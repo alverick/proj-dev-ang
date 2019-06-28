@@ -1,0 +1,56 @@
+@mixin css3-prefix($property, $value) {
+    -webkit-#{$property}: #{$value};
+    -khtml-#{$property}: #{$value};
+    -moz-#{$property}: #{$value};
+    -ms-#{$property}: #{$value};
+    -o-#{$property}: #{$value};
+    #{$property}: #{$value};
+  }
+  
+  @mixin border-radius($radius) {
+    @include css3-prefix('border-radius', $radius);
+    background-clip: padding-box;  /* stops bg color from leaking outside the border: */
+  }
+  
+  @mixin box-shadows($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4), $inset: "") {
+    @if ($inset != "") {
+      @include css3-prefix('box-shadow', $inset $x $y $blur $color);
+    } @else {
+      @include css3-prefix('box-shadow', $x $y $blur $color);
+    }
+  }
+  @mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+  }
+  @mixin rotate ($deg) {
+    @include transform(rotate(#{$deg}deg));
+  }
+  
+  @mixin draw-progress($progress, $color) {
+    .pie {
+      .left-side {
+        transform: rotate($progress * 3.6deg);
+      }
+  
+      @if $progress <= 50 {
+        .right-side {
+          display: none;
+        }
+      } @else {
+        clip: rect(auto, auto, auto, auto);
+  
+        .right-side {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+  
+  @mixin translate ($x, $y) {
+    @include transform(translate($x, $y));
+  }
+  
