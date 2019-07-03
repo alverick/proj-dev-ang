@@ -19,11 +19,11 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
   }
-
+/*
   public logout():void  {
     this.loginService.logout().subscribe(
       response => { if(response) {this.storageService.logout();}}
     );
-  }
+  }¨*/
 
 }

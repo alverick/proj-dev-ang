@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     
   }
-
+/*
   public logout(): void{
     this.loginService.logout().subscribe(
         response => {if(response) {this.storageService.logout();}}
@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  
+  */
 
   
 }

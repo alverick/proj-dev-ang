@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -17,6 +18,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 
 
 import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
+import { timeoutWith } from 'rxjs/operators';
 
 
 
@@ -38,7 +40,11 @@ import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
     AuthModule,
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpModule
+
+
+    
     
   ],
   providers: [

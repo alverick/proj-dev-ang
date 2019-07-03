@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Session } from "src/app/shared/models/session.model";
 import { LoginObject } from 'src/app/shared/services/login-object.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,6 @@ export class LoginComponent implements OnInit {
   public submitted: Boolean = false;
   public error: {ruc: string, message: string} = null;
 
-
   constructor(
     private formBuilder: FormBuilder,
     private LoginService: LoginService,
@@ -27,11 +27,34 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       ruc: ['', Validators.required],
-      password: ['', Validators.required]
+      psw: ['', Validators.required]
     });
   }
 
+  get f() { return this.loginForm.controls; }
+
+
   public submitLogin(): void {
+    this.submitted = true;
+    this.error = null;
+    console.log(this.loginForm.value);
+    if(this.loginForm.valid){
+      this.LoginService.login(this.f.ruc.value, this.f.psw.value)
+      .pipe(first())
+      .subscribe(
+          data=>{
+            this.router.navigate(['/home']);
+          },
+          error =>{
+            this.error=error;
+          }
+      )
+    }
+  }
+
+
+  
+/*  public submitLogin(): void {
     this.submitted = true;
     this.error = null;
     console.log(this.loginForm.value);
@@ -45,7 +68,7 @@ export class LoginComponent implements OnInit {
           this.error = error;
         })
     }
-  }
+  }*/
 
   private correctLogin(data: Session){
     console.log(data);
