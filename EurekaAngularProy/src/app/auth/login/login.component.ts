@@ -37,12 +37,13 @@ export class LoginComponent implements OnInit {
   public submitLogin(): void {
     this.submitted = true;
     this.error = null;
-    console.log(this.loginForm.value);
+    console.log("LOGIN VALID  : " +this.loginForm.valid);
     if(this.loginForm.valid){
+      console.log(this.loginForm.value);
       this.LoginService.login(this.f.ruc.value, this.f.psw.value)
       .pipe(first())
       .subscribe(
-          data=>{
+          ()=>{
             this.router.navigate(['/home']);
           },
           error =>{

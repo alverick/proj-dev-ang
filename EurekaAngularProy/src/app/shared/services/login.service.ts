@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../../environments/environment';
-import { Respuesta } from "../models/respuesta.model";
+import { RespuestaLogin } from "../models/respuestaLogin.model";
 import { catchError } from "rxjs/operators";
-import { throwError } from "rxjs";
+import { throwError, Observable } from "rxjs";
 
 
 @Injectable({
@@ -20,9 +20,14 @@ constructor(public http: HttpClient)  { }
 
 private URI_API: string = environment.END_POINT
 
-login(ruc: string, psw: string){
-  const url = `${this.URI_API}/login/in/${ruc}/${psw}`;
-  return this.http.get<Respuesta>(url);  
+login(ruc: string, psw: string): Observable<RespuestaLogin>{
+  const url = `${this.URI_API}/Login/in/${ruc}/${psw}`;
+  console.log(url);
+  console.log(this.http.get<RespuestaLogin>(url));
+
+  return this.http.get<RespuestaLogin>(url).pipe(
+    catchError(error => throwError(error))
+  );  
  }    
 
 
