@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -18,6 +17,7 @@ import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
@@ -40,14 +40,14 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
     HttpClientModule,
     HttpModule,
     NgxSpinnerModule,
-    MatInputModule
+    MatInputModule,
+    SweetAlert2Module,
   ],
   providers: [
      fakeBackendProvider,
      {provide: ErrorStateMatcher,
       useClass: ShowOnDirtyErrorStateMatcher
-     }
-     
+      }
   ],
   exports:[
     MatInputModule

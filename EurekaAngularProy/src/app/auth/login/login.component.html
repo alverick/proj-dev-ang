@@ -21,18 +21,15 @@
                         
                         <div class="flex-fill">
                             <label class="d-block texto-negro h6" for="">RUC</label>
-                            <mat-form-field class="example-full-width">
-                                <input matInput formControlName="ruc">
+                            <mat-form-field class="full-width">
+                                <input matInput maxlength="11" type="text" formControlName="ruc" required>                   
+                                <mat-error *ngFor="let validation of account_validation_messages.ruc">
+                                    <mat-error class="error-message"
+                                        *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty || loginForm.get('ruc').touched)">
+                                        {{validation.message}}
+                                    </mat-error>
+                                </mat-error>
                             </mat-form-field>
-                            <mat-error *ngIf="loginForm.get('ruc').errors && loginForm.get('ruc').dirty">
-                            </mat-error>
-                            <mat-error *ngIf="loginForm.get('ruc').hasError('required')">
-                                    Los campos son requeridos 
-                            </mat-error>
-                            <mat-error *ngIf="loginForm.get('ruc').hasError('minlenght')">
-
-                            </mat-error>
-                            
                         </div>
                     </div>
                     
@@ -51,9 +48,8 @@
                     
                     <!-- Login -->
                     <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white"
-                                form="login-form">
-                                Login
-                            <!--<a routerLink="home" class="nav-link text-white">Login</a>-->
+                            form="login-form" [disabled]="loginForm.invalid">
+                                Ingresar
                     </button>
                      
                     <div class="mt-3 text-center">
@@ -72,3 +68,25 @@
     </div>
 </div>
 
+   <!--
+
+                                                    <mat-hint>RUC 20032132313 ejemplo</mat-hint>
+
+                                <mat-error *ngIf="loginForm.hasError('required')">
+                                    RUC es requerido    
+                                </mat-error>
+                                <mat-error *ngIf="loginForm.hasError('required')">
+                                        RUC es requerido    
+                                </mat-error>
+
+                                <div *ngIf="loginForm.get('ruc').errors && loginForm.get('ruc').dirty">
+                            <p *ngIf="loginForm.get('ruc').hasError('required')">RUC es requerido</p>
+                            <p *ngIf="loginForm.get('ruc').hasError('minlenght')">Minimo 11 Carácteres </p>
+                            <p *ngIf="loginForm.get('ruc').hasError('maxlenght')">Máximo 20 Carácteres </p>    
+                            </div>
+                           <mat-error *ngIf="loginForm.get('ruc').hasError('required')">
+                                    Los campos son requeridos 
+                           </mat-error>
+                            <mat-error *ngIf="loginForm.get('ruc').hasError('minlenght')">                                
+                            </mat-error>
+                            -->

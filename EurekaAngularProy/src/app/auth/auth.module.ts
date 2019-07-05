@@ -18,7 +18,6 @@ import { MatInputModule } from '@angular/material/input';
 
 
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -26,7 +25,8 @@ import { MatInputModule } from '@angular/material/input';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatInputModule
+    MatInputModule,
+
   ],
   providers:[
     StorageService,
