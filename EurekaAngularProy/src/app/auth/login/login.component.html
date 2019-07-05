@@ -18,13 +18,21 @@
                         <div class="mr-3">
                             <span class="icon-usuario"></span>
                         </div>
+                        
                         <div class="flex-fill">
                             <label class="d-block texto-negro h6" for="">RUC</label>
-                            <input class="input-line-bottom w-100 font-16" type="text" formControlName="ruc" placeholder="8000 0000 0000 0000">
-                            <!--<div class="mt-3">
-                                <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
-                                <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
-                            </div>-->
+                            <mat-form-field class="example-full-width">
+                                <input matInput formControlName="ruc">
+                            </mat-form-field>
+                            <mat-error *ngIf="loginForm.get('ruc').errors && loginForm.get('ruc').dirty">
+                            </mat-error>
+                            <mat-error *ngIf="loginForm.get('ruc').hasError('required')">
+                                    Los campos son requeridos 
+                            </mat-error>
+                            <mat-error *ngIf="loginForm.get('ruc').hasError('minlenght')">
+
+                            </mat-error>
+                            
                         </div>
                     </div>
                     
@@ -35,9 +43,9 @@
                         <div class="flex-fill">
                             <label class="d-block texto-negro h6" for="">Contraseña</label>
                             <input class="input-line-bottom w-100 font-16" type="password" formControlName="psw" placeholder="***********">
-                           <!-- <div class="mt-3">
+                            <div class="mt-3">
                                 <a class="texto-amarillo link-page" href="">¿La olvidaste?</a>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                     
@@ -47,13 +55,13 @@
                                 Login
                             <!--<a routerLink="home" class="nav-link text-white">Login</a>-->
                     </button>
-                     <!--
+                     
                     <div class="mt-3 text-center">
                         <button class="btn-big w-100 btn-eureca btn-eureca-azul text-white">
                           
                            <a routerLink="afiliacion" class="nav-link text-white">Registrate</a>
                         </button>
-                    </div>-->
+                    </div>
                 </form>
             </div>
         </div>

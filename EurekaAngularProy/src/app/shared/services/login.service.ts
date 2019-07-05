@@ -15,16 +15,11 @@ export class LoginService {
 
 
 constructor(public http: HttpClient)  { }
-/*baseUrl: string = environment.END_POINT + '/login/in/';
-*/
 
 private URI_API: string = environment.END_POINT
 
 login(ruc: string, psw: string): Observable<RespuestaLogin>{
   const url = `${this.URI_API}/Login/in/${ruc}/${psw}`;
-  console.log(url);
-  console.log(this.http.get<RespuestaLogin>(url));
-
   return this.http.get<RespuestaLogin>(url).pipe(
     catchError(error => throwError(error))
   );  

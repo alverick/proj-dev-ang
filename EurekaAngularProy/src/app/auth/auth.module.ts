@@ -12,8 +12,10 @@ import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+
+
 
 
 
@@ -24,7 +26,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-
+    MatInputModule
   ],
   providers:[
     StorageService,

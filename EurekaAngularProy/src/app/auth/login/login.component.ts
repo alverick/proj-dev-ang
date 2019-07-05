@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Session } from "src/app/shared/models/session.model";
-import { LoginObject } from 'src/app/shared/services/login-object.model';
-import { StorageService } from 'src/app/shared/services/storage.service';
 import { first } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
@@ -14,21 +13,25 @@ import { first } from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
 
-  public loginForm: FormGroup;
-  public submitted: Boolean = false;
-  public error: {ruc: string, message: string} = null;
+  public  loginForm: FormGroup;
+  public  submitted: Boolean = false;
+  public  error: {ruc: string, message: string} = null;
+  public  respuestaHttp: number
 
   constructor(
     private formBuilder: FormBuilder,
     private LoginService: LoginService,
-    private storageService: StorageService,
-    private router: Router    ) { }
+    private router: Router,
+    private spinner: NgxSpinnerService
+    ) { 
+      this.loginForm = this.formBuilder.group({
+        ruc: ['', Validators.required ],
+        psw: ['', Validators.required ]
+      });
+    }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      ruc: ['', Validators.required],
-      psw: ['', Validators.required]
-    });
+    
   }
 
   get f() { return this.loginForm.controls; }
@@ -37,21 +40,37 @@ export class LoginComponent implements OnInit {
   public submitLogin(): void {
     this.submitted = true;
     this.error = null;
+
     console.log("LOGIN VALID  : " +this.loginForm.valid);
     if(this.loginForm.valid){
+      this.spinner.show();
+
       console.log(this.loginForm.value);
       this.LoginService.login(this.f.ruc.value, this.f.psw.value)
       .pipe(first())
       .subscribe(
-          ()=>{
+          value => {
+            if(value.estado===true){
             this.router.navigate(['/home']);
+            this.spinner.hide();
+            }else{
+              this.loginForm = this.formBuilder.group({
+                ruc: [''],
+                psw: ['']
+              });
+              this.spinner.hide();
+            }
           },
           error =>{
             this.error=error;
+            this.spinner.hide();
+
           }
       )
+      
     }
   }
+
 
 
   
@@ -70,10 +89,9 @@ export class LoginComponent implements OnInit {
         })
     }
   }*/
-
+/*
   private correctLogin(data: Session){
-    console.log(data);
     this.storageService.setCurrentSession(data);
     this.router.navigate(['/home']);
-  } 
+  } */
 }

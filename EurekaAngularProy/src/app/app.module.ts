@@ -14,13 +14,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from 'src/app/auth/auth.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginService } from 'src/app/shared/services/login.service';
-
-
 import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
-import { timeoutWith } from 'rxjs/operators';
-
-
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { MatInputModule } from '@angular/material/input';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
 
 @NgModule({
@@ -41,15 +38,19 @@ import { timeoutWith } from 'rxjs/operators';
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpModule
-
-
-    
-    
+    HttpModule,
+    NgxSpinnerModule,
+    MatInputModule
   ],
   providers: [
-    
-     fakeBackendProvider
+     fakeBackendProvider,
+     {provide: ErrorStateMatcher,
+      useClass: ShowOnDirtyErrorStateMatcher
+     }
+     
+  ],
+  exports:[
+    MatInputModule
   ],
   bootstrap: [AppComponent]
 })
