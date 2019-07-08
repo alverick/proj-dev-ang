@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -18,6 +18,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     HttpModule,
     NgxSpinnerModule,
     MatInputModule,
-    SweetAlert2Module,
+    SweetAlert2Module.forRoot(),  
+    RecaptchaModule.forRoot()
   ],
   providers: [
      fakeBackendProvider,

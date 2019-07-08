@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -17,23 +17,67 @@ export class LoginComponent implements OnInit {
   public  loginForm: FormGroup;
   public  submitted: Boolean = false;
   public  error: {ruc: string, message: string} = null;
-  public  respuestaHttp: number
+  public  respuestaHttp: number;
+  isTrue: boolean = false;
+  intentos: number = 0;
+    inputElement: any;
 
   account_validation_messages = {
     'ruc': [
       { type: 'required', message: 'Debes ingresar un RUC' },
       { type: 'minlength', message: 'Ingrese un RUC válido de 11 dígitos' },
       { type: 'pattern', message: 'Debe contener solo números' },
-      { type: 'validUsername', message: 'Your username has already been taken' }
     ],
-    'password': [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long' },
-      { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+    'psw': [
+      { type: 'required', message:  'Debe ingresar el password' },
+      { type: 'minlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres' },
+      { type: 'maxlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres'},
     ]
   
   }
 
+
+  @HostListener('keydown', ['$event'])
+onKeyDown(e: KeyboardEvent) {
+  if (
+    [46, 8, 9, 27, 13].indexOf(e.keyCode) !== -1 || 
+    (e.keyCode === 65 && e.ctrlKey === true) || 
+    (e.keyCode === 67 && e.ctrlKey === true) || 
+    (e.keyCode === 86 && e.ctrlKey === true) || 
+    (e.keyCode === 88 && e.ctrlKey === true) || 
+    (e.keyCode === 65 && e.metaKey === true) ||
+    (e.keyCode === 67 && e.metaKey === true) || 
+    (e.keyCode === 86 && e.metaKey === true) || 
+    (e.keyCode === 88 && e.metaKey === true) || 
+    (e.keyCode >= 35 && e.keyCode <= 39) 
+  ) {
+    return;  
+  }
+  // Ensure that it is a number and stop the keypress
+  if (
+    (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
+    (e.keyCode < 96 || e.keyCode > 105)
+  ) {
+    e.preventDefault();
+  }
+}
+
+@HostListener('paste', ['$event'])
+onPaste(event: ClipboardEvent) {
+  event.preventDefault();
+  const pastedInput: string = event.clipboardData
+    .getData('text/plain')
+    .replace(/\D/g, ''); // get a digit-only string
+  document.execCommand('insertText', false, pastedInput);
+}
+@HostListener('drop', ['$event'])
+onDrop(event: DragEvent) {
+  event.preventDefault();
+  const textData = event.dataTransfer
+    .getData('text').replace(/\D/g, '');
+  this.inputElement.focus();
+  document.execCommand('insertText', false, textData);
+}
   constructor(
     private formBuilder: FormBuilder,
     private LoginService: LoginService,
@@ -44,47 +88,87 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       ruc: ['', Validators.compose([Validators.minLength(11), Validators.required,
-      Validators.pattern("^[0-9]*$")])],
+            Validators.pattern("^[0-9]*$")])],
       psw: ['', Validators.required ]
     });
   }
 
-  get f() { return this.loginForm.controls; }
 
+  
+
+  get f() { return this.loginForm.controls; }
+  
+  resolved(captchaResponse: string) : boolean{
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
+    return true;
+  }
+   
   savedata(){
     console.log(this.loginForm.value)
   }
 
-  public submitLogin(): void {
+  public submitLogin(): any {
     this.submitted = true;
     this.error = null;
-
     console.log("LOGIN VALID  : " +this.loginForm.valid);
     if(this.loginForm.valid){
       this.spinner.show();
       console.log(this.loginForm.value);
+      
       this.LoginService.login(this.f.ruc.value, this.f.psw.value)
       .pipe(first())
       .subscribe(
           value => {
+            this.intentos= value.paramNum;
             if(value.estado===true){
+
             this.router.navigate(['/home']);
-            this.spinner.hide();
-            Swal.fire({
-              position: 'top-end',
-              type: 'success',
-              title: 'Your work has been saved',
-              showConfirmButton: false,
-              timer: 1500
-            })
-            }else{
-              this.loginForm = this.formBuilder.group({
-                ruc: [''],
-                psw: ['']
-              });
-              this.spinner.hide();
-              alert("No registrado");
+            this.spinner.hide();          
             }
+            else
+              if(this.intentos <= 3){
+                this.loginForm = this.formBuilder.group({
+                  ruc: [''],
+                  psw: ['']
+                });
+                this.spinner.hide();
+                console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
+                Swal.fire({
+                  type: 'error',
+                  text: 'No tenemos una cuenta registrada con este RUC',
+                })
+                return this.isTrue = false;
+              }
+              else 
+              if(this.intentos == 4 || this.intentos == 5 ){
+                this.loginForm = this.formBuilder.group({
+                  ruc: [''],
+                  psw: ['']
+                });
+                this.spinner.hide();
+                console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
+                Swal.fire({
+                  type: 'error',
+                  text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
+
+                })
+                return this.isTrue = true;
+              }else
+              if(this.intentos = 6){
+                this.loginForm = this.formBuilder.group({
+                  ruc: [''],
+                  psw: ['']
+                });
+                Swal.fire({
+                  type: 'error',
+                  title: 'Contraseña Incorrecta',
+                  text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe',
+                })
+                this.spinner.hide();
+                console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
+                alert("No registrado");
+              }
+              
           },
           error =>{
             this.error=error;
@@ -92,32 +176,15 @@ export class LoginComponent implements OnInit {
             console.log("error")
           }
       )
-      
     }
   }
 
 
-  
-
-
-/*  public submitLogin(): void {
-    this.submitted = true;
-    this.error = null;
-    console.log(this.loginForm.value);
-    if(this.loginForm.valid){
-      console.log(this.loginForm.valid); 
-      console.log(this.LoginService.login(new LoginObject(this.loginForm.value)));
-      console.log(data => this.correctLogin(data));    
-      this.LoginService.login(new LoginObject(this.loginForm.value)).subscribe(       
-        data => this.correctLogin(data),
-        error => {
-          this.error = error;
-        })
-    }
-  }*/
-/*
-  private correctLogin(data: Session){
-    this.storageService.setCurrentSession(data);
-    this.router.navigate(['/home']);
-  } */
+ 
 }
+
+/*
+[CA8] Si la contraseña es incorrecta, se deberá mostrar un pop-up con título “Contraseña incorrecta” y texto “Lo
+sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes X intentos restantes”.
+
+*/

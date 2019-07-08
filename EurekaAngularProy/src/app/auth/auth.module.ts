@@ -12,11 +12,9 @@ import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-
-
-
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   imports: [
@@ -26,7 +24,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     HttpClientModule,
     MatInputModule,
-
+    RecaptchaModule
   ],
   providers:[
     StorageService,
@@ -36,6 +34,7 @@ import { MatInputModule } from '@angular/material/input';
   ],
   declarations: [LoginComponent, AfiliacionComponent, ConfigurarServiciosComponent, ProcesandoComponent, CrearContrasenaComponent]
 })
+
 export class AuthModule {
   constructor (@Optional() @SkipSelf() parentModule: AuthModule) {
     if (parentModule) {
