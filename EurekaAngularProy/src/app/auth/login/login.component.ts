@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
@@ -20,24 +20,28 @@ export class LoginComponent implements OnInit {
   public  respuestaHttp: number;
   isTrue: boolean = false;
   intentos: number = 0;
-    inputElement: any;
+  inputElement: any;
+  
+  noCoincidePsw : string = 'No coincido la password con el ruc';
+  coincide : boolean = false;
 
   account_validation_messages = {
     'ruc': [
       { type: 'required', message: 'Debes ingresar un RUC' },
       { type: 'minlength', message: 'Ingrese un RUC válido de 11 dígitos' },
       { type: 'pattern', message: 'Debe contener solo números' },
+      
     ],
     'psw': [
       { type: 'required', message:  'Debe ingresar el password' },
       { type: 'minlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres' },
       { type: 'maxlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres'},
     ]
-  
   }
 
+  
 
-  @HostListener('keydown', ['$event'])
+@HostListener('keydown', ['$event'])
 onKeyDown(e: KeyboardEvent) {
   if (
     [46, 8, 9, 27, 13].indexOf(e.keyCode) !== -1 || 
@@ -93,9 +97,6 @@ onDrop(event: DragEvent) {
     });
   }
 
-
-  
-
   get f() { return this.loginForm.controls; }
   
   resolved(captchaResponse: string) : boolean{
@@ -106,6 +107,7 @@ onDrop(event: DragEvent) {
   savedata(){
     console.log(this.loginForm.value)
   }
+
 
   public submitLogin(): any {
     this.submitted = true;
@@ -127,20 +129,31 @@ onDrop(event: DragEvent) {
             }
             else
               if(this.intentos <= 3){
+                console.log("ParamStr  :  "+ value.paramStr);
+                console.log("no coincide  :  "+ this.noCoincidePsw);
+
+                if(value.paramStr !== 'No coincido la password con el ruc'){
                 this.loginForm = this.formBuilder.group({
                   ruc: [''],
                   psw: ['']
                 });
                 this.spinner.hide();
                 console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                Swal.fire({
-                  type: 'error',
-                  text: 'No tenemos una cuenta registrada con este RUC',
-                })
+                return this.coincide= true;
+
                 return this.isTrue = false;
+                }else{
+                  return this.coincide= true;
+                }         
               }
+
+
+
+
               else 
               if(this.intentos == 4 || this.intentos == 5 ){
+                console.log("ParamStr  :  "+ value.paramStr);
+                if(this.noCoincidePsw != value.paramStr){
                 this.loginForm = this.formBuilder.group({
                   ruc: [''],
                   psw: ['']
@@ -150,10 +163,15 @@ onDrop(event: DragEvent) {
                 Swal.fire({
                   type: 'error',
                   text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
-
                 })
                 return this.isTrue = true;
-              }else
+                }else{
+                  return this.coincide=true;
+                }
+              }
+              
+
+              else
               if(this.intentos = 6){
                 this.loginForm = this.formBuilder.group({
                   ruc: [''],
@@ -168,7 +186,6 @@ onDrop(event: DragEvent) {
                 console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
                 alert("No registrado");
               }
-              
           },
           error =>{
             this.error=error;
@@ -178,9 +195,6 @@ onDrop(event: DragEvent) {
       )
     }
   }
-
-
- 
 }
 
 /*

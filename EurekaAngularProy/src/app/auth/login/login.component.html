@@ -22,12 +22,15 @@
                         <div class="flex-fill">
                             <label class="d-block texto-negro h6" for="">RUC</label>
                             <mat-form-field class="full-width">
-                                <input matInput  type="text" digitOnly maxlength="11" numbersOnly required  formControlName="ruc" >                   
+                                <input matInput  type="text" digitOnly maxlength="13" numbersOnly required  formControlName="ruc" >                   
                                 <mat-error *ngFor="let validation of account_validation_messages.ruc">
                                     <mat-error class="error-message"
                                         *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty || loginForm.get('ruc').touched)">
                                         {{validation.message}}
                                     </mat-error>
+                                </mat-error>
+                                <mat-error *ngIf="coincide">
+                                    No coincide la password con el ruc
                                 </mat-error>
                             </mat-form-field>
                             <div class="mt-3">
@@ -45,7 +48,7 @@
                         <div class="flex-fill">
                             <label class="d-block texto-negro h6" for="">Contraseña</label>
                             <mat-form-field class="full-width">
-                                <input matInput minlength="6" maxlength="20" type="password"  formControlName="psw" required>
+                                <input matInput minlength="3" maxlength="20" type="password"  formControlName="psw" required>
                                 <mat-error *ngFor="let validation of account_validation_messages.psw">
                                     <mat-error class="error-message" 
                                         *ngIf="loginForm.get('psw').hasError(validation.type) && (loginForm.get('psw').dirty || loginForm.get('psw').touched)">
