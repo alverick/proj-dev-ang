@@ -21,8 +21,7 @@ export class LoginComponent implements OnInit {
   isTrue: boolean = false;
   intentos: number = 0;
   inputElement: any;
-  isCaptchaValidate: boolean = true;
-
+  
   noCoincidePsw : string = 'No coincido la password con el ruc';
   coincide : boolean = false;
 
@@ -94,7 +93,8 @@ onDrop(event: DragEvent) {
     this.loginForm = this.formBuilder.group({
       ruc: ['', Validators.compose([Validators.minLength(11), Validators.required,
             Validators.pattern("^[0-9]*$")])],
-      psw: ['', Validators.required ]
+      psw: ['', Validators.required ],
+      captcha: ['']
     });
   }
 
@@ -102,7 +102,6 @@ onDrop(event: DragEvent) {
   
   resolved(captchaResponse: string) : boolean{
     console.log(`Resolved captcha with response: ${captchaResponse}`);
-    this.isCaptchaValidate = true;
     return true;
   }
    
@@ -115,7 +114,7 @@ onDrop(event: DragEvent) {
     this.submitted = true;
     this.error = null;
     console.log("LOGIN VALID  : " +this.loginForm.valid);
-    if(this.loginForm.valid && this.isCaptchaValidate){
+    if(this.loginForm.valid){
       this.spinner.show();
       console.log(this.loginForm.value);
       
@@ -166,7 +165,6 @@ onDrop(event: DragEvent) {
                   type: 'error',
                   text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
                 })
-                this.isCaptchaValidate = false;
                 return this.isTrue = true;
                 }else{
                   return this.coincide=true;

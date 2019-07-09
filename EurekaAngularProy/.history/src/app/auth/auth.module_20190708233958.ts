@@ -15,7 +15,6 @@ import { SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { RecaptchaModule } from 'ng-recaptcha';
-import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   imports: [
@@ -27,11 +26,11 @@ import { CookieService } from 'ngx-cookie-service';
     MatInputModule,
     RecaptchaModule
   ],
-  providers: [
+  providers:[
     StorageService,
     AuthGuard,
-    fakeBackendProvider,
-    CookieService
+    fakeBackendProvider
+    
   ],
   declarations: [LoginComponent, AfiliacionComponent, ConfigurarServiciosComponent, ProcesandoComponent, CrearContrasenaComponent]
 })

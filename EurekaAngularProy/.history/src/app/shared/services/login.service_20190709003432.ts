@@ -35,7 +35,6 @@ login(ruc: string, psw: string): Observable<RespuestaLogin>{
         isAuthenticate: true,
         token: r.paramStr 
       });
-      r.paramStr = null;
       return r;
     }));  
  }    

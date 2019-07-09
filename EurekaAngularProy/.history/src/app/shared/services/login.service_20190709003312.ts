@@ -22,7 +22,7 @@ private URI_API: string = environment.END_POINT
 login(ruc: string, psw: string): Observable<RespuestaLogin>{
   console.log('begin login')
   const url = `${this.URI_API}/login`;
-  const data = `username=${ruc}&password=${psw}`;
+  const data = { username: ruc, password: psw };
   console.log(url, data);
   const opts = {
     headers: { "Content-Type": "application/x-www-form-urlencoded" }
@@ -35,7 +35,6 @@ login(ruc: string, psw: string): Observable<RespuestaLogin>{
         isAuthenticate: true,
         token: r.paramStr 
       });
-      r.paramStr = null;
       return r;
     }));  
  }    

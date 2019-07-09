@@ -166,7 +166,6 @@ onDrop(event: DragEvent) {
                   type: 'error',
                   text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
                 })
-                this.isCaptchaValidate = false;
                 return this.isTrue = true;
                 }else{
                   return this.coincide=true;

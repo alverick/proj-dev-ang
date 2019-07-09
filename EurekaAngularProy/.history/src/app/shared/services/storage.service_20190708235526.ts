@@ -18,9 +18,7 @@ export class StorageService {
 
   setCurrentSession(session: Session): void {
     this.currentSession = session;
-    const expire = new Date();
-    expire.setDate(expire.getDate() + 5);
-    this.cookieStorage.set('ruc', session.user.ruc, expire);
+    this.cookieStorage.set('ruc', session.user.ruc);
     this.localStorageService.setItem('tk', session.token);
   }
 
@@ -28,7 +26,6 @@ export class StorageService {
     if (this.cookieStorage.check('ruc')) {
       return {
         user: { ruc: this.cookieStorage.get('ruc') },
-        isAuthenticate: false,
         token: null
       };
     }
@@ -50,7 +47,7 @@ export class StorageService {
   };
 
   isAuthenticated(): boolean {
-    return (this.currentSession && this.currentSession.isAuthenticate);
+    return (this.getCurrentToken() != null) ? true : false;
   };
 
   getCurrentToken(): string {

@@ -62,7 +62,7 @@
                     <!--<re-captcha #existingItem formControlName="recaptchaReactive" *ngIf="isTrue"   (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI"></re-captcha>    -->
                     
                    
-                    <re-captcha *ngIf="isTrue" (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI" ></re-captcha>
+                    <re-captcha (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI" formControlName="captcha" ></re-captcha>
                     
                     <!-- Login -->
                     <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white"

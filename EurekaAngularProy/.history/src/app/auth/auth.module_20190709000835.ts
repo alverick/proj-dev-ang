@@ -27,7 +27,7 @@ import { CookieService } from 'ngx-cookie-service';
     MatInputModule,
     RecaptchaModule
   ],
-  providers: [
+  providers:[
     StorageService,
     AuthGuard,
     fakeBackendProvider,

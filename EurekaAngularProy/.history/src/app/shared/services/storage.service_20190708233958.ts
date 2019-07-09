@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Router } from '@angular/router';
 import { Session } from "../models/session.model";
 import { User } from "../models/user.model";
-import { CookieService } from 'ngx-cookie-service';
+
 
 
 @Injectable()
@@ -11,28 +11,19 @@ export class StorageService {
   private localStorageService;
   private currentSession : Session = null;
 
-  constructor(private router: Router, private cookieStorage: CookieService) {
+  constructor(private router: Router) {
     this.localStorageService = localStorage;
     this.currentSession = this.loadSessionData();
   }
 
   setCurrentSession(session: Session): void {
     this.currentSession = session;
-    const expire = new Date();
-    expire.setDate(expire.getDate() + 5);
-    this.cookieStorage.set('ruc', session.user.ruc, expire);
-    this.localStorageService.setItem('tk', session.token);
+    this.localStorageService.setItem('currentUser', JSON.stringify(session));
   }
 
   loadSessionData(): Session{
-    if (this.cookieStorage.check('ruc')) {
-      return {
-        user: { ruc: this.cookieStorage.get('ruc') },
-        isAuthenticate: false,
-        token: null
-      };
-    }
-    return null;
+    var sessionStr = this.localStorageService.getItem('currentUser');
+    return (sessionStr) ? <Session> JSON.parse(sessionStr) : null;
   }
 
   getCurrentSession(): Session {
@@ -40,7 +31,7 @@ export class StorageService {
   }
 
   removeCurrentSession(): void {
-    this.localStorageService.removeItem('tk');
+    this.localStorageService.removeItem('currentUser');
     this.currentSession = null;
   }
 
@@ -50,7 +41,7 @@ export class StorageService {
   };
 
   isAuthenticated(): boolean {
-    return (this.currentSession && this.currentSession.isAuthenticate);
+    return (this.getCurrentToken() != null) ? true : false;
   };
 
   getCurrentToken(): string {
