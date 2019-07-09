@@ -1,10 +1,13 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { User } from 'src/app/shared/models/user.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -18,13 +21,16 @@ export class LoginComponent implements OnInit {
   public  submitted: Boolean = false;
   public  error: {ruc: string, message: string} = null;
   public  respuestaHttp: number;
+  public  formData: any = {};
+
   isTrue: boolean = false;
   intentos: number = 0;
-  inputElement: any;
   isCaptchaValidate: boolean = true;
+  
 
-  noCoincidePsw : string = 'No coincido la password con el ruc';
-  coincide : boolean = false;
+  codRpt2 : boolean = false;
+  codRpt3 : boolean = false;
+  
 
   account_validation_messages = {
     'ruc': [
@@ -40,62 +46,34 @@ export class LoginComponent implements OnInit {
     ]
   }
 
-  
 
-@HostListener('keydown', ['$event'])
-onKeyDown(e: KeyboardEvent) {
-  if (
-    [46, 8, 9, 27, 13].indexOf(e.keyCode) !== -1 || 
-    (e.keyCode === 65 && e.ctrlKey === true) || 
-    (e.keyCode === 67 && e.ctrlKey === true) || 
-    (e.keyCode === 86 && e.ctrlKey === true) || 
-    (e.keyCode === 88 && e.ctrlKey === true) || 
-    (e.keyCode === 65 && e.metaKey === true) ||
-    (e.keyCode === 67 && e.metaKey === true) || 
-    (e.keyCode === 86 && e.metaKey === true) || 
-    (e.keyCode === 88 && e.metaKey === true) || 
-    (e.keyCode >= 35 && e.keyCode <= 39) 
-  ) {
-    return;  
-  }
-  // Ensure that it is a number and stop the keypress
-  if (
-    (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
-    (e.keyCode < 96 || e.keyCode > 105)
-  ) {
-    e.preventDefault();
-  }
-}
-
-@HostListener('paste', ['$event'])
-onPaste(event: ClipboardEvent) {
-  event.preventDefault();
-  const pastedInput: string = event.clipboardData
-    .getData('text/plain')
-    .replace(/\D/g, ''); // get a digit-only string
-  document.execCommand('insertText', false, pastedInput);
-}
-@HostListener('drop', ['$event'])
-onDrop(event: DragEvent) {
-  event.preventDefault();
-  const textData = event.dataTransfer
-    .getData('text').replace(/\D/g, '');
-  this.inputElement.focus();
-  document.execCommand('insertText', false, textData);
-}
   constructor(
     private formBuilder: FormBuilder,
     private LoginService: LoginService,
     private router: Router,
-    private spinner: NgxSpinnerService
-    ) { }
+    private spinner: NgxSpinnerService,
+    private cookieService : CookieService   ) {
+
+    if(cookieService.get('recordar')){
+      const ruc: string = cookieService.get('ruc');
+      this.formData.ruc = ruc;
+    }
+
+     }
 
   ngOnInit() {
+    let rucStr = this.cookieService.check('ruc') ?
+      this.cookieService.get('ruc') :
+      '';
     this.loginForm = this.formBuilder.group({
-      ruc: ['', Validators.compose([Validators.minLength(11), Validators.required,
+      ruc: [rucStr, Validators.compose([Validators.minLength(11), Validators.required,
             Validators.pattern("^[0-9]*$")])],
-      psw: ['', Validators.required ]
+      psw: ['', Validators.required ],
+      rememberme:[false]  
+     
     });
+
+   
   }
 
   get f() { return this.loginForm.controls; }
@@ -132,30 +110,17 @@ onDrop(event: DragEvent) {
             else
               if(this.intentos <= 3){
                 console.log("ParamStr  :  "+ value.paramStr);
-                console.log("no coincide  :  "+ this.noCoincidePsw);
-
-                if(value.paramStr !== 'No coincido la password con el ruc'){
+                if(value.codRespuesta == 2){
                 this.loginForm = this.formBuilder.group({
                   ruc: [''],
                   psw: ['']
                 });
                 this.spinner.hide();
                 console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                return this.coincide= true;
-
-                return this.isTrue = false;
-                }else{
-                  return this.coincide= true;
-                }         
-              }
-
-
-
-
-              else 
-              if(this.intentos == 4 || this.intentos == 5 ){
-                console.log("ParamStr  :  "+ value.paramStr);
-                if(this.noCoincidePsw != value.paramStr){
+                return this.codRpt2= true;
+                }
+                else 
+                if(value.codRespuesta == 3){
                 this.loginForm = this.formBuilder.group({
                   ruc: [''],
                   psw: ['']
@@ -165,11 +130,61 @@ onDrop(event: DragEvent) {
                 Swal.fire({
                   type: 'error',
                   text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
-                })
-                this.isCaptchaValidate = false;
-                return this.isTrue = true;
-                }else{
-                  return this.coincide=true;
+                }) 
+                }                
+                else{
+                  this.loginForm = this.formBuilder.group({
+                    ruc: [''],
+                    psw: ['']
+                  });
+                  console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
+                  return this.isTrue=false;
+                }         
+              }
+
+
+
+
+              else 
+              if(this.intentos == 4 || this.intentos == 5 ){
+                console.log("ParamStr  :  "+ value.paramStr);
+                if(value.codRespuesta == 2){
+                  this.loginForm = this.formBuilder.group({
+                    ruc: [''],
+                    psw: ['']
+                  });
+                  this.spinner.hide();
+                  console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
+                  return this.codRpt2= true;
+                }
+                else 
+                if(value.codRespuesta == 3){
+                this.loginForm = this.formBuilder.group({
+                  ruc: [''],
+                  psw: ['']
+                });
+                this.spinner.hide();
+                console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
+                
+                Swal.fire({
+                  type: 'error',
+                  text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
+                }) 
+                }     
+
+                else{
+                  this.loginForm = this.formBuilder.group({
+                    ruc: [''],
+                    psw: ['']
+                  });
+                  this.spinner.hide();
+                  console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
+                  Swal.fire({
+                    type: 'error',
+                    text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
+                  })
+                  this.isCaptchaValidate = false;
+                  return this.isTrue = true;              
                 }
               }
               
@@ -187,7 +202,6 @@ onDrop(event: DragEvent) {
                 })
                 this.spinner.hide();
                 console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                alert("No registrado");
               }
           },
           error =>{

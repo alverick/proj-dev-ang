@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { DigitOnlyModule } from '@uiowa/digit-only';
 
 
 @NgModule({
@@ -43,7 +44,9 @@ import { RecaptchaModule } from 'ng-recaptcha';
     NgxSpinnerModule,
     MatInputModule,
     SweetAlert2Module.forRoot(),  
-    RecaptchaModule.forRoot()
+    RecaptchaModule.forRoot(),
+    DigitOnlyModule
+
   ],
   providers: [
      fakeBackendProvider,

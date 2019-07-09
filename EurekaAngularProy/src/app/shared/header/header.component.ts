@@ -15,29 +15,14 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router,
               private loginService: LoginService,
               private storageService: StorageService) { 
-    router.events.forEach((event) =>{
-      if(event instanceof NavigationStart){
-        if(event['url'] == '/login'){
-          this.showHead=false;
-        }else{
-          this.showHead = true;
-        }
-      }
-    });
   }
 
   ngOnInit() {
     
   }
-/*
+
   public logout(): void{
-    this.loginService.logout().subscribe(
-        response => {if(response) {this.storageService.logout();}}
-    );
+    this.storageService.logout();
   }
 
-
-  */
-
-  
 }

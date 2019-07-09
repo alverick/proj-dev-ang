@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
+import { DigitOnlyModule } from '@uiowa/digit-only';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { CookieService } from 'ngx-cookie-service';
     ReactiveFormsModule,
     HttpClientModule,
     MatInputModule,
-    RecaptchaModule
+    RecaptchaModule,
+    DigitOnlyModule
   ],
   providers: [
     StorageService,

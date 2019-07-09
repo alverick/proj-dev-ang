@@ -13,7 +13,7 @@
                 <h2 class="texto-azulbase text-center pb-3 mb-4 font-medium">Iniciar Sesión</h2>                
                 
                 <!--/////// F O R M ////////-->
-                <form  id="login-form"  [formGroup]="loginForm" (ngSubmit)="submitLogin()" novalidate>
+                <form  id="login-form"  [formGroup]="loginForm" (ngSubmit)="submitLogin()">
                     <div class="d-flex mb-4">
                         <div class="mr-3">
                             <span class="icon-usuario"></span>
@@ -22,19 +22,20 @@
                         <div class="flex-fill">
                             <label class="d-block texto-negro h6" for="">RUC</label>
                             <mat-form-field class="full-width">
-                                <input matInput  type="text" digitOnly maxlength="13" numbersOnly required  formControlName="ruc" >                   
+                                <input matInput  type="text" digitOnly minlength="11" maxlength="11"  formControlName="ruc" required    >                   
                                 <mat-error *ngFor="let validation of account_validation_messages.ruc">
                                     <mat-error class="error-message"
                                         *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty || loginForm.get('ruc').touched)">
                                         {{validation.message}}
                                     </mat-error>
                                 </mat-error>
-                                <mat-error *ngIf="coincide">
-                                    No coincide la password con el ruc
+                                <mat-error *ngIf="codRpt2">
+                                    No tenemos una cuenta registrada con este RUC
                                 </mat-error>
+                                
                             </mat-form-field>
-                            <div class="mt-3">
-                                <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
+                            <div class="mt-4">
+                                <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" formControlName="rememberme" value="value1">
                                 <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
                             </div>
                         </div>
@@ -48,7 +49,7 @@
                         <div class="flex-fill">
                             <label class="d-block texto-negro h6" for="">Contraseña</label>
                             <mat-form-field class="full-width">
-                                <input matInput minlength="3" maxlength="20" type="password"  formControlName="psw" required>
+                                <input matInput minlength="6" maxlength="20" type="password"  formControlName="psw" >
                                 <mat-error *ngFor="let validation of account_validation_messages.psw">
                                     <mat-error class="error-message" 
                                         *ngIf="loginForm.get('psw').hasError(validation.type) && (loginForm.get('psw').dirty || loginForm.get('psw').touched)">
@@ -58,23 +59,16 @@
                             </mat-form-field>
                         </div>
               
-                    </div>
-                    <!--<re-captcha #existingItem formControlName="recaptchaReactive" *ngIf="isTrue"   (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI"></re-captcha>    -->
-                    
+                    </div>                    
                    
                     <re-captcha *ngIf="isTrue" (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI" ></re-captcha>
                     
                     <!-- Login -->
                     <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white"
-                            form="login-form" [disabled]="disabledButton" >
+                            form="login-form" >
                                 Ingresar
                     </button>
-                    <!--
-                    <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white"
-                            form="login-form" [disabled]="disabledButton" >
-                                Ingresar
-                    </button>
-                     -->
+
                     <div class="mt-3 text-center">
                         <button class="btn-big w-100 btn-eureca btn-eureca-azul text-white">
                            <a routerLink="afiliacion" class="nav-link text-white">Registrate</a>
