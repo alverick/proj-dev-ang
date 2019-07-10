@@ -1,0 +1,162 @@
+
+/* Change all elements to use border-box */
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+
+body{
+    font-size: 14px;
+    font-family: 'Omnes' !important;
+   /* background: #0b0044 !important;*/
+    color: $negro;
+}
+
+header{
+    height: 80px;
+  }
+  
+  a{
+    &:hover{
+      text-decoration: none;
+    }
+  }
+
+  .logo{
+    max-width: 250px;
+  }
+
+    
+  .container{
+    width: 1000px;
+    max-width: 1000px;
+  }
+  
+  .link-page{
+    text-decoration: underline;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+  
+  .text-small{
+    font-size: 10px;
+  }
+
+  .texto-amarillo{
+    color:#fc9a00;
+  }
+
+  .texto-azul{
+    color: #2121c4;
+  }
+  
+  .font-16{
+    font-size: 16px;
+  }
+  
+  small, .small {
+    font-size: 12px;
+  }
+  
+  h1, .h1{
+    font-size: 36px;
+  }
+  
+  h2, .h2{
+    font-size: 28px;
+  }
+  
+  h5, .h5{
+    font-size: 18px;
+  }
+  
+  h6, .h6{
+    font-size: 16px;
+  }
+
+/*Boton */
+
+  .btn-eureca{
+    /*@extend .texto-blanco;*/
+    /*@extend .font-medium;*/
+    @include border-radius(25px);
+    border: 0;
+  }
+  
+  .btn-eureca-amarillo{
+    background-color: $amarillo;
+    @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
+    &:hover{
+      background-color: $amarillolight;
+    }
+    &:focus{
+      background-color: $amarillobold;
+    }
+  }
+  
+  .btn-eureca-azul{
+    @include box-shadows(0, 1px, 4px, 0, rgba(38, 38, 191, 0.2));
+    background-color: $azul;
+    &:hover{
+      background-color: $azullight;
+    }
+    &:focus{
+      background-color: $azulbold;
+    }
+  }
+
+  .btn.btn-lg {
+    border-radius: 24px;
+    font-size: 16px;
+    padding-left: 45px;
+    padding-right: 45px;
+    height: 48px;
+    line-height: 45px;
+  }
+
+  .btn-outline-amarillo {
+    color: #fc9a00 !important;
+    background-color:white;
+    border-color: #fc9a00;
+    border-width: 2px;
+    border-style: solid;    
+  }
+  
+  .btn-big{
+    font-size: 16px;
+    padding-left: 45px;
+    padding-right: 45px;
+    height: 48px;
+  }
+  
+  .btn-medium{
+    font-size: 16px;
+    padding-left: 45px;
+    padding-right: 45px;
+    height: 40px;
+  }
+  
+  .btn-small{
+    font-size: 14px;
+    line-height: normal;
+    padding: 8px 35px;
+  }
+  
+  .input-filter{
+    padding:5px;
+    padding-left:45px;
+    width:375px;
+    border:1px solid #bebebe;
+    -webkit-border-radius:20px;
+    -khtml-border-radius:20px;
+    -moz-border-radius:20px;
+    -ms-border-radius:20px;
+    -o-border-radius:20px;
+    border-radius:20px;
+    background-clip:padding-box;
+    font-size:14px;
+    font-weight:500}
