@@ -1,18 +1,20 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, HostListener, Directive} from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
-import { StorageService } from 'src/app/shared/services/storage.service';
-import { User } from 'src/app/shared/models/user.model';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
+})
+
+@Directive({
+  selector: '[appBlockCopyPaste]'
 })
 
 export class LoginComponent implements OnInit {
@@ -52,19 +54,11 @@ export class LoginComponent implements OnInit {
     private LoginService: LoginService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private cookieService : CookieService   ) {
-
-    if(cookieService.get('recordar')){
-      const ruc: string = cookieService.get('ruc');
-      this.formData.ruc = ruc;
-    }
-
-     }
+    private cookieService : CookieService   ) {}
 
   ngOnInit() {
     let rucStr = this.cookieService.check('ruc') ?
-      this.cookieService.get('ruc') :
-      '';
+    this.cookieService.get('ruc') :  '';
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.minLength(11), Validators.required,
             Validators.pattern("^[0-9]*$")])],
@@ -72,8 +66,6 @@ export class LoginComponent implements OnInit {
       rememberme:[false]  
      
     });
-
-   
   }
 
   get f() { return this.loginForm.controls; }
@@ -88,6 +80,23 @@ export class LoginComponent implements OnInit {
     console.log(this.loginForm.value)
   }
 
+  
+  /* ////////  N O T  - A L L L O W - T O - C O P Y //////// */
+  
+  @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
+    e.preventDefault();
+  }
+
+  @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
+    e.preventDefault();
+  }
+
+  @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
+    e.preventDefault();
+  }
+
+
+  /* /////// L O G I N ////////////  */
 
   public submitLogin(): any {
     this.submitted = true;
@@ -103,7 +112,6 @@ export class LoginComponent implements OnInit {
           value => {
             this.intentos= value.paramNum;
             if(value.estado===true){
-
             this.router.navigate(['/home']);
             this.spinner.hide();          
             }
@@ -212,10 +220,6 @@ export class LoginComponent implements OnInit {
       )
     }
   }
+
+
 }
-
-/*
-[CA8] Si la contraseña es incorrecta, se deberá mostrar un pop-up con título “Contraseña incorrecta” y texto “Lo
-sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes X intentos restantes”.
-
-*/

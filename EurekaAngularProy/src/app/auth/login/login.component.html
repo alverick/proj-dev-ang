@@ -8,56 +8,57 @@
 
             <!--/////// R I G H T ////////-->
             <div class="col-sm">
+                <!--<div class="position-absolute bg-blanco box-login custom-shadow">-->
                 <div class="position-absolute bg-blanco box-login custom-shadow">
-                <!--/////// T I T L E ////////-->
-                <h2 class="texto-azulbase text-center pb-3 mb-4 font-medium">Iniciar Sesión</h2>                
+                    <!--/////// T I T L E ////////-->
+                    <h2 class="texto-azulbase text-center pb-3 mb-4 font-medium">Iniciar Sesión</h2>                
                 
-                <!--/////// F O R M ////////-->
-                <form  id="login-form"  [formGroup]="loginForm" (ngSubmit)="submitLogin()">
-                    <div class="d-flex mb-4">
-                        <div class="mr-3">
-                            <span class="icon-usuario"></span>
-                        </div>       
-                        <!-- ////////////// R U C /////////////////// -->
-                        <div class="flex-fill">
-                            <label class="d-block texto-negro h6" for="">RUC</label>
-                            <mat-form-field class="full-width">
-                                <input matInput  type="text" digitOnly minlength="11" maxlength="11"  formControlName="ruc" required    >                   
-                                <mat-error *ngFor="let validation of account_validation_messages.ruc">
-                                    <mat-error class="error-message"
-                                        *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty || loginForm.get('ruc').touched)">
-                                        {{validation.message}}
+                    <!--/////// F O R M ////////-->
+                    <form  id="login-form"  [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+                        <div class="d-flex mb-4">
+                            <div class="mr-3">
+                                <span class="icon-usuario"></span>
+                            </div>       
+                            <!-- ////////////// R U C /////////////////// -->
+                            <div class="flex-fill">
+                                <label class="d-block texto-negro h6" for="">RUC</label>
+                                <mat-form-field class="full-width">
+                                    <input matInput  type="text" digitOnly minlength="11" maxlength="11"  formControlName="ruc"  appBlockCopyPaste>                   
+                                    <mat-error *ngFor="let validation of account_validation_messages.ruc">
+                                        <mat-error class="error-message"
+                                            *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty || loginForm.get('ruc').touched)">
+                                            {{validation.message}}
+                                        </mat-error>
                                     </mat-error>
-                                </mat-error>
-                                <mat-error *ngIf="codRpt2">
-                                    No tenemos una cuenta registrada con este RUC
-                                </mat-error>
+                                    <mat-error *ngIf="codRpt2">
+                                        No tenemos una cuenta registrada con este RUC
+                                    </mat-error> 
+                                </mat-form-field>
                                 
-                            </mat-form-field>
-                            <div class="mt-4">
-                                <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" formControlName="rememberme" value="value1">
-                                <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
+                                <div class="mt-4">
+                                    <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" formControlName="rememberme" value="value1">
+                                    <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     
-                    <div class="d-flex mb-4">
-                        <div class="mr-3">
-                            <span class="icon-acceso"></span>
-                        </div>
-                        <!-- ////////////// P A S S W O R D /////////////////// -->
-                        <div class="flex-fill">
-                            <label class="d-block texto-negro h6" for="">Contraseña</label>
-                            <mat-form-field class="full-width">
-                                <input matInput minlength="6" maxlength="20" type="password"  formControlName="psw" >
-                                <mat-error *ngFor="let validation of account_validation_messages.psw">
-                                    <mat-error class="error-message" 
-                                        *ngIf="loginForm.get('psw').hasError(validation.type) && (loginForm.get('psw').dirty || loginForm.get('psw').touched)">
-                                        {{validation.message}}
+                        <div class="d-flex mb-4">
+                            <div class="mr-3">
+                                <span class="icon-acceso"></span>
+                            </div>
+                            <!-- ////////////// P A S S W O R D /////////////////// -->
+                            <div class="flex-fill">
+                                <label class="d-block texto-negro h6" for="">Contraseña</label>
+                                <mat-form-field class="full-width">
+                                    <input matInput type="password" minlength="6" maxlength="20"  formControlName="psw" appBlockCopyPaste >
+                                    <mat-error *ngFor="let validation of account_validation_messages.psw">
+                                        <mat-error class="error-message" 
+                                            *ngIf="loginForm.get('psw').hasError(validation.type) && (loginForm.get('psw').dirty || loginForm.get('psw').touched)">
+                                            {{validation.message}}
+                                        </mat-error>
                                     </mat-error>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
+                                </mat-form-field>
+                            </div>
               
                     </div>                    
                    

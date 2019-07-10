@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../../environments/environment';
 import { RespuestaLogin } from "../models/respuestaLogin.model";
-import { catchError, map } from "rxjs/operators";
-import { throwError, Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { Observable } from "rxjs";
 import { StorageService } from "./storage.service";
 
 
