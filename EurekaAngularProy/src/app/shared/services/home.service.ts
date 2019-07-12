@@ -50,12 +50,12 @@ export class HomeService {
     {idWayPay: 3, descripcion: 'Pagado'},
   ];
 
-
   private date:  Date[] = [
     {idDate: 1, descripcion: 'Por fecha'},
     {idDate: 2, descripcion: 'Fecha de emisión'},
     {idDate: 3, descripcion: 'Fecha de pago'},
   ];
+
   /*
   private type: string[]=[
     'Pensión', 'Matricula'
@@ -90,10 +90,9 @@ getDate(): Observable<Date[]> {
   return of(this.date);
 }
 
-
-  getServices(): Observable<String[]>{
-    return of(this.SERVICES);
-  }
+getServices(): Observable<String[]>{
+  return of(this.SERVICES);
+}
 
 
   constructor() { }

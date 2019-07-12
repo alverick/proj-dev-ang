@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -10,7 +10,7 @@ import { AnalisisComponent } from './pages/analisis/analisis.component';
 import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from 'src/app/auth/auth.module';
+import { AuthModule } from 'src/app/auth/auth.module';  
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
@@ -20,7 +20,9 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatNativeDateModule } 
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import { MatDatepickerModule } from '@angular/material/datepicker'; 
+import { MatButtonModule } from '@angular/material/button';
+import { ExcelService } from './shared/services/excel.service';
 
 
 @NgModule({
@@ -48,10 +50,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     RecaptchaModule.forRoot(),
     DigitOnlyModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonModule
 
   ],
   providers: [
+    ExcelService,
      fakeBackendProvider,
      {provide: ErrorStateMatcher,
       useClass: ShowOnDirtyErrorStateMatcher
