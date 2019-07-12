@@ -5,6 +5,8 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Debts } from 'src/app/shared/models/debts';
 
 @Component({
   selector: 'app-home',
@@ -14,49 +16,61 @@ import { Subject } from 'rxjs';
 export class HomeComponent implements OnInit {
     
   public user: User;
-  private homeService: HomeService;
-  private unsubscribe = new Subject();
+  private unsubscribe$ = new Subject();
+  private unsubscribe2$ = new Subject();
+
+  DebtsList : Debts[];
 
   typeSelected: String;
   type: String[];
 
-  wayPaySelected: String;
+  wayPaySelected:  String;
   wayPay: String[];
 
   dateSelected: String;
   date: String[];
 
+  serviceSelected: String;
+  services: String[];
+
   constructor(
     private storageService: StorageService,
-    private loginService: LoginService
-  ) { }
+    private loginService: LoginService,
+    private homeService: HomeService,
+    private router: Router  ) { }
+
 
   ngOnInit() {
+
     this.user = this.storageService.getCurrentUser();
-    this.homeService.getType().pipe(takeUntil(this.unsubscribe)).subscribe(
-      value => {
-        this.type = value;
-        this.typeSelected = value[0];
-      }
-    );
-    this.homeService.getWayPay().pipe(takeUntil(this.unsubscribe)).subscribe(
-      value => {
-        this.wayPay = value;
-        this.wayPaySelected = value[0];
-      }
-    );    
-    
-    this.homeService.getDate().pipe(takeUntil(this.unsubscribe)).subscribe(
+
+    this.homeService.getServices().pipe(takeUntil(this.unsubscribe$)).subscribe(
       value =>{
-        this.date = value;
-        this.dateSelected = value[0];
+        this.services = value;
+        this.serviceSelected = value[0];
+        console.log("Servicios seleccionado : " + this.serviceSelected)
+        console.log("Servicios : " + this.services)
+
       }
     );
-      
-      
+
+    this.homeService.getDebts().pipe(takeUntil(this.unsubscribe2$)).subscribe(
+      value => {
+        this.DebtsList = value;
+        // this.dateSelected = value[0];
+      }
+    );
+ 
 
   }
 
+  consult(){
+    this.router.navigateByUrl("['/subirPlantilla']");
+  }
+
+  
+
+ 
 
   
 
