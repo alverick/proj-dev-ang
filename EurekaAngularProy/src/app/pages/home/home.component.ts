@@ -14,7 +14,7 @@ import { Subject } from 'rxjs';
 export class HomeComponent implements OnInit {
     
   public user: User;
-  private homeService: HomeService;
+ //  private homeService: HomeService;
   private unsubscribe = new Subject();
 
   typeSelected: String;
@@ -28,7 +28,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private storageService: StorageService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private homeService: HomeService
   ) { }
 
   ngOnInit() {
