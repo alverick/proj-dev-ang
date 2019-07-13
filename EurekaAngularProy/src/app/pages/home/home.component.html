@@ -2,8 +2,8 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                    <div class="table-responsive">
-                        <table class="table">
+                <div class="table-responsive">
+                    <table class="table">
                             <h1 class="h5 mb-3">Movimientos</h1>
                             <div class="my-3 p-3 bg-white rounded shadow-sm">
                             
@@ -24,60 +24,65 @@
                             
                                 <!--////////// F I L T R O S 2 //////////////////-->
                             <div class="d-flex align-items-center mt-4">
-                                    <div class="mr-4">
-                                            <div class="select-eureca position-relative">
-                                                    <select class="selectpicker" name="" id="">
-                                                          <option value="{{item.idType}}"  *ngFor="let item of typeList"> {{item.descripcion}} </option>
-                                                    </select>
-                                            </div>
-                                    </div>
-                                    <div class="mr-4">
-                                        <div class="select-eureca position-relative">
-                                            <select class="selectpicker" name="" id="">
-                                                <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="mr-4">
-                                        <div class="select-eureca position-relative">
-                                            <select class="selectpicker" name="" id="">
-                                                <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
-                                            </select>
-                                        </div>
-                                    </div> 
-                                    <div class="mr-4">
-                                            <div class="content-input-icon position-relative">
-                                                    <mat-form-field>
-                                                            <input matInput [matDatepicker]="myDatepicker2">
-                                                            <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
-                                                            <mat-datepicker #myDatepicker2></mat-datepicker>
-                                                    </mat-form-field>
-                                            </div>
-                                    </div>
-                                    <!-- Example single danger button -->
-       
-                                    <div class="mr-4">
-                                        <div class="content-input-icon position-relative">
-                                            <mat-form-field>
-                                                    <input matInput [matDatepicker]="myDatepicker">
-                                                    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-                                                    <mat-datepicker #myDatepicker ></mat-datepicker>
-                                            </mat-form-field>
-                                    </div>
-                                    </div>
-                                    <div class="texto-azulbase font-medium">
-                                        <button class="btn-eureca btn-small btn-eureca-amarillo">Buscar</button>
+                                <div class="mr-4">
+                                    <div class="select-eureca position-relative">
+                                        <select class="selectpicker" name="" id="">
+                                            <option value="{{item.idType}}"  *ngFor="let item of typeList"> {{item.descripcion}} </option>
+                                        </select>
                                     </div>
                                 </div>
+                                
+                                <div class="mr-4">
+                                    <div class="select-eureca position-relative">
+                                        <select class="selectpicker" name="" id="">
+                                            <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mr-4">
+                                    <div class="select-eureca position-relative">
+                                        <select class="selectpicker" name="" id="">
+                                            <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
+                                        </select>
+                                    </div>
+                                </div> 
+                                
+                                <div class="mr-4">
+                                    <div class="content-input-icon position-relative">
+                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="myDatepicker2">
+                                            <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+                                            <mat-datepicker #myDatepicker2></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                
+                                <!-- Example single danger button -->
+       
+                                <div class="mr-4">
+                                    <div class="content-input-icon position-relative">
+                                        <mat-form-field>
+                                            <input matInput [matDatepicker]="myDatepicker">
+                                            <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #myDatepicker ></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="texto-azulbase font-medium">
+                                    <button class="btn-eureca btn-small btn-eureca-amarillo">Buscar</button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="my-3 p-3 bg-white rounded shadow-sm">
                         <thead>
                             <!--//////////// A C C I O N E S //////////////// -->
                             <tr>
-                                    <td valign="top" class="head">
-                                            <input class="styled-checkbox"   type="checkbox" value="value1" (click)="SeleccionarTodos()" > 
-                                    </td>
+                                <td valign="top" class="head">
+                                    <input class="styled-checkbox"   type="checkbox" value="value1" (click)="SeleccionarTodos()" > 
+                                </td>
                                 
                                 <td colspan="7" class="head">
                                     <div class="d-flex">                                          
@@ -109,6 +114,14 @@
                                                     </div>        
                                                 </div>
                                             </div>
+
+                                            <!--
+                                                <div>
+                                                    <button mat-button (click)="openSnackBar()" aria-label="Show an example snack-bar" class="btn-eureca btn-eureca-amarillo btn-small">
+                                                            Subir plantilla
+                                                        </button>
+                                                </div>
+                                                -->
                                         </div>
 
                                         <!--

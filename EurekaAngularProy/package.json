@@ -25,6 +25,7 @@
     "@sweetalert2/ngx-sweetalert2": "^5.1.0",
     "@uiowa/digit-only": "^1.0.1",
     "angular-font-awesome": "^3.1.2",
+    "angular-progress-bar": "^1.0.9",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "file-saver": "^2.0.2",

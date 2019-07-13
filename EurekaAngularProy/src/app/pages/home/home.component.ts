@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { LoginService } from 'src/app/shared/services/login.service';
+import { Component, OnInit, Inject, Renderer2 } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -7,19 +6,15 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Debts } from 'src/app/shared/models/debts';
-<<<<<<< HEAD
 import { ExcelService } from 'src/app/shared/services/excel.service';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
-
-export interface DialogData {
-  animal: 'panda' | 'unicorn' | 'lion';
-}
-=======
+import { MatDialog, MAT_DIALOG_DATA, MatSnackBar, MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
 
->>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
+export interface DialogData {
+  animal: 'panda' | 'unicorn' | 'lion';
+}
 
 @Component({
   selector: 'app-home',
@@ -27,18 +22,27 @@ import { Date } from 'src/app/shared/models/date';
   styleUrls: ['./home.component.scss']
 })
 
-
 export class HomeComponent implements OnInit {
-    
-  DebtsArray = [];
+  
   public user: User;
+  DebtsArray = [];
   checkboxes: any;
-  private unsubscribe$ = new Subject();
-  private unsubscribe2$ = new Subject();
-<<<<<<< HEAD
+  private unsubscribe$  =  new  Subject();
+  private unsubscribe2$ = new Subject(); 
+  private unsubscribe3$ = new Subject();
+  private unsubscribe4$ = new Subject();
+  private unsubscribe5$ = new Subject();
 
-
-  DebtsList : Debts[];
+  mostrar: Boolean;
+  BotonEditar: Boolean;
+  BotonCancelar: Boolean;
+  inputEdit: Boolean;
+  InputList: Boolean;  
+  DebtsList : Debts[]; 
+ 
+  typeList: Type[];
+  waypayList: WayPay[];
+  DateList: Date[];
 
   typeSelected: String;
   type: String[];
@@ -60,60 +64,15 @@ export class HomeComponent implements OnInit {
   {  eid: 'e104',  ename: 'chris',  eapellido: 'ravi',  eemail: 'email', estado: 'deudor', fecha: '16/05/15',  esal: 6000 },
   {  eid: 'e105', ename: 'jhon', eapellido: 'ravi',   eemail: 'email', estado: 'deudor',   fecha: '16/05/15',  esal: 15000}];
 
-  /* Data completa */
-
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
     private router: Router ,
     private excelService: ExcelService,
-    public dialog: MatDialog) { }
-/*
-  openDialog(){
-    this.dialog.open(DialogDataExampleDialog, {
-      data: {
-        animal: 'panda'
-      }
-    });
-  }
-*/
-
-openDialog() {
-  const dialogRef = this.dialog.open(DialogDataExampleDialog);
-
-  dialogRef.afterClosed().subscribe(result => {
-    console.log(`Dialog result: ${result}`);
-  });
-}
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-=======
-  private unsubscribe3$ = new Subject();
-  private unsubscribe4$ = new Subject();
-  private unsubscribe5$ = new Subject();
-
-  DebtsList : Debts[]; 
-  typeList: Type[];
-  waypayList: WayPay[];
-  DateList: Date[]; 
-  serviceSelected: String;
-  services: String[];  
-  mostrar: Boolean;
-  BotonEditar: Boolean;
-  BotonCancelar: Boolean;
-  inputEdit: Boolean;
-  InputList: Boolean;
-  constructor(
-    private storageService: StorageService,
-    private loginService: LoginService,
- 
-    private homeService: HomeService,
-    private router: Router  ) { }
- 
-  ngOnInit() {
-    this.InputList = true;
-    this.mostrar= true; 
->>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
     this.user = this.storageService.getCurrentUser();
     this.homeService.getServices().pipe(takeUntil(this.unsubscribe$)).subscribe(
       value =>{
@@ -121,22 +80,13 @@ openDialog() {
         this.serviceSelected = value[0];
         console.log("Servicios seleccionado : " + this.serviceSelected)
         console.log("Servicios : " + this.services)
-<<<<<<< HEAD
       }
     );
-=======
-      });
->>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
-
     this.homeService.getDebts().pipe(takeUntil(this.unsubscribe2$)).subscribe(
       value => {
         this.DebtsList = value; 
       }
     );
-<<<<<<< HEAD
-=======
-
-
     this.homeService.getType().pipe(takeUntil(this.unsubscribe3$)).subscribe(
       value => {
         this.typeList = value; 
@@ -149,16 +99,20 @@ openDialog() {
       value => {
         this.DateList = value; 
     });  
->>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogDataExampleDialog);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   
 
   consult(){
     this.router.navigateByUrl("['/subirPlantilla']");
   }
 
-<<<<<<< HEAD
   exportDataParcialXLSX():void {
     this.excelService.exportAsExcelFile(this.dataParcial, 'data_parcial');
   }
@@ -166,7 +120,7 @@ openDialog() {
   exportDataCompletaXLSX():void{
     this.excelService.exportAsExcelFile(this.dataCompleta, 'data_completa');
   }
-=======
+
   BotonActualizar(id: number){
     this.mostrar  = false;
     this.BotonEditar = true;
@@ -223,10 +177,7 @@ openDialog() {
    } else {
        alert('seleccione algun elemento para eliminar');
    }
- 
 
-   
-     
   }
 
   SeleccionarTodos() {
@@ -244,10 +195,6 @@ openDialog() {
     */ 
   }
 
-
->>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
-  
-
 }
 
 
@@ -257,6 +204,52 @@ openDialog() {
 })
 
 export class DialogDataExampleDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData,
+              public snackBar: MatSnackBar) {}
 
+
+  openSnackBar() {
+    this.snackBar.openFromComponent(UploadProgressComponent, {
+      data: { uploadProgress: 50 }
+    })
+    ;
+  }
+} 
+
+
+@Component({
+  selector: 'app-upload-progress-snackbar',
+  template: `
+  Progress:
+  <mat-progress-bar mode="determinate" [value]="progress" *ngIf="progress !== undefined"></mat-progress-bar> Click Me To Dissmiss`,
+  styles: [`mat-progress-bar { margin-top: 5px;}`],
+})
+export class UploadProgressComponent {
+  constructor(
+    @Inject(MAT_SNACK_BAR_DATA) public data,
+    private _snackRef: MatSnackBarRef<UploadProgressComponent>,
+    private ren:Renderer2
+    ) { 
+      setTimeout(()=>{
+        let snackEl = document.getElementsByClassName('mat-snack-bar-container').item(0);
+        ren.listen(snackEl, 'click', ()=>this.dismiss())
+      })
+    }
+
+  private started = false;
+  public progress = 50;
+  // public progress = this.data.uploadProgress.pipe(
+  //   map(({ loaded, total }) => {
+  //     if (loaded === undefined) {
+  //       return !this.started ? 0 : 100;
+  //     } else {
+  //       this.started = true;
+  //       return Math.round(loaded / (total || loaded) * 100);
+  //     }
+  //   },
+  //   ));
+
+  dismiss(){
+    this._snackRef.dismiss();
+  }
+}
