@@ -7,12 +7,19 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Debts } from 'src/app/shared/models/debts';
+<<<<<<< HEAD
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
 
 export interface DialogData {
   animal: 'panda' | 'unicorn' | 'lion';
 }
+=======
+import { WayPay } from 'src/app/shared/models/way-pay';
+import { Type } from 'src/app/shared/models/type';
+import { Date } from 'src/app/shared/models/date';
+
+>>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
 
 @Component({
   selector: 'app-home',
@@ -23,9 +30,12 @@ export interface DialogData {
 
 export class HomeComponent implements OnInit {
     
+  DebtsArray = [];
   public user: User;
+  checkboxes: any;
   private unsubscribe$ = new Subject();
   private unsubscribe2$ = new Subject();
+<<<<<<< HEAD
 
 
   DebtsList : Debts[];
@@ -77,6 +87,33 @@ openDialog() {
 }
 
   ngOnInit() {
+=======
+  private unsubscribe3$ = new Subject();
+  private unsubscribe4$ = new Subject();
+  private unsubscribe5$ = new Subject();
+
+  DebtsList : Debts[]; 
+  typeList: Type[];
+  waypayList: WayPay[];
+  DateList: Date[]; 
+  serviceSelected: String;
+  services: String[];  
+  mostrar: Boolean;
+  BotonEditar: Boolean;
+  BotonCancelar: Boolean;
+  inputEdit: Boolean;
+  InputList: Boolean;
+  constructor(
+    private storageService: StorageService,
+    private loginService: LoginService,
+ 
+    private homeService: HomeService,
+    private router: Router  ) { }
+ 
+  ngOnInit() {
+    this.InputList = true;
+    this.mostrar= true; 
+>>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
     this.user = this.storageService.getCurrentUser();
     this.homeService.getServices().pipe(takeUntil(this.unsubscribe$)).subscribe(
       value =>{
@@ -84,15 +121,35 @@ openDialog() {
         this.serviceSelected = value[0];
         console.log("Servicios seleccionado : " + this.serviceSelected)
         console.log("Servicios : " + this.services)
+<<<<<<< HEAD
       }
     );
+=======
+      });
+>>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
 
     this.homeService.getDebts().pipe(takeUntil(this.unsubscribe2$)).subscribe(
       value => {
-        this.DebtsList = value;
-        // this.dateSelected = value[0];
+        this.DebtsList = value; 
       }
     );
+<<<<<<< HEAD
+=======
+
+
+    this.homeService.getType().pipe(takeUntil(this.unsubscribe3$)).subscribe(
+      value => {
+        this.typeList = value; 
+    }); 
+    this.homeService.getWayPay().pipe(takeUntil(this.unsubscribe4$)).subscribe(
+      value => {
+        this.waypayList = value; 
+    }); 
+    this.homeService.getDate().pipe(takeUntil(this.unsubscribe5$)).subscribe(
+      value => {
+        this.DateList = value; 
+    });  
+>>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
   }
 
   
@@ -101,6 +158,7 @@ openDialog() {
     this.router.navigateByUrl("['/subirPlantilla']");
   }
 
+<<<<<<< HEAD
   exportDataParcialXLSX():void {
     this.excelService.exportAsExcelFile(this.dataParcial, 'data_parcial');
   }
@@ -108,6 +166,86 @@ openDialog() {
   exportDataCompletaXLSX():void{
     this.excelService.exportAsExcelFile(this.dataCompleta, 'data_completa');
   }
+=======
+  BotonActualizar(id: number){
+    this.mostrar  = false;
+    this.BotonEditar = true;
+    this.BotonCancelar = true;
+    this.inputEdit = true;
+    this.InputList = false;
+   // alert(id); 
+  }
+
+  BotonCancela(){
+    this.mostrar  = true; 
+    this.BotonEditar = false;
+    this.BotonCancelar = false;
+    
+    this.inputEdit = false;
+    this.InputList = true;
+  }
+
+
+  SeleccionarParaEliminar(idDebt: number){
+  
+    //alert(idDebt);
+     this.DebtsArray.push(idDebt);
+  /*
+    if (this.DebtsArray.length === 0) {
+      this.DebtsArray.push(idDebt); 
+    } else{
+      for (const value in this.DebtsArray) { 
+        if(this.DebtsArray[value] === idDebt){
+          this.DebtsList.splice(this.DebtsArray[value],1)
+          alert(idDebt + ' ya esta agregado y se elimino');
+        }
+        else{
+          this.DebtsArray.push(idDebt);
+          alert(idDebt + ' agregado');
+        }
+    }
+    }  
+*/
+
+     
+  }
+
+  EliminarSeleccionados(){
+    alert(this.DebtsArray);
+     
+     if (this.DebtsArray.length > 0) { 
+      for (const value in this.DebtsArray) { 
+        this.DebtsList.splice(this.DebtsArray[value],1);
+ 
+      } 
+      alert('eliminados');
+      this.DebtsArray  = []; 
+   } else {
+       alert('seleccione algun elemento para eliminar');
+   }
+ 
+
+   
+     
+  }
+
+  SeleccionarTodos() {
+   /* this.checkboxes  = document.getElementsByTagName('input')
+    
+    alert(this.checkboxes);
+     
+     for (const valinput in this.checkboxes){
+       
+          if(this.checkboxes[valinput].type === "checkbox"){
+            this.cont++;
+          } 
+     } 
+     alert(this.cont.toString());
+    */ 
+  }
+
+
+>>>>>>> 5d00352977cc67c8a861be1989cebf698f5da703
   
 
 }

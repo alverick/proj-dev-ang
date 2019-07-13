@@ -27,21 +27,21 @@
                                     <div class="mr-4">
                                             <div class="select-eureca position-relative">
                                                     <select class="selectpicker" name="" id="">
-                                                          <option value="{{item.idType}}"  *ngFor="let item of types"> {{item.descripcion}} </option>
+                                                          <option value="{{item.idType}}"  *ngFor="let item of typeList"> {{item.descripcion}} </option>
                                                     </select>
                                             </div>
                                     </div>
                                     <div class="mr-4">
                                         <div class="select-eureca position-relative">
                                             <select class="selectpicker" name="" id="">
-                                                <option value="{{item.idWayPay}}"  *ngFor="let item of wayPay"> {{item.descripcion}} </option>
+                                                <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="mr-4">
                                         <div class="select-eureca position-relative">
                                             <select class="selectpicker" name="" id="">
-                                                <option value="{{item.idDate}}"  *ngFor="let item of date"> {{item.descripcion}} </option>
+                                                <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
                                             </select>
                                         </div>
                                     </div> 
@@ -75,10 +75,9 @@
                         <thead>
                             <!--//////////// A C C I O N E S //////////////// -->
                             <tr>
-                                <td valign="top" class="head">
-                                    <input class="styled-checkbox" id="styled-checkbox-11" type="checkbox" value="value1">
-                                    <label for="styled-checkbox-11"></label>
-                                </td>
+                                    <td valign="top" class="head">
+                                            <input class="styled-checkbox"   type="checkbox" value="value1" (click)="SeleccionarTodos()" > 
+                                    </td>
                                 
                                 <td colspan="7" class="head">
                                     <div class="d-flex">                                          
@@ -218,7 +217,12 @@
 
                                 <tr *ngFor="let items of DebtsList">
                                 <!---  <th scope="row"><input type="checkbox" id="exampleCheck1"></th> -->
-                                <td><input type="checkbox" id="exampleCheck1"></td>
+                                <td>
+                                    
+                                    <div class="custom-control custom-checkbox">
+                                            <input type="checkbox"   (click)=" SeleccionarParaEliminar(items.id_debt)" > 
+                                    </div>
+                                </td>
                                 <td>{{items.status}}</td>
                                 <td>{{items.currency}}</td>
                                 <td>{{items.quota_code}}</td>
@@ -227,17 +231,17 @@
                                 <td>{{items.amount_balance}}</td>
                                 <td>{{items.interest_amount}}</td>
                                 <td>{{items.emission_date}}</td>
-                                <td>{{items.due_date}}</td>
-                                <td>{{items.document_number}}</td>
-                                <td>  <a  id="{{items.id_debt}}" href="" (click)="SelccionarItem(items.id_debt)" ><span class="icon-editar iconos-big iconos-big"></span></a> </td>
+                                <td> <label *ngIf="InputList"  for="item">{{items.due_date}}</label> <input  *ngIf="inputEdit" type="text" value="{{items.due_date}}">   </td> 
+                                <td> <label *ngIf="InputList"  for="item"> {{items.document_number}}</label> <input *ngIf="inputEdit"  type="text" value="{{items.document_number}}"> </td>
+                                <td> <div *ngIf="mostrar" id="items.id_debt"    (click)="BotonActualizar(items.id_debt)" ><span class="icon-editar iconos-big iconos-big"></span></div> </td>
                                 <td width="76">
-                                        <div class="d-flex">
-                                            <a class="d-inline-block" href="">
+                                       <div class="d-flex">
+                                            <div  *ngIf="BotonEditar"  class="d-inline-block" href="">
                                                 <img src="assets/images/table-check.svg"  alt="Aceptar">
-                                            </a> 
-                                            <a class="d-inline-block" href="">
+                                            </div> 
+                                            <div  (click)="BotonCancela()"  *ngIf="BotonCancelar"  class="d-inline-block" href="">
                                                 <img src="assets/images/table-delete.svg" alt="Eliminar">
-                                            </a>
+                                            </div>
                                         </div>
                                     </td>
                             </tr> 
