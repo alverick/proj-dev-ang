@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { HomeComponent } from './pages/home/home.component';
+import { HomeComponent, DialogDataExampleDialog } from './pages/home/home.component';
 import { AnalisisComponent } from './pages/analisis/analisis.component';
 import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -23,7 +23,9 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 import { MatDatepickerModule } from '@angular/material/datepicker'; 
 import { MatButtonModule } from '@angular/material/button';
 import { ExcelService } from './shared/services/excel.service';
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -32,8 +34,9 @@ import { ExcelService } from './shared/services/excel.service';
     HomeComponent,
     AnalisisComponent,
     SubirPlantillaComponent,
-    PageNotFoundComponent
-  ],
+    PageNotFoundComponent,
+    DialogDataExampleDialog
+    ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -51,7 +54,10 @@ import { ExcelService } from './shared/services/excel.service';
     DigitOnlyModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatSelectModule
 
   ],
   providers: [
@@ -60,13 +66,11 @@ import { ExcelService } from './shared/services/excel.service';
      {provide: ErrorStateMatcher,
       useClass: ShowOnDirtyErrorStateMatcher
       },
-      
   ],
   exports:[
     MatInputModule,
-    
-    
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogDataExampleDialog]
 })
 export class AppModule { }
