@@ -16,10 +16,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatInputModule } from '@angular/material/input';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
+import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { DigitOnlyModule } from '@uiowa/digit-only';
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -45,17 +47,23 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
     MatInputModule,
     SweetAlert2Module.forRoot(),  
     RecaptchaModule.forRoot(),
-    DigitOnlyModule
+    DigitOnlyModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
 
   ],
   providers: [
      fakeBackendProvider,
      {provide: ErrorStateMatcher,
       useClass: ShowOnDirtyErrorStateMatcher
-      }
+      },
+      
   ],
   exports:[
-    MatInputModule
+    MatInputModule,
+    
+    
   ],
   bootstrap: [AppComponent]
 })

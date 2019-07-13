@@ -7,7 +7,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
   showHead: boolean = null;
@@ -23,6 +23,13 @@ export class HeaderComponent implements OnInit {
 
   public logout(): void{
     this.storageService.logout();
+  }
+
+  public show(): boolean{
+    if(this.router.url.includes('/login') || this.router.url.includes('/subirPlantilla')){
+      return false;
+    }
+    return true;
   }
 
 }
