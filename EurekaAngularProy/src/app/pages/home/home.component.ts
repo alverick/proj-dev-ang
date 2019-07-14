@@ -7,14 +7,11 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Debts } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
-import { MatDialog, MAT_DIALOG_DATA, MatSnackBar, MAT_SNACK_BAR_DATA, MatSnackBarRef} from '@angular/material';
+import { MatDialog, MatSnackBar, MAT_SNACK_BAR_DATA, MatSnackBarRef, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
-
-export interface DialogData {
-  animal: 'panda' | 'unicorn' | 'lion';
-}
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -56,13 +53,6 @@ export class HomeComponent implements OnInit {
   serviceSelected: String;
   services: String[];
 
- /*Data Parcial */
-  dataParcial: any = [{  eid: 'e101',    ename: 'ravi',    esal: 1000},  { eid: 'e102',  ename: 'ram',    esal: 2000  },  { eid: 'e103',   ename: 'rajesh',    esal: 300}];
-
- /*Data Completa */
-  dataCompleta: any = [{ eid: 'e101',    ename: 'ravi',   eapellido: 'ravi',   eemail: 'email',   estado: 'deudor', fecha: '16/05/15',   esal: 1000, }, {   eid: 'e102',   ename: 'ram',   eapellido: 'ravi',    eemail: 'email',    estado: 'deudor',  fecha: '16/05/15', esal: 2000},  {eid: 'e103',  ename: 'rajesh',   eapellido: 'ravi',   eemail: 'email',   estado: 'deudor',   fecha: '16/05/15', esal: 3000},
-  {  eid: 'e104',  ename: 'chris',  eapellido: 'ravi',  eemail: 'email', estado: 'deudor', fecha: '16/05/15',  esal: 6000 },
-  {  eid: 'e105', ename: 'jhon', eapellido: 'ravi',   eemail: 'email', estado: 'deudor',   fecha: '16/05/15',  esal: 15000}];
 
   constructor(
     private storageService: StorageService,
@@ -113,13 +103,6 @@ export class HomeComponent implements OnInit {
     this.router.navigateByUrl("['/subirPlantilla']");
   }
 
-  exportDataParcialXLSX():void {
-    this.excelService.exportAsExcelFile(this.dataParcial, 'data_parcial');
-  }
-
-  exportDataCompletaXLSX():void{
-    this.excelService.exportAsExcelFile(this.dataCompleta, 'data_completa');
-  }
 
   BotonActualizar(id: number){
     this.mostrar  = false;
@@ -160,7 +143,6 @@ export class HomeComponent implements OnInit {
     }
     }  
 */
-
      
   }
 
@@ -170,14 +152,12 @@ export class HomeComponent implements OnInit {
      if (this.DebtsArray.length > 0) { 
       for (const value in this.DebtsArray) { 
         this.DebtsList.splice(this.DebtsArray[value],1);
- 
       } 
       alert('eliminados');
       this.DebtsArray  = []; 
-   } else {
+    }else {
        alert('seleccione algun elemento para eliminar');
-   }
-
+    }
   }
 
   SeleccionarTodos() {
@@ -198,39 +178,94 @@ export class HomeComponent implements OnInit {
 }
 
 
+/*////////////////////////////////////////////////////////
+///////////////// D I A L O G //////////////////////////
+///////////////////////////////////////////////////////// */
+
+
 @Component({
   selector: 'dialog-data-example-dialog',
   templateUrl: 'dialog-data-example-dialog.html',
 })
 
 export class DialogDataExampleDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData,
-              public snackBar: MatSnackBar) {}
 
+  public inputXlsForm: FormGroup;
 
-  openSnackBar() {
-    this.snackBar.openFromComponent(UploadProgressComponent, {
-      data: { uploadProgress: 50 }
+  /*Data Parcial */
+  dataParcial: any = [{  eid: 'e101',    ename: 'ravi',    esal: 1000},  { eid: 'e102',  ename: 'ram',    esal: 2000  },  { eid: 'e103',   ename: 'rajesh',    esal: 300}];
+
+  /*Data Completa */
+  dataCompleta: any = [{ eid: 'e101',    ename: 'ravi',   eapellido: 'ravi',   eemail: 'email',   estado: 'deudor', fecha: '16/05/15',   esal: 1000, }, {   eid: 'e102',   ename: 'ram',   eapellido: 'ravi',    eemail: 'email',    estado: 'deudor',  fecha: '16/05/15', esal: 2000},  {eid: 'e103',  ename: 'rajesh',   eapellido: 'ravi',   eemail: 'email',   estado: 'deudor',   fecha: '16/05/15', esal: 3000},
+    {  eid: 'e104',  ename: 'chris',  eapellido: 'ravi',  eemail: 'email', estado: 'deudor', fecha: '16/05/15',  esal: 6000 },
+    {  eid: 'e105', ename: 'jhon', eapellido: 'ravi',   eemail: 'email', estado: 'deudor',   fecha: '16/05/15',  esal: 15000}];
+  
+  constructor(public  snackBar: MatSnackBar,
+              private excelService: ExcelService,
+              public  formBuilder: FormBuilder,
+              public  dialogRef: MatDialogRef<DialogDataExampleDialog>,
+            ) { }
+
+  ngOnInit(){
+    this.inputXlsForm = this.formBuilder.group({
+      xls: ['',Validators.required]
     })
-    ;
+  }
+  
+  get f(){ return this.inputXlsForm.controls;}
+
+  
+   openSnackBar() {
+    if(this.inputXlsForm.valid){
+    this.snackBar.openFromComponent(UploadProgressComponent, {
+      data: { uploadProgress: 50 }});
+      /*Colocar el servicio */
+
+    }else{
+      alert('Ingresa el excel');
+    }
+  }
+
+  closeSnackBar(){
+    this.dialogRef.close();
+  }
+
+  exportDataParcialXLSX():void {
+    this.excelService.exportAsExcelFile(this.dataParcial, 'data_parcial');
+  }
+
+  exportDataCompletaXLSX():void{
+    this.excelService.exportAsExcelFile(this.dataCompleta, 'data_completa');
   }
 } 
 
 
+
+
+
+
+
+
+
+/*///////////////////////////////////////////////////////////////////////////
+///////////////// P R O G R E S S / S N A C K B A R //////////////////////////
+////////////////////////////////////////////////////////////////////////////// */
+
 @Component({
   selector: 'app-upload-progress-snackbar',
-  template: `
-  Progress:
-  <mat-progress-bar mode="determinate" [value]="progress" *ngIf="progress !== undefined"></mat-progress-bar> Click Me To Dissmiss`,
-  styles: [`mat-progress-bar { margin-top: 5px;}`],
+  template: `Progress:
+    <mat-progress-bar mode="determinate" [value]="progress" *ngIf="progress !== undefined">
+    </mat-progress-bar> Click Me To Dissmiss`,
+  styles: [`mat-progress-bar { margin-top: 5px; }`],
 })
+
 export class UploadProgressComponent {
-  constructor(
-    @Inject(MAT_SNACK_BAR_DATA) public data,
-    private _snackRef: MatSnackBarRef<UploadProgressComponent>,
-    private ren:Renderer2
-    ) { 
-      setTimeout(()=>{
+  
+  constructor( @Inject(MAT_SNACK_BAR_DATA) public data,
+              private _snackRef: MatSnackBarRef<UploadProgressComponent>,
+              private ren:Renderer2) { 
+        
+        setTimeout(()=>{
         let snackEl = document.getElementsByClassName('mat-snack-bar-container').item(0);
         ren.listen(snackEl, 'click', ()=>this.dismiss())
       })
