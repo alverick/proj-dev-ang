@@ -3,7 +3,7 @@ import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, interval } from 'rxjs';
 import { Router } from '@angular/router';
 import { Debts } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
@@ -12,6 +12,7 @@ import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-home',
@@ -178,6 +179,13 @@ export class HomeComponent implements OnInit {
 }
 
 
+
+
+
+
+
+
+
 /*////////////////////////////////////////////////////////
 ///////////////// D I A L O G //////////////////////////
 ///////////////////////////////////////////////////////// */
@@ -203,7 +211,8 @@ export class DialogDataExampleDialog {
   constructor(public  snackBar: MatSnackBar,
               private excelService: ExcelService,
               public  formBuilder: FormBuilder,
-              public  dialogRef: MatDialogRef<DialogDataExampleDialog>,
+              public  dialogRef: MatDialogRef<DialogDataExampleDialog>
+
             ) { }
 
   ngOnInit(){
@@ -212,23 +221,30 @@ export class DialogDataExampleDialog {
     })
   }
   
+  onChangeFile(event) {
+    this.files = event.target.files;
+  }
+
+  private files: any;
   get f(){ return this.inputXlsForm.controls;}
 
   
    openSnackBar() {
     if(this.inputXlsForm.valid){
-    this.snackBar.openFromComponent(UploadProgressComponent, {
-      data: { uploadProgress: 50 }});
-      /*Colocar el servicio */
-
+    /*service*/
+    this.excelService.UploadExcel(this.files)
+    .subscribe(
+      value=>{
+        this.excelService.idProcess = value.id;
+      }
+    )
+    this.snackBar.openFromComponent(UploadProgressComponent);      
+    this.dialogRef.close();
     }else{
       alert('Ingresa el excel');
     }
   }
 
-  closeSnackBar(){
-    this.dialogRef.close();
-  }
 
   exportDataParcialXLSX():void {
     this.excelService.exportAsExcelFile(this.dataParcial, 'data_parcial');
@@ -237,6 +253,8 @@ export class DialogDataExampleDialog {
   exportDataCompletaXLSX():void{
     this.excelService.exportAsExcelFile(this.dataCompleta, 'data_completa');
   }
+
+  
 } 
 
 
@@ -252,16 +270,105 @@ export class DialogDataExampleDialog {
 ////////////////////////////////////////////////////////////////////////////// */
 
 @Component({
-  selector: 'app-upload-progress-snackbar',
-  template: `Progress:
-    <mat-progress-bar mode="determinate" [value]="progress" *ngIf="progress !== undefined">
-    </mat-progress-bar> Click Me To Dissmiss`,
-  styles: [`mat-progress-bar { margin-top: 5px; }`],
+  selector: 'upload-progress',
+  templateUrl: 'upload-progress.html',
 })
 
-export class UploadProgressComponent {
+export class UploadProgressComponent  implements OnInit  {
+ 
+  constructor( public dialog: MatDialog, private excelService: ExcelService) { }
+
+  ngOnInit(){
+    var th = this;
+    var fnc = () => {
+      if (th.excelService.idProcess > 0) {
+        th.verifyStatus();
+      }
+      else {
+        setTimeout(fnc, 500);
+      }
+    };
+    setTimeout(fnc, 500);
+  }
+
+  private verifyStatus() {
+    var recursiveFunc = (value) => {
+      if (value.status === "REJECTED") {
+        this.excelService.errores = value.errors;
+        const dialogRef =  this.dialog.open(ValidationComponent);
+        //value.errors
+      }
+      else if (value.status !== "COMPLETED") {
+        var th = this;
+        setTimeout(() => {
+          th.excelService.StatusExcel(th.excelService.idProcess)
+            .subscribe(recursiveFunc);
+        }, 500);
+        //Delay (10 ms)
+        // Volver a llamar a status
+      }
+    };
+    setTimeout(() => {
+      this.excelService.StatusExcel(this.excelService.idProcess)
+      .subscribe(recursiveFunc);     
+    }, 800);
+  }
+
+}
+
+
+
+
+/*///////////////////////////////////////////////////////////////////////////
+///////////////// V A L I D A T I O N   //////////////////////////
+////////////////////////////////////////////////////////////////////////////// */
+
+error: Error;
+
+@Component({
+  selector: 'validation',
+  templateUrl: 'validation.html',
+})
+
+export class ValidationComponent implements OnInit {
+ 
+  constructor(private excelService: ExcelService) { }
+
+  ngOnInit(){
+    
+  }
+
+
   
-  constructor( @Inject(MAT_SNACK_BAR_DATA) public data,
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /*
+
+ @Component({
+  selector: 'app-upload-progress-snackbar',
+  template: `<mat-progress-bar   mode="determinate"  [value]="progress">
+              </mat-progress-bar>`,
+  styles: [`mat-progress-bar { margin-top: 5px; }`],
+})
+ constructor( @Inject(MAT_SNACK_BAR_DATA) public data,
               private _snackRef: MatSnackBarRef<UploadProgressComponent>,
               private ren:Renderer2) { 
         
@@ -273,18 +380,31 @@ export class UploadProgressComponent {
 
   private started = false;
   public progress = 50;
-  // public progress = this.data.uploadProgress.pipe(
-  //   map(({ loaded, total }) => {
-  //     if (loaded === undefined) {
-  //       return !this.started ? 0 : 100;
-  //     } else {
-  //       this.started = true;
-  //       return Math.round(loaded / (total || loaded) * 100);
-  //     }
-  //   },
-  //   ));
 
   dismiss(){
     this._snackRef.dismiss();
   }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   openSnackBar() {
+    if(this.inputXlsForm.valid){
+    this.snackBar.openFromComponent(UploadProgressComponent, {
+      data: { uploadProgress: 80 }});
+      
+    }else{
+      alert('Ingresa el excel');
+    }
+  }*/

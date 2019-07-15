@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { HomeComponent, DialogDataExampleDialog, UploadProgressComponent} from './pages/home/home.component';
+import { HomeComponent, DialogDataExampleDialog, UploadProgressComponent, ValidationComponent} from './pages/home/home.component';
 import { AnalisisComponent } from './pages/analisis/analisis.component';
 import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -40,8 +40,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     SubirPlantillaComponent,
     PageNotFoundComponent,
     DialogDataExampleDialog,
-    UploadProgressComponent
-    
+    UploadProgressComponent,
+    ValidationComponent    
     ],
   imports: [
     BrowserModule,
@@ -82,6 +82,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   ],
   bootstrap: [AppComponent],
   entryComponents: [DialogDataExampleDialog,
-                    UploadProgressComponent]
+                    UploadProgressComponent,
+                    ValidationComponent
+                    ]
 })
 export class AppModule { }

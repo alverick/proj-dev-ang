@@ -1,14 +1,25 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { environment } from '../../../environments/environment';
+import { StorageService } from "./storage.service";
+import { Observable, throwError } from "rxjs";
+
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+import { catchError } from "rxjs/operators";
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 
 @Injectable()
 export class ExcelService {
+  private URI_API: string = environment.END_POINT;
 
-  constructor() { }
+  constructor(public http: HttpClient, private storage: StorageService) { }
+
+  /* ///////////////////////////////////
+  ////////// D O W N L O A D /////////////////
+  //////////////////////////////////////////  */ 
 
   public exportAsExcelFile(json: any[], excelFileName: string): void {
     
@@ -26,5 +37,41 @@ export class ExcelService {
     });
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
   }
+
+
+  /* ///////////////////////////////////
+  ////////// U P L O A D /////////////////
+  //////////////////////////////////////////  */ 
+
+  public idProcess: number = 0;
+  public errores: Error[] = [];
+
+  UploadExcel(files: any): Observable<any>{
+    console.log('begin upload excel')
+    console.log(files);
+    const url = `${this.URI_API}/debt/load?_=` + new Date().getTime();
+    const opts={
+      headers: {
+        "Authorization" : "bearer " + this.storage.getCurrentToken()
+      }
+    }
+    const formData = new FormData();
+    formData.append('file', files[0], files[0].name)
+    console.log(url);
+    return this.http.post<any>(url, formData, opts).pipe(
+      catchError(error => throwError(error)));  
+   }   
+
+  StatusExcel(id: number): Observable<any>{
+    console.log('begin status excel')
+    const url = `${this.URI_API}/debt/process/${id}/status?_=` + new Date().getTime();
+    const opts={
+      headers: {"Authorization" : "bearer " + this.storage.getCurrentToken()}
+    }
+    return this.http.get<any>(url, opts).pipe(catchError(error => throwError(error)));
+  }
+
+ 
+
 
 }

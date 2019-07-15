@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  END_POINT: 'http://localhost:49340/api',
+  END_POINT: 'http://apieurecatmp.azurewebsites.net/api',
 
 };
