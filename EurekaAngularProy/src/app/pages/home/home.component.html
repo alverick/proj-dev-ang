@@ -57,9 +57,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                
-                                <!-- Example single danger button -->
-       
+                                       
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative">
                                         <mat-form-field>
@@ -114,40 +112,19 @@
                                                     </div>        
                                                 </div>
                                             </div>
-
-                                            <!--
-                                                <div>
-                                                    <button mat-button (click)="openSnackBar()" aria-label="Show an example snack-bar" class="btn-eureca btn-eureca-amarillo btn-small">
-                                                            Subir plantilla
-                                                        </button>
-                                                </div>
-                                                -->
                                         </div>
 
-                                        <!--
-                                        <div class="mr-3">
-                                            <div class="mr-3 ml-2">
-                                                <div class="btn-group">
-                                                    <select class="dropdown" [(ngModel)]="serviceSelected" >
-                                                        <option *ngFor="let service of services" [ngValue]="service">
-                                                        {{service}}
-                                                        </option>
-                                                    </select>                                                                           
-                                                </div>
-                                            </div>
-                                        </div>
-                                                 <div data-toggle="collapse" (click)="openDialog()">
-                                                                Matricula
-                                                        </div>
-                                                    
-                                    -->
+                                 
                                     </div>
                                 </td>
                                 <td colspan="5" valign="middle" class="head">
+                                    <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+
+                                    <!--
                                     <div class="text-right"> 1 - 50 de 250
                                         <a class="pl-4 pr-1 d-inline-block" href=""></a>
                                         <a class="pl-2 pr-3 d-inline-block" href=""></a>
-                                    </div>
+                                    </div>-->
                                 </td>
                                 
                             </tr>
@@ -226,14 +203,11 @@
                             </tr>
                         </thead>
                                 
-                        <tbody >
-
-                                <tr *ngFor="let items of DebtsList">
-                                <!---  <th scope="row"><input type="checkbox" id="exampleCheck1"></th> -->
-                                <td>
-                                    
+                        <tbody>
+                            <tr *ngFor="let items of debtsList | paginate: {itemtsPerPage: 50, currentPage: pageActual}">
+                                <td>                                    
                                     <div class="custom-control custom-checkbox">
-                                            <input type="checkbox"   (click)=" SeleccionarParaEliminar(items.id_debt)" > 
+                                            <input type="checkbox" (click)=" SeleccionarParaEliminar(items.id_debt)" > 
                                     </div>
                                 </td>
                                 <td>{{items.status}}</td>

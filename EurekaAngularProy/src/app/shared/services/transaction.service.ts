@@ -4,7 +4,9 @@ import { environment } from '../../../environments/environment';
 import { StorageService } from "./storage.service";
 import { Debts } from "../models/debts";
 import { Observable, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { catchError, first } from "rxjs/operators";
+import { DebstEdit } from "../models/debts-edit.model";
+
 
 @Injectable({
     providedIn: 'root'
@@ -17,14 +19,42 @@ export class TransactionService {
     constructor(public http: HttpClient, private storage: StorageService)  { }
 
 
-    getDeuda(numeroPagina: number): Observable<Debts>{
+    getDeuda(pagenumber: number, columName: string,
+            inputSearch: string, asc: boolean, service: string, status: boolean,
+            dateForFilter: string, dateFrom: Date, Datefor: Date): Observable<Debts[]>{
         console.log('begin login')
-        const url = `${this.URI_API}/login?numeroPagina=${numeroPagina}`;
+        const url = `${this.URI_API}/debt?PageNumber=${pagenumber}&ColumnName=${columName}&InputSearch=${inputSearch}&Asc=${asc}&Service=${service}&Status=${status}&DateForFilter=${dateForFilter}&DateFrom=${dateFrom}`;
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
         };
-        return this.http.get<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
-       }   
+        return this.http.get<Debts[]>(url, opts).pipe(catchError(error => throwError(error)));  
+    }   
       
+
+       deleteDeuda(idDebt: number): Observable<Debts>{
+        console.log('begin login')
+        // cambia link
+        const url = `${this.URI_API}/movimientos/${idDebt}`;
+        console.log(url);
+        const opts = {
+          headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
+        };
+        return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
+    } 
+
+    editDeuda(debts: DebstEdit): Observable<any>{
+      console.log('begin login')
+      // cambia link
+      const url = `${this.URI_API}/movimientos/${debts.idDebt}`;
+      console.log(url);
+      const opts = {
+        headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
+      };
+      return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));  
+    }
+
+    
+  
+  
 }

@@ -1,17 +1,19 @@
-import { Component, OnInit, Inject, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject, interval } from 'rxjs';
+import { Subject} from 'rxjs';
 import { Router } from '@angular/router';
 import { Debts } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
-import { MatDialog, MatSnackBar, MAT_SNACK_BAR_DATA, MatSnackBarRef, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatSnackBar,MatSnackBarRef, MatDialogRef} from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { TransactionService } from 'src/app/shared/services/transaction.service';
 
 
 @Component({
@@ -21,7 +23,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 
 export class HomeComponent implements OnInit {
-  
+ 
+  state: boolean = false;
+  pageActual : number= 1;
+
   public user: User;
   DebtsArray = [];
   checkboxes: any;
@@ -36,7 +41,8 @@ export class HomeComponent implements OnInit {
   BotonCancelar: Boolean;
   inputEdit: Boolean;
   InputList: Boolean;  
-  DebtsList : Debts[]; 
+
+  debtsList : Debts[]; 
  
   typeList: Type[];
   waypayList: WayPay[];
@@ -58,6 +64,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
+    private transactionService: TransactionService,
     private router: Router ,
     private excelService: ExcelService,
     public dialog: MatDialog,
@@ -73,11 +80,10 @@ export class HomeComponent implements OnInit {
         console.log("Servicios : " + this.services)
       }
     );
-    this.homeService.getDebts().pipe(takeUntil(this.unsubscribe2$)).subscribe(
-      value => {
-        this.DebtsList = value; 
-      }
-    );
+
+    /*///////S E R V I C E //////// */
+      /*this.consultDeuda();*/
+    /*///////C O M B O S ////////// */ 
     this.homeService.getType().pipe(takeUntil(this.unsubscribe3$)).subscribe(
       value => {
         this.typeList = value; 
@@ -100,10 +106,19 @@ export class HomeComponent implements OnInit {
   }
   
 
-  consult(){
-    this.router.navigateByUrl("['/subirPlantilla']");
-  }
 
+  /*//////////////////////////////
+  //////////  C R U D /////////////////////// 
+  ////////////////////////////////////////////////*/
+/*
+  consultDeuda(){
+    this.transactionService.getDeuda(this.pageActual).subscribe(
+      value =>{
+        this.debtsList = value; 
+    }); 
+
+
+  }*/
 
   BotonActualizar(id: number){
     this.mostrar  = false;
@@ -146,7 +161,7 @@ export class HomeComponent implements OnInit {
 */
      
   }
-
+/*
   EliminarSeleccionados(){
     alert(this.DebtsArray);
      
@@ -160,7 +175,7 @@ export class HomeComponent implements OnInit {
        alert('seleccione algun elemento para eliminar');
     }
   }
-
+*/
   SeleccionarTodos() {
    /* this.checkboxes  = document.getElementsByTagName('input')
     
@@ -275,8 +290,10 @@ export class DialogDataExampleDialog {
 })
 
 export class UploadProgressComponent  implements OnInit  {
- 
-  constructor( public dialog: MatDialog, private excelService: ExcelService) { }
+   state: boolean = false;
+
+  constructor( public dialog: MatDialog, private excelService: ExcelService,
+                private snackRef: MatSnackBarRef<UploadProgressComponent>) { }
 
   ngOnInit(){
     var th = this;
@@ -291,19 +308,29 @@ export class UploadProgressComponent  implements OnInit  {
     setTimeout(fnc, 500);
   }
 
-  private verifyStatus() {
+  private verifyStatus()  {
+    
     var recursiveFunc = (value) => {
+
       if (value.status === "REJECTED") {
         this.excelService.errores = value.errors;
+        console.log("ABRE DIALOG")
         const dialogRef =  this.dialog.open(ValidationComponent);
+        this.snackRef.dismiss();
+      
         //value.errors
       }
-      else if (value.status !== "COMPLETED") {
+      else if (value.status === "COMPLETED") {
         var th = this;
         setTimeout(() => {
           th.excelService.StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
         }, 500);
+        this.snackRef.dismiss();
+        Swal.fire({
+          type: 'success',
+          text: 'Cargó con éxito tu excel'
+        }) 
         //Delay (10 ms)
         // Volver a llamar a status
       }
@@ -311,6 +338,8 @@ export class UploadProgressComponent  implements OnInit  {
     setTimeout(() => {
       this.excelService.StatusExcel(this.excelService.idProcess)
       .subscribe(recursiveFunc);     
+      this.snackRef.dismiss();
+
     }, 800);
   }
 
@@ -332,7 +361,8 @@ error: Error;
 
 export class ValidationComponent implements OnInit {
  
-  constructor(private excelService: ExcelService) { }
+  constructor(private excelService: ExcelService,
+    ) { }
 
   ngOnInit(){
     

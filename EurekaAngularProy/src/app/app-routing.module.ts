@@ -13,7 +13,7 @@ import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-fou
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent /*, canActivate: [AuthGuard] */},  
+  { path: 'home', component: HomeComponent,  canActivate: [AuthGuard] },  
   { path: 'login', component: LoginComponent},
   { path: '', redirectTo: '/home', pathMatch: 'full'  },  
   { path: '**', redirectTo: '/home'},
