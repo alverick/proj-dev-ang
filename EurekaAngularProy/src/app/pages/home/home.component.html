@@ -77,13 +77,16 @@
                         <div class="my-3 p-3 bg-white rounded shadow-sm">
                         <thead>
                             <!--//////////// A C C I O N E S //////////////// -->
-                            <tr>
-                                <td valign="top" class="head">
-                                    <input class="styled-checkbox"   type="checkbox" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" > 
-                                </td>
-                                
-                                <td colspan="7" class="head">
-                                    <div class="d-flex">                                          
+                            <tr> 
+                                <td colspan="2" class="head">
+                                    <div class="d-flex">
+                                        <div class="mr-3">
+                                            <td valign="top" class="head" class="stylechk">
+                                                <input class="styled-checkbox"   type="checkbox" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" > 
+                                                <span class="checkmark"></span>
+                                            </td> 
+                                        </div>
+                                                                                          
                                         <div class="mr-3">
                                             <a class="texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
                                                 <span class="icon-correo-azul iconos-big"></span> <br>
@@ -99,7 +102,7 @@
                                         
                                         <div class="mr-3">
                                             <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                <span class="icon-eliminar iconos-big"></span><br>
+                                                <span class="icon-papel-2 iconos-big"></span><br>
                                                     <span class="text-small font-medium">Cargar Excel</span>
                                             </div>                                            
                                             
@@ -117,7 +120,7 @@
                                  
                                     </div>
                                 </td>
-                                <td colspan="5" valign="middle" class="head">
+                                <td colspan="8" valign="middle" class="head">
                                     <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
 
                                     <!--
@@ -234,9 +237,9 @@
                                        <div class="d-flex">
                                             <div  *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="BotonEditar(items)" >
                                                 <span class="icon-editar iconos-big iconos-big"></span>
-                                            </div> 
+                                            </div> &nbsp;&nbsp;&nbsp;
                                             <div  *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="Eliminar(items)" >
-                                                <span class="icon-editar iconos-big iconos-big"></span>
+                                                <span class="icon-eliminar iconos-big iconos-big"></span>
                                             </div> 
                                             <div  *ngIf="items.edit"  class="d-inline-block" style="cursor: pointer" (click)="BotonActualizar(items)">
                                                 <img src="assets/images/table-check.svg"  alt="Aceptar">
