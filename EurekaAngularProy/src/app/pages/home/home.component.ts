@@ -5,7 +5,7 @@ import { HomeService } from 'src/app/shared/services/home.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject} from 'rxjs';
 import { Router } from '@angular/router';
-import { Debts } from 'src/app/shared/models/debts';
+import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { MatDialog, MatSnackBar,MatSnackBarRef, MatDialogRef} from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
   inputEdit: Boolean;
   InputList: Boolean;  
 
-  debtsList : Debts[]; 
+  debtsList : DebtsPagedList; 
  
   typeList: Type[];
   waypayList: WayPay[];
@@ -121,7 +121,10 @@ export class HomeComponent implements OnInit {
   
   consultaDeuda() {
     console.log(this.filtro);
-    this.debtsList = [];
+    this.debtsList = {
+      count: 0,
+      data: []
+    };
     this.transactionService.getDeuda(this.filtro)
       .subscribe(debts => {
         console.log(debts);
@@ -170,7 +173,7 @@ export class HomeComponent implements OnInit {
 
   EliminarSeleccionados(){
     let itemsParaEliminar = [];
-    this.debtsList.forEach(c => {
+    this.debtsList.data.forEach(c => {
       if (c.selected) 
         itemsParaEliminar.push(c.id);
     });
@@ -187,7 +190,7 @@ export class HomeComponent implements OnInit {
 
   SeleccionarTodos() {
     console.log('selecctionarTodos');
-   this.debtsList.forEach(itm => itm.selected = this.selectedAll);
+   this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
   }
 
 }
@@ -311,34 +314,41 @@ export class UploadProgressComponent  implements OnInit  {
     
     var recursiveFunc = (value) => {
 
+      console.log(value.status);
       if (value.status === "REJECTED") {
         this.excelService.errores = value.errors;
         console.log("ABRE DIALOG")
         const dialogRef =  this.dialog.open(ValidationComponent);
+        dialogRef.afterClosed()
+          .subscribe(() => {
+            this.excelService.errores = [];
+            this.excelService.idProcess = 0;
+          });
         this.snackRef.dismiss();
-      
         //value.errors
       }
-      else if (value.status === "COMPLETED") {
+      else if (value.status === "COMPLETED"){
+        this.snackRef.dismiss();
+        this.excelService.errores = [];
+        this.excelService.idProcess = 0;
+        Swal.fire({
+          type: 'success',
+          text: 'Cargó con éxito tu excel'
+        });
+      }
+      else  {
         var th = this;
         setTimeout(() => {
           th.excelService.StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
         }, 500);
-        this.snackRef.dismiss();
-        Swal.fire({
-          type: 'success',
-          text: 'Cargó con éxito tu excel'
-        }) 
         //Delay (10 ms)
         // Volver a llamar a status
       }
     };
     setTimeout(() => {
       this.excelService.StatusExcel(this.excelService.idProcess)
-      .subscribe(recursiveFunc);     
-      this.snackRef.dismiss();
-
+      .subscribe(recursiveFunc);
     }, 800);
   }
 

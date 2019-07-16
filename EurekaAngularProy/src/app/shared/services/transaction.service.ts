@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../../environments/environment';
 import { StorageService } from "./storage.service";
-import { Debts } from "../models/debts";
+import { Debts, DebtsPagedList } from "../models/debts";
 import { Observable, throwError } from "rxjs";
 import { catchError, first, map } from "rxjs/operators";
 import { DebtEdit } from "../models/debts-edit.model";
@@ -32,15 +32,15 @@ export class TransactionService {
       return '';
     }
 
-    getDeuda(filtro: DebstFilter): Observable<Debts[]>{
+    getDeuda(filtro: DebstFilter): Observable<DebtsPagedList>{
         const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${this.getDateFormat(filtro.dateFrom)}&DateTo=${this.getDateFormat(filtro.dateTo)}`;
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
         };
-        return this.http.get<Debts[]>(url, opts)
-          .pipe<Debts[]>(map(r => {
-            r.forEach(d => {
+        return this.http.get<DebtsPagedList>(url, opts)
+          .pipe<DebtsPagedList>(map(r => {
+            r.data.forEach(d => {
               d.emissionDate = new Date(d.emissionDate);
               d.dueDate = new Date(d.dueDate);
               d.edit = false;

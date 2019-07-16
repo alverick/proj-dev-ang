@@ -14,3 +14,8 @@ export interface Debts {
     newConcept?: string;
     selected?: boolean;
 }
+
+export interface DebtsPagedList {
+    count: number;
+    data: Debts[]
+}

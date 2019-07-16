@@ -193,7 +193,7 @@
                         </thead>
                                 
                         <tbody>
-                            <tr *ngFor="let items of debtsList | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: 22 }">
+                            <tr *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
                                 <td>                                    
                                     <div class="custom-control custom-checkbox">
                                             <input type="checkbox" [(ngModel)]="items.selected" > 
@@ -247,13 +247,10 @@
                                         </div>
                                     </td>
                             </tr> 
-
                         </tbody>
                         </div>
                     </table>
                 </div>
-                    
-      
         </div>        
     </div>
 </div>
