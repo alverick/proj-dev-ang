@@ -42,6 +42,7 @@
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
     "sweetalert2": "^8.13.2",
+    "symbol-observable": "^1.2.0",
     "xlsx": "^0.14.3",
     "zone.js": "~0.8.26"
   },

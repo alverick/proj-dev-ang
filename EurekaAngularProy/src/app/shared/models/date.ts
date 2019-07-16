@@ -1,5 +1,5 @@
 export interface Date {
-    idDate: number;
+    idDate: string;
     descripcion: string;
   }
   

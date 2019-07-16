@@ -10,128 +10,24 @@ import { Date } from 'src/app/shared/models/date';
 })
 export class HomeService {
 
-  private ListDebts: Debts[] = [
-    {
-      id_debt: 1,
-      status: 'status1', 
-      currency: 'dolar',
-      quota_code:'quota_code 1',
-      operation_mod: 'operation_mod 1',
-      amount_init: 'amount_init1',
-      amount_balance: 'amount_balance1',
-      interest_amount: 'interest_amount1',
-      emission_date: 'emission_date1',
-      due_date: 'due_date1',
-      document_number: 'document_number1'    
-    },
-    {
-      id_debt: 2, 
-      status: 'status2',
-      currency: 'soles',
-      quota_code:'quota_code 2',
-      operation_mod: 'operation_mod2',
-      amount_init: 'amount_init2',
-      amount_balance: 'amount_balance2',
-      interest_amount: 'interest_amount2', 
-      emission_date: 'emission_date2',
-      due_date: 'due_date2',
-      document_number: 'document_number2' 
-    },
-    {
-      id_debt: 3,
-      status: 'status3', 
-      currency: 'dolar',
-      quota_code:'quota_code 1',
-      operation_mod: 'operation_mod 1',
-      amount_init: 'amount_init1',
-      amount_balance: 'amount_balance1',
-      interest_amount: 'interest_amount1',
-      emission_date: 'emission_date1',
-      due_date: 'due_date1',
-      document_number: 'document_number1'    
-    },
-    {
-      id_debt: 4, 
-      status: 'status4',
-      currency: 'soles',
-      quota_code:'quota_code 2',
-      operation_mod: 'operation_mod2',
-      amount_init: 'amount_init2',
-      amount_balance: 'amount_balance2',
-      interest_amount: 'interest_amount2', 
-      emission_date: 'emission_date2',
-      due_date: 'due_date2',
-      document_number: 'document_number2' 
-    },
-    {
-      id_debt: 5, 
-      status: 'status5',
-      currency: 'soles',
-      quota_code:'quota_code 2',
-      operation_mod: 'operation_mod2',
-      amount_init: 'amount_init2',
-      amount_balance: 'amount_balance2',
-      interest_amount: 'interest_amount2', 
-      emission_date: 'emission_date2',
-      due_date: 'due_date2',
-      document_number: 'document_number2' 
-    },
-    {
-      id_debt: 6, 
-      status: 'status6',
-      currency: 'soles',
-      quota_code:'quota_code 2',
-      operation_mod: 'operation_mod2',
-      amount_init: 'amount_init2',
-      amount_balance: 'amount_balance2',
-      interest_amount: 'interest_amount2', 
-      emission_date: 'emission_date2',
-      due_date: 'due_date2',
-      document_number: 'document_number2' 
-    },
-    {
-      id_debt: 7, 
-      status: 'status7',
-      currency: 'soles',
-      quota_code:'quota_code 2',
-      operation_mod: 'operation_mod2',
-      amount_init: 'amount_init2',
-      amount_balance: 'amount_balance2',
-      interest_amount: 'interest_amount2', 
-      emission_date: 'emission_date2',
-      due_date: 'due_date2',
-      document_number: 'document_number2' 
-    },
-    {
-      id_debt: 8, 
-      status: 'status8',
-      currency: 'soles',
-      quota_code:'quota_code 2',
-      operation_mod: 'operation_mod2',
-      amount_init: 'amount_init2',
-      amount_balance: 'amount_balance2',
-      interest_amount: 'interest_amount2', 
-      emission_date: 'emission_date2',
-      due_date: 'due_date2',
-      document_number: 'document_number2' 
-    },
-  ]; 
+  private ListDebts: Debts[] = []; 
 
   private type: Type[] = [
-    {idType: 1, descripcion: 'Pensión'},
-    {idType: 2, descripcion: 'Matricula'}
+    { idType: '', descripcion: 'Servicio' },
+    {idType: 'Pension', descripcion: 'Pensión'},
+    {idType: 'Matricula', descripcion: 'Matricula'}
   ];
 
   private wayPay: WayPay[] = [
-    {idWayPay: 1, descripcion: 'Estado de Pago'},
-    {idWayPay: 2, descripcion: 'Pendiente de Pago'},
-    {idWayPay: 3, descripcion: 'Pagado'},
+    {idWayPay: '', descripcion: 'Estado de Pago'},
+    {idWayPay: 'PENDING', descripcion: 'Pendiente de Pago'},
+    {idWayPay: 'PAID', descripcion: 'Pagado'},
   ];
 
   private date:  Date[] = [
-    {idDate: 1, descripcion: 'Por fecha'},
-    {idDate: 2, descripcion: 'Fecha de emisión'},
-    {idDate: 3, descripcion: 'Fecha de pago'},
+    {idDate: '', descripcion: 'Por fecha'},
+    {idDate: 'EmissionDate', descripcion: 'Fecha de emisión'},
+    {idDate: 'dueDate', descripcion: 'Fecha de pago'},
   ];
 
   /*

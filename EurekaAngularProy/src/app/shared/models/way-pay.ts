@@ -1,5 +1,5 @@
 export interface WayPay {
-    idWayPay: number;
+    idWayPay: string;
     descripcion: string;
   }
   

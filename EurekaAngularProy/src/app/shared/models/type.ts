@@ -1,5 +1,5 @@
 export interface Type {
-    idType: number;
+    idType: string;
     descripcion: string;
  }
  

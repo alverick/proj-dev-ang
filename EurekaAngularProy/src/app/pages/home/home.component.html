@@ -17,7 +17,7 @@
                                     <div class="pl-1">
                                         <div class="content-filter">
                                             <span class="icon-search"></span>
-                                            <input class="input-filter" type="text" placeholder="Buscar por nombre o código">
+                                            <input class="input-filter" type="text" [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
                                         </div>
                                     </div>
                                 </div>
@@ -26,7 +26,7 @@
                             <div class="d-flex align-items-center mt-4">
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" name="" id="">
+                                        <select class="selectpicker" [(ngModel)]="filtro.service" name="" id="">
                                             <option value="{{item.idType}}"  *ngFor="let item of typeList"> {{item.descripcion}} </option>
                                         </select>
                                     </div>
@@ -34,7 +34,7 @@
                                 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" name="" id="">
+                                        <select class="selectpicker" [(ngModel)]="filtro.status" name="" id="">
                                             <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
                                         </select>
                                     </div>
@@ -42,7 +42,7 @@
                                 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" name="" id="">
+                                        <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name="" id="">
                                             <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
                                         </select>
                                     </div>
@@ -51,7 +51,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative">
                                         <mat-form-field>
-                                            <input matInput [matDatepicker]="myDatepicker2">
+                                            <input matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" >
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
                                         </mat-form-field>
@@ -61,7 +61,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative">
                                         <mat-form-field>
-                                            <input matInput [matDatepicker]="myDatepicker">
+                                            <input matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" >
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker ></mat-datepicker>
                                         </mat-form-field>
@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div class="texto-azulbase font-medium">
-                                    <button class="btn-eureca btn-small btn-eureca-amarillo">Buscar</button>
+                                    <button class="btn-eureca btn-small btn-eureca-amarillo" (click)="consultaDeuda()">Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             <!--//////////// A C C I O N E S //////////////// -->
                             <tr>
                                 <td valign="top" class="head">
-                                    <input class="styled-checkbox"   type="checkbox" value="value1" (click)="SeleccionarTodos()" > 
+                                    <input class="styled-checkbox"   type="checkbox" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" > 
                                 </td>
                                 
                                 <td colspan="7" class="head">
@@ -91,7 +91,7 @@
                                             </a>
                                         </div>
                                         <div class="mr-3">
-                                            <a class="texto-azul" href="" data-toggle="modal" data-target="#ModalNotificacion">
+                                            <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
                                                 <span class="icon-eliminar iconos-big"></span><br>
                                                 <span class="text-small font-medium">Eliminar</span>
                                             </a>
@@ -118,7 +118,7 @@
                                     </div>
                                 </td>
                                 <td colspan="5" valign="middle" class="head">
-                                    <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+                                    <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
 
                                     <!--
                                     <div class="text-right"> 1 - 50 de 250
@@ -174,59 +174,74 @@
 
                                 <th scope="col">
                                     <div class="d-flex align-items-center justify-content-center">
+                                        <div class="d-inline-block text-center"> Concepto</div>
+                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                    </div>
+                                </th>
+
+                                <th scope="col">
+                                    <div class="d-flex align-items-center justify-content-center">
                                         <div class="d-inline-block text-center"> Monto</div>
                                         <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
                                     </div>
                                 </th>
-
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center"> Estado de Pago</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
-                                </th>
-
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                         <div class="d-inline-block text-center"> Fecha de Pago</div>
-                                         <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
-                                </th>
                                 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center">Canal</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
+                                <th scope="col">&nbsp;
                                 </th>
                                 
                             </tr>
                         </thead>
                                 
                         <tbody>
-                            <tr *ngFor="let items of debtsList | paginate: {itemtsPerPage: 50, currentPage: pageActual}">
+                            <tr *ngFor="let items of debtsList | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: 22 }">
                                 <td>                                    
                                     <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" (click)=" SeleccionarParaEliminar(items.id_debt)" > 
+                                            <input type="checkbox" [(ngModel)]="items.selected" > 
                                     </div>
                                 </td>
-                                <td>{{items.status}}</td>
-                                <td>{{items.currency}}</td>
-                                <td>{{items.quota_code}}</td>
-                                <td>{{items.operation_mod}}</td>
-                                <td>{{items.amount_init}}</td>
-                                <td>{{items.amount_balance}}</td>
-                                <td>{{items.interest_amount}}</td>
-                                <td>{{items.emission_date}}</td>
-                                <td> <label *ngIf="InputList"  for="item">{{items.due_date}}</label> <input  *ngIf="inputEdit" type="text" value="{{items.due_date}}">   </td> 
-                                <td> <label *ngIf="InputList"  for="item"> {{items.document_number}}</label> <input *ngIf="inputEdit"  type="text" value="{{items.document_number}}"> </td>
-                                <td> <div *ngIf="mostrar" id="items.id_debt"    (click)="BotonActualizar(items.id_debt)" ><span class="icon-editar iconos-big iconos-big"></span></div> </td>
+                                <td>
+                                    <span *ngIf="!items.edit" >{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
+                                    <div *ngIf="items.edit" class="content-input-icon position-relative">
+                                            <mat-form-field style="width: 100px">
+                                                <input matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" >
+                                                <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
+                                                <mat-datepicker #edp></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </td>
+                                <td>
+                                    <span *ngIf="!items.edit" >{{items.dueDate | date:'dd/MM/yyyy' }}</span>
+                                    <div *ngIf="items.edit" class="content-input-icon position-relative">
+                                        <mat-form-field style="width: 100px">
+                                            <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" >
+                                            <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
+                                            <mat-datepicker #ddp></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </td>
+                                <td>{{items.code}}</td>
+                                <td>{{items.firstName}}</td>
+                                <td>{{items.lastName}}</td>
+                                <td>{{items.service}}</td>
+                                <td>
+                                    <span *ngIf="!items.edit" >{{items.concept}}</span>
+                                    <div *ngIf="items.edit">
+                                        <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" />
+                                    </div>
+                                </td>
+                                <td>{{items.amount}}</td>
                                 <td width="76">
                                        <div class="d-flex">
-                                            <div  *ngIf="BotonEditar"  class="d-inline-block" href="">
+                                            <div  *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="BotonEditar(items)" >
+                                                <span class="icon-editar iconos-big iconos-big"></span>
+                                            </div> 
+                                            <div  *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="Eliminar(items)" >
+                                                <span class="icon-editar iconos-big iconos-big"></span>
+                                            </div> 
+                                            <div  *ngIf="items.edit"  class="d-inline-block" style="cursor: pointer" (click)="BotonActualizar(items)">
                                                 <img src="assets/images/table-check.svg"  alt="Aceptar">
                                             </div> 
-                                            <div  (click)="BotonCancela()"  *ngIf="BotonCancelar"  class="d-inline-block" href="">
+                                            <div  (click)="BotonCancela(items)"  *ngIf="items.edit"  class="d-inline-block" style="cursor: pointer">
                                                 <img src="assets/images/table-delete.svg" alt="Eliminar">
                                             </div>
                                         </div>

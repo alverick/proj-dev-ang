@@ -1,13 +1,16 @@
 export interface Debts {
-    id_debt: number;
-    status: string;
-    currency: string;
-    quota_code: string;
-    operation_mod: string;
-    amount_init: string;
-    amount_balance: string;
-    interest_amount: string;
-    emission_date: string;
-    due_date: string;
-    document_number: string;
+    id: number;
+    emissionDate: Date;
+    dueDate: Date;
+    code: string;
+    firstName: string;
+    lastName: string;
+    service: string;
+    concept: string;
+    amount: string;
+    edit: boolean;
+    newEmissionDate?: Date;
+    newDueDate?: Date;
+    newConcept?: string;
+    selected?: boolean;
 }

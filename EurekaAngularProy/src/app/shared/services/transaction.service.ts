@@ -4,8 +4,9 @@ import { environment } from '../../../environments/environment';
 import { StorageService } from "./storage.service";
 import { Debts } from "../models/debts";
 import { Observable, throwError } from "rxjs";
-import { catchError, first } from "rxjs/operators";
-import { DebstEdit } from "../models/debts-edit.model";
+import { catchError, first, map } from "rxjs/operators";
+import { DebtEdit } from "../models/debts-edit.model";
+import { DebstFilter } from "../models/debts-filter.model";
 
 
 @Injectable({
@@ -18,24 +19,42 @@ export class TransactionService {
 
     constructor(public http: HttpClient, private storage: StorageService)  { }
 
+    getDateFormat(date: Date): string {
+      if (date) {
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        var str = day > 9 ? day.toString() : '0' + day.toString();
+        str += '%2F' + (month > 9 ? month.toString() : '0' + month.toString());
+        str += '%2F' + year.toString();
+        return str;
+      }
+      return '';
+    }
 
-    getDeuda(pagenumber: number, columName: string,
-            inputSearch: string, asc: boolean, service: string, status: boolean,
-            dateForFilter: string, dateFrom: Date, Datefor: Date): Observable<Debts[]>{
-        console.log('begin login')
-        const url = `${this.URI_API}/debt?PageNumber=${pagenumber}&ColumnName=${columName}&InputSearch=${inputSearch}&Asc=${asc}&Service=${service}&Status=${status}&DateForFilter=${dateForFilter}&DateFrom=${dateFrom}`;
+    getDeuda(filtro: DebstFilter): Observable<Debts[]>{
+        const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${this.getDateFormat(filtro.dateFrom)}&DateTo=${this.getDateFormat(filtro.dateTo)}`;
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
         };
-        return this.http.get<Debts[]>(url, opts).pipe(catchError(error => throwError(error)));  
+        return this.http.get<Debts[]>(url, opts)
+          .pipe<Debts[]>(map(r => {
+            r.forEach(d => {
+              d.emissionDate = new Date(d.emissionDate);
+              d.dueDate = new Date(d.dueDate);
+              d.edit = false;
+            });
+            return r;
+          }))
+          .pipe(catchError(error => throwError(error)));  
     }   
       
 
        deleteDeuda(idDebt: number): Observable<Debts>{
         console.log('begin login')
         // cambia link
-        const url = `${this.URI_API}/movimientos/${idDebt}`;
+        const url = `${this.URI_API}/debt/${idDebt}`;
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
@@ -43,10 +62,19 @@ export class TransactionService {
         return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
     } 
 
-    editDeuda(debts: DebstEdit): Observable<any>{
+    deleteAll(ids: number[]): Observable<any> {
+      const url = `${this.URI_API}/debt/deleteAll`;
+      console.log(url);
+      const opts = {
+        headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
+      };
+      return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
+    }
+
+    editDeuda(id: number, debts: DebtEdit): Observable<any>{
       console.log('begin login')
       // cambia link
-      const url = `${this.URI_API}/movimientos/${debts.idDebt}`;
+      const url = `${this.URI_API}/debt/${id}`;
       console.log(url);
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }

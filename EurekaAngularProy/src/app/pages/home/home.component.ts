@@ -14,6 +14,7 @@ import { Date } from 'src/app/shared/models/date';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
+import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
 
 
 @Component({
@@ -37,8 +38,6 @@ export class HomeComponent implements OnInit {
   private unsubscribe5$ = new Subject();
 
   mostrar: Boolean;
-  BotonEditar: Boolean;
-  BotonCancelar: Boolean;
   inputEdit: Boolean;
   InputList: Boolean;  
 
@@ -60,6 +59,19 @@ export class HomeComponent implements OnInit {
   serviceSelected: String;
   services: String[];
 
+  selectedAll: boolean = false;
+
+  filtro: DebstFilter = {
+    pageNumber: 1,
+    columnName: 'FirstName',
+    asc: true,
+    inputSearch: '',
+    service: '',
+    status: '',
+    dateForFilter: '',
+    dateFrom: null,
+    dateTo: null
+  };
 
   constructor(
     private storageService: StorageService,
@@ -72,7 +84,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
-    this.homeService.getServices().pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.homeService.getServices().subscribe(
       value =>{
         this.services = value;
         this.serviceSelected = value[0];
@@ -84,18 +96,20 @@ export class HomeComponent implements OnInit {
     /*///////S E R V I C E //////// */
       /*this.consultDeuda();*/
     /*///////C O M B O S ////////// */ 
-    this.homeService.getType().pipe(takeUntil(this.unsubscribe3$)).subscribe(
+    this.homeService.getType().subscribe(
       value => {
         this.typeList = value; 
     }); 
-    this.homeService.getWayPay().pipe(takeUntil(this.unsubscribe4$)).subscribe(
+    this.homeService.getWayPay().subscribe(
       value => {
         this.waypayList = value; 
     }); 
-    this.homeService.getDate().pipe(takeUntil(this.unsubscribe5$)).subscribe(
+    this.homeService.getDate().subscribe(
       value => {
         this.DateList = value; 
     });  
+
+    this.consultaDeuda();
   }
 
   openDialog() {
@@ -105,7 +119,15 @@ export class HomeComponent implements OnInit {
     });
   }
   
-
+  consultaDeuda() {
+    console.log(this.filtro);
+    this.debtsList = [];
+    this.transactionService.getDeuda(this.filtro)
+      .subscribe(debts => {
+        console.log(debts);
+        this.debtsList = debts;
+      });
+  }
 
   /*//////////////////////////////
   //////////  C R U D /////////////////////// 
@@ -120,75 +142,52 @@ export class HomeComponent implements OnInit {
 
   }*/
 
-  BotonActualizar(id: number){
-    this.mostrar  = false;
-    this.BotonEditar = true;
-    this.BotonCancelar = true;
-    this.inputEdit = true;
-    this.InputList = false;
-   // alert(id); 
+  BotonEditar(item: Debts) {
+    item.edit = true;
+    item.newEmissionDate = item.emissionDate;
+    item.newDueDate = item.dueDate;
+    item.newConcept = item.concept;
   }
 
-  BotonCancela(){
-    this.mostrar  = true; 
-    this.BotonEditar = false;
-    this.BotonCancelar = false;
-    
-    this.inputEdit = false;
-    this.InputList = true;
+  BotonActualizar(item: Debts){
+    console.log('actualizar', item);
+    item.edit = false;
+    this.transactionService.editDeuda(item.id, {
+      emissionDate: item.newEmissionDate,
+      dueDate: item.newDueDate,
+      concept: item.newConcept
+    }).subscribe(this.consultaDeuda);
   }
 
-
-  SeleccionarParaEliminar(idDebt: number){
-  
-    //alert(idDebt);
-     this.DebtsArray.push(idDebt);
-  /*
-    if (this.DebtsArray.length === 0) {
-      this.DebtsArray.push(idDebt); 
-    } else{
-      for (const value in this.DebtsArray) { 
-        if(this.DebtsArray[value] === idDebt){
-          this.DebtsList.splice(this.DebtsArray[value],1)
-          alert(idDebt + ' ya esta agregado y se elimino');
-        }
-        else{
-          this.DebtsArray.push(idDebt);
-          alert(idDebt + ' agregado');
-        }
-    }
-    }  
-*/
-     
+  BotonCancela(item: Debts){
+    item.edit = false;
   }
-/*
+
+  changePage(nro: number) {
+    this.filtro.pageNumber = nro;
+    this.consultaDeuda();
+  }
+
   EliminarSeleccionados(){
-    alert(this.DebtsArray);
-     
-     if (this.DebtsArray.length > 0) { 
-      for (const value in this.DebtsArray) { 
-        this.DebtsList.splice(this.DebtsArray[value],1);
-      } 
-      alert('eliminados');
-      this.DebtsArray  = []; 
-    }else {
-       alert('seleccione algun elemento para eliminar');
+    let itemsParaEliminar = [];
+    this.debtsList.forEach(c => {
+      if (c.selected) 
+        itemsParaEliminar.push(c.id);
+    });
+    this.transactionService.deleteAll(itemsParaEliminar)
+      .subscribe(this.consultaDeuda);
+  }
+
+  Eliminar(item: Debts) {
+    if (confirm("¿Esta Seguro de Eliminar el Registro?")) {
+      this.transactionService.deleteDeuda(item.id)
+        .subscribe(this.consultaDeuda);
     }
   }
-*/
+
   SeleccionarTodos() {
-   /* this.checkboxes  = document.getElementsByTagName('input')
-    
-    alert(this.checkboxes);
-     
-     for (const valinput in this.checkboxes){
-       
-          if(this.checkboxes[valinput].type === "checkbox"){
-            this.cont++;
-          } 
-     } 
-     alert(this.cont.toString());
-    */ 
+    console.log('selecctionarTodos');
+   this.debtsList.forEach(itm => itm.selected = this.selectedAll);
   }
 
 }
