@@ -15,7 +15,7 @@
         <div class="text-center">
             <table>
                 <tr *ngFor="let error of excelService.errores">
-                    <td>{{ error.description }}</td>
+                    <td style="color: red;" ><span>En la columna</span> {{ error.description }}</td>
                 </tr>
             </table>
         </div>
