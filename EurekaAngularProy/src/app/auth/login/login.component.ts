@@ -119,20 +119,18 @@ export class LoginComponent implements OnInit {
               if(this.intentos <= 3){
                 console.log("ParamStr  :  "+ value.paramStr);
                 if(value.codRespuesta == 2){
-                this.loginForm = this.formBuilder.group({
-                  ruc: [''],
-                  psw: ['']
-                });
-                this.spinner.hide();
-                console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                return this.codRpt2= true;
+                  this.loginForm = this.formBuilder.group({
+                    ruc: [''],
+                    psw: [''] });
+                  this.spinner.hide();
+                  console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
+                  return this.codRpt2= true;
                 }
                 else 
-                if(value.codRespuesta == 3){
-                this.loginForm = this.formBuilder.group({
-                  ruc: [''],
-                  psw: ['']
-                });
+                  if(value.codRespuesta == 3){
+                    this.loginForm = this.formBuilder.group({
+                    ruc: [''],
+                    psw: [''] });
                 this.spinner.hide();
                 console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
                 Swal.fire({
