@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -29,7 +29,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
+import {  NgxPaginationModule } from 'ngx-pagination'; 
+import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
+
 
 
 @NgModule({
@@ -77,6 +79,10 @@ import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
      {provide: ErrorStateMatcher,
       useClass: ShowOnDirtyErrorStateMatcher
       },
+      {provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptorService,
+        multi: true
+      }
   ],
   exports:[
     MatInputModule,

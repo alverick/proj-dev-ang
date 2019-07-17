@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { StorageService } from "./storage.service";
 import { Debts, DebtsPagedList } from "../models/debts";
 import { Observable, throwError } from "rxjs";
-import { catchError, first, map } from "rxjs/operators";
+import { catchError,  map } from "rxjs/operators";
 import { DebtEdit } from "../models/debts-edit.model";
 import { DebstFilter } from "../models/debts-filter.model";
 
@@ -54,7 +54,7 @@ export class TransactionService {
        deleteDeuda(idDebt: number): Observable<Debts>{
         console.log('begin login')
         // cambia link
-        const url = `${this.URI_API}/debt/${idDebt}`;
+        const url = `${this.URI_API}/debt?id=${idDebt}`;
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }

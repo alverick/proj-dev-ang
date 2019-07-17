@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject} from 'rxjs';
 import { Router } from '@angular/router';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
@@ -31,11 +29,6 @@ export class HomeComponent implements OnInit {
   public user: User;
   DebtsArray = [];
   checkboxes: any;
-  private unsubscribe$  =  new  Subject();
-  private unsubscribe2$ = new Subject(); 
-  private unsubscribe3$ = new Subject();
-  private unsubscribe4$ = new Subject();
-  private unsubscribe5$ = new Subject();
 
   mostrar: Boolean;
   inputEdit: Boolean;
@@ -88,14 +81,10 @@ export class HomeComponent implements OnInit {
       value =>{
         this.services = value;
         this.serviceSelected = value[0];
-        console.log("Servicios seleccionado : " + this.serviceSelected)
-        console.log("Servicios : " + this.services)
+
       }
     );
 
-    /*///////S E R V I C E //////// */
-      /*this.consultDeuda();*/
-    /*///////C O M B O S ////////// */ 
     this.homeService.getType().subscribe(
       value => {
         this.typeList = value; 
@@ -112,12 +101,7 @@ export class HomeComponent implements OnInit {
     this.consultaDeuda();
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogDataExampleDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+/*//////// C R U D ///////////////////// */
   
   consultaDeuda() {
     console.log(this.filtro);
@@ -131,19 +115,6 @@ export class HomeComponent implements OnInit {
         this.debtsList = debts;
       });
   }
-
-  /*//////////////////////////////
-  //////////  C R U D /////////////////////// 
-  ////////////////////////////////////////////////*/
-/*
-  consultDeuda(){
-    this.transactionService.getDeuda(this.pageActual).subscribe(
-      value =>{
-        this.debtsList = value; 
-    }); 
-
-
-  }*/
 
   BotonEditar(item: Debts) {
     item.edit = true;
@@ -159,7 +130,7 @@ export class HomeComponent implements OnInit {
       emissionDate: item.newEmissionDate,
       dueDate: item.newDueDate,
       concept: item.newConcept
-    }).subscribe(this.consultaDeuda);
+    }).subscribe(() => this.consultaDeuda());
   }
 
   BotonCancela(item: Debts){
@@ -178,19 +149,30 @@ export class HomeComponent implements OnInit {
         itemsParaEliminar.push(c.id);
     });
     this.transactionService.deleteAll(itemsParaEliminar)
-      .subscribe(this.consultaDeuda);
+      .subscribe(() => this.consultaDeuda());
   }
 
   Eliminar(item: Debts) {
     if (confirm("¿Esta Seguro de Eliminar el Registro?")) {
       this.transactionService.deleteDeuda(item.id)
-        .subscribe(this.consultaDeuda);
+        .subscribe(() => this.consultaDeuda());
     }
   }
 
   SeleccionarTodos() {
     console.log('selecctionarTodos');
    this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
+  }
+
+
+/*//////// O P E N  - D I A L O G ///////////////////// */
+  
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogDataExampleDialog);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }
@@ -325,7 +307,7 @@ export class UploadProgressComponent  implements OnInit  {
             this.excelService.idProcess = 0;
           });
         this.snackRef.dismiss();
-        //value.errors
+
       }
       else if (value.status === "COMPLETED"){
         this.snackRef.dismiss();
@@ -342,8 +324,7 @@ export class UploadProgressComponent  implements OnInit  {
           th.excelService.StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
         }, 500);
-        //Delay (10 ms)
-        // Volver a llamar a status
+
       }
     };
     setTimeout(() => {
@@ -368,82 +349,9 @@ error: Error;
   templateUrl: 'validation.html',
 })
 
-export class ValidationComponent implements OnInit {
+export class ValidationComponent  {
  
   constructor(private excelService: ExcelService,
     ) { }
 
-  ngOnInit(){
-    
-  }
-
-
-  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /*
-
- @Component({
-  selector: 'app-upload-progress-snackbar',
-  template: `<mat-progress-bar   mode="determinate"  [value]="progress">
-              </mat-progress-bar>`,
-  styles: [`mat-progress-bar { margin-top: 5px; }`],
-})
- constructor( @Inject(MAT_SNACK_BAR_DATA) public data,
-              private _snackRef: MatSnackBarRef<UploadProgressComponent>,
-              private ren:Renderer2) { 
-        
-        setTimeout(()=>{
-        let snackEl = document.getElementsByClassName('mat-snack-bar-container').item(0);
-        ren.listen(snackEl, 'click', ()=>this.dismiss())
-      })
-    }
-
-  private started = false;
-  public progress = 50;
-
-  dismiss(){
-    this._snackRef.dismiss();
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   openSnackBar() {
-    if(this.inputXlsForm.valid){
-    this.snackBar.openFromComponent(UploadProgressComponent, {
-      data: { uploadProgress: 80 }});
-      
-    }else{
-      alert('Ingresa el excel');
-    }
-  }*/

@@ -76,11 +76,7 @@ export class LoginComponent implements OnInit {
     return true;
   }
    
-  savedata(){
-    console.log(this.loginForm.value)
-  }
 
-  
   /* ////////  N O T  - A L L L O W - T O - C O P Y //////// */
   
   @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
@@ -209,6 +205,7 @@ export class LoginComponent implements OnInit {
                 this.spinner.hide();
                 console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
               }
+
           },
           error =>{
             this.error=error;
