@@ -159,7 +159,7 @@ export class HomeComponent implements OnInit {
       emissionDate: item.newEmissionDate,
       dueDate: item.newDueDate,
       concept: item.newConcept
-    }).subscribe(this.consultaDeuda);
+    }).subscribe(() => this.consultaDeuda());
   }
 
   BotonCancela(item: Debts){
@@ -178,13 +178,13 @@ export class HomeComponent implements OnInit {
         itemsParaEliminar.push(c.id);
     });
     this.transactionService.deleteAll(itemsParaEliminar)
-      .subscribe(this.consultaDeuda);
+      .subscribe(() => this.consultaDeuda());
   }
 
   Eliminar(item: Debts) {
     if (confirm("¿Esta Seguro de Eliminar el Registro?")) {
       this.transactionService.deleteDeuda(item.id)
-        .subscribe(this.consultaDeuda);
+        .subscribe(() => this.consultaDeuda());
     }
   }
 
