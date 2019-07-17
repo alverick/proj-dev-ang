@@ -60,7 +60,7 @@ export class ExcelService {
     console.log(url);
     return this.http.post<any>(url, formData, opts).pipe(
       catchError(error => throwError(error)));  
-   }   
+  }   
 
   StatusExcel(id: number): Observable<any>{
     console.log('begin status excel')
@@ -69,6 +69,7 @@ export class ExcelService {
       headers: {"Authorization" : "bearer " + this.storage.getCurrentToken()}
     }
     return this.http.get<any>(url, opts).pipe(catchError(error => throwError(error)));
+  
   }
 
  

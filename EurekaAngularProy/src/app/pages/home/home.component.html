@@ -78,13 +78,15 @@
                         <thead>
                             <!--//////////// A C C I O N E S //////////////// -->
                             <tr> 
+
+                                    
                                 <td colspan="2" class="head">
                                     <div class="d-flex">
-                                        <div class="mr-3">
-                                            <td valign="top" class="head" class="stylechk">
-                                                <input class="styled-checkbox"   type="checkbox" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" > 
-                                                <span class="checkmark"></span>
-                                            </td> 
+                                        <div class="mr-3">   
+                                           
+                                                <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" >
+                                                <label for="styl" class="text-small font-medium">Seleccionar Todos</label> 
+                                             
                                         </div>
                                                                                           
                                         <div class="mr-3">
@@ -100,28 +102,32 @@
                                             </a>
                                         </div>
                                         
-                                        <div class="mr-3">
+                                        <div class="mr-3" >
+                                            <div id="sobresale">
                                             <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                 <span class="icon-papel-2 iconos-big"></span><br>
                                                     <span class="text-small font-medium">Cargar Excel</span>
                                             </div>                                            
                                             
                                             <div class="collapse" id="collapseExample">
-                                                <div class="card card-body">
-                                                    <div *ngFor="let service of services" (click)="openDialog()">
+                                                <div class="card card-body" >
+                                                    <div  *ngFor="let service of services" (click)="openDialog()">
                                                         <div data-toggle="collapse" >
                                                             {{service}} 
                                                         </div>
                                                     </div>        
                                                 </div>
                                             </div>
-                                            
-                                        </div>
-
-                                                                  
+                                            </div>  
+                                        </div>  
+                                        
+                                        
                                     </div>
+
+                                    
                                 </td>
-                                <td colspan="8" valign="middle" class="head">
+                                <td colspan="4"  class="head">   
+                                <td colspan="4"  class="head">
                                     <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
 
                                     <!--
@@ -189,19 +195,15 @@
                                         <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
                                     </div>
                                 </th>
-                                
-                                <th scope="col">&nbsp;
-                                </th>
-                                
+                                  
                             </tr>
                         </thead>
                                 
                         <tbody>
                             <tr *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
-                                <td>                                    
-                                    <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" [(ngModel)]="items.selected" > 
-                                    </div>
+                                <td> 
+                                       <input id="{{ 'chk_' + items.id }}" class="styled-checkbox"  type="checkbox" [(ngModel)]="items.selected" >
+                                       <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label> 
                                 </td>
                                 <td>
                                     <span *ngIf="!items.edit" >{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
@@ -212,7 +214,7 @@
                                                 <mat-datepicker #edp></mat-datepicker>
                                             </mat-form-field>
                                         </div>
-                                    </td>
+                                </td>
                                 <td>
                                     <span *ngIf="!items.edit" >{{items.dueDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">

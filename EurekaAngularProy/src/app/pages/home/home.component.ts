@@ -253,6 +253,7 @@ export class DialogDataExampleDialog {
     .subscribe(
       value=>{
         this.excelService.idProcess = value.id;
+       // console.table(value);
       }
     )
     this.snackBar.openFromComponent(UploadProgressComponent);      
@@ -317,6 +318,7 @@ export class UploadProgressComponent  implements OnInit  {
       console.log(value.status);
       if (value.status === "REJECTED") {
         this.excelService.errores = value.errors;
+        // console.table(value);
         console.log("ABRE DIALOG")
         const dialogRef =  this.dialog.open(ValidationComponent);
         dialogRef.afterClosed()
