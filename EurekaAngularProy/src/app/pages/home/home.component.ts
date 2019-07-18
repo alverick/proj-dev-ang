@@ -143,15 +143,22 @@ export class HomeComponent implements OnInit {
   /*//////////////////////////////
   //////////  C R U D /////////////////////// 
   ////////////////////////////////////////////////*/
-/*
-  consultDeuda(){
-    this.transactionService.getDeuda(this.pageActual).subscribe(
-      value =>{
-        this.debtsList = value; 
-    }); 
+ /*probando*/
+    limpiarInput()
+    {
+      this.filtro.inputSearch  = "";
+    }
+    
+    limpiarcombo1()
+    {
+      this.filtro.dateFrom = null;
+    }
 
-
-  }*/
+    limpiarcombo2()
+    {
+      this.filtro.dateTo = null;
+    }
+ /////1
 
   BotonEditar(item: Debts) {
     item.edit = true;

@@ -4,8 +4,8 @@
             <div class="col">
                 <div class="table-responsive">
                     <table class="table">
-                            <h1 class="h5 mb-3">Movimientos</h1>
-                            <div class="my-3 p-3 bg-white rounded shadow-sm">
+                        <h1 class="h5 mb-3">Movimientos</h1>
+                        <div class="my-3 p-3 bg-white rounded shadow-sm">
                             
                                 <!--//////////// F I L T R O S //////////////// -->
                                 <div class="d-flex align-items-center">
@@ -13,14 +13,23 @@
                                     <div class="pl-2 pr-4">
                                         <span class="icon-filter"></span>
                                     </div>
-                                
+                                    <!--
                                     <div class="pl-1">
                                         <div class="content-filter">
-                                            <span class="icon-search"></span>
+                                                <span class="icon-search"></span>
                                             <input class="input-filter" type="text" [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
                                         </div>
-                                    </div>
-                                </div>
+                                    </div> -->
+                                     <!---probando input -->
+                                     <div class="pl-1">
+                                            <div class="icon-addon addon-md "> 
+                                                    <input  class="input-filter" type="text"  [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
+                                                    <label  (click)="limpiarInput()"  class="fa fa-times" ></label>
+                                                   
+                                            </div>
+                                    </div> 
+                                      
+                                </div>  
                             
                                 <!--////////// F I L T R O S 2 //////////////////-->
                             <div class="d-flex align-items-center mt-4">
@@ -49,19 +58,21 @@
                                 </div> 
                                 
                                 <div class="mr-4">
-                                    <div class="content-input-icon position-relative">
+                                    <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="9" minlength="9" type="text" (keypress)="onlyNumberKey($event)" >
+                                            <input  type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="9" minlength="9"   (keypress)="onlyNumberKey($event)" >
+                                            <label  (click)="limpiarcombo1()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                       
+                                     
                                 <div class="mr-4">
-                                    <div class="content-input-icon position-relative">
+                                    <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="9" minlength="9" type="text" (keypress)="onlyNumberKey($event)">
+                                            <input type="text" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="9" minlength="9" (keypress)="onlyNumberKey($event)">
+                                            <label  (click)="limpiarcombo2()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker ></mat-datepicker>
                                         </mat-form-field>
@@ -85,7 +96,7 @@
                                         <div class="mr-3">   
                                            
                                                 <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" >
-                                                <label for="styl" class="text-small font-medium">Eliminar Todos</label> 
+                                                <label for="styl" class="text-small font-medium">Seleccionar  Todos</label> 
                                              
                                         </div>
                                                                                           
@@ -119,14 +130,13 @@
                                                 </div>
                                             </div>
                                             </div>  
-                                        </div>  
-                                        
-                                        
+                                        </div>   
                                     </div>
 
                                     
                                 </td>
-                                <td colspan="4"  class="head">   
+                                <td colspan="4"  class="head"> 
+                                </td>   
                                 <td colspan="4"  class="head">
                                     <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
 
