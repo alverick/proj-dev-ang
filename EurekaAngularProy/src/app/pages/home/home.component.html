@@ -34,7 +34,7 @@
                                 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.status" name="" id="">
+                                        <select class="selectpicker" [(ngModel)]="filtro.status" name=""  >
                                             <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
                                         </select>
                                     </div>
@@ -42,7 +42,7 @@
                                 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name="" id="">
+                                        <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name=""  >
                                             <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
                                         </select>
                                     </div>
@@ -51,7 +51,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative">
                                         <mat-form-field>
-                                            <input matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" >
+                                            <input matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="9" minlength="9" type="text" (keypress)="onlyNumberKey($event)" >
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
                                         </mat-form-field>
@@ -61,7 +61,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative">
                                         <mat-form-field>
-                                            <input matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" >
+                                            <input matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="9" minlength="9" type="text" (keypress)="onlyNumberKey($event)">
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker ></mat-datepicker>
                                         </mat-form-field>
@@ -85,7 +85,7 @@
                                         <div class="mr-3">   
                                            
                                                 <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" >
-                                                <label for="styl" class="text-small font-medium">Seleccionar Todos</label> 
+                                                <label for="styl" class="text-small font-medium">Eliminar Todos</label> 
                                              
                                         </div>
                                                                                           
@@ -209,17 +209,17 @@
                                     <span *ngIf="!items.edit" >{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
-                                                <input matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" >
+                                                <input matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate"  maxlength="9" minlength="9" type="text" (keypress)="onlyNumberKey($event)" >
                                                 <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                                                 <mat-datepicker #edp></mat-datepicker>
                                             </mat-form-field>
-                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <span *ngIf="!items.edit" >{{items.dueDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                         <mat-form-field style="width: 100px">
-                                            <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" >
+                                            <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate"  maxlength="9" minlength="9" type="text" (keypress)="onlyNumberKey($event)">
                                             <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
                                             <mat-datepicker #ddp></mat-datepicker>
                                         </mat-form-field>
@@ -232,7 +232,7 @@
                                 <td>
                                     <span *ngIf="!items.edit" >{{items.concept}}</span>
                                     <div *ngIf="items.edit">
-                                        <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" />
+                                        <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="onlyNumberKey($event)" />
                                     </div>
                                 </td>
                                 <td>{{items.amount}}</td>

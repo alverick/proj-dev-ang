@@ -59,7 +59,7 @@ export class ExcelService {
     formData.append('file', files[0], files[0].name)
     console.log(url);
     return this.http.post<any>(url, formData, opts).pipe(
-      catchError(error => throwError(error)));  
+      catchError(error => throwError(error)));   
   }   
 
   StatusExcel(id: number): Observable<any>{

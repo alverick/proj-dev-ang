@@ -9,13 +9,14 @@
 
     <div class="bg-blanco custom-shadow pasos-add-registro activo">
         <div class="title-popup-add-registo text-center position-relative h2 m-0">
-            <div>El formato que haz ingresado no es el correcto!</div>
+            <div>El informacion que haz ingresado es incorrecto!</div>
         </div>
         <hr>
         <div class="text-center">
             <table>
                 <tr *ngFor="let error of excelService.errores">
-                    <td style="color: red;" ><span>En la columna</span> {{ error.description }}</td>
+                    <td>En la columna <span style="color: red;"> {{ error.description }}</span>  </td> 
+                    <td>, el campo<span style="color: green;">  {{ error.field }}</span>tiene el valor<span style="color: orange;">{{ error.value }} </span></td> 
                 </tr>
             </table>
         </div>

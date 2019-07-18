@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
 
-
+declare var $: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html', 
@@ -25,6 +25,7 @@ import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
 
 export class HomeComponent implements OnInit {
  
+  
   state: boolean = false;
   pageActual : number= 1;
 
@@ -110,7 +111,14 @@ export class HomeComponent implements OnInit {
     });  
 
     this.consultaDeuda();
+ 
   }
+
+ 
+  onlyNumberKey(event) { 
+      return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57; 
+  } 
+
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogDataExampleDialog);
@@ -316,6 +324,7 @@ export class UploadProgressComponent  implements OnInit  {
     var recursiveFunc = (value) => {
 
       console.log(value.status);
+       
       if (value.status === "REJECTED") {
         this.excelService.errores = value.errors;
         // console.table(value);
