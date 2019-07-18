@@ -25,8 +25,13 @@ export class LoginComponent implements OnInit {
   public  respuestaHttp: number;
   public  formData: any = {};
 
-  isTrue: boolean = false;
+
   intentos: number = 0;
+  codRespuesta: number;
+  err: boolean;
+  numero2: number;
+
+  isTrue: boolean = false;
   isCaptchaValidate: boolean = true;
   
 
@@ -48,22 +53,28 @@ export class LoginComponent implements OnInit {
     ]
   }
 
+  
 
   constructor(
     private formBuilder: FormBuilder,
-    private LoginService: LoginService,
+    private loginService: LoginService,
     private router: Router,
     private spinner: NgxSpinnerService,
     private cookieService : CookieService   ) {}
 
   ngOnInit() {
+    this.validationLogin();
+    this.codRpt2;
+  }
+
+  validationLogin(){
     let rucStr = this.cookieService.check('ruc') ?
     this.cookieService.get('ruc') :  '';
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.minLength(11), Validators.required,
             Validators.pattern("^[0-9]*$")])],
       psw: ['', Validators.required ],
-      rememberme:[false]  
+      rememberme:[false, Validators.required]  
      
     });
   }
@@ -94,24 +105,81 @@ export class LoginComponent implements OnInit {
 
   /* /////// L O G I N ////////////  */
 
-  public submitLogin(): any {
+  public submitLogin() : any {
     this.submitted = true;
     this.error = null;
     console.log("LOGIN VALID  : " +this.loginForm.valid);
     if(this.loginForm.valid && this.isCaptchaValidate){
       this.spinner.show();
       console.log(this.loginForm.value);
-      
-      this.LoginService.login(this.f.ruc.value, this.f.psw.value)
+      this.loginService.login(this.f.ruc.value, this.f.psw.value)
       .pipe(first())
       .subscribe(
-          value => {
-            this.intentos= value.paramNum;
-            if(value.estado===true){
+        value => {
+          this.intentos= value.paramNum;
+          this.codRespuesta= value.codRespuesta;
+          console.log("Codigo de respuseta : "+this.codRespuesta);
+          if(value.estado===true){
             this.router.navigate(['/home']);
-            this.spinner.hide();          
+            this.spinner.hide();     
+          
+          }else if(this.intentos <= 3 && this.codRespuesta == 2 ){
+            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
+            this.loginService.errores= value.codRespuesta;
+            }else if(this.intentos <= 3 && this.codRespuesta == 3){
+            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
+            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
+          }
+          
+          
+          else if(this.intentos == 4 || this.intentos == 5 && this.codRespuesta == 2){
+            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
+            this.loginService.errores= value.codRespuesta;            
+            this.isCaptchaValidate = false;
+
+          }else if(this.intentos == 4 || this.intentos == 5 && this.codRespuesta == 3){
+            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
+            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
+            this.isCaptchaValidate = false;
+            return this.isTrue = true;              
+
+          } 
+          
+          else if(this.intentos == 6){
+            console.log("Intentos : " + value.paramNum + "   Sin codigo");
+            Swal.fire({ type: 'error', title: 'Contraseña Incorrecta', text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe'})}            
+          },
+
+          error =>{ 
+            this.spinner.hide();
+            if(error.status ===500){
+              Swal.fire({
+                type: 'error',
+                text: 'ERROR 500',
+              }) 
             }
-            else
+        },
+        () => this.spinner.hide()
+      );
+      }
+  }
+
+
+
+
+
+  public respuesta() : boolean{
+    return true;
+  }
+}
+
+
+
+
+/*
+
+
+else
               if(this.intentos <= 3){
                 console.log("ParamStr  :  "+ value.paramStr);
                 if(value.codRespuesta == 2){
@@ -206,15 +274,11 @@ export class LoginComponent implements OnInit {
                 console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
               }
 
-          },
-          error =>{
-            this.error=error;
-            this.spinner.hide();
+
+
+
+
+ this.error=error;
             console.log("error")
-          }
-      )
-    }
-  }
 
-
-}
+*/

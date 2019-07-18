@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
 
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-home',
@@ -73,7 +74,9 @@ export class HomeComponent implements OnInit {
     private router: Router ,
     private excelService: ExcelService,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar,
+    private spinner2: NgxSpinnerService,
+    ) { }
 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
@@ -105,6 +108,8 @@ export class HomeComponent implements OnInit {
   
   consultaDeuda() {
     console.log(this.filtro);
+    this.spinner2.show();
+
     this.debtsList = {
       count: 0,
       data: []
@@ -113,10 +118,13 @@ export class HomeComponent implements OnInit {
       .subscribe(debts => {
         console.log(debts);
         this.debtsList = debts;
+        this.spinner2.hide();
+
       });
   }
 
   BotonEditar(item: Debts) {
+    this.spinner2.show();
     item.edit = true;
     item.newEmissionDate = item.emissionDate;
     item.newDueDate = item.dueDate;
@@ -143,16 +151,20 @@ export class HomeComponent implements OnInit {
   }
 
   EliminarSeleccionados(){
+    this.spinner2.show();
+
     let itemsParaEliminar = [];
     this.debtsList.data.forEach(c => {
       if (c.selected) 
         itemsParaEliminar.push(c.id);
+
     });
     this.transactionService.deleteAll(itemsParaEliminar)
       .subscribe(() => this.consultaDeuda());
   }
 
   Eliminar(item: Debts) {
+    this.spinner2.show();
     if (confirm("¿Esta Seguro de Eliminar el Registro?")) {
       this.transactionService.deleteDeuda(item.id)
         .subscribe(() => this.consultaDeuda());
@@ -334,6 +346,12 @@ export class UploadProgressComponent  implements OnInit  {
   }
 
 }
+
+
+
+
+
+
 
 
 

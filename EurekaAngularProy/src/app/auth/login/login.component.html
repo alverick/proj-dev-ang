@@ -26,17 +26,19 @@
                                     <input matInput  type="text" digitOnly minlength="11" maxlength="11"  formControlName="ruc"  appBlockCopyPaste>                   
                                     <mat-error *ngFor="let validation of account_validation_messages.ruc">
                                         <mat-error class="error-message"
-                                            *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty || loginForm.get('ruc').touched)">
+                                            *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty 
+                                            || loginForm.get('ruc').touched)">
                                             {{validation.message}}
                                         </mat-error>
+
                                     </mat-error>
-                                    <mat-error *ngIf="codRpt2">
+                                    <mat-error class="error-message" *ngIf="loginService.errores > 2">
                                         No tenemos una cuenta registrada con este RUC
                                     </mat-error> 
                                 </mat-form-field>
                                 
                                 <div class="mt-4">
-                                    <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" formControlName="rememberme" value="value1">
+                                    <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" formControlName="rememberme" >
                                     <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
                                 </div>
                             </div>
