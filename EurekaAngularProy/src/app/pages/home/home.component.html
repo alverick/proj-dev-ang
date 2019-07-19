@@ -7,8 +7,8 @@
             <div class="col">
                 <div class="table-responsive">
                     <table class="table">
-                            <h1 class="h5 mb-3">Movimientos</h1>
-                            <div class="my-3 p-3 bg-white rounded shadow-sm">
+                        <h1 class="h5 mb-3">Movimientos</h1>
+                        <div class="my-3 p-3 bg-white rounded shadow-sm">
                             
                                 <!--//////////// F I L T R O S //////////////// -->
                                 <div class="d-flex align-items-center">
@@ -16,14 +16,22 @@
                                     <div class="pl-2 pr-4">
                                         <span class="icon-filter"></span>
                                     </div>
-                                
+                                    <!--
                                     <div class="pl-1">
                                         <div class="content-filter">
-                                            <span class="icon-search"></span>
+                                                <span class="icon-search"></span>
                                             <input class="input-filter" type="text" [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
                                         </div>
-                                    </div>
-                                </div>
+                                    </div> -->
+                                     <!---probando input -->
+                                     <div class="pl-1">
+                                            <div class="icon-addon addon-md "> 
+                                                    <input  class="input-filter" type="text"  [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
+                                                    <label  (click)="limpiarInput()"  class="fa fa-times" ></label> 
+                                            </div>
+                                    </div> 
+                                      
+                                </div>  
                             
                                 <!--////////// F I L T R O S 2 //////////////////-->
                             <div class="d-flex align-items-center mt-4">
@@ -37,7 +45,7 @@
                                 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.status" name="" id="">
+                                        <select class="selectpicker" [(ngModel)]="filtro.status" name=""  >
                                             <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
                                         </select>
                                     </div>
@@ -45,26 +53,28 @@
                                 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name="" id="">
+                                        <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name=""  >
                                             <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
                                         </select>
                                     </div>
                                 </div> 
                                 
                                 <div class="mr-4">
-                                    <div class="content-input-icon position-relative">
+                                    <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" >
+                                            <input  type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"    appBlockCopyPaste>
+                                            <label  (click)="limpiarcombo1()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                       
+                                     
                                 <div class="mr-4">
-                                    <div class="content-input-icon position-relative">
+                                    <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" >
+                                            <input type="text" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"  appBlockCopyPaste  >
+                                            <label  (click)="limpiarcombo2()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker ></mat-datepicker>
                                         </mat-form-field>
@@ -91,13 +101,15 @@
                         <thead>
                             <!--//////////// A C C I O N E S //////////////// -->
                             <tr> 
+
+                                    
                                 <td colspan="2" class="head">
                                     <div class="d-flex">
-                                        <div class="mr-3">
-                                            <td valign="top" class="head" class="stylechk">
-                                                <input class="styled-checkbox"   type="checkbox" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" > 
-                                                <span class="checkmark"></span>
-                                            </td> 
+                                        <div class="mr-3">   
+                                           
+                                                <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" >
+                                                <label for="styl" class="text-small font-medium">Seleccionar  Todos</label> 
+                                             
                                         </div>
                                                                                           
                                         <div class="mr-3">
@@ -113,27 +125,31 @@
                                             </a>
                                         </div>
                                         
-                                        <div class="mr-3">
+                                        <div class="mr-3" >
+                                            <div id="sobresale">
                                             <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                 <span class="icon-papel-2 iconos-big"></span><br>
                                                     <span class="text-small font-medium">Cargar Excel</span>
                                             </div>                                            
                                             
                                             <div class="collapse" id="collapseExample">
-                                                <div class="card card-body">
-                                                    <div *ngFor="let service of services" (click)="openDialog()">
+                                                <div class="card card-body" >
+                                                    <div  *ngFor="let service of services" (click)="openDialog()">
                                                         <div data-toggle="collapse" >
                                                             {{service}} 
                                                         </div>
                                                     </div>        
                                                 </div>
                                             </div>
-                                        </div>
-
-                                 
+                                            </div>  
+                                        </div>   
                                     </div>
+
+                                    
                                 </td>
-                                <td colspan="8" valign="middle" class="head">
+                                <td colspan="4"  class="head"> 
+                                </td>   
+                                <td colspan="4"  class="head">
                                     <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
 
                                     <!--
@@ -201,35 +217,31 @@
                                         <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
                                     </div>
                                 </th>
-                                
-                                <th scope="col">&nbsp;
-                                </th>
-                                
+                                  
                             </tr>
                         </thead>
                                 
                         <tbody>
                             <tr *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
-                                <td>                                    
-                                    <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" [(ngModel)]="items.selected" > 
-                                    </div>
+                                <td> 
+                                       <input id="{{ 'chk_' + items.id }}" class="styled-checkbox"  type="checkbox" [(ngModel)]="items.selected" >
+                                       <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label> 
                                 </td>
                                 <td>
                                     <span *ngIf="!items.edit" >{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
-                                                <input matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" >
+                                                <input matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate"  maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)" >
                                                 <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                                                 <mat-datepicker #edp></mat-datepicker>
                                             </mat-form-field>
-                                        </div>
-                                    </td>
+                                    </div>
+                                </td>
                                 <td>
                                     <span *ngIf="!items.edit" >{{items.dueDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                         <mat-form-field style="width: 100px">
-                                            <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" >
+                                            <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate"   maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
                                             <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
                                             <mat-datepicker #ddp></mat-datepicker>
                                         </mat-form-field>
@@ -242,7 +254,7 @@
                                 <td>
                                     <span *ngIf="!items.edit" >{{items.concept}}</span>
                                     <div *ngIf="items.edit">
-                                        <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" />
+                                        <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="onlyNumberKey($event)" />
                                     </div>
                                 </td>
                                 <td>{{items.amount}}</td>

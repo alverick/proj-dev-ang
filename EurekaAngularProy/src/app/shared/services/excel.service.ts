@@ -1,9 +1,9 @@
+import { Error } from './../models/error.model';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from '../../../environments/environment';
 import { StorageService } from "./storage.service";
 import { Observable, throwError } from "rxjs";
-
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { catchError } from "rxjs/operators";
@@ -59,8 +59,8 @@ export class ExcelService {
     formData.append('file', files[0], files[0].name)
     console.log(url);
     return this.http.post<any>(url, formData, opts).pipe(
-      catchError(error => throwError(error)));  
-   }   
+      catchError(error => throwError(error)));   
+  }   
 
   StatusExcel(id: number): Observable<any>{
     console.log('begin status excel')
@@ -69,6 +69,7 @@ export class ExcelService {
       headers: {"Authorization" : "bearer " + this.storage.getCurrentToken()}
     }
     return this.http.get<any>(url, opts).pipe(catchError(error => throwError(error)));
+  
   }
 
  

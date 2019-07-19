@@ -32,7 +32,6 @@
                                             <mat-error class="error-message" *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty 
                                                 || loginForm.get('ruc').touched)">
                                                 {{validation.message}}
-                                            </mat-error>
                                         </mat-error>
                                         
                                         <mat-error class="error-message" *ngIf="loginService.errores > 2">
