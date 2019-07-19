@@ -362,7 +362,7 @@ export class UploadProgressComponent  implements OnInit  {
        
       if (value.status === "REJECTED") {
         this.excelService.errores = value.errors;
-        // console.table(value);
+        console.table(value.errors);
         console.log("ABRE DIALOG")
         const dialogRef =  this.dialog.open(ValidationComponent);
         dialogRef.afterClosed()
