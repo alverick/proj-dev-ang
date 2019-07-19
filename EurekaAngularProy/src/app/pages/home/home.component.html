@@ -24,8 +24,7 @@
                                      <div class="pl-1">
                                             <div class="icon-addon addon-md "> 
                                                     <input  class="input-filter" type="text"  [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
-                                                    <label  (click)="limpiarInput()"  class="fa fa-times" ></label>
-                                                   
+                                                    <label  (click)="limpiarInput()"  class="fa fa-times" ></label> 
                                             </div>
                                     </div> 
                                       
@@ -60,7 +59,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input  type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="9" minlength="9"   (keypress)="onlyNumberKey($event)" >
+                                            <input  type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"    appBlockCopyPaste>
                                             <label  (click)="limpiarcombo1()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
@@ -71,7 +70,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input type="text" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="9" minlength="9" (keypress)="onlyNumberKey($event)">
+                                            <input type="text" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"  appBlockCopyPaste  >
                                             <label  (click)="limpiarcombo2()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker ></mat-datepicker>
@@ -219,7 +218,7 @@
                                     <span *ngIf="!items.edit" >{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
-                                                <input matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate"  maxlength="9" minlength="9" type="text" (keypress)="onlyNumberKey($event)" >
+                                                <input matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate"  maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)" >
                                                 <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                                                 <mat-datepicker #edp></mat-datepicker>
                                             </mat-form-field>
@@ -229,7 +228,7 @@
                                     <span *ngIf="!items.edit" >{{items.dueDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                         <mat-form-field style="width: 100px">
-                                            <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate"  maxlength="9" minlength="9" type="text" (keypress)="onlyNumberKey($event)">
+                                            <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate"   maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
                                             <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
                                             <mat-datepicker #ddp></mat-datepicker>
                                         </mat-form-field>

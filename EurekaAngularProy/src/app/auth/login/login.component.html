@@ -23,7 +23,7 @@
                             <div class="flex-fill">
                                 <label class="d-block texto-negro h6" for="">RUC</label>
                                 <mat-form-field class="full-width">
-                                    <input matInput  type="text" digitOnly minlength="11" maxlength="11"  formControlName="ruc"  appBlockCopyPaste>                   
+                                    <input matInput  type="text" digitOnly minlength="11" maxlength="11"  formControlName="ruc"  >                   
                                     <mat-error *ngFor="let validation of account_validation_messages.ruc">
                                         <mat-error class="error-message"
                                             *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty || loginForm.get('ruc').touched)">

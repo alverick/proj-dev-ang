@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -22,9 +22,13 @@ declare var $: any;
   templateUrl: './home.component.html', 
   styleUrls: ['./home.component.scss']
 })
+ 
+@Directive({
+  selector: '[appBlockCopyPaste]'
+})
+
 
 export class HomeComponent implements OnInit {
- 
   
   state: boolean = false;
   pageActual : number= 1;
@@ -81,7 +85,31 @@ export class HomeComponent implements OnInit {
     private router: Router ,
     private excelService: ExcelService,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar, private el: ElementRef) { 
+ 
+    }
+
+
+    numberOnly(event): boolean {
+      const charCode = (event.which) ? event.which : event.keyCode;
+      if (charCode > 31 && (charCode <= 46 || charCode >= 57)  ) {
+        return false;
+      }
+      return true;
+  
+    }
+ 
+    @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
+      e.preventDefault();
+    }
+  
+    @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
+      e.preventDefault();
+    }
+  
+    @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
+      e.preventDefault();
+    }
 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
@@ -93,6 +121,10 @@ export class HomeComponent implements OnInit {
         console.log("Servicios : " + this.services)
       }
     );
+
+
+    /** */
+ 
 
     /*///////S E R V I C E //////// */
       /*this.consultDeuda();*/
@@ -113,13 +145,7 @@ export class HomeComponent implements OnInit {
     this.consultaDeuda();
  
   }
-
- 
-  onlyNumberKey(event) { 
-      return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57; 
-  } 
-
-
+  
   openDialog() {
     const dialogRef = this.dialog.open(DialogDataExampleDialog);
     dialogRef.afterClosed().subscribe(result => {
@@ -148,7 +174,7 @@ export class HomeComponent implements OnInit {
     {
       this.filtro.inputSearch  = "";
     }
-    
+                     
     limpiarcombo1()
     {
       this.filtro.dateFrom = null;
@@ -158,6 +184,8 @@ export class HomeComponent implements OnInit {
     {
       this.filtro.dateTo = null;
     }
+
+    
  /////1
 
   BotonEditar(item: Debts) {
