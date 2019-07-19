@@ -1,13 +1,17 @@
-import { Injectable } from "@angular/core";
+    import { Injectable } from "@angular/core";
 import { Router } from '@angular/router';
 import { Session } from "../models/session.model";
 import { User } from "../models/user.model";
 import { CookieService } from 'ngx-cookie-service';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  }
+)
 export class StorageService {
-    
+  redirectUrl: string;
+
   private localStorageService;
   private currentSession : Session = null;
 
@@ -19,7 +23,7 @@ export class StorageService {
   setCurrentSession(session: Session): void {
     this.currentSession = session;
     const expire = new Date();
-    expire.setDate(expire.getDate() + 5);
+    expire.setDate(expire.getDate() + 25);
     this.cookieStorage.set('ruc', session.user.ruc, expire);
     this.localStorageService.setItem('tk', session.token);
   }
@@ -50,6 +54,7 @@ export class StorageService {
   };
 
   isAuthenticated(): boolean {
+    const token = this.localStorageService.getItem('tk');
     return (this.currentSession && this.currentSession.isAuthenticate);
   };
 

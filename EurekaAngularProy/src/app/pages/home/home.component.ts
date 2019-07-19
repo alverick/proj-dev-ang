@@ -2,8 +2,6 @@ import { Component, OnInit, Directive, HostListener, Input, ElementRef } from '@
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject} from 'rxjs';
 import { Router } from '@angular/router';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
@@ -15,8 +13,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var $: any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html', 
@@ -36,11 +36,6 @@ export class HomeComponent implements OnInit {
   public user: User;
   DebtsArray = [];
   checkboxes: any;
-  private unsubscribe$  =  new  Subject();
-  private unsubscribe2$ = new Subject(); 
-  private unsubscribe3$ = new Subject();
-  private unsubscribe4$ = new Subject();
-  private unsubscribe5$ = new Subject();
 
   mostrar: Boolean;
   inputEdit: Boolean;
@@ -85,7 +80,8 @@ export class HomeComponent implements OnInit {
     private router: Router ,
     private excelService: ExcelService,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar, private el: ElementRef) { 
+    public snackBar: MatSnackBar,
+    private spinner2: NgxSpinnerService, private el: ElementRef) { 
  
     }
 
@@ -117,18 +113,15 @@ export class HomeComponent implements OnInit {
       value =>{
         this.services = value;
         this.serviceSelected = value[0];
-        console.log("Servicios seleccionado : " + this.serviceSelected)
-        console.log("Servicios : " + this.services)
+
       }
     );
 
 
-    /** */
- 
-
     /*///////S E R V I C E //////// */
       /*this.consultDeuda();*/
     /*///////C O M B O S ////////// */ 
+
     this.homeService.getType().subscribe(
       value => {
         this.typeList = value; 
@@ -145,16 +138,13 @@ export class HomeComponent implements OnInit {
     this.consultaDeuda();
  
   }
-  
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogDataExampleDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+
+/*//////// C R U D ///////////////////// */
   
   consultaDeuda() {
     console.log(this.filtro);
+    this.spinner2.show();
+
     this.debtsList = {
       count: 0,
       data: []
@@ -163,6 +153,8 @@ export class HomeComponent implements OnInit {
       .subscribe(debts => {
         console.log(debts);
         this.debtsList = debts;
+        this.spinner2.hide();
+
       });
   }
 
@@ -189,6 +181,7 @@ export class HomeComponent implements OnInit {
  /////1
 
   BotonEditar(item: Debts) {
+    this.spinner2.show();
     item.edit = true;
     item.newEmissionDate = item.emissionDate;
     item.newDueDate = item.dueDate;
@@ -215,16 +208,20 @@ export class HomeComponent implements OnInit {
   }
 
   EliminarSeleccionados(){
+    this.spinner2.show();
+
     let itemsParaEliminar = [];
     this.debtsList.data.forEach(c => {
       if (c.selected) 
         itemsParaEliminar.push(c.id);
+
     });
     this.transactionService.deleteAll(itemsParaEliminar)
       .subscribe(() => this.consultaDeuda());
   }
 
   Eliminar(item: Debts) {
+    this.spinner2.show();
     if (confirm("¿Esta Seguro de Eliminar el Registro?")) {
       this.transactionService.deleteDeuda(item.id)
         .subscribe(() => this.consultaDeuda());
@@ -234,6 +231,17 @@ export class HomeComponent implements OnInit {
   SeleccionarTodos() {
     console.log('selecctionarTodos');
    this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
+  }
+
+
+/*//////// O P E N  - D I A L O G ///////////////////// */
+  
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogDataExampleDialog);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }
@@ -371,7 +379,7 @@ export class UploadProgressComponent  implements OnInit  {
             this.excelService.idProcess = 0;
           });
         this.snackRef.dismiss();
-        //value.errors
+
       }
       else if (value.status === "COMPLETED"){
         this.snackRef.dismiss();
@@ -388,8 +396,7 @@ export class UploadProgressComponent  implements OnInit  {
           th.excelService.StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
         }, 500);
-        //Delay (10 ms)
-        // Volver a llamar a status
+
       }
     };
     setTimeout(() => {
@@ -399,6 +406,12 @@ export class UploadProgressComponent  implements OnInit  {
   }
 
 }
+
+
+
+
+
+
 
 
 
@@ -414,82 +427,9 @@ error: Error;
   templateUrl: 'validation.html',
 })
 
-export class ValidationComponent implements OnInit {
+export class ValidationComponent  {
  
   constructor(private excelService: ExcelService,
     ) { }
 
-  ngOnInit(){
-    
-  }
-
-
-  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /*
-
- @Component({
-  selector: 'app-upload-progress-snackbar',
-  template: `<mat-progress-bar   mode="determinate"  [value]="progress">
-              </mat-progress-bar>`,
-  styles: [`mat-progress-bar { margin-top: 5px; }`],
-})
- constructor( @Inject(MAT_SNACK_BAR_DATA) public data,
-              private _snackRef: MatSnackBarRef<UploadProgressComponent>,
-              private ren:Renderer2) { 
-        
-        setTimeout(()=>{
-        let snackEl = document.getElementsByClassName('mat-snack-bar-container').item(0);
-        ren.listen(snackEl, 'click', ()=>this.dismiss())
-      })
-    }
-
-  private started = false;
-  public progress = 50;
-
-  dismiss(){
-    this._snackRef.dismiss();
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   openSnackBar() {
-    if(this.inputXlsForm.valid){
-    this.snackBar.openFromComponent(UploadProgressComponent, {
-      data: { uploadProgress: 80 }});
-      
-    }else{
-      alert('Ingresa el excel');
-    }
-  }*/

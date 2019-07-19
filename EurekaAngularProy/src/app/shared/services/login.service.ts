@@ -18,6 +18,8 @@ export class LoginService {
 constructor(public http: HttpClient, private storage: StorageService)  { }
 
 private URI_API: string = environment.END_POINT
+public errores: number;
+
 
 login(ruc: string, psw: string): Observable<RespuestaLogin>{
   console.log('begin login')

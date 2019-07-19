@@ -1,6 +1,9 @@
+
 <div class="body">
     <div class="container">
         <div class="row">
+                
+            
             <div class="col">
                 <div class="table-responsive">
                     <table class="table">
@@ -79,7 +82,17 @@
                                 </div>
 
                                 <div class="texto-azulbase font-medium">
-                                    <button class="btn-eureca btn-small btn-eureca-amarillo" (click)="consultaDeuda()">Buscar</button>
+                                    <button class="btn-eureca btn-small btn-eureca-amarillo" (click)="consultaDeuda()">Buscar
+                                            <ngx-spinner
+                                            bdOpacity = 0.9
+                                            bdColor = ""
+                                            size = "medium"
+                                            color = "#ee7474"
+                                            type = "ball-spin-fade"
+                                            [fullScreen] = "false"
+                                            >
+                                            </ngx-spinner>
+                                    </button>
                                 </div>
                             </div>
                         </div>
