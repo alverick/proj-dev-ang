@@ -6,7 +6,21 @@
 .body{
   background: #0b0044 !important;
 }
-
+label{
+  margin-bottom: 0px;
+}
+.border{
+  box-sizing:  border-box;
+  border-style:solid !important;
+  border-width: 2vw 3.2vw!important;
+  border-color: white !important;
+}
+.h6{
+  font-size: 16px;
+}
+.p-5{
+  padding: 0.2rem 2.5rem !important;
+}
 
 .bg-image-landing{
   background-image:url("/assets/images/fondo-landing.png");
