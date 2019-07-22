@@ -4,8 +4,140 @@
 @import '~src/scss/landing';
 
 
+@font-face {font-family: "Omnes";
+    src: url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.eot");
+    src: url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.svg#Omnes") format("svg");
+}
+
 .body{
     background: #f4f5f7  !important;
   } 
  
   
+  .styled-checkbox{position:absolute;opacity:0}
+  .styled-checkbox+label{position:relative;cursor:pointer;padding:0;margin:0}
+  .styled-checkbox+label:before{content:'';display:inline-block;vertical-align:text-top;width:16px;height:16px;border:2px solid #2121c4;background:white}
+  .styled-checkbox:hover+label:before{background:#2121c4}
+  .styled-checkbox:focus+label:before{border:2px solid #2121c4}
+  .styled-checkbox:checked+label:before{background:#2121c4}
+  .styled-checkbox:disabled+label{color:#fff;cursor:auto}
+  .styled-checkbox:disabled+label:before{box-shadow:none;background:#fff}
+  .styled-checkbox:checked+label:after{content:'';position:absolute;left:3px;top:9px;background:#fff;width:2px;height:2px;box-shadow:2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;transform:rotate(45deg)}
+
+ .sobresale{ position:absolute; z-index:1; background-color:#FFFFFF; }
+
+
+
+  
+   
+// https://bootsnipp.com/snippets/Vz7B?fbclid=IwAR3B3A_1YX5Qz4LBUdBZ6K7YBfK1neINr4kIImA-RQ2CDjwGa5D3N8n59Hg
+
+ /*eliminar contenido de caja de texto*/
+ 
+// cuando el puntero no señala la caja de texto
+ 
+
+ 
+.center-block {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group .icon-addon .form-control {
+    border-radius: 0;
+}
+
+.icon-addon {
+    position: relative;
+    color: #555;
+    display: block;
+}
+
+.icon-addon:after,
+.icon-addon:before {
+    display: table;
+    content: " ";
+}
+
+.icon-addon:after {
+    clear: both;
+}
+
+.icon-addon.addon-md .glyphicon,
+.icon-addon .glyphicon, 
+.icon-addon.addon-md .fa{
+    font-size: 18px;
+    margin-left:330px;
+    top: -3px; 
+}
+.icon-addon .fa {
+    position: absolute;
+    z-index: 2;
+    left: 10px; 
+    width: 20px;
+    margin-left: -2.5px; 
+    padding: 10px 0;
+    top: -1px ;
+}
+
+.icon-addon.addon-lg .form-control {
+    line-height: 1.33;
+    height: 46px;
+    font-size: 18px;
+    padding: 10px 16px 10px 40px;
+}
+
+.icon-addon.addon-sm .form-control {
+    height: 30px;
+    padding: 5px 10px 5px 28px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+// date 
+.icon-addon.addon-lg .fa{
+    font-size: 18px;
+    margin-left:150px;
+    top: -2px; 
+}
+.icon-addon.addon-lg .glyphicon {
+    font-size: 18px;
+    margin-left: 0;
+    left: 11px;
+    top: 4px;
+}
+
+.icon-addon.addon-md .form-control,
+.icon-addon .form-control {
+    padding-left: 30px;
+    float: left;
+    font-weight: normal;
+}
+
+.icon-addon.addon-sm .fa{
+    font-size: 18px;
+    margin-left:10px;
+    top: -2px; 
+}
+.icon-addon.addon-sm .glyphicon {
+    margin-left: 0;
+    font-size: 12px;
+    left: 5px;
+    top: -1px
+}
+
+.icon-addon .form-control:focus + .glyphicon,
+.icon-addon:hover .glyphicon,
+.icon-addon .form-control:focus + .fa,
+.icon-addon:hover .fa {
+    color: #2580db;
+}
+
+
+ 
+ 

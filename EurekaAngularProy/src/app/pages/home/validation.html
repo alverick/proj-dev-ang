@@ -3,22 +3,25 @@
         <div class="d-none text-center">
             <h6 class="my-4">Validacion</h6>
             <div class="icon-grande"><span class="icon-papel"></span></div>
-            <div class="mb-3 mt-4"><button class="btn-eureca btn-eureca-amarillo btn-small">Descargar plantilla</button></div>
+            <div class="mb-3 mt-4"><button class="btn-eureca btn-eureca-amarillo btn-small">Descargar plantilla</button>
+            </div>
         </div>
     </div>
 
     <div class="bg-blanco custom-shadow pasos-add-registro activo">
         <div class="title-popup-add-registo text-center position-relative h2 m-0">
-            <div>Hubo errores </div>
+            <div>La información que haz ingresado es incorrecta!</div>
         </div>
         <hr>
         <div class="text-center">
             <table>
                 <tr *ngFor="let error of excelService.errores">
-                    <td>{{ error.description }}</td>
+                    <td>En la columna &nbsp;<span style="color: red;"> {{ error.description | slice: 0: 2 }}
+                            &nbsp;</span> {{ error.description | slice: 3: 100}} </td>
+                    <td>, el campo &nbsp; <span style="color: green;"> {{ error.field }}</span> &nbsp; tiene el valor
+                        &nbsp; <span style="color: orange;">{{ error.value }} </span></td>
                 </tr>
             </table>
         </div>
     </div>
 </div>
-    

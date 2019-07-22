@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Directive, HostListener, Input, ElementRef } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -13,17 +13,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
-
 import { NgxSpinnerService } from 'ngx-spinner';
+
+declare var $: any;
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html', 
   styleUrls: ['./home.component.scss']
 })
+ 
+@Directive({
+  selector: '[appBlockCopyPaste]'
+})
+
 
 export class HomeComponent implements OnInit {
- 
+  
   state: boolean = false;
   pageActual : number= 1;
 
@@ -75,8 +81,31 @@ export class HomeComponent implements OnInit {
     private excelService: ExcelService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private spinner2: NgxSpinnerService,
-    ) { }
+    private spinner2: NgxSpinnerService, private el: ElementRef) { 
+ 
+    }
+
+
+    numberOnly(event): boolean {
+      const charCode = (event.which) ? event.which : event.keyCode;
+      if (charCode > 31 && (charCode <= 46 || charCode >= 57)  ) {
+        return false;
+      }
+      return true;
+  
+    }
+ 
+    @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
+      e.preventDefault();
+    }
+  
+    @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
+      e.preventDefault();
+    }
+  
+    @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
+      e.preventDefault();
+    }
 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
@@ -87,6 +116,11 @@ export class HomeComponent implements OnInit {
 
       }
     );
+
+
+    /*///////S E R V I C E //////// */
+      /*this.consultDeuda();*/
+    /*///////C O M B O S ////////// */ 
 
     this.homeService.getType().subscribe(
       value => {
@@ -102,6 +136,7 @@ export class HomeComponent implements OnInit {
     });  
 
     this.consultaDeuda();
+ 
   }
 
 /*//////// C R U D ///////////////////// */
@@ -122,6 +157,28 @@ export class HomeComponent implements OnInit {
 
       });
   }
+
+  /*//////////////////////////////
+  //////////  C R U D /////////////////////// 
+  ////////////////////////////////////////////////*/
+ /*probando*/
+    limpiarInput()
+    {
+      this.filtro.inputSearch  = "";
+    }
+                     
+    limpiarcombo1()
+    {
+      this.filtro.dateFrom = null;
+    }
+
+    limpiarcombo2()
+    {
+      this.filtro.dateTo = null;
+    }
+
+    
+ /////1
 
   BotonEditar(item: Debts) {
     this.spinner2.show();
@@ -247,6 +304,7 @@ export class DialogDataExampleDialog {
     .subscribe(
       value=>{
         this.excelService.idProcess = value.id;
+       // console.table(value);
       }
     )
     this.snackBar.openFromComponent(UploadProgressComponent);      
@@ -309,8 +367,10 @@ export class UploadProgressComponent  implements OnInit  {
     var recursiveFunc = (value) => {
 
       console.log(value.status);
+       
       if (value.status === "REJECTED") {
         this.excelService.errores = value.errors;
+        console.table(value.errors);
         console.log("ABRE DIALOG")
         const dialogRef =  this.dialog.open(ValidationComponent);
         dialogRef.afterClosed()
