@@ -18,11 +18,14 @@ export class AuthGuard implements CanActivate {
     }
 
   checkLogin(url: string) : boolean{
-    if(this.storageService.getCurrentToken){ return true; }
+    if(this.storageService.getCurrentToken){
+       return true; 
+    }else{
 
-    this.storageService.redirectUrl;
+      this.storageService.redirectUrl;
 
-    this.router.navigate(['/login']);
-
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
 }

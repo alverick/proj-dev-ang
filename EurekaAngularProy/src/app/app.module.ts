@@ -13,7 +13,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from 'src/app/auth/auth.module';  
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
@@ -75,7 +74,6 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
   ],
   providers: [
     ExcelService,
-     fakeBackendProvider,
      {provide: ErrorStateMatcher,
       useClass: ShowOnDirtyErrorStateMatcher
       },

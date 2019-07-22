@@ -20,7 +20,9 @@ export class AuthInterceptorService implements HttpInterceptor {
     if(token){
       request = req.clone({
         setHeaders:{
-          authorization: `Bearer ${ token }`
+          authorization: `Bearer ${ token }`, 
+          ocpApimSubscriptionKey: `3b8700ab20814ee58e07ffc89e16c86`,
+          ocpApimTrace: `true`
         }
       });
     }

@@ -27,7 +27,9 @@ login(ruc: string, psw: string): Observable<RespuestaLogin>{
   const data = `username=${ruc}&password=${psw}`;
   console.log(url, data);
   const opts = {
-    headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    headers: { "Content-Type": "application/x-www-form-urlencoded",
+              "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+              "Ocp-Apim-Trace": "true" }
   };
   return this.http.post(url, data, opts)
     .pipe(map((r: RespuestaLogin) => { 
