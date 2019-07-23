@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { environment } from '../../../environments/environment';
+import { environment } from "src/environments/environment"; 
 import { RespuestaLogin } from "../models/respuestaLogin.model";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
@@ -17,7 +17,7 @@ export class LoginService {
 
 constructor(public http: HttpClient, private storage: StorageService)  { }
 
-private URI_API: string = environment.END_POINT
+private URI_API: string = environment.END_POINT;
 public errores: number;
 
 
