@@ -420,7 +420,7 @@ export class UploadProgressComponent  implements OnInit  {
 ///////////////// V A L I D A T I O N   //////////////////////////
 ////////////////////////////////////////////////////////////////////////////// */
 
-error: Error;
+let error: Error;
 
 @Component({
   selector: 'validation',
@@ -429,7 +429,7 @@ error: Error;
 
 export class ValidationComponent  {
  
-  constructor(private excelService: ExcelService,
+  constructor(public excelService: ExcelService,
     ) { }
 
 }
