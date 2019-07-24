@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  END_POINT: 'http://apieurecatmp.azurewebsites.net/api',
+  END_POINT: 'http://apis.dev.interbank.pe/eureca/api',
 
 };
