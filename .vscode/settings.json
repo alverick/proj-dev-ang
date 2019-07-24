@@ -1,0 +1,7 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/fe04196d-a862-412e-8346-3bbb88a80b32/resourceGroups/RG_EU2_C003_EURC_DEV_01/providers/Microsoft.Web/sites/wappeu2c003eurcdev01",
+    "appService.deploySubpath": "EurekaAngularProy",
+    "appService.zipIgnorePattern": [
+        ".vscode{,/**}"
+    ]
+}

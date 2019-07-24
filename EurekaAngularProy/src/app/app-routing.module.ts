@@ -13,9 +13,9 @@ import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-fou
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent,  canActivate: [AuthGuard] },  
-  { path: 'login', component: LoginComponent},
-  { path: '', redirectTo: '/home', pathMatch: 'full'  },  
+  { path: 'home', component: HomeComponent  },  
+  { path: 'login', component: LoginComponent,  canActivate: [AuthGuard]},
+  { path: '', redirectTo: '/login', pathMatch: 'full'  },  
   { path: '**', redirectTo: ''},
 
   { path: 'afiliacion', component: AfiliacionComponent},

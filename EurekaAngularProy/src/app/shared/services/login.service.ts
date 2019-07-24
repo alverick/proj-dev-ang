@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { environment } from '../../../environments/environment';
+import { environment } from "src/environments/environment.prod"; 
 import { RespuestaLogin } from "../models/respuestaLogin.model";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
@@ -17,7 +17,7 @@ export class LoginService {
 
 constructor(public http: HttpClient, private storage: StorageService)  { }
 
-private URI_API: string = environment.END_POINT
+private URI_API: string = environment.END_POINT;
 public errores: number;
 
 
@@ -27,7 +27,9 @@ login(ruc: string, psw: string): Observable<RespuestaLogin>{
   const data = `username=${ruc}&password=${psw}`;
   console.log(url, data);
   const opts = {
-    headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    headers: { "Content-Type": "application/x-www-form-urlencoded",
+              "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+              "Ocp-Apim-Trace": "true" }
   };
   return this.http.post(url, data, opts)
     .pipe(map((r: RespuestaLogin) => { 

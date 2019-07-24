@@ -8,7 +8,6 @@ import { CrearContrasenaComponent } from './crear-contrasena/crear-contrasena.co
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
-import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
@@ -32,7 +31,6 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
   providers: [
     StorageService,
     AuthGuard,
-    fakeBackendProvider,
     CookieService
   ],
   declarations: [LoginComponent, AfiliacionComponent, ConfigurarServiciosComponent, ProcesandoComponent, CrearContrasenaComponent]

@@ -13,7 +13,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from 'src/app/auth/auth.module';  
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
@@ -29,7 +28,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {  NgxPaginationModule } from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination'; 
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
 
 
@@ -44,7 +43,7 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
     PageNotFoundComponent,
     DialogDataExampleDialog,
     UploadProgressComponent,
-    ValidationComponent    
+    ValidationComponent
     ],
   imports: [
     BrowserModule,
@@ -70,12 +69,11 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
     MatCheckboxModule,
     MatSnackBarModule,
     MatProgressBarModule,
-    NgxPaginationModule
+    NgxPaginationModule,
 
   ],
   providers: [
     ExcelService,
-     fakeBackendProvider,
      {provide: ErrorStateMatcher,
       useClass: ShowOnDirtyErrorStateMatcher
       },
