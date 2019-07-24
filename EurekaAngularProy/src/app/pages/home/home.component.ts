@@ -118,10 +118,7 @@ export class HomeComponent implements OnInit {
     );
 
 
-    /*///////S E R V I C E //////// */
-      /*this.consultDeuda();*/
-    /*///////C O M B O S ////////// */ 
-
+    
     this.homeService.getType().subscribe(
       value => {
         this.typeList = value; 
@@ -288,7 +285,8 @@ export class DialogDataExampleDialog {
       xls: ['',Validators.required]
     })
   }
-  
+
+
   onChangeFile(event) {
     this.files = event.target.files;
   }
@@ -313,6 +311,7 @@ export class DialogDataExampleDialog {
       alert('Ingresa el excel');
     }
   }
+  
 
 
   exportDataParcialXLSX():void {
@@ -403,8 +402,12 @@ export class UploadProgressComponent  implements OnInit  {
       this.excelService.StatusExcel(this.excelService.idProcess)
       .subscribe(recursiveFunc);
     }, 800);
+
   }
 
+  ngOnDestroy(){
+    this.snackRef.dismiss();
+  }
 }
 
 
