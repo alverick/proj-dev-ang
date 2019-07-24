@@ -52,7 +52,9 @@ export class ExcelService {
     const url = `${this.URI_API}/debt/load?_=` + new Date().getTime();
     const opts={
       headers: {
-        "Authorization" : "bearer " + this.storage.getCurrentToken()
+        "Authorization" : "bearer " + this.storage.getCurrentToken(),
+        "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+        "Ocp-Apim-Trace": "true"
       }
     }
     const formData = new FormData();
@@ -66,7 +68,9 @@ export class ExcelService {
     console.log('begin status excel')
     const url = `${this.URI_API}/debt/process/${id}/status?_=` + new Date().getTime();
     const opts={
-      headers: {"Authorization" : "bearer " + this.storage.getCurrentToken()}
+      headers: {"Authorization" : "bearer " + this.storage.getCurrentToken(),
+      "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+      "Ocp-Apim-Trace": "true"}
     }
     return this.http.get<any>(url, opts).pipe(catchError(error => throwError(error)));
   

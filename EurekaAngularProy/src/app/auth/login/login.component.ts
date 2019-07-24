@@ -155,7 +155,7 @@ export class LoginComponent implements OnInit {
             if(error.status ===500){
               Swal.fire({
                 type: 'error',
-                text: 'ERROR 500',
+                text: 'ERROR de Servidor',
               }) 
             }
         },
