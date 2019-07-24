@@ -28,9 +28,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {  NgxPaginationModule } from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination'; 
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
-import { environment } from "src/environments/environment"; 
 
 
 
