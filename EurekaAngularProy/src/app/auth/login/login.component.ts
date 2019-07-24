@@ -121,51 +121,39 @@ export class LoginComponent implements OnInit {
           console.log("Codigo de respuseta : "+this.codRespuesta);
           if(value.estado===true){
             this.router.navigate(['/home']);
-            this.spinner.hide();     
-          
+            this.spinner.hide();           
           }else if(this.intentos <= 3 && this.codRespuesta == 2 ){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;
-            }else if(this.intentos <= 3 && this.codRespuesta == 3){
+          }else if(this.intentos <= 3 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
-          }
-          
-          
-          else if(this.intentos == 4 || this.intentos == 5 && this.codRespuesta == 2){
+          }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;            
             this.isCaptchaValidate = false;
-
-          }else if(this.intentos == 4 || this.intentos == 5 && this.codRespuesta == 3){
+          }else if(this.intentos == 4 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
             this.isCaptchaValidate = false;
             return this.isTrue = true;              
-
-          } 
-          
-          else if(this.intentos == 6){
+          }else if(this.intentos == 5 && this.codRespuesta == 2){
+            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
+          }else if(this.intentos == 6){
             console.log("Intentos : " + value.paramNum + "   Sin codigo");
-            Swal.fire({ type: 'error', title: 'Contraseña Incorrecta', text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe'})}            
-          },
-
+            Swal.fire({ type: 'error', title: 'Contraseña Incorrecta', text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe'})
+          }            
+        },
           error =>{ 
             this.spinner.hide();
             if(error.status ===500){
-              Swal.fire({
-                type: 'error',
-                text: 'ERROR de Servidor',
-              }) 
+              Swal.fire({ type: 'error', text: 'ERROR de Servidor'}) 
             }
-        },
+          },
         () => this.spinner.hide()
       );
-      }
+    }
   }
-
-
-
 
 
   public respuesta() : boolean{

@@ -117,8 +117,6 @@ export class HomeComponent implements OnInit {
       }
     );
 
-
-    
     this.homeService.getType().subscribe(
       value => {
         this.typeList = value; 
@@ -158,7 +156,7 @@ export class HomeComponent implements OnInit {
   /*//////////////////////////////
   //////////  C R U D /////////////////////// 
   ////////////////////////////////////////////////*/
- /*probando*/
+
     limpiarInput()
     {
       this.filtro.inputSearch  = "";
@@ -174,8 +172,6 @@ export class HomeComponent implements OnInit {
       this.filtro.dateTo = null;
     }
 
-    
- /////1
 
   BotonEditar(item: Debts) {
     this.spinner2.show();
