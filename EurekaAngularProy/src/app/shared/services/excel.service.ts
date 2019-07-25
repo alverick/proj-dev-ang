@@ -7,15 +7,19 @@ import { Observable, throwError } from "rxjs";
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { catchError } from "rxjs/operators";
+import { HomeComponent } from 'src/app/pages/home/home.component';
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
+const SERVICIO = 'Servicio';
 
 @Injectable()
 export class ExcelService {
   private URI_API: string = environment.END_POINT;
 
-  constructor(public http: HttpClient, private storage: StorageService) { }
+
+  constructor(public http: HttpClient, private storage: StorageService, 
+    public home: HomeComponent) { }
 
   /* ///////////////////////////////////
   ////////// D O W N L O A D /////////////////

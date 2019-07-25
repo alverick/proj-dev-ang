@@ -86,15 +86,7 @@ export class HomeComponent implements OnInit {
     }
 
 
-    numberOnly(event): boolean {
-      const charCode = (event.which) ? event.which : event.keyCode;
-      if (charCode > 31 && (charCode <= 46 || charCode >= 57)  ) {
-        return false;
-      }
-      return true;
-  
-    }
- 
+
     @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
       e.preventDefault();
     }
@@ -113,7 +105,6 @@ export class HomeComponent implements OnInit {
       value =>{
         this.services = value;
         this.serviceSelected = value[0];
-
       }
     );
 
