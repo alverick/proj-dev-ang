@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public show(): boolean{
-    if(this.router.url.includes('/login') || this.router.url.includes('/subirPlantilla')){
+    if(this.router.url.includes('/login') || this.router.url.includes('/afiliacion')|| this.router.url.includes('/crearContrasena')){
       return false;
     }
     return true;

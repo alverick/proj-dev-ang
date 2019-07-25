@@ -24,7 +24,7 @@
                                      <!---probando input -->
                                      <div class="pl-1">
                                             <div class="icon-addon addon-md "> 
-                                                    <input  class="input-filter" type="text"  [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
+                                                    <input maxlength="75"  #inputText  class="input-filter" type="text"  [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código" (keypress)="InputNombreCodigo($event)">
                                                     <label  (click)="limpiarInput()"  class="fa fa-times" ></label> 
                                             </div>
                                     </div> 
@@ -60,10 +60,11 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input  type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"    appBlockCopyPaste>
-                                            <label  (click)="limpiarcombo1()"  class="fa fa-times" ></label>
+                                            <input #inputDate1   type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"    appBlockCopyPaste>
+                                            <label  (click)="limpiardate1()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
+                                           
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -71,8 +72,8 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input type="text" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"  appBlockCopyPaste  >
-                                            <label  (click)="limpiarcombo2()"  class="fa fa-times" ></label>
+                                            <input  #inputDate2 type="text" id="inputDate2" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"  appBlockCopyPaste  >
+                                            <label  (click)="limpiardate2()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker ></mat-datepicker>
                                         </mat-form-field>

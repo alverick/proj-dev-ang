@@ -1,4 +1,4 @@
-import { Component, OnInit, Directive, HostListener, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -14,7 +14,6 @@ import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
 import { NgxSpinnerService } from 'ngx-spinner';
-
 declare var $: any;
 
 @Component({
@@ -26,10 +25,13 @@ declare var $: any;
 @Directive({
   selector: '[appBlockCopyPaste]'
 })
-
+ 
 
 export class HomeComponent implements OnInit {
-  
+ // inputDate1:string = '';  inputText 
+ @ViewChild("inputText") inputText: ElementRef;
+ @ViewChild("inputDate1") inputDate1: ElementRef;
+ @ViewChild("inputDate2") inputDate2: ElementRef;
   state: boolean = false;
   pageActual : number= 1;
 
@@ -86,6 +88,14 @@ export class HomeComponent implements OnInit {
     }
 
 
+    InputNombreCodigo(event): boolean {
+      const charCode = (event.which) ? event.which : event.keyCode;
+       if (charCode > 31 && (charCode <= 47 || charCode >= 57) &&  (charCode <= 65 || charCode >= 90) &&  (charCode <= 97 || charCode >= 122)  ) {
+        return false;
+      }
+      return true;
+  
+    }
     numberOnly(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
       if (charCode > 31 && (charCode <= 46 || charCode >= 57)  ) {
@@ -135,27 +145,64 @@ export class HomeComponent implements OnInit {
         this.DateList = value; 
     });  
 
-    this.consultaDeuda();
+    this.ListaDeuda();
  
   }
 
 /*//////// C R U D ///////////////////// */
+ 
+
+ListaDeuda() { 
+      console.log(this.filtro);
+      this.spinner2.show();
   
+      this.debtsList = {
+        count: 0,
+        data: []
+      };
+      this.transactionService.getDeuda(this.filtro)
+        .subscribe(debts => {
+          console.log(debts);
+          this.debtsList = debts;
+          this.spinner2.hide();
+  
+        });  
+  }
+
   consultaDeuda() {
-    console.log(this.filtro);
-    this.spinner2.show();
-
-    this.debtsList = {
-      count: 0,
-      data: []
-    };
-    this.transactionService.getDeuda(this.filtro)
-      .subscribe(debts => {
-        console.log(debts);
-        this.debtsList = debts;
-        this.spinner2.hide();
-
-      });
+  //   let usDatePattern = /^02\/(?:[01]\d|2\d)\/(?:19|20)(?:0[048]|[13579][26]|[2468][048])|(?:0[13578]|10|12)\/(?:[0-2]\d|3[01])\/(?:19|20)\d{2}|(?:0[469]|11)\/(?:[0-2]\d|30)\/(?:19|20)\d{2}|02\/(?:[0-1]\d|2[0-8])\/(?:19|20)\d{2}$/;
+     const fechaDesde = this.filtro.dateFrom;
+   
+     if(this.filtro.dateFrom > this.filtro.dateTo   ) { 
+      Swal.fire({
+            type: 'error',
+            text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
+          });
+          return; 
+     } 
+     if(this.filtro.dateFrom === null  ||this.filtro.dateTo === null ) { 
+          Swal.fire({
+                type: 'error',
+                text: 'Ingrese Correctamente los campos de Fecha',
+              }); 
+              return; 
+     } 
+     else{
+      console.log(this.filtro);
+      this.spinner2.show();
+  
+      this.debtsList = {
+        count: 0,
+        data: []
+      };
+      this.transactionService.getDeuda(this.filtro)
+        .subscribe(debts => {
+          console.log(debts);
+          this.debtsList = debts;
+          this.spinner2.hide();
+  
+        });   
+     } 
   }
 
   /*//////////////////////////////
@@ -163,18 +210,19 @@ export class HomeComponent implements OnInit {
   ////////////////////////////////////////////////*/
  /*probando*/
     limpiarInput()
-    {
-      this.filtro.inputSearch  = "";
+    { 
+       this.inputText.nativeElement.value = "";
     }
                      
-    limpiarcombo1()
-    {
-      this.filtro.dateFrom = null;
+    limpiardate1()
+    { 
+      this.inputDate1.nativeElement.value = ""; 
+       
     }
 
-    limpiarcombo2()
+    limpiardate2()
     {
-      this.filtro.dateTo = null;
+      this.inputDate2.nativeElement.value = ""; 
     }
 
     
