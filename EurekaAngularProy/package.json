@@ -24,7 +24,7 @@
     "@angular/router": "^6.1.0",
     "@auth0/angular-jwt": "^3.0.0",
     "@sweetalert2/ngx-sweetalert2": "^5.1.0",
-    "@uiowa/digit-only": "^1.0.1",
+    "@uiowa/digit-only": "^1.0.2",
     "angular-font-awesome": "^3.1.2",
     "angular-progress-bar": "^1.0.9",
     "bootstrap": "^4.3.1",
@@ -44,6 +44,7 @@
     "rxjs-compat": "^6.5.2",
     "sweetalert2": "^8.13.2",
     "symbol-observable": "^1.2.0",
+    "web-animations-js": "^2.3.2",
     "xlsx": "^0.14.3",
     "zone.js": "~0.8.26"
   },

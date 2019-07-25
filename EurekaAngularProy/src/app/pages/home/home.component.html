@@ -102,8 +102,7 @@
                         
                         <thead>
                             <!--//////////// A C C I O N E S //////////////// -->
-                            <tr>  
-                                    
+                            <tr>                                     
                                 <td colspan="2" class="head">
                                     <div class="d-flex">
                                         <div class="mr-3">   
@@ -133,7 +132,7 @@
                                             </div>  
                                             <div class="collapse sobresale" id="collapseExample">
                                                 <div class="card card-body" >
-                                                    <div  *ngFor="let service of services" (click)="openDialog()">
+                                                    <div *ngFor="let service of services" (click)="openDialog()">
                                                         <div data-toggle="collapse" >
                                                             {{service}} 
                                                         </div>
@@ -142,15 +141,12 @@
                                             </div> 
                                         </div>   
                                     </div>
-
-                                    
                                 </td>
                                    
                                 <td colspan="8"  class="head">
                                     <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
  
-                                </td>
-                                
+                                </td>                                
                             </tr>
 
                             <!--//////////// A C C I O N E S //////////////// -->                            
@@ -212,6 +208,63 @@
                                   
                             </tr>
                         </thead>
+
+
+                        <tbody>
+                            <tr *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
+                                <td> 
+                                    <input id="{{ 'chk_' + items.id }}" class="styled-checkbox"  type="checkbox" [(ngModel)]="items.selected" >
+                                    <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label> 
+                                </td>
+                                <td>
+                                    <span *ngIf="!items.edit" >{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
+                                    <div *ngIf="items.edit" class="content-input-icon position-relative">
+                                            <mat-form-field style="width: 100px">
+                                                <input matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate"  maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)" >
+                                                <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
+                                                <mat-datepicker #edp></mat-datepicker>
+                                            </mat-form-field>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span *ngIf="!items.edit" >{{items.dueDate | date:'dd/MM/yyyy' }}</span>
+                                    <div *ngIf="items.edit" class="content-input-icon position-relative">
+                                        <mat-form-field style="width: 100px">
+                                            <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate"   maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
+                                            <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
+                                            <mat-datepicker #ddp></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </td>
+                                <td>{{items.code}}</td>
+                                <td>{{items.firstName}}</td>
+                                <td>{{items.lastName}}</td>
+                                <td>{{items.service}}</td>
+                                <td>
+                                    <span *ngIf="!items.edit" >{{items.concept}}</span>
+                                    <div *ngIf="items.edit">
+                                        <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="onlyNumberKey($event)" />
+                                    </div>
+                                </td>
+                                <td>{{items.amount}}</td>
+                                <td width="76">
+                                       <div class="d-flex">
+                                            <div  *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="BotonEditar(items)" >
+                                                <span class="icon-editar iconos-big iconos-big"></span>
+                                            </div> &nbsp;&nbsp;&nbsp;
+                                            <div  *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="Eliminar(items)" >
+                                                <span class="icon-eliminar iconos-big iconos-big"></span>
+                                            </div> 
+                                            <div  *ngIf="items.edit"  class="d-inline-block" style="cursor: pointer" (click)="BotonActualizar(items)">
+                                                <img src="assets/images/table-check.svg"  alt="Aceptar">
+                                            </div> 
+                                            <div  (click)="BotonCancela(items)"  *ngIf="items.edit"  class="d-inline-block" style="cursor: pointer">
+                                                <img src="assets/images/table-delete.svg" alt="Eliminar">
+                                            </div>
+                                        </div>
+                                    </td>
+                            </tr> 
+                        </tbody>
                                 
                          
                         </div>

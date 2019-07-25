@@ -12,11 +12,9 @@
 
             <!--/////// R I G H T ////////-->
             <div class="col-sm position-relative">
-                <!--<div class="position-absolute bg-blanco box-login custom-shadow">-->
                 <div class="d-flex justify-content-center">
                     <div class="shadow-none border p-5 bg-white rounded">
-
-                    <!--/////// F O R M ////////-->
+                        <!--/////// F O R M ////////-->
                         <form  id="login-form"  [formGroup]="loginForm" (ngSubmit)="submitLogin()">
                             <h3 class="texto-azulbase text-center pb-3 mb-4 font-medium">Iniciar Sesión</h3>                
                             <div class="d-flex mb-4">
@@ -27,13 +25,12 @@
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6" for="">RUC</label>
                                     <mat-form-field class="full-width">
-                                        <input matInput  type="text" digitOnly minlength="11" maxlength="11"  formControlName="ruc"  appBlockCopyPaste>                   
+                                        <input matInput type="text" minlength="11" maxlength="11"  inputmode="numeric" pattern="[0-9]*" digitOnly  formControlName="ruc" appBlockCopyPaste>
                                         <mat-error *ngFor="let validation of account_validation_messages.ruc">
                                             <mat-error class="error-message" *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty 
                                                 || loginForm.get('ruc').touched)">
                                                 {{validation.message}}
                                         </mat-error>
-                                        
                                         <mat-error class="error-message" *ngIf="loginService.errores > 2">
                                             No tenemos una cuenta registrada con este RUC
                                         </mat-error> </mat-error> 
@@ -44,20 +41,23 @@
                                         <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
                                     </div>
                                 </div>
-                        </div>
-                        
-                        <div class="d-flex mb-4">
-                            <div class="mr-3">
-                                <span class="icon-acceso"></span>
                             </div>
-                            <!-- ////////////// P A S S W O R D /////////////////// -->
+                         
+
+                        
+                            <div class="d-flex mb-4">
+                                <div class="mr-3">
+                                    <span class="icon-acceso"></span>
+                                </div>
+                                
+                                <!-- ////////////// P A S S W O R D /////////////////// -->
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6" for="">Contraseña</label>
                                     <mat-form-field class="full-width">
                                         <input matInput type="password" minlength="6" maxlength="20"  formControlName="psw" appBlockCopyPaste >
                                         <mat-error *ngFor="let validation of account_validation_messages.psw">
                                             <mat-error class="error-message" *ngIf="loginForm.get('psw').hasError(validation.type) && (loginForm.get('psw').dirty || loginForm.get('psw').touched)">
-                                                {{validation.message}}
+                                            {{validation.message}}
                                             </mat-error>
                                         </mat-error>
                                     </mat-form-field>
@@ -79,8 +79,9 @@
                 </div>
             </div>            
         </div>           
-        </div>
-        <div class="bg-image-landing d-sm-none d-md-block" >
-            <img  class="img-fluid">            
-        </div>   
     </div>
+    
+    <div class="bg-image-landing d-sm-none d-md-block" >
+        <img  class="img-fluid">            
+    </div>   
+</div>
