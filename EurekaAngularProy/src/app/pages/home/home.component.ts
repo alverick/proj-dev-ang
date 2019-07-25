@@ -85,9 +85,8 @@ export class HomeComponent implements OnInit {
     public snackBar: MatSnackBar,
     private spinner2: NgxSpinnerService, private el: ElementRef) { 
  
-    }
-
-
+    } 
+    
     InputNombreCodigo(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
        if (charCode > 31 && (charCode <= 47 || charCode >= 57) &&  (charCode <= 65 || charCode >= 90) &&  (charCode <= 97 || charCode >= 122)  ) {
@@ -104,6 +103,7 @@ export class HomeComponent implements OnInit {
       return true;
   
     }
+ 
  
     @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
       e.preventDefault();
