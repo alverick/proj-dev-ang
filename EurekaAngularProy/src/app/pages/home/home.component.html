@@ -81,15 +81,6 @@
 
                                 <div class="texto-azulbase font-medium">
                                     <button class="btn-eureca btn-small btn-eureca-amarillo" (click)="consultaDeuda()">Buscar
-                                            <ngx-spinner
-                                            bdOpacity = 0.9
-                                            bdColor = ""
-                                            size = "medium"
-                                            color = "#ee7474"
-                                            type = "ball-spin-fade"
-                                            [fullScreen] = "false"
-                                            >
-                                            </ngx-spinner>
                                     </button>
                                 </div>
                             </div>
@@ -131,7 +122,7 @@
                                             </div>  
                                             <div class="collapse sobresale" id="collapseExample">
                                                 <div class="card card-body" >
-                                                    <div *ngFor="let service of services" (click)="openDialog()">
+                                                    <div *ngFor="let service of services" (click)="openDialog(service)">
                                                         <div data-toggle="collapse" >
                                                             {{service}} 
                                                         </div>

@@ -45,7 +45,7 @@ export class HomeService {
 */
 
 public SERVICES: string[]=[
-  'servicio', 'Matricula', 'Pension'
+  'Matricula', 'Pension'
 ];
   
 getDebts(): Observable<Debts[]> {

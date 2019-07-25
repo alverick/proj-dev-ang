@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Directive, ElementRef, Input} from '@angular/core';
+import { Component, OnInit, HostListener, Directive, ElementRef, Input, ViewChild} from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
+import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   public  error: {ruc: string, message: string} = null;
   public  respuestaHttp: number;
   public  formData: any = {};
-
+  public rememberMe: boolean = false;
 
 
 private specialKeys = {
@@ -39,11 +40,12 @@ private specialKeys = {
   
   isTrue: boolean = false;
   isCaptchaValidate: boolean = true;
-  rememberMe: boolean = false;
 
   codRpt2 : boolean = false;
   codRpt3 : boolean = false;
   
+  @ViewChild("recaptchaRef")
+  recaptchaRef: RecaptchaComponent;
 
   account_validation_messages = {
     'ruc': [
@@ -116,7 +118,9 @@ private specialKeys = {
   public submitLogin() : any {
     this.submitted = true;
     this.error = null;
+    this.cookieService.delete('ruc');
     console.log("LOGIN VALID  : " +this.loginForm.valid);
+    console.log(this.isCaptchaValidate);
     if(this.loginForm.valid && this.isCaptchaValidate){
       this.spinner.show();
       console.log(this.loginForm.value);
@@ -128,43 +132,55 @@ private specialKeys = {
           this.codRespuesta= value.codRespuesta;
           console.log("Codigo de respuseta : "+this.codRespuesta);
           if(value.estado===true){
-            let rucStr = this.cookieService.check('ruc')
             if(this.rememberMe==true){
-              let rucStr = this.cookieService.check('ruc') ?
-              this.cookieService.get('ruc') :  '';
-              this.router.navigate(['/home']);
-              this.spinner.hide();   
-            }else{
-              this.router.navigate(['/home']);
-              this.spinner.hide();
+              const expire = new Date();
+              expire.setDate(expire.getDate() + 25);
+              this.cookieService.set('ruc', this.f.ruc.value, expire);
             }
-            /* let rucStr = this.cookieService.check('ruc') ?
+            this.router.navigate(['/home']);
+            this.spinner.hide();
+          /* let rucStr = this.cookieService.check('ruc') ?
               this.cookieService.get('ruc') :  '';*/
             
-          }else if(this.intentos <= 3 && this.codRespuesta == 2 ){
+          }else if(this.intentos < 3 && this.codRespuesta == 2 ){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;
-          }else if(this.intentos <= 3 && this.codRespuesta == 3){
+          }else if(this.intentos < 3 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
+          }else if(this.intentos === 3 && this.codRespuesta == 2 ){
+            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
+            this.loginService.errores= value.codRespuesta;
+            this.isTrue = true;              
+          }else if(this.intentos === 3 && this.codRespuesta == 3){
+            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
+            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
+            this.isTrue = true;              
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;            
             this.isCaptchaValidate = false;
+            this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
+            this.isTrue = true;              
           }else if(this.intentos == 4 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
             this.isCaptchaValidate = false;
-            return this.isTrue = true;              
+            this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
+            this.isTrue = true;              
           }else if(this.intentos == 5 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
+            this.isTrue = true;              
           }else if(this.intentos == 5 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
+            this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
-          }else if(this.intentos == 6){
+            this.isTrue = true;              
+          }else if(this.intentos >= 6){
             console.log("Intentos : " + value.paramNum + "   Sin codigo");
             Swal.fire({ type: 'error', title: 'Contraseña Incorrecta', text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe'})
+            this.isTrue = false;              
           }            
         },
       error =>{ 

@@ -37,7 +37,7 @@
                                     </mat-form-field>
                                 
                                     <div class="mt-4">
-                                        <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" formControlName="rememberme" >
+                                        <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" [(ngModel)]="rememberMe" formControlName="rememberme" >
                                         <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
                                 </div>
                             </div>                    
                    
-                            <re-captcha *ngIf="isTrue" (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI" ></re-captcha>
+                            <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI" ></re-captcha>
                     
                             <!-- Login -->
                             <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white" form="login-form"> Ingresar</button>

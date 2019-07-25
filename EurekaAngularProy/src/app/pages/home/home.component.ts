@@ -165,7 +165,6 @@ export class HomeComponent implements OnInit {
 
 
   BotonEditar(item: Debts) {
-    this.spinner2.show();
     item.edit = true;
     item.newEmissionDate = item.emissionDate;
     item.newDueDate = item.dueDate;
@@ -175,6 +174,7 @@ export class HomeComponent implements OnInit {
   BotonActualizar(item: Debts){
     console.log('actualizar', item);
     item.edit = false;
+    this.spinner2.show();
     this.transactionService.editDeuda(item.id, {
       emissionDate: item.newEmissionDate,
       dueDate: item.newDueDate,
@@ -205,8 +205,8 @@ export class HomeComponent implements OnInit {
   }
 
   Eliminar(item: Debts) {
-    this.spinner2.show();
     if (confirm("¿Esta Seguro de Eliminar el Registro?")) {
+      this.spinner2.show();
       this.transactionService.deleteDeuda(item.id)
         .subscribe(() => this.consultaDeuda());
     }
@@ -221,7 +221,8 @@ export class HomeComponent implements OnInit {
 /*//////// O P E N  - D I A L O G ///////////////////// */
   
 
-  openDialog() {
+  openDialog(service: string) {
+    this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogDataExampleDialog);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -285,7 +286,7 @@ export class DialogDataExampleDialog {
    openSnackBar() {
     if(this.inputXlsForm.valid){
     /*service*/
-    this.excelService.UploadExcel(this.files)
+    this.excelService.UploadExcel(this.files, this.excelService.service)
     .subscribe(
       value=>{
         this.excelService.idProcess = value.id;
@@ -330,8 +331,8 @@ export class DialogDataExampleDialog {
 })
 
 export class UploadProgressComponent  implements OnInit  {
-   state: boolean = false;
-
+  state: boolean = false;
+  contador: number = 0;
   constructor( public dialog: MatDialog, public excelService: ExcelService,
                 private snackRef: MatSnackBarRef<UploadProgressComponent>) { }
 
@@ -348,12 +349,14 @@ export class UploadProgressComponent  implements OnInit  {
     setTimeout(fnc, 500);
   }
 
-  private verifyStatus()  {
+  private verifyStatus() {
     
     var recursiveFunc = (value) => {
-
+      
       console.log(value.status);
-       
+      this.contador = this.contador+1;
+
+    this.snackRef.dismiss();
       if (value.status === "REJECTED") {
         this.excelService.errores = value.errors;
         console.table(value.errors);
@@ -373,7 +376,7 @@ export class UploadProgressComponent  implements OnInit  {
         this.excelService.idProcess = 0;
         Swal.fire({
           type: 'success',
-          text: 'Cargó con éxito tu excel'
+          text: `Se cargaron ${value.rowsUploaded} registros`
         });
       }
       else  {
@@ -383,7 +386,7 @@ export class UploadProgressComponent  implements OnInit  {
             .subscribe(recursiveFunc);
         }, 500);
 
-      }
+      } 
     };
     setTimeout(() => {
       this.excelService.StatusExcel(this.excelService.idProcess)

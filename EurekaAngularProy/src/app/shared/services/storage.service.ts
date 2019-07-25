@@ -22,9 +22,9 @@ export class StorageService {
 
   setCurrentSession(session: Session): void {
     this.currentSession = session;
-    const expire = new Date();
-    expire.setDate(expire.getDate() + 25);
-    this.cookieStorage.set('ruc', session.user.ruc, expire);
+    //const expire = new Date();
+    //expire.setDate(expire.getDate() + 25);
+    //this.cookieStorage.set('ruc', session.user.ruc, expire);
     this.localStorageService.setItem('tk', session.token);
   }
 

@@ -28,7 +28,7 @@ login(ruc: string, psw: string): Observable<RespuestaLogin>{
   console.log(url, data);
   const opts = {
     headers: { "Content-Type": "application/x-www-form-urlencoded",
-              "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+              "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
               "Ocp-Apim-Trace": "true" }
   };
   return this.http.post(url, data, opts)
