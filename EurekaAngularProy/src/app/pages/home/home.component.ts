@@ -223,7 +223,7 @@ export class HomeComponent implements OnInit {
 
   SeleccionarTodos() {
     console.log('selecctionarTodos');
-   this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
+    this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
   }
 
 

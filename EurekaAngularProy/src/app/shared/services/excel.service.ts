@@ -49,7 +49,7 @@ export class ExcelService {
   UploadExcel(files: any): Observable<any>{
     console.log('begin upload excel')
     console.log(files);
-    const url = `${this.URI_API}/debt/load?_=` + new Date().getTime();
+    const url = `${this.URI_API}/debt/load/?_=` + new Date().getTime();
     const opts={
       headers: {
         "Authorization" : "bearer " + this.storage.getCurrentToken(),
