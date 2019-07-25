@@ -86,8 +86,7 @@ export class HomeComponent implements OnInit {
     private spinner2: NgxSpinnerService, private el: ElementRef) { 
  
     }
-
-
+ 
     InputNombreCodigo(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
        if (charCode > 31 && (charCode <= 47 || charCode >= 57) &&  (charCode <= 65 || charCode >= 90) &&  (charCode <= 97 || charCode >= 122)  ) {
@@ -104,6 +103,7 @@ export class HomeComponent implements OnInit {
       return true;
   
     }
+ 
  
     @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
       e.preventDefault();
@@ -123,14 +123,8 @@ export class HomeComponent implements OnInit {
       value =>{
         this.services = value;
         this.serviceSelected = value[0];
-
       }
     );
-
-
-    /*///////S E R V I C E //////// */
-      /*this.consultDeuda();*/
-    /*///////C O M B O S ////////// */ 
 
     this.homeService.getType().subscribe(
       value => {
@@ -208,7 +202,7 @@ ListaDeuda() {
   /*//////////////////////////////
   //////////  C R U D /////////////////////// 
   ////////////////////////////////////////////////*/
- /*probando*/
+
     limpiarInput()
     { 
        this.inputText.nativeElement.value = "";
@@ -225,8 +219,6 @@ ListaDeuda() {
       this.inputDate2.nativeElement.value = ""; 
     }
 
-    
- /////1
 
   BotonEditar(item: Debts) {
     this.spinner2.show();
@@ -278,7 +270,7 @@ ListaDeuda() {
 
   SeleccionarTodos() {
     console.log('selecctionarTodos');
-   this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
+    this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
   }
 
 
@@ -336,7 +328,8 @@ export class DialogDataExampleDialog {
       xls: ['',Validators.required]
     })
   }
-  
+
+
   onChangeFile(event) {
     this.files = event.target.files;
   }
@@ -361,6 +354,7 @@ export class DialogDataExampleDialog {
       alert('Ingresa el excel');
     }
   }
+  
 
 
   exportDataParcialXLSX():void {
@@ -451,8 +445,12 @@ export class UploadProgressComponent  implements OnInit  {
       this.excelService.StatusExcel(this.excelService.idProcess)
       .subscribe(recursiveFunc);
     }, 800);
+
   }
 
+  ngOnDestroy(){
+    this.snackRef.dismiss();
+  }
 }
 
 
