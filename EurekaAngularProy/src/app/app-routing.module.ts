@@ -14,10 +14,10 @@ import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent  },  
-  { path: 'login', component: LoginComponent/*,  canActivate: [AuthGuard]*/},
-  /*{ path: '', redirectTo: '/login', pathMatch: 'full'  },  
+  { path: 'login', component: LoginComponent,  canActivate: [AuthGuard]},
+  { path: '', redirectTo: '/login', pathMatch: 'full'  },  
   { path: '**', redirectTo: ''},
-*/
+
   { path: 'afiliacion', component: AfiliacionComponent},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent},
   { path: 'crearContrasena', component: CrearContrasenaComponent},
@@ -25,7 +25,6 @@ const routes: Routes = [
   
   { path: 'subirPlantilla', component: SubirPlantillaComponent},   
   { path: 'analisis', component: AnalisisComponent},
-
   { path: 'notFound', component: PageNotFoundComponent},
   
   
