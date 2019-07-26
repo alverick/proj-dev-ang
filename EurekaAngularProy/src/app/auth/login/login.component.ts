@@ -74,7 +74,6 @@ private specialKeys = {
     let rucStr = this.cookieService.check('ruc') ?
     this.cookieService.get('ruc') :  '';
     if(rucStr){
-      console.log("ENTRO !!");
       this.checked=true;
     }
 
@@ -141,21 +140,12 @@ private specialKeys = {
                   }
                       this.router.navigate(['/home']);
                       this.spinner.hide();             
-          }else if(this.intentos < 3 && this.codRespuesta == 2 ){
+          }else if(this.intentos < 4 && this.codRespuesta == 2 ){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
             this.codigo2=true;
-          }else if(this.intentos < 3 && this.codRespuesta == 3){
+          }else if(this.intentos < 4 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
-          }else if(this.intentos == 3 && this.codRespuesta == 2 ){
-            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
-            this.loginService.errores= value.codRespuesta;
-            this.isTrue = true;    
-            this.codigo2=true;          
-          }else if(this.intentos == 3 && this.codRespuesta == 3){
-            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
-            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
-            this.isTrue = true;              
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;            
