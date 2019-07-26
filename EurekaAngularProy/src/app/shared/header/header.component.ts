@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/shared/services/login.service';
-import { StorageService } from 'src/app/shared/services/storage.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -13,7 +13,8 @@ export class HeaderComponent implements OnInit {
   showHead: boolean = null;
 
   constructor(private router: Router,
-              private loginService: LoginService) { 
+              private loginService: LoginService,
+              private spinner: NgxSpinnerService) { 
   }
 
   ngOnInit() {
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout(): void{
+    this.spinner.show();
     this.loginService.logout();
   }
 
