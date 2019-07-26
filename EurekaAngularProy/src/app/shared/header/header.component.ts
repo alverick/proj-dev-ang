@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
   public logout(): void{
     this.spinner.show();
     this.loginService.logout();
+    this.spinner.hide();
   }
 
   public show(): boolean{

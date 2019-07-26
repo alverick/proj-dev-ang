@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   public  error: {ruc: string, message: string} = null;
   public  respuestaHttp: number;
   public  formData: any = {};
-  public rememberMe: boolean = false;
+  public  rememberMe: boolean = false;
 
 private specialKeys = {
   number: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
@@ -37,6 +37,7 @@ private specialKeys = {
   codRespuesta: number;
   err: boolean;
   numero2: number;
+  checked: boolean = false;
   
   isTrue: boolean = false;
   codigo2: boolean = false;
@@ -70,10 +71,14 @@ private specialKeys = {
   }
 
   validationLogin(){
-   /* let rucStr = this.cookieService.check('ruc') ?
-    this.cookieService.get('ruc') :  '';*/
     let rucStr = this.cookieService.check('ruc') ?
     this.cookieService.get('ruc') :  '';
+    if(rucStr){
+      console.log("ENTRO !!");
+      this.checked=true;
+    }
+
+    console.log("RUCSTR : "+rucStr);
     
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.minLength(11), Validators.required,
@@ -111,7 +116,7 @@ private specialKeys = {
   
 
   /* /////// L O G I N ////////////  */
-
+ 
   public submitLogin() : any {
 
     this.cookieService.delete('ruc');
