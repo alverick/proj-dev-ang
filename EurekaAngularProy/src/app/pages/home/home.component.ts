@@ -1,3 +1,4 @@
+import { Datepicker2Component } from './../datepicker2/datepicker2.component';
 import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -9,7 +10,7 @@ import { MatDialog, MatSnackBar,MatSnackBarRef, MatDialogRef} from '@angular/mat
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
@@ -34,11 +35,13 @@ export class HomeComponent implements OnInit {
  @ViewChild("inputDate2") inputDate2: ElementRef;
   state: boolean = false;
   pageActual : number= 1;
+  ListaValidacion : Boolean;
 
   public user: User;
   DebtsArray = [];
   checkboxes: any;
 
+  
   mostrar: Boolean;
   inputEdit: Boolean;
   InputList: Boolean;  
@@ -74,6 +77,7 @@ export class HomeComponent implements OnInit {
     dateFrom: null,
     dateTo: null
   };
+  control: any;
 
   constructor(
     private storageService: StorageService,
@@ -83,10 +87,11 @@ export class HomeComponent implements OnInit {
     private excelService: ExcelService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private spinner2: NgxSpinnerService, private el: ElementRef) { 
- 
+    private spinner2: NgxSpinnerService, 
+    private el: ElementRef, ) { 
+      
     } 
-    
+   
     InputNombreCodigo(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
        if (charCode > 31 && (charCode <= 47 || charCode >= 57) &&  (charCode <= 65 || charCode >= 90) &&  (charCode <= 97 || charCode >= 122)  ) {
@@ -100,8 +105,7 @@ export class HomeComponent implements OnInit {
       if (charCode > 31 && (charCode <= 46 || charCode >= 57)  ) {
         return false;
       }
-      return true;
-  
+      return true; 
     }
  
  
@@ -140,7 +144,11 @@ export class HomeComponent implements OnInit {
     });  
 
     this.ListaDeuda();
- 
+
+   /* if(this.debtsList.count <=0){
+      this.ListaValidacion = true;
+    }
+ */
   }
 
 /*//////// C R U D ///////////////////// */
@@ -153,36 +161,147 @@ ListaDeuda() {
       this.debtsList = {
         count: 0,
         data: []
-      };
+      }; 
       this.transactionService.getDeuda(this.filtro)
         .subscribe(debts => {
           console.log(debts);
           this.debtsList = debts;
           this.spinner2.hide();
   
-        });  
+      });  
   }
 
   consultaDeuda() {
-  //   let usDatePattern = /^02\/(?:[01]\d|2\d)\/(?:19|20)(?:0[048]|[13579][26]|[2468][048])|(?:0[13578]|10|12)\/(?:[0-2]\d|3[01])\/(?:19|20)\d{2}|(?:0[469]|11)\/(?:[0-2]\d|30)\/(?:19|20)\d{2}|02\/(?:[0-1]\d|2[0-8])\/(?:19|20)\d{2}$/;
-     const fechaDesde = this.filtro.dateFrom;
-   
-     if(this.filtro.dateFrom > this.filtro.dateTo   ) { 
-      Swal.fire({
-            type: 'error',
-            text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
-          });
-          return; 
-     } 
-     if(this.filtro.dateFrom === null  ||this.filtro.dateTo === null ) { 
-          Swal.fire({
+      let usDatePattern = /^02\/(?:[01]\d|2\d)\/(?:19|20)(?:0[048]|[13579][26]|[2468][048])|(?:0[13578]|10|12)\/(?:[0-2]\d|3[01])\/(?:19|20)\d{2}|(?:0[469]|11)\/(?:[0-2]\d|30)\/(?:19|20)\d{2}|02\/(?:[0-1]\d|2[0-8])\/(?:19|20)\d{2}$/;
+   //   formControlName="rememberme"
+  // control: new FormControl();
+
+
+  // const fechaDesde = this.filtro.dateFrom;
+
+    
+
+      if(this.filtro.dateFrom === null &&  this.filtro.dateTo === null) { 
+    ///       dateFrom es inputDate1              | dateTo  es inputDate2
+    console.log("entro 1");
+        if(this.inputDate1.nativeElement.value === "" &&  this.inputDate2.nativeElement.value === ""){
+          if(this.filtro.dateFrom > this.filtro.dateTo   ) { 
+            Swal.fire({
+              type: 'error',
+              text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
+            });
+            return; 
+          }else{
+                console.log(this.filtro);
+                this.spinner2.show();
+          
+                this.debtsList = {
+                  count: 0,
+                  data: []
+                };
+                this.transactionService.getDeuda(this.filtro)
+                  .subscribe(debts => {
+                    console.log(debts);
+                    this.debtsList = debts;
+                    this.spinner2.hide();
+            
+                });   
+          }
+        }
+        else {
+                if (!this.inputDate1.nativeElement.value.match(usDatePattern)){
+                  Swal.fire({
+                    type: 'error',
+                    text: 'Ingrese correctamente la fecha desde',
+                  });
+                  return;
+                }
+                if (!this.inputDate2.nativeElement.value.match(usDatePattern)){
+                  Swal.fire({
+                    type: 'error',
+                    text: 'Ingrese correctamente las fecha hasta',
+                  });
+                  return;
+                }
+                else{
+                      console.log(this.filtro);
+                      this.spinner2.show();
+                
+                      this.debtsList = {
+                        count: 0,
+                        data: []
+                      };
+                      this.transactionService.getDeuda(this.filtro)
+                        .subscribe(debts => {
+                          console.log(debts);
+                          this.debtsList = debts;
+                          this.spinner2.hide();
+                  
+                      });   
+                }   
+        } 
+      }
+      /////  CAMBIO ACA XDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+      else { 
+        console.log("entro 2");
+          if( this.inputDate1.nativeElement.value === ""){
+              Swal.fire({
                 type: 'error',
-                text: 'Ingrese Correctamente los campos de Fecha',
-              }); 
+              //  text: 'La fecha "desde" no puede estar en blanco',
+                text: 'Ingrese una de la fecha desde 2',  
+              });
               return; 
-     } 
-     else{
-      console.log(this.filtro);
+          }
+          else if( this.inputDate2.nativeElement.value === ""){
+              Swal.fire({
+                type: 'error', 
+                text: 'Ingrese una de la fecha hasta 2',    
+              });
+              return; 
+          } 
+          else if( this.inputDate2.nativeElement.value === ""){
+            Swal.fire({
+              type: 'error', 
+              text: 'Ingrese una de la fecha hasta 2',    
+            });
+            return; 
+          } 
+          else if( !this.inputDate1.nativeElement.value.match(usDatePattern)){
+              Swal.fire({
+                type: 'error', 
+                text: 'ingrese correctamente la fecha desde',  
+              });
+              return;
+          }
+          else if( !this.inputDate2.nativeElement.value.match(usDatePattern)){
+            Swal.fire({
+              type: 'error', 
+              text: 'ingrese correctamente la fecha hasta',  
+            });
+            return;
+          }else{
+              console.log(this.filtro);
+              this.spinner2.show();
+        
+              this.debtsList = {
+                count: 0,
+                data: []
+              };
+              this.transactionService.getDeuda(this.filtro)
+                .subscribe(debts => {
+                  console.log(debts);
+                  this.debtsList = debts;
+                  this.spinner2.hide();
+          
+              });   
+
+          }
+       
+      
+     
+}
+
+    /*  console.log(this.filtro);
       this.spinner2.show();
   
       this.debtsList = {
@@ -196,9 +315,9 @@ ListaDeuda() {
           this.spinner2.hide();
   
         });   
-     } 
-  }
-
+      */
+     
+}
   /*//////////////////////////////
   //////////  C R U D /////////////////////// 
   ////////////////////////////////////////////////*/
@@ -211,12 +330,13 @@ ListaDeuda() {
     limpiardate1()
     { 
       this.inputDate1.nativeElement.value = ""; 
-       
+      this.filtro.dateFrom = null; 
     }
 
     limpiardate2()
     {
       this.inputDate2.nativeElement.value = ""; 
+      this.filtro.dateTo = null;
     }
 
 

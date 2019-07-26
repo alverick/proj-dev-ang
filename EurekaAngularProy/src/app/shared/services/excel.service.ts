@@ -6,8 +6,7 @@ import { StorageService } from "./storage.service";
 import { Observable, throwError } from "rxjs";
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
-import { catchError } from "rxjs/operators";
-import { HomeComponent } from 'src/app/pages/home/home.component';
+import { catchError } from "rxjs/operators"; 
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -19,7 +18,7 @@ export class ExcelService {
 
 
   constructor(public http: HttpClient, private storage: StorageService, 
-    public home: HomeComponent) { }
+    ) { }
 
   /* ///////////////////////////////////
   ////////// D O W N L O A D /////////////////

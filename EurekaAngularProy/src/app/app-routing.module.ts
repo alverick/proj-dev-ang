@@ -11,12 +11,14 @@ import { ProcesandoComponent } from 'src/app/auth/procesando/procesando.componen
 import { AnalisisComponent } from 'src/app/pages/analisis/analisis.component';
 import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-found.component';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
+import { Datepicker2Component } from './pages/datepicker2/datepicker2.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent /*,  canActivate: [AuthGuard] */},  
+  { path: 'home', component: HomeComponent /* ,  canActivate: [AuthGuard] */ },  
   { path: 'login', component: LoginComponent},
-/*  { path: '', redirectTo: '/home', pathMatch: 'full'  },  
-  { path: '**', redirectTo: ''},*/
+  { path: 'date', component: Datepicker2Component},
+   { path: '', redirectTo: '/home', pathMatch: 'full'  },  
+  { path: '**', redirectTo: ''}, 
 
   { path: 'afiliacion', component: AfiliacionComponent},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent},

@@ -30,9 +30,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxPaginationModule } from 'ngx-pagination'; 
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
-
-
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter'; 
+import { Datepicker2Component } from './pages/datepicker2/datepicker2.component';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +43,8 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
     PageNotFoundComponent,
     DialogDataExampleDialog,
     UploadProgressComponent,
-    ValidationComponent
+    ValidationComponent,
+    Datepicker2Component
     ],
   imports: [
     BrowserModule,
@@ -70,7 +71,8 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
     MatSnackBarModule,
     MatProgressBarModule,
     NgxPaginationModule,
-
+    MatMomentDateModule,  
+  
   ],
   providers: [
     ExcelService,

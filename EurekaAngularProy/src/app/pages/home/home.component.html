@@ -60,7 +60,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input #inputDate1   type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"    appBlockCopyPaste>
+                                            <input   #inputDate1   type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"    appBlockCopyPaste>
                                             <label  (click)="limpiardate1()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
@@ -72,7 +72,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input  #inputDate2 type="text" id="inputDate2" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"  appBlockCopyPaste  >
+                                            <input   #inputDate2 type="text" id="inputDate2" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"  appBlockCopyPaste  >
                                             <label  (click)="limpiardate2()"  class="fa fa-times" ></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker ></mat-datepicker>
@@ -209,7 +209,8 @@
 
 
                         <tbody>
-                            <tr *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
+                          <!--  <tr *ngIf="ListaValidacion" style="align-self: center;"> No se encontraron ningun Resultado </tr>  -->
+                            <tr  *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
                                 <td> 
                                     <input id="{{ 'chk_' + items.id }}" class="styled-checkbox"  type="checkbox" [(ngModel)]="items.selected" >
                                     <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label> 
@@ -218,7 +219,7 @@
                                     <span *ngIf="!items.edit" >{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
-                                                <input matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate"  maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)" >
+                                                <input (dateChange)="change($event)"  matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)" >
                                                 <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                                                 <mat-datepicker #edp></mat-datepicker>
                                             </mat-form-field>
