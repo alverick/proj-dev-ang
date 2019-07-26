@@ -13,8 +13,7 @@ export class HeaderComponent implements OnInit {
   showHead: boolean = null;
 
   constructor(private router: Router,
-              private loginService: LoginService,
-              private storageService: StorageService) { 
+              private loginService: LoginService) { 
   }
 
   ngOnInit() {
@@ -22,7 +21,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout(): void{
-    this.storageService.logout();
+    this.loginService.logout();
   }
 
   public show(): boolean{

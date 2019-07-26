@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Directive, ElementRef, Input, ViewChild} from '@angular/core';
+import { Component, OnInit, HostListener, Directive, ViewChild} from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -28,22 +28,20 @@ export class LoginComponent implements OnInit {
   public  formData: any = {};
   public rememberMe: boolean = false;
 
-
 private specialKeys = {
   number: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
   decimal: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
 };
+
   intentos: number = 0;
   codRespuesta: number;
   err: boolean;
   numero2: number;
   
   isTrue: boolean = false;
+  codigo2: boolean = false;
   isCaptchaValidate: boolean = true;
 
-  codRpt2 : boolean = false;
-  codRpt3 : boolean = false;
-  
   @ViewChild("recaptchaRef")
   recaptchaRef: RecaptchaComponent;
 
@@ -69,7 +67,6 @@ private specialKeys = {
 
   ngOnInit() {
     this.validationLogin();
-    this.codRpt2;
   }
 
   validationLogin(){
@@ -116,8 +113,7 @@ private specialKeys = {
   /* /////// L O G I N ////////////  */
 
   public submitLogin() : any {
-    this.submitted = true;
-    this.error = null;
+
     this.cookieService.delete('ruc');
     console.log("LOGIN VALID  : " +this.loginForm.valid);
     console.log(this.isCaptchaValidate);
@@ -130,29 +126,28 @@ private specialKeys = {
         value => {
           this.intentos= value.paramNum;
           this.codRespuesta= value.codRespuesta;
-          console.log("Codigo de respuseta : "+this.codRespuesta);
-          if(value.estado===true){
-            if(this.rememberMe==true){
-              const expire = new Date();
-              expire.setDate(expire.getDate() + 25);
-              this.cookieService.set('ruc', this.f.ruc.value, expire);
-            }
-            this.router.navigate(['/home']);
-            this.spinner.hide();
-          /* let rucStr = this.cookieService.check('ruc') ?
-              this.cookieService.get('ruc') :  '';*/
-            
+          if(value.paramStr==="Un session ya se encuentra activa"){
+            Swal.fire({ type: 'warning', text: 'Existe una Sesión Activa'})        
+          }else if(value.estado===true){
+                  if(this.rememberMe==true){
+                      const expire = new Date();
+                      expire.setDate(expire.getDate() + 25);
+                      this.cookieService.set('ruc', this.f.ruc.value, expire);
+                  }
+                      this.router.navigate(['/home']);
+                      this.spinner.hide();             
           }else if(this.intentos < 3 && this.codRespuesta == 2 ){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
-            this.loginService.errores= value.codRespuesta;
+            this.codigo2=true;
           }else if(this.intentos < 3 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
-          }else if(this.intentos === 3 && this.codRespuesta == 2 ){
+          }else if(this.intentos == 3 && this.codRespuesta == 2 ){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;
-            this.isTrue = true;              
-          }else if(this.intentos === 3 && this.codRespuesta == 3){
+            this.isTrue = true;    
+            this.codigo2=true;          
+          }else if(this.intentos == 3 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
             this.isTrue = true;              
@@ -162,15 +157,20 @@ private specialKeys = {
             this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isTrue = true;              
+            this.codigo2=true;          
+
           }else if(this.intentos == 4 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
             this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isTrue = true;              
+            
           }else if(this.intentos == 5 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
-            this.isTrue = true;              
+            this.isTrue = true;      
+            this.codigo2=true;          
+        
           }else if(this.intentos == 5 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        

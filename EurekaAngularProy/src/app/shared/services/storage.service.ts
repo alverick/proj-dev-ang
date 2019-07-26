@@ -15,7 +15,7 @@ export class StorageService {
   private localStorageService;
   private currentSession : Session = null;
 
-  constructor(private router: Router, private cookieStorage: CookieService) {
+  constructor(private cookieStorage: CookieService) {
     this.localStorageService = localStorage;
     this.currentSession = this.loadSessionData();
   }
@@ -62,10 +62,10 @@ export class StorageService {
     var session = this.getCurrentSession();
     return (session && session.token) ? session.token : null;
   };
-
+/*
   logout(): void{
     this.removeCurrentSession();
     this.router.navigate(['/login']);
   }
-
+*/
 }

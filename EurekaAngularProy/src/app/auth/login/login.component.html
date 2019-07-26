@@ -31,10 +31,11 @@
                                                 || loginForm.get('ruc').touched)">
                                                 {{validation.message}}
                                         </mat-error>
-                                        <mat-error class="error-message" *ngIf="loginService.errores > 2">
-                                            No tenemos una cuenta registrada con este RUC
-                                        </mat-error> </mat-error> 
+                                        </mat-error> 
                                     </mat-form-field>
+                                     <div style="color:#f44336 !important; font-size: 1vw" *ngIf="codigo2" class="error-message">
+                                        No tenemos una cuenta registrada con este RUC
+                                    </div>
                                 
                                     <div class="mt-4">
                                         <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" [(ngModel)]="rememberMe" formControlName="rememberme" >
