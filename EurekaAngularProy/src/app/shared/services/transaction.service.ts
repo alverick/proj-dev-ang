@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment.prod";
+import { environment } from "src/environments/environment";
 import { StorageService } from "./storage.service";
 import { Debts, DebtsPagedList } from "../models/debts";
 import { Observable, throwError } from "rxjs";
@@ -37,7 +37,7 @@ export class TransactionService {
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),
-          "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+          "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
           "Ocp-Apim-Trace": "true" }
         };
         return this.http.get<DebtsPagedList>(url, opts)
@@ -56,11 +56,11 @@ export class TransactionService {
        deleteDeuda(idDebt: number): Observable<Debts>{
         console.log('begin login')
         // cambia link
-        const url = `${this.URI_API}/debt?id=${idDebt}`;
+        const url = `${this.URI_API}/debt/${idDebt}`;
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),
-          "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+          "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
           "Ocp-Apim-Trace": "true" }
         };
         return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
@@ -71,7 +71,7 @@ export class TransactionService {
       console.log(url);
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),
-        "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": "true" }
       };
       return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
@@ -84,7 +84,7 @@ export class TransactionService {
       console.log(url);
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),
-        "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": "true" }
       };
       return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));  

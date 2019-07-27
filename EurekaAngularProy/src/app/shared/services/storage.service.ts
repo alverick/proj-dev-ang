@@ -15,16 +15,16 @@ export class StorageService {
   private localStorageService;
   private currentSession : Session = null;
 
-  constructor(private router: Router, private cookieStorage: CookieService) {
+  constructor(private cookieStorage: CookieService) {
     this.localStorageService = localStorage;
     this.currentSession = this.loadSessionData();
   }
 
   setCurrentSession(session: Session): void {
     this.currentSession = session;
-    const expire = new Date();
-    expire.setDate(expire.getDate() + 25);
-    this.cookieStorage.set('ruc', session.user.ruc, expire);
+    //const expire = new Date();
+    //expire.setDate(expire.getDate() + 25);
+    //this.cookieStorage.set('ruc', session.user.ruc, expire);
     this.localStorageService.setItem('tk', session.token);
   }
 
@@ -62,10 +62,10 @@ export class StorageService {
     var session = this.getCurrentSession();
     return (session && session.token) ? session.token : null;
   };
-
+/*
   logout(): void{
     this.removeCurrentSession();
     this.router.navigate(['/login']);
   }
-
+*/
 }

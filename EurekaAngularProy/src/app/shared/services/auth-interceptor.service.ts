@@ -3,6 +3,7 @@ import { HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +18,17 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     let request = req;
 
+    let headers = {
+      "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
+      "Ocp-Apim-Trace": `true`
+    };
+
     if(token){
-      request = req.clone({
-        setHeaders:{
-          authorization: `Bearer ${ token }`, 
-          ocpApimSubscriptionKey: `3b8700ab20814ee58e07ffc89e16c86`,
-          ocpApimTrace: `true`
-        }
-      });
+      headers["Authorization"] = `bearer ${token}`  
     }
+    request = req.clone({
+      setHeaders: headers
+    });
 
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse)=>{

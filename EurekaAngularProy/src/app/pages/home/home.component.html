@@ -13,13 +13,7 @@
                                 <div class="pl-2 pr-4">
                                     <span class="icon-filter"></span>
                                 </div>
-                                <!--
-                                    <div class="pl-1">
-                                        <div class="content-filter">
-                                                <span class="icon-search"></span>
-                                            <input class="input-filter" type="text" [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
-                                        </div>
-                                    </div> -->
+
                                 <!---probando input -->
                                 <div class="pl-1">
                                     <div class="icon-addon addon-md ">
@@ -81,15 +75,6 @@
 
                                 <div class="texto-azulbase font-medium">
                                     <button class="btn-eureca btn-small btn-eureca-amarillo" (click)="consultaDeuda()">Buscar
-                                            <ngx-spinner
-                                            bdOpacity = 0.9
-                                            bdColor = ""
-                                            size = "medium"
-                                            color = "#ee7474"
-                                            type = "ball-spin-fade"
-                                            [fullScreen] = "false"
-                                            >
-                                            </ngx-spinner>
                                     </button>
                                 </div>
                             </div>
@@ -129,7 +114,7 @@
                                                 </div>
                                                 <div class="collapse sobresale" id="collapseExample">
                                                     <div class="card card-body">
-                                                        <div *ngFor="let service of services" (click)="openDialog()">
+                                                        <div *ngFor="let service of services" (click)="openDialog(service)">
                                                             <div data-toggle="collapse">
                                                                 {{service}}
                                                             </div>
@@ -137,7 +122,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </td>
 
                                     <td colspan="8" class="head">
@@ -265,10 +249,10 @@
                             </tbody>
 
 
-                        </div>
+                            </div>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

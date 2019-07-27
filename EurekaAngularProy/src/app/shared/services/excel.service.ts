@@ -6,7 +6,7 @@ import { StorageService } from "./storage.service";
 import { Observable, throwError } from "rxjs";
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
-import { catchError } from "rxjs/operators"; 
+import { catchError } from "rxjs/operators";
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -17,8 +17,7 @@ export class ExcelService {
   private URI_API: string = environment.END_POINT;
 
 
-  constructor(public http: HttpClient, private storage: StorageService, 
-    ) { }
+  constructor(public http: HttpClient, private storage: StorageService, ) { }
 
   /* ///////////////////////////////////
   ////////// D O W N L O A D /////////////////
@@ -46,17 +45,18 @@ export class ExcelService {
   ////////// U P L O A D /////////////////
   //////////////////////////////////////////  */ 
 
+  public service: string = '';
   public idProcess: number = 0;
   public errores: Error[] = [];
 
-  UploadExcel(files: any): Observable<any>{
+  UploadExcel(files: any, service: string): Observable<any>{
     console.log('begin upload excel')
     console.log(files);
-    const url = `${this.URI_API}/debt/load/?_=` + new Date().getTime();
+    const url = `${this.URI_API}/debt/load/${service}?_=` + new Date().getTime();
     const opts={
       headers: {
         "Authorization" : "bearer " + this.storage.getCurrentToken(),
-        "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": "true"
       }
     }
@@ -72,7 +72,7 @@ export class ExcelService {
     const url = `${this.URI_API}/debt/process/${id}/status?_=` + new Date().getTime();
     const opts={
       headers: {"Authorization" : "bearer " + this.storage.getCurrentToken(),
-      "Ocp-Apim-Subscription-Key": "3b8700ab20814ee58e07ffc89e16c86d",
+      "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
       "Ocp-Apim-Trace": "true"}
     }
     return this.http.get<any>(url, opts).pipe(catchError(error => throwError(error)));
