@@ -1,4 +1,3 @@
-import { Datepicker2Component } from './../datepicker2/datepicker2.component';
 import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -6,7 +5,7 @@ import { HomeService } from 'src/app/shared/services/home.service';
 import { Router } from '@angular/router';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
-import { MatDialog, MatSnackBar,MatSnackBarRef, MatDialogRef} from '@angular/material';
+import { MatDialog, MatSnackBar, MatSnackBarRef, MatDialogRef} from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
@@ -15,39 +14,77 @@ import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+
+/// DATE PIECKER FORMAT
+import {   Output, EventEmitter } from '@angular/core';
+import * as _moment from 'moment';  // dejalo si sale error
+import { default as _rollupMoment } from 'moment';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+//// END DATE ////////////////////
+
+const moment = _rollupMoment || _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+////////////////////////////
+
 declare var $: any;
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html', 
-  styleUrls: ['./home.component.scss']
+  selector: 'app-home',  
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+  providers: [
+
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
 })
- 
+
 @Directive({
   selector: '[appBlockCopyPaste]'
 })
- 
 
+
+// tslint:disable-next-line:directive-class-suffix
 export class HomeComponent implements OnInit {
- // inputDate1:string = '';  inputText 
- @ViewChild("inputText") inputText: ElementRef;
- @ViewChild("inputDate1") inputDate1: ElementRef;
- @ViewChild("inputDate2") inputDate2: ElementRef;
+ // datepicker format
+ @Output() date2: EventEmitter<any> = new EventEmitter<any>();
+ date = new FormControl(moment());
+
+ // inputDate1:string = '';  inputText
+ @ViewChild('inputText') inputText: ElementRef;
+ @ViewChild('inputDate1') inputDate1: ElementRef;
+ @ViewChild('inputDate2') inputDate2: ElementRef;
+  // tslint:disable-next-line:no-inferrable-types
   state: boolean = false;
-  pageActual : number= 1;
-  ListaValidacion : Boolean;
+  // tslint:disable-next-line:whitespace
+  // tslint:disable-next-line:no-inferrable-types
+  pageActual: number = 1;
+  ListaValidacion: Boolean;
 
   public user: User;
   DebtsArray = [];
   checkboxes: any;
 
-  
+
   mostrar: Boolean;
   inputEdit: Boolean;
-  InputList: Boolean;  
+  InputList: Boolean;
 
-  debtsList : DebtsPagedList; 
- 
+  debtsList: DebtsPagedList;
+
   typeList: Type[];
   waypayList: WayPay[];
   DateList: Date[];
@@ -64,6 +101,7 @@ export class HomeComponent implements OnInit {
   serviceSelected: String;
   services: String[];
 
+  // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = false;
 
   filtro: DebstFilter = {
@@ -87,36 +125,37 @@ export class HomeComponent implements OnInit {
     private excelService: ExcelService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private spinner2: NgxSpinnerService, 
-    private el: ElementRef, ) { 
-      
-    } 
-   
+    private spinner2: NgxSpinnerService,
+    private el: ElementRef, ) {
+
+    }
+
     InputNombreCodigo(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
+       // tslint:disable-next-line:max-line-length
        if (charCode > 31 && (charCode <= 47 || charCode >= 57) &&  (charCode <= 65 || charCode >= 90) &&  (charCode <= 97 || charCode >= 122)  ) {
         return false;
       }
       return true;
-  
+
     }
     numberOnly(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
       if (charCode > 31 && (charCode <= 46 || charCode >= 57)  ) {
         return false;
       }
-      return true; 
+      return true;
     }
- 
- 
+
+
     @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
       e.preventDefault();
     }
-  
+
     @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
       e.preventDefault();
     }
-  
+
     @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
       e.preventDefault();
     }
@@ -124,7 +163,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
     this.homeService.getServices().subscribe(
-      value =>{
+      value => {
         this.services = value;
         this.serviceSelected = value[0];
       }
@@ -132,18 +171,18 @@ export class HomeComponent implements OnInit {
 
     this.homeService.getType().subscribe(
       value => {
-        this.typeList = value; 
-    }); 
+        this.typeList = value;
+    });
     this.homeService.getWayPay().subscribe(
       value => {
-        this.waypayList = value; 
-    }); 
+        this.waypayList = value;
+    });
     this.homeService.getDate().subscribe(
       value => {
-        this.DateList = value; 
-    });  
+        this.DateList = value;
+    });
 
-    this.ListaDeuda();
+    this.consultaDeuda();
 
    /* if(this.debtsList.count <=0){
       this.ListaValidacion = true;
@@ -152,49 +191,34 @@ export class HomeComponent implements OnInit {
   }
 
 /*//////// C R U D ///////////////////// */
- 
+// datepiecker format
+change(dateEvent) {
+  this.date2.emit(dateEvent.value);
+}
 
-ListaDeuda() { 
-      console.log(this.filtro);
-      this.spinner2.show();
-  
-      this.debtsList = {
-        count: 0,
-        data: []
-      }; 
-      this.transactionService.getDeuda(this.filtro)
-        .subscribe(debts => {
-          console.log(debts);
-          this.debtsList = debts;
-          this.spinner2.hide();
-  
-      });  
-  }
 
   consultaDeuda() {
-      let usDatePattern = /^02\/(?:[01]\d|2\d)\/(?:19|20)(?:0[048]|[13579][26]|[2468][048])|(?:0[13578]|10|12)\/(?:[0-2]\d|3[01])\/(?:19|20)\d{2}|(?:0[469]|11)\/(?:[0-2]\d|30)\/(?:19|20)\d{2}|02\/(?:[0-1]\d|2[0-8])\/(?:19|20)\d{2}$/;
-   //   formControlName="rememberme"
-  // control: new FormControl();
+    // tslint:disable-next-line:max-line-length
+    //  let usDatePattern = /^02\/(?:[01]\d|2\d)\/(?:19|20)(?:0[048]|[13579][26]|[2468][048])|(?:0[13578]|10|12)\/(?:[0-2]\d|3[01])\/(?:19|20)\d{2}|(?:0[469]|11)\/(?:[0-2]\d|30)\/(?:19|20)\d{2}|02\/(?:[0-1]\d|2[0-8])\/(?:19|20)\d{2}$/;
 
 
-  // const fechaDesde = this.filtro.dateFrom;
+  // tslint:disable-next-line:prefer-const
+  let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
 
-    
-
-      if(this.filtro.dateFrom === null &&  this.filtro.dateTo === null) { 
+      if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
     ///       dateFrom es inputDate1              | dateTo  es inputDate2
-    console.log("entro 1");
-        if(this.inputDate1.nativeElement.value === "" &&  this.inputDate2.nativeElement.value === ""){
-          if(this.filtro.dateFrom > this.filtro.dateTo   ) { 
+        console.log('entro 1');
+        if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
+          if (this.filtro.dateFrom > this.filtro.dateTo   ) {
             Swal.fire({
               type: 'error',
               text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
             });
-            return; 
-          }else{
+            return;
+          } else {
                 console.log(this.filtro);
                 this.spinner2.show();
-          
+
                 this.debtsList = {
                   count: 0,
                   data: []
@@ -204,29 +228,27 @@ ListaDeuda() {
                     console.log(debts);
                     this.debtsList = debts;
                     this.spinner2.hide();
-            
-                });   
+
+                });
           }
-        }
-        else {
-                if (!this.inputDate1.nativeElement.value.match(usDatePattern)){
+        } else {
+                if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
                   Swal.fire({
                     type: 'error',
                     text: 'Ingrese correctamente la fecha desde',
                   });
                   return;
                 }
-                if (!this.inputDate2.nativeElement.value.match(usDatePattern)){
+                if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
                   Swal.fire({
                     type: 'error',
                     text: 'Ingrese correctamente las fecha hasta',
                   });
                   return;
-                }
-                else{
+                } else {
                       console.log(this.filtro);
                       this.spinner2.show();
-                
+
                       this.debtsList = {
                         count: 0,
                         data: []
@@ -236,53 +258,48 @@ ListaDeuda() {
                           console.log(debts);
                           this.debtsList = debts;
                           this.spinner2.hide();
-                  
-                      });   
-                }   
-        } 
-      }
-      /////  CAMBIO ACA XDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-      else { 
-        console.log("entro 2");
-          if( this.inputDate1.nativeElement.value === ""){
+
+                      });
+                }
+        }
+         /////  CAMBIO ACA XDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+      } else {
+        console.log('entro 2');
+          if ( this.inputDate1.nativeElement.value === '') {
               Swal.fire({
                 type: 'error',
               //  text: 'La fecha "desde" no puede estar en blanco',
-                text: 'Ingrese una de la fecha desde 2',  
-              });
-              return; 
-          }
-          else if( this.inputDate2.nativeElement.value === ""){
-              Swal.fire({
-                type: 'error', 
-                text: 'Ingrese una de la fecha hasta 2',    
-              });
-              return; 
-          } 
-          else if( this.inputDate2.nativeElement.value === ""){
-            Swal.fire({
-              type: 'error', 
-              text: 'Ingrese una de la fecha hasta 2',    
-            });
-            return; 
-          } 
-          else if( !this.inputDate1.nativeElement.value.match(usDatePattern)){
-              Swal.fire({
-                type: 'error', 
-                text: 'ingrese correctamente la fecha desde',  
+                text: 'Ingrese una de la fecha desde 2',
               });
               return;
-          }
-          else if( !this.inputDate2.nativeElement.value.match(usDatePattern)){
+          } else if ( this.inputDate2.nativeElement.value === '') {
+              Swal.fire({
+                type: 'error',
+                text: 'Ingrese una de la fecha hasta 2',
+              });
+              return;
+          } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
+              Swal.fire({
+                type: 'error',
+                text: 'ingrese correctamente la fecha desde',
+              });
+              return;
+          } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) {
             Swal.fire({
-              type: 'error', 
-              text: 'ingrese correctamente la fecha hasta',  
+              type: 'error',
+              text: 'ingrese correctamente la fecha hasta',
             });
             return;
-          }else{
+          } else if (this.filtro.dateFrom > this.filtro.dateTo ) {
+            Swal.fire({
+              type: 'error',
+              text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
+            });
+            return;
+          } else {
               console.log(this.filtro);
               this.spinner2.show();
-        
+
               this.debtsList = {
                 count: 0,
                 data: []
@@ -292,63 +309,46 @@ ListaDeuda() {
                   console.log(debts);
                   this.debtsList = debts;
                   this.spinner2.hide();
-          
-              });   
+
+              });
 
           }
-       
-      
-     
+
+
+
 }
 
-    /*  console.log(this.filtro);
-      this.spinner2.show();
-  
-      this.debtsList = {
-        count: 0,
-        data: []
-      };
-      this.transactionService.getDeuda(this.filtro)
-        .subscribe(debts => {
-          console.log(debts);
-          this.debtsList = debts;
-          this.spinner2.hide();
-  
-        });   
-      */
-     
+
+
 }
   /*//////////////////////////////
-  //////////  C R U D /////////////////////// 
+  //////////  C R U D ///////////////////////
   ////////////////////////////////////////////////*/
 
-    limpiarInput()
-    { 
-       this.inputText.nativeElement.value = "";
-    }
-                     
-    limpiardate1()
-    { 
-      this.inputDate1.nativeElement.value = ""; 
-      this.filtro.dateFrom = null; 
+    limpiarInput() {
+       this.inputText.nativeElement.value = '';
     }
 
-    limpiardate2()
-    {
-      this.inputDate2.nativeElement.value = ""; 
+    limpiardate1() {
+      this.inputDate1.nativeElement.value = '';
+      this.filtro.dateFrom = null;
+    }
+
+    limpiardate2() {
+      this.inputDate2.nativeElement.value = '';
       this.filtro.dateTo = null;
     }
 
 
   BotonEditar(item: Debts) {
-    this.spinner2.show();
+   // this.spinner2.show();
     item.edit = true;
     item.newEmissionDate = item.emissionDate;
     item.newDueDate = item.dueDate;
     item.newConcept = item.concept;
   }
 
-  BotonActualizar(item: Debts){
+  BotonActualizar(item: Debts) {
     console.log('actualizar', item);
     item.edit = false;
     this.transactionService.editDeuda(item.id, {
@@ -358,7 +358,7 @@ ListaDeuda() {
     }).subscribe(() => this.consultaDeuda());
   }
 
-  BotonCancela(item: Debts){
+  BotonCancela(item: Debts) {
     item.edit = false;
   }
 
@@ -367,13 +367,14 @@ ListaDeuda() {
     this.consultaDeuda();
   }
 
-  EliminarSeleccionados(){
+  EliminarSeleccionados() {
     this.spinner2.show();
 
-    let itemsParaEliminar = [];
+    const itemsParaEliminar = [];
     this.debtsList.data.forEach(c => {
-      if (c.selected) 
+      if (c.selected) {
         itemsParaEliminar.push(c.id);
+      }
 
     });
     this.transactionService.deleteAll(itemsParaEliminar)
@@ -382,7 +383,7 @@ ListaDeuda() {
 
   Eliminar(item: Debts) {
     this.spinner2.show();
-    if (confirm("¿Esta Seguro de Eliminar el Registro?")) {
+    if (confirm('¿Esta Seguro de Eliminar el Registro?')) {
       this.transactionService.deleteDeuda(item.id)
         .subscribe(() => this.consultaDeuda());
     }
@@ -395,7 +396,7 @@ ListaDeuda() {
 
 
 /*//////// O P E N  - D I A L O G ///////////////////// */
-  
+
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogDataExampleDialog);
@@ -420,22 +421,26 @@ ListaDeuda() {
 
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'dialog-data-example-dialog',
   templateUrl: 'dialog-data-example-dialog.html',
 })
 
+// tslint:disable-next-line:component-class-suffix
 export class DialogDataExampleDialog {
 
   public inputXlsForm: FormGroup;
 
   /*Data Parcial */
+  // tslint:disable-next-line:max-line-length
   dataParcial: any = [{  eid: 'e101',    ename: 'ravi',    esal: 1000},  { eid: 'e102',  ename: 'ram',    esal: 2000  },  { eid: 'e103',   ename: 'rajesh',    esal: 300}];
 
   /*Data Completa */
+  // tslint:disable-next-line:max-line-length
   dataCompleta: any = [{ eid: 'e101',    ename: 'ravi',   eapellido: 'ravi',   eemail: 'email',   estado: 'deudor', fecha: '16/05/15',   esal: 1000, }, {   eid: 'e102',   ename: 'ram',   eapellido: 'ravi',    eemail: 'email',    estado: 'deudor',  fecha: '16/05/15', esal: 2000},  {eid: 'e103',  ename: 'rajesh',   eapellido: 'ravi',   eemail: 'email',   estado: 'deudor',   fecha: '16/05/15', esal: 3000},
     {  eid: 'e104',  ename: 'chris',  eapellido: 'ravi',  eemail: 'email', estado: 'deudor', fecha: '16/05/15',  esal: 6000 },
     {  eid: 'e105', ename: 'jhon', eapellido: 'ravi',   eemail: 'email', estado: 'deudor',   fecha: '16/05/15',  esal: 15000}];
-  
+
   constructor(public  snackBar: MatSnackBar,
               private excelService: ExcelService,
               public  formBuilder: FormBuilder,
@@ -443,10 +448,11 @@ export class DialogDataExampleDialog {
 
             ) { }
 
-  ngOnInit(){
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnInit() {
     this.inputXlsForm = this.formBuilder.group({
-      xls: ['',Validators.required]
-    })
+      xls: ['', Validators.required]
+    });
   }
 
 
@@ -457,7 +463,7 @@ export class DialogDataExampleDialog {
   private files: any;
   get f(){ return this.inputXlsForm.controls;}
 
-  
+
    openSnackBar() {
     if(this.inputXlsForm.valid){
     /*service*/
@@ -468,13 +474,13 @@ export class DialogDataExampleDialog {
        // console.table(value);
       }
     )
-    this.snackBar.openFromComponent(UploadProgressComponent);      
+    this.snackBar.openFromComponent(UploadProgressComponent);
     this.dialogRef.close();
     }else{
       alert('Ingresa el excel');
     }
   }
-  
+
 
 
   exportDataParcialXLSX():void {
@@ -485,8 +491,8 @@ export class DialogDataExampleDialog {
     this.excelService.exportAsExcelFile(this.dataCompleta, 'data_completa');
   }
 
-  
-} 
+
+}
 
 
 
@@ -525,11 +531,11 @@ export class UploadProgressComponent  implements OnInit  {
   }
 
   private verifyStatus()  {
-    
+
     var recursiveFunc = (value) => {
 
       console.log(value.status);
-       
+
       if (value.status === "REJECTED") {
         this.excelService.errores = value.errors;
         console.table(value.errors);
@@ -594,7 +600,7 @@ let error: Error;
 })
 
 export class ValidationComponent  {
- 
+
   constructor(public excelService: ExcelService,
     ) { }
 

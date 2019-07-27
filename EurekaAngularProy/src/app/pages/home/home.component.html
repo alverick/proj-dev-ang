@@ -1,37 +1,36 @@
-
 <div class="body">
     <div class="container">
-        <div class="row"> 
+        <div class="row">
             <div class="col">
                 <div class="table-responsive">
                     <!--TODO BIEN HASTA AHI-->
                     <table class="table">
                         <h1 class="h5 mb-3">Movimientos</h1>
-                        <div class="my-3 p-3 bg-white rounded shadow-sm"> 
-                                <!--//////////// F I L T R O S //////////////// -->
-                                <div class="d-flex align-items-center">
-                                    <div class="texto-azulbase font-medium"> Filtrar</div>
-                                    <div class="pl-2 pr-4">
-                                        <span class="icon-filter"></span>
-                                    </div>
-                                    <!--
+                        <div class="my-3 p-3 bg-white rounded shadow-sm">
+                            <!--//////////// F I L T R O S //////////////// -->
+                            <div class="d-flex align-items-center">
+                                <div class="texto-azulbase font-medium"> Filtrar</div>
+                                <div class="pl-2 pr-4">
+                                    <span class="icon-filter"></span>
+                                </div>
+                                <!--
                                     <div class="pl-1">
                                         <div class="content-filter">
                                                 <span class="icon-search"></span>
                                             <input class="input-filter" type="text" [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
                                         </div>
                                     </div> -->
-                                     <!---probando input -->
-                                     <div class="pl-1">
-                                            <div class="icon-addon addon-md "> 
-                                                    <input maxlength="75"  #inputText  class="input-filter" type="text"  [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código" (keypress)="InputNombreCodigo($event)">
-                                                    <label  (click)="limpiarInput()"  class="fa fa-times" ></label> 
-                                            </div>
-                                    </div> 
-                                      
-                                </div>  
-                            
-                                <!--////////// F I L T R O S 2 //////////////////-->
+                                <!---probando input -->
+                                <div class="pl-1">
+                                    <div class="icon-addon addon-md ">
+                                        <input maxlength="75" #inputText class="input-filter" type="text" [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código" (keypress)="InputNombreCodigo($event)">
+                                        <label (click)="limpiarInput()" class="fa fa-times"></label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--////////// F I L T R O S 2 //////////////////-->
                             <div class="d-flex align-items-center mt-4">
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
@@ -40,42 +39,42 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.status" name=""  >
+                                        <select class="selectpicker" [(ngModel)]="filtro.status" name="">
                                             <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name=""  >
+                                        <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name="">
                                             <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
                                         </select>
                                     </div>
-                                </div> 
-                                
+                                </div>
+
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input   #inputDate1   type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"    appBlockCopyPaste>
-                                            <label  (click)="limpiardate1()"  class="fa fa-times" ></label>
+                                            <input (dateChange)="change($event)" #inputDate1 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10" (keypress)="numberOnly($event)" appBlockCopyPaste>
+                                            <label (click)="limpiardate1()" class="fa fa-times"></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
-                                           
+
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                     
+
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input   #inputDate2 type="text" id="inputDate2" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"  (keypress)="numberOnly($event)"  appBlockCopyPaste  >
-                                            <label  (click)="limpiardate2()"  class="fa fa-times" ></label>
+                                            <input (dateChange)="change($event)" #inputDate2 type="text" id="inputDate2" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10" (keypress)="numberOnly($event)" appBlockCopyPaste>
+                                            <label (click)="limpiardate2()" class="fa fa-times"></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-                                            <mat-datepicker #myDatepicker ></mat-datepicker>
+                                            <mat-datepicker #myDatepicker></mat-datepicker>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -97,179 +96,179 @@
                         </div>
                         <!--TODO BIEN-->
                         <div class="my-3 p-3 bg-white rounded shadow-sm">
-                        <!--TODO BIEN-->  
-                        <thead>
-                            <!--//////////// A C C I O N E S //////////////// -->
-                            <tr>                                     
-                                <td colspan="2" class="head">
-                                    <div class="d-flex">
-                                        <div class="mr-3">   
-                                           
-                                                <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)" >
-                                                <label for="styl" class="text-small font-medium">Seleccionar  Todos</label> 
-                                             
-                                        </div>
-                                                                                          
-                                        <div class="mr-3">
-                                            <a class="texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
-                                                <span class="icon-correo-azul iconos-big"></span> <br>
-                                                <span class="text-small font-medium">Descargar</span>
-                                            </a>
-                                        </div>
-                                        <div class="mr-3">
-                                            <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
-                                                <span class="icon-eliminar iconos-big"></span><br>
-                                                <span class="text-small font-medium">Eliminar</span>
-                                            </a>
-                                        </div>
-                                        
-                                        <div class="mr-3" > 
-                                            <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                <span class="icon-papel-2 iconos-big"></span><br>
+                            <!--TODO BIEN-->
+                            <thead>
+                                <!--//////////// A C C I O N E S //////////////// -->
+                                <tr>
+                                    <td colspan="2" class="head">
+                                        <div class="d-flex">
+                                            <div class="mr-3">
+
+                                                <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
+                                                <label for="styl" class="text-small font-medium">Seleccionar  Todos</label>
+
+                                            </div>
+
+                                            <div class="mr-3">
+                                                <a class="texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
+                                                    <span class="icon-correo-azul iconos-big"></span> <br>
+                                                    <span class="text-small font-medium">Descargar</span>
+                                                </a>
+                                            </div>
+                                            <div class="mr-3">
+                                                <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
+                                                    <span class="icon-eliminar iconos-big"></span><br>
+                                                    <span class="text-small font-medium">Eliminar</span>
+                                                </a>
+                                            </div>
+
+                                            <div class="mr-3">
+                                                <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                    <span class="icon-papel-2 iconos-big"></span><br>
                                                     <span class="text-small font-medium">Cargar Excel</span>
-                                            </div>  
-                                            <div class="collapse sobresale" id="collapseExample">
-                                                <div class="card card-body" >
-                                                    <div *ngFor="let service of services" (click)="openDialog()">
-                                                        <div data-toggle="collapse" >
-                                                            {{service}} 
-                                                        </div>
-                                                    </div>        
                                                 </div>
-                                            </div> 
-                                        </div>   
-                                    </div>
-                                </td>
-                                   
-                                <td colspan="8"  class="head">
-                                    <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
- 
-                                </td>                                
-                            </tr>
+                                                <div class="collapse sobresale" id="collapseExample">
+                                                    <div class="card card-body">
+                                                        <div *ngFor="let service of services" (click)="openDialog()">
+                                                            <div data-toggle="collapse">
+                                                                {{service}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
 
-                            <!--//////////// A C C I O N E S //////////////// -->                            
-                            <tr>
-                                <th scope="col"></th>                                            
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">            
-                                        <div class="d-inline-block text-center"> Fecha emisión.</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>                                        
-                                    </div>
-                                </th>
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center"> Fecha vto.</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
-                                </th>
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center"> Codigo de Cliente</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
-                                </th>
+                                    <td colspan="8" class="head">
+                                        <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center"> Nombres</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
-                                </th>
+                                    </td>
+                                </tr>
 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center"> Apellidos</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
-                                </th>
+                                <!--//////////// A C C I O N E S //////////////// -->
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center"> Fecha emisión.</div>
+                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                        </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center"> Fecha vto.</div>
+                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                        </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center"> Codigo de Cliente</div>
+                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                        </div>
+                                    </th>
 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center"> Servicio</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
-                                </th>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center"> Nombres</div>
+                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                        </div>
+                                    </th>
 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center"> Concepto</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
-                                </th>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center"> Apellidos</div>
+                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                        </div>
+                                    </th>
 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center"> Monto</div>
-                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                    </div>
-                                </th>
-                                  
-                            </tr>
-                        </thead>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center"> Servicio</div>
+                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center"> Concepto</div>
+                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                        </div>
+                                    </th>
+
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center"> Monto</div>
+                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                        </div>
+                                    </th>
+
+                                </tr>
+                            </thead>
 
 
-                        <tbody>
-                          <!--  <tr *ngIf="ListaValidacion" style="align-self: center;"> No se encontraron ningun Resultado </tr>  -->
-                            <tr  *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
-                                <td> 
-                                    <input id="{{ 'chk_' + items.id }}" class="styled-checkbox"  type="checkbox" [(ngModel)]="items.selected" >
-                                    <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label> 
-                                </td>
-                                <td>
-                                    <span *ngIf="!items.edit" >{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
-                                    <div *ngIf="items.edit" class="content-input-icon position-relative">
+                            <tbody>
+                                <!--  <tr *ngIf="ListaValidacion" style="align-self: center;"> No se encontraron ningun Resultado </tr>  -->
+                                <tr *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
+                                    <td>
+                                        <input id="{{ 'chk_' + items.id }}" class="styled-checkbox" type="checkbox" [(ngModel)]="items.selected">
+                                        <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="!items.edit">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
+                                        <div *ngIf="items.edit" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
-                                                <input (dateChange)="change($event)"  matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)" >
+                                                <input (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
                                                 <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                                                 <mat-datepicker #edp></mat-datepicker>
                                             </mat-form-field>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span *ngIf="!items.edit" >{{items.dueDate | date:'dd/MM/yyyy' }}</span>
-                                    <div *ngIf="items.edit" class="content-input-icon position-relative">
-                                        <mat-form-field style="width: 100px">
-                                            <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate"   maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
-                                            <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
-                                            <mat-datepicker #ddp></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
-                                </td>
-                                <td>{{items.code}}</td>
-                                <td>{{items.firstName}}</td>
-                                <td>{{items.lastName}}</td>
-                                <td>{{items.service}}</td>
-                                <td>
-                                    <span *ngIf="!items.edit" >{{items.concept}}</span>
-                                    <div *ngIf="items.edit">
-                                        <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="onlyNumberKey($event)" />
-                                    </div>
-                                </td>
-                                <td>{{items.amount}}</td>
-                                <td width="76">
-                                       <div class="d-flex">
-                                            <div  *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="BotonEditar(items)" >
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="!items.edit">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
+                                        <div *ngIf="items.edit" class="content-input-icon position-relative">
+                                            <mat-form-field style="width: 100px">
+                                                <input matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
+                                                <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
+                                                <mat-datepicker #ddp></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </td>
+                                    <td>{{items.code}}</td>
+                                    <td>{{items.firstName}}</td>
+                                    <td>{{items.lastName}}</td>
+                                    <td>{{items.service}}</td>
+                                    <td>
+                                        <span *ngIf="!items.edit">{{items.concept}}</span>
+                                        <div *ngIf="items.edit">
+                                            <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="onlyNumberKey($event)" />
+                                        </div>
+                                    </td>
+                                    <td>{{items.amount}}</td>
+                                    <td width="76">
+                                        <div class="d-flex">
+                                            <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="BotonEditar(items)">
                                                 <span class="icon-editar iconos-big iconos-big"></span>
                                             </div> &nbsp;&nbsp;&nbsp;
-                                            <div  *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="Eliminar(items)" >
+                                            <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="Eliminar(items)">
                                                 <span class="icon-eliminar iconos-big iconos-big"></span>
-                                            </div> 
-                                            <div  *ngIf="items.edit"  class="d-inline-block" style="cursor: pointer" (click)="BotonActualizar(items)">
-                                                <img src="assets/images/table-check.svg"  alt="Aceptar">
-                                            </div> 
-                                            <div  (click)="BotonCancela(items)"  *ngIf="items.edit"  class="d-inline-block" style="cursor: pointer">
+                                            </div>
+                                            <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer" (click)="BotonActualizar(items)">
+                                                <img src="assets/images/table-check.svg" alt="Aceptar">
+                                            </div>
+                                            <div (click)="BotonCancela(items)" *ngIf="items.edit" class="d-inline-block" style="cursor: pointer">
                                                 <img src="assets/images/table-delete.svg" alt="Eliminar">
                                             </div>
                                         </div>
                                     </td>
-                            </tr> 
-                        </tbody>
-                                
-                         
+                                </tr>
+                            </tbody>
+
+
                         </div>
                     </table>
                 </div>
-        </div>        
+            </div>
+        </div>
     </div>
-</div>
 </div>
