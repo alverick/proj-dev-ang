@@ -61,7 +61,7 @@ declare var $: any;
 export class HomeComponent implements OnInit {
  // datepicker format
  @Output() date2: EventEmitter<any> = new EventEmitter<any>();
- date = new FormControl(moment());
+ // date = new FormControl(moment());
 
  // inputDate1:string = '';  inputText
  @ViewChild('inputText') inputText: ElementRef;
@@ -341,10 +341,6 @@ change(dateEvent) {
 
 
   BotonEditar(item: Debts) {
-<<<<<<< HEAD
-   // this.spinner2.show();
-=======
->>>>>>> 89a06bfa5edb20c6e5ab4a273ef945f1622f84bf
     item.edit = true;
     item.newEmissionDate = item.emissionDate;
     item.newDueDate = item.dueDate;
@@ -386,13 +382,8 @@ change(dateEvent) {
   }
 
   Eliminar(item: Debts) {
-<<<<<<< HEAD
-    this.spinner2.show();
-    if (confirm('¿Esta Seguro de Eliminar el Registro?')) {
-=======
     if (confirm("¿Esta Seguro de Eliminar el Registro?")) {
       this.spinner2.show();
->>>>>>> 89a06bfa5edb20c6e5ab4a273ef945f1622f84bf
       this.transactionService.deleteDeuda(item.id)
         .subscribe(() => this.consultaDeuda());
     }
@@ -540,23 +531,12 @@ export class UploadProgressComponent  implements OnInit  {
     setTimeout(fnc, 500);
   }
 
-<<<<<<< HEAD
-  private verifyStatus()  {
-
-=======
   private verifyStatus() {
-    
->>>>>>> 89a06bfa5edb20c6e5ab4a273ef945f1622f84bf
-    var recursiveFunc = (value) => {
-      
+
+    // tslint:disable-next-line:prefer-const
+    let recursiveFunc = (value) => {
+
       console.log(value.status);
-<<<<<<< HEAD
-
-=======
-      this.contador = this.contador+1;
-
-    this.snackRef.dismiss();
->>>>>>> 89a06bfa5edb20c6e5ab4a273ef945f1622f84bf
       if (value.status === "REJECTED") {
         this.excelService.errores = value.errors;
         console.table(value.errors);
@@ -569,8 +549,7 @@ export class UploadProgressComponent  implements OnInit  {
           });
         this.snackRef.dismiss();
 
-      }
-      else if (value.status === "COMPLETED"){
+      } else if (value.status === "COMPLETED"){
         this.snackRef.dismiss();
         this.excelService.errores = [];
         this.excelService.idProcess = 0;
@@ -578,15 +557,14 @@ export class UploadProgressComponent  implements OnInit  {
           type: 'success',
           text: `Se cargaron ${value.rowsUploaded} registros`
         });
-      }
-      else  {
+      } else  {
         var th = this;
         setTimeout(() => {
           th.excelService.StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
         }, 500);
 
-      } 
+      }
     };
     setTimeout(() => {
       this.excelService.StatusExcel(this.excelService.idProcess)
@@ -595,7 +573,8 @@ export class UploadProgressComponent  implements OnInit  {
 
   }
 
-  ngOnDestroy(){
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngOnDestroy() {
     this.snackRef.dismiss();
   }
 }

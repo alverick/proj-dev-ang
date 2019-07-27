@@ -2,6 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                <!--good-->
                 <div class="table-responsive">
                     <!--TODO BIEN HASTA AHI-->
                     <table class="table">
@@ -29,24 +30,24 @@
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
                                         <select class="selectpicker" [(ngModel)]="filtro.service" name="" id="">
-                                            <option value="{{item.idType}}"  *ngFor="let item of typeList"> {{item.descripcion}} </option>
-                                        </select>
+                                                <option value="{{item.idType}}"  *ngFor="let item of typeList"> {{item.descripcion}} </option>
+                                            </select>
                                     </div>
                                 </div>
 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
                                         <select class="selectpicker" [(ngModel)]="filtro.status" name="">
-                                            <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
-                                        </select>
+                                                <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
+                                            </select>
                                     </div>
                                 </div>
 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
                                         <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name="">
-                                            <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
-                                        </select>
+                                                <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
+                                            </select>
                                     </div>
                                 </div>
 
@@ -75,53 +76,54 @@
 
                                 <div class="texto-azulbase font-medium">
                                     <button class="btn-eureca btn-small btn-eureca-amarillo" (click)="consultaDeuda()">Buscar
-                                    </button>
+                                        </button>
                                 </div>
                             </div>
                         </div>
                         <!--TODO BIEN-->
+                        <!--DESDE AQUI-->Ç
                         <div class="my-3 p-3 bg-white rounded shadow-sm">
                             <!--TODO BIEN-->
                             <thead>
                                 <!--//////////// A C C I O N E S //////////////// -->
                                 <tr>
                                     <td colspan="2" class="head">
-                                        <div class="d-flex">
-                                            <div class="mr-3">
 
-                                                <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
-                                                <label for="styl" class="text-small font-medium">Seleccionar  Todos</label>
+                                        <div class="mr-3">
 
+                                            <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
+                                            <label for="styl" class="text-small font-medium">Seleccionar  Todos</label>
+
+                                        </div>
+
+                                        <div class="mr-3">
+                                            <a class="texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
+                                                <span class="icon-correo-azul iconos-big"></span> <br>
+                                                <span class="text-small font-medium">Descargar</span>
+                                            </a>
+                                        </div>
+                                        <div class="mr-3">
+                                            <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
+                                                <span class="icon-eliminar iconos-big"></span><br>
+                                                <span class="text-small font-medium">Eliminar</span>
+                                            </a>
+                                        </div>
+
+                                        <div class="mr-3">
+                                            <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                <span class="icon-papel-2 iconos-big"></span><br>
+                                                <span class="text-small font-medium">Cargar Excel</span>
                                             </div>
-
-                                            <div class="mr-3">
-                                                <a class="texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
-                                                    <span class="icon-correo-azul iconos-big"></span> <br>
-                                                    <span class="text-small font-medium">Descargar</span>
-                                                </a>
-                                            </div>
-                                            <div class="mr-3">
-                                                <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
-                                                    <span class="icon-eliminar iconos-big"></span><br>
-                                                    <span class="text-small font-medium">Eliminar</span>
-                                                </a>
-                                            </div>
-
-                                            <div class="mr-3">
-                                                <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                    <span class="icon-papel-2 iconos-big"></span><br>
-                                                    <span class="text-small font-medium">Cargar Excel</span>
-                                                </div>
-                                                <div class="collapse sobresale" id="collapseExample">
-                                                    <div class="card card-body">
-                                                        <div *ngFor="let service of services" (click)="openDialog(service)">
-                                                            <div data-toggle="collapse">
-                                                                {{service}}
-                                                            </div>
+                                            <div class="collapse sobresale" id="collapseExample">
+                                                <div class="card card-body">
+                                                    <div *ngFor="let service of services" (click)="openDialog(service)">
+                                                        <div data-toggle="collapse">
+                                                            {{service}}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                     </td>
 
                                     <td colspan="8" class="head">
@@ -190,9 +192,8 @@
                                 </tr>
                             </thead>
 
-
                             <tbody>
-                                <!--  <tr *ngIf="ListaValidacion" style="align-self: center;"> No se encontraron ningun Resultado </tr>  -->
+
                                 <tr *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
                                     <td>
                                         <input id="{{ 'chk_' + items.id }}" class="styled-checkbox" type="checkbox" [(ngModel)]="items.selected">
@@ -249,10 +250,13 @@
                             </tbody>
 
 
-                            </div>
+
+                        </div>
+
                     </table>
-                    </div>
                 </div>
+                <!--end good-->
             </div>
         </div>
     </div>
+</div>
