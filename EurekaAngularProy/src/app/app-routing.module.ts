@@ -11,12 +11,14 @@ import { ProcesandoComponent } from 'src/app/auth/procesando/procesando.componen
 import { AnalisisComponent } from 'src/app/pages/analisis/analisis.component';
 import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-found.component';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
+import { Datepicker2Component } from './pages/datepicker2/datepicker2.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent  },  
-  { path: 'login', component: LoginComponent,  canActivate: [AuthGuard]},
-  { path: '', redirectTo: '/login', pathMatch: 'full'  },  
-  { path: '**', redirectTo: ''},
+  { path: 'home', component: HomeComponent /* ,  canActivate: [AuthGuard] */ },  
+  { path: 'login', component: LoginComponent},
+  { path: 'date', component: Datepicker2Component},
+   { path: '', redirectTo: '/home', pathMatch: 'full'  },  
+  { path: '**', redirectTo: ''}, 
 
   { path: 'afiliacion', component: AfiliacionComponent},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent},
@@ -27,7 +29,6 @@ const routes: Routes = [
   { path: 'analisis', component: AnalisisComponent},
 
   { path: 'notFound', component: PageNotFoundComponent},
-  
   
 ]; 
 export const Routing: ModuleWithProviders = RouterModule.forRoot(routes);

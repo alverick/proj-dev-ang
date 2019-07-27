@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Directive} from '@angular/core';
+import { Component, OnInit, HostListener, Directive, ElementRef, Input} from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,6 +17,7 @@ import { CookieService } from 'ngx-cookie-service';
   selector: '[appBlockCopyPaste]'
 })
 
+
 export class LoginComponent implements OnInit {
 
   public  loginForm: FormGroup;
@@ -26,14 +27,19 @@ export class LoginComponent implements OnInit {
   public  formData: any = {};
 
 
+
+private specialKeys = {
+  number: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
+  decimal: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
+};
   intentos: number = 0;
   codRespuesta: number;
   err: boolean;
   numero2: number;
-
+  
   isTrue: boolean = false;
   isCaptchaValidate: boolean = true;
-  
+  rememberMe: boolean = false;
 
   codRpt2 : boolean = false;
   codRpt3 : boolean = false;
@@ -43,8 +49,7 @@ export class LoginComponent implements OnInit {
     'ruc': [
       { type: 'required', message: 'Debes ingresar un RUC' },
       { type: 'minlength', message: 'Ingrese un RUC válido de 11 dígitos' },
-      { type: 'pattern', message: 'Debe contener solo números' },
-      
+      { type: 'pattern', message: 'Debe contener solo números' },     
     ],
     'psw': [
       { type: 'required', message:  'Debe ingresar el password' },
@@ -53,14 +58,12 @@ export class LoginComponent implements OnInit {
     ]
   }
 
-  
-
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private cookieService : CookieService   ) {}
+    private cookieService : CookieService ) {}
 
   ngOnInit() {
     this.validationLogin();
@@ -68,14 +71,17 @@ export class LoginComponent implements OnInit {
   }
 
   validationLogin(){
+   /* let rucStr = this.cookieService.check('ruc') ?
+    this.cookieService.get('ruc') :  '';*/
     let rucStr = this.cookieService.check('ruc') ?
     this.cookieService.get('ruc') :  '';
+    
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.minLength(11), Validators.required,
-            Validators.pattern("^[0-9]*$")])],
+            Validators.pattern('^[0-9]*$')])
+          ],
       psw: ['', Validators.required ],
       rememberme:[false, Validators.required]  
-     
     });
   }
 
@@ -87,6 +93,8 @@ export class LoginComponent implements OnInit {
     return true;
   }
    
+
+  
 
   /* ////////  N O T  - A L L L O W - T O - C O P Y //////// */
   
@@ -101,7 +109,7 @@ export class LoginComponent implements OnInit {
   @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
     e.preventDefault();
   }
-
+  
 
   /* /////// L O G I N ////////////  */
 
@@ -120,165 +128,54 @@ export class LoginComponent implements OnInit {
           this.codRespuesta= value.codRespuesta;
           console.log("Codigo de respuseta : "+this.codRespuesta);
           if(value.estado===true){
-            this.router.navigate(['/home']);
-            this.spinner.hide();     
-          
+            let rucStr = this.cookieService.check('ruc')
+            if(this.rememberMe==true){
+              let rucStr = this.cookieService.check('ruc') ?
+              this.cookieService.get('ruc') :  '';
+              this.router.navigate(['/home']);
+              this.spinner.hide();   
+            }else{
+              this.router.navigate(['/home']);
+              this.spinner.hide();
+            }
+            /* let rucStr = this.cookieService.check('ruc') ?
+              this.cookieService.get('ruc') :  '';*/
+            
           }else if(this.intentos <= 3 && this.codRespuesta == 2 ){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;
-            }else if(this.intentos <= 3 && this.codRespuesta == 3){
+          }else if(this.intentos <= 3 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
-          }
-          
-          
-          else if(this.intentos == 4 || this.intentos == 5 && this.codRespuesta == 2){
+          }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;            
             this.isCaptchaValidate = false;
-
-          }else if(this.intentos == 4 || this.intentos == 5 && this.codRespuesta == 3){
+          }else if(this.intentos == 4 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
             Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
             this.isCaptchaValidate = false;
             return this.isTrue = true;              
-
-          } 
-          
-          else if(this.intentos == 6){
+          }else if(this.intentos == 5 && this.codRespuesta == 2){
+            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
+          }else if(this.intentos == 5 && this.codRespuesta == 3){
+            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
+            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
+            this.isCaptchaValidate = false;
+          }else if(this.intentos == 6){
             console.log("Intentos : " + value.paramNum + "   Sin codigo");
-            Swal.fire({ type: 'error', title: 'Contraseña Incorrecta', text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe'})}            
-          },
-
-          error =>{ 
-            this.spinner.hide();
-            if(error.status ===500){
-              Swal.fire({
-                type: 'error',
-                text: 'ERROR 500',
-              }) 
-            }
+            Swal.fire({ type: 'error', title: 'Contraseña Incorrecta', text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe'})
+          }            
         },
-        () => this.spinner.hide()
-      );
-      }
-  }
-
-
-
-
-
-  public respuesta() : boolean{
-    return true;
+      error =>{ 
+        this.spinner.hide();
+        if(error.status ===500){
+          Swal.fire({ type: 'error', text: 'ERROR del Servidor'}) 
+        }
+      },
+      () => this.spinner.hide()
+    );
   }
 }
-
-
-
-
-/*
-
-
-else
-              if(this.intentos <= 3){
-                console.log("ParamStr  :  "+ value.paramStr);
-                if(value.codRespuesta == 2){
-                  this.loginForm = this.formBuilder.group({
-                    ruc: [''],
-                    psw: [''] });
-                  this.spinner.hide();
-                  console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                  return this.codRpt2= true;
-                }
-                else 
-                  if(value.codRespuesta == 3){
-                    this.loginForm = this.formBuilder.group({
-                    ruc: [''],
-                    psw: [''] });
-                this.spinner.hide();
-                console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                Swal.fire({
-                  type: 'error',
-                  text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
-                }) 
-                }                
-                else{
-                  this.loginForm = this.formBuilder.group({
-                    ruc: [''],
-                    psw: ['']
-                  });
-                  console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                  return this.isTrue=false;
-                }         
-              }
-
-
-
-
-              else 
-              if(this.intentos == 4 || this.intentos == 5 ){
-                console.log("ParamStr  :  "+ value.paramStr);
-                if(value.codRespuesta == 2){
-                  this.loginForm = this.formBuilder.group({
-                    ruc: [''],
-                    psw: ['']
-                  });
-                  this.spinner.hide();
-                  console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                  return this.codRpt2= true;
-                }
-                else 
-                if(value.codRespuesta == 3){
-                this.loginForm = this.formBuilder.group({
-                  ruc: [''],
-                  psw: ['']
-                });
-                this.spinner.hide();
-                console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                
-                Swal.fire({
-                  type: 'error',
-                  text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
-                }) 
-                }     
-
-                else{
-                  this.loginForm = this.formBuilder.group({
-                    ruc: [''],
-                    psw: ['']
-                  });
-                  this.spinner.hide();
-                  console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-                  Swal.fire({
-                    type: 'error',
-                    text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos',
-                  })
-                  this.isCaptchaValidate = false;
-                  return this.isTrue = true;              
-                }
-              }
-              
-
-              else
-              if(this.intentos = 6){
-                this.loginForm = this.formBuilder.group({
-                  ruc: [''],
-                  psw: ['']
-                });
-                Swal.fire({
-                  type: 'error',
-                  title: 'Contraseña Incorrecta',
-                  text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe',
-                })
-                this.spinner.hide();
-                console.log("Variable ParamNum  :  " +value.paramNum +" intentos"+ this.intentos);
-              }
-
-
-
-
-
- this.error=error;
-            console.log("error")
-
-*/
+ 
+}

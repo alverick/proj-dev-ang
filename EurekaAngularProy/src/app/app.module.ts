@@ -28,12 +28,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {  NgxPaginationModule } from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination'; 
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
-import { environment } from "src/environments/environment"; 
-
-
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter'; 
+import { Datepicker2Component } from './pages/datepicker2/datepicker2.component';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +43,8 @@ import { environment } from "src/environments/environment";
     PageNotFoundComponent,
     DialogDataExampleDialog,
     UploadProgressComponent,
-    ValidationComponent
+    ValidationComponent,
+    Datepicker2Component
     ],
   imports: [
     BrowserModule,
@@ -71,7 +71,8 @@ import { environment } from "src/environments/environment";
     MatSnackBarModule,
     MatProgressBarModule,
     NgxPaginationModule,
-
+    MatMomentDateModule,  
+  
   ],
   providers: [
     ExcelService,
