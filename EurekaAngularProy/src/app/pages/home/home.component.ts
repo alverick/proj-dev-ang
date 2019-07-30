@@ -1,7 +1,8 @@
-import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, ComponentRef, Input } from '@angular/core';
+import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
+import { Router } from '@angular/router';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { MatDialog, MatSnackBar,MatSnackBarRef, MatDialogRef} from '@angular/material';
@@ -13,9 +14,6 @@ import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { takeUntil } from 'rxjs/operators';
-import {Subject} from 'rxjs';
-
 declare var $: any;
 
 @Component({
@@ -34,9 +32,6 @@ export class HomeComponent implements OnInit {
  @ViewChild("inputText") inputText: ElementRef;
  @ViewChild("inputDate1") inputDate1: ElementRef;
  @ViewChild("inputDate2") inputDate2: ElementRef;
-
- @ViewChild('dialog') childOne:DialogDataExampleDialog;
-
   state: boolean = false;
   pageActual : number= 1;
 
@@ -65,9 +60,6 @@ export class HomeComponent implements OnInit {
 
   serviceSelected: String;
   services: String[];
-  private unsubscribe$ = new Subject();
-
-  excel: String;
 
   selectedAll: boolean = false;
 
@@ -89,6 +81,7 @@ export class HomeComponent implements OnInit {
     private storageService: StorageService,
     private homeService: HomeService,
     private transactionService: TransactionService,
+    private router: Router ,
     private excelService: ExcelService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
@@ -128,7 +121,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
-    this.getServicios();
+    this.homeService.getServices().subscribe(
+      value =>{
+        this.services = value;
+        this.serviceSelected = value[0];
+      }
+    );
 
     this.homeService.getType().subscribe(
       value => {
@@ -146,32 +144,6 @@ export class HomeComponent implements OnInit {
     this.ListaDeuda();
  
   }
-
-ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-}
-
-
-getServicios(){
-  this.homeService.getServices().pipe(takeUntil(this.unsubscribe$)).subscribe(
-    value =>{
-      this.services = value;
-      this.serviceSelected = value[0];
-    }
-  );
-}
-
-public getServicio(): String{
-  return this.serviceSelected;
-}
-
-setServicio(service : String)  {
-  this.serviceSelected = service;
-}
-
-
-
 
   /*//////////////////////////////
   //////////  C R U D /////////////////////// 
@@ -305,28 +277,14 @@ ListaDeuda() {
 
 /*//////// O P E N  - D I A L O G ///////////////////// */
   
-openDialog() {
-  const opcion={ 
-  servicio: this.serviceSelected};
-  console.log("S E R V I C I O  :  " + opcion.servicio);
-  this.setServicio(opcion.servicio);
-   /* this.excel = this.excelService.service;
-  this.excel= opcion.servicio;
-  console.log("S E R V I C I O - E X C E L : " + this.excel)*/
-  
-  const dialogRef = this.dialog.open(DialogDataExampleDialog);
-  dialogRef.afterClosed().subscribe(result => {
-    console.log(`Dialog result: ${result}`);
-  });
-}
-/*
+
   openDialog(service: string) {
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogDataExampleDialog);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-  }*/
+  }
 
 }
 
@@ -343,18 +301,16 @@ openDialog() {
 ///////////////////////////////////////////////////////// */
 
 
-
 @Component({
   selector: 'dialog-data-example-dialog',
   templateUrl: 'dialog-data-example-dialog.html',
 })
 
-export class DialogDataExampleDialog implements OnInit {
+export class DialogDataExampleDialog {
  
   public inputXlsForm: FormGroup;
   public xlsValid: boolean;
-  @Input() public option: String = null;
-  
+  public codigoCliente: String = 'Codigo de Cliente';
 
   /*Data Parcial */
   dataParcial: any = [{  x: ['Codigo de Cliente'],    ename: 'ravi',    esal: 1000},  { eid: 'e102',  ename: 'ram',    esal: 2000  },  { eid: 'e103',   ename: 'rajesh',    esal: 300}];
@@ -371,17 +327,14 @@ export class DialogDataExampleDialog implements OnInit {
   constructor(public  snackBar: MatSnackBar,
               private excelService: ExcelService,
               public  formBuilder: FormBuilder,
-              public  dialogRef: MatDialogRef<DialogDataExampleDialog>,
-              /*public home: ComponentRef<HomeComponent>*/
-             ) { }
+              public  dialogRef: MatDialogRef<DialogDataExampleDialog>
+
+            ) { }
 
   ngOnInit(){
     this.inputXlsForm = this.formBuilder.group({
       xls: ['',Validators.required]
     })
-    
-   /* this.option = this.home.instance.getServicio();*/
-    console.log("OPCION : " + this.option);
   }
 
 
@@ -393,7 +346,7 @@ export class DialogDataExampleDialog implements OnInit {
   get f(){ return this.inputXlsForm.controls;}
 
   
-   openSnackBar() {
+   openSnackBar() {git s
     if(this.inputXlsForm.valid){
     /*service*/
     this.excelService.UploadExcel(this.files, this.excelService.service)
@@ -433,7 +386,6 @@ export class DialogDataExampleDialog implements OnInit {
 /*///////////////////////////////////////////////////////////////////////////
 ///////////////// P R O G R E S S / S N A C K B A R //////////////////////////
 ////////////////////////////////////////////////////////////////////////////// */
-
 
 @Component({
   selector: 'upload-progress',
