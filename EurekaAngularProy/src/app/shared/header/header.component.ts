@@ -14,21 +14,30 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router,
               private loginService: LoginService,
-              private spinner: NgxSpinnerService) { 
+              private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
-    
+    this.spinner.hide();
   }
 
-  public logout(): void{
+  public menu(): boolean {
+    if (localStorage.getItem('tk') === null) {
+      return false;
+
+    } else {
+      return true;
+    }
+  }
+
+  public logout(): void {
     this.spinner.show();
     this.loginService.logout();
     this.spinner.hide();
   }
 
-  public show(): boolean{
-    if(this.router.url.includes('/login') || this.router.url.includes('/afiliacion')|| this.router.url.includes('/crearContrasena')){
+  public show(): boolean {
+    if (this.router.url.includes('/login') || this.router.url.includes('/afiliacion') || this.router.url.includes('/crearContrasena')) {
       return false;
     }
     return true;

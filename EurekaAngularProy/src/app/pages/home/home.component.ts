@@ -41,7 +41,7 @@ export const MY_FORMATS = {
 declare var $: any;
 
 @Component({
-  selector: 'app-home',  
+  selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   providers: [
@@ -59,6 +59,10 @@ declare var $: any;
 
 // tslint:disable-next-line:directive-class-suffix
 export class HomeComponent implements OnInit {
+ 
+  // cargar excel combo
+ // cargaExcel: boolean;
+  @ViewChild('cargaExcel') cargaExcel;
  // datepicker format
  @Output() date2: EventEmitter<any> = new EventEmitter<any>();
  // date = new FormControl(moment());
@@ -73,7 +77,7 @@ export class HomeComponent implements OnInit {
   // tslint:disable-next-line:no-inferrable-types
   pageActual: number = 1;
   ListaValidacion: Boolean;
-
+ // x en los input
   public user: User;
   DebtsArray = [];
   checkboxes: any;
@@ -182,12 +186,28 @@ export class HomeComponent implements OnInit {
         this.DateList = value;
     });
 
-    this.consultaDeuda();
+   this.validandoListado();
+   this.cargaExcel = false;
+  }
 
-   /* if(this.debtsList.count <=0){
-      this.ListaValidacion = true;
+  validandoListado() {
+    if (localStorage.getItem('tk') === null  ) {
+      this.router.navigate(['/login']);
+    } else {
+      this.consultaDeuda();
     }
- */
+  }
+  ceroRegistros(): boolean {
+      if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
+        this.router.navigate(['/login']);
+        return false;
+      } else {
+        if (this.debtsList.count === 0) {
+          return true;
+      } else {
+          return false;
+      }
+      }
   }
 
 /*//////// C R U D ///////////////////// */
@@ -198,10 +218,6 @@ change(dateEvent) {
 
 
   consultaDeuda() {
-    // tslint:disable-next-line:max-line-length
-    //  let usDatePattern = /^02\/(?:[01]\d|2\d)\/(?:19|20)(?:0[048]|[13579][26]|[2468][048])|(?:0[13578]|10|12)\/(?:[0-2]\d|3[01])\/(?:19|20)\d{2}|(?:0[469]|11)\/(?:[0-2]\d|30)\/(?:19|20)\d{2}|02\/(?:[0-1]\d|2[0-8])\/(?:19|20)\d{2}$/;
-
-
   // tslint:disable-next-line:prefer-const
   let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
 
@@ -324,9 +340,34 @@ change(dateEvent) {
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
   ////////////////////////////////////////////////*/
+    mostrarx(): boolean {
+          // tslint:disable-next-line:max-line-length
+          if (this.inputText.nativeElement.value === '' ) {
+              return false;
+          } else {
+            return true;
+          }
+    }
+    mostrarxdate1(): boolean {
+      // tslint:disable-next-line:max-line-length
+      if (this.inputDate1.nativeElement.value === '' ) {
+          return false;
+      } else {
+        return true;
+      }
+    }
+    mostrarxdate2(): boolean {
+      // tslint:disable-next-line:max-line-length
+      if (this.inputDate2.nativeElement.value === '' ) {
+          return false;
+      } else {
+        return true;
+      }
+    }
 
     limpiarInput() {
        this.inputText.nativeElement.value = '';
+
     }
 
     limpiardate1() {
@@ -356,6 +397,7 @@ change(dateEvent) {
       dueDate: item.newDueDate,
       concept: item.newConcept
     }).subscribe(() => this.consultaDeuda());
+    this.spinner2.hide();
   }
 
   BotonCancela(item: Debts) {
@@ -379,13 +421,15 @@ change(dateEvent) {
     });
     this.transactionService.deleteAll(itemsParaEliminar)
       .subscribe(() => this.consultaDeuda());
+      this.spinner2.hide();
   }
 
   Eliminar(item: Debts) {
-    if (confirm("¿Esta Seguro de Eliminar el Registro?")) {
+    if (confirm('¿Esta Seguro de Eliminar el Registro?')) {
       this.spinner2.show();
       this.transactionService.deleteDeuda(item.id)
         .subscribe(() => this.consultaDeuda());
+        this.spinner2.hide();
     }
   }
 
@@ -399,10 +443,13 @@ change(dateEvent) {
 
 
   openDialog(service: string) {
+    this.cargaExcel = false;
+    console.log('sale el pop up');
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogDataExampleDialog);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+
     });
   }
 
@@ -513,8 +560,8 @@ export class DialogDataExampleDialog {
 })
 
 export class UploadProgressComponent  implements OnInit  {
-  state: boolean = false;
-  contador: number = 0;
+  state = false;
+  contador = 0;
   constructor( public dialog: MatDialog, public excelService: ExcelService,
                 private snackRef: MatSnackBarRef<UploadProgressComponent>) { }
 

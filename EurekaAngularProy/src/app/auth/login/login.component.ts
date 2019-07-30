@@ -38,7 +38,7 @@ private specialKeys = {
   err: boolean;
   numero2: number;
   checked: boolean = false;
-  
+
   isTrue: boolean = false;
   codigo2: boolean = false;
   isCaptchaValidate: boolean = true;
@@ -50,7 +50,7 @@ private specialKeys = {
     'ruc': [
       { type: 'required', message: 'Debes ingresar un RUC' },
       { type: 'minlength', message: 'Ingrese un RUC válido de 11 dígitos' },
-      { type: 'pattern', message: 'Debe contener solo números' },     
+      { type: 'pattern', message: 'Debe contener solo números' },
     ],
     'psw': [
       { type: 'required', message:  'Debe ingresar el password' },
@@ -70,37 +70,34 @@ private specialKeys = {
     this.validationLogin();
   }
 
-  validationLogin(){
+  validationLogin() {
     let rucStr = this.cookieService.check('ruc') ?
     this.cookieService.get('ruc') :  '';
-    if(rucStr){
-      this.checked=true;
+    if (rucStr) {
+      this.checked = true;
     }
 
-    console.log("RUCSTR : "+rucStr);
-    
+    console.log('RUCSTR : ' + rucStr);
+
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.minLength(11), Validators.required,
             Validators.pattern('^[0-9]*$')])
           ],
       psw: ['', Validators.required ],
-      rememberme:[false, Validators.required]  
+      rememberme: [false, Validators.required]
     });
   }
 
   get f() { return this.loginForm.controls; }
-  
+
   resolved(captchaResponse: string) : boolean{
     console.log(`Resolved captcha with response: ${captchaResponse}`);
     this.isCaptchaValidate = true;
     return true;
   }
-   
-
-  
 
   /* ////////  N O T  - A L L L O W - T O - C O P Y //////// */
-  
+
   @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
     e.preventDefault();
   }
@@ -131,7 +128,7 @@ private specialKeys = {
           this.intentos= value.paramNum;
           this.codRespuesta= value.codRespuesta;
           if(value.paramStr==="Un session ya se encuentra activa"){
-            Swal.fire({ type: 'warning', text: 'Existe una Sesión Activa'})        
+            Swal.fire({ type: 'warning', text: 'Existe una Sesión Activa'})
           }else if(value.estado===true){
                   if(this.rememberMe==true){
                       const expire = new Date();

@@ -11,12 +11,11 @@ import { ProcesandoComponent } from 'src/app/auth/procesando/procesando.componen
 import { AnalisisComponent } from 'src/app/pages/analisis/analisis.component';
 import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-found.component';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
+import { LogoutGuard } from './shared/guards/logout.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent,   canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent},
-  { path: '', redirectTo: '/home', pathMatch: 'full'  },
-  { path: '**', redirectTo: ''},
+  { path: 'login', component: LoginComponent, canActivate: [LogoutGuard]},
 
   { path: 'afiliacion', component: AfiliacionComponent},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent},
@@ -26,6 +25,9 @@ const routes: Routes = [
   { path: 'subirPlantilla', component: SubirPlantillaComponent},
   { path: 'analisis', component: AnalisisComponent},
   { path: 'notFound', component: PageNotFoundComponent},
+
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login'},
 
 ];
 export const Routing: ModuleWithProviders = RouterModule.forRoot(routes);

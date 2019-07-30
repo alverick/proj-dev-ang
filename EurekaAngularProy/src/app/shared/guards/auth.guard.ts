@@ -8,22 +8,20 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router:Router,
-              private storageService: StorageService){}
-  
+  constructor(private router: Router,
+              private storageService: StorageService) {}
+
   canActivate(next: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): boolean {
     let url: string = state.url;
     return this.checkLogin(url);
     }
 
-  checkLogin(url: string) : boolean{
-    if(this.storageService.getCurrentToken){
-       return true; 
-    }else{
-
-      this.storageService.redirectUrl;
-
+  checkLogin(url: string): boolean {
+    if (this.storageService.getCurrentToken) {
+       return true;
+    } else {
+      this.storageService.redirectUrl; 
       this.router.navigate(['/login']);
       return false;
     }

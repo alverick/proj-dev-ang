@@ -13,13 +13,12 @@
             <div>La información que haz ingresado es incorrecta!</div>
         </div>
         <hr>
-        <div class="text-center">
+        <div class="text-center" style="overflow:scroll;">
             <table>
                 <tr *ngFor="let error of excelService.errores">
                     <td>En la fila &nbsp;<span style="color: red;"> {{ error.description | slice: 0: 2 }}
                             &nbsp;</span> {{ error.description | slice: 3: 100}} </td>
-                    <td>, el campo &nbsp; <span style="color: green;"> {{ error.field }}</span> &nbsp; tiene el valor
-                        &nbsp; <span style="color: orange;">{{ error.value }} </span></td>
+                    <td>, el campo &nbsp; <span style="color: green;"> {{ error.field }}</span> &nbsp; tiene el valor &nbsp; <span style="color: orange;">{{ error.value }} </span></td>
                 </tr>
             </table>
         </div>
