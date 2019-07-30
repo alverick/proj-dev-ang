@@ -346,7 +346,7 @@ export class DialogDataExampleDialog {
   get f(){ return this.inputXlsForm.controls;}
 
   
-   openSnackBar() {git s
+   openSnackBar() {
     if(this.inputXlsForm.valid){
     /*service*/
     this.excelService.UploadExcel(this.files, this.excelService.service)

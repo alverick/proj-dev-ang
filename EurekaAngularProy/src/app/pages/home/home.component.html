@@ -109,19 +109,19 @@
                                         </div>
                                         
                                         <div class="mr-3" > 
-                                            <a class="texto-azul" href="" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                 <span class="icon-papel-2 iconos-big"></span><br>
                                                 <span class="text-small font-medium">Cargar Excel</span>
-                                            </a>  
+                                            </div>  
                                             <div class="collapse sobresale" id="collapseExample">
-                                                <div class="card card-body" [(ngModel)]="serviceSelected">
+                                                <div class="card card-body" >
                                                     <div *ngFor="let service of services" (click)="openDialog(service)">
-                                                        <div data-toggle="collapse" [ngValue]="service">
+                                                        <div data-toggle="collapse" >
                                                             {{service}} 
                                                         </div>
                                                     </div>        
                                                 </div>
-                                            </div>
+                                            </div> 
                                         </div>   
                                     </div>
                                 </td>
