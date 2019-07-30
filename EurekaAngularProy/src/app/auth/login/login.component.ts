@@ -28,16 +28,13 @@ export class LoginComponent implements OnInit {
   public  formData: any = {};
   public  rememberMe: boolean = false;
 
-private specialKeys = {
-  number: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
-  decimal: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
-};
 
   intentos: number = 0;
   codRespuesta: number;
   err: boolean;
   numero2: number;
   checked: boolean = false;
+  intento6: boolean =false;
 
   isTrue: boolean = false;
   codigo2: boolean = false;
@@ -76,9 +73,7 @@ private specialKeys = {
     if (rucStr) {
       this.checked = true;
     }
-
-    console.log('RUCSTR : ' + rucStr);
-
+    
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.minLength(11), Validators.required,
             Validators.pattern('^[0-9]*$')])
@@ -142,7 +137,9 @@ private specialKeys = {
             this.codigo2=true;
           }else if(this.intentos < 4 && this.codRespuesta == 3){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
-            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
+            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'}).then(function () {
+
+            });        
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;            
@@ -172,6 +169,7 @@ private specialKeys = {
           }else if(this.intentos >= 6){
             console.log("Intentos : " + value.paramNum + "   Sin codigo");
             Swal.fire({ type: 'error', title: 'Contraseña Incorrecta', text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe'})
+            this.intento6= true;
             this.isTrue = false;              
           }            
         },

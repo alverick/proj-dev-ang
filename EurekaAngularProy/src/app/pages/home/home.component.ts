@@ -121,6 +121,8 @@ export class HomeComponent implements OnInit {
   };
   control: any;
 
+  
+
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
@@ -334,7 +336,7 @@ change(dateEvent) {
 
 }
 
-
+ 
 
 }
   /*//////////////////////////////
@@ -367,7 +369,7 @@ change(dateEvent) {
 
     limpiarInput() {
        this.inputText.nativeElement.value = '';
-
+ 
     }
 
     limpiardate1() {
@@ -476,18 +478,22 @@ change(dateEvent) {
 
 // tslint:disable-next-line:component-class-suffix
 export class DialogDataExampleDialog {
-
+ 
   public inputXlsForm: FormGroup;
+  public xlsValid: boolean;
+  public codigoCliente: String = 'Codigo de Cliente';
 
   /*Data Parcial */
-  // tslint:disable-next-line:max-line-length
-  dataParcial: any = [{  eid: 'e101',    ename: 'ravi',    esal: 1000},  { eid: 'e102',  ename: 'ram',    esal: 2000  },  { eid: 'e103',   ename: 'rajesh',    esal: 300}];
+  dataParcial: any = [{  x: ['Codigo de Cliente'],    ename: 'ravi',    esal: 1000},  { eid: 'e102',  ename: 'ram',    esal: 2000  },  { eid: 'e103',   ename: 'rajesh',    esal: 300}];
 
   /*Data Completa */
-  // tslint:disable-next-line:max-line-length
-  dataCompleta: any = [{ eid: 'e101',    ename: 'ravi',   eapellido: 'ravi',   eemail: 'email',   estado: 'deudor', fecha: '16/05/15',   esal: 1000, }, {   eid: 'e102',   ename: 'ram',   eapellido: 'ravi',    eemail: 'email',    estado: 'deudor',  fecha: '16/05/15', esal: 2000},  {eid: 'e103',  ename: 'rajesh',   eapellido: 'ravi',   eemail: 'email',   estado: 'deudor',   fecha: '16/05/15', esal: 3000},
-    {  eid: 'e104',  ename: 'chris',  eapellido: 'ravi',  eemail: 'email', estado: 'deudor', fecha: '16/05/15',  esal: 6000 },
-    {  eid: 'e105', ename: 'jhon', eapellido: 'ravi',   eemail: 'email', estado: 'deudor',   fecha: '16/05/15',  esal: 15000}];
+  matricula: any = [{"Código de cliente":1234567,"Nombres":"Oscar","Apellidos":"Paredes Zapata","Servicio":"Otros"}];
+  
+  validationExcel = {
+    'xls':[
+      { type: 'required', message: 'Debes Ingresar un archivo excel'}
+    ]
+  }
 
   constructor(public  snackBar: MatSnackBar,
               private excelService: ExcelService,
@@ -502,8 +508,7 @@ export class DialogDataExampleDialog {
       xls: ['', Validators.required]
     });
   }
-
-
+  git 
   onChangeFile(event) {
     this.files = event.target.files;
   }
@@ -525,18 +530,17 @@ export class DialogDataExampleDialog {
     this.snackBar.openFromComponent(UploadProgressComponent);
     this.dialogRef.close();
     }else{
-      alert('Ingresa el excel');
+      this.xlsValid = true;
     }
   }
-
-
+ 
 
   exportDataParcialXLSX():void {
     this.excelService.exportAsExcelFile(this.dataParcial, 'data_parcial');
   }
 
-  exportDataCompletaXLSX():void{
-    this.excelService.exportAsExcelFile(this.dataCompleta, 'data_completa');
+  exportDataMatriculaXLSX():void{
+    this.excelService.exportAsExcelFile(this.matricula, 'data_completa');
   }
 
 
