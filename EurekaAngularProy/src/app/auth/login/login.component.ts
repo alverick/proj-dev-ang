@@ -28,6 +28,11 @@ export class LoginComponent implements OnInit {
   public  formData: any = {};
   public  rememberMe: boolean = false;
 
+  public  inputUsuario: boolean = false;
+  @ViewChild('inputUsua') inputUsua: ElementRef;
+  @ViewChild('inputPass') inputPass: ElementRef;
+  inputUsuaValid: boolean = false;
+  inputPassValid: boolean = false;
 
   intentos: number = 0;
   codRespuesta: number;
@@ -45,13 +50,14 @@ export class LoginComponent implements OnInit {
 
   account_validation_messages = {
     'ruc': [
+      // hasError
       { type: 'required', message: 'Debes ingresar un RUC' },
-      { type: 'minlength', message: 'Ingrese un RUC válido de 11 dígitos' },
+     // { type: 'minlength', message: 'Ingrese un RUC válido de 11 dígitos' },
       { type: 'pattern', message: 'Debe contener solo números' },
     ],
     'psw': [
       { type: 'required', message:  'Debe ingresar el password' },
-      { type: 'minlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres' },
+      // { type: 'minlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres' },
       { type: 'maxlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres'},
     ]
   }
@@ -65,9 +71,28 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.validationLogin();
+     this.validaInputs();
   }
 
-  validationLogin() {
+
+  mostrarMensajeUsu(): boolean {
+    // tslint:disable-next-line:max-line-length
+    if (this.inputUsua.nativeElement.value === '' ) {
+        return   true;
+    } else {
+      return  false;
+    }
+  }
+  mostrarMensajePass(): boolean {
+    // tslint:disable-next-line:max-line-length
+    if (this.inputPass.nativeElement.value === '' ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+    validationLogin() {
     let rucStr = this.cookieService.check('ruc') ?
     this.cookieService.get('ruc') :  '';
     if (rucStr) {
@@ -75,9 +100,9 @@ export class LoginComponent implements OnInit {
     }
     
     this.loginForm = this.formBuilder.group({
-      ruc: [rucStr, Validators.compose([Validators.minLength(11), Validators.required,
+      ruc: [rucStr, Validators.compose([Validators.required,
             Validators.pattern('^[0-9]*$')])
-          ],
+           ],
       psw: ['', Validators.required ],
       rememberme: [false, Validators.required]
     });
@@ -104,11 +129,30 @@ export class LoginComponent implements OnInit {
   @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
     e.preventDefault();
   }
+ 
+  validaInputs() {
+    if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   )) {
+      this.inputUsuaValid = false;
+      this.inputPassValid = false; 
+    } 
+  }
   
-
+  focusFunctionRuc(){ 
+    this.inputUsuaValid = false;
+  }
+  focusFunctionPass(){
+    this.inputPassValid = false; 
+  }
   /* /////// L O G I N ////////////  */
  
-  public submitLogin() : any {
+  public submitLogin() : any { 
+
+    if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '')) {
+      this.inputUsuaValid = true;
+      this.inputPassValid = true;
+      //return;
+    }
+    
 
     this.cookieService.delete('ruc');
     console.log("LOGIN VALID  : " +this.loginForm.valid);

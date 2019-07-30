@@ -54,7 +54,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input (dateChange)="change($event)" #inputDate1 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10" (keypress)="numberOnly($event)" appBlockCopyPaste>
+                                            <input inputmode="numeric" (dateChange)="change($event)" #inputDate1 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10" (keypress)="numberOnly($event)" appBlockCopyPaste>
                                             <label *ngIf="mostrarxdate1()" (click)="limpiardate1()" class="fa fa-times"></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker class="md-datepicker-input-container" #myDatepicker2></mat-datepicker>
@@ -66,7 +66,7 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input (dateChange)="change($event)" #inputDate2 type="text" id="inputDate2" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10" (keypress)="numberOnly($event)" appBlockCopyPaste>
+                                            <input  inputmode="numeric" (dateChange)="change($event)" #inputDate2 type="text" id="inputDate2" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10" (keypress)="numberOnly($event)" appBlockCopyPaste>
                                             <label *ngIf="mostrarxdate2()" (click)="limpiardate2()" class="fa fa-times"></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker></mat-datepicker>
@@ -116,11 +116,11 @@
                                             </div>
 
                                             <div class="mr-3">
-                                                <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                <div (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                                     <span class="icon-papel-2 iconos-big"></span><br>
                                                     <span class="text-small font-medium">Cargar </span>
                                                 </div>
-                                                <div class="collapse sobresale " id="collapseExample">
+                                                <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
                                                     <div class="card card-body">
                                                         <div *ngFor="let service of services" (click)="openDialog(service)">
                                                             <div data-toggle="collapse">

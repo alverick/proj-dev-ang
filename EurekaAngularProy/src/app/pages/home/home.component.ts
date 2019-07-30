@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
   DebtsArray = [];
   checkboxes: any;
 
-
+  OcultaListaExcel: boolean = true;
   mostrar: Boolean;
   inputEdit: Boolean;
   InputList: Boolean;
@@ -442,9 +442,12 @@ change(dateEvent) {
 
 
 /*//////// O P E N  - D I A L O G ///////////////////// */
-
+MostrarListaSelect(){
+  this.OcultaListaExcel = true;
+}
 
   openDialog(service: string) {
+    this.OcultaListaExcel = false;
     this.cargaExcel = false;
     console.log('sale el pop up');
     this.excelService.service = service;
