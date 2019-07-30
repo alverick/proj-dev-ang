@@ -28,10 +28,6 @@ export class LoginComponent implements OnInit {
   public  formData: any = {};
   public  rememberMe: boolean = false;
 
-private specialKeys = {
-  number: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
-  decimal: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
-};
 
   intentos: number = 0;
   codRespuesta: number;
@@ -77,8 +73,6 @@ private specialKeys = {
     if(rucStr){
       this.checked=true;
     }
-
-    console.log("RUCSTR : "+rucStr);
     
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.minLength(11), Validators.required,

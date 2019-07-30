@@ -86,7 +86,7 @@
                         <thead>
                             <!--//////////// A C C I O N E S //////////////// -->
                             <tr>                                     
-                                <td colspan="2" class="head">
+                                <td colspan="5" class="head">
                                     <div class="d-flex">
                                         <div class="mr-3">   
                                            
@@ -109,19 +109,28 @@
                                         </div>
                                         
                                         <div class="mr-3" > 
-                                            <div data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            <a class="texto-azul" href="javascript:;">
                                                 <span class="icon-papel-2 iconos-big"></span><br>
-                                                    <span class="text-small font-medium">Cargar Excel</span>
-                                            </div>  
+                                                <select class="custom-select" (change)="openDialog()" [(ngModel)]="serviceSelected" style="border:0px; outline:0px; margin:0px; font-size: 10px; padding:0px;  background: none">
+                                                    <option *ngFor="let service of services" [ngValue]="service">
+                                                        {{service}}
+                                                    </option>
+                                                </select>
+                                            </a>
+                                            <!--
+                                            <a class="texto-azul" href="" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                <span class="icon-papel-2 iconos-big"></span><br>
+                                                <span class="text-small font-medium">Cargar Excel</span>
+                                            </a>  
                                             <div class="collapse sobresale" id="collapseExample">
-                                                <div class="card card-body" >
+                                                <div class="card card-body" [(ngModel)]="serviceSelected">
                                                     <div *ngFor="let service of services" (click)="openDialog(service)">
-                                                        <div data-toggle="collapse" >
+                                                        <div data-toggle="collapse" [ngValue]="service">
                                                             {{service}} 
                                                         </div>
                                                     </div>        
                                                 </div>
-                                            </div> 
+                                            </div>--> 
                                         </div>   
                                     </div>
                                 </td>
