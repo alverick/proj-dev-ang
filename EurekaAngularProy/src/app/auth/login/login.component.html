@@ -35,10 +35,6 @@
                                             </mat-error> 
                                        
                                     </mat-form-field>
-                                    <!--   <div style="color:#f44336 !important; font-size: 8" *ngIf="codigo2" class="error-message">
-                                        No tenemos una cuenta registrada con este RUC
-                                    </div>
-                                    -->
                                     <div class="mt-4">
                                         <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" [checked]="checked" [(ngModel)]="rememberMe" formControlName="rememberme">
                                         <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
@@ -74,7 +70,7 @@
                                 Usuario o password Incorrecto
                             </div>
                             <br>
-                            <!--  <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI" ></re-captcha>-->
+
                             <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
 
                             <!-- Login -->
