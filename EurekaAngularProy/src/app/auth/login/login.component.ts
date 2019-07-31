@@ -116,15 +116,7 @@ export class LoginComponent implements OnInit {
     return true;
   }
 
-  numberOnly(event): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
 
-  }
- 
   validaInputs() {
     if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   ) {
       this.inputUsuaValid = false;
