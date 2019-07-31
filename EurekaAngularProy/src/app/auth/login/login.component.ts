@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Directive, ViewChild} from '@angular/core';
+import { Component, OnInit, HostListener, Directive, ViewChild, ElementRef} from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('inputPass') inputPass: ElementRef;
   inputUsuaValid: boolean = false;
   inputPassValid: boolean = false;
+  validarCantRuc: boolean = false;
 
   intentos: number = 0;
   codRespuesta: number;
@@ -131,7 +132,7 @@ export class LoginComponent implements OnInit {
   }
  
   validaInputs() {
-    if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   )) {
+    if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   ) {
       this.inputUsuaValid = false;
       this.inputPassValid = false; 
     } 
@@ -144,10 +145,19 @@ export class LoginComponent implements OnInit {
     this.inputPassValid = false; 
   }
   /* /////// L O G I N ////////////  */
- 
+  OutfocusFunctionRuc() {
+   /* if( < 11 ) {
+      this.validarCantRuc = true;  
+    } else {
+      this.validarCantRuc = false;  
+    }  */
+    // this.inputUsua.nativeElement.value.
+  }
+
+
   public submitLogin() : any { 
 
-    if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '')) {
+    if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '') {
       this.inputUsuaValid = true;
       this.inputPassValid = true;
       //return;
