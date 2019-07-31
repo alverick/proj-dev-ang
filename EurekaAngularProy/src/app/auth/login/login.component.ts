@@ -116,22 +116,17 @@ export class LoginComponent implements OnInit {
     return true;
   }
 
-  /* ////////  N O T  - A L L L O W - T O - C O P Y //////// */
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
 
-  @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
-    e.preventDefault();
-  }
-
-  @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
-    e.preventDefault();
-  }
-
-  @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
-    e.preventDefault();
   }
  
   validaInputs() {
-    if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   )) {
+    if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   ) {
       this.inputUsuaValid = false;
       this.inputPassValid = false; 
     } 
@@ -147,7 +142,7 @@ export class LoginComponent implements OnInit {
  
   public submitLogin() : any { 
 
-    if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '')) {
+    if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '') {
       this.inputUsuaValid = true;
       this.inputPassValid = true;
       //return;

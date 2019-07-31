@@ -18,12 +18,8 @@
     "@angular/core": "^6.1.0",
     "@angular/forms": "^6.1.0",
     "@angular/http": "^6.1.10",
-<<<<<<< HEAD
     "@angular/material": "^5.2.5",
-=======
-    "@angular/material": "^5.2.0",
-    "@angular/material-moment-adapter": "^8.1.1",
->>>>>>> 718333dff606affbbfef79e8fadd8fe003ba3991
+    "@angular/material-moment-adapter": "^8.1.2",
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
