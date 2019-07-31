@@ -15,8 +15,10 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
-import { DigitOnlyModule } from '@uiowa/digit-only';
-import { MatFormFieldModule, MatSelectModule } from '@angular/material';
+import { DigitOnlyModule } from '@uiowa/digit-only'; 
+import { MatFormFieldModule, MatSelectModule } from '@angular/material'; 
+import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
+import { NumberDirective } from './login/numbers-only.directive'; 
 
 @NgModule({
   imports: [
@@ -36,7 +38,7 @@ import { MatFormFieldModule, MatSelectModule } from '@angular/material';
     AuthGuard,
     CookieService
   ],
-  declarations: [LoginComponent, AfiliacionComponent, ConfigurarServiciosComponent, ProcesandoComponent, CrearContrasenaComponent]
+  declarations: [LoginComponent, AfiliacionComponent, ConfigurarServiciosComponent, ProcesandoComponent, CrearContrasenaComponent, BlockCopyPasteDirective, NumberDirective]
 })
 
 export class AuthModule {

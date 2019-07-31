@@ -117,20 +117,7 @@ export class LoginComponent implements OnInit {
     return true;
   }
 
-  /* ////////  N O T  - A L L L O W - T O - C O P Y //////// */
 
-  @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
-    e.preventDefault();
-  }
-
-  @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
-    e.preventDefault();
-  }
-
-  @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
-    e.preventDefault();
-  }
- 
   validaInputs() {
     if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   ) {
       this.inputUsuaValid = false;

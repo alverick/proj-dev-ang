@@ -25,7 +25,7 @@
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6" for="">RUC</label>
                                     <mat-form-field class="full-width">
-                                        <input #inputUsua matInput type="text" (focus)="focusFunctionRuc()" (focusout)="OutfocusFunctionRuc()" minlength="11" maxlength="11" inputmode="numeric" pattern="[0-9]*" digitOnly formControlName="ruc" appBlockCopyPaste [ngClass]="{ 'is-invalid': submitted && f.ruc.errors }">
+                                        <input #inputUsua matInput type="text" (focus)="focusFunctionRuc()" minlength="11" maxlength="11" formControlName="ruc" [ngClass]="{ 'is-invalid': submitted && f.ruc.errors }" numbersOnly>
                                             <mat-error  *ngFor="let validation of account_validation_messages.ruc">
                                                 <div *ngIf="inputUsuaValid">
                                                 <mat-error class="error-message" *ngIf="loginForm.get('ruc').hasError(validation.type) ">
@@ -63,7 +63,7 @@
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6" for="">Contraseña</label>
                                     <mat-form-field class="full-width">
-                                        <input #inputPass matInput type="password" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" appBlockCopyPaste [ngClass]="{ 'is-invalid': submitted && f.psw.errors }">
+                                        <input #inputPass matInput type="password" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" appBlockCopyPaste [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste> 
                                             <mat-error *ngFor="let validation of account_validation_messages.psw">
                                                 <div *ngIf="inputPassValid">
                                                 <mat-error class="error-message" *ngIf="loginForm.get('psw').hasError(validation.type) ">
