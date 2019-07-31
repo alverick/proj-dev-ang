@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Component, OnInit, HostListener, Directive, ViewChild, ElementRef } from '@angular/core';
+=======
+import { Component, OnInit, HostListener, Directive, ViewChild, ElementRef} from '@angular/core';
+>>>>>>> b6089fa4b9be76d1ec9ace6b6445f717017029f6
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -33,6 +37,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('inputPass') inputPass: ElementRef;
   inputUsuaValid: boolean = false;
   inputPassValid: boolean = false;
+  validarCantRuc: boolean = false;
 
   intentos: number = 0;
   codRespuesta: number;
@@ -116,18 +121,19 @@ export class LoginComponent implements OnInit {
     return true;
   }
 
-  /* ////////  N O T  - A L L L O W - T O - C O P Y //////// */
 
-  @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
-    e.preventDefault();
+  validaInputs() {
+    if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   ) {
+      this.inputUsuaValid = false;
+      this.inputPassValid = false; 
+    } 
   }
-
-  @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
-    e.preventDefault();
+  
+  focusFunctionRuc(){ 
+    this.inputUsuaValid = false;
   }
-
-  @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
-    e.preventDefault();
+  focusFunctionPass(){
+    this.inputPassValid = false; 
   }
  
   validaInputs() {

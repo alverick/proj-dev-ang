@@ -32,6 +32,12 @@
                                                     {{validation.message}}
                                                 </mat-error>
                                                 </div>
+                                                <div *ngIf="validarCantRuc">
+                                                    <mat-error class="error-message">
+                                                        Ingrese un RUC válido de 11 dígitos
+                                                    </mat-error>
+                                                </div>
+
                                             </mat-error> 
                                        
                                     </mat-form-field>

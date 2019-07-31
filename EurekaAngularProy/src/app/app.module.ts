@@ -30,8 +30,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter'; 
+import { MatFormFieldModule } from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,12 +64,13 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    MatSelectModule,
     MatCheckboxModule,
     MatSnackBarModule,
     MatProgressBarModule,
     NgxPaginationModule,
     MatMomentDateModule,
+    MatFormFieldModule, 
+    MatSelectModule
 
   ],
   providers: [
