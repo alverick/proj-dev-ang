@@ -11,7 +11,7 @@ import { DebstFilter } from "../models/debts-filter.model";
 
 @Injectable({
     providedIn: 'root'
-  }  
+  }
 )
 
 export class TransactionService {
@@ -33,7 +33,7 @@ export class TransactionService {
     }
 
     getDeuda(filtro: DebstFilter): Observable<DebtsPagedList>{
-        const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${this.getDateFormat(filtro.dateFrom)}&DateTo=${this.getDateFormat(filtro.dateTo)}`;
+        const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${filtro.dateFrom}&DateTo=${filtro.dateTo}`;
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),

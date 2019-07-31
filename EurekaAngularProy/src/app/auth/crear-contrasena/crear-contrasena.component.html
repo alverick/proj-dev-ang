@@ -1,68 +1,158 @@
 <div class="body">
-  <div class="container">            
-      <div class="row">
-          <!--/////// L E F T ////////-->
-          <div class="col-sm-4">
-              <div class="row">
-                  <div class="col-sm">
-                    <br>
-                      <h2 class="texto-azulbase">Crea una contraseña <br> para guardar tus <br> registros</h2>                    
-                  </div>
-              </div>
-          </div>
+    <div class="container">
+        <div class="row">
+            <!--/////// L E F T ////////-->
+            <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-sm">
+                        <br>
+                        <h2 class="texto-azulbase">Crea una contraseña <br> para guardar tus <br> registros</h2>
+                    </div>
+                </div>
+            </div>
 
-          <!--/////// R I G H T ////////-->
-          <div class="col-sm-8 position-relative">
-              <br> 
-           <!--<div class="position-absolute bg-blanco box-login custom-shadow">-->
-              <div class="d-flex justify-content-center">
-                  <div class=" border p-5 bg-white rounded">
-                   
-                  <!--/////// F O R M ////////-->
-                      <form>
-                          
-                      <div class="d-flex mb-3"> 
-                              <!-- ////////////// R U C /////////////////// --> 
-                             <mat-form-field class="super-full-width ">
-                                 <input matInput  type="text"  placeholder="RUC" digitOnly minlength="11" maxlength="11">                   
-                             </mat-form-field>  
-                      </div>
-                      <div class="d-flex mb-3"> 
-                          <!-- ////////////// R U C /////////////////// --> 
-                         <mat-form-field class="super-full-width ">
-                             <input matInput  type="text"  placeholder="Email" digitOnly minlength="11" maxlength="11">                   
-                         </mat-form-field>  
-                      </div>
-                      <div class="d-flex mb-3"> 
-                          <!-- ////////////// R U C /////////////////// --> 
-                         <mat-form-field class="super-full-width ">
-                             <input matInput  type="text"  placeholder="Telefono ó Celular" digitOnly minlength="11" maxlength="11">                   
-                         </mat-form-field>  
-                      </div>
-                      <div class="d-flex mb-3"> 
-                          <!-- ////////////// R U C /////////////////// --> 
-                         <mat-form-field class="super-full-width ">
-                             <input matInput  type="password"  placeholder="Contraseña" digitOnly minlength="11" maxlength="11">                   
-                         </mat-form-field>  
-                      </div>
-                      <div class="d-flex mb-3">
-                          <!-- ////////////// R U C /////////////////// --> 
-                         <mat-form-field class="super-full-width ">
-                             <input matInput  type="password"  placeholder="Repita Contraseña" digitOnly minlength="11" maxlength="11">                   
-                         </mat-form-field>  
-                      </div> 
-                          <!-- Login -->
-                          <div class="d-flex mb-3">
-                              <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox"  >
-                              <label for="styled-checkbox-1"> Acepto los Terminos y Condiciones </label>
-                            
-                          </div> 
-                      <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white" form="login-form"> Registrarme</button>
-                      </form>
-                  </div>
-              </div>
-              <br> 
-          </div>            
-      </div>           
-      </div>  
-  </div>
+            <!--/////// R I G H T ////////-->
+            <div class="col-sm-8 position-relative">
+                <br>
+                <!--<div class="position-absolute bg-blanco box-login custom-shadow">-->
+                <div class="d-flex justify-content-center">
+                    <div class=" border p-5 bg-white rounded">
+
+                        <!--/////// F O R M ////////-->
+                        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                            <mat-form-field class="super-full-width ">   
+                                <input matInput type="text" placeholder="ruc" formControlName="ruc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ruc.errors }" />
+                                <div *ngIf="submitted && f.ruc.errors" class="invalid-feedback">
+                                    <div *ngIf="f.ruc.errors.required">ruc es requerido</div>
+                                </div>  
+                            </mat-form-field>
+                            <mat-form-field class="super-full-width ">  
+                                <input matInput  placeholder="Email" type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email.errors.required">Email is required</div>
+                                    <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                </div>  
+                            </mat-form-field>
+                            <mat-form-field class="super-full-width ">  
+                                <input matInput type="text" placeholder="telefono" formControlName="telefono" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" />
+                                <!-- <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
+                                    <div *ngIf="f.telefono.errors.required">telefono is required</div>
+                                </div>-->
+                            </mat-form-field>
+
+                            <mat-form-field class="super-full-width ">  
+                                <input matInput type="password" placeholder="Contraseña"  formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                               <!-- <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="f.password.errors.required">Password is required</div>
+                                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                                </div> -->
+                            </mat-form-field >
+                            <mat-form-field class="super-full-width "> 
+                                <input type="password" matInput formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" placeholder="Repita Contraseña" digitOnly minlength="11" maxlength="11" />
+                               <!-- <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                                    <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+                                    <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+                                </div> -->
+                            </mat-form-field >
+                            <div class="form-group">
+                                <input formControlName="rememberme" class="styled-checkbox" id="styled-checkbox-1" type="checkbox">
+                                <label for="styled-checkbox-1"> Acepto los Terminos y Condiciones </label>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--
+
+     <div class="body">
+    <div class="container">
+        <div class="row"> 
+            <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm">
+                            <br>
+                            <h2 class="texto-azulbase">Crea una contraseña <br> para guardar tus <br> registros</h2>
+                        </div>
+                    </div>
+                </div>
+     
+                <div class="col-sm-8 position-relative">
+                    <br>
+                    
+                    <div class="d-flex justify-content-center">
+                        <div class=" border p-5 bg-white rounded">
+    
+                         
+                            <form [formGroup]="creaContrasena" (ngSubmit)="validaFormularioSubmit()">
+    
+                                <div class="form-group">
+                                    
+    
+                                    <input formControlName="ruc" [ngClass]="{ 'is-invalid': submitted && f.ruc.errors }" matInput type="text" placeholder="RUC" digitOnly minlength="11" maxlength="11">
+                                    <div *ngIf="submitted && f.ruc.errors" class="invalid-feedback">
+                                        <div *ngIf="f.ruc.errors.required">Last Name is required</div>
+                                    </div>
+    
+                                </div>
+                                <div class="form-group">
+                                     
+                                    <mat-form-field class="super-full-width ">
+                                        <input formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" matInput type="text" placeholder="Email" digitOnly minlength="11" maxlength="11">
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors.required">Last Name is required</div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <mat-form-field class="super-full-width ">
+                                        <input formControlName="telefono" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" matInput type="text" placeholder="Telefono ó Celular" digitOnly minlength="11" maxlength="11">
+                                        <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
+                                            <div *ngIf="f.telefono.errors.required">Last Name is required</div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group">
+                                   
+                                    <mat-form-field class="super-full-width ">
+                                        <input formControlName="contrasena" [ngClass]="{ 'is-invalid': submitted && f.contrasena.errors }" matInput type="password" placeholder="Contraseña" digitOnly minlength="11" maxlength="11">
+                                        <div *ngIf="submitted && f.contrasena.errors" class="invalid-feedback">
+                                            <div *ngIf="f.contrasena.errors.required">Last Name is required</div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group">
+                                   
+                                    <mat-form-field class="super-full-width ">
+                                        <input formControlName="repcontrasena" [ngClass]="{ 'is-invalid': submitted && f.repcontrasena.errors }" matInput type="password" placeholder="Repita Contraseña" digitOnly minlength="11" maxlength="11">
+                                        <div *ngIf="submitted && f.repcontrasena.errors" class="invalid-feedback">
+                                            <div *ngIf="f.repcontrasena.errors.required.mustMatch">Last Name is required</div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input formControlName="rememberme" class="styled-checkbox" id="styled-checkbox-1" type="checkbox">
+                                    <label for="styled-checkbox-1"> Acepto los Terminos y Condiciones </label>
+    
+                                </div>
+                                <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white" form="login-form"> Registrarme</button>
+                            </form>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+-->

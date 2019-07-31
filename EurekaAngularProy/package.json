@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "gulp nodemon",
+    "build": "gulp build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -18,7 +18,12 @@
     "@angular/core": "^6.1.0",
     "@angular/forms": "^6.1.0",
     "@angular/http": "^6.1.10",
+<<<<<<< HEAD
     "@angular/material": "^5.2.5",
+=======
+    "@angular/material": "^5.2.0",
+    "@angular/material-moment-adapter": "^8.1.1",
+>>>>>>> 718333dff606affbbfef79e8fadd8fe003ba3991
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
@@ -32,14 +37,18 @@
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
+    "highlight.js": "^9.15.8",
+    "moment": "^2.24.0",
     "ng-recaptcha": "^4.3.0",
     "ngx-captcha": "^5.0.4",
     "ngx-cookie-service": "^2.2.0",
+    "ngx-highlightjs": "^3.0.3",
     "ngx-pagination": "^4.1.0",
     "ngx-spinner": "^7.2.0",
     "ngx-webstorage-service": "^4.0.1",
     "node-sass": "^4.12.0",
     "normalize.css": "^8.0.1",
+    "npm": "^6.10.2",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
     "sweetalert2": "^8.14.0",
@@ -50,7 +59,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",
-    "@angular/cli": "~6.2.9",
+    "@angular/cli": "^6.2.9",
     "@angular/compiler-cli": "^6.1.0",
     "@angular/language-service": "^6.1.0",
     "@types/jasmine": "~2.8.8",

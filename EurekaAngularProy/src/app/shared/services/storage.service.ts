@@ -13,7 +13,7 @@ export class StorageService {
   redirectUrl: string;
 
   private localStorageService;
-  private currentSession : Session = null;
+  private currentSession: Session = null;
 
   constructor(private cookieStorage: CookieService) {
     this.localStorageService = localStorage;
@@ -22,13 +22,15 @@ export class StorageService {
 
   setCurrentSession(session: Session): void {
     this.currentSession = session;
-    //const expire = new Date();
-    //expire.setDate(expire.getDate() + 25);
-    //this.cookieStorage.set('ruc', session.user.ruc, expire);
-    this.localStorageService.setItem('tk', session.token);
+
+    if (session.token === 'RUC no esta registrado'  ||  session.token ===  'Un session ya se encuentra activa'  ||  session.token ===  'Credenciales invalidas') {
+       return ;
+    } else {
+      this.localStorageService.setItem('tk', session.token);
+    }
   }
 
-  loadSessionData(): Session{
+  loadSessionData(): Session {
     if (this.cookieStorage.check('ruc')) {
       return {
         user: { ruc: this.cookieStorage.get('ruc') },

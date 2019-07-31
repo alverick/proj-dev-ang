@@ -10,7 +10,7 @@ import { AnalisisComponent } from './pages/analisis/analisis.component';
 import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from 'src/app/auth/auth.module';  
+import { AuthModule } from 'src/app/auth/auth.module';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -19,7 +19,7 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatNativeDateModule } 
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { MatDatepickerModule } from '@angular/material/datepicker'; 
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { ExcelService } from './shared/services/excel.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,10 +28,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { NgxPaginationModule } from 'ngx-pagination'; 
+import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
-
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -43,7 +42,7 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
     PageNotFoundComponent,
     DialogDataExampleDialog,
     UploadProgressComponent,
-    ValidationComponent
+    ValidationComponent,
     ],
   imports: [
     BrowserModule,
@@ -57,7 +56,7 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
     HttpModule,
     NgxSpinnerModule,
     MatInputModule,
-    SweetAlert2Module.forRoot(),  
+    SweetAlert2Module.forRoot(),
     RecaptchaModule.forRoot(),
     DigitOnlyModule,
     MatDatepickerModule,
@@ -70,6 +69,7 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
     MatSnackBarModule,
     MatProgressBarModule,
     NgxPaginationModule,
+    MatMomentDateModule,
 
   ],
   providers: [
@@ -82,7 +82,7 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
         multi: true
       }
   ],
-  exports:[
+  exports: [
     MatInputModule,
     MatSnackBarModule
   ],

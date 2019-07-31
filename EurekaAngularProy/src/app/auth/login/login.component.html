@@ -1,11 +1,11 @@
 <div class="body">
-    <div class="container">            
+    <div class="container">
         <div class="row">
             <!--/////// L E F T ////////-->
             <div class="col-sm">
                 <div class="row">
                     <div class="col-sm">
-                        <h1 class="title-landing text-white">Descubre una nueva forma de manejar tus cobros</h1>                    
+                        <h1 class="title-landing text-white">Descubre una nueva forma de manejar tus cobros</h1>
                     </div>
                 </div>
             </div>
@@ -15,58 +15,66 @@
                 <div class="d-flex justify-content-center">
                     <div class="shadow-none border p-5 bg-white rounded">
                         <!--/////// F O R M ////////-->
-                        <form  id="login-form"  [formGroup]="loginForm" (ngSubmit)="submitLogin()">
-                            <h3 class="texto-azulbase text-center pb-3 mb-4 font-medium">Iniciar Sesión</h3>                
+                        <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+                            <h3 class="texto-azulbase text-center pb-3 mb-4 font-medium">Iniciar Sesión</h3>
                             <div class="d-flex mb-4">
                                 <div class="mr-3">
                                     <span class="icon-usuario"></span>
-                                </div>       
+                                </div>
                                 <!-- ////////////// R U C /////////////////// -->
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6" for="">RUC</label>
                                     <mat-form-field class="full-width">
-                                        <input matInput type="text" minlength="11" maxlength="11"  inputmode="numeric" pattern="[0-9]*" digitOnly  formControlName="ruc" appBlockCopyPaste>
-                                        <mat-error *ngFor="let validation of account_validation_messages.ruc">
-                                            <mat-error class="error-message" *ngIf="loginForm.get('ruc').hasError(validation.type) && (loginForm.get('ruc').dirty 
-                                                || loginForm.get('ruc').touched)">
-                                                {{validation.message}}
-                                        </mat-error>
-                                        </mat-error> 
+                                        <input #inputUsua matInput type="text" (focus)="focusFunctionRuc()" minlength="11" maxlength="11" inputmode="numeric" pattern="[0-9]*" digitOnly formControlName="ruc" appBlockCopyPaste [ngClass]="{ 'is-invalid': submitted && f.ruc.errors }">
+                                            <mat-error  *ngFor="let validation of account_validation_messages.ruc">
+                                                <div *ngIf="inputUsuaValid">
+                                                <mat-error class="error-message" *ngIf="loginForm.get('ruc').hasError(validation.type) ">
+                                                    {{validation.message}}
+                                                </mat-error>
+                                                </div>
+                                            </mat-error> 
+                                       
                                     </mat-form-field>
-                                  
-                                     <div style="color:#f44336 !important; font-size: 1vw" *ngIf="codigo2" class="error-message">
+                                    <!--   <div style="color:#f44336 !important; font-size: 8" *ngIf="codigo2" class="error-message">
                                         No tenemos una cuenta registrada con este RUC
                                     </div>
-                                
+                                    -->
                                     <div class="mt-4">
-                                        <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox"  [checked]="checked" [(ngModel)]="rememberMe" formControlName="rememberme" >
-                                        <label for="styled-checkbox-1"  ><span class="ml-2">Recordar</span></label>
+                                        <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" [checked]="checked" [(ngModel)]="rememberMe" formControlName="rememberme">
+                                        <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
                                     </div>
                                 </div>
                             </div>
-                         
 
-                        
+
+
                             <div class="d-flex mb-4">
                                 <div class="mr-3">
                                     <span class="icon-acceso"></span>
                                 </div>
-                                
+
                                 <!-- ////////////// P A S S W O R D /////////////////// -->
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6" for="">Contraseña</label>
                                     <mat-form-field class="full-width">
-                                        <input matInput type="password" minlength="6" maxlength="20"  formControlName="psw" appBlockCopyPaste >
-                                        <mat-error *ngFor="let validation of account_validation_messages.psw">
-                                            <mat-error class="error-message" *ngIf="loginForm.get('psw').hasError(validation.type) && (loginForm.get('psw').dirty || loginForm.get('psw').touched)">
-                                            {{validation.message}}
-                                            </mat-error>
-                                        </mat-error>
+                                        <input #inputPass matInput type="password" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" appBlockCopyPaste [ngClass]="{ 'is-invalid': submitted && f.psw.errors }">
+                                            <mat-error *ngFor="let validation of account_validation_messages.psw">
+                                                <div *ngIf="inputPassValid">
+                                                <mat-error class="error-message" *ngIf="loginForm.get('psw').hasError(validation.type) ">
+                                                    {{validation.message}}
+                                                </mat-error>
+                                                </div>
+                                            </mat-error> 
                                     </mat-form-field>
                                 </div>
-                            </div>                    
-                   
-                          <!--  <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI" ></re-captcha>-->
+
+                            </div>
+
+                            <div style="color:#f44336 !important; font-size: 8" *ngIf="codigo2" class="error-message">
+                                Usuario o password Incorrecto
+                            </div>
+                            <br>
+                            <!--  <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6Ld5ZKwUAAAAALo_ylReq7guXhULmpJoJ3INiFhI" ></re-captcha>-->
                             <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
 
                             <!-- Login -->
@@ -80,11 +88,11 @@
                         </form>
                     </div>
                 </div>
-            </div>            
-        </div>           
+            </div>
+        </div>
     </div>
-    
-    <div class="bg-image-landing d-sm-none d-md-block" >
-        <img  class="img-fluid">            
-    </div>   
+
+    <div class="bg-image-landing d-sm-none d-md-block">
+        <img class="img-fluid">
+    </div>
 </div>

@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
-}  
+}
 )
 
 export class LoginService {
@@ -19,17 +19,17 @@ export class LoginService {
   private localStorageService;
 
 constructor(public http: HttpClient, private storage: StorageService,
-  private router: Router)  
+  private router: Router)
 {
-  
+
  }
 
 private URI_API: string = environment.END_POINT;
 public errores: number;
 
 
-login(ruc: string, psw: string): Observable<RespuestaLogin>{
-  console.log('begin login')
+login(ruc: string, psw: string): Observable<RespuestaLogin> {
+  console.log('begin login' )
   const url = `${this.URI_API}/login`;
   const data = `username=${ruc}&password=${psw}`;
   console.log(url, data);
@@ -37,16 +37,16 @@ login(ruc: string, psw: string): Observable<RespuestaLogin>{
     headers: { "Content-Type": "application/x-www-form-urlencoded" }
   };
   return this.http.post(url, data, opts)
-    .pipe(map((r: RespuestaLogin) => { 
+    .pipe(map((r: RespuestaLogin) => {
       console.log(r);
-      this.storage.setCurrentSession({ 
+      this.storage.setCurrentSession({
         user: { ruc: ruc },
         isAuthenticate: true,
-        token: r.paramStr 
+        token: r.paramStr
       });
       /*r.paramStr = null;*/
       return r;
-    }));  
+    }));
  }
 
 logout(): void {
@@ -60,7 +60,7 @@ logout(): void {
     .subscribe(() => {
       this.storage.removeCurrentSession();
       this.router.navigate(['/login']);
-    }); 
-} 
+    });
+}
 
 }

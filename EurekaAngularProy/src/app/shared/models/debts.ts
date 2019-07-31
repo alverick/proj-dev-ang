@@ -17,5 +17,5 @@ export interface Debts {
 
 export interface DebtsPagedList {
     count: number;
-    data: Debts[]
+    data: Debts[];
 }
