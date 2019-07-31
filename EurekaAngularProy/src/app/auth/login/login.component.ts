@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Component, OnInit, HostListener, Directive, ViewChild, ElementRef } from '@angular/core';
-=======
 import { Component, OnInit, HostListener, Directive, ViewChild, ElementRef} from '@angular/core';
->>>>>>> b6089fa4b9be76d1ec9ace6b6445f717017029f6
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -134,21 +130,8 @@ export class LoginComponent implements OnInit {
   }
   focusFunctionPass(){
     this.inputPassValid = false; 
-  }
- 
-  validaInputs() {
-    if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   ) {
-      this.inputUsuaValid = false;
-      this.inputPassValid = false; 
-    } 
-  }
+  } 
   
-  focusFunctionRuc(){ 
-    this.inputUsuaValid = false;
-  }
-  focusFunctionPass(){
-    this.inputPassValid = false; 
-  }
   /* /////// L O G I N ////////////  */
  
   public submitLogin() : any { 
