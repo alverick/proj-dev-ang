@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
   inputPassValid: boolean = false;
 
   intentos: number = 0;
+  intentosRestantes: number = 6;
   codRespuesta: number;
   err: boolean;
   numero2: number;
@@ -152,6 +153,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         value => {
           this.intentos= value.paramNum;
+          this.intentosRestantes= 6 - this.intentos;
           this.codRespuesta= value.codRespuesta;
           if(value.paramStr==="Un session ya se encuentra activa"){
             Swal.fire({ type: 'warning', text: 'Existe una Sesión Activa'})
@@ -168,8 +170,9 @@ export class LoginComponent implements OnInit {
             this.codigo2=true;
           }else if(this.intentos < 4 && this.codRespuesta == 3){
             this.codigo2= false;
+          
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
-            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos', showConfirmButton: false, showCloseButton: true}); 
+            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true}); 
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;            
@@ -181,7 +184,7 @@ export class LoginComponent implements OnInit {
           }else if(this.intentos == 4 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
-            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos', showConfirmButton: false, showCloseButton: true});this.isCaptchaValidate = false;
+            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true});this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isTrue = true;              
             
@@ -193,7 +196,7 @@ export class LoginComponent implements OnInit {
           }else if(this.intentos == 5 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
-            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos', showConfirmButton: false, showCloseButton: true});        
+            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true});        
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
             this.isTrue = true; 
@@ -201,7 +204,7 @@ export class LoginComponent implements OnInit {
           }else if(this.intentos >= 6){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Sin codigo");
-            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos', showConfirmButton: false, showCloseButton: true});
+            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true});
             this.intento6= true;
             this.isTrue = false;
                           
