@@ -32,6 +32,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
 import { MatMomentDateModule } from '@angular/material-moment-adapter'; 
 import { MatFormFieldModule } from '@angular/material';
+import { AfiliacionService } from './shared/services/afiliacion.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +83,8 @@ import { MatFormFieldModule } from '@angular/material';
       {provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptorService,
         multi: true
-      }
+      },
+      AfiliacionService
   ],
   exports: [
     MatInputModule,

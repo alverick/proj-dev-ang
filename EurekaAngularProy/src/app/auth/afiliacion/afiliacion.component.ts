@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AfiliacionService } from '../../shared/services/afiliacion.service';
 
 @Component({
   selector: 'app-afiliacion',
@@ -11,5 +12,4 @@ export class AfiliacionComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
