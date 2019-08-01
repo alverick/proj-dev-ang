@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('inputPass') inputPass: ElementRef;
   inputUsuaValid: boolean = false;
   inputPassValid: boolean = false;
+  validarCantRuc: boolean = false;
 
   intentos: number;
   intentosRestantes: number = 6;
@@ -131,7 +132,8 @@ export class LoginComponent implements OnInit {
   }
   focusFunctionPass(){
     this.inputPassValid = false; 
-  }
+  } 
+  
   /* /////// L O G I N ////////////  */
 
     

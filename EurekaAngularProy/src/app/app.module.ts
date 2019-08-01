@@ -33,6 +33,8 @@ import { AuthInterceptorService } from './shared/services/auth-interceptor.servi
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { LogoutGuard } from './shared/guards/logout.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { MatFormFieldModule } from '@angular/material';
+import { AfiliacionService } from './shared/services/afiliacion.service';
 
 @NgModule({
   declarations: [
@@ -66,12 +68,13 @@ import { AuthGuard } from './shared/guards/auth.guard';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    MatSelectModule,
     MatCheckboxModule,
     MatSnackBarModule,
     MatProgressBarModule,
     NgxPaginationModule,
     MatMomentDateModule,
+    MatFormFieldModule, 
+    MatSelectModule
 
   ],
   providers: [
@@ -82,8 +85,8 @@ import { AuthGuard } from './shared/guards/auth.guard';
       {provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptorService,
         multi: true
-      }
-      
+      },
+      AfiliacionService
   ],
   exports: [
     MatInputModule,
