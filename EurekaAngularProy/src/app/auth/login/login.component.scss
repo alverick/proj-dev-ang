@@ -12,7 +12,6 @@ html{
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
-
 }
 
 
@@ -80,7 +79,7 @@ label{
   ::ng-deep .mat-form-field {
     .mat-form-field-underline {
         background-color: slategray;
-        height: 0.1vw !important;
+        height: 0.15vw !important;
     }
 
   }
