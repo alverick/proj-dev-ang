@@ -31,6 +31,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { LogoutGuard } from './shared/guards/logout.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
         useClass: AuthInterceptorService,
         multi: true
       }
+      
   ],
   exports: [
     MatInputModule,

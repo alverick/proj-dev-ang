@@ -82,17 +82,61 @@
                         </div>
                     </table>
                 </div>
-
-
-                <div class="table-responsive">
-                    <table class="table">
-
-                        <!--TODO BIEN-->
-                        <!--DESDE AQUI-->
-                        <div class="my-3 p-3 bg-white rounded shadow-sm">
+  
+                <div class="p-3 bg-white rounded shadow-sm">
+                    <div class="table-responsive">
+                        <div class="table-options">
                             <!--TODO BIEN-->
+                            <div class="d-flex bd-highlight mb-3">
+                                    <div class="p-2 bd-highlight">
+                                            <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
+                                            <label for="styl" class="text-small font-medium"></label><br>
+                                            <span class="text-small font-medium">Seleccionar</span>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <a class="texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
+                                            <span class="icon-correo-azul iconos-big"></span> <br>
+                                            <span class="text-small font-medium">Descargar</span>
+                                        </a>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
+                                            <span class="icon-eliminar iconos-big"></span><br>
+                                            <span class="text-small font-medium">Eliminar</span>
+                                        </a>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                            <a class="texto-azul" href="javascript:;">
+                                                    <div (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        <span class="icon-papel-2 iconos-big"></span><br>
+                                                        <span class="text-small font-medium">Cargar </span>
+                                                    </div>
+                                                    <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
+                                                        <div class="card card-body">
+                                                            <div *ngFor="let service of services" (click)="openDialog(service)">
+                                                                <div data-toggle="collapse">
+                                                                    {{service}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                    </div>
+                                    <div class="ml-auto p-2 bd-highlight">
+                                            <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+
+                                    </div>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="table-responsive">
+                        <table class="table">                            
                             <thead>
+                                
+
+                                
                                 <!--//////////// A C C I O N E S //////////////// -->
+                                <!--
                                 <tr>
                                     <td colspan="2" class="head">
                                         <div class="d-flex">
@@ -116,19 +160,21 @@
                                             </div>
 
                                             <div class="mr-3">
-                                                <div (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                    <span class="icon-papel-2 iconos-big"></span><br>
-                                                    <span class="text-small font-medium">Cargar </span>
-                                                </div>
-                                                <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
-                                                    <div class="card card-body">
-                                                        <div *ngFor="let service of services" (click)="openDialog(service)">
-                                                            <div data-toggle="collapse">
-                                                                {{service}}
+                                                <a class="texto-azul" href="javascript:;">
+                                                    <div (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        <span class="icon-papel-2 iconos-big"></span><br>
+                                                        <span class="text-small font-medium">Cargar </span>
+                                                    </div>
+                                                    <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
+                                                        <div class="card card-body">
+                                                            <div *ngFor="let service of services" (click)="openDialog(service)">
+                                                                <div data-toggle="collapse">
+                                                                    {{service}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </td>
@@ -139,7 +185,7 @@
                                         <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
 
                                     </td>
-                                </tr>
+                                </tr>-->
 
                                 <!--//////////// A C C I O N E S //////////////// -->
                                 <tr>
@@ -267,12 +313,10 @@
                                     </td>
                                 </tr>
                             </tbody>
-
-
-                        </div>
-
                     </table>
                 </div>
+            </div>
+            <br>
                 <!--end good-->
             </div>
         </div>

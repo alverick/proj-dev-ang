@@ -36,9 +36,7 @@ export class TransactionService {
         const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${filtro.dateFrom}&DateTo=${filtro.dateTo}`;
         console.log(url);
         const opts = {
-          headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),
-          "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
-          "Ocp-Apim-Trace": "true" }
+          headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
         };
         return this.http.get<DebtsPagedList>(url, opts)
           .pipe<DebtsPagedList>(map(r => {
@@ -59,9 +57,7 @@ export class TransactionService {
         const url = `${this.URI_API}/debt/${idDebt}`;
         console.log(url);
         const opts = {
-          headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),
-          "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
-          "Ocp-Apim-Trace": "true" }
+          headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
         };
         return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
     } 
@@ -70,9 +66,7 @@ export class TransactionService {
       const url = `${this.URI_API}/debt/deleteAll`;
       console.log(url);
       const opts = {
-        headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),
-        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
-        "Ocp-Apim-Trace": "true" }
+        headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
       };
       return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
     }
@@ -83,9 +77,7 @@ export class TransactionService {
       const url = `${this.URI_API}/debt/${id}`;
       console.log(url);
       const opts = {
-        headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),
-        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
-        "Ocp-Apim-Trace": "true" }
+        headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
       };
       return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));  
     }

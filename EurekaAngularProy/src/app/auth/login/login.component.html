@@ -33,7 +33,6 @@
                                                 </mat-error>
                                                 </div>
                                             </mat-error> 
-                                       
                                     </mat-form-field>
                                     <div class="mt-4">
                                         <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" [checked]="checked" [(ngModel)]="rememberMe" formControlName="rememberme">
@@ -52,8 +51,8 @@
                                 <!-- ////////////// P A S S W O R D /////////////////// -->
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6" for="">Contraseña</label>
-                                    <mat-form-field class="full-width">
-                                        <input #inputPass matInput type="password" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" appBlockCopyPaste [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste> 
+                                    <mat-form-field class="full-width" style="height: 1.9px !important">
+                                        <input #inputPass matInput type="password" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw"  [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste> 
                                             <mat-error *ngFor="let validation of account_validation_messages.psw">
                                                 <div *ngIf="inputPassValid">
                                                 <mat-error class="error-message" *ngIf="loginForm.get('psw').hasError(validation.type) ">
@@ -63,7 +62,6 @@
                                             </mat-error> 
                                     </mat-form-field>
                                 </div>
-
                             </div>
 
                             <div style="color:#f44336 !important; font-size: 8" *ngIf="codigo2" class="error-message">
