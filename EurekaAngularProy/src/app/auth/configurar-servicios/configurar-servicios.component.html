@@ -72,13 +72,13 @@
                       <form >
 
                           <div class="form-group"> 
-                              <mat-form-field  class="super-full-width">
+                              <mat-form-field  class="w-100">
                                   <input   matInput type="text" placeholder="Nombre de Servicio"  >
                                   
                               </mat-form-field>
                           </div>
                           <div class="form-group"> 
-                              <mat-form-field  >
+                              <mat-form-field class="w-49" >
                                   <mat-label>Rubro de Servicio</mat-label>
                                   <mat-select [formControl]="animalControl" required>
                                     <mat-option>--</mat-option>
@@ -88,9 +88,8 @@
                                   </mat-select>
                                   <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error>
                                   <mat-hint>{{animalControl.value?.sound}}</mat-hint>
-                                </mat-form-field>  
-                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                              <mat-form-field  >
+                                </mat-form-field>&nbsp;  
+                                <mat-form-field class="w-49" >
                                   <mat-label>Codigo Deudor</mat-label>
                                   <mat-select [formControl]="animalControl" required>
                                     <mat-option>--</mat-option>
@@ -104,7 +103,7 @@
                           </div> 
                            
                           <div class="form-group"> 
-                              <mat-form-field   class="super-full-width">
+                              <mat-form-field  class="w-100">
                                   <mat-label>Que datos tienes de tus clientes?</mat-label>
                                   <mat-select [formControl]="animalControl" required>
                                     <mat-option>--</mat-option>
@@ -117,7 +116,7 @@
                                 </mat-form-field>
                           </div>
                           <div class="form-group"> 
-                              <mat-form-field  class="super-full-width">
+                              <mat-form-field  class="w-100">
                                   <mat-label>Como quieres que te paguen tus clientes?</mat-label>
                                   <mat-select [formControl]="animalControl" required>
                                     <mat-option>--</mat-option>
