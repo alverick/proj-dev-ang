@@ -31,6 +31,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { AfiliacionService } from './shared/services/afiliacion.service';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
       {provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptorService,
         multi: true
-      }
+      },
+      AfiliacionService
   ],
   exports: [
     MatInputModule,
