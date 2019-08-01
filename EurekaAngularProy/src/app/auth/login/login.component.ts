@@ -130,18 +130,10 @@ export class LoginComponent implements OnInit {
   }
   focusFunctionPass(){
     this.inputPassValid = false; 
-  }
+  } 
+  
   /* /////// L O G I N ////////////  */
-  OutfocusFunctionRuc() {
-   /* if( < 11 ) {
-      this.validarCantRuc = true;  
-    } else {
-      this.validarCantRuc = false;  
-    }  */
-    // this.inputUsua.nativeElement.value.
-  }
-
-
+ 
   public submitLogin() : any { 
 
     if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '') {
