@@ -12,9 +12,11 @@ export interface Animal {
 })
 export class ConfigurarServiciosComponent implements OnInit {
 
+  Formulario: boolean =true;
   constructor() { }
 
   ngOnInit() {
+    this.Formulario =true;
   }
 
   animalControl = new FormControl('', [Validators.required]);
@@ -26,4 +28,11 @@ export class ConfigurarServiciosComponent implements OnInit {
     {name: 'Fox', sound: 'Wa-pa-pa-pa-pa-pa-pow!'},
   ];
 
+  OcultarFormulario(){
+    this.Formulario = false 
+  }
+  MostarFormulario() {
+    this.Formulario = true;
+  }
+   
 }
