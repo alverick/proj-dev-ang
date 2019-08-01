@@ -47,18 +47,27 @@
                   </div>
                   <br>
                   <div  style="text-align:center;">
+                      <button (click)="MostarFormulario()" class="btn-big w-80 btn-eureca btn-eureca-azul text-white">
+                          Agregar otro servicio
+                      </button>
+                      <br>
+                      <br>
                       <button type="submit" class="btn-big w-80 btn-eureca btn-eureca-amarillo text-white" form="login-form"> Finalizar</button>
                   </div>
                   
 
           </div>
    
-          <div class="col-sm-7 position-relative">
+          <div class="col-sm-7 position-relative" *ngIf="Formulario" >
               <br>
               
               <div class="d-flex justify-content-center">
                   <div class=" border p-5 bg-white rounded">
-
+                    <div  style="float: right;">
+                        <button (click)="OcultarFormulario()"   type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button> 
+                    </div>
+                     
                    
                       <form >
 
