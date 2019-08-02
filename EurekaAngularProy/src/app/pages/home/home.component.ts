@@ -65,8 +65,9 @@ export class HomeComponent implements OnInit {
   @ViewChild('cargaExcel') cargaExcel;
  // datepicker format
  @Output() date2: EventEmitter<any> = new EventEmitter<any>();
- // date = new FormControl(moment());
-
+ // fechas limites
+ minDate = new Date(2000, 0, 1);
+ maxDate = new Date(2050, 0, 1);
  // inputDate1:string = '';  inputText
  @ViewChild('inputText') inputText: ElementRef;
  @ViewChild('inputDate1') inputDate1: ElementRef;
@@ -139,7 +140,7 @@ export class HomeComponent implements OnInit {
     InputNombreCodigo(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
        // tslint:disable-next-line:max-line-length
-       if (charCode > 31 && (charCode <= 47 || charCode >= 57) &&  (charCode <= 65 || charCode >= 90) &&  (charCode <= 97 || charCode >= 122)  ) {
+       if (charCode > 31 && (charCode <= 47 || charCode >= 58) &&  (charCode <= 65 || charCode >= 90) &&  (charCode <= 97 || charCode >= 122)  ) {
         return false;
       }
       return true;
@@ -147,7 +148,15 @@ export class HomeComponent implements OnInit {
     }
     numberOnly(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
-      if (charCode > 31 && (charCode <= 46 || charCode >= 57)  ) {
+      if (charCode > 31 && (charCode <= 46 || charCode >= 58)  ) {
+        return false;
+      }
+      return true;
+    }
+    concepto(event): boolean {
+     // let usDatePattern =  /^[0-9]{10}/;
+      const charCode = (event.which) ? event.which : event.keyCode;
+      if (  (charCode <= 47 || charCode >= 58)  ) {
         return false;
       }
       return true;
@@ -390,16 +399,81 @@ change(dateEvent) {
     item.newConcept = item.concept;
   }
 
-  BotonActualizar(item: Debts) {
-    console.log('actualizar', item);
-    item.edit = false;
-    this.spinner2.show();
-    this.transactionService.editDeuda(item.id, {
-      emissionDate: item.newEmissionDate,
-      dueDate: item.newDueDate,
-      concept: item.newConcept
-    }).subscribe(() => this.consultaDeuda());
-    this.spinner2.hide();
+  BotonActualizar(item: Debts) { 
+
+    if(item.newEmissionDate.getFullYear() < 2000 ){
+      Swal.fire({
+        type: 'error', 
+        text: 'Ingrese una fecha valida para la fecha de emision',
+      });
+      return;
+    }
+    if(item.newDueDate.getFullYear() > 2050 ){
+      Swal.fire({
+        type: 'error', 
+        text: 'Ingrese una fecha valida para la fecha de emision',
+      });
+      return;
+    }
+    if(item.newEmissionDate == null){
+      Swal.fire({
+        type: 'error', 
+        text: 'Ingrese la fecha de emision',
+      });
+      return;
+    }
+    if(item.newDueDate == null){
+      Swal.fire({
+        type: 'error', 
+        text: 'Ingrese la fecha de vencimiento',
+      });
+      return;
+    }
+    if(item.newConcept == ''){
+      Swal.fire({
+        type: 'error', 
+        text: 'Ingrese el concepto',
+      });
+      return;
+    }
+    if(item.newEmissionDate>item.newDueDate){
+      Swal.fire({
+        type: 'error', 
+        text: 'La fecha de Emision no puede ser mayor a la fecha de vencimiento',
+      });
+      return;
+    }
+
+    Swal.fire({
+      title: 'Deseas Actualizar?',
+      text: "¡No podrás revertir esto!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Editarlo!'
+    }).then((result) => {
+      if (result.value) {
+
+        item.edit = false;
+        this.spinner2.show();
+        this.transactionService.editDeuda(item.id, {
+          emissionDate: item.newEmissionDate,
+          dueDate: item.newDueDate,
+          concept: item.newConcept
+        }).subscribe(() => this.consultaDeuda());
+        this.spinner2.hide();
+
+       /* Swal.fire(
+          'Editado!',
+          'Su registro a sido editado',
+          'success'
+        ) */
+      }
+    })
+
+     
+    
   }
 
   BotonCancela(item: Debts) {

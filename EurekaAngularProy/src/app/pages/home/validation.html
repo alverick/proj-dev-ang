@@ -15,6 +15,7 @@
         <hr>
         <div class="text-center" style="overflow:scroll;">
             <table>
+                <!--si es fila 0 solo un mensaje  'La información que haz ingresado es incorrecta!'-->
                 <tr *ngFor="let error of excelService.errores">
                     <td>En la fila &nbsp;<span style="color: red;"> {{ error.description | slice: 0: 2 }}
                             &nbsp;</span> {{ error.description | slice: 3: 100}} </td>
