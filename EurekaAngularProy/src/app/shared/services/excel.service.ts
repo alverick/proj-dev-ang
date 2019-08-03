@@ -1,7 +1,7 @@
 import { Error } from './../models/error.model';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment.prod";
+import { environment } from "src/environments/environment";
 import { StorageService } from "./storage.service";
 import { Observable, throwError } from "rxjs";
 import * as FileSaver from 'file-saver';
@@ -56,7 +56,7 @@ export class ExcelService {
     const opts={
       headers: {
         "Authorization" : "bearer " + this.storage.getCurrentToken(),
-        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
+        "Ocp-Apim-Subscription-Key": environment.END_POINT,
         "Ocp-Apim-Trace": "true"
       }
     }

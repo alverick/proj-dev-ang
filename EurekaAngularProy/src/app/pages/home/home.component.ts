@@ -58,10 +58,10 @@ declare var $: any;
 
 
 // tslint:disable-next-line:directive-class-suffix
-export class HomeComponent implements OnInit {
- 
+export class HomeComponent implements OnInit { 
   // cargar excel combo
  // cargaExcel: boolean;
+ // DialogDataExampleDialog 
   @ViewChild('cargaExcel') cargaExcel;
  // datepicker format
  @Output() date2: EventEmitter<any> = new EventEmitter<any>();
@@ -133,7 +133,8 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private spinner2: NgxSpinnerService,
-    private el: ElementRef, ) {
+    private el: ElementRef, 
+    ) {
 
     }
 
@@ -174,7 +175,7 @@ export class HomeComponent implements OnInit {
     @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
       e.preventDefault();
     }
-
+ 
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
     this.homeService.getServices().subscribe(
@@ -199,6 +200,7 @@ export class HomeComponent implements OnInit {
 
    this.validandoListado();
    this.cargaExcel = false;
+   
   }
 
   validandoListado() {
@@ -401,7 +403,7 @@ change(dateEvent) {
 
   BotonActualizar(item: Debts) { 
 
-    if(item.newEmissionDate.getFullYear() < 2000 ){
+ /*   if(item.newEmissionDate.getFullYear() < 2000 ){
       Swal.fire({
         type: 'error', 
         text: 'Ingrese una fecha valida para la fecha de emision',
@@ -414,7 +416,7 @@ change(dateEvent) {
         text: 'Ingrese una fecha valida para la fecha de emision',
       });
       return;
-    }
+    }  */
     if(item.newEmissionDate == null){
       Swal.fire({
         type: 'error', 
@@ -527,9 +529,9 @@ MostrarListaSelect(){
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogDataExampleDialog);
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
+     
     });
+    this.consultaDeuda();
   }
 
 }
@@ -554,7 +556,7 @@ MostrarListaSelect(){
 })
 
 // tslint:disable-next-line:component-class-suffix
-export class DialogDataExampleDialog {
+export class DialogDataExampleDialog implements OnInit {
  
   public inputXlsForm: FormGroup;
   public xlsValid: boolean;
@@ -584,12 +586,18 @@ export class DialogDataExampleDialog {
     this.inputXlsForm = this.formBuilder.group({
       xls: ['', Validators.required]
     });
+
+    //this.SalirsnackBar();
+    
   }
   git 
   onChangeFile(event) {
     this.files = event.target.files;
   }
 
+  SalirsnackBar() {
+    this.dialogRef.close();
+  }
   private files: any;
   get f(){ return this.inputXlsForm.controls;}
 
@@ -604,6 +612,8 @@ export class DialogDataExampleDialog {
        // console.table(value);
       }
     )
+    // 
+    console.log('se habre el sncack bar ');
     this.snackBar.openFromComponent(UploadProgressComponent);
     this.dialogRef.close();
     }else{
@@ -642,9 +652,9 @@ export class DialogDataExampleDialog {
 
 export class UploadProgressComponent  implements OnInit  {
   state = false;
-  contador = 0;
+  contador = 0; 
   constructor( public dialog: MatDialog, public excelService: ExcelService,
-                private snackRef: MatSnackBarRef<UploadProgressComponent>) { }
+                private snackRef: MatSnackBarRef<UploadProgressComponent>/*, public home: HomeComponent */) { }
 
   ngOnInit(){
     var th = this;
@@ -658,7 +668,7 @@ export class UploadProgressComponent  implements OnInit  {
     };
     setTimeout(fnc, 500);
   }
-
+ 
   private verifyStatus() {
 
     // tslint:disable-next-line:prefer-const
@@ -680,7 +690,7 @@ export class UploadProgressComponent  implements OnInit  {
       } else if (value.status === "COMPLETED"){
         this.snackRef.dismiss();
         this.excelService.errores = [];
-        this.excelService.idProcess = 0;
+        this.excelService.idProcess = 0; 
         Swal.fire({
           type: 'success',
           text: `Se cargaron ${value.rowsUploaded} registros`

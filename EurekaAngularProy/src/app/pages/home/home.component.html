@@ -84,7 +84,7 @@
 
 
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" >
 
                         <!--TODO BIEN-->
                         <!--DESDE AQUI-->
@@ -150,61 +150,60 @@
                                 </tr>
 
                                 <!--//////////// A C C I O N E S //////////////// -->
-                                <tr>
-                                    <th scope="col" ></th>
-                                    <th scope="col"  >
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center"> Fecha emisión.</div>
-                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                        </div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center"> Fecha vto.</div>
-                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                        </div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center"> Codigo de Cliente</div>
-                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                        </div>
-                                    </th>
+                                <tr bgcolor="#f9f7f0">
+                                        <th width="10"></th>
+                                        <th style="width: auto">
+                                            <div class="d-flex align-items-center justify-content-center "> 
+                                                  <div class="styletexttable">  Fecha<br>emisión </div>
+                                                <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                            </div>
+                                        </th>
+                                        <th style="width: auto">
+                                                <div class=" d-flex align-items-center justify-content-center "> 
+                                                      <div class="styletexttable" >Fecha<br>vto. </div>  
+                                                    <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                                </div>
+                                            </th>
+                                            <th width="85">
+                                                <div class="d-flex align-items-center justify-content-center"> 
+                                                        <div class="styletexttable">Código<br>de cliente  </div>  
+                                                    <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                                </div>
+                                            </th>
 
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center"> Nombres</div>
-                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                        </div>
-                                    </th>
+                                            <th width="90">
+                                                    <div class="d-flex align-items-center justify-content-center"> 
+                                                            <div class="styletexttable">Nombres  </div>     
+                                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                                    </div>
+                                                </th>
+                                                <th width="95">
+                                                    <div class="d-flex align-items-center justify-content-center"> 
+                                                            <div class="styletexttable">Apellidos  </div>     
+                                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                                    </div>
+                                                </th>
 
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center"> Apellidos</div>
-                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                        </div>
-                                    </th>
+                                                <th width="75">
+                                                        <div class="d-flex align-items-center justify-content-center"> 
+                                                                <div class="styletexttable">Servicio  </div>     
+                                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                                        </div>
+                                                </th>
+                                                <th width="65">
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                            <div class="styletexttable">Concepto  </div>  
+                                                        <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                                    </div>
+                                                </th>
 
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center"> Servicio</div>
-                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                        </div>
-                                    </th>
-
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center"> Concepto</div>
-                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                        </div>
-                                    </th>
-
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center"> Monto</div>
-                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
-                                        </div>
-                                    </th>
+                                                <th width="65">
+                                                        <div class="d-flex align-items-center justify-content-center"> 
+                                                                <div class="styletexttable">Monto </div>    
+                                                            <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
+                                                        </div>
+                                                    </th>
+                                                <th></th>
 
                                 </tr>
                             </thead>
@@ -220,13 +219,13 @@
                                     <td></td>
                                 </tr>
 
-                                <tr *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
-                                    <td  >
+                                <tr  *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
+                                    <td width="10" >
                                         <input id="{{ 'chk_' + items.id }}" class="styled-checkbox" type="checkbox" [(ngModel)]="items.selected">
                                         <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
                                     </td>
-                                    <td  >
-                                        <span *ngIf="!items.edit">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
+                                    <td>
+                                        <span style="width: auto"   *ngIf="!items.edit">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
                                         <div *ngIf="items.edit" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
                                                 <input [min]="minDate" [max]="maxDate" inputmode="numeric" (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
@@ -235,8 +234,8 @@
                                             </mat-form-field>
                                         </div>
                                     </td>
-                                    <td>
-                                        <span *ngIf="!items.edit">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
+                                    <td >
+                                        <span   *ngIf="!items.edit">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
                                         <div *ngIf="items.edit" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
                                                 <input  [min]="minDate" [max]="maxDate" inputmode="numeric" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
@@ -245,11 +244,11 @@
                                             </mat-form-field>
                                         </div>
                                     </td>
-                                    <td>{{items.code}}</td>
-                                    <td>{{items.firstName}}</td>
-                                    <td>{{items.lastName}}</td>
-                                    <td>{{items.service}}</td>
-                                    <td>
+                                    <td width="85">{{items.code}}</td>
+                                    <td width="90">{{items.firstName}}</td>
+                                    <td width="95">{{items.lastName}}</td>
+                                    <td width="75">{{items.service}}</td>
+                                    <td width="65">
                                         <span *ngIf="!items.edit">{{items.concept}}</span>
                                         <div *ngIf="items.edit">
                                             <input type="text"   [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="concepto($event)"  maxlength="10" minlength="10"/>
