@@ -1,7 +1,7 @@
 import { Error } from './../models/error.model';
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment.prod";
+import { environment } from "src/environments/environment";
 import { StorageService } from "./storage.service";
 import { Observable, throwError } from "rxjs";
 import * as FileSaver from 'file-saver';
@@ -55,7 +55,9 @@ export class ExcelService {
     const url = `${this.URI_API}/debt/load/${service}?_=` + new Date().getTime();
     const opts={
       headers: { "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization" : "bearer " + this.storage.getCurrentToken()
+        "Authorization" : "bearer " + this.storage.getCurrentToken(),
+        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
+        "Ocp-Apim-Trace": `true`
       }
     }
     const formData = new FormData();
@@ -70,7 +72,9 @@ export class ExcelService {
     const url = `${this.URI_API}/debt/process/${id}/status?_=` + new Date().getTime();
     const opts={
       headers: { "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization" : "bearer " + this.storage.getCurrentToken()}
+        "Authorization" : "bearer " + this.storage.getCurrentToken(),
+        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
+        "Ocp-Apim-Trace": `true`},
     }
     return this.http.get<any>(url, opts).pipe(catchError(error => throwError(error)));
   

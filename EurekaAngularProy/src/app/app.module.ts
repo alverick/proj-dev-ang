@@ -35,6 +35,7 @@ import { LogoutGuard } from './shared/guards/logout.guard';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { MatFormFieldModule } from '@angular/material';
 import { AfiliacionService } from './shared/services/afiliacion.service';
+import { NumberDirectiveHome } from './pages/home/number.directive';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { AfiliacionService } from './shared/services/afiliacion.service';
     DialogDataExampleDialog,
     UploadProgressComponent,
     ValidationComponent,
+    NumberDirectiveHome
     ],
   imports: [
     BrowserModule,

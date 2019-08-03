@@ -1,3 +1,34 @@
+<mat-dialog-actions align="end" >
+    <div (click)="close()">
+        <span class="h5 m-0 pr-2">Cancelar</span>
+        <span class="icon-icono-x font-16"></span>
+    </div>
+</mat-dialog-actions>
+<br>
+
+<div class="pasos-add-registro activo">
+        <h3 align="center" style="color : #fc9a00; font-size: 2rem">Sube</h3>
+        <div class="text-center">
+                <form id="input-form"  [formGroup]="inputXlsForm" (ngSubmit)="openSnackBar()">
+                    <h6 class="my-4" style="font-size: 16px; font-family: 'Omnes'; color: #333">la plantilla y llena los datos de tus clientes nuevos</h6>
+                        <div class="icon-grande" style="font-size: 5rem; margin-bottom: 2vw"><span class="icon-papel-2"></span></div>
+                        <input formControlName="xls" type="file" accept=".xlsx" (change)="onChangeFile($event)" required />
+                        <mat-error style="margin-top: 1vw" *ngFor="let validation of validationExcel.xls">
+                            <mat-error class="error-message" *ngIf="xlsValid">
+                                {{validation.message}}
+                            </mat-error>
+                        </mat-error>
+                    <hr>
+                    <div class="mb-3">
+                        <button type="submit" form="input-form" style="color: #f4f5f7" aria-label="Show an example snack-bar" class="btn-eureca btn-eureca-amarillo btn-small">
+                        Subir plantilla
+                        </button>
+                    </div>
+                </form>
+        </div>
+</div>
+
+<!--
 <div class="container py-4" style="background: #f4f5f7  !important;">
     <div class="bg-blanco mb-3 custom-shadow pasos-add-registro">
         <div class="d-none text-center">
@@ -31,8 +62,7 @@
             </form>
         </div>
         <hr>
-        <div class="text-center">
-            <a href="javascript:;" style="color: blue"class="my-4" (click)="exportDataMatriculaXLSX()">Descarga tu plantilla</a>
-        </div>
+        
     </div>
 </div>
+-->

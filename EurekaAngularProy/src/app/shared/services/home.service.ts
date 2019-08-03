@@ -28,6 +28,7 @@ export class HomeService {
     {idDate: '', descripcion: 'Por fecha'},
     {idDate: 'EmissionDate', descripcion: 'Fecha de emisión'},
     {idDate: 'dueDate', descripcion: 'Fecha de pago'},
+    {idDate: 'expirationDate', descripcion: 'Fecha de vencimiento'}
   ];
 
   /*
@@ -45,7 +46,7 @@ export class HomeService {
 */
 
 public SERVICES: string[]=[
-  'Cargar Excel','Matricula', 'Pension'
+  'Matricula', 'Pension'
 ];
   
 getDebts(): Observable<Debts[]> {

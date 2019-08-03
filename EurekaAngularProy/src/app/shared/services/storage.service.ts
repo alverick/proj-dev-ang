@@ -1,5 +1,4 @@
-    import { Injectable } from "@angular/core";
-import { Router } from '@angular/router';
+import { Injectable } from "@angular/core";
 import { Session } from "../models/session.model";
 import { User } from "../models/user.model";
 import { CookieService } from 'ngx-cookie-service';
@@ -22,9 +21,9 @@ export class StorageService {
 
   setCurrentSession(session: Session): void {
     this.currentSession = session;
-
     if (session.token === 'RUC no esta registrado'  ||  session.token ===  'Un session ya se encuentra activa'  ||  session.token ===  'Credenciales invalidas') {
        return ;
+    
     } else {
       this.localStorageService.setItem('tk', session.token);
     }
@@ -64,10 +63,13 @@ export class StorageService {
     var session = this.getCurrentSession();
     return (session && session.token) ? session.token : null;
   };
-/*
-  logout(): void{
-    this.removeCurrentSession();
-    this.router.navigate(['/login']);
+
+  setIntentos(intentos: number): void {    
+    this.localStorageService.setItem('intento', intentos );
   }
-*/
+
+  getIntentos() : number{
+    return this.localStorageService.getItem('intento');
+  }
+
 }

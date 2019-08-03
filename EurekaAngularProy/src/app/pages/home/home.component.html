@@ -75,7 +75,7 @@
                                 </div>
 
                                 <div class="texto-azulbase font-medium">
-                                    <button class="btn-eureca btn-small btn-eureca-amarillo" (click)="consultaDeuda()">Buscar
+                                    <button class="btn-eureca btn-small btn-eureca-amarillo" style="color: white; font-weight: 500" (click)="consultaDeuda()">Buscar
                                         </button>
                                 </div>
                             </div>
@@ -122,9 +122,8 @@
                                                     </div>
                                                 </a>
                                     </div>
-                                    <div class="ml-auto p-2 bd-highlight">
+                                    <div class="col-md-4 ml-auto">
                                             <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
-
                                     </div>
                             </div>
                         </div>
@@ -188,7 +187,7 @@
                                 </tr>-->
 
                                 <!--//////////// A C C I O N E S //////////////// -->
-                                <tr>
+                                <tr bgcolor="#f9f7f0" style="font-size: 12px !important"> 
                                     <th scope="col"></th>
                                     <th scope="col">
                                         <div class="d-flex align-items-center justify-content-center">
@@ -243,6 +242,7 @@
                                             <div class="d-inline-block ml-1"><span class="icon-arrowtopbottom"></span></div>
                                         </div>
                                     </th>
+                                    <th scope="col"></th>
 
                                 </tr>
                             </thead>
@@ -259,7 +259,7 @@
                                     <td></td>
                                 </tr>
 
-                                <tr *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
+                                <tr style="font-size: 14px !important" *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
                                     <td>
                                         <input id="{{ 'chk_' + items.id }}" class="styled-checkbox" type="checkbox" [(ngModel)]="items.selected">
                                         <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
@@ -291,7 +291,7 @@
                                     <td>
                                         <span *ngIf="!items.edit">{{items.concept}}</span>
                                         <div *ngIf="items.edit">
-                                            <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="onlyNumberKey($event)" />
+                                            <input type="text" [(ngModel)]="items.newConcept" style="width: 100px"  numbersOnly />
                                         </div>
                                     </td>
                                     <td>{{items.amount}}</td>

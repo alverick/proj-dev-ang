@@ -235,7 +235,7 @@ change(dateEvent) {
             return;
           } else {
                 console.log(this.filtro);
-                this.spinner2.show();
+               /* this.spinner2.show();*/
 
                 this.debtsList = {
                   count: 0,
@@ -265,7 +265,7 @@ change(dateEvent) {
                   return;
                 } else {
                       console.log(this.filtro);
-                      this.spinner2.show();
+                      /*this.spinner2.show();*/
 
                       this.debtsList = {
                         count: 0,
@@ -316,7 +316,7 @@ change(dateEvent) {
             return;
           } else {
               console.log(this.filtro);
-              this.spinner2.show();
+             /* this.spinner2.show();*/
 
               this.debtsList = {
                 count: 0,
@@ -393,13 +393,13 @@ change(dateEvent) {
   BotonActualizar(item: Debts) {
     console.log('actualizar', item);
     item.edit = false;
-    this.spinner2.show();
+    /*this.spinner2.show();*/
     this.transactionService.editDeuda(item.id, {
       emissionDate: item.newEmissionDate,
       dueDate: item.newDueDate,
       concept: item.newConcept
     }).subscribe(() => this.consultaDeuda());
-    this.spinner2.hide();
+    /*this.spinner2.hide();*/
   }
 
   BotonCancela(item: Debts) {
@@ -412,7 +412,7 @@ change(dateEvent) {
   }
 
   EliminarSeleccionados() {
-    this.spinner2.show();
+    /*this.spinner2.show();*/
 
     const itemsParaEliminar = [];
     this.debtsList.data.forEach(c => {
@@ -423,16 +423,40 @@ change(dateEvent) {
     });
     this.transactionService.deleteAll(itemsParaEliminar)
       .subscribe(() => this.consultaDeuda());
-      this.spinner2.hide();
+      /*this.spinner2.hide();*/
   }
 
   Eliminar(item: Debts) {
+     
+Swal.fire({
+  text: "¿Esta Seguro de Eliminar el Registro?",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Si, Borralo'
+}).then((result) => {
+  if (result.value) {
+   /* this.spinner2.show();*/
+    this.transactionService.deleteDeuda(item.id)
+      .subscribe(() => this.consultaDeuda());
+    /*this.spinner2.hide();*/
+    
+    Swal.fire(
+      'Eliminado!',
+      'Tu archivo ha sido eliminado',
+      'success'
+    )
+  }
+})
+/*
     if (confirm('¿Esta Seguro de Eliminar el Registro?')) {
       this.spinner2.show();
       this.transactionService.deleteDeuda(item.id)
         .subscribe(() => this.consultaDeuda());
         this.spinner2.hide();
     }
+    /*/
   }
 
   SeleccionarTodos() {
@@ -457,6 +481,7 @@ MostrarListaSelect(){
 
     });
   }
+
 
 }
 
@@ -486,12 +511,6 @@ export class DialogDataExampleDialog {
   public xlsValid: boolean;
   public codigoCliente: String = 'Codigo de Cliente';
 
-  /*Data Parcial */
-  dataParcial: any = [{  x: ['Codigo de Cliente'],    ename: 'ravi',    esal: 1000},  { eid: 'e102',  ename: 'ram',    esal: 2000  },  { eid: 'e103',   ename: 'rajesh',    esal: 300}];
-
-  /*Data Completa */
-  matricula: any = [{"Código de cliente":1234567,"Nombres":"Oscar","Apellidos":"Paredes Zapata","Servicio":"Otros"}];
-  
   validationExcel = {
     'xls':[
       { type: 'required', message: 'Debes Ingresar un archivo excel'}
@@ -536,16 +555,13 @@ export class DialogDataExampleDialog {
       this.xlsValid = true;
     }
   }
- 
 
-  exportDataParcialXLSX():void {
-    this.excelService.exportAsExcelFile(this.dataParcial, 'data_parcial');
+  close(){
+    this.dialogRef.close();
   }
+  
 
-  exportDataMatriculaXLSX():void{
-    this.excelService.exportAsExcelFile(this.matricula, 'data_completa');
-  }
-
+  
 
 }
 
