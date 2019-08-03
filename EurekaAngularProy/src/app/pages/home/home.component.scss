@@ -203,3 +203,88 @@
     margin-bottom: 1rem !important;
     color: #212529 !important;
 }
+
+///rotar un elemento
+
+.rotar {
+    -webkit-transform: rotate(180deg); /* Chrome & Safari */
+    -moz-transform: rotate(180deg); /* Firefox */
+    -ms-transform: rotate(180deg); /* IE 9+ */
+    -o-transform: rotate(180deg); /* Opera */
+    transform: rotate(180deg); /* CSS3 */
+    filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678, sizingMethod='auto expand'); /* IE 7-8 */
+}
+
+.mano {
+    cursor: pointer;
+}
+.selecciona-servicio{
+    font-size: 12px;
+    color: gray;
+}
+
+
+.borde{
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    padding: 0 4px 0 4px;
+ }
+
+ .d-inline-block, .box-estadisticas .data[data-content]:after {
+    display: inline-block !important;
+}
+.text-center {
+    text-align: center!important;
+}
+
+.custom-shadow {
+    -webkit-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
+    -khtml-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
+    -moz-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
+    -ms-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
+    -o-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
+    box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    background-clip: padding-box;
+}
+.table-movimientos {
+    table-layout: fixed;
+    display: block;
+}
+
+.w-100, .box-estadisticas .data {
+    width: 100% !important;
+}
+.w-100 {
+    width: 100%!important;
+}
+.d-flex {
+    display: -ms-flexbox!important;
+    display: flex!important;
+}
+.justify-content-center {
+    justify-content: center !important;
+}
+.align-items-center {
+    align-items: center !important;
+} 
+.text-center, .table-movimientos th, .table-movimientos td {
+    text-align: center !important;
+}
+.d-inline-block, .box-estadisticas .data[data-content]:after {
+    display: inline-block !important;
+}
+
+.styletexttable{
+    font-size: 15px;
+}
+
+/// scrolll bar
+ 
