@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
 
   { path: 'afiliacion', component: AfiliacionComponent},
-  { path: 'configurarServicios', component: ConfigurarServiciosComponent},
+  { path: 'configurarServicios', component: ConfigurarServiciosComponent, canActivate: [LogoutGuard]},
   { path: 'crearContrasena', component: CrearContrasenaComponent},
   { path: 'procesando', component: ProcesandoComponent},
 

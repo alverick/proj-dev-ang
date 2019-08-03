@@ -2,6 +2,34 @@
   .super-full-width {
     width: 100%;
   }
+  
+  .w-70 {
+    width: 70%; 
+  }
+  .btn-outline-amarillo {
+    color: #fc9a00;
+    border-color: #fc9a00;
+    border-width: 2px;
+    border-style: solid;
+    color: #fc9a00 !important;
+}
+.btn-outline-amarillo:hover {
+    color: #fc9a00;
+    background-color: #f69600;
+    border-color: #f69600;
+}
+.btn-outline-amarillo:hover {
+    background-color: #fc9a00;
+    color: #fff !important;
+}
+.btn-outline-amarillo:active, .btn-outline-amarillo:focus, .btn-outline-amarillo:hover {
+    background-color: #FFAD2D;
+    border-color: #FFAD2D;
+}
+  .w-50 {
+    width: 50%;
+  }
+
 
   
   .styled-checkbox{position:absolute;opacity:0}
