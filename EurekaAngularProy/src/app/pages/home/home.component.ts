@@ -59,8 +59,50 @@ declare var $: any;
 
 // tslint:disable-next-line:directive-class-suffix
 export class HomeComponent implements OnInit { 
-  // cargar excel combo
- // cargaExcel: boolean;
+
+  numeroPagina:number;
+  ///ORDENES DE LA TABLA
+  ascFeEmisiongray: boolean = false;
+  ascFeEmisionblue: boolean = true;
+  descFeEmisionblue: boolean = true;
+  descFeEmisiongray: boolean = false; 
+  //fecha de vencimiento
+
+  ascFeVctgray: boolean = false;
+  ascFeVctblue: boolean = true;
+  dscFeVctblue: boolean = true;
+  dscFeVctgray: boolean = false; 
+
+  //codigicliente
+  asccodgray: boolean = false;
+  asccodblue: boolean = true;
+  dsccodiblue: boolean = true;
+  dsccodigray: boolean = false; 
+  // name
+  ascnamegray: boolean = false;
+  ascnameblue: boolean = true;
+  dscnameblue: boolean = true;
+  dscnamegray: boolean = false; 
+  //apelido
+  asclastgray: boolean = false;
+  asclastblue: boolean = true;
+  dsclastblue: boolean = true;
+  dsclastgray: boolean = false; 
+// srvicio
+  ascservgray: boolean = false;
+  ascservblue: boolean = true;
+  dscservblue: boolean = true;
+  dscservgray: boolean = false;  
+  // concepto 
+  ascconcepgray: boolean = false;
+  ascconcepblue: boolean = true;
+  dscconcepblue: boolean = true;
+  dscconcepgray: boolean = false;   
+    // monto 
+  ascmontopgray: boolean = false;
+  ascmontopblue: boolean = true;
+  dscmontopblue: boolean = true;
+  dscmontopgray: boolean = false;   
  // DialogDataExampleDialog 
   @ViewChild('cargaExcel') cargaExcel;
  // datepicker format
@@ -141,7 +183,7 @@ export class HomeComponent implements OnInit {
     InputNombreCodigo(event): boolean {
       const charCode = (event.which) ? event.which : event.keyCode;
        // tslint:disable-next-line:max-line-length
-       if (charCode > 31 && (charCode <= 47 || charCode >= 58) &&  (charCode <= 65 || charCode >= 90) &&  (charCode <= 97 || charCode >= 122)  ) {
+       if (charCode > 31 && (charCode <= 47 || charCode >= 58) &&  (charCode <= 64 || charCode >= 90) &&  (charCode <= 96 || charCode >= 122)  ) {
         return false;
       }
       return true;
@@ -229,6 +271,166 @@ change(dateEvent) {
   this.date2.emit(dateEvent.value);
 }
 
+////ORDENAMIENTO OCULTAR LAS FLECHAS
+ 
+
+  AscDesc(/*nro: number */columnName:string  ,asc :boolean){
+    // this.filtro.pageNumber = nro;
+  this.ascFeEmisiongray  = false;
+  this.ascFeEmisionblue   = true;
+  this.descFeEmisionblue  = true;
+  this.descFeEmisiongray = false; 
+  //fecha de vencimiento
+
+  this.ascFeVctgray = false;
+  this.ascFeVctblue = true;
+  this.dscFeVctblue  = true;
+  this.dscFeVctgray  = false; 
+
+  //codigicliente
+  this.asccodgray  = false;
+  this.asccodblue  = true;
+  this.dsccodiblue = true;
+  this.dsccodigray  = false; 
+  // name
+  this.ascnamegray  = false;
+  this.ascnameblue  = true;
+  this.dscnameblue  = true;
+  this.dscnamegray  = false; 
+  //apelido
+  this.asclastgray = false;
+  this.asclastblue  = true;
+  this.dsclastblue = true;
+  this.dsclastgray  = false; 
+// srvicio
+this.ascservgray  = false;
+this.ascservblue = true;
+this.dscservblue  = true;
+this.dscservgray = false;  
+  // concepto 
+  this.ascconcepgray  = false;
+  this.ascconcepblue  = true;
+  this.dscconcepblue  = true;
+  this.dscconcepgray = false;   
+    // monto 
+    this.ascmontopgray  = false;
+    this.ascmontopblue = true;
+    this.dscmontopblue  = true;
+    this.dscmontopgray  = false;   
+    
+    if(columnName === "emissionDate" ){
+        if(asc == true){ 
+          this.ascFeEmisionblue  = false;
+          this.ascFeEmisiongray= true;
+          this.descFeEmisionblue =true;
+          this.descFeEmisiongray = false;
+        }else{ 
+          this.descFeEmisionblue =false;
+          this.descFeEmisiongray = true;
+          this.ascFeEmisionblue  = true;
+          this.ascFeEmisiongray= false;
+        }
+    }
+    if(columnName === "dueDate" ){
+      if(asc == true){ 
+        this.ascFeVctblue  = false;
+        this.ascFeVctgray= true;
+        this.dscFeVctblue =true;
+        this.dscFeVctgray = false;
+      }else{ 
+        this.dscFeVctblue =false;
+        this.dscFeVctgray = true;
+        this.ascFeVctblue  = true;
+        this.ascFeVctgray= false;
+      }
+  }
+  if(columnName === "code" ){
+    if(asc == true){ 
+      this.asccodblue  = false;
+      this.asccodgray= true;
+      this.dsccodiblue =true;
+      this.dsccodigray = false;
+    }else{ 
+      this.dsccodiblue =false;
+      this.dsccodigray = true;
+      this.asccodblue  = true;
+      this.asccodgray= false;
+    }
+} 
+if(columnName === "firstName" ){
+  if(asc == true){ 
+    this.ascnameblue  = false;
+    this.ascnamegray= true;
+    this.dscnameblue =true;
+    this.dscnamegray = false;
+  }else{ 
+    this.dscnameblue =false;
+    this.dscnamegray = true;
+    this.ascnameblue  = true;
+    this.ascnamegray= false;
+  }
+}
+if(columnName === "lastName" ){
+  if(asc == true){ 
+    this.asclastblue  = false;
+    this.asclastgray= true;
+    this.dsclastblue =true;
+    this.dsclastgray = false;
+  }else{ 
+    this.dsclastblue =false;
+    this.dsclastgray = true;
+    this.asclastblue  = true;
+    this.asclastgray= false;
+  }
+}
+if(columnName === "service" ){
+  if(asc == true){ 
+    this.ascservblue  = false;
+    this.ascservgray= true;
+    this.dscservblue =true;
+    this.dscservgray = false;
+  }else{ 
+    this.dscservblue =false;
+    this.dscservgray = true;
+    this.ascservblue  = true;
+    this.ascservgray= false;
+  }
+}
+if(columnName === "concept" ){
+  if(asc == true){ 
+    this.ascconcepblue  = false;
+    this.ascconcepgray= true;
+    this.dscconcepblue =true;
+    this.dscconcepgray = false;
+  }else{ 
+    this.dscconcepblue =false;
+    this.dscconcepgray = true;
+    this.ascconcepblue  = true;
+    this.ascconcepgray= false;
+  }
+}
+if(columnName === "amount" ){
+  if(asc == true){ 
+    this.ascmontopblue  = false;
+    this.ascmontopgray= true;
+    this.dscmontopblue =true;
+    this.dscmontopgray = false;
+  }else{ 
+    this.dscmontopblue =false;
+    this.dscmontopgray = true;
+    this.ascmontopblue  = true;
+    this.ascmontopgray= false;
+  }
+}
+
+    this.filtro.pageNumber = this.numeroPagina;
+    this.filtro.asc = asc;
+    this.filtro.columnName =columnName; 
+    this.filtro.dateFrom 
+    this.filtro.dateTo
+    this.consultaDeuda();
+    console.log(asc,columnName );
+  }
 
   consultaDeuda() {
   // tslint:disable-next-line:prefer-const
@@ -245,9 +447,10 @@ change(dateEvent) {
             });
             return;
           } else {
-                console.log(this.filtro);
-                this.spinner2.show();
-
+                console.table(this.filtro);
+                this.filtro.dateFrom 
+                this.filtro.dateTo
+                this.spinner2.show(); 
                 this.debtsList = {
                   count: 0,
                   data: []
@@ -339,16 +542,9 @@ change(dateEvent) {
                   this.debtsList = debts;
                   this.spinner2.hide();
 
-              });
-
-          }
-
-
-
-}
-
- 
-
+              }); 
+         } 
+  }
 }
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
@@ -472,10 +668,8 @@ change(dateEvent) {
           'success'
         ) */
       }
-    })
+    }) 
 
-     
-    
   }
 
   BotonCancela(item: Debts) {
@@ -484,22 +678,35 @@ change(dateEvent) {
 
   changePage(nro: number) {
     this.filtro.pageNumber = nro;
+    this.numeroPagina =nro;
     this.consultaDeuda();
   }
 
   EliminarSeleccionados() {
-    this.spinner2.show();
+  //  
 
-    const itemsParaEliminar = [];
-    this.debtsList.data.forEach(c => {
-      if (c.selected) {
-        itemsParaEliminar.push(c.id);
-      }
-
-    });
-    this.transactionService.deleteAll(itemsParaEliminar)
-      .subscribe(() => this.consultaDeuda());
-      this.spinner2.hide();
+ Swal.fire({
+      title: 'Deseas Eliminar las filas seleccionadas?',
+      text: "¡No podrás revertir esto!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminarlo!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner2.show();
+        const itemsParaEliminar = [];
+        this.debtsList.data.forEach(c => {
+        if (c.selected) {
+          itemsParaEliminar.push(c.id);
+        } 
+        });
+        this.transactionService.deleteAll(itemsParaEliminar)
+          .subscribe(() => this.consultaDeuda());
+          this.spinner2.hide();
+          }
+        })  
   }
 
   Eliminar(item: Debts) {
@@ -595,7 +802,7 @@ export class DialogDataExampleDialog implements OnInit {
     this.files = event.target.files;
   }
 
-  SalirsnackBar() {
+  SalirsnackBar(){
     this.dialogRef.close();
   }
   private files: any;
