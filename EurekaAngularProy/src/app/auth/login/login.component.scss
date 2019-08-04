@@ -12,12 +12,12 @@ html{
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
-
 }
 
 
 .body{
   background: #0b0044 !important;
+  
 }
 label{
   margin-bottom: 0px;
@@ -79,3 +79,10 @@ label{
 .focus-elements{
     outline:none;
  }
+  ::ng-deep .mat-form-field {
+    .mat-form-field-underline {
+        background-color: slategray;
+        height: 0.18vw !important;
+    }
+
+  }

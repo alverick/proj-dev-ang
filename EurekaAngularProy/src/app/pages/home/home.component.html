@@ -92,65 +92,53 @@
                         <!--DESDE AQUI-->
                         <div class="my-3 p-3 bg-white rounded shadow-sm">
                             <!--TODO BIEN-->
-                            <thead>
-                                <!--//////////// A C C I O N E S //////////////// -->
-                                <tr>
-                                    <td colspan="2" class="head">
-                                        <div class="d-flex">
-                                            <div class="mr-3">
-                                                <div>
-                                                    <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
-                                                    <label for="styl" class="text-small font-medium"></label><br>
-                                                    <span class="text-small font-medium"></span>
-                                                </div>
-                                                <span class="text-small font-medium">Seleccionar</span>
-                                            </div>
-
-
-                                            <div class="mr-3">
-                                                <div class="rotar mano" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                    <span class="text-small font-medium"></span>
-                                                    <span class="icon-correo-azul  iconos-big"></span>
-                                                </div>
-                                                <span class="text-small font-medium">Cargar </span>
-                                                <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
-                                                    <div class="card card-body">
-                                                        <div data-toggle="collapse" class="selecciona-servicio">Selecciona el servicio</div>
-                                                        <div *ngFor="let service of services" (click)="openDialog(service)">
-                                                            <div data-toggle="collapse">
-                                                                {{service}}
+                            <div class="d-flex bd-highlight mb-3">
+                                    <div class="p-2 bd-highlight">
+                                            <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
+                                            <label for="styl" class="text-small font-medium"></label><br>
+                                            <span class="text-small font-medium">Seleccionar</span>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <a class="texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
+                                            <span class="icon-correo-azul iconos-big"></span> <br>
+                                            <span class="text-small font-medium">Descargar</span>
+                                        </a>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
+                                            <span class="icon-eliminar iconos-big"></span><br>
+                                            <span class="text-small font-medium">Eliminar</span>
+                                        </a>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                            <a class="texto-azul" href="javascript:;">
+                                                    <div (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        <span class="icon-papel-2 iconos-big"></span><br>
+                                                        <span class="text-small font-medium">Cargar </span>
+                                                    </div>
+                                                    <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
+                                                        <div class="card card-body">
+                                                            <div *ngFor="let service of services" (click)="openDialog(service)">
+                                                                <div data-toggle="collapse">
+                                                                    {{service}}
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="mr-3">
-                                                <a class=" mano texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
-                                                    <span class="icon-correo-azul iconos-big"></span> <br>
-                                                    <span class="text-small font-medium"> </span>
                                                 </a>
-                                                <span class="text-small font-medium">Descargar</span>
-                                            </div>
-                                            <div class="mr-3">
-                                                <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
-                                                    <span class="icon-eliminar iconos-big"></span><br>
-                                                    <span class="text-small font-medium"></span>
-                                                </a>
-                                                <span class="text-small font-medium">Eliminar</span>
-                                            </div>
+                                    </div>
+                                    <div class="ml-auto p-2 bd-highlight">
+                                            <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
 
-
-                                        </div>
-                                    </td>
-                                    <td colspan="4" class="head">
-
-                                    </td>
-                                    <td colspan="4" class="head">
-                                        <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
-
-                                    </td>
-                                </tr>
-
+                                    </div>
+                            </div>
+                        </div>
+                        </table>
+                    </div> 
+                    
+                    <div class="table-responsive">
+                        <table class="table">                            
+                            <thead> 
                                 <!--//////////// A C C I O N E S //////////////// -->
                                 <tr bgcolor="#f9f7f0">
                                     <th width="10"></th>
@@ -315,12 +303,10 @@
                                     </td>
                                 </tr>
                             </tbody>
-
-
-                        </div>
-
-                    </table>
+                        </table>
                 </div>
+             
+            <br>
                 <!--end good-->
             </div>
         </div>

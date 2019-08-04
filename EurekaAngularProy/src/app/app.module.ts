@@ -30,8 +30,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
-import { MatMomentDateModule } from '@angular/material-moment-adapter'; 
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { LogoutGuard } from './shared/guards/logout.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 import { MatFormFieldModule } from '@angular/material';
+import { AfiliacionService } from './shared/services/afiliacion.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +85,8 @@ import { MatFormFieldModule } from '@angular/material';
       {provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptorService,
         multi: true
-      }
+      },
+      AfiliacionService
   ],
   exports: [
     MatInputModule,

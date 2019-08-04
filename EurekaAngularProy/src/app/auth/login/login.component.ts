@@ -35,12 +35,14 @@ export class LoginComponent implements OnInit {
   inputPassValid: boolean = false;
   validarCantRuc: boolean = false;
 
-  intentos: number = 0;
+  intentos: number;
+  intentosRestantes: number = 6;
   codRespuesta: number;
   err: boolean;
   numero2: number;
   checked: boolean = false;
   intento6: boolean =false;
+  ruc: number=0;
 
   isTrue: boolean = false;
   codigo2: boolean = false;
@@ -133,8 +135,11 @@ export class LoginComponent implements OnInit {
   } 
   
   /* /////// L O G I N ////////////  */
- 
+
+    
+
   public submitLogin() : any { 
+    console.log("INTENTOS : "+this.intentos)
 
     if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '') {
       this.inputUsuaValid = true;
@@ -154,10 +159,18 @@ export class LoginComponent implements OnInit {
       .subscribe(
         value => {
           this.intentos= value.paramNum;
+          this.intentosRestantes= 6 - this.intentos;
           this.codRespuesta= value.codRespuesta;
           if(value.paramStr==="Un session ya se encuentra activa"){
             Swal.fire({ type: 'warning', text: 'Existe una Sesión Activa'})
-          }else if(value.estado===true){
+          }else if(this.intentos >= 6){
+            this.codigo2= false;
+            console.log("Intentos : " + value.paramNum + "   Sin codigo");
+            Swal.fire({ type:"error", text: 'Contraseña Incorrecta” y texto: “Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe ', showConfirmButton: false, showCloseButton: true});
+            this.intento6= true;
+            this.isTrue = false;
+                          
+          }else if(value.estado===true && value.paramNum<=6){
                   if(this.rememberMe==true){
                       const expire = new Date();
                       expire.setDate(expire.getDate() + 25);
@@ -169,10 +182,10 @@ export class LoginComponent implements OnInit {
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
             this.codigo2=true;
           }else if(this.intentos < 4 && this.codRespuesta == 3){
+            this.codigo2= false;
+          
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
-            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'}).then(function () {
-
-            });        
+            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true}); 
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;            
@@ -182,9 +195,9 @@ export class LoginComponent implements OnInit {
             this.codigo2=true;          
 
           }else if(this.intentos == 4 && this.codRespuesta == 3){
+            this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
-            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
-            this.isCaptchaValidate = false;
+            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true});this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isTrue = true;              
             
@@ -194,17 +207,14 @@ export class LoginComponent implements OnInit {
             this.codigo2=true;          
         
           }else if(this.intentos == 5 && this.codRespuesta == 3){
+            this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
-            Swal.fire({ type: 'error', text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentos+' intentos'})        
+            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true});        
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
-            this.isTrue = true;              
-          }else if(this.intentos >= 6){
-            console.log("Intentos : " + value.paramNum + "   Sin codigo");
-            Swal.fire({ type: 'error', title: 'Contraseña Incorrecta', text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe'})
-            this.intento6= true;
-            this.isTrue = false;              
-          }            
+            this.isTrue = true; 
+            this.codigo2= false;             
+          }         
         },
       error =>{ 
         this.spinner.hide();
