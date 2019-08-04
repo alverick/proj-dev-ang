@@ -1,5 +1,5 @@
 import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild } from '@angular/core';
-import { User } from "src/app/shared/models/user.model";
+import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { Router } from '@angular/router';
@@ -272,26 +272,26 @@ change(dateEvent) {
 }
 
 ////ORDENAMIENTO OCULTAR LAS FLECHAS
- 
 
-  AscDesc(/*nro: number */columnName:string  ,asc :boolean){
+
+  AscDesc(/*nro: number */columnName: string, asc: boolean) {
     // this.filtro.pageNumber = nro;
   this.ascFeEmisiongray  = false;
   this.ascFeEmisionblue   = true;
   this.descFeEmisionblue  = true;
-  this.descFeEmisiongray = false; 
+  this.descFeEmisiongray = false;
   //fecha de vencimiento
 
   this.ascFeVctgray = false;
   this.ascFeVctblue = true;
   this.dscFeVctblue  = true;
-  this.dscFeVctgray  = false; 
+  this.dscFeVctgray  = false;
 
   //codigicliente
   this.asccodgray  = false;
   this.asccodblue  = true;
   this.dsccodiblue = true;
-  this.dsccodigray  = false; 
+  this.dsccodigray  = false;
   // name
   this.ascnamegray  = false;
   this.ascnameblue  = true;
@@ -301,25 +301,25 @@ change(dateEvent) {
   this.asclastgray = false;
   this.asclastblue  = true;
   this.dsclastblue = true;
-  this.dsclastgray  = false; 
+  this.dsclastgray  = false;
 // srvicio
 this.ascservgray  = false;
 this.ascservblue = true;
 this.dscservblue  = true;
-this.dscservgray = false;  
+this.dscservgray = false;
   // concepto 
   this.ascconcepgray  = false;
   this.ascconcepblue  = true;
   this.dscconcepblue  = true;
-  this.dscconcepgray = false;   
+  this.dscconcepgray = false;
     // monto 
     this.ascmontopgray  = false;
     this.ascmontopblue = true;
     this.dscmontopblue  = true;
-    this.dscmontopgray  = false;   
-    
-    if(columnName === "emissionDate" ){
-        if(asc == true){ 
+    this.dscmontopgray  = false;
+
+    if (columnName === 'emissionDate' ) {
+        if (asc === true) {
           this.ascFeEmisionblue  = false;
           this.ascFeEmisiongray= true;
           this.descFeEmisionblue =true;
@@ -331,8 +331,8 @@ this.dscservgray = false;
           this.ascFeEmisiongray= false;
         }
     }
-    if(columnName === "dueDate" ){
-      if(asc == true){ 
+    if(columnName === 'dueDate' ){
+      if(asc === true){ 
         this.ascFeVctblue  = false;
         this.ascFeVctgray= true;
         this.dscFeVctblue =true;
@@ -344,92 +344,92 @@ this.dscservgray = false;
         this.ascFeVctgray= false;
       }
   }
-  if(columnName === "code" ){
-    if(asc == true){ 
+  if(columnName === 'code' ){
+    if(asc === true) { 
       this.asccodblue  = false;
       this.asccodgray= true;
       this.dsccodiblue =true;
       this.dsccodigray = false;
-    }else{ 
+    } else { 
       this.dsccodiblue =false;
       this.dsccodigray = true;
       this.asccodblue  = true;
       this.asccodgray= false;
     }
 } 
-if(columnName === "firstName" ){
-  if(asc == true){ 
+if(columnName === 'firstName' ) {
+  if(asc === true){ 
     this.ascnameblue  = false;
     this.ascnamegray= true;
     this.dscnameblue =true;
     this.dscnamegray = false;
-  }else{ 
+  } else { 
     this.dscnameblue =false;
     this.dscnamegray = true;
     this.ascnameblue  = true;
     this.ascnamegray= false;
   }
 }
-if(columnName === "lastName" ){
-  if(asc == true){ 
+if(columnName === 'lastName' ) {
+  if(asc === true){ 
     this.asclastblue  = false;
     this.asclastgray= true;
     this.dsclastblue =true;
     this.dsclastgray = false;
-  }else{ 
+  } else { 
     this.dsclastblue =false;
     this.dsclastgray = true;
     this.asclastblue  = true;
     this.asclastgray= false;
   }
 }
-if(columnName === "service" ){
-  if(asc == true){ 
+if(columnName === 'service' ) {
+  if(asc === true) { 
     this.ascservblue  = false;
     this.ascservgray= true;
     this.dscservblue =true;
     this.dscservgray = false;
-  }else{ 
+  } else { 
     this.dscservblue =false;
     this.dscservgray = true;
     this.ascservblue  = true;
     this.ascservgray= false;
   }
 }
-if(columnName === "concept" ){
-  if(asc == true){ 
+if(columnName === 'concept' ) {
+  if(asc === true) { 
     this.ascconcepblue  = false;
     this.ascconcepgray= true;
     this.dscconcepblue =true;
     this.dscconcepgray = false;
-  }else{ 
+  } else { 
     this.dscconcepblue =false;
     this.dscconcepgray = true;
     this.ascconcepblue  = true;
     this.ascconcepgray= false;
   }
 }
-if(columnName === "amount" ){
-  if(asc == true){ 
+if(columnName === 'amount' ) {
+  if(asc === true) { 
     this.ascmontopblue  = false;
     this.ascmontopgray= true;
     this.dscmontopblue =true;
     this.dscmontopgray = false;
-  }else{ 
+  } else { 
     this.dscmontopblue =false;
     this.dscmontopgray = true;
     this.ascmontopblue  = true;
     this.ascmontopgray= false;
   }
 }
-
+    console.table(this.filtro );
     this.filtro.pageNumber = this.numeroPagina;
     this.filtro.asc = asc;
-    this.filtro.columnName =columnName; 
+    this.filtro.columnName = columnName;
     this.filtro.dateFrom 
     this.filtro.dateTo
     this.consultaDeuda();
-    console.log(asc,columnName );
+
   }
 
   consultaDeuda() {
@@ -450,7 +450,7 @@ if(columnName === "amount" ){
                 console.table(this.filtro);
                 this.filtro.dateFrom 
                 this.filtro.dateTo
-                this.spinner2.show(); 
+                this.spinner2.show();
                 this.debtsList = {
                   count: 0,
                   data: []
@@ -542,8 +542,8 @@ if(columnName === "amount" ){
                   this.debtsList = debts;
                   this.spinner2.hide();
 
-              }); 
-         } 
+              });
+         }
   }
 }
   /*//////////////////////////////
@@ -576,7 +576,6 @@ if(columnName === "amount" ){
 
     limpiarInput() {
        this.inputText.nativeElement.value = '';
- 
     }
 
     limpiardate1() {
@@ -597,46 +596,46 @@ if(columnName === "amount" ){
     item.newConcept = item.concept;
   }
 
-  BotonActualizar(item: Debts) { 
+  BotonActualizar(item: Debts) {
 
  /*   if(item.newEmissionDate.getFullYear() < 2000 ){
       Swal.fire({
-        type: 'error', 
+        type: 'error',
         text: 'Ingrese una fecha valida para la fecha de emision',
       });
       return;
     }
     if(item.newDueDate.getFullYear() > 2050 ){
       Swal.fire({
-        type: 'error', 
+        type: 'error',
         text: 'Ingrese una fecha valida para la fecha de emision',
       });
       return;
     }  */
-    if(item.newEmissionDate == null){
+    if (item.newEmissionDate == null) {
       Swal.fire({
-        type: 'error', 
+        type: 'error',
         text: 'Ingrese la fecha de emision',
       });
       return;
     }
-    if(item.newDueDate == null){
+    if (item.newDueDate == null) {
       Swal.fire({
-        type: 'error', 
+        type: 'error',
         text: 'Ingrese la fecha de vencimiento',
       });
       return;
     }
-    if(item.newConcept == ''){
+    if (item.newConcept === '') {
       Swal.fire({
-        type: 'error', 
+        type: 'error',
         text: 'Ingrese el concepto',
       });
       return;
     }
-    if(item.newEmissionDate>item.newDueDate){
+    if (item.newEmissionDate > item.newDueDate) {
       Swal.fire({
-        type: 'error', 
+        type: 'error',
         text: 'La fecha de Emision no puede ser mayor a la fecha de vencimiento',
       });
       return;
@@ -644,7 +643,7 @@ if(columnName === "amount" ){
 
     Swal.fire({
       title: 'Deseas Actualizar?',
-      text: "¡No podrás revertir esto!",
+      text: '¡No podrás revertir esto!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -668,7 +667,7 @@ if(columnName === "amount" ){
           'success'
         ) */
       }
-    }) 
+    });
 
   }
 
@@ -678,16 +677,30 @@ if(columnName === "amount" ){
 
   changePage(nro: number) {
     this.filtro.pageNumber = nro;
-    this.numeroPagina =nro;
+    this.numeroPagina = nro;
     this.consultaDeuda();
   }
 
   EliminarSeleccionados() {
-  //  
+
+    const itemsParaEliminar = [];
+    this.debtsList.data.forEach(c => {
+    if (c.selected) {
+      itemsParaEliminar.push(c.id);
+    }
+    });
+
+    if (itemsParaEliminar.length === 0 ) {
+      Swal.fire({
+        type: 'error',
+        text: '¡Seleccione las filas a eliminar por favor!',
+      });
+      return;
+    }
 
  Swal.fire({
-      title: 'Deseas Eliminar las filas seleccionadas?',
-      text: "¡No podrás revertir esto!",
+      title: 'Estas Seguro de Eliminar ' + itemsParaEliminar.length + ' registros?',
+      text: '¡No podrás revertir esto!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -696,17 +709,12 @@ if(columnName === "amount" ){
     }).then((result) => {
       if (result.value) {
         this.spinner2.show();
-        const itemsParaEliminar = [];
-        this.debtsList.data.forEach(c => {
-        if (c.selected) {
-          itemsParaEliminar.push(c.id);
-        } 
-        });
+
         this.transactionService.deleteAll(itemsParaEliminar)
           .subscribe(() => this.consultaDeuda());
           this.spinner2.hide();
           }
-        })  
+        });
   }
 
   Eliminar(item: Debts) {
@@ -725,7 +733,7 @@ if(columnName === "amount" ){
 
 
 /*//////// O P E N  - D I A L O G ///////////////////// */
-MostrarListaSelect(){
+MostrarListaSelect() {
   this.OcultaListaExcel = true;
 }
 
@@ -736,7 +744,7 @@ MostrarListaSelect(){
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogDataExampleDialog);
     dialogRef.afterClosed().subscribe(result => {
-     
+
     });
     this.consultaDeuda();
   }
@@ -764,7 +772,7 @@ MostrarListaSelect(){
 
 // tslint:disable-next-line:component-class-suffix
 export class DialogDataExampleDialog implements OnInit {
- 
+
   public inputXlsForm: FormGroup;
   public xlsValid: boolean;
   public codigoCliente: String = 'Codigo de Cliente';
@@ -773,7 +781,7 @@ export class DialogDataExampleDialog implements OnInit {
   dataParcial: any = [{  x: ['Codigo de Cliente'],    ename: 'ravi',    esal: 1000},  { eid: 'e102',  ename: 'ram',    esal: 2000  },  { eid: 'e103',   ename: 'rajesh',    esal: 300}];
 
   /*Data Completa */
-  matricula: any = [{"Código de cliente":1234567,"Nombres":"Oscar","Apellidos":"Paredes Zapata","Servicio":"Otros"}];
+  matricula: any = [{'Código de cliente':1234567,'Nombres':'Oscar','Apellidos':'Paredes Zapata','Servicio':'Otros'}];
   
   validationExcel = {
     'xls':[
@@ -802,19 +810,19 @@ export class DialogDataExampleDialog implements OnInit {
     this.files = event.target.files;
   }
 
-  SalirsnackBar(){
+  SalirsnackBar() {
     this.dialogRef.close();
   }
   private files: any;
-  get f(){ return this.inputXlsForm.controls;}
+  get f() { return this.inputXlsForm.controls;}
 
 
    openSnackBar() {
-    if(this.inputXlsForm.valid){
+    if(this.inputXlsForm.valid) {
     /*service*/
     this.excelService.UploadExcel(this.files, this.excelService.service)
     .subscribe(
-      value=>{
+      value=> {
         this.excelService.idProcess = value.id;
        // console.table(value);
       }
@@ -823,7 +831,7 @@ export class DialogDataExampleDialog implements OnInit {
     console.log('se habre el sncack bar ');
     this.snackBar.openFromComponent(UploadProgressComponent);
     this.dialogRef.close();
-    }else{
+    } else {
       this.xlsValid = true;
     }
   }
@@ -833,7 +841,7 @@ export class DialogDataExampleDialog implements OnInit {
     this.excelService.exportAsExcelFile(this.dataParcial, 'data_parcial');
   }
 
-  exportDataMatriculaXLSX():void{
+  exportDataMatriculaXLSX():void {
     this.excelService.exportAsExcelFile(this.matricula, 'data_completa');
   }
 
@@ -863,13 +871,12 @@ export class UploadProgressComponent  implements OnInit  {
   constructor( public dialog: MatDialog, public excelService: ExcelService,
                 private snackRef: MatSnackBarRef<UploadProgressComponent>/*, public home: HomeComponent */) { }
 
-  ngOnInit(){
+  ngOnInit() {
     var th = this;
     var fnc = () => {
       if (th.excelService.idProcess > 0) {
         th.verifyStatus();
-      }
-      else {
+      } else {
         setTimeout(fnc, 500);
       }
     };
@@ -882,10 +889,10 @@ export class UploadProgressComponent  implements OnInit  {
     let recursiveFunc = (value) => {
 
       console.log(value.status);
-      if (value.status === "REJECTED") {
+      if (value.status === 'REJECTED') {
         this.excelService.errores = value.errors;
         console.table(value.errors);
-        console.log("ABRE DIALOG")
+        console.log('ABRE DIALOG')
         const dialogRef =  this.dialog.open(ValidationComponent);
         dialogRef.afterClosed()
           .subscribe(() => {
@@ -894,7 +901,7 @@ export class UploadProgressComponent  implements OnInit  {
           });
         this.snackRef.dismiss();
 
-      } else if (value.status === "COMPLETED"){
+      } else if (value.status === 'COMPLETED') {
         this.snackRef.dismiss();
         this.excelService.errores = [];
         this.excelService.idProcess = 0; 
