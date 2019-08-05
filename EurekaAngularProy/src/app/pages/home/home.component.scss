@@ -291,3 +291,36 @@
  .focus-elements{
     outline:none;
  }
+ 
+/*
+.sobresale {
+    position: absolute;
+    z-index: 1;
+    background-color: #FFFFFF;
+}
+*/
+ .arrow-filter-asc-blue{
+    color: blue; 
+    float: initial; 
+    padding-top: 15px;
+    padding-left: 5px;
+ }
+ .arrow-filter-dsc-blue{
+    color: blue; 
+    float: initial; 
+    padding-top: 0px;
+    padding-left: 5px;
+
+ }
+ .arrow-filter-asc-gray{
+    color: gray; 
+    float: initial;
+    padding-top: 15px;
+    padding-left: 5px;
+ }
+ .arrow-filter-dsc-gray{
+    color: gray; 
+    float: initial;
+    padding-top: 0px;
+    padding-left: 5px;
+ }
