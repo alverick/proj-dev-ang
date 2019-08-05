@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Directive, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit,  Directive, ViewChild, ElementRef} from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     'ruc': [
       // hasError
       { type: 'required', message: 'Debes ingresar un RUC' },
-     // { type: 'minlength', message: 'Ingrese un RUC válido de 11 dígitos' },
+      { type: 'minlength', message: 'Ingrese un RUC válido de 11 dígitos' },
       { type: 'pattern', message: 'Debe contener solo números' },
     ],
     'psw': [
@@ -105,8 +105,8 @@ export class LoginComponent implements OnInit {
     }
     
     this.loginForm = this.formBuilder.group({
-      ruc: [rucStr, Validators.compose([Validators.required,
-            Validators.pattern('^[0-9]*$')])
+      ruc: [rucStr, Validators.compose([Validators.required, 
+            Validators.pattern('^[0-9]*$'), Validators.minLength(11)])
            ],
       psw: ['', Validators.required ],
       rememberme: [false, Validators.required]

@@ -262,13 +262,13 @@ export class HomeComponent implements OnInit {
   }
 
   getDeuda(){
-    this.spinner2.show();
     this.debtsList = {
       count: 0,
       data: []
     };
     this.transactionService.getDeuda(this.filtro)
       .subscribe(debts => {
+        this.spinner2.show();
         console.log(debts);
         this.debtsList = debts;   
         console.log("NUMERO PAGINA " + this.filtro.pageNumber)
@@ -522,7 +522,7 @@ if(columnName === 'amount' ) {
                   return;
                 } else {
                       console.log(this.filtro);
-                      /*this.spinner2.show();*/
+                      this.spinner2.show();
 
                       this.debtsList = {
                         count: 0,
@@ -532,7 +532,7 @@ if(columnName === 'amount' ) {
                         .subscribe(debts => {
                           console.log(debts);
                           this.debtsList = debts;
-                         /* this.spinner2.hide();*/
+                          this.spinner2.hide();
 
                       });
                 }
@@ -573,7 +573,7 @@ if(columnName === 'amount' ) {
             return;
           } else {
               console.log(this.filtro);
-             /* this.spinner2.show();*/
+              this.spinner2.show();
 
               this.debtsList = {
                 count: 0,
@@ -583,7 +583,7 @@ if(columnName === 'amount' ) {
                 .subscribe(debts => {
                   console.log(debts);
                   this.debtsList = debts;
-                 /* this.spinner2.hide();*/
+                  this.spinner2.hide();
               });
          }
   }
