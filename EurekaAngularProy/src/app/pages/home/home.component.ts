@@ -9,7 +9,7 @@ import { MatDialog, MatSnackBar, MatSnackBarRef, MatDialogRef} from '@angular/ma
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
@@ -22,6 +22,7 @@ import { default as _rollupMoment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
+import { DialogDataExampleDialog } from './dialog-data-example-dialog';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -149,8 +150,12 @@ export class HomeComponent implements OnInit {
 
   serviceSelected: String;
   services: String[];
-
   spinner : boolean= false;
+
+  pagination1: boolean= false;
+  pagination2: boolean= false;
+  pagination3: boolean= false;
+  
 
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = false;
@@ -166,9 +171,8 @@ export class HomeComponent implements OnInit {
     dateFrom: null,
     dateTo: null
   };
-  control: any;
-
   
+  control: any;
 
   constructor(
     private storageService: StorageService,
@@ -266,12 +270,32 @@ export class HomeComponent implements OnInit {
     this.transactionService.getDeuda(this.filtro)
       .subscribe(debts => {
         console.log(debts);
-        this.debtsList = debts;     
+        this.debtsList = debts;   
+        console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+        if(this.filtro.pageNumber <= 1){
+          this.pagination1= true;
+          this.pagination2= false;
+          this.pagination3= false;
+        }
+        if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+            this.pagination1=false;
+            this.pagination2= true;
+            this.pagination3= false;
+        }
+        if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+            this.pagination1=false;
+            this.pagination2= false;
+            this.pagination3=true;          
+        }
+    },
+    error =>{
+      if(error.status ===500){
+        Swal.fire({ type: 'error', text: 'Error del Servidor comuniquese con el administrador'})
+      }
     });
     this.spinner2.hide();
-
-
   }
+  
   ceroRegistros(): boolean {
       if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
         this.router.navigate(['/login']);
@@ -616,20 +640,6 @@ if(columnName === 'amount' ) {
 
   BotonActualizar(item: Debts) {
 
- /*   if(item.newEmissionDate.getFullYear() < 2000 ){
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese una fecha valida para la fecha de emision',
-      });
-      return;
-    }
-    if(item.newDueDate.getFullYear() > 2050 ){
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese una fecha valida para la fecha de emision',
-      });
-      return;
-    }  */
     if (item.newEmissionDate == null) {
       Swal.fire({
         type: 'error',
@@ -714,7 +724,7 @@ if(columnName === 'amount' ) {
   changePage(nro: number) {
     this.filtro.pageNumber = nro;
     this.numeroPagina = nro;
-    this.consultaDeuda();
+    this.getDeuda();
   }
 
   EliminarSeleccionados() {
@@ -795,9 +805,7 @@ MostrarListaSelect() {
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogDataExampleDialog);
     dialogRef.afterClosed().subscribe(result => {
-
     });
-    //this.consultaDeuda();
   }
 
 
@@ -814,10 +822,9 @@ MostrarListaSelect() {
 /*////////////////////////////////////////////////////////
 ///////////////// D I A L O G //////////////////////////
 ///////////////////////////////////////////////////////// */
-
+/*
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'dialog-data-example-dialog',
   templateUrl: 'dialog-data-example-dialog.html',
 })
@@ -847,8 +854,6 @@ export class DialogDataExampleDialog implements OnInit {
     this.inputXlsForm = this.formBuilder.group({
       xls: ['', Validators.required]
     });
-
-    //this.SalirsnackBar();
     
   }
 
@@ -865,15 +870,13 @@ export class DialogDataExampleDialog implements OnInit {
 
    openSnackBar() {
     if(this.inputXlsForm.valid) {
-    /*service*/
     this.excelService.UploadExcel(this.files, this.excelService.service)
     .subscribe(
       value=> {
         this.excelService.idProcess = value.id;
-       // console.table(value);
       }
     )
-    // 
+  
     console.log('se habre el sncack bar ');
     this.snackBar.openFromComponent(UploadProgressComponent);
     this.dialogRef.close();
@@ -890,7 +893,7 @@ export class DialogDataExampleDialog implements OnInit {
 
   
 
-}
+}*/
 
 
 
@@ -903,7 +906,7 @@ export class DialogDataExampleDialog implements OnInit {
 /*///////////////////////////////////////////////////////////////////////////
 ///////////////// P R O G R E S S / S N A C K B A R //////////////////////////
 ////////////////////////////////////////////////////////////////////////////// */
-
+/*
 @Component({
   selector: 'upload-progress',
   templateUrl: 'upload-progress.html',
@@ -934,7 +937,6 @@ export class UploadProgressComponent  implements OnInit  {
  
   private verifyStatus() {
 
-    // tslint:disable-next-line:prefer-const
     let recursiveFunc = (value) => {
 
       console.log(value.status);
@@ -983,14 +985,13 @@ export class UploadProgressComponent  implements OnInit  {
 
   }
 
-  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     this.snackRef.dismiss();
   } 
 }
 
 
-
+*/
 
 
 
@@ -1002,8 +1003,7 @@ export class UploadProgressComponent  implements OnInit  {
 ///////////////// V A L I D A T I O N   //////////////////////////
 ////////////////////////////////////////////////////////////////////////////// */
 
-let error: Error;
-
+/*
 @Component({
   selector: 'validation',
   templateUrl: 'validation.html',
@@ -1014,4 +1014,4 @@ export class ValidationComponent  {
   constructor(public excelService: ExcelService,
     ) { }
 
-}
+}*/

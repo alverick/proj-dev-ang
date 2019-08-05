@@ -127,16 +127,42 @@
                                 </a>
                                 <span class="text-small font-medium">Eliminar</span>
                            </div>
-                           <div class="col-md-7 ml-auto" style="padding-top: 12px;">
+                           
+                           <!-- M O B I L E-->
+                           <div class="p-2 bd-highlight mobile">
+                                <div style="font-size: 17px" *ngIf="pagination1">
+                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{ debtsList.data.length}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                </div>
+                                <div style="font-size: 17px" *ngIf="pagination2">
+                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{filtro.pageNumber*50}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                </div>
+                                <div style="font-size: 17px" *ngIf="pagination3">
+                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{debtsList.count}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                </div>
+                            
+                                <pagination-controls   responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)">    </pagination-controls>
+                            </div>
+
+                           <!-- D E S K T O P / T A B L E T-->
+                           <div class="col-md-8 ml-auto info" style="padding-top: 12px;">
                             <div class="row justify-content-end">
-                                <div style="font-size: 17px">
-                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{((filtro.pageNumber-1)*50)+49}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                <div style="font-size: 17px" *ngIf="pagination1">
+                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{ debtsList.data.length}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                </div>
+                                <div style="font-size: 17px" *ngIf="pagination2">
+                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{filtro.pageNumber*50}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                </div>
+                                <div style="font-size: 17px" *ngIf="pagination3">
+                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{debtsList.count}}</span> de <span> {{debtsList.count }}</span> de elementos
                                 </div>
                                 <div>
                                     <pagination-controls   responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)">    </pagination-controls>
                                 </div>
                               </div>
                             </div>
+
+                           
+                            
                         </div>
                     </table>
                 </div>  
@@ -304,22 +330,11 @@
                                             <img src="assets/images/table-delete.svg" alt="Eliminar">
                                         </div>
                                     </div>
-                                    <!--
-                                        <mat-progress-spinner *ngIf="spinnerTrue"
-                                                class="example-margin"
-                                                [color]="color"
-                                                [mode]="mode"
-                                                [value]="value">
-                                            </mat-progress-spinner>
-                                    -->
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
-                <br>
-                <!--end good-->
             </div>
         </div>
     </div>
