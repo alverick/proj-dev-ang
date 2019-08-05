@@ -15,7 +15,7 @@
         <div class="text-center">
             <form id="input-form"  [formGroup]="inputXlsForm" (ngSubmit)="openSnackBar()">
                 <h6 class="my-4">la plantilla y llena los datos de tus clientes nuevos</h6>
-                    <input formControlName="xls" type="file" accept=".xlsx" (change)="onChangeFile($event)" required />
+                    <input class="focus-elements" formControlName="xls" type="file" accept=".xlsx" (change)="onChangeFile($event)" required />
                         
                     <mat-error style="margin-top: 1vw" *ngFor="let validation of validationExcel.xls">
                         <mat-error class="error-message" *ngIf="xlsValid">
@@ -24,7 +24,7 @@
                     </mat-error>
                 <hr>
                 <div class="mb-3">
-                    <button type="submit" form="input-form" style="color: #f4f5f7" aria-label="Show an example snack-bar" class="btn-eureca btn-eureca-amarillo btn-small">
+                    <button type="submit" form="input-form" style="color: #f4f5f7" aria-label="Show an example snack-bar" class="focus-elements btn-eureca btn-eureca-amarillo btn-small">
                     Subir plantilla
                     </button>
                 </div>
@@ -32,7 +32,13 @@
         </div>
         <hr>
         <div class="text-center">
-            <a href="javascript:;" style="color: blue"class="my-4" (click)="exportDataMatriculaXLSX()">Descarga tu plantilla</a>
+            <button href="javascript:;" style="color: blue"class="my-4" (click)="exportDataMatriculaXLSX()">Descarga tu plantilla</button>
         </div>
     </div>
 </div>
+
+<style>
+.focus-elements{
+    outline:none;
+ }
+</style>

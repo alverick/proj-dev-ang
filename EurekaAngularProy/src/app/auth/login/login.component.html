@@ -75,13 +75,12 @@
                             </div>
                             <br>
 
-                            <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
-                            
-                            <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white" form="login-form" [disabled]="intento6  ? 'disabled': null"> Ingresar</button>
+                            <!-- Login -->
+                            <button type="submit" class="focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white" form="login-form" [disabled]="intento6  ? 'disabled': null"> Ingresar</button>
 
                             <div class="mt-3 text-center">
-                                <button class="btn-big w-100 btn-eureca btn-eureca-azul text-white">
-                                    <a [routerLink]="['/afiliacion']" class="nav-link text-white">Registrate</a>
+                                <button class="focus-elements btn-big w-100 btn-eureca btn-eureca-azul text-white">
+                                    <a routerLink="afiliacion" class="nav-link text-white">Registrate</a>
                                 </button>
                             </div>
                         </form>
