@@ -26,7 +26,8 @@
               "src/scss/style.scss",
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
-            "scripts": ["node_modules/core-js/client/shim.min.js",
+            "scripts": [
+              "node_modules/core-js/client/shim.min.js"
             ]
           },
           "configurations": {

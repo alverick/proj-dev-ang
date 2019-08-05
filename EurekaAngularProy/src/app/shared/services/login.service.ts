@@ -3,10 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment"; 
 import { RespuestaLogin } from "../models/respuestaLogin.model";
 import { map } from "rxjs/operators";
-import { Observable, throwError } from "rxjs";
+import { Observable } from "rxjs";
 import { StorageService } from "./storage.service";
-
-import { first } from 'rxjs/operators';
 import { Router } from "@angular/router";
 
 @Injectable({
@@ -16,13 +14,8 @@ import { Router } from "@angular/router";
 
 export class LoginService {
 
-  private localStorageService;
-
 constructor(public http: HttpClient, private storage: StorageService,
-  private router: Router)
-{
-
- }
+  private router: Router){ }
 
 private URI_API: string = environment.END_POINT;
 public errores: number;
@@ -51,11 +44,6 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
 
 logout(): void {
   const url = `${this.URI_API}/login/out`;
-  /*const opts = {
-    headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),
-    "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
-    "Ocp-Apim-Trace": "true" }
-  };*/
   this.http.post(url, {})
     .subscribe(() => {
       this.storage.removeCurrentSession();

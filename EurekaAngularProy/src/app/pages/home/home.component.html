@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col">
                 <!--good-->
-
+                <div class="my-3 p-3 bg-white rounded shadow-sm">
                 <div class="table-responsive">
                     <table class="table">
                         <h1 class="h5 mb-3">Movimientos</h1>
-                        <div class="my-3 p-3 bg-white rounded shadow-sm">
+                        
                             <!--//////////// F I L T R O S //////////////// -->
                             <div class="d-flex align-items-center">
                                 <div class="texto-azulbase font-medium">
@@ -76,83 +76,78 @@
                                 </div>
 
                                 <div class="texto-azulbase font-medium">
-                                    <button class="btn-eureca btn-small btn-eureca-amarillo focus-elements" (click)="consultaDeuda()">Buscar
+                                    <button class="btn-eureca btn-small btn-eureca-amarillo" style="color: white; font-weight: 500" (click)="consultaDeuda()">Buscar
                                         </button>
                                 </div>
                             </div>
-                        </div>
-                    </table>
+                        </table>
+                    </div>
                 </div>
 
 
-
+                <div class="my-3 p-3 bg-white rounded shadow-sm">
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <!--//////////// A C C I O N E S //////////////// -->
-
-                            <tr>
-                                <td colspan="2" class="head">
-                                    <div class="d-flex">
-                                        <div class="mr-3">
-                                            <div>
-                                                <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
-                                                <label for="styl" class="text-small font-medium"></label><br>
-                                                <span class="text-small font-medium"></span>
-                                            </div>
-                                            <span class="text-small font-medium">Seleccionar</span>
-                                        </div>
-
-
-                                        <div class="mr-3">
-                                            <div class="rotar mano" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                <span class="text-small font-medium"></span>
-                                                <span class="icon-correo-azul  iconos-big"></span>
-                                            </div>
-                                            <span class="text-small font-medium">Cargar </span>
-                                            <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
-                                                <div class="card card-body">
-                                                    <div data-toggle="collapse" class="selecciona-servicio">Selecciona el servicio</div>
-                                                    <div *ngFor="let service of services" (click)="openDialog(service)">
-                                                        <div data-toggle="collapse">
-                                                            {{service}}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                    <table class="table" style="margin-bottom: 0rem">
+                        <div class="d-flex bd-highlight">
+                            <div class="p-2 bd-highlight">
+                                <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
+                                <label for="styl" class="text-small font-medium"></label><br>
+                                <span class="text-small font-medium">Seleccionar</span>
+                            </div>
+                            <div class="p-2 bd-highlight">
+                                <div class="rotar mano" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    <span class="text-small font-medium"></span>
+                                    <span class="icon-correo-azul  iconos-big"></span>
+                                </div>
+                                <span class="text-small font-medium">Cargar </span>
+                                <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
+                                    <div class="card card-body">
+                                        <div data-toggle="collapse" class="selecciona-servicio">Selecciona el servicio</div>
+                                        <div *ngFor="let service of services" (click)="openDialog(service)">
+                                            <div data-toggle="collapse">
+                                                {{service}}
                                             </div>
                                         </div>
-                                        <div class="mr-3">
-                                            <a class=" mano texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
-                                                <span class="icon-correo-azul iconos-big"></span> <br>
-                                                <span class="text-small font-medium"> </span>
-                                            </a>
-                                            <span class="text-small font-medium">Descargar</span>
-                                        </div>
-                                        <div class="mr-3">
-                                            <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
-                                                <span class="icon-eliminar iconos-big"></span><br>
-                                                <span class="text-small font-medium"></span>
-                                            </a>
-                                            <span class="text-small font-medium">Eliminar</span>
-                                        </div>
-
-
                                     </div>
-                                </td>
-                                <td colspan="4" class="head">
-
-                                </td>
-                                <td colspan="4" class="head">
-                                    <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
-
-                                </td>
-                            </tr>
-
-                            <tr bgcolor="#f9f7f0">
-                                <th width="10"></th> 
-                                <th style="width: auto; text-align: center;">
-                                    <div class=" d-flex align-items-center justify-content-center ">
-                                        <div class="styletexttable"> Fecha<br>emisión </div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-2 bd-highlight">
+                                <a class=" mano texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
+                                    <span class="icon-correo-azul iconos-big"></span> <br>
+                                    <span class="text-small font-medium"> </span>
+                                </a>
+                                <span class="text-small font-medium">Descargar</span>
+                            </div>
+                            
+                            <div class="p-2 bd-highlight">
+                                <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
+                                    <span class="icon-eliminar iconos-big"></span><br>
+                                    <span class="text-small font-medium"></span>
+                                </a>
+                                <span class="text-small font-medium">Eliminar</span>
+                           </div>
+                           <div class="col-md-7 ml-auto" style="padding-top: 12px;">
+                            <div class="row justify-content-end">
+                                <div style="font-size: 17px">
+                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{((filtro.pageNumber-1)*50)+49}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                </div>
+                                <div>
+                                    <pagination-controls   responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)">    </pagination-controls>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                    </table>
+                </div>  
+                <div class="table-responsive">
+                    <table class="table">                            
+                        <thead>
+                            <tr bgcolor="#f9f7f0" style="font-size: 12px !important">
+                                <th scope="col"></th>
+                                <th scope="col">
+                                    <div class="d-flex align-items-center justify-content-center ">
+                                        <div class="d-inline-block text-center"> Fecha<br>emisión </div>
                                         <div class=" d-inline-block ml-1">
                                             <div class="arrow-filter-asc-gray" *ngIf="ascFeEmisiongray"  ><span class="  fa fas fa-caret-up"></span> </div>
                                             <div class="arrow-filter-asc-blue" *ngIf="ascFeEmisionblue"  ><span class="mano fa fas fa-caret-up" (click)="AscDesc('emissionDate', true)"></span> </div>  
@@ -161,9 +156,9 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th style="width: auto; text-align: center;">
+                                <th scope="col">
                                     <div class=" d-flex align-items-center justify-content-center ">
-                                        <div class="styletexttable">Fecha<br>vto. </div>
+                                        <div class="d-inline-block text-center">Fecha<br>vto. </div>
                                         <div class=" d-inline-block ml-1">
                                             <div class="arrow-filter-asc-gray" *ngIf="ascFeVctgray"  ><span class="  fa fas fa-caret-up"></span> </div>
                                             <div class="arrow-filter-asc-blue" *ngIf="ascFeVctblue"  ><span class="mano fa fas fa-caret-up" (click)="AscDesc('dueDate', true)"></span> </div>  
@@ -172,9 +167,9 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th style="width: auto">
+                                <th scope="col">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <div class="styletexttable">Código<br>de cliente </div>
+                                        <div class="d-inline-block text-center">Código<br>de cliente </div>
                                         <div class=" d-inline-block ml-1">
                                             <div class="arrow-filter-asc-gray" *ngIf="asccodgray"  ><span class="  fa fas fa-caret-up"></span> </div>
                                             <div class="arrow-filter-asc-blue" *ngIf="asccodblue"> <span   class="mano fa fas fa-caret-up" (click)="AscDesc('code', true)"></span> </div>  
@@ -183,8 +178,7 @@
                                         </div>
                                     </div>
                                 </th>
-
-                                <th style="width: auto">
+                                <th scope="col">
                                     <div class="d-flex align-items-center justify-content-center">
                                         <div class="styletexttable">Nombres </div>
                                         <div class=" d-inline-block ml-1">
@@ -195,9 +189,10 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th style="width: auto">
+
+                                <th scope="col">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <div class="styletexttable">Apellidos </div>
+                                        <div class="d-inline-block text-center">Apellidos </div>
                                         <div class="d-inline-block ml-1">
                                             <div class="arrow-filter-asc-gray" *ngIf="asclastgray" ><span class="  fa fas fa-caret-up"></span> </div>
                                             <div class="arrow-filter-asc-blue" *ngIf="asclastblue"  ><span class="mano fa fas fa-caret-up" (click)="AscDesc('lastName', true)"></span> </div>  
@@ -207,7 +202,7 @@
                                     </div>
                                 </th>
 
-                                <th style="width: auto">
+                                <th scope="col">
                                     <div class="d-flex align-items-center justify-content-center">
                                         <div class="styletexttable">Servicio </div>
                                         <div class="mano d-inline-block ml-1">
@@ -218,7 +213,8 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th style="width: auto">
+
+                                <th scope="col">
                                     <div class="d-flex align-items-center justify-content-center">
                                         <div class="styletexttable">Concepto </div>
                                         <div class="mano d-inline-block ml-1">
@@ -230,9 +226,9 @@
                                     </div>
                                 </th>
 
-                                <th style="width: auto">
+                                <th scope="col">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <div class="styletexttable">Monto </div>
+                                        <div class="d-inline-block text-center">Monto </div>
                                         <div class="mano d-inline-block ml-1">
                                             <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray" ><span class="  fa fas fa-caret-up"></span> </div>
                                             <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"  > <span class="mano fa fas fa-caret-up" (click)="AscDesc('amount', true)"></span> </div>  
@@ -241,8 +237,7 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th></th>
-
+                                <th scope="col"></th>
                             </tr>
                         </thead>
 
@@ -293,7 +288,7 @@
                                     </div>
                                 </td>
                                 <td>{{items.amount}}</td>
-                                <td width="76">
+                                <td>
                                     <div class="d-flex">
                                         <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="BotonEditar(items)">
                                             <span class="icon-editar iconos-big iconos-big"></span>
@@ -308,6 +303,14 @@
                                             <img src="assets/images/table-delete.svg" alt="Eliminar">
                                         </div>
                                     </div>
+                                    <!--
+                                        <mat-progress-spinner *ngIf="spinnerTrue"
+                                                class="example-margin"
+                                                [color]="color"
+                                                [mode]="mode"
+                                                [value]="value">
+                                            </mat-progress-spinner>
+                                    -->
                                 </td>
                             </tr>
                         </tbody>

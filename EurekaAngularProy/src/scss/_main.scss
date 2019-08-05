@@ -2,6 +2,7 @@
 /* Change all elements to use border-box */
 html {
     box-sizing: border-box;
+    background-color: #f4f5f7 !important;
    /* background-color: #0b0044 !important;*/
 }
 *, *:before, *:after {
