@@ -83,7 +83,7 @@ export class TransactionService {
       return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
     }
 
-    editDeuda(id: number, debts:  ): Observable<any>{
+    editDeuda(id: number, debts: DebtEdit): Observable<any>{
       console.log('begin login')
       // cambia link
       const url = `${this.URI_API}/debt/${id}`;
