@@ -423,11 +423,11 @@ if(columnName === 'amount' ) {
   }
 }
     console.table(this.filtro );
-    this.filtro.pageNumber = this.numeroPagina;
     this.filtro.asc = asc;
     this.filtro.columnName = columnName;
     this.filtro.dateFrom 
     this.filtro.dateTo
+    console.table(this.filtro);
     this.consultaDeuda();
 
   }
