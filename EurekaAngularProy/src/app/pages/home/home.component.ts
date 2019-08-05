@@ -780,6 +780,7 @@ if(columnName === 'amount' ) {
   SeleccionarTodos() {
     console.log('selecctionarTodos');
     this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
+    
   }
 
 

@@ -129,10 +129,10 @@
                            </div>
                            <div class="col-md-7 ml-auto" style="padding-top: 12px;">
                             <div class="row justify-content-end">
-                                <div style="font-size: 17px">
+                                <div *ngIf="debtsList.data.length !== 0"  style="font-size: 17px">
                                     <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{((filtro.pageNumber-1)*50)+49}}</span> de <span> {{debtsList.count }}</span> de elementos
-                                </div>
-                                <div>
+                                </div> 
+                                <div *ngIf="debtsList.data.length !== 0">
                                     <pagination-controls   responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)">    </pagination-controls>
                                 </div>
                               </div>
