@@ -31,19 +31,6 @@ export class HomeService {
     {idDate: 'expirationDate', descripcion: 'Fecha de vencimiento'}
   ];
 
-  /*
-  private type: string[]=[
-    'Pensión', 'Matricula'
-  ]
-  
-  private wayPay: string []=[
-    'Estado de Pago', 'Pendiente de Pago', 'Pagado'
-  ]
-
-  private date: string []=[
-    'Por fecha', 'Fecha de emisión',  'Fecha de emisión', 'Fecha de pago'
-  ];
-*/
 
 public SERVICES: string[]=[
    'Matricula', 'Pension'

@@ -27,6 +27,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": ["node_modules/core-js/client/shim.min.js",
+              "node_modules/web-animations-js/web-animations.min.js"
             ]
           },
           "configurations": {
@@ -87,7 +88,8 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": ["node_modules/core-js/client/shim.min.js",
+              "node_modules/web-animations-js/web-animations.min.js"],
             "assets": [
               "src/favicon.ico",
               "src/assets"
