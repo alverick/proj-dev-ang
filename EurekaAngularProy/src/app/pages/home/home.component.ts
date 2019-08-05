@@ -679,10 +679,19 @@ if(columnName === 'amount' ) {
 
         this.transactionService.editDeuda(item.id, debts).subscribe(
           debtsUpdate=>{
-            Swal.fire(
-              'Editado!',
-              'Su registro a sido editado',
-              'success')  
+            Swal.fire({
+              type: 'success',
+              titleText: 'Editado!',
+              text:'Su registro a sido editado',
+              onAfterClose: () => {
+                console.log('onAfterClose');
+                //this.consultaDeuda();
+                item.emissionDate = item.newEmissionDate;
+                item.dueDate = item.newDueDate;
+                item.concept = item.newConcept;
+                item.edit = false;
+              }
+            });  
           }
         )
       
