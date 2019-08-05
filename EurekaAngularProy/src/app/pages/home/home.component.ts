@@ -1,4 +1,4 @@
-import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, Input } from '@angular/core';
 import { User } from "src/app/shared/models/user.model";
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -21,6 +21,7 @@ import * as _moment from 'moment';  // dejalo si sale error
 import { default as _rollupMoment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -89,6 +90,7 @@ export class HomeComponent implements OnInit {
   InputList: Boolean;
 
   debtsList: DebtsPagedList;
+  private debtsUpdate: DebtEdit = new DebtEdit();
 
   typeList: Type[];
   waypayList: WayPay[];
@@ -105,6 +107,8 @@ export class HomeComponent implements OnInit {
 
   serviceSelected: String;
   services: String[];
+
+  spinner : boolean= false;
 
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = false;
@@ -207,15 +211,31 @@ export class HomeComponent implements OnInit {
     if (localStorage.getItem('tk') === null  ) {
       this.router.navigate(['/login']);
     } else {
-      this.consultaDeuda();
+      this.getDeuda();
     }
+  }
+
+  getDeuda(){
+    this.spinner2.show();
+    this.debtsList = {
+      count: 0,
+      data: []
+    };
+    this.transactionService.getDeuda(this.filtro)
+      .subscribe(debts => {
+        console.log(debts);
+        this.debtsList = debts;     
+    });
+    this.spinner2.hide();
+
+
   }
   ceroRegistros(): boolean {
       if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
         this.router.navigate(['/login']);
         return false;
       } else {
-        if (this.debtsList.count === 0) {
+        if (this.transactionService.debtItems.count === 0) {
           return true;
       } else {
           return false;
@@ -229,11 +249,9 @@ change(dateEvent) {
   this.date2.emit(dateEvent.value);
 }
 
-
   consultaDeuda() {
   // tslint:disable-next-line:prefer-const
   let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-
       if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
     ///       dateFrom es inputDate1              | dateTo  es inputDate2
         console.log('entro 1');
@@ -246,8 +264,8 @@ change(dateEvent) {
             return;
           } else {
                 console.log(this.filtro);
-               /* this.spinner2.show();*/
-
+                /*this.spinner2.show()*/
+                this.spinner=true;
                 this.debtsList = {
                   count: 0,
                   data: []
@@ -256,7 +274,7 @@ change(dateEvent) {
                   .subscribe(debts => {
                     console.log(debts);
                     this.debtsList = debts;
-                    this.spinner2.hide();
+                    /*this.spinner2.hide();*/
 
                 });
           }
@@ -286,7 +304,7 @@ change(dateEvent) {
                         .subscribe(debts => {
                           console.log(debts);
                           this.debtsList = debts;
-                          this.spinner2.hide();
+                         /* this.spinner2.hide();*/
 
                       });
                 }
@@ -337,14 +355,9 @@ change(dateEvent) {
                 .subscribe(debts => {
                   console.log(debts);
                   this.debtsList = debts;
-                  this.spinner2.hide();
-
+                 /* this.spinner2.hide();*/
               });
-
           }
-
-
-
 }
 
  
@@ -401,22 +414,8 @@ change(dateEvent) {
     item.newConcept = item.concept;
   }
 
-  BotonActualizar(item: Debts) { 
+  BotonActualizar(item: Debts): void { 
 
- /*   if(item.newEmissionDate.getFullYear() < 2000 ){
-      Swal.fire({
-        type: 'error', 
-        text: 'Ingrese una fecha valida para la fecha de emision',
-      });
-      return;
-    }
-    if(item.newDueDate.getFullYear() > 2050 ){
-      Swal.fire({
-        type: 'error', 
-        text: 'Ingrese una fecha valida para la fecha de emision',
-      });
-      return;
-    }  */
     if(item.newEmissionDate == null){
       Swal.fire({
         type: 'error', 
@@ -456,16 +455,25 @@ change(dateEvent) {
       confirmButtonText: 'Si, Editarlo!'
     }).then((result) => {
       if (result.value) {
-
+        
         item.edit = false;
-        this.spinner2.show();
-        this.transactionService.editDeuda(item.id, {
+        const debts = {
           emissionDate: item.newEmissionDate,
           dueDate: item.newDueDate,
           concept: item.newConcept
-        }).subscribe(() => this.consultaDeuda());
-        this.spinner2.hide();
+        }
 
+        this.transactionService.editDeuda(item.id, debts).subscribe(
+          debtsUpdate=>{
+            Swal.fire(
+              'Editado!',
+              'Su registro a sido editado',
+              'success')  
+          }
+        )
+      
+        /* this.transactionService.editDeuda(item.id, debts)
+        .subscribe(() => this.consultaDeuda());*/
        /* Swal.fire(
           'Editado!',
           'Su registro a sido editado',
@@ -489,7 +497,7 @@ change(dateEvent) {
 
   EliminarSeleccionados() {
     /*this.spinner2.show();*/
-
+  
     const itemsParaEliminar = [];
     this.debtsList.data.forEach(c => {
       if (c.selected) {
@@ -504,17 +512,17 @@ change(dateEvent) {
 
   Eliminar(item: Debts) {
      
-Swal.fire({
-  text: "¿Esta Seguro de Eliminar el Registro?",
-  type: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Si, Borralo'
-}).then((result) => {
-  if (result.value) {
-   /* this.spinner2.show();*/
-    this.transactionService.deleteDeuda(item.id)
+  Swal.fire({
+    text: "¿Esta Seguro de Eliminar el Registro?",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, Borralo'
+  }).then((result) => {
+    if (result.value) {
+    /* this.spinner2.show();*/
+      this.transactionService.deleteDeuda(item.id)
       .subscribe(() => this.consultaDeuda());
     /*this.spinner2.hide();*/
     
@@ -525,15 +533,7 @@ Swal.fire({
     )
   }
 })
-/*
-    if (confirm('¿Esta Seguro de Eliminar el Registro?')) {
-      this.spinner2.show();
-      this.transactionService.deleteDeuda(item.id)
-        .subscribe(() => this.consultaDeuda());
-        this.spinner2.hide();
-    }
-    /*/
-  }
+}
 
   SeleccionarTodos() {
     console.log('selecctionarTodos');
@@ -555,7 +555,7 @@ MostrarListaSelect(){
     dialogRef.afterClosed().subscribe(result => {
      
     });
-    this.consultaDeuda();
+    //this.consultaDeuda();
   }
 
 
@@ -609,7 +609,7 @@ export class DialogDataExampleDialog implements OnInit {
     //this.SalirsnackBar();
     
   }
-  git 
+
   onChangeFile(event) {
     this.files = event.target.files;
   }
@@ -637,6 +637,7 @@ export class DialogDataExampleDialog implements OnInit {
     this.dialogRef.close();
     }else{
       this.xlsValid = true;
+      
     }
   }
 
@@ -669,8 +670,13 @@ export class DialogDataExampleDialog implements OnInit {
 export class UploadProgressComponent  implements OnInit  {
   state = false;
   contador = 0; 
+
+
+  debtsList: DebtsPagedList;
+
   constructor( public dialog: MatDialog, public excelService: ExcelService,
-                private snackRef: MatSnackBarRef<UploadProgressComponent>/*, public home: HomeComponent */) { }
+                private snackRef: MatSnackBarRef<UploadProgressComponent>,
+                private transactionService: TransactionService) { }
 
   ngOnInit(){
     var th = this;
@@ -692,6 +698,8 @@ export class UploadProgressComponent  implements OnInit  {
 
       console.log(value.status);
       if (value.status === "REJECTED") {
+        this.snackRef.dismiss();
+
         this.excelService.errores = value.errors;
         console.table(value.errors);
         console.log("ABRE DIALOG")
@@ -701,7 +709,6 @@ export class UploadProgressComponent  implements OnInit  {
             this.excelService.errores = [];
             this.excelService.idProcess = 0;
           });
-        this.snackRef.dismiss();
 
       } else if (value.status === "COMPLETED"){
         this.snackRef.dismiss();
@@ -711,9 +718,16 @@ export class UploadProgressComponent  implements OnInit  {
           type: 'success',
           text: `Se cargaron ${value.rowsUploaded} registros`
         });
+        console.log("GET DEUDA HOME")
+        this.transactionService.getDeuda()
+        .subscribe(debts => {
+          console.log(debts);
+      });
+        
       } else  {
         var th = this;
         setTimeout(() => {
+          this.snackRef.dismiss();
           th.excelService.StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
         }, 500);
@@ -721,6 +735,7 @@ export class UploadProgressComponent  implements OnInit  {
       }
     };
     setTimeout(() => {
+      this.snackRef.dismiss();
       this.excelService.StatusExcel(this.excelService.idProcess)
       .subscribe(recursiveFunc);
     }, 800);
@@ -730,7 +745,7 @@ export class UploadProgressComponent  implements OnInit  {
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     this.snackRef.dismiss();
-  }
+  } 
 }
 
 

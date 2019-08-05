@@ -54,10 +54,10 @@ export class ExcelService {
     console.log(files);
     const url = `${this.URI_API}/debt/load/${service}?_=` + new Date().getTime();
     const opts={
-      headers: { "Content-Type": "application/x-www-form-urlencoded",
+      headers: {
         "Authorization" : "bearer " + this.storage.getCurrentToken(),
-        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
-        "Ocp-Apim-Trace": `true`
+        "Ocp-Apim-Subscription-Key": environment.END_POINT,
+        "Ocp-Apim-Trace": "true"
       }
     }
     const formData = new FormData();
@@ -71,16 +71,11 @@ export class ExcelService {
     console.log('begin status excel')
     const url = `${this.URI_API}/debt/process/${id}/status?_=` + new Date().getTime();
     const opts={
-      headers: { "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization" : "bearer " + this.storage.getCurrentToken(),
-        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
-        "Ocp-Apim-Trace": `true`},
+      headers: {"Authorization" : "bearer " + this.storage.getCurrentToken(),
+      "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
+      "Ocp-Apim-Trace": "true"}
     }
     return this.http.get<any>(url, opts).pipe(catchError(error => throwError(error)));
   
   }
-
- 
-
-
 }

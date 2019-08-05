@@ -16,8 +16,11 @@ import { DebstFilter } from "../models/debts-filter.model";
 
 export class TransactionService {
     private URI_API: string = environment.END_POINT
+    private lastFilter: DebstFilter = null;
 
     constructor(public http: HttpClient, private storage: StorageService)  { }
+
+    public debtItems: DebtsPagedList = { count:0, data: [] };
 
     getDateFormat(date: Date): string {
       if (date) {
@@ -32,7 +35,15 @@ export class TransactionService {
       return '';
     }
 
-    getDeuda(filtro: DebstFilter): Observable<DebtsPagedList>{
+    getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
+      console.log(filtro);
+      if (filtro === null) {
+        filtro = this.lastFilter;
+      }
+      else {
+        this.lastFilter = filtro;
+      }
+        console.log(filtro);
         const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${filtro.dateFrom}&DateTo=${filtro.dateTo}`;
         console.log(url);
         const opts = {
@@ -45,6 +56,7 @@ export class TransactionService {
               d.dueDate = new Date(d.dueDate);
               d.edit = false;
             });
+            this.debtItems = r;
             return r;
           }))
           .pipe(catchError(error => throwError(error)));  
@@ -71,7 +83,7 @@ export class TransactionService {
       return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
     }
 
-    editDeuda(id: number, debts: DebtEdit): Observable<any>{
+    editDeuda(id: number, debts:  ): Observable<any>{
       console.log('begin login')
       // cambia link
       const url = `${this.URI_API}/debt/${id}`;
