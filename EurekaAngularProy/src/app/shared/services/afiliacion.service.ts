@@ -18,6 +18,7 @@ export class AfiliacionService {
         rubro: 0,
         codDeudor: 1,
         tipoDato: '01',
+        tipoPago: 1,
         nroCuenta: '',
         moneda: 'PEN',
         usaAgente: false,
@@ -72,6 +73,13 @@ export class AfiliacionService {
         ]);
     }
 
+    public GetTipoPago(): Observable<any[]> {
+        return of<any[]>([
+            { id: 1, name: "Completa" },
+            { id: 2, name: "Parcial" }
+        ]);
+    }
+
     public GetMoneda(): Observable<MonedaModel[]> {
         return of<MonedaModel[]>([
             { code: 'PEN', name: 'Soles', symbol: 'S/' },
@@ -81,8 +89,8 @@ export class AfiliacionService {
 
     public GetPeriodoMora(): Observable<any[]> {
         return of<any[]>([
-            { code: 1, name: 'Diario' },
-            { code: 2, name: 'FIjo' }
+            { id: 1, name: 'Diario' },
+            { id: 2, name: 'Fijo' }
         ]);
     }
 }

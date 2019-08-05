@@ -3,6 +3,7 @@ export interface ServiceModel {
     rubro: number;
     codDeudor: number;
     tipoDato: string;
+    tipoPago: number;
     nroCuenta: string;
     moneda: string;
     usaWebApp: boolean;
