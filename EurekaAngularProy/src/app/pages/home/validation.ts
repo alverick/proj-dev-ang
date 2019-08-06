@@ -4,7 +4,8 @@ import { MatDialogRef } from "@angular/material";
 
 @Component({
     selector: 'validation',
-    templateUrl: 'validation.html',
+    templateUrl: 'validation.html', 
+    
   })
   
   export class ValidationComponent  {
