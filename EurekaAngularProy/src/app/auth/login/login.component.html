@@ -29,12 +29,12 @@
                                         <input #inputUsua matInput type="text" (focus)="focusFunctionRuc()" minlength="11" maxlength="11" inputmode="numeric" pattern="[0-9]*" digitOnly formControlName="ruc" appBlockCopyPaste [ngClass]="{ 'is-invalid': submitted && f.ruc.errors }">
                                             <mat-error  *ngFor="let validation of account_validation_messages.ruc">
                                                 <div *ngIf="inputUsuaValid">
-                                                <mat-error class="error-message" *ngIf="loginForm.get('ruc').hasError(validation.type) ">
+                                                <mat-error class="color-lleyow error-message" *ngIf="loginForm.get('ruc').hasError(validation.type) ">
                                                     {{validation.message}}
                                                 </mat-error>
                                                 </div>
                                                 <div *ngIf="validarCantRuc">
-                                                    <mat-error class="error-message">
+                                                    <mat-error  class="color-lleyow error-message">
                                                         Ingrese un RUC válido de 11 dígitos
                                                     </mat-error>
                                                 </div>
@@ -62,7 +62,7 @@
                                         <input #inputPass matInput type="password" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw"  [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste> 
                                             <mat-error *ngFor="let validation of account_validation_messages.psw">
                                                 <div *ngIf="inputPassValid">
-                                                <mat-error class="error-message" *ngIf="loginForm.get('psw').hasError(validation.type) ">
+                                                <mat-error class="color-lleyow error-message" *ngIf="loginForm.get('psw').hasError(validation.type) ">
                                                     {{validation.message}}
                                                 </mat-error>
                                                 </div>
@@ -71,7 +71,7 @@
                                 </div>
                             </div>
 
-                            <div style="color:#f44336 !important; font-size: 8" *ngIf="codigo2" class="error-message">
+                            <div style="color:#fc9a00 !important; font-size: 8" *ngIf="codigo2" class="error-message">
                                 Usuario o password Incorrecto
                             </div>
                             <br>
