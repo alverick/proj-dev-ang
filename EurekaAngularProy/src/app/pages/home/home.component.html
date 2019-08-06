@@ -127,10 +127,19 @@
                                 </a>
                                 <span class="text-small font-medium">Eliminar</span>
                            </div>
-                           <div class="col-md-7 ml-auto" style="padding-top: 12px;">
+                           <div class="col-md-9 ml-auto" style="padding-top: 12px;">
                             <div class="row justify-content-end">
-                                <div *ngIf="debtsList.data.length !== 0"  style="font-size: 17px">
-                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{((filtro.pageNumber-1)*50)+49}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                <div   style="font-size: 17px">
+                                    <div style="font-size: 17px" *ngIf="pagination1">
+                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{ debtsList.data.length}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                    </div>
+                                    <div style="font-size: 17px" *ngIf="pagination2">
+                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{filtro.pageNumber*50}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                    </div>
+                                    <div style="font-size: 17px" *ngIf="pagination3">
+                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{debtsList.count}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                    </div>
+                                   
                                 </div> 
                                 <div *ngIf="debtsList.data.length !== 0">
                                     <pagination-controls   responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)">    </pagination-controls>

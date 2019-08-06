@@ -152,6 +152,9 @@ export class HomeComponent implements OnInit {
 
   spinner : boolean= false;
 
+  pagination1: boolean= false;
+  pagination2: boolean= false;
+  pagination3: boolean= false;
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = false;
 
@@ -250,23 +253,40 @@ export class HomeComponent implements OnInit {
   }
 
   validandoListado() {
+    
     if (localStorage.getItem('tk') === null  ) {
       this.router.navigate(['/login']);
     } else {
-      this.getDeuda();
+      this.consultaDeuda();
     }
   }
 
   getDeuda(){
-    this.spinner2.show();
+    
     this.debtsList = {
       count: 0,
       data: []
     };
+    this.spinner2.show();
     this.transactionService.getDeuda(this.filtro)
       .subscribe(debts => {
-        console.log(debts);
-        this.debtsList = debts;     
+        this.debtsList = debts;   
+                console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+                if(this.filtro.pageNumber <= 1){
+                  this.pagination1= true;
+                  this.pagination2= false;
+                  this.pagination3= false;
+                }
+                if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                    this.pagination1=false;
+                    this.pagination2= true;
+                    this.pagination3= false;
+                }
+                if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                    this.pagination1=false;
+                    this.pagination2= false;
+                    this.pagination3=true;          
+                }
     });
     this.spinner2.hide();
 
@@ -454,6 +474,8 @@ if(columnName === 'amount' ) {
 
   consultaDeuda() {
   // tslint:disable-next-line:prefer-const
+
+
   let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
       if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
     ///       dateFrom es inputDate1              | dateTo  es inputDate2
@@ -477,6 +499,22 @@ if(columnName === 'amount' ) {
                     console.log(debts);
                     this.debtsList = debts;
                     this.spinner2.hide();
+                    console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+                    if(this.filtro.pageNumber <= 1){
+                      this.pagination1= true;
+                      this.pagination2= false;
+                      this.pagination3= false;
+                    }
+                    if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                        this.pagination1=false;
+                        this.pagination2= true;
+                        this.pagination3= false;
+                    }
+                    if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                        this.pagination1=false;
+                        this.pagination2= false;
+                        this.pagination3=true;          
+                    }
 
                 });
           }
@@ -496,7 +534,7 @@ if(columnName === 'amount' ) {
                   return;
                 } else {
                       console.log(this.filtro);
-                      /*this.spinner2.show();*/
+                      this.spinner2.show();
 
                       this.debtsList = {
                         count: 0,
@@ -506,8 +544,23 @@ if(columnName === 'amount' ) {
                         .subscribe(debts => {
                           console.log(debts);
                           this.debtsList = debts;
-                         /* this.spinner2.hide();*/
-
+                         this.spinner2.hide();
+                         console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+                         if(this.filtro.pageNumber <= 1){
+                           this.pagination1= true;
+                           this.pagination2= false;
+                           this.pagination3= false;
+                         }
+                         if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                             this.pagination1=false;
+                             this.pagination2= true;
+                             this.pagination3= false;
+                         }
+                         if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                             this.pagination1=false;
+                             this.pagination2= false;
+                             this.pagination3=true;          
+                         }
                       });
                 }
         }
@@ -547,7 +600,7 @@ if(columnName === 'amount' ) {
             return;
           } else {
               console.log(this.filtro);
-             /* this.spinner2.show();*/
+              this.spinner2.show();
 
               this.debtsList = {
                 count: 0,
@@ -557,7 +610,23 @@ if(columnName === 'amount' ) {
                 .subscribe(debts => {
                   console.log(debts);
                   this.debtsList = debts;
-                 /* this.spinner2.hide();*/
+                  console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+                  if(this.filtro.pageNumber <= 1){
+                    this.pagination1= true;
+                    this.pagination2= false;
+                    this.pagination3= false;
+                  }
+                  if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                      this.pagination1=false;
+                      this.pagination2= true;
+                      this.pagination3= false;
+                  }
+                  if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                      this.pagination1=false;
+                      this.pagination2= false;
+                      this.pagination3=true;          
+                  }
+                 this.spinner2.hide();
               });
          }
   }
@@ -592,6 +661,8 @@ if(columnName === 'amount' ) {
 
     limpiarInput() {
        this.inputText.nativeElement.value = '';
+       this.inputText.nativeElement.value = null;
+       this.filtro.inputSearch = "";
     }
 
     limpiardate1() {
@@ -712,7 +783,7 @@ if(columnName === 'amount' ) {
   changePage(nro: number) {
     this.filtro.pageNumber = nro;
     this.numeroPagina = nro;
-    this.consultaDeuda();
+    this.getDeuda();
   }
 
   EliminarSeleccionados() {
@@ -741,11 +812,11 @@ if(columnName === 'amount' ) {
       confirmButtonText: 'Si, Eliminarlo!'
     }).then((result) => {
       if (result.value) {
-        this.spinner2.show();
+        /*this.spinner2.show();*/
 
         this.transactionService.deleteAll(itemsParaEliminar)
           .subscribe(() => this.consultaDeuda());
-          this.spinner2.hide();
+         /* this.spinner2.hide();*/
           }
         });
   }
@@ -761,10 +832,10 @@ if(columnName === 'amount' ) {
     confirmButtonText: 'Si, Borralo'
   }).then((result) => {
     if (result.value) {
-    /* this.spinner2.show();*/
+   /* this.spinner2.show();*/
       this.transactionService.deleteDeuda(item.id)
       .subscribe(() => this.consultaDeuda());
-    /*this.spinner2.hide();*/
+ /*   this.spinner2.hide();*/
     
     Swal.fire(
       'Eliminado!',
