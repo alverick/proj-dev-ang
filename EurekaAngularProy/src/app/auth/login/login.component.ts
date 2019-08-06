@@ -189,9 +189,18 @@ export class LoginComponent implements OnInit {
             this.codigo2=true;
           }else if(this.intentos< 4 && this.codRespuesta == 3){
             this.codigo2= false;
-          
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
-            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true}); 
+            Swal.fire({
+              type:"error",
+              title: 'Contraseña Incorrecta',
+              text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' ,
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:
+              'Cancelar',
+            })   
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;            
@@ -203,7 +212,18 @@ export class LoginComponent implements OnInit {
           }else if(this.intentos == 4 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
-            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true});this.isCaptchaValidate = false;
+            Swal.fire({
+              type:"error",
+              title: 'Contraseña Incorrecta',
+              text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' ,
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:
+              'Cancelar',
+            })   
+            this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isTrue = true;              
             
@@ -215,7 +235,17 @@ export class LoginComponent implements OnInit {
           }else if(this.intentos == 5 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
-            Swal.fire({ type:"error", text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes', showConfirmButton: false, showCloseButton: true});        
+            Swal.fire({
+              type:"error",
+              title: 'Contraseña Incorrecta',
+              text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' ,
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:
+              'Cancelar',
+            })   
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
             this.isTrue = true; 
@@ -224,7 +254,17 @@ export class LoginComponent implements OnInit {
           else if(this.intentos >= 6){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Sin codigo");
-            Swal.fire({ type:"error", text: 'Contraseña Incorrecta” y texto: “Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe ', showConfirmButton: false, showCloseButton: true});
+            Swal.fire({
+              type:"error",
+              title: 'Contraseña Incorrecta',
+              text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe ' ,
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:
+              'Cancelar',
+            })   
             this.intento6= true;
             this.isTrue = false;             
           }         
