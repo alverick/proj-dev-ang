@@ -1,4 +1,4 @@
-import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -150,13 +150,10 @@ export class HomeComponent implements OnInit {
 
   serviceSelected: String;
   services: String[];
-  spinner : boolean= false;
 
   pagination1: boolean= false;
   pagination2: boolean= false;
   pagination3: boolean= false;
-  
-
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = false;
 
@@ -182,7 +179,7 @@ export class HomeComponent implements OnInit {
     private excelService: ExcelService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private spinner2: NgxSpinnerService,
+    private spinner: NgxSpinnerService,
     private el: ElementRef, 
     ) {
 
@@ -247,53 +244,62 @@ export class HomeComponent implements OnInit {
       value => {
         this.DateList = value;
     });
-
-   this.validandoListado();
+    this.spinner.show("mySpinner", {
+      type: "line-scale-party",
+      size: "large",
+      bdColor: "rgba(100,149,237, .8)",
+      color: "white"
+    });
+   this.consultaDeuda();
    this.cargaExcel = false;
    
   }
-
+/*
   validandoListado() {
+    
     if (localStorage.getItem('tk') === null  ) {
       this.router.navigate(['/login']);
     } else {
       this.getDeuda();
     }
-  }
+  }*/
 
-  getDeuda(){
+  getDeudas(){
+
+    if (localStorage.getItem('tk') === null  ) {
+      this.router.navigate(['/login']);
+
+  }else{
+    this.spinner.show();
+    console.log("SPINNER "+ this.spinner)
     this.debtsList = {
       count: 0,
       data: []
     };
     this.transactionService.getDeuda(this.filtro)
       .subscribe(debts => {
-        this.spinner2.show();
-        console.log(debts);
         this.debtsList = debts;   
-        console.log("NUMERO PAGINA " + this.filtro.pageNumber)
-        if(this.filtro.pageNumber <= 1){
-          this.pagination1= true;
-          this.pagination2= false;
-          this.pagination3= false;
-        }
-        if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
-            this.pagination1=false;
-            this.pagination2= true;
-            this.pagination3= false;
-        }
-        if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
-            this.pagination1=false;
-            this.pagination2= false;
-            this.pagination3=true;          
-        }
-    },
-    error =>{
-      if(error.status ===500){
-        Swal.fire({ type: 'error', text: 'Error del Servidor comuniquese con el administrador'})
-      }
+                console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+                if(this.filtro.pageNumber <= 1){
+                  this.pagination1= true;
+                  this.pagination2= false;
+                  this.pagination3= false;
+                }
+                if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                    this.pagination1=false;
+                    this.pagination2= true;
+                    this.pagination3= false;
+                }
+                if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                    this.pagination1=false;
+                    this.pagination2= false;
+                    this.pagination3=true;          
+                }
     });
-    this.spinner2.hide();
+    this.spinner.hide();
+    
+  }
+
   }
   
   ceroRegistros(): boolean {
@@ -476,8 +482,15 @@ if(columnName === 'amount' ) {
 
   }
 
+  sendFiltro() {
+    this.filtro.pageNumber = 1;
+    this.consultaDeuda();
+  }
+
   consultaDeuda() {
   // tslint:disable-next-line:prefer-const
+
+
   let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
       if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
     ///       dateFrom es inputDate1              | dateTo  es inputDate2
@@ -491,7 +504,7 @@ if(columnName === 'amount' ) {
             return;
           } else {
                 console.table(this.filtro);
-                this.spinner2.show();
+                this.spinner.show();
                 this.debtsList = {
                   count: 0,
                   data: []
@@ -499,8 +512,25 @@ if(columnName === 'amount' ) {
                 this.transactionService.getDeuda(this.filtro)
                   .subscribe(debts => {
                     console.log(debts);
+                    this.selectedAll = false;
                     this.debtsList = debts;
-                    this.spinner2.hide();
+                   this.spinner.hide();
+                    console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+                    if(this.filtro.pageNumber <= 1){
+                      this.pagination1= true;
+                      this.pagination2= false;
+                      this.pagination3= false;
+                    }
+                    if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                        this.pagination1=false;
+                        this.pagination2= true;
+                        this.pagination3= false;
+                    }
+                    if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                        this.pagination1=false;
+                        this.pagination2= false;
+                        this.pagination3=true;          
+                    }
 
                 });
           }
@@ -520,7 +550,7 @@ if(columnName === 'amount' ) {
                   return;
                 } else {
                       console.log(this.filtro);
-                      this.spinner2.show();
+                      this.spinner.show();
 
                       this.debtsList = {
                         count: 0,
@@ -530,8 +560,23 @@ if(columnName === 'amount' ) {
                         .subscribe(debts => {
                           console.log(debts);
                           this.debtsList = debts;
-                          this.spinner2.hide();
-
+                       this.spinner.hide();
+                         console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+                         if(this.filtro.pageNumber <= 1){
+                           this.pagination1= true;
+                           this.pagination2= false;
+                           this.pagination3= false;
+                         }
+                         if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                             this.pagination1=false;
+                             this.pagination2= true;
+                             this.pagination3= false;
+                         }
+                         if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                             this.pagination1=false;
+                             this.pagination2= false;
+                             this.pagination3=true;          
+                         }
                       });
                 }
         }
@@ -563,7 +608,16 @@ if(columnName === 'amount' ) {
               text: 'ingrese correctamente la fecha hasta',
             });
             return;
-          } else if (this.filtro.dateFrom > this.filtro.dateTo ) {
+          }
+          else if (this.filtro.dateTo.toString() === this.filtro.dateFrom.toString()   ) {
+            Swal.fire({
+              type: 'error',
+              text: 'La fecha "desde" no puede ser igual a la fecha "hasta"',
+            });
+            console.log('segunda vuelta');
+            return;
+          }
+           else if (this.filtro.dateFrom > this.filtro.dateTo ) {
             Swal.fire({
               type: 'error',
               text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
@@ -571,7 +625,7 @@ if(columnName === 'amount' ) {
             return;
           } else {
               console.log(this.filtro);
-              this.spinner2.show();
+            this.spinner.show();
 
               this.debtsList = {
                 count: 0,
@@ -581,7 +635,23 @@ if(columnName === 'amount' ) {
                 .subscribe(debts => {
                   console.log(debts);
                   this.debtsList = debts;
-                  this.spinner2.hide();
+                  console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+                  if(this.filtro.pageNumber <= 1){
+                    this.pagination1= true;
+                    this.pagination2= false;
+                    this.pagination3= false;
+                  }
+                  if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                      this.pagination1=false;
+                      this.pagination2= true;
+                      this.pagination3= false;
+                  }
+                  if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                      this.pagination1=false;
+                      this.pagination2= false;
+                      this.pagination3=true;          
+                  }
+                this.spinner.hide();
               });
          }
   }
@@ -616,6 +686,8 @@ if(columnName === 'amount' ) {
 
     limpiarInput() {
        this.inputText.nativeElement.value = '';
+       this.inputText.nativeElement.value = null;
+       this.filtro.inputSearch = "";
     }
 
     limpiardate1() {
@@ -720,11 +792,11 @@ if(columnName === 'amount' ) {
   }
 
   changePage(nro: number) {
+    this.selectedAll= false;
     this.filtro.pageNumber = nro;
     this.numeroPagina = nro;
-    this.getDeuda();
+    this.getDeudas();
   }
-
   EliminarSeleccionados() {
     const itemsParaEliminar = [];
     this.debtsList.data.forEach(c => {
@@ -751,14 +823,16 @@ if(columnName === 'amount' ) {
       confirmButtonText: 'Si, Eliminarlo!'
     }).then((result) => {
       if (result.value) {
-        this.spinner2.show();
-
+        /*this.spinner2.show();*/
+        
         this.transactionService.deleteAll(itemsParaEliminar)
           .subscribe(() => this.consultaDeuda());
-          this.spinner2.hide();
+         /* this.spinner2.hide();*/
           }
         });
   }
+
+
 
   Eliminar(item: Debts) {
      
@@ -771,10 +845,10 @@ if(columnName === 'amount' ) {
     confirmButtonText: 'Si, Borralo'
   }).then((result) => {
     if (result.value) {
-    /* this.spinner2.show();*/
+   /* this.spinner2.show();*/
       this.transactionService.deleteDeuda(item.id)
       .subscribe(() => this.consultaDeuda());
-    /*this.spinner2.hide();*/
+ /*   this.spinner2.hide();*/
     
     Swal.fire(
       'Eliminado!',
@@ -915,12 +989,10 @@ export class UploadProgressComponent  implements OnInit  {
   state = false;
   contador = 0; 
 
-
-  debtsList: DebtsPagedList;
-
   constructor( public dialog: MatDialog, public excelService: ExcelService,
                 private snackRef: MatSnackBarRef<UploadProgressComponent>,
-                private transactionService: TransactionService) { }
+                private transactionService: TransactionService,
+                private detectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     var th = this;
@@ -934,6 +1006,9 @@ export class UploadProgressComponent  implements OnInit  {
     setTimeout(fnc, 500);
   }
  
+  //  const dialogRef =  this.dialog.open(ValidationComponent);
+
+ 
   private verifyStatus() {
 
     let recursiveFunc = (value) => {
@@ -946,12 +1021,13 @@ export class UploadProgressComponent  implements OnInit  {
         console.table(value.errors);
         console.log('ABRE DIALOG')
         const dialogRef =  this.dialog.open(ValidationComponent);
+       // dialogRef.close(ValidationComponent);
         dialogRef.afterClosed()
           .subscribe(() => {
             this.excelService.errores = [];
             this.excelService.idProcess = 0;
           });
-
+        
       } else if (value.status === 'COMPLETED') {
         this.snackRef.dismiss();
         this.excelService.errores = [];
@@ -963,13 +1039,13 @@ export class UploadProgressComponent  implements OnInit  {
         console.log("GET DEUDA HOME")
         this.transactionService.getDeuda()
         .subscribe(debts => {
-          console.log(debts);
-      });
-        
+          console.log(this.transactionService.debtItems);
+          //this.detectorRef.detectChanges();
+        });    
+    
       } else  {
         var th = this;
         setTimeout(() => {
-          this.snackRef.dismiss();
           th.excelService.StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
         }, 500);
@@ -977,12 +1053,15 @@ export class UploadProgressComponent  implements OnInit  {
       }
     };
     setTimeout(() => {
-      this.snackRef.dismiss();
       this.excelService.StatusExcel(this.excelService.idProcess)
       .subscribe(recursiveFunc);
     }, 800);
 
   }
+  
+ 
+  
+  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     this.snackRef.dismiss();
   } 
@@ -1010,6 +1089,13 @@ export class UploadProgressComponent  implements OnInit  {
 export class ValidationComponent  {
 
   constructor(public excelService: ExcelService,
+   
+    public dialog: MatDialogRef<ValidationComponent>,
+
     ) { }
+    ocultar: boolean = true;
+  hideErros(){
+    return this.ocultar = false;
+  }
 
 }*/

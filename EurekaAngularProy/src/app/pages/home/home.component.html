@@ -76,7 +76,7 @@
                                 </div>
 
                                 <div class="texto-azulbase font-medium">
-                                    <button class="focus-elements btn-eureca btn-small btn-eureca-amarillo" style="color: white; font-weight: 500" (click)="consultaDeuda()">Buscar
+                                    <button class="focus-elements btn-eureca btn-small btn-eureca-amarillo" style="color: white; font-weight: 500" (click)="sendFiltro()">Buscar
                                     </button>
                                 </div>
                             </div>
@@ -127,42 +127,25 @@
                                 </a>
                                 <span class="text-small font-medium">Eliminar</span>
                            </div>
-                           
-                           <!-- M O B I L E-->
-                           <!--                           <div class="p-2 bd-highlight mobile">
-                                <div style="font-size: 17px" *ngIf="pagination1">
-                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{ debtsList.data.length}}</span> de <span> {{debtsList.count }}</span> de elementos
-                                </div>
-                                <div style="font-size: 17px" *ngIf="pagination2">
-                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{filtro.pageNumber*50}}</span> de <span> {{debtsList.count }}</span> de elementos
-                                </div>
-                                <div style="font-size: 17px" *ngIf="pagination3">
-                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{debtsList.count}}</span> de <span> {{debtsList.count }}</span> de elementos
-                                </div>
-                            
-                                <pagination-controls   responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)">    </pagination-controls>
-                            </div>
--->
-
-                           <!-- D E S K T O P / T A B L E T-->
-                           <div class="col-md-8 ml-auto info" style="padding-top: 12px;">
+                           <div class="col-md-9 ml-auto" style="padding-top: 12px;">
                             <div class="row justify-content-end">
-                                <div style="font-size: 17px" *ngIf="pagination1">
-                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{ debtsList.data.length}}</span> de <span> {{debtsList.count }}</span> de elementos
-                                </div>
-                                <div style="font-size: 17px" *ngIf="pagination2">
-                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{filtro.pageNumber*50}}</span> de <span> {{debtsList.count }}</span> de elementos
-                                </div>
-                                <div style="font-size: 17px" *ngIf="pagination3">
-                                    <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{debtsList.count}}</span> de <span> {{debtsList.count }}</span> de elementos
-                                </div>
-                                <div>
+                                <div   style="font-size: 17px">
+                                    <div style="font-size: 17px" *ngIf="pagination1">
+                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{ transactionService.debtItems.data.length}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
+                                    </div>
+                                    <div style="font-size: 17px" *ngIf="pagination2">
+                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{filtro.pageNumber*50}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
+                                    </div>
+                                    <div style="font-size: 17px" *ngIf="pagination3">
+                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{transactionService.debtItems.count}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
+                                    </div>
+                                   
+                                </div> 
+                                <div *ngIf="debtsList.data.length !== 0">
                                     <pagination-controls   responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)">    </pagination-controls>
                                 </div>
                               </div>
                             </div>
-
-                           
                             
                         </div>
                     </table>
@@ -279,7 +262,7 @@
                                 <td></td>
                             </tr>
 
-                            <tr  *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
+                            <tr  *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }">
                                 <td style="width: auto">
                                     <input id="{{ 'chk_' + items.id }}" class="styled-checkbox" type="checkbox" [(ngModel)]="items.selected">
                                     <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
@@ -288,7 +271,7 @@
                                     <span style="width: auto" *ngIf="!items.edit">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                         <mat-form-field style="width: 100px">
-                                            <input [min]="minDate" [max]="maxDate" inputmode="numeric" (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
+                                            <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" inputmode="numeric" (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
                                             <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                                             <mat-datepicker #edp></mat-datepicker>
                                         </mat-form-field>
@@ -298,7 +281,7 @@
                                     <span *ngIf="!items.edit">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                         <mat-form-field style="width: 100px">
-                                            <input [min]="minDate" [max]="maxDate" inputmode="numeric" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
+                                            <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" inputmode="numeric" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
                                             <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
                                             <mat-datepicker #ddp></mat-datepicker>
                                         </mat-form-field>
@@ -317,16 +300,16 @@
                                 <td>{{items.amount}}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="BotonEditar(items)">
+                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
                                             <span class="icon-editar iconos-big iconos-big"></span>
                                         </div> &nbsp;&nbsp;&nbsp;
-                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="Eliminar(items)">
+                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="Eliminar(items)">
                                             <span class="icon-eliminar iconos-big iconos-big"></span>
                                         </div>
-                                        <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer" (click)="BotonActualizar(items)">
+                                        <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer;  margin-right: 18px !important" (click)="BotonActualizar(items)">
                                             <img src="assets/images/table-check.svg" alt="Aceptar">
                                         </div>
-                                        <div (click)="BotonCancela(items)" *ngIf="items.edit" class="d-inline-block" style="cursor: pointer">
+                                        <div (click)="BotonCancela(items)" *ngIf="items.edit" class="d-inline-block" style="cursor: pointer; margin-right: 18px !important">
                                             <img src="assets/images/table-delete.svg" alt="Eliminar">
                                         </div>
                                     </div>

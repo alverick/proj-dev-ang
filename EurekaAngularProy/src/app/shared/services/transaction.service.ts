@@ -36,13 +36,9 @@ export class TransactionService {
     }
 
     getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
-      console.log('Filtro: ',filtro);
+     /* console.log('Filtro: ',filtro);
       console.log('Filtro.DateFrom: ',filtro.dateFrom);
-      console.log('Filtro.dateTo: ',filtro.dateTo);
-      var strDateFrom = (filtro.dateFrom === null ? '' : filtro.dateFrom.toISOString()); 
-      var strDateTo = (filtro.dateTo === null ? '' : filtro.dateTo.toISOString());
-      console.log('strDateFrom: ',strDateFrom);
-      console.log('strDateTo: ',strDateTo);
+      console.log('Filtro.dateTo: ',filtro.dateTo);*/
 
       if (filtro === null) {
         filtro = this.lastFilter;
@@ -50,7 +46,12 @@ export class TransactionService {
       else {
         this.lastFilter = filtro;
       }
-        console.log(filtro);
+      var strDateFrom = (filtro.dateFrom === null ? '' : filtro.dateFrom.toISOString()); 
+      var strDateTo = (filtro.dateTo === null ? '' : filtro.dateTo.toISOString());
+      console.log('strDateFrom: ',strDateFrom);
+      console.log('strDateTo: ',strDateTo);
+
+      console.log(filtro);
         const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
         console.log(url);
         const opts = {
@@ -70,25 +71,25 @@ export class TransactionService {
     }   
       
 
-       deleteDeuda(idDebt: number): Observable<Debts>{
-        console.log('begin login')
-        // cambia link
-        const url = `${this.URI_API}/debt/${idDebt}`;
-        console.log(url);
-        const opts = {
-          headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
-        };
-        return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
-    } 
-
-    deleteAll(ids: number[]): Observable<any> {
-      const url = `${this.URI_API}/debt/deleteAll`;
+    deleteDeuda(idDebt: number): Observable<Debts>{
+      console.log('begin login')
+      // cambia link
+      const url = `${this.URI_API}/debt/${idDebt}`;
       console.log(url);
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
       };
-      return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
-    }
+      return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
+  } 
+
+  deleteAll(ids: number[]): Observable<any> {
+    const url = `${this.URI_API}/debt/deleteAll`;
+    console.log(url);
+    const opts = {
+      headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
+    };
+    return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
+  }
 
     editDeuda(id: number, debts: DebtEdit): Observable<any>{
       console.log('begin login')

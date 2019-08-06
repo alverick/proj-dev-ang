@@ -26,8 +26,15 @@
               "src/scss/style.scss",
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
+<<<<<<< HEAD
             "scripts": ["node_modules/core-js/client/shim.min.js",
               "node_modules/web-animations-js/web-animations.min.js"
+=======
+            "scripts": [
+              "node_modules/core-js/client/shim.min.js",
+              "node_modules/web-animations-js/web-animations.min.js"
+
+>>>>>>> 870a59b84915d841fadd53752e4ae2dcb1002bc4
             ]
           },
           "configurations": {

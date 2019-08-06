@@ -232,7 +232,7 @@ export class LoginComponent implements OnInit {
       error =>{ 
         this.spinner.hide();
         if(error.status ===500){
-          Swal.fire({ type: 'error',text: 'Error del Servidor comuniquese con el administrador'}) 
+           Swal.fire({ type: 'error',text: 'Error del Servidor comuniquese con el administrador'}) 
         }
       },
       () => this.spinner.hide()
