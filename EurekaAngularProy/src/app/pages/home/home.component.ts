@@ -9,7 +9,7 @@ import { MatDialog, MatSnackBar, MatSnackBarRef, MatDialogRef} from '@angular/ma
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
@@ -22,6 +22,9 @@ import { default as _rollupMoment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
+import { ValidationComponent } from './validation';
+import { UploadProgressComponent } from './upload-progress';
+import { DialogComponent } from './dialog';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -890,7 +893,7 @@ MostrarListaSelect() {
     this.cargaExcel = false;
     console.log('sale el pop up');
     this.excelService.service = service;
-    const dialogRef = this.dialog.open(DialogDataExampleDialog);
+    const dialogRef = this.dialog.open(DialogComponent);
     dialogRef.afterClosed().subscribe(result => {
 
     });
@@ -912,14 +915,12 @@ MostrarListaSelect() {
 ///////////////// D I A L O G //////////////////////////
 ///////////////////////////////////////////////////////// */
 
-
+/*
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'dialog-data-example-dialog',
-  templateUrl: 'dialog-data-example-dialog.html',
+  templateUrl: 'dialog.html',
 })
 
-// tslint:disable-next-line:component-class-suffix
 export class DialogDataExampleDialog implements OnInit {
 
   public inputXlsForm: FormGroup;
@@ -939,14 +940,11 @@ export class DialogDataExampleDialog implements OnInit {
 
             ) { }
 
-  // tslint:disable-next-line:use-life-cycle-interface
   ngOnInit() {
     this.inputXlsForm = this.formBuilder.group({
       xls: ['', Validators.required]
     });
 
-    //this.SalirsnackBar();
-    
   }
 
   onChangeFile(event) {
@@ -962,15 +960,12 @@ export class DialogDataExampleDialog implements OnInit {
 
    openSnackBar() {
     if(this.inputXlsForm.valid) {
-    /*service*/
     this.excelService.UploadExcel(this.files, this.excelService.service)
     .subscribe(
       value=> {
         this.excelService.idProcess = value.id;
-       // console.table(value);
       }
     )
-    // 
     console.log('se habre el sncack bar ');
     this.snackBar.openFromComponent(UploadProgressComponent);
     this.dialogRef.close();
@@ -983,142 +978,9 @@ export class DialogDataExampleDialog implements OnInit {
   close(){
     this.dialogRef.close();
   }
-  
-
-  
-
 }
 
+*/
 
 
 
-
-
-
-
-
-/*///////////////////////////////////////////////////////////////////////////
-///////////////// P R O G R E S S / S N A C K B A R //////////////////////////
-////////////////////////////////////////////////////////////////////////////// */
-
-@Component({
-  selector: 'upload-progress',
-  templateUrl: 'upload-progress.html',
-})
-
-export class UploadProgressComponent  implements OnInit  {
-  state = false;
-  contador = 0; 
-
-  constructor( public dialog: MatDialog, public excelService: ExcelService,
-                private snackRef: MatSnackBarRef<UploadProgressComponent>,
-                private transactionService: TransactionService,
-                private detectorRef: ChangeDetectorRef) { }
-
-  ngOnInit() {
-    var th = this;
-    var fnc = () => {
-      if (th.excelService.idProcess > 0) {
-        th.verifyStatus();
-      } else {
-        setTimeout(fnc, 500);
-      }
-    };
-    setTimeout(fnc, 500);
-  }
- 
-  //  const dialogRef =  this.dialog.open(ValidationComponent);
-
- 
-  private verifyStatus() {
-
-    // tslint:disable-next-line:prefer-const
-    let recursiveFunc = (value) => {
-
-      console.log(value.status);
-      if (value.status === "REJECTED") {
-        this.snackRef.dismiss();
-
-        this.excelService.errores = value.errors;
-        console.table(value.errors);
-        console.log('ABRE DIALOG')
-        const dialogRef =  this.dialog.open(ValidationComponent);
-       // dialogRef.close(ValidationComponent);
-        dialogRef.afterClosed()
-          .subscribe(() => {
-            this.excelService.errores = [];
-            this.excelService.idProcess = 0;
-          });
-        
-      } else if (value.status === 'COMPLETED') {
-        this.snackRef.dismiss();
-        this.excelService.errores = [];
-        this.excelService.idProcess = 0; 
-        Swal.fire({
-          type: 'success',
-          text: `Se cargaron ${value.rowsUploaded} registros`
-        });
-        console.log("GET DEUDA HOME")
-        this.transactionService.getDeuda()
-        .subscribe(debts => {
-          console.log(this.transactionService.debtItems);
-          //this.detectorRef.detectChanges();
-        });    
-    
-      } else  {
-        var th = this;
-        setTimeout(() => {
-          th.excelService.StatusExcel(th.excelService.idProcess)
-            .subscribe(recursiveFunc);
-        }, 500);
-
-      }
-    };
-    setTimeout(() => {
-      this.excelService.StatusExcel(this.excelService.idProcess)
-      .subscribe(recursiveFunc);
-    }, 800);
-
-  }
-  
- 
-  
-  // tslint:disable-next-line:use-life-cycle-interface
-  ngOnDestroy() {
-    this.snackRef.dismiss();
-  } 
-}
-
-
-
-
-
-
-
-
-
-
-/*///////////////////////////////////////////////////////////////////////////
-///////////////// V A L I D A T I O N   //////////////////////////
-////////////////////////////////////////////////////////////////////////////// */
-
-let error: Error;
-
-@Component({
-  selector: 'validation',
-  templateUrl: 'validation.html',
-})
-
-export class ValidationComponent  {
-
-  constructor(public excelService: ExcelService,
-   
-    public dialog: MatDialogRef<ValidationComponent>,
-
-    ) { }
-    ocultar: boolean = true;
-  hideErros(){
-    return this.ocultar = false;
-  }
-
-}
