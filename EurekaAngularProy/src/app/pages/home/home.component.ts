@@ -507,6 +507,7 @@ if(columnName === 'amount' ) {
                 this.transactionService.getDeuda(this.filtro)
                   .subscribe(debts => {
                     console.log(debts);
+                    this.selectedAll = false;
                     this.debtsList = debts;
                    this.spinner.hide();
                     console.log("NUMERO PAGINA " + this.filtro.pageNumber)
@@ -832,7 +833,7 @@ if(columnName === 'amount' ) {
     }).then((result) => {
       if (result.value) {
         /*this.spinner2.show();*/
-
+        
         this.transactionService.deleteAll(itemsParaEliminar)
           .subscribe(() => this.consultaDeuda());
          /* this.spinner2.hide();*/
@@ -1063,7 +1064,6 @@ export class UploadProgressComponent  implements OnInit  {
       } else  {
         var th = this;
         setTimeout(() => {
-          this.snackRef.dismiss();
           th.excelService.StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
         }, 500);
@@ -1071,7 +1071,6 @@ export class UploadProgressComponent  implements OnInit  {
       }
     };
     setTimeout(() => {
-      this.snackRef.dismiss();
       this.excelService.StatusExcel(this.excelService.idProcess)
       .subscribe(recursiveFunc);
     }, 800);
