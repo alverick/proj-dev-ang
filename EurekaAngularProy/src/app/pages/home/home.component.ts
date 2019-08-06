@@ -1102,8 +1102,6 @@ export class UploadProgressComponent  implements OnInit  {
 ///////////////// V A L I D A T I O N   //////////////////////////
 ////////////////////////////////////////////////////////////////////////////// */
 
-let error: Error;
-
 @Component({
   selector: 'validation',
   templateUrl: 'validation.html',
@@ -1112,10 +1110,7 @@ let error: Error;
 export class ValidationComponent  {
 
   constructor(public excelService: ExcelService,
-   
-    public dialog: MatDialogRef<ValidationComponent>,
-
-    ) { }
+               public dialog: MatDialogRef<ValidationComponent>) { }
     ocultar: boolean = true;
   hideErros(){
     return this.ocultar = false;

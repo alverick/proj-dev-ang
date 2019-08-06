@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { HomeComponent, DialogDataExampleDialog, UploadProgressComponent, ValidationComponent} from './pages/home/home.component';
+import { HomeComponent, DialogDataExampleDialog, UploadProgressComponent} from './pages/home/home.component';
 import { AnalisisComponent } from './pages/analisis/analisis.component';
 import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -31,12 +31,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { LogoutGuard } from './shared/guards/logout.guard';
-import { AuthGuard } from './shared/guards/auth.guard';
 import { MatFormFieldModule } from '@angular/material';
 import { AfiliacionService } from './shared/services/afiliacion.service';
 import { NumberDirectiveHome } from './pages/home/number.directive';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ValidationComponent } from './pages/home/validation';
 
 
 @NgModule({
@@ -48,8 +47,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     SubirPlantillaComponent,
     PageNotFoundComponent,
     DialogDataExampleDialog,
-    UploadProgressComponent,
     ValidationComponent,
+    UploadProgressComponent,
     NumberDirectiveHome
     ],
   imports: [
@@ -100,7 +99,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
   bootstrap: [AppComponent],
   entryComponents: [DialogDataExampleDialog,
                     UploadProgressComponent,
-                    ValidationComponent
+                   // ValidationComponent
                     ]
 })
 export class AppModule { }
