@@ -33,6 +33,10 @@ export class AuthInterceptorService implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse)=>{
         if(err.status === 401){
+          localStorage.removeItem('tk');
+          this.router.navigateByUrl('/login');
+        }if(err.status === 500){
+          localStorage.removeItem('tk');
           this.router.navigateByUrl('/login');
         }
 

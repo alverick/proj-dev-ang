@@ -291,6 +291,20 @@
  .focus-elements{
     outline:none;
  }
+
+ @media screen and (max-width: 576px)  {
+    .col-md-8 { display: none !important };  
+     
+  }
+
+ @media screen and (max-width:768px ) {
+   .mobile { display: none !important}  
+ }
+
+
+  
+
+
  
 /*
 .sobresale {
