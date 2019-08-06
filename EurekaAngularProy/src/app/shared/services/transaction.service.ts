@@ -70,25 +70,25 @@ export class TransactionService {
     }   
       
 
-       deleteDeuda(idDebt: number): Observable<Debts>{
-        console.log('begin login')
-        // cambia link
-        const url = `${this.URI_API}/debt/${idDebt}`;
-        console.log(url);
-        const opts = {
-          headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
-        };
-        return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
-    } 
-
-    deleteAll(ids: number[]): Observable<any> {
-      const url = `${this.URI_API}/debt/deleteAll`;
+    deleteDeuda(idDebt: number): Observable<Debts>{
+      console.log('begin login')
+      // cambia link
+      const url = `${this.URI_API}/debt/${idDebt}`;
       console.log(url);
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
       };
-      return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
-    }
+      return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
+  } 
+
+  deleteAll(ids: number[]): Observable<any> {
+    const url = `${this.URI_API}/debt/deleteAll`;
+    console.log(url);
+    const opts = {
+      headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
+    };
+    return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
+  }
 
     editDeuda(id: number, debts: DebtEdit): Observable<any>{
       console.log('begin login')

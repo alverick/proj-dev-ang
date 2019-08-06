@@ -602,7 +602,16 @@ if(columnName === 'amount' ) {
               text: 'ingrese correctamente la fecha hasta',
             });
             return;
-          } else if (this.filtro.dateFrom > this.filtro.dateTo ) {
+          }
+          else if (this.filtro.dateTo.toString() === this.filtro.dateFrom.toString()   ) {
+            Swal.fire({
+              type: 'error',
+              text: 'La fecha "desde" no puede ser igual a la fecha "hasta"',
+            });
+            console.log('segunda vuelta');
+            return;
+          }
+           else if (this.filtro.dateFrom > this.filtro.dateTo ) {
             Swal.fire({
               type: 'error',
               text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
@@ -795,7 +804,6 @@ if(columnName === 'amount' ) {
     this.numeroPagina = nro;
     this.getDeudas();
   }
-
   EliminarSeleccionados() {
     const itemsParaEliminar = [];
     this.debtsList.data.forEach(c => {
@@ -825,11 +833,13 @@ if(columnName === 'amount' ) {
         /*this.spinner2.show();*/
 
         this.transactionService.deleteAll(itemsParaEliminar)
-          .subscribe(() => this.consultaDeuda());
+          .subscribe(() => this.getDeudas());
          /* this.spinner2.hide();*/
           }
         });
   }
+
+
 
   Eliminar(item: Debts) {
      
@@ -844,7 +854,7 @@ if(columnName === 'amount' ) {
     if (result.value) {
    /* this.spinner2.show();*/
       this.transactionService.deleteDeuda(item.id)
-      .subscribe(() => this.consultaDeuda());
+      .subscribe(() => this.getDeudas());
  /*   this.spinner2.hide();*/
     
     Swal.fire(
