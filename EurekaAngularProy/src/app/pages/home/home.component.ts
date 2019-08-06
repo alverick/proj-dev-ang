@@ -802,7 +802,7 @@ if(columnName === 'amount' ) {
   changePage(nro: number) {
     this.filtro.pageNumber = nro;
     this.numeroPagina = nro;
-    this.getDeudas();
+    this.consultaDeuda();
   }
   EliminarSeleccionados() {
     const itemsParaEliminar = [];
@@ -833,7 +833,7 @@ if(columnName === 'amount' ) {
         /*this.spinner2.show();*/
 
         this.transactionService.deleteAll(itemsParaEliminar)
-          .subscribe(() => this.getDeudas());
+          .subscribe(() => this.consultaDeuda());
          /* this.spinner2.hide();*/
           }
         });
@@ -854,7 +854,7 @@ if(columnName === 'amount' ) {
     if (result.value) {
    /* this.spinner2.show();*/
       this.transactionService.deleteDeuda(item.id)
-      .subscribe(() => this.getDeudas());
+      .subscribe(() => this.consultaDeuda());
  /*   this.spinner2.hide();*/
     
     Swal.fire(
