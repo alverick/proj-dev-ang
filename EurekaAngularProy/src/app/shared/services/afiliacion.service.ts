@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { ServiceModel } from '../models/services.model';
-import { Observable, throwError } from "rxjs";
+import { ServiceModel, RubroModel, MonedaModel } from '../models';
+import { Observable, throwError, of } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { environment } from 'src/environments/environment';
 import { catchError, map } from "rxjs/operators";
@@ -14,9 +14,21 @@ export class AfiliacionService {
     public idCompany: number = 0;
 
     public serviceActual: ServiceModel = {
+        servicio: '',
+        rubro: 0,
+        codDeudor: 1,
+        tipoDato: '01',
+        tipoPago: 1,
+        nroCuenta: '',
+        moneda: 'PEN',
         usaAgente: false,
         usaTienda: false,
-        usaWebApp: false
+        usaWebApp: false,
+        cobraMora: 'N',
+        periodoMora: 1,
+        tipoMora: 'P',
+        monto: 0,
+        porcentaje: 0
     };
 
     public get UsaUnMedio(): boolean {
@@ -35,5 +47,50 @@ export class AfiliacionService {
                 this.spinner.hide();
                 return throwError(err);
             }));
+    }
+
+    public GetRubros(): Observable<RubroModel[]> {
+        return of<RubroModel[]>([
+            { id: 1, name: "Colegios" },
+            { id: 2, name: "Servicio Público" },
+            { id: 3, name: "Seguros" }
+        ]);
+    }
+
+    public GetCodDeudor(): Observable<any[]> {
+        return of<any[]>([
+            { code: 1, name: "DNI" },
+            { code: 2, name: "RUC" },
+            { code: 3, name: "Código" },
+            { code: 4, name: "Otro" }
+        ]);
+    }
+
+    public GetTipoDato(): Observable<any[]> {
+        return of<any[]>([
+            { code: "01", name: "Tengo su código, nombres y deuda" },
+            { code: "02", name: "Tengo solo código y nombres" }
+        ]);
+    }
+
+    public GetTipoPago(): Observable<any[]> {
+        return of<any[]>([
+            { id: 1, name: "Completa" },
+            { id: 2, name: "Parcial" }
+        ]);
+    }
+
+    public GetMoneda(): Observable<MonedaModel[]> {
+        return of<MonedaModel[]>([
+            { code: 'PEN', name: 'Soles', symbol: 'S/' },
+            { code: 'USD', name: 'Dólares', symbol: '$' }
+        ]);
+    }
+
+    public GetPeriodoMora(): Observable<any[]> {
+        return of<any[]>([
+            { id: 1, name: 'Diario' },
+            { id: 2, name: 'Fijo' }
+        ]);
     }
 }

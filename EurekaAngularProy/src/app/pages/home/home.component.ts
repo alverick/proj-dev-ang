@@ -467,11 +467,11 @@ if(columnName === 'amount' ) {
   }
 }
     console.table(this.filtro );
-    this.filtro.pageNumber = this.numeroPagina;
     this.filtro.asc = asc;
     this.filtro.columnName = columnName;
     this.filtro.dateFrom 
     this.filtro.dateTo
+    console.table(this.filtro);
     this.consultaDeuda();
 
   }
@@ -790,6 +790,7 @@ if(columnName === 'amount' ) {
   SeleccionarTodos() {
     console.log('selecctionarTodos');
     this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
+    
   }
 
 

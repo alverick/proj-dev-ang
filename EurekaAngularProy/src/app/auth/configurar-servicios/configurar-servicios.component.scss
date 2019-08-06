@@ -1,6 +1,7 @@
-  
-  .super-full-width {
-    width: 100%;
+
+
+  .w-49 {
+    width: 49%;
   }
   
   .w-70 {
@@ -107,4 +108,8 @@
     height: 8px;
     border-radius: 50%;
     background: white;
+}
+
+.seleccionado {
+    border: blue 2px solid;
 }
