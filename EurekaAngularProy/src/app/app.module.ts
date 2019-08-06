@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { HomeComponent, DialogDataExampleDialog} from './pages/home/home.component';
+import { HomeComponent} from './pages/home/home.component';
 import { AnalisisComponent } from './pages/analisis/analisis.component';
 import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -37,6 +37,7 @@ import { NumberDirectiveHome } from './pages/home/number.directive';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ValidationComponent } from './pages/home/validation';
 import { UploadProgressComponent } from './pages/home/upload-progress';
+import { DialogComponent } from './pages/home/dialog';
 
 
 @NgModule({
@@ -47,10 +48,11 @@ import { UploadProgressComponent } from './pages/home/upload-progress';
     AnalisisComponent,
     SubirPlantillaComponent,
     PageNotFoundComponent,
-    DialogDataExampleDialog,
     ValidationComponent,
     NumberDirectiveHome,
-    UploadProgressComponent
+    UploadProgressComponent,
+    DialogComponent
+
     ],
   imports: [
     BrowserModule,
@@ -99,9 +101,10 @@ import { UploadProgressComponent } from './pages/home/upload-progress';
     ValidationComponent
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DialogDataExampleDialog,
+  entryComponents: [DialogComponent,
                     UploadProgressComponent,
-                    ValidationComponent
+                    ValidationComponent,
+                    HomeComponent
                     ]
 })
 export class AppModule { }
