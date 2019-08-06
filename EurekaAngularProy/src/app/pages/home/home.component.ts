@@ -482,6 +482,11 @@ if(columnName === 'amount' ) {
 
   }
 
+  sendFiltro() {
+    this.filtro.pageNumber = 1;
+    this.consultaDeuda();
+  }
+
   consultaDeuda() {
   // tslint:disable-next-line:prefer-const
 

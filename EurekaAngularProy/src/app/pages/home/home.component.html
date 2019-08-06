@@ -76,7 +76,7 @@
                                 </div>
 
                                 <div class="texto-azulbase font-medium">
-                                    <button class="focus-elements btn-eureca btn-small btn-eureca-amarillo" style="color: white; font-weight: 500" (click)="consultaDeuda()">Buscar
+                                    <button class="focus-elements btn-eureca btn-small btn-eureca-amarillo" style="color: white; font-weight: 500" (click)="sendFiltro()">Buscar
                                     </button>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@
                                     <span style="width: auto" *ngIf="!items.edit">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                         <mat-form-field style="width: 100px">
-                                            <input [min]="minDate" [max]="maxDate" inputmode="numeric" (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
+                                            <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" inputmode="numeric" (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
                                             <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                                             <mat-datepicker #edp></mat-datepicker>
                                         </mat-form-field>
@@ -281,7 +281,7 @@
                                     <span *ngIf="!items.edit">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
                                     <div *ngIf="items.edit" class="content-input-icon position-relative">
                                         <mat-form-field style="width: 100px">
-                                            <input [min]="minDate" [max]="maxDate" inputmode="numeric" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
+                                            <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" inputmode="numeric" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
                                             <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
                                             <mat-datepicker #ddp></mat-datepicker>
                                         </mat-form-field>
@@ -300,16 +300,16 @@
                                 <td>{{items.amount}}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="BotonEditar(items)">
+                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
                                             <span class="icon-editar iconos-big iconos-big"></span>
                                         </div> &nbsp;&nbsp;&nbsp;
-                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer" (click)="Eliminar(items)">
+                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="Eliminar(items)">
                                             <span class="icon-eliminar iconos-big iconos-big"></span>
                                         </div>
-                                        <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer" (click)="BotonActualizar(items)">
+                                        <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer;  margin-right: 18px !important" (click)="BotonActualizar(items)">
                                             <img src="assets/images/table-check.svg" alt="Aceptar">
                                         </div>
-                                        <div (click)="BotonCancela(items)" *ngIf="items.edit" class="d-inline-block" style="cursor: pointer">
+                                        <div (click)="BotonCancela(items)" *ngIf="items.edit" class="d-inline-block" style="cursor: pointer; margin-right: 18px !important">
                                             <img src="assets/images/table-delete.svg" alt="Eliminar">
                                         </div>
                                     </div>
