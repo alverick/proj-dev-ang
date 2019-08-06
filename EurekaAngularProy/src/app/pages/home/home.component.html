@@ -175,10 +175,10 @@
                                     <div class="d-flex align-items-center justify-content-center ">
                                         <div class="d-inline-block text-center"> Fecha<br>emisión </div>
                                         <div class=" d-inline-block ml-1">
-                                            <div *ngIf="ascFeEmisiongray"><span style="color:gray; float: initial;" class="fa fas fa-caret-up"></span></div>
-                                            <div *ngIf="ascFeEmisionblue"><span style="color: blue; float: initial;" class="mano fa fas fa-caret-up" (click)="AscDesc('emissionDate', true)"></span></div> <br>
-                                            <div *ngIf="descFeEmisionblue"><span style="color: blue; float: initial;" class="mano fa fas fa-caret-down" (click)="AscDesc('emissionDate', false)"></span></div> <br>
-                                            <div *ngIf="descFeEmisiongray"><span style="color:gray; float: initial;" class="fa fas fa-caret-down"></span></div>
+                                            <div class="arrow-filter-asc-gray" *ngIf="ascFeEmisiongray"  ><span class="  fa fas fa-caret-up"></span> </div>
+                                            <div class="arrow-filter-asc-blue" *ngIf="ascFeEmisionblue"  ><span class="mano fa fas fa-caret-up" (click)="AscDesc('emissionDate', true)"></span> </div>  
+                                            <div class="arrow-filter-dsc-blue" *ngIf="descFeEmisionblue"  ><span class="mano fa fas fa-caret-down" (click)="AscDesc('emissionDate', false)"></span> </div>
+                                            <div class="arrow-filter-dsc-gray"*ngIf="descFeEmisiongray"  ><span class="  fa fas fa-caret-down"></span> </div>
                                         </div>
                                     </div>
                                 </th>
@@ -186,10 +186,10 @@
                                     <div class=" d-flex align-items-center justify-content-center ">
                                         <div class="d-inline-block text-center">Fecha<br>vto. </div>
                                         <div class=" d-inline-block ml-1">
-                                            <div *ngIf="ascFeVctgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div *ngIf="ascFeVctblue" style="color: blue; float: initial;"><span class="mano fa fas fa-caret-up" (click)="AscDesc('dueDate', true)"></span> </div> <br>
-                                            <div *ngIf="dscFeVctblue" style="color: blue; float: initial;"><span class="mano fa fas fa-caret-down" (click)="AscDesc('dueDate', false)"></span> </div>
-                                            <div *ngIf="dscFeVctgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-down"></span> </div>
+                                            <div class="arrow-filter-asc-gray" *ngIf="ascFeVctgray"  ><span class="  fa fas fa-caret-up"></span> </div>
+                                            <div class="arrow-filter-asc-blue" *ngIf="ascFeVctblue"  ><span class="mano fa fas fa-caret-up" (click)="AscDesc('dueDate', true)"></span> </div>  
+                                            <div class="arrow-filter-dsc-blue" *ngIf="dscFeVctblue"  ><span class="mano fa fas fa-caret-down" (click)="AscDesc('dueDate', false)"></span> </div>
+                                            <div class="arrow-filter-dsc-gray"*ngIf="dscFeVctgray"  ><span class="  fa fas fa-caret-down"></span> </div>
                                         </div>
                                     </div>
                                 </th>
@@ -197,21 +197,21 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <div class="d-inline-block text-center">Código<br>de cliente </div>
                                         <div class=" d-inline-block ml-1">
-                                            <div *ngIf="asccodgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div *ngIf="asccodblue"> <span style="color: blue; float: initial;" class="mano fa fas fa-caret-up" (click)="AscDesc('code', true)"></span> </div> <br>
-                                            <div *ngIf="dsccodiblue"> <span style="color: blue; float: initial;" class="mano fa fas fa-caret-down" (click)="AscDesc('code', false)"></span></div>
-                                            <div *ngIf="dsccodigray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-down"></span> </div>
+                                            <div class="arrow-filter-asc-gray" *ngIf="asccodgray"  ><span class="  fa fas fa-caret-up"></span> </div>
+                                            <div class="arrow-filter-asc-blue" *ngIf="asccodblue"> <span   class="mano fa fas fa-caret-up" (click)="AscDesc('code', true)"></span> </div>  
+                                            <div class="arrow-filter-dsc-blue" *ngIf="dsccodiblue"> <span   class="mano fa fas fa-caret-down" (click)="AscDesc('code', false)"></span></div>
+                                            <div class="arrow-filter-dsc-gray" *ngIf="dsccodigray" ><span class="  fa fas fa-caret-down"></span> </div>
                                         </div>
                                     </div>
                                 </th>
                                 <th scope="col">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center">Nombres </div>
-                                        <div class="d-inline-block ml-1">
-                                            <div *ngIf="ascnamegray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div *ngIf="ascnameblue" style="color: blue; float: initial;"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('firstName', true)"></span></div> <br>
-                                            <div *ngIf="dscnameblue" style="color: blue; float: initial;"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('firstName', false)"></span> </div>
-                                            <div *ngIf="dscnamegray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-down"></span> </div>
+                                        <div class="styletexttable">Nombres </div>
+                                        <div class=" d-inline-block ml-1">
+                                            <div class="arrow-filter-asc-gray" *ngIf="ascnamegray" ><span class="  fa fas fa-caret-up"></span> </div>
+                                            <div class="arrow-filter-asc-blue" *ngIf="ascnameblue"  > <span class="mano fa fas fa-caret-up" (click)="AscDesc('firstName', true)"></span></div>  
+                                            <div class="arrow-filter-dsc-blue" *ngIf="dscnameblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('firstName', false)"></span> </div>
+                                            <div class="arrow-filter-dsc-gray" *ngIf="dscnamegray" ><span class="  fa fas fa-caret-down"></span> </div>
                                         </div>
                                     </div>
                                 </th>
@@ -220,10 +220,10 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <div class="d-inline-block text-center">Apellidos </div>
                                         <div class="d-inline-block ml-1">
-                                            <div *ngIf="asclastgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div *ngIf="asclastblue" style="color: blue; float: initial;"><span class="mano fa fas fa-caret-up" (click)="AscDesc('lastName', true)"></span> </div> <br>
-                                            <div *ngIf="dsclastblue" style="color: blue; float: initial;"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('lastName', false)"></span> </div>
-                                            <div *ngIf="dsclastgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-down"></span> </div>
+                                            <div class="arrow-filter-asc-gray" *ngIf="asclastgray" ><span class="  fa fas fa-caret-up"></span> </div>
+                                            <div class="arrow-filter-asc-blue" *ngIf="asclastblue"  ><span class="mano fa fas fa-caret-up" (click)="AscDesc('lastName', true)"></span> </div>  
+                                            <div class="arrow-filter-dsc-blue" *ngIf="dsclastblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('lastName', false)"></span> </div>
+                                            <div class="arrow-filter-dsc-gray" *ngIf="dsclastgray" ><span class="  fa fas fa-caret-down"></span> </div>
                                         </div>
                                     </div>
                                 </th>
@@ -232,10 +232,10 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <div class="styletexttable">Servicio </div>
                                         <div class="mano d-inline-block ml-1">
-                                            <div *ngIf="ascservgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div *ngIf="ascservblue" style="color: blue; float: initial;"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('service', true)"></span> </div> <br>
-                                            <div *ngIf="dscservblue" style="color: blue; float: initial;"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('service', false)"></span> </div>
-                                            <div *ngIf="dscservgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-down"></span> </div>
+                                            <div class="arrow-filter-asc-gray" *ngIf="ascservgray" ><span class="  fa fas fa-caret-up"></span> </div>
+                                            <div class="arrow-filter-asc-blue"  *ngIf="ascservblue"  > <span class="mano fa fas fa-caret-up" (click)="AscDesc('service', true)"></span> </div>  
+                                            <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('service', false)"></span> </div>
+                                            <div class="arrow-filter-dsc-gray" *ngIf="dscservgray" ><span class="  fa fas fa-caret-down"></span> </div>
                                         </div>
                                     </div>
                                 </th>
@@ -244,10 +244,10 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <div class="styletexttable">Concepto </div>
                                         <div class="mano d-inline-block ml-1">
-                                            <div *ngIf="ascconcepgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div *ngIf="ascconcepblue" style="color: blue; float: initial;"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('concept', true)"></span> </div> <br>
-                                            <div *ngIf="dscconcepblue" style="color: blue; float: initial;"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('concept', false)"></span> </div>
-                                            <div *ngIf="dscconcepgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-down"></span> </div>
+                                            <div class="arrow-filter-asc-gray" *ngIf="ascconcepgray" ><span class="  fa fas fa-caret-up"></span> </div>
+                                            <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"  > <span class="mano fa fas fa-caret-up" (click)="AscDesc('concept', true)"></span> </div> 
+                                            <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('concept', false)"></span> </div>
+                                            <div class="arrow-filter-dsc-gray" *ngIf="dscconcepgray" ><span class="  fa fas fa-caret-down"></span> </div>
                                         </div>
                                     </div>
                                 </th>
@@ -256,10 +256,10 @@
                                     <div class="d-flex align-items-center justify-content-center">
                                         <div class="d-inline-block text-center">Monto </div>
                                         <div class="mano d-inline-block ml-1">
-                                            <div *ngIf="ascmontopgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div *ngIf="ascmontopblue" style="color: blue; float: initial;"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('amount', true)"></span> </div> <br>
-                                            <div *ngIf="dscmontopblue" style="color: blue; float: initial;"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('amount', false)"></span> </div>
-                                            <div *ngIf="dscmontopgray" style="color: gray; float: initial;"><span class="  fa fas fa-caret-down"></span> </div>
+                                            <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray" ><span class="  fa fas fa-caret-up"></span> </div>
+                                            <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"  > <span class="mano fa fas fa-caret-up" (click)="AscDesc('amount', true)"></span> </div>  
+                                            <div class="arrow-filter-dsc-blue" *ngIf="dscmontopblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('amount', false)"></span> </div>
+                                            <div class="arrow-filter-dsc-gray" *ngIf="dscmontopgray" ><span class="  fa fas fa-caret-down"></span> </div>
                                         </div>
                                     </div>
                                 </th>
