@@ -931,6 +931,9 @@ export class UploadProgressComponent  implements OnInit  {
     setTimeout(fnc, 500);
   }
  
+  //  const dialogRef =  this.dialog.open(ValidationComponent);
+
+ 
   private verifyStatus() {
 
     // tslint:disable-next-line:prefer-const
@@ -944,12 +947,13 @@ export class UploadProgressComponent  implements OnInit  {
         console.table(value.errors);
         console.log('ABRE DIALOG')
         const dialogRef =  this.dialog.open(ValidationComponent);
+       // dialogRef.close(ValidationComponent);
         dialogRef.afterClosed()
           .subscribe(() => {
             this.excelService.errores = [];
             this.excelService.idProcess = 0;
           });
-
+        
       } else if (value.status === 'COMPLETED') {
         this.snackRef.dismiss();
         this.excelService.errores = [];
@@ -981,10 +985,8 @@ export class UploadProgressComponent  implements OnInit  {
     }, 800);
 
   }
-   
-  hideErrors(){
-   // this.validacion =false;
-  }
+  
+ 
   
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
@@ -1015,6 +1017,13 @@ let error: Error;
 export class ValidationComponent  {
 
   constructor(public excelService: ExcelService,
+   
+    public dialog: MatDialogRef<ValidationComponent>,
+
     ) { }
+    ocultar: boolean = true;
+  hideErros(){
+    return this.ocultar = false;
+  }
 
 }
