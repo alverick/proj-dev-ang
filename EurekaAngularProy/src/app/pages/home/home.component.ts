@@ -150,7 +150,6 @@ export class HomeComponent implements OnInit {
   serviceSelected: String;
   services: String[];
 
-  spinner : boolean= false;
 
   pagination1: boolean= false;
   pagination2: boolean= false;
@@ -181,7 +180,7 @@ export class HomeComponent implements OnInit {
     private excelService: ExcelService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private spinner2: NgxSpinnerService,
+    private spinner: NgxSpinnerService,
     private el: ElementRef, 
     ) {
 
@@ -246,28 +245,38 @@ export class HomeComponent implements OnInit {
       value => {
         this.DateList = value;
     });
-
-   this.validandoListado();
+    this.spinner.show("mySpinner", {
+      type: "line-scale-party",
+      size: "large",
+      bdColor: "rgba(100,149,237, .8)",
+      color: "white"
+    });
+   this.consultaDeuda();
    this.cargaExcel = false;
    
   }
-
+/*
   validandoListado() {
     
     if (localStorage.getItem('tk') === null  ) {
       this.router.navigate(['/login']);
     } else {
-      this.consultaDeuda();
+      this.getDeuda();
     }
-  }
+  }*/
 
-  getDeuda(){
-    
+  getDeudas(){
+
+    if (localStorage.getItem('tk') === null  ) {
+      this.router.navigate(['/login']);
+
+  }else{
+    this.spinner.show();
+    console.log("SPINNER "+ this.spinner)
     this.debtsList = {
       count: 0,
       data: []
     };
-    this.spinner2.show();
     this.transactionService.getDeuda(this.filtro)
       .subscribe(debts => {
         this.debtsList = debts;   
@@ -288,8 +297,9 @@ export class HomeComponent implements OnInit {
                     this.pagination3=true;          
                 }
     });
-    this.spinner2.hide();
-
+    this.spinner.hide();
+    
+  }
 
   }
   ceroRegistros(): boolean {
@@ -489,7 +499,7 @@ if(columnName === 'amount' ) {
             return;
           } else {
                 console.table(this.filtro);
-                this.spinner2.show();
+                this.spinner.show();
                 this.debtsList = {
                   count: 0,
                   data: []
@@ -498,7 +508,7 @@ if(columnName === 'amount' ) {
                   .subscribe(debts => {
                     console.log(debts);
                     this.debtsList = debts;
-                    this.spinner2.hide();
+                   this.spinner.hide();
                     console.log("NUMERO PAGINA " + this.filtro.pageNumber)
                     if(this.filtro.pageNumber <= 1){
                       this.pagination1= true;
@@ -534,7 +544,7 @@ if(columnName === 'amount' ) {
                   return;
                 } else {
                       console.log(this.filtro);
-                      this.spinner2.show();
+                      this.spinner.show();
 
                       this.debtsList = {
                         count: 0,
@@ -544,7 +554,7 @@ if(columnName === 'amount' ) {
                         .subscribe(debts => {
                           console.log(debts);
                           this.debtsList = debts;
-                         this.spinner2.hide();
+                       this.spinner.hide();
                          console.log("NUMERO PAGINA " + this.filtro.pageNumber)
                          if(this.filtro.pageNumber <= 1){
                            this.pagination1= true;
@@ -600,7 +610,7 @@ if(columnName === 'amount' ) {
             return;
           } else {
               console.log(this.filtro);
-              this.spinner2.show();
+            this.spinner.show();
 
               this.debtsList = {
                 count: 0,
@@ -626,7 +636,7 @@ if(columnName === 'amount' ) {
                       this.pagination2= false;
                       this.pagination3=true;          
                   }
-                 this.spinner2.hide();
+                this.spinner.hide();
               });
          }
   }
@@ -783,7 +793,7 @@ if(columnName === 'amount' ) {
   changePage(nro: number) {
     this.filtro.pageNumber = nro;
     this.numeroPagina = nro;
-    this.getDeuda();
+    this.getDeudas();
   }
 
   EliminarSeleccionados() {
