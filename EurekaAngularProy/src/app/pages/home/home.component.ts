@@ -800,6 +800,7 @@ if(columnName === 'amount' ) {
   }
 
   changePage(nro: number) {
+    this.selectedAll= false;
     this.filtro.pageNumber = nro;
     this.numeroPagina = nro;
     this.consultaDeuda();
