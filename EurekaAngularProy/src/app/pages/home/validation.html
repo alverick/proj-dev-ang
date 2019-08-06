@@ -1,4 +1,11 @@
-<div class="container py-4" style="background: #f4f5f7  !important;">
+<div   class="container py-4" style="background: #f4f5f7  !important;">
+    <mat-dialog-actions align="end" >
+        <div (click)="hideErrors()" >
+            <span class="h5 m-0 pr-2">Cancelar</span>
+            <span class="icon-icono-x font-16"></span>
+        </div>
+    </mat-dialog-actions>
+
     <div class="bg-blanco mb-3 custom-shadow pasos-add-registro">
         <div class="d-none text-center">
             <h6 class="my-4">Validacion</h6>
@@ -23,11 +30,13 @@
                         </span>     
                     </div>
                     <div   *ngIf="error.row !== 0" >
+                    <div data-spy="scroll">
                     <td>En la fila &nbsp;<span style="color: red;"> {{ error.row}}
                     &nbsp;</span> {{ error.description }}, el campo &nbsp; 
                     <span style="color: green;"> {{ error.field }}</span> 
                     &nbsp; tiene el valor &nbsp; <span style="color: orange;">{{ error.value }} </span></td>
                     </div>
+                </div>
                 </tr>
             </table>
         </div>

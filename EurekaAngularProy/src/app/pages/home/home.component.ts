@@ -445,8 +445,8 @@ if(columnName === 'amount' ) {
     console.table(this.filtro );
     this.filtro.asc = asc;
     this.filtro.columnName = columnName;
-    this.filtro.dateFrom 
-    this.filtro.dateTo
+   // this.filtro.dateFrom=; 
+    // this.filtro.dateTo;
     console.table(this.filtro);
     this.consultaDeuda();
 
@@ -467,8 +467,6 @@ if(columnName === 'amount' ) {
             return;
           } else {
                 console.table(this.filtro);
-                this.filtro.dateFrom 
-                this.filtro.dateTo
                 this.spinner2.show();
                 this.debtsList = {
                   count: 0,
@@ -983,7 +981,11 @@ export class UploadProgressComponent  implements OnInit  {
     }, 800);
 
   }
-
+   
+  hideErrors(){
+   // this.validacion =false;
+  }
+  
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     this.snackRef.dismiss();

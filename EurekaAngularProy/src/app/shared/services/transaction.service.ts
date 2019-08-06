@@ -36,7 +36,14 @@ export class TransactionService {
     }
 
     getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
-      console.log(filtro);
+      console.log('Filtro: ',filtro);
+      console.log('Filtro.DateFrom: ',filtro.dateFrom);
+      console.log('Filtro.dateTo: ',filtro.dateTo);
+      var strDateFrom = (filtro.dateFrom === null ? '' : filtro.dateFrom.toISOString()); 
+      var strDateTo = (filtro.dateTo === null ? '' : filtro.dateTo.toISOString());
+      console.log('strDateFrom: ',strDateFrom);
+      console.log('strDateTo: ',strDateTo);
+
       if (filtro === null) {
         filtro = this.lastFilter;
       }
@@ -44,7 +51,7 @@ export class TransactionService {
         this.lastFilter = filtro;
       }
         console.log(filtro);
-        const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${filtro.dateFrom}&DateTo=${filtro.dateTo}`;
+        const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
