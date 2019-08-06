@@ -103,8 +103,6 @@ import { DialogComponent } from './pages/home/dialog';
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent,
                     UploadProgressComponent,
-                    ValidationComponent,
-                    HomeComponent
-                    ]
+                    ValidationComponent                    ]
 })
 export class AppModule { }
