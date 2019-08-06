@@ -1,4 +1,4 @@
-import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -1010,12 +1010,10 @@ export class UploadProgressComponent  implements OnInit  {
   state = false;
   contador = 0; 
 
-
-  debtsList: DebtsPagedList;
-
   constructor( public dialog: MatDialog, public excelService: ExcelService,
                 private snackRef: MatSnackBarRef<UploadProgressComponent>,
-                private transactionService: TransactionService) { }
+                private transactionService: TransactionService,
+                private detectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     var th = this;
@@ -1063,9 +1061,10 @@ export class UploadProgressComponent  implements OnInit  {
         console.log("GET DEUDA HOME")
         this.transactionService.getDeuda()
         .subscribe(debts => {
-          console.log(debts);
-      });
-        
+          console.log(this.transactionService.debtItems);
+          //this.detectorRef.detectChanges();
+        });    
+    
       } else  {
         var th = this;
         setTimeout(() => {

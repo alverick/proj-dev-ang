@@ -131,13 +131,13 @@
                             <div class="row justify-content-end">
                                 <div   style="font-size: 17px">
                                     <div style="font-size: 17px" *ngIf="pagination1">
-                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{ debtsList.data.length}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{ transactionService.debtItems.data.length}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
                                     </div>
                                     <div style="font-size: 17px" *ngIf="pagination2">
-                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{filtro.pageNumber*50}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{filtro.pageNumber*50}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
                                     </div>
                                     <div style="font-size: 17px" *ngIf="pagination3">
-                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{debtsList.count}}</span> de <span> {{debtsList.count }}</span> de elementos
+                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{transactionService.debtItems.count}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
                                     </div>
                                    
                                 </div> 
@@ -262,7 +262,7 @@
                                 <td></td>
                             </tr>
 
-                            <tr  *ngFor="let items of debtsList.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: debtsList.count }">
+                            <tr  *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }">
                                 <td style="width: auto">
                                     <input id="{{ 'chk_' + items.id }}" class="styled-checkbox" type="checkbox" [(ngModel)]="items.selected">
                                     <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
