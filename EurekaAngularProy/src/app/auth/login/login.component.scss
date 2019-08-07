@@ -34,6 +34,7 @@ label{
 }
 .p-5{
   padding: 0.2rem 2.5rem !important;
+  max-width: 0.2rem 2.5rem !important;
 }
 
 .bg-image-landing{
@@ -88,3 +89,10 @@ label{
       color: #fc9a00;
 
   }
+
+  div.mat-form-field-infix { padding: 0em 0 !important }
+
+  .mat-form-field .mat-form-field-underline {
+    background-color: slategray;
+    height: 0.18vw !important;
+    margin-bottom: 5px;}

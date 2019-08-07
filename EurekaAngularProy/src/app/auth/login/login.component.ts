@@ -315,7 +315,7 @@ export class LoginComponent implements OnInit {
             this.isTrue = true; 
             this.codigo2= false;             
           }
-          else if(this.intentos >= 6){
+          else if(this.intentos >= 6 || value.paramStr==='Vuelva a intentarlo mas tarde' || value.paramStr==='El usuario esta bloqueado'){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Sin codigo");
             Swal.fire({
@@ -331,7 +331,7 @@ export class LoginComponent implements OnInit {
             })   
             this.intento6= true;
             this.isTrue = false;             
-          }         
+          }
         },
       error =>{ 
         this.spinner.hide();
