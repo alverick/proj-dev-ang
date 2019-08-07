@@ -38,6 +38,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ValidationComponent } from './pages/home/validation';
 import { UploadProgressComponent } from './pages/home/upload-progress';
 import { DialogComponent } from './pages/home/dialog';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { DialogComponent } from './pages/home/dialog';
     MatMomentDateModule,
     MatFormFieldModule, 
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FontAwesomeModule
 
   ],
   providers: [

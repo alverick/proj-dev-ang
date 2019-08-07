@@ -236,13 +236,12 @@ export class LoginComponent implements OnInit {
 
           this.intentosRestantes= 6 - this.intentos;
           this.codRespuesta= value.codRespuesta;
-
+          //  background-image:url("/assets/images/fondo-landing.png");
           if(value.paramStr==="Un session ya se encuentra activa"){
-            Swal.fire({ type: 'warning', text: 'Existe una Sesión Activa'})
+            Swal.fire({   imageUrl: '/assets/images/complain.svg',   imageHeight: 100,   text: 'Existe una Sesión Activa'})
           }else if(value.estado===true && this.intentos<=6){
                   console.log("RECORDAR : " + this.rememberMe);
                   if(this.rememberMe==true){
-                  
                       const expire = new Date();
                       expire.setDate(expire.getDate() + 25);
                       this.cookieService.set('ruc', this.f.ruc.value, expire);
