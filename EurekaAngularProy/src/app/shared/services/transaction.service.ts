@@ -33,7 +33,9 @@ export class TransactionService {
     }
 
     getDeuda(filtro: DebstFilter): Observable<DebtsPagedList>{
-        const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${filtro.dateFrom}&DateTo=${filtro.dateTo}`;
+      let strDateFrom = (filtro.dateFrom === null ? '' : filtro.dateFrom);
+      let strDateTo = (filtro.dateTo === null ? '' : filtro.dateTo);
+        const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken(),

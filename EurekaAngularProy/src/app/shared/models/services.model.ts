@@ -1,17 +1,19 @@
 export interface ServiceModel {
-    servicio: string;
-    rubro: number;
-    codDeudor: number;
+    id?: number;
+    nombre: string;
+    rubro?: number;
+    codDeudor?: number;
     tipoDato: string;
-    tipoPago: number;
+    tipoPago?: string;
     nroCuenta: string;
     moneda: string;
+    simboloMoneda?: string;
     usaWebApp: boolean;
     usaAgente: boolean;
     usaTienda: boolean;      
     cobraMora: string;
-    periodoMora: number;
+    periodoMora?: number;
     tipoMora: string;
-    monto: number;
-    porcentaje: number;
+    monto?: number;
+    porcentaje?: number;
 }
