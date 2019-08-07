@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
   public  rememberMe: boolean = false;
 
   public  inputUsuario: boolean = false;
-  @ViewChild('inputUsua') inputUsua: ElementRef;
-  @ViewChild('inputPass') inputPass: ElementRef;
+ // @ViewChild('inputUsua') inputUsua: ElementRef;
+ // @ViewChild('inputPass') inputPass: ElementRef;
   inputUsuaValid: boolean = false;
   inputPassValid: boolean = false;
   validarCantRuc: boolean = false;
@@ -80,11 +80,11 @@ export class LoginComponent implements OnInit {
     this.cookieService.get('ruc') :  '';
     
     this.validationLogin(rucStr);
-    this.validaInputs();
+   // this.validaInputs();
   }
 
 
-  mostrarMensajeUsu(): boolean {
+ /* mostrarMensajeUsu(): boolean {
     // tslint:disable-next-line:max-line-length
     if (this.inputUsua.nativeElement.value === '' ) {
         return   true;
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
     } else {
       return false;
     }
-  }
+  } */
 
     validationLogin(rucStr: any) {
     if (rucStr) {
@@ -132,13 +132,13 @@ export class LoginComponent implements OnInit {
   }
 
 
-  validaInputs() {
+ /* validaInputs() {
     if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   ) {
       this.inputUsuaValid = false;
       this.inputPassValid = false; 
     } 
   }
-  
+  */
   focusFunctionRuc(){ 
     this.inputUsuaValid = false;
     this.validarCantRuc = false;
@@ -158,25 +158,63 @@ export class LoginComponent implements OnInit {
 
     console.log("INTENTOS THIS : "+this.intentos)
 
-    if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '') {
+  /*  if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '') {
       this.inputUsuaValid = true;
       this.inputPassValid = true;
        return;
-    }
+    } */
     
-    if(this.loginForm.get('ruc').value.length < 11 && this.loginForm.get('psw').value.length < 6){
+    // validacion cuando le falta para llegar a la cantidad de letras
+    
+    
+    // validacion cuando le falta para llegar a la cantidad de letras
+    if(this.loginForm.get('ruc').value.length == 0 && (this.loginForm.get('psw').value.length > 0 && this.loginForm.get('psw').value.length < 6)){
+      this.inputUsuaValid =true;
+      this.validarCantPass =true;  
+      return;
+    }
+    if( (this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11) &&  this.loginForm.get('psw').value.length == 0){
+      this.validarCantRuc =true;
+      this.inputPassValid =true;  
+      return;
+    }
+
+
+    if(this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11 && this.loginForm.get('psw').value.length > 0 &&   this.loginForm.get('psw').value.length < 6){
       this.validarCantRuc =true;
       this.validarCantPass =true;
+
+     // this.inputPassValid =false; 
+     // this.inputUsuaValid =false; 
       return;
     }
-    if(this.loginForm.get('ruc').value.length < 11){
-      this.validarCantRuc =true;
+    if(this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11 ){
+      this.validarCantRuc =true; 
+      this.inputPassValid =false; 
+      this.inputUsuaValid =false; 
       return;
     }
-    if(this.loginForm.get('psw').value.length < 6){
-      this.validarCantPass =true;
+    if(this.loginForm.get('psw').value.length > 0 && this.loginForm.get('psw').value.length < 6){
+      this.validarCantPass =true; 
+      this.inputPassValid =false; 
+      this.inputUsuaValid =false; 
       return;
     }
+
+    //////
+    if(this.loginForm.get('ruc').value.length == 0 && this.loginForm.get('psw').value.length == 0){
+      this.inputPassValid =true;
+      this.inputUsuaValid =true;  
+      return;
+    }
+    if(this.loginForm.get('ruc').value.length == 0){
+      this.inputUsuaValid =true; 
+      return;
+    }
+    if(this.loginForm.get('psw').value.length == 0){
+      this.inputPassValid =true; 
+      return;
+    }  
     
     
     this.cookieService.delete('ruc');

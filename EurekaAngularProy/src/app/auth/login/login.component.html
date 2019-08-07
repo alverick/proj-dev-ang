@@ -26,14 +26,17 @@
                                     <label class="d-block texto-negro h6" for="">RUC</label>
                                     <mat-form-field class="full-width">
                                          <!--   <input matInput  type="text" (focus)="focusFunctionRuc()"  minlength="11" maxlength="11" numbersOnly required  formControlName="ruc" [ngClass]="{ 'is-invalid': submitted && f.ruc.errors }" >                   -->
-                                        <input #inputUsua matInput type="text" (focus)="focusFunctionRuc()" minlength="11" maxlength="11" inputmode="numeric" pattern="[0-9]*" digitOnly formControlName="ruc" appBlockCopyPaste [ngClass]="{ 'is-invalid': submitted && f.ruc.errors }">
-                                            <mat-error  *ngFor="let validation of account_validation_messages.ruc">
+                                            <input   matInput type="text" (focus)="focusFunctionRuc()" minlength="11" maxlength="11" inputmode="numeric" pattern="[0-9]*" digitOnly formControlName="ruc" appBlockCopyPaste [ngClass]="{ 'is-invalid': submitted && f.ruc.errors }">
+                                            <!-- <mat-error  *ngFor="let validation of account_validation_messages.ruc">
                                                 <div *ngIf="inputUsuaValid">
                                                 <mat-error class="error-message" *ngIf="loginForm.get('ruc').hasError(validation.type) ">
                                                     {{validation.message}}
                                                 </mat-error>
                                                 </div>  
-                                            </mat-error> 
+                                                </mat-error> -->
+                                            <mat-error *ngIf="inputUsuaValid" class="error-message">
+                                                Debe ingresar el RUC
+                                            </mat-error>
                                             <mat-error *ngIf="validarCantRuc" class="error-message">
                                                 Ingrese un RUC válido de 11 dígitos
                                             </mat-error>
@@ -56,14 +59,17 @@
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6" for="">Contraseña</label>
                                     <mat-form-field class="full-width" style="height: 1.9px !important">
-                                        <input #inputPass matInput type="password" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw"  [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste> 
-                                            <mat-error *ngFor="let validation of account_validation_messages.psw">
+                                        <input   matInput type="password" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw"  [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste> 
+                                         <!--  <mat-error *ngFor="let validation of account_validation_messages.psw">
                                                 <div *ngIf="inputPassValid">
                                                 <mat-error class="error-message" *ngIf="loginForm.get('psw').hasError(validation.type) ">
                                                     {{validation.message}}
                                                 </mat-error>
                                                 </div>
-                                            </mat-error> 
+                                            </mat-error> --> 
+                                            <mat-error *ngIf="inputPassValid" class="error-message">
+                                                Debe ingresar el password
+                                            </mat-error>
                                             <mat-error *ngIf="validarCantPass" class="error-message">
                                                 Debes ingresar una contraseña entre 6 y 20 caracteres
                                             </mat-error>
