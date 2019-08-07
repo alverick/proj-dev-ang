@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   inputUsuaValid: boolean = false;
   inputPassValid: boolean = false;
   validarCantRuc: boolean = false;
+  validarCantPass: boolean = false;
 
   intentos: number;
   intentosRestantes: number = 6;
@@ -61,7 +62,7 @@ export class LoginComponent implements OnInit {
     ],
     'psw': [
       { type: 'required', message:  'Debe ingresar el password' },
-      // { type: 'minlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres' },
+      //{ type: 'minlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres' },
       { type: 'maxlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres'},
     ]
   }
@@ -105,13 +106,21 @@ export class LoginComponent implements OnInit {
             this.rememberMe = true;
     }
     
-    this.loginForm = this.formBuilder.group({
+  /*  this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.required,
             Validators.pattern('^[0-9]*$')])
            ],
       psw: ['', Validators.required ],
       rememberme: [false, Validators.required]
-    });
+    });  */
+
+    this.loginForm = this.formBuilder.group({
+      ruc: [rucStr, Validators.compose([Validators.required,
+             Validators.pattern('^[0-9]*$')  ])   ],
+      psw: ['', Validators.required ],
+      rememberme: [false, Validators.required]
+    }); 
+
   }
 
   get f() { return this.loginForm.controls; }
@@ -132,9 +141,11 @@ export class LoginComponent implements OnInit {
   
   focusFunctionRuc(){ 
     this.inputUsuaValid = false;
+    this.validarCantRuc = false;
   }
   focusFunctionPass(){
     this.inputPassValid = false; 
+    this.validarCantPass =false;
   } 
   
   /* /////// L O G I N ////////////  */
@@ -143,12 +154,28 @@ export class LoginComponent implements OnInit {
   }  
 
   public submitLogin() : any { 
+
+
     console.log("INTENTOS THIS : "+this.intentos)
 
     if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '') {
       this.inputUsuaValid = true;
       this.inputPassValid = true;
-      //return;
+       return;
+    }
+    
+    if(this.loginForm.get('ruc').value.length < 11 && this.loginForm.get('psw').value.length < 6){
+      this.validarCantRuc =true;
+      this.validarCantPass =true;
+      return;
+    }
+    if(this.loginForm.get('ruc').value.length < 11){
+      this.validarCantRuc =true;
+      return;
+    }
+    if(this.loginForm.get('psw').value.length < 6){
+      this.validarCantPass =true;
+      return;
     }
     
     
