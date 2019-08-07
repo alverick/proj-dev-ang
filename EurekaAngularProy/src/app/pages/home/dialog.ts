@@ -64,7 +64,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
       .subscribe(
         value=> {
           this.excelService.idProcess = value.id;
-         // console.table(value);
+        
         }
       )
       // 
