@@ -44,7 +44,7 @@ import Swal from "sweetalert2";
           this.snackRef.dismiss();
   
           this.excelService.errores = value.errors;
-          console.table(value.errors);
+          
           console.log('ABRE DIALOG')
           const dialogRef =  this.dialog.open(ValidationComponent);
          // dialogRef.close(ValidationComponent);

@@ -9,7 +9,6 @@ import { MatDialog, MatSnackBar, MatSnackBarRef, MatDialogRef} from '@angular/ma
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
@@ -22,8 +21,6 @@ import { default as _rollupMoment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
-import { ValidationComponent } from './validation';
-import { UploadProgressComponent } from './upload-progress';
 import { DialogComponent } from './dialog';
 //// END DATE ////////////////////
 
@@ -475,12 +472,11 @@ if(columnName === 'amount' ) {
     this.ascmontopgray= false;
   }
 }
-    console.table(this.filtro );
+
     this.filtro.asc = asc;
     this.filtro.columnName = columnName;
    // this.filtro.dateFrom=; 
     // this.filtro.dateTo;
-    console.table(this.filtro);
     this.consultaDeuda();
 
   }
@@ -506,7 +502,7 @@ if(columnName === 'amount' ) {
             });
             return;
           } else {
-                console.table(this.filtro);
+             
                 this.spinner.show();
                 this.debtsList = {
                   count: 0,
@@ -782,7 +778,6 @@ if(columnName === 'amount' ) {
               text:'Su registro a sido editado',
               onAfterClose: () => {
                 console.log('onAfterClose');
-                //this.consultaDeuda();
                 item.emissionDate = item.newEmissionDate;
                 item.dueDate = item.newDueDate;
                 item.concept = item.newConcept;
@@ -791,14 +786,7 @@ if(columnName === 'amount' ) {
             });  
           }
         )
-      
-        /* this.transactionService.editDeuda(item.id, debts)
-        .subscribe(() => this.consultaDeuda());*/
-       /* Swal.fire(
-          'Editado!',
-          'Su registro a sido editado',
-          'success'
-        ) */
+
       }
     });
 
@@ -897,90 +885,10 @@ MostrarListaSelect() {
     dialogRef.afterClosed().subscribe(result => {
 
     });
-    //this.consultaDeuda();
   }
 
 
 }
-
-
-
-
-
-
-
-
-
-/*////////////////////////////////////////////////////////
-///////////////// D I A L O G //////////////////////////
-///////////////////////////////////////////////////////// */
-
-/*
-@Component({
-  selector: 'dialog-data-example-dialog',
-  templateUrl: 'dialog.html',
-})
-
-export class DialogDataExampleDialog implements OnInit {
-
-  public inputXlsForm: FormGroup;
-  public xlsValid: boolean;
-  public codigoCliente: String = 'Codigo de Cliente';
-
-  validationExcel = {
-    'xls':[
-      { type: 'required', message: 'Debes Ingresar un archivo excel'}
-    ]
-  }
-
-  constructor(public  snackBar: MatSnackBar,
-              private excelService: ExcelService,
-              public  formBuilder: FormBuilder,
-              public  dialogRef: MatDialogRef<DialogDataExampleDialog>
-
-            ) { }
-
-  ngOnInit() {
-    this.inputXlsForm = this.formBuilder.group({
-      xls: ['', Validators.required]
-    });
-
-  }
-
-  onChangeFile(event) {
-    this.files = event.target.files;
-  }
-
-  SalirsnackBar() {
-    this.dialogRef.close();
-  }
-  private files: any;
-  get f() { return this.inputXlsForm.controls;}
-
-
-   openSnackBar() {
-    if(this.inputXlsForm.valid) {
-    this.excelService.UploadExcel(this.files, this.excelService.service)
-    .subscribe(
-      value=> {
-        this.excelService.idProcess = value.id;
-      }
-    )
-    console.log('se habre el sncack bar ');
-    this.snackBar.openFromComponent(UploadProgressComponent);
-    this.dialogRef.close();
-    } else {
-      this.xlsValid = true;
-      
-    }
-  }
-
-  close(){
-    this.dialogRef.close();
-  }
-}
-
-*/
 
 
 
