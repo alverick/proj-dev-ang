@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import { DialogComponent } from 'src/app/pages/home/dialog';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -73,12 +75,13 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private cookieService : CookieService,
-    private storageService: StorageService ) {}
+    private storageService: StorageService
+    ) {}
 
   ngOnInit() {
     let rucStr = this.cookieService.check('ruc') ?
     this.cookieService.get('ruc') :  '';
-    
+
     this.validationLogin(rucStr);
    // this.validaInputs();
   }
@@ -227,9 +230,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         value => {
-          console.log("INTENTOS SERVICE : "+value.paramNum)
-
-          
+          console.log("INTENTOS SERVICE : "+value.paramNum) 
           this.storageService.setIntentos(value.paramNum);
           this.intentos = this.storageService.getIntentos();
 

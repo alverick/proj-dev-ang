@@ -75,14 +75,14 @@ import Swal from "sweetalert2";
             th.excelService.StatusExcel(th.excelService.idProcess)
               .subscribe(recursiveFunc);
           }, 500);
-  
+          this.snackRef.dismiss();
         }
       };
       setTimeout(() => {
         this.excelService.StatusExcel(this.excelService.idProcess)
         .subscribe(recursiveFunc);
       }, 800);
-  
+      this.snackRef.dismiss();  
     }
     
    
