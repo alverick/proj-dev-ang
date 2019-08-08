@@ -58,7 +58,9 @@ import { ExcelService } from "src/app/shared/services/excel.service";
   
   
      openSnackBar() {
-      if(this.inputXlsForm.valid) {
+       console.log("ENTRO : " + this.inputXlsForm.value)
+      if(this.inputXlsForm.value) {
+        this.xlsValid= false;
       /*service*/
       this.excelService.UploadExcel(this.files, this.excelService.service)
       .subscribe(
@@ -68,7 +70,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
         }
       )
       // 
-      console.log('se habre el sncack bar ');
+      console.log('se abre el snack bar ');
       this.snackBar.openFromComponent(UploadProgressComponent);
       this.dialogRef.close();
       } else {

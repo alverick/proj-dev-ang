@@ -38,7 +38,9 @@ import Swal from "sweetalert2";
   
       // tslint:disable-next-line:prefer-const
       let recursiveFunc = (value) => {
-  
+        
+
+          console.log("LOCAL : "+localStorage.getItem('tk'));
         console.log(value.status);
         if (value.status === "REJECTED") {
           this.snackRef.dismiss();
@@ -75,14 +77,12 @@ import Swal from "sweetalert2";
             th.excelService.StatusExcel(th.excelService.idProcess)
               .subscribe(recursiveFunc);
           }, 500);
-  
         }
       };
       setTimeout(() => {
         this.excelService.StatusExcel(this.excelService.idProcess)
         .subscribe(recursiveFunc);
       }, 800);
-  
     }
     
    
