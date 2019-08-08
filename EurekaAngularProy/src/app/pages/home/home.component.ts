@@ -196,8 +196,15 @@ export class HomeComponent implements OnInit {
 
     }
     numberOnly(event): boolean {
+      /*
       const charCode = (event.which) ? event.which : event.keyCode;
       if (charCode > 31 && (charCode <= 46 || charCode >= 58)  ) {
+        return false;
+      }
+      return true;*/
+      const usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+
+      if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
         return false;
       }
       return true;

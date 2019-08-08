@@ -39,6 +39,7 @@ import { ValidationComponent } from './pages/home/validation';
 import { UploadProgressComponent } from './pages/home/upload-progress';
 import { DialogComponent } from './pages/home/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DateDirective } from './pages/home/date.directive';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ValidationComponent,
     NumberDirectiveHome,
     UploadProgressComponent,
-    DialogComponent
+    DialogComponent,
+    DateDirective
 
     ],
   imports: [
@@ -80,7 +82,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatProgressBarModule,
     NgxPaginationModule,
     MatMomentDateModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatSelectModule,
     MatProgressSpinnerModule,
     FontAwesomeModule

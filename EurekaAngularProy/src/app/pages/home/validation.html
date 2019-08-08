@@ -1,6 +1,6 @@
 <div class="container py-4" style="background: #f4f5f7  !important;">
-    <mat-dialog-actions align="end" >
-        <div (click)="hideErros()" >
+    <mat-dialog-actions align="end">
+        <div (click)="hideErros()">
             <span class="h5 m-0 pr-2"></span>
             <button class="button-close" [mat-dialog-close]="true">
                 <span class="icon-icono-x font-16" ></span>
@@ -8,47 +8,46 @@
         </div>
     </mat-dialog-actions>
     <mat-dialog-content>
-    <div class="bg-blanco mb-3 custom-shadow pasos-add-registro">
-        <div class="d-none text-center">
-            <h6 class="my-4">Validacion</h6>
-            <div class="icon-grande"><span class="icon-papel"></span></div>
-            <div class="mb-3 mt-4"><button class="btn-eureca btn-eureca-amarillo btn-small">Descargar plantilla</button>
+        <div class="bg-blanco mb-3 custom-shadow pasos-add-registro">
+            <div class="d-none text-center">
+                <h6 class="my-4">Validacion</h6>
+                <div class="icon-grande"><span class="icon-papel"></span></div>
+                <div class="mb-3 mt-4"><button class="btn-eureca btn-eureca-amarillo btn-small">Descargar plantilla</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="bg-blanco custom-shadow pasos-add-registro activo">
-        <div class="title-popup-add-registo text-center position-relative h2 m-0">
-            <div>La información que haz ingresado es incorrecta!</div>
-        </div>
-        <hr>
-        <div    style="text-align: left; ">
-            <table >
-                <!--si es fila 0 solo un mensaje  'La información que haz ingresado es incorrecta!'-->
-                <tr style="overflow: scroll;" *ngFor="let error of excelService.errores">
-                    <div *ngIf="error.row == 0" >
-                        <span style="color: red;">
+        <div class="bg-blanco custom-shadow pasos-add-registro activo">
+            <div class="title-popup-add-registo text-center position-relative h2 m-0">
+                <div>Se encontraron los siguientes errores:</div>
+            </div>
+            <div style="text-align: left; border: 1px solid red; ">
+                <table>
+                    <!--si es fila 0 solo un mensaje  'La información que haz ingresado es incorrecta!'-->
+                    <tr *ngFor="let error of excelService.errores">
+                        <div *ngIf="error.row == 0">
+                            <span style="color: red;">
                            Asegurese que el Excel que has ingresado sea el formato correcto
-                        </span>     
-                    </div>
-                    <div   *ngIf="error.row !== 0" >
-                    <div data-spy="scroll">
-                    <td>En la fila &nbsp;<span style="color: red;"> {{ error.row}}
-                    &nbsp;</span> {{ error.description }}, el campo &nbsp; 
-                    <span style="color: green;"> {{ error.field }}</span> 
-                    &nbsp; tiene el valor &nbsp; <span style="color: orange;">{{ error.value }} </span></td>
-                    </div>
-                </div>
-                </tr>
-            </table>
+                        </span>
+                        </div>
+                        <div *ngIf="error.row > 1">
+                            <div data-spy="scroll">
+                                <td> <strong>Fila &nbsp; {{ error.row}}:&nbsp;</strong> {{ error.description }}
+                                    <!-- , el campo &nbsp;
+                                    <span style="color: green;"> {{ error.field }}</span> &nbsp; tiene el valor &nbsp; <span style="color: orange;">{{ error.value }} </span> --></td>
+                            </div>
+                        </div>
+                    </tr>
+                </table>
+            </div>
+            <div>Corrige los errores y vuelve a subir la plantilla</div>
         </div>
-    </div>
     </mat-dialog-content>
 </div>
 
 <style>
-.button-close{
-    background-color: #ffffff00; 
-    border-color: #ffffff00;
-}
+    .button-close {
+        background-color: #ffffff00;
+        border-color: #ffffff00;
+    }
 </style>

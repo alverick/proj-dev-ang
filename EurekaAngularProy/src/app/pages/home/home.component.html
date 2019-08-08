@@ -4,10 +4,10 @@
             <div class="col">
                 <!--good-->
                 <div class="my-3 p-3 bg-white rounded shadow-sm">
-                <div class="table-responsive">
-                    <table class="table">
-                        <h1 class="h5 mb-3">Movimientos</h1>
-                        
+                    <div class="table-responsive">
+                        <table class="table">
+                            <h1 class="h5 mb-3">Movimientos</h1>
+
                             <!--//////////// F I L T R O S //////////////// -->
                             <div class="d-flex align-items-center">
                                 <div class="texto-azulbase font-medium">
@@ -53,8 +53,8 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field>
-                                            <input [min]="minDate" [max]="maxDate" inputmode="numeric" (dateChange)="change($event)" #inputDate1 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10" (keypress)="numberOnly($event)"
-                                                appBlockCopyPaste>
+                                            <input [min]="minDate" [max]="maxDate" ngModel pattern="/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$" (dateChange)="change($event)" #inputDate1 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom"
+                                                maxlength="10" minlength="10" appBlockCopyPaste>
                                             <label *ngIf="mostrarxdate1()" (click)="limpiardate1()" class="fa fa-times"></label>
                                             <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker class="md-datepicker-input-container" #myDatepicker2></mat-datepicker>
@@ -86,234 +86,234 @@
 
 
                 <div class="my-3 p-3 bg-white rounded shadow-sm">
-                <div class="table-responsive">
-                    <table class="table" style="margin-bottom: 0rem">
-                        <div class="d-flex bd-highlight">
-                            <div class="p-2 bd-highlight">
-                                <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
-                                <label for="styl" class="text-small font-medium"></label><br>
-                                <span class="text-small font-medium">Seleccionar</span>
-                            </div>
-                            <div class="p-2 bd-highlight">
-                                <div class="rotar mano" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    <span class="text-small font-medium"></span>
-                                    <span class="icon-correo-azul  iconos-big"></span>
+                    <div class="table-responsive">
+                        <table class="table" style="margin-bottom: 0rem">
+                            <div class="d-flex bd-highlight">
+                                <div class="p-2 bd-highlight">
+                                    <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
+                                    <label for="styl" class="text-small font-medium"></label><br>
+                                    <span class="text-small font-medium">Seleccionar</span>
                                 </div>
-                                <span class="text-small font-medium">Cargar </span>
-                                <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
-                                    <div class="card card-body">
-                                        <div data-toggle="collapse" class="selecciona-servicio">Selecciona el servicio</div>
-                                        <div *ngFor="let service of services" (click)="openDialog(service)">
-                                            <div class="mano" data-toggle="collapse">
-                                                {{service}}
+                                <div class="p-2 bd-highlight">
+                                    <div class="rotar mano" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                        <span class="text-small font-medium"></span>
+                                        <span class="icon-correo-azul  iconos-big"></span>
+                                    </div>
+                                    <span class="text-small font-medium">Cargar </span>
+                                    <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
+                                        <div class="card card-body">
+                                            <div data-toggle="collapse" class="selecciona-servicio">Selecciona el servicio</div>
+                                            <div *ngFor="let service of services" (click)="openDialog(service)">
+                                                <div class="mano" data-toggle="collapse">
+                                                    {{service}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="p-2 bd-highlight">
-                                <a class=" mano texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
-                                    <span class="icon-correo-azul iconos-big"></span> <br>
-                                    <span class="text-small font-medium"> </span>
-                                </a>
-                                <span class="text-small font-medium">Descargar</span>
-                            </div>
-                            
-                            <div class="p-2 bd-highlight">
-                                <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
-                                    <span class="icon-eliminar iconos-big"></span><br>
-                                    <span class="text-small font-medium"></span>
-                                </a>
-                                <span class="text-small font-medium">Eliminar</span>
-                           </div>
-                           <div class="col-md-9 ml-auto" style="padding-top: 12px;">
-                            <div class="row justify-content-end">
-                                <div   style="font-size: 17px">
-                                    <div style="font-size: 17px" *ngIf="pagination1">
-                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{ transactionService.debtItems.data.length}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
-                                    </div>
-                                    <div style="font-size: 17px" *ngIf="pagination2">
-                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{filtro.pageNumber*50}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
-                                    </div>
-                                    <div style="font-size: 17px" *ngIf="pagination3">
-                                        <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span>  <span>{{transactionService.debtItems.count}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
-                                    </div>
-                                   
-                                </div> 
-                                <div *ngIf="debtsList.data.length !== 0">
-                                    <pagination-controls   responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)">    </pagination-controls>
+
+                                <div class="p-2 bd-highlight">
+                                    <a class=" mano texto-azul" href="" data-toggle="modal" data-target="#ModalDescargar">
+                                        <span class="icon-correo-azul iconos-big"></span> <br>
+                                        <span class="text-small font-medium"> </span>
+                                    </a>
+                                    <span class="text-small font-medium">Descargar</span>
                                 </div>
-                              </div>
+
+                                <div class="p-2 bd-highlight">
+                                    <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
+                                        <span class="icon-eliminar iconos-big"></span><br>
+                                        <span class="text-small font-medium"></span>
+                                    </a>
+                                    <span class="text-small font-medium">Eliminar</span>
+                                </div>
+                                <div class="col-md-9 ml-auto" style="padding-top: 12px;">
+                                    <div class="row justify-content-end">
+                                        <div style="font-size: 17px">
+                                            <div style="font-size: 17px" *ngIf="pagination1">
+                                                <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{ transactionService.debtItems.data.length}}</span> de <span> {{transactionService.debtItems.count }}</span>                                                de elementos
+                                            </div>
+                                            <div style="font-size: 17px" *ngIf="pagination2">
+                                                <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{filtro.pageNumber*50}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
+                                            </div>
+                                            <div style="font-size: 17px" *ngIf="pagination3">
+                                                <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{transactionService.debtItems.count}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
+                                            </div>
+
+                                        </div>
+                                        <div *ngIf="debtsList.data.length > 0">
+                                            <pagination-controls responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)"> </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            
-                        </div>
-                    </table>
-                </div>  
-                <div class="table-responsive">
-                    <table class="table">                            
-                        <thead>
-                            <tr bgcolor="#f9f7f0" style="font-size: 12px !important">
-                                <th scope="col"></th>
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center ">
-                                        <div class="d-inline-block text-center"> Fecha<br>emisión </div>
-                                        <div class=" d-inline-block ml-1">
-                                            <div class="arrow-filter-asc-gray" *ngIf="ascFeEmisiongray"  ><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div class="arrow-filter-asc-blue" *ngIf="ascFeEmisionblue"  ><span class="mano fa fas fa-caret-up" (click)="AscDesc('emissionDate', true)"></span> </div>  
-                                            <div class="arrow-filter-dsc-blue" *ngIf="descFeEmisionblue"  ><span class="mano fa fas fa-caret-down" (click)="AscDesc('emissionDate', false)"></span> </div>
-                                            <div class="arrow-filter-dsc-gray"*ngIf="descFeEmisiongray"  ><span class="  fa fas fa-caret-down"></span> </div>
+                        </table>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr bgcolor="#f9f7f0" style="font-size: 12px !important">
+                                    <th scope="col"></th>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center ">
+                                            <div class="d-inline-block text-center"> Fecha<br>emisión </div>
+                                            <div class=" d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascFeEmisiongray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascFeEmisionblue"><span class="mano fa fas fa-caret-up" (click)="AscDesc('emissionDate', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="descFeEmisionblue"><span class="mano fa fas fa-caret-down" (click)="AscDesc('emissionDate', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="descFeEmisiongray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
-                                <th scope="col">
-                                    <div class=" d-flex align-items-center justify-content-center ">
-                                        <div class="d-inline-block text-center">Fecha<br>vto. </div>
-                                        <div class=" d-inline-block ml-1">
-                                            <div class="arrow-filter-asc-gray" *ngIf="ascFeVctgray"  ><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div class="arrow-filter-asc-blue" *ngIf="ascFeVctblue"  ><span class="mano fa fas fa-caret-up" (click)="AscDesc('dueDate', true)"></span> </div>  
-                                            <div class="arrow-filter-dsc-blue" *ngIf="dscFeVctblue"  ><span class="mano fa fas fa-caret-down" (click)="AscDesc('dueDate', false)"></span> </div>
-                                            <div class="arrow-filter-dsc-gray"*ngIf="dscFeVctgray"  ><span class="  fa fas fa-caret-down"></span> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class=" d-flex align-items-center justify-content-center ">
+                                            <div class="d-inline-block text-center">Fecha<br>vto. </div>
+                                            <div class=" d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascFeVctgray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascFeVctblue"><span class="mano fa fas fa-caret-up" (click)="AscDesc('dueDate', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscFeVctblue"><span class="mano fa fas fa-caret-down" (click)="AscDesc('dueDate', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscFeVctgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center">Código<br>de cliente </div>
-                                        <div class=" d-inline-block ml-1">
-                                            <div class="arrow-filter-asc-gray" *ngIf="asccodgray"  ><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div class="arrow-filter-asc-blue" *ngIf="asccodblue"> <span   class="mano fa fas fa-caret-up" (click)="AscDesc('code', true)"></span> </div>  
-                                            <div class="arrow-filter-dsc-blue" *ngIf="dsccodiblue"> <span   class="mano fa fas fa-caret-down" (click)="AscDesc('code', false)"></span></div>
-                                            <div class="arrow-filter-dsc-gray" *ngIf="dsccodigray" ><span class="  fa fas fa-caret-down"></span> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center">Código<br>de cliente </div>
+                                            <div class=" d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="asccodgray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="asccodblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('code', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dsccodiblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('code', false)"></span></div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dsccodigray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="styletexttable">Nombres </div>
-                                        <div class=" d-inline-block ml-1">
-                                            <div class="arrow-filter-asc-gray" *ngIf="ascnamegray" ><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div class="arrow-filter-asc-blue" *ngIf="ascnameblue"  > <span class="mano fa fas fa-caret-up" (click)="AscDesc('firstName', true)"></span></div>  
-                                            <div class="arrow-filter-dsc-blue" *ngIf="dscnameblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('firstName', false)"></span> </div>
-                                            <div class="arrow-filter-dsc-gray" *ngIf="dscnamegray" ><span class="  fa fas fa-caret-down"></span> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="styletexttable">Nombres </div>
+                                            <div class=" d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascnamegray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascnameblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('firstName', true)"></span></div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscnameblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('firstName', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscnamegray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
+                                    </th>
 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center">Apellidos </div>
-                                        <div class="d-inline-block ml-1">
-                                            <div class="arrow-filter-asc-gray" *ngIf="asclastgray" ><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div class="arrow-filter-asc-blue" *ngIf="asclastblue"  ><span class="mano fa fas fa-caret-up" (click)="AscDesc('lastName', true)"></span> </div>  
-                                            <div class="arrow-filter-dsc-blue" *ngIf="dsclastblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('lastName', false)"></span> </div>
-                                            <div class="arrow-filter-dsc-gray" *ngIf="dsclastgray" ><span class="  fa fas fa-caret-down"></span> </div>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center">Apellidos </div>
+                                            <div class="d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="asclastgray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="asclastblue"><span class="mano fa fas fa-caret-up" (click)="AscDesc('lastName', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dsclastblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('lastName', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dsclastgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
+                                    </th>
 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="styletexttable">Servicio </div>
-                                        <div class="mano d-inline-block ml-1">
-                                            <div class="arrow-filter-asc-gray" *ngIf="ascservgray" ><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div class="arrow-filter-asc-blue"  *ngIf="ascservblue"  > <span class="mano fa fas fa-caret-up" (click)="AscDesc('service', true)"></span> </div>  
-                                            <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('service', false)"></span> </div>
-                                            <div class="arrow-filter-dsc-gray" *ngIf="dscservgray" ><span class="  fa fas fa-caret-down"></span> </div>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="styletexttable">Servicio </div>
+                                            <div class="mano d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascservgray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascservblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('service', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('service', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscservgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
+                                    </th>
 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="styletexttable">Concepto </div>
-                                        <div class="mano d-inline-block ml-1">
-                                            <div class="arrow-filter-asc-gray" *ngIf="ascconcepgray" ><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"  > <span class="mano fa fas fa-caret-up" (click)="AscDesc('concept', true)"></span> </div> 
-                                            <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('concept', false)"></span> </div>
-                                            <div class="arrow-filter-dsc-gray" *ngIf="dscconcepgray" ><span class="  fa fas fa-caret-down"></span> </div>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="styletexttable">Concepto </div>
+                                            <div class="mano d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascconcepgray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('concept', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('concept', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscconcepgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
+                                    </th>
 
-                                <th scope="col">
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <div class="d-inline-block text-center">Monto </div>
-                                        <div class="mano d-inline-block ml-1">
-                                            <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray" ><span class="  fa fas fa-caret-up"></span> </div>
-                                            <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"  > <span class="mano fa fas fa-caret-up" (click)="AscDesc('amount', true)"></span> </div>  
-                                            <div class="arrow-filter-dsc-blue" *ngIf="dscmontopblue"  > <span class="mano fa fas fa-caret-down" (click)="AscDesc('amount', false)"></span> </div>
-                                            <div class="arrow-filter-dsc-gray" *ngIf="dscmontopgray" ><span class="  fa fas fa-caret-down"></span> </div>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center">Monto </div>
+                                            <div class="mano d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('amount', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscmontopblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('amount', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscmontopgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
+                                    </th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
 
 
-                        <tbody style=" overflow: auto;">
-                            <tr *ngIf="ceroRegistros()">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td colspan="30" style="align-content: center; font-size: 20px;" class="texto-after">
-                                    Para empezar, carga las deudas de tus clientes </td>
-                                <td></td>
-                            </tr>
+                            <tbody style=" overflow: auto;">
+                                <tr *ngIf="ceroRegistros()">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td colspan="30" style="align-content: center; font-size: 20px;" class="texto-after">
+                                        Para empezar, carga las deudas de tus clientes </td>
+                                    <td></td>
+                                </tr>
 
-                            <tr  *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }">
-                                <td style="width: auto">
-                                    <input id="{{ 'chk_' + items.id }}" class="styled-checkbox" type="checkbox" [(ngModel)]="items.selected">
-                                    <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
-                                </td>
-                                <td style="width: auto; text-align: center;">
-                                    <span style="width: auto" *ngIf="!items.edit">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
-                                    <div *ngIf="items.edit" class="content-input-icon position-relative">
-                                        <mat-form-field style="width: 100px">
-                                            <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" inputmode="numeric" (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
-                                            <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
-                                            <mat-datepicker #edp></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
-                                </td>
-                                <td style="width: auto">
-                                    <span *ngIf="!items.edit">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
-                                    <div *ngIf="items.edit" class="content-input-icon position-relative">
-                                        <mat-form-field style="width: 100px">
-                                            <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" inputmode="numeric" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
-                                            <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
-                                            <mat-datepicker #ddp></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
-                                </td>
-                                <td style="width: auto">{{items.code}}</td>
-                                <td style="width: auto">{{items.firstName}}</td>
-                                <td style="width: auto">{{items.lastName}}</td>
-                                <td style="width: auto">{{items.service}}</td>
-                                <td style="width: auto">
-                                    <span *ngIf="!items.edit">{{items.concept}}</span>
-                                    <div *ngIf="items.edit">
-                                        <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="concepto($event)" maxlength="10" minlength="10" />
-                                    </div>
-                                </td>
-                                <td>{{items.amount}}</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
-                                            <span class="icon-editar iconos-big iconos-big"></span>
-                                        </div> &nbsp;&nbsp;&nbsp;
-                                        <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="Eliminar(items)">
-                                            <span class="icon-eliminar iconos-big iconos-big"></span>
+                                <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }">
+                                    <td style="width: auto">
+                                        <input id="{{ 'chk_' + items.id }}" class="styled-checkbox" type="checkbox" [(ngModel)]="items.selected">
+                                        <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
+                                    </td>
+                                    <td style="width: auto; text-align: center;">
+                                        <span style="width: auto" *ngIf="!items.edit">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
+                                        <div *ngIf="items.edit" class="content-input-icon position-relative">
+                                            <mat-form-field style="width: 100px">
+                                                <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" inputmode="numeric" (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
+                                                <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
+                                                <mat-datepicker #edp></mat-datepicker>
+                                            </mat-form-field>
                                         </div>
-                                        <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer;  margin-right: 18px !important" (click)="BotonActualizar(items)">
-                                            <img src="assets/images/table-check.svg" alt="Aceptar">
+                                    </td>
+                                    <td style="width: auto">
+                                        <span *ngIf="!items.edit">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
+                                        <div *ngIf="items.edit" class="content-input-icon position-relative">
+                                            <mat-form-field style="width: 100px">
+                                                <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" inputmode="numeric" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
+                                                <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
+                                                <mat-datepicker #ddp></mat-datepicker>
+                                            </mat-form-field>
                                         </div>
-                                        <div (click)="BotonCancela(items)" *ngIf="items.edit" class="d-inline-block" style="cursor: pointer; margin-right: 18px !important">
-                                            <img src="assets/images/table-delete.svg" alt="Eliminar">
+                                    </td>
+                                    <td style="width: auto">{{items.code}}</td>
+                                    <td style="width: auto">{{items.firstName}}</td>
+                                    <td style="width: auto">{{items.lastName}}</td>
+                                    <td style="width: auto">{{items.service}}</td>
+                                    <td style="width: auto">
+                                        <span *ngIf="!items.edit">{{items.concept}}</span>
+                                        <div *ngIf="items.edit">
+                                            <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="concepto($event)" maxlength="10" minlength="10" />
                                         </div>
-                                    </div>
-                                    <!--
+                                    </td>
+                                    <td>{{items.amount}}</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
+                                                <span class="icon-editar iconos-big iconos-big"></span>
+                                            </div> &nbsp;&nbsp;&nbsp;
+                                            <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="Eliminar(items)">
+                                                <span class="icon-eliminar iconos-big iconos-big"></span>
+                                            </div>
+                                            <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer;  margin-right: 18px !important" (click)="BotonActualizar(items)">
+                                                <img src="assets/images/table-check.svg" alt="Aceptar">
+                                            </div>
+                                            <div (click)="BotonCancela(items)" *ngIf="items.edit" class="d-inline-block" style="cursor: pointer; margin-right: 18px !important">
+                                                <img src="assets/images/table-delete.svg" alt="Eliminar">
+                                            </div>
+                                        </div>
+                                        <!--
                                         <mat-progress-spinner *ngIf="spinnerTrue"
                                                 class="example-margin"
                                                 [color]="color"
@@ -321,15 +321,15 @@
                                                 [value]="value">
                                             </mat-progress-spinner>
                                     -->
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                <br>
-                <!--end good-->
+                    <br>
+                    <!--end good-->
+                </div>
             </div>
         </div>
     </div>
-</div>
