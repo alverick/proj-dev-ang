@@ -1,274 +1,79 @@
 <div class="body">
   <div class="container">
-      <div class="row"> 
-          <div class="col-sm-5">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="row">
+          <div class="col-sm">
+            <br>
+            <h2 class="texto-azulbase">Configura tus servicios </h2>
+            <div class="col-sm-10">
+              <div class="card" *ngFor="let svc of afiliacionService.services; let i = index">
+                <div class="card-body">
                   <div class="row">
-                      <div class="col-sm">
-                          <br>
-                          <h2 class="texto-azulbase">Configura tus servicios </h2>
-                          
-                          <div class="col-sm-10">
-                            <div class="card">
-                              <div class="card-body">
-                                  <div class="row">
-                                    
-                                    <div class="col-sm-9"> 
-                                      <h5 class="font-semibold">Pensión</h5> 
-                                    </div>
-                                    <div class="col-sm-1"> 
-                                      <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
-                                          <li>
-                                              <a class="texto-azul" href="#"><i class="icon-lapiz"></i></a>
-                                          </li>
-                                          <li class="ml-2">
-                                              <a class="texto-azul borrar" href="#"><i class="icon-basura"></i></a>
-                                          </li>
-                                      </ul>
-                                    </div>
-
-                                  </div>
-                                  <table class="table table-sm table-borderless mb-0">
-                                      <tr>
-                                          <th><small>Canales</small></th>
-                                          <td><small>Digital, agentes y agencias</small></td>
-                                      </tr>
-                                      <tr>
-                                          <th><small>Mora</small></th>
-                                          <td><small>S/0</small></td>
-                                      </tr>
-                                      <tr>
-                                          <th><small>Cuenta</small></th>
-                                          <td><small>2093857379</small></td>
-                                      </tr>
-                                  </table>
-
-                              </div>
-                            </div>
-                          </div> 
-                      </div>
-                  </div>
-                  <br>
-                   
-                      <p>
-                      <button (click)="MostarFormulario()" class="btn w-70 btn-outline-amarillo fa fa-plus-circle">
-                          Agregar otro servicio
-                      </button>
-                      </p>
-                      <button type="submit" class="btn-big w-50 btn-eureca btn-eureca-amarillo text-white" form="login-form"> Finalizar</button>
-                 
-                  
-
-          </div>
-   
-          <div class="col-sm-7 position-relative" *ngIf="Formulario" >
-              <br>
-              
-              <div class="d-flex justify-content-center">
-                  <div class=" border p-5 bg-white rounded">
-                    <div  style="float: right;">
-                        <button (click)="OcultarFormulario()"   type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i>
-                        </button> 
+                    <div class="col-sm-9">
+                      <h5 class="font-semibold">{{svc.nombre}}</h5>
                     </div>
-                     
-                    <h5 class="mt-2 mb-4 font-semibold">Editar servicio</h5>
-                      <form [formGroup]="frm" novalidate (submit)="onSubmitServicio()">
-                          <div class="form-group"> 
-                              <mat-form-field  class="w-100">
-                                  <input   matInput type="text" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio"  >
-                                  <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>                                  
-                              </mat-form-field>
-                          </div>
-                          <div class="form-group"> 
-                              <mat-form-field class="w-49" >
-                                  <mat-label>Rubro de Servicio</mat-label>
-                                  <mat-select formControlName="rubro" name="rubro">
-                                    <mat-option>Rubro de Servicio</mat-option>
-                                    <mat-option *ngFor="let r of rubros" [value]="r.id">
-                                      {{r.name}}
-                                    </mat-option>
-                                  </mat-select>
-                                  <mat-error *ngIf="f.rubro.invalid && f.rubro.hasError('required')">Elija una opcion</mat-error>
-                                </mat-form-field>&nbsp;  
-                                <mat-form-field class="w-49" >
-                                  <mat-label>Codigo Deudor</mat-label>
-                                  <mat-select formControlName="codDeudor" name="codDeudor">
-                                    <mat-option>Codigo Deudor</mat-option>
-                                    <mat-option *ngFor="let c of codDeudor" [value]="c.code">
-                                      {{c.name}}
-                                    </mat-option>
-                                  </mat-select>
-                                  <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
-                                </mat-form-field>
-                          </div> 
-                           
-                          <div class="form-group"> 
-                              <mat-form-field  class="w-100">
-                                  <mat-label>¿Que datos tienes de tus clientes?</mat-label>
-                                  <mat-select formControlName="tipoDato" name="tipoDato">
-                                    <mat-option>¿Que datos tienes de tus clientes?</mat-option>
-                                    <mat-option *ngFor="let t of tiposDato" [value]="t.code">
-                                      {{t.name}}
-                                    </mat-option>
-                                  </mat-select>
-                                  <mat-error *ngIf="f.tipoDato.invalid && f.tipoDato.hasError('required')">Elija una opcion</mat-error>
-                                </mat-form-field>
-                          </div>
-                          <div class="form-group"> 
-                              <mat-form-field  class="w-100">
-                                  <mat-label>¿Como quieres que te paguen tus clientes?</mat-label>
-                                  <mat-select formControlName="tipoPago" name="tipoPago">
-                                    <mat-option>¿Como quieres que te paguen tus clientes?</mat-option>
-                                    <mat-option *ngFor="let t of tiposPago" [value]="t.id">
-                                      {{t.name}}
-                                    </mat-option>
-                                  </mat-select>
-                                  <mat-error *ngIf="f.tipoPago.invalid && f.tipoPago.hasError('required')">Elija una opcion</mat-error>
-                                </mat-form-field>
-                          </div>
-                          <div class="form-group"> 
-                              <mat-form-field  >
-                                  <input    matInput type="text" formControlName="nroCta" name="nroCta" placeholder="N° de Cuenta"  >
-                                  <mat-error *ngIf="f.nroCta.invalid && f.nroCta.hasError('required')">El numero de cuenta es obligatorio</mat-error>                                  
-                              </mat-form-field>
-
-                              &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                <mat-form-field  >
-                                    <mat-label>Tipo de Moneda</mat-label>
-                                    <mat-select formControlName="moneda" name="moneda" (change)="changeMoneda()">
-                                      <mat-option>Tipo de Moneda</mat-option>
-                                      <mat-option *ngFor="let m of monedas" [value]="m.code">
-                                        {{m.name}}
-                                      </mat-option>
-                                    </mat-select>
-                                    <mat-error *ngIf="f.moneda.hasError('required')">Elija una opcion</mat-error>
-                                </mat-form-field>
-                          </div>
-
-                          <span class="texto-azulbase" style="font-size:13px;"> <strong>Elige los medios por los cuales tus clientes te pagarán </strong> </span>
-                              <div class="row">
-                                  <div class="col-sm-4"  >
-                                    <div class="card" [class.seleccionado]="f.usaWebApp.value" style=" height: 250px;">
-                                      <div class="card-body">
-                                          <div class="mt-4" style="text-align:center;" >
-                                              <input class="styled-checkbox" formControlName="usaWebApp" id="styled-checkbox-1" type="checkbox" >
-                                              <label for="styled-checkbox-1"><span class="ml-2"></span></label>
-                                          </div>
-                                          <div class="text-center w-100 pb-2 px-1 position-relative">
-                                              <h6 class="font-semibold d-block mb-1"><strong> Digital </strong><br> 
-                                              </h6>
-                                              <br> 
-                                              <h6 class="font-semibold d-block mb-1"> 
-                                                <small class="d-block mt-1">Banca por internet, Interbank APP</small>
-                                            </h6>
-                                              <span class="d-block mb-4 texto-azul font-semibold precio">GRATIS</span>
-                                          </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col-sm-4">
-                                    <div class="card" [class.seleccionado]="f.usaAgente.value" style=" height: 250px;">
-                                      <div class="card-body">
-                                          <div class="mt-4" style="text-align:center;">
-                                              <input style="align-content: center;" formControlName="usaAgente" class="styled-checkbox" id="styled-checkbox-2" type="checkbox"  >
-                                              <label for="styled-checkbox-2"><span class="ml-2">  </span></label>
-                                          </div>
-                                          <div class="text-center w-100 pb-2 px-1 position-relative">
-                                              <h6 class="font-semibold d-block mb-1"><strong> Agentes </strong><br>
-                                                  
-                                              </h6>
-                                              <br><br>
-                                              <h6 class="font-semibold d-block mb-1">  
-                                                <small class="d-block mt-1">Lima y provincias</small>
-                                             
-                                              <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 1</span>
-                                              <small  >por transacion</small>
-                                              </h6>
-                                          </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col-sm-4">
-                                      <div class="card" [class.seleccionado]="f.usaTienda.value" style=" height: 250px;">
-                                        <div class="card-body">
-                                            <div class="mt-4" style="text-align:center;">
-                                                <input class="styled-checkbox" formControlName="usaTienda" id="styled-checkbox-3" type="checkbox"  >
-                                                <label for="styled-checkbox-3"><span class="ml-2"></span></label>
-                                                <div class="text-center w-100 pb-2 px-1 position-relative">
-                                                    <h6 class="font-semibold d-block mb-1"><strong> Tiendas </strong><br>
-                                                      <small >Ventanilla</small>
-                                                    </h6>
-                                                    <br> <br>
-                                                    <h6 class="font-semibold d-block mb-1">  
-                                                      <small class="d-block mt-1">Lima y provincias</small>
-                                                   
-                                                    <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 7</span>
-                                                    <small class="d-block">por transacion</small>
-                                                  </h6>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                      </div> 
-                                    </div>
-                                </div>
-
-                                <span class="texto-azulbase" style="font-size:13px;"> <strong> Cobro de mora</strong> </span>
-                                
-                                <div class="row">
-                                     
-                                      <div class="form-group">
-                                          <label class="d-block mb-1 radio">No
-                                              <input type="radio" formControlName="cobraMora" name="cobraMora" id="mora-no" value="No" (change)="changeMora()">
-                                              <span class="check"></span>
-                                          </label>
-
-                                          <label class="d-block mb-0 radio">Sí
-                                              <input type="radio" formControlName="cobraMora" name="cobraMora" id="mora-si" value="Sí" (change)="changeMora()">
-                                              <span class="check"></span>
-                                          </label>
-                                      </div>  
-                                      <div class="form-group"> 
-                                      <mat-form-field *ngIf="cobraMora" >
-                                          <mat-label>Tipo de Cobro</mat-label>
-                                          <mat-select formControlName="periodoMora">
-                                            <mat-option>Tipo de Cobro</mat-option>
-                                            <mat-option *ngFor="let t of tiposMora" [value]="t.id">
-                                              {{t.name}}
-                                            </mat-option>
-                                          </mat-select>
-                                          <mat-error *ngIf="f.periodoMora.invalid && f.periodoMora.hasError('required')">Elija una opcion</mat-error>
-                                        </mat-form-field>
-                                      </div> 
-                                        <div class="form-group" class="col-2 mb-3" *ngIf="cobraMora" >
-                                            <label class="d-block mb-1 radio">Monto
-                                                <input type="radio" formControlName="tipoMora" name="tipoMora" id="monto" value="M" (change)="changeTipoMora()">
-                                                <span class="check"></span>  
-                                               
-                                            </label>
-                                            <mat-form-field *ngIf="cobraMonto" >
-                                                <input formControlName="monto" name="monto"  matInput type="text" >
-                                                <span matPrefix>{{simboloMoneda}}&nbsp;&nbsp;</span>  
-                                            </mat-form-field>
-                                           
-  
-                                            <label class="d-block mb-0 radio">Porcentaje
-                                                <input type="radio" formControlName="tipoMora" name="tipoMora" id="porcentaje" value="P" (change)="changeTipoMora()">
-                                                <span class="check"></span>
-                                            </label>
-                                            <mat-form-field *ngIf="cobraPorcentaje" >
-                                                <input formControlName="porcentaje" name="porcentaje"  matInput type="text" placeholder="Porcentaje"  > 
-                                                <span matSuffix>%</span>
-                                            </mat-form-field>
-                                        </div> 
-
-                                </div>
-                          <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white"> Registrarme</button>
-                      </form>
+                    <div class="col-sm-1">
+                      <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
+                        <li>
+                          <a class="texto-azul" style="cursor: pointer" (click)="editService(svc, i)"><i
+                              class="icon-lapiz"></i></a>
+                        </li>
+                        <li class="ml-2" *ngIf="afiliacionService.services.length > 1">
+                          <a class="texto-azul borrar" style="cursor: pointer" (click)="delService(i)"><i
+                              class="icon-basura"></i></a>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
+                  <table class="table table-sm table-borderless mb-0">
+                    <tr>
+                      <th><small>Canales</small></th>
+                      <td><small>{{ getCanales(svc) }}</small></td>
+                    </tr>
+                    <tr>
+                      <th><small>Mora</small></th>
+                      <td>
+                        <small *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }}</small>
+                        <small *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'P'">{{ svc.porcentaje }} %</small>
+                        <small *ngIf="svc.cobraMora === 'N'" >NO</small>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th><small>Cuenta</small></th>
+                      <td><small>{{ svc.nroCuenta }}</small></td>
+                    </tr>
+                  </table>
+                </div>
               </div>
-              <br>
+            </div>
           </div>
-
-
-          </div>
+        </div>
+        <br>
+        <div style="text-align:center;">
+          <button (click)="MostarFormulario()" class="btn-big w-80 btn-eureca btn-eureca-azul text-white">
+            Agregar otro servicio
+          </button>
+          <br>
+          <br>
+          <button (click)="EnviarServicios()" class="btn-big w-80 btn-eureca btn-eureca-amarillo text-white">
+            Finalizar</button>
+        </div>
       </div>
+      <div class="col-sm-7 position-relative" *ngIf="Formulario">
+        <br>
+        <div class="d-flex justify-content-center">
+          <div class=" border p-5 bg-white rounded">
+            <div style="float: right;">
+              <button (click)="OcultarFormulario()" type="button" class="btn btn-tool" data-widget="remove"><i
+                  class="fa fa-times"></i>
+              </button>
+            </div>
+            <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
   </div>
+</div>

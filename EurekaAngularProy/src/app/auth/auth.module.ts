@@ -19,6 +19,7 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 import { MatFormFieldModule, MatSelectModule } from '@angular/material'; 
 import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
 import { NumberDirective } from './login/numbers-only.directive'; 
+import { FormServicioComponent } from './form-servicio/form-servicio.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,16 @@ import { NumberDirective } from './login/numbers-only.directive';
     AuthGuard,
     CookieService
   ],
-  declarations: [LoginComponent, AfiliacionComponent, ConfigurarServiciosComponent, ProcesandoComponent, CrearContrasenaComponent, BlockCopyPasteDirective, NumberDirective]
+  declarations: [
+    LoginComponent, 
+    AfiliacionComponent, 
+    ConfigurarServiciosComponent, 
+    FormServicioComponent,
+    ProcesandoComponent,
+    CrearContrasenaComponent, 
+    BlockCopyPasteDirective, 
+    NumberDirective
+  ]
 })
 
 export class AuthModule {

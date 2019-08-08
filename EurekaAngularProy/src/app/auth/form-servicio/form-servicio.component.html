@@ -1,0 +1,172 @@
+<form [formGroup]="frm" novalidate (submit)="onSubmitServicio()">
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <input matInput type="text" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
+      <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <mat-label>Codigo Deudor</mat-label>
+      <mat-select formControlName="codDeudor" name="codDeudor">
+        <mat-option>Codigo Deudor</mat-option>
+        <mat-option *ngFor="let c of codDeudor" [value]="c.code">
+          {{c.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <mat-label>¿Que datos tienes de tus clientes?</mat-label>
+      <mat-select formControlName="tipoDato" name="tipoDato">
+        <mat-option>¿Que datos tienes de tus clientes?</mat-option>
+        <mat-option *ngFor="let t of tiposDato" [value]="t.code">
+          {{t.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.tipoDato.invalid && f.tipoDato.hasError('required')">Elija una opcion</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <mat-label>¿Como quieres que te paguen tus clientes?</mat-label>
+      <mat-select formControlName="tipoPago" name="tipoPago">
+        <mat-option>¿Como quieres que te paguen tus clientes?</mat-option>
+        <mat-option *ngFor="let t of tiposPago" [value]="t.code">
+          {{t.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.tipoPago.invalid && f.tipoPago.hasError('required')">Elija una opcion</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput type="text" formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
+      <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('required')">El numero de cuenta es obligatorio
+      </mat-error>
+    </mat-form-field>
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &nbsp;
+    <mat-form-field>
+      <mat-label>Tipo de Moneda</mat-label>
+      <mat-select formControlName="moneda" name="moneda" (change)="changeMoneda()">
+        <mat-option>Tipo de Moneda</mat-option>
+        <mat-option *ngFor="let m of monedas" [value]="m.code">
+          {{m.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.moneda.hasError('required')">Elija una opcion</mat-error>
+    </mat-form-field>
+  </div>
+  <span class="texto-azulbase" style="font-size:13px;"> <strong>Elige los medios por los cuales tus clientes te pagarán
+    </strong> </span>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card" [class.seleccionado]="f.usaWebApp.value" style=" height: 250px;">
+        <div class="card-body">
+          <div class="mt-4" style="text-align:center;">
+            <input class="styled-checkbox" formControlName="usaWebApp" id="styled-checkbox-1" type="checkbox">
+            <label for="styled-checkbox-1"><span class="ml-2"></span></label>
+          </div>
+          <div class="text-center w-100 pb-2 px-1 position-relative">
+            <h6 class="font-semibold d-block mb-1"><strong> Digital </strong><br>
+            </h6>
+            <br>
+            <h6 class="font-semibold d-block mb-1">
+              <small class="d-block mt-1">Banca por internet, Interbank APP</small>
+            </h6>
+            <span class="d-block mb-4 texto-azul font-semibold precio">GRATIS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card" [class.seleccionado]="f.usaAgente.value" style=" height: 250px;">
+        <div class="card-body">
+          <div class="mt-4" style="text-align:center;">
+            <input style="align-content: center;" formControlName="usaAgente" class="styled-checkbox"
+              id="styled-checkbox-2" type="checkbox">
+            <label for="styled-checkbox-2"><span class="ml-2"> </span></label>
+          </div>
+          <div class="text-center w-100 pb-2 px-1 position-relative">
+            <h6 class="font-semibold d-block mb-1"><strong> Agentes </strong><br></h6>
+            <br><br>
+            <h6 class="font-semibold d-block mb-1">
+              <small class="d-block mt-1">Lima y provincias</small>
+              <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 1</span>
+              <small>por transacion</small>
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card" [class.seleccionado]="f.usaTienda.value" style=" height: 250px;">
+        <div class="card-body">
+          <div class="mt-4" style="text-align:center;">
+            <input class="styled-checkbox" formControlName="usaTienda" id="styled-checkbox-3" type="checkbox">
+            <label for="styled-checkbox-3"><span class="ml-2"></span></label>
+            <div class="text-center w-100 pb-2 px-1 position-relative">
+              <h6 class="font-semibold d-block mb-1"><strong> Tiendas </strong><br>
+                <small>Ventanilla</small>
+              </h6>
+              <br> <br>
+              <h6 class="font-semibold d-block mb-1">
+                <small class="d-block mt-1">Lima y provincias</small>
+                <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 7</span>
+                <small class="d-block">por transacion</small>
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="texto-azulbase" style="font-size:13px;"> <strong> Cobro de mora</strong> </span>
+  <div class="row">
+    <div class="col-2 mb-3">
+      <label class="d-block mb-1 radio">No
+        <input type="radio" formControlName="cobraMora" name="cobraMora" id="mora-no" value="N"
+          (change)="changeMora()">
+        <span class="check"></span>
+      </label>
+      <label class="d-block mb-0 radio">Sí
+        <input type="radio" formControlName="cobraMora" name="cobraMora" id="mora-si" value="S"
+          (change)="changeMora()">
+        <span class="check"></span>
+      </label>
+    </div>
+    <mat-form-field *ngIf="cobraMora">
+      <mat-label>Tipo de Cobro</mat-label>
+      <mat-select formControlName="periodoMora">
+        <mat-option>Tipo de Cobro</mat-option>
+        <mat-option *ngFor="let t of tiposMora" [value]="t.id">
+          {{t.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="f.periodoMora.invalid && f.periodoMora.hasError('required')">Elija una opcion</mat-error>
+    </mat-form-field>
+    <div class="col-2 mb-3" *ngIf="cobraMora">
+      <label class="d-block mb-1 radio">Monto
+        <input type="radio" formControlName="tipoMora" name="tipoMora" id="monto" value="M" (change)="changeTipoMora()">
+        <span class="check"></span>
+      </label>
+      <mat-form-field *ngIf="cobraMonto">
+        <input formControlName="monto" name="monto" matInput type="number">
+        <span matPrefix>{{simboloMoneda}}&nbsp;&nbsp;</span>
+      </mat-form-field>
+      <label class="d-block mb-0 radio">Porcentaje
+        <input type="radio" formControlName="tipoMora" name="tipoMora" id="porcentaje" value="P"
+          (change)="changeTipoMora()">
+        <span class="check"></span>
+      </label>
+      <mat-form-field *ngIf="cobraPorcentaje">
+        <input formControlName="porcentaje" name="porcentaje" matInput type="number" placeholder="Porcentaje">
+        <span matSuffix>%</span>
+      </mat-form-field>
+    </div>
+  </div>
+  <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white"> Registrarme</button>
+</form>
