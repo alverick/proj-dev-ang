@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { DialogComponent } from 'src/app/pages/home/dialog';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -75,10 +75,12 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private cookieService : CookieService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public  snackBar: MatSnackBar,
     ) {}
 
   ngOnInit() {
+    this.snackBar.dismiss();
     let rucStr = this.cookieService.check('ruc') ?
     this.cookieService.get('ruc') :  '';
 

@@ -12,7 +12,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private router: Router) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler, ): Observable<HttpEvent<any>> {
   
     const token: string = localStorage.getItem('tk');
 
