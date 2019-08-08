@@ -196,18 +196,18 @@ export class HomeComponent implements OnInit {
 
     }
     numberOnly(event): boolean {
-      /*
+
       const charCode = (event.which) ? event.which : event.keyCode;
       if (charCode > 31 && (charCode <= 46 || charCode >= 58)  ) {
         return false;
       }
-      return true;*/
-      const usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+      return true;
+     /* const usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
 
       if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
         return false;
       }
-      return true;
+      return true; */
     }
     concepto(event): boolean {
      // let usDatePattern =  /^[0-9]{10}/;
@@ -586,7 +586,7 @@ if(columnName === 'amount' ) {
                       });
                 }
         }
-         /////  CAMBIO ACA XDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+         /// change
       } else {
         console.log('entro 2');
           if ( this.inputDate1.nativeElement.value === '') {
@@ -614,16 +614,7 @@ if(columnName === 'amount' ) {
               text: 'ingrese correctamente la fecha hasta',
             });
             return;
-          }
-          else if (this.filtro.dateTo.toString() === this.filtro.dateFrom.toString()   ) {
-            Swal.fire({
-              type: 'error',
-              text: 'La fecha "desde" no puede ser igual a la fecha "hasta"',
-            });
-            console.log('segunda vuelta');
-            return;
-          }
-           else if (this.filtro.dateFrom > this.filtro.dateTo ) {
+          } else if (this.filtro.dateFrom > this.filtro.dateTo ) {
             Swal.fire({
               type: 'error',
               text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
@@ -716,20 +707,20 @@ if(columnName === 'amount' ) {
 
   BotonActualizar(item: Debts) {
 
- /*   if(item.newEmissionDate.getFullYear() < 2000 ){
+   if (item.newEmissionDate.getFullYear().valueOf() < 2000 ) {
       Swal.fire({
         type: 'error',
         text: 'Ingrese una fecha valida para la fecha de emision',
       });
       return;
     }
-    if(item.newDueDate.getFullYear() > 2050 ){
+    if (item.newDueDate.getFullYear() > 2050 ) {
       Swal.fire({
         type: 'error',
         text: 'Ingrese una fecha valida para la fecha de emision',
       });
       return;
-    }  */
+    }
     if (item.newEmissionDate == null) {
       Swal.fire({
         type: 'error',
@@ -762,7 +753,7 @@ if(columnName === 'amount' ) {
     Swal.fire({
       title: 'Deseas Actualizar?',
       text: '¡No podrás revertir esto!',
-      imageUrl: '/assets/images/complain.svg',   imageHeight: 100, 
+      imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
       showCancelButton: true,
       showCloseButton: true,
       confirmButtonColor: '#3085d6',
@@ -771,20 +762,20 @@ if(columnName === 'amount' ) {
       cancelButtonText: 'Cerrar',
     }).then((result) => {
       if (result.value) {
-        
+
         item.edit = false;
         const debts = {
           emissionDate: item.newEmissionDate,
           dueDate: item.newDueDate,
           concept: item.newConcept
-        }
+        };
 
         this.transactionService.editDeuda(item.id, debts).subscribe(
-          debtsUpdate=>{
+          debtsUpdate => {
             Swal.fire({
               type: 'success',
               titleText: 'Editado!',
-              text:'Su registro a sido editado',
+              text: 'Su registro a sido editado',
               onAfterClose: () => {
                 console.log('onAfterClose');
                 item.emissionDate = item.newEmissionDate;
@@ -792,9 +783,9 @@ if(columnName === 'amount' ) {
                 item.concept = item.newConcept;
                 item.edit = false;
               }
-            });  
+            });
           }
-        )
+        );
 
       }
     });
@@ -806,7 +797,7 @@ if(columnName === 'amount' ) {
   }
 
   changePage(nro: number) {
-    this.selectedAll= false;
+    this.selectedAll = false;
     this.filtro.pageNumber = nro;
     this.numeroPagina = nro;
     this.consultaDeuda();

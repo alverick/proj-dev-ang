@@ -11,10 +11,15 @@
     src: url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.woff") format("woff"), url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/07dc45de3c2d37fcd503045055b2253b.svg#Omnes") format("svg");
 }
 
-.button-close{
+.button-close {
     background-color: #008CBA;
     color: white;
 }
+
+input::-ms-clear {
+    display: none;
+}
+
 .body {
     background: #f4f5f7 !important;
 }
@@ -202,54 +207,61 @@
     color: #2580db;
 }
 
-.table-options{
+.table-options {
     width: auto !important;
     margin-bottom: 1rem !important;
     color: #212529 !important;
 }
 
 ///rotar un elemento
-
 .rotar {
-    -webkit-transform: rotate(180deg); /* Chrome & Safari */
-    -moz-transform: rotate(180deg); /* Firefox */
-    -ms-transform: rotate(180deg); /* IE 9+ */
-    -o-transform: rotate(180deg); /* Opera */
-    transform: rotate(180deg); /* CSS3 */
-    filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678, sizingMethod='auto expand'); /* IE 7-8 */
+    -webkit-transform: rotate(180deg);
+    /* Chrome & Safari */
+    -moz-transform: rotate(180deg);
+    /* Firefox */
+    -ms-transform: rotate(180deg);
+    /* IE 9+ */
+    -o-transform: rotate(180deg);
+    /* Opera */
+    transform: rotate(180deg);
+    /* CSS3 */
+    //  filter: progid: DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678, sizingMethod='auto expand');
+    /* IE 7-8 */
 }
 
 .mano {
     cursor: pointer;
 }
-.selecciona-servicio{
+
+.selecciona-servicio {
     font-size: 12px;
     color: gray;
 }
 
-
-.borde{
+.borde {
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
     border: 1px solid gray;
     padding: 0 4px 0 4px;
- }
+}
 
- .d-inline-block, .box-estadisticas .data[data-content]:after {
+.d-inline-block,
+.box-estadisticas .data[data-content]:after {
     display: inline-block !important;
 }
+
 .text-center {
     text-align: center!important;
 }
 
 .custom-shadow {
-    -webkit-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
-    -khtml-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
-    -moz-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
-    -ms-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
-    -o-box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
-    box-shadow: rgba(0,0,0,0.05) 0 4px 10px 0;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.05) 0 4px 10px 0;
+    -khtml-box-shadow: rgba(0, 0, 0, 0.05) 0 4px 10px 0;
+    -moz-box-shadow: rgba(0, 0, 0, 0.05) 0 4px 10px 0;
+    -ms-box-shadow: rgba(0, 0, 0, 0.05) 0 4px 10px 0;
+    -o-box-shadow: rgba(0, 0, 0, 0.05) 0 4px 10px 0;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 4px 10px 0;
     -webkit-border-radius: 5px;
     -khtml-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -258,21 +270,26 @@
     border-radius: 5px;
     background-clip: padding-box;
 }
+
 .table-movimientos {
     table-layout: fixed;
     display: block;
 }
 
-.w-100, .box-estadisticas .data {
+.w-100,
+.box-estadisticas .data {
     width: 100% !important;
 }
+
 .w-100 {
     width: 100%!important;
 }
 
-.w-80, .box-estadisticas .data {
+.w-80,
+.box-estadisticas .data {
     width: 100% !important;
 }
+
 .w-80 {
     width: 100%!important;
 }
@@ -281,29 +298,37 @@
     display: -ms-flexbox!important;
     display: flex!important;
 }
+
 .justify-content-center {
     justify-content: center !important;
 }
+
 .align-items-center {
     align-items: center !important;
-} 
-.text-center, .table-movimientos th, .table-movimientos td {
+}
+
+.text-center,
+.table-movimientos th,
+.table-movimientos td {
     text-align: center !important;
 }
-.d-inline-block, .box-estadisticas .data[data-content]:after {
+
+.d-inline-block,
+.box-estadisticas .data[data-content]:after {
     display: inline-block !important;
 }
 
-.styletexttable{
+.styletexttable {
     font-size: 15px;
 }
 
 /// scrolll bar
- // focus en los elementos
- .focus-elements{
-    outline:none;
- }
- 
+// focus en los elementos
+.focus-elements {
+    outline: none;
+}
+
+
 /*
 .sobresale {
     position: absolute;
@@ -311,28 +336,31 @@
     background-color: #FFFFFF;
 }
 */
- .arrow-filter-asc-blue{
-    color: blue; 
-    float: initial; 
-    padding-top: 15px;
-    padding-left: 5px;
- }
- .arrow-filter-dsc-blue{
-    color: blue; 
-    float: initial; 
-    padding-top: 0px;
-    padding-left: 5px;
 
- }
- .arrow-filter-asc-gray{
-    color: gray; 
+.arrow-filter-asc-blue {
+    color: blue;
     float: initial;
     padding-top: 15px;
     padding-left: 5px;
- }
- .arrow-filter-dsc-gray{
-    color: gray; 
+}
+
+.arrow-filter-dsc-blue {
+    color: blue;
     float: initial;
     padding-top: 0px;
     padding-left: 5px;
- }
+}
+
+.arrow-filter-asc-gray {
+    color: gray;
+    float: initial;
+    padding-top: 15px;
+    padding-left: 5px;
+}
+
+.arrow-filter-dsc-gray {
+    color: gray;
+    float: initial;
+    padding-top: 0px;
+    padding-left: 5px;
+}
