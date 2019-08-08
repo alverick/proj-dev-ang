@@ -757,9 +757,11 @@ if(columnName === 'amount' ) {
       text: '¡No podrás revertir esto!',
       imageUrl: '/assets/images/complain.svg',   imageHeight: 100, 
       showCancelButton: true,
+      showCloseButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Editarlo!'
+      confirmButtonText: 'Si, Editarlo!',
+      cancelButtonText: 'Cerrar',
     }).then((result) => {
       if (result.value) {
         
@@ -823,9 +825,11 @@ if(columnName === 'amount' ) {
       text: '¡No podrás revertir esto!',
       imageUrl: '/assets/images/complain.svg',   imageHeight: 100, 
       showCancelButton: true,
+      showCloseButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Eliminarlo!'
+      confirmButtonText: 'Si, Eliminarlo!',
+      cancelButtonText: 'Cerrar',
     }).then((result) => {
       if (result.value) {
         /*this.spinner2.show();*/
@@ -842,12 +846,14 @@ if(columnName === 'amount' ) {
   Eliminar(item: Debts) {
      
   Swal.fire({
-    text: "¿Esta Seguro de Eliminar el Registro?",
+    title: "¿Esta Seguro de Eliminar el Registro?",
     imageUrl: '/assets/images/complain.svg',   imageHeight: 100,  
     showCancelButton: true,
+    showCloseButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, Borralo'
+    confirmButtonText: 'Si, Borralo',
+    cancelButtonText: 'Cerrar',
   }).then((result) => {
     if (result.value) {
    /* this.spinner2.show();*/

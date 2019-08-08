@@ -229,16 +229,14 @@ export class LoginComponent implements OnInit {
         value => {
           console.log("INTENTOS SERVICE : "+value.paramNum)
 
-
-          /*this.intentos= value.paramNum;*/
+          
           this.storageService.setIntentos(value.paramNum);
           this.intentos = this.storageService.getIntentos();
 
           this.intentosRestantes= 6 - this.intentos;
           this.codRespuesta= value.codRespuesta;
-          //  background-image:url("/assets/images/fondo-landing.png");
           if(value.paramStr==="Un session ya se encuentra activa"){
-            Swal.fire({   imageUrl: '/assets/images/complain.svg',   imageHeight: 100,   text: 'Existe una Sesión Activa'})
+            Swal.fire({   imageUrl: '/assets/images/complain.svg',   imageHeight: 100,  title:'Existe una Sesión Activa', cancelButtonText: 'Cerrar',   cancelButtonColor: '#d33', showCloseButton: true})
           }else if(value.estado===true && this.intentos<=6){
                   console.log("RECORDAR : " + this.rememberMe);
                   if(this.rememberMe==true){
@@ -262,8 +260,7 @@ export class LoginComponent implements OnInit {
               showCancelButton: true,
               showConfirmButton: false,
               cancelButtonColor: '#d33',
-              cancelButtonText:
-              'Cancelar',
+              cancelButtonText:  'Cerrar',
             })   
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
@@ -285,7 +282,7 @@ export class LoginComponent implements OnInit {
               showConfirmButton: false,
               cancelButtonColor: '#d33',
               cancelButtonText:
-              'Cancelar',
+              'Cerrar',
             })   
             this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
