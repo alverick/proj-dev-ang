@@ -209,6 +209,7 @@ export class HomeComponent implements OnInit {
       }
       return true; */
     }
+
     concepto(event): boolean {
      // let usDatePattern =  /^[0-9]{10}/;
       const charCode = (event.which) ? event.which : event.keyCode;
@@ -707,7 +708,7 @@ if(columnName === 'amount' ) {
 
   BotonActualizar(item: Debts) {
 
-   if (item.newEmissionDate.getFullYear().valueOf() < 2000 ) {
+  /* if (item.newEmissionDate.getFullYear().valueOf() < 2000 ) {
       Swal.fire({
         type: 'error',
         text: 'Ingrese una fecha valida para la fecha de emision',
@@ -720,7 +721,43 @@ if(columnName === 'amount' ) {
         text: 'Ingrese una fecha valida para la fecha de emision',
       });
       return;
+    } */
+
+    let validationDate = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+
+ /*   if(!item.newEmissionDate.toString().match(validationDate) && !item.newDueDate.toString().match(validationDate)){
+      Swal.fire({
+        type: 'error',
+        text: 'Ingrese un formato correcto para las Fechas',
+      });
+      return;
+    } */
+
+  /*  if(!item.newEmissionDate.toString().match(validationDate)){
+      Swal.fire({
+        type: 'error',
+        text: 'Ingrese un formato correcto para la Fecha de emision',
+      });
+      return;
     }
+    if(!item.newDueDate.toString().match(validationDate)){
+      Swal.fire({
+        type: 'error',
+        text: 'Ingrese un formato correcto de la Fecha de vencimiento',
+      });
+      return;
+    }  */
+    
+    let onlyNumbersConcept =  /^[0-9]{8,10}$/;
+  /* if(item.newConcept.match(onlyNumbersConcept)){
+      Swal.fire({
+        type: 'error',
+        text: 'Ingrese un formato correcto del Concepto',
+      }); 
+     }    */
+     //CONCEPTO
+      
+
     if (item.newEmissionDate == null) {
       Swal.fire({
         type: 'error',
@@ -735,7 +772,7 @@ if(columnName === 'amount' ) {
       });
       return;
     }
-    if (item.newConcept === '') {
+    if (item.newConcept === ''   ) {
       Swal.fire({
         type: 'error',
         text: 'Ingrese el concepto',
