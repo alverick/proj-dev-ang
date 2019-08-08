@@ -25,16 +25,3 @@ export class LogoutGuard implements CanActivate {
   }
 
 }
-
-
-
-
-/*
-    if (localStorage.getItem('tk') === null) {
-       return true;
-     }
-    if ( localStorage.getItem('tk') ) {
-      this.router.navigate(['/home']);
-        return false;
-    }
-*/
