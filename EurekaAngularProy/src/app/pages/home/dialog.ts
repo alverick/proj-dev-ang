@@ -59,7 +59,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
   
      openSnackBar() {
        console.log("ENTRO : " + this.inputXlsForm.value)
-      if(this.inputXlsForm.value) {
+      if(this.inputXlsForm.valid) {
         this.xlsValid= false;
       /*service*/
       this.excelService.UploadExcel(this.files, this.excelService.service)
