@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Directive, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, Directive, ViewChild} from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

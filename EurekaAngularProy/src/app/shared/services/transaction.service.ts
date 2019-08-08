@@ -71,7 +71,7 @@ export class TransactionService {
     }   
       
 
-    deleteDeuda(idDebt: number): Observable<Debts>{
+  deleteDeuda(idDebt: number): Observable<Debts>{
       console.log('begin login')
       // cambia link
       const url = `${this.URI_API}/debt/${idDebt}`;

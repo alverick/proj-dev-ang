@@ -271,7 +271,7 @@
                                         <span style="width: auto" *ngIf="!items.edit">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
                                         <div *ngIf="items.edit" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
-                                                <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (keypress)="numberOnly($event)">
+                                                <input style="font-size: 14px;" [min]="minDate" [max]="maxDate" (dateChange)="change($event)" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" numbersOnly>
                                                 <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                                                 <mat-datepicker #edp></mat-datepicker>
                                             </mat-form-field>
@@ -294,7 +294,7 @@
                                     <td style="width: auto">
                                         <span *ngIf="!items.edit">{{items.concept}}</span>
                                         <div *ngIf="items.edit">
-                                            <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="concepto($event)" maxlength="10" minlength="10" />
+                                            <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" (keypress)="concepto($event)" maxlength="10" minlength="10" numbersOnly />
                                         </div>
                                     </td>
                                     <td>{{items.amount}}</td>

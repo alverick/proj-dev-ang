@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -35,12 +36,23 @@ export class AuthInterceptorService implements HttpInterceptor {
         if(err.status === 401){
         localStorage.removeItem('tk');
         this.router.navigateByUrl('/login');
-        }if(err.status === 500){
+        }
+        if(err.status === 500){
         localStorage.removeItem('tk');
         this.router.navigateByUrl('/login');
-        }if(localStorage.getItem('tk')== null || !localStorage.getItem('tk') ){
+        }
+        if(!(localStorage.getItem('tk'))){
         localStorage.removeItem('tk');
-        this.router.navigateByUrl('/login')
+        Swal.fire({
+          imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
+          title: 'Su sesión ha sido cerrada por inactividad',
+          showCancelButton: true,
+          confirmButtonText: 'Aceptar',
+          onAfterClose: () =>{
+            console.log('C E R R A R');
+            this.router.navigateByUrl('/login')
+          }
+        })
         }
         return throwError(err);
       })
