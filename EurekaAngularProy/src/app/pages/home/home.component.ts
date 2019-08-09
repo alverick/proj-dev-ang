@@ -734,7 +734,7 @@ if(columnName === 'amount' ) {
     }
 
     Swal.fire({
-      title: 'Deseas Actualizar?',
+      title: '¿Deseas Actualizar?',
       text: '¡No podrás revertir esto!',
       imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
       showCancelButton: true,
@@ -802,7 +802,7 @@ if(columnName === 'amount' ) {
     }
 
  Swal.fire({
-      title: 'Estas Seguro de Eliminar ' + itemsParaEliminar.length + ' registros?',
+      title: '¿Estas Seguro de Eliminar ' + itemsParaEliminar.length + ' registros?',
       text: '¡No podrás revertir esto!',
       imageUrl: '/assets/images/complain.svg',   imageHeight: 100, 
       showCancelButton: true,
