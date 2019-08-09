@@ -2,18 +2,26 @@
     <div class="container py-4">            
         <div class="row py-4">
           <!--////// L E F T /////-->
-          <div class="col">
+          <div class="col-5">
               <h1 class="texto-azulbase">Crea una contraseña para guardar tus servicios</h1>
           </div>
 
           <!--///// R I G H T //// -->
 
-          <div class="col-12 col-md-8">
+          <div class="col-10 col-md-7">
               <div class="shadow-none border p-5 bg-white rounded">
                   <form class="example-form">
                       <mat-form-field class="example-full-width">
                         <input matInput type="text" placeholder="RUC" numberOnly>
                       </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <input matInput type="text" placeholder="Nombre Empresa">
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width">
+                            <input matInput type="text" placeholder="Rubro">
+                    </mat-form-field>
+
                       <mat-form-field class="example-full-width">
                         <input matInput type="email" placeholder="Email">
                       </mat-form-field>
@@ -29,6 +37,13 @@
                       <mat-form-field class="example-full-width">
                           <input matInput type="password" placeholder="Repetir Contraseña">
                       </mat-form-field>
+                      <div class="mt-4">
+                            <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox">
+                            <label for="styled-checkbox-1"><span class="ml-2">Acepto los términos y condiciones</span></label>
+                      </div>
+                      <div class="mt-4">
+                           <button style="margin-top: 13px" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white" form="login-form"> Registrarme</button>
+                      </div>
                   </form>
             </div>
         </div>
