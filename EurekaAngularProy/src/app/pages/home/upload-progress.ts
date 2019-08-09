@@ -48,6 +48,7 @@ import Swal from "sweetalert2";
           this.excelService.errores = value.errors;
           
           console.log('ABRE DIALOG')
+          this.excelService.statusUpload = false;
           const dialogRef =  this.dialog.open(ValidationComponent);
          // dialogRef.close(ValidationComponent);
           dialogRef.afterClosed()
@@ -60,13 +61,14 @@ import Swal from "sweetalert2";
           this.snackRef.dismiss();
           this.excelService.errores = [];
           this.excelService.idProcess = 0; 
+          this.excelService.statusUpload = false;
           if(value.rowsUploaded == 0){
             Swal.fire({
               title: 'Ingrese Datos',
               type: 'error',
               text: `su Archivo esta vacio`
             });
-          }else{
+          } else {
             Swal.fire({
               type: 'success',
               text: `Se cargaron ${value.rowsUploaded} registros`
@@ -76,7 +78,7 @@ import Swal from "sweetalert2";
             .subscribe(debts => {
               console.log(this.transactionService.debtItems);
               //this.detectorRef.detectChanges();
-            });    
+          });    
           }
           
       

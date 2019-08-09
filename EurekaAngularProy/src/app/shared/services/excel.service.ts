@@ -15,7 +15,7 @@ const SERVICIO = 'Servicio';
 @Injectable()
 export class ExcelService {
   private URI_API: string = environment.END_POINT;
-
+  public statusUpload: boolean = false;
 
   constructor(public http: HttpClient, private storage: StorageService, ) { }
 
@@ -49,8 +49,8 @@ export class ExcelService {
   public idProcess: number = 0;
   public errores: Error[] = [];
 
-  UploadExcel(files: any, service: string): Observable<any>{
-    console.log('begin upload excel')
+  UploadExcel(files: any, service: string, changestatus: boolean): Observable<any> {
+    this.statusUpload = changestatus; 
     console.log(files);
     const url = `${this.URI_API}/debt/load/${service}?_=` + new Date().getTime();
     const opts={
@@ -68,6 +68,7 @@ export class ExcelService {
   }   
 
   StatusExcel(id: number): Observable<any>{
+    //this.statusUpload = status;
     console.log('begin status excel')
     const url = `${this.URI_API}/debt/process/${id}/status?_=` + new Date().getTime();
     const opts={

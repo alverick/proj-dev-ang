@@ -1,6 +1,6 @@
 <div class="container py-4" style="background: #f4f5f7  !important;">
     <mat-dialog-actions align="end">
-        <div (click)="hideErros()">
+        <div  >
             <span class="h5 m-0 pr-2"></span>
             <button class="button-close" [mat-dialog-close]="true">
                 <span class="icon-icono-x font-16" ></span>
@@ -24,13 +24,15 @@
             <div >
                 <table>
                     <!--si es fila 0 solo un mensaje  'La información que haz ingresado es incorrecta!'-->
-                    <tr *ngFor="let error of excelService.errores">
-                        <div *ngIf="error.row == 0">
+                    <tr *ngIf="excelService.errores.row == 0">
+                        <div>
                             <span style="color: red;">
-                           Asegurese que el Excel que has ingresado sea el formato correcto
+                           Asegurese que el Excel que as ingresado sea el formato correcto
                         </span>
                         </div>
-                        <div *ngIf="error.row > 1">
+                    </tr>
+                    <tr *ngIf="excelService.errores.row > 0">  
+                        <div *ngFor="let error of excelService.errores">
                             <div data-spy="scroll">
                                 <td> <strong>Fila &nbsp; {{ error.row}}:&nbsp;</strong> {{ error.description }}
                               , el campo &nbsp;
