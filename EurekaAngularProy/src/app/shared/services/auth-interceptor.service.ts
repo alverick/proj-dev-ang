@@ -46,10 +46,12 @@ export class AuthInterceptorService implements HttpInterceptor {
         Swal.fire({
           imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
           title: 'Su sesión ha sido cerrada por inactividad',
+          showCloseButton: true,
           showCancelButton: true,
-          confirmButtonText: 'Aceptar',
+          showConfirmButton: false,
+          cancelButtonColor: '#d33',
+          cancelButtonText:  'Cerrar',
           onAfterClose: () =>{
-            console.log('C E R R A R');
             this.router.navigateByUrl('/login')
           }
         })

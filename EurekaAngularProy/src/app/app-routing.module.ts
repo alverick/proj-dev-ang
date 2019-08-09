@@ -12,6 +12,7 @@ import { AnalisisComponent } from 'src/app/pages/analisis/analisis.component';
 import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-found.component';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { LogoutGuard } from './shared/guards/logout.guard';
+import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard] },
@@ -22,6 +23,8 @@ const routes: Routes = [
   { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard ] },
   { path: 'crearContrasena', component: CrearContrasenaComponent},
   { path: 'procesando', component: ProcesandoComponent},
+  { path: 'configuracion', component: ConfigurarServiciosComponent},
+  { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent},
 
   { path: 'subirPlantilla', component: SubirPlantillaComponent},
   { path: 'analisis', component: AnalisisComponent},
