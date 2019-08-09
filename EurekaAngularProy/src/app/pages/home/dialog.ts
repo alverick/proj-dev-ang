@@ -45,6 +45,12 @@ import { ExcelService } from "src/app/shared/services/excel.service";
       //this.SalirsnackBar();
       
     }
+
+     /*Data Completa */
+  matricula: any = [{"Fecha de emisión":"17/8/2019","Fecha de vencimiento":"16/9/2019",
+  "Código de cliente":"u2019000001","Nombres":"Nombre Demo", "Apellidos:":"apellido Demo",
+  "Servicio":"Matricula","Concepto": "20190708","Monto":"500"}];
+  
   
     onChangeFile(event) {
       this.files = event.target.files;
@@ -59,7 +65,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
   
      openSnackBar() {
        console.log("ENTRO : " + this.inputXlsForm.value)
-      if(this.inputXlsForm.value) {
+      if(this.inputXlsForm.valid) {
         this.xlsValid= false;
       /*service*/
       this.excelService.UploadExcel(this.files, this.excelService.service)
@@ -81,6 +87,10 @@ import { ExcelService } from "src/app/shared/services/excel.service";
   
     close(){
       this.dialogRef.close();
+    }
+
+    exportDataMatriculaXLSX():void{
+      this.excelService.exportAsExcelFile(this.matricula, 'data_completa');
     }
   }
   

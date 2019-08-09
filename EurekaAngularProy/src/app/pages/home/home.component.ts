@@ -195,31 +195,7 @@ export class HomeComponent implements OnInit {
       return true;
 
     }
-    numberOnly(event): boolean {
-
-      const charCode = (event.which) ? event.which : event.keyCode;
-      if (charCode > 31 && (charCode <= 46 || charCode >= 58)  ) {
-        return false;
-      }
-      return true;
-     /* const usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-
-      if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
-        return false;
-      }
-      return true; */
-    }
-
-    concepto(event): boolean {
-     // let usDatePattern =  /^[0-9]{10}/;
-      const charCode = (event.which) ? event.which : event.keyCode;
-      if (  (charCode <= 47 || charCode >= 58)  ) {
-        return false;
-      }
-      return true;
-    }
-
-
+  
     @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
       e.preventDefault();
     }
@@ -707,57 +683,27 @@ if(columnName === 'amount' ) {
   }
 
   BotonActualizar(item: Debts) {
+     
+ /*   let yearEmission  = parseInt(item.newEmissionDate.getFullYear().toString());
+    console.log(yearEmission);
+    let yearDua = parseInt(item.newDueDate.toString());  
+    console.log(yearDua);
 
-  /* if (item.newEmissionDate.getFullYear().valueOf() < 2000 ) {
+  if (yearEmission < 2000 ) {
       Swal.fire({
         type: 'error',
         text: 'Ingrese una fecha valida para la fecha de emision',
       });
       return;
     }
-    if (item.newDueDate.getFullYear() > 2050 ) {
+    if (yearDua > 2050 ) {
       Swal.fire({
         type: 'error',
         text: 'Ingrese una fecha valida para la fecha de emision',
       });
       return;
-    } */
-
-    let validationDate = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-
- /*   if(!item.newEmissionDate.toString().match(validationDate) && !item.newDueDate.toString().match(validationDate)){
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese un formato correcto para las Fechas',
-      });
-      return;
-    } */
-
-  /*  if(!item.newEmissionDate.toString().match(validationDate)){
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese un formato correcto para la Fecha de emision',
-      });
-      return;
-    }
-    if(!item.newDueDate.toString().match(validationDate)){
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese un formato correcto de la Fecha de vencimiento',
-      });
-      return;
-    }  */
-    
-    let onlyNumbersConcept =  /^[0-9]{8,10}$/;
-  /* if(item.newConcept.match(onlyNumbersConcept)){
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese un formato correcto del Concepto',
-      }); 
-     }    */
-     //CONCEPTO
-      
-
+    }   */
+  
     if (item.newEmissionDate == null) {
       Swal.fire({
         type: 'error',
