@@ -36,12 +36,10 @@ export class AuthInterceptorService implements HttpInterceptor {
         if(err.status === 401){
         localStorage.removeItem('tk');
         this.router.navigateByUrl('/login');
-        }
-        if(err.status === 500){
+        }else if(err.status === 500){
         localStorage.removeItem('tk');
         this.router.navigateByUrl('/login');
-        }
-        if(!(localStorage.getItem('tk'))){
+        }else if(!(localStorage.getItem('tk'))){
         localStorage.removeItem('tk');
         Swal.fire({
           imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
