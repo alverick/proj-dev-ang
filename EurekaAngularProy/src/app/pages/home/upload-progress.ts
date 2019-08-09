@@ -63,7 +63,7 @@ import Swal from "sweetalert2";
           if(value.rowsUploaded == 0){
             Swal.fire({
               title: 'Ingrese Datos',
-              type: 'success',
+              type: 'error',
               text: `su Archivo esta vacio`
             });
           }else{
