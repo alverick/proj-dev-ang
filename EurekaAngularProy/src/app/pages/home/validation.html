@@ -21,7 +21,7 @@
             <div class="title-popup-add-registo text-center position-relative h2 m-0">
                 <div>Se encontraron los siguientes errores:</div>
             </div>
-            <div style="text-align: left; border: 1px solid red; ">
+            <div >
                 <table>
                     <!--si es fila 0 solo un mensaje  'La información que haz ingresado es incorrecta!'-->
                     <tr *ngFor="let error of excelService.errores">
@@ -33,8 +33,8 @@
                         <div *ngIf="error.row > 1">
                             <div data-spy="scroll">
                                 <td> <strong>Fila &nbsp; {{ error.row}}:&nbsp;</strong> {{ error.description }}
-                                    <!-- , el campo &nbsp;
-                                    <span style="color: green;"> {{ error.field }}</span> &nbsp; tiene el valor &nbsp; <span style="color: orange;">{{ error.value }} </span> --></td>
+                              , el campo &nbsp;
+                                    <span style="color: green;"> {{ error.field }}</span> &nbsp; tiene el valor &nbsp; <span style="color: orange;">{{ error.value }} </span>  </td>
                             </div>
                         </div>
                     </tr>

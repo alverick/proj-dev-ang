@@ -60,16 +60,25 @@ import Swal from "sweetalert2";
           this.snackRef.dismiss();
           this.excelService.errores = [];
           this.excelService.idProcess = 0; 
-          Swal.fire({
-            type: 'success',
-            text: `Se cargaron ${value.rowsUploaded} registros`
-          });
-          console.log("GET DEUDA HOME")
-          this.transactionService.getDeuda()
-          .subscribe(debts => {
-            console.log(this.transactionService.debtItems);
-            //this.detectorRef.detectChanges();
-          });    
+          if(value.rowsUploaded == 0){
+            Swal.fire({
+              title: 'Ingrese Datos',
+              type: 'success',
+              text: `su Archivo esta vacio`
+            });
+          }else{
+            Swal.fire({
+              type: 'success',
+              text: `Se cargaron ${value.rowsUploaded} registros`
+            });
+            console.log("GET DEUDA HOME")
+            this.transactionService.getDeuda()
+            .subscribe(debts => {
+              console.log(this.transactionService.debtItems);
+              //this.detectorRef.detectChanges();
+            });    
+          }
+          
       
         } else  {
           var th = this;
