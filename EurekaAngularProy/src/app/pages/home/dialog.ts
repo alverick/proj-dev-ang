@@ -18,7 +18,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
   
   // tslint:disable-next-line:component-class-suffix
   export class DialogComponent implements OnInit {
-  
+    public messageUploadExcel: boolean =false;
     public inputXlsForm: FormGroup;
     public xlsValid: boolean;
     public codigoCliente: String = 'Codigo de Cliente';
@@ -48,7 +48,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
 
      /*Data Completa */
   matricula: any = [{"Fecha de emisión":"17/8/2019","Fecha de vencimiento":"16/9/2019",
-  "Código de cliente":"u2019000001","Nombres":"Nombre Demo", "Apellidos:":"apellido Demo",
+  "Código de cliente":"u2019000001","Nombres":"Nombre Demo", "Apellidos":"apellido Demo",
   "Servicio":"Matricula","Concepto": "20190708","Monto":"500"}];
   
   
@@ -62,21 +62,27 @@ import { ExcelService } from "src/app/shared/services/excel.service";
     private files: any;
     get f() { return this.inputXlsForm.controls;}
   
-  
-     openSnackBar() {
+     changestatus =true;
+     openSnackBar() { 
+     
        console.log("ENTRO : " + this.inputXlsForm.value)
       if(this.inputXlsForm.valid) {
         this.xlsValid= false;
       /*service*/
-      this.excelService.UploadExcel(this.files, this.excelService.service)
-      .subscribe(
-        value=> {
-          this.excelService.idProcess = value.id;
-        
+
+        if(this.excelService.statusUpload == false){
+          
+          this.excelService.UploadExcel(this.files, this.excelService.service, this.changestatus )
+          .subscribe(
+            value=> {
+              this.excelService.idProcess = value.id;
+            
+            });
+        } else {
+          this.messageUploadExcel =true;  
+          return;
         }
-      )
-      // 
-      console.log('se abre el snack bar ');
+  
       this.snackBar.openFromComponent(UploadProgressComponent);
       this.dialogRef.close();
       } else {

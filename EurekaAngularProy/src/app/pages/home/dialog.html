@@ -24,6 +24,9 @@
                         Subir plantilla
                         </button>
                     </div>
+                    <mat-error *ngIf="messageUploadExcel" class="error-message">
+                        Usted esta subiendo un Archivo en este momento
+                    </mat-error>
                 </form> 
                 <div class="text-center">
                     <button href="javascript:;" style="color: blue"class="my-4" (click)="exportDataMatriculaXLSX()">Descarga tu plantilla</button>

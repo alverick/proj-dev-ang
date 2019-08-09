@@ -13,8 +13,6 @@ import { MatDialogRef } from "@angular/material";
     constructor(public excelService: ExcelService,
                  public dialog: MatDialogRef<ValidationComponent>) { }
       ocultar: boolean = true;
-    hideErros(){
-      return this.ocultar = false;
-    }
+    
   
   }
