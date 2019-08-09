@@ -857,7 +857,6 @@ if(columnName === 'amount' ) {
     
   }
 
-
 /*//////// O P E N  - D I A L O G ///////////////////// */
 MostrarListaSelect() {
   this.OcultaListaExcel = true;
