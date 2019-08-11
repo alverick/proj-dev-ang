@@ -41,6 +41,7 @@ import { DialogComponent } from './pages/home/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DateDirective } from './pages/home/date.directive';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
+import { ConfiguracionService } from './shared/services/configuracion.service';
 
 
 @NgModule({
@@ -56,7 +57,7 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
     UploadProgressComponent,
     DialogComponent,
     DateDirective,
-    ConfigurarEmpresaComponent,
+    ConfigurarEmpresaComponent
 
     ],
   imports: [
@@ -99,7 +100,9 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
         useClass: AuthInterceptorService,
         multi: true
       },
-      AfiliacionService
+      AfiliacionService,
+      ConfiguracionService
+    
   ],
   exports: [
     MatInputModule,
