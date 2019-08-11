@@ -13,7 +13,54 @@ export class FormServicioComponent implements OnInit {
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder) {}
 
-    public ngInputtextCodi:boolean =false;
+  @Input() set service(value: ServiceModel) {
+    if (value === null || value === undefined) {
+      this._service = {
+        nombre: '',
+        rubro: null,
+        codDeudor: null,
+        tipoDato: '',
+        tipoPago: null,
+        nroCuenta: '',
+        moneda: '',
+        usaAgente: false,
+        usaTienda: false,
+        usaWebApp: false,
+        cobraMora: 'N',
+        periodoMora: null,
+        tipoMora: 'M'
+      }
+      this.simboloMoneda = 'S/';
+    }
+    else {
+      this._service = value;
+      this.simboloMoneda = value.simboloMoneda
+      delete this._service.simboloMoneda;
+    }
+  }
+
+  get f() {
+    return this.frm.controls;
+  }
+
+    public ngInputtextCodi:boolean = false;
+
+  frm: FormGroup;
+
+  codiDeudor: any[] = [];
+  tiposDato: any[] = [];
+  tiposPago: any[] = [];
+  monedas: MonedaModel[] = [];
+  tiposMora: any[] = [];
+
+  simboloMoneda: string = 'S/';
+  cobraMora: boolean = false;
+  cobraMonto: boolean = true;
+  cobraPorcentaje: boolean = false;
+
+  private _service: ServiceModel;
+  @Output() grabar = new EventEmitter<any>();
+  public services: ServiceModel[] = [];
 
   ngOnInit(): void {
     this.frm = this.fb.group({
@@ -42,70 +89,65 @@ export class FormServicioComponent implements OnInit {
     this.changeTipoMora();
 
   }
-  
-  frm: FormGroup;
 
-  codiDeudor: any[] = [];
-  tiposDato: any[] = [];
-  tiposPago: any[] = [];
-  monedas: MonedaModel[] = [];
-  tiposMora: any[] = [];
-
-  simboloMoneda: string = 'S/';
-  cobraMora: boolean = false;
-  cobraMonto: boolean = true;
-  cobraPorcentaje: boolean = false;
-
-  private _service: ServiceModel;
-
-  @Input() set service(value: ServiceModel) {
-    if (value === null || value === undefined) {
-      this._service = {
-        nombre: '',
-        rubro: null,
-        codDeudor: null,
-        tipoDato: '',
-        tipoPago: null,
-        nroCuenta: '',
-        moneda: '',
-        usaAgente: false,
-        usaTienda: false,
-        usaWebApp: false,
-        cobraMora: 'N',
-        periodoMora: null,
-        tipoMora: 'M'
-      }
-      this.simboloMoneda = 'S/';
-    }
-    else {
-      this._service = value;
-      this.simboloMoneda = value.simboloMoneda
-      delete this._service.simboloMoneda;
-    }
-  }
-  @Output() grabar = new EventEmitter<any>();
-
-  get f() {
-    return this.frm.controls;
-  }
-  public services: ServiceModel[] = [];
-  
   onSubmitServicio() {
     if (this.frm.valid) {
-      //this.frm.get('nombre').value
-       
-     // alert('holas ' + this.frm.get('nombre').value  );
+     // tslint:disable-next-line:radix
+     const monto  = parseInt(this.frm.get('monto').value);
+     // tslint:disable-next-line:radix
+     const porcentaje  = parseInt(this.frm.get('porcentaje').value);
 
-      
-      if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-        Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
-      }
-      else {
- 
-        let value: ServiceModel = this.frm.value;
-        value.simboloMoneda = this.simboloMoneda;
-        this.grabar.emit(value);  
-      }
+     if (this.frm.get('cobraMora').value === 'S') {
+        if (this.frm.get('tipoMora').value === 'M') {
+          if (monto > 1000 ) {
+            Swal.fire({
+              type: 'error',
+              text: 'el maximo monto que se puede ingresa es 1000',
+            });
+            return;
+          } else {
+            if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
+              Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
+            } else {
+
+              const value: ServiceModel = this.frm.value;
+              value.simboloMoneda = this.simboloMoneda;
+              this.grabar.emit(value);
+            }
+
+          }
+        } else {
+          if (porcentaje > 100 ) {
+            Swal.fire({
+              type: 'error',
+              text: 'el maximo porcentaje que se puede ingresa es 100',
+            });
+            return;
+          } else {
+            if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
+              Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
+            } else {
+
+              const value: ServiceModel = this.frm.value;
+              value.simboloMoneda = this.simboloMoneda;
+              this.grabar.emit(value);
+            }
+
+          }
+
+        }
+     } else {
+        if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
+          Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
+        } else {
+
+          let value: ServiceModel = this.frm.value;
+          value.simboloMoneda = this.simboloMoneda;
+          this.grabar.emit(value);
+        }
+     }
+
+
     }
   }
 
