@@ -10,58 +10,59 @@
 
           <div class="col-10 col-md-7" >
               <div class="shadow-none border p-5 bg-white rounded">
-                    <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit(formGroup.value)" class="form">
+                    <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()" class="form">
                         <mat-form-field class="example-full-width">
-                                <input matInput [readonly]="true" placeholder="RUC">
+                            <input matInput [readonly]="true" type="text" formControlName="ruc"  >
                         </mat-form-field>
                             
                         <mat-form-field class="example-full-width">
-                            <input matInput [readonly]="true" type="text" placeholder="Nombre Empresa">
+                            <input matInput [readonly]="true" type="text" formControlName="name"  >
                         </mat-form-field>
             
                         <mat-form-field class="example-full-width">
-                            <input matInput [readonly]="true" type="text" placeholder="Rubro">
+                            <input matInput [readonly]="true" type="text" formControlName="entry" >
                         </mat-form-field>
             
                         <mat-form-field  class="example-full-width">
-                            <input matInput type="email" placeholder="Email" formControlName="email" [class.is-invalid]="f.email.invalid">
+                            <input matInput type="email" placeholder="Email" formControlName="email"  [class.is-invalid]="f.email.invalid">
                             <mat-error *ngIf="!formGroup.controls['email'].valid || formGroup.controls['email'].touched">
                                 {{ getErrorEmail() }}
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field  class="example-full-width">
-                                <input matInput type="text" placeholder="Télefono" formControlName="phone" [class.is-invalid]="f.phone.invalid">
-                                <mat-error *ngIf="!formGroup.controls['phone'].valid || formGroup.controls['phone'].touched">
+                                <input matInput type="text" placeholder="Télefono" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid" >
+                                <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
                                     {{ getErrorPhone() }}
                                 </mat-error>
                             </mat-form-field>
-                        
+
+                            <!--
                         <mat-form-field  class="example-full-width">
                             <input matInput type="password" placeholder="Contraseña Actual" formControlName="password" [class.is-invalid]="f.password.invalid">
                             <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
                                 {{ getErrorPassword() }}
                               </mat-error>
-                        </mat-form-field>
+                        </mat-form-field>-->
                         
                         <mat-form-field  class="example-full-width">
-                                <input matInput type="password" placeholder="Nueva Contraseña" formControlName="newPassword"  [class.is-invalid]="f.newPassword.invalid">
-                                <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
-                                    {{ getErrorNewPassword() }}
+                                <input matInput type="password" placeholder="Nueva Contraseña" formControlName="password" >
+                                <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
+                                    {{ getErrorPassword() }}
                                   </mat-error>
                         </mat-form-field>
 
                         <mat-form-field  class="example-full-width">
-                                <input matInput type="password"  placeholder="Confirmar Nueva Contraseña" formControlName="confirmNewPassword" [class.is-invalid]="f.confirmNewPassword.invalid">
-                                <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
+                                <input matInput type="password"  placeholder="Confirmar Contraseña" formControlName="confirmPassword" [class.is-invalid]="f.confirmPassword.invalid">
+                                <mat-error *ngIf="!formGroup.controls['confirmPassword'].valid || formGroup.controls['confirmPassword'].touched">
                                     {{ getErrorConfirmNewPassword() }}
                                   </mat-error>
-                                  <mat-error *ngIf="f.confirmNewPassword.invalid">Debe ser igual a Contraseña</mat-error>
+                                  <mat-error *ngIf="f.confirmPassword.invalid">Debe ser igual a Contraseña</mat-error>
 
                         </mat-form-field>
 
                         <div  class="mt-4"    >
-                              <button color="primary" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white"  >Submit Form</button>
+                              <button color="primary" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white" >Actualizar</button>
                         </div>
                     </form>
             </div>

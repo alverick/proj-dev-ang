@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable }    from 'rxjs/Observable';
 import { MustMatch } from 'src/app/auth/crear-contrasena/must-match.validator';
+import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
+import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
+import Swal from 'sweetalert2';
+import { stringify } from '@angular/core/src/render3/util';
 
 
 @Component({
@@ -17,26 +20,36 @@ export class ConfigurarEmpresaComponent implements OnInit {
   post: any = '';
   submitted: boolean= false;
 
-  constructor(private formBuilder: FormBuilder) { }
-
-
+  constructor(private formBuilder: FormBuilder,
+              private configEmpresaService: ConfiguracionService) { }
 
   ngOnInit() {
     this.createForm();
+    this.getInfoEmpresa();
   }
 
   
+  getInfoEmpresa(){
+    this.configEmpresaService.getDatosEmpresa()
+      .subscribe( dataEnterprise =>{
+        console.log("DATA " + dataEnterprise);
+        this.formGroup.setValue(dataEnterprise);
+      }
+  );
+  }
   
-    createForm() {
-      this.formGroup = this.formBuilder.group({
-        email: new FormControl('', [Validators.required, Validators.email]),
-        phone: new FormControl('', [Validators.required]),
-        password:new FormControl('', [Validators.required]),
-        newPassword: new FormControl('', [Validators.required]),
-        confirmNewPassword:new FormControl('', [Validators.required]),
-       },{          
-            validator: MustMatch('newPassword', 'confirmNewPassword')
-        });
+  createForm() {
+    this.formGroup = this.formBuilder.group({
+      ruc: new FormControl(''),
+      name: new FormControl(''),
+      entry: new FormControl(''),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      movilNumber: new FormControl('', [Validators.required]),
+     password: new FormControl('', [Validators.required]),
+      confirmPassword:new FormControl('', [Validators.required]),
+    },{          
+      validator: MustMatch('password', 'confirmPassword')
+    });
   }
 
   get f() { return this.formGroup.controls; }
@@ -48,7 +61,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   }
   
   getErrorPhone(){
-    return this.formGroup.get('phone').hasError('required') ? 'Télefono es requerido' : '';
+    return this.formGroup.get('movilNumber').hasError('required') ? 'Télefono es requerido' : '';
   }
 
   getErrorPassword() {
@@ -59,20 +72,44 @@ export class ConfigurarEmpresaComponent implements OnInit {
     return this.formGroup.get('newPassword').hasError('required') ? 'La Contraseña es requerida' :''  }
 
   getErrorConfirmNewPassword() {
-    return this.formGroup.get('confirmNewPassword').hasError('required') ? 'La Contraseña es requerida' :''  
+    return this.formGroup.get('confirmPassword').hasError('required') ? 'La Contraseña es requerida' :''  
   }
 
 
-  onSubmit(post) {
+  onSubmit() {
     this.submitted = true;
-
-    console.log(this.formGroup.valid);
-
-    if(this.formGroup.invalid){
-      return;
+    console.log("ENTRO  ");
+    if(this.formGroup.valid){
+      console.log(this.formGroup.value);
+      const datosEmpresa = this.formGroup.value;
+      console.log(datosEmpresa.newEmail);
+      const enterprise={
+        email: datosEmpresa.email,
+        movilNumber: datosEmpresa.movilNumber,
+        password: datosEmpresa.password,
+        confirmPassword: datosEmpresa.confirmPassword
+      }
+      console.log("FORM GROUP : "+this.formGroup.valid);
+      console.log(enterprise);
+      this.configEmpresaService.saveDatosEmpresa(enterprise).
+        subscribe(
+        enterpriseUpdate =>{
+        
+          Swal.fire({
+            type: 'success',
+            title: 'Datos de empresa guardados',
+            text: 'Sus datos han sido actualizados',
+            confirmButtonText: 'Aceptar',
+            onAfterClose: () =>{
+              console.log("DATOS : "+datosEmpresa.newEmail);
+              datosEmpresa.email = datosEmpresa.newEmail;
+              datosEmpresa.movilNumber = datosEmpresa.newMovilNumber;
+              datosEmpresa.password = datosEmpresa.newPassword;
+            }
+          })
+        }
+      );
     }
-
-    
   }
 
 
