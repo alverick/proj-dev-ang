@@ -10,49 +10,9 @@ import Swal from "sweetalert2";
   styleUrls: ['./form-servicio.component.scss']
 })
 export class FormServicioComponent implements OnInit {
+  isValidFormSubmitted = null;
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder) {}
-
-  ngOnInit(): void {
-    this.frm = this.fb.group({
-      nombre: [this._service.nombre, Validators.required],
-      codDeudor: [this._service.codDeudor, Validators.required],
-      tipoDato: [this._service.tipoDato, Validators.required],
-      tipoPago: [this._service.tipoPago, Validators.required],
-      nroCuenta: [this._service.nroCuenta, Validators.required],
-      moneda: [this._service.moneda, Validators.required],
-      usaAgente: [this._service.usaAgente],
-      usaTienda: [this._service.usaTienda],
-      usaWebApp: [this._service.usaWebApp],
-      cobraMora: [this._service.cobraMora, Validators.required],
-      periodoMora: [this._service.periodoMora],
-      tipoMora: [this._service.tipoMora],
-      monto: [this._service.monto],
-      porcentaje: [this._service.porcentaje]
-    });
-    this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
-    this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
-    this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
-    this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
-    this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
-    this.changeMora();
-    this.changeTipoMora();
-  }
-
-  frm: FormGroup;
-
-  codDeudor: any[] = [];
-  tiposDato: any[] = [];
-  tiposPago: any[] = [];
-  monedas: MonedaModel[] = [];
-  tiposMora: any[] = [];
-
-  simboloMoneda: string = 'S/';
-  cobraMora: boolean = false;
-  cobraMonto: boolean = true;
-  cobraPorcentaje: boolean = false;
-
-  private _service: ServiceModel;
 
   @Input() set service(value: ServiceModel) {
     if (value === null || value === undefined) {
@@ -79,22 +39,119 @@ export class FormServicioComponent implements OnInit {
       delete this._service.simboloMoneda;
     }
   }
-  @Output() grabar = new EventEmitter<any>();
 
   get f() {
     return this.frm.controls;
   }
 
+    public ngInputtextCodi:boolean = false;
+
+  frm: FormGroup;
+
+  codiDeudor: any[] = [];
+  tiposDato: any[] = [];
+  tiposPago: any[] = [];
+  monedas: MonedaModel[] = [];
+  tiposMora: any[] = [];
+
+  simboloMoneda: string = 'S/';
+  cobraMora: boolean = false;
+  cobraMonto: boolean = true;
+  cobraPorcentaje: boolean = false;
+
+  private _service: ServiceModel;
+  @Output() grabar = new EventEmitter<any>();
+  public services: ServiceModel[] = [];
+
+  ngOnInit(): void {
+    this.frm = this.fb.group({
+      nombre: [this._service.nombre, Validators.required, Validators.minLength(3)],
+      codDeudor: [this._service.codDeudor, Validators.required],
+      tipoDato: [this._service.tipoDato, Validators.required],
+      tipoPago: [this._service.tipoPago, Validators.required],
+      nroCuenta: [this._service.nroCuenta, Validators.required],
+      moneda: [this._service.moneda, Validators.required],
+      usaAgente: [this._service.usaAgente],
+      usaTienda: [this._service.usaTienda],
+      usaWebApp: [this._service.usaWebApp],
+      cobraMora: [this._service.cobraMora, Validators.required],
+      periodoMora: [this._service.periodoMora],
+      tipoMora: [this._service.tipoMora],
+      monto: [this._service.monto, Validators.maxLength(4)],
+      porcentaje: [this._service.porcentaje]
+    });
+
+    this.afiliacionService.GetCodDeudor().subscribe(d => this.codiDeudor = d);
+    this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
+    this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
+    this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
+    this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
+    this.changeMora();
+    this.changeTipoMora();
+
+  }
+
   onSubmitServicio() {
+    this.isValidFormSubmitted = false;
+
     if (this.frm.valid) {
-      if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-        Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
-      }
-      else {
-        let value: ServiceModel = this.frm.value;
-        value.simboloMoneda = this.simboloMoneda;
-        this.grabar.emit(value);
-      }
+    this.isValidFormSubmitted = true;
+     // tslint:disable-next-line:radix
+     const monto  = parseInt(this.frm.get('monto').value);
+     // tslint:disable-next-line:radix
+     const porcentaje  = parseInt(this.frm.get('porcentaje').value);
+
+     if (this.frm.get('cobraMora').value === 'S') {
+        if (this.frm.get('tipoMora').value === 'M') {
+          if (monto > 1000 ) {
+            Swal.fire({
+              type: 'error',
+              text: 'el maximo monto que se puede ingresa es 1000',
+            });
+            return;
+          } else {
+            if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
+              Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
+            } else {
+
+              const value: ServiceModel = this.frm.value;
+              value.simboloMoneda = this.simboloMoneda;
+              this.grabar.emit(value);
+            }
+
+          }
+        } else {
+          if (porcentaje > 100 ) {
+            Swal.fire({
+              type: 'error',
+              text: 'el maximo porcentaje que se puede ingresa es 100',
+            });
+            return;
+          } else {
+            if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
+              Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
+            } else {
+
+              const value: ServiceModel = this.frm.value;
+              value.simboloMoneda = this.simboloMoneda;
+              this.grabar.emit(value);
+            }
+
+          }
+
+        }
+     } else {
+        if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
+          Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
+        } else {
+
+          const value: ServiceModel = this.frm.value;
+          value.simboloMoneda = this.simboloMoneda;
+          this.grabar.emit(value);
+        }
+     }
+
+
     }
   }
 
@@ -125,4 +182,15 @@ export class FormServicioComponent implements OnInit {
       this.f.monto.reset();
     }
   }
+
+  selectCodigo(event){  
+    //alert(event);
+    if(event == 'Otro Codigo'){
+      this.ngInputtextCodi = true;
+    }
+  }
+  changetoSelect(){
+    this.ngInputtextCodi = false;
+  }
+
 }

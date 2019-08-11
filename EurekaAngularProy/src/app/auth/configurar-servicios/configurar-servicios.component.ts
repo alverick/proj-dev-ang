@@ -17,9 +17,12 @@ export class ConfigurarServiciosComponent implements OnInit {
   ngOnInit() {
     this.Formulario =true;
     this.route.data.subscribe(d => {
+      console.log('Configurar Servicios');
+      console.log(d);
       if (d.isEdit) {
         this.afiliacionService.GetServicios();
       } else {
+        console.log('llamando a Clear');
         this.afiliacionService.Clear();
       }
     })
@@ -102,6 +105,8 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     this.Formulario = false;
   }
+
+  
 }
 
 

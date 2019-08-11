@@ -40,8 +40,8 @@ import { UploadProgressComponent } from './pages/home/upload-progress';
 import { DialogComponent } from './pages/home/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DateDirective } from './pages/home/date.directive';
-import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { ConfiguracionService } from './shared/services/configuracion.service';
+import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component'; 
 
 
 @NgModule({
@@ -57,7 +57,8 @@ import { ConfiguracionService } from './shared/services/configuracion.service';
     UploadProgressComponent,
     DialogComponent,
     DateDirective,
-    ConfigurarEmpresaComponent
+    ConfigurarEmpresaComponent,
+   
 
     ],
   imports: [
@@ -88,7 +89,6 @@ import { ConfiguracionService } from './shared/services/configuracion.service';
     MatFormFieldModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    FontAwesomeModule
 
   ],
   providers: [
