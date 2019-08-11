@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
   styleUrls: ['./form-servicio.component.scss']
 })
 export class FormServicioComponent implements OnInit {
+  isValidFormSubmitted = null;
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder) {}
 
@@ -64,7 +65,7 @@ export class FormServicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.frm = this.fb.group({
-      nombre: [this._service.nombre, Validators.required],
+      nombre: [this._service.nombre, Validators.required, Validators.minLength(3)],
       codDeudor: [this._service.codDeudor, Validators.required],
       tipoDato: [this._service.tipoDato, Validators.required],
       tipoPago: [this._service.tipoPago, Validators.required],
@@ -91,7 +92,10 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
+    this.isValidFormSubmitted = false;
+
     if (this.frm.valid) {
+    this.isValidFormSubmitted = true;
      // tslint:disable-next-line:radix
      const monto  = parseInt(this.frm.get('monto').value);
      // tslint:disable-next-line:radix
@@ -141,7 +145,7 @@ export class FormServicioComponent implements OnInit {
           Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
         } else {
 
-          let value: ServiceModel = this.frm.value;
+          const value: ServiceModel = this.frm.value;
           value.simboloMoneda = this.simboloMoneda;
           this.grabar.emit(value);
         }

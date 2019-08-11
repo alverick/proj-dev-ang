@@ -49,7 +49,7 @@
     </div>
     <div class="form-group">
         <mat-form-field>
-            <input matInput type="text" maxlength="13" formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
+            <input matInput type="text" appOnlyNumbersForm maxlength="13" formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
             <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('required')">El numero de cuenta es obligatorio
             </mat-error>
         </mat-form-field>
@@ -157,19 +157,22 @@
             <span class="check"></span>
          </label>
             <mat-form-field *ngIf="cobraMonto">
-                <input formControlName="monto" type="text" name="monto" matInput maxlength="4">
+                <input formControlName="monto" type="text" name="monto" appOnlyNumbersForm matInput maxlength="4">
                 <span matPrefix>{{simboloMoneda}}&nbsp;&nbsp;</span>
             </mat-form-field>
             <label class="d-block mb-0 radio">Porcentaje
             <input type="radio" formControlName="tipoMora" name="tipoMora" id="porcentaje" value="P"
               (change)="changeTipoMora()">
             <span class="check"></span>
-          </label>
+            </label>
             <mat-form-field *ngIf="cobraPorcentaje">
-                <input formControlName="porcentaje" name="porcentaje" matInput type="number" placeholder="Porcentaje" maxlength="4">
+                <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" placeholder="Porcentaje" maxlength="3">
                 <span matSuffix>%</span>
             </mat-form-field>
         </div>
+
     </div>
     <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white"> Registrarme</button>
 </form>
+<br>
+<br>
