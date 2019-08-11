@@ -11,7 +11,8 @@ import { StorageService } from "./storage.service";
 @Injectable()
 export class AfiliacionService {
   constructor(private http: HttpClient,
-    private spinner: NgxSpinnerService, private storage: StorageService) {}
+    private spinner: NgxSpinnerService, private storage: StorageService
+    ) {}
 
   public idCompany: number = 0;
 
@@ -107,11 +108,11 @@ export class AfiliacionService {
   public GetTipoPago(): Observable < any[] > {
     return of<any[]>([{
         code: 'C',
-        name: "Completa"
+        name: "Pueden elegir qué deuda quieren pagar"
       },
       {
         code: 'P',
-        name: "Parcial"
+        name: "Siempre la deuda que vence primero"
       }
     ]);
   }
@@ -143,7 +144,15 @@ export class AfiliacionService {
   }
 
   public GetServicios() {
-    this.http.get<any[]>(`${environment.END_POINT}/company/service`)
+
+    const headers: any = {
+        "Ocp-Apim-Subscription-Key": environment.END_POINT,
+        "Ocp-Apim-Trace": "true"
+      };
+      if(this.storage.isAuthenticated) {
+        headers["Authorization"] = "bearer " + this.storage.getCurrentToken();
+      }
+    this.http.get<any[]>(`${environment.END_POINT}/company/service`, { headers: headers })
       .subscribe(d => {
         let servicios = [];
         d.forEach(s => {
@@ -168,6 +177,8 @@ export class AfiliacionService {
         });
         this.services = servicios;
       });
+
+      
   }
 
   public GrabarServicios(): Observable<any> {

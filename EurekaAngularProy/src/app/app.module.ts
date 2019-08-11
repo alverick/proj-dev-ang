@@ -41,7 +41,8 @@ import { DialogComponent } from './pages/home/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DateDirective } from './pages/home/date.directive';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
-
+import { NumbersDirective } from './auth/form-servicio/numbers.directive';
+ 
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
     DialogComponent,
     DateDirective,
     ConfigurarEmpresaComponent,
+    NumbersDirective,
 
     ],
   imports: [

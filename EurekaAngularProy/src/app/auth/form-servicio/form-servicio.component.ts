@@ -13,6 +13,8 @@ export class FormServicioComponent implements OnInit {
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder) {}
 
+    public ngInputtextCodi:boolean =false;
+
   ngOnInit(): void {
     this.frm = this.fb.group({
       nombre: [this._service.nombre, Validators.required],
@@ -27,21 +29,23 @@ export class FormServicioComponent implements OnInit {
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
-      monto: [this._service.monto],
+      monto: [this._service.monto, Validators.maxLength(4)],
       porcentaje: [this._service.porcentaje]
     });
-    this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
+
+    this.afiliacionService.GetCodDeudor().subscribe(d => this.codiDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
     this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
     this.changeMora();
     this.changeTipoMora();
-  }
 
+  }
+  
   frm: FormGroup;
 
-  codDeudor: any[] = [];
+  codiDeudor: any[] = [];
   tiposDato: any[] = [];
   tiposPago: any[] = [];
   monedas: MonedaModel[] = [];
@@ -84,16 +88,23 @@ export class FormServicioComponent implements OnInit {
   get f() {
     return this.frm.controls;
   }
-
+  public services: ServiceModel[] = [];
+  
   onSubmitServicio() {
     if (this.frm.valid) {
+      //this.frm.get('nombre').value
+       
+     // alert('holas ' + this.frm.get('nombre').value  );
+
+      
       if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
         Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
       }
       else {
+ 
         let value: ServiceModel = this.frm.value;
         value.simboloMoneda = this.simboloMoneda;
-        this.grabar.emit(value);
+        this.grabar.emit(value);  
       }
     }
   }
@@ -125,4 +136,15 @@ export class FormServicioComponent implements OnInit {
       this.f.monto.reset();
     }
   }
+
+  selectCodigo(event){  
+    //alert(event);
+    if(event == 'Otro Codigo'){
+      this.ngInputtextCodi = true;
+    }
+  }
+  changetoSelect(){
+    this.ngInputtextCodi = false;
+  }
+
 }

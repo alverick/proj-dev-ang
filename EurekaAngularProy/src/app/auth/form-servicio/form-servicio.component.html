@@ -1,19 +1,20 @@
 <form [formGroup]="frm" novalidate (submit)="onSubmitServicio()">
   <div class="form-group">
     <mat-form-field class="w-100">
-      <input matInput type="text" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
+      <input matInput type="text"  maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
       <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
     </mat-form-field>
   </div>
   <div class="form-group">
     <mat-form-field class="w-100">
       <mat-label>Codigo Deudor</mat-label>
-      <mat-select formControlName="codDeudor" name="codDeudor">
-        <mat-option>Codigo Deudor</mat-option>
-        <mat-option *ngFor="let c of codDeudor" [value]="c.code">
+      <mat-select *ngIf="!ngInputtextCodi"   formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)"  >
+         <mat-option *ngFor="let c of codiDeudor" [value]="c.code">
           {{c.name}}
-        </mat-option>
-      </mat-select>
+        </mat-option> 
+      </mat-select> 
+      <input *ngIf="ngInputtextCodi"  matInput type="text"  maxlength="20" formControlName="codDeudor" name="codDeudor" placeholder="Otro">
+      <label *ngIf="ngInputtextCodi"  style="float: right; cursor: pointer;" class="fa fa-times" (click)="changetoSelect()"></label>
       <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
     </mat-form-field>
   </div>
@@ -43,7 +44,7 @@
   </div>
   <div class="form-group">
     <mat-form-field>
-      <input matInput type="text" formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
+      <input matInput type="text" maxlength="13"  formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
       <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('required')">El numero de cuenta es obligatorio
       </mat-error>
     </mat-form-field>
@@ -140,8 +141,7 @@
     </div>
     <mat-form-field *ngIf="cobraMora">
       <mat-label>Tipo de Cobro</mat-label>
-      <mat-select formControlName="periodoMora">
-        <mat-option>Tipo de Cobro</mat-option>
+      <mat-select formControlName="periodoMora"> 
         <mat-option *ngFor="let t of tiposMora" [value]="t.id">
           {{t.name}}
         </mat-option>
@@ -154,7 +154,7 @@
         <span class="check"></span>
       </label>
       <mat-form-field *ngIf="cobraMonto">
-        <input formControlName="monto" name="monto" matInput type="number">
+        <input formControlName="monto" type="number" name="monto"   matInput maxlength="4" >
         <span matPrefix>{{simboloMoneda}}&nbsp;&nbsp;</span>
       </mat-form-field>
       <label class="d-block mb-0 radio">Porcentaje
@@ -163,7 +163,7 @@
         <span class="check"></span>
       </label>
       <mat-form-field *ngIf="cobraPorcentaje">
-        <input formControlName="porcentaje" name="porcentaje" matInput type="number" placeholder="Porcentaje">
+        <input formControlName="porcentaje" name="porcentaje" matInput type="number" placeholder="Porcentaje" maxlength="4">
         <span matSuffix>%</span>
       </mat-form-field>
     </div>
