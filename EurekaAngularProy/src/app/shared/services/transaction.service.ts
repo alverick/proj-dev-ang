@@ -36,9 +36,7 @@ export class TransactionService {
     }
 
     getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
-     /* console.log('Filtro: ',filtro);
-      console.log('Filtro.DateFrom: ',filtro.dateFrom);
-      console.log('Filtro.dateTo: ',filtro.dateTo);*/
+
 
       if (filtro === null) {
         filtro = this.lastFilter;
