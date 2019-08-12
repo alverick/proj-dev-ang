@@ -37,28 +37,29 @@
                                 </mat-error>
                             </mat-form-field>
 
-                            <!--
-                        <mat-form-field  class="example-full-width">
-                            <input matInput type="password" placeholder="Contraseña Actual" formControlName="password" [class.is-invalid]="f.password.invalid">
-                            <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
-                                {{ getErrorPassword() }}
-                              </mat-error>
-                        </mat-form-field>-->
+
                         
                         <mat-form-field  class="example-full-width">
-                                <input matInput type="password" placeholder="Nueva Contraseña" formControlName="password" >
+                                <input matInput type="password" placeholder="Contraseña actual" formControlName="password" >
                                 <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
                                     {{ getErrorPassword() }}
                                   </mat-error>
                         </mat-form-field>
 
                         <mat-form-field  class="example-full-width">
-                                <input matInput type="password"  placeholder="Confirmar Contraseña" formControlName="confirmPassword" [class.is-invalid]="f.confirmPassword.invalid">
-                                <mat-error *ngIf="!formGroup.controls['confirmPassword'].valid || formGroup.controls['confirmPassword'].touched">
+                                <input matInput type="password" placeholder="Nueva contraseña"  formControlName="newPassword" >
+                                <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
+                                    {{ getErrorNewPassword() }}
+                                  </mat-error>
+                        </mat-form-field>
+
+
+                        <mat-form-field  class="example-full-width">
+                                <input matInput type="password"  placeholder="Repetir nueva contraseña" formControlName="confirmNewPassword">
+                                <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
                                     {{ getErrorConfirmNewPassword() }}
                                   </mat-error>
-                                  <mat-error *ngIf="f.confirmPassword.invalid">Debe ser igual a Contraseña</mat-error>
-
+                                  <mat-error *ngIf="f.confirmNewPassword.invalid">Debe ser igual a Contraseña</mat-error>
                         </mat-form-field>
 
                         <div  class="mt-4"    >

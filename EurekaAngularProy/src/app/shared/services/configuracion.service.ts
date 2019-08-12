@@ -23,7 +23,10 @@ export class ConfiguracionService {
     return this.http.get<DataEnterpriseModel>(url, opts)
         .pipe(map(r => {
           r.password = '';
-          r.confirmPassword = '';
+          r.newPassword = '';
+          r.confirmNewPassword  = '';
+          /*r.password = '';
+          r.confirmPassword = '';*/
           return r;
         }))
         .pipe(catchError(err => throwError(err)));

@@ -45,10 +45,11 @@ export class ConfigurarEmpresaComponent implements OnInit {
       entry: new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.email]),
       movilNumber: new FormControl('', [Validators.required]),
-     password: new FormControl('', [Validators.required]),
-      confirmPassword:new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      newPassword: new FormControl(''),
+      confirmNewPassword:new FormControl(''),
     },{          
-      validator: MustMatch('password', 'confirmPassword')
+      validator: MustMatch('newPassword', 'confirmNewPassword')
     });
   }
 
@@ -67,13 +68,12 @@ export class ConfigurarEmpresaComponent implements OnInit {
   getErrorPassword() {
     return this.formGroup.get('password').hasError('required') ? 'La Contraseña es requerida' :''  }
 
-    
+
   getErrorNewPassword() {
     return this.formGroup.get('newPassword').hasError('required') ? 'La Contraseña es requerida' :''  }
 
   getErrorConfirmNewPassword() {
-    return this.formGroup.get('confirmPassword').hasError('required') ? 'La Contraseña es requerida' :''  
-  }
+    return this.formGroup.get('confirmNewPassword').hasError('required') ? 'La Contraseña es requerida' :''  }
 
 
   onSubmit() {
@@ -82,26 +82,24 @@ export class ConfigurarEmpresaComponent implements OnInit {
     if(this.formGroup.valid){
       console.log(this.formGroup.value);
       const datosEmpresa = this.formGroup.value;
-      console.log(datosEmpresa.newEmail);
       const enterprise={
         email: datosEmpresa.email,
         movilNumber: datosEmpresa.movilNumber,
         password: datosEmpresa.password,
-        confirmPassword: datosEmpresa.confirmPassword
+        newPassword: datosEmpresa.newPassword,
+        confirmNewPassword: datosEmpresa.confirmNewPassword
       }
       console.log("FORM GROUP : "+this.formGroup.valid);
       console.log(enterprise);
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
         enterpriseUpdate =>{
-        
           Swal.fire({
             type: 'success',
             title: 'Datos de empresa guardados',
             text: 'Sus datos han sido actualizados',
             confirmButtonText: 'Aceptar',
             onAfterClose: () =>{
-              console.log("DATOS : "+datosEmpresa.newEmail);
               datosEmpresa.email = datosEmpresa.newEmail;
               datosEmpresa.movilNumber = datosEmpresa.newMovilNumber;
               datosEmpresa.password = datosEmpresa.newPassword;

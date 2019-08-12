@@ -5,5 +5,6 @@ export interface DataEnterpriseModel{
     email: string;
     movilNumber: number;    
     password: string;
-    confirmPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
 }
