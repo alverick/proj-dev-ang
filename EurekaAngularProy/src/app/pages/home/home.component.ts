@@ -629,6 +629,10 @@ if(columnName === 'amount' ) {
               });
          }
   }
+console.log('FILTRO FECHAS');
+  console.log('fecha desde '+this.filtro.dateFrom);
+  console.log('fecha hasta '+this.filtro.dateTo);
+
 }
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
