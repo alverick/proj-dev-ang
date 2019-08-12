@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, CanDeactivate } from '@angular/router';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -31,7 +31,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   private indiceActual: number = -1;
   serviceActual: ServiceModel = null;
 
-  OcultarFormulario(){
+  OcultarFormulario() {
     this.Formulario = false 
   }
   MostarFormulario() {

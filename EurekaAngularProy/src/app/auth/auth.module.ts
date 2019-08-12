@@ -21,6 +21,7 @@ import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
 import { NumberDirective } from './login/numbers-only.directive';
 import { FormServicioComponent } from './form-servicio/form-servicio.component';
 import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
+import { CloseViewGuard } from '../shared/guards/close-view.guard';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.dire
   providers: [
     StorageService,
     AuthGuard,
-    CookieService
+    CookieService,
+    CloseViewGuard
   ],
   declarations: [
     LoginComponent,

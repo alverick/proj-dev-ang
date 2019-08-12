@@ -1,79 +1,79 @@
 <div class="body">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-5">
+    <div class="container">
         <div class="row">
-          <div class="col-sm">
-            <br>
-            <h2 class="texto-azulbase">Configura tus servicios </h2>
-            <div class="col-sm-10">
-              <div class="card" *ngFor="let svc of afiliacionService.services; let i = index">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-9">
-                      <h5 class="font-semibold">{{svc.nombre}}</h5>
-                    </div>
-                    <div class="col-sm-1">
-                      <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
-                        <li>
-                          <a class="texto-azul" style="cursor: pointer" (click)="editService(svc, i)"><i
+            <div class="col-sm-5">
+                <div class="row">
+                    <div class="col-sm">
+                        <br>
+                        <h2 class="texto-azulbase">Configura tus servicios </h2>
+                        <div class="col-sm-10">
+                            <div class="card" *ngFor="let svc of afiliacionService.services; let i = index">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <h5 class="font-semibold">{{svc.nombre}}</h5>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
+                                                <li>
+                                                    <a class="texto-azul" style="cursor: pointer" (click)="editService(svc, i)"><i
                               class="icon-lapiz"></i></a>
-                        </li>
-                        <li class="ml-2" *ngIf="afiliacionService.services.length > 1">
-                          <a class="texto-azul borrar" style="cursor: pointer" (click)="delService(i)"><i
+                                                </li>
+                                                <li class="ml-2" *ngIf="afiliacionService.services.length > 1">
+                                                    <a class="texto-azul borrar" style="cursor: pointer" (click)="delService(i)"><i
                               class="icon-basura"></i></a>
-                        </li>
-                      </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <table class="table table-sm table-borderless mb-0">
+                                        <tr>
+                                            <th><small>Canales</small></th>
+                                            <td><small>{{ getCanales(svc) }}</small></td>
+                                        </tr>
+                                        <tr>
+                                            <th><small>Mora</small></th>
+                                            <td>
+                                                <small *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }}</small>
+                                                <small *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'P'">{{ svc.porcentaje }} %</small>
+                                                <small *ngIf="svc.cobraMora === 'N'">NO</small>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><small>Cuenta</small></th>
+                                            <td><small>{{ svc.nroCuenta }}</small></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <table class="table table-sm table-borderless mb-0">
-                    <tr>
-                      <th><small>Canales</small></th>
-                      <td><small>{{ getCanales(svc) }}</small></td>
-                    </tr>
-                    <tr>
-                      <th><small>Mora</small></th>
-                      <td>
-                        <small *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }}</small>
-                        <small *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'P'">{{ svc.porcentaje }} %</small>
-                        <small *ngIf="svc.cobraMora === 'N'" >NO</small>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th><small>Cuenta</small></th>
-                      <td><small>{{ svc.nroCuenta }}</small></td>
-                    </tr>
-                  </table>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div style="text-align:center;">
-          <button (click)="MostarFormulario()" class="btn-big w-80 btn-eureca btn-eureca-azul text-white">
-            Agregar otro servicio
-          </button>
-          <br>
-          <br>
-          <button (click)="EnviarServicios()" class="btn-big w-80 btn-eureca btn-eureca-amarillo text-white">
+                <br>
+                <div style="text-align:center;">
+                    <button (click)="MostarFormulario()" class="btn btn-lg btn-outline-amarillo">
+                      <span class="fa fa-plus-circle"></span>   Agregar otro servicio
+                    </button>
+                    <br>
+                    <br>
+                    <button (click)="EnviarServicios()" class="btn-big w-80 btn-eureca btn-eureca-amarillo text-white">
             Finalizar</button>
-        </div>
-      </div>
-      <div class="col-sm-7 position-relative" *ngIf="Formulario">
-        <br>
-        <div class="d-flex justify-content-center">
-          <div class=" border p-5 bg-white rounded">
-            <div style="float: right;">
-              <button (click)="OcultarFormulario()" type="button" class="btn btn-tool" data-widget="remove"><i
+                </div>
+            </div>
+            <div class="col-sm-7 position-relative" *ngIf="Formulario">
+                <br>
+                <div class="d-flex justify-content-center">
+                    <div class=" border p-5 bg-white rounded">
+                        <div style="float: right;">
+                            <button (click)="OcultarFormulario()" type="button" class="btn btn-tool" data-widget="remove"><i
                   class="fa fa-times"></i>
               </button>
+                        </div>
+                        <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
+                    </div>
+                </div>
+                <br>
             </div>
-            <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
-          </div>
         </div>
-        <br>
-      </div>
     </div>
-  </div>
 </div>

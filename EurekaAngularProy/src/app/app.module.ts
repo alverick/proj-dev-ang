@@ -57,7 +57,8 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
     DialogComponent,
     DateDirective,
     ConfigurarEmpresaComponent,
-   
+
+
 
     ],
   imports: [

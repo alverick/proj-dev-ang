@@ -14,15 +14,16 @@ import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { LogoutGuard } from './shared/guards/logout.guard';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 
+
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
 
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
-  { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }},
+  { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [LogoutGuard] },
   { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard ] },
   { path: 'crearContrasena', component: CrearContrasenaComponent},
-  { path: 'procesando', component: ProcesandoComponent},
+  { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
   { path: 'configuracion', component: ConfigurarServiciosComponent},
   { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent},
 
