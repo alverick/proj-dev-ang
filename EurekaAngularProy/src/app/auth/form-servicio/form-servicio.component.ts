@@ -10,7 +10,9 @@ import Swal from "sweetalert2";
   styleUrls: ['./form-servicio.component.scss']
 })
 export class FormServicioComponent implements OnInit {
-  isValidFormSubmitted = null;
+ 
+  public ngInputtextCodi:boolean = false;
+
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder) {}
 
@@ -20,6 +22,7 @@ export class FormServicioComponent implements OnInit {
         nombre: '',
         rubro: null,
         codDeudor: null,
+        nameCod: null,
         tipoDato: '',
         tipoPago: null,
         nroCuenta: '',
@@ -44,11 +47,10 @@ export class FormServicioComponent implements OnInit {
     return this.frm.controls;
   }
 
-    public ngInputtextCodi:boolean = false;
-
+   
   frm: FormGroup;
 
-  codiDeudor: any[] = [];
+  codDeudor: any[] = [];
   tiposDato: any[] = [];
   tiposPago: any[] = [];
   monedas: MonedaModel[] = [];
@@ -67,6 +69,7 @@ export class FormServicioComponent implements OnInit {
     this.frm = this.fb.group({
       nombre: [this._service.nombre, Validators.required],
       codDeudor: [this._service.codDeudor, Validators.required],
+      nameCod: [this._service.nameCod],
       tipoDato: [this._service.tipoDato, Validators.required],
       tipoPago: [this._service.tipoPago, Validators.required],
       nroCuenta: [this._service.nroCuenta, Validators.required],
@@ -81,7 +84,7 @@ export class FormServicioComponent implements OnInit {
       porcentaje: [this._service.porcentaje]
     });
 
-    this.afiliacionService.GetCodDeudor().subscribe(d => this.codiDeudor = d);
+    this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
     this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
@@ -92,14 +95,11 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    this.isValidFormSubmitted = false;
-
+    
     if (this.frm.valid) {
-    this.isValidFormSubmitted = true;
-     // tslint:disable-next-line:radix
-     const monto  = parseInt(this.frm.get('monto').value);
-     // tslint:disable-next-line:radix
-     const porcentaje  = parseInt(this.frm.get('porcentaje').value);
+     
+     const monto  = parseInt(this.frm.get('monto').value); 
+     const porcentaje  = parseInt(this.frm.get('porcentaje').value);  
 
      if (this.frm.get('cobraMora').value === 'S') {
         if (this.frm.get('tipoMora').value === 'M') {

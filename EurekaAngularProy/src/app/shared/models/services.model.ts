@@ -2,7 +2,8 @@ export interface ServiceModel {
     id?: number;
     nombre: string;
     rubro?: number;
-    codDeudor?: number;
+    codDeudor?: string;
+    nameCod?: string;
     tipoDato: string;
     tipoPago?: string;
     nroCuenta: string;

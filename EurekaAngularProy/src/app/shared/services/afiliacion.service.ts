@@ -22,7 +22,7 @@ export class AfiliacionService {
   public Clear() {
     this.services.push({
       nombre: 'Pension',
-      codDeudor: 1,
+      codDeudor: 'DNI',
       tipoDato: 'C',
       tipoPago: 'C',
       nroCuenta: '',
@@ -88,8 +88,8 @@ export class AfiliacionService {
         name: "Código"
       },
       {
-        code: 'Otro Codigo',
-        name: "Otro"
+        code: 'Otro',
+        name: "Otro Codigo"
       }
     ]);
   }

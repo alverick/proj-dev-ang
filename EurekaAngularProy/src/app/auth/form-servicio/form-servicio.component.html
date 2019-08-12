@@ -6,21 +6,20 @@
             <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
         </mat-form-field>
     </div>
-    <div *ngIf="!ngInputtextCodi" class="form-group">
+    <div class="form-group">
         <mat-form-field class="w-100">
             <mat-label>Codigo Deudor</mat-label>
             <mat-select formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
-                <mat-option *ngFor="let c of codiDeudor" [value]="c.code">
+                <mat-option *ngFor="let c of codDeudor" [value]="c.code">
                     {{c.name}}
                 </mat-option>
             </mat-select>
             <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
         </mat-form-field>
     </div>
-    <div *ngIf="ngInputtextCodi" class="form-group">
+    <div *ngIf="f.codDeudor.value === 'Otro'" class="form-group">
         <mat-form-field class="w-100">
-            <input matInput type="text" minlength="3" maxlength="20" formControlName="codDeudor" name="codDeudor" placeholder="Otro">
-            <label style="float: right; cursor: pointer;" class="fa fa-times" (click)="changetoSelect()"></label>
+            <input matInput type="text" minlength="3" maxlength="20" formControlName="nameCod" name="nameCod" placeholder="Nombre de Código">
             <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Escriba su Opcion</mat-error>
         </mat-form-field>
     </div>

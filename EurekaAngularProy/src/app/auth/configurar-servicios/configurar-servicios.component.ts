@@ -3,6 +3,7 @@ import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
+import { FormServicioComponent } from '../form-servicio/form-servicio.component';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -11,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ConfigurarServiciosComponent implements OnInit {
 
+  public input: FormServicioComponent;
   Formulario: boolean =true;
   constructor(private afiliacionService: AfiliacionService, private route: ActivatedRoute) { }
 
@@ -41,6 +43,14 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   EnviarServicios() {
+    // el if
+    if(this.afiliacionService.services.length > 99){
+      Swal.fire({
+        type: 'error',
+        text: 'solo puede tener 3 servicios como maximo'
+      });
+      return;
+    }
     this.afiliacionService.GrabarServicios()
       .subscribe(r => { });
   }
@@ -60,6 +70,12 @@ export class ConfigurarServiciosComponent implements OnInit {
     return str;
   }
 
+  getCodDebtor(svc: ServiceModel) {
+    if (svc.codDeudor === 'Otro')
+      return svc.nameCod;
+    return svc.codDeudor;
+  }
+
   delService(index: number) {
     Swal.fire({
       type: 'warning',
@@ -77,7 +93,10 @@ export class ConfigurarServiciosComponent implements OnInit {
   editService(svc: ServiceModel, index: number) {
     console.log(index);
     this.indiceActual = index;
-    this.serviceActual = svc;
+    if(svc.codDeudor !== 'DNI' && svc.codDeudor !== 'RUC' && svc.codDeudor !== 'Codigo Interno' && svc.codDeudor !== 'Otro Codigo' ){
+      console.log('cambios '+ svc.codDeudor);
+    }
+    this.serviceActual = svc; 
     this.Formulario = true;
   }
 
