@@ -104,13 +104,7 @@ export class TransactionService {
 
     report(ids: number[]): Observable<any>{
       const url = `${this.URI_API}/debt/report`;
-      let strIds = '';
-      ids.forEach(id => {
-        if (strIds !== '')
-          strIds += ',';
-        strIds += id.toString();
-      });
-      return this.http.post(url, { ids: strIds })
+      return this.http.post(url, { ids: ids })
         .pipe(catchError(err => throwError(err)));
     }
   
