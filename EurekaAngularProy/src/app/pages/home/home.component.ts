@@ -629,6 +629,10 @@ if(columnName === 'amount' ) {
               });
          }
   }
+console.log('FILTRO FECHAS');
+  console.log('fecha desde '+this.filtro.dateFrom);
+  console.log('fecha hasta '+this.filtro.dateTo);
+
 }
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
@@ -873,7 +877,31 @@ MostrarListaSelect() {
     });
   }
 
+  DescargarReporte() {
+    const itemsParaReporte: number[] = [];
+    this.debtsList.data.forEach(c => {
+    if (c.selected) {
+      itemsParaReporte.push(c.id);
+    }
+    });
 
+    if (itemsParaReporte.length === 0 ) {
+      Swal.fire({
+        type: 'error',
+        text: '¡Seleccione las filas para el reporte, por favor!',
+      });
+      return;
+    }
+
+    this.transactionService.report(itemsParaReporte)
+      .subscribe((r: Blob) => {
+        console.log('todo bien');
+        console.log(r);
+        var downloadUrl = URL.createObjectURL(r);
+        console.log(downloadUrl);
+        window.open(downloadUrl);
+      });
+  }
 }
 
 

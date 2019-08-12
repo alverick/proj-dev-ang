@@ -37,7 +37,11 @@ export class HeaderComponent implements OnInit {
   }
 
   public show(): boolean {
-    if (this.router.url.includes('/login') || this.router.url.includes('/afiliacion') || this.router.url.includes('/crearContrasena')) {
+    if (this.router.url.includes('/login') ||
+     this.router.url.includes('/afiliacion') ||
+     this.router.url.includes('/crearContrasena') ||
+     this.router.url.includes('/configurarServicios') ||
+     this.router.url.includes('/procesando')) {
       return false;
     }
     return true;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
@@ -25,13 +25,13 @@ export class ConfigurarServiciosComponent implements OnInit {
         console.log('llamando a Clear');
         this.afiliacionService.Clear();
       }
-    })
+    });
   }
 
   private indiceActual: number = -1;
   serviceActual: ServiceModel = null;
 
-  OcultarFormulario(){
+  OcultarFormulario() {
     this.Formulario = false 
   }
   MostarFormulario() {
@@ -106,7 +106,4 @@ export class ConfigurarServiciosComponent implements OnInit {
     this.Formulario = false;
   }
 
-  
 }
-
-

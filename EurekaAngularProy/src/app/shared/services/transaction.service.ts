@@ -7,6 +7,7 @@ import { Observable, throwError } from "rxjs";
 import { catchError,  map } from "rxjs/operators";
 import { DebtEdit } from "../models/debts-edit.model";
 import { DebstFilter } from "../models/debts-filter.model";
+import { Http, Headers, ResponseContentType } from "@angular/http";
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class TransactionService {
     private URI_API: string = environment.END_POINT
     private lastFilter: DebstFilter = null;
 
-    constructor(public http: HttpClient, private storage: StorageService)  { }
+    constructor(public http: HttpClient, private nativeHttp: Http, private storage: StorageService)  { }
 
     public debtItems: DebtsPagedList = { count:0, data: [] };
 
@@ -100,17 +101,20 @@ export class TransactionService {
       return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));  
     }
 
-    updateDeuda(id: number, paid: boolean): Observable<any>{
-      const url = `${this.URI_API}/debt/${id}`
-      console.log(url);
-      const opts={
-        headers: { "Authorization":"bearer" + this.storage.getCurrentToken()}
-      };
-      return this.http.post(url).pipe(catchError(error => throwError(error)));
-    
+    report(ids: number[]): Observable<any>{
+      const url = `${this.URI_API}/debt/report`;
+      const headers = new Headers({
+        "Authorization": "bearer " + this.storage.getCurrentToken(),
+        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
+        "Ocp-Apim-Trace": 'true'
+      });
+      return this.nativeHttp.post(url, { ids: ids }, { 
+        headers: headers, 
+        responseType: ResponseContentType.Blob 
+      })
+        .pipe(map(r => r.blob()))
+        .pipe(catchError(err => throwError(err)));
     }
-
-    
   
   
 }
