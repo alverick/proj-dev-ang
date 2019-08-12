@@ -1,3 +1,4 @@
+import { LogoutGuard } from './../shared/guards/logout.guard';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
@@ -41,6 +42,7 @@ import { CloseViewGuard } from '../shared/guards/close-view.guard';
     StorageService,
     AuthGuard,
     CookieService,
+    LogoutGuard,
     CloseViewGuard
   ],
   declarations: [

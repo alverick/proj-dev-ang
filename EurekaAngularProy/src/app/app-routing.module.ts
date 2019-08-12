@@ -13,6 +13,7 @@ import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-fou
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { LogoutGuard } from './shared/guards/logout.guard';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
+import { CloseViewGuard } from './shared/guards/close-view.guard';
 
 
 const routes: Routes = [

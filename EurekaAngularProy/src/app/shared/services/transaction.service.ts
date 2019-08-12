@@ -102,7 +102,17 @@ export class TransactionService {
       return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));  
     }
 
-    
+    report(ids: number[]): Observable<any>{
+      const url = `${this.URI_API}/debt/report`;
+      let strIds = '';
+      ids.forEach(id => {
+        if (strIds !== '')
+          strIds += ',';
+        strIds += id.toString();
+      });
+      return this.http.post(url, { ids: strIds })
+        .pipe(catchError(err => throwError(err)));
+    }
   
   
 }
