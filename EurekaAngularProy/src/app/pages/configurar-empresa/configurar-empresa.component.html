@@ -10,42 +10,62 @@
 
           <div class="col-10 col-md-7" >
               <div class="shadow-none border p-5 bg-white rounded">
-                  <form id="configurar-form" class="example-form" [formGroup]="configurarEmpresaForm" (ngSubmit)="submitEnterprise()">
-                    <mat-form-field class="example-full-width">
-                        <input matInput [readonly]="true" placeholder="RUC">
-                    </mat-form-field>
-                
-                    <mat-form-field class="example-full-width">
-                        <input matInput [readonly]="true" type="text" placeholder="Nombre Empresa">
-                    </mat-form-field>
+                    <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()" class="form">
+                        <mat-form-field class="example-full-width">
+                            <input matInput [readonly]="true" type="text" formControlName="ruc"  >
+                        </mat-form-field>
+                            
+                        <mat-form-field class="example-full-width">
+                            <input matInput [readonly]="true" type="text" formControlName="name"  >
+                        </mat-form-field>
+            
+                        <mat-form-field class="example-full-width">
+                            <input matInput [readonly]="true" type="text" formControlName="entry" >
+                        </mat-form-field>
+            
+                        <mat-form-field  class="example-full-width">
+                            <input matInput type="email" placeholder="Email" formControlName="email"  [class.is-invalid]="f.email.invalid">
+                            <mat-error *ngIf="!formGroup.controls['email'].valid || formGroup.controls['email'].touched">
+                                {{ getErrorEmail() }}
+                            </mat-error>
+                        </mat-form-field>
 
-                    <mat-form-field class="example-full-width">
-                        <input matInput [readonly]="true" type="text" placeholder="Rubro">
-                    </mat-form-field>
+                        <mat-form-field  class="example-full-width">
+                                <input matInput type="text" placeholder="Télefono" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid" >
+                                <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
+                                    {{ getErrorPhone() }}
+                                </mat-error>
+                            </mat-form-field>
 
-                    <mat-form-field class="example-full-width" >
-                        <input matInput type="email" placeholder="Email" formControlName="email">
-                        <mat-error *ngFor="let validation of validations.email">
-                            <mat-error class="error-message" *ngIf="configurarEmpresaForm.get('email').hasError(validation.type) && (configurarEmpresaForm.get('email').dirty || configurarEmpresaForm.get('email').touched)">{{validation.message}}</mat-error>
-                        </mat-error>
-                      </mat-form-field>
 
-                      <mat-form-field class="example-full-width">
-                          <input matInput type="tel" placeholder="Teléfono Celular" formControlName="tel">
-                      </mat-form-field>
+                        
+                        <mat-form-field  class="example-full-width">
+                                <input matInput type="password" placeholder="Contraseña actual" formControlName="password" >
+                                <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
+                                    {{ getErrorPassword() }}
+                                  </mat-error>
+                        </mat-form-field>
 
-                      <mat-form-field class="example-full-width">
-                          <input matInput type="password" placeholder="Contraseña" minlength="6" maxlength="20" formControlName="psw">
-                      </mat-form-field>
+                        <mat-form-field  class="example-full-width">
+                                <input matInput type="password" placeholder="Nueva contraseña"  formControlName="newPassword" >
+                                <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
+                                    {{ getErrorNewPassword() }}
+                                  </mat-error>
+                        </mat-form-field>
 
-                      <mat-form-field class="example-full-width">
-                          <input matInput type="password" placeholder="Repetir Contraseña" minlength="6" maxlength="20" formControlName="repeatPsw">
-                      </mat-form-field>
-                      
-                      <div class="mt-4">
-                           <button style="margin-top: 13px" type="submit" form="configurar-form"class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white" form="login-form"> Registrarme</button>
-                      </div>
-                  </form>
+
+                        <mat-form-field  class="example-full-width">
+                                <input matInput type="password"  placeholder="Repetir nueva contraseña" formControlName="confirmNewPassword">
+                                <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
+                                    {{ getErrorConfirmNewPassword() }}
+                                  </mat-error>
+                                  <mat-error *ngIf="f.confirmNewPassword.invalid">Debe ser igual a Contraseña</mat-error>
+                        </mat-form-field>
+
+                        <div  class="mt-4"    >
+                              <button color="primary" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white" >Actualizar</button>
+                        </div>
+                    </form>
             </div>
         </div>
     </div>

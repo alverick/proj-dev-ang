@@ -40,6 +40,7 @@ import { UploadProgressComponent } from './pages/home/upload-progress';
 import { DialogComponent } from './pages/home/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DateDirective } from './pages/home/date.directive';
+import { ConfiguracionService } from './shared/services/configuracion.service';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component'; 
 
 
@@ -100,7 +101,9 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
         useClass: AuthInterceptorService,
         multi: true
       },
-      AfiliacionService
+      AfiliacionService,
+      ConfiguracionService
+    
   ],
   exports: [
     MatInputModule,
