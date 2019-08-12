@@ -37,7 +37,6 @@ export class TransactionService {
 
     getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
 
-
       if (filtro === null) {
         filtro = this.lastFilter;
       }
@@ -63,6 +62,7 @@ export class TransactionService {
               d.edit = false;
             });
             this.debtItems = r;
+            console.log(r);
             return r;
           }))
           .pipe(catchError(error => throwError(error)));  
@@ -98,6 +98,16 @@ export class TransactionService {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
       };
       return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));  
+    }
+
+    updateDeuda(id: number, paid: boolean): Observable<any>{
+      const url = `${this.URI_API}/debt/${id}`
+      console.log(url);
+      const opts={
+        headers: { "Authorization":"bearer" + this.storage.getCurrentToken()}
+      };
+      return this.http.post(url).pipe(catchError(error => throwError(error)));
+    
     }
 
     
