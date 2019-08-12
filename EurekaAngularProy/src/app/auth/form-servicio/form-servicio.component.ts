@@ -65,7 +65,7 @@ export class FormServicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.frm = this.fb.group({
-      nombre: [this._service.nombre, Validators.required, Validators.minLength(3)],
+      nombre: [this._service.nombre, Validators.required],
       codDeudor: [this._service.codDeudor, Validators.required],
       tipoDato: [this._service.tipoDato, Validators.required],
       tipoPago: [this._service.tipoPago, Validators.required],

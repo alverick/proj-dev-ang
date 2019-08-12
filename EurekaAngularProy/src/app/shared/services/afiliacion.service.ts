@@ -7,11 +7,12 @@ import { catchError, map } from "rxjs/operators";
 import { NgxSpinnerService } from "ngx-spinner";
 import Swal from "sweetalert2";
 import { StorageService } from "./storage.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AfiliacionService {
   constructor(private http: HttpClient,
-    private spinner: NgxSpinnerService, private storage: StorageService
+    private spinner: NgxSpinnerService, private storage: StorageService, private router: Router
     ) {}
 
   public idCompany: number = 0;
@@ -178,7 +179,7 @@ export class AfiliacionService {
         this.services = servicios;
       });
 
-      
+
   }
 
   public GrabarServicios(): Observable<any> {
@@ -207,11 +208,14 @@ export class AfiliacionService {
     return this.http.post<any>(`${environment.END_POINT}/company/service`, data)
       .pipe(map(r => {
         this.spinner.hide();
+        this.router.navigate(['/procesando']);
         return r;
       }))
       .pipe(catchError(err => {
         this.spinner.hide();
+        this.router.navigate(['/procesando']);
         throw throwError(err);
       }));
+
   }
 }
