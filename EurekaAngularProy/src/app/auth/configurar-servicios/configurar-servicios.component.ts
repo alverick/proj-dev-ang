@@ -1,9 +1,8 @@
-import { ErrorStateMatcher } from '@angular/material/core';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
 
 @Component({
@@ -17,7 +16,8 @@ export class ConfigurarServiciosComponent implements OnInit {
   public stateEdit: boolean;
   public input: FormServicioComponent;
   Formulario: boolean =true;
-  constructor(private afiliacionService: AfiliacionService, private route: ActivatedRoute ) { }
+  constructor(private afiliacionService: AfiliacionService, private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
     this.Formulario =true;
@@ -54,7 +54,7 @@ export class ConfigurarServiciosComponent implements OnInit {
  
   EnviarServicios() {
     /*+ this.serviceActual.nombre.toString() +*/
-    if(this.stateEdit === true){
+    if(this.Formulario === true){
       Swal.fire({
         title: 'Servicio no guardado',
         type: 'error',
@@ -68,23 +68,18 @@ export class ConfigurarServiciosComponent implements OnInit {
       return;
     }
     // this.frm.get('monto').value
-    if(this.stateCreate == true){
-      Swal.fire({
-        type: 'error',
-        text: '¿Desea finalizar sin guardar el nuevo servicio ?'
-      });
-      return;
-    }
   
     if(this.afiliacionService.services.length > 99){
       Swal.fire({
         type: 'error',
-        text: 'solo puede tener 3 servicios como maximo'
+        text: 'solo puede tener 99 servicios como maximo'
       });
       return;
     }
     this.afiliacionService.GrabarServicios()
-      .subscribe(r => { });
+      .subscribe(r => { 
+        this.router.navigate(['/procesando']);
+       });
   }
  
   getCanales(svc: ServiceModel) {

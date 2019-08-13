@@ -15,31 +15,21 @@
                 <div class="mb-3 mt-4"><button class="btn-eureca btn-eureca-amarillo btn-small">Descargar plantilla</button>
                 </div>
             </div>
-        </div>
-
-        <div class="bg-blanco custom-shadow pasos-add-registro activo">
+        </div> 
+        <div  class="bg-blanco custom-shadow pasos-add-registro activo">
             <div class="title-popup-add-registo text-center position-relative h2 m-0">
                 <div>Se encontraron los siguientes errores:</div>
             </div>
             <div >
-                <table>
-                    <!--si es fila 0 solo un mensaje  'La información que haz ingresado es incorrecta!'-->
-                   <!-- <tr *ngIf="excelService.errores.row == 0">
-                        <div>
-                            <span style="color: red;">
-                           Asegurese que el Excel que as ingresado sea el formato correcto
-                        </span>
-                        </div>
-                    </tr> -->
-                    <tr *ngIf="excelService.errores.row > 0">  
+                <table>  
                         <div *ngFor="let error of excelService.errores">
                             <div data-spy="scroll">
                                 <td> <strong>Fila &nbsp; {{ error.row}}:&nbsp;</strong> {{ error.description }}
-                              , el campo &nbsp;
+                              ,&nbsp;el campo &nbsp;
                                     <span style="color: green;"> {{ error.field }}</span> &nbsp; tiene el valor &nbsp; <span style="color: orange;">{{ error.value }} </span>  </td>
                             </div>
                         </div>
-                    </tr>
+                    
                 </table>
             </div>
             <div>Corrige los errores y vuelve a subir la plantilla</div>

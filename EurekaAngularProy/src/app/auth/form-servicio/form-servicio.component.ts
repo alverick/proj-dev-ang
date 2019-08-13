@@ -94,11 +94,7 @@ export class FormServicioComponent implements OnInit {
     this.changeTipoMora();
 
   }
-
-  alerta(){
-    alert('hola seccion 3');
-  }
-
+ 
 
   onSubmitServicio() {
     
@@ -114,10 +110,56 @@ export class FormServicioComponent implements OnInit {
 
      if (this.frm.get('cobraMora').value === 'S') {
         if (this.frm.get('tipoMora').value === 'M') {
-          if (monto > 1000 ) {
+
+          if (monto !== null ) {
+            if (monto > 1000 ) {
+              Swal.fire({
+                type: 'error',
+                text: 'el maximo monto que se puede ingresa es 1000',
+                showCloseButton: true,
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonColor: '#d33',
+                cancelButtonText:  'Cerrar',
+                
+              });
+              return;
+            }
+            if(monto < 1 ) {
+              Swal.fire({
+                type: 'error',
+                text: 'el minimo monto que se puede ingresa es 1',
+                showCloseButton: true,
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonColor: '#d33',
+                cancelButtonText:  'Cerrar',
+                
+              });
+              return;
+            } else {
+              if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
+                Swal.fire({ 
+                  type: 'error',
+                  html: 'Debe escoger un medio de pago', 
+                  showCloseButton: true,
+                  showCancelButton: true,
+                  showConfirmButton: false,
+                  cancelButtonColor: '#d33',
+                  cancelButtonText:  'Cerrar',});
+              } else {
+  
+                const value: ServiceModel = this.frm.value;
+                value.simboloMoneda = this.simboloMoneda;
+                this.grabar.emit(value);
+              }
+  
+            }
+
+          }else {
             Swal.fire({
               type: 'error',
-              text: 'el maximo monto que se puede ingresa es 1000',
+              text: 'Ingrese el monto',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
@@ -126,25 +168,22 @@ export class FormServicioComponent implements OnInit {
               
             });
             return;
-          } else {
-            if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-              Swal.fire({ 
-                type: 'error',
-                html: 'Debe escoger un medio de pago', 
-                showCloseButton: true,
-                showCancelButton: true,
-                showConfirmButton: false,
-                cancelButtonColor: '#d33',
-                cancelButtonText:  'Cerrar',});
-            } else {
-
-              const value: ServiceModel = this.frm.value;
-              value.simboloMoneda = this.simboloMoneda;
-              this.grabar.emit(value);
-            }
-
           }
+         
         } else {
+          if (porcentaje === null) {
+            Swal.fire({
+              type: 'error',
+              text: 'Ingrese el porcentaje',
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:  'Cerrar',
+              
+            });
+            return;
+          }
           if (porcentaje > 100 ) {
             Swal.fire({
               type: 'error',
@@ -157,9 +196,29 @@ export class FormServicioComponent implements OnInit {
               
             });
             return;
+          }
+          if (porcentaje <1 ) {
+            Swal.fire({
+              type: 'error',
+              text: 'el minimo porcentaje 1%',
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:  'Cerrar',
+              
+            });
+            return;
           } else {
             if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-              Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
+              Swal.fire({ 
+                type: 'error', 
+                html: 'Debe escoger un medio de pago',
+                showCloseButton: true,
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonColor: '#d33',
+                cancelButtonText:  'Cerrar', });
             } else { 
               const value: ServiceModel = this.frm.value;
               value.simboloMoneda = this.simboloMoneda;
@@ -168,16 +227,22 @@ export class FormServicioComponent implements OnInit {
           }
 
         }
-     } else {
-        if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-          Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
-        } else {
+      } else {
+          if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
+            Swal.fire({ type: 'error', 
+                        html: 'Debe escoger un medio de pago',
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonColor: '#d33',
+                        cancelButtonText:  'Cerrar', });
+          } else {
 
-          const value: ServiceModel = this.frm.value;
-          value.simboloMoneda = this.simboloMoneda;
-          this.grabar.emit(value);
-        }
-     } 
+            const value: ServiceModel = this.frm.value;
+            value.simboloMoneda = this.simboloMoneda;
+            this.grabar.emit(value);
+          }
+      } 
     }
   }
 
