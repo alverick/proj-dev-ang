@@ -1,3 +1,4 @@
+import { ErrorStateMatcher } from '@angular/material/core';
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
@@ -12,12 +13,15 @@ import { FormServicioComponent } from '../form-servicio/form-servicio.component'
 })
 export class ConfigurarServiciosComponent implements OnInit {
 
+  public stateCreate: boolean;
+  public stateEdit: boolean;
   public input: FormServicioComponent;
   Formulario: boolean =true;
-  constructor(private afiliacionService: AfiliacionService, private route: ActivatedRoute) { }
+  constructor(private afiliacionService: AfiliacionService, private route: ActivatedRoute ) { }
 
   ngOnInit() {
     this.Formulario =true;
+    this.afiliacionService.services = [] 
     this.route.data.subscribe(d => {
       console.log('Configurar Servicios');
       console.log(d);
@@ -28,6 +32,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.afiliacionService.Clear();
       }
     });
+
   }
 
   private indiceActual: number = -1;
@@ -35,15 +40,42 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   OcultarFormulario() {
     this.Formulario = false 
+    this.stateCreate =false;
+    this.stateEdit =false;
   }
-  MostarFormulario() {
+  MostarFormulario() {  
+    this.stateCreate == true; 
     this.indiceActual = -1;
     this.serviceActual = null;
     this.Formulario = true;
   }
-
+ 
+ 
+ 
   EnviarServicios() {
-    // el if
+    /*+ this.serviceActual.nombre.toString() +*/
+    if(this.stateEdit === true){
+      Swal.fire({
+        title: 'Servicio no guardado',
+        type: 'error',
+        text: 'Guarde los cambios del servicio  para poder continuar al siguiente paso',
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonColor: '#d33',
+        cancelButtonText:  'Cerrar',
+      });
+      return;
+    }
+    // this.frm.get('monto').value
+    if(this.stateCreate == true){
+      Swal.fire({
+        type: 'error',
+        text: '¿Desea finalizar sin guardar el nuevo servicio ?'
+      });
+      return;
+    }
+  
     if(this.afiliacionService.services.length > 99){
       Swal.fire({
         type: 'error',
@@ -54,7 +86,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     this.afiliacionService.GrabarServicios()
       .subscribe(r => { });
   }
-
+ 
   getCanales(svc: ServiceModel) {
     let str = '';
     if (svc.usaWebApp) {
@@ -91,16 +123,18 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   editService(svc: ServiceModel, index: number) {
+    this.stateEdit = true;
     console.log(index);
     this.indiceActual = index;
-    if(svc.codDeudor !== 'DNI' && svc.codDeudor !== 'RUC' && svc.codDeudor !== 'Codigo Interno' && svc.codDeudor !== 'Otro Codigo' ){
+   /* if(svc.codDeudor !== 'DNI' && svc.codDeudor !== 'RUC' && svc.codDeudor !== 'Codigo Interno' && svc.codDeudor !== 'Otro Codigo' ){
       console.log('cambios '+ svc.codDeudor);
-    }
+    } */
     this.serviceActual = svc; 
     this.Formulario = true;
   }
 
   onGrabar(svc: ServiceModel) {
+ 
     console.log(svc);
     if (this.indiceActual >= 0) {
       if (this.afiliacionService.services.find((s, i) => s.nombre === svc.nombre && i !== this.indiceActual)) {

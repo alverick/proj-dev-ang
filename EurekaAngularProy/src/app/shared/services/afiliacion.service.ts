@@ -213,7 +213,7 @@ export class AfiliacionService {
       }))
       .pipe(catchError(err => {
         this.spinner.hide();
-        this.router.navigate(['/procesando']);
+         this.router.navigate(['/procesando']);
         throw throwError(err);
       }));
 

@@ -19,7 +19,7 @@
     </div>
     <div *ngIf="f.codDeudor.value === 'Otro'" class="form-group">
         <mat-form-field class="w-100">
-            <input matInput type="text" minlength="3" maxlength="20" formControlName="nameCod" name="nameCod" placeholder="Nombre de Código">
+            <input matInput type="text" minlength="3" maxlength="20" formControlName="nameCod" name="nameCod" placeholder="Describa su opcion de Pago">
             <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Escriba su Opcion</mat-error>
         </mat-form-field>
     </div>

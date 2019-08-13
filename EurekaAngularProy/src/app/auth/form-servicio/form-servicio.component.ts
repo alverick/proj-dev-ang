@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
 import { MonedaModel, ServiceModel } from "src/app/shared/models";
 import Swal from "sweetalert2";
+import { ConfigurarServiciosComponent } from "../configurar-servicios/configurar-servicios.component";
 
 @Component({
   selector: 'app-form-servicio',
@@ -14,7 +15,7 @@ export class FormServicioComponent implements OnInit {
   public ngInputtextCodi:boolean = false;
 
   constructor(private afiliacionService: AfiliacionService,
-    private fb: FormBuilder) {}
+    private fb: FormBuilder,private stateEdit: ConfigurarServiciosComponent ) {}
 
   @Input() set service(value: ServiceModel) {
     if (value === null || value === undefined) {
@@ -94,10 +95,20 @@ export class FormServicioComponent implements OnInit {
 
   }
 
+  alerta(){
+    alert('hola seccion 3');
+  }
+
+
   onSubmitServicio() {
     
-    if (this.frm.valid) {
-     
+    if (this.frm.valid) 
+    {
+     this.stateEdit.stateCreate =false;
+     this.stateEdit.stateEdit = false;
+      
+     console.log('stado de editar ' + this.stateEdit.stateEdit);
+
      const monto  = parseInt(this.frm.get('monto').value); 
      const porcentaje  = parseInt(this.frm.get('porcentaje').value);  
 
@@ -107,11 +118,24 @@ export class FormServicioComponent implements OnInit {
             Swal.fire({
               type: 'error',
               text: 'el maximo monto que se puede ingresa es 1000',
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:  'Cerrar',
+              
             });
             return;
           } else {
             if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-              Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
+              Swal.fire({ 
+                type: 'error',
+                html: 'Debe escoger un medio de pago', 
+                showCloseButton: true,
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonColor: '#d33',
+                cancelButtonText:  'Cerrar',});
             } else {
 
               const value: ServiceModel = this.frm.value;
@@ -125,18 +149,22 @@ export class FormServicioComponent implements OnInit {
             Swal.fire({
               type: 'error',
               text: 'el maximo porcentaje que se puede ingresa es 100',
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:  'Cerrar',
+              
             });
             return;
           } else {
             if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
               Swal.fire({ type: 'error', html: 'Debe escoger un medio de pago' });
-            } else {
-
+            } else { 
               const value: ServiceModel = this.frm.value;
               value.simboloMoneda = this.simboloMoneda;
               this.grabar.emit(value);
-            }
-
+            } 
           }
 
         }
@@ -149,9 +177,7 @@ export class FormServicioComponent implements OnInit {
           value.simboloMoneda = this.simboloMoneda;
           this.grabar.emit(value);
         }
-     }
-
-
+     } 
     }
   }
 

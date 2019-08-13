@@ -24,13 +24,13 @@
             <div >
                 <table>
                     <!--si es fila 0 solo un mensaje  'La información que haz ingresado es incorrecta!'-->
-                    <tr *ngIf="excelService.errores.row == 0">
+                   <!-- <tr *ngIf="excelService.errores.row == 0">
                         <div>
                             <span style="color: red;">
                            Asegurese que el Excel que as ingresado sea el formato correcto
                         </span>
                         </div>
-                    </tr>
+                    </tr> -->
                     <tr *ngIf="excelService.errores.row > 0">  
                         <div *ngFor="let error of excelService.errores">
                             <div data-spy="scroll">

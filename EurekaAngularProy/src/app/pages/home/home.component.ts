@@ -521,14 +521,24 @@ if(columnName === 'amount' ) {
                 if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
                   Swal.fire({
                     type: 'error',
-                    text: 'Ingrese correctamente la fecha desde',
+                    text: 'Ingrese correctamente l fecha desde',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    showConfirmButton: false,
+                    cancelButtonColor: '#d33',
+                    cancelButtonText:  'Cerrar',
                   });
                   return;
                 }
                 if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
                   Swal.fire({
                     type: 'error',
-                    text: 'Ingrese correctamente las fecha hasta',
+                    text: 'Ingrese correctamente la fecha hasta',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    showConfirmButton: false,
+                    cancelButtonColor: '#d33',
+                    cancelButtonText:  'Cerrar',
                   });
                   return;
                 } else {
@@ -569,32 +579,53 @@ if(columnName === 'amount' ) {
           if ( this.inputDate1.nativeElement.value === '') {
               Swal.fire({
                 type: 'error',
-              //  text: 'La fecha "desde" no puede estar en blanco',
-                text: 'Ingrese una de la fecha desde 2',
+                text: 'La fecha "desde" no puede estar en blanco',
+                showCloseButton: true,
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonColor: '#d33',
+                cancelButtonText:  'Cerrar',
+              //  text: 'Ingrese una de la fecha desde 2',
               });
               return;
           } else if ( this.inputDate2.nativeElement.value === '') {
               Swal.fire({
                 type: 'error',
-                text: 'Ingrese una de la fecha hasta 2',
+               // text: 'Ingrese una de la fecha desde',
+               text: 'La fecha "hasta" no puede estar en blanco',
               });
               return;
           } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
               Swal.fire({
                 type: 'error',
                 text: 'ingrese correctamente la fecha desde',
+                showCloseButton: true,
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonColor: '#d33',
+                cancelButtonText:  'Cerrar',
               });
               return;
           } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) {
             Swal.fire({
               type: 'error',
               text: 'ingrese correctamente la fecha hasta',
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:  'Cerrar',
             });
             return;
           } else if (this.filtro.dateFrom > this.filtro.dateTo ) {
             Swal.fire({
               type: 'error',
               text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonColor: '#d33',
+              cancelButtonText:  'Cerrar',
             });
             return;
           } else {
