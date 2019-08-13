@@ -222,6 +222,8 @@ export class HomeComponent implements OnInit {
     this.homeService.getServices().subscribe(
       value => {
         this.services = value;
+        console.log("SERVICES");
+        console.log(this.services);
         this.serviceSelected = value[0];
       }
     );
