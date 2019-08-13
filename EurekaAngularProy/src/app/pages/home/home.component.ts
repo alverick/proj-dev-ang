@@ -5,7 +5,7 @@ import { HomeService } from 'src/app/shared/services/home.service';
 import { Router } from '@angular/router';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
-import { MatDialog, MatSnackBar, MatSnackBarRef, MatDialogRef} from '@angular/material';
+import { MatDialog, MatSnackBar, MatSnackBarRef, MatDialogRef, fadeInItems} from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import { Date } from 'src/app/shared/models/date';
@@ -157,6 +157,14 @@ export class HomeComponent implements OnInit {
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = false;
 
+
+  statusOptions : Array<Object> = [
+    {  option:'Pendiente', state: '1'},
+    {  option: 'Pagado', state : '2'}
+  ]
+
+  showEdit: boolean = false;
+
   filtro: DebstFilter = {
     pageNumber: 1,
     columnName: 'FirstName',
@@ -182,6 +190,7 @@ export class HomeComponent implements OnInit {
     public snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private el: ElementRef, 
+    
     ) {
 
     }
@@ -637,6 +646,8 @@ console.log('FILTRO FECHAS');
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
   ////////////////////////////////////////////////*/
+
+
     mostrarx(): boolean {
           // tslint:disable-next-line:max-line-length
           if (this.inputText.nativeElement.value === '' ) {
@@ -707,7 +718,7 @@ console.log('FILTRO FECHAS');
       });
       return;
     }   */
-  
+
     if (item.newEmissionDate == null) {
       Swal.fire({
         type: 'error',
@@ -722,7 +733,7 @@ console.log('FILTRO FECHAS');
       });
       return;
     }
-    if (item.newConcept === ''   ) {
+    if (item.newConcept === '') {
       Swal.fire({
         type: 'error',
         text: 'Ingrese el concepto',
@@ -748,8 +759,8 @@ console.log('FILTRO FECHAS');
       confirmButtonText: 'Si, Editarlo!',
       cancelButtonText: 'Cerrar',
     }).then((result) => {
+      
       if (result.value) {
-
         item.edit = false;
         const debts = {
           emissionDate: item.newEmissionDate,
@@ -757,7 +768,10 @@ console.log('FILTRO FECHAS');
           concept: item.newConcept
         };
 
-        this.transactionService.editDeuda(item.id, debts).subscribe(
+        
+        
+    if(item.newStatus===null || item.newStatus === undefined){
+      this.transactionService.editDeuda(item.id, debts).subscribe(
           debtsUpdate => {
             Swal.fire({
               type: 'success',
@@ -769,15 +783,48 @@ console.log('FILTRO FECHAS');
                 item.dueDate = item.newDueDate;
                 item.concept = item.newConcept;
                 item.edit = false;
-              }
-            });
+              } });
           }
         );
+      }else if(item.newStatus==='1'){
+       
+        this.transactionService.updateDeuda(item.id, false ).subscribe(
+          statusUpdate=>{
+            Swal.fire({
+              type: 'success',
+              titleText: 'Editado!',
+              text: 'Su registro a sido editado',
+              onAfterClose: () => {
+                console.log('onAfterClose');
+                item.status='Pendiente';
+                item.edit = false;
+              }});
+          }
+        );
+      }else if(item.newStatus==='2'){
+          let boolean= false;
+          this.transactionService.updateDeuda(item.id, true).subscribe(
+            statusUpdate=>{
+              Swal.fire({
+                type:'success',
+                titleText: 'Editado!',
+                text: 'Su registro a sido editado',
+                onAfterClose: () => {
+                  console.log('onAfterClose');
+                  item.status= 'Pagado';
+                  this.showEdit = true;
+                  item.edit = false;  
+                }});
+              }
+          );
+        }  
+    }        
+  })
 
-      }
-    });
+}
+  
 
-  }
+  
 
   BotonCancela(item: Debts) {
     item.edit = false;

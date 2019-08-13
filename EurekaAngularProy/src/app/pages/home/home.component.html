@@ -247,6 +247,37 @@
                                             </div>
                                         </div>
                                     </th>
+                                    <th scope="col">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center">Estado de Pago </div>
+                                            <div class="mano d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('amount', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscmontopblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('amount', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscmontopgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center">Fecha de Pago </div>
+                                                <div class="mano d-inline-block ml-1">
+                                                    <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                    <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('amount', true)"></span> </div>
+                                                    <div class="arrow-filter-dsc-blue" *ngIf="dscmontopblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('amount', false)"></span> </div>
+                                                    <div class="arrow-filter-dsc-gray" *ngIf="dscmontopgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                </div>
+                                        </div>
+                                    </th>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                            <div class="d-inline-block text-center">Canal </div>
+                                            <div class="mano d-inline-block ml-1">
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray"><span class="  fa fas fa-caret-up"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('amount', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscmontopblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('amount', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscmontopgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                            </div>
+                                        </div>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -300,15 +331,23 @@
                                     </td>
                                     <td>{{items.amount}}</td>
                                     <td>
+                                       <span *ngIf="!items.edit">{{items.status}}</span>
+                                        <select *ngIf="items.edit" [(ngModel)]="items.newStatus">
+                                            <option *ngFor="let opt of statusOptions" [ngValue]="opt.state">{{opt.option}}</option>
+                                        </select>
+                                    </td>
+                                    <td>{{items.payDate}}</td>
+                                    <td>{{items.canal}}</td>
+                                    <td>
                                         <div class="d-flex">
-                                            <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
+                                            <div *ngIf="!items.edit && items.status=='PENDING'" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
                                                 <span class="icon-editar iconos-big iconos-big"></span>
                                             </div> &nbsp;&nbsp;&nbsp;
                                             <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="Eliminar(items)">
                                                 <span class="icon-eliminar iconos-big iconos-big"></span>
-                                            </div>
-                                            <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer;  margin-right: 18px !important" (click)="BotonActualizar(items)">
-                                                <img src="assets/images/table-check.svg" alt="Aceptar">
+                                            </div>                                           
+                                            <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer;  margin-right: 18px !important"  (click)="BotonActualizar(items)">                                                
+                                                    <img src="assets/images/table-check.svg" alt="Aceptar">
                                             </div>
                                             <div (click)="BotonCancela(items)" *ngIf="items.edit" class="d-inline-block" style="cursor: pointer; margin-right: 18px !important">
                                                 <img src="assets/images/table-delete.svg" alt="Eliminar">

@@ -116,5 +116,17 @@ export class TransactionService {
         .pipe(catchError(err => throwError(err)));
     }
   
+    updateDeuda(id: number, paid: boolean): Observable<boolean>{
+      const url = `${this.URI_API}/debt/pay`
+      console.log(url);
+      const opts={
+        headers: { "Authorization":"bearer" + this.storage.getCurrentToken()}
+      };
+      const data ={
+        idDebt : id,
+        Payed : paid
+      }
+      return this.http.post<any>(url, data).pipe(catchError(error => throwError(error)));    
+    }
   
 }
