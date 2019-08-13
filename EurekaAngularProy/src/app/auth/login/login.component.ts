@@ -308,7 +308,7 @@ export class LoginComponent implements OnInit {
               showConfirmButton: false,
               cancelButtonColor: '#d33',
               cancelButtonText:
-              'Cancelar',
+              'Cerrar',
             })   
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
@@ -327,7 +327,7 @@ export class LoginComponent implements OnInit {
               showConfirmButton: false,
               cancelButtonColor: '#d33',
               cancelButtonText:
-              'Cancelar',
+              'Cerrar',
             })   
             this.intento6= true;
             this.isTrue = false;             

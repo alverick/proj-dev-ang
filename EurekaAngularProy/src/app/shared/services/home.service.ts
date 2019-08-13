@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError, of } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 import { Debts } from '../models/debts';
 import { Type } from '../models/type';
 import { WayPay } from '../models/way-pay';
 import { Date } from 'src/app/shared/models/date';
-
+import { environment } from 'src/environments/environment';
+import { catchError, map } from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
+  constructor(private http: HttpClient){}
 
   private ListDebts: Debts[] = []; 
 
@@ -35,7 +38,7 @@ export class HomeService {
 public SERVICES: string[]=[
    'Matricula', 'Pension'
 ];
-  
+
 getDebts(): Observable<Debts[]> {
     return of(this.ListDebts);
 }
@@ -52,10 +55,18 @@ getDate(): Observable<Date[]> {
   return of(this.date);
 }
 
-getServices(): Observable<String[]>{
-  return of(this.SERVICES);
+getServices(): Observable<any[]> {
+  return this.http.get<any[]> (`${environment.END_POINT}/company/service`)
+    .pipe(map(r => {
+      let data: any[] = [];
+      r.forEach(s => data.push({
+        id: s.id,
+        name: s.name
+      }));
+      return data;
+    }))
+    .pipe(catchError(err => throwError(err)));
 }
 
 
-  constructor() { }
 }
