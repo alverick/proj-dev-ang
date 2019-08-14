@@ -1,19 +1,16 @@
+<body>
 <div class="body">
     <div class="container">
         <div class="row">
             <!--/////// L E F T ////////-->
-            <div class="col-sm">
-                <div class="row">
-                    <div class="col-sm">
-                        <h1 class="title-landing text-white">Descubre una nueva forma de manejar tus cobros</h1>
-                    </div>
-                </div>
+            <div class="col-md-7">
+                <h1 class="title-landing text-white">Descubre una nueva forma de manejar tus cobros</h1>
             </div>
 
             <!--/////// R I G H T ////////-->
-            <div class="col-sm position-relative">
-                <div class="d-flex justify-content-center">
-                    <div class="shadow-none border p-5 bg-white rounded">
+            <div class="col-md-4">
+               <!--<div class="d-flex justify-content-center">--> 
+                    <div class="shadow-none border p-5 bg-white rounded" style="position: absolute !important ">
                         <!--/////// F O R M ////////-->
                         <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
                             <h3 class="texto-azulbase text-center pb-3 mb-4 font-medium">Iniciar Sesión</h3>
@@ -55,17 +52,10 @@
                                 </div>
 
                                 <!-- ////////////// P A S S W O R D /////////////////// -->
-                                <div class="flex-fill">
+                                <div >
                                     <label class="d-block texto-negro h6" for="">Contraseña</label>
                                     <mat-form-field class="full-width" style="height: 1.9px !important">
                                         <input matInput type="password" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste>
-                                        <!--  <mat-error *ngFor="let validation of account_validation_messages.psw">
-                                                <div *ngIf="inputPassValid">
-                                                <mat-error class="error-message" *ngIf="loginForm.get('psw').hasError(validation.type) ">
-                                                    {{validation.message}}
-                                                </mat-error>
-                                                </div>
-                                            </mat-error> -->
                                         <mat-error *ngIf="inputPassValid" class="error-message">
                                             Debe ingresar el password
                                         </mat-error>
@@ -95,12 +85,13 @@
                             </div>
                         </form>
                     </div>
-                </div>
+              <!--  </div>-->
             </div>
         </div>
     </div>
 
-    <div class="bg-image-landing d-sm-none d-md-block">
+    <div class="bg-image-landing " style="position: relative">
         <img class="img-fluid">
     </div>
 </div>
+</body>

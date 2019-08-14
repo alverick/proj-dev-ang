@@ -45,7 +45,7 @@ export class ExcelService {
   ////////// U P L O A D /////////////////
   //////////////////////////////////////////  */ 
 
-  public service: string = '';
+  public service: any = '';
   public idProcess: number = 0;
   public errores: Error[] = [];
 

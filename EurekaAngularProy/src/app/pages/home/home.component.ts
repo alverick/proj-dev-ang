@@ -175,7 +175,7 @@ export class HomeComponent implements OnInit {
 
 
   statusOptions : Array<Object> = [
-    {  option:'Pendiente', state: '1'},
+    {  option:'PENDING', state: '1'},
     {  option: 'Pagado', state : '2'}
   ]
 
@@ -237,6 +237,8 @@ export class HomeComponent implements OnInit {
     this.homeService.getServices().subscribe(
       value => {
         this.services = value;
+        console.log("SERVICES");
+        console.log(this.services);
         this.serviceSelected = value[0];
         console.table(value);
       }
@@ -1010,7 +1012,7 @@ if(columnName === 'canal' ) {
               text: 'Su registro a sido editado',
               onAfterClose: () => {
                 console.log('onAfterClose');
-                item.status='Pendiente';
+                item.status='PENDING';
                 item.edit = false;
               }});
           }

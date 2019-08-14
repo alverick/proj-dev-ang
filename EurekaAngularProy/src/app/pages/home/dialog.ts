@@ -71,8 +71,9 @@ import { ExcelService } from "src/app/shared/services/excel.service";
       /*service*/
 
         if(this.excelService.statusUpload == false){
-          
-          this.excelService.UploadExcel(this.files, this.excelService.service, this.changestatus )
+          console.log("SERVICE");
+          console.log(this.excelService.service);
+          this.excelService.UploadExcel(this.files, this.excelService.service.name, this.changestatus )
           .subscribe(
             value=> {
               this.excelService.idProcess = value.id;
