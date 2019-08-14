@@ -66,6 +66,7 @@ getServices(): Observable<any[]> {
       return data;
     }))
     .pipe(catchError(err => throwError(err)));
+    
 }
 
 
