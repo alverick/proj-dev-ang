@@ -159,7 +159,7 @@ export class HomeComponent implements OnInit {
 
 
   statusOptions : Array<Object> = [
-    {  option:'Pendiente', state: '1'},
+    {  option:'PENDING', state: '1'},
     {  option: 'Pagado', state : '2'}
   ]
 
@@ -829,7 +829,7 @@ console.log('FILTRO FECHAS');
               text: 'Su registro a sido editado',
               onAfterClose: () => {
                 console.log('onAfterClose');
-                item.status='Pendiente';
+                item.status='PENDING';
                 item.edit = false;
               }});
           }
