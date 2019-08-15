@@ -41,7 +41,8 @@ import { DialogComponent } from './pages/home/dialog';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DateDirective } from './pages/home/date.directive';
 import { ConfiguracionService } from './shared/services/configuracion.service';
-import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component'; 
+import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
+import { ShearDirective } from './pages/home/shear.directive'; 
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
     DialogComponent,
     DateDirective,
     ConfigurarEmpresaComponent,
+    ShearDirective,
 
 
 

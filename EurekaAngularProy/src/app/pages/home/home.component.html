@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="pl-1">
                                     <div class="icon-addon addon-md ">
-                                        <input maxlength="75" #inputText class="input-filter focus-elements" type="text" [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código" (keypress)="InputNombreCodigo($event)">
+                                        <input appShear maxlength="20" #inputText class="input-filter focus-elements" type="text" [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código" >
                                         <label *ngIf="mostrarx()" (click)="limpiarInput()" class="fa fa-times"></label>
                                     </div>
                                 </div>
@@ -46,7 +46,7 @@
                                     <div class="select-eureca position-relative">
                                         <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name="">
                                                 <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
-                                            </select>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -56,9 +56,8 @@
                                             <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom"
                                                 maxlength="10" minlength="10" appBlockCopyPaste>
                                             <label *ngIf="mostrarxdate1()" (click)="limpiardate1()" class="fa fa-times"></label>
-                                            <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
-                                            <mat-datepicker class="md-datepicker-input-container" #myDatepicker2></mat-datepicker>
-
+                                            <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+                                            <mat-datepicker   #myDatepicker2></mat-datepicker> 
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -69,8 +68,8 @@
                                             <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"  
                                                 appBlockCopyPaste>
                                             <label *ngIf="mostrarxdate2()" (click)="limpiardate2()" class="fa fa-times"></label>
-                                            <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-                                            <mat-datepicker #myDatepicker></mat-datepicker>
+                                            <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                                            <mat-datepicker   #myDatepicker></mat-datepicker>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -113,7 +112,7 @@
                                 </div>
 
                                 <div class="p-2 bd-highlight">
-                                    <a  style="align-content: center;" class=" mano texto-azul" href="javascript:;" (click)="DescargarReporte()" >
+                                    <a class=" mano texto-azul" href="javascript:;" (click)="DescargarReporte()" >
                                         <span class="icon-correo-azul iconos-big"></span> <br>
                                         <span class="text-small font-medium"> </span>
                                     </a>
@@ -159,10 +158,10 @@
                                         <div class="d-flex align-items-center justify-content-center ">
                                             <div class="d-inline-block text-center"> Fecha emisión </div>
                                             <div class=" d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascFeEmisiongray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascFeEmisionblue"><span class="mano fa fas fa-caret-up" (click)="AscDesc('emissionDate', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="descFeEmisionblue"><span class="mano fa fas fa-caret-down" (click)="AscDesc('emissionDate', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="descFeEmisiongray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascFeEmisiongray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascFeEmisionblue"><span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('emissionDate', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="descFeEmisionblue"><span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('emissionDate', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="descFeEmisiongray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
                                     </th>
@@ -170,10 +169,10 @@
                                         <div class=" d-flex align-items-center justify-content-center ">
                                             <div class="d-inline-block text-center">Fecha vto. </div>
                                             <div class=" d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascFeVctgray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascFeVctblue"><span class="mano fa fas fa-caret-up" (click)="AscDesc('dueDate', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscFeVctblue"><span class="mano fa fas fa-caret-down" (click)="AscDesc('dueDate', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscFeVctgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascFeVctgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascFeVctblue"><span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('dueDate', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscFeVctblue"><span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('dueDate', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscFeVctgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
                                     </th>
@@ -181,10 +180,10 @@
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="d-inline-block text-center">Código de cliente </div>
                                             <div class=" d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="asccodgray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="asccodblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('code', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dsccodiblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('code', false)"></span></div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dsccodigray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                <div class="arrow-filter-asc-gray" *ngIf="asccodgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="asccodblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('code', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dsccodiblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('code', false)"></span></div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dsccodigray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
                                     </th>
@@ -192,10 +191,10 @@
                                         <div class="d-flex align-items-center justify-content-center"> 
                                             <div class="d-inline-block text-center">Nombres </div>
                                             <div class=" d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascnamegray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascnameblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('firstName', true)"></span></div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscnameblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('firstName', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscnamegray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascnamegray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascnameblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('firstName', true)"></span></div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscnameblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('firstName', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscnamegray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
                                     </th>
@@ -204,10 +203,10 @@
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="d-inline-block text-center">Apellidos </div>
                                             <div class="d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="asclastgray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="asclastblue"><span class="mano fa fas fa-caret-up" (click)="AscDesc('lastName', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dsclastblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('lastName', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dsclastgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                <div class="arrow-filter-asc-gray" *ngIf="asclastgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="asclastblue"><span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('lastName', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dsclastblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('lastName', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dsclastgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
                                     </th>
@@ -216,10 +215,10 @@
                                         <div class="d-flex align-items-center justify-content-center"> 
                                             <div class="d-inline-block text-center">Servicio </div>
                                             <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascservgray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascservblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('service', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('service', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscservgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascservgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascservblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('service', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('service', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscservgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
                                     </th>
@@ -228,10 +227,10 @@
                                         <div class="d-flex align-items-center justify-content-center"> 
                                             <div class="d-inline-block text-center">Concepto </div>
                                             <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascconcepgray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('concept', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('concept', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscconcepgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascconcepgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('concept', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('concept', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscconcepgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
                                     </th>
@@ -240,10 +239,10 @@
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="d-inline-block text-center">Monto </div>
                                             <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('amount', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscmontopblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('amount', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscmontopgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('amount', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscmontopblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('amount', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscmontopgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
                                     </th>
@@ -251,10 +250,10 @@
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="d-inline-block text-center">Estado de Pago </div>
                                             <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascestpagopgray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascstpagoopblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('status', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscstpagopblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('status', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscstpagopgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                <div class="arrow-filter-asc-gray" *ngIf="ascestpagopgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascstpagoopblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('status', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscstpagopblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('status', false)"></span> </div>
+                                                <div class="arrow-filter-dsc-gray" *ngIf="dscstpagopgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
                                     </th>
@@ -262,10 +261,10 @@
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="d-inline-block text-center">Fecha de Pago </div>
                                                 <div class="mano d-inline-block ml-1">
-                                                    <div class="arrow-filter-asc-gray" *ngIf="ascfechapagopgray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                    <div class="arrow-filter-asc-blue" *ngIf="ascfechapagopblue"> <span class="mano fa fas fa-caret-up" (click)="AscDesc('payDate', true)"></span> </div>
-                                                    <div class="arrow-filter-dsc-blue" *ngIf="dscfechapagopblue"> <span class="mano fa fas fa-caret-down" (click)="AscDesc('payDate', false)"></span> </div>
-                                                    <div class="arrow-filter-dsc-gray" *ngIf="dscfechapagopgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                    <div class="arrow-filter-asc-gray" *ngIf="ascfechapagopgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                    <div class="arrow-filter-asc-blue" *ngIf="ascfechapagopblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('payDate', true)"></span> </div>
+                                                    <div class="arrow-filter-dsc-blue" *ngIf="dscfechapagopblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('payDate', false)"></span> </div>
+                                                    <div class="arrow-filter-dsc-gray" *ngIf="dscfechapagopgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                                 </div>
                                         </div>
                                     </th>
@@ -273,10 +272,10 @@
                                         <div class="d-flex align-items-center justify-content-center">
                                                 <div class="d-inline-block text-center">Canal </div>
                                                 <div class="mano d-inline-block ml-1"> 
-                                                    <div class="arrow-filter-asc-gray" *ngIf="asccanalpgray"><span class="  fa fas fa-caret-up"></span> </div>
-                                                    <div class="arrow-filter-asc-blue" *ngIf="asccanalpblue" > <span class="mano fa fas fa-caret-up" (click)="AscDesc('canal', true)" ></span> </div>
-                                                    <div class="arrow-filter-dsc-blue" *ngIf="dsccanalpblue" > <span class="mano fa fas fa-caret-down" (click)="AscDesc('canal', false)" ></span> </div>
-                                                    <div class="arrow-filter-dsc-gray" *ngIf="dsccanalpgray"><span class="  fa fas fa-caret-down"></span> </div>
+                                                    <div class="arrow-filter-asc-gray" *ngIf="asccanalpgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
+                                                    <div class="arrow-filter-asc-blue" *ngIf="asccanalpblue" > <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('canal', true)" ></span> </div>
+                                                    <div class="arrow-filter-dsc-blue" *ngIf="dsccanalpblue" > <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('canal', false)" ></span> </div>
+                                                    <div class="arrow-filter-dsc-gray" *ngIf="dsccanalpgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                                 </div>
                                         </div>
                                     </th>
