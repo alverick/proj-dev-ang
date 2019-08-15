@@ -17,8 +17,8 @@ export class HomeService {
 
   private type: Type[] = [
     { idType: '', descripcion: 'Servicio' },
-    {idType: 'Pension', descripcion: 'Pensión'},
-    {idType: 'Matricula', descripcion: 'Matricula'}
+   /* {idType: 'Pension', descripcion: 'Pensión'},
+    {idType: 'Matricula', descripcion: 'Matricula'}*/
   ];
 
   private wayPay: WayPay[] = [
