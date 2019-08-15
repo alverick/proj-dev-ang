@@ -209,17 +209,7 @@ export class HomeComponent implements OnInit {
     ) {
 
     }
-
-    InputNombreCodigo(event): boolean {
-      const charCode = (event.which) ? event.which : event.keyCode;
-       // tslint:disable-next-line:max-line-length
-       if (charCode > 31 && (charCode <= 47 || charCode >= 58) &&  (charCode <= 64 || charCode >= 90) &&  (charCode <= 96 || charCode >= 122)  ) {
-        return false;
-      }
-      return true;
-
-    }
-  
+ 
     @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
       e.preventDefault();
     }

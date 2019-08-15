@@ -325,39 +325,41 @@ input::-ms-clear {
     outline: none;
 }
 
-
-/*
-.sobresale {
-    position: absolute;
-    z-index: 1;
-    background-color: #FFFFFF;
-}
-*/
-
+ 
 .arrow-filter-asc-blue {
     color: blue;
-    float: initial;
-    padding-top: 15px;
-    padding-left: 5px;
+    float: initial; 
+    margin-top: 6px; 
 }
 
 .arrow-filter-dsc-blue {
     color: blue;
     float: initial;
-    padding-top: 0px;
-    padding-left: 5px;
+    margin-top: -6px; 
 }
 
 .arrow-filter-asc-gray {
     color: gray;
-    float: initial;
-    padding-top: 15px;
-    padding-left: 5px;
+    float: initial;  
+    margin-top: 6px; 
 }
 
 .arrow-filter-dsc-gray {
     color: gray;
     float: initial;
-    padding-top: 0px;
-    padding-left: 5px;
+    margin-top: -6px; 
+}
+
+.date-color-eureca {
+    color: blue; 
+}
+ 
+
+// combo box 
+.bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+    overflow: hidden;
+}
+.select-eureca .filter-option-inner-inner {
+    padding: 3px 0;
+    font-size: 14px;
 }
