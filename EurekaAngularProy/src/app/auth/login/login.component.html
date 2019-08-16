@@ -9,7 +9,6 @@
 
             <!--/////// R I G H T ////////-->
             <div class="col-md-4">
-               <!--<div class="d-flex justify-content-center">--> 
                     <div class="shadow-none border p-5 bg-white rounded" style="position: absolute !important ">
                         <!--/////// F O R M ////////-->
                         <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
@@ -22,15 +21,8 @@
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6">RUC</label>
                                     <mat-form-field class="full-width">
-                                        <input matInput  type="text" (focus)="focusFunctionRuc()"  minlength="11" maxlength="11" numbersOnly
-                                         required  formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors" >                
-                                        <!-- <mat-e qrror  *ngFor="let validation of account_validation_messages.ruc">
-                                                <div *ngIf="inputUsuaValid">
-                                                <mat-error class="error-message" *ngIf="loginForm.get('ruc').hasError(validation.type) ">
-                                                    {{validation.message}}
-                                                </mat-error>
-                                                </div>  
-                                                </mat-error> -->
+                                        <input matInput  type="text" (focus)="focusFunctionRuc()"  minlength="11" maxlength="11" numbersOnly required autocomplete="off" formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors" >                
+
                                         <mat-error *ngIf="inputUsuaValid" class="error-message">
                                             Debe ingresar el RUC
                                         </mat-error>
@@ -39,7 +31,7 @@
                                         </mat-error>
                                     </mat-form-field>
                                     <div class="mt-4">
-                                        <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" [(ngModel)]="rememberMe" formControlName="rememberme">
+                                        <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" [(ngModel)]="rememberMe" autocomplete="on" formControlName="rememberme">
                                         <label for="styled-checkbox-1"><span class="ml-2">Recordar</span></label>
                                     </div>
                                 </div>
@@ -74,19 +66,16 @@
 
                             <div style="transform:scale(0.70);margin-right: 5px;max-width: 10vw;margin: 0vw;padding: 0vw;">
                                 <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
-                            </div>
- 
-                            
+                            </div> 
                             <button style="margin-top: 13px" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white" form="login-form"> Ingresar</button>
-
                             <div class="mt-3 text-center">
-                                <button class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-azul text-white">
-                                    <a [routerLink]="['/afiliacion']" class="nav-link text-white">Registrate</a>
-                                </button>
+                                    <div class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-azul text-white">
+                                        <a [routerLink]="['/afiliacion']" class="nav-link text-white">Registrate</a>
+                                    </div>
                             </div>
                         </form>
+                       
                     </div>
-              <!--  </div>-->
             </div>
         </div>
     </div>

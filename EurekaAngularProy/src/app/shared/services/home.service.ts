@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from "rxjs";
-import { HttpClient } from "@angular/common/http";
 import { Debts } from '../models/debts';
 import { Type } from '../models/type';
 import { WayPay } from '../models/way-pay';
 import { Date } from 'src/app/shared/models/date';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from "rxjs/operators";
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,8 +17,8 @@ export class HomeService {
 
   private type: Type[] = [
     { idType: '', descripcion: 'Servicio' },
-    {idType: 'Pension', descripcion: 'Pensión'},
-    {idType: 'Matricula', descripcion: 'Matricula'}
+   /* {idType: 'Pension', descripcion: 'Pensión'},
+    {idType: 'Matricula', descripcion: 'Matricula'}*/
   ];
 
   private wayPay: WayPay[] = [

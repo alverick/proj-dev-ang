@@ -230,7 +230,6 @@ export class HomeComponent implements OnInit {
         console.log("SERVICES");
         console.log(this.services);
         this.serviceSelected = value[0];
-        console.table(value);
       }
     );
 

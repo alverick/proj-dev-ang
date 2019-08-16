@@ -5,21 +5,23 @@ import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public snackBar: MatSnackBar) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler, ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
   
     const token: string = localStorage.getItem('tk');
 
     let request = req;
 
     let headers = {
+      'Cache-Control': 'no-cache',
       "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
       "Ocp-Apim-Trace": `true`
     };
@@ -35,12 +37,15 @@ export class AuthInterceptorService implements HttpInterceptor {
       catchError((err: HttpErrorResponse)=>{
         if(err.status === 401){
         localStorage.removeItem('tk');
+        this.snackBar.dismiss();
         this.router.navigateByUrl('/login');
         }else if(err.status === 500){
         localStorage.removeItem('tk');
         this.router.navigateByUrl('/login');
+        this.snackBar.dismiss();
         }else if(!(localStorage.getItem('tk'))){
         localStorage.removeItem('tk');
+        this.snackBar.dismiss();
         Swal.fire({
           imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
           title: 'Su sesión ha sido cerrada por inactividad',
