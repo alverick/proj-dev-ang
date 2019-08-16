@@ -51,6 +51,8 @@ export class LoginComponent implements OnInit {
   isTrue: boolean = false;
   codigo2: boolean = false;
   isCaptchaValidate: boolean = true;
+  
+  storeRuc : any ;
 
   @ViewChild("recaptchaRef")
   recaptchaRef: RecaptchaComponent;
@@ -81,49 +83,26 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.snackBar.dismiss();
-    let rucStr = this.cookieService.check('ruc') ?
-    this.cookieService.get('ruc') :  '';
+    let rucStr = this.cookieService.check('ruc') ? this.cookieService.get('ruc') :  '';
 
+    console.log(rucStr);
+    console.log("R U C");
     this.validationLogin(rucStr);
    // this.validaInputs();
   }
 
 
- /* mostrarMensajeUsu(): boolean {
-    // tslint:disable-next-line:max-line-length
-    if (this.inputUsua.nativeElement.value === '' ) {
-        return   true;
-    } else {
-      return  false;
-    }
-  }
-  mostrarMensajePass(): boolean {
-    // tslint:disable-next-line:max-line-length
-    if (this.inputPass.nativeElement.value === '' ) {
-      return true;
-    } else {
-      return false;
-    }
-  } */
 
     validationLogin(rucStr: any) {
     if (rucStr) {
             this.rememberMe = true;
-    }
-    
-  /*  this.loginForm = this.formBuilder.group({
-      ruc: [rucStr, Validators.compose([Validators.required,
-            Validators.pattern('^[0-9]*$')])
-           ],
-      psw: ['', Validators.required ],
-      rememberme: [false, Validators.required]
-    });  */
-
+    }    
+    console.log(rucStr);
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.required,
              Validators.pattern('^[0-9]*$')  ])   ],
       psw: ['', Validators.required ],
-      rememberme: [false, Validators.required]
+      rememberme: [this.rememberMe, Validators.required]
     }); 
 
   }
@@ -136,14 +115,6 @@ export class LoginComponent implements OnInit {
     return true;
   }
 
-
- /* validaInputs() {
-    if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   ) {
-      this.inputUsuaValid = false;
-      this.inputPassValid = false; 
-    } 
-  }
-  */
   focusFunctionRuc(){ 
     this.inputUsuaValid = false;
     this.validarCantRuc = false;
