@@ -21,6 +21,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     let request = req;
 
     let headers = {
+      'Cache-Control': 'no-cache',
       "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
       "Ocp-Apim-Trace": `true`
     };
