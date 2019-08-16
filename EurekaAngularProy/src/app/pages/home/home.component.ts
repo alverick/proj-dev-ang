@@ -558,8 +558,13 @@ if(columnName === 'canal' ) {
     this.consultaDeuda();
   }
 
+   mensaje(tipo: any, titulo: string, text: string){
+    if (localStorage.getItem('tk') !== null  ) { 
+      this. mesageeError(tipo,titulo,text);
+    } 
+  }
 
-  mensaje(tipo: any, titulo: string, text: string){
+  mesageeError(tipo: any, titulo: string, text: string){
     Swal.fire({
       type: tipo ,
       title: titulo ,

@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit {
       { type: 'maxlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres'},
     ]
   }
+  
 
   constructor(
     private formBuilder: FormBuilder,
@@ -136,21 +137,28 @@ export class LoginComponent implements OnInit {
     return true;
   }
 
-
- /* validaInputs() {
-    if(this.inputUsua.nativeElement.value !== null && this.inputPass.nativeElement.value !== null   ) {
-      this.inputUsuaValid = false;
-      this.inputPassValid = false; 
-    } 
+  mensaje(tipo: any, titulo: string, text: string){
+    Swal.fire({
+      type: tipo ,
+      title: titulo ,
+      text: text,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      cancelButtonColor: '#d33',
+      cancelButtonText:  'Cerrar',
+    });
   }
-  */
+ 
   focusFunctionRuc(){ 
     this.inputUsuaValid = false;
     this.validarCantRuc = false;
+    this.codigo2=false;
   }
   focusFunctionPass(){
     this.inputPassValid = false; 
     this.validarCantPass =false;
+    this.codigo2=false;
   } 
   
   /* /////// L O G I N ////////////  */
@@ -162,16 +170,7 @@ export class LoginComponent implements OnInit {
 
 
     console.log("INTENTOS THIS : "+this.intentos)
-
-  /*  if(this.inputUsua.nativeElement.value === '' && this.inputPass.nativeElement.value === '') {
-      this.inputUsuaValid = true;
-      this.inputPassValid = true;
-       return;
-    } */
-    
-    // validacion cuando le falta para llegar a la cantidad de letras
-    
-    
+ 
     // validacion cuando le falta para llegar a la cantidad de letras
     if(this.loginForm.get('ruc').value.length == 0 && (this.loginForm.get('psw').value.length > 0 && this.loginForm.get('psw').value.length < 6)){
       this.inputUsuaValid =true;
@@ -182,15 +181,10 @@ export class LoginComponent implements OnInit {
       this.validarCantRuc =true;
       this.inputPassValid =true;  
       return;
-    }
-
-
+    }  
     if(this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11 && this.loginForm.get('psw').value.length > 0 &&   this.loginForm.get('psw').value.length < 6){
       this.validarCantRuc =true;
-      this.validarCantPass =true;
-
-     // this.inputPassValid =false; 
-     // this.inputUsuaValid =false; 
+      this.validarCantPass =true; 
       return;
     }
     if(this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11 ){
@@ -204,9 +198,7 @@ export class LoginComponent implements OnInit {
       this.inputPassValid =false; 
       this.inputUsuaValid =false; 
       return;
-    }
-
-    //////
+    } 
     if(this.loginForm.get('ruc').value.length == 0 && this.loginForm.get('psw').value.length == 0){
       this.inputPassValid =true;
       this.inputUsuaValid =true;  
@@ -255,16 +247,9 @@ export class LoginComponent implements OnInit {
           }else if(this.intentos< 4 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
-            Swal.fire({
-              type:"error",
-              title: 'Contraseña Incorrecta',
-              text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' ,
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonColor: '#d33',
-              cancelButtonText:  'Cerrar',
-            })   
+            this.mensaje( 'error', 'Contraseña Incorrecta', 
+            'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' );
+             
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.loginService.errores= value.codRespuesta;            
@@ -276,17 +261,10 @@ export class LoginComponent implements OnInit {
           }else if(this.intentos == 4 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
-            Swal.fire({
-              type:"error",
-              title: 'Contraseña Incorrecta',
-              text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' ,
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonColor: '#d33',
-              cancelButtonText:
-              'Cerrar',
-            })   
+
+            this.mensaje( 'error', 'Contraseña Incorrecta', 
+            'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' );
+              
             this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isTrue = true;              
@@ -299,17 +277,7 @@ export class LoginComponent implements OnInit {
           }else if(this.intentos == 5 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
-            Swal.fire({
-              type:"error",
-              title: 'Contraseña Incorrecta',
-              text: 'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' ,
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonColor: '#d33',
-              cancelButtonText:
-              'Cerrar',
-            })   
+            this.mensaje( 'error', 'Contraseña Incorrecta','Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes');
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
             this.isTrue = true; 
@@ -318,17 +286,7 @@ export class LoginComponent implements OnInit {
           else if(this.intentos >= 6 || value.paramStr==='Vuelva a intentarlo mas tarde' || value.paramStr==='El usuario esta bloqueado'){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Sin codigo");
-            Swal.fire({
-              type:"error",
-              title: 'Contraseña Incorrecta',
-              text: 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe ' ,
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonColor: '#d33',
-              cancelButtonText:
-              'Cerrar',
-            })   
+            this.mensaje( 'error', 'Contraseña Incorrecta','Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe '  );
             this.intento6= true;
             this.isTrue = false;             
           }
@@ -336,7 +294,8 @@ export class LoginComponent implements OnInit {
       error =>{ 
         this.spinner.hide();
         if(error.status ===500){
-           Swal.fire({ type: 'error',text: 'Error del Servidor comuniquese con el administrador'}) 
+          this.mensaje( 'error', 'Error', 'Error del Servidor comuniquese con el administrador');
+           
         }
       },
       () => this.spinner.hide()
