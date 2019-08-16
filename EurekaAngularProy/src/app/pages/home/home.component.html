@@ -28,24 +28,17 @@
                             <div class="d-flex align-items-center mt-4">
                                 <div class="mr-4">
                                         <div class="select-eureca position-relative">
-                                                <select class="selectpicker" [(ngModel)]="filtro.service">
-                                                        <option value="{{item.idType}}"  *ngFor="let item of typeList"> {{item.descripcion}} </option>
+                                                <select class="selectpicker" [(ngModel)]="filtro.service" name=""> 
                                                         <option value="{{service.id}}"  *ngFor="let service of services" > {{service.name}}</option>
-                                                    </select>
-                                            </div>
-                                    <!--
-                                    <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.service" name="" id="">
-                                                <option value="{{item.idType}}"  *ngFor="let item of typeList"> {{item.descripcion}} </option>
-                                            </select>
-                                    </div>-->
+                                                </select>
+                                       </div> 
                                 </div>
 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
                                         <select class="selectpicker" [(ngModel)]="filtro.status" name="">
                                                 <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
-                                            </select>
+                                        </select>
                                     </div>
                                 </div>
 
