@@ -68,6 +68,8 @@ export class AfiliacionService {
       }));
   }
 
+  
+
   public GetRubros(): Observable<RubroModel[]> {
     return this.http.get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading`)
       .pipe(catchError(err => throwError(err)));

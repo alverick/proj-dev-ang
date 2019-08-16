@@ -70,7 +70,7 @@ export class CrearContrasenaComponent implements OnInit {
       acceptTerms: this.registerForm.value.acceptterms
     }).subscribe(d => {
       if (d.success) {
-        this.router.navigate(["/configurarServicios"]);
+        this.router.navigate(["/configurarServicios"/*, this.registerForm.get('ruc')*/]);
       } else {
         Swal.fire({
           type: 'error',

@@ -63,6 +63,7 @@ getServices(): Observable<any[]> {
         id: s.id,
         name: s.name
       }));
+      console.table(data);
       return data;
     }))
     .pipe(catchError(err => throwError(err)));

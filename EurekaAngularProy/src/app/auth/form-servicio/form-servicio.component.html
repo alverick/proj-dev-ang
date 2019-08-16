@@ -67,11 +67,11 @@
     </div>
     <span class="texto-azulbase" style="font-size:13px;"> <strong>Elige los medios por los cuales tus clientes te pagarán
   </strong> </span>
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="card" [class.seleccionado]="f.usaWebApp.value" style=" height: 250px;">
-                <div class="card-body">
-                    <div class="mt-4" style="text-align:center;">
+  <div class="card-deck mb-3 text-center">    
+       
+        <div class="card mb-4 shadow-sm" >
+            <div [class.seleccionado]="f.usaWebApp.value" style=" height: 250px;">
+                  <div style="text-align:center;">
                         <input class="styled-checkbox" formControlName="usaWebApp" id="styled-checkbox-1" type="checkbox">
                         <label for="styled-checkbox-1"><span class="ml-2"></span></label>
                     </div>
@@ -83,48 +83,45 @@
                             <small class="d-block mt-1">Banca por internet, Interbank APP</small>
                         </h6>
                         <span class="d-block mb-4 texto-azul font-semibold precio">GRATIS</span>
-                    </div>
-                </div>
+                    </div> 
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="card" [class.seleccionado]="f.usaAgente.value" style=" height: 250px;">
-                <div class="card-body">
-                    <div class="mt-4" style="text-align:center;">
+
+        <div class="card mb-4 shadow-sm" >
+            <div [class.seleccionado]="f.usaAgente.value" style=" height: 250px;"> 
+                    <div  style="text-align:center;">
                         <input style="align-content: center;" formControlName="usaAgente" class="styled-checkbox" id="styled-checkbox-2" type="checkbox">
                         <label for="styled-checkbox-2"><span class="ml-2"> </span></label>
                     </div>
                     <div class="text-center w-100 pb-2 px-1 position-relative">
                         <h6 class="font-semibold d-block mb-1"><strong> Agentes </strong><br></h6>
-                        <br><br>
+                        <br> 
                         <h6 class="font-semibold d-block mb-1">
                             <small class="d-block mt-1">Lima y provincias</small>
                             <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 1</span>
                             <small>por transacion</small>
                         </h6>
                     </div>
-                </div>
+                
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="card" [class.seleccionado]="f.usaTienda.value" style=" height: 250px;">
-                <div class="card-body">
-                    <div class="mt-4" style="text-align:center;">
+        <div class="card mb-4 shadow-sm" >
+            <div [class.seleccionado]="f.usaTienda.value" style=" height: 250px;"> 
+                    <div   style="text-align:center;">
                         <input class="styled-checkbox" formControlName="usaTienda" id="styled-checkbox-3" type="checkbox">
                         <label for="styled-checkbox-3"><span class="ml-2"></span></label>
                         <div class="text-center w-100 pb-2 px-1 position-relative">
                             <h6 class="font-semibold d-block mb-1"><strong> Tiendas </strong><br>
                                 <small>Ventanilla</small>
                             </h6>
-                            <br> <br>
+                            <br>  
                             <h6 class="font-semibold d-block mb-1">
                                 <small class="d-block mt-1">Lima y provincias</small>
                                 <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 7</span>
                                 <small class="d-block">por transacion</small>
                             </h6>
                         </div>
-                    </div>
-                </div>
+                    </div> 
             </div>
         </div>
     </div>

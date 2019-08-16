@@ -12,6 +12,7 @@ import { FormServicioComponent } from '../form-servicio/form-servicio.component'
 })
 export class ConfigurarServiciosComponent implements OnInit {
 
+  protected ruc: number;
   public stateCreate: boolean;
   public stateEdit: boolean;
   public input: FormServicioComponent;
@@ -22,12 +23,15 @@ export class ConfigurarServiciosComponent implements OnInit {
   ngOnInit() {
     this.Formulario =true;
     this.afiliacionService.services = [] 
+  //  console.log(this.route.params.subscribe( params => this.ruc = params.ruc )) ;
     this.route.data.subscribe(d => {
       console.log('Configurar Servicios');
       console.log(d);
       if (d.isEdit) {
+        console.log('pide token xdee -----------------');
         this.afiliacionService.GetServicios();
       } else {
+        // siempre entra ahí
         console.log('llamando a Clear');
         this.afiliacionService.Clear();
       }

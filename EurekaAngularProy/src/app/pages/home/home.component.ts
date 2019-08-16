@@ -234,7 +234,7 @@ export class HomeComponent implements OnInit {
       }
     );
 
-    this.homeService.getType().subscribe(
+    this.homeService.getServices().subscribe(
       value => {
         this.typeList = value;
     });
@@ -558,6 +558,20 @@ if(columnName === 'canal' ) {
     this.consultaDeuda();
   }
 
+
+  mensaje(tipo: any, titulo: string, text: string){
+    Swal.fire({
+      type: tipo ,
+      title: titulo ,
+      text: text,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      cancelButtonColor: '#d33',
+      cancelButtonText:  'Cerrar',
+    });
+  }
+
   consultaDeuda() {
   // tslint:disable-next-line:prefer-const
 
@@ -578,11 +592,8 @@ if(columnName === 'canal' ) {
         if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
            
           
-          if (this.filtro.dateFrom > this.filtro.dateTo   ) {
-            Swal.fire({
-              type: 'error',
-              text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
-            });
+          if (this.filtro.dateFrom > this.filtro.dateTo   ) { 
+            this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
             return;
           } else {
              
@@ -617,28 +628,12 @@ if(columnName === 'canal' ) {
                 });
           }
         } else {
-                if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
-                  Swal.fire({
-                    type: 'error',
-                    text: 'Ingrese correctamente fecha desde',
-                    showCloseButton: true,
-                    showCancelButton: true,
-                    showConfirmButton: false,
-                    cancelButtonColor: '#d33',
-                    cancelButtonText:  'Cerrar',
-                  });
+                if (!this.inputDate1.nativeElement.value.match(usDatePattern)) { 
+                  this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
                   return;
                 }
-                if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
-                  Swal.fire({
-                    type: 'error',
-                    text: 'Ingrese correctamente la fecha hasta',
-                    showCloseButton: true,
-                    showCancelButton: true,
-                    showConfirmButton: false,
-                    cancelButtonColor: '#d33',
-                    cancelButtonText:  'Cerrar',
-                  });
+                if (!this.inputDate2.nativeElement.value.match(usDatePattern)) { 
+                  this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
                   return;
                 } else {
                       console.log(this.filtro);
@@ -673,84 +668,32 @@ if(columnName === 'canal' ) {
                 }
         }
          /// change
-      } else {
-        console.log('entro 2');
-          if ( this.inputDate1.nativeElement.value === '') {
-              Swal.fire({
-                type: 'error',
-                text: 'La fecha "desde" no puede estar en blanco',
-                showCloseButton: true,
-                showCancelButton: true,
-                showConfirmButton: false,
-                cancelButtonColor: '#d33',
-                cancelButtonText:  'Cerrar', 
-              });
+      } else { 
+          if ( this.inputDate1.nativeElement.value === '') { 
+              this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
               return;
           } else if ( this.inputDate2.nativeElement.value === '') {
-               Swal.fire({
-               type: 'error', 
-               text: 'La fecha "hasta" no puede estar en blanco',
-              });
+              this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco'); 
               return;
-          } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
-              Swal.fire({
-                type: 'error',
-                text: 'ingrese correctamente la fecha desde',
-                showCloseButton: true,
-                showCancelButton: true,
-                showConfirmButton: false,
-                cancelButtonColor: '#d33',
-                cancelButtonText:  'Cerrar',
-              });
+          } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) { 
+              this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde'); 
               return;
-          } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) {
-            Swal.fire({
-              type: 'error',
-              text: 'ingrese correctamente la fecha hasta',
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonColor: '#d33',
-              cancelButtonText:  'Cerrar',
-            });
+          } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) { 
+            this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta'); 
             return;
           } 
           
           else if (fromdate <  2000 || fromdate >  2050 ) {
-            Swal.fire({
-              type: 'error',
-              text: 'Ingrese un Año valido para la fecha de Emision',
-              imageHeight: 100, 
-              showCloseButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33', 
-              cancelButtonText: 'Cerrar',
-            });
+            this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');  
             return;
           }
           
-          else if (todate <  2000 || todate >  2050 ) {
-            Swal.fire({
-              type: 'error',
-              text: 'Ingrese un Año valido  para la fecha de Vencimiento',
-              imageHeight: 100, 
-              showCloseButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33', 
-              cancelButtonText: 'Cerrar',
-            });
+          else if (todate <  2000 || todate >  2050 ) { 
+            this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');  
             return;
           } 
-          else if (this.filtro.dateFrom > this.filtro.dateTo ) {
-            Swal.fire({
-              type: 'error',
-              text: 'La fecha "desde" no puede ser mayor a la fecha "hasta"',
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonColor: '#d33',
-              cancelButtonText:  'Cerrar',
-            });
+          else if (this.filtro.dateFrom > this.filtro.dateTo ) { 
+            this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');  
             return;
           } else {
               console.log(this.filtro);
@@ -851,106 +794,41 @@ if(columnName === 'canal' ) {
      var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd));  
     // console.log('imprime esto '+ duadate ); 
 
-     if (emidate <  2000 || emidate >  2050 ) {
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese un Año valido para la fecha de Emision',
-        imageHeight: 100, 
-        showCloseButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33', 
-        cancelButtonText: 'Cerrar',
-      });
+     if (emidate <  2000 || emidate >  2050 ) { 
+      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');  
       return;
     }
     
     if (duadate <  2000 || duadate >  2050 ) {
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese un Año valido  para la fecha de Vencimiento',
-        imageHeight: 100, 
-        showCloseButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33', 
-        cancelButtonText: 'Cerrar',
-      });
-      return;
+      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');  
+      return; 
     } 
   
     if(item.newConcept.length <  8) {
-      Swal.fire({
-        type: 'error',
-        text: 'El concepto tiene que tener como minimo 8 digitos',
-        imageHeight: 100, 
-        showCloseButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33', 
-        cancelButtonText: 'Cerrar',
-      });
-      return;
+      this.mensaje( 'error', 'Error en el Concepto','El concepto tiene que tener como minimo 8 digitos');  
+      return;  
     }  
 
     if(item.newConcept === null || item.newConcept === ""){
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese El concepto',
-        imageHeight: 100, 
-        showCloseButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33', 
-        cancelButtonText: 'Cerrar',
-      });
-      return;
+      this.mensaje( 'error', 'Error en el Concepto','Ingrese El concepto');  
+      return;  
     }
     if (item.newEmissionDate == null) {
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese la fecha de emision',
-        imageHeight: 100, 
-        showCloseButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33', 
-        cancelButtonText: 'Cerrar',
-      });
-      return;
+      this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de emision');  
+      return;   
     }
     if (item.newDueDate == null) {
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese la fecha de vencimiento',
-        imageHeight: 100, 
-        showCloseButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33', 
-        cancelButtonText: 'Cerrar',
-      });
-      return;
+      this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de vencimiento');  
+      return;   
     }
     if (item.newConcept === '') {
-      Swal.fire({
-        type: 'error',
-        text: 'Ingrese el concepto',
-        imageHeight: 100, 
-        showCloseButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33', 
-        cancelButtonText: 'Cerrar',
-      });
-      return;
+      this.mensaje( 'error', 'Error en el Concepto','Ingrese el concepto');  
+      return;  
     }
    
     if (item.newEmissionDate > item.newDueDate) {
-      Swal.fire({
-        type: 'error',
-        text: 'La fecha de Emision no puede ser mayor a la fecha de vencimiento',
-        imageHeight: 100,
-        showCancelButton: true,
-        showCloseButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33', 
-        cancelButtonText: 'Cerrar',
-      });
-      return;
+      this.mensaje( 'error', 'Error en la fecha','La fecha de Emision no puede ser mayor a la fecha de vencimiento');  
+      return; 
     }
 
     Swal.fire({
@@ -1050,12 +928,9 @@ if(columnName === 'canal' ) {
     }
     });
 
-    if (itemsParaEliminar.length === 0 ) {
-      Swal.fire({
-        type: 'error',
-        text: '¡Seleccione las filas a eliminar por favor!',
-      });
-      return;
+    if (itemsParaEliminar.length === 0 ) { 
+      this.mensaje( 'error', 'Error al Eliminar','¡Seleccione las filas a eliminar por favor!');  
+      return; 
     }
 
  Swal.fire({
@@ -1139,11 +1014,8 @@ MostrarListaSelect() {
     });
 
     if (itemsParaReporte.length === 0 ) {
-      Swal.fire({
-        type: 'error',
-        text: '¡Seleccione las filas para el reporte, por favor!',
-      });
-      return;
+      this.mensaje( 'error', 'Error al Descargar','¡Seleccione las filas a eliminar por favor!');  
+      return;  
     }
 
     this.transactionService.report(itemsParaReporte)
