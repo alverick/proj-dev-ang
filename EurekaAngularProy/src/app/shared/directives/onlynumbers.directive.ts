@@ -1,10 +1,9 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { Directive, HostListener, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: 'input[numbersOnly]'
+  selector: 'input[appOnlynumbers]'
 })
-export class NumberDirective {
+export class OnlynumbersDirective {
 
   constructor(private _el: ElementRef) { }
 
@@ -15,5 +14,6 @@ export class NumberDirective {
       event.stopPropagation();
     }
   }
+
 
 }

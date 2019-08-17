@@ -18,11 +18,11 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { MatFormFieldModule, MatSelectModule } from '@angular/material';
-import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
-import { NumberDirective } from './login/numbers-only.directive';
+import { BlockCopyPasteDirective } from './login/block-copy-paste.directive'; 
 import { FormServicioComponent } from './form-servicio/form-servicio.component';
 import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
-import { CloseViewGuard } from '../shared/guards/close-view.guard';
+import { CloseViewGuard } from '../shared/guards/close-view.guard'; 
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -36,14 +36,15 @@ import { CloseViewGuard } from '../shared/guards/close-view.guard';
     RecaptchaModule,
     DigitOnlyModule,
     MatFormFieldModule,
-    MatSelectModule,
+    MatSelectModule, 
+    SharedModule  
   ],
   providers: [
     StorageService,
     AuthGuard,
     CookieService,
     LogoutGuard,
-    CloseViewGuard
+    CloseViewGuard, 
   ],
   declarations: [
     LoginComponent,
@@ -53,7 +54,6 @@ import { CloseViewGuard } from '../shared/guards/close-view.guard';
     ProcesandoComponent,
     CrearContrasenaComponent,
     BlockCopyPasteDirective,
-    NumberDirective,
     OnlyNumbersFormDirective
   ]
 })
@@ -64,6 +64,5 @@ export class AuthModule {
       throw new Error(
         'CoreModule is already loaded. Import it in the AppModule only');
     }
-  }
-
- }
+  } 
+ } 

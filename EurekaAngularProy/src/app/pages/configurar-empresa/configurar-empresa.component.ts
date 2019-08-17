@@ -83,6 +83,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       console.log(this.formGroup.value);
       const datosEmpresa = this.formGroup.value;
       const enterprise={
+        ruc: datosEmpresa.ruc, 
         email: datosEmpresa.email,
         movilNumber: datosEmpresa.movilNumber,
         password: datosEmpresa.password,
