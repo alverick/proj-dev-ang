@@ -28,8 +28,10 @@
                             <div class="d-flex align-items-center mt-4">
                                 <div class="mr-4">
                                         <div class="select-eureca position-relative">
+                                                
                                                 <select class="selectpicker" [(ngModel)]="filtro.service" name=""> 
-                                                        <option value="{{service.id}}"  *ngFor="let service of services" > {{service.name}}</option>
+                                                        <option value="">Servicios</option>
+                                                        <option value="{{service.id}}"  *ngFor="let service of services"> {{service.name}}</option>
                                                 </select>
                                        </div> 
                                 </div>
