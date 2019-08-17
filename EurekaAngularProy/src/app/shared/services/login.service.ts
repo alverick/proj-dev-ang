@@ -6,6 +6,7 @@ import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { StorageService } from "./storage.service";
 import { Router } from "@angular/router";
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ constructor(public http: HttpClient, private storage: StorageService,
 private URI_API: string = environment.END_POINT;
 public errores: number;
 
+private callingRefresh = false;
 
 login(ruc: string, psw: string): Observable<RespuestaLogin> {
   console.log('begin login' )
@@ -32,10 +34,12 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
   return this.http.post(url, data, opts)
     .pipe(map((r: RespuestaLogin) => {
       console.log(r);
+      let token_expira = moment(new Date()).add(30, 'm').toDate();
       this.storage.setCurrentSession({
         user: { ruc: ruc },
         isAuthenticate: true,
-        token: r.paramStr
+        token: r.paramStr,
+        expire: token_expira
       });
       /*r.paramStr = null;*/
       return r;
@@ -49,6 +53,34 @@ logout(): void {
       this.storage.removeCurrentSession();
       this.router.navigate(['/login']);
     });
+}
+
+refresh(): void {
+  if (this.callingRefresh === false) {
+    console.log('refresh');
+    let now = new Date();
+    let storage = this.storage.getCurrentSession();
+    console.log(now);
+    console.log(storage);
+    if (storage !== null && storage !== undefined && now > storage.expire){
+      console.log('refresh token');
+      this.callingRefresh = true;
+      const url = `${this.URI_API}/login`;
+      this.http.get(url,{})
+      .subscribe((r: RespuestaLogin)=>{
+        let token_expira = moment(new Date()).add(30, 'm').toDate();
+        let storage = this.storage.getCurrentSession();
+        this.storage.setCurrentSession({
+          user: storage.user,
+          isAuthenticate: true,
+          token: r.paramStr,
+          expire: token_expira
+        });
+        this.callingRefresh = false;
+        return r;
+      })
+    }
+  }
 }
 
 }

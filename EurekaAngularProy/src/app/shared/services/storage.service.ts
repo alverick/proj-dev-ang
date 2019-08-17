@@ -26,6 +26,7 @@ export class StorageService {
     
     } else {
       this.localStorageService.setItem('tk', session.token);
+      this.localStorageService.setItem('exp', session.expire);
     }
   }
 
@@ -41,11 +42,21 @@ export class StorageService {
   }
 
   getCurrentSession(): Session {
+    if (this.currentSession === null || this.currentSession === undefined) {
+      console.log('currentSession from localStorage');
+      this.currentSession = {
+        user: { ruc: '' },
+        isAuthenticate: true,
+        token: this.localStorageService.getItem('tk'),
+        expire: new Date(this.localStorageService.getItem('exp'))
+      }
+    }
     return this.currentSession;
   }
 
   removeCurrentSession(): void {
     this.localStorageService.removeItem('tk');
+    this.localStorageService.removeItem('exp');
     this.currentSession = null;
   }
 

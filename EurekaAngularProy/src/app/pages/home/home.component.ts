@@ -23,6 +23,7 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DialogComponent } from './dialog';  
+import { LoginService } from 'src/app/shared/services/login.service';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -205,8 +206,8 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
-    private el: ElementRef
-    ) {
+    private loginService: LoginService,
+    private el: ElementRef) {
 
     }
  
@@ -224,6 +225,7 @@ export class HomeComponent implements OnInit {
  
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
+    this.loginService.refresh();
     this.homeService.getServices().subscribe(
       value => {
         this.services = value;
