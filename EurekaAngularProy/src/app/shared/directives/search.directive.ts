@@ -1,9 +1,10 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: 'input[appShear]'
+  selector: 'input[appSearch]'
 })
-export class ShearDirective {
+export class SearchDirective {
+
 
   constructor(private el: ElementRef) { }
 
@@ -14,5 +15,6 @@ export class ShearDirective {
       event.stopPropagation();
     }
   }
+
 
 }
