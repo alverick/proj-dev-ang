@@ -1,72 +1,77 @@
 <div class="body">
-    <div class="container py-4">            
+    <div class="container py-4">
         <div class="row py-4">
-          <!--////// L E F T /////-->
-          <div class="col-5">
-              <h1 class="texto-azulbase">Mantén actualizada tu información de empresa</h1>
-          </div>
+            <!--////// L E F T /////-->
+            <div class="col-5">
+                <h1 class="texto-azulbase">Mantén actualizada tu información de empresa</h1>
+            </div>
 
-          <!--///// R I G H T //// -->
+            <!--///// R I G H T //// -->
 
-          <div class="col-10 col-md-7" >
-              <div class="shadow-none border p-5 bg-white rounded">
+            <div class="col-10 col-md-7">
+                <div class="shadow-none border p-5 bg-white rounded">
                     <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()" class="form">
                         <mat-form-field class="example-full-width">
-                            <input matInput [readonly]="true" type="text" formControlName="ruc"  >
+                            <input matInput [readonly]="true" type="text" formControlName="ruc">
                         </mat-form-field>
-                            
+
                         <mat-form-field class="example-full-width">
-                            <input matInput [readonly]="true" type="text" formControlName="name"  >
+                            <input matInput [readonly]="true" type="text" formControlName="name" placeholder="Nombre">
                         </mat-form-field>
-            
+
                         <mat-form-field class="example-full-width">
-                            <input matInput [readonly]="true" type="text" formControlName="entry" >
+                            <mat-label>Rubro de tu empresa</mat-label>
+                            <mat-select formControlName="entry" [disabled]="butDisabled">
+                                <mat-option *ngFor="let r of rubros" [value]="r.code">
+                                    {{r.name}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
-            
-                        <mat-form-field  class="example-full-width">
-                            <input matInput type="email" placeholder="Email" formControlName="email"  [class.is-invalid]="f.email.invalid">
+
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="email" placeholder="Email" formControlName="email" [class.is-invalid]="f.email.invalid">
                             <mat-error *ngIf="!formGroup.controls['email'].valid || formGroup.controls['email'].touched">
                                 {{ getErrorEmail() }}
                             </mat-error>
                         </mat-form-field>
 
-                        <mat-form-field  class="example-full-width">
-                                <input matInput type="text" placeholder="Télefono" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid" >
-                                <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
-                                    {{ getErrorPhone() }}
-                                </mat-error>
-                            </mat-form-field>
-
-
-                        
-                        <mat-form-field  class="example-full-width">
-                                <input matInput type="password" placeholder="Contraseña actual" formControlName="password" >
-                                <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
-                                    {{ getErrorPassword() }}
-                                  </mat-error>
-                        </mat-form-field>
-
-                        <mat-form-field  class="example-full-width">
-                                <input matInput type="password" placeholder="Nueva contraseña"  formControlName="newPassword" >
-                                <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
-                                    {{ getErrorNewPassword() }}
-                                  </mat-error>
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="text" placeholder="Télefono" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
+                            <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
+                                {{ getErrorPhone() }}
+                            </mat-error>
                         </mat-form-field>
 
 
-                        <mat-form-field  class="example-full-width">
-                                <input matInput type="password"  placeholder="Repetir nueva contraseña" formControlName="confirmNewPassword">
-                                <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
-                                    {{ getErrorConfirmNewPassword() }}
-                                  </mat-error>
-                                  <mat-error *ngIf="f.confirmNewPassword.invalid">Debe ser igual a Contraseña</mat-error>
+
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="password" placeholder="Contraseña actual" formControlName="password">
+                            <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
+                                {{ getErrorPassword() }}
+                            </mat-error>
                         </mat-form-field>
 
-                        <div  class="mt-4"    >
-                              <button color="primary" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white" >Actualizar</button>
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="password" placeholder="Nueva contraseña" formControlName="newPassword">
+                            <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
+                                {{ getErrorNewPassword() }}
+                            </mat-error>
+                        </mat-form-field>
+
+
+                        <mat-form-field class="example-full-width">
+                            <input matInput type="password" placeholder="Repetir nueva contraseña" formControlName="confirmNewPassword">
+                            <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
+                                {{ getErrorConfirmNewPassword() }}
+                            </mat-error>
+                            <mat-error *ngIf="f.confirmNewPassword.invalid">Debe ser igual a Contraseña</mat-error>
+                        </mat-form-field>
+
+                        <div class="mt-4">
+                            <button color="primary" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white">Actualizar</button>
                         </div>
                     </form>
+                </div>
             </div>
         </div>
     </div>
-</div>

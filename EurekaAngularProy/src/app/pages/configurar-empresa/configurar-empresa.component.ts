@@ -5,6 +5,9 @@ import { ConfiguracionService } from 'src/app/shared/services/configuracion.serv
 import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import Swal from 'sweetalert2';
 import { stringify } from '@angular/core/src/render3/util';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { RubroModel } from 'src/app/shared/models';
+import { DISABLED } from '@angular/forms/src/model';
 
 
 @Component({
@@ -14,30 +17,34 @@ import { stringify } from '@angular/core/src/render3/util';
 })
 export class ConfigurarEmpresaComponent implements OnInit {
 
-  //public configurarE,mpresaForm: FormGroup;
-  formGroup: FormGroup
+  // public configurarE,mpresaForm: FormGroup;
+  formGroup: FormGroup;
   titleAlert: string = 'This field is required';
   post: any = '';
   submitted: boolean= false;
-
+  butDisabled: boolean = true;
+  rubros: RubroModel[] = [];
   constructor(private formBuilder: FormBuilder,
-              private configEmpresaService: ConfiguracionService) { }
+              private configEmpresaService: ConfiguracionService,
+              private afiliacionService: AfiliacionService) { }
 
   ngOnInit() {
     this.createForm();
     this.getInfoEmpresa();
+    this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
   }
 
-  
-  getInfoEmpresa(){
+
+  getInfoEmpresa() {
     this.configEmpresaService.getDatosEmpresa()
-      .subscribe( dataEnterprise =>{
+      .subscribe( dataEnterprise => {
         console.log("DATA " + dataEnterprise);
         this.formGroup.setValue(dataEnterprise);
+        console.table(dataEnterprise);
       }
   );
   }
-  
+
   createForm() {
     this.formGroup = this.formBuilder.group({
       ruc: new FormControl(''),
@@ -47,8 +54,8 @@ export class ConfigurarEmpresaComponent implements OnInit {
       movilNumber: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       newPassword: new FormControl(''),
-      confirmNewPassword:new FormControl(''),
-    },{          
+      confirmNewPassword: new FormControl(''),
+    }, {
       validator: MustMatch('newPassword', 'confirmNewPassword')
     });
   }
@@ -60,8 +67,8 @@ export class ConfigurarEmpresaComponent implements OnInit {
     return this.formGroup.get('email').hasError('required') ? 'Email es requerido' :
       this.formGroup.get('email').hasError('email') ? 'No es un Email válido' :'';
   }
-  
-  getErrorPhone(){
+
+  getErrorPhone() {
     return this.formGroup.get('movilNumber').hasError('required') ? 'Télefono es requerido' : '';
   }
 
@@ -75,20 +82,21 @@ export class ConfigurarEmpresaComponent implements OnInit {
   getErrorConfirmNewPassword() {
     return this.formGroup.get('confirmNewPassword').hasError('required') ? 'La Contraseña es requerida' :''  }
 
-
+// actualizado
   onSubmit() {
     this.submitted = true;
     console.log("ENTRO  ");
-    if(this.formGroup.valid){
+    if (this.formGroup.valid) {
       console.log(this.formGroup.value);
       const datosEmpresa = this.formGroup.value;
-      const enterprise={
+      const enterprise = {
+        ruc: datosEmpresa.ruc,
         email: datosEmpresa.email,
         movilNumber: datosEmpresa.movilNumber,
         password: datosEmpresa.password,
         newPassword: datosEmpresa.newPassword,
         confirmNewPassword: datosEmpresa.confirmNewPassword
-      }
+      };
       console.log("FORM GROUP : "+this.formGroup.valid);
       console.log(enterprise);
       this.configEmpresaService.saveDatosEmpresa(enterprise).
@@ -99,7 +107,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
             title: 'Datos de empresa guardados',
             text: 'Sus datos han sido actualizados',
             confirmButtonText: 'Aceptar',
-            onAfterClose: () =>{
+            onAfterClose: () => {
               datosEmpresa.email = datosEmpresa.newEmail;
               datosEmpresa.movilNumber = datosEmpresa.newMovilNumber;
               datosEmpresa.password = datosEmpresa.newPassword;

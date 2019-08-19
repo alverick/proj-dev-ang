@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { StorageService } from 'src/app/shared/services/storage.service'; 
-import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MatSnackBar } from '@angular/material'; 
 
 @Component({
   selector: 'app-login',
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private cookieService : CookieService,
     private storageService: StorageService,
-    public  snackBar: MatSnackBar,
+    public  snackBar: MatSnackBar
     ) {}
 
   ngOnInit() {

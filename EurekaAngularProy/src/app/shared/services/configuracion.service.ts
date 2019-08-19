@@ -13,9 +13,9 @@ export class ConfiguracionService {
 
     public debtItems: DataEnterpriseModel ;
 
-    getDatosEmpresa(): Observable<DataEnterpriseModel>{
+    getDatosEmpresa(): Observable<DataEnterpriseModel> {
     console.log("Begin get datos empresa")
-    const url=`${environment.END_POINT}/company?_=`+ new Date().getTime();
+    const url = `${environment.END_POINT}/company?_=`+ new Date().getTime();
 
     const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
@@ -33,8 +33,7 @@ export class ConfiguracionService {
 
     }
 
-    saveDatosEmpresa(data: any): Observable<any>{
-    console.log("Begin Save datos empresa");
+    saveDatosEmpresa(data: any): Observable<any>{ 
     const url=`${environment.END_POINT}/company?_=`+ new Date().getTime();
     const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}

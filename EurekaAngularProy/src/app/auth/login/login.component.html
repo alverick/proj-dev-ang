@@ -21,7 +21,7 @@
                                 <div class="flex-fill">
                                     <label class="d-block texto-negro h6">RUC</label>
                                     <mat-form-field class="full-width">
-                                        <input matInput  type="text" (focus)="focusFunctionRuc()"  minlength="11" maxlength="11" numbersOnly required autocomplete="off" formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors" >                
+                                        <input matInput  type="text" appOnlynumbers (focus)="focusFunctionRuc()" minlength="11" maxlength="11" required autocomplete="off" formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors" >                
 
                                         <mat-error *ngIf="inputUsuaValid" class="error-message">
                                             Debe ingresar el RUC

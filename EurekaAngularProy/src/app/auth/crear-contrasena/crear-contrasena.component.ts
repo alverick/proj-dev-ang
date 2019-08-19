@@ -15,6 +15,7 @@ export class CrearContrasenaComponent implements OnInit {
   registerForm: FormGroup;
   submitted: boolean = false;
 
+
   constructor(
     private formBuilder: FormBuilder,
     private afiliacionService: AfiliacionService,
@@ -63,8 +64,9 @@ export class CrearContrasenaComponent implements OnInit {
 
     this.afiliacionService.Registrar({
       ruc: this.registerForm.value.ruc,
-      email: this.registerForm.value.email,
+      name: this.registerForm.value.nombre,
       entry: this.registerForm.value.rubro,
+      email: this.registerForm.value.email,
       movilNumber: this.registerForm.value.telefono,
       password: this.registerForm.value.contrasena,
       acceptTerms: this.registerForm.value.acceptterms

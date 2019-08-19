@@ -42,7 +42,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DateDirective } from './pages/home/date.directive';
 import { ConfiguracionService } from './shared/services/configuracion.service';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
-import { ShearDirective } from './pages/home/shear.directive'; 
+import { ShearDirective } from './pages/home/shear.directive';
+import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
 
 
 @NgModule({
@@ -60,7 +61,7 @@ import { ShearDirective } from './pages/home/shear.directive';
     DateDirective,
     ConfigurarEmpresaComponent,
     ShearDirective,
-
+    BlockCopyPasteDirective,
 
 
     ],
@@ -105,7 +106,7 @@ import { ShearDirective } from './pages/home/shear.directive';
       },
       AfiliacionService,
       ConfiguracionService
-    
+
   ],
   exports: [
     MatInputModule,
