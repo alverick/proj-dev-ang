@@ -22,6 +22,7 @@ export class TransactionService {
 
     constructor(public http: HttpClient, private nativeHttp: Http, private storage: StorageService)  { }
 
+    public pageMessage: string = "Mostrando 0 elementos";
     public debtItems: DebtsPagedList = { count:0, data: [] };
 
     getDateFormat(date: Date): string {
@@ -70,6 +71,19 @@ export class TransactionService {
             });
             this.debtItems = r;
             console.log(r);
+            return r;
+          }))
+          .pipe(map(r => {
+            if (r.count == 0) {
+              this.pageMessage = "Mostrando 0 elementos";
+            }
+            else { 
+              let beg = ((filtro.pageNumber - 1) * 50) + 1;
+              let end = filtro.pageNumber * 50;
+              if (end > r.count)
+                end = r.count;
+              this.pageMessage = `Mostrando de ${beg} - ${end} de ${r.count} elementos`;
+            }
             return r;
           }))
           .pipe(catchError(error => throwError(error)));  
