@@ -178,8 +178,8 @@ export class HomeComponent implements OnInit {
 
 
   statusOptions : Array<Object> = [
-    {  option:'PENDING', state: '1'},
-    {  option: 'Pagado', state : '2'}
+    {  option:'PENDIENTE', state: '1'},
+    {  option:'PAGADO', state : '2'}
   ]
 
   showEdit: boolean = false;
@@ -626,21 +626,25 @@ if(columnName === 'canal' ) {
                    this.spinner.hide();
                     console.log("NUMERO PAGINA " + this.filtro.pageNumber)
                     if(this.filtro.pageNumber <= 1 && this.debtsList.data.length>1){
+                      console.log("ENTRO 1");
                       this.pagination1= true;
                       this.pagination2= false;
                       this.pagination3= false;
                       this.pagination4 = false;
                     }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                      console.log("ENTRO 2");
                         this.pagination1=false;
                         this.pagination2= true;
                         this.pagination3= false;
                         this.pagination4= false;
                     }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                      console.log("ENTRO 3");
                         this.pagination1=false;
                         this.pagination2= false;
                         this.pagination3=true;  
                         this.pagination4= false;        
-                    }else{
+                    }else if(this.filtro.pageNumber <= 1 && this.debtsList.data.length==0){
+                      console.log("ENTRO 4");
                       this.pagination1=false;
                       this.pagination2= false;
                       this.pagination3=false;  
@@ -672,21 +676,25 @@ if(columnName === 'canal' ) {
                        this.spinner.hide();
                          console.log("NUMERO PAGINA " + this.filtro.pageNumber)
                          if(this.filtro.pageNumber <= 1 && this.debtsList.data.length>1){
+                          console.log("ENTRO 1");
                            this.pagination1= true;
                            this.pagination2= false;
                            this.pagination3= false;
                            this.pagination4 = false;
                          } else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                          console.log("ENTRO 2");
                              this.pagination1=false;
                              this.pagination2= true;
                              this.pagination3= false;
                              this.pagination4 = false;
                          } else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                          console.log("ENTRO 3");
                              this.pagination1=false;
                              this.pagination2= false;
                              this.pagination3=true;          
                              this.pagination4 = false;
-                         }else{
+                         }else if(this.filtro.pageNumber <= 1 && this.debtsList.data.length==0){
+                          console.log("ENTRO 4");
                             this.pagination1= false;
                             this.pagination2= false;
                             this.pagination3 = false;
@@ -738,22 +746,26 @@ if(columnName === 'canal' ) {
                   this.debtsList = debts;
                   console.log("NUMERO PAGINA " + this.filtro.pageNumber)
                   if(this.filtro.pageNumber <= 1 && this.debtsList.data.length>1){
+                    console.log("ENTRO 1");
                     this.pagination1= true;
                     this.pagination2= false;
                     this.pagination3= false;
                     this.pagination4 = false;
                   }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                      console.log("ENTRO 2");
                       this.pagination1=false;
                       this.pagination2= true;
                       this.pagination3= false;
                       this.pagination4 = false;
                   }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                    console.log("ENTRO 3");
                       this.pagination1=false;
                       this.pagination2= false;
                       this.pagination3=true;   
                       this.pagination4 = false;       
-                  }else{
-                    this.pagination1=false;
+                  }else if(this.filtro.pageNumber <= 1 && this.debtsList.data.length==0){
+                      console.log("ENTRO 4");
+                      this.pagination1=false;
                       this.pagination2= false;
                       this.pagination3= false;   
                       this.pagination4 = true;
