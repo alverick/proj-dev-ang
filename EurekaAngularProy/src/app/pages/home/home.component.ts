@@ -289,26 +289,31 @@ export class HomeComponent implements OnInit {
         this.debtsList = debts;   
                 console.log("NUMERO PAGINA " + this.filtro.pageNumber)
                 if(this.filtro.pageNumber <= 1 && this.debtsList.data.length>1){
-                  this.pagination1= true;
-                  this.pagination2= false;
-                  this.pagination3= false;
-                  this.pagination4= false;
-                }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
-                    this.pagination1=false;
-                    this.pagination2= true;
-                    this.pagination3= false;
-                    this.pagination4= false;
-                }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
-                    this.pagination1=false;
+                  console.log("ENTRO 1");
+                   this.pagination1= true;
+                   this.pagination2= false;
+                   this.pagination3= false;
+                   this.pagination4 = false;
+                 } else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                  console.log("ENTRO 2");
+                     this.pagination1=false;
+                     this.pagination2= true;
+                     this.pagination3= false;
+                     this.pagination4 = false;
+                 } else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                  console.log("ENTRO 3");
+                     this.pagination1=false;
+                     this.pagination2= false;
+                     this.pagination3=true;          
+                     this.pagination4 = false;
+                 }else if(this.filtro.pageNumber <= 1 && this.debtsList.data.length==0){
+                  console.log("ENTRO 4");
+                    this.pagination1= false;
                     this.pagination2= false;
-                    this.pagination3=true;  
-                    this.pagination4= false;        
-                }else{
-                  this.pagination1=false;
-                  this.pagination2= false;
-                  this.pagination3=false;  
-                  this.pagination4= true;
-                }
+                    this.pagination3 = false;
+                    this.pagination4 = true;
+                    
+                 }
     });
     this.spinner.hide();
     
@@ -625,6 +630,7 @@ if(columnName === 'canal' ) {
                     this.debtsList = debts;
                    this.spinner.hide();
                     console.log("NUMERO PAGINA " + this.filtro.pageNumber)
+                    console.log(this.debtsList.data.length)
                     if(this.filtro.pageNumber <= 1 && this.debtsList.data.length>1){
                       console.log("ENTRO 1");
                       this.pagination1= true;
