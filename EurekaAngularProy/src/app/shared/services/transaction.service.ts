@@ -8,6 +8,7 @@ import { catchError,  map } from "rxjs/operators";
 import { DebtEdit } from "../models/debts-edit.model";
 import { DebstFilter } from "../models/debts-filter.model";
 import { Http, Headers, ResponseContentType } from "@angular/http";
+import * as moment from "moment";
 
 
 @Injectable({
@@ -44,10 +45,15 @@ export class TransactionService {
       else {
         this.lastFilter = filtro;
       }
-      var strDateFrom = (filtro.dateFrom === null ? '' : filtro.dateFrom.toISOString()); 
-      var strDateTo = (filtro.dateTo === null ? '' : filtro.dateTo.toISOString());
-      console.log('strDateFrom: ',strDateFrom);
-      console.log('strDateTo: ',strDateTo);
+
+
+      var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));  
+      var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
+      //fechas
+      console.log('fechas');
+      console.log(strDateFrom);
+      console.log(strDateTo);
+      console.table(filtro);
 
       console.log(filtro);
         const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;

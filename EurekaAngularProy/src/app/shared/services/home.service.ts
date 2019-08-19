@@ -29,9 +29,8 @@ export class HomeService {
 
   private date:  Date[] = [
     {idDate: '', descripcion: 'Por fecha'},
-    {idDate: 'EmissionDate', descripcion: 'Fecha de emisión'},
-    {idDate: 'dueDate', descripcion: 'Fecha de pago'},
-    {idDate: 'expirationDate', descripcion: 'Fecha de vencimiento'}
+    {idDate: 'EmissionDate', descripcion: 'Fecha de emisión'}, 
+    {idDate: 'DueDate', descripcion: 'Fecha de vencimiento'}
   ];
 
 
