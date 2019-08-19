@@ -625,7 +625,8 @@ if(columnName === 'canal' ) {
                 };
                 this.transactionService.getDeuda(this.filtro)
                   .subscribe(debts => {
-                    console.log(debts);
+                    
+                    //console.table(this.filtro);
                     this.selectedAll = false;
                     this.debtsList = debts;
                    this.spinner.hide();
@@ -1012,7 +1013,7 @@ if(columnName === 'canal' ) {
   Eliminar(item: Debts) {
      
   Swal.fire({
-    title: "¿Esta Seguro de Eliminar el Registro?",
+    title: "¿Esta Seguro de Eliminar el Registro? ",
     imageUrl: '/assets/images/complain.svg',   imageHeight: 100,  
     showCancelButton: true,
     showCloseButton: true,
@@ -1022,10 +1023,10 @@ if(columnName === 'canal' ) {
     cancelButtonText: 'Cerrar',
   }).then((result) => {
     if (result.value) {
-   /* this.spinner2.show();*/
+     //this.spinner.show(); 
       this.transactionService.deleteDeuda(item.id)
       .subscribe(() => this.consultaDeuda());
- /*   this.spinner2.hide();*/
+   //   this.spinner.hide(); 
     
     Swal.fire(
       'Eliminado!',
