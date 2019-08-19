@@ -172,6 +172,7 @@ export class HomeComponent implements OnInit {
   pagination1: boolean= false;
   pagination2: boolean= false;
   pagination3: boolean= false;
+  pagination4: boolean = false;
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = true;
 
@@ -287,20 +288,26 @@ export class HomeComponent implements OnInit {
       .subscribe(debts => {
         this.debtsList = debts;   
                 console.log("NUMERO PAGINA " + this.filtro.pageNumber)
-                if(this.filtro.pageNumber <= 1){
+                if(this.filtro.pageNumber <= 1 && this.debtsList.data.length>1){
                   this.pagination1= true;
                   this.pagination2= false;
                   this.pagination3= false;
-                }
-                if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                  this.pagination4= false;
+                }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
                     this.pagination1=false;
                     this.pagination2= true;
                     this.pagination3= false;
-                }
-                if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                    this.pagination4= false;
+                }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
                     this.pagination1=false;
                     this.pagination2= false;
-                    this.pagination3=true;          
+                    this.pagination3=true;  
+                    this.pagination4= false;        
+                }else{
+                  this.pagination1=false;
+                  this.pagination2= false;
+                  this.pagination3=false;  
+                  this.pagination4= true;
                 }
     });
     this.spinner.hide();
@@ -618,20 +625,26 @@ if(columnName === 'canal' ) {
                     this.debtsList = debts;
                    this.spinner.hide();
                     console.log("NUMERO PAGINA " + this.filtro.pageNumber)
-                    if(this.filtro.pageNumber <= 1){
+                    if(this.filtro.pageNumber <= 1 && this.debtsList.data.length>1){
                       this.pagination1= true;
                       this.pagination2= false;
                       this.pagination3= false;
-                    }
-                    if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                      this.pagination4 = false;
+                    }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
                         this.pagination1=false;
                         this.pagination2= true;
                         this.pagination3= false;
-                    }
-                    if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                        this.pagination4= false;
+                    }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
                         this.pagination1=false;
                         this.pagination2= false;
-                        this.pagination3=true;          
+                        this.pagination3=true;  
+                        this.pagination4= false;        
+                    }else{
+                      this.pagination1=false;
+                      this.pagination2= false;
+                      this.pagination3=false;  
+                      this.pagination4= true;
                     }
 
                 });
@@ -658,20 +671,27 @@ if(columnName === 'canal' ) {
                           this.debtsList = debts;
                        this.spinner.hide();
                          console.log("NUMERO PAGINA " + this.filtro.pageNumber)
-                         if(this.filtro.pageNumber <= 1){
+                         if(this.filtro.pageNumber <= 1 && this.debtsList.data.length>1){
                            this.pagination1= true;
                            this.pagination2= false;
                            this.pagination3= false;
-                         }
-                         if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                           this.pagination4 = false;
+                         } else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
                              this.pagination1=false;
                              this.pagination2= true;
                              this.pagination3= false;
-                         }
-                         if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                             this.pagination4 = false;
+                         } else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
                              this.pagination1=false;
                              this.pagination2= false;
                              this.pagination3=true;          
+                             this.pagination4 = false;
+                         }else{
+                            this.pagination1= false;
+                            this.pagination2= false;
+                            this.pagination3 = false;
+                            this.pagination4 = true;
+                            
                          }
                       });
                 }
@@ -717,20 +737,26 @@ if(columnName === 'canal' ) {
                   console.log(debts);
                   this.debtsList = debts;
                   console.log("NUMERO PAGINA " + this.filtro.pageNumber)
-                  if(this.filtro.pageNumber <= 1){
+                  if(this.filtro.pageNumber <= 1 && this.debtsList.data.length>1){
                     this.pagination1= true;
                     this.pagination2= false;
                     this.pagination3= false;
-                  }
-                  if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
+                    this.pagination4 = false;
+                  }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
                       this.pagination1=false;
                       this.pagination2= true;
                       this.pagination3= false;
-                  }
-                  if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
+                      this.pagination4 = false;
+                  }else if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
                       this.pagination1=false;
                       this.pagination2= false;
-                      this.pagination3=true;          
+                      this.pagination3=true;   
+                      this.pagination4 = false;       
+                  }else{
+                    this.pagination1=false;
+                      this.pagination2= false;
+                      this.pagination3= false;   
+                      this.pagination4 = true;
                   }
                 this.spinner.hide();
               });

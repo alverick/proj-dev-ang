@@ -30,7 +30,7 @@
                                         <div class="select-eureca position-relative">
                                             <select class="selectpicker" [(ngModel)]="filtro.service" name=""> 
                                                 <option value="">Servicios</option>
-                                                        <option value="{{service.id}}"  *ngFor="let service of services"> {{service.name}}</option>
+                                                        <option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</option>
                                                 </select>
                                     </div>
                                 </div>
@@ -129,13 +129,17 @@
                                     <div class="row justify-content-end">
                                         <div style="font-size: 17px">
                                             <div style="font-size: 17px" *ngIf="pagination1">
-                                                <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{ transactionService.debtItems.data.length}}</span> de <span> {{transactionService.debtItems.count }}</span>                                                de elementos
+                                                <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{ transactionService.debtItems.data.length}}</span> de <span> {{transactionService.debtItems.count }}</span>   de elementos
                                             </div>
                                             <div style="font-size: 17px" *ngIf="pagination2">
                                                 <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{filtro.pageNumber*50}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
                                             </div>
                                             <div style="font-size: 17px" *ngIf="pagination3">
                                                 <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{transactionService.debtItems.count}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
+                                            </div>
+
+                                            <div style="font-size: 17px" *ngIf="pagination4">
+                                                    <span></span>Mostrando <span> {{transactionService.debtItems.count }}</span> de elementos
                                             </div>
 
                                         </div>
