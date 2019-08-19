@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Date } from './../../shared/models/date';
 import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild} from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
@@ -172,7 +173,7 @@ export class HomeComponent implements OnInit {
   pagination2: boolean= false;
   pagination3: boolean= false;
   // tslint:disable-next-line:no-inferrable-types
-  selectedAll: boolean = false;
+  selectedAll: boolean = true;
 
 
   statusOptions : Array<Object> = [
@@ -256,6 +257,9 @@ export class HomeComponent implements OnInit {
    this.consultaDeuda();
    this.cargaExcel = false;
    
+   // check
+   this.SeleccionarTodos();
+   this.selectedAll = false;
   }
 /*
   validandoListado() {
@@ -579,8 +583,7 @@ if(columnName === 'canal' ) {
   }
 
   consultaDeuda() {
-  // tslint:disable-next-line:prefer-const
-
+  // tslint:disable-next-line:prefer-const 
 
   let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
   //lenght date from 
@@ -928,7 +931,7 @@ if(columnName === 'canal' ) {
   }
   EliminarSeleccionados() {
     const itemsParaEliminar = [];
-    this.debtsList.data.forEach(c => {
+    this.transactionService.debtItems.data.forEach(c => {
     if (c.selected) {
       itemsParaEliminar.push(c.id);
     }
@@ -989,9 +992,9 @@ if(columnName === 'canal' ) {
 })
 }
 
-  SeleccionarTodos() {
-    console.log('selecctionarTodos');
-    this.debtsList.data.forEach(itm => itm.selected = this.selectedAll);
+  SeleccionarTodos() {  
+   // console.log(this.debtsList.data);
+    this.transactionService.debtItems.data.forEach(itm => itm.selected = this.selectedAll);
     
   }
 
@@ -1013,14 +1016,14 @@ MostrarListaSelect() {
 
   DescargarReporte() {
     const itemsParaReporte: number[] = [];
-    this.debtsList.data.forEach(c => {
+    this.transactionService.debtItems.data.forEach(c => {
     if (c.selected) {
       itemsParaReporte.push(c.id);
     }
     });
 
     if (itemsParaReporte.length === 0 ) {
-      this.mensaje( 'error', 'Error al Descargar','¡Seleccione las filas a eliminar por favor!');  
+      this.mensaje( 'error', 'Error al Descargar','¡Seleccione las filas a descargar por favor!');  
       return;  
     }
 

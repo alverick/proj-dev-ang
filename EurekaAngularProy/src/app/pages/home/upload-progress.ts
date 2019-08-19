@@ -74,6 +74,7 @@ import Swal from "sweetalert2";
               text: `Se cargaron ${value.rowsUploaded} registros`
             });
             console.log("GET DEUDA HOME")
+            
             this.transactionService.getDeuda()
             .subscribe(debts => {
               console.log(this.transactionService.debtItems);

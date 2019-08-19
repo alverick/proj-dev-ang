@@ -88,7 +88,7 @@
                         <table class="table" style="margin-bottom: 0rem">
                             <div class="d-flex bd-highlight">
                                 <div class="p-2 bd-highlight">
-                                    <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (change)="SeleccionarTodos($event)">
+                                    <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos($event)">
                                     <label for="styl" class="text-small font-medium"></label><br>
                                     <span class="text-small font-medium">Seleccionar</span>
                                 </div>
