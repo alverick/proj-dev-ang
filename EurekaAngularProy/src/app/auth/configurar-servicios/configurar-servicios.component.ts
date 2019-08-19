@@ -59,15 +59,8 @@ export class ConfigurarServiciosComponent implements OnInit {
  
   EnviarServicios() {
  //   if(this.afiliacionService.services.forEach)
-    if(this.afiliacionService.services.find((v) => v.nroCuenta === '')) {
-      Swal.fire({
-        type: 'error',
-        text: 'Falta Ingresar datos en su servicio Pension'
-      });
-      return;
-    }
-    if(this.Formulario.valueOf)
-
+    
+    
     if(this.Formulario === true){
       Swal.fire({
         title: 'Servicio no guardado',
@@ -87,6 +80,13 @@ export class ConfigurarServiciosComponent implements OnInit {
       Swal.fire({
         type: 'error',
         text: 'solo puede tener 99 servicios como maximo'
+      });
+      return;
+    }
+    if(this.afiliacionService.services.find((v) => v.nroCuenta === '')) {
+      Swal.fire({
+        type: 'error',
+        text: 'Falta Ingresar datos en su servicio Pension'
       });
       return;
     }
