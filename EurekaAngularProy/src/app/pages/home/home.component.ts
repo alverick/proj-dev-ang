@@ -568,7 +568,6 @@ if(columnName === 'canal' ) {
             
                 this.transactionService.getDeuda(this.filtro)
                   .subscribe(debts => {  
-                   //console.table(this.filtro);
                   this.selectedAll = false;
                   this.spinner.hide();
                 });

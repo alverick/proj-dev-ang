@@ -54,7 +54,6 @@ export class TransactionService {
       console.log('fechas');
       console.log(strDateFrom);
       console.log(strDateTo);
-      console.table(filtro);
 
       console.log(filtro);
         const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
