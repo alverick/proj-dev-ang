@@ -139,11 +139,11 @@
                                             </div>
 
                                             <div style="font-size: 17px" *ngIf="pagination4">
-                                                <span></span>Mostrando <span> {{transactionService.debtItems.count }}</span> de elementos
+                                                Mostrando <span> {{transactionService.debtItems.count }}</span> de elementos
                                             </div>
 
                                         </div>
-                                        <div *ngIf="debtsList.data.length > 0">
+                                        <div *ngIf="transactionService.debtItems.data.length >= 0">
                                             <pagination-controls responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)"> </pagination-controls>
                                         </div>
                                     </div>
