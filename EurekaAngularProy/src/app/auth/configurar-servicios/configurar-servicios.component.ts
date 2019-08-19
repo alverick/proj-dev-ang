@@ -4,6 +4,7 @@ import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -57,7 +58,16 @@ export class ConfigurarServiciosComponent implements OnInit {
  
  
   EnviarServicios() {
-    /*+ this.serviceActual.nombre.toString() +*/
+ //   if(this.afiliacionService.services.forEach)
+    if(this.afiliacionService.services.find((v) => v.nroCuenta === '')) {
+      Swal.fire({
+        type: 'error',
+        text: 'Falta Ingresar datos en su servicio Pension'
+      });
+      return;
+    }
+    if(this.Formulario.valueOf)
+
     if(this.Formulario === true){
       Swal.fire({
         title: 'Servicio no guardado',
@@ -85,6 +95,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.router.navigate(['/procesando']);
        });
   }
+
+
  
   getCanales(svc: ServiceModel) {
     let str = '';
