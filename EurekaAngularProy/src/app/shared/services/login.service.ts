@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "src/environments/environment"; 
+import { environment } from "src/environments/environment";
 import { RespuestaLogin } from "../models/respuestaLogin.model";
 import { map } from "rxjs/operators";
 import { Observable } from "rxjs";
@@ -34,14 +34,13 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
   return this.http.post(url, data, opts)
     .pipe(map((r: RespuestaLogin) => {
       console.log(r);
-      let token_expira = moment(new Date()).add(30, 'm').toDate();
       this.storage.setCurrentSession({
         user: { ruc: ruc },
         isAuthenticate: true,
         token: r.paramStr,
-        expire: token_expira
+        expire: r.exp,
+        refresh: r.rfs
       });
-      /*r.paramStr = null;*/
       return r;
     }));
  }
@@ -62,23 +61,30 @@ refresh(): void {
     let storage = this.storage.getCurrentSession();
     console.log(now);
     console.log(storage);
-    if (storage !== null && storage !== undefined && now > storage.expire){
-      console.log('refresh token');
-      this.callingRefresh = true;
-      const url = `${this.URI_API}/login`;
-      this.http.get(url,{})
-      .subscribe((r: RespuestaLogin)=>{
-        let token_expira = moment(new Date()).add(30, 'm').toDate();
-        let storage = this.storage.getCurrentSession();
-        this.storage.setCurrentSession({
-          user: storage.user,
-          isAuthenticate: true,
-          token: r.paramStr,
-          expire: token_expira
-        });
+    if (storage) {
+      let exp = new Date(storage.expire);
+      let rfs = new Date(storage.refresh);
+      if (now > rfs && now < exp){
+        console.log('refresh token');
+        this.callingRefresh = true;
+        const url = `${this.URI_API}/login`;
+        this.http.get(url,{})
+          .subscribe((r: RespuestaLogin)=>{
+            let storage = this.storage.getCurrentSession();
+            this.storage.setCurrentSession({
+              user: storage.user,
+              isAuthenticate: true,
+              token: r.paramStr,
+              expire: r.exp,
+              refresh: r.rfs
+            });
+          this.callingRefresh = false;
+          return r;
+        })
+      }
+      else {
         this.callingRefresh = false;
-        return r;
-      })
+      }
     }
   }
 }

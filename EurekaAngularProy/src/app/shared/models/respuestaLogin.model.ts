@@ -3,5 +3,7 @@ export interface RespuestaLogin {
      codRespuesta?: number ;
      estado?:  boolean;
      paramStr?: string;
+     exp?: string;
+     rfs?: string;
      paramNum?: number;
  }
