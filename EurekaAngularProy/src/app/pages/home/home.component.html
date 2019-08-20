@@ -39,7 +39,7 @@
                                     <div class="select-eureca position-relative">
                                          <select class="selectpicker" [(ngModel)]="filtro.status" name="">
                                                 <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
-                                        </select>  
+                                        </select>
                                     </div>
                                 </div>
 
@@ -318,7 +318,7 @@
                                             <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" numbersOnly maxlength="8" minlength="8" />
                                         </div>
                                     </td>
-                                    <td>{{items.amount}}</td>
+                                    <td style="text-align: right">{{items.currency}} {{items.amount}}</td>
                                     <td>
                                         <span *ngIf="!items.editButton" [class.text-success]="items.status === 'PAGADO'"
                                           [class.text-danger]="estaVencido(items)" >{{items.status}}</span>

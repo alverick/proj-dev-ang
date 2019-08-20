@@ -7,16 +7,16 @@ export interface Debts {
     lastName: string;
     service: string;
     concept: string;
-    amount: string;
+    amount: number;
     status: string;
     payDate: Date;
-    canal: string; 
+    canal: string;
     newEmissionDate?: Date;
     newDueDate?: Date;
     newConcept?: string;
     newStatus?:  string;
     selected?: boolean;
-    
+
     editInput: boolean;
     editButton: boolean;
 }

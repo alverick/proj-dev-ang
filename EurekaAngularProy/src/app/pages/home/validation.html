@@ -15,21 +15,21 @@
                 <div class="mb-3 mt-4"><button class="btn-eureca btn-eureca-amarillo btn-small">Descargar plantilla</button>
                 </div>
             </div>
-        </div> 
+        </div>
         <div  class="bg-blanco custom-shadow pasos-add-registro activo">
             <div class="title-popup-add-registo text-center position-relative h2 m-0">
                 <div>Se encontraron los siguientes errores:</div>
             </div>
             <div >
-                <table>  
+                <table>
                         <div *ngFor="let error of excelService.errores">
                             <div data-spy="scroll">
-                                <td> <strong>Fila &nbsp; {{ error.row}}:&nbsp;</strong> {{ error.description }}
-                              ,&nbsp;el campo 
-                               {{ error.field }}  &nbsp; tiene el valor &nbsp; {{ error.value }}   </td>
+                                <td> <strong *ngIf="verFila(error)">Fila &nbsp; {{ error.row}}:&nbsp;</strong> {{ error.description }}
+                              ,&nbsp;<span *ngIf="verFila(error)">el campo
+                               {{ error.field }}  &nbsp; tiene el valor &nbsp; {{ error.value }}   </span></td>
                             </div>
                         </div>
-                    
+
                 </table>
             </div>
             <div>Corrige los errores y vuelve a subir la plantilla</div>
