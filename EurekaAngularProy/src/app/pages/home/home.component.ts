@@ -177,6 +177,8 @@ export class HomeComponent implements OnInit {
     {  option:'PAGADO', state : '2'}
   ]
 
+  colorStatus: string;
+
   showEdit: boolean = false;
 
   filtro: DebstFilter = {
@@ -252,8 +254,6 @@ export class HomeComponent implements OnInit {
     });
    this.consultaDeuda();
    this.cargaExcel = false;
-  
-
 
    // check
    this.SeleccionarTodos();
@@ -417,7 +417,7 @@ if(columnName === 'lastName' ) {
     this.asclastgray= false;
   }
 }
-if(columnName === 'service' ) {
+if(columnName === 'Service' ) {
   if(asc === true) { 
     this.ascservblue  = false;
     this.ascservgray= true;
@@ -430,7 +430,7 @@ if(columnName === 'service' ) {
     this.ascservgray= false;
   }
 }
-if(columnName === 'concept' ) {
+if(columnName === 'Concept' ) {
   if(asc === true) { 
     this.ascconcepblue  = false;
     this.ascconcepgray= true;

@@ -25,7 +25,7 @@ private callingRefresh = false;
 
 login(ruc: string, psw: string): Observable<RespuestaLogin> {
   console.log('begin login' )
-  const url = `${this.URI_API}/login`;
+  const url = `${this.URI_API}/login?_=` + new Date().getTime();
   const data = `username=${ruc}&password=${psw}`;
   console.log(url, data);
   const opts = {
@@ -67,7 +67,7 @@ refresh(): void {
     if (storage !== null && storage !== undefined && now > storage.expire){
       console.log('refresh token');
       this.callingRefresh = true;
-      const url = `${this.URI_API}/login`;
+      const url = `${this.URI_API}/login?_=` + new Date().getTime();
       this.http.get(url,{})
       .subscribe((r: RespuestaLogin)=>{
         let token_expira = moment(new Date()).add(30, 'm').toDate();
