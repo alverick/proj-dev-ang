@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import Swal from 'sweetalert2';
 
 /*The auth guard is used to prevent unauthenticated users from accessing restricted routes */
 @Injectable({
@@ -15,13 +16,16 @@ export class AuthGuard implements CanActivate {
               state: RouterStateSnapshot): boolean {
     let url: string = state.url;
     return this.checkLogin(url);
-    }
+  }
 
   checkLogin(url: string): boolean {
-    if (this.storageService.getCurrentToken) {
-       return true;
+    console.log('auth.guard');
+    console.log(url);
+    let session = this.storageService.getCurrentSession();
+    if (session) {
+      return true;
     } else {
-      this.storageService.redirectUrl; 
+      console.log('Auth.Guard to Login');
       this.router.navigate(['/login']);
       return false;
     }

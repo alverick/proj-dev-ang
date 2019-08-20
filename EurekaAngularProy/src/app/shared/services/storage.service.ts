@@ -23,10 +23,11 @@ export class StorageService {
     this.currentSession = session;
     if (session.token === 'RUC no esta registrado'  ||  session.token ===  'Un session ya se encuentra activa'  ||  session.token ===  'Credenciales invalidas') {
        return ;
-    
+
     } else {
       this.localStorageService.setItem('tk', session.token);
       this.localStorageService.setItem('exp', session.expire);
+      this.localStorageService.setItem('rfs', session.refresh);
     }
   }
 
@@ -48,7 +49,8 @@ export class StorageService {
         user: { ruc: '' },
         isAuthenticate: true,
         token: this.localStorageService.getItem('tk'),
-        expire: new Date(this.localStorageService.getItem('exp'))
+        expire: this.localStorageService.getItem('exp'),
+        refresh: this.localStorageService.getItem('rfs')
       }
     }
     return this.currentSession;
@@ -57,6 +59,7 @@ export class StorageService {
   removeCurrentSession(): void {
     this.localStorageService.removeItem('tk');
     this.localStorageService.removeItem('exp');
+    this.localStorageService.removeItem('rfs');
     this.currentSession = null;
   }
 
@@ -75,7 +78,7 @@ export class StorageService {
     return (session && session.token) ? session.token : null;
   };
 
-  setIntentos(intentos: number): void {    
+  setIntentos(intentos: number): void {
     this.localStorageService.setItem('intento', intentos );
   }
 

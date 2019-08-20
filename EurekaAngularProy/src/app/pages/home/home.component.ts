@@ -10,7 +10,7 @@ import { ExcelService } from 'src/app/shared/services/excel.service';
 import { MatDialog, MatSnackBar} from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
- 
+
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
@@ -23,7 +23,7 @@ import { default as _rollupMoment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
-import { DialogComponent } from './dialog';  
+import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { isNgTemplate } from '@angular/compiler';
 //// END DATE ////////////////////
@@ -63,67 +63,67 @@ declare var $: any;
 
 
 // tslint:disable-next-line:directive-class-suffix
-export class HomeComponent implements OnInit { 
+export class HomeComponent implements OnInit {
 
   numeroPagina:number;
   ///ORDENES DE LA TABLA
   ascFeEmisiongray: boolean = false;
   ascFeEmisionblue: boolean = true;
   descFeEmisionblue: boolean = true;
-  descFeEmisiongray: boolean = false; 
+  descFeEmisiongray: boolean = false;
   //fecha de vencimiento
 
   ascFeVctgray: boolean = false;
   ascFeVctblue: boolean = true;
   dscFeVctblue: boolean = true;
-  dscFeVctgray: boolean = false; 
+  dscFeVctgray: boolean = false;
 
   //codigicliente
   asccodgray: boolean = false;
   asccodblue: boolean = true;
   dsccodiblue: boolean = true;
-  dsccodigray: boolean = false; 
+  dsccodigray: boolean = false;
   // name
   ascnamegray: boolean = false;
   ascnameblue: boolean = true;
   dscnameblue: boolean = true;
-  dscnamegray: boolean = false; 
+  dscnamegray: boolean = false;
   //apelido
   asclastgray: boolean = false;
   asclastblue: boolean = true;
   dsclastblue: boolean = true;
-  dsclastgray: boolean = false; 
+  dsclastgray: boolean = false;
 // srvicio
   ascservgray: boolean = false;
   ascservblue: boolean = true;
   dscservblue: boolean = true;
-  dscservgray: boolean = false;  
-  // concepto 
+  dscservgray: boolean = false;
+  // concepto
   ascconcepgray: boolean = false;
   ascconcepblue: boolean = true;
   dscconcepblue: boolean = true;
-  dscconcepgray: boolean = false;   
-    // monto 
+  dscconcepgray: boolean = false;
+    // monto
   ascmontopgray: boolean = false;
   ascmontopblue: boolean = true;
   dscmontopblue: boolean = true;
-  dscmontopgray: boolean = false;   
- // estado de pago 
+  dscmontopgray: boolean = false;
+ // estado de pago
   ascestpagopgray: boolean = false;
   ascstpagoopblue: boolean = true;
   dscstpagopblue: boolean = true;
-  dscstpagopgray: boolean = false;  
-  // fecha de pago 
+  dscstpagopgray: boolean = false;
+  // fecha de pago
   ascfechapagopgray: boolean = false;
   ascfechapagopblue: boolean = true;
   dscfechapagopblue: boolean = true;
-  dscfechapagopgray: boolean = false;  
+  dscfechapagopgray: boolean = false;
     // canal
   asccanalpgray: boolean = false;
   asccanalpblue: boolean = true;
   dsccanalpblue: boolean = true;
-  dsccanalpgray: boolean = false;  
- // DialogDataExampleDialog 
+  dsccanalpgray: boolean = false;
+ // DialogDataExampleDialog
   @ViewChild('cargaExcel') cargaExcel;
  // datepicker format
  @Output() date2: EventEmitter<any> = new EventEmitter<any>();
@@ -194,7 +194,7 @@ export class HomeComponent implements OnInit {
   };
   control: any;
 
-  
+
 
   constructor(
     private storageService: StorageService,
@@ -209,7 +209,7 @@ export class HomeComponent implements OnInit {
     private el: ElementRef) {
 
     }
- 
+
     @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
       e.preventDefault();
     }
@@ -221,7 +221,7 @@ export class HomeComponent implements OnInit {
     @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
       e.preventDefault();
     }
- 
+
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
@@ -261,7 +261,7 @@ export class HomeComponent implements OnInit {
   }
 /*
   validandoListado() {
-    
+
     if (localStorage.getItem('tk') === null  ) {
       this.router.navigate(['/login']);
     } else {
@@ -271,7 +271,7 @@ export class HomeComponent implements OnInit {
 
   ceroRegistros(): boolean {
       if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
-        this.router.navigate(['/login']);
+        //this.router.navigate(['/login']);
         return false;
       } else {
         if (this.transactionService.debtItems.count === 0) {
@@ -313,7 +313,7 @@ change(dateEvent) {
   this.ascnamegray  = false;
   this.ascnameblue  = true;
   this.dscnameblue  = true;
-  this.dscnamegray  = false; 
+  this.dscnamegray  = false;
   //apelido
   this.asclastgray = false;
   this.asclastblue  = true;
@@ -324,28 +324,28 @@ this.ascservgray  = false;
 this.ascservblue = true;
 this.dscservblue  = true;
 this.dscservgray = false;
-  // concepto 
+  // concepto
 this.ascconcepgray  = false;
 this.ascconcepblue  = true;
 this.dscconcepblue  = true;
 this.dscconcepgray = false;
-    // monto 
+    // monto
 this.ascmontopgray  = false;
 this.ascmontopblue = true;
 this.dscmontopblue  = true;
 this.dscmontopgray  = false;
-// estado de pago 
+// estado de pago
 this.ascestpagopgray = false;
 this.ascstpagoopblue  = true;
 this.dscstpagopblue =true;
 this.dscstpagopgray = false;
 
-// fecha de pago 
+// fecha de pago
 this.ascfechapagopgray= false;
 this.ascfechapagopblue  = true;
 this.dscfechapagopblue =true;
 this.dscfechapagopgray = false;
-// canal 
+// canal
 this.asccanalpgray= false;
 this.asccanalpblue  = true;
 this.dsccanalpblue =true;
@@ -358,7 +358,7 @@ this.dsccanalpgray = false;
         this.ascFeEmisiongray= true;
         this.descFeEmisionblue =true;
         this.descFeEmisiongray = false;
-      }else{ 
+      }else{
         this.descFeEmisionblue =false;
         this.descFeEmisiongray = true;
         this.ascFeEmisionblue  = true;
@@ -366,12 +366,12 @@ this.dsccanalpgray = false;
       }
     }
     if(columnName === 'dueDate' ){
-      if(asc === true){ 
+      if(asc === true){
         this.ascFeVctblue  = false;
         this.ascFeVctgray= true;
         this.dscFeVctblue =true;
         this.dscFeVctgray = false;
-      }else{ 
+      }else{
         this.dscFeVctblue =false;
         this.dscFeVctgray = true;
         this.ascFeVctblue  = true;
@@ -379,25 +379,25 @@ this.dsccanalpgray = false;
       }
   }
   if(columnName === 'code' ){
-    if(asc === true) { 
+    if(asc === true) {
       this.asccodblue  = false;
       this.asccodgray= true;
       this.dsccodiblue =true;
       this.dsccodigray = false;
-    } else { 
+    } else {
       this.dsccodiblue =false;
       this.dsccodigray = true;
       this.asccodblue  = true;
       this.asccodgray= false;
     }
-} 
+}
 if(columnName === 'firstName' ) {
-  if(asc === true){ 
+  if(asc === true){
     this.ascnameblue  = false;
     this.ascnamegray= true;
     this.dscnameblue =true;
     this.dscnamegray = false;
-  } else { 
+  } else {
     this.dscnameblue =false;
     this.dscnamegray = true;
     this.ascnameblue  = true;
@@ -405,12 +405,12 @@ if(columnName === 'firstName' ) {
   }
 }
 if(columnName === 'lastName' ) {
-  if(asc === true){ 
+  if(asc === true){
     this.asclastblue  = false;
     this.asclastgray= true;
     this.dsclastblue =true;
     this.dsclastgray = false;
-  } else { 
+  } else {
     this.dsclastblue =false;
     this.dsclastgray = true;
     this.asclastblue  = true;
@@ -418,12 +418,12 @@ if(columnName === 'lastName' ) {
   }
 }
 if(columnName === 'Service' ) {
-  if(asc === true) { 
+  if(asc === true) {
     this.ascservblue  = false;
     this.ascservgray= true;
     this.dscservblue =true;
     this.dscservgray = false;
-  } else { 
+  } else {
     this.dscservblue =false;
     this.dscservgray = true;
     this.ascservblue  = true;
@@ -431,12 +431,12 @@ if(columnName === 'Service' ) {
   }
 }
 if(columnName === 'Concept' ) {
-  if(asc === true) { 
+  if(asc === true) {
     this.ascconcepblue  = false;
     this.ascconcepgray= true;
     this.dscconcepblue =true;
     this.dscconcepgray = false;
-  } else { 
+  } else {
     this.dscconcepblue =false;
     this.dscconcepgray = true;
     this.ascconcepblue  = true;
@@ -444,12 +444,12 @@ if(columnName === 'Concept' ) {
   }
 }
 if(columnName === 'amount' ) {
-  if(asc === true) { 
+  if(asc === true) {
     this.ascmontopblue  = false;
     this.ascmontopgray= true;
     this.dscmontopblue =true;
     this.dscmontopgray = false;
-  } else { 
+  } else {
     this.dscmontopblue =false;
     this.dscmontopgray = true;
     this.ascmontopblue  = true;
@@ -457,12 +457,12 @@ if(columnName === 'amount' ) {
   }
 }
 if(columnName === 'amount' ) {
-  if(asc === true) { 
+  if(asc === true) {
     this.ascmontopblue  = false;
     this.ascmontopgray= true;
     this.dscmontopblue =true;
     this.dscmontopgray = false;
-  } else { 
+  } else {
     this.dscmontopblue =false;
     this.dscmontopgray = true;
     this.ascmontopblue  = true;
@@ -471,12 +471,12 @@ if(columnName === 'amount' ) {
 }
 //staus page
 if(columnName === 'status' ) {
-  if(asc === true) { 
+  if(asc === true) {
     this.ascstpagoopblue  = false;
     this.ascestpagopgray = true;
     this.dscstpagopblue =true;
     this.dscstpagopgray = false;
-  } else { 
+  } else {
     this.dscstpagopblue =false;
     this.dscstpagopgray = true;
     this.ascstpagoopblue  = true;
@@ -485,12 +485,12 @@ if(columnName === 'status' ) {
 }
 // fecha de pago
 if(columnName === 'payDate' ) {
-  if(asc === true) { 
+  if(asc === true) {
     this.ascfechapagopblue  = false;
     this.ascfechapagopgray= true;
     this.dscfechapagopblue =true;
     this.dscfechapagopgray = false;
-  } else { 
+  } else {
     this.dscfechapagopblue =false;
     this.dscfechapagopgray = true;
     this.ascfechapagopblue  = true;
@@ -498,12 +498,12 @@ if(columnName === 'payDate' ) {
   }
 }
 if(columnName === 'canal' ) {
-  if(asc === true) { 
+  if(asc === true) {
     this.asccanalpblue  = false;
     this.asccanalpgray= true;
     this.dsccanalpblue =true;
     this.dsccanalpgray = false;
-  } else { 
+  } else {
     this.dsccanalpblue =false;
     this.dsccanalpgray = true;
     this.asccanalpblue  = true;
@@ -513,7 +513,7 @@ if(columnName === 'canal' ) {
 
     this.filtro.asc = asc;
     this.filtro.columnName = columnName;
-   // this.filtro.dateFrom=; 
+   // this.filtro.dateFrom=;
     // this.filtro.dateTo;
     this.consultaDeuda();
 
@@ -525,9 +525,9 @@ if(columnName === 'canal' ) {
   }
 
    mensaje(tipo: any, titulo: string, text: string){
-    if (localStorage.getItem('tk') !== null  ) { 
+    if (localStorage.getItem('tk') !== null  ) {
       this. mesageeError(tipo,titulo,text);
-    } 
+    }
   }
 
   mesageeError(tipo: any, titulo: string, text: string){
@@ -546,15 +546,15 @@ if(columnName === 'canal' ) {
   }
 
   consultaDeuda() {
-  // tslint:disable-next-line:prefer-const 
+  // tslint:disable-next-line:prefer-const
 
   let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-  //lenght date from 
+  //lenght date from
   var lenghtdf = new Date(this.filtro.dateFrom).toDateString().length;
-  var fromdate = parseInt(new Date(this.filtro.dateFrom).toDateString().substr(lenghtdf-4, lenghtdf));  
+  var fromdate = parseInt(new Date(this.filtro.dateFrom).toDateString().substr(lenghtdf-4, lenghtdf));
   // lenght to
   var lenghtdt = new Date(this.filtro.dateTo).toDateString().length;
-  var todate = parseInt(new Date(this.filtro.dateTo).toDateString().substr(lenghtdt-4, lenghtdt));  
+  var todate = parseInt(new Date(this.filtro.dateTo).toDateString().substr(lenghtdt-4, lenghtdt));
 
 
 
@@ -562,27 +562,27 @@ if(columnName === 'canal' ) {
     ///       dateFrom es inputDate1              | dateTo  es inputDate2
         console.log('entro 1');
         if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
-           
-          
-          if (this.filtro.dateFrom > this.filtro.dateTo   ) { 
+
+
+          if (this.filtro.dateFrom > this.filtro.dateTo   ) {
             this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
             return;
           } else {
-             
+
                 this.spinner.show();
-            
+
                 this.transactionService.getDeuda(this.filtro)
-                  .subscribe(debts => {  
+                  .subscribe(debts => {
                   this.selectedAll = false;
                   this.spinner.hide();
-                });
+                }, err => { this.spinner.hide(); });
           }
         } else {
-                if (!this.inputDate1.nativeElement.value.match(usDatePattern)) { 
+                if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
                   this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
                   return;
                 }
-                if (!this.inputDate2.nativeElement.value.match(usDatePattern)) { 
+                if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
                   this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
                   return;
                 } else {
@@ -592,36 +592,38 @@ if(columnName === 'canal' ) {
                       this.transactionService.getDeuda(this.filtro)
                         .subscribe(debts => {
                           console.log(debts);
-                      });
+
+
+                      }, err => { this.spinner.hide(); });
                 }
         }
          /// change
-      } else { 
-          if ( this.inputDate1.nativeElement.value === '') { 
+      } else {
+          if ( this.inputDate1.nativeElement.value === '') {
               this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
               return;
           } else if ( this.inputDate2.nativeElement.value === '') {
-              this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco'); 
+              this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
               return;
-          } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) { 
-              this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde'); 
+          } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
+              this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
               return;
-          } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) { 
-            this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta'); 
-            return;
-          } 
-          
-          else if (fromdate <  2000 || fromdate >  2050 ) {
-            this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');  
+          } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) {
+            this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
             return;
           }
-          
-          else if (todate <  2000 || todate >  2050 ) { 
-            this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');  
+
+          else if (fromdate <  2000 || fromdate >  2050 ) {
+            this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');
             return;
-          } 
-          else if (this.filtro.dateFrom > this.filtro.dateTo ) { 
-            this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');  
+          }
+
+          else if (todate <  2000 || todate >  2050 ) {
+            this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');
+            return;
+          }
+          else if (this.filtro.dateFrom > this.filtro.dateTo ) {
+            this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
             return;
           } else {
               console.log(this.filtro);
@@ -634,9 +636,9 @@ if(columnName === 'canal' ) {
               this.transactionService.getDeuda(this.filtro)
                 .subscribe(debts => {
                 this.spinner.hide();
-              });
+              }, err => { this.spinner.hide(); });
          }
-  } 
+  }
 
 }
   /*//////////////////////////////
@@ -692,72 +694,72 @@ if(columnName === 'canal' ) {
     // item.edit = true;
     item.newEmissionDate = item.emissionDate;
     item.newDueDate = item.dueDate;
-    item.newConcept = item.concept; 
+    item.newConcept = item.concept;
   }
 
   selectEstPag(event, item: Debts){
-   /* if(event == '1'){ 
+    if(event == '1'){ 
       item.editInput = true;
     }
-    if(event == '2'){ 
+    if(event == '2'){
       item.editInput = false;
     }
-    */
+    
   }
 
 
   BotonActualizar(item: Debts) {
     /// EMISION DATE
     var lenghted = new Date(item.newEmissionDate).toDateString().length;
-    var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));  
+    var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
    // console.log('imprime esto '+ emidate );
- 
+
      /// DUE DATE
      var lenghtdd = new Date(item.newDueDate).toDateString().length;
-     var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd));  
-    // console.log('imprime esto '+ duadate ); 
+     var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd));
+    // console.log('imprime esto '+ duadate );
 
-     if (emidate <  2000 || emidate >  2050 ) { 
-      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');  
+     if (emidate <  2000 || emidate >  2050 ) {
+      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');
       return;
     }
-    
+
     if (duadate <  2000 || duadate >  2050 ) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');  
-      return; 
-    } 
-  
+      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');
+      return;
+    }
+
     if(item.newConcept.length <  8) {
-      this.mensaje( 'error', 'Error en el Concepto','El concepto tiene que tener como minimo 8 digitos');  
-      return;  
-    }  
+      this.mensaje( 'error', 'Error en el Concepto','El concepto tiene que tener como minimo 8 digitos');
+      return;
+    }
 
     if(item.newConcept === null || item.newConcept === ""){
-      this.mensaje( 'error', 'Error en el Concepto','Ingrese El concepto');  
-      return;  
+      this.mensaje( 'error', 'Error en el Concepto','Ingrese El concepto');
+      return;
     }
     if (item.newEmissionDate == null) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de emision');  
-      return;   
+      this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de emision');
+      return;
     }
     if (item.newDueDate == null) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de vencimiento');  
-      return;   
+      this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de vencimiento');
+      return;
     }
     if (item.newConcept === '') {
-      this.mensaje( 'error', 'Error en el Concepto','Ingrese el concepto');  
-      return;  
+      this.mensaje( 'error', 'Error en el Concepto','Ingrese el concepto');
+      return;
     }
-   
+
     if (item.newEmissionDate > item.newDueDate) {
-      this.mensaje( 'error', 'Error en la fecha','La fecha de Emision no puede ser mayor a la fecha de vencimiento');  
-      return; 
+      this.mensaje( 'error', 'Error en la fecha','La fecha de Emision no puede ser mayor a la fecha de vencimiento');
+      return;
     }
 
     Swal.fire({
       title: '¿Deseas Actualizar?',
       text: '¡No podrás revertir esto!',
-      imageUrl: '/assets/images/complain.svg',   
+      imageUrl: '/assets/images/complain.svg',
       imageHeight: 100,
       showCancelButton: true,
       showCloseButton: true,
@@ -767,7 +769,7 @@ if(columnName === 'canal' ) {
       cancelButtonText: 'Cerrar', 
       allowOutsideClick: false,
     }).then((result) => {
-      
+
       if (result.value) {
       //  item.edit = false;
         item.editInput =false;
@@ -778,8 +780,8 @@ if(columnName === 'canal' ) {
           concept: item.newConcept
         };
 
-        
-        
+
+
     if(item.newStatus===null || item.newStatus === undefined){
       this.transactionService.editDeuda(item.id, debts).subscribe(
           debtsUpdate => {
@@ -801,7 +803,7 @@ if(columnName === 'canal' ) {
           }
         );
       }else if(item.newStatus==='1'){
-       
+
         this.transactionService.updateDeuda(item.id, false ).subscribe(
           statusUpdate=>{
             Swal.fire({
@@ -812,7 +814,7 @@ if(columnName === 'canal' ) {
               allowOutsideClick: false,
               onAfterClose: () => {
                 console.log('onAfterClose');
-                item.status='PENDING';
+                item.status='PENDIENTE';
                 // item.edit = false;
                 item.editInput =false;
                 item.editButton = false;
@@ -833,20 +835,20 @@ if(columnName === 'canal' ) {
                   console.log('onAfterClose');
                   item.status= 'PAGADO';
                   this.showEdit = true;
-                  // item.edit = false;  
+                  // item.edit = false;
                   item.editInput =false;
                   item.editButton = false;
                 }});
               }
           );
-        }  
-    }        
+        }
+    }
   })
 
 }
-  
 
-  
+
+
 
   BotonCancela(item: Debts) {
    //  item.edit = false;
@@ -870,15 +872,15 @@ if(columnName === 'canal' ) {
     }
     });
 
-    if (itemsParaEliminar.length === 0 ) { 
-      this.mensaje( 'error', 'Error al Eliminar','¡Seleccione las filas a eliminar por favor!');  
-      return; 
+    if (itemsParaEliminar.length === 0 ) {
+      this.mensaje( 'error', 'Error al Eliminar','¡Seleccione las filas a eliminar por favor!');
+      return;
     }
 
  Swal.fire({
       title: '¿Estas Seguro de Eliminar ' + itemsParaEliminar.length + ' registros?',
       text: '¡No podrás revertir esto!',
-      imageUrl: '/assets/images/complain.svg',   imageHeight: 100, 
+      imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
       showCancelButton: true,
       showCloseButton: true,
       confirmButtonColor: '#3085d6',
@@ -889,7 +891,7 @@ if(columnName === 'canal' ) {
     }).then((result) => {
       if (result.value) {
         /*this.spinner2.show();*/
-        
+
         this.transactionService.deleteAll(itemsParaEliminar)
           .subscribe(() => this.consultaDeuda());
          /* this.spinner2.hide();*/
@@ -900,10 +902,10 @@ if(columnName === 'canal' ) {
 
 
   Eliminar(item: Debts) {
-     
+
   Swal.fire({
     title: "¿Esta Seguro de Eliminar el Registro? ",
-    imageUrl: '/assets/images/complain.svg',   imageHeight: 100,  
+    imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
     showCancelButton: true,
     showCloseButton: true,
     confirmButtonColor: '#3085d6',
@@ -913,11 +915,11 @@ if(columnName === 'canal' ) {
     allowOutsideClick: false,
   }).then((result) => {
     if (result.value) {
-      
+
       this.transactionService.deleteDeuda(item.id)
       .subscribe(() => this.consultaDeuda());
 
-      setTimeout(() => 
+      setTimeout(() =>
       {
         Swal.fire(
           'Eliminado!',
@@ -925,15 +927,15 @@ if(columnName === 'canal' ) {
           'success' 
         )
       },
-      1000); 
-  } 
+      1000);
+  }
 })
 }
 
-  SeleccionarTodos() {  
+  SeleccionarTodos() {
    // console.log(this.debtsList.data);
     this.transactionService.debtItems.data.forEach(itm => itm.selected = this.selectedAll);
-    
+
   }
 
 /*//////// O P E N  - D I A L O G ///////////////////// */
@@ -961,8 +963,8 @@ MostrarListaSelect() {
     });
 
     if (itemsParaReporte.length === 0 ) {
-      this.mensaje( 'error', 'Error al Descargar','¡Seleccione las filas a descargar por favor!');  
-      return;  
+      this.mensaje( 'error', 'Error al Descargar','¡Seleccione las filas a descargar por favor!');
+      return;
     }
 
     this.transactionService.report(itemsParaReporte)

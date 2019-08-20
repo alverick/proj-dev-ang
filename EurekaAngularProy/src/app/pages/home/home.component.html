@@ -27,11 +27,11 @@
                             <!--////////// F I L T R O S 2 //////////////////-->
                             <div class="d-flex align-items-center mt-4">
                                 <div class="mr-4">
-                                   <div class="select-eureca position-relative">
-                                         <select class="selectpicker" [(ngModel)]="filtro.service" name=""> 
-                                            <option value="">Servicios</option>
-                                            <option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</option>
-                                        </select>  
+                                        <div class="select-eureca position-relative">
+                                            <select class="selectpicker" [(ngModel)]="filtro.service" name="">
+                                                <option value="">Servicios</option>
+                                                        <option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</option>
+                                                </select>
                                     </div>
                                 </div>
 
@@ -279,13 +279,8 @@
 
                             <tbody style=" overflow: auto;">
                                 <tr *ngIf="ceroRegistros()">
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td colspan="30" style="align-content: center; font-size: 20px;" class="texto-after">
+                                    <td colspan="13" style="text-align: center; font-size: 20px;" class="texto-after">
                                         Para empezar, carga las deudas de tus clientes </td>
-                                    <td></td>
                                 </tr>
 
                                 <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }">

@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 export class HomeService {
   constructor(private http: HttpClient){}
 
-  private ListDebts: Debts[] = []; 
+  private ListDebts: Debts[] = [];
 
   private type: Type[] = [
     { idType: '', descripcion: 'Servicio' },
@@ -29,7 +29,7 @@ export class HomeService {
 
   private date:  Date[] = [
     {idDate: '', descripcion: 'Por fecha'},
-    {idDate: 'EmissionDate', descripcion: 'Fecha de emisión'}, 
+    {idDate: 'EmissionDate', descripcion: 'Fecha de emisión'},
     {idDate: 'DueDate', descripcion: 'Fecha de vencimiento'}
   ];
 
@@ -62,11 +62,11 @@ getServices(): Observable<any[]> {
       r.forEach(s => data.push({
         id: s.id,
         name: s.name
-      })); 
+      }));
       return data;
     }))
     .pipe(catchError(err => throwError(err)));
-    
+
 }
 
 
