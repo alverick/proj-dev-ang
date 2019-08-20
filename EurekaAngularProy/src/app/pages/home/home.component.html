@@ -320,9 +320,8 @@
                                     </td>
                                     <td>{{items.amount}}</td>
                                     <td>
-                                        <span *ngIf="!items.editButton" [ngClass]="{
-                                            'text-success' :items.status === 'PAGADO'
-                                          }">{{items.status}}</span>
+                                        <span *ngIf="!items.editButton" [class.text-success]="items.status === 'PAGADO'"
+                                          [class.text-danger]="estaVencido(items)" >{{items.status}}</span>
                                         <select *ngIf="items.editButton" [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)">
                                             <option *ngFor="let opt of statusOptions" [ngValue]="opt.state">{{opt.option}}</option>
                                         </select>

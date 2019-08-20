@@ -252,6 +252,7 @@ export class HomeComponent implements OnInit {
       bdColor: "rgba(100,149,237, .8)",
       color: "white"
     });
+    this.transactionService.debtItems = { data: [], count : 0 };
    this.consultaDeuda();
    this.cargaExcel = false;
 
@@ -963,6 +964,10 @@ MostrarListaSelect() {
         console.log(downloadUrl);
         window.open(downloadUrl);
       });
+  }
+
+  estaVencido(itm: Debts){
+    return itm.status === 'PENDIENTE' && itm.dueDate < new Date();
   }
 }
 
