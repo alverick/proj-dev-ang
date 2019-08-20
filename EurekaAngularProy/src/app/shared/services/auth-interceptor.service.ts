@@ -6,16 +6,20 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material';
+import { LoginService } from './login.service';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptorService implements HttpInterceptor {
 
-  constructor(private router: Router, public snackBar: MatSnackBar) { }
+  constructor(private router: Router, public snackBar: MatSnackBar, private login: LoginService,
+    private storage: StorageService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
-  
+    console.log('intercept');
+    this.login.refresh();
     const token: string = localStorage.getItem('tk');
 
     let request = req;
@@ -36,28 +40,28 @@ export class AuthInterceptorService implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse)=>{
         if(err.status === 401){
-        localStorage.removeItem('tk');
-        this.snackBar.dismiss();
-        this.router.navigateByUrl('/login');
-        }else if(err.status === 500){
-        localStorage.removeItem('tk');
-        this.router.navigateByUrl('/login');
-        this.snackBar.dismiss();
-        }else if(!(localStorage.getItem('tk'))){
-        localStorage.removeItem('tk');
-        this.snackBar.dismiss();
-        Swal.fire({
-          imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
-          title: 'Su sesión ha sido cerrada por inactividad',
-          showCloseButton: true,
-          showCancelButton: true,
-          showConfirmButton: false,
-          cancelButtonColor: '#d33',
-          cancelButtonText:  'Cerrar',
-          onAfterClose: () =>{
-            this.router.navigateByUrl('/login')
-          }
-        })
+          this.storage.removeCurrentSession();
+          this.snackBar.dismiss();
+          this.router.navigateByUrl('/login');
+        } else if(err.status === 500){
+          this.storage.removeCurrentSession();
+          this.router.navigateByUrl('/login');
+          this.snackBar.dismiss();
+        } else if(!(localStorage.getItem('tk'))){
+          this.storage.removeCurrentSession();
+          this.snackBar.dismiss();
+          Swal.fire({
+            imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
+            title: 'Su sesión ha sido cerrada por inactividad',
+            showCloseButton: true,
+            showCancelButton: true,
+            showConfirmButton: false,
+            cancelButtonColor: '#d33',
+            cancelButtonText:  'Cerrar',
+            onAfterClose: () =>{
+              this.router.navigateByUrl('/login')
+            }
+          })
         }
         return throwError(err);
       })

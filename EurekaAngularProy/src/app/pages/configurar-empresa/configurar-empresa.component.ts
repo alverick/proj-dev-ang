@@ -40,7 +40,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
       .subscribe( dataEnterprise => {
         console.log("DATA " + dataEnterprise);
         this.formGroup.setValue(dataEnterprise);
-        console.table(dataEnterprise);
       }
   );
   }

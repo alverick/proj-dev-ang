@@ -54,7 +54,7 @@ export class AfiliacionService {
 
   public Registrar(data: any): Observable<any> {
     this.spinner.show();
-    return this.http.post<any>(`${environment.END_POINT}/company`, data)
+    return this.http.post<any>(`${environment.END_POINT}/company?_=`+ new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();
         if (r.success) {
@@ -70,7 +70,7 @@ export class AfiliacionService {
 
 
   public GetRubros(): Observable<RubroModel[]> {
-    return this.http.get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading`)
+    return this.http.get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading?_=`+ new Date().getTime())
       .pipe(catchError(err => throwError(err)));
   }
 
@@ -153,7 +153,7 @@ export class AfiliacionService {
       if(this.storage.isAuthenticated) {
         headers["Authorization"] = "bearer " + this.storage.getCurrentToken();
       }
-    this.http.get<any[]>(`${environment.END_POINT}/company/service`, { headers: headers })
+    this.http.get<any[]>(`${environment.END_POINT}/company/service?_=`+ new Date().getTime(), { headers: headers })
       .subscribe(d => {
         let servicios = [];
         d.forEach(s => {
@@ -205,7 +205,7 @@ export class AfiliacionService {
         percentage: s.porcentaje
       });
     });
-    return this.http.post<any>(`${environment.END_POINT}/company/service`, data)
+    return this.http.post<any>(`${environment.END_POINT}/company/service?_=`+ new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();
         return r;

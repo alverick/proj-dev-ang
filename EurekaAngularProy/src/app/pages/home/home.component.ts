@@ -1,13 +1,13 @@
 import { Observable } from 'rxjs';
 import { Date } from './../../shared/models/date';
-import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild} from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { Router } from '@angular/router';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
-import { MatDialog, MatSnackBar, MatSnackBarRef, MatDialogRef, fadeInItems} from '@angular/material';
+import { MatDialog, MatSnackBar} from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
  
@@ -24,6 +24,8 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DialogComponent } from './dialog';  
+import { LoginService } from 'src/app/shared/services/login.service';
+import { isNgTemplate } from '@angular/compiler';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -148,7 +150,6 @@ export class HomeComponent implements OnInit {
   inputEdit: Boolean;
   InputList: Boolean;
 
-  debtsList: DebtsPagedList;
   private debtsUpdate: DebtEdit = new DebtEdit();
 
   typeList: Type[];
@@ -167,18 +168,16 @@ export class HomeComponent implements OnInit {
   serviceSelected: String;
   services: String[];
 
-
-  pagination1: boolean= false;
-  pagination2: boolean= false;
-  pagination3: boolean= false;
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = true;
 
 
   statusOptions : Array<Object> = [
     {  option:'PENDIENTE', state: '1'},
-    {  option: 'PAGADO', state : '2'}
+    {  option:'PAGADO', state : '2'}
   ]
+
+  colorStatus: string;
 
   showEdit: boolean = false;
 
@@ -206,8 +205,8 @@ export class HomeComponent implements OnInit {
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
-    private el: ElementRef
-    ) {
+    private loginService: LoginService,
+    private el: ElementRef) {
 
     }
  
@@ -225,6 +224,7 @@ export class HomeComponent implements OnInit {
  
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
+    this.loginService.refresh();
     this.homeService.getServices().subscribe(
       value => {
         this.services = value;
@@ -254,7 +254,7 @@ export class HomeComponent implements OnInit {
     });
    this.consultaDeuda();
    this.cargaExcel = false;
-   
+
    // check
    //this.SeleccionarTodos();
    this.selectedAll = false;
@@ -269,43 +269,6 @@ export class HomeComponent implements OnInit {
     }
   }*/
 
-  getDeudas(){
-
-    if (localStorage.getItem('tk') === null  ) {
-      this.router.navigate(['/login']);
-
-  }else{
-    this.spinner.show();
-    console.log("SPINNER "+ this.spinner)
-    this.debtsList = {
-      count: 0,
-      data: []
-    };
-    this.transactionService.getDeuda(this.filtro)
-      .subscribe(debts => {
-        this.debtsList = debts;   
-                console.log("NUMERO PAGINA " + this.filtro.pageNumber)
-                if(this.filtro.pageNumber <= 1){
-                  this.pagination1= true;
-                  this.pagination2= false;
-                  this.pagination3= false;
-                }
-                if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
-                    this.pagination1=false;
-                    this.pagination2= true;
-                    this.pagination3= false;
-                }
-                if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
-                    this.pagination1=false;
-                    this.pagination2= false;
-                    this.pagination3=true;          
-                }
-    });
-    this.spinner.hide();
-    
-  }
-
-  }
   ceroRegistros(): boolean {
       if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
         this.router.navigate(['/login']);
@@ -454,7 +417,7 @@ if(columnName === 'lastName' ) {
     this.asclastgray= false;
   }
 }
-if(columnName === 'service' ) {
+if(columnName === 'Service' ) {
   if(asc === true) { 
     this.ascservblue  = false;
     this.ascservgray= true;
@@ -467,7 +430,7 @@ if(columnName === 'service' ) {
     this.ascservgray= false;
   }
 }
-if(columnName === 'concept' ) {
+if(columnName === 'Concept' ) {
   if(asc === true) { 
     this.ascconcepblue  = false;
     this.ascconcepgray= true;
@@ -605,34 +568,11 @@ if(columnName === 'canal' ) {
           } else {
              
                 this.spinner.show();
-                this.debtsList = {
-                  count: 0,
-                  data: []
-                };
+            
                 this.transactionService.getDeuda(this.filtro)
-                  .subscribe(debts => {
-                    
-                    //console.table(this.filtro);
-                    this.selectedAll = false;
-                    this.debtsList = debts;
-                   this.spinner.hide();
-                    console.log("NUMERO PAGINA " + this.filtro.pageNumber)
-                    if(this.filtro.pageNumber <= 1){
-                      this.pagination1= true;
-                      this.pagination2= false;
-                      this.pagination3= false;
-                    }
-                    if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
-                        this.pagination1=false;
-                        this.pagination2= true;
-                        this.pagination3= false;
-                    }
-                    if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
-                        this.pagination1=false;
-                        this.pagination2= false;
-                        this.pagination3=true;          
-                    }
-
+                  .subscribe(debts => {  
+                  this.selectedAll = false;
+                  this.spinner.hide();
                 });
           }
         } else {
@@ -647,32 +587,9 @@ if(columnName === 'canal' ) {
                       console.log(this.filtro);
                       this.spinner.show();
 
-                      this.debtsList = {
-                        count: 0,
-                        data: []
-                      };
                       this.transactionService.getDeuda(this.filtro)
                         .subscribe(debts => {
                           console.log(debts);
-                          this.debtsList = debts;
-                      
-                         console.log("NUMERO PAGINA " + this.filtro.pageNumber)
-                         if(this.filtro.pageNumber <= 1){
-                           this.pagination1= true;
-                           this.pagination2= false;
-                           this.pagination3= false;
-                         }
-                         if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
-                             this.pagination1=false;
-                             this.pagination2= true;
-                             this.pagination3= false;
-                         }
-                         if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
-                             this.pagination1=false;
-                             this.pagination2= false;
-                             this.pagination3=true;          
-                         }
-                         this.spinner.hide();
                       });
                 }
         }
@@ -707,31 +624,13 @@ if(columnName === 'canal' ) {
           } else {
               console.log(this.filtro);
             this.spinner.show();
-
+/*
               this.debtsList = {
                 count: 0,
                 data: []
-              };
+              };*/
               this.transactionService.getDeuda(this.filtro)
                 .subscribe(debts => {
-                  console.log(debts);
-                  this.debtsList = debts;
-                  console.log("NUMERO PAGINA " + this.filtro.pageNumber)
-                  if(this.filtro.pageNumber <= 1){
-                    this.pagination1= true;
-                    this.pagination2= false;
-                    this.pagination3= false;
-                  }
-                  if(this.filtro.pageNumber >= 2 && this.debtsList.data.length== 50){
-                      this.pagination1=false;
-                      this.pagination2= true;
-                      this.pagination3= false;
-                  }
-                  if(this.filtro.pageNumber >= 2 && this.debtsList.data.length != 50 ){
-                      this.pagination1=false;
-                      this.pagination2= false;
-                      this.pagination3=true;          
-                  }
                 this.spinner.hide();
               });
          }
@@ -922,7 +821,7 @@ if(columnName === 'canal' ) {
                 text: 'Su registro a sido editado',
                 onAfterClose: () => {
                   console.log('onAfterClose');
-                  item.status= 'Pagado';
+                  item.status= 'PAGADO';
                   this.showEdit = true;
                   // item.edit = false;  
                   item.editInput =false;
@@ -951,6 +850,8 @@ if(columnName === 'canal' ) {
     this.numeroPagina = nro;
     this.consultaDeuda();
   }
+
+
   EliminarSeleccionados() {
     const itemsParaEliminar = [];
     this.transactionService.debtItems.data.forEach(c => {

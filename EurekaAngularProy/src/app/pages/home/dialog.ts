@@ -99,6 +99,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
     exportDataMatriculaXLSX():void{
       this.excelService.exportAsExcelFile(this.matricula, 'data_completa');
     }
+
   }
   
   

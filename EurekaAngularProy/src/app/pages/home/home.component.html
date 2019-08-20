@@ -27,9 +27,10 @@
                             <!--////////// F I L T R O S 2 //////////////////-->
                             <div class="d-flex align-items-center mt-4">
                                 <div class="mr-4">
-                                    <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.service" name=""> 
-                                                        <option value="{{service.id}}"  *ngFor="let service of services" > {{service.name}}</option>
+                                        <div class="select-eureca position-relative">
+                                            <select class="selectpicker" [(ngModel)]="filtro.service" name=""> 
+                                                <option value="">Servicios</option>
+                                                        <option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</option>
                                                 </select>
                                     </div>
                                 </div>
@@ -112,7 +113,7 @@
                                 <div class="p-2 bd-highlight">
                                     <a class=" mano texto-azul" href="javascript:;" (click)="DescargarReporte()">
                                         <span class="icon-correo-azul iconos-big"></span> <br>
-                                        <span class="text-small font-medium"> </span>
+                                        <span ass="text-small font-medium"> </span>
                                     </a>
                                     <span class="text-small font-medium">Descargar</span>
                                 </div>
@@ -127,18 +128,12 @@
                                 <div class="col-md-9 ml-auto" style="padding-top: 12px;">
                                     <div class="row justify-content-end">
                                         <div style="font-size: 17px">
-                                            <div style="font-size: 17px" *ngIf="pagination1">
-                                                <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{ transactionService.debtItems.data.length}}</span> de <span> {{transactionService.debtItems.count }}</span>                                                de elementos
-                                            </div>
-                                            <div style="font-size: 17px" *ngIf="pagination2">
-                                                <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{filtro.pageNumber*50}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
-                                            </div>
-                                            <div style="font-size: 17px" *ngIf="pagination3">
-                                                <span></span>Mostrando de <span>{{((filtro.pageNumber-1)*50)+1}}</span> <span>-</span> <span>{{transactionService.debtItems.count}}</span> de <span> {{transactionService.debtItems.count }}</span> de elementos
+                                            <div style="font-size: 17px" >
+                                                {{transactionService.pageMessage}}
                                             </div>
 
                                         </div>
-                                        <div *ngIf="debtsList.data.length > 0">
+                                        <div *ngIf="transactionService.debtItems.data.length >= 0">
                                             <pagination-controls responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)"> </pagination-controls>
                                         </div>
                                     </div>
@@ -214,8 +209,8 @@
                                             <div class="d-inline-block text-center">Servicio </div>
                                             <div class="mano d-inline-block ml-1">
                                                 <div class="arrow-filter-asc-gray" *ngIf="ascservgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascservblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('service', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('service', false)"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascservblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('Service', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('Service', false)"></span> </div>
                                                 <div class="arrow-filter-dsc-gray" *ngIf="dscservgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
@@ -226,8 +221,8 @@
                                             <div class="d-inline-block text-center">Concepto </div>
                                             <div class="mano d-inline-block ml-1">
                                                 <div class="arrow-filter-asc-gray" *ngIf="ascconcepgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('concept', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('concept', false)"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('Concept', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('Concept', false)"></span> </div>
                                                 <div class="arrow-filter-dsc-gray" *ngIf="dscconcepgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
@@ -260,7 +255,7 @@
                                             <div class="d-inline-block text-center">Fecha de Pago </div>
                                         <!--     <div class="mano d-inline-block ml-1">
                                                 <div class="arrow-filter-asc-gray" *ngIf="ascfechapagopgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascfechapagopblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('payDate', true)"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascfechapagopblue"> <span class="mano fa fas fa-caret-up fa-lg"  (click)="AscDesc('payDate', true)"></span> </div>
                                                 <div class="arrow-filter-dsc-blue" *ngIf="dscfechapagopblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('payDate', false)"></span> </div>
                                                 <div class="arrow-filter-dsc-gray" *ngIf="dscfechapagopgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>-->
@@ -330,7 +325,9 @@
                                     </td>
                                     <td>{{items.amount}}</td>
                                     <td>
-                                        <span *ngIf="!items.editButton">{{items.status}}</span>
+                                        <span *ngIf="!items.editButton" [ngClass]="{
+                                            'text-success' :items.status === 'PAGADO'
+                                          }">{{items.status}}</span>
                                         <select *ngIf="items.editButton" [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)">
                                             <option *ngFor="let opt of statusOptions" [ngValue]="opt.state">{{opt.option}}</option>
                                         </select>

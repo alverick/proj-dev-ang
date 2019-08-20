@@ -23,8 +23,8 @@ export class HomeService {
 
   private wayPay: WayPay[] = [
     {idWayPay: '', descripcion: 'Estado de Pago'},
-    {idWayPay: 'PENDIENTE', descripcion: 'Pendiente'},
-    {idWayPay: 'PAGADO', descripcion: 'Pagado'},
+    {idWayPay: 'PENDIENTE', descripcion: 'PENDIENTE'},
+    {idWayPay: 'PAGADO', descripcion: 'PAGADO'},
   ];
 
   private date:  Date[] = [
@@ -55,7 +55,8 @@ getDate(): Observable<Date[]> {
 }
 
 getServices(): Observable<any[]> {
-  return this.http.get<any[]> (`${environment.END_POINT}/company/service`)
+  const url =`${environment.END_POINT}/company/service?_=`+ new Date().getTime();;
+  return this.http.get<any[]> (url)
     .pipe(map(r => {
       let data: any[] = [];
       r.forEach(s => data.push({

@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit {
 
     validationLogin(rucStr: any) {
     if (rucStr) {
-            this.rememberMe = true;
+      this.rememberMe = true;
     }    
     console.log(rucStr);
     this.loginForm = this.formBuilder.group({
@@ -217,6 +217,7 @@ export class LoginComponent implements OnInit {
                       expire.setDate(expire.getDate() + 25);
                       this.cookieService.set('ruc', this.f.ruc.value, expire);
                   }
+                      
                       this.router.navigate(['/home']);
                       this.spinner.hide();             
           }else if(this.intentos < 4 && this.codRespuesta == 2 ){
