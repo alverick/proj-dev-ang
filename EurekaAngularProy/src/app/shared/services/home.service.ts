@@ -23,8 +23,8 @@ export class HomeService {
 
   private wayPay: WayPay[] = [
     {idWayPay: '', descripcion: 'Estado de Pago'},
-    {idWayPay: 'PENDIENTE', descripcion: 'Pendiente de Pago'},
-    {idWayPay: 'PAGADO', descripcion: 'Pagado'},
+    {idWayPay: 'PENDIENTE', descripcion: 'PENDIENTE'},
+    {idWayPay: 'PAGADO', descripcion: 'PAGADO'},
   ];
 
   private date:  Date[] = [
