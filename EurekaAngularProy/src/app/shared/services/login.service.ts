@@ -25,11 +25,13 @@ private callingRefresh = false;
 
 login(ruc: string, psw: string): Observable<RespuestaLogin> {
   console.log('begin login' )
-  const url = `${this.URI_API}/login`;
+  const url = `${this.URI_API}/login?_=` + new Date().getTime();
   const data = `username=${ruc}&password=${psw}`;
   console.log(url, data);
   const opts = {
-    headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    headers: { "Content-Type": "application/x-www-form-urlencoded",
+    'Cache-Control': 'no-cache',
+  }
   };
   return this.http.post(url, data, opts)
     .pipe(map((r: RespuestaLogin) => {

@@ -56,7 +56,7 @@ export class TransactionService {
       console.log(strDateTo);
 
       console.log(filtro);
-        const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
+        const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
         console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
@@ -92,7 +92,7 @@ export class TransactionService {
   deleteDeuda(idDebt: number): Observable<Debts>{
       console.log('begin login')
       // cambia link
-      const url = `${this.URI_API}/debt/${idDebt}`;
+      const url = `${this.URI_API}/debt/${idDebt}?_=`+ new Date().getTime();
       console.log(url);
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
@@ -101,7 +101,7 @@ export class TransactionService {
   } 
 
   deleteAll(ids: number[]): Observable<any> {
-    const url = `${this.URI_API}/debt/deleteAll`;
+    const url = `${this.URI_API}/debt/deleteAll?_=`+ new Date().getTime();
     console.log(url);
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
@@ -112,7 +112,7 @@ export class TransactionService {
     editDeuda(id: number, debts: DebtEdit): Observable<any>{
       console.log('begin login')
       // cambia link
-      const url = `${this.URI_API}/debt/${id}`;
+      const url = `${this.URI_API}/debt/${id}?_=`+ new Date().getTime();;
       console.log(url);
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
@@ -121,7 +121,7 @@ export class TransactionService {
     }
 
     report(ids: number[]): Observable<any>{
-      const url = `${this.URI_API}/debt/report`;
+      const url = `${this.URI_API}/debt/report?_=`+ new Date().getTime();
       const headers = new Headers({
         "Authorization": "bearer " + this.storage.getCurrentToken(),
         "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
@@ -136,7 +136,7 @@ export class TransactionService {
     }
   
     updateDeuda(id: number, paid: boolean): Observable<boolean>{
-      const url = `${this.URI_API}/debt/pay`
+      const url = `${this.URI_API}/debt/pay?_=`+ new Date().getTime();
       console.log(url);
       const opts={
         headers: { "Authorization":"bearer" + this.storage.getCurrentToken()}

@@ -209,8 +209,8 @@
                                             <div class="d-inline-block text-center">Servicio </div>
                                             <div class="mano d-inline-block ml-1">
                                                 <div class="arrow-filter-asc-gray" *ngIf="ascservgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascservblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('service', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('service', false)"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascservblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('Service', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('Service', false)"></span> </div>
                                                 <div class="arrow-filter-dsc-gray" *ngIf="dscservgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
@@ -221,8 +221,8 @@
                                             <div class="d-inline-block text-center">Concepto </div>
                                             <div class="mano d-inline-block ml-1">
                                                 <div class="arrow-filter-asc-gray" *ngIf="ascconcepgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('concept', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('concept', false)"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('Concept', true)"></span> </div>
+                                                <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('Concept', false)"></span> </div>
                                                 <div class="arrow-filter-dsc-gray" *ngIf="dscconcepgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
                                         </div>
@@ -255,7 +255,7 @@
                                             <div class="d-inline-block text-center">Fecha de Pago </div>
                                             <div class="mano d-inline-block ml-1">
                                                 <div class="arrow-filter-asc-gray" *ngIf="ascfechapagopgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascfechapagopblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('payDate', true)"></span> </div>
+                                                <div class="arrow-filter-asc-blue" *ngIf="ascfechapagopblue"> <span class="mano fa fas fa-caret-up fa-lg"  (click)="AscDesc('payDate', true)"></span> </div>
                                                 <div class="arrow-filter-dsc-blue" *ngIf="dscfechapagopblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('payDate', false)"></span> </div>
                                                 <div class="arrow-filter-dsc-gray" *ngIf="dscfechapagopgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
                                             </div>
@@ -325,7 +325,9 @@
                                     </td>
                                     <td>{{items.amount}}</td>
                                     <td>
-                                        <span *ngIf="!items.edit">{{items.status}}</span>
+                                        <span *ngIf="!items.edit" [ngClass]="{
+                                            'text-success' :items.status === 'PAGADO'
+                                          }">{{items.status}}</span>
                                         <select *ngIf="items.edit" [(ngModel)]="items.newStatus">
                                             <option *ngFor="let opt of statusOptions" [ngValue]="opt.state">{{opt.option}}</option>
                                         </select>
