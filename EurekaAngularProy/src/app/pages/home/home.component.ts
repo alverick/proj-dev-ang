@@ -25,6 +25,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DialogComponent } from './dialog';  
 import { LoginService } from 'src/app/shared/services/login.service';
+import { isNgTemplate } from '@angular/compiler';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -251,7 +252,9 @@ export class HomeComponent implements OnInit {
     });
    this.consultaDeuda();
    this.cargaExcel = false;
-   
+  
+
+
    // check
    this.SeleccionarTodos();
    this.selectedAll = false;
