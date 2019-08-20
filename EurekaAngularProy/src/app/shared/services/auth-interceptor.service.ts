@@ -26,6 +26,8 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     let headers = {
       'Cache-Control': 'no-cache',
+      'Pragma': 'no-cache',
+      'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT',
       "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
       "Ocp-Apim-Trace": `true`
     };

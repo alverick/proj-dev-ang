@@ -804,7 +804,7 @@ if(columnName === 'canal' ) {
               text: 'Su registro a sido editado',
               onAfterClose: () => {
                 console.log('onAfterClose');
-                item.status='PENDING';
+                item.status='PENDIENTE';
                 // item.edit = false;
                 item.editInput =false;
                 item.editButton = false;
