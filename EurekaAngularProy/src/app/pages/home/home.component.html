@@ -27,19 +27,19 @@
                             <!--////////// F I L T R O S 2 //////////////////-->
                             <div class="d-flex align-items-center mt-4">
                                 <div class="mr-4">
-                                        <div class="select-eureca position-relative">
-                                            <select class="selectpicker" [(ngModel)]="filtro.service" name=""> 
-                                                <option value="">Servicios</option>
-                                                        <option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</option>
-                                                </select>
+                                   <div class="select-eureca position-relative">
+                                         <select class="selectpicker" [(ngModel)]="filtro.service" name=""> 
+                                            <option value="">Servicios</option>
+                                            <option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</option>
+                                        </select>  
                                     </div>
                                 </div>
 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.status" name="">
+                                         <select class="selectpicker" [(ngModel)]="filtro.status" name="">
                                                 <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
-                                        </select>
+                                        </select>  
                                     </div>
                                 </div>
 
