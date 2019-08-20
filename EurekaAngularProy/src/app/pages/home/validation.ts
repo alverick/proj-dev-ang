@@ -11,7 +11,9 @@ import { MatDialogRef } from "@angular/material";
   export class ValidationComponent  {
   
     constructor(public excelService: ExcelService,
-                 public dialog: MatDialogRef<ValidationComponent>) { }
+                 public dialog: MatDialogRef<ValidationComponent>) {
+                  dialog.disableClose = true;
+                  }
       ocultar: boolean = true;
     
   

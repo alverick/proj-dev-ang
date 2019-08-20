@@ -540,6 +540,8 @@ if(columnName === 'canal' ) {
       showConfirmButton: false,
       cancelButtonColor: '#d33',
       cancelButtonText:  'Cerrar',
+      allowOutsideClick: false
+
     });
   }
 
@@ -694,12 +696,13 @@ if(columnName === 'canal' ) {
   }
 
   selectEstPag(event, item: Debts){
-    if(event == '1'){ 
+   /* if(event == '1'){ 
       item.editInput = true;
     }
     if(event == '2'){ 
       item.editInput = false;
     }
+    */
   }
 
 
@@ -761,7 +764,8 @@ if(columnName === 'canal' ) {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Editarlo!',
-      cancelButtonText: 'Cerrar',
+      cancelButtonText: 'Cerrar', 
+      allowOutsideClick: false,
     }).then((result) => {
       
       if (result.value) {
@@ -783,6 +787,8 @@ if(columnName === 'canal' ) {
               type: 'success',
               titleText: 'Editado!',
               text: 'Su registro a sido editado',
+              showCloseButton: true,
+              allowOutsideClick: false,
               onAfterClose: () => {
                 console.log('onAfterClose');
                 item.emissionDate = item.newEmissionDate;
@@ -802,6 +808,8 @@ if(columnName === 'canal' ) {
               type: 'success',
               titleText: 'Editado!',
               text: 'Su registro a sido editado',
+              showCloseButton: true,
+              allowOutsideClick: false,
               onAfterClose: () => {
                 console.log('onAfterClose');
                 item.status='PENDING';
@@ -819,6 +827,8 @@ if(columnName === 'canal' ) {
                 type:'success',
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
+                showCloseButton: true,
+                allowOutsideClick: false,
                 onAfterClose: () => {
                   console.log('onAfterClose');
                   item.status= 'PAGADO';
@@ -875,6 +885,7 @@ if(columnName === 'canal' ) {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
+      allowOutsideClick: false,
     }).then((result) => {
       if (result.value) {
         /*this.spinner2.show();*/
@@ -899,6 +910,7 @@ if(columnName === 'canal' ) {
     cancelButtonColor: '#d33',
     confirmButtonText: 'Si, Borralo',
     cancelButtonText: 'Cerrar',
+    allowOutsideClick: false,
   }).then((result) => {
     if (result.value) {
       
@@ -910,7 +922,7 @@ if(columnName === 'canal' ) {
         Swal.fire(
           'Eliminado!',
           'Tu archivo ha sido eliminado',
-          'success'
+          'success' 
         )
       },
       1000); 

@@ -125,6 +125,7 @@ export class LoginComponent implements OnInit {
       showConfirmButton: false,
       cancelButtonColor: '#d33',
       cancelButtonText:  'Cerrar',
+      allowOutsideClick: false,
     });
   }
  
