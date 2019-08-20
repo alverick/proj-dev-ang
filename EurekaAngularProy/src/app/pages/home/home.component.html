@@ -253,23 +253,23 @@
                                     <th>
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="d-inline-block text-center">Fecha de Pago </div>
-                                            <div class="mano d-inline-block ml-1">
+                                        <!--     <div class="mano d-inline-block ml-1">
                                                 <div class="arrow-filter-asc-gray" *ngIf="ascfechapagopgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
                                                 <div class="arrow-filter-asc-blue" *ngIf="ascfechapagopblue"> <span class="mano fa fas fa-caret-up fa-lg"  (click)="AscDesc('payDate', true)"></span> </div>
                                                 <div class="arrow-filter-dsc-blue" *ngIf="dscfechapagopblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('payDate', false)"></span> </div>
                                                 <div class="arrow-filter-dsc-gray" *ngIf="dscfechapagopgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </th>
                                     <th>
                                         <div class="d-flex align-items-center justify-content-center">
                                             <div class="d-inline-block text-center">Canal </div>
-                                            <div class="mano d-inline-block ml-1">
+                                         <!--   <div class="mano d-inline-block ml-1">
                                                 <div class="arrow-filter-asc-gray" *ngIf="asccanalpgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
                                                 <div class="arrow-filter-asc-blue" *ngIf="asccanalpblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('canal', true)"></span> </div>
                                                 <div class="arrow-filter-dsc-blue" *ngIf="dsccanalpblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('canal', false)"></span> </div>
                                                 <div class="arrow-filter-dsc-gray" *ngIf="dsccanalpgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </th>
                                     <th></th>
@@ -289,8 +289,8 @@
                                         <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
                                     </td>
                                     <td style="width: auto; text-align: center;">
-                                        <span style="width: auto" *ngIf="!items.edit">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
-                                        <div *ngIf="items.edit" class="content-input-icon position-relative">
+                                        <span style="width: auto" *ngIf="!items.editInput">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
+                                        <div *ngIf="items.editInput" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
                                                 <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text">
                                                 <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
@@ -299,8 +299,8 @@
                                         </div>
                                     </td>
                                     <td style="width: auto">
-                                        <span *ngIf="!items.edit">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
-                                        <div *ngIf="items.edit" class="content-input-icon position-relative">
+                                        <span *ngIf="!items.editInput">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
+                                        <div *ngIf="items.editInput" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
                                                 <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text">
                                                 <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
@@ -313,17 +313,17 @@
                                     <td style="width: auto">{{items.lastName}}</td>
                                     <td style="width: auto">{{items.service}}</td>
                                     <td style="width: auto">
-                                        <span *ngIf="!items.edit">{{items.concept}}</span>
-                                        <div *ngIf="items.edit">
+                                        <span *ngIf="!items.editInput">{{items.concept}}</span>
+                                        <div *ngIf="items.editInput">
                                             <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" numbersOnly maxlength="8" minlength="8" />
                                         </div>
                                     </td>
                                     <td>{{items.amount}}</td>
                                     <td>
-                                        <span *ngIf="!items.edit" [ngClass]="{
+                                        <span *ngIf="!items.editButton" [ngClass]="{
                                             'text-success' :items.status === 'PAGADO'
                                           }">{{items.status}}</span>
-                                        <select *ngIf="items.edit" [(ngModel)]="items.newStatus">
+                                        <select *ngIf="items.editButton" [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)">
                                             <option *ngFor="let opt of statusOptions" [ngValue]="opt.state">{{opt.option}}</option>
                                         </select>
                                     </td>
@@ -331,16 +331,16 @@
                                     <td>{{items.canal}}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <div *ngIf="!items.edit && items.status=='PENDIENTE'" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
+                                            <div *ngIf="!items.editButton && items.status=='PENDIENTE'" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
                                                 <span class="icon-editar iconos-big iconos-big"></span>
                                             </div> &nbsp;&nbsp;&nbsp;
-                                            <div *ngIf="!items.edit" id="items.edit" style="cursor: pointer;  margin-left: 18px !important" (click)="Eliminar(items)">
+                                            <div *ngIf="!items.editButton"   style="cursor: pointer;  margin-left: 18px !important" (click)="Eliminar(items)">
                                                 <span class="icon-eliminar iconos-big iconos-big"></span>
                                             </div>
-                                            <div *ngIf="items.edit" class="d-inline-block" style="cursor: pointer;  margin-right: 18px !important" (click)="BotonActualizar(items)">
+                                            <div *ngIf="items.editButton" class="d-inline-block" style="cursor: pointer;  margin-right: 18px !important" (click)="BotonActualizar(items)">
                                                 <img src="assets/images/table-check.svg" alt="Aceptar">
                                             </div>
-                                            <div (click)="BotonCancela(items)" *ngIf="items.edit" class="d-inline-block" style="cursor: pointer; margin-right: 18px !important">
+                                            <div (click)="BotonCancela(items)" *ngIf="items.editButton" class="d-inline-block" style="cursor: pointer; margin-right: 18px !important">
                                                 <img src="assets/images/table-delete.svg" alt="Eliminar">
                                             </div>
                                         </div>

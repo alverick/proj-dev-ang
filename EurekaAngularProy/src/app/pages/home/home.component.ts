@@ -256,7 +256,7 @@ export class HomeComponent implements OnInit {
    this.cargaExcel = false;
 
    // check
-   this.SeleccionarTodos();
+   //this.SeleccionarTodos();
    this.selectedAll = false;
   }
 /*
@@ -687,11 +687,23 @@ if(columnName === 'canal' ) {
 
 
   BotonEditar(item: Debts) {
-    item.edit = true;
+    item.editInput =true;
+    item.editButton = true;
+    // item.edit = true;
     item.newEmissionDate = item.emissionDate;
     item.newDueDate = item.dueDate;
     item.newConcept = item.concept;
   }
+
+  selectEstPag(event, item: Debts){
+    if(event == '1'){
+      item.editInput = true;
+    }
+    if(event == '2'){
+      item.editInput = false;
+    }
+  }
+
 
   BotonActualizar(item: Debts) {
     /// EMISION DATE
@@ -755,7 +767,9 @@ if(columnName === 'canal' ) {
     }).then((result) => {
 
       if (result.value) {
-        item.edit = false;
+      //  item.edit = false;
+        item.editInput =false;
+        item.editButton = false;
         const debts = {
           emissionDate: item.newEmissionDate,
           dueDate: item.newDueDate,
@@ -776,7 +790,9 @@ if(columnName === 'canal' ) {
                 item.emissionDate = item.newEmissionDate;
                 item.dueDate = item.newDueDate;
                 item.concept = item.newConcept;
-                item.edit = false;
+               // item.edit = false;
+               item.editInput =false;
+               item.editButton = false;
               } });
           }
         );
@@ -790,8 +806,10 @@ if(columnName === 'canal' ) {
               text: 'Su registro a sido editado',
               onAfterClose: () => {
                 console.log('onAfterClose');
-                item.status='PENDIENTE';
-                item.edit = false;
+                item.status='PENDING';
+                // item.edit = false;
+                item.editInput =false;
+                item.editButton = false;
               }});
           }
         );
@@ -807,7 +825,9 @@ if(columnName === 'canal' ) {
                   console.log('onAfterClose');
                   item.status= 'PAGADO';
                   this.showEdit = true;
-                  item.edit = false;
+                  // item.edit = false;
+                  item.editInput =false;
+                  item.editButton = false;
                 }});
               }
           );
@@ -821,7 +841,9 @@ if(columnName === 'canal' ) {
 
 
   BotonCancela(item: Debts) {
-    item.edit = false;
+   //  item.edit = false;
+   item.editInput =false;
+   item.editButton = false;
   }
 
   changePage(nro: number) {
@@ -853,8 +875,8 @@ if(columnName === 'canal' ) {
       showCloseButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Eliminarlo!',
-      cancelButtonText: 'Cerrar',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.value) {
         /*this.spinner2.show();*/
@@ -881,16 +903,19 @@ if(columnName === 'canal' ) {
     cancelButtonText: 'Cerrar',
   }).then((result) => {
     if (result.value) {
-     //this.spinner.show();
+
       this.transactionService.deleteDeuda(item.id)
       .subscribe(() => this.consultaDeuda());
-   //   this.spinner.hide();
 
-    Swal.fire(
-      'Eliminado!',
-      'Tu archivo ha sido eliminado',
-      'success'
-    )
+      setTimeout(() =>
+      {
+        Swal.fire(
+          'Eliminado!',
+          'Tu archivo ha sido eliminado',
+          'success'
+        )
+      },
+      1000);
   }
 })
 }

@@ -10,13 +10,15 @@ export interface Debts {
     amount: string;
     status: string;
     payDate: Date;
-    canal: string;
-    edit: boolean;
+    canal: string; 
     newEmissionDate?: Date;
     newDueDate?: Date;
     newConcept?: string;
     newStatus?:  string;
     selected?: boolean;
+    
+    editInput: boolean;
+    editButton: boolean;
 }
 
 export interface DebtsPagedList {

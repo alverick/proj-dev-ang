@@ -48,7 +48,7 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
  }
 
 logout(): void {
-  const url = `${this.URI_API}/login/out`;
+  const url = `${this.URI_API}/login/out?_=` + new Date().getTime();;
   this.http.post(url, {})
     .subscribe(() => {
       this.storage.removeCurrentSession();
@@ -69,7 +69,7 @@ refresh(): void {
       if (now > rfs && now < exp){
         console.log('refresh token');
         this.callingRefresh = true;
-        const url = `${this.URI_API}/login`;
+        const url = `${this.URI_API}/login?_=` + new Date().getTime();;
         this.http.get(url,{})
           .subscribe((r: RespuestaLogin)=>{
             let storage = this.storage.getCurrentSession();

@@ -9,7 +9,7 @@ export class ShearDirective {
 
   @HostListener('input', ['$event']) InputShearNombreCodigo(event) {
     const initalValue = this.el.nativeElement.value;
-    this.el.nativeElement.value = initalValue.replace(/[^0-9-A-Z-a-z]*/g, '');
+    this.el.nativeElement.value = initalValue.replace(/[^ 0-9-a-z-A-Z-´]*/g, '');
     if ( initalValue !== this.el.nativeElement.value) {
       event.stopPropagation();
     }

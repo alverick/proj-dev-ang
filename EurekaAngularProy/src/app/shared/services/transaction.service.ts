@@ -66,7 +66,8 @@ export class TransactionService {
             r.data.forEach(d => {
               d.emissionDate = new Date(d.emissionDate);
               d.dueDate = new Date(d.dueDate);
-              d.edit = false;
+              d.editInput = false;
+              d.editButton = false;
             });
             this.debtItems = r;
             console.log(r);
