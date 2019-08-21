@@ -695,6 +695,7 @@ if(columnName === 'canal' ) {
     item.newEmissionDate = item.emissionDate;
     item.newDueDate = item.dueDate;
     item.newConcept = item.concept;
+    item.newAmount = item.amount;
   }
 
   selectEstPag(event, item: Debts){
@@ -709,6 +710,17 @@ if(columnName === 'canal' ) {
 
 
   BotonActualizar(item: Debts) {
+
+    // MONTO
+    let decimales =  /^[0-9 {8}]+$/;
+     if(item.newAmount.toString().match(decimales)){
+       alert('alerta de num');
+       return;
+     }else{
+      alert('false de num');
+      return;
+     }
+
     /// EMISION DATE
     var lenghted = new Date(item.newEmissionDate).toDateString().length;
     var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
@@ -777,7 +789,9 @@ if(columnName === 'canal' ) {
         const debts = {
           emissionDate: item.newEmissionDate,
           dueDate: item.newDueDate,
-          concept: item.newConcept
+          concept: item.newConcept,
+          amount: item.newAmount,
+
         };
 
 
@@ -796,6 +810,7 @@ if(columnName === 'canal' ) {
                 item.emissionDate = item.newEmissionDate;
                 item.dueDate = item.newDueDate;
                 item.concept = item.newConcept;
+                item.amount  = item.newAmount;
                // item.edit = false;
                item.editInput =false;
                item.editButton = false;

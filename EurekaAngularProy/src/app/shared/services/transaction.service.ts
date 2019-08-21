@@ -110,6 +110,7 @@ export class TransactionService {
     return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
   }
 
+  // ESITAR LA DEUDA
     editDeuda(id: number, debts: DebtEdit): Observable<any>{
       console.log('begin login')
       // cambia link

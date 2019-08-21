@@ -55,9 +55,13 @@ import { ExcelService } from "src/app/shared/services/excel.service";
   
   
     onChangeFile(event) {
-      this.files = event.target.files;
+      this.files = event.target.files; 
     }
   
+    OcultarMensaje(){
+      this.xlsValid= false;
+    }
+
     SalirsnackBar() {
       this.dialogRef.close();
     }

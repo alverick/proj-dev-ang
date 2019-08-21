@@ -44,6 +44,7 @@ import { ConfiguracionService } from './shared/services/configuracion.service';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { ShearDirective } from './pages/home/shear.directive';
 import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
+import { DecimalesDirective } from './pages/home/decimales.directive';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.di
     ConfigurarEmpresaComponent,
     ShearDirective,
     BlockCopyPasteDirective,
+    DecimalesDirective,
 
 
     ],
