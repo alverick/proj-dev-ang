@@ -137,7 +137,7 @@ export class TransactionService {
         .pipe(catchError(err => throwError(err)));
     }
 
-    updateDeuda(id: number, paid: boolean): Observable<boolean>{
+    updateDeuda(id: number, paid: boolean): Observable<any>{
       const url = `${this.URI_API}/debt/pay?_=`+ new Date().getTime();
       console.log(url);
       const opts={

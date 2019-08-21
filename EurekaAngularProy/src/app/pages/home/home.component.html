@@ -57,7 +57,9 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field style="width: 140px;">
-                                            <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10" appBlockCopyPaste>
+                                            <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1 type="text"
+                                              class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10"
+                                              minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
                                             <label *ngIf="mostrarxdate1()" (click)="limpiardate1()" class="fa fa-times" style="left: -50px;"></label>
                                             <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
@@ -68,7 +70,9 @@
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
                                         <mat-form-field style="width: 140px;">
-                                            <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10" appBlockCopyPaste>
+                                            <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2 type="text"
+                                              class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10"
+                                              minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
                                             <label *ngIf="mostrarxdate2()" (click)="limpiardate2()" class="fa fa-times" style="left: -50px;"></label>
                                             <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker></mat-datepicker>
@@ -292,8 +296,8 @@
                                         <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
                                     </td>
                                     <td style="width: auto; text-align: center;">
-                                        <span style="width: auto" *ngIf="!items.editInput">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
-                                        <div *ngIf="items.editInput && items.status === 'PENDIENTE'" class="content-input-icon position-relative">
+                                        <span style="width: auto" *ngIf="!items.editPending">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
+                                        <div *ngIf="items.editPending" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
                                                 <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text">
                                                 <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
@@ -316,24 +320,25 @@
                                     <td style="width: auto">{{items.lastName}}</td>
                                     <td style="width: auto">{{items.service}}</td>
                                     <td style="width: auto">
-                                        <span *ngIf="!items.editInput">{{items.concept}}</span>
-                                        <div *ngIf="items.editInput && items.status === 'PENDIENTE'">
+                                        <span *ngIf="!items.editPending">{{items.concept}}</span>
+                                        <div *ngIf="items.editPending">
                                             <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" numbersOnly maxlength="8" minlength="8" />
                                         </div>
                                     </td>
                                     <td style="width: auto">
-                                           <span *ngIf="!items.editInput"> {{items.amount }}</span>
+                                           <span *ngIf="!items.editInput">{{items.currency}} <span *ngIf="items.amountPayed > 0">{{items.amountPayed}} / </span>{{items.amount }}</span>
                                             <div *ngIf="items.editInput">
                                                 <input type="text" appDecimales [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" />
                                             </div>
                                            <!--  {{items.amount}} -->
                                     </td>
                                     <td>
-                                        <span *ngIf="!items.editButton" [class.text-success]="items.status === 'PAGADO'"
+                                        <span *ngIf="!items.editButton || items.status === 'PAGADO'" [class.text-success]="items.status === 'PAGADO'"
                                           [class.text-danger]="estaVencido(items)" >{{items.status}}</span>
-                                        <select *ngIf="items.editButton" [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)">
+                                        <select *ngIf="items.editButton && items.status !== 'PAGADO'" [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)">
                                             <option></option>
-                                            <option *ngFor="let opt of statusOptions" [ngValue]="opt.state">{{opt.option}}</option>
+                                            <option value="1">{{items.status}}</option>
+                                            <option value="2">PAGADO</option>
                                         </select>
                                     </td>
                                     <td>{{items.payDate | date:'dd/MM/yyyy'}}</td>

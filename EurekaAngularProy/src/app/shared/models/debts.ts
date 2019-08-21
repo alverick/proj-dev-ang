@@ -8,9 +8,10 @@ export interface Debts {
     service: string;
     concept: string;
     amount: number;
+    amountPayed?: number;
     status: string;
     payDate: Date;
-    canal: string;
+    channel: string;
     newEmissionDate?: Date;
     newDueDate?: Date;
     newConcept?: string;
@@ -18,6 +19,7 @@ export interface Debts {
     newStatus?:  string;
     selected?: boolean;
 
+    editPending: boolean;
     editInput: boolean;
     editButton: boolean;
 }

@@ -692,6 +692,7 @@ if(columnName === 'canal' ) {
   BotonEditar(item: Debts) {
     item.editInput =true;
     item.editButton = true;
+    item.editPending = (item.status === 'PENDIENTE');
     // item.edit = true;
     item.newDueDate = item.dueDate;
     item.newEmissionDate = item.emissionDate;
@@ -702,9 +703,11 @@ if(columnName === 'canal' ) {
   selectEstPag(event, item: Debts){
     if(event == '1'){
       item.editInput = true;
+      item.editPending = true;
     }
     if(event == '2'){
       item.editInput = false;
+      item.editPending = false;
     }
 
   }
@@ -717,7 +720,7 @@ if(columnName === 'canal' ) {
     if(item.newAmount.toString() ==='' ||item.newAmount.toString() === null){
       this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
       return;
-    } 
+    }
     if(item.newAmount.toString().length < 1){
       this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
       return;
@@ -725,13 +728,13 @@ if(columnName === 'canal' ) {
     if(parseInt(item.newAmount.toString()) < 1){
       this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
       return;
-    }    
-    
+    }
+
     if(!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)){
       this.mensaje( 'error', 'Error en el monto','Ingrese un Monto valido minimo de 1 y maximo de 9 caracteres enteros y 2 decimales como maximo');
       return;
-    } 
- 
+    }
+
     /// EMISION DATE
     var lenghted = new Date(item.newEmissionDate).toDateString().length;
     var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
@@ -795,8 +798,6 @@ if(columnName === 'canal' ) {
 
       if (result.value) {
       //  item.edit = false;
-        item.editInput =false;
-        item.editButton = false;
         const debts = {
           emissionDate: item.newEmissionDate,
           dueDate: item.newDueDate,
@@ -810,22 +811,36 @@ if(columnName === 'canal' ) {
     if(item.newStatus===null || item.newStatus === undefined){
       this.transactionService.editDeuda(item.id, debts).subscribe(
           debtsUpdate => {
-            Swal.fire({
-              type: 'success',
-              titleText: 'Editado!',
-              text: 'Su registro a sido editado',
-              showCloseButton: true,
-              allowOutsideClick: false,
-              onAfterClose: () => {
-                console.log('onAfterClose');
-                item.emissionDate = item.newEmissionDate;
-                item.dueDate = item.newDueDate;
-                item.concept = item.newConcept;
-                item.amount  = item.newAmount;
-               // item.edit = false;
-               item.editInput =false;
-               item.editButton = false;
-              } });
+            if (debtsUpdate.success) {
+              Swal.fire({
+                type: 'success',
+                titleText: 'Editado!',
+                text: 'Su registro a sido editado',
+                showCloseButton: true,
+                allowOutsideClick: false,
+                onAfterClose: () => {
+                  console.log('onAfterClose');
+                  item.status = debtsUpdate.status;
+                  item.emissionDate = item.newEmissionDate;
+                  item.dueDate = item.newDueDate;
+                  item.concept = item.newConcept;
+                  item.amount  = item.newAmount;
+                 // item.edit = false;
+                 item.editInput =false;
+                 item.editButton = false;
+                 item.editPending = false;
+                }
+              });
+            }
+            else {
+              Swal.fire({
+                type: 'warning',
+                titleText: 'ERROR',
+                text: debtsUpdate.message,
+                showCloseButton: true,
+                allowOutsideClick: false
+              });
+            }
           }
         );
       }else if(item.newStatus==='1'){
@@ -840,10 +855,11 @@ if(columnName === 'canal' ) {
               allowOutsideClick: false,
               onAfterClose: () => {
                 console.log('onAfterClose');
-                item.status='PENDIENTE';
                 // item.edit = false;
+                item.newStatus = null;
                 item.editInput =false;
                 item.editButton = false;
+                item.editPending = false;
               }});
           }
         );
@@ -860,10 +876,15 @@ if(columnName === 'canal' ) {
                 onAfterClose: () => {
                   console.log('onAfterClose');
                   item.status= 'PAGADO';
+                  item.amountPayed = statusUpdate.payed;
+                  item.payDate = new Date();
+                  item.channel = 'Efectivo';
                   this.showEdit = true;
                   // item.edit = false;
+                  item.newStatus = null;
                   item.editInput =false;
                   item.editButton = false;
+                  item.editPending = false;
                 }});
               }
           );
@@ -880,6 +901,7 @@ if(columnName === 'canal' ) {
    //  item.edit = false;
    item.editInput =false;
    item.editButton = false;
+   item.editPending = false;
   }
 
   changePage(nro: number) {
@@ -1004,7 +1026,7 @@ MostrarListaSelect() {
   }
 
   estaVencido(itm: Debts){
-    return itm.status === 'PENDIENTE' && itm.dueDate < new Date();
+    return (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && itm.dueDate < new Date();
   }
 }
 
