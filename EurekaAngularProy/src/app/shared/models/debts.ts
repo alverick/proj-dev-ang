@@ -14,6 +14,7 @@ export interface Debts {
     newEmissionDate?: Date;
     newDueDate?: Date;
     newConcept?: string;
+    newAmount?: number;
     newStatus?:  string;
     selected?: boolean;
 

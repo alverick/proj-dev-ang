@@ -696,6 +696,7 @@ if(columnName === 'canal' ) {
     item.newDueDate = item.dueDate;
     item.newEmissionDate = item.emissionDate;
     item.newConcept = item.concept;
+    item.newAmount = item.amount;
   }
 
   selectEstPag(event, item: Debts){
@@ -710,6 +711,27 @@ if(columnName === 'canal' ) {
 
 
   BotonActualizar(item: Debts) {
+
+    // MONTO
+
+    if(item.newAmount.toString() ==='' ||item.newAmount.toString() === null){
+      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
+      return;
+    } 
+    if(item.newAmount.toString().length < 1){
+      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
+      return;
+    }
+    if(parseInt(item.newAmount.toString()) < 1){
+      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
+      return;
+    }    
+    
+    if(!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)){
+      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto valido minimo de 1 y maximo de 9 caracteres enteros y 2 decimales como maximo');
+      return;
+    } 
+ 
     /// EMISION DATE
     var lenghted = new Date(item.newEmissionDate).toDateString().length;
     var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
@@ -778,7 +800,9 @@ if(columnName === 'canal' ) {
         const debts = {
           emissionDate: item.newEmissionDate,
           dueDate: item.newDueDate,
-          concept: item.newConcept
+          concept: item.newConcept,
+          amount: parseFloat(item.newAmount.toString()),
+
         };
 
 
@@ -797,6 +821,7 @@ if(columnName === 'canal' ) {
                 item.emissionDate = item.newEmissionDate;
                 item.dueDate = item.newDueDate;
                 item.concept = item.newConcept;
+                item.amount  = item.newAmount;
                // item.edit = false;
                item.editInput =false;
                item.editButton = false;

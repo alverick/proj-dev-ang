@@ -55,7 +55,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
 
 
     onChangeFile(event) {
-      this.files = event.target.files;
+      this.files = event.target.files; 
     }
 
     SalirsnackBar() {
