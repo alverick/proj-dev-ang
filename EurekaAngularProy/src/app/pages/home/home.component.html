@@ -339,16 +339,15 @@
                                         </div>
                                     </td>
                                     <td style="width: auto">
-                                           <span *ngIf="!items.editInput"> {{items.amount}}</span>
+                                           <span *ngIf="!items.editInput"> {{items.amount }}</span>
                                             <div *ngIf="items.editInput">
-                                                <input type="text" [(ngModel)]="items.newAmount" style="width: 100px" maxlength="8" minlength="8" />
+                                                <input type="text" appDecimales [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" />
                                             </div> 
                                            <!--  {{items.amount}} -->
                                     </td>
                                     <td>
-                                        <span *ngIf="!items.editButton" [ngClass]="{
-                                            'text-success' :items.status === 'PAGADO'
-                                          }">{{items.status}}</span>
+                                        <span *ngIf="!items.editButton" [class.text-success]="items.status === 'PAGADO'"
+                                          [class.text-danger]="estaVencido(items)" >{{items.status}}</span>
                                         <select *ngIf="items.editButton" [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)">
                                             <option></option>
                                             <option *ngFor="let opt of statusOptions" [ngValue]="opt.state">{{opt.option}}</option>

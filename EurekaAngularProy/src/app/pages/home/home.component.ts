@@ -252,6 +252,7 @@ export class HomeComponent implements OnInit {
       bdColor: "rgba(100,149,237, .8)",
       color: "white"
     });
+    this.transactionService.debtItems = { data: [], count : 0 };
    this.consultaDeuda();
    this.cargaExcel = false;
 
@@ -712,15 +713,25 @@ if(columnName === 'canal' ) {
   BotonActualizar(item: Debts) {
 
     // MONTO
-    let decimales =  /^[0-9 {8}]+$/;
-     if(item.newAmount.toString().match(decimales)){
-       alert('alerta de num');
-       return;
-     }else{
-      alert('false de num');
-      return;
-     }
 
+    if(item.newAmount.toString() ==='' ||item.newAmount.toString() === null){
+      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
+      return;
+    } 
+    if(item.newAmount.toString().length < 1){
+      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
+      return;
+    }
+    if(parseInt(item.newAmount.toString()) < 1){
+      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
+      return;
+    }    
+    
+    if(!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)){
+      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto valido minimo de 1 y maximo de 9 caracteres enteros y 2 decimales como maximo');
+      return;
+    } 
+ 
     /// EMISION DATE
     var lenghted = new Date(item.newEmissionDate).toDateString().length;
     var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
@@ -790,7 +801,7 @@ if(columnName === 'canal' ) {
           emissionDate: item.newEmissionDate,
           dueDate: item.newDueDate,
           concept: item.newConcept,
-          amount: item.newAmount,
+          amount: parseFloat(item.newAmount.toString()),
 
         };
 
@@ -990,6 +1001,10 @@ MostrarListaSelect() {
         console.log(downloadUrl);
         window.open(downloadUrl);
       });
+  }
+
+  estaVencido(itm: Debts){
+    return itm.status === 'PENDIENTE' && itm.dueDate < new Date();
   }
 }
 

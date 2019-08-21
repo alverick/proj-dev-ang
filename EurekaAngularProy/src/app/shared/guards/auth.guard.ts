@@ -22,7 +22,8 @@ export class AuthGuard implements CanActivate {
     console.log('auth.guard');
     console.log(url);
     let session = this.storageService.getCurrentSession();
-    if (session) {
+    console.log(session);
+    if (session.isAuthenticate) {
       return true;
     } else {
       console.log('Auth.Guard to Login');

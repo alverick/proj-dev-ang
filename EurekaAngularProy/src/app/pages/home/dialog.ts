@@ -15,51 +15,47 @@ import { ExcelService } from "src/app/shared/services/excel.service";
     selector: 'dialog-data-example-dialog',
     templateUrl: 'dialog.html',
   })
-  
+
   // tslint:disable-next-line:component-class-suffix
   export class DialogComponent implements OnInit {
     public messageUploadExcel: boolean =false;
     public inputXlsForm: FormGroup;
     public xlsValid: boolean;
     public codigoCliente: String = 'Codigo de Cliente';
-  
+
     validationExcel = {
       'xls':[
         { type: 'required', message: 'Debes Ingresar un archivo excel'}
       ]
     }
-  
+
     constructor(public  snackBar: MatSnackBar,
                 private excelService: ExcelService,
                 public  formBuilder: FormBuilder,
                 public  dialogRef: MatDialogRef<DialogComponent>
-  
+
               ) {
                 dialogRef.disableClose = true;
                }
-  
+
     // tslint:disable-next-line:use-life-cycle-interface
     ngOnInit() {
       this.inputXlsForm = this.formBuilder.group({
         xls: ['', Validators.required]
       });
-  
+
       //this.SalirsnackBar();
-      
+
     }
 
      /*Data Completa */
   matricula: any = [{"Fecha de emisión":"17/8/2019","Fecha de vencimiento":"16/9/2019",
   "Código de cliente":"u2019000001","Nombres":"Nombre Demo", "Apellidos":"apellido Demo",
   "Servicio":"Matricula","Concepto": "20190708","Monto":"500"}];
-  
-  
+
+
     onChangeFile(event) {
       this.files = event.target.files; 
-    }
-  
-    OcultarMensaje(){
-      this.xlsValid= false;
     }
 
     SalirsnackBar() {
@@ -67,10 +63,10 @@ import { ExcelService } from "src/app/shared/services/excel.service";
     }
     private files: any;
     get f() { return this.inputXlsForm.controls;}
-  
+
      changestatus =true;
-     openSnackBar() { 
-     
+     openSnackBar() {
+
        console.log("ENTRO : " + this.inputXlsForm.value)
       if(this.inputXlsForm.valid) {
         this.xlsValid= false;
@@ -83,21 +79,21 @@ import { ExcelService } from "src/app/shared/services/excel.service";
           .subscribe(
             value=> {
               this.excelService.idProcess = value.id;
-            
+
             });
         } else {
-          this.messageUploadExcel =true;  
+          this.messageUploadExcel =true;
           return;
         }
-  
+
       this.snackBar.openFromComponent(UploadProgressComponent);
       this.dialogRef.close();
       } else {
         this.xlsValid = true;
-        
+
       }
     }
-  
+
     close(){
       this.dialogRef.close();
     }
@@ -106,7 +102,9 @@ import { ExcelService } from "src/app/shared/services/excel.service";
       this.excelService.exportAsExcelFile(this.matricula, 'data_completa');
     }
 
+    OcultarMensaje() {
+      this.xlsValid = false;
+    }
   }
-  
-  
-  
+
+

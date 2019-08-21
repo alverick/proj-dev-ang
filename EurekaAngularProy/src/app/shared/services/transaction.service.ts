@@ -48,7 +48,7 @@ export class TransactionService {
       }
 
 
-      var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));  
+      var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
       var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
       //fechas
       console.log('fechas');
@@ -77,7 +77,7 @@ export class TransactionService {
             if (r.count == 0) {
               this.pageMessage = "Mostrando 0 elementos";
             }
-            else { 
+            else {
               let beg = ((filtro.pageNumber - 1) * 50) + 1;
               let end = filtro.pageNumber * 50;
               if (end > r.count)
@@ -86,9 +86,9 @@ export class TransactionService {
             }
             return r;
           }))
-          .pipe(catchError(error => throwError(error)));  
-    }   
-      
+          .pipe(catchError(error => throwError(error)));
+    }
+
 
   deleteDeuda(idDebt: number): Observable<Debts>{
       console.log('begin login')
@@ -98,8 +98,8 @@ export class TransactionService {
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
       };
-      return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));  
-  } 
+      return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));
+  }
 
   deleteAll(ids: number[]): Observable<any> {
     const url = `${this.URI_API}/debt/deleteAll?_=`+ new Date().getTime();
@@ -107,7 +107,7 @@ export class TransactionService {
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
-    return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));  
+    return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));
   }
 
   // ESITAR LA DEUDA
@@ -119,7 +119,7 @@ export class TransactionService {
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
       };
-      return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));  
+      return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));
     }
 
     report(ids: number[]): Observable<any>{
@@ -129,14 +129,14 @@ export class TransactionService {
         "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": 'true'
       });
-      return this.nativeHttp.post(url, { ids: ids }, { 
-        headers: headers, 
-        responseType: ResponseContentType.Blob 
+      return this.nativeHttp.post(url, { ids: ids }, {
+        headers: headers,
+        responseType: ResponseContentType.Blob
       })
         .pipe(map(r => r.blob()))
         .pipe(catchError(err => throwError(err)));
     }
-  
+
     updateDeuda(id: number, paid: boolean): Observable<boolean>{
       const url = `${this.URI_API}/debt/pay?_=`+ new Date().getTime();
       console.log(url);
@@ -147,7 +147,7 @@ export class TransactionService {
         idDebt : id,
         Payed : paid
       }
-      return this.http.post<any>(url, data).pipe(catchError(error => throwError(error)));    
+      return this.http.post<any>(url, data).pipe(catchError(error => throwError(error)));
     }
-  
+
 }
