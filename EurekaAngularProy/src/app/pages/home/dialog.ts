@@ -17,11 +17,11 @@ import { ExcelService } from "src/app/shared/services/excel.service";
   })
 
   // tslint:disable-next-line:component-class-suffix
-  export class DialogComponent implements OnInit {
-    public messageUploadExcel: boolean =false;
+  export class DialogComponent implements OnInit { 
     public inputXlsForm: FormGroup;
     public xlsValid: boolean;
     public codigoCliente: String = 'Codigo de Cliente';
+    public messageUploadExcel: boolean = false;
 
     validationExcel = {
       'xls':[
@@ -44,14 +44,15 @@ import { ExcelService } from "src/app/shared/services/excel.service";
         xls: ['', Validators.required]
       });
 
-      //this.SalirsnackBar();
-
+       
+       
     }
+    
 
      /*Data Completa */
-  matricula: any = [{"Fecha de emisión":"17/8/2019","Fecha de vencimiento":"16/9/2019",
-  "Código de cliente":"u2019000001","Nombres":"Nombre Demo", "Apellidos":"apellido Demo",
-  "Servicio":"Matricula","Concepto": "20190708","Monto":"500"}];
+    matricula: any = [{"Fecha de emisión":"17/8/2019","Fecha de vencimiento":"16/9/2019",
+    "Código de cliente":"u2019000001","Nombres":"Nombre Demo", "Apellidos":"apellido Demo",
+    "Servicio":"Matricula","Concepto": "20190708","Monto":"500"}];
 
 
     onChangeFile(event) {
@@ -72,7 +73,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
         this.xlsValid= false;
       /*service*/
 
-        if(this.excelService.statusUpload == false){
+        if(this.excelService.statusUpload == false) {
           console.log("SERVICE");
           console.log(this.excelService.service);
           this.excelService.UploadExcel(this.files, this.excelService.service.name, this.changestatus )
@@ -82,7 +83,8 @@ import { ExcelService } from "src/app/shared/services/excel.service";
 
             });
         } else {
-          this.messageUploadExcel =true;
+            
+          this.messageUploadExcel =this.excelService.statusUpload;
           return;
         }
 
@@ -93,6 +95,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
 
       }
     }
+    
 
     close(){
       this.dialogRef.close();

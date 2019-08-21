@@ -48,6 +48,8 @@ export class ExcelService {
   public service: any = '';
   public idProcess: number = 0;
   public errores: Error[] = [];
+  // public messageUploadExcel: boolean = true;
+
 
   UploadExcel(files: any, service: string, changestatus: boolean): Observable<any> {
     this.statusUpload = changestatus; 

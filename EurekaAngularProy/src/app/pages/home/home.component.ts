@@ -270,6 +270,8 @@ export class HomeComponent implements OnInit {
     }
   }*/
 
+ 
+
   ceroRegistros(): boolean {
       if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
         //this.router.navigate(['/login']);
