@@ -163,7 +163,7 @@ input::-ms-clear {
     line-height: 1.5;
 }
 
-// date 
+// date
 .icon-addon.addon-lg .fa {
     font-size: 18px;
     margin-left: 150px;
@@ -325,41 +325,62 @@ input::-ms-clear {
     outline: none;
 }
 
- 
+
 .arrow-filter-asc-blue {
     color: blue;
-    float: initial; 
-    margin-top: 6px; 
+    float: initial;
+    margin-top: 6px;
 }
 
 .arrow-filter-dsc-blue {
     color: blue;
     float: initial;
-    margin-top: -6px; 
+    margin-top: -6px;
 }
 
 .arrow-filter-asc-gray {
     color: gray;
-    float: initial;  
-    margin-top: 6px; 
+    float: initial;
+    margin-top: 6px;
 }
 
 .arrow-filter-dsc-gray {
     color: gray;
     float: initial;
-    margin-top: -6px; 
+    margin-top: -6px;
 }
 
 .date-color-eureca {
-    color: blue; 
+    color: blue;
 }
- 
 
-// combo box 
+
+// combo box
 .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
     overflow: hidden;
 }
 .select-eureca .filter-option-inner-inner {
     padding: 3px 0;
     font-size: 14px;
+}
+
+.clear-select {
+  margin-right: -25px;
+  float: right;
+  left: -40px;
+  top: 3px;
+  position: relative;
+  cursor: pointer;
+}
+
+.clear-select:hover {
+  color: #2580db;
+}
+
+.filter-slt {
+  width: 170px;
+}
+
+.filter-cmb {
+  width: 190px;
 }

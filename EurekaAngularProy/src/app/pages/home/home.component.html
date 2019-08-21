@@ -28,34 +28,37 @@
                             <div class="d-flex align-items-center mt-4">
                                 <div class="mr-4">
                                         <div class="select-eureca position-relative">
-                                            <select class="selectpicker" [(ngModel)]="filtro.service" name="">
+                                            <select class="selectpicker filter-slt" [(ngModel)]="filtro.service" name="">
                                                 <option value="">Servicios</option>
                                                         <option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</option>
                                                 </select>
-                                    </div>
+                                                <label *ngIf="filtro.service" (click)="filtro.service = ''" class="clear-select fa fa-times"></label>
+                                              </div>
                                 </div>
 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                         <select class="selectpicker" [(ngModel)]="filtro.status" name="">
+                                         <select class="selectpicker filter-slt" [(ngModel)]="filtro.status" name="">
                                                 <option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </option>
                                         </select>
+                                        <label *ngIf="filtro.status" (click)="filtro.status = ''" class="clear-select fa fa-times"></label>
                                     </div>
                                 </div>
 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker" [(ngModel)]="filtro.dateForFilter" name="">
+                                        <select class="selectpicker filter-cmb" [(ngModel)]="filtro.dateForFilter" name="">
                                                 <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
                                         </select>
+                                        <label *ngIf="filtro.dateForFilter" (click)="filtro.dateForFilter = ''" class="clear-select fa fa-times"></label>
                                     </div>
                                 </div>
 
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
-                                        <mat-form-field>
+                                        <mat-form-field style="width: 140px;">
                                             <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10" minlength="10" appBlockCopyPaste>
-                                            <label *ngIf="mostrarxdate1()" (click)="limpiardate1()" class="fa fa-times"></label>
+                                            <label *ngIf="mostrarxdate1()" (click)="limpiardate1()" class="fa fa-times" style="left: -50px;"></label>
                                             <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker2></mat-datepicker>
                                         </mat-form-field>
@@ -64,9 +67,9 @@
 
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
-                                        <mat-form-field>
+                                        <mat-form-field style="width: 140px;">
                                             <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2 type="text" class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10" appBlockCopyPaste>
-                                            <label *ngIf="mostrarxdate2()" (click)="limpiardate2()" class="fa fa-times"></label>
+                                            <label *ngIf="mostrarxdate2()" (click)="limpiardate2()" class="fa fa-times" style="left: -50px;"></label>
                                             <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                                             <mat-datepicker #myDatepicker></mat-datepicker>
                                         </mat-form-field>
@@ -290,7 +293,7 @@
                                     </td>
                                     <td style="width: auto; text-align: center;">
                                         <span style="width: auto" *ngIf="!items.editInput">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
-                                        <div *ngIf="items.editInput" class="content-input-icon position-relative">
+                                        <div *ngIf="items.editInput && items.status === 'PENDIENTE'" class="content-input-icon position-relative">
                                             <mat-form-field style="width: 100px">
                                                 <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text">
                                                 <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
@@ -314,7 +317,7 @@
                                     <td style="width: auto">{{items.service}}</td>
                                     <td style="width: auto">
                                         <span *ngIf="!items.editInput">{{items.concept}}</span>
-                                        <div *ngIf="items.editInput">
+                                        <div *ngIf="items.editInput && items.status === 'PENDIENTE'">
                                             <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" numbersOnly maxlength="8" minlength="8" />
                                         </div>
                                     </td>
@@ -322,15 +325,15 @@
                                     <td>
                                         <span *ngIf="!items.editButton" [class.text-success]="items.status === 'PAGADO'"
                                           [class.text-danger]="estaVencido(items)" >{{items.status}}</span>
-                                        <select *ngIf="items.editButton" [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)">
+                                        <select *ngIf="items.editButton && items.status === 'PENDIENTE'" [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)">
                                             <option *ngFor="let opt of statusOptions" [ngValue]="opt.state">{{opt.option}}</option>
                                         </select>
                                     </td>
-                                    <td>{{items.payDate}}</td>
-                                    <td>{{items.canal}}</td>
+                                    <td>{{items.payDate | date:'dd/MM/yyyy'}}</td>
+                                    <td>{{items.channel}}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <div *ngIf="!items.editButton && items.status=='PENDIENTE'" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
+                                            <div *ngIf="!items.editButton" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
                                                 <span class="icon-editar iconos-big iconos-big"></span>
                                             </div> &nbsp;&nbsp;&nbsp;
                                             <div *ngIf="!items.editButton"   style="cursor: pointer;  margin-left: 18px !important" (click)="Eliminar(items)">

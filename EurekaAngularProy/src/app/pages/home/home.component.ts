@@ -693,19 +693,19 @@ if(columnName === 'canal' ) {
     item.editInput =true;
     item.editButton = true;
     // item.edit = true;
-    item.newEmissionDate = item.emissionDate;
     item.newDueDate = item.dueDate;
+    item.newEmissionDate = item.emissionDate;
     item.newConcept = item.concept;
   }
 
   selectEstPag(event, item: Debts){
-    if(event == '1'){ 
+    if(event == '1'){
       item.editInput = true;
     }
     if(event == '2'){
       item.editInput = false;
     }
-    
+
   }
 
 
@@ -767,7 +767,7 @@ if(columnName === 'canal' ) {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Editarlo!',
-      cancelButtonText: 'Cerrar', 
+      cancelButtonText: 'Cerrar',
       allowOutsideClick: false,
     }).then((result) => {
 
@@ -925,7 +925,7 @@ if(columnName === 'canal' ) {
         Swal.fire(
           'Eliminado!',
           'Tu archivo ha sido eliminado',
-          'success' 
+          'success'
         )
       },
       1000);
