@@ -45,10 +45,11 @@ export class StorageService {
   getCurrentSession(): Session {
     if (this.currentSession === null || this.currentSession === undefined) {
       console.log('currentSession from localStorage');
+      var tk = this.localStorageService.getItem('tk');
       this.currentSession = {
         user: { ruc: '' },
-        isAuthenticate: true,
-        token: this.localStorageService.getItem('tk'),
+        isAuthenticate: (tk !== null && tk !== undefined && tk !== ''),
+        token: tk,
         expire: this.localStorageService.getItem('exp'),
         refresh: this.localStorageService.getItem('rfs')
       }
