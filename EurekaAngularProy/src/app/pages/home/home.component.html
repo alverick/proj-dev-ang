@@ -47,10 +47,10 @@
 
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
-                                        <select class="selectpicker filter-cmb" [(ngModel)]="filtro.dateForFilter" name="">
+                                        <select class="selectpicker filter-cmb" [(ngModel)]="filtro.dateForFilter" name="" (ngModelChange)="clearDatePicker($event)">
                                                 <option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </option>
                                         </select>
-                                        <label *ngIf="filtro.dateForFilter" (click)="filtro.dateForFilter = ''" class="clear-select fa fa-times"></label>
+                                        <label *ngIf="filtro.dateForFilter" (click)="filtro.dateForFilter = ''; filtro.dateFrom= null; filtro.dateTo= null;" class="clear-select fa fa-times"></label>
                                     </div>
                                 </div>
 
@@ -335,9 +335,8 @@
                                     <td>
                                         <span *ngIf="!items.editButton || items.status === 'PAGADO'" [class.text-success]="items.status === 'PAGADO'"
                                           [class.text-danger]="estaVencido(items)" >{{items.status}}</span>
-                                        <select *ngIf="items.editButton && items.status !== 'PAGADO'" [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)">
-                                            <option></option>
-                                            <option value="1">{{items.status}}</option>
+                                        <select *ngIf="items.editButton && items.status !== 'PAGADO'"  [value]='1' [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)" >
+                                            <option value="1" >{{items.status}}</option>
                                             <option value="2">PAGADO</option>
                                         </select>
                                     </td>

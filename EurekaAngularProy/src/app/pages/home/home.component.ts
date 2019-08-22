@@ -233,7 +233,8 @@ export class HomeComponent implements OnInit {
         this.serviceSelected = value[0];
       }
     );
-
+    
+    
     this.homeService.getServices().subscribe(
       value => {
         this.typeList = value;
@@ -252,13 +253,21 @@ export class HomeComponent implements OnInit {
       bdColor: "rgba(100,149,237, .8)",
       color: "white"
     });
-    this.transactionService.debtItems = { data: [], count : 0 };
+
+
+
+   this.transactionService.debtItems = { data: [], count : 0 };
    this.consultaDeuda();
    this.cargaExcel = false;
 
    // check
    //this.SeleccionarTodos();
    this.selectedAll = false;
+
+  }
+
+  statusOpt(){
+      
   }
 /*
   validandoListado() {
@@ -695,7 +704,7 @@ if(columnName === 'canal' ) {
     item.editInput =true;
     item.editButton = true;
     item.editPending = (item.status === 'PENDIENTE');
-    // item.edit = true;
+    item.newStatus =  '1';
     item.newDueDate = item.dueDate;
     item.newEmissionDate = item.emissionDate;
     item.newConcept = item.concept;
@@ -714,9 +723,16 @@ if(columnName === 'canal' ) {
 
   }
 
+  clearDatePicker(event){
+    if(event == ''){
+      this.limpiardate1();
+      this.limpiardate2(); 
+    }  
+     
+  }
+
 
   BotonActualizar(item: Debts) {
-
     // MONTO
 
     if(item.newAmount.toString() ==='' ||item.newAmount.toString() === null){
@@ -809,9 +825,9 @@ if(columnName === 'canal' ) {
         };
 
 
+  if(item.newStatus==='1'){ 
 
-    if(item.newStatus===null || item.newStatus === undefined){
-      this.transactionService.editDeuda(item.id, debts).subscribe(
+        this.transactionService.editDeuda(item.id, debts).subscribe(
           debtsUpdate => {
             if (debtsUpdate.success) {
               Swal.fire({
@@ -831,6 +847,7 @@ if(columnName === 'canal' ) {
                  item.editInput =false;
                  item.editButton = false;
                  item.editPending = false;
+                 item.newStatus = '1';
                 }
               });
             }
@@ -845,26 +862,7 @@ if(columnName === 'canal' ) {
             }
           }
         );
-      }else if(item.newStatus==='1'){
 
-        this.transactionService.updateDeuda(item.id, false ).subscribe(
-          statusUpdate=>{
-            Swal.fire({
-              type: 'success',
-              titleText: 'Editado!',
-              text: 'Su registro a sido editado',
-              showCloseButton: true,
-              allowOutsideClick: false,
-              onAfterClose: () => {
-                console.log('onAfterClose');
-                // item.edit = false;
-                item.newStatus = null;
-                item.editInput =false;
-                item.editButton = false;
-                item.editPending = false;
-              }});
-          }
-        );
       }else if(item.newStatus==='2'){
           let boolean= false;
           this.transactionService.updateDeuda(item.id, true).subscribe(
@@ -945,7 +943,17 @@ if(columnName === 'canal' ) {
         this.transactionService.deleteAll(itemsParaEliminar)
           .subscribe(() => this.consultaDeuda());
          /* this.spinner2.hide();*/
-          }
+          } 
+          
+          setTimeout(() =>
+          {
+            Swal.fire(
+              'Eliminado!',
+              'Se han eliminado ' + itemsParaEliminar.length + ' registros',
+              'success'
+            )
+          },
+          2000);
         });
   }
 

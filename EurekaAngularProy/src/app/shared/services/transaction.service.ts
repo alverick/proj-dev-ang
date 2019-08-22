@@ -68,6 +68,7 @@ export class TransactionService {
               d.dueDate = new Date(d.dueDate);
               d.editInput = false;
               d.editButton = false;
+              d.newStatus = '1';
             });
             this.debtItems = r;
             console.log(r);
