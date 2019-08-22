@@ -569,7 +569,6 @@ if(columnName === 'canal' ) {
       showConfirmButton: false,
       cancelButtonColor: '#d33',
       cancelButtonText:  'Cerrar',
-      allowOutsideClick: false
 
     });
   }
@@ -770,12 +769,12 @@ if(columnName === 'canal' ) {
      var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd));
 
      if (emidate <  2000 || emidate >  2050 ) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');
+      this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Emision');
       return;
     }
 
     if (duadate <  2000 || duadate >  2050 ) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');
+      this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Vencimiento');
       return;
     }
 
@@ -816,8 +815,7 @@ if(columnName === 'canal' ) {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Editarlo!',
-      cancelButtonText: 'Cerrar',
-      allowOutsideClick: false,
+      cancelButtonText: 'Cerrar'
     }).then((result) => {
 
       if (result.value) {
@@ -841,7 +839,6 @@ if(columnName === 'canal' ) {
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
-                allowOutsideClick: false,
                 onAfterClose: () => {
                   item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
@@ -862,7 +859,6 @@ if(columnName === 'canal' ) {
                 titleText: 'ERROR',
                 text: debtsUpdate.message,
                 showCloseButton: true,
-                allowOutsideClick: false
               });
             }
           }
@@ -877,7 +873,6 @@ if(columnName === 'canal' ) {
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
-                allowOutsideClick: false,
                 onAfterClose: () => {
                   item.status= 'PAGADO';
                   item.amountPayed = statusUpdate.payed;
@@ -939,7 +934,6 @@ if(columnName === 'canal' ) {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
-      allowOutsideClick: false,
     }).then((result) => {
       console.log(result);
       if (result.value) {
@@ -973,7 +967,6 @@ if(columnName === 'canal' ) {
     cancelButtonColor: '#d33',
     confirmButtonText: 'Si, Borralo',
     cancelButtonText: 'Cerrar',
-    allowOutsideClick: false,
   }).then((result) => {
     console.log(result);
     if (result.value) {

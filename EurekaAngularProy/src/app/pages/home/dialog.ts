@@ -34,8 +34,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
                 public  formBuilder: FormBuilder,
                 public  dialogRef: MatDialogRef<DialogComponent>
 
-              ) {
-                dialogRef.disableClose = true;
+              ) { 
                }
 
     // tslint:disable-next-line:use-life-cycle-interface
