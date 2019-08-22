@@ -12,7 +12,7 @@ import { MatDialogRef } from "@angular/material";
 
     constructor(public excelService: ExcelService,
                  public dialog: MatDialogRef<ValidationComponent>) {
-                  dialog.disableClose = true;
+                 // dialog.disableClose = true;
                   }
       ocultar: boolean = true;
 

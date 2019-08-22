@@ -568,8 +568,7 @@ if(columnName === 'canal' ) {
       showCancelButton: true,
       showConfirmButton: false,
       cancelButtonColor: '#d33',
-      cancelButtonText:  'Cerrar',
-      allowOutsideClick: false
+      cancelButtonText:  'Cerrar', 
 
     });
   }
@@ -767,12 +766,12 @@ if(columnName === 'canal' ) {
      var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd)); 
 
      if (emidate <  2000 || emidate >  2050 ) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');
+      this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Emision');
       return;
     }
 
     if (duadate <  2000 || duadate >  2050 ) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');
+      this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Vencimiento');
       return;
     }
 
@@ -813,8 +812,7 @@ if(columnName === 'canal' ) {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, Editarlo!',
-      cancelButtonText: 'Cerrar',
-      allowOutsideClick: false,
+      cancelButtonText: 'Cerrar'
     }).then((result) => {
 
       if (result.value) {
@@ -837,8 +835,7 @@ if(columnName === 'canal' ) {
                 type: 'success',
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
-                showCloseButton: true,
-                allowOutsideClick: false,
+                showCloseButton: true, 
                 onAfterClose: () => { 
                   item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
@@ -858,8 +855,7 @@ if(columnName === 'canal' ) {
                 type: 'warning',
                 titleText: 'ERROR',
                 text: debtsUpdate.message,
-                showCloseButton: true,
-                allowOutsideClick: false
+                showCloseButton: true, 
               });
             }
           }
@@ -873,8 +869,7 @@ if(columnName === 'canal' ) {
                 type:'success',
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
-                showCloseButton: true,
-                allowOutsideClick: false,
+                showCloseButton: true, 
                 onAfterClose: () => { 
                   item.status= 'PAGADO';
                   item.amountPayed = statusUpdate.payed;
@@ -935,26 +930,19 @@ if(columnName === 'canal' ) {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar',
-      allowOutsideClick: false,
+      cancelButtonText: 'Cancelar', 
     }).then((result) => {
       if (result.value) {
         /*this.spinner2.show();*/
 
         this.transactionService.deleteAll(itemsParaEliminar)
           .subscribe(() => this.consultaDeuda());
-         /* this.spinner2.hide();*/
-          } 
-          
           setTimeout(() =>
-          {
-            Swal.fire(
-              'Eliminado!',
-              'Se han eliminado ' + itemsParaEliminar.length + ' registros',
-              'success'
-            )
+          { 
+            this.mensaje('success','Eliminado!','Tu registro ha sido eliminado');
           },
-          2000);
+          1000);
+          }  
         });
   }
 
@@ -970,8 +958,7 @@ if(columnName === 'canal' ) {
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Si, Borralo',
-    cancelButtonText: 'Cerrar',
-    allowOutsideClick: false,
+    cancelButtonText: 'Cerrar', 
   }).then((result) => {
     if (result.value) {
 
@@ -979,12 +966,8 @@ if(columnName === 'canal' ) {
       .subscribe(() => this.consultaDeuda());
 
       setTimeout(() =>
-      {
-        Swal.fire(
-          'Eliminado!',
-          'Tu archivo ha sido eliminado',
-          'success'
-        )
+      { 
+        this.mensaje('success','Eliminado!','Tu registro ha sido eliminado');
       },
       1000);
   }

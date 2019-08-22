@@ -66,12 +66,14 @@ import Swal from "sweetalert2";
             Swal.fire({
               title: 'Ingrese Datos',
               type: 'error',
-              text: `Su archivo está vació`
+              text: `Su archivo está vació`,
+              showCloseButton: true, 
             });
           } else {
             Swal.fire({
               type: 'success',
-              text: `Se cargaron ${value.rowsUploaded} registros`
+              text: `Se cargaron ${value.rowsUploaded} registros`,
+              showCloseButton: true, 
             });
             console.log("GET DEUDA HOME")
             
