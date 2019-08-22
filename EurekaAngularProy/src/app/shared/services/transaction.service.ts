@@ -123,14 +123,14 @@ export class TransactionService {
       return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));
     }
 
-    report(ids: number[]): Observable<any>{
+    report(filtro: DebstFilter): Observable<any>{
       const url = `${this.URI_API}/debt/report?_=`+ new Date().getTime();
       const headers = new Headers({
         "Authorization": "bearer " + this.storage.getCurrentToken(),
         "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": 'true'
       });
-      return this.nativeHttp.post(url, { ids: ids }, {
+      return this.nativeHttp.post(url, filtro, {
         headers: headers,
         responseType: ResponseContentType.Blob
       })

@@ -10,6 +10,7 @@ import { ExcelService } from 'src/app/shared/services/excel.service';
 import { MatDialog, MatSnackBar} from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
+import * as saveAs from 'file-saver';
 
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
@@ -557,101 +558,89 @@ if(columnName === 'canal' ) {
     });
   }
 
+  validaFiltro(): boolean {
+
+    let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+    //lenght date from
+    var lenghtdf = new Date(this.filtro.dateFrom).toDateString().length;
+    var fromdate = parseInt(new Date(this.filtro.dateFrom).toDateString().substr(lenghtdf-4, lenghtdf));
+    // lenght to
+    var lenghtdt = new Date(this.filtro.dateTo).toDateString().length;
+    var todate = parseInt(new Date(this.filtro.dateTo).toDateString().substr(lenghtdt-4, lenghtdt));
+
+
+
+    if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
+      ///       dateFrom es inputDate1              | dateTo  es inputDate2
+          console.log('entro 1');
+          if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
+
+
+            if (this.filtro.dateFrom > this.filtro.dateTo   ) {
+              this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
+              return false;
+            } else {
+              return true;
+              }
+          } else {
+                  if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
+                    this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
+                    return false;
+                  }
+                  if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
+                    this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
+                    return false;
+                  } else {
+                    return true;
+                  }
+          }
+           /// change
+        } else {
+            if ( this.inputDate1.nativeElement.value === '') {
+                this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
+                return false;
+            } else if ( this.inputDate2.nativeElement.value === '') {
+                this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
+                return false;
+            } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
+                this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
+                return false;
+            } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) {
+              this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
+              return false;
+            }
+
+            else if (fromdate <  2000 || fromdate >  2050 ) {
+              this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');
+              return false;
+            }
+
+            else if (todate <  2000 || todate >  2050 ) {
+              this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');
+              return false;
+            }
+            else if (this.filtro.dateFrom > this.filtro.dateTo ) {
+              this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
+              return false;
+            } else {
+
+              return true;
+           }
+    }
+
+  }
+
   consultaDeuda() {
   // tslint:disable-next-line:prefer-const
 
-  let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-  //lenght date from
-  var lenghtdf = new Date(this.filtro.dateFrom).toDateString().length;
-  var fromdate = parseInt(new Date(this.filtro.dateFrom).toDateString().substr(lenghtdf-4, lenghtdf));
-  // lenght to
-  var lenghtdt = new Date(this.filtro.dateTo).toDateString().length;
-  var todate = parseInt(new Date(this.filtro.dateTo).toDateString().substr(lenghtdt-4, lenghtdt));
-
-
-
-  if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
-    ///       dateFrom es inputDate1              | dateTo  es inputDate2
-        console.log('entro 1');
-        if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
-
-
-          if (this.filtro.dateFrom > this.filtro.dateTo   ) {
-            this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
-            return;
-          } else {
-
+    if (this.validaFiltro()){
                 this.spinner.show();
-
                 this.transactionService.getDeuda(this.filtro)
                   .subscribe(debts => {
                   this.selectedAll = false;
                   this.spinner.hide();
                 }, err => { this.spinner.hide(); });
           }
-        } else {
-                if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
-                  this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
-                  return;
-                }
-                if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
-                  this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
-                  return;
-                } else {
-                      console.log(this.filtro);
-                      this.spinner.show();
-
-                      this.transactionService.getDeuda(this.filtro)
-                        .subscribe(debts => {
-                          console.log(debts);
-
-
-                      }, err => { this.spinner.hide(); });
-                }
-        }
-         /// change
-      } else {
-          if ( this.inputDate1.nativeElement.value === '') {
-              this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
-              return;
-          } else if ( this.inputDate2.nativeElement.value === '') {
-              this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
-              return;
-          } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
-              this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
-              return;
-          } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) {
-            this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
-            return;
-          }
-
-          else if (fromdate <  2000 || fromdate >  2050 ) {
-            this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');
-            return;
-          }
-
-          else if (todate <  2000 || todate >  2050 ) {
-            this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');
-            return;
-          }
-          else if (this.filtro.dateFrom > this.filtro.dateTo ) {
-            this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
-            return;
-          } else {
-              console.log(this.filtro);
-            this.spinner.show();
-/*
-              this.debtsList = {
-                count: 0,
-                data: []
-              };*/
-              this.transactionService.getDeuda(this.filtro)
-                .subscribe(debts => {
-                this.spinner.hide();
-              }, err => { this.spinner.hide(); });
-         }
-  }
-
 }
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
@@ -1013,26 +1002,14 @@ MostrarListaSelect() {
   }
 
   DescargarReporte() {
-    const itemsParaReporte: number[] = [];
-    this.transactionService.debtItems.data.forEach(c => {
-    if (c.selected) {
-      itemsParaReporte.push(c.id);
-    }
-    });
-
-    if (itemsParaReporte.length === 0 ) {
-      this.mensaje( 'error', 'Error al Descargar','¡Seleccione las filas a descargar por favor!');
-      return;
-    }
-
-    this.transactionService.report(itemsParaReporte)
+    if (this.validaFiltro()) {
+      this.transactionService.report(this.filtro)
       .subscribe((r: Blob) => {
         console.log('todo bien');
         console.log(r);
-        var downloadUrl = URL.createObjectURL(r);
-        console.log(downloadUrl);
-        window.open(downloadUrl);
+        saveAs(r, "reporte.xlsx");
       });
+    }
   }
 
   estaVencido(itm: Debts){
