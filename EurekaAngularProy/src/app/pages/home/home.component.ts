@@ -194,7 +194,9 @@ export class HomeComponent implements OnInit {
     dateTo: null
   };
   control: any;
+ // mensaje grila
 
+  messageTable: string ='';
 
 
   constructor(
@@ -228,9 +230,7 @@ export class HomeComponent implements OnInit {
     this.loginService.refresh();
     this.homeService.getServices().subscribe(
       value => {
-        this.services = value;
-        console.log("SERVICES");
-        console.log(this.services);
+        this.services = value; 
         this.serviceSelected = value[0];
       }
     );
@@ -534,7 +534,23 @@ if(columnName === 'canal' ) {
 
   sendFiltro() {
     this.filtro.pageNumber = 1;
-    this.consultaDeuda();
+    this.consultaDeuda(); 
+
+    if(this.filtro.inputSearch == ''  && 
+       this.filtro.service == ''  &&  
+       this.filtro.status == ''  &&  
+       this.filtro.inputSearch == ''  &&  
+       this.filtro.dateForFilter == ''){
+       this.messageTable = ' Para empezar, carga las deudas de tus clientes';     
+       } else{
+        if(this.consultaDeuda.length === 0){
+          this.messageTable ='No se encontro ningun Registro para esta Busqueda'; 
+        }
+         
+       }
+
+    
+
   }
 
    mensaje(tipo: any, titulo: string, text: string){
@@ -571,8 +587,7 @@ if(columnName === 'canal' ) {
 
 
     if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
-      ///       dateFrom es inputDate1              | dateTo  es inputDate2
-          console.log('entro 1');
+      ///       dateFrom es inputDate1              | dateTo  es inputDate2 
           if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
 
 
@@ -641,6 +656,8 @@ if(columnName === 'canal' ) {
                   this.spinner.hide();
                 }, err => { this.spinner.hide(); });
           }
+     this.messageTable = ' Para empezar, carga las deudas de tus clientes';     
+          
 }
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
@@ -744,13 +761,10 @@ if(columnName === 'canal' ) {
 
     /// EMISION DATE
     var lenghted = new Date(item.newEmissionDate).toDateString().length;
-    var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
-   // console.log('imprime esto '+ emidate );
-
+    var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted)); 
      /// DUE DATE
      var lenghtdd = new Date(item.newDueDate).toDateString().length;
-     var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd));
-    // console.log('imprime esto '+ duadate );
+     var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd)); 
 
      if (emidate <  2000 || emidate >  2050 ) {
       this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');
@@ -825,8 +839,7 @@ if(columnName === 'canal' ) {
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
                 allowOutsideClick: false,
-                onAfterClose: () => {
-                  console.log('onAfterClose');
+                onAfterClose: () => { 
                   item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
                   item.dueDate = item.newDueDate;
@@ -862,8 +875,7 @@ if(columnName === 'canal' ) {
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
                 allowOutsideClick: false,
-                onAfterClose: () => {
-                  console.log('onAfterClose');
+                onAfterClose: () => { 
                   item.status= 'PAGADO';
                   item.amountPayed = statusUpdate.payed;
                   item.payDate = new Date();
@@ -979,8 +991,7 @@ if(columnName === 'canal' ) {
 })
 }
 
-  SeleccionarTodos() {
-   // console.log(this.debtsList.data);
+  SeleccionarTodos() { 
     this.transactionService.debtItems.data.forEach(itm => itm.selected = this.selectedAll);
 
   }
@@ -992,8 +1003,7 @@ MostrarListaSelect() {
 
   openDialog(service: string) {
     this.OcultaListaExcel = false;
-    this.cargaExcel = false;
-    console.log('sale el pop up');
+    this.cargaExcel = false; 
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogComponent);
     dialogRef.afterClosed().subscribe(result => {

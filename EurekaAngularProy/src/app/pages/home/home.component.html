@@ -287,7 +287,7 @@
                             <tbody style=" overflow: auto;">
                                 <tr *ngIf="ceroRegistros()">
                                     <td colspan="13" style="text-align: center; font-size: 20px;" class="texto-after">
-                                        Para empezar, carga las deudas de tus clientes </td>
+                                      <!--  Para empezar, carga las deudas de tus clientes --> {{messageTable}}</td>
                                 </tr>
 
                                 <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }">
