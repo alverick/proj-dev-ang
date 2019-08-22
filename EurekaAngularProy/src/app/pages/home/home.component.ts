@@ -230,12 +230,12 @@ export class HomeComponent implements OnInit {
     this.loginService.refresh();
     this.homeService.getServices().subscribe(
       value => {
-        this.services = value; 
+        this.services = value;
         this.serviceSelected = value[0];
       }
     );
-    
-    
+
+
     this.homeService.getServices().subscribe(
       value => {
         this.typeList = value;
@@ -268,7 +268,7 @@ export class HomeComponent implements OnInit {
   }
 
   statusOpt(){
-      
+
   }
 /*
   validandoListado() {
@@ -280,7 +280,7 @@ export class HomeComponent implements OnInit {
     }
   }*/
 
- 
+
 
   ceroRegistros(): boolean {
       if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
@@ -534,22 +534,22 @@ if(columnName === 'canal' ) {
 
   sendFiltro() {
     this.filtro.pageNumber = 1;
-    this.consultaDeuda(); 
+    this.consultaDeuda();
 
-    if(this.filtro.inputSearch == ''  && 
-       this.filtro.service == ''  &&  
-       this.filtro.status == ''  &&  
-       this.filtro.inputSearch == ''  &&  
+    if(this.filtro.inputSearch == ''  &&
+       this.filtro.service == ''  &&
+       this.filtro.status == ''  &&
+       this.filtro.inputSearch == ''  &&
        this.filtro.dateForFilter == ''){
-       this.messageTable = ' Para empezar, carga las deudas de tus clientes';     
+       this.messageTable = ' Para empezar, carga las deudas de tus clientes';
        } else{
         if(this.consultaDeuda.length === 0){
-          this.messageTable ='No se encontro ningun Registro para esta Busqueda'; 
+          this.messageTable ='No se encontro ningun Registro para esta Busqueda';
         }
-         
+
        }
 
-    
+
 
   }
 
@@ -587,7 +587,7 @@ if(columnName === 'canal' ) {
 
 
     if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
-      ///       dateFrom es inputDate1              | dateTo  es inputDate2 
+      ///       dateFrom es inputDate1              | dateTo  es inputDate2
           if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
 
 
@@ -645,7 +645,7 @@ if(columnName === 'canal' ) {
 
   }
 
-  consultaDeuda() {
+  consultaDeuda(cb: () => void = null) {
   // tslint:disable-next-line:prefer-const
 
     if (this.validaFiltro()){
@@ -654,10 +654,13 @@ if(columnName === 'canal' ) {
                   .subscribe(debts => {
                   this.selectedAll = false;
                   this.spinner.hide();
+                  if (cb) {
+                    cb();
+                  }
                 }, err => { this.spinner.hide(); });
           }
-     this.messageTable = ' Para empezar, carga las deudas de tus clientes';     
-          
+     this.messageTable = ' Para empezar, carga las deudas de tus clientes';
+
 }
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
@@ -732,9 +735,9 @@ if(columnName === 'canal' ) {
   clearDatePicker(event){
     if(event == ''){
       this.limpiardate1();
-      this.limpiardate2(); 
-    }  
-     
+      this.limpiardate2();
+    }
+
   }
 
 
@@ -761,10 +764,10 @@ if(columnName === 'canal' ) {
 
     /// EMISION DATE
     var lenghted = new Date(item.newEmissionDate).toDateString().length;
-    var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted)); 
+    var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
      /// DUE DATE
      var lenghtdd = new Date(item.newDueDate).toDateString().length;
-     var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd)); 
+     var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd));
 
      if (emidate <  2000 || emidate >  2050 ) {
       this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');
@@ -828,7 +831,7 @@ if(columnName === 'canal' ) {
         };
 
 
-  if(item.newStatus==='1'){ 
+  if(item.newStatus==='1'){
 
         this.transactionService.editDeuda(item.id, debts).subscribe(
           debtsUpdate => {
@@ -839,7 +842,7 @@ if(columnName === 'canal' ) {
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
                 allowOutsideClick: false,
-                onAfterClose: () => { 
+                onAfterClose: () => {
                   item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
                   item.dueDate = item.newDueDate;
@@ -875,7 +878,7 @@ if(columnName === 'canal' ) {
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
                 allowOutsideClick: false,
-                onAfterClose: () => { 
+                onAfterClose: () => {
                   item.status= 'PAGADO';
                   item.amountPayed = statusUpdate.payed;
                   item.payDate = new Date();
@@ -938,24 +941,23 @@ if(columnName === 'canal' ) {
       cancelButtonText: 'Cancelar',
       allowOutsideClick: false,
     }).then((result) => {
+      console.log(result);
       if (result.value) {
-        /*this.spinner2.show();*/
+        this.spinner.show();
 
         this.transactionService.deleteAll(itemsParaEliminar)
-          .subscribe(() => this.consultaDeuda());
-         /* this.spinner2.hide();*/
-          } 
-          
-          setTimeout(() =>
-          {
-            Swal.fire(
-              'Eliminado!',
-              'Se han eliminado ' + itemsParaEliminar.length + ' registros',
-              'success'
-            )
-          },
-          2000);
-        });
+          .subscribe(() => {
+            this.consultaDeuda(() =>
+              {
+                Swal.fire(
+                  'Eliminado!',
+                  'Se han eliminado ' + itemsParaEliminar.length + ' registros',
+                'success'
+                )
+              });
+          }, err => { this.spinner.hide(); });
+      }
+    });
   }
 
 
@@ -973,25 +975,23 @@ if(columnName === 'canal' ) {
     cancelButtonText: 'Cerrar',
     allowOutsideClick: false,
   }).then((result) => {
+    console.log(result);
     if (result.value) {
-
+      this.spinner.show();
       this.transactionService.deleteDeuda(item.id)
-      .subscribe(() => this.consultaDeuda());
-
-      setTimeout(() =>
+      .subscribe(() => this.consultaDeuda(() =>
       {
         Swal.fire(
           'Eliminado!',
           'Tu archivo ha sido eliminado',
           'success'
         )
-      },
-      1000);
-  }
-})
+      }), err => { this.spinner.hide(); });
+    }
+  });
 }
 
-  SeleccionarTodos() { 
+  SeleccionarTodos() {
     this.transactionService.debtItems.data.forEach(itm => itm.selected = this.selectedAll);
 
   }
@@ -1003,7 +1003,7 @@ MostrarListaSelect() {
 
   openDialog(service: string) {
     this.OcultaListaExcel = false;
-    this.cargaExcel = false; 
+    this.cargaExcel = false;
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogComponent);
     dialogRef.afterClosed().subscribe(result => {
