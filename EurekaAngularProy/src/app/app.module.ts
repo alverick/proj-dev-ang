@@ -44,7 +44,7 @@ import { ConfiguracionService } from './shared/services/configuracion.service';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { ShearDirective } from './pages/home/shear.directive';
 import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
-import { DecimalesDirective } from './pages/home/decimales.directive'; 
+import { DecimalesDirective } from './pages/home/decimales.directive';
 
 
 @NgModule({
@@ -63,7 +63,7 @@ import { DecimalesDirective } from './pages/home/decimales.directive';
     ConfigurarEmpresaComponent,
     ShearDirective,
     BlockCopyPasteDirective,
-    DecimalesDirective, 
+    DecimalesDirective,
 
 
     ],
@@ -94,8 +94,7 @@ import { DecimalesDirective } from './pages/home/decimales.directive';
     MatMomentDateModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatProgressSpinnerModule,
-
+    MatProgressSpinnerModule
   ],
   providers: [
     ExcelService,
