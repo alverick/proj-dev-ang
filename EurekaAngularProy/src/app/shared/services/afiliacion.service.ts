@@ -41,7 +41,8 @@ export class AfiliacionService {
     if (svc_old) {
       Swal.fire({
         type: 'error',
-        text: 'Este servicio ya existe'
+        text: 'Este servicio ya existe',
+        allowOutsideClick: false
       });
     } else {
       this.services.push(svc);

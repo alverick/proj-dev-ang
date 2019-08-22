@@ -23,7 +23,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   ngOnInit() {
     this.Formulario =true;
-    this.afiliacionService.services = [] 
+    this.afiliacionService.services = []
   //  console.log(this.route.params.subscribe( params => this.ruc = params.ruc )) ;
     this.route.data.subscribe(d => {
       console.log('Configurar Servicios');
@@ -44,23 +44,23 @@ export class ConfigurarServiciosComponent implements OnInit {
   serviceActual: ServiceModel = null;
 
   OcultarFormulario() {
-    this.Formulario = false 
+    this.Formulario = false
     this.stateCreate =false;
     this.stateEdit =false;
   }
-  MostarFormulario() {  
-    this.stateCreate == true; 
+  MostarFormulario() {
+    this.stateCreate == true;
     this.indiceActual = -1;
     this.serviceActual = null;
     this.Formulario = true;
   }
- 
- 
- 
+
+
+
   EnviarServicios() {
  //   if(this.afiliacionService.services.forEach)
-    
-    
+
+
     if(this.Formulario === true){
       Swal.fire({
         title: 'Servicio no guardado',
@@ -71,33 +71,36 @@ export class ConfigurarServiciosComponent implements OnInit {
         showConfirmButton: false,
         cancelButtonColor: '#d33',
         cancelButtonText:  'Cerrar',
+        allowOutsideClick: false
       });
       return;
     }
     // this.frm.get('monto').value
-  
+
     if(this.afiliacionService.services.length > 99){
       Swal.fire({
         type: 'error',
-        text: 'solo puede tener 99 servicios como maximo'
+        text: 'solo puede tener 99 servicios como maximo',
+        allowOutsideClick: false
       });
       return;
     }
     if(this.afiliacionService.services.find((v) => v.nroCuenta === '')) {
       Swal.fire({
         type: 'error',
-        text: 'Falta Ingresar datos en su servicio Pension'
+        text: 'Falta Ingresar datos en su servicio Pension',
+        allowOutsideClick: false
       });
       return;
     }
     this.afiliacionService.GrabarServicios()
-      .subscribe(r => { 
+      .subscribe(r => {
         this.router.navigate(['/procesando']);
        });
   }
 
 
- 
+
   getCanales(svc: ServiceModel) {
     let str = '';
     if (svc.usaWebApp) {
@@ -125,7 +128,8 @@ export class ConfigurarServiciosComponent implements OnInit {
       text: 'Se va a eliminar el registro. ¿Desea continuar?',
       showCancelButton: true,
       showConfirmButton: true,
-      confirmButtonText: 'Si, eliminalo!'
+      confirmButtonText: 'Si, eliminalo!',
+      allowOutsideClick: false
     }).then(r => {
       if (r.value) {
         this.afiliacionService.DelService(index);
@@ -140,18 +144,19 @@ export class ConfigurarServiciosComponent implements OnInit {
    /* if(svc.codDeudor !== 'DNI' && svc.codDeudor !== 'RUC' && svc.codDeudor !== 'Codigo Interno' && svc.codDeudor !== 'Otro Codigo' ){
       console.log('cambios '+ svc.codDeudor);
     } */
-    this.serviceActual = svc; 
+    this.serviceActual = svc;
     this.Formulario = true;
   }
 
   onGrabar(svc: ServiceModel) {
- 
+
     console.log(svc);
     if (this.indiceActual >= 0) {
       if (this.afiliacionService.services.find((s, i) => s.nombre === svc.nombre && i !== this.indiceActual)) {
         Swal.fire({
           type: 'error',
-          text: 'Ya existe un servicio con este nombre'
+          text: 'Ya existe un servicio con este nombre',
+          allowOutsideClick: false
         });
         return;
       }
@@ -161,7 +166,8 @@ export class ConfigurarServiciosComponent implements OnInit {
       if (this.afiliacionService.services.find(s => s.nombre === svc.nombre)) {
         Swal.fire({
           type: 'error',
-          text: 'Ya existe un servicio con este nombre'
+          text: 'Ya existe un servicio con este nombre',
+          allowOutsideClick: false
         });
         return;
       }

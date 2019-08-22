@@ -11,7 +11,7 @@ import { ConfigurarServiciosComponent } from "../configurar-servicios/configurar
   styleUrls: ['./form-servicio.component.scss']
 })
 export class FormServicioComponent implements OnInit {
- 
+
   public ngInputtextCodi:boolean = false;
 
   constructor(private afiliacionService: AfiliacionService,
@@ -48,7 +48,7 @@ export class FormServicioComponent implements OnInit {
     return this.frm.controls;
   }
 
-   
+
   frm: FormGroup;
 
   codDeudor: any[] = [];
@@ -94,19 +94,19 @@ export class FormServicioComponent implements OnInit {
     this.changeTipoMora();
 
   }
- 
+
 
   onSubmitServicio() {
-    
-    if (this.frm.valid) 
+
+    if (this.frm.valid)
     {
      this.stateEdit.stateCreate =false;
      this.stateEdit.stateEdit = false;
-      
+
      console.log('stado de editar ' + this.stateEdit.stateEdit);
 
-     const monto  = parseInt(this.frm.get('monto').value); 
-     const porcentaje  = parseInt(this.frm.get('porcentaje').value);  
+     const monto  = parseInt(this.frm.get('monto').value);
+     const porcentaje  = parseInt(this.frm.get('porcentaje').value);
 
      if (this.frm.get('cobraMora').value === 'S') {
         if (this.frm.get('tipoMora').value === 'M') {
@@ -121,7 +121,8 @@ export class FormServicioComponent implements OnInit {
                 showConfirmButton: false,
                 cancelButtonColor: '#d33',
                 cancelButtonText:  'Cerrar',
-                
+                allowOutsideClick: false,
+
               });
               return;
             }
@@ -134,26 +135,28 @@ export class FormServicioComponent implements OnInit {
                 showConfirmButton: false,
                 cancelButtonColor: '#d33',
                 cancelButtonText:  'Cerrar',
-                
+                allowOutsideClick: false,
+
               });
               return;
             } else {
               if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-                Swal.fire({ 
+                Swal.fire({
                   type: 'error',
-                  html: 'Debe escoger un medio de pago', 
+                  html: 'Debe escoger un medio de pago',
                   showCloseButton: true,
                   showCancelButton: true,
                   showConfirmButton: false,
                   cancelButtonColor: '#d33',
-                  cancelButtonText:  'Cerrar',});
+                  cancelButtonText:  'Cerrar',
+                  allowOutsideClick: false,});
               } else {
-  
+
                 const value: ServiceModel = this.frm.value;
                 value.simboloMoneda = this.simboloMoneda;
                 this.grabar.emit(value);
               }
-  
+
             }
 
           }else {
@@ -165,11 +168,12 @@ export class FormServicioComponent implements OnInit {
               showConfirmButton: false,
               cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
-              
+              allowOutsideClick: false,
+
             });
             return;
           }
-         
+
         } else {
           if (porcentaje === null) {
             Swal.fire({
@@ -180,7 +184,8 @@ export class FormServicioComponent implements OnInit {
               showConfirmButton: false,
               cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
-              
+              allowOutsideClick: false,
+
             });
             return;
           }
@@ -193,7 +198,8 @@ export class FormServicioComponent implements OnInit {
               showConfirmButton: false,
               cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
-              
+              allowOutsideClick: false,
+
             });
             return;
           }
@@ -206,43 +212,46 @@ export class FormServicioComponent implements OnInit {
               showConfirmButton: false,
               cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
-              
+              allowOutsideClick: false,
+
             });
             return;
           } else {
             if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-              Swal.fire({ 
-                type: 'error', 
+              Swal.fire({
+                type: 'error',
                 html: 'Debe escoger un medio de pago',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
                 cancelButtonColor: '#d33',
-                cancelButtonText:  'Cerrar', });
-            } else { 
+                cancelButtonText:  'Cerrar',
+                allowOutsideClick: false, });
+            } else {
               const value: ServiceModel = this.frm.value;
               value.simboloMoneda = this.simboloMoneda;
               this.grabar.emit(value);
-            } 
+            }
           }
 
         }
       } else {
           if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-            Swal.fire({ type: 'error', 
+            Swal.fire({ type: 'error',
                         html: 'Debe escoger un medio de pago',
                         showCloseButton: true,
                         showCancelButton: true,
                         showConfirmButton: false,
                         cancelButtonColor: '#d33',
-                        cancelButtonText:  'Cerrar', });
+                        cancelButtonText:  'Cerrar',
+                        allowOutsideClick: false, });
           } else {
 
             const value: ServiceModel = this.frm.value;
             value.simboloMoneda = this.simboloMoneda;
             this.grabar.emit(value);
           }
-      } 
+      }
     }
   }
 
@@ -274,7 +283,7 @@ export class FormServicioComponent implements OnInit {
     }
   }
 
-  selectCodigo(event){  
+  selectCodigo(event){
     //alert(event);
     if(event == 'Otro Codigo'){
       this.ngInputtextCodi = true;

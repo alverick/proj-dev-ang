@@ -106,6 +106,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
             title: 'Datos de empresa guardados',
             text: 'Sus datos han sido actualizados',
             confirmButtonText: 'Aceptar',
+            allowOutsideClick: false,
             onAfterClose: () => {
               datosEmpresa.email = datosEmpresa.newEmail;
               datosEmpresa.movilNumber = datosEmpresa.newMovilNumber;

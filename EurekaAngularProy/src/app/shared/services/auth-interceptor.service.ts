@@ -53,6 +53,7 @@ export class AuthInterceptorService implements HttpInterceptor {
             showConfirmButton: false,
             cancelButtonColor: '#d33',
             cancelButtonText:  'Cerrar',
+            allowOutsideClick: false,
             onClose: () =>{
               console.log('auth.interceptor to Login');
               this.router.navigateByUrl('/login')
@@ -69,6 +70,7 @@ export class AuthInterceptorService implements HttpInterceptor {
             showConfirmButton: false,
             cancelButtonColor: '#d33',
             cancelButtonText:  'Cerrar',
+            allowOutsideClick: false,
             onClose: () =>{
               console.log('auth.interceptor to Login');
               this.router.navigateByUrl('/login')

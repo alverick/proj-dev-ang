@@ -57,7 +57,8 @@ export class CrearContrasenaComponent implements OnInit {
     if (this.registerForm.value.acceptterms == false) {
       Swal.fire({
         type: 'warning',
-        text: 'Debe aceptar los terminos y condiciones'
+        text: 'Debe aceptar los terminos y condiciones',
+        allowOutsideClick: false
       });
       return;
     }
@@ -76,14 +77,16 @@ export class CrearContrasenaComponent implements OnInit {
       } else {
         Swal.fire({
           type: 'error',
-          text: d.message
+          text: d.message,
+          allowOutsideClick: false
         });
       }
     }, err => {
       console.log(err);
       Swal.fire({
         type: 'error',
-        html: 'Ha ocurrido un error con el servidor<br />Intente de nuevo'
+        html: 'Ha ocurrido un error con el servidor<br />Intente de nuevo',
+        allowOutsideClick: false
       });
     });
   }

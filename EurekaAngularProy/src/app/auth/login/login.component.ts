@@ -7,8 +7,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { CookieService } from 'ngx-cookie-service';
 import { RecaptchaComponent } from 'ng-recaptcha';
-import { StorageService } from 'src/app/shared/services/storage.service'; 
-import { MatDialogRef, MatSnackBar } from '@angular/material'; 
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
   isTrue: boolean = false;
   codigo2: boolean = false;
   isCaptchaValidate: boolean = true;
-  
+
   storeRuc : any ;
 
   @ViewChild("recaptchaRef")
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
       { type: 'maxlength', message: 'Debes ingresar una contraseña entre 6 y 20 caracteres'},
     ]
   }
-  
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -96,14 +96,14 @@ export class LoginComponent implements OnInit {
     validationLogin(rucStr: any) {
     if (rucStr) {
       this.rememberMe = true;
-    }    
+    }
     console.log(rucStr);
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.required,
              Validators.pattern('^[0-9]*$')  ])   ],
       psw: ['', Validators.required ],
       rememberme: [this.rememberMe, Validators.required]
-    }); 
+    });
 
   }
 
@@ -128,71 +128,71 @@ export class LoginComponent implements OnInit {
       allowOutsideClick: false,
     });
   }
- 
-  focusFunctionRuc(){ 
+
+  focusFunctionRuc(){
     this.inputUsuaValid = false;
     this.validarCantRuc = false;
     this.codigo2=false;
   }
   focusFunctionPass(){
-    this.inputPassValid = false; 
+    this.inputPassValid = false;
     this.validarCantPass =false;
     this.codigo2=false;
-  } 
-  
+  }
+
   /* /////// L O G I N ////////////  */
   public try(): void{
 
-  }  
+  }
 
-  public submitLogin() : any { 
+  public submitLogin() : any {
 
 
     console.log("INTENTOS THIS : "+this.intentos)
- 
+
     // validacion cuando le falta para llegar a la cantidad de letras
     if(this.loginForm.get('ruc').value.length == 0 && (this.loginForm.get('psw').value.length > 0 && this.loginForm.get('psw').value.length < 6)){
       this.inputUsuaValid =true;
-      this.validarCantPass =true;  
+      this.validarCantPass =true;
       return;
     }
     if( (this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11) &&  this.loginForm.get('psw').value.length == 0){
       this.validarCantRuc =true;
-      this.inputPassValid =true;  
+      this.inputPassValid =true;
       return;
-    }  
+    }
     if(this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11 && this.loginForm.get('psw').value.length > 0 &&   this.loginForm.get('psw').value.length < 6){
       this.validarCantRuc =true;
-      this.validarCantPass =true; 
+      this.validarCantPass =true;
       return;
     }
     if(this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11 ){
-      this.validarCantRuc =true; 
-      this.inputPassValid =false; 
-      this.inputUsuaValid =false; 
+      this.validarCantRuc =true;
+      this.inputPassValid =false;
+      this.inputUsuaValid =false;
       return;
     }
     if(this.loginForm.get('psw').value.length > 0 && this.loginForm.get('psw').value.length < 6){
-      this.validarCantPass =true; 
-      this.inputPassValid =false; 
-      this.inputUsuaValid =false; 
+      this.validarCantPass =true;
+      this.inputPassValid =false;
+      this.inputUsuaValid =false;
       return;
-    } 
+    }
     if(this.loginForm.get('ruc').value.length == 0 && this.loginForm.get('psw').value.length == 0){
       this.inputPassValid =true;
-      this.inputUsuaValid =true;  
+      this.inputUsuaValid =true;
       return;
     }
     if(this.loginForm.get('ruc').value.length == 0){
-      this.inputUsuaValid =true; 
+      this.inputUsuaValid =true;
       return;
     }
     if(this.loginForm.get('psw').value.length == 0){
-      this.inputPassValid =true; 
+      this.inputPassValid =true;
       return;
-    }  
-    
-    
+    }
+
+
     this.cookieService.delete('ruc');
     console.log("LOGIN VALID  : " +this.loginForm.valid);
     console.log(this.isCaptchaValidate);
@@ -203,14 +203,22 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         value => {
-          console.log("INTENTOS SERVICE : "+value.paramNum) 
+          console.log("INTENTOS SERVICE : "+value.paramNum)
           this.storageService.setIntentos(value.paramNum);
           this.intentos = this.storageService.getIntentos();
 
           this.intentosRestantes= 6 - this.intentos;
           this.codRespuesta= value.codRespuesta;
           if(value.paramStr==="Un session ya se encuentra activa"){
-            Swal.fire({   imageUrl: '/assets/images/complain.svg',   imageHeight: 100,  title:'Existe una Sesión Activa', cancelButtonText: 'Cerrar',   cancelButtonColor: '#d33', showCloseButton: true})
+            Swal.fire({
+              imageUrl: '/assets/images/complain.svg',
+              imageHeight: 100,
+              title:'Existe una Sesión Activa',
+              cancelButtonText: 'Cerrar',
+              cancelButtonColor: '#d33',
+              showCloseButton: true,
+              allowOutsideClick: false
+            })
           }else if(value.estado===true && this.intentos<=6){
                   console.log("RECORDAR : " + this.rememberMe);
                   if(this.rememberMe==true){
@@ -218,69 +226,69 @@ export class LoginComponent implements OnInit {
                       expire.setDate(expire.getDate() + 25);
                       this.cookieService.set('ruc', this.f.ruc.value, expire);
                   }
-                      
+
                       this.router.navigate(['/home']);
-                      this.spinner.hide();             
+                      this.spinner.hide();
           }else if(this.intentos < 4 && this.codRespuesta == 2 ){
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
             this.codigo2=true;
           }else if(this.intentos< 4 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
-            this.mensaje( 'error', 'Contraseña Incorrecta', 
+            this.mensaje( 'error', 'Contraseña Incorrecta',
             'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' );
-             
+
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
-            this.loginService.errores= value.codRespuesta;            
+            this.loginService.errores= value.codRespuesta;
             this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
-            this.isTrue = true;              
-            this.codigo2=true;          
+            this.isTrue = true;
+            this.codigo2=true;
 
           }else if(this.intentos == 4 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
 
-            this.mensaje( 'error', 'Contraseña Incorrecta', 
+            this.mensaje( 'error', 'Contraseña Incorrecta',
             'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' );
-              
+
             this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
-            this.isTrue = true;              
-            
+            this.isTrue = true;
+
           }else if(this.intentos == 5 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
-            this.isTrue = true;      
-            this.codigo2=true;          
-        
+            this.isTrue = true;
+            this.codigo2=true;
+
           }else if(this.intentos == 5 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
             this.mensaje( 'error', 'Contraseña Incorrecta','Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes');
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
-            this.isTrue = true; 
-            this.codigo2= false;             
+            this.isTrue = true;
+            this.codigo2= false;
           }
           else if(this.intentos >= 6 || value.paramStr==='Vuelva a intentarlo mas tarde' || value.paramStr==='El usuario esta bloqueado'){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Sin codigo");
             this.mensaje( 'error', 'Contraseña Incorrecta','Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe '  );
             this.intento6= true;
-            this.isTrue = false;             
+            this.isTrue = false;
           }
         },
-      error =>{ 
+      error =>{
         this.spinner.hide();
         if(error.status ===500){
           this.mensaje( 'error', 'Error', 'Error del Servidor comuniquese con el administrador');
-           
+
         }
       },
       () => this.spinner.hide()
     );
   }
 }
- 
+
 }
