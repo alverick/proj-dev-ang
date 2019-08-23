@@ -536,21 +536,14 @@ if(columnName === 'canal' ) {
     this.filtro.pageNumber = 1;
     this.consultaDeuda();
 
-    if(this.filtro.inputSearch == ''  &&
-       this.filtro.service == ''  &&
-       this.filtro.status == ''  &&
-       this.filtro.inputSearch == ''  &&
-       this.filtro.dateForFilter == ''){
+    if((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
+       (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined)  &&
+       (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
+       (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)){
        this.messageTable = ' Para empezar, carga las deudas de tus clientes';
-       } else{
-        if(this.consultaDeuda.length === 0){
-          this.messageTable ='No se encontro ningun Registro para esta Busqueda';
-        }
-
-       }
-
-
-
+      } else{
+        this.messageTable ='No se encontro ningun Registro para esta Busqueda';
+      }
   }
 
    mensaje(tipo: any, titulo: string, text: string){
@@ -563,7 +556,7 @@ if(columnName === 'canal' ) {
     Swal.fire({
       type: tipo ,
       title: titulo ,
-      text: text,
+      html: text,
       showCloseButton: true,
       showCancelButton: true,
       showConfirmButton: false,
@@ -583,10 +576,27 @@ if(columnName === 'canal' ) {
     var lenghtdt = new Date(this.filtro.dateTo).toDateString().length;
     var todate = parseInt(new Date(this.filtro.dateTo).toDateString().substr(lenghtdt-4, lenghtdt));
 
+    if (this.filtro.dateForFilter !== '' && this.filtro.dateForFilter !== null && this.filtro.dateForFilter !== undefined) {
+      let faltaDesde: boolean = false;
+      let faltaHasta: boolean = false;
+      if (this.filtro.dateFrom === null && this.inputDate1.nativeElement.value === '') {
+        faltaDesde = true;
+      }
+      if (this.filtro.dateTo === null && this.inputDate2.nativeElement.value === '') {
+        faltaHasta = true;
+      }
+      let msg = faltaDesde ? 'La fecha "desde" no puede estar en blanco' : '';
+      msg += faltaHasta ? (faltaDesde ? '<br />' : '') + 'La fecha "hasta" no puede estar en blanco' : '';
+      if (faltaDesde || faltaHasta) {
+        this.mensaje( 'error', 'Error en la fecha',msg);
+        return false;
+      }
+    }
 
 
     if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
       ///       dateFrom es inputDate1              | dateTo  es inputDate2
+
           if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
 
 
@@ -742,67 +752,68 @@ if(columnName === 'canal' ) {
 
   BotonActualizar(item: Debts) {
     // MONTO
+    if(item.newStatus==='1') {
+      if(item.newAmount.toString() ==='' ||item.newAmount.toString() === null){
+        this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
+        return;
+      }
+      if(item.newAmount.toString().length < 1){
+        this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
+        return;
+      }
+      if(parseInt(item.newAmount.toString()) < 1){
+        this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
+        return;
+      }
 
-    if(item.newAmount.toString() ==='' ||item.newAmount.toString() === null){
-      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
-      return;
-    }
-    if(item.newAmount.toString().length < 1){
-      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
-      return;
-    }
-    if(parseInt(item.newAmount.toString()) < 1){
-      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
-      return;
-    }
+      if(!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)){
+        this.mensaje( 'error', 'Error en el monto','Ingrese un Monto valido minimo de 1 y maximo de 9 caracteres enteros y 2 decimales como maximo');
+        return;
+      }
 
-    if(!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)){
-      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto valido minimo de 1 y maximo de 9 caracteres enteros y 2 decimales como maximo');
-      return;
-    }
+      /// EMISION DATE
+      var lenghted = new Date(item.newEmissionDate).toDateString().length;
+      var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
+      /// DUE DATE
+      var lenghtdd = new Date(item.newDueDate).toDateString().length;
+      var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd));
 
-    /// EMISION DATE
-    var lenghted = new Date(item.newEmissionDate).toDateString().length;
-    var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
-     /// DUE DATE
-     var lenghtdd = new Date(item.newDueDate).toDateString().length;
-     var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd));
+      if (emidate <  2000 || emidate >  2050 ) {
+        this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Emision');
+        return;
+      }
 
-     if (emidate <  2000 || emidate >  2050 ) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Emision');
-      return;
-    }
+      if (duadate <  2000 || duadate >  2050 ) {
+        this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Vencimiento');
+        return;
+      }
 
-    if (duadate <  2000 || duadate >  2050 ) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Vencimiento');
-      return;
-    }
+      if(item.newConcept.length <  8) {
+        this.mensaje( 'error', 'Error en el Concepto','El concepto tiene que tener como minimo 8 digitos');
+        return;
+      }
 
-    if(item.newConcept.length <  8) {
-      this.mensaje( 'error', 'Error en el Concepto','El concepto tiene que tener como minimo 8 digitos');
-      return;
-    }
+      if(item.newConcept === null || item.newConcept === ""){
+        this.mensaje( 'error', 'Error en el Concepto','Ingrese El concepto');
+        return;
+      }
+      if (item.newEmissionDate == null) {
+        this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de emision');
+        return;
+      }
+      if (item.newDueDate == null) {
+        this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de vencimiento');
+        return;
+      }
+      if (item.newConcept === '') {
+        this.mensaje( 'error', 'Error en el Concepto','Ingrese el concepto');
+        return;
+      }
 
-    if(item.newConcept === null || item.newConcept === ""){
-      this.mensaje( 'error', 'Error en el Concepto','Ingrese El concepto');
-      return;
-    }
-    if (item.newEmissionDate == null) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de emision');
-      return;
-    }
-    if (item.newDueDate == null) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de vencimiento');
-      return;
-    }
-    if (item.newConcept === '') {
-      this.mensaje( 'error', 'Error en el Concepto','Ingrese el concepto');
-      return;
-    }
-
-    if (item.newEmissionDate > item.newDueDate) {
-      this.mensaje( 'error', 'Error en la fecha','La fecha de Emision no puede ser mayor a la fecha de vencimiento');
-      return;
+      if (item.newEmissionDate > item.newDueDate) {
+        this.mensaje( 'error', 'Error en la fecha','La fecha de Emision no puede ser mayor a la fecha de vencimiento');
+        return;
+      }
     }
 
     Swal.fire({
@@ -976,7 +987,7 @@ if(columnName === 'canal' ) {
       {
         Swal.fire(
           'Eliminado!',
-          'Tu archivo ha sido eliminado',
+          'Tu registro ha sido eliminado',
           'success'
         )
       }), err => { this.spinner.hide(); });

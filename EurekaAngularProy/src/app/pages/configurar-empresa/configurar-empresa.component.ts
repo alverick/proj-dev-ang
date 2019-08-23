@@ -26,7 +26,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   rubros: RubroModel[] = [];
   constructor(private formBuilder: FormBuilder,
               private configEmpresaService: ConfiguracionService,
-              private afiliacionService: AfiliacionService) { }
+              public afiliacionService: AfiliacionService) { }
 
   ngOnInit() {
     this.createForm();

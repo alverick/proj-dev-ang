@@ -14,10 +14,10 @@ import { AnalisisComponent } from './analisis/analisis.component';
 
   ],
   declarations: [
-    HomeComponent,
-    ConfigurarEmpresaComponent,
-    SubirPlantillaComponent,
-    AnalisisComponent
+    //HomeComponent,
+    //ConfigurarEmpresaComponent,
+    //SubirPlantillaComponent,
+    //AnalisisComponent
   ]
 })
 export class PagesModule {

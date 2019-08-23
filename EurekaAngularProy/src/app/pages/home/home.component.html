@@ -33,9 +33,9 @@
                                                         <option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</option>
                                                 </select>
                                                 <label *ngIf="filtro.service" (click)="filtro.service = ''" class="clear-select fa fa-times"></label>
-                                        </div>  
+                                        </div>
                                 </div>
-                                
+
                                 <div class="mr-4">
                                     <div class="select-eureca position-relative">
                                          <select class="selectpicker filter-slt" [(ngModel)]="filtro.status" name="">
@@ -326,7 +326,7 @@
                                         </div>
                                     </td>
                                     <td style="width: auto">
-                                           <span *ngIf="!items.editInput">{{items.currency}} <span *ngIf="items.amountPayed > 0">{{items.amountPayed | number : '1.2-2'}} / </span>{{items.amount| number : '1.2-2'}}</span>
+                                           <span *ngIf="!items.editInput">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
                                             <div *ngIf="items.editInput">
                                                 <input type="text"  appDecimales [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" />
                                             </div>

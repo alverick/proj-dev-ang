@@ -24,12 +24,12 @@
             ],
             "styles": [
               "src/scss/style.scss",
-              "node_modules/bootstrap/dist/css/bootstrap.css"
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/font-awesome/css/font-awesome.css"
             ],
             "scripts": [
               "node_modules/core-js/client/shim.min.js",
-              "node_modules/web-animations-js/web-animations.min.js",
-              "node_modules/font-awesome/css/font-awesome.css"
+              "node_modules/web-animations-js/web-animations.min.js"
 
 
             ]

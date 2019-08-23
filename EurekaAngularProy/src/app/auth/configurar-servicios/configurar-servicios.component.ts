@@ -18,7 +18,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   public stateEdit: boolean;
   public input: FormServicioComponent;
   Formulario: boolean =true;
-  constructor(private afiliacionService: AfiliacionService, private route: ActivatedRoute,
+  constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {

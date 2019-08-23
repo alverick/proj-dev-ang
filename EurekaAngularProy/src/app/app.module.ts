@@ -38,14 +38,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ValidationComponent } from './pages/home/validation';
 import { UploadProgressComponent } from './pages/home/upload-progress';
 import { DialogComponent } from './pages/home/dialog';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DateDirective } from './pages/home/date.directive';
+import { PuntoDirective } from './pages/home/punto.directive';
 import { ConfiguracionService } from './shared/services/configuracion.service';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { ShearDirective } from './pages/home/shear.directive';
 import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
 import { DecimalesDirective } from './pages/home/decimales.directive';
-import { PuntoDirective } from './pages/home/punto.directive';
 
 
 @NgModule({
@@ -61,11 +60,11 @@ import { PuntoDirective } from './pages/home/punto.directive';
     UploadProgressComponent,
     DialogComponent,
     DateDirective,
+    PuntoDirective,
     ConfigurarEmpresaComponent,
     ShearDirective,
     BlockCopyPasteDirective,
     DecimalesDirective,
-    PuntoDirective,
 
 
     ],
