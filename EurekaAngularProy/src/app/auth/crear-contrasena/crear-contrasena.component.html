@@ -15,13 +15,13 @@
                         <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="ruc" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC" digitOnly minlength="11" maxlength="11">
+                                    <input formControlName="ruc" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC" appOnlynumbers minlength="11" maxlength="11">
                                     <mat-error *ngIf="f.ruc.invalid">RUC es un campo requerido</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="nombre"  appSearch [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" maxlength="80">
+                                    <input formControlName="nombre"  appSearch [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
                                     <mat-error *ngIf="f.nombre.invalid">Nombre es un campo requerido</mat-error>
                                 </mat-form-field>
                             </div>
@@ -45,19 +45,19 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="telefono" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Telefono ó Celular"   maxlength="12">
+                                    <input formControlName="telefono" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Telefono ó Celular" minlength="6" maxlength="11">
                                     <mat-error *ngIf="f.telefono.invalid">Telefono es un campo requerido</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="contrasena" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
+                                    <input formControlName="contrasena" minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
                                     <mat-error *ngIf="f.contrasena.invalid">Contraseña es un campo requerido</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="repcontrasena" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repita Contraseña">
+                                    <input formControlName="repcontrasena"  minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repita Contraseña">
                                     <mat-error *ngIf="f.repcontrasena.invalid">Debe ser igual a Contraseña</mat-error>
                                 </mat-form-field>
                             </div>

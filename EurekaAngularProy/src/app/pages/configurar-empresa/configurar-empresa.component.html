@@ -29,14 +29,14 @@
                         </mat-form-field>
 
                         <mat-form-field class="example-full-width">
-                            <input matInput type="email" placeholder="Email" formControlName="email" [class.is-invalid]="f.email.invalid">
+                            <input matInput type="email" appEmail placeholder="Email" maxlength="50" formControlName="email" [class.is-invalid]="f.email.invalid">
                             <mat-error *ngIf="!formGroup.controls['email'].valid || formGroup.controls['email'].touched">
                                 {{ getErrorEmail() }}
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="example-full-width">
-                            <input matInput type="text" placeholder="Télefono" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
+                            <input matInput type="text" minlength="6"   maxlength="11" placeholder="Télefono" appOnlyNumbers formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
                             <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
                                 {{ getErrorPhone() }}
                             </mat-error>
@@ -45,14 +45,14 @@
 
 
                         <mat-form-field class="example-full-width">
-                            <input matInput type="password" placeholder="Contraseña actual" formControlName="password">
+                            <input matInput type="password"   minlength="6" maxlength="20" placeholder="Contraseña actual" formControlName="password">
                             <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
                                 {{ getErrorPassword() }}
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field class="example-full-width">
-                            <input matInput type="password" placeholder="Nueva contraseña" formControlName="newPassword">
+                            <input matInput type="password"  minlength="6" maxlength="20"  placeholder="Nueva contraseña" formControlName="newPassword">
                             <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
                                 {{ getErrorNewPassword() }}
                             </mat-error>
@@ -60,7 +60,7 @@
 
 
                         <mat-form-field class="example-full-width">
-                            <input matInput type="password" placeholder="Repetir nueva contraseña" formControlName="confirmNewPassword">
+                            <input matInput type="password"   minlength="6" maxlength="20" placeholder="Repetir nueva contraseña" formControlName="confirmNewPassword">
                             <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
                                 {{ getErrorConfirmNewPassword() }}
                             </mat-error>
@@ -68,7 +68,7 @@
                         </mat-form-field>
 
                         <div class="mt-4">
-                            <button color="primary" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white">Actualizar</button>
+                            <button color="primary" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white">Actualizar campos</button>
                         </div>
                     </form>
                 </div>

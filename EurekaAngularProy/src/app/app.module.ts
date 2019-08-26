@@ -47,6 +47,8 @@ import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.di
 import { DecimalesDirective } from './pages/home/decimales.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { EmailDirective } from './pages/configurar-empresa/email.directive';
+import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.directive';
 
 
 @NgModule({
@@ -67,6 +69,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     ShearDirective,
     BlockCopyPasteDirective,
     DecimalesDirective,
+    EmailDirective,
+    OnlyNumbersDirective,
 
 
     ],
