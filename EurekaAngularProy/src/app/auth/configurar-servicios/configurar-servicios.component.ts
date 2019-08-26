@@ -19,6 +19,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   public input: FormServicioComponent;
   Formulario: boolean =true;
   buttonServicios ='';
+  private inEdit: boolean = false;
 
   constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
     private router: Router) { }
@@ -29,6 +30,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     this.route.data.subscribe(d => {
       console.log('Configurar Servicios');
       console.log(d);
+      this.inEdit = d.isEdit;
       if (d.isEdit) {
         console.log('pide token xdee -----------------');
         this.Formulario = false;
@@ -129,18 +131,47 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   delService(index: number) {
-    Swal.fire({
-      type: 'warning',
-      text: 'Se va a eliminar el registro. ¿Desea continuar?',
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonText: 'Si, eliminalo!',
-      allowOutsideClick: false
-    }).then(r => {
-      if (r.value) {
-        this.afiliacionService.DelService(index);
-      }
+    if (this.inEdit) {
+      this.afiliacionService.CanDeleteService(index).subscribe(r => {
+        let title = 'Eliminación total el servicio';
+        let msg = 'Se eliminará el servicio de los canales de interbank';
+        if (r.hasPayed) {
+          title = 'Eliminacion Parcial del Servicio';
+          msg = '';
+        }
+        Swal.fire({
+          type: 'warning',
+          text: msg,
+          title: title,
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Cancelar',
+          allowOutsideClick: false
+        }).then(r => {
+          if (r.value) {
+            this.afiliacionService.SendDelService(index)
+              .subscribe(r => {});
+          }
+        });
     });
+    }
+    else {
+      Swal.fire({
+        type: 'warning',
+        text: 'Se eliminará el servicio de los canales de interbank',
+        title: 'Eliminación total el servicio',
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+        allowOutsideClick: false
+      }).then(r => {
+        if (r.value) {
+          this.afiliacionService.DelService(index);
+        }
+      });
+    }
   }
 
   editService(svc: ServiceModel, index: number) {

@@ -45,6 +45,8 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
 import { ShearDirective } from './pages/home/shear.directive';
 import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
 import { DecimalesDirective } from './pages/home/decimales.directive';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @NgModule({
@@ -95,7 +97,9 @@ import { DecimalesDirective } from './pages/home/decimales.directive';
     MatMomentDateModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FontAwesomeModule,
+    InfiniteScrollModule
   ],
   providers: [
     ExcelService,

@@ -55,6 +55,20 @@ export class AfiliacionService {
     this.services.splice(index, 1);
   }
 
+  public SendDelService(index: number) {
+    let url = `${environment.END_POINT}/service/${this.services[index].id}`;
+    return this.http.delete(url)
+      .pipe(map(r => {
+        this.services.splice(index, 1);
+        return r;
+      }));
+  }
+
+  public CanDeleteService(index: number) {
+    let url = `${environment.END_POINT}/service/${this.services[index].id}/canDelete`;
+    return this.http.get<any>(url);
+  }
+
   public Registrar(data: any): Observable<any> {
     this.spinner.show();
     return this.http.post<any>(`${environment.END_POINT}/company?_=`+ new Date().getTime(), data)
@@ -150,7 +164,7 @@ export class AfiliacionService {
   public GetServicios() {
 
     const headers: any = {
-        "Ocp-Apim-Subscription-Key": environment.END_POINT,
+        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": "true"
       };
       if(this.storage.isAuthenticated) {
@@ -172,7 +186,7 @@ export class AfiliacionService {
             usaWebApp: s.useAppWeb,
             usaAgente: s.useAgent,
             usaTienda: s.useStore,
-            cobraMora: s.changeInterest,
+            cobraMora: s.chargeInterest,
             periodoMora: s.chargeType,
             tipoMora: s.interestType,
             monto: s.amount,
