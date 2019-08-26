@@ -2,25 +2,26 @@
     <h3>Editar tus Servicios</h3>
     <div class="form-group">
         <mat-form-field class="w-100">
-            <input matInput type="text" minlength="3" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
+            <input matInput appSearch type="text" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
             <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
+            <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
+            <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
         </mat-form-field>
     </div>
     <div class="form-group">
         <mat-form-field class="w-100">
             <mat-label>Codigo Deudor</mat-label>
-            <mat-select formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
+            <mat-select *ngIf="f.codDeudor.value !== 'Otro'" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
+              <mat-option>Codigo Deudor</mat-option>
                 <mat-option *ngFor="let c of codDeudor" [value]="c.code">
                     {{c.name}}
                 </mat-option>
             </mat-select>
+            <input *ngIf="f.codDeudor.value === 'Otro'" matInput appSearch type="text" maxlength="20" formControlName="nameCod" name="nameCod" placeholder="Describa su opcion de Pago">
+            <div *ngIf="f.codDeudor.value === 'Otro'" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
             <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
-        </mat-form-field>
-    </div>
-    <div *ngIf="f.codDeudor.value === 'Otro'" class="form-group">
-        <mat-form-field class="w-100">
-            <input matInput type="text" minlength="3" maxlength="20" formControlName="nameCod" name="nameCod" placeholder="Describa su opcion de Pago">
-            <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Escriba su Opcion</mat-error>
+            <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
+            <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
         </mat-form-field>
     </div>
     <div class="form-group">
@@ -67,8 +68,8 @@
     </div>
     <span class="texto-azulbase" style="font-size:13px;"> <strong>Elige los medios por los cuales tus clientes te pagarán
   </strong> </span>
-  <div class="card-deck mb-3 text-center">    
-       
+  <div class="card-deck mb-3 text-center">
+
         <div class="card mb-4 shadow-sm" >
             <div [class.seleccionado]="f.usaWebApp.value" style=" height: 250px;">
                   <div style="text-align:center;">
@@ -83,30 +84,30 @@
                             <small class="d-block mt-1">Banca por internet, Interbank APP</small>
                         </h6>
                         <span class="d-block mb-4 texto-azul font-semibold precio">GRATIS</span>
-                    </div> 
+                    </div>
             </div>
         </div>
 
         <div class="card mb-4 shadow-sm" >
-            <div [class.seleccionado]="f.usaAgente.value" style=" height: 250px;"> 
+            <div [class.seleccionado]="f.usaAgente.value" style=" height: 250px;">
                     <div  style="text-align:center;">
                         <input style="align-content: center;" formControlName="usaAgente" class="styled-checkbox" id="styled-checkbox-2" type="checkbox">
                         <label for="styled-checkbox-2"><span class="ml-2"> </span></label>
                     </div>
                     <div class="text-center w-100 pb-2 px-1 position-relative">
                         <h6 class="font-semibold d-block mb-1"><strong> Agentes </strong><br></h6>
-                        <br> 
+                        <br>
                         <h6 class="font-semibold d-block mb-1">
                             <small class="d-block mt-1">Lima y provincias</small>
                             <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 1</span>
                             <small>por transacion</small>
                         </h6>
                     </div>
-                
+
             </div>
         </div>
         <div class="card mb-4 shadow-sm" >
-            <div [class.seleccionado]="f.usaTienda.value" style=" height: 250px;"> 
+            <div [class.seleccionado]="f.usaTienda.value" style=" height: 250px;">
                     <div   style="text-align:center;">
                         <input class="styled-checkbox" formControlName="usaTienda" id="styled-checkbox-3" type="checkbox">
                         <label for="styled-checkbox-3"><span class="ml-2"></span></label>
@@ -114,14 +115,14 @@
                             <h6 class="font-semibold d-block mb-1"><strong> Tiendas </strong><br>
                                 <small>Ventanilla</small>
                             </h6>
-                            <br>  
+                            <br>
                             <h6 class="font-semibold d-block mb-1">
                                 <small class="d-block mt-1">Lima y provincias</small>
                                 <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 7</span>
                                 <small class="d-block">por transacion</small>
                             </h6>
                         </div>
-                    </div> 
+                    </div>
             </div>
         </div>
     </div>
@@ -142,6 +143,7 @@
         <mat-form-field *ngIf="cobraMora">
             <mat-label>Tipo de Cobro</mat-label>
             <mat-select formControlName="periodoMora">
+              <mat-option>Tipo de Cobro</mat-option>
                 <mat-option *ngFor="let t of tiposMora" [value]="t.id">
                     {{t.name}}
                 </mat-option>

@@ -20,8 +20,7 @@ export class AfiliacionService {
 
   public Clear() {
     this.services.push({
-      id:0,
-      nombre: 'Pension',
+      nombre: 'Mensualidad',
       codDeudor: 'DNI',
       tipoDato: 'C',
       tipoPago: 'C',
@@ -32,8 +31,10 @@ export class AfiliacionService {
       usaAgente: false,
       usaTienda: false,
       cobraMora: 'N',
-      periodoMora: 1,
-      tipoMora: 'M'
+      periodoMora: '1',
+      tipoMora: 'M',
+      monto: 0,
+      porcentaje: 0
     });
   }
 
@@ -91,7 +92,7 @@ export class AfiliacionService {
       },
       {
         code: 'Otro',
-        name: "Otro Codigo"
+        name: "Otro"
       }
     ]);
   }
@@ -136,11 +137,11 @@ export class AfiliacionService {
 
   public GetPeriodoMora(): Observable<any[]> {
     return of<any[]> ([{
-        id: 1,
+        id: '1',
         name: 'Diario'
       },
       {
-        id: 2,
+        id: '2',
         name: 'Fijo'
       }
     ]);

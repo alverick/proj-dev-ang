@@ -24,7 +24,6 @@ export class ConfigurarServiciosComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.Formulario =true;
     this.afiliacionService.services = []
   //  console.log(this.route.params.subscribe( params => this.ruc = params.ruc )) ;
     this.route.data.subscribe(d => {
@@ -32,18 +31,19 @@ export class ConfigurarServiciosComponent implements OnInit {
       console.log(d);
       if (d.isEdit) {
         console.log('pide token xdee -----------------');
+        this.Formulario = false;
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
       } else {
         // siempre entra ahí
+        window['_url_loop_'] = 'configurarServicios';
         console.log('llamando a Clear');
+        this.Formulario =true;
         this.afiliacionService.Clear();
         this.buttonServicios = 'Guardar';
-      } 
+        this.editService(this.afiliacionService.services[0], 0);
+      }
     });
-      this.Formulario = false;
-      this.editService(this.afiliacionService.services.find((v) => v.id === 0),0);
-
   }
 
   private indiceActual: number = -1;
