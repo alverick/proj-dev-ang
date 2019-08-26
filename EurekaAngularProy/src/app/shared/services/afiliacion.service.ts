@@ -20,6 +20,7 @@ export class AfiliacionService {
 
   public Clear() {
     this.services.push({
+      id:0,
       nombre: 'Pension',
       codDeudor: 'DNI',
       tipoDato: 'C',

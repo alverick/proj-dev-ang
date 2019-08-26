@@ -18,6 +18,8 @@ export class ConfigurarServiciosComponent implements OnInit {
   public stateEdit: boolean;
   public input: FormServicioComponent;
   Formulario: boolean =true;
+  buttonServicios ='';
+
   constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
     private router: Router) { }
 
@@ -31,12 +33,16 @@ export class ConfigurarServiciosComponent implements OnInit {
       if (d.isEdit) {
         console.log('pide token xdee -----------------');
         this.afiliacionService.GetServicios();
+        this.buttonServicios = 'Actualizar';
       } else {
         // siempre entra ahí
         console.log('llamando a Clear');
         this.afiliacionService.Clear();
-      }
+        this.buttonServicios = 'Guardar';
+      } 
     });
+      this.Formulario = false;
+      this.editService(this.afiliacionService.services.find((v) => v.id === 0),0);
 
   }
 

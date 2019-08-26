@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="nombre" [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" maxlength="80">
+                                    <input formControlName="nombre"  appSearch [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" maxlength="80">
                                     <mat-error *ngIf="f.nombre.invalid">Nombre es un campo requerido</mat-error>
                                 </mat-form-field>
                             </div>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="telefono" [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Telefono ó Celular" digitOnly maxlength="11">
+                                    <input formControlName="telefono" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Telefono ó Celular"   maxlength="12">
                                     <mat-error *ngIf="f.telefono.invalid">Telefono es un campo requerido</mat-error>
                                 </mat-form-field>
                             </div>
