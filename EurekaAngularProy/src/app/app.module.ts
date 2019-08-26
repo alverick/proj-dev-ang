@@ -68,7 +68,7 @@ import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.di
     BlockCopyPasteDirective,
     DecimalesDirective,
     EmailDirective,
-    OnlyNumbersDirective,
+    OnlyNumbersDirective, 
 
 
     ],

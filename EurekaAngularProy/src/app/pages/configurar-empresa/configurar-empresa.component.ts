@@ -109,7 +109,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
         enterpriseUpdate =>{
-          console.table(enterpriseUpdate);
+        //  console.table(enterpriseUpdate);
           if( enterpriseUpdate.success == true ){
             Swal.fire({
               type: 'success',

@@ -3,14 +3,17 @@ import { CommonModule } from '@angular/common';
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive'; 
 import { DialogComponent } from '../pages/home/dialog'; 
+import { CorreoDirective } from './directives/correo.directive';
 
 @NgModule({
   imports: [
     CommonModule
   ],providers:[ ],
   declarations: [OnlynumbersDirective,
-                 SearchDirective],
+                 SearchDirective,
+                 CorreoDirective],
   exports: [OnlynumbersDirective,
-            SearchDirective]
+            SearchDirective,
+            CorreoDirective]
 })
 export class SharedModule { }
