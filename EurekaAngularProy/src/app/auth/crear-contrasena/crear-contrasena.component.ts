@@ -27,12 +27,12 @@ export class CrearContrasenaComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       ruc: new FormControl('', Validators.required),
-      nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
+      nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(80)]),
       rubro: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      telefono: new FormControl('', [Validators.required]),
-      contrasena: new FormControl('', [Validators.required]),
-      repcontrasena: new FormControl('', Validators.required),
+      telefono: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(11)]),
+      contrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+      repcontrasena: new FormControl('', [Validators.required,Validators.minLength(6), Validators.maxLength(20)]),
       acceptterms: new FormControl(false, Validators.required)
     }, {
       validator: MustMatch('contrasena', 'repcontrasena')
@@ -47,19 +47,30 @@ export class CrearContrasenaComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
-    console.log(this.registerForm.valid);
+    var ruc  = this.registerForm.value.ruc.toString();
+    console.log('RUC --->'+  ruc.substring(0,2));
     // stop here if form is invalid
-    if (this.registerForm.invalid) {
+
+    if (this.registerForm.invalid) {  
+      return;
+    }
+    if( parseInt(ruc.substring(0,2)) == 20  ||  parseInt(ruc.substring(0,2)) == 10 ){
+     
+    }else{
+      this.mensaje('warning','Registrame','Debe ingresar un Ruc valido' );
       return;
     }
 
+    if(!this.registerForm.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+      this.mensaje('warning','Registrame','Debe ingresar un email valido' );
+      return;
+    }
+ 
+   //  if(this.registerForm.value.ruc)
     if (this.registerForm.value.acceptterms == false) {
-      Swal.fire({
-        type: 'warning',
-        text: 'Debe aceptar los terminos y condiciones',
-        allowOutsideClick: false
-      });
+  
+      this.mensaje('warning','Registrame','Debe aceptar los terminos y condiciones' );
+
       return;
     }
 
@@ -75,19 +86,30 @@ export class CrearContrasenaComponent implements OnInit {
       if (d.success) {
         this.router.navigate(["/configurarServicios"/*, this.registerForm.get('ruc')*/]);
       } else {
-        Swal.fire({
-          type: 'error',
-          text: d.message,
-          allowOutsideClick: false
-        });
+         
+        this.mensaje('error','Registrame', d.message );
       }
     }, err => {
       console.log(err);
-      Swal.fire({
-        type: 'error',
-        html: 'Ha ocurrido un error con el servidor<br />Intente de nuevo',
-        allowOutsideClick: false
-      });
+      
+      this.mensaje('error','Registrame','Ha ocurrido un error con el servidor<br />Intente de nuevo' );
+
     });
   }
+
+  mensaje(tipo: any, titulo: string, text: string){
+    Swal.fire({
+      type: tipo ,
+      title: titulo ,
+      html: text,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      cancelButtonColor: '#d33',
+      cancelButtonText:  'Cerrar',
+
+    });
+  }
+
+
 }

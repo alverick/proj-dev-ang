@@ -21,19 +21,18 @@ export class ConfiguracionService {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
       };
     return this.http.get<DataEnterpriseModel>(url, opts)
-        .pipe(map(r => {
-          r.password = '';
+        .pipe(map(r => { 
           r.newPassword = '';
-          r.confirmNewPassword  = '';
-          /*r.password = '';
-          r.confirmPassword = '';*/
+          r.password = '';
+          r.confirmNewPassword  = ''; 
+          
           return r;
         }))
         .pipe(catchError(err => throwError(err)));
 
     }
 
-    saveDatosEmpresa(data: any): Observable<any>{ 
+    saveDatosEmpresa(data: any): Observable<any> { 
     const url=`${environment.END_POINT}/company?_=`+ new Date().getTime();
     const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}

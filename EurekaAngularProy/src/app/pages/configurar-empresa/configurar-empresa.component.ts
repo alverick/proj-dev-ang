@@ -38,7 +38,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   getInfoEmpresa() {
     this.configEmpresaService.getDatosEmpresa()
       .subscribe( dataEnterprise => {
-        console.log("DATA " + dataEnterprise);
+        console.table(  dataEnterprise);
         this.formGroup.setValue(dataEnterprise);
       }
   );
@@ -51,9 +51,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
       entry: new FormControl(''),
       email: new FormControl('', [Validators.required, Validators.email]),
       movilNumber: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
-      newPassword: new FormControl(''),
-      confirmNewPassword: new FormControl(''),
+      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20)]),
+      newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
+      confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
     }, {
       validator: MustMatch('newPassword', 'confirmNewPassword')
     });
@@ -83,6 +83,14 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
 // actualizado
   onSubmit() {
+
+
+    if(!this.formGroup.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+      this.mensaje('warning','Edicion de Empresa','Debe ingresar un email valido' );
+      return;
+    }
+  
+
     this.submitted = true;
     console.log("ENTRO  ");
     if (this.formGroup.valid) {
@@ -101,21 +109,45 @@ export class ConfigurarEmpresaComponent implements OnInit {
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
         enterpriseUpdate =>{
-          Swal.fire({
-            type: 'success',
-            title: 'Datos de empresa guardados',
-            text: 'Sus datos han sido actualizados',
-            confirmButtonText: 'Aceptar',
-            allowOutsideClick: false,
-            onAfterClose: () => {
-              datosEmpresa.email = datosEmpresa.newEmail;
-              datosEmpresa.movilNumber = datosEmpresa.newMovilNumber;
-              datosEmpresa.password = datosEmpresa.newPassword;
-            }
-          })
+          console.table(enterpriseUpdate);
+          if( enterpriseUpdate.success == true ){
+            Swal.fire({
+              type: 'success',
+              title: 'Datos de empresa guardados',
+              text: 'Sus datos han sido actualizados',
+              confirmButtonText: 'Aceptar',
+              allowOutsideClick: false,
+              onAfterClose: () => {
+                datosEmpresa.email = datosEmpresa.newEmail;
+                datosEmpresa.movilNumber = datosEmpresa.newMovilNumber;
+                datosEmpresa.password = datosEmpresa.newPassword;
+              }
+            });
+          }
+         if(enterpriseUpdate.success == false ) {
+          this.mensaje('warning','Edicion de Empresa','La contraseña no coincide con la contraseña actual' );
+          return;
+         }
+         
+          
         }
       );
     }
+  }
+
+  
+  mensaje(tipo: any, titulo: string, text: string){
+    Swal.fire({
+      type: tipo ,
+      title: titulo ,
+      html: text,
+      showCloseButton: true,
+      showCancelButton: true,
+      showConfirmButton: false,
+      cancelButtonColor: '#d33',
+      cancelButtonText:  'Cerrar',
+
+    });
   }
 
 

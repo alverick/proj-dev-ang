@@ -45,6 +45,8 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
 import { ShearDirective } from './pages/home/shear.directive';
 import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
 import { DecimalesDirective } from './pages/home/decimales.directive';
+import { EmailDirective } from './pages/configurar-empresa/email.directive';
+import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.directive';
 
 
 @NgModule({
@@ -65,6 +67,8 @@ import { DecimalesDirective } from './pages/home/decimales.directive';
     ShearDirective,
     BlockCopyPasteDirective,
     DecimalesDirective,
+    EmailDirective,
+    OnlyNumbersDirective,
 
 
     ],
