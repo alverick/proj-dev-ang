@@ -11,9 +11,9 @@ export interface ServiceModel {
     simboloMoneda?: string;
     usaWebApp: boolean;
     usaAgente: boolean;
-    usaTienda: boolean;      
+    usaTienda: boolean;
     cobraMora: string;
-    periodoMora?: number;
+    periodoMora: string;
     tipoMora: string;
     monto?: number;
     porcentaje?: number;

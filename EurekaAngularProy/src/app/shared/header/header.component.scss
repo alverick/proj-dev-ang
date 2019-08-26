@@ -22,7 +22,7 @@
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: none;
-  
+
   text-transform: none;
   line-height: 1;
   font-size: 20px !important;
@@ -33,5 +33,36 @@
 }
 
 .mano {
+  cursor: pointer;
+}
+
+.scroll-menu {
+  max-height: 350px;
+  overflow-x: hidden;
+}
+
+.dropdown-item {
+  border-bottom: #a7a0a0 1px solid;
+}
+
+.dropdown-item.es-nuevo {
+  font-weight: bold;
+}
+
+.dropdown-item .texto {
+  font-size: 1em;
+  color: black;
+}
+
+.dropdown-item .tiempo {
+  font-size: 0.7em;
+}
+
+.item-icono {
+  display: block;
+  float: right;
+  top: -15px;
+  position: relative;
+  font-size: 8px;
   cursor: pointer;
 }

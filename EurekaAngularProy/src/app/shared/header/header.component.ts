@@ -1,11 +1,12 @@
- 
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { ExcelService } from '../services/excel.service';
-
+import { NotifyService } from '../services/notify.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-header',
@@ -18,11 +19,13 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router,
               private loginService: LoginService,
               private spinner: NgxSpinnerService,
-              private excelser: ExcelService ) {
+              private excelser: ExcelService,
+              public notify: NotifyService ) {
   }
 
   ngOnInit() {
     this.spinner.hide();
+    this.notify.iniciar();
   }
 
   public menu(): boolean {
@@ -50,7 +53,7 @@ export class HeaderComponent implements OnInit {
 
   public logout(): void {
 
-   /*   if(this.excelser.statusUpload == true) { 
+   /*   if(this.excelser.statusUpload == true) {
         Swal.fire({
           title: 'Esta cargando un Excel!',
           text: "¿Desea  Cancelar esa Accion?",
@@ -59,24 +62,24 @@ export class HeaderComponent implements OnInit {
           confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Si, Salir!'
-        }).then((result) => { 
+        }).then((result) => {
           this.spinner.show();
           this.loginService.logout();
           this.excelser.statusUpload =false;
-          this.spinner.hide();  
-        }) 
-    }else {  
+          this.spinner.hide();
+        })
+    }else {
       this.spinner.show();
       this.loginService.logout();
       this.excelser.statusUpload =false;
-      this.spinner.hide();  
+      this.spinner.hide();
       return;
     }  */
     this.spinner.show();
     this.loginService.logout();
     this.excelser.statusUpload =false;
-    this.spinner.hide();  
-  
+    this.spinner.hide();
+
   }
 
   public show(): boolean {
@@ -90,4 +93,16 @@ export class HeaderComponent implements OnInit {
     return true;
   }
 
+  getAgo(date): string {
+    return moment.utc(date).fromNow();
+  }
+
+  onScroll() {
+    console.log('scroll');
+    this.notify.loadMsgs();
+  }
+
+  onShowMessages() {
+    console.log('show Messages');
+  }
 }

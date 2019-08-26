@@ -22,9 +22,11 @@
 <body>
   <app-root></app-root>
   <script type = "text/javascript" >
-    history.pushState(null, null, 'login');
+    //history.pushState(null, null, 'login');
+    window['_url_loop_'] = 'login';
     window.addEventListener('popstate', function(event) {
-    history.pushState(null, null, 'login');
+      let _url_ = window['_url_loop_'];
+      history.pushState(null, null, _url_);
     });
   </script>
 </body>

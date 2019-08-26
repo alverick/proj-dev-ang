@@ -4,7 +4,7 @@
     width: 49%;
   }
 
-  
+
   .styled-checkbox{position:absolute;opacity:0}
   .styled-checkbox+label{position:relative;cursor:pointer;padding:0;margin:0}
   .styled-checkbox+label:before{content:'';display:inline-block;vertical-align:text-top;width:16px;height:16px;border:2px solid #2121c4;background:white}
@@ -84,4 +84,10 @@
 
 .seleccionado {
     border: blue 2px solid;
+}
+
+.hide-name-cod {
+  float: right !important;
+  position: absolute;
+  right: 5px;
 }

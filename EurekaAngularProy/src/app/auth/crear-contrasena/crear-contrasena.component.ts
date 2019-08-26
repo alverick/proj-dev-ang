@@ -25,6 +25,7 @@ export class CrearContrasenaComponent implements OnInit {
   rubros: RubroModel[] = [];
 
   ngOnInit() {
+    window['_url_loop_'] = 'crearContrasena';
     this.registerForm = this.formBuilder.group({
       ruc: new FormControl('', Validators.required),
       nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(80)]),

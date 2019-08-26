@@ -21,19 +21,20 @@ export class FormServicioComponent implements OnInit {
     if (value === null || value === undefined) {
       this._service = {
         nombre: '',
-        rubro: null,
-        codDeudor: null,
-        nameCod: null,
-        tipoDato: '',
-        tipoPago: null,
+        codDeudor: 'DNI',
+        tipoDato: 'C',
+        tipoPago: 'C',
         nroCuenta: '',
-        moneda: '',
+        moneda: '001',
+        simboloMoneda: 'S/',
+        usaWebApp: true,
         usaAgente: false,
         usaTienda: false,
-        usaWebApp: false,
         cobraMora: 'N',
-        periodoMora: null,
-        tipoMora: 'M'
+        periodoMora: '1',
+        tipoMora: 'M',
+        monto: 0,
+        porcentaje: 0
       }
       this.simboloMoneda = 'S/';
     }
@@ -44,7 +45,7 @@ export class FormServicioComponent implements OnInit {
     }
   }
 
-  get f() {
+  get f(): any {
     return this.frm.controls;
   }
 
@@ -68,7 +69,7 @@ export class FormServicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.frm = this.fb.group({
-      nombre: [this._service.nombre, Validators.required],
+      nombre: [this._service.nombre, [Validators.required, Validators.minLength(3)]],
       codDeudor: [this._service.codDeudor, Validators.required],
       nameCod: [this._service.nameCod],
       tipoDato: [this._service.tipoDato, Validators.required],
@@ -262,7 +263,7 @@ export class FormServicioComponent implements OnInit {
   changeMora() {
     this.cobraMora = (this.f.cobraMora.value === 'S');
     if (this.cobraMora) {
-      this.f.periodoMora.setValidators(Validators.required);
+      this.f.periodoMora.setValidators([Validators.required]);
     } else {
       this.f.periodoMora.clearValidators();
       this.f.periodoMora.reset();
@@ -273,20 +274,23 @@ export class FormServicioComponent implements OnInit {
     this.cobraMonto = (this.f.tipoMora.value === "M");
     this.cobraPorcentaje = (this.f.tipoMora.value === "P");
     if (this.cobraMora && this.cobraMonto) {
-      this.f.monto.setValidators(Validators.required);
+      this.f.monto.setValidators([Validators.required]);
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.reset();
     } else if (this.cobraMora && this.cobraPorcentaje) {
-      this.f.porcentaje.setValidators(Validators.required);
+      this.f.porcentaje.setValidators([Validators.required]);
       this.f.monto.clearValidators();
       this.f.monto.reset();
     }
   }
 
   selectCodigo(event){
-    //alert(event);
-    if(event == 'Otro Codigo'){
-      this.ngInputtextCodi = true;
+    if(event === 'Otro'){
+      this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
+    }
+    else {
+      this.f.nameCod.clearValidators();
+      this.f.nameCod.reset();
     }
   }
   changetoSelect(){

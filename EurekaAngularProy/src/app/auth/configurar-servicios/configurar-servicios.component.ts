@@ -19,31 +19,33 @@ export class ConfigurarServiciosComponent implements OnInit {
   public input: FormServicioComponent;
   Formulario: boolean =true;
   buttonServicios ='';
+  private inEdit: boolean = false;
 
   constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    this.Formulario =true;
     this.afiliacionService.services = []
   //  console.log(this.route.params.subscribe( params => this.ruc = params.ruc )) ;
     this.route.data.subscribe(d => {
       console.log('Configurar Servicios');
       console.log(d);
+      this.inEdit = d.isEdit;
       if (d.isEdit) {
         console.log('pide token xdee -----------------');
+        this.Formulario = false;
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
       } else {
         // siempre entra ahí
+        window['_url_loop_'] = 'configurarServicios';
         console.log('llamando a Clear');
+        this.Formulario =true;
         this.afiliacionService.Clear();
         this.buttonServicios = 'Guardar';
-      } 
+        this.editService(this.afiliacionService.services[0], 0);
+      }
     });
-      this.Formulario = false;
-      this.editService(this.afiliacionService.services.find((v) => v.id === 0),0);
-
   }
 
   private indiceActual: number = -1;
@@ -129,18 +131,47 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   delService(index: number) {
-    Swal.fire({
-      type: 'warning',
-      text: 'Se va a eliminar el registro. ¿Desea continuar?',
-      showCancelButton: true,
-      showConfirmButton: true,
-      confirmButtonText: 'Si, eliminalo!',
-      allowOutsideClick: false
-    }).then(r => {
-      if (r.value) {
-        this.afiliacionService.DelService(index);
-      }
+    if (this.inEdit) {
+      this.afiliacionService.CanDeleteService(index).subscribe(r => {
+        let title = 'Eliminación total el servicio';
+        let msg = 'Se eliminará el servicio de los canales de interbank';
+        if (r.hasPayed) {
+          title = 'Eliminacion Parcial del Servicio';
+          msg = '';
+        }
+        Swal.fire({
+          type: 'warning',
+          text: msg,
+          title: title,
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Cancelar',
+          allowOutsideClick: false
+        }).then(r => {
+          if (r.value) {
+            this.afiliacionService.SendDelService(index)
+              .subscribe(r => {});
+          }
+        });
     });
+    }
+    else {
+      Swal.fire({
+        type: 'warning',
+        text: 'Se eliminará el servicio de los canales de interbank',
+        title: 'Eliminación total el servicio',
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+        allowOutsideClick: false
+      }).then(r => {
+        if (r.value) {
+          this.afiliacionService.DelService(index);
+        }
+      });
+    }
   }
 
   editService(svc: ServiceModel, index: number) {

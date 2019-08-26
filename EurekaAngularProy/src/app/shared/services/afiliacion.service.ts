@@ -20,8 +20,7 @@ export class AfiliacionService {
 
   public Clear() {
     this.services.push({
-      id:0,
-      nombre: 'Pension',
+      nombre: 'Mensualidad',
       codDeudor: 'DNI',
       tipoDato: 'C',
       tipoPago: 'C',
@@ -32,8 +31,10 @@ export class AfiliacionService {
       usaAgente: false,
       usaTienda: false,
       cobraMora: 'N',
-      periodoMora: 1,
-      tipoMora: 'M'
+      periodoMora: '1',
+      tipoMora: 'M',
+      monto: 0,
+      porcentaje: 0
     });
   }
 
@@ -52,6 +53,20 @@ export class AfiliacionService {
 
   public DelService(index: number) {
     this.services.splice(index, 1);
+  }
+
+  public SendDelService(index: number) {
+    let url = `${environment.END_POINT}/service/${this.services[index].id}`;
+    return this.http.delete(url)
+      .pipe(map(r => {
+        this.services.splice(index, 1);
+        return r;
+      }));
+  }
+
+  public CanDeleteService(index: number) {
+    let url = `${environment.END_POINT}/service/${this.services[index].id}/canDelete`;
+    return this.http.get<any>(url);
   }
 
   public Registrar(data: any): Observable<any> {
@@ -91,7 +106,7 @@ export class AfiliacionService {
       },
       {
         code: 'Otro',
-        name: "Otro Codigo"
+        name: "Otro"
       }
     ]);
   }
@@ -136,11 +151,11 @@ export class AfiliacionService {
 
   public GetPeriodoMora(): Observable<any[]> {
     return of<any[]> ([{
-        id: 1,
+        id: '1',
         name: 'Diario'
       },
       {
-        id: 2,
+        id: '2',
         name: 'Fijo'
       }
     ]);
@@ -149,7 +164,7 @@ export class AfiliacionService {
   public GetServicios() {
 
     const headers: any = {
-        "Ocp-Apim-Subscription-Key": environment.END_POINT,
+        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": "true"
       };
       if(this.storage.isAuthenticated) {
@@ -171,7 +186,7 @@ export class AfiliacionService {
             usaWebApp: s.useAppWeb,
             usaAgente: s.useAgent,
             usaTienda: s.useStore,
-            cobraMora: s.changeInterest,
+            cobraMora: s.chargeInterest,
             periodoMora: s.chargeType,
             tipoMora: s.interestType,
             monto: s.amount,
