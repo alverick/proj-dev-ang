@@ -103,7 +103,18 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     this.afiliacionService.GrabarServicios()
       .subscribe(r => {
-        this.router.navigate(['/procesando']);
+        if (this.inEdit) {
+          this.router.navigate(['/home']);
+          /*for(let i=0; i<this.afiliacionService.services.length; i++) {
+            if (this.afiliacionService.services[i].inReview == false) {
+              return;
+            }
+          }
+          this.router.navigate(['/procesando']);*/
+        }
+        else {
+          this.router.navigate(['/procesando']);
+        }
        });
   }
 
@@ -151,10 +162,17 @@ export class ConfigurarServiciosComponent implements OnInit {
         }).then(r => {
           if (r.value) {
             this.afiliacionService.SendDelService(index)
-              .subscribe(r => {});
+              .subscribe(r => {
+                Swal.fire({
+                  type: 'info',
+                  text: 'Se ha eliminado el Servicio',
+                  title: title,
+                  allowOutsideClick: false
+                });
+              });
           }
         });
-    });
+      });
     }
     else {
       Swal.fire({
