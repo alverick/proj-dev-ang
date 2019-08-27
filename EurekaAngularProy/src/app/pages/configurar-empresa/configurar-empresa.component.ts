@@ -8,6 +8,7 @@ import { stringify } from '@angular/core/src/render3/util';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { RubroModel } from 'src/app/shared/models';
 import { DISABLED } from '@angular/forms/src/model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   rubros: RubroModel[] = [];
   constructor(private formBuilder: FormBuilder,
               private configEmpresaService: ConfiguracionService,
-              public afiliacionService: AfiliacionService) { }
+              public afiliacionService: AfiliacionService, private router: Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -84,13 +85,30 @@ export class ConfigurarEmpresaComponent implements OnInit {
 // actualizado
   onSubmit() {
 
-
+    console.log('EL CORREO ES '+this.formGroup.value.email.toString());
+    
+    var correo =  parseInt(this.formGroup.value.email.toString().length);
+    if(correo==0){
+      return;
+    }
     if(!this.formGroup.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
       this.mensaje('warning','Edicion de Empresa','Debe ingresar un email valido' );
       return;
     }
-  
+    var Pass =  parseInt(this.formGroup.value.password.toString().length);
+    var newPass =  parseInt(this.formGroup.value.newPassword.toString().length); 
+    
+    if(newPass > 0 &&  Pass == 0){
+      this.mensaje('warning','Edicion de Empresa','Debe ingresar su contraseña Actual para continuar' );
+      return;
+    }  
+    if(Pass > 0 && newPass == 0){
+      this.mensaje('warning','Edicion de Empresa','Debe ingresar la nueva contraseña para continuar' );
+      return;
+    }
 
+     
+    
     this.submitted = true;
     console.log("ENTRO  ");
     if (this.formGroup.valid) {
@@ -109,20 +127,30 @@ export class ConfigurarEmpresaComponent implements OnInit {
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
         enterpriseUpdate =>{
-        //  console.table(enterpriseUpdate);
+          console.table(enterpriseUpdate);
           if( enterpriseUpdate.success == true ){
+             
             Swal.fire({
-              type: 'success',
-              title: 'Datos de empresa guardados',
-              text: 'Sus datos han sido actualizados',
-              confirmButtonText: 'Aceptar',
-              allowOutsideClick: false,
-              onAfterClose: () => {
-                datosEmpresa.email = datosEmpresa.newEmail;
-                datosEmpresa.movilNumber = datosEmpresa.newMovilNumber;
-                datosEmpresa.password = datosEmpresa.newPassword;
+              title: '¿Desea Actualizar los datos de su empresa?',
+              text: '¡No podrás revertir esto!',
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Confirmar',
+              cancelButtonText: 'Cancelar'
+            }).then((result) => {
+              if (result.value) {
+                onAfterClose: () => {
+                  datosEmpresa.email = datosEmpresa.newEmail;
+                  datosEmpresa.movilNumber = datosEmpresa.newMovilNumber;
+                  datosEmpresa.password = datosEmpresa.newPassword;
+                }
+                this.router.navigate(['/home']);
               }
-            });
+            })
+
+
           }
          if(enterpriseUpdate.success == false ) {
           this.mensaje('warning','Edicion de Empresa','La contraseña no coincide con la contraseña actual' );
