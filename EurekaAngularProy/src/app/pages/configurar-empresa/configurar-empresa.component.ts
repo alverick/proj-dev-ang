@@ -50,9 +50,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
       ruc: new FormControl(''),
       name: new FormControl(''),
       entry: new FormControl(''),
-      email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email , Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$') ]),
       movilNumber: new FormControl('', [Validators.required]),
-      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20)]),
+      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(11)]),
       newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
       confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
     }, {
@@ -84,34 +84,33 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
 // actualizado
   onSubmit() {
-
+    this.submitted = true;
     console.log('EL CORREO ES '+this.formGroup.value.email.toString());
     
     var correo =  parseInt(this.formGroup.value.email.toString().length);
-    if(correo==0){
-      return;
-    }
-    if(!this.formGroup.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
-      this.mensaje('warning','Edicion de Empresa','Debe ingresar un email valido' );
-      return;
-    }
+   
     var Pass =  parseInt(this.formGroup.value.password.toString().length);
     var newPass =  parseInt(this.formGroup.value.newPassword.toString().length); 
-    
-    if(newPass > 0 &&  Pass == 0){
-      this.mensaje('warning','Edicion de Empresa','Debe ingresar su contraseña Actual para continuar' );
-      return;
-    }  
-    if(Pass > 0 && newPass == 0){
-      this.mensaje('warning','Edicion de Empresa','Debe ingresar la nueva contraseña para continuar' );
-      return;
-    }
 
-     
-    
-    this.submitted = true;
+ 
     console.log("ENTRO  ");
     if (this.formGroup.valid) {
+      if(correo==0){
+        return;
+      }
+       if(!this.formGroup.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+        this.mensaje('warning','Edicion de Empresa','Debe ingresar un email valido' );
+        return;
+      }  
+      
+      if(newPass > 0 &&  Pass == 0){
+        this.mensaje('warning','Edicion de Empresa','Debe ingresar su contraseña Actual para continuar' );
+        return;
+      }  
+      if(Pass > 0 && newPass == 0){
+        this.mensaje('warning','Edicion de Empresa','Debe ingresar la nueva contraseña para continuar' );
+        return;
+      }
       console.log(this.formGroup.value);
       const datosEmpresa = this.formGroup.value;
       const enterprise = {
