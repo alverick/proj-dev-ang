@@ -5,13 +5,13 @@ import { faBell as fasBell, faCircle as fasCircle } from '@fortawesome/free-soli
 import { faBell as farBell, faCircle as farCircle } from '@fortawesome/free-regular-svg-icons';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { StorageService } from './storage.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class NotifyService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private storage: StorageService) { }
 
+  inExecution: boolean = false;
   icono: any = farBell;
 
   existMore: boolean = true;
@@ -19,19 +19,23 @@ export class NotifyService {
   total: number = -1;
 
   public iniciar() {
-    var callNotify = () => {
-      this.http.get<any>(`${environment.END_POINT}/notification/total?_=${new Date().getTime()}`)
-        .subscribe(d => {
-          this.icono = (d.total > 0 ? fasBell : farBell);
-          if (d.total !== this.total) {
-            this.total = d.total;
-            this.messages = [];
-            this.loadMsgs();
-          }
-        })
-    };
-    Observable.interval(10000).subscribe(() => callNotify());
-    callNotify();
+    if (!this.inExecution) {
+      this.inExecution = true;
+      var callNotify = () => {
+        if (this.storage.isAuthenticated()) {
+          this.http.get<any>(`${environment.END_POINT}/notification/total?_=${new Date().getTime()}`)
+            .subscribe(d => {
+              this.icono = (d.total > 0 ? fasBell : farBell);
+              if (d.total !== this.total) {
+                this.total = d.total;
+                this.messages = [];
+                this.loadMsgs();
+              }
+            });
+        }
+      };
+      Observable.interval(10000).subscribe(() => callNotify());
+    }
   }
 
   public loadMsgs() {

@@ -49,6 +49,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { EmailDirective } from './pages/configurar-empresa/email.directive';
 import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.directive';
+import { NotifyService } from './shared/services/notify.service';
 
 
 @NgModule({
@@ -115,7 +116,8 @@ import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.di
         multi: true
       },
       AfiliacionService,
-      ConfiguracionService
+      ConfiguracionService,
+      NotifyService
 
   ],
   exports: [
