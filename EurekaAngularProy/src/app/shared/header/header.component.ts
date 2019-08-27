@@ -25,7 +25,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.hide();
-    this.notify.iniciar();
+    this.notify.iniciar(); 
+    this.notify.messages =[];
   }
 
   public menu(): boolean {
