@@ -16,13 +16,18 @@
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
                                     <input formControlName="ruc" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC" appOnlynumbers minlength="11" maxlength="11">
-                                    <mat-error *ngIf="f.ruc.invalid">RUC es un campo requerido</mat-error>
+                                    <mat-error *ngIf="submitted && f.ruc.errors">
+                                        <mat-error *ngIf="f.ruc.errors.required">RUC es un campo requerido</mat-error>
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="nombre"  appSearch [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
-                                    <mat-error *ngIf="f.nombre.invalid">Nombre es un campo requerido</mat-error>
+                                    <input formControlName="nombre" appSearch [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
+                                    <mat-error *ngIf="submitted && f.nombre.errors">
+                                        <mat-error *ngIf="f.nombre.errors.required">Nombre es un campo requerido</mat-error>
+                                    </mat-error>
+
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
@@ -39,31 +44,44 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="email"  appCorreo [class.is-invalid]="f.email.invalid" matInput type="email" placeholder="Email">
-                                    <mat-error *ngIf="f.email.invalid">Email es un campo requerido</mat-error>
+                                    <input formControlName="email" appCorreo [class.is-invalid]="f.email.invalid" matInput type="email" placeholder="Email">
+                                    <mat-error *ngIf="submitted && f.email.errors">
+                                        <mat-error *ngIf="f.email.errors.required">Email es un campo requerido</mat-error>
+                                        <mat-error *ngIf="f.email.errors.pattern"> Ingrese un email valido </mat-error>
+                                    </mat-error>
+
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
                                     <input formControlName="telefono" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Telefono ó Celular" minlength="6" maxlength="11">
-                                    <mat-error *ngIf="f.telefono.invalid">Telefono es un campo requerido</mat-error>
+                                    <mat-error *ngIf="submitted && f.telefono.errors">
+                                        <mat-error *ngIf="f.telefono.errors.required">Telefono es un campo requerido</mat-error>
+                                    </mat-error>
+
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
                                     <input formControlName="contrasena" minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
-                                    <mat-error *ngIf="f.contrasena.invalid">Contraseña es un campo requerido</mat-error>
+                                    <mat-error *ngIf="submitted && f.contrasena.errors">
+                                        <mat-error *ngIf="f.contrasena.invalid">Contraseña es un campo requerido</mat-error>
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="repcontrasena"  minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repita Contraseña">
-                                    <mat-error *ngIf="f.repcontrasena.invalid">Debe ser igual a Contraseña</mat-error>
+                                    <input formControlName="repcontrasena" minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repita Contraseña">
+                                    <mat-error *ngIf="submitted && f.repcontrasena.errors">
+                                        <mat-error *ngIf="f.repcontrasena.invalid">Debe ser igual a Contraseña</mat-error>
+                                    </mat-error>
+
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <input formControlName="acceptterms" class="styled-checkbox" id="styled-checkbox-1" type="checkbox">
                                 <label for="styled-checkbox-1"> Acepto los Terminos y Condiciones </label>
+
                             </div>
                             <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white">
                 Registrarme</button>
