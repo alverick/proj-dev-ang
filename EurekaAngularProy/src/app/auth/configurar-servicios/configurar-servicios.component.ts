@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
 import { throwError } from 'rxjs';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -20,6 +21,8 @@ export class ConfigurarServiciosComponent implements OnInit {
   Formulario: boolean =true;
   buttonServicios ='';
   private inEdit: boolean = false;
+
+  public onFormAction: EventEmitter<string> = new EventEmitter();
 
   constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
     private router: Router) { }
@@ -56,11 +59,34 @@ export class ConfigurarServiciosComponent implements OnInit {
     this.stateCreate =false;
     this.stateEdit =false;
   }
+
+  addNewAfterSave: boolean = false;
+  sendAfterSave: boolean = false;
+
   MostarFormulario() {
-    this.stateCreate == true;
-    this.indiceActual = -1;
-    this.serviceActual = null;
-    this.Formulario = true;
+    if (this.Formulario) {
+      Swal.fire({
+        type: 'warning',
+        title: 'Servicio no guardado',
+        text: `Guarde los cambios del servicio ${this.serviceActual === null ? '' : this.serviceActual.nombre} para poder continuar al siguiente paso`,
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Deshacer cambios',
+        cancelButtonColor: '#d33'
+      }).then(r => {
+        if (r.value) {
+          this.addNewAfterSave = true;
+          this.onFormAction.emit('save');
+        }
+      });
+    }
+    else {
+      this.stateCreate == true;
+      this.indiceActual = -1;
+      this.serviceActual = null;
+      this.Formulario = true;
+    }
   }
 
 
@@ -72,14 +98,20 @@ export class ConfigurarServiciosComponent implements OnInit {
     if(this.Formulario === true){
       Swal.fire({
         title: 'Servicio no guardado',
-        type: 'error',
-        text: 'Guarde los cambios del servicio  para poder continuar al siguiente paso',
+        type: 'warning',
+        text: `Guarde los cambios del servicio ${this.serviceActual === null ? '' : this.serviceActual.nombre} para poder continuar al siguiente paso`,
         showCloseButton: true,
         showCancelButton: true,
-        showConfirmButton: false,
+        showConfirmButton: true,
         cancelButtonColor: '#d33',
-        cancelButtonText:  'Cerrar',
+        cancelButtonText:  'Deshacer cambios',
+        confirmButtonText: 'Guardar',
         allowOutsideClick: false
+      }).then(r => {
+        if (r.value) {
+          this.sendAfterSave = true;
+          this.onFormAction.emit('save');
+        }
       });
       return;
     }
@@ -204,8 +236,6 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   onGrabar(svc: ServiceModel) {
-
-    console.log(svc);
     if (this.indiceActual >= 0) {
       if (this.afiliacionService.services.find((s, i) => s.nombre === svc.nombre && i !== this.indiceActual)) {
         Swal.fire({
@@ -218,17 +248,28 @@ export class ConfigurarServiciosComponent implements OnInit {
       this.afiliacionService.services[this.indiceActual] = svc;
     }
     else {
-      if (this.afiliacionService.services.find(s => s.nombre === svc.nombre)) {
-        Swal.fire({
-          type: 'error',
-          text: 'Ya existe un servicio con este nombre',
-          allowOutsideClick: false
-        });
-        return;
+      let nro = 1;
+      this.afiliacionService.services.forEach((s, i) => {
+        if (s.nombre.startsWith(svc.nombre)) {
+          if (!isNaN(parseInt(s.nombre.substr(svc.nombre.length))) || s.nombre.substr(svc.nombre.length) === ''){
+            nro += 1;
+          }
+        }
+      });
+      if (nro > 1) {
+        svc.nombre += nro.toString();
       }
       this.afiliacionService.services.push(svc);
     }
     this.Formulario = false;
+    if (this.addNewAfterSave) {
+      setTimeout(() => this.MostarFormulario(), 600);
+    }
+    else if (this.sendAfterSave) {
+      setTimeout(() => this.EnviarServicios(), 600);
+    }
+    this.addNewAfterSave = false;
+    this.sendAfterSave = false;
   }
 
 }

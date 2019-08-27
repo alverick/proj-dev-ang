@@ -151,11 +151,11 @@ export class AfiliacionService {
 
   public GetPeriodoMora(): Observable<any[]> {
     return of<any[]> ([{
-        id: '1',
+        code: '1',
         name: 'Diario'
       },
       {
-        id: '2',
+        code: '2',
         name: 'Fijo'
       }
     ]);
