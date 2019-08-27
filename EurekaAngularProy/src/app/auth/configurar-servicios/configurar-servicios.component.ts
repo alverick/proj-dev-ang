@@ -103,7 +103,18 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     this.afiliacionService.GrabarServicios()
       .subscribe(r => {
-        this.router.navigate(['/procesando']);
+        if (this.inEdit) {
+          this.router.navigate(['/home']);
+          /*for(let i=0; i<this.afiliacionService.services.length; i++) {
+            if (this.afiliacionService.services[i].inReview == false) {
+              return;
+            }
+          }
+          this.router.navigate(['/procesando']);*/
+        }
+        else {
+          this.router.navigate(['/procesando']);
+        }
        });
   }
 
@@ -134,10 +145,10 @@ export class ConfigurarServiciosComponent implements OnInit {
     if (this.inEdit) {
       this.afiliacionService.CanDeleteService(index).subscribe(r => {
         let title = 'Eliminación total el servicio';
-        let msg = 'Se eliminará el servicio de los canales de interbank';
+        let msg = 'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
         if (r.hasPayed) {
           title = 'Eliminacion Parcial del Servicio';
-          msg = '';
+          msg = 'Ya existe un historial de pagos realizados con este servicio, solo se eliminarán las deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
         }
         Swal.fire({
           type: 'warning',
@@ -151,10 +162,17 @@ export class ConfigurarServiciosComponent implements OnInit {
         }).then(r => {
           if (r.value) {
             this.afiliacionService.SendDelService(index)
-              .subscribe(r => {});
+              .subscribe(r => {
+                Swal.fire({
+                  type: 'info',
+                  text: 'Se ha eliminado el Servicio',
+                  title: title,
+                  allowOutsideClick: false
+                });
+              });
           }
         });
-    });
+      });
     }
     else {
       Swal.fire({

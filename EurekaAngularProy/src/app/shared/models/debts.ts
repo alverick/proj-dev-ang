@@ -6,6 +6,7 @@ export interface Debts {
     firstName: string;
     lastName: string;
     service: string;
+    svcStatus?: number;
     concept: string;
     amount: number;
     amountPayed?: number;
