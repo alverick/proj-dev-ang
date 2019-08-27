@@ -13,15 +13,16 @@ export class LogoutGuard implements CanActivate {
   }
   canActivate(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-
-      if (localStorage.getItem('tk') == null || localStorage.getItem('tk')=='El usuario esta bloqueado' || localStorage.getItem('tk')=='Vuelva a intentarlo mas tarde') {
+      console.log('logout.guard');
+      if (!this.storageService.isAuthenticated()) {
         this.spinner.hide();
-        return true;      
+        return true;
       }
-     if ( localStorage.getItem('tk') ) {
-       this.router.navigate(['/home']);
-         return false;
-     }
+      else {
+        console.log('nav to home');
+        this.router.navigate(['/home']);
+        return false;
+      }
   }
 
 }
