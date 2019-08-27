@@ -150,48 +150,28 @@ export class LoginComponent implements OnInit {
 
     console.log("INTENTOS THIS : "+this.intentos)
 
-    // validacion cuando le falta para llegar a la cantidad de letras
-    if(this.loginForm.get('ruc').value.length == 0 && (this.loginForm.get('psw').value.length > 0 && this.loginForm.get('psw').value.length < 6)){
+    let continuar = true;
+
+    if (this.loginForm.get('ruc').value.length === 0) {
       this.inputUsuaValid =true;
-      this.validarCantPass =true;
-      return;
+      continuar = false;
     }
-    if( (this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11) &&  this.loginForm.get('psw').value.length == 0){
-      this.validarCantRuc =true;
-      this.inputPassValid =true;
-      return;
-    }
-    if(this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11 && this.loginForm.get('psw').value.length > 0 &&   this.loginForm.get('psw').value.length < 6){
-      this.validarCantRuc =true;
-      this.validarCantPass =true;
-      return;
-    }
-    if(this.loginForm.get('ruc').value.length > 0 && this.loginForm.get('ruc').value.length < 11 ){
-      this.validarCantRuc =true;
-      this.inputPassValid =false;
-      this.inputUsuaValid =false;
-      return;
-    }
-    if(this.loginForm.get('psw').value.length > 0 && this.loginForm.get('psw').value.length < 6){
-      this.validarCantPass =true;
-      this.inputPassValid =false;
-      this.inputUsuaValid =false;
-      return;
-    }
-    if(this.loginForm.get('ruc').value.length == 0 && this.loginForm.get('psw').value.length == 0){
-      this.inputPassValid =true;
-      this.inputUsuaValid =true;
-      return;
-    }
-    if(this.loginForm.get('ruc').value.length == 0){
-      this.inputUsuaValid =true;
-      return;
-    }
-    if(this.loginForm.get('psw').value.length == 0){
-      this.inputPassValid =true;
-      return;
+    else if (this.loginForm.get('ruc').value.length < 11) {
+      this.validarCantRuc = true;
+      continuar = false;
     }
 
+    if (this.loginForm.get('psw').value.length === 0) {
+      this.inputPassValid =true;
+      continuar = false;
+    }
+    else if (this.loginForm.get('psw').value.length < 6 || this.loginForm.get('psw').value.length > 20) {
+      this.validarCantPass = true;
+      continuar = false;
+    }
+
+    if (!continuar)
+      return;
 
     this.cookieService.delete('ruc');
     console.log("LOGIN VALID  : " +this.loginForm.valid);
