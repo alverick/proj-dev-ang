@@ -30,10 +30,10 @@ export class CrearContrasenaComponent implements OnInit {
       ruc: new FormControl('', Validators.required),
       nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(80)]),
       rubro: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
       telefono: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(11)]),
       contrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-      repcontrasena: new FormControl('', [Validators.required,Validators.minLength(6), Validators.maxLength(20)]),
+      repcontrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
       acceptterms: new FormControl(false, Validators.required)
     }, {
       validator: MustMatch('contrasena', 'repcontrasena')
