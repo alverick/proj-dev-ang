@@ -54,8 +54,8 @@ getDate(): Observable<Date[]> {
   return of(this.date);
 }
 
-getServices(): Observable<any[]> {
-  const url =`${environment.END_POINT}/company/service?_=`+ new Date().getTime();;
+getServices(incDeactivates: boolean = false): Observable<any[]> {
+  const url =`${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=`+ new Date().getTime();;
   return this.http.get<any[]> (url)
     .pipe(map(r => {
       let data: any[] = [];

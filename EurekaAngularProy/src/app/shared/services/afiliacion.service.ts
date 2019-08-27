@@ -161,7 +161,7 @@ export class AfiliacionService {
     ]);
   }
 
-  public GetServicios() {
+  public GetServicios(incDeactivates: boolean = false) {
 
     const headers: any = {
         "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
@@ -170,7 +170,7 @@ export class AfiliacionService {
       if(this.storage.isAuthenticated) {
         headers["Authorization"] = "bearer " + this.storage.getCurrentToken();
       }
-    this.http.get<any[]>(`${environment.END_POINT}/company/service?_=`+ new Date().getTime(), { headers: headers })
+    this.http.get<any[]>(`${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=`+ new Date().getTime(), { headers: headers })
       .subscribe(d => {
         let servicios = [];
         d.forEach(s => {
@@ -183,14 +183,16 @@ export class AfiliacionService {
             tipoPago: s.paymentType,
             nroCuenta: s.accountNumber,
             moneda: s.currency,
+            simboloMoneda: s.currencySymbol,
             usaWebApp: s.useAppWeb,
             usaAgente: s.useAgent,
             usaTienda: s.useStore,
             cobraMora: s.chargeInterest,
-            periodoMora: s.chargeType,
+            periodoMora: s.chargeType.toString(),
             tipoMora: s.interestType,
             monto: s.amount,
-            porcentaje: s.percentage
+            porcentaje: s.percentage,
+            inReview: s.inReview
           });
         });
         this.services = servicios;
@@ -215,7 +217,7 @@ export class AfiliacionService {
         useAppWeb: s.usaWebApp,
         useAgent: s.usaAgente,
         useStore: s.usaTienda,
-        changeInterest: s.cobraMora,
+        chargeInterest: s.cobraMora,
         chargeType: s.periodoMora,
         interestType: s.tipoMora,
         amount: s.monto,

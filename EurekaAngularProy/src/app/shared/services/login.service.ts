@@ -58,16 +58,12 @@ logout(): void {
 
 refresh(): void {
   if (this.callingRefresh === false) {
-    console.log('refresh');
     let now = new Date();
     let storage = this.storage.getCurrentSession();
-    console.log(now);
-    console.log(storage);
     if (storage) {
       let exp = new Date(storage.expire);
       let rfs = new Date(storage.refresh);
       if (now > rfs && now < exp){
-        console.log('refresh token');
         this.callingRefresh = true;
         const url = `${this.URI_API}/login?_=` + new Date().getTime();;
         this.http.get(url,{})

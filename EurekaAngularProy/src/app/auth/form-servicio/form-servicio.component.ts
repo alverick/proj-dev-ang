@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
-import { FormBuilder, Validators, FormGroup } from "@angular/forms";
+import { FormBuilder, Validators, FormGroup, FormControl } from "@angular/forms";
 import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
 import { MonedaModel, ServiceModel } from "src/app/shared/models";
 import Swal from "sweetalert2";
@@ -11,13 +11,13 @@ import { ConfigurarServiciosComponent } from "../configurar-servicios/configurar
   styleUrls: ['./form-servicio.component.scss']
 })
 export class FormServicioComponent implements OnInit {
-
-  public ngInputtextCodi:boolean = false;
+  public editMode: boolean = false;
 
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder,private stateEdit: ConfigurarServiciosComponent ) {}
 
   @Input() set service(value: ServiceModel) {
+    console.log('set service');
     if (value === null || value === undefined) {
       this._service = {
         nombre: '',
@@ -39,6 +39,7 @@ export class FormServicioComponent implements OnInit {
       this.simboloMoneda = 'S/';
     }
     else {
+      console.log(value);
       this._service = value;
       this.simboloMoneda = value.simboloMoneda
       delete this._service.simboloMoneda;
@@ -68,24 +69,24 @@ export class FormServicioComponent implements OnInit {
   public services: ServiceModel[] = [];
 
   ngOnInit(): void {
+    this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.frm = this.fb.group({
-      nombre: [this._service.nombre, [Validators.required, Validators.minLength(3)]],
-      codDeudor: [this._service.codDeudor, Validators.required],
-      nameCod: [this._service.nameCod],
-      tipoDato: [this._service.tipoDato, Validators.required],
-      tipoPago: [this._service.tipoPago, Validators.required],
+      nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3)]),
+      codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, Validators.required),
+      nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode }),
+      tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
+      tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       nroCuenta: [this._service.nroCuenta, Validators.required],
       moneda: [this._service.moneda, Validators.required],
-      usaAgente: [this._service.usaAgente],
-      usaTienda: [this._service.usaTienda],
-      usaWebApp: [this._service.usaWebApp],
+      usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
+      usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
+      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: this.editMode }),
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
       monto: [this._service.monto, Validators.maxLength(4)],
       porcentaje: [this._service.porcentaje]
     });
-
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
     this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
@@ -292,9 +293,6 @@ export class FormServicioComponent implements OnInit {
       this.f.nameCod.clearValidators();
       this.f.nameCod.reset();
     }
-  }
-  changetoSelect(){
-    this.ngInputtextCodi = false;
   }
 
 }

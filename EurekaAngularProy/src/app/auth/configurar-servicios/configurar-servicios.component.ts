@@ -134,10 +134,10 @@ export class ConfigurarServiciosComponent implements OnInit {
     if (this.inEdit) {
       this.afiliacionService.CanDeleteService(index).subscribe(r => {
         let title = 'Eliminación total el servicio';
-        let msg = 'Se eliminará el servicio de los canales de interbank';
+        let msg = 'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
         if (r.hasPayed) {
           title = 'Eliminacion Parcial del Servicio';
-          msg = '';
+          msg = 'Ya existe un historial de pagos realizados con este servicio, solo se eliminarán las deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
         }
         Swal.fire({
           type: 'warning',

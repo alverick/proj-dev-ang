@@ -17,4 +17,5 @@ export interface ServiceModel {
     tipoMora: string;
     monto?: number;
     porcentaje?: number;
+    inReview?: boolean;
 }

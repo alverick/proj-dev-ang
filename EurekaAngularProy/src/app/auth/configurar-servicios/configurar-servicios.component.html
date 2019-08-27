@@ -12,6 +12,7 @@
                                     <div class="row">
                                         <div class="col-sm-9">
                                             <h5 class="font-semibold">{{svc.nombre}}</h5>
+                                            <small *ngIf="svc.inReview" style="color: red;">Pendiente de aprobación por IBK</small>
                                         </div>
                                         <div class="col-sm-1">
                                             <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">

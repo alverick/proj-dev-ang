@@ -228,7 +228,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
-    this.homeService.getServices().subscribe(
+    this.homeService.getServices(true).subscribe(
       value => {
         this.services = value;
         this.serviceSelected = value[0];

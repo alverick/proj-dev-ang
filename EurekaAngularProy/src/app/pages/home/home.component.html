@@ -108,7 +108,7 @@
                                     <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
                                         <div class="card card-body">
                                             <div data-toggle="collapse" class="selecciona-servicio">Selecciona el servicio</div>
-                                            <div *ngFor="let service of services" (click)="openDialog(service)">
+                                            <div *ngFor="let service of typeList" (click)="openDialog(service)">
                                                 <div class="mano" data-toggle="collapse">
                                                     {{service.name}}
                                                 </div>
@@ -343,7 +343,7 @@
                                     <td>{{items.payDate | date:'dd/MM/yyyy'}}</td>
                                     <td>{{items.channel}}</td>
                                     <td>
-                                        <div class="d-flex">
+                                        <div *ngIf="items.svcStatus !== 1" class="d-flex">
                                             <div *ngIf="!items.editButton" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
                                                 <span class="icon-editar iconos-big iconos-big"></span>
                                             </div> &nbsp;&nbsp;&nbsp;
