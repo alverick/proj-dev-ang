@@ -70,6 +70,7 @@ export class FormServicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
+    console.log(this._service);
     this.frm = this.fb.group({
       nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3)]),
       codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, Validators.required),
@@ -78,9 +79,9 @@ export class FormServicioComponent implements OnInit {
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       nroCuenta: [this._service.nroCuenta, Validators.required],
       moneda: [this._service.moneda, Validators.required],
-      usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
-      usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
-      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: this.editMode }),
+      usaAgente: [this._service.usaAgente],
+      usaTienda: [this._service.usaTienda],
+      usaWebApp: [this._service.usaWebApp],
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
@@ -95,6 +96,11 @@ export class FormServicioComponent implements OnInit {
     this.changeMora();
     this.changeTipoMora();
 
+    setTimeout(() => {
+      this.frm.get('usaAgente').disable();
+      this.frm.get('usaTienda').disable();
+      this.frm.get('usaWebApp').disable();
+    }, 500);
   }
 
 
@@ -154,8 +160,21 @@ export class FormServicioComponent implements OnInit {
                   allowOutsideClick: false,});
               } else {
 
-                const value: ServiceModel = this.frm.value;
-                value.simboloMoneda = this.simboloMoneda;
+                let value: ServiceModel;
+                if (this.editMode) {
+                  console.log(this._service);
+                  value = this._service;
+                  value.nroCuenta = this.frm.value.nroCuenta;
+                  value.cobraMora = this.frm.value.cobraMora;
+                  value.periodoMora = this.frm.value.periodoMora;
+                  value.tipoMora = this.frm.value.tipoMora;
+                  value.monto = this.frm.value.monto;
+                  value.porcentaje = this.frm.value.porcentaje;
+                }
+                else {
+                  value = this.frm.value;
+                }
+                    value.simboloMoneda = this.simboloMoneda;
                 this.grabar.emit(value);
               }
 
@@ -230,8 +249,21 @@ export class FormServicioComponent implements OnInit {
                 cancelButtonText:  'Cerrar',
                 allowOutsideClick: false, });
             } else {
-              const value: ServiceModel = this.frm.value;
-              value.simboloMoneda = this.simboloMoneda;
+              let value: ServiceModel;
+              if (this.editMode) {
+                console.log(this._service);
+                value = this._service;
+                value.nroCuenta = this.frm.value.nroCuenta;
+                value.cobraMora = this.frm.value.cobraMora;
+                value.periodoMora = this.frm.value.periodoMora;
+                value.tipoMora = this.frm.value.tipoMora;
+                value.monto = this.frm.value.monto;
+                value.porcentaje = this.frm.value.porcentaje;
+              }
+              else {
+                value = this.frm.value;
+              }
+                value.simboloMoneda = this.simboloMoneda;
               this.grabar.emit(value);
             }
           }
@@ -248,9 +280,22 @@ export class FormServicioComponent implements OnInit {
                         cancelButtonText:  'Cerrar',
                         allowOutsideClick: false, });
           } else {
-
-            const value: ServiceModel = this.frm.value;
+            let value: ServiceModel;
+            if (this.editMode) {
+              console.log(this._service);
+              value = this._service;
+              value.nroCuenta = this.frm.value.nroCuenta;
+              value.cobraMora = this.frm.value.cobraMora;
+              value.periodoMora = this.frm.value.periodoMora;
+              value.tipoMora = this.frm.value.tipoMora;
+              value.monto = this.frm.value.monto;
+              value.porcentaje = this.frm.value.porcentaje;
+            }
+            else {
+              value = this.frm.value;
+            }
             value.simboloMoneda = this.simboloMoneda;
+            console.log(value);
             this.grabar.emit(value);
           }
       }

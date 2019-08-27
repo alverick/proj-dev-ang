@@ -86,6 +86,9 @@
     border: blue 2px solid;
 }
 
+.seleccionado .styled-checkbox:disabled+label{color:#fff;}
+.seleccionado .styled-checkbox:disabled+label:before{background:#2121c4}
+
 .hide-name-cod {
   float: right !important;
   position: absolute;
