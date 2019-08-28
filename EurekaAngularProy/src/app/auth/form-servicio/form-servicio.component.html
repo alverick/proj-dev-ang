@@ -36,7 +36,7 @@
             <mat-error *ngIf="f.tipoDato.invalid && f.tipoDato.hasError('required')">Elija una opcion</mat-error>
         </mat-form-field>
     </div>
-    <div class="form-group">
+    <div *ngIf="f.tipoDato.value !== 'P'" class="form-group">
         <mat-form-field class="w-100">
             <mat-label>¿Como quieres que te paguen tus clientes?</mat-label>
             <mat-select formControlName="tipoPago" name="tipoPago">
@@ -144,7 +144,7 @@
             <mat-label>Tipo de Cobro</mat-label>
             <mat-select formControlName="periodoMora">
               <mat-option>Tipo de Cobro</mat-option>
-                <mat-option *ngFor="let t of tiposMora" [value]="t.id">
+                <mat-option *ngFor="let t of tiposMora" [value]="t.code">
                     {{t.name}}
                 </mat-option>
             </mat-select>

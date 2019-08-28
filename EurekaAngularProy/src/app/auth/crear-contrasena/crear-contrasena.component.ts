@@ -42,7 +42,7 @@ export class CrearContrasenaComponent implements OnInit {
   }
 
   // Obtención de conveniencia para un fácil acceso a los campos de formulario
-  get f() {
+  get f(): any {
     return this.registerForm.controls;
   }
 
@@ -52,11 +52,11 @@ export class CrearContrasenaComponent implements OnInit {
     console.log('RUC --->'+  ruc.substring(0,2));
     // stop here if form is invalid
 
-    if (this.registerForm.invalid) {  
+    if (this.registerForm.invalid) {
       return;
     }
-     if( parseInt(ruc.substring(0,2)) == 20  ||  parseInt(ruc.substring(0,2)) == 10 ){
-     
+    if( parseInt(ruc.substring(0,2)) == 20  ||  parseInt(ruc.substring(0,2)) == 10 ){
+
     }else{
       this.mensaje('warning','Registrame','Debe ingresar un Ruc valido' );
       return;
@@ -66,10 +66,10 @@ export class CrearContrasenaComponent implements OnInit {
       this.mensaje('warning','Registrame','Debe ingresar un email valido' );
       return;
     }
- 
+
    //  if(this.registerForm.value.ruc)
     if (this.registerForm.value.acceptterms == false) {
-  
+
       this.mensaje('warning','Registrame','Debe aceptar los terminos y condiciones' );
 
       return;
@@ -87,12 +87,37 @@ export class CrearContrasenaComponent implements OnInit {
       if (d.success) {
         this.router.navigate(["/configurarServicios"/*, this.registerForm.get('ruc')*/]);
       } else {
-         
-        this.mensaje('error','Registrame', d.message );
+        if (d.code === 1) {
+          Swal.fire({
+            type: 'warning',
+            title: 'Crea tu cuenta',
+            text: `El RUC: ${this.registerForm.value.ruc} ya se encuentra registrado en Eureca`,
+            showConfirmButton: false,
+            showCancelButton: true,
+            showCloseButton: true,
+            cancelButtonText: 'Cerrar'
+          });
+        }
+        else {
+          Swal.fire({
+            type: 'warning',
+            title: 'Crea tu cuenta de negocios',
+            text: `No tenemos ninguna cuenta asociada al RUC: ${this.registerForm.value.ruc}. Para continuar crea primero tu cuenta negocios y puedas cobrar tus servicios ahí`,
+            showConfirmButton: true,
+            showCancelButton: true,
+            showCloseButton: true,
+            confirmButtonText: 'Crear mi cuenta',
+            cancelButtonText: 'Corregir mi RUC'
+          }).then(res => {
+            if (res.value) {
+              window.open('https://interbank.pe/cuenta-negocios');
+            }
+          });
+        }
       }
     }, err => {
       console.log(err);
-      
+
       this.mensaje('error','Registrame','Ha ocurrido un error con el servidor<br />Intente de nuevo' );
 
     });

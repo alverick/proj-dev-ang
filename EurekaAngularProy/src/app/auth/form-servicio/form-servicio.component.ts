@@ -14,13 +14,15 @@ export class FormServicioComponent implements OnInit {
   public editMode: boolean = false;
 
   constructor(private afiliacionService: AfiliacionService,
-    private fb: FormBuilder,private stateEdit: ConfigurarServiciosComponent ) {}
+    private fb: FormBuilder,private stateEdit: ConfigurarServiciosComponent ) {
+      stateEdit.onFormAction.subscribe(e => this.formAction(e));
+    }
 
   @Input() set service(value: ServiceModel) {
     console.log('set service');
     if (value === null || value === undefined) {
       this._service = {
-        nombre: '',
+        nombre: 'Mensualidad',
         codDeudor: 'DNI',
         tipoDato: 'C',
         tipoPago: 'C',
@@ -79,9 +81,9 @@ export class FormServicioComponent implements OnInit {
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       nroCuenta: [this._service.nroCuenta, Validators.required],
       moneda: [this._service.moneda, Validators.required],
-      usaAgente: [this._service.usaAgente],
-      usaTienda: [this._service.usaTienda],
-      usaWebApp: [this._service.usaWebApp],
+      usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
+      usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
+      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: this.editMode }),
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
@@ -95,12 +97,6 @@ export class FormServicioComponent implements OnInit {
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
     this.changeMora();
     this.changeTipoMora();
-
-    setTimeout(() => {
-      this.frm.get('usaAgente').disable();
-      this.frm.get('usaTienda').disable();
-      this.frm.get('usaWebApp').disable();
-    }, 500);
   }
 
 
@@ -337,6 +333,12 @@ export class FormServicioComponent implements OnInit {
     else {
       this.f.nameCod.clearValidators();
       this.f.nameCod.reset();
+    }
+  }
+
+  formAction(action: string){
+    if (action === 'save') {
+      this.onSubmitServicio();
     }
   }
 
