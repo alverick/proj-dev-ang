@@ -7,9 +7,9 @@ export class OnlyNumbersFormDirective {
 
   constructor(private _el: ElementRef) { }
 
-  @HostListener('input', ['$event']) onInputChange(event) {
+  @HostListener('keydown', ['$event']) onInputKeydow(e: KeyboardEvent) {
     const initalValue = this._el.nativeElement.value;
-    this._el.nativeElement.value = initalValue.replace(/[^0-9]*/g, '');
+    this._el.nativeElement.value = initalValue.replace(/[^0-9\.]*/g, '');
     if ( initalValue !== this._el.nativeElement.value) {
       event.stopPropagation();
     }

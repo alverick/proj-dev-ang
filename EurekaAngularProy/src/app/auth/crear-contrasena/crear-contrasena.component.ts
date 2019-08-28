@@ -111,6 +111,7 @@ export class CrearContrasenaComponent implements OnInit {
           }).then(res => {
             if (res.value) {
               window.open('https://interbank.pe/cuenta-negocios');
+              this.router.navigate(['/login']);
             }
           });
         }

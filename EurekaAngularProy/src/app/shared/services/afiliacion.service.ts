@@ -32,10 +32,44 @@ export class AfiliacionService {
       usaTienda: false,
       cobraMora: 'N',
       periodoMora: '1',
-      tipoMora: 'M',
-      monto: 0,
-      porcentaje: 0
+      tipoMora: 'M'
     });
+  }
+
+  public CrearSevice(): ServiceModel {
+    let nombre: string = 'Mensualidad';
+    let nro = 1;
+    this.services.forEach((s, i) => {
+      if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
+        if (!isNaN(parseInt(s.nombre.substr(nombre.length))) || s.nombre.substr(nombre.length) === ''){
+          let aux = parseInt(s.nombre.substr(nombre.length));
+          if (isNaN(aux))
+            nro = 2;
+          else if (aux >= nro)
+            nro = aux + 1;
+        }
+      }
+    });
+    if (nro > 1) {
+      nombre += nro.toString();
+    }
+    let svc: ServiceModel = {
+      nombre: nombre,
+      codDeudor: 'DNI',
+      tipoDato: 'C',
+      tipoPago: 'C',
+      nroCuenta: '',
+      moneda: '001',
+      simboloMoneda: 'S/',
+      usaWebApp: true,
+      usaAgente: false,
+      usaTienda: false,
+      cobraMora: 'N',
+      periodoMora: '1',
+      tipoMora: 'M'
+    };
+    this.services.push(svc);
+    return svc;
   }
 
   public AddService(svc: ServiceModel) {
@@ -234,5 +268,14 @@ export class AfiliacionService {
         throw throwError(err);
       }));
 
+  }
+
+  Descartar(indice: number) {
+    if (this.services.length > 1 && indice >= 0 && indice === (this.services.length - 1)) {
+      let svc = this.services[this.services.length-1];
+      if (svc.id === null || svc.id === undefined || svc.id < 0) {
+        this.services.pop();
+      }
+    }
   }
 }

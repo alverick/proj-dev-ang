@@ -34,9 +34,7 @@ export class FormServicioComponent implements OnInit {
         usaTienda: false,
         cobraMora: 'N',
         periodoMora: '1',
-        tipoMora: 'M',
-        monto: 0,
-        porcentaje: 0
+        tipoMora: 'M'
       }
       this.simboloMoneda = 'S/';
     }
@@ -79,7 +77,7 @@ export class FormServicioComponent implements OnInit {
       nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode }),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
-      nroCuenta: [this._service.nroCuenta, Validators.required],
+      nroCuenta: [this._service.nroCuenta, [Validators.required, Validators.minLength(13)]],
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
@@ -87,8 +85,8 @@ export class FormServicioComponent implements OnInit {
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
-      monto: [this._service.monto, Validators.maxLength(4)],
-      porcentaje: [this._service.porcentaje]
+      monto: [(!this._service.monto ? '1.00' : this._service.monto) , [Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(1), Maximo(1000)]],
+      porcentaje: [(!this._service.porcentaje ? '1' : this._service.porcentaje), [Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(0.01), Maximo(100)]]
     });
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
@@ -99,6 +97,15 @@ export class FormServicioComponent implements OnInit {
     this.changeTipoMora();
   }
 
+  onChangeTipoDato() {
+    if (this.frm.get('tipoDato').value === 'P') {
+      this.frm.get('tipoPago').setValue('C');
+      this.frm.get('tipoPago').disable();
+    }
+    else {
+      this.frm.get('tipoPago').enable();
+    }
+  }
 
   onSubmitServicio() {
 
@@ -316,13 +323,13 @@ export class FormServicioComponent implements OnInit {
     this.cobraMonto = (this.f.tipoMora.value === "M");
     this.cobraPorcentaje = (this.f.tipoMora.value === "P");
     if (this.cobraMora && this.cobraMonto) {
-      this.f.monto.setValidators([Validators.required]);
+      this.f.monto.setValidators([Validators.required,Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(1), Maximo(1000)]);
       this.f.porcentaje.clearValidators();
-      this.f.porcentaje.reset();
+      this.f.porcentaje.value = "1";
     } else if (this.cobraMora && this.cobraPorcentaje) {
-      this.f.porcentaje.setValidators([Validators.required]);
+      this.f.porcentaje.setValidators([Validators.required, Validators.pattern('^[0-9]{1,3}(\.[0-9]{2})?$'), Minimo(0.01), Maximo(100)]);
       this.f.monto.clearValidators();
-      this.f.monto.reset();
+      this.f.monto.value = "1.00";
     }
   }
 
@@ -338,8 +345,35 @@ export class FormServicioComponent implements OnInit {
 
   formAction(action: string){
     if (action === 'save') {
+      Object.keys(this.frm.controls).forEach(c => {
+        this.frm.controls[c].markAsDirty();
+      });
       this.onSubmitServicio();
     }
   }
 
+}
+
+function Maximo(max: number) {
+  return (c: FormControl) => {
+    let nro = parseFloat(c.value);
+    if (!isNaN(nro)) {
+      if (nro > max) {
+        return { maximo: true };
+      }
+    }
+    return null;
+  }
+}
+
+function Minimo(min: number) {
+  return (c: FormControl) => {
+    let nro = parseFloat(c.value);
+    if (!isNaN(nro)) {
+      if (nro < min) {
+        return { minimo: true };
+      }
+    }
+    return null;
+  }
 }
