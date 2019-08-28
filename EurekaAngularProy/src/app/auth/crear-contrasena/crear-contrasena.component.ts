@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { MustMatch } from './must-match.validator';
 import { AfiliacionService } from '../../shared/services/afiliacion.service';
 import { Router } from '@angular/router';
@@ -74,7 +74,7 @@ export class CrearContrasenaComponent implements OnInit {
 
       return;
     }
-     
+
     this.afiliacionService.Registrar({
       ruc: this.registerForm.value.ruc,
       name: this.registerForm.value.nombre,
