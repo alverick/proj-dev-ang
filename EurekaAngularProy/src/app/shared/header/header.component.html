@@ -20,23 +20,24 @@
                     <a href="#" class="nav-link dropdown-toggle" id="lnkMessages" data-toggle="dropdown" aria-haspopup="true"
                       aria-expanded="false">
                       <fa-icon [icon]="notify.icono"></fa-icon>
+                      <span class="badge-icon" *ngIf="notify.total > 0" >{{notify.total}}</span>
                     </a>
                     <div class="dropdown-menu scroll-menu dropdown-menu-right" aria-labelledby="lnkMessages"
-                      infiniteScroll [infiniteScrollDistance]="8" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
+                      infiniteScroll [infiniteScrollDistance]="15" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
                       [scrollWindow]="false" (ngShow)="onShowMessages()" >
 
-                       
-                       <div *ngFor="let msg of notify.messages " class="dropdown-item " [class.es-nuevo]="msg.isNew" > 
+
+                       <div *ngFor="let msg of notify.messages " class="dropdown-item " [class.es-nuevo]="msg.isNew" >
                                     <div class="texto">{{msg.message}}</div>
                                     <div class="tiempo">{{getAgo(msg.create)}}</div>
-                                    <fa-icon class="item-icono" title="{{msg.title}}" [icon]="msg.icono" (click)="notify.changeRead(msg)" > 
-                                    </fa-icon> 
+                                    <fa-icon class="item-icono" title="{{msg.title}}" [icon]="msg.icono" (click)="notify.changeRead(msg)" >
+                                    </fa-icon>
                        </div>
-                     
+
                       <div *ngIf="notify.messages.length == 0" >
                          Usted tiene cero notificaciones
                       </div>
-                      
+
                     </div>
                   </li>
                   <li class="nav-item px-4">

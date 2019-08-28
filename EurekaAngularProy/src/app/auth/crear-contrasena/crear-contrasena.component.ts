@@ -87,20 +87,33 @@ export class CrearContrasenaComponent implements OnInit {
       if (d.success) {
         this.router.navigate(["/configurarServicios"/*, this.registerForm.get('ruc')*/]);
       } else {
-        Swal.fire({
-          type: 'warning',
-          title: 'Crea tu cuenta de negocios',
-          text: `No tenemos ninguna cuenta asociada al RUC: ${this.registerForm.value.ruc}. Para continuar crea primero tu cuenta negocios y puedas cobrar tus servicios ahí`,
-          showConfirmButton: true,
-          showCancelButton: true,
-          showCloseButton: true,
-          confirmButtonText: 'Crear mi cuenta',
-          cancelButtonText: 'Corregir mi RUC'
-        }).then(res => {
-          if (res.value) {
-            window.open('https://interbank.pe/cuenta-negocios');
-          }
-        });
+        if (d.code === 1) {
+          Swal.fire({
+            type: 'warning',
+            title: 'Crea tu cuenta',
+            text: `El RUC: ${this.registerForm.value.ruc} ya se encuentra registrado en Eureca`,
+            showConfirmButton: false,
+            showCancelButton: true,
+            showCloseButton: true,
+            cancelButtonText: 'Cerrar'
+          });
+        }
+        else {
+          Swal.fire({
+            type: 'warning',
+            title: 'Crea tu cuenta de negocios',
+            text: `No tenemos ninguna cuenta asociada al RUC: ${this.registerForm.value.ruc}. Para continuar crea primero tu cuenta negocios y puedas cobrar tus servicios ahí`,
+            showConfirmButton: true,
+            showCancelButton: true,
+            showCloseButton: true,
+            confirmButtonText: 'Crear mi cuenta',
+            cancelButtonText: 'Corregir mi RUC'
+          }).then(res => {
+            if (res.value) {
+              window.open('https://interbank.pe/cuenta-negocios');
+            }
+          });
+        }
       }
     }, err => {
       console.log(err);

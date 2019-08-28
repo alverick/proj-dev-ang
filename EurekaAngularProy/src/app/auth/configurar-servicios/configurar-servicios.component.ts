@@ -58,6 +58,14 @@ export class ConfigurarServiciosComponent implements OnInit {
     this.Formulario = false
     this.stateCreate =false;
     this.stateEdit =false;
+    if (this.addNewAfterSave) {
+      setTimeout(() => this.MostarFormulario(), 600);
+    }
+    else if (this.sendAfterSave) {
+      setTimeout(() => this.EnviarServicios(), 600);
+    }
+    this.addNewAfterSave = false;
+    this.sendAfterSave = false;
   }
 
   addNewAfterSave: boolean = false;
@@ -71,13 +79,21 @@ export class ConfigurarServiciosComponent implements OnInit {
         text: `Guarde los cambios del servicio ${this.serviceActual === null ? '' : this.serviceActual.nombre} para poder continuar al siguiente paso`,
         showConfirmButton: true,
         showCancelButton: true,
+        showCloseButton: true,
         confirmButtonText: 'Guardar',
         cancelButtonText: 'Deshacer cambios',
         cancelButtonColor: '#d33'
       }).then(r => {
+        console.log(r);
+        this.addNewAfterSave = true;
         if (r.value) {
-          this.addNewAfterSave = true;
           this.onFormAction.emit('save');
+        }
+        else if (r.dismiss === Swal.DismissReason.cancel) {
+          this.OcultarFormulario();
+        }
+        else {
+          this.addNewAfterSave = false;
         }
       });
     }
@@ -108,9 +124,15 @@ export class ConfigurarServiciosComponent implements OnInit {
         confirmButtonText: 'Guardar',
         allowOutsideClick: false
       }).then(r => {
+        this.sendAfterSave = true;
         if (r.value) {
-          this.sendAfterSave = true;
           this.onFormAction.emit('save');
+        }
+        else if (r.dismiss === Swal.DismissReason.cancel) {
+          this.OcultarFormulario();
+        }
+        else {
+          this.sendAfterSave = false;
         }
       });
       return;
