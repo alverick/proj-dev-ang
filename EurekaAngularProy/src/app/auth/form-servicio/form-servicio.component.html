@@ -156,8 +156,9 @@
             <span class="check"></span>
          </label>
             <mat-form-field *ngIf="cobraMonto">
-                <input formControlName="monto" type="text" name="monto" appOnlyNumbersForm matInput maxlength="4">
+                <input formControlName="monto" type="text" name="monto"   matInput maxlength="7">
                 <span matPrefix>{{simboloMoneda}}&nbsp;&nbsp;</span>
+                <mat-error *ngIf="f.monto.invalid && f.monto.hasError('pattern')"> Ingrese un monto valido </mat-error>
             </mat-form-field>
             <label class="d-block mb-0 radio">Porcentaje
             <input type="radio" formControlName="tipoMora" name="tipoMora" id="porcentaje" value="P"

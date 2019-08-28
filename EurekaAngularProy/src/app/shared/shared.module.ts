@@ -4,6 +4,7 @@ import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive'; 
 import { DialogComponent } from '../pages/home/dialog'; 
 import { CorreoDirective } from './directives/correo.directive';
+import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 
 @NgModule({
   imports: [
@@ -11,9 +12,11 @@ import { CorreoDirective } from './directives/correo.directive';
   ],providers:[ ],
   declarations: [OnlynumbersDirective,
                  SearchDirective,
-                 CorreoDirective],
+                 CorreoDirective,
+                 NameEnterpiseDirective],
   exports: [OnlynumbersDirective,
             SearchDirective,
-            CorreoDirective]
+            CorreoDirective,
+            NameEnterpiseDirective]
 })
 export class SharedModule { }

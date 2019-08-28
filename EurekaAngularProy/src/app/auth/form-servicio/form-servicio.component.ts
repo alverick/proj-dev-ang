@@ -87,8 +87,8 @@ export class FormServicioComponent implements OnInit {
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
-      monto: [this._service.monto, Validators.maxLength(4)],
-      porcentaje: [this._service.porcentaje]
+      monto: [this._service.monto,Validators.pattern('^([1][0]{3})([.][0-9]{2})?|([1-9]{1}[0-9]{2})([.][0-9]{0,2})?$')],
+      porcentaje: [this._service.porcentaje ]
     });
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);

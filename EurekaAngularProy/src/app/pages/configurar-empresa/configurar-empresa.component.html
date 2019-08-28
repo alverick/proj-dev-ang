@@ -46,8 +46,9 @@
                                     {{ getErrorPhone() }}
                                 </mat-error> -->
 
-                                <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required')">Telefono es un campo requerido</mat-error>
-                                <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('minlength')"> El Telefono debe tener minmo 6 digitos</mat-error>
+                                <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required')">El Telefono ó Celular es un campo requerido</mat-error>
+                                <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('pattern')"> Ingrese un Telefono ó Celular valido </mat-error>
+                                <mat-error *ngIf="f.movilNumber.invalid  && !f.movilNumber.hasError('pattern') && f.movilNumber.hasError('minlength')"> El Telefono ó Celular debe tener mínimo 6 dígitos</mat-error>
 
 
                             </mat-form-field>
@@ -59,8 +60,9 @@
                               <!--  <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
                                     {{ getErrorPassword() }}
                                 </mat-error>-->
-                                <mat-error *ngIf="f.password.invalid && f.password.hasError('required')">Contraseña es un campo requerido</mat-error>
+                                <mat-error *ngIf="f.password.invalid && f.password.hasError('required')">La Contraseña es un campo requerido</mat-error>
                                 <mat-error *ngIf="f.password.invalid && f.password.hasError('minlength')"> La contraseña debe tener minmo 6 digitos</mat-error>
+                                <mat-error *ngIf="f.newPassword.invalid"> La contraseña debe tener minmo 6 digitos</mat-error>
                             </mat-form-field>
     
                             <mat-form-field class="example-full-width">
@@ -70,7 +72,7 @@
                                 </mat-error> -->
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('required')">Debe ingresar la nueva contraseña</mat-error>
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('minlength')"> La nueva contraseña debe tener minmo 6 digitos</mat-error>
-
+                                <mat-error *ngIf="f.password.invalid"> La contraseña debe tener minmo 6 digitos</mat-error>
                             </mat-form-field>
     
     
@@ -87,7 +89,7 @@
                             </mat-form-field>
     
                             <div class="mt-4">
-                                <button color="primary" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white">Actualizar</button>
+                                <button color="primary" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white">Actualizar Campos</button>
                             </div>
                         </form>
                     </div>
