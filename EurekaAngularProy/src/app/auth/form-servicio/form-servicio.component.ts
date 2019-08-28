@@ -100,10 +100,13 @@ export class FormServicioComponent implements OnInit {
   onChangeTipoDato() {
     if (this.frm.get('tipoDato').value === 'P') {
       this.frm.get('tipoPago').setValue('C');
-      this.frm.get('tipoPago').disable();
+      this.tiposPago.pop();
     }
-    else {
-      this.frm.get('tipoPago').enable();
+    else if (this.tiposPago.length === 1) {
+      this.tiposPago.push({
+        code: 'P',
+        name: "Tengo solo código y nombres"
+      });
     }
   }
 

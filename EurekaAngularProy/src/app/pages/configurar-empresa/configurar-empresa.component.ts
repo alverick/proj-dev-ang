@@ -51,7 +51,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       entry: new FormControl({ value: '', disabled: true }),
     email: new FormControl('', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10)]),
       movilNumber: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(9)]),
-      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20)]),
+      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
       newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
       confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
     }, {
@@ -185,6 +185,14 @@ function ValidateConfigEmpresa() {
     validPwd(f);
     ValidateNewPasswordRequired(f);
   }
+}
+
+function UnaLetra(c: FormControl) {
+  let regex = /[a-zA-Z]/g;
+  if (c.value && !regex.test(c.value)) {
+    return { unaletra: true };
+  }
+  return null;
 }
 
 function ValidateNewPasswordRequired(f: FormGroup) {

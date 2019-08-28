@@ -60,6 +60,7 @@
                                     {{ getErrorPassword() }}
                                 </mat-error>-->
                                 <mat-error *ngIf="f.password.invalid && f.password.hasError('minlength')"> La contraseña debe tener minmo 6 digitos</mat-error>
+                                <mat-error *ngIf="f.password.invalid && f.password.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
                               </mat-form-field>
 
                             <mat-form-field class="example-full-width">
