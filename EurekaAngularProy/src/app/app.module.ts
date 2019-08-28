@@ -49,8 +49,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { EmailDirective } from './pages/configurar-empresa/email.directive';
 import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.directive';
-import { NotifyService } from './shared/services/notify.service';
-
+import { NotifyService } from './shared/services/notify.service'; 
 
 @NgModule({
   declarations: [
@@ -71,7 +70,7 @@ import { NotifyService } from './shared/services/notify.service';
     BlockCopyPasteDirective,
     DecimalesDirective,
     EmailDirective,
-    OnlyNumbersDirective,
+    OnlyNumbersDirective, 
 
 
     ],

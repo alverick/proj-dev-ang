@@ -49,11 +49,11 @@ export class ConfigurarEmpresaComponent implements OnInit {
       ruc: new FormControl({ value: '', disabled: true }),
       name: new FormControl({ value: '', disabled: true }),
       entry: new FormControl({ value: '', disabled: true }),
-    email: new FormControl('', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10)]),
-      movilNumber: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(9)]),
+      email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
+      movilNumber: new FormControl('', [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
       password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
-      newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
-      confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
+      newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
+      confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
     }, {
       validator: ValidateConfigEmpresa()
     });
@@ -94,7 +94,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
     console.log("ENTRO  ");
     if (this.formGroup.valid) {
-      if(correo==0){
+       if(correo==0){
         return;
       }
        if(!this.formGroup.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){

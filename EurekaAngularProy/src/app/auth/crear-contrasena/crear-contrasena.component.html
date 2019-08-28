@@ -19,15 +19,15 @@
 
                                     <mat-error *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
                                     <mat-error *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
-                                    <mat-error *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 digitos</mat-error>
-
+                                    <mat-error *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
+ 
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="nombre" appSearch [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
+                                    <input formControlName="nombre" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
                                     <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
-                                    <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')"> El nombre debe tener minimo 3 digitos</mat-error>
+                                    <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
@@ -44,28 +44,29 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="email" (Keydown.space)="$event.preventDefault()"  [class.is-invalid]="f.email.invalid" matInput type="email" minlength="10" maxlength="100" placeholder="Email">
-
+                                    <input formControlName="email" (Keydown.space)="$event.preventDefault()"  [class.is-invalid]="f.email.invalid" matInput type="text" minlength="10" maxlength="100" placeholder="Email">
+                                     
                                     <mat-error *ngIf="f.email.invalid && f.email.hasError('required')">El email es obligatorio</mat-error>
                                     <mat-error *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un email valido </mat-error>
-                                    <mat-error *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El email debe tener minimo 10 digitos</mat-error>
+                                    <mat-error *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El email debe tener mínimo 10 dígitos</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
                                     <input formControlName="telefono" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Telefono ó Celular" minlength="6" maxlength="9">
-
-                                    <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('required')">Telefono es un campo requerido</mat-error>
-                                    <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('minlength')"> El Telefono debe tener minmo 6 digitos</mat-error>
-
-                                </mat-form-field>
+                                    
+                                    <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('required')">Telefono ó Celular es un campo requerido</mat-error>
+                                    <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('pattern')"> Ingrese un Telefono ó Celular valido </mat-error>
+                                    <mat-error *ngIf="f.telefono.invalid  && !f.telefono.hasError('pattern') && f.telefono.hasError('minlength')"> El Telefono ó Celular debe tener mínimo 6 dígitos</mat-error>
+                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
                                     <input formControlName="contrasena" (Keydown.space)="$event.preventDefault()"  appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
 
                                     <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('required')">Contraseña es un campo requerido</mat-error>
-                                    <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener minmo 6 digitos</mat-error>
+                                    <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
+
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
@@ -74,16 +75,15 @@
 
                                     <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required')">Debe repetir la contraseña</mat-error>
                                     <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
-                                    <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('minlength')"> La contraseña debe tener minmo 6 digitos</mat-error>
+                                    <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
 
                                 </mat-form-field>
                             </div>
 
                             <div class="form-group">
                                 <input formControlName="acceptterms" class="styled-checkbox" id="styled-checkbox-1" type="checkbox">
-                                <label for="styled-checkbox-1"> Acepto los </label>&nbsp;<a href="assets/Términos y condiciones.pdf" target="_blank" >Terminos y Condiciones</a>
-                                <mat-error *ngIf="submitted && f.acceptterms.errors">aceptar los terminos y condiciones</mat-error> <br>
-
+                                <label for="styled-checkbox-1"> Acepto los </label>&nbsp;<a href="assets/Términos y condiciones.pdf" target="_blank" >Terminos y Condiciones</a> 
+                                <mat-error *ngIf="submitted && f.acceptterms.errors">Acepte los terminos y condiciones</mat-error>   
                             </div>
                             <br>
                             <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white">
