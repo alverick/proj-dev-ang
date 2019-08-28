@@ -1,7 +1,7 @@
 import { Directive, HostListener, ElementRef } from '@angular/core';
 
 @Directive({
-  selector: 'input[appOnlynumbers]'
+  selector: '[appOnlynumbers]'
 })
 export class OnlynumbersDirective {
 

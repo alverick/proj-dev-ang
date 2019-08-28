@@ -10,6 +10,7 @@ export class ProcesandoComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    window['_url_loop_'] = 'procesando';
   }
 
 }

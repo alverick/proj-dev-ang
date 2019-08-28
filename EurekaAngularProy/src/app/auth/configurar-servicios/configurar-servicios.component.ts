@@ -4,8 +4,6 @@ import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
-import { throwError } from 'rxjs';
-import { isNumber } from 'util';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -18,7 +16,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   public stateCreate: boolean;
   public stateEdit: boolean;
   public input: FormServicioComponent;
-  Formulario: boolean =true;
+  Formulario: boolean = false;
   buttonServicios ='';
   private inEdit: boolean = false;
 
@@ -36,14 +34,12 @@ export class ConfigurarServiciosComponent implements OnInit {
       this.inEdit = d.isEdit;
       if (d.isEdit) {
         console.log('pide token xdee -----------------');
-        this.Formulario = false;
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
       } else {
         // siempre entra ahí
         window['_url_loop_'] = 'configurarServicios';
         console.log('llamando a Clear');
-        this.Formulario =true;
         this.afiliacionService.Clear();
         this.buttonServicios = 'Guardar';
         this.editService(this.afiliacionService.services[0], 0);
@@ -51,21 +47,47 @@ export class ConfigurarServiciosComponent implements OnInit {
     });
   }
 
-  private indiceActual: number = -1;
+  public indiceActual: number = -1;
   serviceActual: ServiceModel = null;
 
-  OcultarFormulario() {
-    this.Formulario = false
-    this.stateCreate =false;
-    this.stateEdit =false;
-    if (this.addNewAfterSave) {
-      setTimeout(() => this.MostarFormulario(), 600);
+  OcultarFormulario(requireConfirm: boolean) {
+    if (requireConfirm) {
+      Swal.fire({
+        type: 'question',
+        title: 'Descartar Cambios',
+        text: 'Se van a descartar los cambios.',
+        showConfirmButton: true,
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: 'Descartar',
+        cancelButtonText: 'Regresar'
+      }).then(r => {
+        if (r.value) {
+          this.Formulario = false
+          this.stateCreate =false;
+          this.stateEdit =false;
+          this.addNewAfterSave = false;
+          this.sendAfterSave = false;
+          this.afiliacionService.Descartar(this.indiceActual);
+          this.indiceActual = -1;
+        }
+      });
     }
-    else if (this.sendAfterSave) {
-      setTimeout(() => this.EnviarServicios(), 600);
+    else {
+      this.Formulario = false
+      this.stateCreate =false;
+      this.stateEdit =false;
+      this.afiliacionService.Descartar(this.indiceActual);
+      this.indiceActual = -1;
+      if (this.addNewAfterSave) {
+        setTimeout(() => this.MostarFormulario(), 600);
+      }
+      else if (this.sendAfterSave) {
+        setTimeout(() => this.EnviarServicios(), 600);
+      }
+      this.addNewAfterSave = false;
+      this.sendAfterSave = false;
     }
-    this.addNewAfterSave = false;
-    this.sendAfterSave = false;
   }
 
   addNewAfterSave: boolean = false;
@@ -90,7 +112,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           this.onFormAction.emit('save');
         }
         else if (r.dismiss === Swal.DismissReason.cancel) {
-          this.OcultarFormulario();
+          this.OcultarFormulario(false);
         }
         else {
           this.addNewAfterSave = false;
@@ -98,9 +120,9 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
     }
     else {
-      this.stateCreate == true;
-      this.indiceActual = -1;
-      this.serviceActual = null;
+      this.indiceActual = this.afiliacionService.services.length;
+      this.serviceActual = this.afiliacionService.CrearSevice();
+      this.stateEdit = true;
       this.Formulario = true;
     }
   }
@@ -129,7 +151,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           this.onFormAction.emit('save');
         }
         else if (r.dismiss === Swal.DismissReason.cancel) {
-          this.OcultarFormulario();
+          this.OcultarFormulario(false);
         }
         else {
           this.sendAfterSave = false;
@@ -196,6 +218,18 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   delService(index: number) {
+    if (this.Formulario) {
+      Swal.fire({
+        type: 'warning',
+        title: 'Eliminación del Servicio',
+        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
+        showCloseButton: true,
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonText: 'Cerrar'
+      });
+      return;
+    }
     if (this.inEdit) {
       this.afiliacionService.CanDeleteService(index).subscribe(r => {
         let title = 'Eliminación total el servicio';
@@ -247,6 +281,19 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   editService(svc: ServiceModel, index: number) {
+    if (this.Formulario && this.indiceActual !== index) {
+      Swal.fire({
+        type: 'warning',
+        title: 'Edición del Servicio',
+        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
+        showCloseButton: true,
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonText: 'Cerrar'
+      });
+      return;
+    }
+
     this.stateEdit = true;
     console.log(index);
     this.indiceActual = index;
@@ -259,7 +306,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   onGrabar(svc: ServiceModel) {
     if (this.indiceActual >= 0) {
-      if (this.afiliacionService.services.find((s, i) => s.nombre === svc.nombre && i !== this.indiceActual)) {
+      if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({
           type: 'error',
           text: 'Ya existe un servicio con este nombre',
@@ -268,6 +315,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         return;
       }
       this.afiliacionService.services[this.indiceActual] = svc;
+      this.indiceActual = -1;
     }
     else {
       let nro = 1;

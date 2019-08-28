@@ -7,7 +7,7 @@
                         <br>
                         <h2 class="texto-azulbase">Configura tus servicios </h2>
                         <div class="col-sm-10">
-                            <div class="card" *ngFor="let svc of afiliacionService.services; let i = index">
+                            <div class="card" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-9">
@@ -72,7 +72,7 @@
                 <div class="d-flex justify-content-center">
                     <div class=" border p-5 bg-white rounded">
                         <div style="float: right;">
-                            <button (click)="OcultarFormulario()" type="button" class="btn btn-tool" data-widget="remove"><i
+                            <button (click)="OcultarFormulario(true)" type="button" class="btn btn-tool" data-widget="remove"><i
                   class="fa fa-times"></i>
               </button>
                         </div>

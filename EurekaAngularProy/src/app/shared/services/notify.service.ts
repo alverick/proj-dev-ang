@@ -29,12 +29,14 @@ export class NotifyService {
               if (d.total !== this.total) {
                 this.total = d.total;
                 this.messages = [];
+                this.existMore = true;
                 this.loadMsgs();
               }
             });
         }
       };
-      Observable.interval(10000).subscribe(() => callNotify());
+      Observable.interval(1000).subscribe(() => callNotify());
+      callNotify();
     }
   }
 
