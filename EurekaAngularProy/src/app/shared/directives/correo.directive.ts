@@ -7,9 +7,11 @@ export class CorreoDirective {
 
   constructor(private el: ElementRef) { }
 
-  @HostListener('input', ['$event']) InputShearNombreCodigo(event) {
+  @HostListener('input', ['$event']) onInputChange(event) {
     let initalValue = this.el.nativeElement.value; 
-    this.el.nativeElement.value = initalValue.replace(/[^.-@-_0-9-A-Z-a-z]*/g, '');
+    console.log('espacio no acept');
+    this.el.nativeElement.value = initalValue.replace(/[^0-9]*/g, '');
+    
     if ( initalValue !== this.el.nativeElement.value) {
       event.stopPropagation();
     }

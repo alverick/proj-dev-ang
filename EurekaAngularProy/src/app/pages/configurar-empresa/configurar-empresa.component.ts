@@ -50,9 +50,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
       ruc: new FormControl(''),
       name: new FormControl(''),
       entry: new FormControl(''),
-    email: new FormControl('', [Validators.required, Validators.email , Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$') ]),
-      movilNumber: new FormControl('', [Validators.required]),
-      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(11)]),
+    email: new FormControl('', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10)]),
+      movilNumber: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(9)]),
+      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20)]),
       newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
       confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
     }, {

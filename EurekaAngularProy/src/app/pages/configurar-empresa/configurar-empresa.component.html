@@ -29,42 +29,61 @@
                             </mat-form-field>
     
                             <mat-form-field class="example-full-width">
-                                <input matInput type="email" placeholder="Email"  maxlength="100" formControlName="email" [class.is-invalid]="f.email.invalid">
-                                <mat-error *ngIf="!formGroup.controls['email'].valid || formGroup.controls['email'].touched">
+                                <input matInput type="email" placeholder="Email" minlength="10" maxlength="100" formControlName="email" [class.is-invalid]="f.email.invalid">
+                                <mat-error *ngIf="f.email.invalid && f.email.hasError('required')">El email es obligatorio</mat-error>
+                                <mat-error *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un email valido </mat-error> 
+                                <mat-error *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El email debe tener minimo 10 digitos</mat-error>
+
+                                
+                              <!--  <mat-error *ngIf="!formGroup.controls['email'].valid || formGroup.controls['email'].touched">
                                     {{ getErrorEmail() }}
-                                </mat-error>
+                                </mat-error> -->
                             </mat-form-field>
     
                             <mat-form-field class="example-full-width">
-                                <input matInput type="text" placeholder="Télefono" minlength="6" maxlength="11" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
-                                <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
+                                <input matInput type="text" placeholder="Télefono" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
+                               <!-- <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
                                     {{ getErrorPhone() }}
-                                </mat-error>
+                                </mat-error> -->
+
+                                <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required')">Telefono es un campo requerido</mat-error>
+                                <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('minlength')"> El Telefono debe tener minmo 6 digitos</mat-error>
+
+
                             </mat-form-field>
     
     
     
                             <mat-form-field class="example-full-width">
-                                <input matInput type="password" placeholder="Contraseña actual" formControlName="password" minlength="6" maxlength="20" >
-                                <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
+                                <input matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Contraseña actual" formControlName="password" minlength="6" maxlength="20" >
+                              <!--  <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
                                     {{ getErrorPassword() }}
-                                </mat-error>
+                                </mat-error>-->
+                                <mat-error *ngIf="f.password.invalid && f.password.hasError('required')">Contraseña es un campo requerido</mat-error>
+                                <mat-error *ngIf="f.password.invalid && f.password.hasError('minlength')"> La contraseña debe tener minmo 6 digitos</mat-error>
                             </mat-form-field>
     
                             <mat-form-field class="example-full-width">
-                                <input matInput type="password" placeholder="Nueva contraseña" formControlName="newPassword" minlength="6" maxlength="20" >
-                                <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
+                                <input matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Nueva contraseña" formControlName="newPassword" minlength="6" maxlength="20" >
+                             <!--   <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
                                     {{ getErrorNewPassword() }}
-                                </mat-error>
+                                </mat-error> -->
+                                <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('required')">Debe ingresar la nueva contraseña</mat-error>
+                                <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('minlength')"> La nueva contraseña debe tener minmo 6 digitos</mat-error>
+
                             </mat-form-field>
     
     
                             <mat-form-field class="example-full-width">
-                                <input matInput type="password" placeholder="Repetir nueva contraseña" formControlName="confirmNewPassword" minlength="6" maxlength="20" >
-                                <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
+                                <input matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Repetir nueva contraseña" formControlName="confirmNewPassword" minlength="6" maxlength="20" >
+                               <!-- <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
                                     {{ getErrorConfirmNewPassword() }}
-                                </mat-error>
-                                <mat-error *ngIf="f.confirmNewPassword.invalid">Debe ser igual a Contraseña</mat-error>
+                                </mat-error> 
+                                 <mat-error *ngIf="f.confirmNewPassword.invalid">Debe ser igual a Contraseña</mat-error> -->
+
+                                 <mat-error *ngIf="f.confirmNewPassword.invalid && f.confirmNewPassword.hasError('required')">Debe repetir la contraseña</mat-error>
+                                 <mat-error *ngIf="f.confirmNewPassword.invalid && f.confirmNewPassword.hasError('mustMatch')">Debe ser igual a la contraseña</mat-error>
+                                 <mat-error *ngIf="f.confirmNewPassword.invalid && f.confirmNewPassword.hasError('minlength')"> La contraseña debe tener minmo 6 digitos</mat-error>
                             </mat-form-field>
     
                             <div class="mt-4">

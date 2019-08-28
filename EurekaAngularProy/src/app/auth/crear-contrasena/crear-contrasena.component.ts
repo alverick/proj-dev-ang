@@ -27,14 +27,14 @@ export class CrearContrasenaComponent implements OnInit {
   ngOnInit() {
     window['_url_loop_'] = 'crearContrasena';
     this.registerForm = this.formBuilder.group({
-      ruc: new FormControl('', Validators.required),
-      nombre: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(80)]),
+      ruc: new FormControl('',  [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
+      nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
       rubro: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10)]),
       telefono: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(9)]),
       contrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
       repcontrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-      acceptterms: new FormControl(false, Validators.required)
+      acceptterms: new FormControl(false, Validators.requiredTrue)
     }, {
       validator: MustMatch('contrasena', 'repcontrasena')
     });
@@ -55,7 +55,7 @@ export class CrearContrasenaComponent implements OnInit {
     if (this.registerForm.invalid) {  
       return;
     }
-    if( parseInt(ruc.substring(0,2)) == 20  ||  parseInt(ruc.substring(0,2)) == 10 ){
+     if( parseInt(ruc.substring(0,2)) == 20  ||  parseInt(ruc.substring(0,2)) == 10 ){
      
     }else{
       this.mensaje('warning','Registrame','Debe ingresar un Ruc valido' );
@@ -74,7 +74,7 @@ export class CrearContrasenaComponent implements OnInit {
 
       return;
     }
-
+     
     this.afiliacionService.Registrar({
       ruc: this.registerForm.value.ruc,
       name: this.registerForm.value.nombre,
