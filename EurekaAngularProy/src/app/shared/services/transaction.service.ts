@@ -130,7 +130,20 @@ export class TransactionService {
         "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": 'true'
       });
-      return this.nativeHttp.post(url, filtro, {
+      var strDateFrom = (filtro.dateFrom === null ? '' : moment(filtro.dateFrom).format('YYYY/MM/DD'));
+      var strDateTo = (filtro.dateTo === null ? '' : moment(filtro.dateTo).format('YYYY/MM/DD'));
+      let fltr = {
+        pageNumber: filtro.pageNumber,
+        columnName: filtro.columnName,
+        asc: filtro.asc,
+        inputSearch: filtro.inputSearch,
+        service: filtro.service,
+        status: filtro.status,
+        dateForFilter: filtro.dateForFilter,
+        dateFrom: strDateFrom,
+        dateTo: strDateTo
+      }
+      return this.nativeHttp.post(url, fltr, {
         headers: headers,
         responseType: ResponseContentType.Blob
       })

@@ -169,10 +169,11 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
       return;
     }
-    if(this.afiliacionService.services.find((v) => v.nroCuenta === '')) {
+    let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
+    if(svcSinCta) {
       Swal.fire({
         type: 'error',
-        text: 'Falta Ingresar datos en su servicio Pension',
+        text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
         allowOutsideClick: false
       });
       return;
