@@ -1016,14 +1016,19 @@ MostrarListaSelect() {
   }
 
   DescargarReporte() {
-    if (this.validaFiltro()) {
-      this.transactionService.report(this.filtro)
-      .subscribe((r: Blob) => {
-        console.log('todo bien');
-        console.log(r);
-        saveAs(r, "reporte.xlsx");
-      });
+    if( this.transactionService.debtItems.data.length > 0){
+      if (this.validaFiltro()) {
+        this.transactionService.report(this.filtro)
+        .subscribe((r: Blob) => {
+          console.log('todo bien');
+          console.log(r);
+          saveAs(r, "reporte.xlsx");
+        });
+      }
+    }else{
+      this.mensaje('warning', 'Descarga','No tiene registros para descargar');
     }
+
   }
 
   estaVencido(itm: Debts){
