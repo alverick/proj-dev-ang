@@ -27,9 +27,8 @@ export class ConfigurarServiciosComponent implements OnInit {
 
     @HostListener('window:beforeunload', ['$event'])
     public closeWindow($event: any) {
-      console.log('cerrar');
-      if (confirm("Se van a perder los cambios. ¿Desea Salir?")) {
-        $event.returnValue = false;
+      if (!this.afiliacionService.Guardado) {
+        $event.returnValue = 'Se van a perder los cambios.';
       }
     }
 
@@ -347,6 +346,17 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     else if (this.sendAfterSave) {
       setTimeout(() => this.EnviarServicios(), 600);
+    }
+    else {
+      Swal.fire({
+        type: 'info',
+        title: 'Guardar',
+        text: 'Los datos han sido guardados',
+        showCloseButton: true,
+        showCancelButton: false,
+        showConfirmButton: true,
+        confirmButtonText: "Cerrar"
+      });
     }
     this.addNewAfterSave = false;
     this.sendAfterSave = false;
