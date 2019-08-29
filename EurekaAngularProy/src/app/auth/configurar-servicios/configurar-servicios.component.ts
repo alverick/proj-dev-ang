@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, HostListener } from '@angular/core';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
@@ -25,6 +25,14 @@ export class ConfigurarServiciosComponent implements OnInit {
   constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
     private router: Router) { }
 
+    @HostListener('window:beforeunload', ['$event'])
+    public closeWindow($event: any) {
+      console.log('cerrar');
+      if (confirm("Se van a perder los cambios. ¿Desea Salir?")) {
+        $event.returnValue = false;
+      }
+    }
+
   ngOnInit() {
     this.afiliacionService.services = []
   //  console.log(this.route.params.subscribe( params => this.ruc = params.ruc )) ;
@@ -39,6 +47,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       } else {
         // siempre entra ahí
         window['_url_loop_'] = 'configurarServicios';
+        history.pushState(null, null, 'configurarServicios');
         console.log('llamando a Clear');
         this.afiliacionService.Clear();
         this.buttonServicios = 'Guardar';

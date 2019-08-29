@@ -14,6 +14,7 @@ import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { LogoutGuard } from './shared/guards/logout.guard';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { CloseViewGuard } from './shared/guards/close-view.guard';
+import { ClientGuard } from './shared/guards/client.guard';
 
 
 const routes: Routes = [
@@ -21,7 +22,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
 
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
-  { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false } },
+  { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
   { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard ] },
   { path: 'crearContrasena', component: CrearContrasenaComponent},
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
