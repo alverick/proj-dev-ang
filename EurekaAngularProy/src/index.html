@@ -26,6 +26,7 @@
     window['_url_loop_'] = 'login';
     window.addEventListener('popstate', function(event) {
       let _url_ = window['_url_loop_'];
+      console.log('push history ', _url_);
       history.pushState(null, null, _url_);
     });
   </script>
