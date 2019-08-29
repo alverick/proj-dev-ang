@@ -41,7 +41,7 @@
                             </mat-form-field>
 
                             <mat-form-field class="example-full-width">
-                                <input matInput type="text" placeholder="Télefono" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
+                                <input matInput type="text" (Keydown.space)="$event.preventDefault()" placeholder="Télefono" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
                                <!-- <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
                                     {{ getErrorPhone() }}
                                 </mat-error> -->

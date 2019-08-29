@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="telefono" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Telefono ó Celular" minlength="6" maxlength="9">
+                                    <input formControlName="telefono" (Keydown.space)="$event.preventDefault()"  appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Telefono ó Celular" minlength="6" maxlength="9">
                                     
                                     <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('required')">Telefono ó Celular es un campo requerido</mat-error>
                                     <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('pattern')"> Ingrese un Telefono ó Celular valido </mat-error>
