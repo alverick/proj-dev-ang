@@ -129,14 +129,13 @@ export class ConfigurarEmpresaComponent implements OnInit {
           if( enterpriseUpdate.success == true ){
 
             Swal.fire({
-              title: '¿Desea Actualizar los datos de su empresa?',
-              text: '¡No podrás revertir esto!',
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Confirmar',
-              cancelButtonText: 'Cancelar'
+              title: 'Datos de Empresa guardados',
+              text: 'Sus datos han sido actualizados',
+              type: 'warning', 
+              showCloseButton: true,
+              confirmButtonColor: '#3085d6', 
+              confirmButtonText: 'Aceptar', 
+
             }).then((result) => {
               if (result.value) {
                 onAfterClose: () => {
@@ -190,7 +189,7 @@ function ValidateConfigEmpresa() {
 function ValidateNewPasswordRequired(f: FormGroup) {
   let pwdCtrl = f.get('password');
   let newPwdCtrl = f.get('newPassword');
-
+9
   /*if (pwdCtrl.valid && pwdCtrl.dirty && pwdCtrl.value) {
     if (!newPwdCtrl.value) {
       newPwdCtrl.markAsDirty();
@@ -220,3 +219,4 @@ function ValidateNewPasswordRequired(f: FormGroup) {
     }
   }*/
 }
+7
