@@ -46,14 +46,14 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.formBuilder.group({
-      ruc: new FormControl(''),
-      name: new FormControl(''),
-      entry: new FormControl(''),
+      ruc: new FormControl({ value: '', disabled: true }),
+      name: new FormControl({ value: '', disabled: true }),
+      entry: new FormControl({ value: '', disabled: true }),
       email: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       movilNumber: new FormControl('', [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
-      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20)]),
-      newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
-      confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20)]),
+      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
+      newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
+      confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
     }, {
       validator: ValidateConfigEmpresa()
     });
@@ -109,7 +109,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       if(Pass > 0 && newPass == 0){
         this.mensaje('warning','Edicion de Empresa','Debe ingresar la nueva contraseña para continuar' );
         return;
-      }   
+      }
       console.log(this.formGroup.value);
       const datosEmpresa = this.formGroup.value;
       const enterprise = {
@@ -184,6 +184,14 @@ function ValidateConfigEmpresa() {
     validPwd(f);
     ValidateNewPasswordRequired(f);
   }
+}
+
+function UnaLetra(c: FormControl) {
+  let regex = /[a-zA-Z]/g;
+  if (c.value && !regex.test(c.value)) {
+    return { unaletra: true };
+  }
+  return null;
 }
 
 function ValidateNewPasswordRequired(f: FormGroup) {
