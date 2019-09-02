@@ -61,7 +61,6 @@
                                     {{ getErrorPassword() }}
                                 </mat-error>-->
                                 <mat-error *ngIf="f.password.invalid && f.password.hasError('minlength')"> La contraseña debe tener minmo 6 digitos</mat-error>
-                                <mat-error *ngIf="f.password.invalid && f.password.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
                               </mat-form-field>
 
                             <mat-form-field class="example-full-width">
@@ -72,6 +71,8 @@
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('required')">Debe ingresar la nueva contraseña</mat-error>
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('minlength')"> La nueva contraseña debe tener minmo 6 digitos</mat-error>
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('reqNewPwd')"> Debe ingresar la nueva contraseña</mat-error>
+                                <mat-error *ngIf="f.newPassword.invalid && !f.newPassword.hasError('minlength') && f.newPassword.hasError('unaletra')"> La nueva contraseña debe tener por lo menos una letra</mat-error>
+
                             </mat-form-field>
 
 
@@ -85,6 +86,7 @@
                                  <mat-error *ngIf="f.confirmNewPassword.invalid && f.confirmNewPassword.hasError('required')">Debe repetir la contraseña</mat-error>
                                  <mat-error *ngIf="f.confirmNewPassword.invalid && f.confirmNewPassword.hasError('mustMatch')">Debe ser igual a la contraseña</mat-error>
                                  <mat-error *ngIf="f.confirmNewPassword.invalid && f.confirmNewPassword.hasError('minlength')"> La contraseña debe tener minmo 6 digitos</mat-error>
+                                 <mat-error *ngIf="f.confirmNewPassword.invalid && !f.confirmNewPassword.hasError('minlength') && f.confirmNewPassword.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
                             </mat-form-field>
 
                             <div class="mt-4">

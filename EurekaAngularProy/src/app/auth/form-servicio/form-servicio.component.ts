@@ -73,8 +73,8 @@ export class FormServicioComponent implements OnInit {
     console.log(this._service);
     this.frm = this.fb.group({
       nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3)]),
-      codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, Validators.required),
-      nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode }),
+      codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
+      nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode}),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       nroCuenta: [this._service.nroCuenta, [Validators.required, Validators.minLength(13)]],
@@ -354,6 +354,32 @@ export class FormServicioComponent implements OnInit {
       this.onSubmitServicio();
     }
   }
+
+  nameCodInput(e) {
+    let initalValue = this.f.nameCod.value;
+   /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
+    initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
+    initalValue = initalValue.replace(/\s{2,}/g, " ");
+    this.f.nameCod.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
+  }
+  
+  nameCodBlur(e) {
+    let initalValue = this.f.nameCod.value;
+    this.f.nameCod.setValue(initalValue.trim());
+  }
+  nameSerInput(e) {
+    let initalValue = this.f.nombre.value;
+   /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
+    initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
+    initalValue = initalValue.replace(/\s{2,}/g, " ");
+    this.f.nombre.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
+  }
+  
+  nameSerBlur(e) {
+    let initalValue = this.f.nombre.value;
+    this.f.nombre.setValue(initalValue.trim());
+  }
+
 
 }
 
