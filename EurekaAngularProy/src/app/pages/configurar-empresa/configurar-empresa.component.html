@@ -29,7 +29,7 @@
                             </mat-form-field>
 
                             <mat-form-field class="example-full-width">
-                                <input matInput type="email" placeholder="Email" minlength="10" maxlength="100" formControlName="email" [class.is-invalid]="f.email.invalid">
+                                <input matInput type="email" placeholder="Email" minlength="10" maxlength="100" formControlName="email" (Keydown.space)="$event.preventDefault()"  [class.is-invalid]="f.email.invalid">
                                 <mat-error *ngIf="f.email.invalid && f.email.hasError('required')">El email es obligatorio</mat-error>
                                 <mat-error *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un email valido </mat-error>
                                 <mat-error *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El email debe tener minimo 10 digitos</mat-error>

@@ -15,10 +15,12 @@ export class AfiliacionService {
     private spinner: NgxSpinnerService, private storage: StorageService) {}
 
   public idCompany: number = 0;
+  public Guardado: boolean = false;
 
   public services: ServiceModel[] = [];
 
   public Clear() {
+    this.Guardado = false;
     this.services.push({
       nombre: 'Mensualidad',
       codDeudor: 'DNI',
@@ -37,6 +39,7 @@ export class AfiliacionService {
   }
 
   public CrearSevice(): ServiceModel {
+    this.Guardado = false;
     let nombre: string = 'Mensualidad';
     let nro = 1;
     this.services.forEach((s, i) => {
@@ -73,6 +76,7 @@ export class AfiliacionService {
   }
 
   public AddService(svc: ServiceModel) {
+    this.Guardado = false;
     var svc_old = this.services.find((v) => v.nombre === svc.nombre);
     if (svc_old) {
       Swal.fire({
@@ -86,6 +90,7 @@ export class AfiliacionService {
   }
 
   public DelService(index: number) {
+    this.Guardado = false;
     this.services.splice(index, 1);
   }
 
@@ -261,6 +266,7 @@ export class AfiliacionService {
     return this.http.post<any>(`${environment.END_POINT}/company/service?_=`+ new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();
+        this.Guardado = true;
         return r;
       }))
       .pipe(catchError(err => {
@@ -271,6 +277,7 @@ export class AfiliacionService {
   }
 
   Descartar(indice: number) {
+    this.Guardado = false;
     if (this.services.length > 1 && indice >= 0 && indice === (this.services.length - 1)) {
       let svc = this.services[this.services.length-1];
       if (svc.id === null || svc.id === undefined || svc.id < 0) {

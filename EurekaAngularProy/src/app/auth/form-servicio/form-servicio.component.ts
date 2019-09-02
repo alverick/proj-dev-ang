@@ -119,8 +119,8 @@ export class FormServicioComponent implements OnInit {
 
      console.log('stado de editar ' + this.stateEdit.stateEdit);
 
-     const monto  = parseInt(this.frm.get('monto').value);
-     const porcentaje  = parseInt(this.frm.get('porcentaje').value);
+     const monto  = parseFloat(this.frm.get('monto').value);
+     const porcentaje  = parseFloat(this.frm.get('porcentaje').value);
 
      if (this.frm.get('cobraMora').value === 'S') {
         if (this.frm.get('tipoMora').value === 'M') {
@@ -230,10 +230,10 @@ export class FormServicioComponent implements OnInit {
             });
             return;
           }
-          if (porcentaje <1 ) {
+          if (porcentaje < 0.01 ) {
             Swal.fire({
               type: 'error',
-              text: 'el minimo porcentaje 1%',
+              text: 'el minimo porcentaje 0.01%',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
