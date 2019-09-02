@@ -102,6 +102,15 @@ export class ConfigurarServiciosComponent implements OnInit {
   sendAfterSave: boolean = false;
 
   MostarFormulario() {
+    console.log(this.afiliacionService.services.length);
+    if(this.afiliacionService.services.length >= 99){
+      Swal.fire({
+        type: 'error',
+        text: 'Usted solo puede tener 99 servicios como maximo',
+        allowOutsideClick: false
+      });
+      return;
+    }
     if (this.Formulario) {
       Swal.fire({
         type: 'warning',
@@ -127,6 +136,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         }
       });
     }
+    
+    
     else {
       this.indiceActual = this.afiliacionService.services.length;
       this.serviceActual = this.afiliacionService.CrearSevice();
@@ -169,14 +180,6 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     // this.frm.get('monto').value
 
-    if(this.afiliacionService.services.length > 99){
-      Swal.fire({
-        type: 'error',
-        text: 'solo puede tener 99 servicios como maximo',
-        allowOutsideClick: false
-      });
-      return;
-    }
     let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
     if(svcSinCta) {
       Swal.fire({
