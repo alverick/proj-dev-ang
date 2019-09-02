@@ -106,7 +106,7 @@
                                     </div>
                                     <span class="text-small font-medium">Cargar </span>
                                     <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
-                                        <div class="card card-body" style="overflow:scroll; height:300px;">
+                                        <div class="card card-body" style="overflow:auto; max-height:200px">
                                             <div data-toggle="collapse" class="selecciona-servicio">Selecciona el servicio</div>
                                             <div *ngFor="let service of typeList" (click)="openDialog(service)"  >
                                                 <div class="mano" data-toggle="collapse"  >
