@@ -1,0 +1,84 @@
+.navbar{
+  background-color: #0b0044;
+}
+
+/* Partners */
+.brand-logo img {
+  width: auto !important;
+  margin: 0 auto;
+  opacity: .4;
+}
+
+.brand-logo img:hover {
+  opacity: 1;
+}
+.icono-perfil{
+  width: 42px;
+  height: 42px;
+}
+
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+
+  text-transform: none;
+  line-height: 1;
+  font-size: 20px !important;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mano {
+  cursor: pointer;
+}
+
+.scroll-menu {
+  max-height: 350px;
+  overflow-x: hidden;
+}
+
+.dropdown-item {
+  border-bottom: #a7a0a0 1px solid;
+}
+
+.dropdown-item.es-nuevo {
+  font-weight: bold;
+}
+
+.dropdown-item .texto {
+  font-size: 1em;
+  color: black;
+}
+
+.dropdown-item .tiempo {
+  font-size: 0.7em;
+}
+
+.item-icono {
+  display: block;
+  float: right;
+  top: -15px;
+  position: relative;
+  font-size: 8px;
+  cursor: pointer;
+}
+
+
+.badge-icon {
+  position: absolute;
+  top: 0;
+  left: 0%;
+  font-size: 12px;
+  line-height: 6px;
+  border-radius: 50%;
+  height: 13px;
+  background-color: #ff0000;
+  border: 4px solid #ff0000;
+  color: #ffffff;
+  text-align: center;
+}
+
