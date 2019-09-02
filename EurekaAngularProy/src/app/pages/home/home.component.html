@@ -101,15 +101,15 @@
                                 </div>
                                 <div class="p-2 bd-highlight">
                                     <div class="rotar mano" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                        <span class="text-small font-medium"></span>
+                                    <span class="text-small font-medium"></span>
                                         <span class="icon-correo-azul  iconos-big"></span>
                                     </div>
                                     <span class="text-small font-medium">Cargar </span>
                                     <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
-                                        <div class="card card-body">
+                                        <div class="card card-body" style="overflow:scroll; height:300px;">
                                             <div data-toggle="collapse" class="selecciona-servicio">Selecciona el servicio</div>
-                                            <div *ngFor="let service of typeList" (click)="openDialog(service)">
-                                                <div class="mano" data-toggle="collapse">
+                                            <div *ngFor="let service of typeList" (click)="openDialog(service)"  >
+                                                <div class="mano" data-toggle="collapse"  >
                                                     {{service.name}}
                                                 </div>
                                             </div>
