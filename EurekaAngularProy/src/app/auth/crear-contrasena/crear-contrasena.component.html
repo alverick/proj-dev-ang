@@ -27,7 +27,8 @@
                                 <mat-form-field class="super-full-width ">
                                     <input formControlName="nombre" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
                                     <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
-                                    <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
+                                    <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
+                                    <mat-error *ngIf="f.nombre.invalid && !f.nombre.hasError('pattern') && f.nombre.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
