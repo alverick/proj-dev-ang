@@ -144,16 +144,16 @@ export class CrearContrasenaComponent implements OnInit {
   
   //spaces in inputs
   nameSerInput(e) {
-    let initalValue = this.f.name.value;
+    let initalValue = this.f.nombre.value;
    /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
     initalValue = initalValue.replace(/\s{2,}/g, " ");
-    this.f.name.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
+    this.f.nombre.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
   }
   
   nameSerBlur(e) {
-    let initalValue = this.f.name.value;
-    this.f.name.setValue(initalValue.trim());
+    let initalValue = this.f.nombre.value;
+    this.f.nombre.setValue(initalValue.trim());
   }
 }
 

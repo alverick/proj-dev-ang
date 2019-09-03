@@ -68,12 +68,13 @@
                                 <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
                             </div> 
                             <button style="margin-top: 13px" type="submit" class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-amarillo text-white" form="login-form"> Ingresar</button>
-                            <div class="mt-3 text-center">
-                                    <div class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-azul text-white">
-                                        <a [routerLink]="['/afiliacion']" class="nav-link text-white">Registrate</a>
-                                    </div>
-                            </div>
+                           
                         </form>
+                        <div class="mt-3 text-center">
+                            <div class="mano focus-elements btn-big w-100 btn-eureca btn-eureca-azul text-white">
+                                <a [routerLink]="['/afiliacion']" class="nav-link text-white">Registrate</a>
+                            </div>
+                    </div>
                        
                     </div>
             </div>
