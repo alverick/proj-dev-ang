@@ -23,6 +23,7 @@ import { FormServicioComponent } from './form-servicio/form-servicio.component';
 import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
 import { CloseViewGuard } from '../shared/guards/close-view.guard';
 import { SharedModule } from '../shared/shared.module';
+import { NumberAccountDirective } from './form-servicio/number-account.directive';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { SharedModule } from '../shared/shared.module';
     ProcesandoComponent,
     CrearContrasenaComponent,
     BlockCopyPasteDirective,
-    OnlyNumbersFormDirective
+    OnlyNumbersFormDirective, 
+    NumberAccountDirective
   ]
 })
 

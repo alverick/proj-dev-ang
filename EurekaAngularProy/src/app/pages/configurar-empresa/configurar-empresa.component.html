@@ -73,7 +73,7 @@
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('required')">Debe ingresar la nueva contraseña</mat-error>
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('minlength')"> La nueva contraseña debe tener mínimo 6 dígitos</mat-error>
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('reqNewPwd')"> Debe ingresar la nueva contraseña</mat-error>
-                                <mat-error *ngIf="f.newPassword.invalid && !f.newPassword.hasError('minlength') && f.newPassword.hasError('unaletra')"> La nueva contraseña debe tener por lo menos una letra</mat-error>
+                                <mat-error *ngIf="f.newPassword.invalid && !f.newPassword.hasError('minlength') && f.newPassword.hasError('UnaLetra')"> La nueva contraseña debe tener por lo menos una letra</mat-error>
 
                             </mat-form-field>
 
@@ -88,7 +88,7 @@
                                  <mat-error *ngIf="f.confirmNewPassword.invalid && f.confirmNewPassword.hasError('required')">Debe repetir la contraseña</mat-error>
                                  <mat-error *ngIf="f.confirmNewPassword.invalid && f.confirmNewPassword.hasError('mustMatch')">Debe ser igual a la contraseña</mat-error>
                                  <mat-error *ngIf="f.confirmNewPassword.invalid && f.confirmNewPassword.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
-                                 <mat-error *ngIf="f.confirmNewPassword.invalid && !f.confirmNewPassword.hasError('minlength') && f.confirmNewPassword.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
+                                 <mat-error *ngIf="f.confirmNewPassword.invalid && !f.confirmNewPassword.hasError('minlength') && f.confirmNewPassword.hasError('UnaLetra')"> La contraseña debe tener por lo menos una letra</mat-error>
                             </mat-form-field>
 
                             <div class="mt-4">
