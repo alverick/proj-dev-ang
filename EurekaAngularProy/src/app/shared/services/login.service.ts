@@ -36,13 +36,15 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
   return this.http.post(url, data, opts)
     .pipe(map((r: RespuestaLogin) => {
       console.log(r);
-      this.storage.setCurrentSession({
-        user: { ruc: ruc },
-        isAuthenticate: true,
-        token: r.paramStr,
-        expire: r.exp,
-        refresh: r.rfs
-      });
+      if (r.estado) {
+        this.storage.setCurrentSession({
+          user: { ruc: ruc },
+          isAuthenticate: true,
+          token: r.paramStr,
+          expire: r.exp,
+          refresh: r.rfs
+        });
+      }
       return r;
     }));
  }
