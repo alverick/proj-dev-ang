@@ -372,9 +372,9 @@ export class FormServicioComponent implements OnInit {
    /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
     initalValue = initalValue.replace(/\s{2,}/g, " ");
-    this.f.nombre.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
+    this.f.nombre.setValue(initalValue.replace(/[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ-]*/g, ''));
   }
-  
+  // ^[0-9a-zA-ZÑñ]{3,30}$
   nameSerBlur(e) {
     let initalValue = this.f.nombre.value;
     this.f.nombre.setValue(initalValue.trim());

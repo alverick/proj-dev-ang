@@ -61,6 +61,7 @@
                                     {{ getErrorPassword() }}
                                 </mat-error>-->
                                 <mat-error *ngIf="f.password.invalid && f.password.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
+                                
                               </mat-form-field>
 
                             <mat-form-field class="example-full-width">
@@ -68,6 +69,7 @@
                              <!--   <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
                                     {{ getErrorNewPassword() }}
                                 </mat-error> -->
+                                <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('equalPwd')">Debe ser diferente de la contraseña actual</mat-error>
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('required')">Debe ingresar la nueva contraseña</mat-error>
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('minlength')"> La nueva contraseña debe tener mínimo 6 dígitos</mat-error>
                                 <mat-error *ngIf="f.newPassword.invalid && f.newPassword.hasError('reqNewPwd')"> Debe ingresar la nueva contraseña</mat-error>
