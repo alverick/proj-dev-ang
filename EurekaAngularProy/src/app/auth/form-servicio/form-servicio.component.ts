@@ -315,10 +315,18 @@ export class FormServicioComponent implements OnInit {
   changeMora() {
     this.cobraMora = (this.f.cobraMora.value === 'S');
     if (this.cobraMora) {
+      console.log('cobra mora');
       this.f.periodoMora.setValidators([Validators.required]);
+      this.f.monto.setValidators([Validators.required,Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(1), Maximo(1000)])
+      this.f.porcentaje.clearValidators();
+      this.f.porcentaje.value = "1";
     } else {
       this.f.periodoMora.clearValidators();
       this.f.periodoMora.reset();
+      this.f.monto.clearValidators();
+      this.f.monto.value = "1.00";
+      this.f.porcentaje.clearValidators();
+      this.f.porcentaje.value = "1";
     }
   }
 
@@ -357,24 +365,24 @@ export class FormServicioComponent implements OnInit {
 
   nameCodInput(e) {
     let initalValue = this.f.nameCod.value;
-   /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
+   /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
     initalValue = initalValue.replace(/\s{2,}/g, " ");
     this.f.nameCod.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
   }
-  
+
   nameCodBlur(e) {
     let initalValue = this.f.nameCod.value;
     this.f.nameCod.setValue(initalValue.trim());
   }
   nameSerInput(e) {
     let initalValue = this.f.nombre.value;
-   /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
+   /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
     initalValue = initalValue.replace(/\s{2,}/g, " ");
     this.f.nombre.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
   }
-  
+
   nameSerBlur(e) {
     let initalValue = this.f.nombre.value;
     this.f.nombre.setValue(initalValue.trim());
