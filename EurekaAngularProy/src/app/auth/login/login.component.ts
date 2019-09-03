@@ -217,6 +217,11 @@ export class LoginComponent implements OnInit {
             console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
             this.mensaje( 'error', 'Contraseña Incorrecta',
             'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' );
+          }else if(this.intentos< 4 && this.codRespuesta == 5){
+            this.codigo2= false;
+            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 5");
+            this.mensaje( 'error', 'Cuenta Inactiva',
+            'Su cuenta se encuentra inactiva' );
 
           }else if(this.intentos == 4 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
@@ -236,16 +241,36 @@ export class LoginComponent implements OnInit {
             this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isTrue = true;
+          }else if(this.intentos == 4 && this.codRespuesta == 5){
+            this.codigo2= false;
+            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
+
+            this.mensaje( 'error', 'Cuenta Inactiva',
+            'Su cuenta se encuentra inactiva' );
+
+            this.isCaptchaValidate = false;
+            this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
+            this.isTrue = true;
 
           }else if(this.intentos == 5 && this.codRespuesta == 2){
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
             this.isTrue = true;
             this.codigo2=true;
 
-          }else if(this.intentos == 5 && this.codRespuesta == 3){
+          }
+          else if(this.intentos == 5 && this.codRespuesta == 3){
             this.codigo2= false;
             console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
             this.mensaje( 'error', 'Contraseña Incorrecta','Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes');
+            this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
+            this.isCaptchaValidate = false;
+            this.isTrue = true;
+            this.codigo2= false;
+          }
+          else if(this.intentos == 5 && this.codRespuesta == 5){
+            this.codigo2= false;
+            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
+            this.mensaje( 'error', 'Cuenta Inactiva','Su cuenta se encuentra inactiva');
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
             this.isTrue = true;

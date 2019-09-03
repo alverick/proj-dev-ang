@@ -105,7 +105,7 @@ export class FormServicioComponent implements OnInit {
     else if (this.tiposPago.length === 1) {
       this.tiposPago.push({
         code: 'P',
-        name: "Tengo solo código y nombres"
+        name: "Siempre la deuda que vence primero"
       });
     }
   }
