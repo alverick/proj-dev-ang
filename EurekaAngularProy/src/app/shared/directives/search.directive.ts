@@ -13,7 +13,7 @@ export class SearchDirective {
    /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
     initalValue = initalValue.replace(/\s{2,}/g, " ");
-    this.el.nativeElement.value = initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, '');
+    this.el.nativeElement.value = initalValue.replace(/[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]*/g, '');
     if ( initalValue !== this.el.nativeElement.value) {
       event.stopPropagation();
     }

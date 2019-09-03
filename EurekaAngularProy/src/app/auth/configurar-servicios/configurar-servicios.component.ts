@@ -106,7 +106,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     if(this.afiliacionService.services.length >= 99){
       Swal.fire({
         type: 'error',
-        text: 'Usted solo puede tener 99 servicios como maximo',
+        text: 'Usted solo puede tener 99 servicios como máximo',
         allowOutsideClick: false
       });
       return;

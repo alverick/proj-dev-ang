@@ -178,10 +178,18 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
 }
 
+
+
 function ValidateConfigEmpresa() {
   var validPwd = MustMatch('newPassword', 'confirmNewPassword');
   return (f: FormGroup) => {
     validPwd(f);
+    if (f.get('password').value && f.get('newPassword').value && f.get('newPassword').value ===  f.get('password').value){
+      f.get('newPassword').setErrors({ equalPwd: true});
+    }
+    else {
+      f.get('newPassword').setErrors(null);
+    }
     ValidateNewPasswordRequired(f);
   }
 }
