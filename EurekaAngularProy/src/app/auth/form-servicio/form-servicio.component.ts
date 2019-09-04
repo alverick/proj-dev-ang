@@ -333,8 +333,6 @@ export class FormServicioComponent implements OnInit {
       this.f.porcentaje.clearValidators();
       if (changeData)
         this.f.porcentaje.value = "1";
-       
-      
     } else {
       this.f.periodoMora.clearValidators();
       this.f.periodoMora.reset();
@@ -427,6 +425,8 @@ function Maximo(max: number) {
   return (c: FormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
+      // 50 > 1000 ==> false
+      // 8000 > 1000 ==> true
       if (nro > max) {
         return { maximo: true };
       }
@@ -439,6 +439,8 @@ function Minimo(min: number) {
   return (c: FormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
+      // 1.2 < 1.00 ==> false
+      // 0.02 < 1.00 ==> true
       if (nro < min) {
         return { minimo: true };
       }
