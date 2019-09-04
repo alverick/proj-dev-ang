@@ -228,7 +228,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
-    this.homeService.getServices(false).subscribe(
+    this.homeService.getServices(true).subscribe(
       value => {
         this.services = value;
         this.serviceSelected = value[0];
@@ -236,7 +236,7 @@ export class HomeComponent implements OnInit {
     );
 
 
-    this.homeService.getServices(true).subscribe(
+    this.homeService.getServicesActive().subscribe(
       value => {
         this.typeList = value;
     });
@@ -567,7 +567,7 @@ if(columnName === 'canal' ) {
   }
 
 
- 
+
 
   validaFiltro(): boolean {
 
