@@ -16,7 +16,7 @@
                                         </div>
                                         <div class="col-sm-1">
                                             <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
-                                                <li>
+                                                <li *ngIf="!svc.inReview" >
                                                     <a class="texto-azul" style="cursor: pointer" (click)="editService(svc, i)"><i
                               class="icon-lapiz"></i></a>
                                                 </li>

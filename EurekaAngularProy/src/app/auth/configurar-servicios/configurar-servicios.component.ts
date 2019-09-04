@@ -136,8 +136,6 @@ export class ConfigurarServiciosComponent implements OnInit {
         }
       });
     }
-
-
     else {
       this.indiceActual = this.afiliacionService.services.length;
       this.serviceActual = this.afiliacionService.CrearSevice();
@@ -306,7 +304,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
       return;
     }
-
+    console.table(svc);
     this.stateEdit = true;
     console.log(index);
     this.indiceActual = index;
