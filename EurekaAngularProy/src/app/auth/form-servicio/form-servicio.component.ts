@@ -42,7 +42,7 @@ export class FormServicioComponent implements OnInit {
       console.log(value);
       this._service = value;
       this.simboloMoneda = value.simboloMoneda
-      delete this._service.simboloMoneda;
+      this._service.simboloMoneda = this.simboloMoneda;
     }
   }
 
@@ -171,6 +171,7 @@ export class FormServicioComponent implements OnInit {
                   console.log(this._service);
                   value = this._service;
                   value.nroCuenta = this.frm.value.nroCuenta;
+                  value.moneda = this.frm.value.moneda;
                   value.cobraMora = this.frm.value.cobraMora;
                   value.periodoMora = this.frm.value.periodoMora;
                   value.tipoMora = this.frm.value.tipoMora;
@@ -260,6 +261,7 @@ export class FormServicioComponent implements OnInit {
                 console.log(this._service);
                 value = this._service;
                 value.nroCuenta = this.frm.value.nroCuenta;
+                value.moneda = this.frm.value.moneda;
                 value.cobraMora = this.frm.value.cobraMora;
                 value.periodoMora = this.frm.value.periodoMora;
                 value.tipoMora = this.frm.value.tipoMora;
@@ -291,6 +293,7 @@ export class FormServicioComponent implements OnInit {
               console.log(this._service);
               value = this._service;
               value.nroCuenta = this.frm.value.nroCuenta;
+              value.moneda = this.frm.value.moneda;
               value.cobraMora = this.frm.value.cobraMora;
               value.periodoMora = this.frm.value.periodoMora;
               value.tipoMora = this.frm.value.tipoMora;
