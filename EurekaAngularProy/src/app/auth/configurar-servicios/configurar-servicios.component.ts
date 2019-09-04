@@ -71,22 +71,21 @@ export class ConfigurarServiciosComponent implements OnInit {
         cancelButtonText: 'Regresar'
       }).then(r => {
         if (r.value) {
+          this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
           this.Formulario = false
           this.stateCreate =false;
           this.stateEdit =false;
           this.addNewAfterSave = false;
           this.sendAfterSave = false;
-          // elimina ultimo servicio
-          this.afiliacionService.Descartar(this.indiceActual);
           this.indiceActual = -1;
         }
       });
     }
     else {
+      this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
       this.Formulario = false
       this.stateCreate =false;
       this.stateEdit =false;
-      this.afiliacionService.Descartar(this.indiceActual);
       this.indiceActual = -1;
       if (this.addNewAfterSave) {
         setTimeout(() => this.MostarFormulario(), 600);
@@ -141,6 +140,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       this.indiceActual = this.afiliacionService.services.length;
       this.serviceActual = this.afiliacionService.CrearSevice();
       this.stateEdit = true;
+      this.stateCreate = true;
       this.Formulario = true;
     }
   }
@@ -304,7 +304,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
       return;
     }
-
+    console.table(svc);
     this.stateEdit = true;
     console.log(index);
     this.indiceActual = index;

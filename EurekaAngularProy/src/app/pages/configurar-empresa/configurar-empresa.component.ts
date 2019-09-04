@@ -131,10 +131,10 @@ export class ConfigurarEmpresaComponent implements OnInit {
             Swal.fire({
               title: 'Datos de Empresa guardados',
               text: 'Sus datos han sido actualizados',
-              type: 'warning', 
+              type: 'warning',
               showCloseButton: true,
-              confirmButtonColor: '#3085d6', 
-              confirmButtonText: 'Aceptar', 
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Aceptar',
 
             }).then((result) => {
               if (result.value) {
@@ -187,8 +187,8 @@ function ValidateConfigEmpresa() {
     if (f.get('password').value && f.get('newPassword').value && f.get('newPassword').value ===  f.get('password').value){
       f.get('newPassword').setErrors({ equalPwd: true});
     }
-    else {
-      f.get('newPassword').setErrors(null);
+    else if (f.get('newPassword').hasError('equalPwd')) {
+      f.get('newPassword').errors['equalPwd'] = null;
     }
     ValidateNewPasswordRequired(f);
   }
