@@ -76,6 +76,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           this.stateEdit =false;
           this.addNewAfterSave = false;
           this.sendAfterSave = false;
+          // elimina ultimo servicio
           this.afiliacionService.Descartar(this.indiceActual);
           this.indiceActual = -1;
         }
@@ -136,8 +137,6 @@ export class ConfigurarServiciosComponent implements OnInit {
         }
       });
     }
-    
-    
     else {
       this.indiceActual = this.afiliacionService.services.length;
       this.serviceActual = this.afiliacionService.CrearSevice();
