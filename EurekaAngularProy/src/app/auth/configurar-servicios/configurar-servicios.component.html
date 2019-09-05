@@ -16,12 +16,12 @@
                                         </div>
                                         <div class="col-sm-1">
                                             <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
-                                                <li *ngIf="!svc.inReview" >
-                                                    <a class="texto-azul" style="cursor: pointer" (click)="editService(svc, i)"><i
+                                                <li *ngIf="!svc.inReview && indiceActual!==i" >
+                                                    <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><i
                               class="icon-lapiz"></i></a>
                                                 </li>
                                                 <li class="ml-2" *ngIf="afiliacionService.services.length > 1">
-                                                    <a class="texto-azul borrar" style="cursor: pointer" (click)="delService(i)"><i
+                                                    <a class="texto-azul borrar" [class.mano]="!Formulario" (click)="delService(i)"><i
                               class="icon-basura"></i></a>
                                                 </li>
                                             </ul>

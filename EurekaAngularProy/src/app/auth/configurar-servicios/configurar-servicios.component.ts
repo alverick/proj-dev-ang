@@ -237,7 +237,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   delService(index: number) {
     if (this.Formulario) {
-      Swal.fire({
+      /*Swal.fire({
         type: 'warning',
         title: 'Eliminación del Servicio',
         text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
@@ -245,7 +245,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         showConfirmButton: false,
         showCancelButton: true,
         cancelButtonText: 'Cerrar'
-      });
+      });*/
       return;
     }
     if (this.inEdit) {
@@ -300,7 +300,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   editService(svc: ServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
-      Swal.fire({
+      /*Swal.fire({
         type: 'warning',
         title: 'Edición del Servicio',
         text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
@@ -308,7 +308,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         showConfirmButton: false,
         showCancelButton: true,
         cancelButtonText: 'Cerrar'
-      });
+      });*/
       return;
     }
     console.table(svc);
