@@ -117,11 +117,10 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
-
+    console.log('iniciando OnSubmit', this.stateEdit.stateCreate);
+    console.log('form.valid', this.frm.valid);
     if (this.frm.valid)
     {
-     this.stateEdit.stateCreate =false;
-     this.stateEdit.stateEdit = false;
 
      console.log('stado de editar ' + this.stateEdit.stateEdit);
 
@@ -373,6 +372,7 @@ export class FormServicioComponent implements OnInit {
   }
 
   formAction(action: string){
+    console.log('formAction', this.stateEdit.stateCreate);
     if (action === 'save') {
       Object.keys(this.frm.controls).forEach(c => {
         this.frm.controls[c].markAsDirty();

@@ -18,7 +18,6 @@ export class AuthInterceptorService implements HttpInterceptor {
     private storage: StorageService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
-    console.log('intercept');
     this.login.refresh();
     const token: string = localStorage.getItem('tk');
 
@@ -41,7 +40,6 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     return next.handle(request)
       .pipe(catchError((err: HttpErrorResponse)=>{
-        console.log('handle auth.interceptor');
         if(err.status === 401){
           this.storage.removeCurrentSession();
           this.snackBar.dismiss();
@@ -55,7 +53,6 @@ export class AuthInterceptorService implements HttpInterceptor {
             cancelButtonText:  'Cerrar',
             allowOutsideClick: false,
             onClose: () =>{
-              console.log('auth.interceptor to Login');
               this.router.navigateByUrl('/login')
             }
           });
@@ -72,7 +69,6 @@ export class AuthInterceptorService implements HttpInterceptor {
             cancelButtonText:  'Cerrar',
             allowOutsideClick: false,
             onClose: () =>{
-              console.log('auth.interceptor to Login');
               this.router.navigateByUrl('/login')
             }
           })

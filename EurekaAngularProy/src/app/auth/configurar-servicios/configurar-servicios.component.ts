@@ -59,6 +59,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   serviceActual: ServiceModel = null;
 
   OcultarFormulario(requireConfirm: boolean) {
+    console.log('iniciando descartar', this.stateCreate);
     if (requireConfirm) {
       Swal.fire({
         type: 'question',
@@ -82,6 +83,8 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
     }
     else {
+      console.log('descartando cambios');
+      console.log(this.indiceActual, this.stateCreate);
       this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
       this.Formulario = false
       this.stateCreate =false;
@@ -102,7 +105,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   sendAfterSave: boolean = false;
 
   MostarFormulario() {
-    console.log(this.afiliacionService.services.length);
+    console.log('mostrar formulario', this.stateCreate);
     if(this.afiliacionService.services.length >= 99){
       Swal.fire({
         type: 'error',
@@ -123,20 +126,23 @@ export class ConfigurarServiciosComponent implements OnInit {
         cancelButtonText: 'Deshacer cambios',
         cancelButtonColor: '#d33'
       }).then(r => {
-        console.log(r); 
         this.addNewAfterSave = true;
         if (r.value) {
+          console.log('grabar cambios', this.stateCreate);
           this.onFormAction.emit('save');
         }
-        else if (r.dismiss === Swal.DismissReason.cancel) { 
+        else if (r.dismiss === Swal.DismissReason.cancel) {
+          console.log('descartar cambios', this.stateCreate);
           this.OcultarFormulario(false);
         }
         else {
+          console.log('cancelar', this.stateCreate);
           this.addNewAfterSave = false;
         }
       });
     }
     else {
+      console.log('crear nuevo');
       this.indiceActual = this.afiliacionService.services.length;
       this.serviceActual = this.afiliacionService.CrearSevice();
       this.stateEdit = true;
