@@ -26,7 +26,13 @@
                       infiniteScroll [infiniteScrollDistance]="15" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
                       [scrollWindow]="false" (ngShow)="onShowMessages()" >
 
+                    <div class="title">
+                      <div class="text al-left">Notificaciones</div>
+                      <div class="mark-all al-right">Marcar todas como leidas</div>
+                      <div class="clear-float"></div>
+                    </div>
 
+                    <div class="notifies">
                        <div *ngFor="let msg of notify.messages " class="dropdown-item " [class.es-nuevo]="msg.isNew" >
                                     <div class="texto">{{msg.message}}</div>
                                     <div class="tiempo">{{getAgo(msg.create)}}</div>
@@ -36,6 +42,11 @@
                       <div *ngIf="notify.messages.length == 0" >
                          Usted tiene cero notificaciones
                       </div>
+                    </div>
+
+                    <div class="more">
+                      <div class="text">Ver más</div>
+                    </div>
 
                   </div>
                 </li>
@@ -44,8 +55,8 @@
                     <img class="perfil" src="assets/images/person.svg" alt="Perfil" >
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="lnkPerfil">
+                    <a class="dropdown-item" [routerLink]="['/configuracionEmpresa']"> Datos de la empresa</a>
                     <a class="dropdown-item" [routerLink]="['/editarServicios']"> Servicios</a>
-                    <a class="dropdown-item" [routerLink]="['/configuracionEmpresa']"> Configuración</a>
                     <a class="dropdown-item" (click)="logout()" >Cerrar Sesión</a>
                   </div>
                 </li>
