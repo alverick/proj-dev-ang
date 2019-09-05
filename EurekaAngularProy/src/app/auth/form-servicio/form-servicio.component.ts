@@ -117,15 +117,15 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    console.log('iniciando OnSubmit', this.stateEdit.stateCreate);
-    console.log('form.valid', this.frm.valid);
     if (this.frm.valid)
     {
 
-     console.log('stado de editar ' + this.stateEdit.stateEdit);
-
      const monto  = parseFloat(this.frm.get('monto').value);
      const porcentaje  = parseFloat(this.frm.get('porcentaje').value);
+     const montofix = monto.toFixed(2);
+     const porcentajefix = porcentaje.toFixed(2);
+     this.frm.value.monto = montofix;
+     this.frm.value.porcentaje = porcentajefix;
 
      if (this.frm.get('cobraMora').value === 'S') {
         if (this.frm.get('tipoMora').value === 'M') {
