@@ -67,7 +67,7 @@ export class FormServicioComponent implements OnInit {
   private _service: ServiceModel;
   @Output() grabar = new EventEmitter<any>();
   public services: ServiceModel[] = [];
- 
+
   ngOnInit(): void {
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     var  montod = (!this._service.monto ? '1.00':this._service.monto);
@@ -89,8 +89,8 @@ export class FormServicioComponent implements OnInit {
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
-      monto:   [montod, [Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(1), Maximo(1000)]],
-      porcentaje: [porcentajed, [Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(0.01), Maximo(100)]]
+      monto:   [montod],
+      porcentaje: [porcentajed]
     });
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
@@ -98,8 +98,8 @@ export class FormServicioComponent implements OnInit {
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
 
-  
-    this.changeMora(false); 
+
+    this.changeMora(false);
     this.changeTipoMora(false);
   }
 
@@ -324,9 +324,9 @@ export class FormServicioComponent implements OnInit {
   changeMora(changeData: boolean = true) {
     this.cobraMora = (this.f.cobraMora.value === 'S');
     console.log('al presionar editar se activa el metodo changeMora');
-    
+
     if (this.cobraMora) {
-      
+
       console.log('cobra mora');
       this.f.periodoMora.setValidators([Validators.required]);
       this.f.monto.setValidators([Validators.required,Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(1), Maximo(1000)])
@@ -390,10 +390,10 @@ export class FormServicioComponent implements OnInit {
   }
 
   MoraMontoBlur(e) {
-    let initalValue = parseFloat(this.f.monto.value) ; 
+    let initalValue = parseFloat(this.f.monto.value) ;
     if(!isNaN(initalValue))
     this.f.monto.setValue(initalValue.toFixed(2));
-    
+
   }
   MoraPorcenBlur(e){
     let initalValue = parseFloat(this.f.porcentaje.value);
