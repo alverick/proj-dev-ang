@@ -42,7 +42,7 @@ export class FormServicioComponent implements OnInit {
       console.log(value);
       this._service = value;
       this.simboloMoneda = value.simboloMoneda
-      delete this._service.simboloMoneda;
+      this._service.simboloMoneda = this.simboloMoneda;
     }
   }
 
@@ -70,11 +70,15 @@ export class FormServicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
+    var  montod = (!this._service.monto ? '1.00':this._service.monto);
+    var porcentajed = (!this._service.porcentaje ? '1' : this._service.porcentaje);
     console.log(this._service);
+    console.log(montod);
+    console.log(porcentajed);
     this.frm = this.fb.group({
       nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3)]),
-      codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, Validators.required),
-      nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode }),
+      codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
+      nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode}),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       nroCuenta: [this._service.nroCuenta, [Validators.required, Validators.minLength(13)]],
@@ -85,16 +89,18 @@ export class FormServicioComponent implements OnInit {
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
-      monto: [(!this._service.monto ? '1.00' : this._service.monto) , [Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(1), Maximo(1000)]],
-      porcentaje: [(!this._service.porcentaje ? '1' : this._service.porcentaje), [Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(0.01), Maximo(100)]]
+      monto:   [montod],
+      porcentaje: [porcentajed]
     });
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
     this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
-    this.changeMora();
-    this.changeTipoMora();
+
+
+    this.changeMora(false);
+    this.changeTipoMora(false);
   }
 
   onChangeTipoDato() {
@@ -105,17 +111,16 @@ export class FormServicioComponent implements OnInit {
     else if (this.tiposPago.length === 1) {
       this.tiposPago.push({
         code: 'P',
-        name: "Tengo solo código y nombres"
+        name: "Siempre la deuda que vence primero"
       });
     }
   }
 
   onSubmitServicio() {
-
+    console.log('iniciando OnSubmit', this.stateEdit.stateCreate);
+    console.log('form.valid', this.frm.valid);
     if (this.frm.valid)
     {
-     this.stateEdit.stateCreate =false;
-     this.stateEdit.stateEdit = false;
 
      console.log('stado de editar ' + this.stateEdit.stateEdit);
 
@@ -171,6 +176,7 @@ export class FormServicioComponent implements OnInit {
                   console.log(this._service);
                   value = this._service;
                   value.nroCuenta = this.frm.value.nroCuenta;
+                  value.moneda = this.frm.value.moneda;
                   value.cobraMora = this.frm.value.cobraMora;
                   value.periodoMora = this.frm.value.periodoMora;
                   value.tipoMora = this.frm.value.tipoMora;
@@ -260,6 +266,7 @@ export class FormServicioComponent implements OnInit {
                 console.log(this._service);
                 value = this._service;
                 value.nroCuenta = this.frm.value.nroCuenta;
+                value.moneda = this.frm.value.moneda;
                 value.cobraMora = this.frm.value.cobraMora;
                 value.periodoMora = this.frm.value.periodoMora;
                 value.tipoMora = this.frm.value.tipoMora;
@@ -291,6 +298,7 @@ export class FormServicioComponent implements OnInit {
               console.log(this._service);
               value = this._service;
               value.nroCuenta = this.frm.value.nroCuenta;
+              value.moneda = this.frm.value.moneda;
               value.cobraMora = this.frm.value.cobraMora;
               value.periodoMora = this.frm.value.periodoMora;
               value.tipoMora = this.frm.value.tipoMora;
@@ -312,26 +320,43 @@ export class FormServicioComponent implements OnInit {
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
   }
 
-  changeMora() {
+  changeMora(changeData: boolean = true) {
     this.cobraMora = (this.f.cobraMora.value === 'S');
+    console.log('al presionar editar se activa el metodo changeMora');
+
     if (this.cobraMora) {
+
+      console.log('cobra mora');
       this.f.periodoMora.setValidators([Validators.required]);
+      this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)])
+      this.f.porcentaje.clearValidators();
+      if (changeData)
+        this.f.porcentaje.value = "1";
     } else {
       this.f.periodoMora.clearValidators();
       this.f.periodoMora.reset();
+      this.f.monto.clearValidators();
+      if (changeData)
+        this.f.monto.value = "1.00";
+      this.f.porcentaje.clearValidators();
+      if (changeData)
+        this.f.porcentaje.value = "1";
     }
   }
 
-  changeTipoMora() {
+  changeTipoMora(changeData: boolean = true) {
+    console.log('al presionar editar se activa el metodo changeTipoMora');
     this.cobraMonto = (this.f.tipoMora.value === "M");
     this.cobraPorcentaje = (this.f.tipoMora.value === "P");
     if (this.cobraMora && this.cobraMonto) {
-      this.f.monto.setValidators([Validators.required,Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(1), Maximo(1000)]);
+      this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)]);
       this.f.porcentaje.clearValidators();
+      if(changeData)
       this.f.porcentaje.value = "1";
     } else if (this.cobraMora && this.cobraPorcentaje) {
-      this.f.porcentaje.setValidators([Validators.required, Validators.pattern('^[0-9]{1,3}(\.[0-9]{2})?$'), Minimo(0.01), Maximo(100)]);
+      this.f.porcentaje.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.01), Maximo(100)]);
       this.f.monto.clearValidators();
+      if(changeData)
       this.f.monto.value = "1.00";
     }
   }
@@ -347,6 +372,7 @@ export class FormServicioComponent implements OnInit {
   }
 
   formAction(action: string){
+    console.log('formAction', this.stateEdit.stateCreate);
     if (action === 'save') {
       Object.keys(this.frm.controls).forEach(c => {
         this.frm.controls[c].markAsDirty();
@@ -354,6 +380,44 @@ export class FormServicioComponent implements OnInit {
       this.onSubmitServicio();
     }
   }
+
+  nameCodInput(e) {
+    let initalValue = this.f.nameCod.value;
+   /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
+    initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
+    initalValue = initalValue.replace(/\s{2,}/g, " ");
+    this.f.nameCod.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
+  }
+
+  MoraMontoBlur(e) {
+    let initalValue = parseFloat(this.f.monto.value) ;
+    if(!isNaN(initalValue))
+    this.f.monto.setValue(initalValue.toFixed(2));
+
+  }
+  MoraPorcenBlur(e){
+    let initalValue = parseFloat(this.f.porcentaje.value);
+    if(!isNaN(initalValue))
+    this.f.porcentaje.setValue(initalValue.toFixed(2));
+
+  }
+  nameCodBlur(e) {
+    let initalValue = this.f.nameCod.value;
+    this.f.nameCod.setValue(initalValue.trim());
+  }
+  nameSerInput(e) {
+    let initalValue = this.f.nombre.value;
+   /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
+    initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
+    initalValue = initalValue.replace(/\s{2,}/g, " ");
+    this.f.nombre.setValue(initalValue.replace(/[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ-]*/g, ''));
+  }
+  // ^[0-9a-zA-ZÑñ]{3,30}$
+  nameSerBlur(e) {
+    let initalValue = this.f.nombre.value;
+    this.f.nombre.setValue(initalValue.trim());
+  }
+
 
 }
 

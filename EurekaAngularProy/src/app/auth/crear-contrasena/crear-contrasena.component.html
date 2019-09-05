@@ -25,9 +25,10 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="nombre" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
+                                    <input formControlName="nombre"  (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
                                     <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
-                                    <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
+                                    <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
+                                    <mat-error *ngIf="f.nombre.invalid && !f.nombre.hasError('pattern') && f.nombre.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
@@ -66,6 +67,7 @@
 
                                     <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('required')">Contraseña es un campo requerido</mat-error>
                                     <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
+                                    <mat-error *ngIf="f.contrasena.invalid && !f.contrasena.hasError('minlength') && f.contrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
 
                                 </mat-form-field>
                             </div>
@@ -76,6 +78,8 @@
                                     <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required')">Debe repetir la contraseña</mat-error>
                                     <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
                                     <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
+                                    <mat-error *ngIf="f.repcontrasena.invalid && !f.repcontrasena.hasError('minlength') && f.repcontrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
+
 
                                 </mat-form-field>
                             </div>

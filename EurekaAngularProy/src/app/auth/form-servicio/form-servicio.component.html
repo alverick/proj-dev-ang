@@ -2,8 +2,9 @@
     <h3>Editar tus Servicios</h3>
     <div class="form-group">
         <mat-form-field class="w-100">
-            <input matInput appSearch type="text" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
+            <input matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
             <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
+            <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>  
             <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
             <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
         </mat-form-field>
@@ -17,11 +18,15 @@
                     {{c.name}}
                 </mat-option>
             </mat-select>
-            <input *ngIf="f.codDeudor.value === 'Otro'" matInput appSearch type="text" maxlength="20" formControlName="nameCod" name="nameCod" placeholder="Describa su opcion de Pago">
+            <input *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod"
+                (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
             <div *ngIf="f.codDeudor.value === 'Otro'" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
             <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
+
             <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
-            <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
+            <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
+            <mat-error *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
+
         </mat-form-field>
     </div>
     <div class="form-group">
@@ -50,7 +55,7 @@
     </div>
     <div class="form-group">
         <mat-form-field>
-            <input matInput type="text" appOnlyNumbersForm maxlength="13" formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
+            <input matInput type="text" appNumberAccount maxlength="13" formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
             <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('required')">El numero de cuenta es obligatorio</mat-error>
             <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('minlength')">El numero de cuenta debe tener 13 carácteres</mat-error>
         </mat-form-field>
@@ -156,11 +161,14 @@
             <span class="check"></span>
          </label>
             <mat-form-field *ngIf="cobraMonto">
-                <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7">
+                <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
                 <span matPrefix>{{simboloMoneda}}&nbsp;&nbsp;</span>
-                <mat-error *ngIf="f.monto.invalid && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error>
+                <mat-error *ngIf="f.monto.invalid && f.monto.hasError('required')">Debe ingresar un monto</mat-error>
                 <mat-error *ngIf="f.monto.invalid && f.monto.hasError('maximo')">No puede ser mayor a 1000.00</mat-error>
                 <mat-error *ngIf="f.monto.invalid && f.monto.hasError('minimo')">No puede ser menor a 1.00</mat-error>
+                <mat-error *ngIf="f.monto.invalid && !f.monto.hasError('maximo') && !f.monto.hasError('minimo') && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error> 
+
+               
             </mat-form-field>
             <label class="d-block mb-0 radio">Porcentaje
             <input type="radio" formControlName="tipoMora" name="tipoMora" id="porcentaje" value="P"
@@ -168,11 +176,12 @@
             <span class="check"></span>
             </label>
             <mat-form-field *ngIf="cobraPorcentaje">
-                <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5">
+                <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
                 <span matSuffix>%</span>
-                <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('pattern')">No tiene el formato correcto</mat-error>
+                <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('required')">Debe ingresar un porcentaje</mat-error> 
                 <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')">No puede ser mayor a 100.00</mat-error>
-                <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')">No puede ser menor a 0.01</mat-error>
+                <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')">No puede ser menor a 0.01</mat-error> 
+                <mat-error *ngIf="f.porcentaje.invalid && !f.porcentaje.hasError('maximo')  && !f.porcentaje.hasError('minimo') && f.porcentaje.hasError('pattern')">No tiene el formato correcto</mat-error> 
             </mat-form-field>
         </div>
 

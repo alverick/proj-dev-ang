@@ -69,5 +69,19 @@ getServices(incDeactivates: boolean = false): Observable<any[]> {
 
 }
 
+getServicesActive(): Observable<any[]> {
+  const url =`${environment.END_POINT}/company/service/active?_=`+ new Date().getTime();;
+  return this.http.get<any[]> (url)
+    .pipe(map(r => {
+      let data: any[] = [];
+      r.forEach(s => data.push({
+        id: s.id,
+        name: s.name
+      }));
+      return data;
+    }))
+    .pipe(catchError(err => throwError(err)));
+
+}
 
 }

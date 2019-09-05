@@ -70,7 +70,7 @@ import { NotifyService } from './shared/services/notify.service';
     BlockCopyPasteDirective,
     DecimalesDirective,
     EmailDirective,
-    OnlyNumbersDirective, 
+    OnlyNumbersDirective,
 
 
     ],

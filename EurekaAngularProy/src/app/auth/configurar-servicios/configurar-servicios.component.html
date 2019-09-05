@@ -6,7 +6,7 @@
                     <div class="col-sm">
                         <br>
                         <h2 class="texto-azulbase">Configura tus servicios </h2>
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" style="overflow:auto; max-height:800px">
                             <div class="card" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
                                 <div class="card-body">
                                     <div class="row">
@@ -16,7 +16,7 @@
                                         </div>
                                         <div class="col-sm-1">
                                             <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
-                                                <li>
+                                                <li *ngIf="!svc.inReview" >
                                                     <a class="texto-azul" style="cursor: pointer" (click)="editService(svc, i)"><i
                               class="icon-lapiz"></i></a>
                                                 </li>
@@ -34,8 +34,8 @@
                                         </tr>
                                         <tr>
                                             <th><small>Codigo Deudor</small></th>
-                                            <td><small>{{ getCodDebtor(svc) }}</small></td>
-                                        </tr>
+                                            <td><small>{{ getCodDebtor(svc) }}</small></td> 
+                                        </tr> 
                                         <tr>
                                             <th><small>Mora</small></th>
                                             <td>
@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                         </div>
-                        <br>
+                        
 
                     </div>
                 </div>

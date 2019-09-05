@@ -30,10 +30,10 @@ export class CrearContrasenaComponent implements OnInit {
       ruc: new FormControl('',  [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
       nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
       rubro: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required , Validators.pattern('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
+      email: new FormControl('', [Validators.required , Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       telefono: new FormControl('', [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
-      contrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-      repcontrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+      contrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
+      repcontrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
       acceptterms: new FormControl(false, Validators.requiredTrue)
     }, {
       validator: MustMatch('contrasena', 'repcontrasena')
@@ -45,6 +45,8 @@ export class CrearContrasenaComponent implements OnInit {
   get f(): any {
     return this.registerForm.controls;
   }
+
+
 
   onSubmit() {
     this.submitted = true;
@@ -139,5 +141,27 @@ export class CrearContrasenaComponent implements OnInit {
     });
   }
 
+  
+  //spaces in inputs
+  nameSerInput(e) {
+    let initalValue = this.f.nombre.value;
+   /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
+    initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
+    initalValue = initalValue.replace(/\s{2,}/g, " ");
+    this.f.nombre.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
+  }
+  
+  nameSerBlur(e) {
+    let initalValue = this.f.nombre.value;
+    this.f.nombre.setValue(initalValue.trim());
+  }
+}
 
+
+function UnaLetra(c: FormControl) {
+  let regex = /[a-zA-Z]/g;
+  if (c.value && !regex.test(c.value)) {
+    return { unaletra: true };
+  }
+  return null;
 }

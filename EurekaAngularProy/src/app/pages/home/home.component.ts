@@ -228,7 +228,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
-    this.homeService.getServices(false).subscribe(
+    this.homeService.getServices(true).subscribe(
       value => {
         this.services = value;
         this.serviceSelected = value[0];
@@ -236,7 +236,7 @@ export class HomeComponent implements OnInit {
     );
 
 
-    this.homeService.getServices(true).subscribe(
+    this.homeService.getServicesActive().subscribe(
       value => {
         this.typeList = value;
     });
@@ -565,6 +565,9 @@ if(columnName === 'canal' ) {
 
     });
   }
+
+
+
 
   validaFiltro(): boolean {
 
@@ -1016,14 +1019,19 @@ MostrarListaSelect() {
   }
 
   DescargarReporte() {
-    if (this.validaFiltro()) {
-      this.transactionService.report(this.filtro)
-      .subscribe((r: Blob) => {
-        console.log('todo bien');
-        console.log(r);
-        saveAs(r, "reporte.xlsx");
-      });
+    if( this.transactionService.debtItems.data.length > 0){
+      if (this.validaFiltro()) {
+        this.transactionService.report(this.filtro)
+        .subscribe((r: Blob) => {
+          console.log('todo bien');
+          console.log(r);
+          saveAs(r, "reporte.xlsx");
+        });
+      }
+    }else{
+      this.mensaje('warning', 'Descarga','No tiene registros para descargar');
     }
+
   }
 
   estaVencido(itm: Debts){

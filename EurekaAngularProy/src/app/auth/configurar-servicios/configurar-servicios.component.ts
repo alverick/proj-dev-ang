@@ -59,6 +59,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   serviceActual: ServiceModel = null;
 
   OcultarFormulario(requireConfirm: boolean) {
+    console.log('iniciando descartar', this.stateCreate);
     if (requireConfirm) {
       Swal.fire({
         type: 'question',
@@ -71,21 +72,23 @@ export class ConfigurarServiciosComponent implements OnInit {
         cancelButtonText: 'Regresar'
       }).then(r => {
         if (r.value) {
+          this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
           this.Formulario = false
           this.stateCreate =false;
           this.stateEdit =false;
           this.addNewAfterSave = false;
           this.sendAfterSave = false;
-          this.afiliacionService.Descartar(this.indiceActual);
           this.indiceActual = -1;
         }
       });
     }
     else {
+      console.log('descartando cambios');
+      console.log(this.indiceActual, this.stateCreate);
+      this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
       this.Formulario = false
       this.stateCreate =false;
       this.stateEdit =false;
-      this.afiliacionService.Descartar(this.indiceActual);
       this.indiceActual = -1;
       if (this.addNewAfterSave) {
         setTimeout(() => this.MostarFormulario(), 600);
@@ -102,6 +105,15 @@ export class ConfigurarServiciosComponent implements OnInit {
   sendAfterSave: boolean = false;
 
   MostarFormulario() {
+    console.log('mostrar formulario', this.stateCreate);
+    if(this.afiliacionService.services.length >= 99){
+      Swal.fire({
+        type: 'error',
+        text: 'Usted solo puede tener 99 servicios como máximo',
+        allowOutsideClick: false
+      });
+      return;
+    }
     if (this.Formulario) {
       Swal.fire({
         type: 'warning',
@@ -114,23 +126,27 @@ export class ConfigurarServiciosComponent implements OnInit {
         cancelButtonText: 'Deshacer cambios',
         cancelButtonColor: '#d33'
       }).then(r => {
-        console.log(r);
         this.addNewAfterSave = true;
         if (r.value) {
+          console.log('grabar cambios', this.stateCreate);
           this.onFormAction.emit('save');
         }
         else if (r.dismiss === Swal.DismissReason.cancel) {
+          console.log('descartar cambios', this.stateCreate);
           this.OcultarFormulario(false);
         }
         else {
+          console.log('cancelar', this.stateCreate);
           this.addNewAfterSave = false;
         }
       });
     }
     else {
+      console.log('crear nuevo');
       this.indiceActual = this.afiliacionService.services.length;
       this.serviceActual = this.afiliacionService.CrearSevice();
       this.stateEdit = true;
+      this.stateCreate = true;
       this.Formulario = true;
     }
   }
@@ -169,14 +185,6 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     // this.frm.get('monto').value
 
-    if(this.afiliacionService.services.length > 99){
-      Swal.fire({
-        type: 'error',
-        text: 'solo puede tener 99 servicios como maximo',
-        allowOutsideClick: false
-      });
-      return;
-    }
     let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
     if(svcSinCta) {
       Swal.fire({
@@ -302,7 +310,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
       return;
     }
-
+    console.table(svc);
     this.stateEdit = true;
     console.log(index);
     this.indiceActual = index;
