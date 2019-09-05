@@ -22,7 +22,7 @@
     font-weight: normal;
     font-style: italic;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-Thin.eot');
@@ -34,7 +34,7 @@
     font-weight: 100;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-BlackItalic.eot');
@@ -46,7 +46,7 @@
     font-weight: 900;
     font-style: italic;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-ExtraLight.eot');
@@ -58,7 +58,7 @@
     font-weight: 200;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-SemiboldItalic.eot');
@@ -70,7 +70,7 @@
     font-weight: 600;
     font-style: italic;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-Black.eot');
@@ -82,7 +82,7 @@
     font-weight: 900;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-Bold.eot');
@@ -94,7 +94,7 @@
     font-weight: bold;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-BoldItalic.eot');
@@ -106,7 +106,7 @@
     font-weight: bold;
     font-style: italic;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-Light.eot');
@@ -118,7 +118,7 @@
     font-weight: 300;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-Regular.eot');
@@ -130,7 +130,7 @@
     font-weight: normal;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-Medium.eot');
@@ -142,7 +142,7 @@
     font-weight: 500;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-LightItalic.eot');
@@ -154,7 +154,7 @@
     font-weight: 300;
     font-style: italic;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-Semibold.eot');
@@ -166,7 +166,7 @@
     font-weight: 600;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-MediumItalic.eot');
@@ -178,7 +178,7 @@
     font-weight: 500;
     font-style: italic;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-ThinItalic.eot');
@@ -190,7 +190,7 @@
     font-weight: 100;
     font-style: italic;
   }
-  
+
   @font-face {
     font-family: 'Omnes Hairline';
     src: url('/fonts/Omnes-Hairline.eot');
@@ -202,7 +202,7 @@
     font-weight: normal;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Omnes';
     src: url('/fonts/Omnes-RegularItalic.eot');
@@ -214,12 +214,12 @@
     font-weight: normal;
     font-style: italic;
   }
-  
-  
+
+
   /*--- Colores ---*/
   $colores : #0b0044 #2121c4 #333333 #ffffff #f4f5f7 #bebebe #9b9b9b #fc9a00 #FFAD2D #cc170e #30abc2 #ffad2d #e68c00 #1b2afa #0e119a transparent;
   $nombrecolores : 'azulbase' 'azul' 'negro' 'blanco' 'grisbajo' 'gris' 'grismedio' 'amarillo' 'amarillo-claro' 'rojo' 'turquesa' 'amarillolight' 'amarillobold' 'azullight' 'azulbold' 'transparent';
-  
+
   $azulbase: nth($colores, 1);
   $azul: nth($colores, 2);
   $negro: nth($colores, 3);
@@ -236,7 +236,7 @@
   $azullight: nth($colores, 14);
   $azulbold: nth($colores, 15);
   $transparent: nth($colores, 16);
-  
+
   @font-face {
     font-family: 'icomoon';
     src:  url('/fonts/iconos.eot?ijqtk6');
@@ -247,179 +247,5 @@
     font-weight: normal;
     font-style: normal;
   }
-  
-  [class^="icon-"], [class*=" icon-"] {
-    /* use !important to prevent issues with browser extensions that change /fonts */
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-  
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  .icon-add .path1:before {
-    content: "\e900";
-    color: rgb(0, 0, 0);
-  }
-  .icon-add .path2:before {
-    content: "\e901";
-    margin-left: -1em;
-    color: rgb(155, 155, 155);
-  }
-  .icon-correo-lineal .path1:before {
-    content: "\e902";
-    color: rgb(229, 153, 31);
-  }
-  .icon-correo-lineal .path2:before {
-    content: "\e903";
-    margin-left: -1em;
-    color: rgb(10, 0, 68);
-  }
-  .icon-papel-2:before {
-    content: "\e904";
-    color: #0b0044;
-  }
-  .icon-papel:before {
-    content: "\e905";
-    color: #0b0044;
-  }
-  .icon-arrow-bottom:before {
-    content: "\e906";
-    color: #2121c4;
-  }
-  .icon-icono-x:before {
-    content: "\e907";
-  }
-  .icon-usuario:before {
-    content: "\e908";
-    color: #2626bf;
-  }
-  .icon-acceso:before {
-    content: "\e909";
-    color: #2626bf;
-  }
-  .icon-calendario:before {
-    content: "\e90a";
-    color: #2121c4;
-  }
-  .icon-editar:before {
-    content: "\e90b";
-    color: #2121c4;
-  }
-  .icon-arrowtopbottom:before {
-    content: "\e90c";
-    color: #2626bf;
-  }
-  .icon-check .path1:before {
-    content: "\e90d";
-    color: rgb(0, 0, 0);
-  }
-  .icon-check .path2:before {
-    content: "\e90e";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
-  .icon-check .path3:before {
-    content: "\e90f";
-    margin-left: -1em;
-    color: rgb(48, 171, 194);
-  }
-  .icon-eliminar-x .path1:before {
-    content: "\e910";
-    color: rgb(0, 0, 0);
-  }
-  .icon-eliminar-x .path2:before {
-    content: "\e911";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
-  .icon-eliminar-x .path3:before {
-    content: "\e912";
-    margin-left: -1em;
-    color: rgb(242, 58, 36);
-  }
-  .icon-eliminar:before {
-    content: "\e913";
-    color: #2626bf;
-  }
-  .icon-correo-azul:before {
-    content: "\e914";
-    color: #2626bf;
-  }
-  .icon-flechaabajo:before {
-    content: "\e915";
-    color: #fff;
-  }
-  .icon-left:before {
-    content: "\e916";
-    color: #fff;
-  }
-  .icon-search:before {
-    content: "\e986";
-    color: #0a0044;
-  }
-  .icon-filter:before {
-    content: "\ea5b";
-    color: #0a0044;
-  }
-  .icon-mail:before {
-    content: "\ea83";
-    color: #2626bf;
-  }
-  
-  .icon-check-hover:before {
-    content: '\e81a';
-  }
-  
-  .icon-check-active:before {
-    content: '\e81b';
-  }
-  
-  .icon-check-default:before {
-    content: '\e81c';
-  }
-  
-  .icon-radio-default:before {
-    content: '\e81d';
-  }
-  
-  .icon-radio-active:before {
-    content: '\e81e';
-  }
-  
-  .icon-right-open-mini:before {
-    content: '\e800';
-  }
-  
-  .icon-left-open-mini:before {
-    content: '\e801';
-  }
-  
-  .icon-up-open-mini:before {
-    content: '\e802';
-  }
-  
-  .icon-down-open-mini:before {
-    content: '\e803';
-  }
-  
-  .icon-lapiz:before {
-    content: '\e81f';
-  }
-  
-  .icon-basura:before {
-    content: '\e820';
-  }
-  
-  .icon-cerrar:before {
-    content: '\e821';
-  }
 
- 
-  
+$textcolor: #00a94f;

@@ -25,7 +25,6 @@ export class NotifyService {
         if (this.storage.isAuthenticated()) {
           this.http.get<any>(`${environment.END_POINT}/notification/total?_=${new Date().getTime()}`)
             .subscribe(d => {
-              this.icono = (d.total > 0 ? fasBell : farBell);
               if (d.total !== this.total) {
                 this.total = d.total;
                 this.messages = [];

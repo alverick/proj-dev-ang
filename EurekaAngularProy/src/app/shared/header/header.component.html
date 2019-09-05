@@ -1,5 +1,5 @@
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark static-top">
+<nav class="navbar navbar-expand-lg static-top">
     <div class="container">
         <a class="navbar-brand" href="#">
             <img style="max-width: 250px;" src="assets/images/logo.svg" alt="">
@@ -10,19 +10,19 @@
         <div *ngIf="show()" class="collapse navbar-collapse" id="navbarResponsive">
 
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active px-4">
+                <li class="nav-item active px-1">
                     <a class="mano nav-link" [routerLink]="['/home']">Movimientos</a>
                 </li>
-                <li class="nav-item px-4">
-                    <a class="mano nav-link" [routerLink]="['/editarServicios']">Servicios</a>
-                </li>
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="lnkMessages" data-toggle="dropdown" aria-haspopup="true"
-                      aria-expanded="false">
-                      <fa-icon [icon]="notify.icono"></fa-icon>
-                      <span class="badge-icon" *ngIf="notify.total > 0" >{{notify.total}}</span>
-                    </a>
-                    <div class="dropdown-menu scroll-menu dropdown-menu-right" aria-labelledby="lnkMessages"
+                  <a href="#" class="nav-link dropdown-toggle no-caret" id="lnkMessages" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <div *ngIf="notify.total > 0" class="badge" >
+                      <img class="badge-bg" src="assets/images/badge-bg.svg" alt="badge">
+                      <span class="badge-icon" >{{notify.total}}</span>
+                    </div>
+                    <img class="bell" src="assets/images/bell.svg" alt="bell">
+                  </a>
+                  <div class="dropdown-menu scroll-menu dropdown-menu-right" aria-labelledby="lnkMessages"
                       infiniteScroll [infiniteScrollDistance]="15" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
                       [scrollWindow]="false" (ngShow)="onShowMessages()" >
 
@@ -30,28 +30,24 @@
                        <div *ngFor="let msg of notify.messages " class="dropdown-item " [class.es-nuevo]="msg.isNew" >
                                     <div class="texto">{{msg.message}}</div>
                                     <div class="tiempo">{{getAgo(msg.create)}}</div>
-                                    <fa-icon class="item-icono" title="{{msg.title}}" [icon]="msg.icono" (click)="notify.changeRead(msg)" >
-                                    </fa-icon>
+                                    <fa-icon class="item-icono" title="{{msg.title}}" [icon]="msg.icono" (click)="notify.changeRead(msg)"></fa-icon>
                        </div>
 
                       <div *ngIf="notify.messages.length == 0" >
                          Usted tiene cero notificaciones
                       </div>
 
-                    </div>
-                  </li>
-                  <li class="nav-item px-4">
-                    <div class="form-inline ml-4 my-lg-0">
-                        <div class="btn-group">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="mr-3 icono-perfil" src="assets/images/perfil-blanco.png" alt="Perfil">
-                            </a>
-                            <div class="dropdown-menu mt-2 dropdown-menu-right">
-                                <a class="mano nav-link" [routerLink]="['/configuracionEmpresa']" style="color: black"> Configuración</a>
-                                <a class="mano nav-link" (click)="logout()" style="color: black">Cerrar Sesión</a>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" id="lnkPerfil" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="perfil" src="assets/images/person.svg" alt="Perfil" >
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="lnkPerfil">
+                    <a class="dropdown-item" [routerLink]="['/editarServicios']"> Servicios</a>
+                    <a class="dropdown-item" [routerLink]="['/configuracionEmpresa']"> Configuración</a>
+                    <a class="dropdown-item" (click)="logout()" >Cerrar Sesión</a>
+                  </div>
                 </li>
             </ul>
         </div>
