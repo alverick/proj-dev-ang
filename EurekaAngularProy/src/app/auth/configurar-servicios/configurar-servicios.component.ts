@@ -123,12 +123,12 @@ export class ConfigurarServiciosComponent implements OnInit {
         cancelButtonText: 'Deshacer cambios',
         cancelButtonColor: '#d33'
       }).then(r => {
-        console.log(r);
+        console.log(r); 
         this.addNewAfterSave = true;
         if (r.value) {
           this.onFormAction.emit('save');
         }
-        else if (r.dismiss === Swal.DismissReason.cancel) {
+        else if (r.dismiss === Swal.DismissReason.cancel) { 
           this.OcultarFormulario(false);
         }
         else {
