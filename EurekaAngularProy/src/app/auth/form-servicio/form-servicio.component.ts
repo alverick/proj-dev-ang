@@ -329,7 +329,7 @@ export class FormServicioComponent implements OnInit {
 
       console.log('cobra mora');
       this.f.periodoMora.setValidators([Validators.required]);
-      this.f.monto.setValidators([Validators.required,Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(1), Maximo(1000)])
+      this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)])
       this.f.porcentaje.clearValidators();
       if (changeData)
         this.f.porcentaje.value = "1";
@@ -350,12 +350,12 @@ export class FormServicioComponent implements OnInit {
     this.cobraMonto = (this.f.tipoMora.value === "M");
     this.cobraPorcentaje = (this.f.tipoMora.value === "P");
     if (this.cobraMora && this.cobraMonto) {
-      this.f.monto.setValidators([Validators.required,Validators.pattern('^[0-9]{1,4}(\.[0-9]{2})?$'), Minimo(1), Maximo(1000)]);
+      this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)]);
       this.f.porcentaje.clearValidators();
       if(changeData)
       this.f.porcentaje.value = "1";
     } else if (this.cobraMora && this.cobraPorcentaje) {
-      this.f.porcentaje.setValidators([Validators.required, Validators.pattern('^[0-9]{1,3}(\.[0-9]{2})?$'), Minimo(0.01), Maximo(100)]);
+      this.f.porcentaje.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.01), Maximo(100)]);
       this.f.monto.clearValidators();
       if(changeData)
       this.f.monto.value = "1.00";
@@ -425,8 +425,6 @@ function Maximo(max: number) {
   return (c: FormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
-      // 50 > 1000 ==> false
-      // 8000 > 1000 ==> true
       if (nro > max) {
         return { maximo: true };
       }
@@ -439,8 +437,6 @@ function Minimo(min: number) {
   return (c: FormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
-      // 1.2 < 1.00 ==> false
-      // 0.02 < 1.00 ==> true
       if (nro < min) {
         return { minimo: true };
       }
