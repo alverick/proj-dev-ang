@@ -34,8 +34,8 @@
                                         </tr>
                                         <tr>
                                             <th><small>Codigo Deudor</small></th>
-                                            <td><small>{{ getCodDebtor(svc) }}</small></td> 
-                                        </tr> 
+                                            <td><small>{{ getCodDebtor(svc) }}</small></td>
+                                        </tr>
                                         <tr>
                                             <th><small>Mora</small></th>
                                             <td>
@@ -52,18 +52,18 @@
                                 </div>
                             </div>
                         </div>
-                        
+
 
                     </div>
                 </div>
                 <br>
                 <div style="text-align:center;">
-                    <button (click)="MostarFormulario()" class="btn btn-lg btn-outline-amarillo">
+                    <button (click)="MostarFormulario()" class="btn btn-lg btn-outline-amarillo" [disabled]="Formulario">
                       <span class="fa fa-plus-circle"></span>   Agregar otro servicio
                     </button>
                     <br>
                     <br>
-                    <button (click)="EnviarServicios()" class="btn-big w-80 btn-eureca btn-eureca-amarillo text-white">
+                    <button (click)="EnviarServicios()" class="btn-big w-80 btn-eureca btn-eureca-amarillo text-white" [disabled]="Formulario">
                      Finalizar</button>
                 </div>
             </div>
