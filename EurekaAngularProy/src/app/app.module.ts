@@ -46,10 +46,10 @@ import { ShearDirective } from './pages/home/shear.directive';
 import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
 import { DecimalesDirective } from './pages/home/decimales.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { EmailDirective } from './pages/configurar-empresa/email.directive';
 import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.directive';
-import { NotifyService } from './shared/services/notify.service'; 
+import { NotifyService } from './shared/services/notify.service';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
   declarations: [
@@ -103,7 +103,7 @@ import { NotifyService } from './shared/services/notify.service';
     MatSelectModule,
     MatProgressSpinnerModule,
     FontAwesomeModule,
-    InfiniteScrollModule
+    PerfectScrollbarModule
   ],
   providers: [
     ExcelService,

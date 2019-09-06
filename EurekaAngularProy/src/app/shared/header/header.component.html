@@ -31,21 +31,23 @@
                       <div class="clear-float"></div>
                     </div>
 
-                    <div class="notifies scroll-div" infiniteScroll [infiniteScrollDistance]="15" [infiniteScrollThrottle]="50" (scrolled)="onScroll()"
-                      [scrollWindow]="false">
-                      <div *ngFor="let msg of notify.messages " class="dropdown-item " [class.es-nuevo]="msg.isNew" >
+                    <perfect-scrollbar class="notifies" (psYReachEnd)="onScroll()" >
+                          <div *ngFor="let msg of notify.messages " class="dropdown-item " [class.es-nuevo]="msg.isNew" (click)="$event.stopPropagation();" >
                                     <div class="texto">{{msg.message}}</div>
                                     <div class="tiempo">{{getAgo(msg.create)}}</div>
-                                    <fa-icon class="item-icono" title="{{msg.title}}" [icon]="msg.icono" (click)="notify.changeRead(msg)"></fa-icon>
+                                    <fa-icon class="item-icono" title="{{msg.title}}" [icon]="msg.icono" (click)="notify.changeRead(msg); $event.stopPropagation();"></fa-icon>
                       </div>
 
                       <div *ngIf="notify.messages.length == 0" >
                          Usted tiene cero notificaciones
                       </div>
-                    </div>
+                      <div *ngIf="notify.loadingMsg" class="loading">
+                          <mat-spinner [diameter]="20" ></mat-spinner>
+                      </div>
+                  </perfect-scrollbar>
 
                     <div class="more">
-                      <div class="text">Ver más</div>
+                      <div class="text" (click)="onScroll(); $event.stopPropagation();">Ver más</div>
                     </div>
 
                   </div>

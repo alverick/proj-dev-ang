@@ -30,3 +30,8 @@
   background-color: #f3f3f3;
   border-radius: 4px;
 }
+
+.mat-progress-spinner circle, 
+.mat-spinner circle {
+  stroke: $textblack;
+}

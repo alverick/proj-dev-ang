@@ -100,7 +100,9 @@ export class HeaderComponent implements OnInit {
 
   onScroll() {
     console.log('scroll');
-    this.notify.loadMsgs();
+    if (this.notify.messages.length > 0) {
+      this.notify.loadMsgs();
+    }
   }
 
   onShowMessages() {

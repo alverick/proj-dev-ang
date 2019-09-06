@@ -13,6 +13,7 @@ export class NotifyService {
 
   inExecution: boolean = false;
   icono: any = farBell;
+  loadingMsg: boolean = false;
 
   existMore: boolean = true;
   messages: any[] = [];
@@ -21,7 +22,7 @@ export class NotifyService {
   public iniciar() {
     if (!this.inExecution) {
       this.inExecution = true;
-      var callNotify = () => {
+      const callNotify = () => {
         if (this.storage.isAuthenticated()) {
           this.http.get<any>(`${environment.END_POINT}/notification/total?_=${new Date().getTime()}`)
             .subscribe(d => {
@@ -41,8 +42,10 @@ export class NotifyService {
 
   public loadMsgs() {
     if (this.existMore) {
+      this.loadingMsg = true;
       this.http.get<any[]>(`${environment.END_POINT}/notification?skip=${this.messages.length}&_=${new Date().getTime()}`)
         .subscribe(d => {
+          this.loadingMsg = false;
           if (d.length < 15) {
             this.existMore = false;
           }
@@ -51,7 +54,7 @@ export class NotifyService {
             s.title = s.isNew ? 'Marcar como leido' : 'Marcar como no leido';
             this.messages.push(s);
           });
-        });
+        }, err => { this.loadingMsg = false; });
     }
   }
 

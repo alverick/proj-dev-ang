@@ -126,6 +126,10 @@ img.bell {
     .notifies {
       max-height: 388px;
       overflow-y: auto;
+
+      .loading {
+        text-align: center;
+      }
     }
 
     .more {
