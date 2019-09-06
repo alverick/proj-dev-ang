@@ -5,7 +5,7 @@
   height: 72px;
   padding: 0 !important;
   background-color: #ffffff;
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.05)
+  @include box-shadows(0 4px 10px 0 rgba(0, 0, 0, 0.05))
 }
 
 /* Partners */
@@ -89,7 +89,7 @@ img.bell {
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    @include box-shadows(0 4px 10px 0 rgba(0, 0, 0, 0.1), 0 4px 10px 0 rgba(0, 0, 0, 0.1));
     background-color: #ffffff;
 
     .dropdown-item {

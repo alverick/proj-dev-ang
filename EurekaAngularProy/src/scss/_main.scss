@@ -31,7 +31,67 @@
   border-radius: 4px;
 }
 
-.mat-progress-spinner circle, 
+.mat-progress-spinner circle,
 .mat-spinner circle {
   stroke: $textblack;
+}
+
+.mat-form-field {
+  .mat-form-field-prefix {
+    margin-right: 2px;
+  }
+
+  .mat-form-field-label {
+    @include font-text(15px);
+    color: $textblack !important;
+    top: 21px;
+  }
+
+  .mat-form-field-ripple {
+    background-color: $textblack !important;
+  }
+
+  .mat-select-arrow {
+    color: $textgreen;
+  }
+
+  .mat-datepicker-toggle {
+    .mat-icon-button {
+      color: $textgreen;
+    }
+  }
+}
+
+.mat-form-field.mat-focused {
+  .mat-form-field-label {
+    @include font-text(12px, 500);
+    color: $textblue !important;
+  }
+
+  .mat-form-field-ripple {
+    background-color: $textblue !important;
+  }
+}
+
+.mat-form-field.mat-form-field-disabled {
+
+  .mat-datepicker-toggle {
+    .mat-icon-button {
+      color: rgba(0,0,0,.42);
+    }
+  }
+}
+
+.btn-eureca-green{
+  @include font-text(14px, 500);
+  color: #ffffff;
+  background-color: $green;
+  @include border-radius(4px);
+  border: solid 1px $green;
+  &:hover{
+    background-color: $green;
+  }
+  &:focus{
+    background-color: $greenclaro;
+  }
 }

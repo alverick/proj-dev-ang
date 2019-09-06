@@ -1,8 +1,55 @@
 <div class="body">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <!--good-->
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="widget">
+          <div class="title">Buscar</div>
+          <div class="content">
+            <form>
+              <mat-form-field class="f1">
+                <input matInput [(ngModel)]="filtro.inputSearch" name="inputSearch" type="text" appShear maxlength="20" placeholder="Nombre o Codigo del deudor">
+                <span matPrefix class="fa fa-search"></span>
+              </mat-form-field>
+              <mat-form-field class="f2">
+                <mat-select placeholder="Servicio" class="selectpicker filter-slt" [(ngModel)]="filtro.service" name="servicio">
+                  <mat-option value="">Servicios</mat-option>
+                  <mat-option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="f2">
+                <mat-select placeholder="Estado de pago" [(ngModel)]="filtro.status" name="status">
+                  <mat-option value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="f2">
+                <mat-select placeholder="Fecha" [(ngModel)]="filtro.dateForFilter" name="dateForFilter" (ngModelChange)="clearDatePicker($event)">
+                  <mat-option value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="f2">
+                <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1
+                  type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom"
+                  maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
+                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker2></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="f2">
+                <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2
+                  type="text" name="dateTo" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo"
+                  maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
+                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
+              </mat-form-field>
+              <button type="button" class="f3 btn-eureca-green" (click)="sendFiltro()">Buscar
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="widget">
+          <div class="title">Movimientos</div>
+          <div class="content"></div>
+        </div>
+                  <!--good-->
                 <div class="my-3 p-3 bg-white rounded shadow-sm">
                     <div class="table-responsive">
                         <table class="table">
@@ -15,12 +62,6 @@
                                 </div>
                                 <div class="pl-2 pr-4">
                                     <span class="icon-filter"></span>
-                                </div>
-                                <div class="pl-1">
-                                    <div class="icon-addon addon-md ">
-                                        <input appShear maxlength="20" #inputText class="input-filter focus-elements" type="text" [(ngModel)]="filtro.inputSearch" placeholder="Buscar por nombre o código">
-                                        <label *ngIf="mostrarx()" (click)="limpiarInput()" class="fa fa-times"></label>
-                                    </div>
                                 </div>
                             </div>
 
@@ -56,27 +97,13 @@
 
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
-                                        <mat-form-field style="width: 140px;">
-                                            <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1 type="text"
-                                              class="input-filter" matInput [matDatepicker]="myDatepicker2" [(ngModel)]="filtro.dateFrom" maxlength="10"
-                                              minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
                                             <label *ngIf="mostrarxdate1()" (click)="limpiardate1()" class="fa fa-times" style="left: -50px;"></label>
-                                            <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
-                                            <mat-datepicker #myDatepicker2></mat-datepicker>
-                                        </mat-form-field>
                                     </div>
                                 </div>
 
                                 <div class="mr-4">
                                     <div class="content-input-icon position-relative icon-addon addon-lg">
-                                        <mat-form-field style="width: 140px;">
-                                            <input [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2 type="text"
-                                              class="input-filter" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10"
-                                              minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
                                             <label *ngIf="mostrarxdate2()" (click)="limpiardate2()" class="fa fa-times" style="left: -50px;"></label>
-                                            <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
-                                            <mat-datepicker #myDatepicker></mat-datepicker>
-                                        </mat-form-field>
                                     </div>
                                 </div>
 
