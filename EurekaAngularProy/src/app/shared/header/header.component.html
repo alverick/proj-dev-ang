@@ -27,15 +27,15 @@
 
                     <div class="title">
                       <div class="text al-left">Notificaciones</div>
-                      <div class="mark-all al-right">Marcar todas como leidas</div>
+                      <div class="mark-all al-right" (click)="notify.markAll()">Marcar todas como leidas</div>
                       <div class="clear-float"></div>
                     </div>
 
-                    <perfect-scrollbar class="notifies" (psYReachEnd)="onScroll()" >
-                          <div *ngFor="let msg of notify.messages " class="dropdown-item " [class.es-nuevo]="msg.isNew" (click)="$event.stopPropagation();" >
-                                    <div class="texto">{{msg.message}}</div>
-                                    <div class="tiempo">{{getAgo(msg.create)}}</div>
-                                    <fa-icon class="item-icono" title="{{msg.title}}" [icon]="msg.icono" (click)="notify.changeRead(msg); $event.stopPropagation();"></fa-icon>
+                    <perfect-scrollbar class="notifies" (psYReachEnd)="onScroll()">
+                      <div *ngFor="let msg of notify.messages " class="dropdown-item " (click)="$event.stopPropagation();" >
+                        <img class="item-icono" *ngIf="msg.isNew" title="{{msg.title}}" src="assets/images/badge-bg.svg" (click)="notify.changeRead(msg); $event.stopPropagation();">
+                        <div class="texto">{{msg.message}}</div>
+                        <div class="tiempo">{{getAgo(msg.create)}}</div>
                       </div>
 
                       <div *ngIf="notify.messages.length == 0" >

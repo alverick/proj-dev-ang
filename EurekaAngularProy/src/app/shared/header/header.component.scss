@@ -127,6 +127,34 @@ img.bell {
       max-height: 388px;
       overflow-y: auto;
 
+      .dropdown-item {
+        padding: 8px;
+
+        .item-icono {
+          float: left;
+          width: 8px;
+          height: 8px;
+          margin: 4px;
+          cursor: pointer;
+        }
+
+        .texto {
+          @include font-text(14px);
+          color: $textblack;
+          margin-left: 15px;
+        }
+
+        .tiempo {
+          @include font-text(14px, 300);
+          color: $textblack;
+          margin-left: 15px;
+        }
+      }
+
+      .dropdown-item:active {
+        background-color: $textgray;
+      }
+
       .loading {
         text-align: center;
       }
