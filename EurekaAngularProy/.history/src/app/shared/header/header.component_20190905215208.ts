@@ -24,11 +24,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.notify.messages = [];
+    this.notify.messages =[];
     this.spinner.hide();
     this.notify.iniciar();
   }
-
+ 
   public menu(): boolean {
     if (localStorage.getItem('tk') == null) {
       return false;
@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
       return true;
     }
   }
-  mesageeError(tipo: any, titulo: string, text: string) {
+  mesageeError(tipo: any, titulo: string, text: string){
     Swal.fire({
       type: tipo ,
       title: titulo ,
@@ -78,7 +78,7 @@ export class HeaderComponent implements OnInit {
     }  */
     this.spinner.show();
     this.loginService.logout();
-    this.excelser.statusUpload = false;
+    this.excelser.statusUpload =false;
     this.spinner.hide();
 
   }
