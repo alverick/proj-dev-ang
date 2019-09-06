@@ -28,9 +28,9 @@ export class HeaderComponent implements OnInit {
     this.spinner.hide();
     this.notify.iniciar();
   }
-
+ 
   public menu(): boolean {
-    if (localStorage.getItem('tk') === null) {
+    if (localStorage.getItem('tk') == null) {
       return false;
 
     } else {
