@@ -95,37 +95,37 @@ label{
 
 /////////////////////////////////////////////////////////////
     .btn-eureca-green{
-      background-color: #00a94f;
+      background-color: $green;
       border-radius: 4px;
       @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
       &:hover{
-        background-color: #00a960;
+        background-color: $greenclaro;
         border-radius: 4px;
       }
       &:focus{
-        background-color: #00a960;
+        background-color: $greenclaro;
         border-radius: 4px;
       }
     }
 // boton Rgistrate
 
 .btn-eureca-green-register{
-  background-color: #ffffff;
+  background-color: $blanco;
   border-radius: 4px;
-  color: #00a94f;
-  border: solid 1px #00a94f;
+  color: $green;
+  border: solid 1px $green;
   @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
   &:hover{
-    background-color: #ffffff;
+    background-color: $blanco;
     border-radius: 4px;
-  border: solid 1px #00a960;
-  color: #00a94f;
+  border: solid 1px $greenclaro;
+  color: $green;
   }
   &:focus{
-    background-color: #ffffff;
+    background-color: $blanco;
     border-radius: 4px;
-    border: solid 1px #00a94f;
-    color: #00a94f;
+    border: solid 1px $green;
+    color: $green;
   }
 }
 .btn-big{
@@ -135,19 +135,19 @@ label{
   height: 48px;
 }
 
-.text-green{color:#00a94f; font-weight: bold; }
-.texto-azul{color:#2121c4; }
+.text-green{color:$green; font-weight: bold; }
+.texto-azul{color:$azul; }
 
 //check
 .styled-checkbox{position:absolute;opacity:0}
 .styled-checkbox+label{position:relative;cursor:pointer;padding:0;margin:0}
-.styled-checkbox+label:before{content:'';display:inline-block;vertical-align:text-top;width:16px;height:16px;border:2px solid #00a94f;background:white}
-.styled-checkbox:hover+label:before{background:#00a94f}
-.styled-checkbox:focus+label:before{border:2px solid #00a94f}
-.styled-checkbox:checked+label:before{background:#00a94f}
-.styled-checkbox:disabled+label{color:#fff;cursor:auto}
-.styled-checkbox:disabled+label:before{box-shadow:none;background:#fff}
-.styled-checkbox:checked+label:after{content:'';position:absolute;left:3px;top:9px;background:#fff;width:2px;height:2px;box-shadow:2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;transform:rotate(45deg)}
+.styled-checkbox+label:before{content:'';display:inline-block;vertical-align:text-top;width:16px;height:16px;border:2px solid $green;background:$blanco}
+.styled-checkbox:hover+label:before{background:$green}
+.styled-checkbox:focus+label:before{border:2px solid $green}
+.styled-checkbox:checked+label:before{background:$green}
+.styled-checkbox:disabled+label{color:$blanco;cursor:auto}
+.styled-checkbox:disabled+label:before{box-shadow:none;background:$blanco}
+.styled-checkbox:checked+label:after{content:'';position:absolute;left:3px;top:9px;background:$blanco;width:2px;height:2px;box-shadow:2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;transform:rotate(45deg)}
 
 .mujer{
   height:301px;
