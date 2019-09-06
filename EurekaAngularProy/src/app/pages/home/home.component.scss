@@ -16,7 +16,11 @@
     background-color: #fff;
     padding: 5px 15px;
     @include box-shadows(0 4px 10px 0 rgba(0, 0, 0, 0.05));
+  }
+}
 
+.widget.filtros {
+  .content {
     .mat-form-field.f1 {
       width: 202px;
     }
@@ -30,6 +34,23 @@
       width: 140px;
       margin-left: 8px;
       height: 32px;
+    }
+  }
+}
+
+.widget.lista {
+  .content {
+    .actions {
+      height: 51px;
+
+      .chk-label {
+        @include font-text(10px, 500);
+        color: #9b9b9b;
+      }
+
+      .seleccionado {
+        color: $textgreen;
+      }
     }
   }
 }

@@ -81,6 +81,18 @@
   }
 }
 
+.chk-vertical {
+  display: block;
+  width: 40px;
+  text-align: center;
+}
+
+.mat-checkbox-checked.mat-accent {
+  .mat-checkbox-background {
+    background-color: $textgreen;
+  }
+}
+
 .btn-eureca-green{
   @include font-text(14px, 500);
   color: #ffffff;

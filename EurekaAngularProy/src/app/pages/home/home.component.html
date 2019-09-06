@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <div class="widget">
+        <div class="widget filtros">
           <div class="title">Buscar</div>
           <div class="content">
             <form>
@@ -70,9 +70,16 @@
             </form>
           </div>
         </div>
-        <div class="widget">
+        <div class="widget lista">
           <div class="title">Movimientos</div>
-          <div class="content"></div>
+          <div class="content">
+            <section class="actions">
+              <div class="chk-vertical">
+                <mat-checkbox id="chk-all" [(ngModel)]="selectedAll"></mat-checkbox>
+                <label class="chk-label" for="chk-all" aria-label="chk-all" [class.seleccionado]="selectedAll">Seleccionar</label>
+              </div>
+            </section>
+          </div>
         </div>
 
                 <div class="my-3 p-3 bg-white rounded shadow-sm">
