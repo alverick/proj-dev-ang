@@ -1,4 +1,5 @@
 @import "../../../scss/_variables.scss";
+@import "../../../scss/_mixin.scss";
 
 /* Partners */
 .brand-logo img {
@@ -27,19 +28,13 @@ li.nav-item {
 }
 
 li.nav-item.active {
-  border-bottom: 2px solid $textcolor;
+  border-bottom: 2px solid $textgreen;
 }
 
 li a.nav-link {
-  font-family: Omnes;
-  font-size: 16px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
+  @include font-text(16px, 500);
   text-align: center;
-  color: $textcolor !important;
+  color: $textgreen !important;
   margin-top: auto;
   width: 100%;
 }
@@ -86,3 +81,63 @@ img.bell {
 .dropdown-toggle::after {
   color: gray;
 }
+
+.navbar-nav {
+  .dropdown-menu {
+    @include border-radius(4px !important);
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+
+    .dropdown-item {
+      @include font-text(14px);
+      padding: 20px 19px;
+      color: $textblack;
+      border-bottom: $separador;
+    }
+
+    .dropdown-item:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .dropdown-menu.scroll-menu {
+    width: 453px;
+
+    .title {
+      padding: 6px 12px;
+      border-bottom: $separador;
+
+      .text {
+        @include font-text(12px, 500);
+        color: $textblack;
+      }
+
+      .mark-all {
+        @include font-text(12px);
+        color: $textgreen;
+        cursor: pointer;
+      }
+    }
+
+    .notifies {
+      max-height: 388px;
+      overflow-y: auto;
+    }
+
+    .more {
+      @include font-text(12px, 500);
+      padding: 6px 12px;
+      color: $textblack;
+      text-align: center;
+
+      .text {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+

@@ -6,12 +6,12 @@
     -o-#{$property}: #{$value};
     #{$property}: #{$value};
   }
-  
+
   @mixin border-radius($radius) {
     @include css3-prefix('border-radius', $radius);
     background-clip: padding-box;  /* stops bg color from leaking outside the border: */
   }
-  
+
   @mixin box-shadows($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4), $inset: "") {
     @if ($inset != "") {
       @include css3-prefix('box-shadow', $inset $x $y $blur $color);
@@ -29,28 +29,37 @@
   @mixin rotate ($deg) {
     @include transform(rotate(#{$deg}deg));
   }
-  
+
   @mixin draw-progress($progress, $color) {
     .pie {
       .left-side {
         transform: rotate($progress * 3.6deg);
       }
-  
+
       @if $progress <= 50 {
         .right-side {
           display: none;
         }
       } @else {
         clip: rect(auto, auto, auto, auto);
-  
+
         .right-side {
           transform: rotate(180deg);
         }
       }
     }
   }
-  
+
   @mixin translate ($x, $y) {
     @include transform(translate($x, $y));
   }
-  
+
+  @mixin font-text($size, $weight:normal) {
+    font-family: Omnes;
+    font-size: $size;
+    font-weight: $weight;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
