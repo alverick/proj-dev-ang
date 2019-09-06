@@ -1,6 +1,13 @@
 @import "../../../scss/_variables.scss";
 @import "../../../scss/_mixin.scss";
 
+.navbar {
+  height: 72px;
+  padding: 0 !important;
+  background-color: #ffffff;
+  @include box-shadows(0 4px 10px 0 rgba(0, 0, 0, 0.05))
+}
+
 /* Partners */
 .brand-logo img {
   width: auto !important;
@@ -14,12 +21,6 @@
 .icono-perfil{
   width: 42px;
   height: 42px;
-}
-
-.navbar {
-  height: 72px;
-  padding: 0 !important;
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.05)
 }
 
 li.nav-item {
@@ -88,13 +89,14 @@ img.bell {
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1), 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    @include box-shadows(0 4px 10px 0 rgba(0, 0, 0, 0.1), 0 4px 10px 0 rgba(0, 0, 0, 0.1));
     background-color: #ffffff;
 
     .dropdown-item {
       @include font-text(14px);
       padding: 20px 19px;
       color: $textblack;
+      cursor: pointer;
       border-bottom: $separador;
     }
 
@@ -125,6 +127,39 @@ img.bell {
     .notifies {
       max-height: 388px;
       overflow-y: auto;
+
+      .dropdown-item {
+        padding: 8px;
+        cursor: default;
+
+        .item-icono {
+          float: left;
+          width: 8px;
+          height: 8px;
+          margin: 4px;
+          cursor: pointer;
+        }
+
+        .texto {
+          @include font-text(14px);
+          color: $textblack;
+          margin-left: 15px;
+        }
+
+        .tiempo {
+          @include font-text(14px, 300);
+          color: $textblack;
+          margin-left: 15px;
+        }
+      }
+
+      .dropdown-item:active {
+        background-color: $textgray;
+      }
+
+      .loading {
+        text-align: center;
+      }
     }
 
     .more {

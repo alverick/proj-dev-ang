@@ -1,0 +1,35 @@
+@import "../../../scss/_variables.scss";
+@import "../../../scss/_mixin.scss";
+
+.widget {
+  width: 100%;
+
+  .title {
+    @include font-text(22px, 500);
+    padding: 20px 15px 10px 15px;
+  }
+
+  .content {
+    width: 100%;
+    min-height: 15px;
+    @include border-radius(4px);
+    background-color: #fff;
+    padding: 5px 15px;
+    @include box-shadows(0 4px 10px 0 rgba(0, 0, 0, 0.05));
+
+    .mat-form-field.f1 {
+      width: 202px;
+    }
+
+    .mat-form-field.f2 {
+      margin-left: 10px;
+      width: 136px;
+    }
+
+    .f3 {
+      width: 140px;
+      margin-left: 8px;
+      height: 32px;
+    }
+  }
+}
