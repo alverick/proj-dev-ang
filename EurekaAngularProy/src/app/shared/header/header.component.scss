@@ -96,6 +96,7 @@ img.bell {
       @include font-text(14px);
       padding: 20px 19px;
       color: $textblack;
+      cursor: pointer;
       border-bottom: $separador;
     }
 
@@ -129,6 +130,7 @@ img.bell {
 
       .dropdown-item {
         padding: 8px;
+        cursor: default;
 
         .item-icono {
           float: left;
