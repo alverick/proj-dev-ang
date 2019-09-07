@@ -64,7 +64,6 @@
 
 .mat-form-field.mat-focused {
   .mat-form-field-label {
-    @include font-text(12px, 500);
     color: $textblue !important;
   }
 
