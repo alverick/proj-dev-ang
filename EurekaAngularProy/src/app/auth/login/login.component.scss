@@ -30,7 +30,7 @@ label{
   border-color: white !important;
   margin-top: 5vw !important;
   width: 381px;
-  height: 538px;
+  height: auto;
 }
 .h6{
   font-size: 16px;
@@ -55,7 +55,7 @@ label{
 .box-login{padding:65px 65px 22px}
 .d-flex{display:flex !important}
 .flex-fill{flex:1 1 auto !important}
-.texto-negro{color:#333 !important}
+
 .icon-usuario:before{content:"\e908";color:#2626bf}
 .d-block,.texto-after:after,.comisiones>[class*=col]:after,.division>li i{display:block !important}
 .custom-shadow{
@@ -121,10 +121,10 @@ label{
   color: $green;
   }
   &:focus{
-    background-color: $green;
+  /*  background-color: $green;
     border-radius: 4px;
-    border: solid 1px $green;
-    color: $blanco;
+    border: solid 1px $greenclaro;
+    color: $blanco; */
   } 
 }
 .btn-big{
@@ -212,16 +212,15 @@ label{
 .w-100-pass {
   width: 100%;
 }
-.input-text{
+.input-text{ 
   font-family: Omnes;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: normal;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
   color: #333333;
-
 }
 
 .position-absolute {
@@ -230,8 +229,23 @@ label{
 
 .shadow-none {
   box-shadow: none !important;
+} 
+ 
+/deep/ .mat-form-field .mat-form-field-ripple {
+  background-color: $textgreen !important;
+}
+/deep/ .mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $textgreen !important;
 }
 
-.mat-form-field-underline {
-  background-color: green;
-}
+
+
+.texto-negro{
+  font-family: Omnes;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;}

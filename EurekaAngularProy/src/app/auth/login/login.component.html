@@ -33,12 +33,12 @@
                             <!-- ////////////// R U C /////////////////// -->
                             <div class="flex-fill">
                                 <label class="d-block texto-negro h6">RUC</label>
-                                <mat-form-field class="w-100 input-text" style="height: 1.9px !important">
-                                    <input matInput  type="text" name="ruc" appOnlynumbers (focus)="focusFunctionRuc()" autocomplete="on"minlength="11" maxlength="11" required  formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors" >
-                                    <mat-error *ngIf="inputUsuaValid" class="error-message">
+                                <mat-form-field class="w-100 " style="height: 1.9px !important">
+                                    <input matInput class="input-text" type="text" name="ruc" appOnlynumbers (focus)="focusFunctionRuc()" autocomplete="on"minlength="11" maxlength="11" required  formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors" >
+                                    <mat-error *ngIf="inputUsuaValid" class="messsage-error">
                                         Debe ingresar el RUC
                                     </mat-error>
-                                    <mat-error *ngIf="validarCantRuc" class="error-message">
+                                    <mat-error *ngIf="validarCantRuc" class="messsage-error">
                                         Ingrese un RUC válido de 11 dígitos
                                     </mat-error>
                                  </mat-form-field>  
@@ -58,31 +58,32 @@
 
                             <!-- ////////////// P A S S W O R D /////////////////// -->
                             <div class="flex-fill">
-                                <label class="d-block texto-negro h6" for="">Contraseña</label>
-                                <mat-form-field class="w-100 input-text" style="height: 1.9px !important">
-                                    <input matInput type="password" (Keydown.space)="$event.preventDefault()" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste>
-                                    <mat-error *ngIf="inputPassValid" class="error-message">
+                                <label class="d-block texto-negro h6">Contraseña</label>
+                               <mat-form-field class="w-100" style="height: 1.9px !important">
+                                    <input matInput class="input-text" type="password" (Keydown.space)="$event.preventDefault()" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste>
+                                    <mat-error  *ngIf="inputPassValid" class="messsage-error">
                                         Debe ingresar el password
                                     </mat-error>
-                                    <mat-error *ngIf="validarCantPass" class="error-message">
+                                    <mat-error *ngIf="validarCantPass" class="messsage-error">
                                         Debes ingresar una contraseña entre 6 y 20 caracteres
                                     </mat-error>
-                                </mat-form-field>
-                                <div style="color:#f44336 !important; font-size: 8" *ngIf="codigo2" class="error-message">
-                                    <br><br> RUC o Contraseña Incorrecta
+                                    
+                                </mat-form-field>   
+                                <br>
+                                <br>
+                                <div *ngIf="codigo2" class="messsage-error">
+                                    RUC o Contraseña Incorrecta
                                 </div>
                             </div>
-                        </div>
-
-
-
+                            
+                        </div> 
                         <div style="transform:scale(0.70);margin-right: 5px;max-width: 10vw;margin: 0vw;padding: 0vw;">
                             <re-captcha *ngIf="isTrue" #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
                         </div>
                         <button style="margin-top: 13px" type="submit" class="mano focus-elements btn-big w-100 btn-eureca-green text-white" form="login-form"> Ingresar</button>
                     </form>
                     <div class="mt-3 text-center">
-                        <button class="mano focus-elements btn-big w-100  btn-eureca-green-register  text-green" [routerLink]="['/afiliacion']">
+                        <button class="mano focus-elements btn-big w-100  btn-eureca-green-register" [routerLink]="['/afiliacion']">
                              Regístrate 
                         </button>
                     </div>  
