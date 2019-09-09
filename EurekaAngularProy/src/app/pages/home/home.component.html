@@ -74,298 +74,230 @@
           <div class="title">Movimientos</div>
           <div class="content">
             <section class="actions">
-              <div class="chk-vertical">
-                <mat-checkbox id="chk-all" [(ngModel)]="selectedAll"></mat-checkbox>
-                <label class="chk-label" for="chk-all" aria-label="chk-all" [class.seleccionado]="selectedAll">Seleccionar</label>
+              <div class="al-left">
+                <div class="chk-vertical">
+                  <mat-checkbox id="chk-all" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos($event)"></mat-checkbox>
+                  <label class="act-label" for="chk-all" aria-label="chk-all" [class.seleccionado]="selectedAll">Seleccionar</label>
+                </div>
+                <div class="btn-eliminar">
+                  <div (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
+                    <img class="icono" src="assets/images/trash.svg" alt="trash">
+                  </div>
+                  <label class="act-label">Eliminar</label>
+                </div>
               </div>
+              <div class="al-right">
+                <div class="lnk-label" (click)="DescargarReporte()">
+                  <img src="assets/images/download.svg" alt="download">
+                  Descargar Movimientos
+                </div>
+                <div class="lnk-label" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  <img src="assets/images/plus_circle.svg" alt="plus_circle">
+                  Agregar Deudas
+                </div>
+                <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
+                    <div class="card">
+                        <div class="selecciona-servicio">Selecciona el servicio</div>
+                        <div *ngFor="let service of typeList" class="option-item  " (click)="openDialog(service)"  >
+                            <div class="mano"  >
+                                {{service.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="clear-float"></div>
+            </section>
+            <section class="lista">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="c0">&nbsp;</th>
+                    <th class="c1">
+                      <div class="text">Fecha emisión</div>
+                      <div class="ord">
+                        <div class="up" [class.seleccionado]="orderBy === 0 && orderDef[0].asc === true" 
+                          (click)="orderList(0, true)"></div>
+                        <div class="down" [class.seleccionado]="orderBy === 0 && orderDef[0].asc === false"
+                          (click)="orderList(0, false)"></div>
+                      </div>
+                    </th>
+                    <th class="c2">
+                      <div class="text">Fecha vcto.</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 1 && orderDef[1].asc === true" 
+                          (click)="orderList(1, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 1 && orderDef[1].asc === false" 
+                          (click)="orderList(1, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c3">
+                      <div class="text">Código de cliente</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === true" 
+                          (click)="orderList(2, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === false" 
+                          (click)="orderList(2, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c4">
+                      <div class="text">Nombres</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 3 && orderDef[3].asc === true" 
+                          (click)="orderList(3, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 3 && orderDef[3].asc === false" 
+                          (click)="orderList(3, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c5">
+                      <div class="text">Apellidos</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 4 && orderDef[4].asc === true" 
+                          (click)="orderList(4, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 4 && orderDef[4].asc === false" 
+                          (click)="orderList(4, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c6">
+                      <div class="text">Servicio</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === true" 
+                          (click)="orderList(5, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === false" 
+                          (click)="orderList(5, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c7">
+                      <div class="text">Cuota</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 6 && orderDef[6].asc === true" 
+                          (click)="orderList(6, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 6 && orderDef[6].asc === false" 
+                          (click)="orderList(6, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c8">
+                      <div class="text">Mora</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 7 && orderDef[7].asc === true" 
+                          (click)="orderList(7, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 7 && orderDef[7].asc === false" 
+                          (click)="orderList(7, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c9">
+                      <div class="text">Total</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 8 && orderDef[8].asc === true" 
+                          (click)="orderList(8, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 8 && orderDef[8].asc === false" 
+                          (click)="orderList(8, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c10">
+                      <div class="text">Estado del pago</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 9 && orderDef[9].asc === true" 
+                          (click)="orderList(9, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 9 && orderDef[9].asc === false" 
+                          (click)="orderList(9, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c11">
+                      <div class="text">Editar</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }">
+                    <td class="c0">
+                      <div class="chk-vertical">
+                        <mat-checkbox [(ngModel)]="items.selected"></mat-checkbox>
+                      </div>
+                    </td>
+                    <td class="c1">
+                      <span *ngIf="!items.editPending">{{items.emissionDate | date:'dd/MM/yy' }}</span>
+                      <div *ngIf="items.editPending" class="content-input-icon position-relative">
+                        <mat-form-field style="width: 90px">
+                          <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text">
+                          <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
+                          <mat-datepicker #edp></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                    </td>
+                    <td class="c2">
+                          <span *ngIf="!items.editInput">{{items.dueDate | date:'dd/MM/yy' }}</span>
+                          <div *ngIf="items.editInput" class="content-input-icon position-relative">
+                              <mat-form-field style="width: 90px">
+                                  <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text">
+                                  <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
+                                  <mat-datepicker #ddp></mat-datepicker>
+                              </mat-form-field>
+                          </div>
+                    </td>
+                    <td class="c3">{{items.code}}</td>
+                    <td class="c4">{{items.firstName}}</td>
+                    <td class="c5">{{items.lastName}}</td>
+                    <td class="c6">{{items.service}}</td>
+                    <td class="c7">
+                        <span *ngIf="!items.editInput">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
+                        <div *ngIf="items.editInput">
+                          <mat-form-field style="width: 90px">
+                            <input type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" (blur)="MontoBlur(items)"/>
+                          </mat-form-field>
+                        </div>
+                    </td>
+                    <td class="c8">
+                        <span >{{items.currency}} {{items.interestAmount| number : '1.2-2'}}</span>
+                    </td>
+                    <td class="c9">
+                        <span >{{items.currency}} {{items.totalAmount| number : '1.2-2'}}</span>
+                    </td>
+                    <td class="c10">
+                      <span *ngIf="items.status === 'PAGADO'" class="text-success">
+                        Pagado <img src="assets/images/ok.svg" alt="ok">
+                      </span>
+                      <span *ngIf="items.status === 'PARCIAL'" class="text-error">
+                        Parcial <img src="assets/images/cancel.svg" alt="cancel">
+                      </span>
+                      <span  *ngIf="items.status === 'PENDIENTE'">
+                        Pendiente
+                      </span>
+                    </td>
+                    <td class="c11">
+                      <div *ngIf="items.svcStatus !== 1" class="d-flex">
+                        <div *ngIf="!items.editButton" class="btn-edit" (click)="BotonEditar(items)">
+                          <img src="assets/images/pencil.svg" alt="editar">
+                        </div>
+                        <div *ngIf="items.editButton" class="btn-ok" (click)="BotonActualizar(items)">
+                          <img src="assets/images/circle_ok.svg" alt="Aceptar">
+                        </div>
+                        <div *ngIf="items.editButton" class="btn-cancel" (click)="BotonCancela(items)" >
+                          <img src="assets/images/circle_cancel.svg" alt="Cancelar">
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <section class="pagination">
+              <div class="ctrl">
+                <pagination-controls responsive="true" maxSize="5" previousLabel="&lt;" nextLabel="&gt;" (pageChange)="changePage($event)"> </pagination-controls>
+              </div>
+              <div class="text" >
+                  {{transactionService.pageMessage}}
+              </div>
+              <div class="clear-float"></div>
             </section>
           </div>
         </div>
-
-                <div class="my-3 p-3 bg-white rounded shadow-sm">
-                    <div class="table-responsive">
-                        <table class="table" style="margin-bottom: 0rem">
-                            <div class="d-flex bd-highlight">
-                                <div class="p-2 bd-highlight">
-                                    <input type="checkbox" class="styled-checkbox" id="styl" value="value1" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos($event)">
-                                    <label for="styl" class="text-small font-medium"></label><br>
-                                    <span class="text-small font-medium">Seleccionar</span>
-                                </div>
-                                <div class="p-2 bd-highlight">
-                                    <div class="rotar mano" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    <span class="text-small font-medium"></span>
-                                        <span class="icon-correo-azul  iconos-big"></span>
-                                    </div>
-                                    <span class="text-small font-medium">Cargar </span>
-                                    <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
-                                        <div class="card card-body" style="overflow:auto; max-height:200px">
-                                            <div data-toggle="collapse" class="selecciona-servicio">Selecciona el servicio</div>
-                                            <div *ngFor="let service of typeList" (click)="openDialog(service)"  >
-                                                <div class="mano" data-toggle="collapse"  >
-                                                    {{service.name}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="p-2 bd-highlight">
-                                    <a class=" mano texto-azul" href="javascript:;" (click)="DescargarReporte()">
-                                        <span class="icon-correo-azul iconos-big"></span> <br>
-                                        <span ass="text-small font-medium"> </span>
-                                    </a>
-                                    <span class="text-small font-medium">Descargar</span>
-                                </div>
-
-                                <div class="p-2 bd-highlight">
-                                    <a class="texto-azul" href="javascript:;" (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
-                                        <span class="icon-eliminar iconos-big"></span><br>
-                                        <span class="text-small font-medium"></span>
-                                    </a>
-                                    <span class="text-small font-medium">Eliminar</span>
-                                </div>
-                                <div class="col-md-9 ml-auto" style="padding-top: 12px;">
-                                    <div class="row justify-content-end">
-                                        <div style="font-size: 17px">
-                                            <div style="font-size: 17px" >
-                                                {{transactionService.pageMessage}}
-                                            </div>
-
-                                        </div>
-                                        <div *ngIf="transactionService.debtItems.data.length >= 0">
-                                            <pagination-controls responsive="true" maxSize="5" previousLabel="" nextLabel="" (pageChange)="changePage($event)"> </pagination-controls>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </table>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr bgcolor="#f9f7f0" style="font-size: 12px !important">
-                                    <th scope="col"></th>
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center ">
-                                            <div class="d-inline-block text-center"> Fecha emisión </div>
-                                            <div class=" d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascFeEmisiongray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascFeEmisionblue"><span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('emissionDate', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="descFeEmisionblue"><span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('emissionDate', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="descFeEmisiongray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class=" d-flex align-items-center justify-content-center ">
-                                            <div class="d-inline-block text-center">Fecha vto. </div>
-                                            <div class=" d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascFeVctgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascFeVctblue"><span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('dueDate', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscFeVctblue"><span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('dueDate', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscFeVctgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center">Código de cliente </div>
-                                            <div class=" d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="asccodgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="asccodblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('code', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dsccodiblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('code', false)"></span></div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dsccodigray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center">Nombres </div>
-                                            <div class=" d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascnamegray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascnameblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('firstName', true)"></span></div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscnameblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('firstName', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscnamegray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
-                                        </div>
-                                    </th>
-
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center">Apellidos </div>
-                                            <div class="d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="asclastgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="asclastblue"><span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('lastName', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dsclastblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('lastName', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dsclastgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
-                                        </div>
-                                    </th>
-
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center">Servicio </div>
-                                            <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascservgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascservblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('Service', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscservblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('Service', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscservgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
-                                        </div>
-                                    </th>
-
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center">Concepto </div>
-                                            <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascconcepgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascconcepblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('Concept', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscconcepblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('Concept', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscconcepgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
-                                        </div>
-                                    </th>
-
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center">Monto </div>
-                                            <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascmontopgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascmontopblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('amount', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscmontopblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('amount', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscmontopgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center">Estado de Pago </div>
-                                            <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascestpagopgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascstpagoopblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('status', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscstpagopblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('status', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscstpagopgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center">Fecha de Pago </div>
-                                        <!--     <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="ascfechapagopgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="ascfechapagopblue"> <span class="mano fa fas fa-caret-up fa-lg"  (click)="AscDesc('payDate', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dscfechapagopblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('payDate', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dscfechapagopgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>-->
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="d-flex align-items-center justify-content-center">
-                                            <div class="d-inline-block text-center">Canal </div>
-                                         <!--   <div class="mano d-inline-block ml-1">
-                                                <div class="arrow-filter-asc-gray" *ngIf="asccanalpgray"><span class="  fa fas fa-caret-up fa-lg"></span> </div>
-                                                <div class="arrow-filter-asc-blue" *ngIf="asccanalpblue"> <span class="mano fa fas fa-caret-up fa-lg" (click)="AscDesc('canal', true)"></span> </div>
-                                                <div class="arrow-filter-dsc-blue" *ngIf="dsccanalpblue"> <span class="mano fa fas fa-caret-down fa-lg" (click)="AscDesc('canal', false)"></span> </div>
-                                                <div class="arrow-filter-dsc-gray" *ngIf="dsccanalpgray"><span class="  fa fas fa-caret-down fa-lg"></span> </div>
-                                            </div>-->
-                                        </div>
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-
-
-                            <tbody style=" overflow: auto;">
-                                <tr *ngIf="ceroRegistros()">
-                                    <td colspan="13" style="text-align: center; font-size: 20px;" class="texto-after">
-                                      <!--  Para empezar, carga las deudas de tus clientes --> {{messageTable}}</td>
-                                </tr>
-
-                                <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }">
-                                    <td style="width: auto">
-                                        <input id="{{ 'chk_' + items.id }}" class="styled-checkbox" type="checkbox" [(ngModel)]="items.selected">
-                                        <label for="{{ 'chk_' + items.id }}" class="text-small font-medium"></label>
-                                    </td>
-                                    <td style="width: auto; text-align: center;">
-                                        <span style="width: auto" *ngIf="!items.editPending">{{items.emissionDate | date:'dd/MM/yyyy' }}</span>
-                                        <div *ngIf="items.editPending" class="content-input-icon position-relative">
-                                            <mat-form-field style="width: 100px">
-                                                <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text">
-                                                <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
-                                                <mat-datepicker #edp></mat-datepicker>
-                                            </mat-form-field>
-                                        </div>
-                                    </td>
-                                    <td style="width: auto">
-                                        <span *ngIf="!items.editInput">{{items.dueDate | date:'dd/MM/yyyy' }}</span>
-                                        <div *ngIf="items.editInput" class="content-input-icon position-relative">
-                                            <mat-form-field style="width: 100px">
-                                                <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text">
-                                                <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
-                                                <mat-datepicker #ddp></mat-datepicker>
-                                            </mat-form-field>
-                                        </div>
-                                    </td>
-                                    <td style="width: auto">{{items.code}}</td>
-                                    <td style="width: auto">{{items.firstName}}</td>
-                                    <td style="width: auto">{{items.lastName}}</td>
-                                    <td style="width: auto">{{items.service}}</td>
-                                    <td style="width: auto">
-                                        <span *ngIf="!items.editPending">{{items.concept}}</span>
-                                        <div *ngIf="items.editPending">
-                                            <input type="text" [(ngModel)]="items.newConcept" style="width: 100px" numbersOnly maxlength="8" minlength="8" />
-                                        </div>
-                                    </td>
-                                    <td style="width: auto">
-                                           <span *ngIf="!items.editInput">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
-                                            <div *ngIf="items.editInput">
-                                                <input type="text"  appDecimales [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" />
-                                            </div>
-                                           <!--  {{items.amount}} -->
-                                    </td>
-                                    <td>
-                                        <span *ngIf="!items.editButton || items.status === 'PAGADO'" [class.text-success]="items.status === 'PAGADO'"
-                                          [class.text-danger]="estaVencido(items)" >{{items.status}}</span>
-                                        <select *ngIf="items.editButton && items.status !== 'PAGADO'"  [value]='1' [(ngModel)]="items.newStatus" (ngModelChange)="selectEstPag($event, items)" >
-                                            <option value="1" >{{items.status}}</option>
-                                            <option value="2">PAGADO</option>
-                                        </select>
-                                    </td>
-                                    <td>{{items.payDate | date:'dd/MM/yyyy'}}</td>
-                                    <td>{{items.channel}}</td>
-                                    <td>
-                                        <div *ngIf="items.svcStatus !== 1" class="d-flex">
-                                            <div *ngIf="!items.editButton" style="cursor: pointer;  margin-left: 18px !important" (click)="BotonEditar(items)">
-                                                <span class="icon-editar iconos-big iconos-big"></span>
-                                            </div> &nbsp;&nbsp;&nbsp;
-                                            <div *ngIf="!items.editButton"   style="cursor: pointer;  margin-left: 18px !important" (click)="Eliminar(items)">
-                                                <span class="icon-eliminar iconos-big iconos-big"></span>
-                                            </div>
-                                            <div *ngIf="items.editButton" class="d-inline-block" style="cursor: pointer;  margin-right: 18px !important" (click)="BotonActualizar(items)">
-                                                <img src="assets/images/table-check.svg" alt="Aceptar">
-                                            </div>
-                                            <div (click)="BotonCancela(items)" *ngIf="items.editButton" class="d-inline-block" style="cursor: pointer; margin-right: 18px !important">
-                                                <img src="assets/images/table-delete.svg" alt="Eliminar">
-                                            </div>
-                                        </div>
-                                        <!--
-                                        <mat-progress-spinner *ngIf="spinnerTrue"
-                                                class="example-margin"
-                                                [color]="color"
-                                                [mode]="mode"
-                                                [value]="value">
-                                            </mat-progress-spinner>
-                                    -->
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <br>
-                    <!--end good-->
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="text-foot">
+        Para comunicarte con nostros puedes llamar o escribir al <b>913718635</b>, o también a <b>pilotos@intercorp.com.pe</b>
+      </div>
+    </div>
+  </div>
+</div>

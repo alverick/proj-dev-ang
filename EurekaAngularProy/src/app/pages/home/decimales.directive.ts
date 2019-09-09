@@ -7,7 +7,7 @@ export class DecimalesDirective {
 
   constructor(private _el: ElementRef) { }
 
-  @HostListener('change', ['$event']) onInputChange(event) {
+  @HostListener('input', ['$event']) onInputChange(event) {
     const initalValue = this._el.nativeElement.value;
     let validValue = /^[0-9]{0,4}\.[0-9]{0-2}$/.exec(initalValue);
     console.log(validValue);

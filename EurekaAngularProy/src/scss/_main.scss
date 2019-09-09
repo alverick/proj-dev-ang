@@ -78,6 +78,17 @@
   display: block;
   width: 40px;
   text-align: center;
+
+  .mat-checkbox-ripple {
+    left: calc(50% - 12px);
+    top: calc(50% - 12px);
+    height: 24px;
+    width: 24px;
+  }
+
+  .mat-checkbox-layout {
+    margin-bottom: 0;
+  }
 }
 
 .mat-checkbox-checked.mat-accent {

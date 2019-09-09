@@ -56,6 +56,9 @@ import { NumberAccountDirective } from './form-servicio/number-account.directive
     BlockCopyPasteDirective,
     OnlyNumbersFormDirective, 
     NumberAccountDirective
+  ],
+  exports: [
+    OnlyNumbersFormDirective
   ]
 })
 
