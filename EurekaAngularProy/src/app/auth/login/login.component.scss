@@ -26,9 +26,11 @@ label{
 .border{
   box-sizing:  border-box;
   border-style:solid !important;
-  border-width: 2vw 3.2vw!important;
+  border-width: 2vw 4.8vw!important;
   border-color: white !important;
   margin-top: 5vw !important;
+  width: 381px;
+  height: auto;
 }
 .h6{
   font-size: 16px;
@@ -53,7 +55,7 @@ label{
 .box-login{padding:65px 65px 22px}
 .d-flex{display:flex !important}
 .flex-fill{flex:1 1 auto !important}
-.texto-negro{color:#333 !important}
+
 .icon-usuario:before{content:"\e908";color:#2626bf}
 .d-block,.texto-after:after,.comisiones>[class*=col]:after,.division>li i{display:block !important}
 .custom-shadow{
@@ -93,9 +95,10 @@ label{
     .btn-eureca-green{
       background-color: $green;
       border-radius: 4px;
+      border: solid 1px $green;
       @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
       &:hover{
-        background-color: $greenclaro;
+        background-color: $green;
         border-radius: 4px;
       }
       &:focus{
@@ -118,11 +121,11 @@ label{
   color: $green;
   }
   &:focus{
-    background-color: $blanco;
+  /*  background-color: $green;
     border-radius: 4px;
-    border: solid 1px $green;
-    color: $green;
-  }
+    border: solid 1px $greenclaro;
+    color: $blanco; */
+  } 
 }
 .btn-big{
   font-size: 16px;
@@ -132,7 +135,15 @@ label{
 }
 
 .text-green{color:$green; font-weight: bold; }
-.texto-azul{color:$azul; }
+.texto-azul{color:$azul;  
+  font-size: 28px; 
+  font-family: Omnes; 
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;}
 
 //check
 .styled-checkbox{position:absolute;opacity:0}
@@ -176,13 +187,65 @@ label{
 
  .texto-login{
   margin-top: 50px;
+  width: 499px;
+  height: 174px;
+  font-family: Omnes;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
  }
 
  .mujer-position{
-  padding-left:  150px;
-  padding-top : 80px;
+  padding-left:  50px;
+  padding-top : 110px;
  }
- .login-position{
-  padding-left: 55px;
-  padding-top : 10px;
- }
+ 
+  
+ /// inputs
+ .w-100 {
+  width: 100%;
+}
+
+.w-100-pass {
+  width: 100%;
+}
+.input-text{ 
+  font-family: Omnes;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;
+}
+
+.position-absolute {
+  position: absolute!important;
+}
+
+.shadow-none {
+  box-shadow: none !important;
+} 
+ 
+/deep/ .mat-form-field .mat-form-field-ripple {
+  background-color: $textgreen !important;
+}
+/deep/ .mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $textgreen !important;
+}
+
+
+
+.texto-negro{
+  font-family: Omnes;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;}

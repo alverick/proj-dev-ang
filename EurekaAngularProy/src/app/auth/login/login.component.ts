@@ -85,8 +85,7 @@ export class LoginComponent implements OnInit {
     this.snackBar.dismiss();
     let rucStr = this.cookieService.check('ruc') ? this.cookieService.get('ruc') :  '';
 
-    console.log(rucStr);
-    console.log("R U C");
+   
     this.validationLogin(rucStr);
    // this.validaInputs();
   }
@@ -97,7 +96,7 @@ export class LoginComponent implements OnInit {
     if (rucStr) {
       this.rememberMe = true;
     }
-    console.log(rucStr);
+    
     this.loginForm = this.formBuilder.group({
       ruc: [rucStr, Validators.compose([Validators.required,
              Validators.pattern('^[0-9]*$')  ])   ],
@@ -110,7 +109,7 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   resolved(captchaResponse: string) : boolean{
-    console.log(`Resolved captcha with response: ${captchaResponse}`);
+    
     this.isCaptchaValidate = true;
     return true;
   }
@@ -148,7 +147,7 @@ export class LoginComponent implements OnInit {
   public submitLogin() : any {
 
 
-    console.log("INTENTOS THIS : "+this.intentos)
+    
 
     let continuar = true;
 
@@ -174,16 +173,15 @@ export class LoginComponent implements OnInit {
       return;
 
     this.cookieService.delete('ruc');
-    console.log("LOGIN VALID  : " +this.loginForm.valid);
-    console.log(this.isCaptchaValidate);
+     
     if(this.loginForm.valid && this.isCaptchaValidate){
       this.spinner.show();
-      console.log(this.loginForm.value);
+      
       this.loginService.login(this.f.ruc.value, this.f.psw.value)
       .pipe(first())
       .subscribe(
         value => {
-          console.log("INTENTOS SERVICE : "+value.paramNum)
+           
           this.storageService.setIntentos(value.paramNum);
           this.intentos = this.storageService.getIntentos();
 
@@ -200,7 +198,7 @@ export class LoginComponent implements OnInit {
               allowOutsideClick: false
             })
           }else if(value.estado===true && this.intentos<=6){
-                  console.log("RECORDAR : " + this.rememberMe);
+                   
                   if(this.rememberMe==true){
                       const expire = new Date();
                       expire.setDate(expire.getDate() + 25);
@@ -210,21 +208,21 @@ export class LoginComponent implements OnInit {
                       this.router.navigate(['/home']);
                       this.spinner.hide();
           }else if(this.intentos < 4 && this.codRespuesta == 2 ){
-            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 2");
+             
             this.codigo2=true;
           }else if(this.intentos< 4 && this.codRespuesta == 3){
             this.codigo2= false;
-            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 3");
+           
             this.mensaje( 'error', 'Contraseña Incorrecta',
             'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' );
           }else if(this.intentos< 4 && this.codRespuesta == 5){
             this.codigo2= false;
-            console.log("Intentos : " + value.paramNum + "  Codigo de Respuesta 5");
+             
             this.mensaje( 'error', 'Cuenta Inactiva',
             'Su cuenta se encuentra inactiva' );
 
           }else if(this.intentos == 4 && this.codRespuesta == 2){
-            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
+             
             this.loginService.errores= value.codRespuesta;
             this.isCaptchaValidate = false;
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
@@ -233,7 +231,7 @@ export class LoginComponent implements OnInit {
 
           }else if(this.intentos == 4 && this.codRespuesta == 3){
             this.codigo2= false;
-            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
+            
 
             this.mensaje( 'error', 'Contraseña Incorrecta',
             'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' );
@@ -243,7 +241,7 @@ export class LoginComponent implements OnInit {
             this.isTrue = true;
           }else if(this.intentos == 4 && this.codRespuesta == 5){
             this.codigo2= false;
-            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
+            
 
             this.mensaje( 'error', 'Cuenta Inactiva',
             'Su cuenta se encuentra inactiva' );
@@ -253,14 +251,14 @@ export class LoginComponent implements OnInit {
             this.isTrue = true;
 
           }else if(this.intentos == 5 && this.codRespuesta == 2){
-            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 2");
+            
             this.isTrue = true;
             this.codigo2=true;
 
           }
           else if(this.intentos == 5 && this.codRespuesta == 3){
             this.codigo2= false;
-            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
+            
             this.mensaje( 'error', 'Contraseña Incorrecta','Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes');
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
@@ -269,7 +267,7 @@ export class LoginComponent implements OnInit {
           }
           else if(this.intentos == 5 && this.codRespuesta == 5){
             this.codigo2= false;
-            console.log("Intentos : " + value.paramNum + "   Codigo de Respuesta 3");
+             
             this.mensaje( 'error', 'Cuenta Inactiva','Su cuenta se encuentra inactiva');
             this.recaptchaRef !== undefined ? this.recaptchaRef.reset() : null;
             this.isCaptchaValidate = false;
@@ -278,7 +276,7 @@ export class LoginComponent implements OnInit {
           }
           else if(this.intentos >= 6 || value.paramStr==='Vuelva a intentarlo mas tarde' || value.paramStr==='El usuario esta bloqueado'){
             this.codigo2= false;
-            console.log("Intentos : " + value.paramNum + "   Sin codigo");
+            
             this.mensaje( 'error', 'Contraseña Incorrecta','Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe '  );
             this.intento6= true;
             this.isTrue = false;
