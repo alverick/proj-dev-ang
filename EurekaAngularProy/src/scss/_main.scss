@@ -1,108 +1,131 @@
 @import "_variables.scss";
-
 .body {
-  background-color: #f4f5f7 !important;
-  margin-top: 65px;
+    background-color: #f4f5f7 !important;
+    margin-top: 65px;
 }
 
-.al-left{
-  float: left;
+.al-left {
+    float: left;
 }
 
-.al-right{
-  float: right;
+.al-right {
+    float: right;
 }
 
 .clear-float {
-  clear: both;
+    clear: both;
 }
 
 .scroll-div::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 .scroll-div::-webkit-scrollbar-thumb {
-  background-color: #333333;
-  border-radius: 4px;
+    background-color: #333333;
+    border-radius: 4px;
 }
 
 .scroll-div::-webkit-scrollbar-track {
-  background-color: #f3f3f3;
-  border-radius: 4px;
+    background-color: #f3f3f3;
+    border-radius: 4px;
 }
 
 .mat-progress-spinner circle,
 .mat-spinner circle {
-  stroke: $textblack;
+    stroke: $textblack;
 }
 
 .mat-form-field {
-  .mat-form-field-prefix {
-    margin-right: 2px;
-  }
-
-  .mat-form-field-label {
-    @include font-text(15px);
-    color: $textblack !important;
-    top: 21px;
-  }
-
-  .mat-form-field-ripple {
-    background-color: $textblack !important;
-  }
-
-  .mat-select-arrow {
-    color: $textgreen;
-  }
-
-  .mat-datepicker-toggle {
-    .mat-icon-button {
-      color: $textgreen;
+    .mat-form-field-prefix {
+        margin-right: 2px;
     }
-  }
+    .mat-form-field-label {
+        @include font-text(15px);
+        color: $textblack !important;
+        top: 21px;
+    }
+    .mat-form-field-ripple {
+        background-color: $textblack !important;
+    }
+    .mat-select-arrow {
+        color: $textgreen;
+    }
+    .mat-datepicker-toggle {
+        .mat-icon-button {
+            color: $textgreen;
+        }
+    }
 }
 
 .mat-form-field.mat-focused {
-  .mat-form-field-label {
-    color: $textblue !important;
-  }
-
-  .mat-form-field-ripple {
-    background-color: $textblue !important;
-  }
+    .mat-form-field-label {
+        color: $textblue !important;
+    }
+    .mat-form-field-ripple {
+        background-color: $textblue !important;
+    }
 }
 
 .mat-form-field.mat-form-field-disabled {
-
-  .mat-datepicker-toggle {
-    .mat-icon-button {
-      color: rgba(0,0,0,.42);
+    .mat-datepicker-toggle {
+        .mat-icon-button {
+            color: rgba(0, 0, 0, .42);
+        }
     }
-  }
 }
 
-.btn-eureca-green{
-  @include font-text(14px, 500);
-  color: #ffffff;
-  background-color: $green;
-  @include border-radius(4px);
-  border: solid 1px $green;
-  &:hover{
+.btn-eureca-green {
+    @include font-text(14px, 500);
+    color: #ffffff;
     background-color: $green;
-  }
-  &:focus{
-    background-color: $greenclaro;
-  }
+    @include border-radius(4px);
+    border: solid 1px $green;
+    &:hover {
+        background-color: $green;
+    }
+    &:focus {
+        background-color: $greenclaro;
+    }
 }
 
+.messsage-error {
+    font-family: Omnes;
+    font-size: 12px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $rojo;
+}
 
-.messsage-error{ 
-  font-family: Omnes;
-  font-size: 12px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: $rojo;
+.w-35 {
+    width: 35%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.btn-big {
+    font-size: 16px;
+    padding-left: 45px;
+    padding-right: 45px;
+    height: 48px;
+}
+
+.text-green {
+    color: $green;
+}
+
+.texto-azul {
+    color: $azul;
+    font-family: Omnes;
+    font-size: 35px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
 }
