@@ -191,6 +191,10 @@
           tr {
             border-bottom: solid 1px #f0f0f0;
 
+            &.seleccionado {
+              background-color: rgba(0, 169, 79, 0.05);
+            }
+
             td {
               @include font-text(14px);
               color: $textblack;
