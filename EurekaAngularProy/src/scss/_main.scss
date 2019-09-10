@@ -1,7 +1,6 @@
 @import "_variables.scss";
 .body {
     background-color: #f4f5f7 !important;
-    margin-top: 65px;
 }
 
 .al-left {
@@ -97,6 +96,14 @@
   }
 }
 
+.mat-progress-bar-buffer{
+  background-color: #a1dbc2;;
+}
+
+.mat-progress-bar-fill::after {
+  background-color: $green;
+}
+
 .btn-eureca-green{
   @include font-text(14px, 500);
   color: #ffffff;
@@ -137,12 +144,12 @@
     height: 48px;
 }
 
-.texto-azul { 
-    @include font-text(36px, $weight:500); 
+.texto-azul {
+    @include font-text(36px, $weight:500);
     color: #2f4a9f;
 }
 
-.font-black {  
-    @include font-text(18px, $weight:600); 
+.font-black {
+    @include font-text(18px, $weight:600);
     color: $negro;
 }

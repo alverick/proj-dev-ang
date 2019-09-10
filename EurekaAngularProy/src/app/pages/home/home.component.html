@@ -209,7 +209,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }">
+                  <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }"
+                    [class.seleccionado]="items.selected">
                     <td class="c0">
                       <div class="chk-vertical">
                         <mat-checkbox [(ngModel)]="items.selected"></mat-checkbox>
