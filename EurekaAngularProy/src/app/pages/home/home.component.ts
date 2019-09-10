@@ -58,10 +58,6 @@ declare var $: any;
   ],
 })
 
-@Directive({
-  selector: '[appBlockCopyPaste]'
-})
-
 
 // tslint:disable-next-line:directive-class-suffix
 export class HomeComponent implements OnInit {
@@ -124,6 +120,21 @@ export class HomeComponent implements OnInit {
   asccanalpblue: boolean = true;
   dsccanalpblue: boolean = true;
   dsccanalpgray: boolean = false;
+
+  orderDef = [
+    { name: 'emissionDate', asc: false },
+    { name: 'dueDate', asc: false },
+    { name: 'code', asc: false },
+    { name: 'firstName', asc: false },
+    { name: 'lastName', asc: false },
+    { name: 'Service', asc: false },
+    { name: 'amount', asc: false },
+    { name: 'interestAmount', asc: false },
+    { name: 'totalAmount', asc: false },
+    { name: 'status', asc: false }
+  ]
+  orderBy = -1;
+
  // DialogDataExampleDialog
   @ViewChild('cargaExcel') cargaExcel;
  // datepicker format
@@ -302,235 +313,14 @@ change(dateEvent) {
 }
 
 ////ORDENAMIENTO OCULTAR LAS FLECHAS
+orderList(index: number, asc: boolean) {
+  this.orderBy = index;
+  this.orderDef[index].asc = asc;
 
-
-  AscDesc(/*nro: number */columnName: string, asc: boolean) {
-    // this.filtro.pageNumber = nro;
-  this.ascFeEmisiongray  = false;
-  this.ascFeEmisionblue   = true;
-  this.descFeEmisionblue  = true;
-  this.descFeEmisiongray = false;
-  //fecha de vencimiento
-
-  this.ascFeVctgray = false;
-  this.ascFeVctblue = true;
-  this.dscFeVctblue  = true;
-  this.dscFeVctgray  = false;
-
-  //codigicliente
-  this.asccodgray  = false;
-  this.asccodblue  = true;
-  this.dsccodiblue = true;
-  this.dsccodigray  = false;
-  // name
-  this.ascnamegray  = false;
-  this.ascnameblue  = true;
-  this.dscnameblue  = true;
-  this.dscnamegray  = false;
-  //apelido
-  this.asclastgray = false;
-  this.asclastblue  = true;
-  this.dsclastblue = true;
-  this.dsclastgray  = false;
-// srvicio
-this.ascservgray  = false;
-this.ascservblue = true;
-this.dscservblue  = true;
-this.dscservgray = false;
-  // concepto
-this.ascconcepgray  = false;
-this.ascconcepblue  = true;
-this.dscconcepblue  = true;
-this.dscconcepgray = false;
-    // monto
-this.ascmontopgray  = false;
-this.ascmontopblue = true;
-this.dscmontopblue  = true;
-this.dscmontopgray  = false;
-// estado de pago
-this.ascestpagopgray = false;
-this.ascstpagoopblue  = true;
-this.dscstpagopblue =true;
-this.dscstpagopgray = false;
-
-// fecha de pago
-this.ascfechapagopgray= false;
-this.ascfechapagopblue  = true;
-this.dscfechapagopblue =true;
-this.dscfechapagopgray = false;
-// canal
-this.asccanalpgray= false;
-this.asccanalpblue  = true;
-this.dsccanalpblue =true;
-this.dsccanalpgray = false;
-
-
-    if (columnName === 'emissionDate' ) {
-      if (asc === true) {
-        this.ascFeEmisionblue  = false;
-        this.ascFeEmisiongray= true;
-        this.descFeEmisionblue =true;
-        this.descFeEmisiongray = false;
-      }else{
-        this.descFeEmisionblue =false;
-        this.descFeEmisiongray = true;
-        this.ascFeEmisionblue  = true;
-        this.ascFeEmisiongray= false;
-      }
-    }
-    if(columnName === 'dueDate' ){
-      if(asc === true){
-        this.ascFeVctblue  = false;
-        this.ascFeVctgray= true;
-        this.dscFeVctblue =true;
-        this.dscFeVctgray = false;
-      }else{
-        this.dscFeVctblue =false;
-        this.dscFeVctgray = true;
-        this.ascFeVctblue  = true;
-        this.ascFeVctgray= false;
-      }
-  }
-  if(columnName === 'code' ){
-    if(asc === true) {
-      this.asccodblue  = false;
-      this.asccodgray= true;
-      this.dsccodiblue =true;
-      this.dsccodigray = false;
-    } else {
-      this.dsccodiblue =false;
-      this.dsccodigray = true;
-      this.asccodblue  = true;
-      this.asccodgray= false;
-    }
+  this.filtro.asc = asc;
+  this.filtro.columnName = this.orderDef[index].name;
+  this.consultaDeuda();
 }
-if(columnName === 'firstName' ) {
-  if(asc === true){
-    this.ascnameblue  = false;
-    this.ascnamegray= true;
-    this.dscnameblue =true;
-    this.dscnamegray = false;
-  } else {
-    this.dscnameblue =false;
-    this.dscnamegray = true;
-    this.ascnameblue  = true;
-    this.ascnamegray= false;
-  }
-}
-if(columnName === 'lastName' ) {
-  if(asc === true){
-    this.asclastblue  = false;
-    this.asclastgray= true;
-    this.dsclastblue =true;
-    this.dsclastgray = false;
-  } else {
-    this.dsclastblue =false;
-    this.dsclastgray = true;
-    this.asclastblue  = true;
-    this.asclastgray= false;
-  }
-}
-if(columnName === 'Service' ) {
-  if(asc === true) {
-    this.ascservblue  = false;
-    this.ascservgray= true;
-    this.dscservblue =true;
-    this.dscservgray = false;
-  } else {
-    this.dscservblue =false;
-    this.dscservgray = true;
-    this.ascservblue  = true;
-    this.ascservgray= false;
-  }
-}
-if(columnName === 'Concept' ) {
-  if(asc === true) {
-    this.ascconcepblue  = false;
-    this.ascconcepgray= true;
-    this.dscconcepblue =true;
-    this.dscconcepgray = false;
-  } else {
-    this.dscconcepblue =false;
-    this.dscconcepgray = true;
-    this.ascconcepblue  = true;
-    this.ascconcepgray= false;
-  }
-}
-if(columnName === 'amount' ) {
-  if(asc === true) {
-    this.ascmontopblue  = false;
-    this.ascmontopgray= true;
-    this.dscmontopblue =true;
-    this.dscmontopgray = false;
-  } else {
-    this.dscmontopblue =false;
-    this.dscmontopgray = true;
-    this.ascmontopblue  = true;
-    this.ascmontopgray= false;
-  }
-}
-if(columnName === 'amount' ) {
-  if(asc === true) {
-    this.ascmontopblue  = false;
-    this.ascmontopgray= true;
-    this.dscmontopblue =true;
-    this.dscmontopgray = false;
-  } else {
-    this.dscmontopblue =false;
-    this.dscmontopgray = true;
-    this.ascmontopblue  = true;
-    this.ascmontopgray= false;
-  }
-}
-//staus page
-if(columnName === 'status' ) {
-  if(asc === true) {
-    this.ascstpagoopblue  = false;
-    this.ascestpagopgray = true;
-    this.dscstpagopblue =true;
-    this.dscstpagopgray = false;
-  } else {
-    this.dscstpagopblue =false;
-    this.dscstpagopgray = true;
-    this.ascstpagoopblue  = true;
-    this.ascestpagopgray= false;
-  }
-}
-// fecha de pago
-if(columnName === 'payDate' ) {
-  if(asc === true) {
-    this.ascfechapagopblue  = false;
-    this.ascfechapagopgray= true;
-    this.dscfechapagopblue =true;
-    this.dscfechapagopgray = false;
-  } else {
-    this.dscfechapagopblue =false;
-    this.dscfechapagopgray = true;
-    this.ascfechapagopblue  = true;
-    this.ascfechapagopgray= false;
-  }
-}
-if(columnName === 'canal' ) {
-  if(asc === true) {
-    this.asccanalpblue  = false;
-    this.asccanalpgray= true;
-    this.dsccanalpblue =true;
-    this.dsccanalpgray = false;
-  } else {
-    this.dsccanalpblue =false;
-    this.dsccanalpgray = true;
-    this.asccanalpblue  = true;
-    this.asccanalpgray= false;
-  }
-}
-
-    this.filtro.asc = asc;
-    this.filtro.columnName = columnName;
-   // this.filtro.dateFrom=;
-    // this.filtro.dateTo;
-    this.consultaDeuda();
-
-  }
 
   sendFiltro() {
     this.filtro.pageNumber = 1;
@@ -1036,6 +826,13 @@ MostrarListaSelect() {
 
   estaVencido(itm: Debts){
     return (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && itm.dueDate < new Date();
+  }
+
+  MontoBlur(e) {
+    console.log(e);
+    let initalValue = parseFloat(e.newAmount);
+    if(!isNaN(initalValue))
+      e.newAmount = initalValue.toFixed(2);
   }
 }
 
