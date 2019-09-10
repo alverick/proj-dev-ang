@@ -63,3 +63,10 @@
     line-height: normal;
     letter-spacing: normal;
   }
+
+  @mixin cuadro($width, $height) {
+    width: $width;
+    height: $height;
+    object-fit: contain;
+    border-radius: 4px;
+  }

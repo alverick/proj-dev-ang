@@ -2,7 +2,74 @@
 @import '~src/scss/variables';
 @import '~src/scss/mixin';
 @import '~src/scss/landing';
+@import '~src/scss/main';
 
 .body{
     background: #f4f5f7  !important;
+  }  
+
+ 
+
+  @mixin btn-eureca( $color, $back-color, $width, $height,$f-back-color ){
+    @include font-text(14px, 500);
+    color: $color;
+    background-color: $back-color;
+    width: $width;
+    height: $height;
+    @include border-radius(4px);
+    border: solid 1px $back-color;
+    &:hover{
+      background-color: $back-color;
+    }
+    &:focus {
+      background-color: $f-back-color ;
+    }
+  }
+
+  
+  .descripcion {  
+    @include font-text(24px, $weight:normal); 
+    color: $negro;
+  }
+  .texto-tipos {   
+    @include font-text(18px, $weight:500);   
+    color: $negro; 
   } 
+  .text-green { 
+    @include font-text(18px, $weight:500);  
+    color: $green;  
+    text-align: center;
+  }
+  .text-titulo{
+    @include font-text(18px, $weight:500);  
+    color: $negro;  
+  }
+  .texto-descripcion-comisiones{
+    @include font-text(12px, $weight:normal);  
+    color: $negro;  
+    text-align: center; 
+  } 
+
+  .cuadro-descripcion { 
+    @include cuadro(621px, 127px);
+    
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+  }
+  .cuadro-comisiones{ 
+    @include cuadro(621px, 352px); 
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+  }
+  .cuadro-canales{
+    @include cuadro(179px, 179px);  
+    background-color: #ffffff;
+    border: solid 1px #bebebe;
+  } 
+
+  .button-afiliacion{
+    @include btn-eureca( $blanco, $textgreen, 207px, 48px,$greenclaro );
+  }
+
+
+ 

@@ -1,3 +1,9 @@
+@import '~src/scss/normalize'; /*Reset Styles*/
+@import '~src/scss/variables';
+@import '~src/scss/mixin';
+@import '~src/scss/landing';
+@import '~src/scss/main';
+
 .btn.btn-lg {
     border-radius: 24px;
     font-size: 16px;
@@ -51,4 +57,20 @@
 
 .seleccionado {
   border: 1px blue solid;
+}
+
+//// look and feel
+
+.font-black-servicios-list {  
+    @include font-text(14px, $weight:300); 
+    color: #333333;
+}
+.font-black-servicios-des-list {  
+    @include font-text(14px, $weight:normal); 
+    color: #333333;
+}
+
+.card-servicios{
+    @include  cuadro(361px, 135px);
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
 }

@@ -126,18 +126,12 @@
     height: 48px;
 }
 
-.text-green {
-    color: $green;
+.texto-azul { 
+    @include font-text(36px, $weight:500); 
+    color: #2f4a9f;
 }
 
-.texto-azul {
-    color: $azul;
-    font-family: Omnes;
-    font-size: 35px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
+.font-black {  
+    @include font-text(18px, $weight:600); 
+    color: $negro;
 }

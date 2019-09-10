@@ -9,7 +9,7 @@ import { RubroModel } from 'src/app/shared/models';
 @Component({
   selector: 'app-crear-contrasena',
   templateUrl: './crear-contrasena.component.html',
-  styleUrls: ['./crear-contrasena.component.css']
+  styleUrls: ['./crear-contrasena.component.scss']
 })
 export class CrearContrasenaComponent implements OnInit {
   registerForm: FormGroup;

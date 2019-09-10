@@ -145,17 +145,7 @@ label{
   letter-spacing: normal;
   text-align: center;}
 
-//check
-.styled-checkbox{position:absolute;opacity:0}
-.styled-checkbox+label{position:relative;cursor:pointer;padding:0;margin:0}
-.styled-checkbox+label:before{content:'';display:inline-block;vertical-align:text-top;width:16px;height:16px;border:2px solid $green;background:$blanco}
-.styled-checkbox:hover+label:before{background:$green}
-.styled-checkbox:focus+label:before{border:2px solid $green}
-.styled-checkbox:checked+label:before{background:$green}
-.styled-checkbox:disabled+label{color:$blanco;cursor:auto}
-.styled-checkbox:disabled+label:before{box-shadow:none;background:$blanco}
-.styled-checkbox:checked+label:after{content:'';position:absolute;left:3px;top:9px;background:$blanco;width:2px;height:2px;box-shadow:2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;transform:rotate(45deg)}
-
+ 
 .mujer{
   height:301px;
   height:518px;

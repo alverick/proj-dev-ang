@@ -23,7 +23,8 @@ import { FormServicioComponent } from './form-servicio/form-servicio.component';
 import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
 import { CloseViewGuard } from '../shared/guards/close-view.guard';
 import { SharedModule } from '../shared/shared.module';
-import { NumberAccountDirective } from './form-servicio/number-account.directive';
+import { NumberAccountDirective } from './form-servicio/number-account.directive'; 
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { NumberAccountDirective } from './form-servicio/number-account.directive
     DigitOnlyModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatCheckboxModule,
     SharedModule
   ],
   providers: [
