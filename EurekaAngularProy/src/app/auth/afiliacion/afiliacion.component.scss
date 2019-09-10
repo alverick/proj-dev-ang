@@ -10,21 +10,7 @@
 
  
 
-  @mixin btn-eureca( $color, $back-color, $width, $height,$f-back-color ){
-    @include font-text(14px, 500);
-    color: $color;
-    background-color: $back-color;
-    width: $width;
-    height: $height;
-    @include border-radius(4px);
-    border: solid 1px $back-color;
-    &:hover{
-      background-color: $back-color;
-    }
-    &:focus {
-      background-color: $f-back-color ;
-    }
-  }
+
 
   
   .descripcion {  
@@ -68,7 +54,9 @@
   } 
 
   .button-afiliacion{
-    @include btn-eureca( $blanco, $textgreen, 207px, 48px,$greenclaro );
+    @include btn-eureca;
+    width: 207px;
+    height: 48px; 
   }
 
 

@@ -13,13 +13,7 @@
     line-height: 45px;
 }
 
-.btn-outline-amarillo {
-    color: #fc9a00;
-    border-color: #fc9a00;
-    border-width: 2px;
-    border-style: solid;
-    color: #fc9a00 !important;
-}
+
 
 .pb-0,
 .py-0,
@@ -73,4 +67,27 @@
 .card-servicios{
     @include  cuadro(361px, 135px);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+}
+.font-cerrar {  
+    @include font-text(10px, $weight:500); 
+    color: #9b9b9b;
+    text-align: center;
+}
+.btn-eureca-green{
+    @include btn-eureca;
+    width: 207px;
+    height: 48px;
+    font-family: Omnes;
+    font-size: 16px; 
+    font-weight: 500;  
+  }
+  .btn-outline-green {
+    width: 361px;
+    height: 58px;
+    object-fit: contain;
+    border-radius: 4px; 
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: $blanco;
+    border:  solid 1px $blanco;
+    color: $green
 }

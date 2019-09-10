@@ -41,22 +41,19 @@
                                                 <td class="font-black-servicios-des-list">{{ svc.nroCuenta }}</td>
                                             </tr>
                                     </table>  
-                                </div> 
-                                
+                                </div>  
                             </div> 
-                        </div>
-                        
-
+                        </div> 
                     </div>
                 </div>
                 <br>
                 <div style="text-align:center;">
-                    <button (click)="MostarFormulario()" class="btn btn-lg btn-outline-amarillo">
+                    <button (click)="MostarFormulario()" class=" btn-outline-green">
                       <span class="fa fa-plus-circle"></span>   Agregar otro servicio
                     </button>
                     <br>
                     <br>
-                    <button (click)="EnviarServicios()" class="btn-big w-80 btn-eureca btn-eureca-amarillo text-white">
+                    <button (click)="EnviarServicios()" class="btn-eureca-green text-white">
                      Finalizar</button>
                 </div>
             </div>
@@ -64,10 +61,8 @@
                 <br>
                 <div class="d-flex justify-content-center">
                     <div class=" border p-5 bg-white rounded">
-                        <div style="float: right;">
-                            <button (click)="OcultarFormulario(true)" type="button" class="btn btn-tool" data-widget="remove"><i
-                  class="fa fa-times"></i>
-              </button>
+                        <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
+                                <img src="assets/images/cerrar.svg">  <br> Cerrar  
                         </div>
                         <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
                     </div>
