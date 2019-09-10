@@ -1,36 +1,35 @@
 <mat-dialog-actions align="end" >
     <div style="cursor: pointer;" (click)="close()">
         <span class="h5 m-0 pr-2">Cancelar</span>
-        <span class="icon-icono-x font-16"></span>
+        <i class="fa fa-times"></i>
     </div>
 </mat-dialog-actions>
-<br>
 
-<div class="pasos-add-registro activo">
-        <h3 align="center" style="color : #fc9a00; font-size: 2rem">Sube</h3>
-        <div class="text-center">
-                <form id="input-form"  [formGroup]="inputXlsForm" (ngSubmit)="openSnackBar()">
-                    <h6 class="my-4" style="font-size: 16px; font-family: 'Omnes'; color: #333">la plantilla y llena los datos de tus clientes nuevos</h6>
-                        <div class="icon-grande" style="font-size: 5rem; margin-bottom: 2vw"><span class="icon-papel-2"></span></div>
-                        <input  class="focus-elements" formControlName="xls" type="file" accept=".xlsx" (change)="onChangeFile($event)" (click)="OcultarMensaje()" required />
-                        <mat-error style="margin-top: 1vw" *ngFor="let validation of validationExcel.xls">
-                            <mat-error class="error-message" *ngIf="xlsValid">
-                                {{validation.message}}
-                            </mat-error>
-                        </mat-error>
-                    <hr>
-                    <div class="mb-3">
-                        <button  type="submit" form="input-form" style="color: #f4f5f7" aria-label="Show an example snack-bar" class="focus-elements btn-eureca btn-eureca-amarillo btn-small">
-                        Subir plantilla
-                        </button>
-                    </div>
-                    <mat-error *ngIf="messageUploadExcel" class="error-message">
-                        Usted esta subiendo un Archivo en este momento
-                    </mat-error>
-                </form>
-                <div class="text-center">
-                    <button href="javascript:;" style="color: blue"class="my-4" (click)="exportDataMatriculaXLSX()">Descarga tu plantilla</button>
-                </div>
-        </div>
+<div class="content">
+  <div class="title">Agregar deudas al servicio <span class="resaltado">{{excelService.service.name}}</span></div>
+  <br/>
+  <div class="text-center">
+    <form id="input-form" [formGroup]="inputXlsForm" (ngSubmit)="openSnackBar()">
+      <mat-form-field class="input-file">
+        <ngx-mat-file-input formControlName="xls" placeholder="Archivo Seleccionado" [disabled]="excelService.statusUpload" (change)="onChangeFile($event)">
+        </ngx-mat-file-input>
+        <mat-error *ngIf="f.xls.invalid && f.xls.hasError('required')">Debe elegir un archivo</mat-error>
+      </mat-form-field>
+    </form>
+  </div>
+  <mat-progress-bar *ngIf="excelService.statusUpload" mode="indeterminate"></mat-progress-bar>
+  <div *ngIf="excelService.errores.length > 0" class="errores">
+    <div class="header">Se encontraron los siguientes errores:</div>
+    <perfect-scrollbar class="list">
+      <div class="err-item" *ngFor="let err of excelService.errores"><span>File {{err.row}} : </span>{{err.description}}</div>
+    </perfect-scrollbar>
+    <div class="footer">Corrige los errores y vuelve a subir la plantilla</div>
+  </div>
+  <br />
+  <div class="text-center">
+    <button class="btn-eureca-green" type="submit" form="input-form">
+      Subir plantilla
+    </button>
+  </div>
 </div>
 

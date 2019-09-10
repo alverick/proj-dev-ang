@@ -50,6 +50,7 @@ import { EmailDirective } from './pages/configurar-empresa/email.directive';
 import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.directive';
 import { NotifyService } from './shared/services/notify.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
     MatSelectModule,
     MatProgressSpinnerModule,
     FontAwesomeModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    MaterialFileInputModule
   ],
   providers: [
     ExcelService,
