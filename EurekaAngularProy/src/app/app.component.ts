@@ -14,8 +14,8 @@ export class AppComponent {
 
   constructor(private router: Router,
     private loginService: LoginService,
-    private storageService: StorageService) { 
-}
+    private storageService: StorageService) {
+  }
 
   public show(): boolean{
     if(this.router.url.includes('/login')){

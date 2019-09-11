@@ -27,6 +27,7 @@ import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { isNgTemplate } from '@angular/compiler';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -63,63 +64,6 @@ declare var $: any;
 export class HomeComponent implements OnInit {
 
   numeroPagina:number;
-  ///ORDENES DE LA TABLA
-  ascFeEmisiongray: boolean = false;
-  ascFeEmisionblue: boolean = true;
-  descFeEmisionblue: boolean = true;
-  descFeEmisiongray: boolean = false;
-  //fecha de vencimiento
-
-  ascFeVctgray: boolean = false;
-  ascFeVctblue: boolean = true;
-  dscFeVctblue: boolean = true;
-  dscFeVctgray: boolean = false;
-
-  //codigicliente
-  asccodgray: boolean = false;
-  asccodblue: boolean = true;
-  dsccodiblue: boolean = true;
-  dsccodigray: boolean = false;
-  // name
-  ascnamegray: boolean = false;
-  ascnameblue: boolean = true;
-  dscnameblue: boolean = true;
-  dscnamegray: boolean = false;
-  //apelido
-  asclastgray: boolean = false;
-  asclastblue: boolean = true;
-  dsclastblue: boolean = true;
-  dsclastgray: boolean = false;
-// srvicio
-  ascservgray: boolean = false;
-  ascservblue: boolean = true;
-  dscservblue: boolean = true;
-  dscservgray: boolean = false;
-  // concepto
-  ascconcepgray: boolean = false;
-  ascconcepblue: boolean = true;
-  dscconcepblue: boolean = true;
-  dscconcepgray: boolean = false;
-    // monto
-  ascmontopgray: boolean = false;
-  ascmontopblue: boolean = true;
-  dscmontopblue: boolean = true;
-  dscmontopgray: boolean = false;
- // estado de pago
-  ascestpagopgray: boolean = false;
-  ascstpagoopblue: boolean = true;
-  dscstpagopblue: boolean = true;
-  dscstpagopgray: boolean = false;
-  // fecha de pago
-  ascfechapagopgray: boolean = false;
-  ascfechapagopblue: boolean = true;
-  dscfechapagopblue: boolean = true;
-  dscfechapagopgray: boolean = false;
-    // canal
-  asccanalpgray: boolean = false;
-  asccanalpblue: boolean = true;
-  dsccanalpblue: boolean = true;
-  dsccanalpgray: boolean = false;
 
   orderDef = [
     { name: 'emissionDate', asc: false },
@@ -208,7 +152,6 @@ export class HomeComponent implements OnInit {
  // mensaje grila
 
   messageTable: string ='';
-
 
   constructor(
     private storageService: StorageService,
@@ -738,6 +681,15 @@ orderList(index: number, asc: boolean) {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
+      onOpen: (el) => {
+        $(el).find('.swal2-actions').css('display', 'grid');
+        $(el).find('.swal2-confirm')
+          .css('display', '')
+          .css('background-color', '')
+          .css('border-left-color', '')
+          .css('border-right-color', '')
+          .addClass('btn-eureca-green');
+      }
     }).then((result) => {
       console.log(result);
       if (result.value) {

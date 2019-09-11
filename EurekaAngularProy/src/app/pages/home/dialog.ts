@@ -38,6 +38,12 @@ import { ExcelService } from "src/app/shared/services/excel.service";
       this.inputXlsForm = this.formBuilder.group({
         xls: ['', Validators.required]
       });
+      this.dialogRef.afterClosed()
+        .subscribe(() => {
+          if (!this.excelService.statusUpload) {
+            this.excelService.errores = [];
+          }
+        });
     }
 
     onChangeFile(event) {
