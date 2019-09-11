@@ -4,6 +4,20 @@
 .content {
   padding: 15px;
 
+  .landing {
+    text-align: center;
+    @include font-text(16px);
+    color: $textblack;
+
+    .text {
+      .link {
+        font-weight: 500;
+        color: $textgreen;
+        cursor: pointer;
+      }
+    }
+  }
+
   .errores {
     .header {
       @include font-text(14px, 500);

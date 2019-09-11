@@ -24,6 +24,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
     public codigoCliente: String = 'Codigo de Cliente';
     public messageUploadExcel: boolean = false;
     public errores: any[] = [];
+    public ready: boolean = false;
 
     constructor(public  snackBar: MatSnackBar,
                 public excelService: ExcelService,
@@ -44,6 +45,10 @@ import { ExcelService } from "src/app/shared/services/excel.service";
             this.excelService.errores = [];
           }
         });
+    }
+
+    mostrarInput() {
+      this.ready = true;
     }
 
     onChangeFile(event) {
@@ -117,6 +122,10 @@ import { ExcelService } from "src/app/shared/services/excel.service";
         this.excelService.StatusExcel(this.excelService.idProcess)
         .subscribe(recursiveFunc);
       }, 800);
+    }
+
+    descargarPlantilla() {
+      alert('descargar plantilla');
     }
   }
 

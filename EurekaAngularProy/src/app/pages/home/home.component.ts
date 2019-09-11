@@ -26,8 +26,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
-import { isNgTemplate } from '@angular/compiler';
-import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { drawPopup } from 'src/app/shared/services/popups';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -291,11 +290,10 @@ orderList(index: number, asc: boolean) {
       title: titulo ,
       html: text,
       showCloseButton: true,
-      showCancelButton: true,
-      showConfirmButton: false,
-      cancelButtonColor: '#d33',
-      cancelButtonText:  'Cerrar',
-
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText:  'Cerrar',
+      onOpen: drawPopup
     });
   }
 
@@ -555,14 +553,11 @@ orderList(index: number, asc: boolean) {
     Swal.fire({
       title: '¿Deseas Actualizar?',
       text: '¡No podrás revertir esto!',
-      imageUrl: '/assets/images/complain.svg',
-      imageHeight: 100,
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Editarlo!',
-      cancelButtonText: 'Cerrar'
+      confirmButtonText: 'Si, Actualizar!',
+      cancelButtonText: 'Cerrar',
+      onOpen: drawPopup
     }).then((result) => {
 
       if (result.value) {
@@ -582,10 +577,11 @@ orderList(index: number, asc: boolean) {
           debtsUpdate => {
             if (debtsUpdate.success) {
               Swal.fire({
-                type: 'success',
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
+                showCancelButton: false,
+                onOpen: drawPopup,
                 onAfterClose: () => {
                   item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
@@ -602,10 +598,11 @@ orderList(index: number, asc: boolean) {
             }
             else {
               Swal.fire({
-                type: 'warning',
                 titleText: 'ERROR',
                 text: debtsUpdate.message,
                 showCloseButton: true,
+                showCancelButton: false,
+                onOpen: drawPopup
               });
             }
           }
@@ -616,10 +613,11 @@ orderList(index: number, asc: boolean) {
           this.transactionService.updateDeuda(item.id, true).subscribe(
             statusUpdate=>{
               Swal.fire({
-                type:'success',
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
+                showCancelButton: false,
+                onOpen: drawPopup,
                 onAfterClose: () => {
                   item.status= 'PAGADO';
                   item.amountPayed = statusUpdate.payed;
@@ -672,24 +670,13 @@ orderList(index: number, asc: boolean) {
     }
 
  Swal.fire({
-      title: '¿Estas Seguro de Eliminar ' + itemsParaEliminar.length + ' registros?',
-      text: '¡No podrás revertir esto!',
-      imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
+      title: '¿Seguro que quieres continuar?',
+      text: `Esta acción va a eliminar ${itemsParaEliminar.length} deudas`,
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
-      onOpen: (el) => {
-        $(el).find('.swal2-actions').css('display', 'grid');
-        $(el).find('.swal2-confirm')
-          .css('display', '')
-          .css('background-color', '')
-          .css('border-left-color', '')
-          .css('border-right-color', '')
-          .addClass('btn-eureca-green');
-      }
+      onOpen: drawPopup
     }).then((result) => {
       console.log(result);
       if (result.value) {
@@ -699,11 +686,13 @@ orderList(index: number, asc: boolean) {
           .subscribe(() => {
             this.consultaDeuda(() =>
               {
-                Swal.fire(
-                  'Eliminado!',
-                  'Se han eliminado ' + itemsParaEliminar.length + ' registros',
-                'success'
-                )
+                Swal.fire({
+                  title: 'Eliminado!',
+                  text: 'Se han eliminado ' + itemsParaEliminar.length + ' registros',
+                  showCloseButton: true,
+                  showCancelButton: false,
+                  onOpen: drawPopup
+                })
               });
           }, err => { this.spinner.hide(); });
       }
@@ -716,13 +705,11 @@ orderList(index: number, asc: boolean) {
 
   Swal.fire({
     title: "¿Esta Seguro de Eliminar el Registro? ",
-    imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
     showCancelButton: true,
     showCloseButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: 'Si, Borralo',
     cancelButtonText: 'Cerrar',
+    onOpen: drawPopup
   }).then((result) => {
     console.log(result);
     if (result.value) {
