@@ -1,3 +1,7 @@
+@import '~src/scss/normalize'; /*Reset Styles*/
+@import '~src/scss/variables';
+@import '~src/scss/mixin';
+@import '~src/scss/landing';
 
 
   .w-49 {
@@ -83,7 +87,8 @@
 }
 
 .seleccionado {
-    border: blue 2px solid;
+    border: $textgreen 1px solid;
+    border-radius: 4px;
 }
 
 .seleccionado .styled-checkbox:disabled+label{color:#fff;}
@@ -94,3 +99,46 @@
   position: absolute;
   right: 5px;
 }
+
+
+////////////look and feel
+
+.btn-eureca-green{
+    @include btn-eureca;
+    width: 207px;
+    height: 48px;
+    font-family: Omnes;
+    font-size: 16px; 
+    font-weight: 500; 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;  
+  }
+  .texto-green{
+    @include font-text(16px, $weight:600);  
+    color: $green;  
+    text-align: center;
+  }
+  .texto-black{
+    @include font-text(16px, $weight:500);  
+    color: $negro;  
+    text-align: center;
+  }
+  .texto-medios{
+    @include font-text(12px, $weight:500);  
+    color: $negro;   
+  }
+  .texto-d-medios{
+    @include font-text(12px, $weight:normal);  
+    color: $negro;  
+    text-align: center;
+  }
+  .texto-p-medios{
+    @include font-text(10px, $weight:normal);  
+    color: $negro;  
+    text-align: center;
+  }
+  .card-medio-pago{
+    @include cuadro( 116px, 161px);
+      border: solid 1px #bebebe; 
+  }

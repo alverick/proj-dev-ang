@@ -3,10 +3,12 @@
     <div class="form-group">
         <mat-form-field class="w-100">
             <input matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
-            <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
-            <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>  
-            <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
-            <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
+            <mat-error class="messsage-error">
+                <mat-error  *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
+                <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>  
+                <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
+                <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
+            </mat-error >
         </mat-form-field>
     </div>
     <div class="form-group">
@@ -21,12 +23,12 @@
             <input *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod"
                 (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
             <div *ngIf="f.codDeudor.value === 'Otro'" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
-            <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
-
-            <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
-            <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
-            <mat-error *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
-
+            <mat-error class="messsage-error">
+                <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error> 
+                <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
+                <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
+                <mat-error *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
+            </mat-error>
         </mat-form-field>
     </div>
     <div class="form-group">
@@ -38,7 +40,7 @@
                     {{t.name}}
                 </mat-option>
             </mat-select>
-            <mat-error *ngIf="f.tipoDato.invalid && f.tipoDato.hasError('required')">Elija una opcion</mat-error>
+            <mat-error class="messsage-error" *ngIf="f.tipoDato.invalid && f.tipoDato.hasError('required')">Elija una opcion</mat-error>
         </mat-form-field>
     </div>
     <div class="form-group">
@@ -50,16 +52,18 @@
                     {{t.name}}
                 </mat-option>
             </mat-select>
-            <mat-error *ngIf="f.tipoPago.invalid && f.tipoPago.hasError('required')">Elija una opcion</mat-error>
+            <mat-error class="messsage-error" *ngIf="f.tipoPago.invalid && f.tipoPago.hasError('required')">Elija una opcion</mat-error>
         </mat-form-field>
     </div>
     <div class="form-group">
         <mat-form-field>
             <input matInput type="text" appNumberAccount maxlength="13" formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
-            <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('required')">El numero de cuenta es obligatorio</mat-error>
-            <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('minlength')">El numero de cuenta debe tener 13 carácteres</mat-error>
+            <mat-error class="messsage-error">
+                <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('required')">El numero de cuenta es obligatorio</mat-error>
+                <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('minlength')">El numero de cuenta debe tener 13 carácteres</mat-error>
+            </mat-error>
         </mat-form-field>
-        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp;  
         <mat-form-field>
             <mat-label>Tipo de Moneda</mat-label>
             <mat-select formControlName="moneda" name="moneda" (change)="changeMoneda()">
@@ -68,66 +72,52 @@
                     {{m.name}}
                 </mat-option>
             </mat-select>
-            <mat-error *ngIf="f.moneda.hasError('required')">Elija una opcion</mat-error>
+            <mat-error class="messsage-error" *ngIf="f.moneda.hasError('required')">Elija una opcion</mat-error>
         </mat-form-field>
     </div>
-    <span class="texto-azulbase" style="font-size:13px;"> <strong>Elige los medios por los cuales tus clientes te pagarán
-  </strong> </span>
-  <div class="card-deck mb-3 text-center">
-
-        <div class="card mb-4 shadow-sm" >
-            <div [class.seleccionado]="f.usaWebApp.value" style=" height: 250px;">
-                  <div style="text-align:center;">
+    <span class="texto-medios" >  Elige los medios por los cuales tus clientes te pagarán  </span>
+  <div class="row card-deck mb-3 text-center"> 
+        <div class="card-medio-pago ml-3" >
+            <div [class.seleccionado]="f.usaWebApp.value" style="height: 161px;" > 
+                    <div class="pt-2" >
                         <input class="styled-checkbox" formControlName="usaWebApp" id="styled-checkbox-1" type="checkbox">
-                        <label for="styled-checkbox-1"><span class="ml-2"></span></label>
-                    </div>
-                    <div class="text-center w-100 pb-2 px-1 position-relative">
-                        <h6 class="font-semibold d-block mb-1"><strong> Digital </strong><br>
-                        </h6>
-                        <br>
-                        <h6 class="font-semibold d-block mb-1">
-                            <small class="d-block mt-1">Banca por internet, Interbank APP</small>
-                        </h6>
-                        <span class="d-block mb-4 texto-azul font-semibold precio">GRATIS</span>
-                    </div>
+                        <label for="styled-checkbox-1"></label>
+                    </div> 
+                    <div class="card-title texto-black"> Digital </div>
+                    <div class="pt-4">
+                        <div class="texto-d-medios"> Banca por internet, Interbank APP </div>
+                        <div class="pt-1 texto-green">GRATIS</div> 
+                    </div> 
             </div>
-        </div>
-
-        <div class="card mb-4 shadow-sm" >
-            <div [class.seleccionado]="f.usaAgente.value" style=" height: 250px;">
-                    <div  style="text-align:center;">
+        </div> 
+        <div class="card-medio-pago ml-2" >
+            <div [class.seleccionado]="f.usaAgente.value"  style="height: 161px;" >
+                    <div class="pt-2" >
                         <input style="align-content: center;" formControlName="usaAgente" class="styled-checkbox" id="styled-checkbox-2" type="checkbox">
-                        <label for="styled-checkbox-2"><span class="ml-2"> </span></label>
-                    </div>
-                    <div class="text-center w-100 pb-2 px-1 position-relative">
-                        <h6 class="font-semibold d-block mb-1"><strong> Agentes </strong><br></h6>
-                        <br>
-                        <h6 class="font-semibold d-block mb-1">
-                            <small class="d-block mt-1">Lima y provincias</small>
-                            <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 1</span>
-                            <small>por transacion</small>
-                        </h6>
-                    </div>
-
+                        <label for="styled-checkbox-2"> </label>
+                    </div> 
+                    <div class="card-title texto-black"> Agentes </div>
+                    <div class="pt-4">
+                        <div class="texto-d-medios">Lima y provincias </div>
+                        <div class="pt-3 texto-green">{{simboloMoneda}} 1</div>
+                        <div class="pt-1 texto-p-medios">por transacion </div>
+                    </div> 
             </div>
-        </div>
-        <div class="card mb-4 shadow-sm" >
-            <div [class.seleccionado]="f.usaTienda.value" style=" height: 250px;">
-                    <div   style="text-align:center;">
-                        <input class="styled-checkbox" formControlName="usaTienda" id="styled-checkbox-3" type="checkbox">
-                        <label for="styled-checkbox-3"><span class="ml-2"></span></label>
-                        <div class="text-center w-100 pb-2 px-1 position-relative">
-                            <h6 class="font-semibold d-block mb-1"><strong> Tiendas </strong><br>
-                                <small>Ventanilla</small>
-                            </h6>
-                            <br>
-                            <h6 class="font-semibold d-block mb-1">
-                                <small class="d-block mt-1">Lima y provincias</small>
-                                <span class="d-block mb-4 texto-azul font-semibold precio">{{simboloMoneda}} 7</span>
-                                <small class="d-block">por transacion</small>
-                            </h6>
-                        </div>
+        </div> 
+        <div class="card-medio-pago ml-2" >
+            <div [class.seleccionado]="f.usaTienda.value"  style="height: 161px;"> 
+                    <div class="pt-2" >
+                            <input class="styled-checkbox" formControlName="usaTienda" id="styled-checkbox-3" type="checkbox">
+                            <label for="styled-checkbox-3"> </label>
+                    </div> 
+                    <div class="card-title texto-black">  Tiendas  <br>
+                        <small>(Ventanilla)</small>
                     </div>
+                    <div class="pt-2">
+                        <div class="texto-d-medios">Lima y provincias </div>
+                        <div class="pt-3 texto-green">{{simboloMoneda}} 7</div>
+                        <div class="pt-1 texto-p-medios">por transacion </div>
+                    </div> 
             </div>
         </div>
     </div>
@@ -153,7 +143,7 @@
                     {{t.name}}
                 </mat-option>
             </mat-select>
-            <mat-error *ngIf="f.periodoMora.invalid && f.periodoMora.hasError('required')">Elija una opcion</mat-error>
+            <mat-error class="messsage-error" *ngIf="f.periodoMora.invalid && f.periodoMora.hasError('required')">Elija una opcion</mat-error>
         </mat-form-field>
         <div class="col-2 mb-3" *ngIf="cobraMora">
             <label class="d-block mb-1 radio">Monto
@@ -163,11 +153,12 @@
             <mat-form-field *ngIf="cobraMonto">
                 <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
                 <span matPrefix>{{simboloMoneda}}&nbsp;&nbsp;</span>
-                <mat-error *ngIf="f.monto.invalid && f.monto.hasError('required')">Debe ingresar un monto</mat-error>
-                <mat-error *ngIf="f.monto.invalid && f.monto.hasError('maximo')">No puede ser mayor a 1000.00</mat-error>
-                <mat-error *ngIf="f.monto.invalid && f.monto.hasError('minimo')">No puede ser menor a 1.00</mat-error>
-                <mat-error *ngIf="f.monto.invalid && !f.monto.hasError('maximo') && !f.monto.hasError('minimo') && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error> 
-
+                <mat-error class="messsage-error">
+                    <mat-error *ngIf="f.monto.invalid && f.monto.hasError('required')">Debe ingresar un monto</mat-error>
+                    <mat-error *ngIf="f.monto.invalid && f.monto.hasError('maximo')">No puede ser mayor a 1000.00</mat-error>
+                    <mat-error *ngIf="f.monto.invalid && f.monto.hasError('minimo')">No puede ser menor a 1.00</mat-error>
+                    <mat-error *ngIf="f.monto.invalid && !f.monto.hasError('maximo') && !f.monto.hasError('minimo') && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error> 
+                </mat-error>
                
             </mat-form-field>
             <label class="d-block mb-0 radio">Porcentaje
@@ -178,15 +169,15 @@
             <mat-form-field *ngIf="cobraPorcentaje">
                 <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
                 <span matSuffix>%</span>
-                <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('required')">Debe ingresar un porcentaje</mat-error> 
-                <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')">No puede ser mayor a 100.00</mat-error>
-                <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')">No puede ser menor a 0.01</mat-error> 
-                <mat-error *ngIf="f.porcentaje.invalid && !f.porcentaje.hasError('maximo')  && !f.porcentaje.hasError('minimo') && f.porcentaje.hasError('pattern')">No tiene el formato correcto</mat-error> 
+                <mat-error class="messsage-error">
+                    <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('required')">Debe ingresar un porcentaje</mat-error> 
+                    <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')">No puede ser mayor a 100.00</mat-error>
+                    <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')">No puede ser menor a 0.01</mat-error> 
+                    <mat-error *ngIf="f.porcentaje.invalid && !f.porcentaje.hasError('maximo')  && !f.porcentaje.hasError('minimo') && f.porcentaje.hasError('pattern')">No tiene el formato correcto</mat-error> 
+                </mat-error>  
             </mat-form-field>
         </div>
 
     </div>
-    <button type="submit" class="btn-big w-100 btn-eureca btn-eureca-amarillo text-white"> Guardar</button>
-</form>
-<br>
-<br>
+    <button type="submit" class="btn-eureca-green text-white"> Guardar</button>
+</form> 

@@ -93,18 +93,13 @@ label{
 
 /////////////////////////////////////////////////////////////
     .btn-eureca-green{
-      background-color: $green;
-      border-radius: 4px;
-      border: solid 1px $green;
-      @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
-      &:hover{
-        background-color: $green;
-        border-radius: 4px;
-      }
-      &:focus{
-        background-color: $greenclaro;
-        border-radius: 4px;
-      }
+      @include btn-eureca;
+      width: 232px;
+      height: 48px;
+      font-family: Omnes;
+      font-size: 16px; 
+      float: right;
+
     }
 // boton Rgistrate
 
@@ -113,6 +108,11 @@ label{
   border-radius: 4px;
   color: $green;
   border: solid 1px $green;
+  width: 232px;
+  height: 48px;
+  font-family: Omnes;
+  font-size: 16px; 
+  float: right;
   @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
   &:hover{
     background-color: $blanco;
@@ -227,9 +227,18 @@ label{
 /deep/ .mat-form-field.mat-focused .mat-form-field-ripple {
   background-color: $textgreen !important;
 }
+.reCaptach{
+  transform:scale(0.70); 
+  margin: 0vw;
+  padding: 0vw;
+  width: 232px;
+  
+}
 
-
-
+.text-check{
+  @include font-text(14px, $weight:300);  
+  color: $negro;  
+} 
 .texto-negro{
   font-family: Omnes;
   font-size: 16px;
