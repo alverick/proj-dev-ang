@@ -3,9 +3,9 @@
         <div class="row">
             <div class="col-sm-5">
                 <div class="row">
-                    <div class="col-sm">
+                    <div class="col-sm  "  >
                         <br>
-                        <h2 class="texto-azul">Configura tus servicios </h2>
+                        <h2 class="texto-azul ">Configura tus servicios </h2>
                         <div class="col-sm-11" style="overflow:auto; max-height:800px">
                             <div class="card-servicios" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
                                 <div class="card-body">
@@ -57,16 +57,15 @@
                      Finalizar</button>
                 </div>
             </div>
-            <div class="col-sm-7 position-relative" *ngIf="Formulario">
-                <br>
-                <div class="d-flex justify-content-center">
-                    <div class=" border p-5 bg-white rounded">
+            <div class="col-sm-7 " *ngIf="Formulario">
+                <br> 
+                    <div class="formulario p-5 bg-white ">
                         <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
-                                <img src="assets/images/cerrar.svg">  <br> Cerrar  
+                                <img  src="assets/images/cerrar.svg">  <br> Cerrar  
                         </div>
                         <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
                     </div>
-                </div>
+                 
                 <br>
             </div>
         </div>
