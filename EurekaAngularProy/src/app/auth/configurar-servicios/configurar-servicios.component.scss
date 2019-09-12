@@ -50,7 +50,7 @@
 }
 
 .seleccionado {
-  border: 1px blue solid;
+  border: 1px  $green solid;
 }
 
 //// look and feel
@@ -67,6 +67,7 @@
 .card-servicios{
     @include  cuadro(361px, 135px);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
 }
 .font-cerrar {  
     @include font-text(10px, $weight:500); 
@@ -80,6 +81,7 @@
     font-family: Omnes;
     font-size: 16px; 
     font-weight: 500;  
+    margin-left: 20%;
   }
   .btn-outline-green {
     width: 361px;
@@ -93,7 +95,7 @@
 }
 
 .formulario{
-    @include cuadro(460px, 898px);
+    @include cuadro(460px, auto);
     object-fit: contain;
     border-radius: 5px;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);

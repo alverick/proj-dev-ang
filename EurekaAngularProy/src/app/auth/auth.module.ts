@@ -17,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { MatFormFieldModule, MatSelectModule, MatCheckboxModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
 import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
 import { FormServicioComponent } from './form-servicio/form-servicio.component';
 import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
@@ -38,7 +38,8 @@ import { NumberAccountDirective } from './form-servicio/number-account.directive
     MatFormFieldModule,
     MatCheckboxModule,
     MatSelectModule,
-    SharedModule
+    SharedModule,
+    MatRadioModule
   ],
   providers: [
     StorageService,

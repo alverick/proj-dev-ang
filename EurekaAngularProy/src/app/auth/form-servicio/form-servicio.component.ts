@@ -321,6 +321,7 @@ export class FormServicioComponent implements OnInit {
   }
 
   changeMora(changeData: boolean = true) {
+    console.log('que valor es 0'+changeData);
     this.cobraMora = (this.f.cobraMora.value === 'S');
     console.log('al presionar editar se activa el metodo changeMora');
 
