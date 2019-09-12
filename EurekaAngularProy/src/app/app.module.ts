@@ -87,7 +87,11 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     HttpModule,
     NgxSpinnerModule,
     MatInputModule,
-    SweetAlert2Module.forRoot(),
+    SweetAlert2Module.forRoot({
+      customClass: {
+        actions: 'actions-popup'
+      }
+    }),
     RecaptchaModule.forRoot(),
     DigitOnlyModule,
     MatDatepickerModule,

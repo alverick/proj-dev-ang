@@ -105,17 +105,25 @@
 }
 
 .btn-eureca-green{
-  @include font-text(14px, 500);
-  color: #ffffff;
-  background-color: $green;
-  @include border-radius(4px);
-  border: solid 1px $green;
+  @include font-text(16px !important, 500 !important);
+  color: #ffffff !important;
+  background-color: $green !important;
+  @include border-radius(4px !important);
+  border: solid 1px $green !important;
   &:hover{
-    background-color: $green;
+    background-color: $green !important;
   }
   &:focus {
-    background-color: $greenclaro;
+    background-color: $greenclaro !important;
   }
+}
+
+.btn-outline-green {
+  @include font-text(16px !important, 500 !important);
+  @include border-radius(4px !important);
+  background-color: $blanco !important;
+  border:  solid 1px $blanco !important;
+  color: $green !important;
 }
 
 .messsage-error {
@@ -153,3 +161,4 @@
     @include font-text(18px, $weight:600);
     color: $negro;
 }
+

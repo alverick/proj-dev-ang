@@ -26,7 +26,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
-import { isNgTemplate } from '@angular/compiler';
+import { drawPopup } from 'src/app/shared/services/popups';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -63,63 +63,6 @@ declare var $: any;
 export class HomeComponent implements OnInit {
 
   numeroPagina:number;
-  ///ORDENES DE LA TABLA
-  ascFeEmisiongray: boolean = false;
-  ascFeEmisionblue: boolean = true;
-  descFeEmisionblue: boolean = true;
-  descFeEmisiongray: boolean = false;
-  //fecha de vencimiento
-
-  ascFeVctgray: boolean = false;
-  ascFeVctblue: boolean = true;
-  dscFeVctblue: boolean = true;
-  dscFeVctgray: boolean = false;
-
-  //codigicliente
-  asccodgray: boolean = false;
-  asccodblue: boolean = true;
-  dsccodiblue: boolean = true;
-  dsccodigray: boolean = false;
-  // name
-  ascnamegray: boolean = false;
-  ascnameblue: boolean = true;
-  dscnameblue: boolean = true;
-  dscnamegray: boolean = false;
-  //apelido
-  asclastgray: boolean = false;
-  asclastblue: boolean = true;
-  dsclastblue: boolean = true;
-  dsclastgray: boolean = false;
-// srvicio
-  ascservgray: boolean = false;
-  ascservblue: boolean = true;
-  dscservblue: boolean = true;
-  dscservgray: boolean = false;
-  // concepto
-  ascconcepgray: boolean = false;
-  ascconcepblue: boolean = true;
-  dscconcepblue: boolean = true;
-  dscconcepgray: boolean = false;
-    // monto
-  ascmontopgray: boolean = false;
-  ascmontopblue: boolean = true;
-  dscmontopblue: boolean = true;
-  dscmontopgray: boolean = false;
- // estado de pago
-  ascestpagopgray: boolean = false;
-  ascstpagoopblue: boolean = true;
-  dscstpagopblue: boolean = true;
-  dscstpagopgray: boolean = false;
-  // fecha de pago
-  ascfechapagopgray: boolean = false;
-  ascfechapagopblue: boolean = true;
-  dscfechapagopblue: boolean = true;
-  dscfechapagopgray: boolean = false;
-    // canal
-  asccanalpgray: boolean = false;
-  asccanalpblue: boolean = true;
-  dsccanalpblue: boolean = true;
-  dsccanalpgray: boolean = false;
 
   orderDef = [
     { name: 'emissionDate', asc: false },
@@ -208,7 +151,6 @@ export class HomeComponent implements OnInit {
  // mensaje grila
 
   messageTable: string ='';
-
 
   constructor(
     private storageService: StorageService,
@@ -348,11 +290,10 @@ orderList(index: number, asc: boolean) {
       title: titulo ,
       html: text,
       showCloseButton: true,
-      showCancelButton: true,
-      showConfirmButton: false,
-      cancelButtonColor: '#d33',
-      cancelButtonText:  'Cerrar',
-
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText:  'Cerrar',
+      onOpen: drawPopup
     });
   }
 
@@ -612,14 +553,11 @@ orderList(index: number, asc: boolean) {
     Swal.fire({
       title: '¿Deseas Actualizar?',
       text: '¡No podrás revertir esto!',
-      imageUrl: '/assets/images/complain.svg',
-      imageHeight: 100,
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Editarlo!',
-      cancelButtonText: 'Cerrar'
+      confirmButtonText: 'Si, Actualizar!',
+      cancelButtonText: 'Cerrar',
+      onOpen: drawPopup
     }).then((result) => {
 
       if (result.value) {
@@ -639,10 +577,11 @@ orderList(index: number, asc: boolean) {
           debtsUpdate => {
             if (debtsUpdate.success) {
               Swal.fire({
-                type: 'success',
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
+                showCancelButton: false,
+                onOpen: drawPopup,
                 onAfterClose: () => {
                   item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
@@ -659,10 +598,11 @@ orderList(index: number, asc: boolean) {
             }
             else {
               Swal.fire({
-                type: 'warning',
                 titleText: 'ERROR',
                 text: debtsUpdate.message,
                 showCloseButton: true,
+                showCancelButton: false,
+                onOpen: drawPopup
               });
             }
           }
@@ -673,10 +613,11 @@ orderList(index: number, asc: boolean) {
           this.transactionService.updateDeuda(item.id, true).subscribe(
             statusUpdate=>{
               Swal.fire({
-                type:'success',
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
+                showCancelButton: false,
+                onOpen: drawPopup,
                 onAfterClose: () => {
                   item.status= 'PAGADO';
                   item.amountPayed = statusUpdate.payed;
@@ -729,15 +670,13 @@ orderList(index: number, asc: boolean) {
     }
 
  Swal.fire({
-      title: '¿Estas Seguro de Eliminar ' + itemsParaEliminar.length + ' registros?',
-      text: '¡No podrás revertir esto!',
-      imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
+      title: '¿Seguro que quieres continuar?',
+      text: `Esta acción va a eliminar ${itemsParaEliminar.length} deudas`,
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
+      onOpen: drawPopup
     }).then((result) => {
       console.log(result);
       if (result.value) {
@@ -747,11 +686,13 @@ orderList(index: number, asc: boolean) {
           .subscribe(() => {
             this.consultaDeuda(() =>
               {
-                Swal.fire(
-                  'Eliminado!',
-                  'Se han eliminado ' + itemsParaEliminar.length + ' registros',
-                'success'
-                )
+                Swal.fire({
+                  title: 'Eliminado!',
+                  text: 'Se han eliminado ' + itemsParaEliminar.length + ' registros',
+                  showCloseButton: true,
+                  showCancelButton: false,
+                  onOpen: drawPopup
+                })
               });
           }, err => { this.spinner.hide(); });
       }
@@ -764,13 +705,11 @@ orderList(index: number, asc: boolean) {
 
   Swal.fire({
     title: "¿Esta Seguro de Eliminar el Registro? ",
-    imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
     showCancelButton: true,
     showCloseButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: 'Si, Borralo',
     cancelButtonText: 'Cerrar',
+    onOpen: drawPopup
   }).then((result) => {
     console.log(result);
     if (result.value) {
