@@ -76,17 +76,15 @@ import * as saveAs from 'file-saver';
           console.log(this.excelService.service);
           this.excelService.UploadExcel(this.files, this.excelService.service.name, this.changestatus )
           .subscribe(value => {
-              this.excelService.idProcess = value.id;
-              this.verifyStatus();
+            this.excelService.statusUpload = false;
+            this.excelService.idProcess = value.id;
+            this.verifyStatus();
           }, err => {
             this.excelService.statusUpload = false;
-            this.snackBar.dismiss();
             if (err.status === 400) {
-              Swal.fire({
-                type: 'error',
-                title: 'Carga de Excel',
-                text: 'El nombre del archivo no es correcto'
-              });
+              this.excelService.errores = [
+                { description: 'El nombre del archivo no es correcto', row: 0 }
+              ];
             }
           });
         } else {

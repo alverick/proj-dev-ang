@@ -33,7 +33,7 @@
   <div *ngIf="excelService.errores.length > 0" class="errores">
     <div class="header">Se encontraron los siguientes errores:</div>
     <perfect-scrollbar class="list">
-      <div class="err-item" *ngFor="let err of excelService.errores"><span>File {{err.row}} : </span>{{err.description}}</div>
+      <div class="err-item" *ngFor="let err of excelService.errores"><span *ngIf="err.row > 0">File {{err.row}} : </span>{{err.description}}</div>
     </perfect-scrollbar>
     <div class="footer">Corrige los errores y vuelve a subir la plantilla</div>
   </div>
