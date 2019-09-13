@@ -326,7 +326,7 @@
                                         </div>
                                     </td>
                                     <td style="width: auto">
-                                           <span *ngIf="!items.editInput">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
+                                           <span *ngIf="!items.editInput && (items.amount > 0)">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
                                             <div *ngIf="items.editInput">
                                                 <input type="text"  appDecimales [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" />
                                             </div>
