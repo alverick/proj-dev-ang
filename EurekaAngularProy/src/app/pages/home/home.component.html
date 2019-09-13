@@ -241,7 +241,7 @@
                     <td class="c5">{{items.lastName}}</td>
                     <td class="c6">{{items.service}}</td>
                     <td class="c7">
-                        <span *ngIf="!items.editInput">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
+                        <span *ngIf="!items.editInput && items.amount > 0">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
                         <div *ngIf="items.editInput">
                           <mat-form-field style="width: 90px">
                             <input type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" (blur)="MontoBlur(items)"/>
@@ -249,10 +249,10 @@
                         </div>
                     </td>
                     <td class="c8">
-                        <span >{{items.currency}} {{items.interestAmount| number : '1.2-2'}}</span>
+                        <span *ngIf="items.interestAmount > 0" >{{items.currency}} {{items.interestAmount| number : '1.2-2'}}</span>
                     </td>
                     <td class="c9">
-                        <span >{{items.currency}} {{items.totalAmount| number : '1.2-2'}}</span>
+                        <span *ngIf="items.totalAmount > 0" >{{items.currency}} {{items.totalAmount| number : '1.2-2'}}</span>
                     </td>
                     <td class="c10">
                       <span *ngIf="items.status === 'PAGADO'" class="text-success">
