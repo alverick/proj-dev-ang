@@ -3,7 +3,8 @@ import { UploadProgressComponent } from "./upload-progress";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar, MatDialogRef } from "@angular/material";
 import { ExcelService } from "src/app/shared/services/excel.service";
-
+import Swal from "sweetalert2";
+import * as saveAs from 'file-saver';
 
 
 /*////////////////////////////////////////////////////////
@@ -17,7 +18,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
   })
 
   // tslint:disable-next-line:component-class-suffix
-  export class DialogComponent implements OnInit { 
+  export class DialogComponent implements OnInit {
     public inputXlsForm: FormGroup;
     public xlsValid: boolean;
     public codigoCliente: String = 'Codigo de Cliente';
@@ -34,7 +35,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
                 public  formBuilder: FormBuilder,
                 public  dialogRef: MatDialogRef<DialogComponent>
 
-              ) { 
+              ) {
                }
 
     // tslint:disable-next-line:use-life-cycle-interface
@@ -43,10 +44,10 @@ import { ExcelService } from "src/app/shared/services/excel.service";
         xls: ['', Validators.required]
       });
 
-       
-       
+
+
     }
-    
+
 
      /*Data Completa */
     matricula: any = [{"Fecha de emisión":"17/8/2019","Fecha de vencimiento":"16/9/2019",
@@ -55,7 +56,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
 
 
     onChangeFile(event) {
-      this.files = event.target.files; 
+      this.files = event.target.files;
     }
 
     SalirsnackBar() {
@@ -76,32 +77,45 @@ import { ExcelService } from "src/app/shared/services/excel.service";
           console.log("SERVICE");
           console.log(this.excelService.service);
           this.excelService.UploadExcel(this.files, this.excelService.service.name, this.changestatus )
-          .subscribe(
-            value=> {
+          .subscribe(value => {
               this.excelService.idProcess = value.id;
 
-            });
+              this.snackBar.openFromComponent(UploadProgressComponent);
+              this.dialogRef.close();
+          }, err => {
+            this.excelService.statusUpload = false;
+            this.snackBar.dismiss();
+            if (err.status === 400) {
+              Swal.fire({
+                type: 'error',
+                title: 'Carga de Excel',
+                text: 'El nombre del archivo no es correcto'
+              });
+            }
+          });
         } else {
-            
+
           this.messageUploadExcel =this.excelService.statusUpload;
           return;
         }
 
-      this.snackBar.openFromComponent(UploadProgressComponent);
-      this.dialogRef.close();
       } else {
         this.xlsValid = true;
 
       }
     }
-    
+
 
     close(){
       this.dialogRef.close();
     }
 
-    exportDataMatriculaXLSX():void{
-      this.excelService.exportAsExcelFile(this.matricula, 'data_completa');
+    exportDataMatriculaXLSX() {
+      console.log('exportDataMatriculaXLSX');
+      this.excelService.GetTemplate()
+        .subscribe((r: Blob) => {
+          saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
+        });
     }
 
     OcultarMensaje() {

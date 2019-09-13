@@ -1,7 +1,7 @@
 export interface Debts {
     id: number;
     emissionDate: Date;
-    dueDate: Date;
+    dueDate?: Date;
     code: string;
     firstName: string;
     lastName: string;
