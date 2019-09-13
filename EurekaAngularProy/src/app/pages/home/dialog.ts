@@ -3,7 +3,8 @@ import { UploadProgressComponent } from "./upload-progress";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar, MatDialogRef } from "@angular/material";
 import { ExcelService } from "src/app/shared/services/excel.service";
-
+import Swal from "sweetalert2";
+import * as saveAs from 'file-saver';
 
 
 /*////////////////////////////////////////////////////////
@@ -74,11 +75,20 @@ import { ExcelService } from "src/app/shared/services/excel.service";
           console.log("SERVICE");
           console.log(this.excelService.service);
           this.excelService.UploadExcel(this.files, this.excelService.service.name, this.changestatus )
-          .subscribe(
-            value=> {
+          .subscribe(value => {
               this.excelService.idProcess = value.id;
               this.verifyStatus();
-            });
+          }, err => {
+            this.excelService.statusUpload = false;
+            this.snackBar.dismiss();
+            if (err.status === 400) {
+              Swal.fire({
+                type: 'error',
+                title: 'Carga de Excel',
+                text: 'El nombre del archivo no es correcto'
+              });
+            }
+          });
         } else {
 
           this.messageUploadExcel =this.excelService.statusUpload;
@@ -125,7 +135,10 @@ import { ExcelService } from "src/app/shared/services/excel.service";
     }
 
     descargarPlantilla() {
-      alert('descargar plantilla');
+      this.excelService.GetTemplate()
+        .subscribe((r: Blob) => {
+          saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
+        });
     }
   }
 

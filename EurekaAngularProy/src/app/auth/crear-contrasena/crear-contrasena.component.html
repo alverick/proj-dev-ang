@@ -1,9 +1,9 @@
 <div class="body">
     <br>
-    <div class="container"> 
+    <div class="container">
         <div class="row">
-            <div class="col-sm-4"> 
-                        <h1 class="texto-azul">Ingresa los datos de la <br>empresa </h1> 
+            <div class="col-sm-4">
+                        <h1 class="texto-azul">Ingresa los datos de la <br>empresa </h1>
             </div>
             <div class="col-md-8">
                 <div class="d-flex justify-content-center">
@@ -33,7 +33,7 @@
                                 <mat-form-field class="super-full-width">
                                     <mat-label>Rubro</mat-label>
                                     <mat-select formControlName="rubro">
-                                        <mat-option>Rubro de Servicio</mat-option>
+                                        <mat-option>Rubro de tu empresa</mat-option>
                                         <mat-option *ngFor="let r of rubros" [value]="r.code">
                                             {{r.name}}
                                         </mat-option>
@@ -86,9 +86,9 @@
 
                             <div class="form-group">
                                 <mat-checkbox  formControlName="acceptterms"  id="styled-checkbox-1"  >
-                                </mat-checkbox> 
+                                </mat-checkbox>
                                 &nbsp; <label for="styled-checkbox-1"> Acepto los </label>&nbsp;<a href="assets/Términos y condiciones.pdf" target="_blank" > términos y condiciones </a>
-                                
+
                                 <mat-error class="messsage-error" *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
                             </div>
                             <br>

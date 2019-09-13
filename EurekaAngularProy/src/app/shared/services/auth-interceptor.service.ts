@@ -56,7 +56,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               this.router.navigateByUrl('/login')
             }
           });
-        } else {
+        } else if (err.status !== 400) {
           this.storage.removeCurrentSession();
           this.snackBar.dismiss();
           Swal.fire({

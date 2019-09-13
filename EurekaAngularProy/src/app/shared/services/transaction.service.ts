@@ -65,7 +65,8 @@ export class TransactionService {
           .pipe<DebtsPagedList>(map(r => {
             r.data.forEach(d => {
               d.emissionDate = new Date(d.emissionDate);
-              d.dueDate = new Date(d.dueDate);
+              if (d.dueDate !== null && d.dueDate !== undefined)
+                d.dueDate = new Date(d.dueDate);
               d.editInput = false;
               d.editButton = false;
               d.newStatus = '1';

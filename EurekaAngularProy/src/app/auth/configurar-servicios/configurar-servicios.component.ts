@@ -13,8 +13,8 @@ import { FormServicioComponent } from '../form-servicio/form-servicio.component'
 export class ConfigurarServiciosComponent implements OnInit {
 
   protected ruc: number;
-  public stateCreate: boolean;
-  public stateEdit: boolean;
+  public stateCreate: boolean = false;
+  public stateEdit: boolean = false;
   public input: FormServicioComponent;
   Formulario: boolean = false;
   buttonServicios ='';
@@ -89,13 +89,14 @@ export class ConfigurarServiciosComponent implements OnInit {
       this.Formulario = false
       this.stateCreate =false;
       this.stateEdit =false;
-      this.indiceActual = -1;
-      if (this.addNewAfterSave) {
+      console.log(this.afiliacionService.services);
+      if (this.addNewAfterSave && this.indiceActual > 0) {
         setTimeout(() => this.MostarFormulario(), 600);
       }
       else if (this.sendAfterSave) {
         setTimeout(() => this.EnviarServicios(), 600);
       }
+      this.indiceActual = -1;
       this.addNewAfterSave = false;
       this.sendAfterSave = false;
     }
@@ -236,7 +237,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   delService(index: number) {
     if (this.Formulario) {
-      Swal.fire({
+      /*Swal.fire({
         type: 'warning',
         title: 'Eliminación del Servicio',
         text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
@@ -244,7 +245,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         showConfirmButton: false,
         showCancelButton: true,
         cancelButtonText: 'Cerrar'
-      });
+      });*/
       return;
     }
     if (this.inEdit) {
@@ -299,7 +300,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   editService(svc: ServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
-      Swal.fire({
+      /*Swal.fire({
         type: 'warning',
         title: 'Edición del Servicio',
         text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
@@ -307,7 +308,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         showConfirmButton: false,
         showCancelButton: true,
         cancelButtonText: 'Cerrar'
-      });
+      });*/
       return;
     }
     console.table(svc);

@@ -16,20 +16,20 @@
                                         </div>
                                         <div class="col-sm-1 mb-0">
                                             <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
-                                                <li *ngIf="!svc.inReview" >
-                                                    <a class="texto-azul" style="cursor: pointer" (click)="editService(svc, i)"> <img  src="assets/images/editar.svg"> </a>
+                                                <li *ngIf="!svc.inReview && indiceActual!==i" >
+                                                    <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img  src="assets/images/editar.svg"></a>
                                                 </li>
                                                 <li class="ml-2" *ngIf="afiliacionService.services.length > 1">
-                                                    <a class="texto-azul borrar" style="cursor: pointer" (click)="delService(i)"><img  src="assets/images/eliminar.svg"></a>
+                                                    <a class="texto-azul borrar" [class.mano]="!Formulario" (click)="delService(i)"><img  src="assets/images/eliminar.svg"></a>
                                                 </li>
                                             </ul>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <table class="table table-sm table-borderless ">
                                             <tr>
                                                 <th class="font-black-servicios-list">Canales</th>
                                                 <td class="font-black-servicios-des-list">{{ getCanales(svc) }}</td>
-                                            </tr> 
+                                            </tr>
                                             <tr>
                                                 <th class="font-black-servicios-list">Mora</th>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }}  </td>
@@ -40,31 +40,31 @@
                                                 <th class="font-black-servicios-list">Cuenta</th>
                                                 <td class="font-black-servicios-des-list">{{ svc.nroCuenta }}</td>
                                             </tr>
-                                    </table>  
-                                </div>  
-                            </div> 
-                        </div> 
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                         <div  >
                                 <button type="button" (click)="MostarFormulario()" class="btn-outline-green">
                                   <span class="fa fa-plus-circle"></span>   Agregar otro servicio
-                                </button> 
+                                </button>
                                 <button   (click)="EnviarServicios()" class="mt-3 btn-eureca-green text-white">
                                  Finalizar
                                 </button>
-                        </div> 
+                        </div>
                     </div>
                 </div>
                 <br>
-                
+
             </div>
             <div class="col-sm-7 pb-3" *ngIf="Formulario">
-                <br> 
+                <br>
                     <div class="formulario p-5 bg-white ">
                         <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
-                                <img  src="assets/images/cerrar.svg">  <br> Cerrar  
+                                <img  src="assets/images/cerrar.svg">  <br> Cerrar
                         </div>
                         <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
-                    </div> 
+                    </div>
                 <br>
             </div>
         </div>

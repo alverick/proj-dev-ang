@@ -55,12 +55,12 @@
 
 //// look and feel
 
-.font-black-servicios-list {  
-    @include font-text(14px, $weight:300); 
+.font-black-servicios-list {
+    @include font-text(14px, $weight:300);
     color: #333333;
 }
-.font-black-servicios-des-list {  
-    @include font-text(14px, $weight:normal); 
+.font-black-servicios-des-list {
+    @include font-text(14px, $weight:normal);
     color: #333333;
 }
 
@@ -69,8 +69,8 @@
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
 }
-.font-cerrar {  
-    @include font-text(10px, $weight:500); 
+.font-cerrar {
+    @include font-text(10px, $weight:500);
     color: #9b9b9b;
     text-align: center;
 }
@@ -79,15 +79,15 @@
     width: 207px;
     height: 48px;
     font-family: Omnes;
-    font-size: 16px; 
-    font-weight: 500;  
+    font-size: 16px;
+    font-weight: 500;
     margin-left: 20%;
   }
   .btn-outline-green {
     width: 361px;
     height: 58px;
     object-fit: contain;
-    border-radius: 4px; 
+    border-radius: 4px;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: $blanco;
     border:  solid 1px $blanco;
@@ -101,4 +101,8 @@
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     float: right;
+}
+
+.mano {
+  cursor: pointer;
 }
