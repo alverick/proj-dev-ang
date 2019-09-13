@@ -76,7 +76,6 @@ import * as saveAs from 'file-saver';
           console.log(this.excelService.service);
           this.excelService.UploadExcel(this.files, this.excelService.service.name, this.changestatus )
           .subscribe(value => {
-            this.excelService.statusUpload = false;
             this.excelService.idProcess = value.id;
             this.verifyStatus();
           }, err => {
@@ -113,9 +112,12 @@ import * as saveAs from 'file-saver';
         }
         else if (value.status === 'COMPLETED') {
           this.excelService.statusUpload = false;
-          this.excelService.errores.push({
-            row: -1,
-            description: `Se cargaron ${value.rowsUploaded} registros`
+          this.excelService.errores = [];
+          this.dialogRef.close();
+          Swal.fire({
+            type: 'success',
+            text: `Se cargaron ${value.rowsUploaded} registros`,
+            showCloseButton: true,
           });
         }
         else  {

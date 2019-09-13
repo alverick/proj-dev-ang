@@ -53,29 +53,6 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout(): void {
-
-   /*   if(this.excelser.statusUpload == true) {
-        Swal.fire({
-          title: 'Esta cargando un Excel!',
-          text: "¿Desea  Cancelar esa Accion?",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, Salir!'
-        }).then((result) => {
-          this.spinner.show();
-          this.loginService.logout();
-          this.excelser.statusUpload =false;
-          this.spinner.hide();
-        })
-    }else {
-      this.spinner.show();
-      this.loginService.logout();
-      this.excelser.statusUpload =false;
-      this.spinner.hide();
-      return;
-    }  */
     this.spinner.show();
     this.loginService.logout();
     this.excelser.statusUpload = false;
@@ -84,6 +61,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public show(): boolean {
+    console.log(this.router.url);
     if (this.router.url.includes('/login') ||
      this.router.url.includes('/afiliacion') ||
      this.router.url.includes('/crearContrasena') ||
