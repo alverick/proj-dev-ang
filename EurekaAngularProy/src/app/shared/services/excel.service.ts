@@ -1,10 +1,9 @@
 import { Error } from './../models/error.model';
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { StorageService } from "./storage.service";
 import { Observable, throwError } from "rxjs";
-import { Http, Headers, ResponseContentType } from "@angular/http";
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 import { catchError, map } from "rxjs/operators";
@@ -18,7 +17,7 @@ export class ExcelService {
   private URI_API: string = environment.END_POINT;
   public statusUpload: boolean = false;
 
-  constructor(public http: HttpClient, private nativeHttp: Http, private storage: StorageService, ) { }
+  constructor(public http: HttpClient, private storage: StorageService, ) { }
 
   /* ///////////////////////////////////
   ////////// D O W N L O A D /////////////////
@@ -30,7 +29,6 @@ export class ExcelService {
     console.log('worksheet',worksheet);
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
     this.saveAsExcelFile(excelBuffer, excelFileName);
   }
 
@@ -70,11 +68,9 @@ export class ExcelService {
       catchError(error => throwError(error)));
   }
 
-  StatusExcel(id: number): Observable<any>{
-    //this.statusUpload = status;
-    console.log('begin status excel')
+  StatusExcel(id: number): Observable<any> {
     const url = `${this.URI_API}/debt/process/${id}/status?_=` + new Date().getTime();
-    const opts={
+    const opts = {
       headers: {"Authorization" : "bearer " + this.storage.getCurrentToken(),
       "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
       "Ocp-Apim-Trace": "true"}
@@ -83,18 +79,17 @@ export class ExcelService {
 
   }
 
-  GetTemplate(): Observable<any> {
-    const url = `${this.URI_API}/debt/template?service=${this.service.name}&_=`+ new Date().getTime();
-    const headers = new Headers({
+  GetTemplate(): Observable<Blob> {
+    const url = `${this.URI_API}/debt/template?service=${this.service.name}&_=${new Date().getTime()}`;
+    const headers = new HttpHeaders({
       "Authorization": "bearer " + this.storage.getCurrentToken(),
       "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
       "Ocp-Apim-Trace": 'true'
     });
     console.log(url);
-    return this.nativeHttp.get(url, {
+    return this.http.get(url, {
       headers: headers,
-      responseType: ResponseContentType.Blob
-    })
-    .pipe(map(r => r.blob()));
+      responseType: 'blob'
+    });
   }
 }

@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/auth/crear-contrasena/must-match.validator';
 import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
-import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import Swal from 'sweetalert2';
-import { stringify } from '@angular/core/src/render3/util';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { RubroModel } from 'src/app/shared/models';
-import { DISABLED } from '@angular/forms/src/model';
 import { Router } from '@angular/router';
 
 

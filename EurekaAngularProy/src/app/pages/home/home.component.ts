@@ -62,7 +62,7 @@ declare var $: any;
 // tslint:disable-next-line:directive-class-suffix
 export class HomeComponent implements OnInit {
 
-  numeroPagina:number;
+  numeroPagina: number;
 
   orderDef = [
     { name: 'emissionDate', asc: false },
@@ -79,16 +79,16 @@ export class HomeComponent implements OnInit {
   orderBy = -1;
 
  // DialogDataExampleDialog
-  @ViewChild('cargaExcel') cargaExcel;
+  @ViewChild('cargaExcel', { static: true }) cargaExcel;
  // datepicker format
  @Output() date2: EventEmitter<any> = new EventEmitter<any>();
  // fechas limites
  minDate = new Date(2000, 0, 1);
  maxDate = new Date(2050, 0, 1);
  // inputDate1:string = '';  inputText
- @ViewChild('inputText') inputText: ElementRef;
- @ViewChild('inputDate1') inputDate1: ElementRef;
- @ViewChild('inputDate2') inputDate2: ElementRef;
+ @ViewChild('inputText', { static: true }) inputText: ElementRef;
+ @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
+ @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
   // tslint:disable-next-line:no-inferrable-types
   state: boolean = false;
   // tslint:disable-next-line:whitespace
@@ -330,7 +330,7 @@ orderList(index: number, asc: boolean) {
 
     if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
       ///       dateFrom es inputDate1              | dateTo  es inputDate2
-
+      console.log(this.inputDate1);
           if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
 
 

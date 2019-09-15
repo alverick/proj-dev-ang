@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -84,7 +83,6 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpModule,
     NgxSpinnerModule,
     MatInputModule,
     SweetAlert2Module.forRoot({

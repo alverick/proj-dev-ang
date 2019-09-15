@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
 
   storeRuc : any ;
 
-  @ViewChild("recaptchaRef")
+  @ViewChild("recaptchaRef", { static: true })
   recaptchaRef: RecaptchaComponent;
 
   account_validation_messages = {
