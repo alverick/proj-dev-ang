@@ -23,19 +23,16 @@ public errores: number;
 
 private callingRefresh = false;
 
-login(ruc: string, psw: string): Observable<RespuestaLogin> {
-  console.log('begin login' )
+login(ruc: string, psw: string): Observable<RespuestaLogin> { 
   const url = `${this.URI_API}/login?_=` + new Date().getTime();
-  const data = `username=${ruc}&password=${psw}`;
-  console.log(url, data);
+  const data = `username=${ruc}&password=${psw}`; 
   const opts = {
     headers: { "Content-Type": "application/x-www-form-urlencoded",
     'Cache-Control': 'no-cache',
   }
   };
   return this.http.post(url, data, opts)
-    .pipe(map((r: RespuestaLogin) => {
-      console.log(r);
+    .pipe(map((r: RespuestaLogin) => { 
       if (r.estado) {
         this.storage.setCurrentSession({
           user: { ruc: ruc },

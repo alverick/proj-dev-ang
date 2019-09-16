@@ -38,16 +38,12 @@ import Swal from "sweetalert2";
 
       // tslint:disable-next-line:prefer-const
       let recursiveFunc = (value) => {
-
-
-          console.log("LOCAL : "+localStorage.getItem('tk'));
-        console.log(value.status);
+ 
         if (value.status === "REJECTED") {
           this.snackRef.dismiss();
 
           this.excelService.errores = value.errors;
-
-          console.log('ABRE DIALOG')
+ 
           this.excelService.statusUpload = false;
           const dialogRef =  this.dialog.open(ValidationComponent);
          // dialogRef.close(ValidationComponent);
@@ -74,12 +70,10 @@ import Swal from "sweetalert2";
               type: 'success',
               text: `Se cargaron ${value.rowsUploaded} registros`,
               showCloseButton: true,
-            });
-            console.log("GET DEUDA HOME")
+            }); 
 
             this.transactionService.getDeuda()
-            .subscribe(debts => {
-              console.log(this.transactionService.debtItems);
+            .subscribe(debts => { 
               //this.detectorRef.detectChanges();
           });
           }

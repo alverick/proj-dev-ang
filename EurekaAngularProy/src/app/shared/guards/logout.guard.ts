@@ -12,8 +12,7 @@ export class LogoutGuard implements CanActivate {
 
   }
   canActivate(next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-      console.log('logout.guard');
+    state: RouterStateSnapshot): boolean { 
       if (localStorage.getItem('tk') == null || localStorage.getItem('tk')=='El usuario esta bloqueado' || localStorage.getItem('tk')=='Vuelva a intentarlo mas tarde') {
         this.spinner.hide();
         return true;

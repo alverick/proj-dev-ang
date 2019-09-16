@@ -80,16 +80,13 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
 // actualizado
   onSubmit() {
-    this.submitted = true;
-    console.log('EL CORREO ES '+this.formGroup.value.email.toString());
+    this.submitted = true; 
 
     var correo =  parseInt(this.formGroup.value.email.toString().length);
 
     var Pass =  parseInt(this.formGroup.value.password.toString().length);
     var newPass =  parseInt(this.formGroup.value.newPassword.toString().length);
-
-
-    console.log("ENTRO  ");
+ 
     if (this.formGroup.valid) {
        if(correo==0){
         return;
@@ -106,8 +103,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       if(Pass > 0 && newPass == 0){
         this.mensaje('warning','Edicion de Empresa','Debe ingresar la nueva contraseña para continuar' );
         return;
-      }
-      console.log(this.formGroup.value);
+      } 
       const datosEmpresa = this.formGroup.value;
       const enterprise = {
         ruc: datosEmpresa.ruc,
@@ -116,9 +112,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
         password: datosEmpresa.password,
         newPassword: datosEmpresa.newPassword,
         confirmNewPassword: datosEmpresa.confirmNewPassword
-      };
-      console.log("FORM GROUP : "+this.formGroup.valid);
-      console.log(enterprise);
+      }; 
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
         enterpriseUpdate =>{

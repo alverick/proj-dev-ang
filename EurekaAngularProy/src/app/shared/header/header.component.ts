@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public menu(): boolean {
-    if (localStorage.getItem('tk') == null) {
+    if (this.router.url.includes('/login')) {
       return false;
 
     } else {
@@ -75,14 +75,12 @@ export class HeaderComponent implements OnInit {
     return moment.utc(date).fromNow();
   }
 
-  onScroll() {
-    console.log('scroll');
+  onScroll() { 
     if (this.notify.messages.length > 0) {
       this.notify.loadMsgs();
     }
   }
 
-  onShowMessages() {
-    console.log('show Messages');
+  onShowMessages() { 
   }
 }

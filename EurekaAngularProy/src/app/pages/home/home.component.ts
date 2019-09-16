@@ -1,10 +1,8 @@
-import { Observable } from 'rxjs';
 import { Date } from './../../shared/models/date';
 import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild} from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
-import { Router } from '@angular/router';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { MatDialog, MatSnackBar} from '@angular/material';
@@ -155,8 +153,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
-    private transactionService: TransactionService,
-    private router: Router ,
+    public transactionService: TransactionService,
     private excelService: ExcelService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
@@ -329,8 +326,7 @@ orderList(index: number, asc: boolean) {
 
 
     if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
-      ///       dateFrom es inputDate1              | dateTo  es inputDate2
-      console.log(this.inputDate1);
+      ///       dateFrom es inputDate1              | dateTo  es inputDate2 
           if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
 
 
@@ -677,8 +673,7 @@ orderList(index: number, asc: boolean) {
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
       onOpen: drawPopup
-    }).then((result) => {
-      console.log(result);
+    }).then((result) => { 
       if (result.value) {
         this.spinner.show();
 
@@ -710,8 +705,7 @@ orderList(index: number, asc: boolean) {
     confirmButtonText: 'Si, Borralo',
     cancelButtonText: 'Cerrar',
     onOpen: drawPopup
-  }).then((result) => {
-    console.log(result);
+  }).then((result) => { 
     if (result.value) {
       this.spinner.show();
       this.transactionService.deleteDeuda(item.id)
@@ -751,9 +745,7 @@ MostrarListaSelect() {
     if( this.transactionService.debtItems.data.length > 0){
       if (this.validaFiltro()) {
         this.transactionService.report(this.filtro)
-        .subscribe((r: Blob) => {
-          console.log('todo bien');
-          console.log(r);
+        .subscribe((r: Blob) => { 
           saveAs(r, "reporte.xlsx");
         });
       }
@@ -767,8 +759,7 @@ MostrarListaSelect() {
     return (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && itm.dueDate < new Date();
   }
 
-  MontoBlur(e) {
-    console.log(e);
+  MontoBlur(e) { 
     let initalValue = parseFloat(e.newAmount);
     if(!isNaN(initalValue))
       e.newAmount = initalValue.toFixed(2);

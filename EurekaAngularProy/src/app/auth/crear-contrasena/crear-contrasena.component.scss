@@ -20,6 +20,6 @@
   }
 
   .cuadro-form{
-    @include cuadro(460px, $height: auto);
+    @include cuadro(460px, $height: 720px);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1); 
   }

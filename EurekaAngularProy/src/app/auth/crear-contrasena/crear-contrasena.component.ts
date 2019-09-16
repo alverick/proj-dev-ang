@@ -50,8 +50,7 @@ export class CrearContrasenaComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    var ruc  = this.registerForm.value.ruc.toString();
-    console.log('RUC --->'+  ruc.substring(0,2));
+    var ruc  = this.registerForm.value.ruc.toString(); 
     // stop here if form is invalid
 
     if (this.registerForm.invalid) {
@@ -119,9 +118,7 @@ export class CrearContrasenaComponent implements OnInit {
           });
         }
       }
-    }, err => {
-      console.log(err);
-
+    }, err => { 
       this.mensaje('error','Registrame','Ha ocurrido un error con el servidor<br />Intente de nuevo' );
 
     });

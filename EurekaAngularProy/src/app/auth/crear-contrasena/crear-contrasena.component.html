@@ -3,11 +3,11 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                        <h1 class="texto-azul">Ingresa los datos de la <br>empresa </h1>
+                        <div class="texto-azul">Ingresa los datos de la empresa </div>
             </div>
             <div class="col-md-8">
-                <div class="d-flex justify-content-center">
-                    <div class="cuadro-form p-5 bg-white  ">
+                <div class="d-flex justify-content-end">
+                    <div class="cuadro-form pr-5 pl-5 pt-4  bg-white">
                         <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
@@ -90,13 +90,13 @@
                                 &nbsp; <label for="styled-checkbox-1"> Acepto los </label>&nbsp;<a href="assets/Términos y condiciones.pdf" target="_blank" > términos y condiciones </a>
 
                                 <mat-error class="messsage-error" *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
-                            </div>
-                            <br>
+                            </div> 
                             <button type="submit" class="btn-big btn-eureca-green w-100 text-white">
                                   Siguiente</button>
                         </form>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
     </div>

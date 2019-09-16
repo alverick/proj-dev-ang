@@ -21,14 +21,15 @@
                 </div>
     
                 <!--/////// R I G H T ////////-->
-                <div class="col-md-6 pt-5">
-                    <div class="position-absolute cuadro-form" >
+                <div class="col-md-6 pt-5 pb-3">
+                    <div class="d-flex justify-content-end">
+                    <div class=" cuadro-form pb-2" >
                         <!--/////// F O R M ////////-->
-                        <div class="texto-azul pt-5 pb-3 mb-4 font-medium">Iniciar Sesión</div>
+                        <div class="texto-azul pt-4 pb-3 mb-4  ">Iniciar Sesión</div>
                         <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
                             
-                            <div class="d-flex ml-5 mr-5 pb-3">
-                                <div class="mr-3">
+                            <div class="d-flex   mr-1 pb-3">
+                                <div class="mr-2">
                                     <img  src="assets/images/user.svg" alt="">
                                 </div>
                                 <!-- ////////////// R U C /////////////////// -->
@@ -53,8 +54,8 @@
     
     
     
-                            <div class="d-flex ml-5 mr-5">
-                                <div class="mr-3">
+                            <div class="d-flex mr-1 pb-3">
+                                <div class="mr-2">
                                     <img  src="assets/images/password.svg" alt="">
                                 </div>
     
@@ -79,22 +80,23 @@
                                 </div>
                                 
                             </div> 
+                             
+                                <div class="reCaptach" *ngIf="isTrue">
+                                    <re-captcha  #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
+                                </div>
+                                <div >
+                                    <button type="submit" class=" focus-elements btn-eureca-green" form="login-form"> Ingresar</button>
+                                </div>
                             
-                            <div class="reCaptach" *ngIf="isTrue">
-                                <re-captcha  #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
-                            </div>
-                            <div>
-                            <button type="submit" class=" focus-elements btn-eureca-green" form="login-form"> Ingresar</button>
-                             </div>
                         </form> 
                     
-                        <div class="mt-1"> 
-                            <br> <br>  <br> 
+                        <div class="mb-2">  
                             <button class="mano focus-elements   btn-eureca-green-register" [routerLink]="['/afiliacion']">
                                  Regístrate 
                             </button>
                         </div>  
                     </div>
+                </div>
                 </div>
     
             </div>

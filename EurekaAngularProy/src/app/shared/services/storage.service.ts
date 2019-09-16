@@ -43,8 +43,7 @@ export class StorageService {
   }
 
   getCurrentSession(): Session {
-    if (this.currentSession === null || this.currentSession === undefined) {
-      console.log('currentSession from localStorage');
+    if (this.currentSession === null || this.currentSession === undefined) { 
       var tk = this.localStorageService.getItem('tk');
       this.currentSession = {
         user: { ruc: '' },
