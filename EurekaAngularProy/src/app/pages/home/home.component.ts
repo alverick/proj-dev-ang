@@ -1,10 +1,8 @@
-import { Observable } from 'rxjs';
 import { Date } from './../../shared/models/date';
 import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild} from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
-import { Router } from '@angular/router';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { MatDialog, MatSnackBar} from '@angular/material';
@@ -155,8 +153,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
-    private transactionService: TransactionService,
-    private router: Router ,
+    public transactionService: TransactionService,
     private excelService: ExcelService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,

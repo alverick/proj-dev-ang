@@ -76,7 +76,7 @@
             <section class="actions">
               <div class="al-left">
                 <div class="chk-vertical">
-                  <mat-checkbox id="chk-all" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos($event)"></mat-checkbox>
+                  <mat-checkbox id="chk-all" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos()"></mat-checkbox>
                   <label class="act-label" for="chk-all" aria-label="chk-all" [class.seleccionado]="selectedAll">Seleccionar</label>
                 </div>
                 <div class="btn-eliminar">

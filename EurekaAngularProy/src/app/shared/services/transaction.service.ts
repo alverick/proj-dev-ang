@@ -46,10 +46,16 @@ export class TransactionService {
         this.lastFilter = filtro;
       }
 
-
       var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
       var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
       //fechas
+
+      if (filtro.service === null || filtro.service === undefined)
+        filtro.service = '';
+      if (filtro.status === null || filtro.status === undefined)
+        filtro.status = '';
+      if (filtro.dateForFilter === null || filtro.dateForFilter === undefined)
+        filtro.dateForFilter = '';
 
         const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
         const opts = {
