@@ -175,22 +175,15 @@ label{
   background-position: bottom center;
 }
 
- .texto-login{
-  margin-top: 50px;
-  width: 499px;
-  height: 174px;
+ .texto-login{  
   font-family: Omnes;
+  font-size: 48px;
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
   line-height: normal;
   letter-spacing: normal;
   color: #ffffff;
- }
-
- .mujer-position{
-  padding-left:  50px;
-  padding-top : 110px;
  }
  
   
@@ -212,10 +205,7 @@ label{
   letter-spacing: normal;
   color: #333333;
 }
-
-.position-absolute {
-  position: absolute!important;
-}
+ 
 
 .shadow-none {
   box-shadow: none !important;
@@ -251,4 +241,10 @@ label{
 
   .cuadro-form{
     @include cuadro(381px,538px); 
+    background-color: #ffffff; 
+    box-sizing:  border-box;
+    border-style:solid !important;
+    border-width: 2vw 4.8vw!important;
+    border-color: white !important;
+    margin-top: 5vw !important;
   }
