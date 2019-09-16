@@ -70,7 +70,7 @@
   margin-bottom: 1px;
 }
 
-/deep/ .input-file {
+:host ::ng-deep .input-file {
   width: 517px;
 
   .mat-form-field-label {
