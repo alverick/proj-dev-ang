@@ -29,14 +29,6 @@ export class HeaderComponent implements OnInit {
     this.notify.iniciar();
   }
 
-  public menu(): boolean {
-    if (localStorage.getItem('tk') == null) {
-      return false;
-
-    } else {
-      return true;
-    }
-  }
   mesageeError(tipo: any, titulo: string, text: string) {
     Swal.fire({
       type: tipo ,
