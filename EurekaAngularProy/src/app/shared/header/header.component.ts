@@ -29,6 +29,14 @@ export class HeaderComponent implements OnInit {
     this.notify.iniciar();
   }
 
+  public menu(): boolean {
+    if (this.router.url.includes('/login')) {
+      return false;
+
+    } else {
+      return true;
+    }
+  }
   mesageeError(tipo: any, titulo: string, text: string) {
     Swal.fire({
       type: tipo ,
