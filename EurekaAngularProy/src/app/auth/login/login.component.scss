@@ -2,7 +2,7 @@
 @import '~src/scss/variables';
 @import '~src/scss/mixin';
 @import '~src/scss/landing';
-
+@import '~src/scss/main';
 .row{
   display: flex;
   flex-wrap: wrap;
@@ -201,16 +201,6 @@ label{
 
 .w-100-pass {
   width: 100%;
-}
-.input-text{
-  font-family: Omnes;
-  font-size: 16px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  color: #333333;
 }
  
 

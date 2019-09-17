@@ -24,6 +24,7 @@ import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.dire
 import { CloseViewGuard } from '../shared/guards/close-view.guard';
 import { SharedModule } from '../shared/shared.module';
 import { NumberAccountDirective } from './form-servicio/number-account.directive';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { NumberAccountDirective } from './form-servicio/number-account.directive
     MatCheckboxModule,
     MatSelectModule,
     SharedModule,
-    MatRadioModule
+    MatRadioModule,
+    PerfectScrollbarModule
   ],
   providers: [
     StorageService,

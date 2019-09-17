@@ -6,7 +6,8 @@
                     <div class="col-sm-11"  >
                         <br>
                         <div class="texto-azul ">Configura tus servicios </div>
-                        <div class="mt-5 mb-3" style="overflow:auto; max-height:400px">
+                        <div class="d-flex justify-content-start">
+                        <perfect-scrollbar class="content-container mt-5 mb-3">
                             <div class="card-servicios mb-2" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
                                 <div class=" pl-4">
                                     <div class="pl-1 row">
@@ -43,6 +44,7 @@
                                     </table>
                                 </div>
                             </div>
+                        </perfect-scrollbar>
                         </div>
                         <div  >
                                 <button type="button" (click)="MostarFormulario()" class="btn-outline-green">
