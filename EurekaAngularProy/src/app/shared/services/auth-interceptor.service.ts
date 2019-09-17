@@ -53,7 +53,8 @@ export class AuthInterceptorService implements HttpInterceptor {
             cancelButtonText:  'Cerrar',
             allowOutsideClick: false,
             onClose: () =>{
-              this.router.navigateByUrl('/login')
+              window.location.href = '/login';
+              //this.router.navigateByUrl('/login')
             }
           });
         } else if (err.status !== 400) {
@@ -69,7 +70,8 @@ export class AuthInterceptorService implements HttpInterceptor {
             cancelButtonText:  'Cerrar',
             allowOutsideClick: false,
             onClose: () =>{
-              this.router.navigateByUrl('/login')
+              window.location.href = '/login';
+              //this.router.navigateByUrl('/login')
             }
           })
         }

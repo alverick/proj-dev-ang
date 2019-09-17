@@ -1035,7 +1035,7 @@ MostrarListaSelect() {
   }
 
   estaVencido(itm: Debts){
-    return (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && itm.dueDate < new Date();
+    return (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && itm.dueDate !== null && itm.dueDate < new Date();
   }
 }
 
