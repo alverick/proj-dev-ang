@@ -10,28 +10,30 @@
                </div>
         </nav>
         <div class="container">
-            <div class="row">
+            <div class="row ">
                 <!--/////// L E F T ////////-->
                
-                <div class="col-md-7 ">
-                    <h3 class="title-landing-login texto-login">Descubre una nueva forma de manejar tus cobros</h3>
-                    <div class="mujer-position">
-                        <img src="assets/images/mujer.svg">
+                <div class="col-md-6 pt-5">
+                    <h3 class="texto-login pt-3">Descubre una nueva forma de manejar tus cobros</h3>
+                    <div class="pt-5">
+                        <img class="pt-5" src="assets/images/mujer.svg">
                     </div>
                 </div>
     
                 <!--/////// R I G H T ////////-->
-                <div class="col-md-4 ">
-                    <div class="position-absolute custom-shadow  shadow-none border bg-white rounded" >
+                <div class="col-md-6 pt-5 pb-3">
+                    <div class="d-flex justify-content-end">
+                    <div class=" cuadro-form pb-2" >
                         <!--/////// F O R M ////////-->
+                        <div class="texto-azul pt-4 pb-3 mb-4  ">Iniciar Sesión</div>
                         <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
-                            <div class="texto-azul pb-3 mb-4 font-medium">Iniciar Sesión</div>
-                            <div class="d-flex mb-4">
-                                <div class="mr-3">
+                            
+                            <div class="d-flex   mr-1 pb-3">
+                                <div class="mr-2">
                                     <img  src="assets/images/user.svg" alt="">
                                 </div>
                                 <!-- ////////////// R U C /////////////////// -->
-                                <div class="flex-fill">
+                                <div class="flex-fill mt-2">
                                     <label class="d-block texto-negro h6">RUC</label>
                                     <mat-form-field class="w-100 " style="height: 1.9px !important">
                                         <input matInput class="input-text" type="text" name="ruc" appOnlynumbers (focus)="focusFunctionRuc()" autocomplete="on"minlength="11" maxlength="11" required  formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors" >
@@ -52,13 +54,13 @@
     
     
     
-                            <div class="d-flex mb-4">
-                                <div class="mr-3">
+                            <div class="d-flex mr-1 pb-3">
+                                <div class="mr-2">
                                     <img  src="assets/images/password.svg" alt="">
                                 </div>
     
                                 <!-- ////////////// P A S S W O R D /////////////////// -->
-                                <div class="flex-fill">
+                                <div class="flex-fill mt-2">
                                     <label class="d-block texto-negro h6">Contraseña</label>
                                    <mat-form-field class="w-100" style="height: 1.9px !important">
                                         <input matInput class="input-text" type="password" (Keydown.space)="$event.preventDefault()" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste>
@@ -78,20 +80,23 @@
                                 </div>
                                 
                             </div> 
+                             
+                                <div class="reCaptach" *ngIf="isTrue">
+                                    <re-captcha  #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
+                                </div>
+                                <div >
+                                    <button type="submit" class=" focus-elements btn-eureca-green" form="login-form"> Ingresar</button>
+                                </div>
                             
-                            <div class="reCaptach" *ngIf="isTrue">
-                                <re-captcha  #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
-                            </div>
-                            <button type="submit" class=" focus-elements btn-eureca-green" form="login-form"> Ingresar</button>
                         </form> 
                     
-                        <div class="mt-1"> 
-                            <br> <br>  <br> 
+                        <div class="mb-2">  
                             <button class="mano focus-elements   btn-eureca-green-register" [routerLink]="['/afiliacion']">
                                  Regístrate 
                             </button>
                         </div>  
                     </div>
+                </div>
                 </div>
     
             </div>

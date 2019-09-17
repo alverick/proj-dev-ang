@@ -13,8 +13,7 @@ export class ConfiguracionService {
 
     public debtItems: DataEnterpriseModel ;
 
-    getDatosEmpresa(): Observable<DataEnterpriseModel> {
-    console.log("Begin get datos empresa")
+    getDatosEmpresa(): Observable<DataEnterpriseModel> { 
     const url = `${environment.END_POINT}/company?_=`+ new Date().getTime();
 
     const opts = {

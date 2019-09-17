@@ -1,4 +1,4 @@
-<div class="body">
+<div>
     <div class="container">
         <div class="row">
             <div class="col-sm-5">
@@ -59,13 +59,14 @@
             </div>
             <div class="col-sm-7 pb-3" *ngIf="Formulario">
                 <br>
+                <div class="d-flex justify-content-end">
                     <div class="formulario p-5 bg-white ">
                         <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
                                 <img  src="assets/images/cerrar.svg">  <br> Cerrar
                         </div>
                         <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
                     </div>
-                <br>
+                </div>
             </div>
         </div>
     </div >

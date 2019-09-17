@@ -99,6 +99,7 @@ label{
       font-family: Omnes;
       font-size: 16px;
       float: right;
+      margin-bottom: 23px;
 
     }
 // boton Rgistrate
@@ -119,6 +120,7 @@ label{
     border-radius: 4px;
   border: solid 1px $greenclaro;
   color: $green;
+  
   }
   &:focus{
   /*  background-color: $green;
@@ -175,11 +177,9 @@ label{
   background-position: bottom center;
 }
 
- .texto-login{
-  margin-top: 50px;
-  width: 499px;
-  height: 174px;
+ .texto-login{  
   font-family: Omnes;
+  font-size: 48px;
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
@@ -212,10 +212,7 @@ label{
   letter-spacing: normal;
   color: #333333;
 }
-
-.position-absolute {
-  position: absolute!important;
-}
+ 
 
 .shadow-none {
   box-shadow: none !important;
@@ -249,6 +246,12 @@ label{
   letter-spacing: normal;
   color: #333333;}
 
-  .cuadro-form{
-    @include cuadro(381px,538px);
+  .cuadro-form{ 
+    @include cuadro(381px,auto); 
+    background-color: #ffffff;  
+    box-sizing:  border-box;
+    border-style:solid !important;
+    border-width: 2vw 4.7vw!important;
+    border-color: white !important;
+    margin-top: 5vw !important;
   }

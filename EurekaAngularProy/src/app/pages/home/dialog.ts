@@ -65,15 +65,12 @@ import * as saveAs from 'file-saver';
 
      changestatus =true;
      openSnackBar() {
-
-       console.log("ENTRO : " + this.inputXlsForm.value)
+ 
       if(this.inputXlsForm.valid) {
         this.xlsValid= false;
       /*service*/
 
-        if(this.excelService.statusUpload == false) {
-          console.log("SERVICE");
-          console.log(this.excelService.service);
+        if(this.excelService.statusUpload == false) { 
           this.excelService.UploadExcel(this.files, this.excelService.service.name, this.changestatus )
           .subscribe(value => {
             this.excelService.idProcess = value.id;
@@ -104,8 +101,7 @@ import * as saveAs from 'file-saver';
     }
 
     private verifyStatus() {
-      let recursiveFunc = (value) => {
-        console.log(value);
+      let recursiveFunc = (value) => { 
         if (value.status === "REJECTED") {
           this.excelService.statusUpload = false;
           this.excelService.errores = value.errors;

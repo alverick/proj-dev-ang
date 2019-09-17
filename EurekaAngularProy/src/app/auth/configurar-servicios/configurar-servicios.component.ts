@@ -33,21 +33,16 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.afiliacionService.services = []
-  //  console.log(this.route.params.subscribe( params => this.ruc = params.ruc )) ;
-    this.route.data.subscribe(d => {
-      console.log('Configurar Servicios');
-      console.log(d);
+    this.afiliacionService.services = [] 
+    this.route.data.subscribe(d => { 
       this.inEdit = d.isEdit;
-      if (d.isEdit) {
-        console.log('pide token xdee -----------------');
+      if (d.isEdit) { 
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
       } else {
         // siempre entra ahí
         window['_url_loop_'] = 'configurarServicios';
-        history.pushState(null, null, 'configurarServicios');
-        console.log('llamando a Clear');
+        history.pushState(null, null, 'configurarServicios'); 
         this.afiliacionService.Clear();
         this.buttonServicios = 'Guardar';
         this.editService(this.afiliacionService.services[0], 0);
@@ -58,8 +53,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   public indiceActual: number = -1;
   serviceActual: ServiceModel = null;
 
-  OcultarFormulario(requireConfirm: boolean) {
-    console.log('iniciando descartar', this.stateCreate);
+  OcultarFormulario(requireConfirm: boolean) { 
     if (requireConfirm) {
       Swal.fire({
         type: 'question',
@@ -82,14 +76,11 @@ export class ConfigurarServiciosComponent implements OnInit {
         }
       });
     }
-    else {
-      console.log('descartando cambios');
-      console.log(this.indiceActual, this.stateCreate);
+    else { 
       this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
       this.Formulario = false
       this.stateCreate =false;
-      this.stateEdit =false;
-      console.log(this.afiliacionService.services);
+      this.stateEdit =false; 
       if (this.addNewAfterSave && this.indiceActual > 0) {
         setTimeout(() => this.MostarFormulario(), 600);
       }
@@ -105,8 +96,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   addNewAfterSave: boolean = false;
   sendAfterSave: boolean = false;
 
-  MostarFormulario() {
-    console.log('mostrar formulario', this.stateCreate);
+  MostarFormulario() { 
     if(this.afiliacionService.services.length >= 99){
       Swal.fire({
         type: 'error',
@@ -128,22 +118,18 @@ export class ConfigurarServiciosComponent implements OnInit {
         cancelButtonColor: '#d33'
       }).then(r => {
         this.addNewAfterSave = true;
-        if (r.value) {
-          console.log('grabar cambios', this.stateCreate);
+        if (r.value) { 
           this.onFormAction.emit('save');
         }
-        else if (r.dismiss === Swal.DismissReason.cancel) {
-          console.log('descartar cambios', this.stateCreate);
+        else if (r.dismiss === Swal.DismissReason.cancel) { 
           this.OcultarFormulario(false);
         }
-        else {
-          console.log('cancelar', this.stateCreate);
+        else { 
           this.addNewAfterSave = false;
         }
       });
     }
-    else {
-      console.log('crear nuevo');
+    else { 
       this.indiceActual = this.afiliacionService.services.length;
       this.serviceActual = this.afiliacionService.CrearSevice();
       this.stateEdit = true;
@@ -310,10 +296,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         cancelButtonText: 'Cerrar'
       });*/
       return;
-    }
-    console.table(svc);
-    this.stateEdit = true;
-    console.log(index);
+    } 
+    this.stateEdit = true; 
     this.indiceActual = index;
    /* if(svc.codDeudor !== 'DNI' && svc.codDeudor !== 'RUC' && svc.codDeudor !== 'Codigo Interno' && svc.codDeudor !== 'Otro Codigo' ){
       console.log('cambios '+ svc.codDeudor);

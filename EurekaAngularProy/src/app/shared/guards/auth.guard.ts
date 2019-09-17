@@ -18,16 +18,12 @@ export class AuthGuard implements CanActivate {
     return this.checkLogin(url);
   }
 
-  checkLogin(url: string): boolean {
-    console.log('auth.guard');
-    console.log(url);
-    let session = this.storageService.getCurrentSession();
-    console.log(session);
+  checkLogin(url: string): boolean { 
+    let session = this.storageService.getCurrentSession(); 
     if (session && session.isAuthenticate) {
       return true;
     }
-    else {
-      console.log('Auth.Guard to Login');
+    else { 
       this.router.navigate(['/login']);
       return false;
     }

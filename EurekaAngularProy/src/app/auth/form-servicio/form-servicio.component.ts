@@ -18,8 +18,7 @@ export class FormServicioComponent implements OnInit {
       stateEdit.onFormAction.subscribe(e => this.formAction(e));
     }
 
-  @Input() set service(value: ServiceModel) {
-    console.log('set service');
+  @Input() set service(value: ServiceModel) { 
     if (value === null || value === undefined) {
       this._service = {
         nombre: 'Mensualidad',
@@ -38,8 +37,7 @@ export class FormServicioComponent implements OnInit {
       }
       this.simboloMoneda = 'S/';
     }
-    else {
-      console.log(value);
+    else { 
       this._service = value;
       this.simboloMoneda = value.simboloMoneda
       this._service.simboloMoneda = this.simboloMoneda;
@@ -71,10 +69,7 @@ export class FormServicioComponent implements OnInit {
   ngOnInit(): void {
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     var  montod = (!this._service.monto ? '1.00':this._service.monto);
-    var porcentajed = (!this._service.porcentaje ? '1' : this._service.porcentaje);
-    console.log(this._service);
-    console.log(montod);
-    console.log(porcentajed);
+    var porcentajed = (!this._service.porcentaje ? '1' : this._service.porcentaje); 
     this.frm = this.fb.group({
       nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3)]),
       codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
@@ -172,8 +167,7 @@ export class FormServicioComponent implements OnInit {
               } else {
 
                 let value: ServiceModel;
-                if (this.editMode) {
-                  console.log(this._service);
+                if (this.editMode) { 
                   value = this._service;
                   value.nroCuenta = this.frm.value.nroCuenta;
                   value.moneda = this.frm.value.moneda;
@@ -262,8 +256,7 @@ export class FormServicioComponent implements OnInit {
                 allowOutsideClick: false, });
             } else {
               let value: ServiceModel;
-              if (this.editMode) {
-                console.log(this._service);
+              if (this.editMode) { 
                 value = this._service;
                 value.nroCuenta = this.frm.value.nroCuenta;
                 value.moneda = this.frm.value.moneda;
@@ -294,8 +287,7 @@ export class FormServicioComponent implements OnInit {
                         allowOutsideClick: false, });
           } else {
             let value: ServiceModel;
-            if (this.editMode) {
-              console.log(this._service);
+            if (this.editMode) { 
               value = this._service;
               value.nroCuenta = this.frm.value.nroCuenta;
               value.moneda = this.frm.value.moneda;
@@ -308,8 +300,7 @@ export class FormServicioComponent implements OnInit {
             else {
               value = this.frm.value;
             }
-            value.simboloMoneda = this.simboloMoneda;
-            console.log(value);
+            value.simboloMoneda = this.simboloMoneda; 
             this.grabar.emit(value);
           }
       }
@@ -320,14 +311,11 @@ export class FormServicioComponent implements OnInit {
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
   }
 
-  changeMora(changeData: boolean = true) {
-    console.log('que valor es 0'+changeData);
-    this.cobraMora = (this.f.cobraMora.value === 'S');
-    console.log('al presionar editar se activa el metodo changeMora');
+  changeMora(changeData: boolean = true) { 
+    this.cobraMora = (this.f.cobraMora.value === 'S'); 
 
     if (this.cobraMora) {
-
-      console.log('cobra mora');
+ 
       this.f.periodoMora.setValidators([Validators.required]);
       this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)])
       this.f.porcentaje.clearValidators();
@@ -345,8 +333,7 @@ export class FormServicioComponent implements OnInit {
     }
   }
 
-  changeTipoMora(changeData: boolean = true) {
-    console.log('al presionar editar se activa el metodo changeTipoMora');
+  changeTipoMora(changeData: boolean = true) { 
     this.cobraMonto = (this.f.tipoMora.value === "M");
     this.cobraPorcentaje = (this.f.tipoMora.value === "P");
     if (this.cobraMora && this.cobraMonto) {
@@ -372,8 +359,7 @@ export class FormServicioComponent implements OnInit {
     }
   }
 
-  formAction(action: string){
-    console.log('formAction', this.stateEdit.stateCreate);
+  formAction(action: string){ 
     if (action === 'save') {
       Object.keys(this.frm.controls).forEach(c => {
         this.frm.controls[c].markAsDirty();
