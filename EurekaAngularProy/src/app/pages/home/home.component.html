@@ -16,7 +16,7 @@
               <mat-form-field class="f2">
                 <mat-select placeholder="Servicio" class="selectpicker filter-slt" [(ngModel)]="filtro.service" name="servicio">
                   <mat-option>Servicio</mat-option>
-                  <mat-option value="{{service.name}}"  *ngFor="let service of services"> {{service.name}}</mat-option>
+                  <mat-option  *ngFor="let service of services" value="{{service.name}}"> {{service.name}}</mat-option>
                 </mat-select>
                 <button mat-button *ngIf="filtro.service" matSuffix mat-icon-button aria-label="Clear"
                   (click)="filtro.service=null; $event.stopPropagation();">
@@ -228,7 +228,7 @@
                     </td>
                     <td class="c2">
                           <span *ngIf="!items.editInput">{{items.dueDate | date:'dd/MM/yy' }}</span>
-                          <div *ngIf="items.editInput" class="content-input-icon position-relative">
+                          <div *ngIf="items.editInput && items.dueDate !== null" class="content-input-icon position-relative">
                               <mat-form-field style="width: 90px">
                                   <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text">
                                   <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
@@ -242,7 +242,7 @@
                     <td class="c6">{{items.service}}</td>
                     <td class="c7">
                         <span *ngIf="!items.editInput && items.amount > 0">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
-                        <div *ngIf="items.editInput">
+                        <div *ngIf="items.editInput && items.dueDate !== null">
                           <mat-form-field style="width: 90px">
                             <input type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" (blur)="MontoBlur(items)"/>
                           </mat-form-field>
@@ -258,11 +258,11 @@
                       <span *ngIf="items.status === 'PAGADO'" class="text-success">
                         Pagado <img src="assets/images/ok.svg" alt="ok">
                       </span>
-                      <span *ngIf="items.status === 'PARCIAL'" [class.text-error]="estaVencido(items)">
+                      <span *ngIf="items.status === 'PARCIAL'" [class.text-danger]="estaVencido(items)">
                         Parcial <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
                       </span>
-                      <span  *ngIf="items.status === 'PENDIENTE'" [class.text-error]="estaVencido(items)">
-                        Pendiente
+                      <span  *ngIf="items.status === 'PENDIENTE'" [class.text-danger]="estaVencido(items)">
+                        Pendiente <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
                       </span>
                     </td>
                     <td class="c11">
