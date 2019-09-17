@@ -258,10 +258,10 @@
                       <span *ngIf="items.status === 'PAGADO'" class="text-success">
                         Pagado <img src="assets/images/ok.svg" alt="ok">
                       </span>
-                      <span *ngIf="items.status === 'PARCIAL'" class="text-error">
-                        Parcial <img src="assets/images/cancel.svg" alt="cancel">
+                      <span *ngIf="items.status === 'PARCIAL'" [class.text-error]="estaVencido(items)">
+                        Parcial <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
                       </span>
-                      <span  *ngIf="items.status === 'PENDIENTE'">
+                      <span  *ngIf="items.status === 'PENDIENTE'" [class.text-error]="estaVencido(items)">
                         Pendiente
                       </span>
                     </td>
