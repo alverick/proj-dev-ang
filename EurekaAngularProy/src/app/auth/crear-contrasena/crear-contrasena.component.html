@@ -11,7 +11,7 @@
                         <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC" appOnlynumbers minlength="11" maxlength="11">
+                                    <input class="input-text" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC" appOnlynumbers minlength="11" maxlength="11">
                                     <mat-error class="messsage-error">
                                         <mat-error *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
                                         <mat-error *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
+                                    <input class="input-text" formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
                                     <mat-error class="messsage-error">
                                         <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                                         <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
@@ -31,10 +31,10 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width">
-                                    <mat-label>Rubro</mat-label>
-                                    <mat-select formControlName="rubro">
-                                        <mat-option>Rubro de tu empresa</mat-option>
-                                        <mat-option *ngFor="let r of rubros" [value]="r.code">
+                                    <mat-label class="input-text">Rubro</mat-label>
+                                    <mat-select class="input-text" formControlName="rubro">
+                                        <mat-option class="input-text">Rubro de tu empresa</mat-option>
+                                        <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
                                             {{r.name}}
                                         </mat-option>
                                     </mat-select>
@@ -42,7 +42,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
-                                <mat-form-field class="super-full-width ">
+                                <mat-form-field class="input-text super-full-width ">
                                     <input formControlName="email" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid" matInput type="text" minlength="10" maxlength="100" placeholder="E-mail">
                                     <mat-error class="messsage-error">
                                         <mat-error *ngIf="f.email.invalid && f.email.hasError('required')">El email es obligatorio</mat-error>
@@ -52,27 +52,27 @@
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
-                                <mat-form-field class="super-full-width ">
+                                <mat-form-field class="input-text super-full-width ">
                                     <input formControlName="telefono" (Keydown.space)="$event.preventDefault()" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Telefono ó celular" minlength="6" maxlength="9">
                                     <mat-error class="messsage-error">
-                                        <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('required')">Telefono ó Celular es un campo requerido</mat-error>
+                                        <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('required')">Telefono ó Celular es obligatorio</mat-error>
                                         <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('pattern')"> Ingrese un Telefono ó Celular valido </mat-error>
                                         <mat-error *ngIf="f.telefono.invalid  && !f.telefono.hasError('pattern') && f.telefono.hasError('minlength')"> El Telefono ó Celular debe tener mínimo 6 dígitos</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
-                                <mat-form-field class="super-full-width ">
+                                <mat-form-field class="input-text super-full-width ">
                                     <input formControlName="contrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
                                     <mat-error class="messsage-error">
-                                        <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('required')">Contraseña es un campo requerido</mat-error>
+                                        <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('required')">Contraseña es obligatorio</mat-error>
                                         <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
                                         <mat-error *ngIf="f.contrasena.invalid && !f.contrasena.hasError('minlength') && f.contrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
-                                <mat-form-field class="super-full-width ">
+                                <mat-form-field class="input-text super-full-width ">
                                     <input formControlName="repcontrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repita Contraseña">
                                     <mat-error class="messsage-error">
                                         <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required')">Debe repetir la contraseña</mat-error>

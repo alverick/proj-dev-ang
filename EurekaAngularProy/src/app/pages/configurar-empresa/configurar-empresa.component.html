@@ -14,15 +14,15 @@
                         <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()" class="form">
                                 <div class="form-group ">
                                     <mat-form-field class="w-100">
-                                        <input matInput [readonly]="true" type="text" formControlName="ruc" placeholder="RUC">
+                                        <input class="input-text" matInput [readonly]="true" type="text" formControlName="ruc" placeholder="RUC">
                                     </mat-form-field>
                                 </div>
                                 <div class="form-group ">
                                     <mat-form-field class="w-100">
-                                        <input matInput [readonly]="true" type="text" formControlName="name" placeholder="Nombre">
+                                        <input class="input-text" matInput [readonly]="true" type="text" formControlName="name" placeholder="Nombre">
                                     </mat-form-field>
                                 </div>
-                                <div class="form-group  ">
+                                <div class="input-text form-group  ">
                                     <mat-form-field class="w-100">
                                         <mat-label>Rubro de tu empresa</mat-label>
                                         <mat-select formControlName="entry">
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100">
-                                        <input matInput type="email" placeholder="Email" minlength="10" maxlength="100" formControlName="email" (Keydown.space)="$event.preventDefault()"  [class.is-invalid]="f.email.invalid">
+                                        <input class="input-text" matInput type="email" placeholder="Email" minlength="10" maxlength="100" formControlName="email" (Keydown.space)="$event.preventDefault()"  [class.is-invalid]="f.email.invalid">
                                         <mat-error class="messsage-error">
                                             <mat-error *ngIf="f.email.invalid && f.email.hasError('required')">El email es obligatorio</mat-error>
                                             <mat-error *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un email valido </mat-error>
@@ -47,12 +47,12 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100">
-                                        <input matInput type="text" (Keydown.space)="$event.preventDefault()" placeholder="Télefono" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
+                                        <input class="input-text"  matInput type="text" (Keydown.space)="$event.preventDefault()" placeholder="Télefono" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
                                     <!-- <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
                                             {{ getErrorPhone() }}
                                         </mat-error> -->
                                         <mat-error class="messsage-error">
-                                            <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required')">El Telefono ó Celular es un campo requerido</mat-error>
+                                            <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required')">El Telefono ó Celular obligatorio</mat-error>
                                             <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('pattern')"> Ingrese un Telefono ó Celular valido </mat-error>
                                             <mat-error *ngIf="f.movilNumber.invalid  && !f.movilNumber.hasError('pattern') && f.movilNumber.hasError('minlength')"> El Telefono ó Celular debe tener mínimo 6 dígitos</mat-error>
                                         </mat-error> 
@@ -61,7 +61,7 @@
 
                                 <div class="form-group">
                                     <mat-form-field class="w-100">
-                                        <input matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Contraseña actual" formControlName="password" minlength="6" maxlength="20" >
+                                        <input class="input-text" matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Contraseña actual" formControlName="password" minlength="6" maxlength="20" >
                                     <!--  <mat-error *ngIf="!formGroup.controls['password'].valid || formGroup.controls['password'].touched">
                                             {{ getErrorPassword() }}
                                         </mat-error>-->
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100">
-                                        <input matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Nueva contraseña" formControlName="newPassword" minlength="6" maxlength="20" >
+                                        <input class="input-text" matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Nueva contraseña" formControlName="newPassword" minlength="6" maxlength="20" >
                                     <!--   <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
                                             {{ getErrorNewPassword() }}
                                         </mat-error> -->
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100">
-                                        <input matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Repita Nueva contraseña" formControlName="confirmNewPassword" minlength="6" maxlength="20" >
+                                        <input class="input-text" matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Repita Nueva contraseña" formControlName="confirmNewPassword" minlength="6" maxlength="20" >
                                     <!-- <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
                                             {{ getErrorConfirmNewPassword() }}
                                         </mat-error>

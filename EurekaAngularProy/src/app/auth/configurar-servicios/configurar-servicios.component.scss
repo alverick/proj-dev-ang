@@ -109,3 +109,15 @@
 .mano {
   cursor: pointer;
 }
+
+.content-container { 
+    position: relative; 
+    overflow-y: auto; 
+    height: 500px;
+    min-height: 0;
+    margin: 8px 16px;
+    border-radius: 4px;
+  
+    background-color: #fff;
+  }
+  
