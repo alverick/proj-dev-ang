@@ -4,6 +4,7 @@ import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
+import { drawPopup } from 'src/app/shared/services/popups';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -33,16 +34,16 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.afiliacionService.services = [] 
-    this.route.data.subscribe(d => { 
+    this.afiliacionService.services = []
+    this.route.data.subscribe(d => {
       this.inEdit = d.isEdit;
-      if (d.isEdit) { 
+      if (d.isEdit) {
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
       } else {
         // siempre entra ahí
         window['_url_loop_'] = 'configurarServicios';
-        history.pushState(null, null, 'configurarServicios'); 
+        history.pushState(null, null, 'configurarServicios');
         this.afiliacionService.Clear();
         this.buttonServicios = 'Guardar';
         this.editService(this.afiliacionService.services[0], 0);
@@ -53,17 +54,17 @@ export class ConfigurarServiciosComponent implements OnInit {
   public indiceActual: number = -1;
   serviceActual: ServiceModel = null;
 
-  OcultarFormulario(requireConfirm: boolean) { 
+  OcultarFormulario(requireConfirm: boolean) {
     if (requireConfirm) {
       Swal.fire({
-        type: 'question',
         title: 'Descartar Cambios',
         text: 'Se van a descartar los cambios.',
         showConfirmButton: true,
         showCancelButton: true,
         showCloseButton: true,
         confirmButtonText: 'Descartar',
-        cancelButtonText: 'Regresar'
+        cancelButtonText: 'Regresar',
+        onOpen: drawPopup
       }).then(r => {
         if (r.value) {
           this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
@@ -76,11 +77,11 @@ export class ConfigurarServiciosComponent implements OnInit {
         }
       });
     }
-    else { 
+    else {
       this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
       this.Formulario = false
       this.stateCreate =false;
-      this.stateEdit =false; 
+      this.stateEdit =false;
       if (this.addNewAfterSave && this.indiceActual > 0) {
         setTimeout(() => this.MostarFormulario(), 600);
       }
@@ -96,18 +97,16 @@ export class ConfigurarServiciosComponent implements OnInit {
   addNewAfterSave: boolean = false;
   sendAfterSave: boolean = false;
 
-  MostarFormulario() { 
+  MostarFormulario() {
     if(this.afiliacionService.services.length >= 99){
       Swal.fire({
-        type: 'error',
         text: 'Usted solo puede tener 99 servicios como máximo',
-        allowOutsideClick: false
+        onOpen: drawPopup
       });
       return;
     }
     if (this.Formulario) {
       Swal.fire({
-        type: 'warning',
         title: 'Servicio no guardado',
         text: `Guarde los cambios del servicio ${this.serviceActual === null ? '' : this.serviceActual.nombre} para poder continuar al siguiente paso`,
         showConfirmButton: true,
@@ -115,21 +114,21 @@ export class ConfigurarServiciosComponent implements OnInit {
         showCloseButton: true,
         confirmButtonText: 'Guardar',
         cancelButtonText: 'Deshacer cambios',
-        cancelButtonColor: '#d33'
+        onOpen: drawPopup
       }).then(r => {
         this.addNewAfterSave = true;
-        if (r.value) { 
+        if (r.value) {
           this.onFormAction.emit('save');
         }
-        else if (r.dismiss === Swal.DismissReason.cancel) { 
+        else if (r.dismiss === Swal.DismissReason.cancel) {
           this.OcultarFormulario(false);
         }
-        else { 
+        else {
           this.addNewAfterSave = false;
         }
       });
     }
-    else { 
+    else {
       this.indiceActual = this.afiliacionService.services.length;
       this.serviceActual = this.afiliacionService.CrearSevice();
       this.stateEdit = true;
@@ -147,7 +146,6 @@ export class ConfigurarServiciosComponent implements OnInit {
     if(this.Formulario === true){
       Swal.fire({
         title: 'Servicio no guardado',
-        type: 'warning',
         text: `Guarde los cambios del servicio ${this.serviceActual === null ? '' : this.serviceActual.nombre} para poder continuar al siguiente paso`,
         showCloseButton: true,
         showCancelButton: true,
@@ -155,7 +153,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         cancelButtonColor: '#d33',
         cancelButtonText:  'Deshacer cambios',
         confirmButtonText: 'Guardar',
-        allowOutsideClick: false
+        onOpen: drawPopup
       }).then(r => {
         this.sendAfterSave = true;
         if (r.value) {
@@ -175,9 +173,8 @@ export class ConfigurarServiciosComponent implements OnInit {
     let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
     if(svcSinCta) {
       Swal.fire({
-        type: 'error',
         text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
-        allowOutsideClick: false
+        onOpen: drawPopup
       });
       return;
     }
@@ -243,23 +240,21 @@ export class ConfigurarServiciosComponent implements OnInit {
           msg = 'Ya existe un historial de pagos realizados con este servicio, solo se eliminarán las deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
         }
         Swal.fire({
-          type: 'warning',
           text: msg,
           title: title,
           showCancelButton: true,
           showConfirmButton: true,
           confirmButtonText: 'Confirmar',
           cancelButtonText: 'Cancelar',
-          allowOutsideClick: false
+          onOpen: drawPopup
         }).then(r => {
           if (r.value) {
             this.afiliacionService.SendDelService(index)
               .subscribe(r => {
                 Swal.fire({
-                  type: 'info',
                   text: 'Se ha eliminado el Servicio',
                   title: title,
-                  allowOutsideClick: false
+                  onOpen: drawPopup
                 });
               });
           }
@@ -268,14 +263,14 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     else {
       Swal.fire({
-        type: 'warning',
         text: 'Se eliminará el servicio de los canales de interbank',
         title: 'Eliminación total el servicio',
         showCancelButton: true,
         showConfirmButton: true,
         confirmButtonText: 'Confirmar',
         cancelButtonText: 'Cancelar',
-        allowOutsideClick: false
+        allowOutsideClick: false,
+        onOpen: drawPopup
       }).then(r => {
         if (r.value) {
           this.afiliacionService.DelService(index);
@@ -296,12 +291,10 @@ export class ConfigurarServiciosComponent implements OnInit {
         cancelButtonText: 'Cerrar'
       });*/
       return;
-    } 
-    this.stateEdit = true; 
+    }
+    this.stateEdit = true;
+    this.stateCreate = false;
     this.indiceActual = index;
-   /* if(svc.codDeudor !== 'DNI' && svc.codDeudor !== 'RUC' && svc.codDeudor !== 'Codigo Interno' && svc.codDeudor !== 'Otro Codigo' ){
-      console.log('cambios '+ svc.codDeudor);
-    } */
     this.serviceActual = svc;
     this.Formulario = true;
   }
@@ -310,9 +303,8 @@ export class ConfigurarServiciosComponent implements OnInit {
     if (this.indiceActual >= 0) {
       if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({
-          type: 'error',
           text: 'Ya existe un servicio con este nombre',
-          allowOutsideClick: false
+          onOpen: drawPopup
         });
         return;
       }
@@ -342,13 +334,13 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     else {
       Swal.fire({
-        type: 'info',
         title: 'Guardar',
         text: 'Los datos han sido guardados',
         showCloseButton: true,
         showCancelButton: false,
         showConfirmButton: true,
-        confirmButtonText: "Cerrar"
+        confirmButtonText: "Cerrar",
+        onOpen: drawPopup
       });
     }
     this.addNewAfterSave = false;

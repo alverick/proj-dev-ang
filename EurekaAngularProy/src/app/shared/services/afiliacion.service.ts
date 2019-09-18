@@ -277,6 +277,7 @@ export class AfiliacionService {
   }
 
   Descartar(indice: number, isNew: boolean) {
+    console.log('descartar', isNew);
     this.Guardado = false;
     if (isNew && this.services.length > 1 && indice >= 0 && indice === (this.services.length - 1)) {
       let svc = this.services[this.services.length-1];

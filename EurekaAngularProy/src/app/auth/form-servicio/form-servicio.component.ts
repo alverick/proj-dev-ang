@@ -18,7 +18,7 @@ export class FormServicioComponent implements OnInit {
       stateEdit.onFormAction.subscribe(e => this.formAction(e));
     }
 
-  @Input() set service(value: ServiceModel) { 
+  @Input() set service(value: ServiceModel) {
     if (value === null || value === undefined) {
       this._service = {
         nombre: 'Mensualidad',
@@ -37,7 +37,7 @@ export class FormServicioComponent implements OnInit {
       }
       this.simboloMoneda = 'S/';
     }
-    else { 
+    else {
       this._service = value;
       this.simboloMoneda = value.simboloMoneda
       this._service.simboloMoneda = this.simboloMoneda;
@@ -68,8 +68,8 @@ export class FormServicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
-    var  montod = (!this._service.monto ? '1.00':this._service.monto);
-    var porcentajed = (!this._service.porcentaje ? '1' : this._service.porcentaje); 
+    var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
+    var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
     this.frm = this.fb.group({
       nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3)]),
       codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
@@ -84,8 +84,8 @@ export class FormServicioComponent implements OnInit {
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
-      monto:   [montod],
-      porcentaje: [porcentajed]
+      monto: new FormControl({ value: montod, disabled: true }),
+      porcentaje: new FormControl({ value: porcentajed, disabled: true })
     });
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
@@ -167,7 +167,7 @@ export class FormServicioComponent implements OnInit {
               } else {
 
                 let value: ServiceModel;
-                if (this.editMode) { 
+                if (this.editMode) {
                   value = this._service;
                   value.nroCuenta = this.frm.value.nroCuenta;
                   value.moneda = this.frm.value.moneda;
@@ -256,7 +256,7 @@ export class FormServicioComponent implements OnInit {
                 allowOutsideClick: false, });
             } else {
               let value: ServiceModel;
-              if (this.editMode) { 
+              if (this.editMode) {
                 value = this._service;
                 value.nroCuenta = this.frm.value.nroCuenta;
                 value.moneda = this.frm.value.moneda;
@@ -287,7 +287,7 @@ export class FormServicioComponent implements OnInit {
                         allowOutsideClick: false, });
           } else {
             let value: ServiceModel;
-            if (this.editMode) { 
+            if (this.editMode) {
               value = this._service;
               value.nroCuenta = this.frm.value.nroCuenta;
               value.moneda = this.frm.value.moneda;
@@ -300,7 +300,7 @@ export class FormServicioComponent implements OnInit {
             else {
               value = this.frm.value;
             }
-            value.simboloMoneda = this.simboloMoneda; 
+            value.simboloMoneda = this.simboloMoneda;
             this.grabar.emit(value);
           }
       }
@@ -311,41 +311,53 @@ export class FormServicioComponent implements OnInit {
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
   }
 
-  changeMora(changeData: boolean = true) { 
-    this.cobraMora = (this.f.cobraMora.value === 'S'); 
+  changeMora(changeData: boolean = true) {
+    this.cobraMora = (this.f.cobraMora.value === 'S');
 
     if (this.cobraMora) {
- 
+
       this.f.periodoMora.setValidators([Validators.required]);
+      this.f.monto.enable();
       this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)])
       this.f.porcentaje.clearValidators();
-      if (changeData)
-        this.f.porcentaje.value = "1";
+      this.f.porcentaje.disable();
+      if (changeData) {
+        this.f.porcentaje.reset("1.00");
+      }
     } else {
       this.f.periodoMora.clearValidators();
-      this.f.periodoMora.reset();
       this.f.monto.clearValidators();
-      if (changeData)
-        this.f.monto.value = "1.00";
+      this.f.monto.disable();
+      if (changeData) {
+        this.f.monto.reset("1.00");
+      }
       this.f.porcentaje.clearValidators();
-      if (changeData)
-        this.f.porcentaje.value = "1";
+      this.f.porcentaje.disable();
+      if (changeData) {
+        this.f.porcentaje.reset("1.00");
+      }
     }
   }
 
-  changeTipoMora(changeData: boolean = true) { 
+  changeTipoMora(changeData: boolean = true) {
     this.cobraMonto = (this.f.tipoMora.value === "M");
     this.cobraPorcentaje = (this.f.tipoMora.value === "P");
     if (this.cobraMora && this.cobraMonto) {
+      this.f.monto.enable();
       this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)]);
       this.f.porcentaje.clearValidators();
-      if(changeData)
-      this.f.porcentaje.value = "1";
+      this.f.porcentaje.disable();
+      if(changeData) {
+        this.f.porcentaje.reset("1.00");
+      }
     } else if (this.cobraMora && this.cobraPorcentaje) {
+      this.f.porcentaje.enable();
       this.f.porcentaje.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.01), Maximo(100)]);
       this.f.monto.clearValidators();
-      if(changeData)
-      this.f.monto.value = "1.00";
+      this.f.monto.disable();
+      if(changeData) {
+        this.f.monto.reset("1.00");
+      }
     }
   }
 
@@ -359,7 +371,7 @@ export class FormServicioComponent implements OnInit {
     }
   }
 
-  formAction(action: string){ 
+  formAction(action: string){
     if (action === 'save') {
       Object.keys(this.frm.controls).forEach(c => {
         this.frm.controls[c].markAsDirty();

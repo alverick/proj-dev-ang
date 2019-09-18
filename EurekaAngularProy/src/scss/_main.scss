@@ -1,4 +1,9 @@
 @import "_variables.scss";
+
+body {
+  background-color: #f4f5f7 !important;
+}
+
 .body {
     background-color: #f4f5f7 !important;
 }
@@ -116,6 +121,10 @@
   &:focus {
     background-color: $greenclaro !important;
   }
+  &.btn-disabled {
+    background-color: #9b9b9b !important;
+    border: solid 1px #9b9b9b !important;
+  }
 }
 
 .btn-outline-green {
@@ -124,6 +133,10 @@
   background-color: $blanco !important;
   border:  solid 1px $blanco !important;
   color: $green !important;
+
+  &.btn-disabled {
+    color: #9b9b9b !important;
+  }
 }
 
 .messsage-error {
