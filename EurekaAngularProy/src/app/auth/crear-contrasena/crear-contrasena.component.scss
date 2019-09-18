@@ -21,6 +21,10 @@
   a{
    // @include font-text(16px, $weight:normal);  
     color: $green;  
+    font-size: 16px;
+    font-weight: 600;
+    font-family: Omnes;
+    text-decoration:underline;
   }
 
   .cuadro-form{

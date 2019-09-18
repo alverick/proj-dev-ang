@@ -9,6 +9,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { drawPopup } from 'src/app/shared/services/popups';
+
 
 @Component({
   selector: 'app-login',
@@ -116,15 +118,17 @@ export class LoginComponent implements OnInit {
 
   mensaje(tipo: any, titulo: string, text: string){
     Swal.fire({
-      type: tipo ,
+     // type: tipo ,
       title: titulo ,
       text: text,
       showCloseButton: true,
-      showCancelButton: true,
-      showConfirmButton: false,
+      showCancelButton: false,
+      showConfirmButton: true,
       cancelButtonColor: '#d33',
-      cancelButtonText:  'Cerrar',
-      allowOutsideClick: false,
+      //cancelButtonText:  'Cerrar',
+      allowOutsideClick: false, 
+      confirmButtonText: 'Cerrar',
+      onOpen: drawPopup, 
     });
   }
 
@@ -189,13 +193,18 @@ export class LoginComponent implements OnInit {
           this.codRespuesta= value.codRespuesta;
           if(value.paramStr==="Un session ya se encuentra activa"){
             Swal.fire({
-              imageUrl: '/assets/images/complain.svg',
+             // imageUrl: '/assets/images/complain.svg',
               imageHeight: 100,
               title:'Existe una Sesión Activa',
-              cancelButtonText: 'Cerrar',
-              cancelButtonColor: '#d33',
+             // cancelButtonText: 'Cerrar', 
               showCloseButton: true,
-              allowOutsideClick: false
+              showCancelButton: false,
+              showConfirmButton: true,
+              cancelButtonColor: '#d33',
+              //cancelButtonText:  'Cerrar',
+              allowOutsideClick: false, 
+              confirmButtonText: 'Cerrar',
+              onOpen: drawPopup, 
             })
           }else if(value.estado===true && this.intentos<=6){
                    
