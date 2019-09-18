@@ -23,9 +23,19 @@
     //history.pushState(null, null, 'login');
     window['_url_loop_'] = 'login';
     window.addEventListener('popstate', function(event) {
-      let _url_ = window['_url_loop_']; 
+      let _url_ = window['_url_loop_'];
       history.pushState(null, null, _url_);
     });
   </script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148142629-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-148142629-1');
+</script>
 </body>
 </html>

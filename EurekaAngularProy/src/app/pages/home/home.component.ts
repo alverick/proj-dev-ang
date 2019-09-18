@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit {
 
   private debtsUpdate: DebtEdit = new DebtEdit();
 
-  typeList: Type[];
+  typeList: any[];
   waypayList: WayPay[];
   DateList: Date[];
 
@@ -119,7 +119,7 @@ export class HomeComponent implements OnInit {
   date: String[];
 
   serviceSelected: String;
-  services: String[];
+  services: any[];
 
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = true;
@@ -326,7 +326,7 @@ orderList(index: number, asc: boolean) {
 
 
     if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
-      ///       dateFrom es inputDate1              | dateTo  es inputDate2 
+      ///       dateFrom es inputDate1              | dateTo  es inputDate2
           if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
 
 
@@ -673,7 +673,7 @@ orderList(index: number, asc: boolean) {
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
       onOpen: drawPopup
-    }).then((result) => { 
+    }).then((result) => {
       if (result.value) {
         this.spinner.show();
 
@@ -705,7 +705,7 @@ orderList(index: number, asc: boolean) {
     confirmButtonText: 'Si, Borralo',
     cancelButtonText: 'Cerrar',
     onOpen: drawPopup
-  }).then((result) => { 
+  }).then((result) => {
     if (result.value) {
       this.spinner.show();
       this.transactionService.deleteDeuda(item.id)
@@ -745,7 +745,7 @@ MostrarListaSelect() {
     if( this.transactionService.debtItems.data.length > 0){
       if (this.validaFiltro()) {
         this.transactionService.report(this.filtro)
-        .subscribe((r: Blob) => { 
+        .subscribe((r: Blob) => {
           saveAs(r, "reporte.xlsx");
         });
       }
@@ -755,11 +755,15 @@ MostrarListaSelect() {
 
   }
 
-  estaVencido(itm: Debts){
-    return (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && itm.dueDate < new Date();
+  estaVencido(itm: Debts): boolean{
+    console.log(itm);
+    let today = new Date();
+    let resp = (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && (itm.dueDate !== null) && (itm.dueDate < today);
+    console.log(resp);
+    return resp;
   }
 
-  MontoBlur(e) { 
+  MontoBlur(e) {
     let initalValue = parseFloat(e.newAmount);
     if(!isNaN(initalValue))
       e.newAmount = initalValue.toFixed(2);
