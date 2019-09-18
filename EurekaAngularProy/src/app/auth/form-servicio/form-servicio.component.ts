@@ -4,6 +4,7 @@ import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
 import { MonedaModel, ServiceModel } from "src/app/shared/models";
 import Swal from "sweetalert2";
 import { ConfigurarServiciosComponent } from "../configurar-servicios/configurar-servicios.component";
+import { drawPopup } from 'src/app/shared/services/popups';
 
 @Component({
   selector: 'app-form-servicio',
@@ -128,42 +129,38 @@ export class FormServicioComponent implements OnInit {
           if (monto !== null ) {
             if (monto > 1000 ) {
               Swal.fire({
-                type: 'error',
                 text: 'el maximo monto que se puede ingresa es 1000',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonColor: '#d33',
                 cancelButtonText:  'Cerrar',
                 allowOutsideClick: false,
-
+                onOpen: drawPopup
               });
               return;
             }
             if(monto < 1 ) {
               Swal.fire({
-                type: 'error',
                 text: 'el minimo monto que se puede ingresa es 1',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonColor: '#d33',
                 cancelButtonText:  'Cerrar',
                 allowOutsideClick: false,
-
+                onOpen: drawPopup
               });
               return;
             } else {
               if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
                 Swal.fire({
-                  type: 'error',
-                  html: 'Debe escoger un medio de pago',
+                  text: 'Debe escoger un medio de pago',
                   showCloseButton: true,
                   showCancelButton: true,
                   showConfirmButton: false,
-                  cancelButtonColor: '#d33',
                   cancelButtonText:  'Cerrar',
-                  allowOutsideClick: false,});
+                  allowOutsideClick: false,
+                  onOpen: drawPopup
+                });
               } else {
 
                 let value: ServiceModel;
@@ -188,15 +185,13 @@ export class FormServicioComponent implements OnInit {
 
           }else {
             Swal.fire({
-              type: 'error',
               text: 'Ingrese el monto',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
               allowOutsideClick: false,
-
+              onOpen: drawPopup
             });
             return;
           }
@@ -204,56 +199,53 @@ export class FormServicioComponent implements OnInit {
         } else {
           if (porcentaje === null) {
             Swal.fire({
-              type: 'error',
               text: 'Ingrese el porcentaje',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
               allowOutsideClick: false,
+              onOpen: drawPopup
 
             });
             return;
           }
           if (porcentaje > 100 ) {
             Swal.fire({
-              type: 'error',
               text: 'el maximo porcentaje que se puede ingresa es 100',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
               allowOutsideClick: false,
+              onOpen: drawPopup
 
             });
             return;
           }
           if (porcentaje < 0.01 ) {
             Swal.fire({
-              type: 'error',
               text: 'el minimo porcentaje 0.01%',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
               allowOutsideClick: false,
+              onOpen: drawPopup
 
             });
             return;
           } else {
             if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
               Swal.fire({
-                type: 'error',
                 html: 'Debe escoger un medio de pago',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonColor: '#d33',
                 cancelButtonText:  'Cerrar',
-                allowOutsideClick: false, });
+                allowOutsideClick: false,
+                onOpen: drawPopup
+               });
             } else {
               let value: ServiceModel;
               if (this.editMode) {
@@ -277,14 +269,16 @@ export class FormServicioComponent implements OnInit {
         }
       } else {
           if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-            Swal.fire({ type: 'error',
+            Swal.fire({
                         html: 'Debe escoger un medio de pago',
                         showCloseButton: true,
                         showCancelButton: true,
                         showConfirmButton: false,
                         cancelButtonColor: '#d33',
                         cancelButtonText:  'Cerrar',
-                        allowOutsideClick: false, });
+                        allowOutsideClick: false,
+                        onOpen: drawPopup
+                      });
           } else {
             let value: ServiceModel;
             if (this.editMode) {

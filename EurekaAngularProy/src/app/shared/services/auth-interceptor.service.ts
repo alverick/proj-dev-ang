@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material';
 import { LoginService } from './login.service';
 import { StorageService } from './storage.service';
+import { drawPopup } from './popups';
 
 @Injectable({
   providedIn: 'root'
@@ -50,9 +51,9 @@ export class AuthInterceptorService implements HttpInterceptor {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
               allowOutsideClick: false,
+              onOpen: drawPopup,
               onClose: () =>{
                 this.router.navigateByUrl('/login')
               }
@@ -66,9 +67,9 @@ export class AuthInterceptorService implements HttpInterceptor {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonColor: '#d33',
               cancelButtonText:  'Cerrar',
               allowOutsideClick: false,
+              onOpen: drawPopup,
               onClose: () =>{
                 this.router.navigateByUrl('/login')
               }

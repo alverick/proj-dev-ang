@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { ExcelService } from '../services/excel.service';
 import { NotifyService } from '../services/notify.service';
 import * as moment from 'moment';
+import { drawPopup } from '../services/popups';
 
 @Component({
   selector: 'app-header',
@@ -39,15 +40,14 @@ export class HeaderComponent implements OnInit {
   }
   mesageeError(tipo: any, titulo: string, text: string) {
     Swal.fire({
-      type: tipo ,
       title: titulo ,
       text: text,
       showCloseButton: true,
       showCancelButton: true,
       showConfirmButton: false,
-      cancelButtonColor: '#d33',
       cancelButtonText:  'Cerrar',
-      allowOutsideClick: false
+      allowOutsideClick: false,
+      onOpen: drawPopup
 
     });
   }
@@ -75,12 +75,12 @@ export class HeaderComponent implements OnInit {
     return moment.utc(date).fromNow();
   }
 
-  onScroll() { 
+  onScroll() {
     if (this.notify.messages.length > 0) {
       this.notify.loadMsgs();
     }
   }
 
-  onShowMessages() { 
+  onShowMessages() {
   }
 }

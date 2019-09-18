@@ -5,6 +5,7 @@ import { MatSnackBar, MatDialogRef } from "@angular/material";
 import { ExcelService } from "src/app/shared/services/excel.service";
 import Swal from "sweetalert2";
 import * as saveAs from 'file-saver';
+import { drawPopup } from "src/app/shared/services/popups";
 
 
 /*////////////////////////////////////////////////////////
@@ -65,12 +66,12 @@ import * as saveAs from 'file-saver';
 
      changestatus =true;
      openSnackBar() {
- 
+
       if(this.inputXlsForm.valid) {
         this.xlsValid= false;
       /*service*/
 
-        if(this.excelService.statusUpload == false) { 
+        if(this.excelService.statusUpload == false) {
           this.excelService.UploadExcel(this.files, this.excelService.service.name, this.changestatus )
           .subscribe(value => {
             this.excelService.idProcess = value.id;
@@ -101,7 +102,7 @@ import * as saveAs from 'file-saver';
     }
 
     private verifyStatus() {
-      let recursiveFunc = (value) => { 
+      let recursiveFunc = (value) => {
         if (value.status === "REJECTED") {
           this.excelService.statusUpload = false;
           this.excelService.errores = value.errors;
@@ -111,9 +112,9 @@ import * as saveAs from 'file-saver';
           this.excelService.errores = [];
           this.dialogRef.close();
           Swal.fire({
-            type: 'success',
             text: `Se cargaron ${value.rowsUploaded} registros`,
             showCloseButton: true,
+            onOpen: drawPopup
           });
         }
         else  {

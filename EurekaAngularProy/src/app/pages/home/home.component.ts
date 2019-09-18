@@ -283,7 +283,6 @@ orderList(index: number, asc: boolean) {
 
   mesageeError(tipo: any, titulo: string, text: string){
     Swal.fire({
-      type: tipo ,
       title: titulo ,
       html: text,
       showCloseButton: true,

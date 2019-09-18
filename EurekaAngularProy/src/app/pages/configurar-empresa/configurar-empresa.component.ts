@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { RubroModel } from 'src/app/shared/models';
 import { Router } from '@angular/router';
+import { drawPopup } from 'src/app/shared/services/popups';
 
 
 @Component({
@@ -80,13 +81,13 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
 // actualizado
   onSubmit() {
-    this.submitted = true; 
+    this.submitted = true;
 
     var correo =  parseInt(this.formGroup.value.email.toString().length);
 
     var Pass =  parseInt(this.formGroup.value.password.toString().length);
     var newPass =  parseInt(this.formGroup.value.newPassword.toString().length);
- 
+
     if (this.formGroup.valid) {
        if(correo==0){
         return;
@@ -103,7 +104,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       if(Pass > 0 && newPass == 0){
         this.mensaje('warning','Edicion de Empresa','Debe ingresar la nueva contraseña para continuar' );
         return;
-      } 
+      }
       const datosEmpresa = this.formGroup.value;
       const enterprise = {
         ruc: datosEmpresa.ruc,
@@ -112,7 +113,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
         password: datosEmpresa.password,
         newPassword: datosEmpresa.newPassword,
         confirmNewPassword: datosEmpresa.confirmNewPassword
-      }; 
+      };
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
         enterpriseUpdate =>{
@@ -122,10 +123,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
             Swal.fire({
               title: 'Datos de Empresa guardados',
               text: 'Sus datos han sido actualizados',
-              type: 'warning',
               showCloseButton: true,
-              confirmButtonColor: '#3085d6',
               confirmButtonText: 'Aceptar',
+              onOpen: drawPopup
 
             }).then((result) => {
               if (result.value) {
@@ -154,14 +154,13 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
   mensaje(tipo: any, titulo: string, text: string){
     Swal.fire({
-      type: tipo ,
       title: titulo ,
-      html: text,
+      text: text,
       showCloseButton: true,
       showCancelButton: true,
       showConfirmButton: false,
-      cancelButtonColor: '#d33',
       cancelButtonText:  'Cerrar',
+      onOpen: drawPopup
 
     });
   }
