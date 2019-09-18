@@ -205,6 +205,13 @@ body{
               padding: 8px 3px;
               text-overflow: ellipsis;
 
+              &.texto-after {
+                @include font-text(32px, 500);
+                text-align: center;
+                height: 300px;
+                color: #333333;
+              }
+
               &.c7, &.c8, &.c9 {
                 text-align: right;
               }
@@ -385,4 +392,3 @@ body{
     text-decoration: underline !important;
   }
 }
-
