@@ -271,7 +271,7 @@ orderList(index: number, asc: boolean) {
        (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)){
        this.messageTable = ' Para empezar, carga las deudas de tus clientes';
       } else{
-        this.messageTable ='No se encontro ningun Registro para esta Busqueda';
+        this.messageTable ='No se encontro ningun registro para esta busqueda';
       }
   }
 
@@ -283,7 +283,6 @@ orderList(index: number, asc: boolean) {
 
   mesageeError(tipo: any, titulo: string, text: string){
     Swal.fire({
-      type: tipo ,
       title: titulo ,
       html: text,
       showCloseButton: true,
@@ -756,10 +755,8 @@ MostrarListaSelect() {
   }
 
   estaVencido(itm: Debts): boolean{
-    console.log(itm);
     let today = new Date();
     let resp = (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && (itm.dueDate !== null) && (itm.dueDate < today);
-    console.log(resp);
     return resp;
   }
 

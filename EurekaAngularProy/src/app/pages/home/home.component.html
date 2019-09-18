@@ -39,7 +39,7 @@
                     <mat-option class="input-text"value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </mat-option>
                 </mat-select>
                 <button mat-button *ngIf="filtro.dateForFilter" matSuffix mat-icon-button aria-label="Clear"
-                  (click)="filtro.dateForFilter=null; $event.stopPropagation();">
+                  (click)="filtro.dateForFilter=null; filtro.dateFrom=null; filtro.dateTo=null; $event.stopPropagation();">
                   <i class="fa fa-close"></i>
                 </button>
               </mat-form-field>
@@ -277,6 +277,11 @@
                           <img src="assets/images/circle_cancel.svg" alt="Cancelar">
                         </div>
                       </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="ceroRegistros()">
+                    <td colspan="12" class="texto-after">
+                      {{messageTable}}
                     </td>
                   </tr>
                 </tbody>

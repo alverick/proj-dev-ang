@@ -8,6 +8,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import Swal from "sweetalert2";
 import { StorageService } from "./storage.service";
 import { Router } from "@angular/router";
+import { drawPopup } from "./popups";
 
 @Injectable()
 export class AfiliacionService {
@@ -80,9 +81,9 @@ export class AfiliacionService {
     var svc_old = this.services.find((v) => v.nombre === svc.nombre);
     if (svc_old) {
       Swal.fire({
-        type: 'error',
         text: 'Este servicio ya existe',
-        allowOutsideClick: false
+        allowOutsideClick: false,
+        onOpen: drawPopup
       });
     } else {
       this.services.push(svc);
@@ -277,6 +278,7 @@ export class AfiliacionService {
   }
 
   Descartar(indice: number, isNew: boolean) {
+    console.log('descartar', isNew);
     this.Guardado = false;
     if (isNew && this.services.length > 1 && indice >= 0 && indice === (this.services.length - 1)) {
       let svc = this.services[this.services.length-1];

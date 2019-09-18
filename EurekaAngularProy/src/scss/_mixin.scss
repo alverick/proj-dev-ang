@@ -12,7 +12,7 @@
     background-clip: padding-box;  /* stops bg color from leaking outside the border: */
   }
 
-  @mixin box-shadows($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4), $inset: "") {
+  @mixin box-shadows($x: 4px, $y: 10px, $blur: 0, $color: rgba(0,0,0,.1), $inset: 0) {
     @if ($inset != "") {
       @include css3-prefix('box-shadow', $inset $x $y $blur $color);
     } @else {

@@ -32,6 +32,10 @@
                                                 <td class="font-black-servicios-des-list">{{ getCanales(svc) }}</td>
                                             </tr>
                                             <tr>
+                                              <th class="font-black-servicios-list">Codigo Deudor</th>
+                                              <td class="font-black-servicios-des-list">{{ getCodDebtor(svc) }}</td>
+                                            </tr>
+                                            <tr>
                                                 <th class="font-black-servicios-list">Mora</th>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }}  </td>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'P'">{{ svc.porcentaje }} %  </td>
@@ -46,11 +50,11 @@
                             </div>
                         </perfect-scrollbar>
                         </div>
-                        <div  >
-                                <button type="button" (click)="MostarFormulario()" class="btn-outline-green">
+                        <div class="btn-col-1" >
+                                <button type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
                                   <span class="fa fa-plus-circle"></span>   Agregar otro servicio
                                 </button>
-                                <button   (click)="EnviarServicios()" class="mt-3 btn-eureca-green text-white">
+                                <button type="button" [disabled]="Formulario"  (click)="EnviarServicios()" class="mt-3 btn-eureca-green text-white" [class.btn-disabled]="Formulario">
                                  Finalizar
                                 </button>
                         </div>
