@@ -756,10 +756,8 @@ MostrarListaSelect() {
   }
 
   estaVencido(itm: Debts): boolean{
-    console.log(itm);
     let today = new Date();
     let resp = (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && (itm.dueDate !== null) && (itm.dueDate < today);
-    console.log(resp);
     return resp;
   }
 
