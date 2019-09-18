@@ -5,14 +5,9 @@
 @import '~src/scss/main';
 
 body{
-    background: #f4f5f7  !important; 
+    background: #f4f5f7 !important; 
   }  
-
  
-
-
-
-  
   .descripcion {  
     @include font-text(24px, $weight:normal); 
     color: $negro;

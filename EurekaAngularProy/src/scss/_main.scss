@@ -162,6 +162,11 @@
     color: $negro;
 }
 
+.swal2-content {
+    @include font-text(16px, $weight:500);
+    color: $negro;
+    text-align: center; 
+}
 .input-text{
     font-family: Omnes;
     font-size: 16px;
