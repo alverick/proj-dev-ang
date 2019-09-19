@@ -18,9 +18,26 @@
     }
   }
 
+  .progress-text {
+    @include font-text(14px);
+  }
+
   .errores {
+
     .header {
       @include font-text(14px, 500);
+
+      .texto {
+        float: left;
+      }
+
+      .resumen {
+        float: right;
+
+        span {
+          margin-right: 10px;
+        }
+      }
     }
 
     .list {

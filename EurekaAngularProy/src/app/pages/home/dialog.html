@@ -14,7 +14,7 @@
       <div class="text">¿No tienes la plantilla excel del servicio {{excelService.service.name}} <span class="link" (click)="descargarPlantilla()">Descargala aquí</span></div>
       <i class="fa fa-file-excel"></i>
     </div>
-    <img class="pb-3 img-excel" src="assets/images/excel.svg"> 
+    <img class="pb-3 img-excel" src="assets/images/excel.svg">
     <div class="text-center">
       <button class="btn-eureca-green" type="button" form="input-form" (click)="mostrarInput()">
         Seleccionar plantilla
@@ -30,9 +30,17 @@
       </mat-form-field>
     </form>
   </div>
-  <mat-progress-bar *ngIf="excelService.statusUpload" mode="indeterminate"></mat-progress-bar>
+  <div *ngIf="excelService.statusUpload" class="progress-text">{{progress.status}}</div>
+  <mat-progress-bar *ngIf="excelService.statusUpload" [mode]="progress.mode" [value]="progress.value" [bufferValue]="100"></mat-progress-bar>
   <div *ngIf="excelService.errores.length > 0" class="errores">
-    <div class="header">Se encontraron los siguientes errores:</div>
+    <div class="header">
+      <div class="texto">Se encontraron los siguientes errores:</div>
+      <div class="resumen">
+        <span *ngIf="rowsAccepted > 0" ><img src="assets/images/ok.svg"> {{rowsAccepted}}</span>
+        <span *ngIf="rowsRejected > 0"><img src="assets/images/cancel.svg"> {{rowsRejected}}</span>
+      </div>
+      <div class="clear-float"></div>
+    </div>
     <perfect-scrollbar class="list">
       <div class="err-item" *ngFor="let err of excelService.errores"><span *ngIf="err.row > 0">File {{err.row}} : </span>{{err.description}}</div>
     </perfect-scrollbar>

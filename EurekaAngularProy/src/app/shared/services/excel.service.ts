@@ -25,7 +25,7 @@ export class ExcelService {
 
   public exportAsExcelFile(json: any[], excelFileName: string): void {
 
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json); 
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     this.saveAsExcelFile(excelBuffer, excelFileName);
@@ -50,7 +50,8 @@ export class ExcelService {
 
 
   UploadExcel(files: any, service: string, changestatus: boolean): Observable<any> {
-    this.statusUpload = changestatus; 
+    this.statusUpload = changestatus;
+    this.errores = [];
     const url = `${this.URI_API}/debt/load/${service}?_=` + new Date().getTime();
     const opts={
       headers: {
@@ -60,7 +61,7 @@ export class ExcelService {
       }
     }
     const formData = new FormData();
-    formData.append('file', files[0], files[0].name) 
+    formData.append('file', files[0], files[0].name)
     return this.http.post<any>(url, formData, opts).pipe(
       catchError(error => throwError(error)));
   }
@@ -82,7 +83,7 @@ export class ExcelService {
       "Authorization": "bearer " + this.storage.getCurrentToken(),
       "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
       "Ocp-Apim-Trace": 'true'
-    }); 
+    });
     return this.http.get(url, {
       headers: headers,
       responseType: 'blob'
