@@ -281,7 +281,26 @@
                   </tr>
                   <tr *ngIf="ceroRegistros()">
                     <td colspan="12" class="texto-after">
-                      {{messageTable}}
+                       
+                        
+                      <div>  
+                          <div class="row">
+                              <div  class="pl-5 col-10 d-flex align-items-end">
+                                   {{messageTable}}   
+                              </div> 
+
+                              <div *ngIf="messageTable == 'Para empezar, carga las deudas de tus clientes'" > 
+                                  <div class="col-2">
+                                 
+                                      <img src="assets/images/path.svg"  >
+                                    
+                                  </div> 
+                              </div>
+                              
+                          </div>  
+                      </div>
+                      
+
                     </td>
                   </tr>
                 </tbody>

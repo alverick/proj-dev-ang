@@ -102,7 +102,8 @@ export class HomeComponent implements OnInit {
   mostrar: Boolean;
   inputEdit: Boolean;
   InputList: Boolean;
-
+  messagetablecode1: Boolean =false;
+  messagetablecode2: Boolean =false;
   private debtsUpdate: DebtEdit = new DebtEdit();
 
   typeList: any[];
@@ -262,6 +263,8 @@ orderList(index: number, asc: boolean) {
 }
 
   sendFiltro() {
+    this.messagetablecode1 = false;
+    this.messagetablecode2 = false;
     this.filtro.pageNumber = 1;
     this.consultaDeuda();
 
@@ -269,9 +272,10 @@ orderList(index: number, asc: boolean) {
        (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined)  &&
        (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
        (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)){
-       this.messageTable = ' Para empezar, carga las deudas de tus clientes';
+       this.messageTable = 'Para empezar, carga las deudas de tus clientes'; 
       } else{
-        this.messageTable ='No se encontro ningun registro para esta busqueda';
+       this.messageTable ='No se encontro ningun registro para esta busqueda';
+        
       }
   }
 
