@@ -1,25 +1,28 @@
-@import '~src/scss/normalize'; /*Reset Styles*/
+@import '~src/scss/normalize';
+
+/*Reset Styles*/
+
 @import '~src/scss/variables';
 @import '~src/scss/mixin';
 @import '~src/scss/landing';
 @import '~src/scss/main';
-body{
-  background: #f4f5f7  !important;
-  
-}  
+body {
+    background: #f4f5f7 !important;
+}
 
-.btn-eureca-green{
+.btn-eureca-green {
     @include btn-eureca;
     width: 207px;
     height: 48px;
     font-family: Omnes;
-    font-size: 16px; 
-    font-weight: 500; 
+    font-size: 16px;
+    font-weight: 500;
     display: block;
     margin-left: auto;
-    margin-right: auto;  
-  }
-  .cuadro-form{
-    @include cuadro(460px,auto);
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1); 
-  }
+    margin-right: auto;
+}
+
+.cuadro-form {
+    @include cuadro(460px, auto);
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+}
