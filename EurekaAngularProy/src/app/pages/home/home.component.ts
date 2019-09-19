@@ -150,6 +150,7 @@ export class HomeComponent implements OnInit {
  // mensaje grila
 
   messageTable: string ='';
+  showArrow: boolean = false;
 
   constructor(
     private storageService: StorageService,
@@ -272,10 +273,12 @@ orderList(index: number, asc: boolean) {
        (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined)  &&
        (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
        (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)){
-       this.messageTable = 'Para empezar, carga las deudas de tus clientes'; 
+       this.messageTable = 'Para empezar, carga las deudas de tus clientes';
+       this.showArrow = true;
       } else{
        this.messageTable ='No se encontro ningun registro para esta busqueda';
-        
+       this.showArrow = false;
+
       }
   }
 
@@ -402,6 +405,7 @@ orderList(index: number, asc: boolean) {
                 }, err => { this.spinner.hide(); });
           }
      this.messageTable = ' Para empezar, carga las deudas de tus clientes';
+     this.showArrow = true;
 
 }
   /*//////////////////////////////

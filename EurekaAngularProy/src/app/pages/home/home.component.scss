@@ -210,6 +210,12 @@ body{
                 text-align: center;
                 height: 300px;
                 color: #333333;
+
+                img {
+                  position: absolute;
+                  top: 47%;
+                  right: 10%;
+                }
               }
 
               &.c7, &.c8, &.c9 {
