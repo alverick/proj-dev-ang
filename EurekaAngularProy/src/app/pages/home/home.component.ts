@@ -124,7 +124,7 @@ export class HomeComponent implements OnInit {
 
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = true;
-
+  selectedUniverse = false;
 
   statusOptions : Array<Object> = [
     {  option:'PENDIENTE', state: '1'},
@@ -216,7 +216,7 @@ export class HomeComponent implements OnInit {
    // check
    //this.SeleccionarTodos();
    this.selectedAll = false;
-
+   this.selectedUniverse = false;
   }
 
   statusOpt(){
@@ -398,6 +398,7 @@ orderList(index: number, asc: boolean) {
                 this.transactionService.getDeuda(this.filtro)
                   .subscribe(debts => {
                   this.selectedAll = false;
+                  this.selectedUniverse = false;
                   this.spinner.hide();
                   if (cb) {
                     cb();
@@ -653,6 +654,7 @@ orderList(index: number, asc: boolean) {
 
   changePage(nro: number) {
     this.selectedAll = false;
+    this.selectedUniverse = false;
     this.filtro.pageNumber = nro;
     this.numeroPagina = nro;
     this.consultaDeuda();
@@ -662,19 +664,20 @@ orderList(index: number, asc: boolean) {
   EliminarSeleccionados() {
     const itemsParaEliminar = [];
     this.transactionService.debtItems.data.forEach(c => {
-    if (c.selected) {
-      itemsParaEliminar.push(c.id);
-    }
+      if (c.selected) {
+        itemsParaEliminar.push(c.id);
+      }
     });
 
-    if (itemsParaEliminar.length === 0 ) {
+    let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : itemsParaEliminar.length;
+    if (totalForDelete === 0 ) {
       this.mensaje( 'error', 'Error al Eliminar','¡Seleccione las filas a eliminar por favor!');
       return;
     }
 
- Swal.fire({
+    Swal.fire({
       title: '¿Seguro que quieres continuar?',
-      text: `Esta acción va a eliminar ${itemsParaEliminar.length} deudas`,
+      text: `Esta acción va a eliminar ${totalForDelete} deudas`,
       showCancelButton: true,
       showCloseButton: true,
       confirmButtonText: 'Confirmar',
@@ -684,13 +687,15 @@ orderList(index: number, asc: boolean) {
       if (result.value) {
         this.spinner.show();
 
-        this.transactionService.deleteAll(itemsParaEliminar)
-          .subscribe(() => {
+        let observable = this.selectedUniverse ?
+          this.transactionService.deleteFiltered(this.filtro):
+          this.transactionService.deleteAll(itemsParaEliminar);
+        observable.subscribe(() => {
             this.consultaDeuda(() =>
               {
                 Swal.fire({
                   title: 'Eliminado!',
-                  text: 'Se han eliminado ' + itemsParaEliminar.length + ' registros',
+                  text: 'Se han eliminado ' + totalForDelete + ' registros',
                   showCloseButton: true,
                   showCancelButton: false,
                   onOpen: drawPopup
@@ -730,7 +735,9 @@ orderList(index: number, asc: boolean) {
 
   SeleccionarTodos() {
     this.transactionService.debtItems.data.forEach(itm => itm.selected = this.selectedAll);
-
+    if (!this.selectedAll) {
+      this.selectedUniverse = false;
+    }
   }
 
 /*//////// O P E N  - D I A L O G ///////////////////// */

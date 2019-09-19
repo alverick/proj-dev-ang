@@ -108,6 +108,25 @@ export class TransactionService {
     return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));
   }
 
+  deleteFiltered(filtro: DebstFilter = null) {
+    if (filtro === null) {
+      filtro = this.lastFilter;
+    }
+    var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
+    var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
+    //fechas
+
+    if (filtro.service === null || filtro.service === undefined)
+      filtro.service = '';
+    if (filtro.status === null || filtro.status === undefined)
+      filtro.status = '';
+    if (filtro.dateForFilter === null || filtro.dateForFilter === undefined)
+      filtro.dateForFilter = '';
+
+    const url = `${this.URI_API}/debt/deleteFiltered?InputSearch=${filtro.inputSearch}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
+    return this.http.delete<Debts>(url).pipe(catchError(error => throwError(error)));
+  }
+
   // ESITAR LA DEUDA
     editDeuda(id: number, debts: DebtEdit): Observable<any>{
       // cambia link
