@@ -236,6 +236,7 @@ export class AfiliacionService {
           });
         });
         this.services = servicios;
+        console.log(this.services);
       });
 
 

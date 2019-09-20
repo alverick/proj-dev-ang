@@ -34,7 +34,7 @@
     <div class="form-group">
         <mat-form-field class="w-100">
             <mat-label>¿Que datos tienes de tus clientes?</mat-label>
-            <mat-select class="input-text"  formControlName="tipoDato" name="tipoDato" (change)="onChangeTipoDato()">
+            <mat-select class="input-text"  formControlName="tipoDato" name="tipoDato" (ngModelChange)="onChangeTipoDato()">
                 <mat-option class="input-text" >¿Que datos tienes de tus clientes?</mat-option>
                 <mat-option class="input-text"  *ngFor="let t of tiposDato" [value]="t.code">
                     {{t.name}}
@@ -43,7 +43,7 @@
             <mat-error class="messsage-error" *ngIf="f.tipoDato.invalid && f.tipoDato.hasError('required')">Elija una opcion</mat-error>
         </mat-form-field>
     </div>
-    <div class="form-group">
+    <div class="form-group" *ngIf="Dataparcial" >
         <mat-form-field class="w-100">
             <mat-label>¿Como quieres que te paguen tus clientes?</mat-label>
             <mat-select class="input-text"  formControlName="tipoPago" name="tipoPago">
@@ -68,7 +68,7 @@
         <div class="form-group col-md-6">
         <mat-form-field  >
             <mat-label>Tipo de Moneda</mat-label>
-            <mat-select class="input-text" formControlName="moneda" name="moneda" (change)="changeMoneda()">
+            <mat-select class="input-text" formControlName="moneda" name="moneda" (change)="changeMoneda()" (ngModelChange)="changeMoneda($event)">
                 <mat-option class="input-text">Tipo de Moneda</mat-option>
                 <mat-option class="input-text" *ngFor="let m of monedas" [value]="m.code">
                     {{m.name}}

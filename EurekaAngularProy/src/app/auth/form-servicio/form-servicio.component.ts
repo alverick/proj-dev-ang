@@ -13,7 +13,7 @@ import { drawPopup } from 'src/app/shared/services/popups';
 })
 export class FormServicioComponent implements OnInit {
   public editMode: boolean = false;
-
+  public Dataparcial: boolean = true;
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder,private stateEdit: ConfigurarServiciosComponent ) {
       stateEdit.onFormAction.subscribe(e => this.formAction(e));
@@ -97,19 +97,25 @@ export class FormServicioComponent implements OnInit {
 
     this.changeMora(false);
     this.changeTipoMora(false);
+ 
   }
 
   onChangeTipoDato() {
     if (this.frm.get('tipoDato').value === 'P') {
-      this.frm.get('tipoPago').setValue('C');
-      this.tiposPago.pop();
+     /* this.frm.get('tipoPago').setValue('C');
+      this.tiposPago.pop();*/
+      this.Dataparcial = false;
+
+    }else{
+      this.Dataparcial = true;
     }
-    else if (this.tiposPago.length === 1) {
+   /* else if (this.tiposPago.length === 1) {
       this.tiposPago.push({
         code: 'P',
         name: "Siempre la deuda que vence primero"
-      });
-    }
+      });  
+    }  */
+
   }
 
   onSubmitServicio() {
@@ -301,8 +307,19 @@ export class FormServicioComponent implements OnInit {
     }
   }
 
-  changeMoneda() {
+  changeMoneda(event) {
+    console.log('hola '+ event);
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
+  }
+
+ Codigo(event){
+    if(event === 'Otro'){
+      this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
+    }
+    else {
+      this.f.nameCod.clearValidators();
+      this.f.nameCod.reset();
+    }
   }
 
   changeMora(changeData: boolean = true) {
