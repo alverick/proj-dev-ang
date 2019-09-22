@@ -176,4 +176,33 @@ export class TransactionService {
       return this.http.post<any>(url, data).pipe(catchError(error => throwError(error)));
     }
 
+  getPayments(debtId: number): Observable<any[]> {
+    let url = `${this.URI_API}/payment/ofDebt/${debtId}?_=${new Date().getTime()}`;
+    return this.http.get<any[]>(url)
+      .pipe(map(p => {
+        p.forEach(v => v.editing = false);
+        return p;
+      }))
+      .pipe(catchError(err => throwError(err)));
+  }
+
+  addPayment(debtId: number, payment: any): Observable<any> {
+    let url = `${this.URI_API}/payment?_=${new Date().getTime()}`;
+    payment.debtId = debtId;
+    return this.http.post<any>(url, payment)
+      .pipe(catchError(err => throwError(err)));
+  }
+
+  editPayment(debtId: number, paymentId: number, payment: any): Observable<any> {
+    let url = `${this.URI_API}/payment/${paymentId}?_=${new Date().getTime()}`;
+    payment.debtId = debtId;
+    return this.http.put(url, payment)
+      .pipe(catchError(err => throwError(err)));
+  }
+
+  deletePayment(debtId: number, paymentId: number): Observable<any> {
+    let url = `${this.URI_API}/payment/${paymentId}/ofDebt/${debtId}?_=${new Date().getTime()}`;
+    return this.http.delete(url)
+      .pipe(catchError(err => throwError(err)));
+  }
 }

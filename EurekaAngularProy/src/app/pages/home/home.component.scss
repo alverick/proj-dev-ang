@@ -246,6 +246,14 @@ body{
                 text-align: right;
               }
 
+              .cnt-status {
+                position: relative;
+
+                .lnk-status {
+                  cursor: pointer;
+                }
+              }
+
               .btn-edit {
                 cursor: pointer;
 

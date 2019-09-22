@@ -1,0 +1,106 @@
+@import "../../../../scss/_variables.scss";
+@import "../../../../scss/_mixin.scss";
+
+.contenedor {
+  margin-top: 3px;
+  position: absolute;
+  @include box-shadows();
+  @include border-radius(4px);
+  background-color: #ffffff;
+  right: 0px;
+  width: 400px;
+  z-index: 1;
+  border: solid 1px #f0f0f0;
+
+  &.block {
+    display: block;
+  }
+
+  &.none {
+    display: none;
+  }
+
+  table {
+    width: 100%;
+
+    thead {
+      tr {
+        border-bottom: solid 1px #f0f0f0;
+
+        th {
+          @include font-text(14px, 500);
+          text-align: center;
+          color: $textblue;
+          padding: 8px 3px;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: solid 1px #f0f0f0;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        td {
+          @include font-text(14px);
+          color: $textblack;
+          padding: 8px 3px;
+          text-align: center;
+
+          &.c1 {
+            text-align: right;
+          }
+
+          &.c5 {
+            img {
+              width: 20px;
+              height: 20px;
+              cursor: pointer;
+            }
+
+            .btn-edit {
+              img {
+                width: 15px;
+                height: 15px;
+              }
+            }
+            .btn-delete {
+              img {
+                width: 15px;
+                height: 15px;
+              }
+            }
+          }
+
+          &.action {
+            button {
+              color: $textgreen;
+
+              img {
+                width: 20px;
+                height: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+:host ::ng-deep .full-width {
+  .mat-form-field-wrapper {
+    .mat-form-field-flex {
+      .mat-form-field-infix {
+        width: 100%;
+
+        input {
+          @include font-text(14px);
+        }
+      }
+    }
+  }
+}

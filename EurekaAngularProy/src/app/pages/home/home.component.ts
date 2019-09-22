@@ -464,7 +464,9 @@ orderList(index: number, asc: boolean) {
     item.newDueDate = item.dueDate;
     item.newEmissionDate = item.emissionDate;
     item.newConcept = item.concept;
-    item.newAmount = item.amount;
+    item.newAmount = item.amount.toFixed(2);
+    item.newFirstName = item.firstName;
+    item.newLastName = item.lastName;
   }
 
   selectEstPag(event, item: Debts){
@@ -552,6 +554,26 @@ orderList(index: number, asc: boolean) {
         this.mensaje( 'error', 'Error en la fecha','La fecha de Emision no puede ser mayor a la fecha de vencimiento');
         return;
       }
+
+      if (item.newFirstName !== null && item.newFirstName !== undefined && item.newFirstName !== '') {
+        if (item.newFirstName.length < 3) {
+          this.mensaje( 'error', 'Error en el nombre','El nombre no debe tener menos de 3 carácteres');
+          return;
+        }
+      }
+
+      if (item.newLastName !== null && item.newLastName !== undefined && item.newLastName !== '') {
+        if (item.newLastName.length < 3) {
+          this.mensaje( 'error', 'Error en el apellido','El apellido no debe tener menos de 3 carácteres');
+          return;
+        }
+      }
+
+      if ((item.newFirstName === null || item.newFirstName === undefined || item.newFirstName === '') &&
+        (item.newLastName === null && item.newLastName === undefined && item.newLastName === '')) {
+        this.mensaje('error', 'Error en nombre o apellido', 'El nombre o el apellido debe tener un valor');
+        return;
+      }
     }
 
     Swal.fire({
@@ -571,7 +593,8 @@ orderList(index: number, asc: boolean) {
           dueDate: item.newDueDate,
           concept: item.newConcept,
           amount: parseFloat(item.newAmount.toString()),
-
+          firstName: item.newFirstName,
+          lastName: item.newLastName
         };
 
 
@@ -582,16 +605,20 @@ orderList(index: number, asc: boolean) {
             if (debtsUpdate.success) {
               Swal.fire({
                 titleText: 'Editado!',
-                text: 'Su registro a sido editado',
+                text: 'Su registro ha sido editado',
                 showCloseButton: true,
                 showCancelButton: false,
                 onOpen: drawPopup,
                 onAfterClose: () => {
+                  console.log(item);
                   item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
                   item.dueDate = item.newDueDate;
                   item.concept = item.newConcept;
-                  item.amount  = item.newAmount;
+                  item.amount  = parseFloat(item.newAmount);
+                  item.totalAmount = item.amount + item.interestAmount;
+                  item.firstName = item.newFirstName,
+                  item.lastName = item.newLastName,
                  // item.edit = false;
                  item.editInput =false;
                  item.editButton = false;

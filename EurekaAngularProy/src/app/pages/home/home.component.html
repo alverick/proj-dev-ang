@@ -246,8 +246,22 @@
                           </div>
                     </td>
                     <td class="c3">{{items.code}}</td>
-                    <td class="c4">{{items.firstName}}</td>
-                    <td class="c5">{{items.lastName}}</td>
+                    <td class="c4">
+                      <span *ngIf="!items.editInput">{{items.firstName}}</span>
+                      <div *ngIf="items.editInput" class="content-input-icon position-relative">
+                        <mat-form-field style="width: 90px">
+                          <input style="font-size: 14px;" matInput [(ngModel)]="items.newFirstName" maxlength="10" minlength="3" type="text">
+                        </mat-form-field>
+                      </div>
+                    </td>
+                    <td class="c5">
+                      <span *ngIf="!items.editInput">{{items.lastName}}</span>
+                      <div *ngIf="items.editInput" class="content-input-icon position-relative">
+                        <mat-form-field style="width: 90px">
+                          <input style="font-size: 14px;" matInput [(ngModel)]="items.newLastName" maxlength="20" minlength="3" type="text">
+                        </mat-form-field>
+                      </div>
+                    </td>
                     <td class="c6">{{items.service}}</td>
                     <td class="c7">
                         <span *ngIf="!items.editInput && items.amount > 0">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
@@ -264,15 +278,20 @@
                         <span *ngIf="items.totalAmount > 0" >{{items.currency}} {{items.totalAmount| number : '1.2-2'}}</span>
                     </td>
                     <td class="c10">
-                      <span *ngIf="items.status === 'PAGADO'" class="text-success">
-                        Pagado <img src="assets/images/ok.svg" alt="ok">
-                      </span>
-                      <span *ngIf="items.status === 'PARCIAL'" [class.text-danger]="estaVencido(items)">
-                        Parcial <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
-                      </span>
-                      <span  *ngIf="items.status === 'PENDIENTE'" [class.text-danger]="estaVencido(items)">
-                        Pendiente <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
-                      </span>
+                      <div class="cnt-status">
+                        <div class="lnk-status" (click)="appPagos.toggle()">
+                          <span *ngIf="items.status === 'PAGADO'" class="text-success">
+                            Pagado <img src="assets/images/ok.svg" alt="ok">
+                          </span>
+                          <span *ngIf="items.status === 'PARCIAL'" [class.text-danger]="estaVencido(items)">
+                            Parcial <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
+                          </span>
+                          <span  *ngIf="items.status === 'PENDIENTE'" [class.text-danger]="estaVencido(items)">
+                            Pendiente <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
+                          </span>
+                        </div>
+                        <app-pagos #appPagos [debtId]="items.id" [(status)]="items.status"></app-pagos>
+                      </div>
                     </td>
                     <td class="c11">
                       <div *ngIf="items.svcStatus !== 1" class="d-flex">
