@@ -134,24 +134,22 @@ div.mat-form-field-infix {
 /////////////////////////////////////////////////////////////
 .btn-eureca-green {
     @include btn-eureca;
+    @include font-text(16px);
     width: 232px;
     height: 48px;
-    font-family: Omnes;
-    font-size: 16px;
     float: right;
     margin-bottom: 23px;
 }
 
 // boton Rgistrate
 .btn-eureca-green-register {
+  @include font-text(16px);
     background-color: $blanco;
     border-radius: 4px;
     color: $green;
     border: solid 1px $green;
     width: 232px;
     height: 48px;
-    font-family: Omnes;
-    font-size: 16px;
     float: right;
     @include box-shadows(0,
     1px,
@@ -188,14 +186,8 @@ div.mat-form-field-infix {
 }
 
 .texto-azul {
+  @include font-text(28px, 500);
     color: $azul;
-    font-size: 28px;
-    font-family: Omnes;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
     text-align: center;
 }
 
@@ -229,13 +221,7 @@ div.mat-form-field-infix {
 
 
 .texto-login {
-    font-family: Omnes;
-    font-size: 48px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
+  @include font-text(48px, 500);
     color: #ffffff;
 }
 
@@ -279,13 +265,7 @@ div.mat-form-field-infix {
 }
 
 .texto-negro {
-    font-family: Omnes;
-    font-size: 16px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
+  @include font-text(16px, 500);
     color: #333333;
 }
 
