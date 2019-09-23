@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, HostListener, ViewChild, ElementRef, Renderer2 } from "@angular/core";
 import Swal from "sweetalert2";
 import { drawPopup } from "src/app/shared/services/popups";
 import { TransactionService } from "src/app/shared/services/transaction.service";
@@ -18,13 +18,19 @@ export class PagosComponent implements OnInit {
 
   @Input() debtId: number;
   @Input() status: string;
+  @Input() currency: string;
   @Output() statusChange = new EventEmitter<string>();
   @Output() showChange = new EventEmitter<boolean>();
 
-  constructor(private transaction: TransactionService, private pagoService: PagoService) {
+  private removeOutside: () => void = null;
+
+  constructor(private transaction: TransactionService, private pagoService: PagoService,
+    private _elementRef: ElementRef, private renderer: Renderer2) {
     pagoService.closeAll.subscribe(() => {
       this.showed = false;
       this.showChange.emit(this.showed);
+      if (this.removeOutside !== null)
+        this.removeOutside();
     });
   }
 
@@ -43,14 +49,24 @@ export class PagosComponent implements OnInit {
   }
 
   public show() {
+    console.log('pagos - show', this.debtId);
     if (!this.showed) {
       this.pagoService.closeAll.emit();
       this.showed = true;
+      setTimeout(() => {
+        this.removeOutside = this.renderer.listen('document', 'click', (e) => this.outsideClick(e.target));
+      }, 100);
     }
     else {
       this.showed = false;
     }
     this.showChange.emit(this.showed);
+  }
+
+  private outsideClick(target) {
+      if (!(this._elementRef.nativeElement as HTMLElement).contains(target)) {
+        this.pagoService.closeAll.emit();
+      }
   }
 
   mensaje(tipo: any, titulo: string, text: string){
@@ -179,7 +195,9 @@ export class PagosComponent implements OnInit {
   }
 
   addItm() {
-    this.items.push({ newAmount: 0, newDate: new Date(), newChannel: 'Efectivo', canEdit: true, editing: true });
+    if (this.items[this.items.length-1].id) {
+      this.items.push({ currency: this.currency, newAmount: 0, newDate: new Date(), newChannel: 'Efectivo', canEdit: true, editing: true });
+    }
   }
 
   delItm(itm) {

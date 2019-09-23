@@ -290,7 +290,7 @@
                             Pendiente <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
                           </span>
                         </div>
-                        <app-pagos #appPagos [debtId]="items.id" [(status)]="items.status" (showChange)="items.verPagos = $event"></app-pagos>
+                        <app-pagos #appPagos [debtId]="items.id" [(status)]="items.status" [currency]="items.currency" (showChange)="items.verPagos = $event"></app-pagos>
                       </div>
                     </td>
                     <td class="c11">

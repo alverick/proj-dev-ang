@@ -137,7 +137,7 @@ export class HomeComponent implements OnInit {
 
   filtro: DebstFilter = {
     pageNumber: 1,
-    columnName: 'FirstName',
+    columnName: '',
     asc: true,
     inputSearch: '',
     service: '',
@@ -610,8 +610,8 @@ orderList(index: number, asc: boolean) {
                 showCancelButton: false,
                 onOpen: drawPopup,
                 onAfterClose: () => {
-                  console.log(item);
-                  item.status = debtsUpdate.status;
+                  this.consultaDeuda();
+                  /*item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
                   item.dueDate = item.newDueDate;
                   item.concept = item.newConcept;
@@ -623,7 +623,7 @@ orderList(index: number, asc: boolean) {
                  item.editInput =false;
                  item.editButton = false;
                  item.editPending = false;
-                 item.newStatus = '1';
+                 item.newStatus = '1';*/
                 }
               });
             }
