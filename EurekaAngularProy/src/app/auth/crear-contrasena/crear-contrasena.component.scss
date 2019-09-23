@@ -18,7 +18,7 @@
       color: #333333;
   }
   
-  a {
+  small {
       // @include font-text(16px, $weight:normal);  
       color: $green;
       font-size: 16px;
@@ -31,3 +31,13 @@
       @include cuadro(460px, $height: 720px);
       box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   }
+
+  .terminos-title{
+    @include font-text(24px, $weight: 500);
+    color: #0d131d;
+  }
+  .terminos-body{
+    @include font-text(16px, $weight:200);
+    color: #0d131d;
+  }
+

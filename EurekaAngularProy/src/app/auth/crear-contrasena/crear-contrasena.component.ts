@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { RubroModel } from 'src/app/shared/models';
 import { drawPopup } from 'src/app/shared/services/popups';
 
+declare var $: any;
 @Component({
   selector: 'app-crear-contrasena',
   templateUrl: './crear-contrasena.component.html',
@@ -57,18 +58,17 @@ export class CrearContrasenaComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    if( parseInt(ruc.substring(0,2)) == 20  ||  parseInt(ruc.substring(0,2)) == 10 ){
+   /* if( parseInt(ruc.substring(0,2)) == 20  ||  parseInt(ruc.substring(0,2)) == 10 ){
 
     }else{
       this.mensaje('warning','Registrame','Debe ingresar un Ruc valido' );
       return;
-    }
-
-   /* if(!this.registerForm.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+    } 
+    if(!this.registerForm.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
       this.mensaje('warning','Registrame','Debe ingresar un email valido' );
       return;
     }
- */
+ 
 
    //  if(this.registerForm.value.ruc)
     if (this.registerForm.value.acceptterms == false) {
@@ -76,7 +76,7 @@ export class CrearContrasenaComponent implements OnInit {
       this.mensaje('warning','Registrame','Debe aceptar los terminos y condiciones' );
 
       return;
-    }
+    } */
 
     this.afiliacionService.Registrar({
       ruc: this.registerForm.value.ruc,
@@ -126,14 +126,18 @@ export class CrearContrasenaComponent implements OnInit {
     });
   }
 
+
+  terminos(){
+    $('#terminos').modal('show');
+  }
   mensaje(tipo: any, titulo: string, text: string){
     Swal.fire({
      // type: tipo ,
       title: titulo ,
       html: text,
-      showCloseButton: true,
-      showCancelButton: true,
-      showConfirmButton: false,
+      showCloseButton: false,
+      showCancelButton: false,
+      showConfirmButton: true,
       cancelButtonColor: '#d33',
       cancelButtonText:  'Cerrar',
       onOpen: drawPopup,
