@@ -2,7 +2,7 @@ declare var $: any;
 
 export function drawPopup(el) {
   $(el).find('.swal2-title')
-    .css('font-family', 'Omnes')
+    .css('font-family', 'Geometria')
     .css('font-size', '28px')
     .css('font-weight', '500')
     .css('font-style', 'normal')
@@ -10,7 +10,7 @@ export function drawPopup(el) {
     .css('line-height', 'normal')
     .css('letter-spacing', 'normal');
   $(el).find('.swal2-content')
-    .css('font-family', 'Omnes')
+    .css('font-family', 'Geometria')
     .css('font-size', '16px')
     .css('font-weight', 'normal')
     .css('font-style', 'normal')

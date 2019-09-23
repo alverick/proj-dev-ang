@@ -137,13 +137,7 @@ body {
 }
 
 .messsage-error {
-    font-family: Omnes;
-    font-size: 12px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
+  @include font-text(12px, 500);
     color: $rojo;
 }
 
@@ -179,12 +173,6 @@ body {
 }
 
 .input-text {
-    font-family: Omnes !important;
-    font-size: 16px !important;
-    font-weight: normal !important;
-    font-style: normal !important;
-    font-stretch: normal !important;
-    line-height: normal !important;
-    letter-spacing: normal !important;
+  @include font-text(16px);
     color: #333333 !important;
 }
