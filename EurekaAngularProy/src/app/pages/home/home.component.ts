@@ -493,20 +493,20 @@ orderList(index: number, asc: boolean) {
   BotonActualizar(item: Debts) {
     // MONTO
     if(item.newStatus==='1') {
-      if(item.newAmount.toString() ==='' ||item.newAmount.toString() === null){
+      if(item.dueDate && (item.newAmount.toString() ==='' ||item.newAmount.toString() === null)){
         this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
         return;
       }
-      if(item.newAmount.toString().length < 1){
+      if(item.dueDate && (item.newAmount.toString().length < 1)){
         this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
         return;
       }
-      if(parseInt(item.newAmount.toString()) < 1){
+      if(item.dueDate && (parseInt(item.newAmount.toString()) < 1)){
         this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
         return;
       }
 
-      if(!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)){
+      if(item.dueDate && (!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/))){
         this.mensaje( 'error', 'Error en el monto','Ingrese un Monto valido minimo de 1 y maximo de 9 caracteres enteros y 2 decimales como maximo');
         return;
       }
