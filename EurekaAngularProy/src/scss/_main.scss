@@ -1,7 +1,6 @@
 @import "_variables.scss";
-
 body {
-  background-color: #f4f5f7 !important;
+    background-color: #f4f5f7 !important;
 }
 
 .body {
@@ -44,7 +43,7 @@ body {
         margin-right: 2px;
     }
     .mat-form-field-label {
-        @include font-text(15px);
+        @include font-text(14px);
         color: $textblack !important;
         top: 21px;
     }
@@ -63,10 +62,13 @@ body {
 
 .mat-form-field.mat-focused {
     .mat-form-field-label {
-        color: $textblue !important;
+        color: $textblack !important;
     }
     .mat-form-field-ripple {
-        background-color: $textblue !important;
+        background-color: $green !important;
+    }
+    .mat-select-arrow {
+      color: $textgreen !important;
     }
 }
 
@@ -79,74 +81,66 @@ body {
 }
 
 .chk-vertical {
-  display: block;
-  width: 40px;
-  text-align: center;
-
-  .mat-checkbox-ripple {
-    left: calc(50% - 12px);
-    top: calc(50% - 12px);
-    height: 24px;
-    width: 24px;
-  }
-
-  .mat-checkbox-layout {
-    margin-bottom: 0;
-  }
+    display: block;
+    width: 40px;
+    text-align: center;
+    .mat-checkbox-ripple {
+        left: calc(50% - 12px);
+        top: calc(50% - 12px);
+        height: 24px;
+        width: 24px;
+    }
+    .mat-checkbox-layout {
+        margin-bottom: 0;
+    }
 }
 
 .mat-checkbox-checked.mat-accent {
-  .mat-checkbox-background {
-    background-color: $textgreen;
-  }
+    .mat-checkbox-background {
+        background-color: $textgreen;
+    }
 }
 
-.mat-progress-bar-buffer{
-  background-color: #a1dbc2;;
+.mat-progress-bar-buffer {
+    background-color: #a1dbc2;
+    ;
 }
 
 .mat-progress-bar-fill::after {
-  background-color: $green;
+    background-color: $green;
 }
 
-.btn-eureca-green{
-  @include font-text(16px !important, 500 !important);
-  color: #ffffff !important;
-  background-color: $green !important;
-  @include border-radius(4px !important);
-  border: solid 1px $green !important;
-  &:hover{
+.btn-eureca-green {
+    @include font-text(16px !important, 500 !important);
+    color: #ffffff !important;
     background-color: $green !important;
-  }
-  &:focus {
-    background-color: $greenclaro !important;
-  }
-  &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
-  }
+    @include border-radius(4px !important);
+    border: solid 1px $green !important;
+    &:hover {
+        background-color: $green !important;
+    }
+    &:focus {
+        background-color: $greenclaro !important;
+    }
+    &.btn-disabled {
+        background-color: #9b9b9b !important;
+        border: solid 1px #9b9b9b !important;
+    }
 }
 
 .btn-outline-green {
-  @include font-text(16px !important, 500 !important);
-  @include border-radius(4px !important);
-  background-color: $blanco !important;
-  border:  solid 1px $blanco !important;
-  color: $green !important;
-
-  &.btn-disabled {
-    color: #9b9b9b !important;
-  }
+    @include font-text(16px !important, 500 !important);
+    @include border-radius(4px !important);
+    background-color: $blanco !important;
+    border: solid 1px $blanco !important;
+    color: $green !important;
+    &.btn-disabled {
+        color: #9b9b9b !important;
+    }
 }
 
 .messsage-error {
-    font-family: Omnes;
-    font-size: 12px;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
+  @include font-text(12px, 500);
     color: $rojo;
 }
 
@@ -166,27 +160,22 @@ body {
 }
 
 .texto-azul {
-    @include font-text(36px, $weight:500);
+    @include font-text(32px, $weight: 500);
     color: #2f4a9f;
 }
 
 .font-black {
-    @include font-text(18px, $weight:600);
+    @include font-text(18px, $weight: 600);
     color: $negro;
 }
 
 .swal2-content {
-    @include font-text(16px, $weight:500);
+    @include font-text(16px, $weight: 500);
     color: $negro;
-    text-align: center; 
+    text-align: center;
 }
-.input-text{
-    font-family: Omnes !important;
-    font-size: 16px !important;
-    font-weight: normal !important;
-    font-style: normal !important;
-    font-stretch: normal !important;
-    line-height: normal !important;
-    letter-spacing: normal !important;
+
+.input-text {
+  @include font-text(14px !important, normal !important);
     color: #333333 !important;
-  }
+}

@@ -3,60 +3,60 @@
         <div class="row">
             <div class="col-sm-5">
                 <div class="row">
-                    <div class="col-sm-11"  >
+                    <div class="col-sm-11">
                         <br>
                         <div class="texto-azul ">Configura tus servicios </div>
                         <div class="d-flex justify-content-start">
-                        <perfect-scrollbar class="content-container mt-5 mb-3">
-                            <div class="card-servicios mb-2" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
-                                <div class=" pl-4">
-                                    <div class="pl-1 row">
-                                        <div class="col-sm-9 pt-3">
-                                            <div class="font-black">{{svc.nombre}}</div>
-                                            <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de aprobación por IBK</mat-error>
+                            <perfect-scrollbar class="content-container mt-5 mb-3">
+                                <div class="card-servicios mb-2" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
+                                    <div class=" pl-4">
+                                        <div class="pl-1 row">
+                                            <div class="col-sm-9 pt-3">
+                                                <div class="font-black">{{svc.nombre}}</div>
+                                                <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de aprobación por IBK</mat-error>
+                                            </div>
+                                            <div class="col-sm-1 mb-0">
+                                                <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
+                                                    <li *ngIf="!svc.inReview && indiceActual!==i">
+                                                        <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
+                                                    </li>
+                                                    <li class="ml-2" *ngIf="afiliacionService.services.length > 1">
+                                                        <a class="texto-azul borrar" [class.mano]="!Formulario" (click)="delService(i,svc)"><img src="assets/images/eliminar.svg"></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-1 mb-0">
-                                            <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
-                                                <li *ngIf="!svc.inReview && indiceActual!==i" >
-                                                    <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img  src="assets/images/editar.svg"></a>
-                                                </li>
-                                                <li class="ml-2" *ngIf="afiliacionService.services.length > 1">
-                                                    <a class="texto-azul borrar" [class.mano]="!Formulario" (click)="delService(i)"><img  src="assets/images/eliminar.svg"></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <table class="table table-sm table-borderless ">
+                                        <table class="table table-sm table-borderless ">
                                             <tr>
                                                 <th class="font-black-servicios-list">Canales</th>
                                                 <td class="font-black-servicios-des-list">{{ getCanales(svc) }}</td>
                                             </tr>
                                             <tr>
-                                              <th class="font-black-servicios-list">Codigo Deudor</th>
-                                              <td class="font-black-servicios-des-list">{{ getCodDebtor(svc) }}</td>
+                                                <th class="font-black-servicios-list">Codigo Deudor</th>
+                                                <td class="font-black-servicios-des-list">{{ getCodDebtor(svc) }}</td>
                                             </tr>
                                             <tr>
                                                 <th class="font-black-servicios-list">Mora</th>
-                                                <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }}  </td>
-                                                <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'P'">{{ svc.porcentaje }} %  </td>
-                                                <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'N'">NO  </td>
+                                                <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }} </td>
+                                                <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'P'">{{ svc.porcentaje }} % </td>
+                                                <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'N'">NO </td>
                                             </tr>
                                             <tr>
                                                 <th class="font-black-servicios-list">Cuenta</th>
                                                 <td class="font-black-servicios-des-list">{{ svc.nroCuenta }}</td>
                                             </tr>
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                        </perfect-scrollbar>
+                            </perfect-scrollbar>
                         </div>
-                        <div class="btn-col-1" >
-                                <button type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
-                                  <span class="fa fa-plus-circle"></span>   Agregar otro servicio
-                                </button>
-                                <button type="button" [disabled]="Formulario"  (click)="EnviarServicios()" class="mt-3 btn-eureca-green text-white" [class.btn-disabled]="Formulario">
-                                 Finalizar
-                                </button>
+                        <div class="btn-col-1">
+                            <button type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
+                                      <span class="fa fa-plus-circle"></span>   Agregar otro servicio
+                                    </button>
+                            <button type="button" [disabled]="Formulario" (click)="EnviarServicios()" class="mt-3 btn-eureca-green text-white" [class.btn-disabled]="Formulario">
+                                     Finalizar
+                                    </button>
                         </div>
                     </div>
                 </div>
@@ -68,12 +68,12 @@
                 <div class="d-flex justify-content-end">
                     <div class="formulario p-5 bg-white ">
                         <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
-                                <img  src="assets/images/cerrar.svg">  <br> Cerrar
+                            <img src="assets/images/cerrar.svg"> <br> Cerrar
                         </div>
                         <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
                     </div>
                 </div>
             </div>
         </div>
-    </div >
+    </div>
 </div>

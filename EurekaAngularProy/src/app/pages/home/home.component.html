@@ -219,7 +219,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }"
-                    [class.seleccionado]="items.selected">
+                    [class.seleccionado]="items.selected" [class.edit-pago]="items.verPagos">
                     <td class="c0">
                       <div class="chk-vertical">
                         <mat-checkbox [(ngModel)]="items.selected"></mat-checkbox>
@@ -279,7 +279,7 @@
                     </td>
                     <td class="c10">
                       <div class="cnt-status">
-                        <div class="lnk-status" (click)="appPagos.toggle()">
+                        <div class="lnk-status" (click)="appPagos.show()">
                           <span *ngIf="items.status === 'PAGADO'" class="text-success">
                             Pagado <img src="assets/images/ok.svg" alt="ok">
                           </span>
@@ -290,7 +290,7 @@
                             Pendiente <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
                           </span>
                         </div>
-                        <app-pagos #appPagos [debtId]="items.id" [(status)]="items.status"></app-pagos>
+                        <app-pagos #appPagos [debtId]="items.id" [(status)]="items.status" (showChange)="items.verPagos = $event"></app-pagos>
                       </div>
                     </td>
                     <td class="c11">

@@ -26,12 +26,12 @@ body{
 .widget.filtros {
   .content {
     .mat-form-field.f1 {
-      width: 202px;
+      width: 220px;
     }
 
     .mat-form-field.f2 {
       margin-left: 10px;
-      width: 136px;
+      width: 132px;
     }
 
     .f3 {
@@ -138,7 +138,7 @@ body{
       text-align: center;
 
       .text {
-        @include font-text(16px);
+        @include font-text(14px);
 
         .btn-select-all {
           padding: 5px 10px;
@@ -166,7 +166,7 @@ body{
             border-bottom: solid 1px #f0f0f0;
 
             th {
-              @include font-text(14px, 500);
+              @include font-text(12px, 500);
               color: $textblue;
               padding: 2px;
 
@@ -223,14 +223,18 @@ body{
               background-color: rgba(0, 169, 79, 0.05);
             }
 
+            &.edit-pago {
+              background-color: rgba(0, 169, 79, 0.05)
+            }
+
             td {
-              @include font-text(14px);
+              @include font-text(12px);
               color: $textblack;
               padding: 8px 3px;
               text-overflow: ellipsis;
 
               &.texto-after {
-                @include font-text(32px, 500);
+                @include font-text(28px, 500);
                 text-align: center;
                 height: 300px;
                 color: #333333;
@@ -398,6 +402,7 @@ body{
 }
 
 .text-foot {
+  @include font-text(16px);
   display: block;
   width: 100%;
   text-align: center;

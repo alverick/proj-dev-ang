@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import Swal from "sweetalert2";
 import { drawPopup } from "src/app/shared/services/popups";
 import { TransactionService } from "src/app/shared/services/transaction.service";
+import { PagoService } from "src/app/shared/services/pago.service";
 
 @Component({
   selector: 'app-pagos',
@@ -18,8 +19,14 @@ export class PagosComponent implements OnInit {
   @Input() debtId: number;
   @Input() status: string;
   @Output() statusChange = new EventEmitter<string>();
+  @Output() showChange = new EventEmitter<boolean>();
 
-  constructor(private transaction: TransactionService) { }
+  constructor(private transaction: TransactionService, private pagoService: PagoService) {
+    pagoService.closeAll.subscribe(() => {
+      this.showed = false;
+      this.showChange.emit(this.showed);
+    });
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -35,8 +42,15 @@ export class PagosComponent implements OnInit {
       });
   }
 
-  public toggle() {
-    this.showed = !this.showed;
+  public show() {
+    if (!this.showed) {
+      this.pagoService.closeAll.emit();
+      this.showed = true;
+    }
+    else {
+      this.showed = false;
+    }
+    this.showChange.emit(this.showed);
   }
 
   mensaje(tipo: any, titulo: string, text: string){

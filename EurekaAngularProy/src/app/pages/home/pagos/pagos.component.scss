@@ -28,7 +28,7 @@
         border-bottom: solid 1px #f0f0f0;
 
         th {
-          @include font-text(14px, 500);
+          @include font-text(12px, 500);
           text-align: center;
           color: $textblue;
           padding: 8px 3px;
@@ -45,7 +45,7 @@
         }
 
         td {
-          @include font-text(14px);
+          @include font-text(12px);
           color: $textblack;
           padding: 8px 3px;
           text-align: center;
@@ -98,7 +98,7 @@
         width: 100%;
 
         input {
-          @include font-text(14px);
+          @include font-text(12px);
         }
       }
     }
@@ -111,7 +111,7 @@
       .mat-select-value {
         .mat-select-value-text {
           span {
-            @include font-text(14px);
+            @include font-text(12px);
             color: $textblack;
           }
         }

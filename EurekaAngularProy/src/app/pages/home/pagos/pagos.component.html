@@ -21,6 +21,7 @@
           <div *ngIf="itm.editing">
             <mat-form-field class="full-width">
               <input type="text" matInput appOnlyNumbersForm [(ngModel)]="itm.newAmount" maxlength="12" minlength="4" (blur)="AmountBlur(itm)" />
+              <span matPrefix>{{itm.currency}}&nbsp;</span>
             </mat-form-field>
           </div>
         </td>
