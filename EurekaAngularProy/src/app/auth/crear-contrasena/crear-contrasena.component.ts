@@ -64,11 +64,11 @@ export class CrearContrasenaComponent implements OnInit {
       return;
     }
 
-    if(!this.registerForm.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+   /* if(!this.registerForm.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
       this.mensaje('warning','Registrame','Debe ingresar un email valido' );
       return;
     }
-
+ */
 
    //  if(this.registerForm.value.ruc)
     if (this.registerForm.value.acceptterms == false) {

@@ -4,24 +4,23 @@
         <mat-form-field class="w-100">
             <input class="input-text" matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
             <mat-error class="messsage-error">
-                <mat-error  *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
+                <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                 <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
                 <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
                 <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
-            </mat-error >
+            </mat-error>
         </mat-form-field>
     </div>
     <div class="form-group">
         <mat-form-field class="w-100">
             <mat-label>Codigo Deudor</mat-label>
             <mat-select class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
-              <mat-option class="input-text">Codigo Deudor</mat-option>
+                <mat-option class="input-text">Codigo Deudor</mat-option>
                 <mat-option class="input-text" *ngFor="let c of codDeudor" [value]="c.code">
                     {{c.name}}
                 </mat-option>
             </mat-select>
-            <input class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod"
-                (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
+            <input class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod" (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
             <div *ngIf="f.codDeudor.value === 'Otro'" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
             <mat-error class="messsage-error">
                 <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
@@ -34,20 +33,20 @@
     <div class="form-group">
         <mat-form-field class="w-100">
             <mat-label>¿Que datos tienes de tus clientes?</mat-label>
-            <mat-select class="input-text"  formControlName="tipoDato" name="tipoDato" (ngModelChange)="onChangeTipoDato()">
-                <mat-option class="input-text" >¿Que datos tienes de tus clientes?</mat-option>
-                <mat-option class="input-text"  *ngFor="let t of tiposDato" [value]="t.code">
+            <mat-select class="input-text" formControlName="tipoDato" name="tipoDato" (ngModelChange)="onChangeTipoDato()">
+                <mat-option class="input-text">¿Que datos tienes de tus clientes?</mat-option>
+                <mat-option class="input-text" *ngFor="let t of tiposDato" [value]="t.code">
                     {{t.name}}
                 </mat-option>
             </mat-select>
             <mat-error class="messsage-error" *ngIf="f.tipoDato.invalid && f.tipoDato.hasError('required')">Elija una opcion</mat-error>
         </mat-form-field>
     </div>
-    <div class="form-group" *ngIf="Dataparcial" >
+    <div class="form-group" *ngIf="Dataparcial">
         <mat-form-field class="w-100">
             <mat-label>¿Como quieres que te paguen tus clientes?</mat-label>
-            <mat-select class="input-text"  formControlName="tipoPago" name="tipoPago">
-                <mat-option class="input-text" >¿Como quieres que te paguen tus clientes?</mat-option>
+            <mat-select class="input-text" formControlName="tipoPago" name="tipoPago">
+                <mat-option class="input-text">¿Como quieres que te paguen tus clientes?</mat-option>
                 <mat-option class="input-text" *ngFor="let t of tiposPago" [value]="t.code">
                     {{t.name}}
                 </mat-option>
@@ -57,8 +56,8 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <mat-form-field  >
-                <input class="input-text"  matInput type="text" appNumberAccount maxlength="13" formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
+            <mat-form-field>
+                <input class="input-text" matInput type="text" appNumberAccount maxlength="13" formControlName="nroCuenta" name="nroCuenta" placeholder="N° de Cuenta">
                 <mat-error class="messsage-error">
                     <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('required')">El numero de cuenta es obligatorio</mat-error>
                     <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('minlength')">El numero de cuenta debe tener 13 carácteres</mat-error>
@@ -66,110 +65,110 @@
             </mat-form-field>
         </div>
         <div class="form-group col-md-6">
-        <mat-form-field  >
-            <mat-label>Tipo de Moneda</mat-label>
-            <mat-select class="input-text" formControlName="moneda" name="moneda" (change)="changeMoneda()" (ngModelChange)="changeMoneda($event)">
-                <mat-option class="input-text">Tipo de Moneda</mat-option>
-                <mat-option class="input-text" *ngFor="let m of monedas" [value]="m.code">
-                    {{m.name}}
-                </mat-option>
-            </mat-select>
-            <mat-error class="messsage-error" *ngIf="f.moneda.hasError('required')">Elija una opcion</mat-error>
-        </mat-form-field>
+            <mat-form-field>
+                <mat-label>Tipo de Moneda</mat-label>
+                <mat-select class="input-text" formControlName="moneda" name="moneda" (ngModelChange)="changeMoneda($event)">
+                    <mat-option class="input-text">Tipo de Moneda</mat-option>
+                    <mat-option class="input-text" *ngFor="let m of monedas" [value]="m.code">
+                        {{m.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error class="messsage-error" *ngIf="f.moneda.hasError('required')">Elija una opcion</mat-error>
+            </mat-form-field>
         </div>
     </div>
-    <span class="texto-medios " >  Elige los medios por los cuales tus clientes te pagarán  </span>
-  <div class="row card-deck mt-2 mb-3 text-center">
-        <div class="card-medio-pago ml-3" >
-            <div [class.seleccionado-card]="f.usaWebApp.value" style="height: 161px;" >
-                    <div class="pt-2" >
-                        <mat-checkbox formControlName="usaWebApp"  id="styled-checkbox-1">
-                        </mat-checkbox>
-                    </div>
-                    <div class="card-title texto-black"> Digital </div>
-                    <div class="pt-4">
-                        <div class="texto-d-medios"> Banca por internet, Interbank APP </div>
-                        <div class="pt-1 texto-green">GRATIS</div>
-                    </div>
+    <span class="texto-medios ">  Elige los medios por los cuales tus clientes te pagarán  </span>
+    <div class="row card-deck mt-2 mb-3 text-center">
+        <div class="card-medio-pago ml-3">
+            <div [class.seleccionado-card]="f.usaWebApp.value" style="height: 161px;">
+                <div class="pt-2">
+                    <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-1">
+                    </mat-checkbox>
+                </div>
+                <div class="card-title texto-black"> Digital </div>
+                <div class="pt-4">
+                    <div class="texto-d-medios"> Banca por internet, Interbank APP </div>
+                    <div class="pt-1 texto-green">GRATIS</div>
+                </div>
             </div>
         </div>
-        <div class="card-medio-pago ml-2" >
-            <div [class.seleccionado-card]="f.usaAgente.value"  style="height: 161px;" >
-                    <div class="pt-2" >
-                        <mat-checkbox formControlName="usaAgente"  id="styled-checkbox-2">
-                        </mat-checkbox>
-                    </div>
-                    <div class="card-title texto-black"> Agentes </div>
-                    <div class="pt-4">
-                        <div class="texto-d-medios">Lima y provincias </div>
-                        <div class="pt-3 texto-green">{{simboloMoneda}} 1</div>
-                        <div class="pt-1 texto-p-medios">por transacion </div>
-                    </div>
+        <div class="card-medio-pago ml-2">
+            <div [class.seleccionado-card]="f.usaAgente.value" style="height: 161px;">
+                <div class="pt-2">
+                    <mat-checkbox formControlName="usaAgente" id="styled-checkbox-2">
+                    </mat-checkbox>
+                </div>
+                <div class="card-title texto-black"> Agentes </div>
+                <div class="pt-4">
+                    <div class="texto-d-medios">Lima y provincias </div>
+                    <div class="pt-3 texto-green">{{simboloMoneda}} 1</div>
+                    <div class="pt-1 texto-p-medios">por transacion </div>
+                </div>
             </div>
         </div>
-        <div class="card-medio-pago ml-2" >
-            <div [class.seleccionado-card]="f.usaTienda.value"  style="height: 161px;">
-                    <div class="pt-2" >
-                        <mat-checkbox formControlName="usaTienda"  id="styled-checkbox-3">
-                        </mat-checkbox>
-                    </div>
-                    <div class="card-title texto-black">  Tiendas  <br>
-                        <small>(Ventanilla)</small>
-                    </div>
-                    <div class="pt-2">
-                        <div class="texto-d-medios">Lima y provincias </div>
-                        <div class="pt-3 texto-green">{{simboloMoneda}} 7</div>
-                        <div class="pt-1 texto-p-medios">por transacion </div>
-                    </div>
+        <div class="card-medio-pago ml-2">
+            <div [class.seleccionado-card]="f.usaTienda.value" style="height: 161px;">
+                <div class="pt-2">
+                    <mat-checkbox formControlName="usaTienda" id="styled-checkbox-3">
+                    </mat-checkbox>
+                </div>
+                <div class="card-title texto-black"> Tiendas <br>
+                    <small>(Ventanilla)</small>
+                </div>
+                <div class="pt-2">
+                    <div class="texto-d-medios">Lima y provincias </div>
+                    <div class="pt-3 texto-green">{{simboloMoneda}} 7</div>
+                    <div class="pt-1 texto-p-medios">por transacion </div>
+                </div>
             </div>
         </div>
     </div>
-    <span class="texto-medios" >  Cobro de mora  </span>
+    <span class="texto-medios">  Cobro de mora  </span>
     <div class="form-row">
         <div class="form-group col-2">
-            <mat-radio-group  formControlName="cobraMora" (change)="changeMora()" >
-                    <mat-radio-button name="cobraMora" id="mora-no" value="N" class="texto-radio">No</mat-radio-button>
-                    <mat-radio-button name="cobraMora" id="mora-si" value="S" class="texto-radio">Si</mat-radio-button>
+            <mat-radio-group formControlName="cobraMora" (change)="changeMora()">
+                <mat-radio-button name="cobraMora" id="mora-no" value="N" class="texto-radio">No</mat-radio-button>
+                <mat-radio-button name="cobraMora" id="mora-si" value="S" class="texto-radio">Si</mat-radio-button>
             </mat-radio-group>
         </div>
         <div class="form-group col-4" *ngIf="cobraMora">
-        <mat-form-field class="w-100"  >
-            <mat-label>Tipo de Cobro</mat-label>
-            <mat-select class="input-text" formControlName="periodoMora" >
-              <mat-option class="input-text">Tipo de Cobro</mat-option>
-                <mat-option class="input-text" *ngFor="let t of tiposMora" [value]="t.code">
-                    {{t.name}}
-                </mat-option>
-            </mat-select>
-            <mat-error class="messsage-error" *ngIf="f.periodoMora.invalid && f.periodoMora.hasError('required')">Elija una opcion</mat-error>
-        </mat-form-field>
+            <mat-form-field class="w-100">
+                <mat-label>Tipo de Cobro</mat-label>
+                <mat-select class="input-text" formControlName="periodoMora" (ngModelChange)="TipoCobro($event)">
+                    <mat-option class="input-text">Tipo de Cobro</mat-option>
+                    <mat-option class="input-text" *ngFor="let t of tiposMora" [value]="t.code">
+                        {{t.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error class="messsage-error" *ngIf="f.periodoMora.invalid && f.periodoMora.hasError('required')">Elija una opcion</mat-error>
+            </mat-form-field>
         </div>
-        <div class="form-group col-6" *ngIf="cobraMora" >
+        <div class="form-group col-6" *ngIf="cobraMora">
 
-        <mat-radio-group class="radio-group" formControlName="tipoMora" (change)="changeTipoMora(true)">
-            <mat-radio-button class="radio-button" name="tipoMora"id="monto" value="M" class="texto-radio-small" >Monto</mat-radio-button>
-            <mat-form-field class="w-100 pt-0 texto-mora" >
-                <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
-                <span matSuffix>{{simboloMoneda}}&nbsp;&nbsp;</span>
-                <mat-error class="messsage-error">
-                    <mat-error *ngIf="f.monto.invalid && f.monto.hasError('required')">Debe ingresar un monto</mat-error>
-                    <mat-error *ngIf="f.monto.invalid && f.monto.hasError('maximo')">No puede ser mayor a 1000.00 <br></mat-error>
-                    <mat-error *ngIf="f.monto.invalid && f.monto.hasError('minimo')">No puede ser menor a 1.00</mat-error>
-                    <mat-error *ngIf="f.monto.invalid && !f.monto.hasError('maximo') && !f.monto.hasError('minimo') && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error>
-                </mat-error>
-            </mat-form-field>
-            <mat-radio-button class="radio-button" name="tipoMora" id="porcentaje" value="P"  class="texto-radio-small">Porcentaje</mat-radio-button>
-            <mat-form-field class="w-100 texto-mora" >
-                <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
-                <span matSuffix>%</span>
-                <mat-error class="messsage-error">
-                    <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('required')">Debe ingresar un porcentaje</mat-error>
-                    <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')">No puede ser mayor a 100.00</mat-error>
-                    <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')">No puede ser menor a 0.01</mat-error>
-                    <mat-error *ngIf="f.porcentaje.invalid && !f.porcentaje.hasError('maximo')  && !f.porcentaje.hasError('minimo') && f.porcentaje.hasError('pattern')">No tiene el formato correcto</mat-error>
-                </mat-error>
-            </mat-form-field>
-        </mat-radio-group>
+            <mat-radio-group class="radio-group" formControlName="tipoMora" (change)="changeTipoMora(true)">
+                <mat-radio-button class="radio-button" name="tipoMora" id="monto" value="M" class="texto-radio-small">Monto</mat-radio-button>
+                <mat-form-field class="w-100 pt-0 texto-mora">
+                    <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
+                    <span matSuffix>{{simboloMoneda}}&nbsp;&nbsp;</span>
+                    <mat-error class="messsage-error">
+                        <mat-error *ngIf="f.monto.invalid && f.monto.hasError('required')">Debe ingresar un monto</mat-error>
+                        <mat-error *ngIf="f.monto.invalid && f.monto.hasError('maximo')">No puede ser mayor a 1000.00 <br></mat-error>
+                        <mat-error *ngIf="f.monto.invalid && f.monto.hasError('minimo')">No puede ser menor a 1.00</mat-error>
+                        <mat-error *ngIf="f.monto.invalid && !f.monto.hasError('maximo') && !f.monto.hasError('minimo') && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error>
+                    </mat-error>
+                </mat-form-field>
+                <mat-radio-button class="radio-button" name="tipoMora" id="porcentaje" value="P" class="texto-radio-small">Porcentaje</mat-radio-button>
+                <mat-form-field class="w-100 texto-mora">
+                    <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
+                    <span matSuffix>%</span>
+                    <mat-error class="messsage-error">
+                        <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('required')">Debe ingresar un porcentaje</mat-error>
+                        <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')">No puede ser mayor a 100.00</mat-error>
+                        <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')">No puede ser menor a 0.01</mat-error>
+                        <mat-error *ngIf="f.porcentaje.invalid && !f.porcentaje.hasError('maximo')  && !f.porcentaje.hasError('minimo') && f.porcentaje.hasError('pattern')">No tiene el formato correcto</mat-error>
+                    </mat-error>
+                </mat-form-field>
+            </mat-radio-group>
 
 
         </div>

@@ -69,7 +69,7 @@ export class AfiliacionService {
       usaAgente: false,
       usaTienda: false,
       cobraMora: 'N',
-      periodoMora: '1',
+      periodoMora: '',
       tipoMora: 'M'
     };
     this.services.push(svc);
@@ -279,7 +279,7 @@ export class AfiliacionService {
   }
 
   Descartar(indice: number, isNew: boolean) {
-    console.log('descartar', isNew);
+    console.log('descartar', isNew, indice);
     this.Guardado = false;
     if (isNew && this.services.length > 1 && indice >= 0 && indice === (this.services.length - 1)) {
       let svc = this.services[this.services.length-1];

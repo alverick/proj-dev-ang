@@ -62,7 +62,7 @@ export class FormServicioComponent implements OnInit {
   cobraMora: boolean = false;
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
-
+  cmoraporce: boolean = false;
   private _service: ServiceModel;
   @Output() grabar = new EventEmitter<any>();
   public services: ServiceModel[] = [];
@@ -97,7 +97,9 @@ export class FormServicioComponent implements OnInit {
 
     this.changeMora(false);
     this.changeTipoMora(false);
- 
+    if (this.f.periodoMora.value === 1 || this.f.periodoMora.value === 2) {
+      this.cmoraporce = true;
+   }
   }
 
   onChangeTipoDato() {
@@ -311,7 +313,14 @@ export class FormServicioComponent implements OnInit {
     console.log('hola '+ event);
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
   }
-
+  TipoCobro(event) {
+    console.log('hola ' + event);
+    if ( event === '1' || event === '2') {
+          this.cmoraporce = true;
+    }else {
+      this.cmoraporce = false;
+    }
+  }
  Codigo(event){
     if(event === 'Otro'){
       this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
@@ -323,19 +332,23 @@ export class FormServicioComponent implements OnInit {
   }
 
   changeMora(changeData: boolean = true) {
+  
     this.cobraMora = (this.f.cobraMora.value === 'S');
 
     if (this.cobraMora) {
 
       this.f.periodoMora.setValidators([Validators.required]);
       this.f.monto.enable();
-      this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)])
+      this.f.monto.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)])
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.disable();
       if (changeData) {
         this.f.porcentaje.reset("1.00");
       }
+
     } else {
+      this.cmoraporce = false;
+      this.f.periodoMora.reset();
       this.f.periodoMora.clearValidators();
       this.f.monto.clearValidators();
       this.f.monto.disable();
@@ -351,8 +364,8 @@ export class FormServicioComponent implements OnInit {
   }
 
   changeTipoMora(changeData: boolean = true) {
-    this.cobraMonto = (this.f.tipoMora.value === "M");
-    this.cobraPorcentaje = (this.f.tipoMora.value === "P");
+     this.cobraMonto = (this.f.tipoMora.value === "M");
+     this.cobraPorcentaje = (this.f.tipoMora.value === "P");
     if (this.cobraMora && this.cobraMonto) {
       this.f.monto.enable();
       this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)]);
