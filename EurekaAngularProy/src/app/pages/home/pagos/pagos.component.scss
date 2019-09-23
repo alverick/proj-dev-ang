@@ -103,4 +103,19 @@
       }
     }
   }
+
+  mat-select {
+    width: 80px;
+
+    .mat-select-trigger {
+      .mat-select-value {
+        .mat-select-value-text {
+          span {
+            @include font-text(14px);
+            color: $textblack;
+          }
+        }
+      }
+    }
+  }
 }

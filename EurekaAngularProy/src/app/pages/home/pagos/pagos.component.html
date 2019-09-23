@@ -38,7 +38,13 @@
           <span *ngIf="!itm.editing">{{itm.channel}}</span>
           <div *ngIf="itm.editing">
               <mat-form-field class="full-width">
-                <input type="text" matInput [(ngModel)]="itm.newChannel" maxlength="20" minlength="3" />
+                <mat-select [(ngModel)]="itm.newChannel">
+                  <mat-option value="Efectivo">Efectivo</mat-option>
+                  <mat-option value="POS">POS</mat-option>
+                  <mat-option value="BCP">BCP</mat-option>
+                  <mat-option value="BBVA">BBVA</mat-option>
+                  <mat-option value="Otro banco">Otro banco</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
           </td>
