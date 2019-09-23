@@ -18,6 +18,7 @@
       @include font-text(16px, $weight:normal);  
       color: $green;
       text-decoration: underline;
+      cursor: pointer;
   }
 
   .cuadro-form {

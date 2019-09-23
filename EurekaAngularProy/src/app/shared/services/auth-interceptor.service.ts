@@ -46,11 +46,11 @@ export class AuthInterceptorService implements HttpInterceptor {
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();
             Swal.fire({
-              imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
+             // imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
               title: 'Su sesión ha sido cerrada por inactividad',
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
+              showCloseButton: false,
+              showCancelButton: false,
+              showConfirmButton: true,
               cancelButtonText:  'Cerrar',
               allowOutsideClick: false,
               onOpen: drawPopup,
@@ -62,11 +62,11 @@ export class AuthInterceptorService implements HttpInterceptor {
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();
             Swal.fire({
-              imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
+             // imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
               title: 'Ha ocurrido un error en el servidor',
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
+              showCloseButton: false,
+              showCancelButton: false,
+              showConfirmButton: true,
               cancelButtonText:  'Cerrar',
               allowOutsideClick: false,
               onOpen: drawPopup,

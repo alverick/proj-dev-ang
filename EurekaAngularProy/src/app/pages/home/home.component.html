@@ -7,7 +7,7 @@
           <div class="content">
             <form>
               <mat-form-field class="f1">
-                <input class="input-text" matInput [(ngModel)]="filtro.inputSearch" name="inputSearch" type="text" appShear maxlength="20" placeholder="Nombre o Codigo del deudor">
+                <input class="input-text" matInput [(ngModel)]="filtro.inputSearch" name="inputSearch" type="text" appShear maxlength="20" placeholder="Nombre o código del deudor">
                 <span matPrefix class="fa fa-search"></span>
                 <button mat-button *ngIf="filtro.inputSearch" matSuffix mat-icon-button aria-label="Clear" (click)="filtro.inputSearch=''">
                   <i class="fa fa-close"></i>
@@ -141,7 +141,7 @@
                         </div>
                       </th>
                     <th class="c3">
-                      <div class="text">Código de cliente</div>
+                      <div class="text">Código de deudor</div>
                       <div class="ord">
                           <div class="up" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === true"
                           (click)="orderList(2, true)"></div>
@@ -332,8 +332,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="text-foot">
-        Para comunicarte con nostros puedes llamar o escribir al <b>913718635</b>, o también a <b>pilotos@intercorp.com.pe</b>
+      <div class="text-foot"> 
+        Para comunicarte con nosotros puedes llamar o escribir al<b>913718635</b>, o también a <b>pilotos@intercorp.com.pe</b>
       </div>
     </div>
   </div>

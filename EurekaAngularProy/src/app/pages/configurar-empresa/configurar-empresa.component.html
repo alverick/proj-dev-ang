@@ -34,11 +34,11 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100">
-                                        <input class="input-text" matInput type="email" placeholder="Email" minlength="10" maxlength="100" formControlName="email" (Keydown.space)="$event.preventDefault()"  [class.is-invalid]="f.email.invalid">
+                                        <input class="input-text" matInput type="email" placeholder="E-mail" minlength="10" maxlength="100" formControlName=" E-mail" (Keydown.space)="$event.preventDefault()"  [class.is-invalid]="f.email.invalid">
                                         <mat-error class="messsage-error">
-                                            <mat-error *ngIf="f.email.invalid && f.email.hasError('required')">El email es obligatorio</mat-error>
-                                            <mat-error *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un email valido </mat-error>
-                                            <mat-error *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El email debe tener mínimo 10 dígitos</mat-error>
+                                            <mat-error *ngIf="f.email.invalid && f.email.hasError('required')">El  E-mail es obligatorio</mat-error>
+                                            <mat-error *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un  E-mail valido </mat-error>
+                                            <mat-error *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El  E-mail debe tener mínimo 10 dígitos</mat-error>
                                         </mat-error> 
                                     <!--  <mat-error *ngIf="!formGroup.controls['email'].valid || formGroup.controls['email'].touched">
                                             {{ getErrorEmail() }}
@@ -47,12 +47,12 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100">
-                                        <input class="input-text"  matInput type="text" (Keydown.space)="$event.preventDefault()" placeholder="Télefono" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
+                                        <input class="input-text"  matInput type="text" (Keydown.space)="$event.preventDefault()" placeholder="Teléfono ó celular" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
                                     <!-- <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
                                             {{ getErrorPhone() }}
                                         </mat-error> -->
                                         <mat-error class="messsage-error">
-                                            <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required')">El Telefono ó Celular obligatorio</mat-error>
+                                            <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required')">El Teléfono ó Celular obligatorio</mat-error>
                                             <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('pattern')"> Ingrese un Telefono ó Celular valido </mat-error>
                                             <mat-error *ngIf="f.movilNumber.invalid  && !f.movilNumber.hasError('pattern') && f.movilNumber.hasError('minlength')"> El Telefono ó Celular debe tener mínimo 6 dígitos</mat-error>
                                         </mat-error> 

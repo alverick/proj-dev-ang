@@ -13,7 +13,7 @@
                                         <div class="pl-1 row">
                                             <div class="col-sm-9 pt-3">
                                                 <div class="font-black">{{svc.nombre}}</div>
-                                                <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de aprobación por IBK</mat-error>
+                                                <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de revisión</mat-error>
                                             </div>
                                             <div class="col-sm-1 mb-0">
                                                 <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
@@ -32,7 +32,7 @@
                                                 <td class="font-black-servicios-des-list">{{ getCanales(svc) }}</td>
                                             </tr>
                                             <tr>
-                                                <th class="font-black-servicios-list">Codigo Deudor</th>
+                                                <th class="font-black-servicios-list">Código Deudor</th>
                                                 <td class="font-black-servicios-des-list">{{ getCodDebtor(svc) }}</td>
                                             </tr>
                                             <tr>
