@@ -10,7 +10,7 @@
                             <perfect-scrollbar class="content-container mt-5 mb-3">
                                 <div class="card-servicios mb-2" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
                                     <div class=" pl-4">
-                                        <div class="pl-1 row">
+                                        <div class="pl-1 row pb-0">
                                             <div class="col-sm-9 pt-3">
                                                 <div class="font-black">{{svc.nombre}}</div>
                                                 <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de revisión</mat-error>
@@ -28,21 +28,21 @@
                                         </div>
                                         <table class="table table-sm table-borderless ">
                                             <tr>
-                                                <th class="font-black-servicios-list">Canales</th>
+                                                <th style="width:150px;" class="font-black-servicios-list">Canales</th>
                                                 <td class="font-black-servicios-des-list">{{ getCanales(svc) }}</td>
                                             </tr>
                                             <tr>
-                                                <th class="font-black-servicios-list">Código Deudor</th>
+                                                <th style="width:150px;" class="font-black-servicios-list">Código Deudor</th>
                                                 <td class="font-black-servicios-des-list">{{ getCodDebtor(svc) }}</td>
                                             </tr>
                                             <tr>
-                                                <th class="font-black-servicios-list">Mora</th>
+                                                <th style="width:150px;" class="font-black-servicios-list">Mora</th>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }} </td>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'P'">{{ svc.porcentaje }} % </td>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'N'">NO </td>
                                             </tr>
                                             <tr>
-                                                <th class="font-black-servicios-list">Cuenta</th>
+                                                <th style="width:150px;" class="font-black-servicios-list">Cuenta</th>
                                                 <td class="font-black-servicios-des-list">{{ svc.nroCuenta }}</td>
                                             </tr>
                                         </table>
