@@ -97,9 +97,25 @@ export class FormServicioComponent implements OnInit {
 
     this.changeMora(false);
     this.changeTipoMora(false);
-    if (this.f.periodoMora.value === 1 || this.f.periodoMora.value === 2) {
+    /*if (this.f.periodoMora.value === 1 || this.f.periodoMora.value === 2) {
       this.cmoraporce = true;
+   } */
+
+   if(this.frm.get('cobraMora').value === 'S') {
+    this.cmoraporce = true;
+    }
+   // combo para ocultar si es data parcial 
+   if (this.frm.get('tipoDato').value === 'P') {
+    /* this.frm.get('tipoPago').setValue('C');
+     this.tiposPago.pop();*/
+     this.Dataparcial = false;
+
+   }else{
+     this.Dataparcial = true;
    }
+
+ 
+
   }
 
   onChangeTipoDato() {
@@ -313,14 +329,14 @@ export class FormServicioComponent implements OnInit {
     console.log('hola '+ event);
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
   }
-  TipoCobro(event) {
-    console.log('hola ' + event);
-    if ( event === '1' || event === '2') {
+  
+  TipoCobro() { 
+    if ( this.frm.get('periodoMora').value === '1' || this.frm.get('periodoMora').value === '2') {
           this.cmoraporce = true;
     }else {
       this.cmoraporce = false;
     }
-  }
+  }  
  Codigo(event){
     if(event === 'Otro'){
       this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
@@ -334,7 +350,7 @@ export class FormServicioComponent implements OnInit {
   changeMora(changeData: boolean = true) {
   
     this.cobraMora = (this.f.cobraMora.value === 'S');
-
+    console.log(this.f.cobraMora.value);
     if (this.cobraMora) {
 
       this.f.periodoMora.setValidators([Validators.required]);
@@ -347,9 +363,12 @@ export class FormServicioComponent implements OnInit {
       }
 
     } else {
+      console.log('entra en no');
       this.cmoraporce = false;
+     // this.f.periodoMora.setValue('1')
       this.f.periodoMora.reset();
       this.f.periodoMora.clearValidators();
+      this.f.periodoMora.updateValueAndValidity();
       this.f.monto.clearValidators();
       this.f.monto.disable();
       if (changeData) {

@@ -68,7 +68,7 @@
         <div class="form-group col-md-6">
                 <mat-form-field>
                     <mat-label>Tipo de Moneda</mat-label>
-                    <mat-select class="input-text" formControlName="moneda" name="moneda" (ngModelChange)="changeMoneda($event)">
+                    <mat-select class="input-text" formControlName="moneda" name="moneda" (ngModelChange)="changeMoneda()">
                         <mat-option class="input-text">Tipo de Moneda</mat-option>
                         <mat-option class="input-text" *ngFor="let m of monedas" [value]="m.code">
                             {{m.name}}
@@ -135,16 +135,16 @@
         <div class="form-group col-4" *ngIf="cobraMora">
             <mat-form-field class="w-100">
                 <mat-label>Tipo de Cobro</mat-label>
-                <mat-select class="input-text" formControlName="periodoMora" (ngModelChange)="TipoCobro($event)">
+                <mat-select class="input-text" formControlName="periodoMora" (ngModelChange)="TipoCobro()">
                     <mat-option class="input-text">Tipo de Cobro</mat-option>
-                    <mat-option class="input-text" *ngFor="let t of tiposMora" [value]="t.code">
-                        {{t.name}}
-                    </mat-option>
-                </mat-select>
+                      <mat-option class="input-text" *ngFor="let t of tiposMora" [value]="t.code">
+                          {{t.name}}
+                      </mat-option>
+                  </mat-select>
                 <mat-error class="messsage-error" *ngIf="f.periodoMora.invalid && f.periodoMora.hasError('required')">Elija una opcion</mat-error>
             </mat-form-field>
         </div>
-        <div class="form-group col-6" *ngIf="cobraMora">
+        <div class="form-group col-6" *ngIf="cmoraporce" >
 
             <mat-radio-group class="radio-group" formControlName="tipoMora" (change)="changeTipoMora(true)">
                 <mat-radio-button class="radio-button" name="tipoMora" id="monto" value="M" class="texto-radio-small">Monto</mat-radio-button>
