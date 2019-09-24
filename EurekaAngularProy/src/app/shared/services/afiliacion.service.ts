@@ -104,7 +104,7 @@ export class AfiliacionService {
       }));
   }
 
-  public CanDeleteService(index: number): Observable<any> {
+  public CanDeleteService(index: number) {
     let url = `${environment.END_POINT}/service/${this.services[index].id}/canDelete`;
     return this.http.get<any>(url);
   }
@@ -158,7 +158,7 @@ export class AfiliacionService {
       },
       {
         code: 'P',
-        name: "Tengo sólo código y nombres"
+        name: "Tengo solo código y nombres"
       }
     ]);
   }
@@ -279,7 +279,7 @@ export class AfiliacionService {
   }
 
   Descartar(indice: number, isNew: boolean) {
-    console.log('descartar', isNew, indice);
+    console.log('descartar', isNew);
     this.Guardado = false;
     if (isNew && this.services.length > 1 && indice >= 0 && indice === (this.services.length - 1)) {
       let svc = this.services[this.services.length-1];
