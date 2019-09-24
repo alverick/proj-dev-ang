@@ -27,6 +27,7 @@ import { drawPopup } from "src/app/shared/services/popups";
     public messageUploadExcel: boolean = false;
     public errores: any[] = [];
     public ready: boolean = false;
+    public fileName: string;
 
     constructor(public  snackBar: MatSnackBar,
                 public excelService: ExcelService,
@@ -54,8 +55,14 @@ import { drawPopup } from "src/app/shared/services/popups";
     }
 
     onChangeFile(event) {
-      this.files = event.target.files;
+      let el = event.target;
+      let names: string[] = el.value.split("/");
+      if (names.length <= 1)
+        names = el.value.split("\\");
+      this.fileName = names[names.length-1];
+      this.files = el.files;
       this.excelService.errores = [];
+      this.ready = true;
     }
 
     SalirsnackBar() {
@@ -65,12 +72,7 @@ import { drawPopup } from "src/app/shared/services/popups";
     get f(): any { return this.inputXlsForm.controls;}
 
      changestatus =true;
-     openSnackBar() {
-
-      if(this.inputXlsForm.valid) {
-        this.xlsValid= false;
-      /*service*/
-
+    openSnackBar() {
         if(this.excelService.statusUpload == false) {
           this.progress.status = "Subiendo";
           this.progress.mode = 'indeterminate';
@@ -92,12 +94,7 @@ import { drawPopup } from "src/app/shared/services/popups";
           this.messageUploadExcel =this.excelService.statusUpload;
           return;
         }
-
-      } else {
-        this.xlsValid = true;
-
       }
-    }
 
 
     close(){

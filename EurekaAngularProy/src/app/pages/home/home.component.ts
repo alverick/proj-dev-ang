@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit {
     { name: 'firstName', asc: false },
     { name: 'lastName', asc: false },
     { name: 'Service', asc: false },
+    { name: 'concept', asc: false },
     { name: 'amount', asc: false },
     { name: 'interestAmount', asc: false },
     { name: 'totalAmount', asc: false },
@@ -146,6 +147,7 @@ export class HomeComponent implements OnInit {
     dateFrom: null,
     dateTo: null
   };
+  errores: any = {};
   control: any;
  // mensaje grila
 
@@ -246,12 +248,6 @@ export class HomeComponent implements OnInit {
       }
       }
   }
-
-/*//////// C R U D ///////////////////// */
-// datepiecker format
-change(dateEvent) {
-  this.date2.emit(dateEvent.value);
-}
 
 ////ORDENAMIENTO OCULTAR LAS FLECHAS
 orderList(index: number, asc: boolean) {
@@ -448,11 +444,13 @@ orderList(index: number, asc: boolean) {
     limpiardate1() {
       this.inputDate1.nativeElement.value = '';
       this.filtro.dateFrom = null;
+      this.errores.dateFrom = 'Ingrese una fecha';
     }
 
     limpiardate2() {
       this.inputDate2.nativeElement.value = '';
       this.filtro.dateTo = null;
+      this.errores.dateTo = 'Ingrese una fecha';
     }
 
 
@@ -482,11 +480,16 @@ orderList(index: number, asc: boolean) {
   }
 
   clearDatePicker(event){
-    if(event == ''){
+    if(event){
+      this.errores['dateFrom'] = 'Ingrese una fecha';
+      this.errores['dateTo'] = 'Ingrese una fecha';
+    }
+    else {
       this.limpiardate1();
       this.limpiardate2();
+      delete this.errores.dateFrom;
+      delete this.errores.dateTo;
     }
-
   }
 
 
@@ -523,17 +526,17 @@ orderList(index: number, asc: boolean) {
         return;
       }
 
-      if (duadate <  2000 || duadate >  2050 ) {
+      if (item.dueDate && (duadate <  2000 || duadate >  2050)) {
         this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Vencimiento');
         return;
       }
 
-      if(item.newConcept.length <  8) {
+      if(item.dueDate && (item.newConcept.length <  8)) {
         this.mensaje( 'error', 'Error en el Concepto','El concepto tiene que tener como minimo 8 digitos');
         return;
       }
 
-      if(item.newConcept === null || item.newConcept === ""){
+      if(item.dueDate && (item.newConcept === null || item.newConcept === "")){
         this.mensaje( 'error', 'Error en el Concepto','Ingrese El concepto');
         return;
       }
@@ -541,16 +544,16 @@ orderList(index: number, asc: boolean) {
         this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de emision');
         return;
       }
-      if (item.newDueDate == null) {
+      if (item.dueDate && (item.newDueDate == null)) {
         this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de vencimiento');
         return;
       }
-      if (item.newConcept === '') {
+      if (item.dueDate && (item.newConcept === '')) {
         this.mensaje( 'error', 'Error en el Concepto','Ingrese el concepto');
         return;
       }
 
-      if (item.newEmissionDate > item.newDueDate) {
+      if (item.dueDate && (item.newEmissionDate > item.newDueDate)) {
         this.mensaje( 'error', 'Error en la fecha','La fecha de Emision no puede ser mayor a la fecha de vencimiento');
         return;
       }
@@ -806,6 +809,53 @@ MostrarListaSelect() {
     let initalValue = parseFloat(e.newAmount);
     if(!isNaN(initalValue))
       e.newAmount = initalValue.toFixed(2);
+  }
+
+  change(dateEvent) {
+    this.date2.emit(dateEvent.value);
+  }
+
+  limpiarDateForFilter() {
+    this.filtro.dateForFilter=null;
+    this.filtro.dateFrom=null;
+    this.filtro.dateTo=null;
+    delete this.errores.dateFrom;
+    delete this.errores.dateTo;
+  }
+
+  private internalValidaDateFrom(e) {
+    if (e === null) {
+      this.errores['dateFrom'] = 'No es una fecha válida';
+    }
+    else {
+      delete this.errores.dateFrom;
+    }
+  }
+
+  private internalValidaDateTo(e) {
+    if (e === null) {
+      this.errores['dateTo'] = 'No es una fecha válida';
+    }
+    else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
+      this.errores['dateTo'] = "No puede ser menor a la emisión"
+    }
+    else {
+      delete this.errores.dateTo;
+    }
+  }
+
+  validaDateFrom(e) {
+    this.internalValidaDateFrom(e);
+    if (!this.errores.dateFrom && this.filtro.dateTo) {
+      this.internalValidaDateTo(this.filtro.dateTo);
+    }
+  }
+
+  validaDateTo(e) {
+    this.internalValidaDateTo(e);
+    if (!this.errores.dateTo && this.filtro.dateFrom) {
+      this.internalValidaDateFrom(this.filtro.dateFrom);
+    }
   }
 }
 

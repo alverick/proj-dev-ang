@@ -5,6 +5,13 @@ body{
   background: #f4f5f7  !important;
 
 }
+
+.container {
+  width: 1230px;
+  max-width: 1230px;
+}
+
+
 .widget {
   width: 100%;
 
@@ -26,12 +33,12 @@ body{
 .widget.filtros {
   .content {
     .mat-form-field.f1 {
-      width: 220px;
+      width: 280px;
     }
 
     .mat-form-field.f2 {
       margin-left: 10px;
-      width: 132px;
+      width: 137px;
     }
 
     .f3 {
@@ -246,7 +253,7 @@ body{
                 }
               }
 
-              &.c7, &.c8, &.c9 {
+              &.c8, &.c9, &.c10 {
                 text-align: right;
               }
 
@@ -344,7 +351,7 @@ body{
           width: 100px;
 
           .text {
-            width: 38px;
+            width: 60px;
           }
         }
 
@@ -352,7 +359,7 @@ body{
           width: 100px;
 
           .text {
-            width: 31px;
+            width: 38px;
           }
         }
 
@@ -365,6 +372,14 @@ body{
         }
 
         .c10 {
+          width: 100px;
+
+          .text {
+            width: 31px;
+          }
+        }
+
+        .c11 {
           width: 85px;
 
           .text {
@@ -372,7 +387,7 @@ body{
           }
         }
 
-        .c11 {
+        .c12 {
           width: 45px;
 
           .text {
@@ -433,5 +448,15 @@ body{
     background: transparent !important;
     color: $textgreen !important;
     text-decoration: underline !important;
+  }
+}
+
+.mat-form-field {
+  .msg-error {
+    @include font-text(12px, 500);
+    position: absolute;
+    color: #f44336;
+    margin-top: 10px;
+    width: 200px;
   }
 }
