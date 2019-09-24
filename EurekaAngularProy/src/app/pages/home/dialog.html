@@ -16,19 +16,18 @@
     </div>
     <img class="pb-3 img-excel" src="assets/images/excel.svg" alt="excel">
     <div class="text-center">
-      <button class="btn-eureca-green" type="button" form="input-form" (click)="mostrarInput()">
+      <form id="input-form" [formGroup]="inputXlsForm" >
+        <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
+      </form>
+      <button class="btn-eureca-green" type="button" form="input-form" (click)="uploadFile.click()">
         Seleccionar plantilla
       </button>
     </div>
   </ng-template>
   <div *ngIf="ready; else landing" class="text-center">
-    <form id="input-form" [formGroup]="inputXlsForm" (ngSubmit)="openSnackBar()">
-      <mat-form-field class="input-file">
-        <ngx-mat-file-input formControlName="xls" placeholder="Archivo Seleccionado" [disabled]="excelService.statusUpload" (change)="onChangeFile($event)">
-        </ngx-mat-file-input>
-        <mat-error *ngIf="f.xls.invalid && f.xls.hasError('required')">Debe elegir un archivo</mat-error>
-      </mat-form-field>
-    </form>
+    <div class="input-file">
+      <span class="text">{{fileName}}</span>
+    </div>
   </div>
   <div *ngIf="excelService.statusUpload" class="progress-text">{{progress.status}}</div>
   <mat-progress-bar *ngIf="excelService.statusUpload" [mode]="progress.mode" [value]="progress.value" [bufferValue]="100"></mat-progress-bar>
@@ -48,7 +47,7 @@
   </div>
   <br />
   <div *ngIf="ready" class="text-center">
-    <button class="btn-eureca-green" type="submit" form="input-form">
+    <button class="btn-eureca-green" type="button" form="input-form" (click)="openSnackBar()">
       Subir plantilla
     </button>
   </div>

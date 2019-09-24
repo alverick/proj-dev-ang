@@ -72,6 +72,18 @@
 
 .text-center {
   text-align: center;
+
+  .input-file {
+    width: 517px;
+    @include border-radius(23.5px);
+    border: solid 1px #9b9b9b;
+    margin-bottom: 15px;
+
+    .text {
+      @include font-text(14px, 500);
+      color: $textblack !important;
+    }
+  }
 }
 
 .btn-eureca-green {
@@ -86,45 +98,6 @@
   margin-top: -25px;
   margin-bottom: 1px;
 }
-
-:host ::ng-deep .input-file {
-  width: 517px;
-
-  .mat-form-field-label {
-    @include font-text(14px, 500);
-    color: $textblack !important;
-  }
-
-  .mat-form-field-ripple {
-    display: none;
-  }
-
-  .mat-form-field.mat-focused {
-    .mat-form-field-wrapper {
-      .mat-form-field-flex {
-        .mat-form-field-infix {
-          .mat-form-field-label-wrapper{
-            .mat-form-field-label {
-              color: $textblack !important;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .mat-form-field-infix {
-    margin-top: 15px;
-    border-radius: 23.5px;
-    border: solid 1px #9b9b9b;
-  }
-
-  .mat-form-field-underline {
-    background-color: transparent !important;
-  }
-}
-
-
 
 .img-excel{
   display: flex;
