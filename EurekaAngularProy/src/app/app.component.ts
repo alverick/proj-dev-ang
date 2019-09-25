@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { StorageService } from './shared/services/storage.service';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+
+declare let ga: Function;
 
 @Component({
   selector: 'app-root',
@@ -14,8 +16,15 @@ export class AppComponent {
 
   constructor(private router: Router,
     private loginService: LoginService,
-    private storageService: StorageService) { 
-}
+    private storageService: StorageService) {
+
+      this.router.events.subscribe(e => {
+        if (e instanceof NavigationEnd) {
+          ga('set', 'page', e.urlAfterRedirects);
+          ga('send', 'pageview');
+        }
+      });
+  }
 
   public show(): boolean{
     if(this.router.url.includes('/login')){

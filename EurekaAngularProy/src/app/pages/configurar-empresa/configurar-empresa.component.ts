@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/auth/crear-contrasena/must-match.validator';
 import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
-import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import Swal from 'sweetalert2';
-import { stringify } from '@angular/core/src/render3/util';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { RubroModel } from 'src/app/shared/models';
-import { DISABLED } from '@angular/forms/src/model';
 import { Router } from '@angular/router';
+import { drawPopup } from 'src/app/shared/services/popups';
 
 
 @Component({
@@ -84,15 +82,12 @@ export class ConfigurarEmpresaComponent implements OnInit {
 // actualizado
   onSubmit() {
     this.submitted = true;
-    console.log('EL CORREO ES '+this.formGroup.value.email.toString());
 
     var correo =  parseInt(this.formGroup.value.email.toString().length);
 
     var Pass =  parseInt(this.formGroup.value.password.toString().length);
     var newPass =  parseInt(this.formGroup.value.newPassword.toString().length);
 
-
-    console.log("ENTRO  ");
     if (this.formGroup.valid) {
        if(correo==0){
         return;
@@ -110,7 +105,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
         this.mensaje('warning','Edicion de Empresa','Debe ingresar la nueva contraseña para continuar' );
         return;
       }
-      console.log(this.formGroup.value);
       const datosEmpresa = this.formGroup.value;
       const enterprise = {
         ruc: datosEmpresa.ruc,
@@ -120,8 +114,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
         newPassword: datosEmpresa.newPassword,
         confirmNewPassword: datosEmpresa.confirmNewPassword
       };
-      console.log("FORM GROUP : "+this.formGroup.valid);
-      console.log(enterprise);
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
         enterpriseUpdate =>{
@@ -131,10 +123,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
             Swal.fire({
               title: 'Datos de Empresa guardados',
               text: 'Sus datos han sido actualizados',
-              type: 'warning',
               showCloseButton: true,
-              confirmButtonColor: '#3085d6',
               confirmButtonText: 'Aceptar',
+              onOpen: drawPopup
 
             }).then((result) => {
               if (result.value) {
@@ -163,14 +154,13 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
   mensaje(tipo: any, titulo: string, text: string){
     Swal.fire({
-      type: tipo ,
       title: titulo ,
-      html: text,
+      text: text,
       showCloseButton: true,
       showCancelButton: true,
       showConfirmButton: false,
-      cancelButtonColor: '#d33',
       cancelButtonText:  'Cerrar',
+      onOpen: drawPopup
 
     });
   }

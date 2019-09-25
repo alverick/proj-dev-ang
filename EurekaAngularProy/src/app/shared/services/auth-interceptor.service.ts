@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material';
 import { LoginService } from './login.service';
 import { StorageService } from './storage.service';
+import { drawPopup } from './popups';
 
 @Injectable({
   providedIn: 'root'
@@ -40,55 +41,41 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     return next.handle(request)
       .pipe(catchError((err: HttpErrorResponse)=>{
-        if(err.status === 401){
-          this.storage.removeCurrentSession();
-          this.snackBar.dismiss();
-          Swal.fire({
-            imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
-            title: 'Su sesión ha sido cerrada por inactividad',
-            showCloseButton: true,
-            showCancelButton: true,
-            showConfirmButton: false,
-            cancelButtonColor: '#d33',
-            cancelButtonText:  'Cerrar',
-            allowOutsideClick: false,
-            onClose: () =>{
-              this.router.navigateByUrl('/login')
-            }
-          });
-        } else {
-          this.storage.removeCurrentSession();
-          this.snackBar.dismiss();
-          Swal.fire({
-            imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
-            title: 'Ha ocurrido un error en el servidor',
-            showCloseButton: true,
-            showCancelButton: true,
-            showConfirmButton: false,
-            cancelButtonColor: '#d33',
-            cancelButtonText:  'Cerrar',
-            allowOutsideClick: false,
-            onClose: () =>{
-              this.router.navigateByUrl('/login')
-            }
-          })
+        if (!request.url.includes('notification')) {
+          if(err.status === 401){
+            this.storage.removeCurrentSession();
+            this.snackBar.dismiss();
+            Swal.fire({
+              imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
+              title: 'Su sesión ha sido cerrada por inactividad',
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonText:  'Cerrar',
+              allowOutsideClick: false,
+              onOpen: drawPopup,
+              onClose: () =>{
+                this.router.navigateByUrl('/login')
+              }
+            });
+          } else if (err.status !== 400) {
+            this.storage.removeCurrentSession();
+            this.snackBar.dismiss();
+            Swal.fire({
+              imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
+              title: 'Ha ocurrido un error en el servidor',
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
+              cancelButtonText:  'Cerrar',
+              allowOutsideClick: false,
+              onOpen: drawPopup,
+              onClose: () =>{
+                this.router.navigateByUrl('/login')
+              }
+            })
+          }
         }
-        /*else if(!(localStorage.getItem('tk'))){
-          this.storage.removeCurrentSession();
-          this.snackBar.dismiss();
-          Swal.fire({
-            imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
-            title: 'Su sesión ha sido cerrada por inactividad',
-            showCloseButton: true,
-            showCancelButton: true,
-            showConfirmButton: false,
-            cancelButtonColor: '#d33',
-            cancelButtonText:  'Cerrar',
-            onAfterClose: () =>{
-              this.router.navigateByUrl('/login')
-            }
-          })
-        }*/
         return throwError(err);
       })
     );

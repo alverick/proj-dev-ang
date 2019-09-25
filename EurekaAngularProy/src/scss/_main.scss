@@ -1,168 +1,192 @@
+@import "_variables.scss";
 
-/* Change all elements to use border-box */
-html {
-    box-sizing: border-box;
+body {
+  background-color: #f4f5f7 !important;
+}
+
+.body {
     background-color: #f4f5f7 !important;
-   /* background-color: #0b0044 !important;*/
-}
-*, *:before, *:after {
-    box-sizing: inherit;
 }
 
+.al-left {
+    float: left;
+}
 
-body{
-    font-size: 14px;
-    font-family: 'Omnes' !important;
-   /* background: #0b0044 !important;*/
+.al-right {
+    float: right;
+}
+
+.clear-float {
+    clear: both;
+}
+
+.scroll-div::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scroll-div::-webkit-scrollbar-thumb {
+    background-color: #333333;
+    border-radius: 4px;
+}
+
+.scroll-div::-webkit-scrollbar-track {
+    background-color: #f3f3f3;
+    border-radius: 4px;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: $textblack;
+}
+
+.mat-form-field {
+    .mat-form-field-prefix {
+        margin-right: 2px;
+    }
+    .mat-form-field-label {
+        @include font-text(15px);
+        color: $textblack !important;
+        top: 21px;
+    }
+    .mat-form-field-ripple {
+        background-color: $textblack !important;
+    }
+    .mat-select-arrow {
+        color: $textgreen;
+    }
+    .mat-datepicker-toggle {
+        .mat-icon-button {
+            color: $textgreen;
+        }
+    }
+}
+
+.mat-form-field.mat-focused {
+    .mat-form-field-label {
+        color: $textblue !important;
+    }
+    .mat-form-field-ripple {
+        background-color: $textblue !important;
+    }
+}
+
+.mat-form-field.mat-form-field-disabled {
+    .mat-datepicker-toggle {
+        .mat-icon-button {
+            color: rgba(0, 0, 0, .42);
+        }
+    }
+}
+
+.chk-vertical {
+  display: block;
+  width: 40px;
+  text-align: center;
+
+  .mat-checkbox-ripple {
+    left: calc(50% - 12px);
+    top: calc(50% - 12px);
+    height: 24px;
+    width: 24px;
+  }
+
+  .mat-checkbox-layout {
+    margin-bottom: 0;
+  }
+}
+
+.mat-checkbox-checked.mat-accent {
+  .mat-checkbox-background {
+    background-color: $textgreen;
+  }
+}
+
+.mat-progress-bar-buffer{
+  background-color: #a1dbc2;;
+}
+
+.mat-progress-bar-fill::after {
+  background-color: $green;
+}
+
+.btn-eureca-green{
+  @include font-text(16px !important, 500 !important);
+  color: #ffffff !important;
+  background-color: $green !important;
+  @include border-radius(4px !important);
+  border: solid 1px $green !important;
+  &:hover{
+    background-color: $green !important;
+  }
+  &:focus {
+    background-color: $greenclaro !important;
+  }
+  &.btn-disabled {
+    background-color: #9b9b9b !important;
+    border: solid 1px #9b9b9b !important;
+  }
+}
+
+.btn-outline-green {
+  @include font-text(16px !important, 500 !important);
+  @include border-radius(4px !important);
+  background-color: $blanco !important;
+  border:  solid 1px $blanco !important;
+  color: $green !important;
+
+  &.btn-disabled {
+    color: #9b9b9b !important;
+  }
+}
+
+.messsage-error {
+    font-family: Omnes;
+    font-size: 12px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $rojo;
+}
+
+.w-35 {
+    width: 35%;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.btn-big {
+    font-size: 16px;
+    padding-left: 45px;
+    padding-right: 45px;
+    height: 48px;
+}
+
+.texto-azul {
+    @include font-text(36px, $weight:500);
+    color: #2f4a9f;
+}
+
+.font-black {
+    @include font-text(18px, $weight:600);
     color: $negro;
 }
 
-header{
-    height: 80px;
+.swal2-content {
+    @include font-text(16px, $weight:500);
+    color: $negro;
+    text-align: center; 
+}
+.input-text{
+    font-family: Omnes !important;
+    font-size: 16px !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    font-stretch: normal !important;
+    line-height: normal !important;
+    letter-spacing: normal !important;
+    color: #333333 !important;
   }
-  
-  a{
-    &:hover{
-      text-decoration: none;
-    }
-  }
-
-  .logo{
-    max-width: 250px;
-  }
-
-    
-  .container{
-    width: 1000px;
-    max-width: 1000px;
-  }
-  
-  .link-page{
-    text-decoration: underline;
-    &:hover{
-      text-decoration: none;
-    }
-  }
-  
-  .text-small{
-    font-size: 10px;
-  }
-
-  .texto-amarillo{
-    color:#fc9a00;
-  }
-
-  .texto-azul{
-    color: #2121c4;
-  }
-  
-  .font-16{
-    font-size: 16px;
-  }
-  
-  small, .small {
-    font-size: 12px;
-  }
-  
-  h1, .h1{
-    font-size: 36px;
-  }
-  
-  h2, .h2{
-    font-size: 28px;
-  }
-  
-  h5, .h5{
-    font-size: 18px;
-  }
-  
-  h6, .h6{
-    font-size: 16px;
-  }
-
-/*Boton */
-
-  .btn-eureca{
-    /*@extend .texto-blanco;*/
-    /*@extend .font-medium;*/
-    @include border-radius(25px);
-    border: 0;
-  }
-  
-  .btn-eureca-amarillo{
-    background-color: $amarillo;
-    @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
-    &:hover{
-      background-color: $amarillolight;
-    }
-    &:focus{
-      background-color: $amarillobold;
-    }
-  }
-  
-  .btn-eureca-azul{
-    @include box-shadows(0, 1px, 4px, 0, rgba(38, 38, 191, 0.2));
-    background-color: $azul;
-    &:hover{
-      background-color: $azullight;
-    }
-    &:focus{
-      background-color: $azulbold;
-    }
-  }
-
-  .btn.btn-lg {
-    border-radius: 24px;
-    font-size: 16px;
-    padding-left: 45px;
-    padding-right: 45px;
-    height: 48px;
-    line-height: 45px;
-  }
-
-  .btn-outline-amarillo {
-    color: #fc9a00 !important;
-    background-color:white;
-    border-color: #fc9a00;
-    border-width: 2px;
-    border-style: solid;    
-  }
-  
-  .btn-big{
-    font-size: 16px;
-    padding-left: 45px;
-    padding-right: 45px;
-    height: 48px;
-  }
-  
-  .btn-medium{
-    font-size: 16px;
-    padding-left: 45px;
-    padding-right: 45px;
-    height: 40px;
-  }
-  
-  .btn-small{
-    font-size: 14px;
-    line-height: normal;
-    padding: 8px 35px;
-  }
-  
-  .input-filter{
-    padding:5px;
-    padding-left:45px;
-    width:375px;
-    border:1px solid #bebebe;
-    -webkit-border-radius:20px;
-    -khtml-border-radius:20px;
-    -moz-border-radius:20px;
-    -ms-border-radius:20px;
-    -o-border-radius:20px;
-    border-radius:20px;
-    background-clip:padding-box;
-    font-size:14px;
-    font-weight:500}
-
-    .focus-elements{
-    outline:none;
- }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { StorageService } from "./storage.service";
 import { Debts, DebtsPagedList } from "../models/debts";
@@ -7,7 +7,6 @@ import { Observable, throwError } from "rxjs";
 import { catchError,  map } from "rxjs/operators";
 import { DebtEdit } from "../models/debts-edit.model";
 import { DebstFilter } from "../models/debts-filter.model";
-import { Http, Headers, ResponseContentType } from "@angular/http";
 import * as moment from "moment";
 
 
@@ -20,7 +19,7 @@ export class TransactionService {
     private URI_API: string = environment.END_POINT
     private lastFilter: DebstFilter = null;
 
-    constructor(public http: HttpClient, private nativeHttp: Http, private storage: StorageService)  { }
+    constructor(public http: HttpClient, private storage: StorageService)  { }
 
     public pageMessage: string = "Mostrando 0 elementos";
     public debtItems: DebtsPagedList = { count:0, data: [] };
@@ -47,17 +46,18 @@ export class TransactionService {
         this.lastFilter = filtro;
       }
 
-
       var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
       var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
       //fechas
-      console.log('fechas');
-      console.log(strDateFrom);
-      console.log(strDateTo);
 
-      console.log(filtro);
+      if (filtro.service === null || filtro.service === undefined)
+        filtro.service = '';
+      if (filtro.status === null || filtro.status === undefined)
+        filtro.status = '';
+      if (filtro.dateForFilter === null || filtro.dateForFilter === undefined)
+        filtro.dateForFilter = '';
+
         const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
-        console.log(url);
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
         };
@@ -65,13 +65,13 @@ export class TransactionService {
           .pipe<DebtsPagedList>(map(r => {
             r.data.forEach(d => {
               d.emissionDate = new Date(d.emissionDate);
-              d.dueDate = new Date(d.dueDate);
+              if (d.dueDate !== null && d.dueDate !== undefined)
+                d.dueDate = new Date(d.dueDate);
               d.editInput = false;
               d.editButton = false;
               d.newStatus = '1';
             });
             this.debtItems = r;
-            console.log(r);
             return r;
           }))
           .pipe(map(r => {
@@ -92,10 +92,8 @@ export class TransactionService {
 
 
   deleteDeuda(idDebt: number): Observable<Debts>{
-      console.log('begin login')
       // cambia link
       const url = `${this.URI_API}/debt/${idDebt}?_=`+ new Date().getTime();
-      console.log(url);
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
       };
@@ -104,7 +102,6 @@ export class TransactionService {
 
   deleteAll(ids: number[]): Observable<any> {
     const url = `${this.URI_API}/debt/deleteAll?_=`+ new Date().getTime();
-    console.log(url);
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
@@ -113,10 +110,8 @@ export class TransactionService {
 
   // ESITAR LA DEUDA
     editDeuda(id: number, debts: DebtEdit): Observable<any>{
-      console.log('begin login')
       // cambia link
       const url = `${this.URI_API}/debt/${id}?_=`+ new Date().getTime();;
-      console.log(url);
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
       };
@@ -125,7 +120,7 @@ export class TransactionService {
 
     report(filtro: DebstFilter): Observable<any>{
       const url = `${this.URI_API}/debt/report?_=`+ new Date().getTime();
-      const headers = new Headers({
+      const headers = new HttpHeaders({
         "Authorization": "bearer " + this.storage.getCurrentToken(),
         "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": 'true'
@@ -143,17 +138,15 @@ export class TransactionService {
         dateFrom: strDateFrom,
         dateTo: strDateTo
       }
-      return this.nativeHttp.post(url, fltr, {
+      return this.http.post(url, fltr, {
         headers: headers,
-        responseType: ResponseContentType.Blob
+        responseType: 'blob'
       })
-        .pipe(map(r => r.blob()))
         .pipe(catchError(err => throwError(err)));
     }
 
     updateDeuda(id: number, paid: boolean): Observable<any>{
       const url = `${this.URI_API}/debt/pay?_=`+ new Date().getTime();
-      console.log(url);
       const opts={
         headers: { "Authorization":"bearer" + this.storage.getCurrentToken()}
       };

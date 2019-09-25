@@ -1,10 +1,8 @@
-import { Observable } from 'rxjs';
 import { Date } from './../../shared/models/date';
 import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild} from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
-import { Router } from '@angular/router';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { MatDialog, MatSnackBar} from '@angular/material';
@@ -26,7 +24,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
-import { isNgTemplate } from '@angular/compiler';
+import { drawPopup } from 'src/app/shared/services/popups';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -58,83 +56,37 @@ declare var $: any;
   ],
 })
 
-@Directive({
-  selector: '[appBlockCopyPaste]'
-})
-
 
 // tslint:disable-next-line:directive-class-suffix
 export class HomeComponent implements OnInit {
 
-  numeroPagina:number;
-  ///ORDENES DE LA TABLA
-  ascFeEmisiongray: boolean = false;
-  ascFeEmisionblue: boolean = true;
-  descFeEmisionblue: boolean = true;
-  descFeEmisiongray: boolean = false;
-  //fecha de vencimiento
+  numeroPagina: number;
 
-  ascFeVctgray: boolean = false;
-  ascFeVctblue: boolean = true;
-  dscFeVctblue: boolean = true;
-  dscFeVctgray: boolean = false;
+  orderDef = [
+    { name: 'emissionDate', asc: false },
+    { name: 'dueDate', asc: false },
+    { name: 'code', asc: false },
+    { name: 'firstName', asc: false },
+    { name: 'lastName', asc: false },
+    { name: 'Service', asc: false },
+    { name: 'amount', asc: false },
+    { name: 'interestAmount', asc: false },
+    { name: 'totalAmount', asc: false },
+    { name: 'status', asc: false }
+  ]
+  orderBy = -1;
 
-  //codigicliente
-  asccodgray: boolean = false;
-  asccodblue: boolean = true;
-  dsccodiblue: boolean = true;
-  dsccodigray: boolean = false;
-  // name
-  ascnamegray: boolean = false;
-  ascnameblue: boolean = true;
-  dscnameblue: boolean = true;
-  dscnamegray: boolean = false;
-  //apelido
-  asclastgray: boolean = false;
-  asclastblue: boolean = true;
-  dsclastblue: boolean = true;
-  dsclastgray: boolean = false;
-// srvicio
-  ascservgray: boolean = false;
-  ascservblue: boolean = true;
-  dscservblue: boolean = true;
-  dscservgray: boolean = false;
-  // concepto
-  ascconcepgray: boolean = false;
-  ascconcepblue: boolean = true;
-  dscconcepblue: boolean = true;
-  dscconcepgray: boolean = false;
-    // monto
-  ascmontopgray: boolean = false;
-  ascmontopblue: boolean = true;
-  dscmontopblue: boolean = true;
-  dscmontopgray: boolean = false;
- // estado de pago
-  ascestpagopgray: boolean = false;
-  ascstpagoopblue: boolean = true;
-  dscstpagopblue: boolean = true;
-  dscstpagopgray: boolean = false;
-  // fecha de pago
-  ascfechapagopgray: boolean = false;
-  ascfechapagopblue: boolean = true;
-  dscfechapagopblue: boolean = true;
-  dscfechapagopgray: boolean = false;
-    // canal
-  asccanalpgray: boolean = false;
-  asccanalpblue: boolean = true;
-  dsccanalpblue: boolean = true;
-  dsccanalpgray: boolean = false;
  // DialogDataExampleDialog
-  @ViewChild('cargaExcel') cargaExcel;
+  @ViewChild('cargaExcel', { static: true }) cargaExcel;
  // datepicker format
  @Output() date2: EventEmitter<any> = new EventEmitter<any>();
  // fechas limites
  minDate = new Date(2000, 0, 1);
  maxDate = new Date(2050, 0, 1);
  // inputDate1:string = '';  inputText
- @ViewChild('inputText') inputText: ElementRef;
- @ViewChild('inputDate1') inputDate1: ElementRef;
- @ViewChild('inputDate2') inputDate2: ElementRef;
+ @ViewChild('inputText', { static: true }) inputText: ElementRef;
+ @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
+ @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
   // tslint:disable-next-line:no-inferrable-types
   state: boolean = false;
   // tslint:disable-next-line:whitespace
@@ -150,10 +102,11 @@ export class HomeComponent implements OnInit {
   mostrar: Boolean;
   inputEdit: Boolean;
   InputList: Boolean;
-
+  messagetablecode1: Boolean =false;
+  messagetablecode2: Boolean =false;
   private debtsUpdate: DebtEdit = new DebtEdit();
 
-  typeList: Type[];
+  typeList: any[];
   waypayList: WayPay[];
   DateList: Date[];
 
@@ -167,7 +120,7 @@ export class HomeComponent implements OnInit {
   date: String[];
 
   serviceSelected: String;
-  services: String[];
+  services: any[];
 
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = true;
@@ -197,13 +150,12 @@ export class HomeComponent implements OnInit {
  // mensaje grila
 
   messageTable: string ='';
-
+  showArrow: boolean = false;
 
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
-    private transactionService: TransactionService,
-    private router: Router ,
+    public transactionService: TransactionService,
     private excelService: ExcelService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
@@ -302,237 +254,18 @@ change(dateEvent) {
 }
 
 ////ORDENAMIENTO OCULTAR LAS FLECHAS
+orderList(index: number, asc: boolean) {
+  this.orderBy = index;
+  this.orderDef[index].asc = asc;
 
-
-  AscDesc(/*nro: number */columnName: string, asc: boolean) {
-    // this.filtro.pageNumber = nro;
-  this.ascFeEmisiongray  = false;
-  this.ascFeEmisionblue   = true;
-  this.descFeEmisionblue  = true;
-  this.descFeEmisiongray = false;
-  //fecha de vencimiento
-
-  this.ascFeVctgray = false;
-  this.ascFeVctblue = true;
-  this.dscFeVctblue  = true;
-  this.dscFeVctgray  = false;
-
-  //codigicliente
-  this.asccodgray  = false;
-  this.asccodblue  = true;
-  this.dsccodiblue = true;
-  this.dsccodigray  = false;
-  // name
-  this.ascnamegray  = false;
-  this.ascnameblue  = true;
-  this.dscnameblue  = true;
-  this.dscnamegray  = false;
-  //apelido
-  this.asclastgray = false;
-  this.asclastblue  = true;
-  this.dsclastblue = true;
-  this.dsclastgray  = false;
-// srvicio
-this.ascservgray  = false;
-this.ascservblue = true;
-this.dscservblue  = true;
-this.dscservgray = false;
-  // concepto
-this.ascconcepgray  = false;
-this.ascconcepblue  = true;
-this.dscconcepblue  = true;
-this.dscconcepgray = false;
-    // monto
-this.ascmontopgray  = false;
-this.ascmontopblue = true;
-this.dscmontopblue  = true;
-this.dscmontopgray  = false;
-// estado de pago
-this.ascestpagopgray = false;
-this.ascstpagoopblue  = true;
-this.dscstpagopblue =true;
-this.dscstpagopgray = false;
-
-// fecha de pago
-this.ascfechapagopgray= false;
-this.ascfechapagopblue  = true;
-this.dscfechapagopblue =true;
-this.dscfechapagopgray = false;
-// canal
-this.asccanalpgray= false;
-this.asccanalpblue  = true;
-this.dsccanalpblue =true;
-this.dsccanalpgray = false;
-
-
-    if (columnName === 'emissionDate' ) {
-      if (asc === true) {
-        this.ascFeEmisionblue  = false;
-        this.ascFeEmisiongray= true;
-        this.descFeEmisionblue =true;
-        this.descFeEmisiongray = false;
-      }else{
-        this.descFeEmisionblue =false;
-        this.descFeEmisiongray = true;
-        this.ascFeEmisionblue  = true;
-        this.ascFeEmisiongray= false;
-      }
-    }
-    if(columnName === 'dueDate' ){
-      if(asc === true){
-        this.ascFeVctblue  = false;
-        this.ascFeVctgray= true;
-        this.dscFeVctblue =true;
-        this.dscFeVctgray = false;
-      }else{
-        this.dscFeVctblue =false;
-        this.dscFeVctgray = true;
-        this.ascFeVctblue  = true;
-        this.ascFeVctgray= false;
-      }
-  }
-  if(columnName === 'code' ){
-    if(asc === true) {
-      this.asccodblue  = false;
-      this.asccodgray= true;
-      this.dsccodiblue =true;
-      this.dsccodigray = false;
-    } else {
-      this.dsccodiblue =false;
-      this.dsccodigray = true;
-      this.asccodblue  = true;
-      this.asccodgray= false;
-    }
+  this.filtro.asc = asc;
+  this.filtro.columnName = this.orderDef[index].name;
+  this.consultaDeuda();
 }
-if(columnName === 'firstName' ) {
-  if(asc === true){
-    this.ascnameblue  = false;
-    this.ascnamegray= true;
-    this.dscnameblue =true;
-    this.dscnamegray = false;
-  } else {
-    this.dscnameblue =false;
-    this.dscnamegray = true;
-    this.ascnameblue  = true;
-    this.ascnamegray= false;
-  }
-}
-if(columnName === 'lastName' ) {
-  if(asc === true){
-    this.asclastblue  = false;
-    this.asclastgray= true;
-    this.dsclastblue =true;
-    this.dsclastgray = false;
-  } else {
-    this.dsclastblue =false;
-    this.dsclastgray = true;
-    this.asclastblue  = true;
-    this.asclastgray= false;
-  }
-}
-if(columnName === 'Service' ) {
-  if(asc === true) {
-    this.ascservblue  = false;
-    this.ascservgray= true;
-    this.dscservblue =true;
-    this.dscservgray = false;
-  } else {
-    this.dscservblue =false;
-    this.dscservgray = true;
-    this.ascservblue  = true;
-    this.ascservgray= false;
-  }
-}
-if(columnName === 'Concept' ) {
-  if(asc === true) {
-    this.ascconcepblue  = false;
-    this.ascconcepgray= true;
-    this.dscconcepblue =true;
-    this.dscconcepgray = false;
-  } else {
-    this.dscconcepblue =false;
-    this.dscconcepgray = true;
-    this.ascconcepblue  = true;
-    this.ascconcepgray= false;
-  }
-}
-if(columnName === 'amount' ) {
-  if(asc === true) {
-    this.ascmontopblue  = false;
-    this.ascmontopgray= true;
-    this.dscmontopblue =true;
-    this.dscmontopgray = false;
-  } else {
-    this.dscmontopblue =false;
-    this.dscmontopgray = true;
-    this.ascmontopblue  = true;
-    this.ascmontopgray= false;
-  }
-}
-if(columnName === 'amount' ) {
-  if(asc === true) {
-    this.ascmontopblue  = false;
-    this.ascmontopgray= true;
-    this.dscmontopblue =true;
-    this.dscmontopgray = false;
-  } else {
-    this.dscmontopblue =false;
-    this.dscmontopgray = true;
-    this.ascmontopblue  = true;
-    this.ascmontopgray= false;
-  }
-}
-//staus page
-if(columnName === 'status' ) {
-  if(asc === true) {
-    this.ascstpagoopblue  = false;
-    this.ascestpagopgray = true;
-    this.dscstpagopblue =true;
-    this.dscstpagopgray = false;
-  } else {
-    this.dscstpagopblue =false;
-    this.dscstpagopgray = true;
-    this.ascstpagoopblue  = true;
-    this.ascestpagopgray= false;
-  }
-}
-// fecha de pago
-if(columnName === 'payDate' ) {
-  if(asc === true) {
-    this.ascfechapagopblue  = false;
-    this.ascfechapagopgray= true;
-    this.dscfechapagopblue =true;
-    this.dscfechapagopgray = false;
-  } else {
-    this.dscfechapagopblue =false;
-    this.dscfechapagopgray = true;
-    this.ascfechapagopblue  = true;
-    this.ascfechapagopgray= false;
-  }
-}
-if(columnName === 'canal' ) {
-  if(asc === true) {
-    this.asccanalpblue  = false;
-    this.asccanalpgray= true;
-    this.dsccanalpblue =true;
-    this.dsccanalpgray = false;
-  } else {
-    this.dsccanalpblue =false;
-    this.dsccanalpgray = true;
-    this.asccanalpblue  = true;
-    this.asccanalpgray= false;
-  }
-}
-
-    this.filtro.asc = asc;
-    this.filtro.columnName = columnName;
-   // this.filtro.dateFrom=;
-    // this.filtro.dateTo;
-    this.consultaDeuda();
-
-  }
 
   sendFiltro() {
+    this.messagetablecode1 = false;
+    this.messagetablecode2 = false;
     this.filtro.pageNumber = 1;
     this.consultaDeuda();
 
@@ -540,9 +273,12 @@ if(columnName === 'canal' ) {
        (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined)  &&
        (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
        (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)){
-       this.messageTable = ' Para empezar, carga las deudas de tus clientes';
+       this.messageTable = 'Para empezar, carga las deudas de tus clientes';
+       this.showArrow = true;
       } else{
-        this.messageTable ='No se encontro ningun Registro para esta Busqueda';
+       this.messageTable ='No se encontro ningun registro para esta busqueda';
+       this.showArrow = false;
+
       }
   }
 
@@ -554,15 +290,13 @@ if(columnName === 'canal' ) {
 
   mesageeError(tipo: any, titulo: string, text: string){
     Swal.fire({
-      type: tipo ,
       title: titulo ,
       html: text,
       showCloseButton: true,
-      showCancelButton: true,
-      showConfirmButton: false,
-      cancelButtonColor: '#d33',
-      cancelButtonText:  'Cerrar',
-
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText:  'Cerrar',
+      onOpen: drawPopup
     });
   }
 
@@ -599,7 +333,6 @@ if(columnName === 'canal' ) {
 
     if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
       ///       dateFrom es inputDate1              | dateTo  es inputDate2
-
           if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
 
 
@@ -672,6 +405,7 @@ if(columnName === 'canal' ) {
                 }, err => { this.spinner.hide(); });
           }
      this.messageTable = ' Para empezar, carga las deudas de tus clientes';
+     this.showArrow = true;
 
 }
   /*//////////////////////////////
@@ -822,14 +556,11 @@ if(columnName === 'canal' ) {
     Swal.fire({
       title: '¿Deseas Actualizar?',
       text: '¡No podrás revertir esto!',
-      imageUrl: '/assets/images/complain.svg',
-      imageHeight: 100,
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Editarlo!',
-      cancelButtonText: 'Cerrar'
+      confirmButtonText: 'Si, Actualizar!',
+      cancelButtonText: 'Cerrar',
+      onOpen: drawPopup
     }).then((result) => {
 
       if (result.value) {
@@ -849,10 +580,11 @@ if(columnName === 'canal' ) {
           debtsUpdate => {
             if (debtsUpdate.success) {
               Swal.fire({
-                type: 'success',
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
+                showCancelButton: false,
+                onOpen: drawPopup,
                 onAfterClose: () => {
                   item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
@@ -869,10 +601,11 @@ if(columnName === 'canal' ) {
             }
             else {
               Swal.fire({
-                type: 'warning',
                 titleText: 'ERROR',
                 text: debtsUpdate.message,
                 showCloseButton: true,
+                showCancelButton: false,
+                onOpen: drawPopup
               });
             }
           }
@@ -883,10 +616,11 @@ if(columnName === 'canal' ) {
           this.transactionService.updateDeuda(item.id, true).subscribe(
             statusUpdate=>{
               Swal.fire({
-                type:'success',
                 titleText: 'Editado!',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
+                showCancelButton: false,
+                onOpen: drawPopup,
                 onAfterClose: () => {
                   item.status= 'PAGADO';
                   item.amountPayed = statusUpdate.payed;
@@ -939,17 +673,14 @@ if(columnName === 'canal' ) {
     }
 
  Swal.fire({
-      title: '¿Estas Seguro de Eliminar ' + itemsParaEliminar.length + ' registros?',
-      text: '¡No podrás revertir esto!',
-      imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
+      title: '¿Seguro que quieres continuar?',
+      text: `Esta acción va a eliminar ${itemsParaEliminar.length} deudas`,
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
       cancelButtonText: 'Cancelar',
+      onOpen: drawPopup
     }).then((result) => {
-      console.log(result);
       if (result.value) {
         this.spinner.show();
 
@@ -957,11 +688,13 @@ if(columnName === 'canal' ) {
           .subscribe(() => {
             this.consultaDeuda(() =>
               {
-                Swal.fire(
-                  'Eliminado!',
-                  'Se han eliminado ' + itemsParaEliminar.length + ' registros',
-                'success'
-                )
+                Swal.fire({
+                  title: 'Eliminado!',
+                  text: 'Se han eliminado ' + itemsParaEliminar.length + ' registros',
+                  showCloseButton: true,
+                  showCancelButton: false,
+                  onOpen: drawPopup
+                })
               });
           }, err => { this.spinner.hide(); });
       }
@@ -974,15 +707,12 @@ if(columnName === 'canal' ) {
 
   Swal.fire({
     title: "¿Esta Seguro de Eliminar el Registro? ",
-    imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
     showCancelButton: true,
     showCloseButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: 'Si, Borralo',
     cancelButtonText: 'Cerrar',
+    onOpen: drawPopup
   }).then((result) => {
-    console.log(result);
     if (result.value) {
       this.spinner.show();
       this.transactionService.deleteDeuda(item.id)
@@ -1023,8 +753,6 @@ MostrarListaSelect() {
       if (this.validaFiltro()) {
         this.transactionService.report(this.filtro)
         .subscribe((r: Blob) => {
-          console.log('todo bien');
-          console.log(r);
           saveAs(r, "reporte.xlsx");
         });
       }
@@ -1034,8 +762,16 @@ MostrarListaSelect() {
 
   }
 
-  estaVencido(itm: Debts){
-    return (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && itm.dueDate < new Date();
+  estaVencido(itm: Debts): boolean{
+    let today = new Date();
+    let resp = (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && (itm.dueDate !== null) && (itm.dueDate < today);
+    return resp;
+  }
+
+  MontoBlur(e) {
+    let initalValue = parseFloat(e.newAmount);
+    if(!isNaN(initalValue))
+      e.newAmount = initalValue.toFixed(2);
   }
 }
 

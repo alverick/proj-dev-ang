@@ -1,91 +1,83 @@
-<div class="body">
-    <div class="container py-4">            
-        <div class="row py-4">
-          <!--////// L E F T /////-->
-          <div class="col">
-              <h1 class="texto-azulbase">Antes de registrarte,<br>
-                ¡conoce Eureca!</h1>
-          </div>
+<div>
+        <br>
+    <div class="container ">
+        <div class="row ">
+            <!--////// L E F T /////-->
+            <div class="col-sm-5 ">
+                <div class="texto-azul">Antes de registrarte, ¡conoce Eureca!</div>
+            </div>
 
-          <!--///// R I G H T //// -->
+            <!--///// R I G H T //// -->
 
-          <div class="col-12 col-md-8">
-              <!--//// P R I M E R  // B L O Q U E //////-->
-              <div class="shadow-none border p-4 bg-white rounded">
-                  <p class="lead mb-0">
-                      Con Eureca tus clientes te podrán pagar a través de los diferentes canales
-                      de Interbank y podrás manejar la información de tus cobros de manera fácil.
-                  </p>
-              </div>
-              <br>
-              <!--//// S E G U N D O  // B L O Q U E //////-->
-
-              <div class="shadow-none border p-4 bg-white rounded"  >
-                  <div class="clearfix">
-                    <h5 class="mt-2 mb-4">Estas son las comisiones por canal:</h5>
-                  </div>
-                  
-                  <div class="card-deck mb-3 text-center">      
-                      <!--/////// C O M I S I O N - 1 //////// -->                
-                      <div class="card mb-4 shadow-sm" >
-                        <br>
-                        <h4 class="my-0 font-weight-normal">Digital</h4>
-                        
-                        <div class="card-body">
-                          <ul class="list-unstyled mt-3 mb-4">
-                              <li>Banca por Internet, Interbank APP</li>                        
-                          </ul>
-                          <h1 class="card-title pricing-card-title texto-azul">GRATIS</h1>
-                        </div>
-                      </div>
-                      <!--/////// C O M I S I O N - 2 //////// -->
-                      <div class="card mb-4 shadow-sm">
-                        <br>
-                        <h4 class="my-0 font-weight-normal">Agentes</h4>
-                        <div class="card-body">
-                          <ul class="list-unstyled mt-3 mb-5">
-                              <li>Lima y Provincias.</li>                        
-                          </ul>
-                          <h1 class="card-title pricing-card-title texto-azul">S/1</h1>
-                          <ul class="list-unstyled mt-3 mb-4">
-                              <li>Costos que se le cobrará a tus clientes</li>                        
-                          </ul>
-                        </div>
-                        
-                      </div>
-                      <!--/////// C O M I S I O N - 3 //////// -->
-                      <div class="card mb-4 shadow-sm">
-                        <br>
-                        <h4 class="my-0 font-weight-normal">Tiendas</h4>
-                        <h6 class="my-0 font-weight-normal">(Ventanilla)</h6>                                                      
-                        <ul class="list-unstyled mt-3 mb-1">
-                            <li>Lima y Provincias.</li>                        
-                        </ul>
-                        <div class="card-body">
-                          
-                          <h1 class="card-title pricing-card-title texto-azul">S/7</h1>
-                          <ul class="list-unstyled mt-3 mb-4">
-                            <li>Costo que se le cobrará a tus clientes.</li>
-                          </ul>
-                        </div>
-                      </div>
+            <div class=" col-md-7 ">
+                
+                <!--//// P R I M E R  // B L O Q U E //////-->
+                <div class="d-flex justify-content-end"> 
+                    <div class="cuadro-descripcion p-4 ">
+                        <p class="descripcion">
+                            Con Eureca tus clientes te podrán pagar a través de los <br> diferentes canales de Interbank y podrás manejar la <br>  información de tus cobros de manera fácil.
+                        </p>
+                    </div> 
+                </div>
+                <!--//// S E G U N D O  // B L O Q U E //////-->
+                <div class="d-flex justify-content-end">
+                <div class="cuadro-comisiones p-4 mt-2 ">
+                    <div class="clearfix">
+                        <div class="texto-tipos pb-4">Estas son las comisiones por canal:</div>
                     </div>
 
-              <!--//// T E R C E R // B L O Q U E //////-->
+                    <div class="card-deck mb-3 text-center">
+                        <!--/////// C O M I S I O N - 1 //////// -->
+                        <div class="card cuadro-canales"> 
+                            <div class="card-title text-titulo p-2">Web / App</div>
 
-                <div class="custom-shadow p-custom-box bg-blanco">
-                  <div class="clearfix">
-                      <p class="text-center">
-                        <button class="btn-big btn-eureca-amarillo btn-eureca text-white" [routerLink]="['/crearContrasena']" >
-                          Quiero Registrarme
-                        </button>
-                      </p>
-                  </div>
+                             
+                                <div class="mt-1  texto-descripcion-comisiones">
+                                     Interbank APP y Banca por <br>internet 
+                                </div>
+                                <div class="pt-3 text-green">GRATIS</div>
+                             
+                        </div>
+                        <!--/////// C O M I S I O N - 2 //////// -->
+                        <div class="card cuadro-canales"> 
+                                
+                            <div class="card-title text-titulo p-2">Agentes</div>
+                            
+                                <div class="mt-1 texto-descripcion-comisiones">
+                                     Lima y provincias. <br><br>
+                                </div>  
+                                <div class="pt-3 pricing-card-title text-green">S/1</div>
+                                <div class="texto-descripcion-comisiones mt-4">
+                                    Costos que se le cobrará a tus clientes 
+                                </div> 
+                        </div>
+                        <!--/////// C O M I S I O N - 3 //////// -->
+                        <div class="card cuadro-canales"> 
+                            <div class="card-title text-titulo pt-2">Tiendas 
+                                    <div class="texto-descripcion-comisiones">(Agencias)</div> 
+                            </div>
+                            
+                                <div class="texto-descripcion-comisiones">
+                                    Lima y provincias. 
+                                </div>
+                                
+                                    <div class="pt-4 card-title pricing-card-title text-green">S/7</div>
+                                    <div class="texto-descripcion-comisiones mt-4">
+                                        Costo que podrá ser asumido por la empresa o por los clientes 
+                                    </div>
+                             
+                        </div>
+                    </div>
+                    <div class="pt-3">
+                    <!--//// T E R C E R // B L O Q U E //////--> 
+                            <button class="button-afiliacion" [routerLink]="['/crearContrasena']">
+                                 Quiero Registrarme
+                            </button>
+                    </div>          
                 </div>
-              </div>
-          </div>
+                </div>
 
-          
+        </div>
         </div>
     </div>
 </div>

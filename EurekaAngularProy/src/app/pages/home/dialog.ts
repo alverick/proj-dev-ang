@@ -3,7 +3,9 @@ import { UploadProgressComponent } from "./upload-progress";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar, MatDialogRef } from "@angular/material";
 import { ExcelService } from "src/app/shared/services/excel.service";
-
+import Swal from "sweetalert2";
+import * as saveAs from 'file-saver';
+import { drawPopup } from "src/app/shared/services/popups";
 
 
 /*////////////////////////////////////////////////////////
@@ -14,27 +16,24 @@ import { ExcelService } from "src/app/shared/services/excel.service";
 @Component({
     selector: 'dialog-data-example-dialog',
     templateUrl: 'dialog.html',
+    styleUrls:['dialog.scss']
   })
 
   // tslint:disable-next-line:component-class-suffix
-  export class DialogComponent implements OnInit { 
+  export class DialogComponent implements OnInit {
     public inputXlsForm: FormGroup;
     public xlsValid: boolean;
     public codigoCliente: String = 'Codigo de Cliente';
     public messageUploadExcel: boolean = false;
-
-    validationExcel = {
-      'xls':[
-        { type: 'required', message: 'Debes Ingresar un archivo excel'}
-      ]
-    }
+    public errores: any[] = [];
+    public ready: boolean = false;
 
     constructor(public  snackBar: MatSnackBar,
-                private excelService: ExcelService,
+                public excelService: ExcelService,
                 public  formBuilder: FormBuilder,
                 public  dialogRef: MatDialogRef<DialogComponent>
 
-              ) { 
+              ) {
                }
 
     // tslint:disable-next-line:use-life-cycle-interface
@@ -42,70 +41,101 @@ import { ExcelService } from "src/app/shared/services/excel.service";
       this.inputXlsForm = this.formBuilder.group({
         xls: ['', Validators.required]
       });
-
-       
-       
+      this.dialogRef.afterClosed()
+        .subscribe(() => {
+          if (!this.excelService.statusUpload) {
+            this.excelService.errores = [];
+          }
+        });
     }
-    
 
-     /*Data Completa */
-    matricula: any = [{"Fecha de emisión":"17/8/2019","Fecha de vencimiento":"16/9/2019",
-    "Código de cliente":"u2019000001","Nombres":"Nombre Demo", "Apellidos":"apellido Demo",
-    "Servicio":"Matricula","Concepto": "20190708","Monto":"500"}];
-
+    mostrarInput() {
+      this.ready = true;
+    }
 
     onChangeFile(event) {
-      this.files = event.target.files; 
+      this.files = event.target.files;
+      this.excelService.errores = [];
     }
 
     SalirsnackBar() {
       this.dialogRef.close();
     }
     private files: any;
-    get f() { return this.inputXlsForm.controls;}
+    get f(): any { return this.inputXlsForm.controls;}
 
      changestatus =true;
      openSnackBar() {
 
-       console.log("ENTRO : " + this.inputXlsForm.value)
       if(this.inputXlsForm.valid) {
         this.xlsValid= false;
       /*service*/
 
         if(this.excelService.statusUpload == false) {
-          console.log("SERVICE");
-          console.log(this.excelService.service);
           this.excelService.UploadExcel(this.files, this.excelService.service.name, this.changestatus )
-          .subscribe(
-            value=> {
-              this.excelService.idProcess = value.id;
-
-            });
+          .subscribe(value => {
+            this.excelService.idProcess = value.id;
+            this.verifyStatus();
+          }, err => {
+            this.excelService.statusUpload = false;
+            if (err.status === 400) {
+              this.excelService.errores = [
+                { description: 'El nombre del archivo no es correcto', row: 0 }
+              ];
+            }
+          });
         } else {
-            
+
           this.messageUploadExcel =this.excelService.statusUpload;
           return;
         }
 
-      this.snackBar.openFromComponent(UploadProgressComponent);
-      this.dialogRef.close();
       } else {
         this.xlsValid = true;
 
       }
     }
-    
+
 
     close(){
       this.dialogRef.close();
     }
 
-    exportDataMatriculaXLSX():void{
-      this.excelService.exportAsExcelFile(this.matricula, 'data_completa');
+    private verifyStatus() {
+      let recursiveFunc = (value) => {
+        if (value.status === "REJECTED") {
+          this.excelService.statusUpload = false;
+          this.excelService.errores = value.errors;
+        }
+        else if (value.status === 'COMPLETED') {
+          this.excelService.statusUpload = false;
+          this.excelService.errores = [];
+          this.dialogRef.close();
+          Swal.fire({
+            text: `Se cargaron ${value.rowsUploaded} registros`,
+            showCloseButton: true,
+            onOpen: drawPopup
+          });
+        }
+        else  {
+          var th = this;
+          setTimeout(() => {
+            th.excelService.StatusExcel(th.excelService.idProcess)
+              .subscribe(recursiveFunc);
+          }, 500);
+        }
+      };
+      setTimeout(() => {
+        this.excelService.StatusExcel(this.excelService.idProcess)
+        .subscribe(recursiveFunc);
+      }, 800);
     }
 
-    OcultarMensaje() {
-      this.xlsValid = false;
+    descargarPlantilla() {
+      this.excelService.GetTemplate()
+        .subscribe((r: Blob) => {
+          saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
+        });
     }
   }
 

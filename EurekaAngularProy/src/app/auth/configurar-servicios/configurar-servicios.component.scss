@@ -1,3 +1,10 @@
+@import "../../../scss/_variables.scss";
+@import "../../../scss/_mixin.scss";
+
+  body{
+    background: #f4f5f7  !important;
+  }
+
 .btn.btn-lg {
     border-radius: 24px;
     font-size: 16px;
@@ -7,13 +14,7 @@
     line-height: 45px;
 }
 
-.btn-outline-amarillo {
-    color: #fc9a00;
-    border-color: #fc9a00;
-    border-width: 2px;
-    border-style: solid;
-    color: #fc9a00 !important;
-}
+
 
 .pb-0,
 .py-0,
@@ -21,14 +22,6 @@
 .servicio-creado table tr th,
 .servicio-creado table tr td {
     padding-bottom: 0 !important;
-}
-
-.pt-0,
-.py-0,
-.btn.btn-lg,
-.servicio-creado table tr th,
-.servicio-creado table tr td {
-    /* padding-top: 0 !important; */
 }
 
 .text-center,
@@ -50,9 +43,70 @@
 }
 
 .seleccionado {
-  border: 1px blue solid;
+  border: 1px  $green solid;
 }
 
-.mano{
+//// look and feel
+
+.font-black-servicios-list {
+    @include font-text(14px, $weight:300);
+    color: #333333;
+}
+.font-black-servicios-des-list {
+    @include font-text(14px, $weight:normal);
+    color: #333333;
+}
+
+.card-servicios{
+    @include  cuadro(361px, 145px);
+    @include box-shadows();
+    background-color: #ffffff;
+}
+.font-cerrar {
+    @include font-text(10px, $weight:500);
+    color: #9b9b9b;
+    text-align: center;
+}
+
+.btn-eureca-green{
+    width: 207px;
+    height: 48px;
+    margin-left: 20%;
+    @include box-shadows();
+  }
+.btn-outline-green {
+    width: 361px;
+    height: 58px;
+    @include box-shadows();
+}
+
+.formulario{
+    @include cuadro(460px, auto);
+    object-fit: contain;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.mano {
   cursor: pointer;
 }
+
+.content-container {
+    overflow-y: auto;
+    max-height: 500px;
+
+    background-color: #f4f5f7;
+  }
+
+.btn-col-1 {
+  display: block;
+  padding-left: 10px;
+  width: 100%;
+}
+
+:host ::ng-deep .ps-content {
+  background-color: transparent;
+  padding-left: 10px;
+}
+

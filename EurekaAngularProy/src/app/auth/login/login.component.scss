@@ -2,11 +2,7 @@
 @import '~src/scss/variables';
 @import '~src/scss/mixin';
 @import '~src/scss/landing';
-
-html{
-  background-color: #f4f5f7  !important
-}
-
+@import '~src/scss/main';
 .row{
   display: flex;
   flex-wrap: wrap;
@@ -15,9 +11,14 @@ html{
 }
 
 
-.body{
-  background: #0b0044 !important;
-  
+body {
+  background-image: url("/assets/images/fondo.svg");
+  //background-image: linear-gradient(58deg, rgba(60, 98, 175, 0.83), rgba(0, 169, 79, 0.64));
+
+}
+.container-style{
+  background-image: linear-gradient(58deg, rgba(60, 98, 175, 0.83), rgba(0, 169, 79, 0.64));
+  height: 920px;
 }
 label{
   margin-bottom: 0px;
@@ -25,9 +26,11 @@ label{
 .border{
   box-sizing:  border-box;
   border-style:solid !important;
-  border-width: 2vw 3.2vw!important;
+  border-width: 2vw 4.8vw!important;
   border-color: white !important;
   margin-top: 5vw !important;
+  width: 381px;
+  height: auto;
 }
 .h6{
   font-size: 16px;
@@ -41,7 +44,7 @@ label{
   background-image:url("/assets/images/fondo-landing.png");
   width: 98vw;
  /* margin-top: 10vw !important;*/
-} 
+}
 
 .bg-blanco{
   background-color:#fff;
@@ -52,7 +55,7 @@ label{
 .box-login{padding:65px 65px 22px}
 .d-flex{display:flex !important}
 .flex-fill{flex:1 1 auto !important}
-.texto-negro{color:#333 !important}
+
 .icon-usuario:before{content:"\e908";color:#2626bf}
 .d-block,.texto-after:after,.comisiones>[class*=col]:after,.division>li i{display:block !important}
 .custom-shadow{
@@ -67,18 +70,8 @@ label{
   -o-border-radius:5px;border-radius:5px;
   background-clip:padding-box}
 
-  .styled-checkbox{position:absolute;opacity:0}
-  .styled-checkbox+label{position:relative;cursor:pointer;padding:0;margin:0}
-  .styled-checkbox+label:before{content:'';display:inline-block;vertical-align:text-top;width:16px;height:16px;border:2px solid #2121c4;background:white}
-  .styled-checkbox:hover+label:before{background:#2121c4}
-  .styled-checkbox:focus+label:before{border:2px solid #2121c4}
-  .styled-checkbox:checked+label:before{background:#2121c4}
-  .styled-checkbox:disabled+label{color:#fff;cursor:auto}
-  .styled-checkbox:disabled+label:before{box-shadow:none;background:#fff}
-  .styled-checkbox:checked+label:after{content:'';position:absolute;left:3px;top:9px;background:#fff;width:2px;height:2px;box-shadow:2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;transform:rotate(45deg)}
 
- 
-  ::ng-deep .mat-form-field {
+  :host ::ng-deep .mat-form-field {
     .mat-form-field-underline {
         background-color: slategray;
         height: 0.18vw !important;
@@ -97,3 +90,158 @@ label{
     background-color: slategray;
     height: 0.18vw !important;
     margin-bottom: 5px;}
+
+/////////////////////////////////////////////////////////////
+    .btn-eureca-green{
+      @include btn-eureca;
+      width: 232px;
+      height: 48px;
+      font-family: Omnes;
+      font-size: 16px;
+      float: right;
+      margin-bottom: 23px;
+
+    }
+// boton Rgistrate
+
+.btn-eureca-green-register{
+  background-color: $blanco;
+  border-radius: 4px;
+  color: $green;
+  border: solid 1px $green;
+  width: 232px;
+  height: 48px;
+  font-family: Omnes;
+  font-size: 16px;
+  float: right;
+  @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
+  &:hover{
+    background-color: $blanco;
+    border-radius: 4px;
+  border: solid 1px $greenclaro;
+  color: $green;
+  
+  }
+  &:focus{
+  /*  background-color: $green;
+    border-radius: 4px;
+    border: solid 1px $greenclaro;
+    color: $blanco; */
+  }
+}
+.btn-big{
+  font-size: 16px;
+  padding-left: 45px;
+  padding-right: 45px;
+  height: 48px;
+}
+
+.text-green{color:$green; font-weight: bold; }
+.texto-azul{color:$azul;
+  font-size: 28px;
+  font-family: Omnes;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;}
+
+
+.mujer{
+  height:301px;
+  height:518px;
+}
+
+.title-landing-login{
+  font-size: 53px;
+  font-weight: 500;
+
+  &:after {
+    /*@extend .position-absolute;
+    @include translate(0, 100%);*/
+    left: 166px;
+    bottom: 20px;
+    content: "";
+    width: 42px;
+    height: 33px;
+   /* background: url("../images/bg-titulo.png") no-repeat;*/
+  }
+}
+
+
+.bg-image-landing{
+  height: 400px;
+  /*background-image: url("../images/fondo-landing.png");*/
+  background-repeat: no-repeat;
+  background-position: bottom center;
+}
+
+ .texto-login{  
+  font-family: Omnes;
+  font-size: 48px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+ }
+
+ .mujer-position{
+  padding-left:  50px;
+  padding-top : 110px;
+ }
+
+
+ /// inputs
+ .w-100 {
+  width: 100%;
+}
+
+.w-100-pass {
+  width: 100%;
+}
+ 
+
+.shadow-none {
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .mat-form-field .mat-form-field-ripple {
+  background-color: $textgreen !important;
+}
+:host ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $textgreen !important;
+}
+.reCaptach{
+  transform:scale(0.70);
+  margin: 0vw;
+  padding: 0vw;
+  width: 232px;
+
+}
+
+.text-check{
+  @include font-text(14px, $weight:300);
+  color: $negro;
+}
+.texto-negro{
+  font-family: Omnes;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;}
+
+  .cuadro-form{ 
+    @include cuadro(381px,auto); 
+    background-color: #ffffff;  
+    box-sizing:  border-box;
+    border-style:solid !important;
+    border-width: 2vw 4.7vw!important;
+    border-color: white !important;
+    margin-top: 5vw !important;
+  }

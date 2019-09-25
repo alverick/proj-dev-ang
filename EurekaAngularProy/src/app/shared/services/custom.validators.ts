@@ -2,15 +2,11 @@ import { AbstractControl, FormControl, Validators } from "@angular/forms";
 
 export class CustomValidators {
     static RequiredWhen(controlName: string, refName: string, refValue: any) {
-        return (form: FormControl) => {
-            console.log('custom validate');
+        return (form: FormControl) => { 
             const ctrl = form.get(controlName);
             const ctrlRef = form.get(refName);
-            if (ctrl !== null && ctrlRef !== null) {
-                console.log(ctrl);
-                console.log(ctrlRef);
-                if (ctrlRef.value === refValue) {
-                    console.log(`${controlName}`)
+            if (ctrl !== null && ctrlRef !== null) { 
+                if (ctrlRef.value === refValue) { 
                     return Validators.required(ctrl);
                 }
             }

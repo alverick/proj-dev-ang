@@ -5,11 +5,12 @@ import { AfiliacionService } from '../../shared/services/afiliacion.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { RubroModel } from 'src/app/shared/models';
+import { drawPopup } from 'src/app/shared/services/popups';
 
 @Component({
   selector: 'app-crear-contrasena',
   templateUrl: './crear-contrasena.component.html',
-  styleUrls: ['./crear-contrasena.component.css']
+  styleUrls: ['./crear-contrasena.component.scss']
 })
 export class CrearContrasenaComponent implements OnInit {
   registerForm: FormGroup;
@@ -50,8 +51,7 @@ export class CrearContrasenaComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    var ruc  = this.registerForm.value.ruc.toString();
-    console.log('RUC --->'+  ruc.substring(0,2));
+    var ruc  = this.registerForm.value.ruc.toString(); 
     // stop here if form is invalid
 
     if (this.registerForm.invalid) {
@@ -92,25 +92,26 @@ export class CrearContrasenaComponent implements OnInit {
       } else {
         if (d.code === 1) {
           Swal.fire({
-            type: 'warning',
+          //  type: 'warning',
             title: 'Crea tu cuenta',
             text: `El RUC: ${this.registerForm.value.ruc} ya se encuentra registrado en Eureca`,
-            showConfirmButton: false,
-            showCancelButton: true,
+            showConfirmButton:true ,
+            showCancelButton: false,
             showCloseButton: true,
-            cancelButtonText: 'Cerrar'
+            confirmButtonText: 'Cerrar',
+            onOpen: drawPopup,
           });
         }
         else {
           Swal.fire({
-            type: 'warning',
-            title: 'Crea tu cuenta de negocios',
-            text: `No tenemos ninguna cuenta asociada al RUC: ${this.registerForm.value.ruc}. Para continuar crea primero tu cuenta negocios y puedas cobrar tus servicios ahí`,
+           // type: 'warning',
+            title: 'Abre tu Cuenta Negocios',
+            text: `Te llevaremos a la página web de Interbank para abrir la cuenta. Una vez que llenes el formulario regresa aquí.`,
             showConfirmButton: true,
-            showCancelButton: true,
+            showCancelButton: false,
             showCloseButton: true,
-            confirmButtonText: 'Crear mi cuenta',
-            cancelButtonText: 'Corregir mi RUC'
+            confirmButtonText: 'Crear mi cuenta',  
+            onOpen: drawPopup, 
           }).then(res => {
             if (res.value) {
               window.open('https://interbank.pe/cuenta-negocios');
@@ -119,9 +120,7 @@ export class CrearContrasenaComponent implements OnInit {
           });
         }
       }
-    }, err => {
-      console.log(err);
-
+    }, err => { 
       this.mensaje('error','Registrame','Ha ocurrido un error con el servidor<br />Intente de nuevo' );
 
     });
@@ -129,7 +128,7 @@ export class CrearContrasenaComponent implements OnInit {
 
   mensaje(tipo: any, titulo: string, text: string){
     Swal.fire({
-      type: tipo ,
+     // type: tipo ,
       title: titulo ,
       html: text,
       showCloseButton: true,
@@ -137,6 +136,7 @@ export class CrearContrasenaComponent implements OnInit {
       showConfirmButton: false,
       cancelButtonColor: '#d33',
       cancelButtonText:  'Cerrar',
+      onOpen: drawPopup,
 
     });
   }

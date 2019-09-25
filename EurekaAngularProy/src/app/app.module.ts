@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -46,10 +45,11 @@ import { ShearDirective } from './pages/home/shear.directive';
 import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
 import { DecimalesDirective } from './pages/home/decimales.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { EmailDirective } from './pages/configurar-empresa/email.directive';
 import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.directive';
-import { NotifyService } from './shared/services/notify.service'; 
+import { NotifyService } from './shared/services/notify.service';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [
@@ -83,10 +83,13 @@ import { NotifyService } from './shared/services/notify.service';
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpModule,
     NgxSpinnerModule,
     MatInputModule,
-    SweetAlert2Module.forRoot(),
+    SweetAlert2Module.forRoot({
+      customClass: {
+        actions: 'actions-popup'
+      }
+    }),
     RecaptchaModule.forRoot(),
     DigitOnlyModule,
     MatDatepickerModule,
@@ -103,7 +106,8 @@ import { NotifyService } from './shared/services/notify.service';
     MatSelectModule,
     MatProgressSpinnerModule,
     FontAwesomeModule,
-    InfiniteScrollModule
+    PerfectScrollbarModule,
+    MaterialFileInputModule
   ],
   providers: [
     ExcelService,

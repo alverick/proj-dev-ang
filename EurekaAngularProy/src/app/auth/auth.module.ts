@@ -17,13 +17,14 @@ import { MatInputModule } from '@angular/material/input';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { MatFormFieldModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
 import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
 import { FormServicioComponent } from './form-servicio/form-servicio.component';
 import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
 import { CloseViewGuard } from '../shared/guards/close-view.guard';
 import { SharedModule } from '../shared/shared.module';
 import { NumberAccountDirective } from './form-servicio/number-account.directive';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
   imports: [
@@ -36,8 +37,11 @@ import { NumberAccountDirective } from './form-servicio/number-account.directive
     RecaptchaModule,
     DigitOnlyModule,
     MatFormFieldModule,
+    MatCheckboxModule,
     MatSelectModule,
-    SharedModule
+    SharedModule,
+    MatRadioModule,
+    PerfectScrollbarModule
   ],
   providers: [
     StorageService,
@@ -56,6 +60,9 @@ import { NumberAccountDirective } from './form-servicio/number-account.directive
     BlockCopyPasteDirective,
     OnlyNumbersFormDirective, 
     NumberAccountDirective
+  ],
+  exports: [
+    OnlyNumbersFormDirective
   ]
 })
 

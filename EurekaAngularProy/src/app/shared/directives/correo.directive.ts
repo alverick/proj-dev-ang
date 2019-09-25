@@ -8,8 +8,7 @@ export class CorreoDirective {
   constructor(private el: ElementRef) { }
 
   @HostListener('input', ['$event']) onInputChange(event) {
-    let initalValue = this.el.nativeElement.value; 
-    console.log('espacio no acept');
+    let initalValue = this.el.nativeElement.value;  
     this.el.nativeElement.value = initalValue.replace(/[^0-9]*/g, '');
     
     if ( initalValue !== this.el.nativeElement.value) {

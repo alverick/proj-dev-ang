@@ -1,9 +1,10 @@
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import { Injectable } from "@angular/core";
+import 'rxjs/add/observable/of';
+import { map, delay } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { faBell as fasBell, faCircle as fasCircle } from '@fortawesome/free-solid-svg-icons';
 import { faBell as farBell, faCircle as farCircle } from '@fortawesome/free-regular-svg-icons';
-import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
 
@@ -13,6 +14,7 @@ export class NotifyService {
 
   inExecution: boolean = false;
   icono: any = farBell;
+  loadingMsg: boolean = false;
 
   existMore: boolean = true;
   messages: any[] = [];
@@ -21,29 +23,31 @@ export class NotifyService {
   public iniciar() {
     if (!this.inExecution) {
       this.inExecution = true;
-      var callNotify = () => {
+      const callNotify = () => {
         if (this.storage.isAuthenticated()) {
-          this.http.get<any>(`${environment.END_POINT}/notification/total?_=${new Date().getTime()}`)
-            .subscribe(d => {
-              this.icono = (d.total > 0 ? fasBell : farBell);
+          this.http.get(`${environment.END_POINT}/notification/total?_=${new Date().getTime()}`)
+            .subscribe((d: any) => {
+              this.inExecution = false;
               if (d.total !== this.total) {
                 this.total = d.total;
                 this.messages = [];
                 this.existMore = true;
                 this.loadMsgs();
               }
+              Observable.of({}).pipe(delay(5000)).subscribe(() => callNotify());
             });
         }
       };
-      Observable.interval(1000).subscribe(() => callNotify());
-      callNotify();
+      Observable.of({}).pipe(delay(1000)).subscribe(() => callNotify());
     }
   }
 
   public loadMsgs() {
-    if (this.existMore) {
-      this.http.get<any[]>(`${environment.END_POINT}/notification?skip=${this.messages.length}&_=${new Date().getTime()}`)
+    if (this.existMore && !this.loadingMsg) {
+      this.loadingMsg = true;
+      this.http.get<any>(`${environment.END_POINT}/notification?skip=${this.messages.length}&_=${new Date().getTime()}`)
         .subscribe(d => {
+          this.loadingMsg = false;
           if (d.length < 15) {
             this.existMore = false;
           }
@@ -52,12 +56,11 @@ export class NotifyService {
             s.title = s.isNew ? 'Marcar como leido' : 'Marcar como no leido';
             this.messages.push(s);
           });
-        });
+        }, err => { this.loadingMsg = false; });
     }
   }
 
   public changeRead(msg: any) {
-    console.log('change read');
     this.http.put(`${environment.END_POINT}/notification/mark/${msg.id}?_=${new Date().getTime()}`, {})
       .subscribe(() => { });
     msg.isNew = !msg.isNew;
@@ -68,5 +71,10 @@ export class NotifyService {
       msg.icono = fasCircle;
       msg.title = 'Marcar como no leido';
     }
+  }
+
+  public markAll() {
+    this.http.post(`${environment.END_POINT}/notification/mark?_=${new Date().getTime()}`, {})
+      .subscribe(() => { });
   }
 }

@@ -16,8 +16,6 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script  type="javascript" src="node_modules/core-js/client/shim.min.js"></script>
-  <script  type="javascript" src="node_modules/web-animations-js/web-animations.min.js"></script>
 </head>
 <body>
   <app-root></app-root>
@@ -26,9 +24,18 @@
     window['_url_loop_'] = 'login';
     window.addEventListener('popstate', function(event) {
       let _url_ = window['_url_loop_'];
-      console.log('push history ', _url_);
       history.pushState(null, null, _url_);
     });
   </script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148142629-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-148142629-1');
+</script>
 </body>
 </html>

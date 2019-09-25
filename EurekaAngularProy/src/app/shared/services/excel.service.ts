@@ -1,12 +1,12 @@
 import { Error } from './../models/error.model';
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { StorageService } from "./storage.service";
 import { Observable, throwError } from "rxjs";
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
-import { catchError } from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -21,15 +21,13 @@ export class ExcelService {
 
   /* ///////////////////////////////////
   ////////// D O W N L O A D /////////////////
-  //////////////////////////////////////////  */ 
+  //////////////////////////////////////////  */
 
   public exportAsExcelFile(json: any[], excelFileName: string): void {
-    
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
-    console.log('worksheet',worksheet);
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json); 
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
     this.saveAsExcelFile(excelBuffer, excelFileName);
   }
 
@@ -43,7 +41,7 @@ export class ExcelService {
 
   /* ///////////////////////////////////
   ////////// U P L O A D /////////////////
-  //////////////////////////////////////////  */ 
+  //////////////////////////////////////////  */
 
   public service: any = '';
   public idProcess: number = 0;
@@ -53,7 +51,6 @@ export class ExcelService {
 
   UploadExcel(files: any, service: string, changestatus: boolean): Observable<any> {
     this.statusUpload = changestatus; 
-    console.log(files);
     const url = `${this.URI_API}/debt/load/${service}?_=` + new Date().getTime();
     const opts={
       headers: {
@@ -63,22 +60,32 @@ export class ExcelService {
       }
     }
     const formData = new FormData();
-    formData.append('file', files[0], files[0].name)
-    console.log(url);
+    formData.append('file', files[0], files[0].name) 
     return this.http.post<any>(url, formData, opts).pipe(
-      catchError(error => throwError(error)));   
-  }   
+      catchError(error => throwError(error)));
+  }
 
-  StatusExcel(id: number): Observable<any>{
-    //this.statusUpload = status;
-    console.log('begin status excel')
+  StatusExcel(id: number): Observable<any> {
     const url = `${this.URI_API}/debt/process/${id}/status?_=` + new Date().getTime();
-    const opts={
+    const opts = {
       headers: {"Authorization" : "bearer " + this.storage.getCurrentToken(),
       "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
       "Ocp-Apim-Trace": "true"}
     }
     return this.http.get<any>(url, opts).pipe(catchError(error => throwError(error)));
-  
+
+  }
+
+  GetTemplate(): Observable<Blob> {
+    const url = `${this.URI_API}/debt/template?service=${this.service.name}&_=${new Date().getTime()}`;
+    const headers = new HttpHeaders({
+      "Authorization": "bearer " + this.storage.getCurrentToken(),
+      "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
+      "Ocp-Apim-Trace": 'true'
+    }); 
+    return this.http.get(url, {
+      headers: headers,
+      responseType: 'blob'
+    });
   }
 }
