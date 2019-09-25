@@ -69,7 +69,7 @@ export class AfiliacionService {
       usaAgente: false,
       usaTienda: false,
       cobraMora: 'N',
-      periodoMora: '1',
+      periodoMora: '',
       tipoMora: 'M'
     };
     this.services.push(svc);
@@ -236,6 +236,7 @@ export class AfiliacionService {
           });
         });
         this.services = servicios;
+        console.log(this.services);
       });
 
 

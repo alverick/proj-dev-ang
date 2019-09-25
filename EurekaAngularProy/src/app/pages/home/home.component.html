@@ -7,7 +7,8 @@
           <div class="content">
             <form>
               <mat-form-field class="f1">
-                <input class="input-text" matInput [(ngModel)]="filtro.inputSearch" name="inputSearch" type="text" appShear maxlength="20" placeholder="Nombre o Codigo del deudor">
+                <input class="input-text" matInput [(ngModel)]="filtro.inputSearch" name="inputSearch" type="text"
+                  appShear maxlength="20" placeholder="Nombre o código del deudor">
                 <span matPrefix class="fa fa-search"></span>
                 <button mat-button *ngIf="filtro.inputSearch" matSuffix mat-icon-button aria-label="Clear" (click)="filtro.inputSearch=''">
                   <i class="fa fa-close"></i>
@@ -39,31 +40,35 @@
                     <mat-option class="input-text"value="{{item.idDate}}"  *ngFor="let item of DateList"> {{item.descripcion}} </mat-option>
                 </mat-select>
                 <button mat-button *ngIf="filtro.dateForFilter" matSuffix mat-icon-button aria-label="Clear"
-                  (click)="filtro.dateForFilter=null; filtro.dateFrom=null; filtro.dateTo=null; $event.stopPropagation();">
+                  (click)="limpiarDateForFilter(); $event.stopPropagation();">
                   <i class="fa fa-close"></i>
                 </button>
               </mat-form-field>
               <mat-form-field class="f2">
                 <input  class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1
-                  placeholder="Desde" [(ngModel)]="filtro.dateFrom"
+                  placeholder="Desde" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)"
                   type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2"
                   maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
                 <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
                 <mat-datepicker #myDatepicker2></mat-datepicker>
-                <button mat-button *ngIf="filtro.dateFrom" matSuffix mat-icon-button aria-label="Clear" (click)="filtro.dateFrom=null">
+                <button mat-button *ngIf="filtro.dateFrom || inputDate1.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="limpiardate1()">
                   <i class="fa fa-close"></i>
                 </button>
+                <div class="msg-error" *ngIf="errores.dateFrom">{{errores.dateFrom}}</div>
               </mat-form-field>
               <mat-form-field class="f2">
                 <input  class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2
-                  placeholder="Hasta"
+                  placeholder="Hasta" (ngModelChange)="validaDateTo($event)"
                   type="text" name="dateTo" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo"
                   maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
                 <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
                 <mat-datepicker #myDatepicker></mat-datepicker>
-                <button mat-button *ngIf="filtro.dateTo" matSuffix mat-icon-button aria-label="Clear" (click)="filtro.dateTo=null">
+                <button mat-button *ngIf="filtro.dateTo || inputDate2.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="limpiardate2()">
                   <i class="fa fa-close"></i>
                 </button>
+                <div class="msg-error" *ngIf="errores.dateTo">{{errores.dateTo}}</div>
               </mat-form-field>
               <button type="button" class="f3 btn-eureca-green" (click)="sendFiltro()">Buscar
               </button>
@@ -108,6 +113,15 @@
               </div>
               <div class="clear-float"></div>
             </section>
+            <section *ngIf="selectedAll" class="counter">
+              <div class="text">
+                Se han seleccionado los <span *ngIf="!selectedUniverse" style="font-weight: 500;">{{transactionService.debtItems.data.length}}</span><span *ngIf="selectedUniverse" style="font-weight: 500;">{{transactionService.debtItems.count}}</span> registros de esta página
+                <button type="button" *ngIf="transactionService.debtItems.count > transactionService.debtItems.data.length" class="btn-select-all" (click)="selectedUniverse = !selectedUniverse">
+                  <span *ngIf="!selectedUniverse">Seleccionar los {{transactionService.debtItems.count}} registros</span>
+                  <span *ngIf="selectedUniverse">Anular la selección</span>
+                </button>
+              </div>
+            </section>
             <section class="lista">
               <table>
                 <thead>
@@ -132,7 +146,7 @@
                         </div>
                       </th>
                     <th class="c3">
-                      <div class="text">Código de cliente</div>
+                      <div class="text">Código de deudor</div>
                       <div class="ord">
                           <div class="up" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === true"
                           (click)="orderList(2, true)"></div>
@@ -161,23 +175,23 @@
                     <th class="c6">
                       <div class="text">Servicio</div>
                       <div class="ord">
-                          <div class="up" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === true"
+                        <div class="up" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === true"
                           (click)="orderList(5, true)"></div>
-                          <div class="down" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === false"
+                        <div class="down" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === false"
                           (click)="orderList(5, false)"></div>
-                        </div>
-                      </th>
+                      </div>
+                    </th>
                     <th class="c7">
-                      <div class="text">Cuota</div>
-                      <div class="ord">
+                      <div class="text">Concepto</div>
+                        <div class="ord">
                           <div class="up" [class.seleccionado]="orderBy === 6 && orderDef[6].asc === true"
-                          (click)="orderList(6, true)"></div>
+                            (click)="orderList(6, true)"></div>
                           <div class="down" [class.seleccionado]="orderBy === 6 && orderDef[6].asc === false"
-                          (click)="orderList(6, false)"></div>
+                            (click)="orderList(6, false)"></div>
                         </div>
                       </th>
                     <th class="c8">
-                      <div class="text">Mora</div>
+                      <div class="text">Cuota</div>
                       <div class="ord">
                           <div class="up" [class.seleccionado]="orderBy === 7 && orderDef[7].asc === true"
                           (click)="orderList(7, true)"></div>
@@ -186,7 +200,7 @@
                         </div>
                       </th>
                     <th class="c9">
-                      <div class="text">Total</div>
+                      <div class="text">Mora</div>
                       <div class="ord">
                           <div class="up" [class.seleccionado]="orderBy === 8 && orderDef[8].asc === true"
                           (click)="orderList(8, true)"></div>
@@ -195,7 +209,7 @@
                         </div>
                       </th>
                     <th class="c10">
-                      <div class="text">Estado del pago</div>
+                      <div class="text">Total</div>
                       <div class="ord">
                           <div class="up" [class.seleccionado]="orderBy === 9 && orderDef[9].asc === true"
                           (click)="orderList(9, true)"></div>
@@ -204,13 +218,22 @@
                         </div>
                       </th>
                     <th class="c11">
+                      <div class="text">Estado del pago</div>
+                      <div class="ord">
+                          <div class="up" [class.seleccionado]="orderBy === 10 && orderDef[10].asc === true"
+                          (click)="orderList(10, true)"></div>
+                          <div class="down" [class.seleccionado]="orderBy === 10 && orderDef[10].asc === false"
+                          (click)="orderList(10, false)"></div>
+                        </div>
+                      </th>
+                    <th class="c12">
                       <div class="text">Editar</div>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }"
-                    [class.seleccionado]="items.selected">
+                    [class.seleccionado]="items.selected" [class.edit-pago]="items.verPagos">
                     <td class="c0">
                       <div class="chk-vertical">
                         <mat-checkbox [(ngModel)]="items.selected"></mat-checkbox>
@@ -237,10 +260,25 @@
                           </div>
                     </td>
                     <td class="c3">{{items.code}}</td>
-                    <td class="c4">{{items.firstName}}</td>
-                    <td class="c5">{{items.lastName}}</td>
+                    <td class="c4">
+                      <span *ngIf="!items.editInput">{{items.firstName}}</span>
+                      <div *ngIf="items.editInput" class="content-input-icon position-relative">
+                        <mat-form-field style="width: 90px">
+                          <input style="font-size: 14px;" matInput [(ngModel)]="items.newFirstName" maxlength="10" minlength="3" type="text">
+                        </mat-form-field>
+                      </div>
+                    </td>
+                    <td class="c5">
+                      <span *ngIf="!items.editInput">{{items.lastName}}</span>
+                      <div *ngIf="items.editInput" class="content-input-icon position-relative">
+                        <mat-form-field style="width: 90px">
+                          <input style="font-size: 14px;" matInput [(ngModel)]="items.newLastName" maxlength="20" minlength="3" type="text">
+                        </mat-form-field>
+                      </div>
+                    </td>
                     <td class="c6">{{items.service}}</td>
-                    <td class="c7">
+                    <td class="c7">{{items.concept}}</td>
+                    <td class="c8">
                         <span *ngIf="!items.editInput && items.amount > 0">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
                         <div *ngIf="items.editInput && items.dueDate !== null">
                           <mat-form-field style="width: 90px">
@@ -248,24 +286,29 @@
                           </mat-form-field>
                         </div>
                     </td>
-                    <td class="c8">
+                    <td class="c9">
                         <span *ngIf="items.interestAmount > 0" >{{items.currency}} {{items.interestAmount| number : '1.2-2'}}</span>
                     </td>
-                    <td class="c9">
+                    <td class="c10">
                         <span *ngIf="items.totalAmount > 0" >{{items.currency}} {{items.totalAmount| number : '1.2-2'}}</span>
                     </td>
-                    <td class="c10">
-                      <span *ngIf="items.status === 'PAGADO'" class="text-success">
-                        Pagado <img src="assets/images/ok.svg" alt="ok">
-                      </span>
-                      <span *ngIf="items.status === 'PARCIAL'" [class.text-danger]="estaVencido(items)">
-                        Parcial <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
-                      </span>
-                      <span  *ngIf="items.status === 'PENDIENTE'" [class.text-danger]="estaVencido(items)">
-                        Pendiente <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
-                      </span>
-                    </td>
                     <td class="c11">
+                      <div class="cnt-status">
+                        <div class="lnk-status" (click)="appPagos.show()">
+                          <span *ngIf="items.status === 'PAGADO'" class="text-success">
+                            Pagado <img src="assets/images/ok.svg" alt="ok">
+                          </span>
+                          <span *ngIf="items.status === 'PARCIAL'" [class.text-danger]="estaVencido(items)">
+                            Parcial <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
+                          </span>
+                          <span  *ngIf="items.status === 'PENDIENTE'" [class.text-danger]="estaVencido(items)">
+                            Pendiente <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
+                          </span>
+                        </div>
+                        <app-pagos #appPagos [debtId]="items.id" [(status)]="items.status" [currency]="items.currency" (showChange)="items.verPagos = $event"></app-pagos>
+                      </div>
+                    </td>
+                    <td class="c12">
                       <div *ngIf="items.svcStatus !== 1" class="d-flex">
                         <div *ngIf="!items.editButton" class="btn-edit" (click)="BotonEditar(items)">
                           <img src="assets/images/pencil.svg" alt="editar">
@@ -280,7 +323,7 @@
                     </td>
                   </tr>
                   <tr *ngIf="ceroRegistros()">
-                    <td colspan="12" class="texto-after">
+                    <td colspan="13" class="texto-after">
                       <span>{{messageTable}}</span>
                               <div *ngIf="showArrow" >
                                       <img src="assets/images/path.svg" alt="arrow" >
@@ -305,7 +348,7 @@
     </div>
     <div class="row">
       <div class="text-foot">
-        Para comunicarte con nostros puedes llamar o escribir al <b>913718635</b>, o también a <b>pilotos@intercorp.com.pe</b>
+        Para comunicarte con nosotros puedes llamar o escribir al<b>913718635</b>, o también a <b>pilotos@intercorp.com.pe</b>
       </div>
     </div>
   </div>

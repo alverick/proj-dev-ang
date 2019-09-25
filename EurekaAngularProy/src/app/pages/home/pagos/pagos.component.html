@@ -1,0 +1,80 @@
+<div class="contenedor" [class.block]="showed" [class.none]="!showed">
+  <table>
+    <thead>
+      <tr>
+        <th class="c1">Monto<br/>Pagado</th>
+        <th class="c2">Fecha<br/>de Pago</th>
+        <th class="c3">Medio</th>
+        <th class="c4">Nro. de<br/>Operacion</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="cargando">
+        <td colspan="5" style="text-align: center">
+          <mat-progress-spinner mode="indeterminate" style="width: 20px; height: 20px;"></mat-progress-spinner>
+        </td>
+      </tr>
+      <tr *ngFor="let itm of items">
+        <td class="c1">
+          <span *ngIf="!itm.editing">{{itm.currency}} {{itm.amount | number:'1.2-2'}}</span>
+          <div *ngIf="itm.editing">
+            <mat-form-field class="full-width">
+              <input type="text" matInput appOnlyNumbersForm [(ngModel)]="itm.newAmount" maxlength="12" minlength="4" (blur)="AmountBlur(itm)" />
+              <span matPrefix>{{itm.currency}}&nbsp;</span>
+            </mat-form-field>
+          </div>
+        </td>
+        <td class="c2">
+          <span *ngIf="!itm.editing">{{itm.date | date:'dd/MM/yy'}}</span>
+          <div *ngIf="itm.editing">
+            <mat-form-field class="full-width">
+              <input appDate matInput [matDatepicker]="ddp" [(ngModel)]="itm.newDate" maxlength="10" minlength="10" type="text">
+              <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
+              <mat-datepicker #ddp></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </td>
+        <td class="c3">
+          <span *ngIf="!itm.editing">{{itm.channel}}</span>
+          <div *ngIf="itm.editing">
+              <mat-form-field class="full-width">
+                <mat-select [(ngModel)]="itm.newChannel">
+                  <mat-option value="Efectivo">Efectivo</mat-option>
+                  <mat-option value="POS">POS</mat-option>
+                  <mat-option value="BCP">BCP</mat-option>
+                  <mat-option value="BBVA">BBVA</mat-option>
+                  <mat-option value="Otro banco">Otro banco</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </td>
+        <td class="c4">{{itm.number}}</td>
+        <td class="c5">
+          <div *ngIf="itm.canEdit" class="d-flex">
+            <div *ngIf="!itm.editing" class="btn-edit" (click)="editItm(itm)">
+              <img src="assets/images/pencil.svg" alt="editar">
+            </div>
+            <div *ngIf="!itm.editing" class="btn-delete" (click)="delItm(itm)">
+              <img src="assets/images/trash.svg" alt="editar">
+            </div>
+            <div *ngIf="itm.editing" class="btn-ok" (click)="saveItm(itm)">
+              <img src="assets/images/circle_ok.svg" alt="Aceptar">
+            </div>
+            <div *ngIf="itm.editing" class="btn-cancel" (click)="cancelItm(itm)" >
+              <img src="assets/images/circle_cancel.svg" alt="Cancelar">
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="status !== 'PAGADO'">
+        <td class="action" colspan="5">
+          <button type="button" class="btn-outline-green" (click)="addItm()">
+            <img src="assets/images/plus_circle.svg" alt="agregar">
+            Agregar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

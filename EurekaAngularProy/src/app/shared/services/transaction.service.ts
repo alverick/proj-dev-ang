@@ -108,6 +108,25 @@ export class TransactionService {
     return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));
   }
 
+  deleteFiltered(filtro: DebstFilter = null) {
+    if (filtro === null) {
+      filtro = this.lastFilter;
+    }
+    var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
+    var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
+    //fechas
+
+    if (filtro.service === null || filtro.service === undefined)
+      filtro.service = '';
+    if (filtro.status === null || filtro.status === undefined)
+      filtro.status = '';
+    if (filtro.dateForFilter === null || filtro.dateForFilter === undefined)
+      filtro.dateForFilter = '';
+
+    const url = `${this.URI_API}/debt/deleteFiltered?InputSearch=${filtro.inputSearch}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
+    return this.http.delete<Debts>(url).pipe(catchError(error => throwError(error)));
+  }
+
   // ESITAR LA DEUDA
     editDeuda(id: number, debts: DebtEdit): Observable<any>{
       // cambia link
@@ -157,4 +176,33 @@ export class TransactionService {
       return this.http.post<any>(url, data).pipe(catchError(error => throwError(error)));
     }
 
+  getPayments(debtId: number): Observable<any[]> {
+    let url = `${this.URI_API}/payment/ofDebt/${debtId}?_=${new Date().getTime()}`;
+    return this.http.get<any[]>(url)
+      .pipe(map(p => {
+        p.forEach(v => v.editing = false);
+        return p;
+      }))
+      .pipe(catchError(err => throwError(err)));
+  }
+
+  addPayment(debtId: number, payment: any): Observable<any> {
+    let url = `${this.URI_API}/payment?_=${new Date().getTime()}`;
+    payment.debtId = debtId;
+    return this.http.post<any>(url, payment)
+      .pipe(catchError(err => throwError(err)));
+  }
+
+  editPayment(debtId: number, paymentId: number, payment: any): Observable<any> {
+    let url = `${this.URI_API}/payment/${paymentId}?_=${new Date().getTime()}`;
+    payment.debtId = debtId;
+    return this.http.put(url, payment)
+      .pipe(catchError(err => throwError(err)));
+  }
+
+  deletePayment(debtId: number, paymentId: number): Observable<any> {
+    let url = `${this.URI_API}/payment/${paymentId}/ofDebt/${debtId}?_=${new Date().getTime()}`;
+    return this.http.delete(url)
+      .pipe(catchError(err => throwError(err)));
+  }
 }

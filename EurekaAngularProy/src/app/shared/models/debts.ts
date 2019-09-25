@@ -10,14 +10,18 @@ export interface Debts {
     concept: string;
     amount: number;
     amountPayed?: number;
+    interestAmount?: number;
+    totalAmount?: number;
     status: string;
     payDate: Date;
     channel: string;
     newEmissionDate?: Date;
     newDueDate?: Date;
     newConcept?: string;
-    newAmount?: number;
+    newAmount?: string;
     newStatus?:  string;
+    newFirstName?: string;
+    newLastName?: string;
     selected?: boolean;
 
     editPending: boolean;

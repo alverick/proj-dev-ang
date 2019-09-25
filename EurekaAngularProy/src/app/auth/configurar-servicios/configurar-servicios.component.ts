@@ -67,20 +67,23 @@ export class ConfigurarServiciosComponent implements OnInit {
         onOpen: drawPopup
       }).then(r => {
         if (r.value) {
+          console.log('descartar');
           this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
-          this.Formulario = false
-          this.stateCreate =false;
-          this.stateEdit =false;
+          this.Formulario = false ;
+          this.stateCreate = false;
+          this.stateEdit = false;
           this.addNewAfterSave = false;
           this.sendAfterSave = false;
           this.indiceActual = -1;
+          console.log(this.Formulario);
         }
       });
     }
-    else {
+   /* else {
+      console.log('entra else');
       this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
-      this.Formulario = false
-      this.stateCreate =false;
+      this.Formulario = false;
+      this.stateCreate = false;
       this.stateEdit =false;
       if (this.addNewAfterSave && this.indiceActual > 0) {
         setTimeout(() => this.MostarFormulario(), 600);
@@ -91,8 +94,9 @@ export class ConfigurarServiciosComponent implements OnInit {
       this.indiceActual = -1;
       this.addNewAfterSave = false;
       this.sendAfterSave = false;
-    }
+    } */
   }
+
 
   addNewAfterSave: boolean = false;
   sendAfterSave: boolean = false;
@@ -105,6 +109,16 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
       return;
     }
+
+    let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
+    if(svcSinCta) {
+      Swal.fire({
+        text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
+        onOpen: drawPopup
+      });
+      return;
+    }
+
     if (this.Formulario) {
       Swal.fire({
         title: 'Servicio no guardado',
@@ -231,7 +245,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       });*/
       return;
     }
-    if (this.inEdit) {
+    if (this.inEdit && this.afiliacionService.services[index].id) {
       this.afiliacionService.CanDeleteService(index).subscribe(r => {
         let title = 'Eliminación total el servicio';
         let msg = 'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';

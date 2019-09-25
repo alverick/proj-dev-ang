@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { HomeComponent} from './pages/home/home.component';
+import { PagosComponent } from './pages/home/pagos/pagos.component';
 import { AnalisisComponent } from './pages/analisis/analisis.component';
 import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -56,6 +57,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     AppComponent,
     HeaderComponent,
     HomeComponent,
+    PagosComponent,
     AnalisisComponent,
     SubirPlantillaComponent,
     PageNotFoundComponent,

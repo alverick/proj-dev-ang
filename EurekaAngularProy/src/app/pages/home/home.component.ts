@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit {
     { name: 'firstName', asc: false },
     { name: 'lastName', asc: false },
     { name: 'Service', asc: false },
+    { name: 'concept', asc: false },
     { name: 'amount', asc: false },
     { name: 'interestAmount', asc: false },
     { name: 'totalAmount', asc: false },
@@ -124,7 +125,7 @@ export class HomeComponent implements OnInit {
 
   // tslint:disable-next-line:no-inferrable-types
   selectedAll: boolean = true;
-
+  selectedUniverse = false;
 
   statusOptions : Array<Object> = [
     {  option:'PENDIENTE', state: '1'},
@@ -137,7 +138,7 @@ export class HomeComponent implements OnInit {
 
   filtro: DebstFilter = {
     pageNumber: 1,
-    columnName: 'FirstName',
+    columnName: '',
     asc: true,
     inputSearch: '',
     service: '',
@@ -146,6 +147,7 @@ export class HomeComponent implements OnInit {
     dateFrom: null,
     dateTo: null
   };
+  errores: any = {};
   control: any;
  // mensaje grila
 
@@ -216,7 +218,7 @@ export class HomeComponent implements OnInit {
    // check
    //this.SeleccionarTodos();
    this.selectedAll = false;
-
+   this.selectedUniverse = false;
   }
 
   statusOpt(){
@@ -246,12 +248,6 @@ export class HomeComponent implements OnInit {
       }
       }
   }
-
-/*//////// C R U D ///////////////////// */
-// datepiecker format
-change(dateEvent) {
-  this.date2.emit(dateEvent.value);
-}
 
 ////ORDENAMIENTO OCULTAR LAS FLECHAS
 orderList(index: number, asc: boolean) {
@@ -398,6 +394,7 @@ orderList(index: number, asc: boolean) {
                 this.transactionService.getDeuda(this.filtro)
                   .subscribe(debts => {
                   this.selectedAll = false;
+                  this.selectedUniverse = false;
                   this.spinner.hide();
                   if (cb) {
                     cb();
@@ -447,11 +444,13 @@ orderList(index: number, asc: boolean) {
     limpiardate1() {
       this.inputDate1.nativeElement.value = '';
       this.filtro.dateFrom = null;
+      this.errores.dateFrom = 'Ingrese una fecha';
     }
 
     limpiardate2() {
       this.inputDate2.nativeElement.value = '';
       this.filtro.dateTo = null;
+      this.errores.dateTo = 'Ingrese una fecha';
     }
 
 
@@ -463,7 +462,9 @@ orderList(index: number, asc: boolean) {
     item.newDueDate = item.dueDate;
     item.newEmissionDate = item.emissionDate;
     item.newConcept = item.concept;
-    item.newAmount = item.amount;
+    item.newAmount = item.amount.toFixed(2);
+    item.newFirstName = item.firstName;
+    item.newLastName = item.lastName;
   }
 
   selectEstPag(event, item: Debts){
@@ -479,31 +480,36 @@ orderList(index: number, asc: boolean) {
   }
 
   clearDatePicker(event){
-    if(event == ''){
+    if(event){
+      this.errores['dateFrom'] = 'Ingrese una fecha';
+      this.errores['dateTo'] = 'Ingrese una fecha';
+    }
+    else {
       this.limpiardate1();
       this.limpiardate2();
+      delete this.errores.dateFrom;
+      delete this.errores.dateTo;
     }
-
   }
 
 
   BotonActualizar(item: Debts) {
     // MONTO
     if(item.newStatus==='1') {
-      if(item.newAmount.toString() ==='' ||item.newAmount.toString() === null){
+      if(item.dueDate && (item.newAmount.toString() ==='' ||item.newAmount.toString() === null)){
         this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
         return;
       }
-      if(item.newAmount.toString().length < 1){
+      if(item.dueDate && (item.newAmount.toString().length < 1)){
         this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
         return;
       }
-      if(parseInt(item.newAmount.toString()) < 1){
+      if(item.dueDate && (parseInt(item.newAmount.toString()) < 1)){
         this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
         return;
       }
 
-      if(!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)){
+      if(item.dueDate && (!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/))){
         this.mensaje( 'error', 'Error en el monto','Ingrese un Monto valido minimo de 1 y maximo de 9 caracteres enteros y 2 decimales como maximo');
         return;
       }
@@ -520,17 +526,17 @@ orderList(index: number, asc: boolean) {
         return;
       }
 
-      if (duadate <  2000 || duadate >  2050 ) {
+      if (item.dueDate && (duadate <  2000 || duadate >  2050)) {
         this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Vencimiento');
         return;
       }
 
-      if(item.newConcept.length <  8) {
+      if(item.dueDate && (item.newConcept.length <  8)) {
         this.mensaje( 'error', 'Error en el Concepto','El concepto tiene que tener como minimo 8 digitos');
         return;
       }
 
-      if(item.newConcept === null || item.newConcept === ""){
+      if(item.dueDate && (item.newConcept === null || item.newConcept === "")){
         this.mensaje( 'error', 'Error en el Concepto','Ingrese El concepto');
         return;
       }
@@ -538,17 +544,37 @@ orderList(index: number, asc: boolean) {
         this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de emision');
         return;
       }
-      if (item.newDueDate == null) {
+      if (item.dueDate && (item.newDueDate == null)) {
         this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de vencimiento');
         return;
       }
-      if (item.newConcept === '') {
+      if (item.dueDate && (item.newConcept === '')) {
         this.mensaje( 'error', 'Error en el Concepto','Ingrese el concepto');
         return;
       }
 
-      if (item.newEmissionDate > item.newDueDate) {
+      if (item.dueDate && (item.newEmissionDate > item.newDueDate)) {
         this.mensaje( 'error', 'Error en la fecha','La fecha de Emision no puede ser mayor a la fecha de vencimiento');
+        return;
+      }
+
+      if (item.newFirstName !== null && item.newFirstName !== undefined && item.newFirstName !== '') {
+        if (item.newFirstName.length < 3) {
+          this.mensaje( 'error', 'Error en el nombre','El nombre no debe tener menos de 3 carácteres');
+          return;
+        }
+      }
+
+      if (item.newLastName !== null && item.newLastName !== undefined && item.newLastName !== '') {
+        if (item.newLastName.length < 3) {
+          this.mensaje( 'error', 'Error en el apellido','El apellido no debe tener menos de 3 carácteres');
+          return;
+        }
+      }
+
+      if ((item.newFirstName === null || item.newFirstName === undefined || item.newFirstName === '') &&
+        (item.newLastName === null && item.newLastName === undefined && item.newLastName === '')) {
+        this.mensaje('error', 'Error en nombre o apellido', 'El nombre o el apellido debe tener un valor');
         return;
       }
     }
@@ -570,7 +596,8 @@ orderList(index: number, asc: boolean) {
           dueDate: item.newDueDate,
           concept: item.newConcept,
           amount: parseFloat(item.newAmount.toString()),
-
+          firstName: item.newFirstName,
+          lastName: item.newLastName
         };
 
 
@@ -581,21 +608,25 @@ orderList(index: number, asc: boolean) {
             if (debtsUpdate.success) {
               Swal.fire({
                 titleText: 'Editado!',
-                text: 'Su registro a sido editado',
+                text: 'Su registro ha sido editado',
                 showCloseButton: true,
                 showCancelButton: false,
                 onOpen: drawPopup,
                 onAfterClose: () => {
-                  item.status = debtsUpdate.status;
+                  this.consultaDeuda();
+                  /*item.status = debtsUpdate.status;
                   item.emissionDate = item.newEmissionDate;
                   item.dueDate = item.newDueDate;
                   item.concept = item.newConcept;
-                  item.amount  = item.newAmount;
+                  item.amount  = parseFloat(item.newAmount);
+                  item.totalAmount = item.amount + item.interestAmount;
+                  item.firstName = item.newFirstName,
+                  item.lastName = item.newLastName,
                  // item.edit = false;
                  item.editInput =false;
                  item.editButton = false;
                  item.editPending = false;
-                 item.newStatus = '1';
+                 item.newStatus = '1';*/
                 }
               });
             }
@@ -653,6 +684,7 @@ orderList(index: number, asc: boolean) {
 
   changePage(nro: number) {
     this.selectedAll = false;
+    this.selectedUniverse = false;
     this.filtro.pageNumber = nro;
     this.numeroPagina = nro;
     this.consultaDeuda();
@@ -662,19 +694,20 @@ orderList(index: number, asc: boolean) {
   EliminarSeleccionados() {
     const itemsParaEliminar = [];
     this.transactionService.debtItems.data.forEach(c => {
-    if (c.selected) {
-      itemsParaEliminar.push(c.id);
-    }
+      if (c.selected) {
+        itemsParaEliminar.push(c.id);
+      }
     });
 
-    if (itemsParaEliminar.length === 0 ) {
+    let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : itemsParaEliminar.length;
+    if (totalForDelete === 0 ) {
       this.mensaje( 'error', 'Error al Eliminar','¡Seleccione las filas a eliminar por favor!');
       return;
     }
 
- Swal.fire({
+    Swal.fire({
       title: '¿Seguro que quieres continuar?',
-      text: `Esta acción va a eliminar ${itemsParaEliminar.length} deudas`,
+      text: `Esta acción va a eliminar ${totalForDelete} deudas`,
       showCancelButton: true,
       showCloseButton: true,
       confirmButtonText: 'Confirmar',
@@ -684,13 +717,15 @@ orderList(index: number, asc: boolean) {
       if (result.value) {
         this.spinner.show();
 
-        this.transactionService.deleteAll(itemsParaEliminar)
-          .subscribe(() => {
+        let observable = this.selectedUniverse ?
+          this.transactionService.deleteFiltered(this.filtro):
+          this.transactionService.deleteAll(itemsParaEliminar);
+        observable.subscribe(() => {
             this.consultaDeuda(() =>
               {
                 Swal.fire({
                   title: 'Eliminado!',
-                  text: 'Se han eliminado ' + itemsParaEliminar.length + ' registros',
+                  text: 'Se han eliminado ' + totalForDelete + ' registros',
                   showCloseButton: true,
                   showCancelButton: false,
                   onOpen: drawPopup
@@ -730,7 +765,9 @@ orderList(index: number, asc: boolean) {
 
   SeleccionarTodos() {
     this.transactionService.debtItems.data.forEach(itm => itm.selected = this.selectedAll);
-
+    if (!this.selectedAll) {
+      this.selectedUniverse = false;
+    }
   }
 
 /*//////// O P E N  - D I A L O G ///////////////////// */
@@ -772,6 +809,53 @@ MostrarListaSelect() {
     let initalValue = parseFloat(e.newAmount);
     if(!isNaN(initalValue))
       e.newAmount = initalValue.toFixed(2);
+  }
+
+  change(dateEvent) {
+    this.date2.emit(dateEvent.value);
+  }
+
+  limpiarDateForFilter() {
+    this.filtro.dateForFilter=null;
+    this.filtro.dateFrom=null;
+    this.filtro.dateTo=null;
+    delete this.errores.dateFrom;
+    delete this.errores.dateTo;
+  }
+
+  private internalValidaDateFrom(e) {
+    if (e === null) {
+      this.errores['dateFrom'] = 'No es una fecha válida';
+    }
+    else {
+      delete this.errores.dateFrom;
+    }
+  }
+
+  private internalValidaDateTo(e) {
+    if (e === null) {
+      this.errores['dateTo'] = 'No es una fecha válida';
+    }
+    else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
+      this.errores['dateTo'] = "No puede ser menor a la emisión"
+    }
+    else {
+      delete this.errores.dateTo;
+    }
+  }
+
+  validaDateFrom(e) {
+    this.internalValidaDateFrom(e);
+    if (!this.errores.dateFrom && this.filtro.dateTo) {
+      this.internalValidaDateTo(this.filtro.dateTo);
+    }
+  }
+
+  validaDateTo(e) {
+    this.internalValidaDateTo(e);
+    if (!this.errores.dateTo && this.filtro.dateFrom) {
+      this.internalValidaDateFrom(this.filtro.dateFrom);
+    }
   }
 }
 
