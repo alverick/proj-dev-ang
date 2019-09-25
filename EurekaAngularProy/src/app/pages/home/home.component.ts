@@ -386,10 +386,19 @@ orderList(index: number, asc: boolean) {
 
   }
 
+  private validaFiltro2() {
+    let res: boolean = true;
+    for(var s in this.errores) {
+      if (this.errores[s])
+        res = false;
+    }
+    return res;
+  }
+
   consultaDeuda(cb: () => void = null) {
   // tslint:disable-next-line:prefer-const
 
-    if (this.validaFiltro()){
+    if (this.validaFiltro2()){
                 this.spinner.show();
                 this.transactionService.getDeuda(this.filtro)
                   .subscribe(debts => {
@@ -495,7 +504,7 @@ orderList(index: number, asc: boolean) {
 
   BotonActualizar(item: Debts) {
     // MONTO
-    if(item.newStatus==='1') {
+    /*if(item.newStatus==='1') {
       if(item.dueDate && (item.newAmount.toString() ==='' ||item.newAmount.toString() === null)){
         this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
         return;
@@ -577,6 +586,15 @@ orderList(index: number, asc: boolean) {
         this.mensaje('error', 'Error en nombre o apellido', 'El nombre o el apellido debe tener un valor');
         return;
       }
+    }*/
+    this.validaEmissionDate(item);
+    this.validaDueDate(item);
+    this.validaMonto(item);
+    this.validaNombresApellidos(item);
+
+    for(var s in item.errores) {
+      if (item.errores[s])
+        return;
     }
 
     Swal.fire({
@@ -856,6 +874,79 @@ MostrarListaSelect() {
     if (!this.errores.dateTo && this.filtro.dateFrom) {
       this.internalValidaDateFrom(this.filtro.dateFrom);
     }
+  }
+
+  validaEmissionDate(items: Debts) {
+    if (!items.newEmissionDate) {
+      items.errores.emissionDate = 'Ingrese una fecha válida';
+    }
+    else {
+      delete items.errores.emissionDate;
+    }
+  }
+
+  validaDueDate(items: Debts) {
+    if (!items.newDueDate) {
+      items.errores.dueDate = 'Ingrese una fecha válida';
+    }
+    else if (items.newEmissionDate && items.newDueDate < items.newEmissionDate) {
+      items.errores.dueDate = 'No debe ser menor a la fecha de emisión';
+    }
+    else {
+      delete items.errores.dueDate;
+    }
+  }
+
+  private internalValidaNombres(items: Debts){
+    if (items.newFirstName) {
+      if (items.newFirstName.length < 3) {
+        items.errores.firstName = 'Debe tener 3 carácteres como mínimo';
+      }
+      else {
+        delete items.errores.firstName;
+      }
+    }
+    else if (!items.newLastName) {
+      items.errores.firstName = 'Debe ingresar un valor'
+    }
+    else {
+      delete items.errores.firstName;
+    }
+  }
+
+  private internalValidaApellidos(items: Debts) {
+    if (items.newLastName) {
+      if (items.newLastName.length < 3) {
+        items.errores.lastName = 'Deben tener 3 carácteres como mínimo';
+      }
+      else {
+        delete items.errores.lastName;
+      }
+    }
+    else {
+      delete items.errores.lastName;
+    }
+  }
+
+  validaNombresApellidos(items: Debts) {
+    this.internalValidaNombres(items);
+    this.internalValidaApellidos(items);
+  }
+
+  validaMonto(items:Debts) {
+      let amount = parseFloat(items.newAmount);
+      if (!amount) {
+        items.errores.amount = 'Debe ingresar un valor';
+      }
+      else if (amount < 1) {
+        items.errores.amount = 'Ingrese un monto válido';
+      }
+      else if (amount > 999999999.99) {
+        items.errores.amount = 'Ingrese un monto válido'
+      }
+      else {
+        delete items.errores.amount;
+      }
   }
 }
 
