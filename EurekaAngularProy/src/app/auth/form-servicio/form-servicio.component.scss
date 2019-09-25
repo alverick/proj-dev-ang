@@ -253,3 +253,8 @@ body {
  :host ::ng-deep .texto-mora .mat-form-field-infix {
     border-top: 0;
 }
+
+.simbolos{
+    @include font-text(14px, $weight: 500);
+    color: $negro;
+}

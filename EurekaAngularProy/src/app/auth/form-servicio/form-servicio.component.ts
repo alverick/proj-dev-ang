@@ -86,7 +86,8 @@ export class FormServicioComponent implements OnInit {
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
       monto: new FormControl({ value: montod, disabled: true }),
-      porcentaje: new FormControl({ value: porcentajed, disabled: true })
+      porcentaje: new FormControl({ value: porcentajed, disabled: true }),
+      pagoPartes:[this._service.pagoPartes, Validators.required],
     });
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
@@ -100,22 +101,27 @@ export class FormServicioComponent implements OnInit {
     /*if (this.f.periodoMora.value === 1 || this.f.periodoMora.value === 2) {
       this.cmoraporce = true;
    } */
-
-   if(this.frm.get('cobraMora').value === 'S') {
-    this.cmoraporce = true;
+    if(this.frm.get('cobraMora').value === 'N') {
+     this.frm.get('periodoMora').setValue('');
+    // this.frm.get('monto').setValue('');
+    // this.frm.get('porcentaje').setValue('');
+     this.cmoraporce =false;
     }
-   // combo para ocultar si es data parcial 
-   if (this.frm.get('tipoDato').value === 'P') {
-    /* this.frm.get('tipoPago').setValue('C');
-     this.tiposPago.pop();*/
-     this.Dataparcial = false;
+    if(this.frm.get('cobraMora').value === 'S') {
+       this.cmoraporce = true;
+       // periodoMora
+     // this.frm.get('periodoMora').setValue('');
+    }
+    // combo para ocultar si es data parcial 
+    if (this.frm.get('tipoDato').value === 'P') {
+      /* this.frm.get('tipoPago').setValue('C');
+      this.tiposPago.pop();*/
+      this.Dataparcial = false;
 
    }else{
      this.Dataparcial = true;
    }
-
  
-
   }
 
   onChangeTipoDato() {
@@ -123,7 +129,16 @@ export class FormServicioComponent implements OnInit {
      /* this.frm.get('tipoPago').setValue('C');
       this.tiposPago.pop();*/
       this.Dataparcial = false;
+      // cobraMora
+      console.log('cambia radio'); //pagaPartes
+      this.frm.get('cobraMora').setValue('N');
+      this.frm.get('pagoPartes').setValue('N');
+      console.log('EL RADIO BUTTON ES '+this.frm.get('cobraMora').value);
 
+      this.frm.get('monto').setValue('1.00');
+      this.frm.get('porcentaje').setValue('1.00');
+      this.cmoraporce =false;
+      this.cobraMora =false;
     }else{
       this.Dataparcial = true;
     }
@@ -137,6 +152,8 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
+    console.log('cobraMora  ES '+this.frm.get('cobraMora').value);
+    console.log('pagoPartes ES '+this.frm.get('pagoPartes').value);
     if (this.frm.valid)
     {
 

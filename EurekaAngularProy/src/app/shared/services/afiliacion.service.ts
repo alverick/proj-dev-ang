@@ -16,6 +16,7 @@ export class AfiliacionService {
     private spinner: NgxSpinnerService, private storage: StorageService) {}
 
   public idCompany: number = 0;
+  public email:string;
   public Guardado: boolean = false;
 
   public services: ServiceModel[] = [];
@@ -35,7 +36,8 @@ export class AfiliacionService {
       usaTienda: false,
       cobraMora: 'N',
       periodoMora: '1',
-      tipoMora: 'M'
+      tipoMora: 'M',
+      pagoPartes: 'N'
     });
   }
 
@@ -70,7 +72,8 @@ export class AfiliacionService {
       usaTienda: false,
       cobraMora: 'N',
       periodoMora: '',
-      tipoMora: 'M'
+      tipoMora: 'M',
+      pagoPartes: 'N'
     };
     this.services.push(svc);
     return svc;
@@ -111,11 +114,12 @@ export class AfiliacionService {
 
   public Registrar(data: any): Observable<any> {
     this.spinner.show();
+    this.email = data.email;
     return this.http.post<any>(`${environment.END_POINT}/company?_=`+ new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();
         if (r.success) {
-          this.idCompany = r.id;
+          this.idCompany = r.id; 
         }
         return r;
       }))

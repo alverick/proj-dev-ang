@@ -18,4 +18,5 @@ export interface ServiceModel {
     monto?: number;
     porcentaje?: number;
     inReview?: boolean;
+    pagoPartes?: string;
 }
