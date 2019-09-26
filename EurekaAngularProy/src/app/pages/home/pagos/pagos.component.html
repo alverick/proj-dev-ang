@@ -12,33 +12,37 @@
     <tbody>
       <tr *ngIf="cargando">
         <td colspan="5" style="text-align: center">
-          <mat-progress-spinner mode="indeterminate" style="width: 20px; height: 20px;"></mat-progress-spinner>
+          <mat-spinner mode="indeterminate" [diameter]="20"></mat-spinner>
         </td>
       </tr>
       <tr *ngFor="let itm of items">
         <td class="c1">
           <span *ngIf="!itm.editing">{{itm.currency}} {{itm.amount | number:'1.2-2'}}</span>
           <div *ngIf="itm.editing">
-            <mat-form-field class="full-width">
-              <input type="text" matInput appOnlyNumbersForm [(ngModel)]="itm.newAmount" maxlength="12" minlength="4" (blur)="AmountBlur(itm)" />
+            <mat-form-field class="full-width inline-input">
+              <input type="text" matInput appOnlyNumbersForm [(ngModel)]="itm.newAmount" maxlength="12"
+                minlength="4" (blur)="AmountBlur(itm)" (ngModelChange)="itm.errores.amount = null" />
               <span matPrefix>{{itm.currency}}&nbsp;</span>
+              <div class="msg-error" *ngIf="itm.errores.amount">{{itm.errores.amount}}</div>
             </mat-form-field>
           </div>
         </td>
         <td class="c2">
           <span *ngIf="!itm.editing">{{itm.date | date:'dd/MM/yy'}}</span>
           <div *ngIf="itm.editing">
-            <mat-form-field class="full-width">
-              <input appDate matInput [matDatepicker]="ddp" [(ngModel)]="itm.newDate" maxlength="10" minlength="10" type="text">
+            <mat-form-field class="full-width inline-input">
+              <input appDate matInput [matDatepicker]="ddp" [(ngModel)]="itm.newDate" maxlength="10"
+                minlength="10" type="text" (ngModelChange)="itm.errores.date = null">
               <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
               <mat-datepicker #ddp></mat-datepicker>
+              <div class="msg-error" *ngIf="itm.errores.date">{{itm.errores.date}}</div>
             </mat-form-field>
           </div>
         </td>
         <td class="c3">
           <span *ngIf="!itm.editing">{{itm.channel}}</span>
           <div *ngIf="itm.editing">
-              <mat-form-field class="full-width">
+              <mat-form-field class="full-width inline-input">
                 <mat-select [(ngModel)]="itm.newChannel">
                   <mat-option value="Efectivo">Efectivo</mat-option>
                   <mat-option value="POS">POS</mat-option>
@@ -52,16 +56,16 @@
         <td class="c4">{{itm.number}}</td>
         <td class="c5">
           <div *ngIf="itm.canEdit" class="d-flex">
-            <div *ngIf="!itm.editing" class="btn-edit" (click)="editItm(itm)">
+            <div *ngIf="!itm.editing" class="btn-edit" (click)="editItm(itm); $event.stopPropagation();">
               <img src="assets/images/pencil.svg" alt="editar">
             </div>
-            <div *ngIf="!itm.editing" class="btn-delete" (click)="delItm(itm)">
+            <div *ngIf="!itm.editing" class="btn-delete" (click)="delItm(itm); $event.stopPropagation();">
               <img src="assets/images/trash.svg" alt="editar">
             </div>
-            <div *ngIf="itm.editing" class="btn-ok" (click)="saveItm(itm)">
+            <div *ngIf="itm.editing" class="btn-ok" (click)="saveItm(itm); $event.stopPropagation();">
               <img src="assets/images/circle_ok.svg" alt="Aceptar">
             </div>
-            <div *ngIf="itm.editing" class="btn-cancel" (click)="cancelItm(itm)" >
+            <div *ngIf="itm.editing" class="btn-cancel" (click)="cancelItm(itm); $event.stopPropagation();" >
               <img src="assets/images/circle_cancel.svg" alt="Cancelar">
             </div>
           </div>

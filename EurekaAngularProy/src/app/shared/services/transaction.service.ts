@@ -70,6 +70,7 @@ export class TransactionService {
               d.editInput = false;
               d.editButton = false;
               d.newStatus = '1';
+              d.errores = {};
             });
             this.debtItems = r;
             return r;
@@ -180,7 +181,10 @@ export class TransactionService {
     let url = `${this.URI_API}/payment/ofDebt/${debtId}?_=${new Date().getTime()}`;
     return this.http.get<any[]>(url)
       .pipe(map(p => {
-        p.forEach(v => v.editing = false);
+        p.forEach(v => {
+          v.editing = false;
+          v.errores = {};
+        });
         return p;
       }))
       .pipe(catchError(err => throwError(err)));

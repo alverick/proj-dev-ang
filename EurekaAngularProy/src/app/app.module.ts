@@ -133,7 +133,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
   bootstrap: [AppComponent],
   entryComponents: [DialogComponent,
                     UploadProgressComponent,
-                    ValidationComponent
+                    ValidationComponent,
+                    PagosComponent
                     ]
 })
 export class AppModule { }
