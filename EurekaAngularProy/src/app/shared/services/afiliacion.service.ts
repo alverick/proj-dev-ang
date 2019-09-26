@@ -28,6 +28,7 @@ export class AfiliacionService {
       codDeudor: 'DNI',
       tipoDato: 'C',
       tipoPago: 'C',
+      idCuenta: 0,
       nroCuenta: '',
       moneda: '001',
       simboloMoneda: 'S/',
@@ -64,6 +65,7 @@ export class AfiliacionService {
       codDeudor: 'DNI',
       tipoDato: 'C',
       tipoPago: 'C',
+      idCuenta: 0,
       nroCuenta: '',
       moneda: '001',
       simboloMoneda: 'S/',
@@ -119,7 +121,7 @@ export class AfiliacionService {
       .pipe(map(r => {
         this.spinner.hide();
         if (r.success) {
-          this.idCompany = r.id; 
+          this.idCompany = r.id;
         }
         return r;
       }))
@@ -205,6 +207,10 @@ export class AfiliacionService {
     ]);
   }
 
+  public GetCards(): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.END_POINT}/company/cards?_=${new Date().getTime()}`);
+  }
+
   public GetServicios(incDeactivates: boolean = false) {
 
     const headers: any = {
@@ -225,6 +231,7 @@ export class AfiliacionService {
             codDeudor: s.debtorCode,
             tipoDato: s.dataType,
             tipoPago: s.paymentType,
+            idCuenta: s.idAccount,
             nroCuenta: s.accountNumber,
             moneda: s.currency,
             simboloMoneda: s.currencySymbol,
@@ -236,7 +243,8 @@ export class AfiliacionService {
             tipoMora: s.interestType,
             monto: s.amount,
             porcentaje: s.percentage,
-            inReview: s.inReview
+            inReview: s.inReview,
+            pagoPartes: s.partialPayment
           });
         });
         this.services = servicios;
@@ -257,6 +265,7 @@ export class AfiliacionService {
         debtorCode: s.codDeudor,
         dataType: s.tipoDato,
         paymentType: s.tipoPago,
+        idAccount: s.idCuenta,
         accountNumber: s.nroCuenta,
         currency: s.moneda,
         useAppWeb: s.usaWebApp,
@@ -266,7 +275,8 @@ export class AfiliacionService {
         chargeType: s.periodoMora,
         interestType: s.tipoMora,
         amount: s.monto,
-        percentage: s.porcentaje
+        percentage: s.porcentaje,
+        partialPayment: s.pagoPartes
       });
     });
     return this.http.post<any>(`${environment.END_POINT}/company/service?_=`+ new Date().getTime(), data)
