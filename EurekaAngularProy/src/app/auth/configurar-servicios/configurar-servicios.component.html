@@ -12,7 +12,7 @@
                                     <div class=" pl-4">
                                         <div class="pl-1 row pb-0">
                                             <div class="col-sm-9 pt-3">
-                                                <div class="font-black">{{svc.nombre}}</div>
+                                                <div class="font-text-services">{{svc.nombre}}</div>
                                                 <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de revisión</mat-error>
                                             </div>
                                             <div class="col-sm-1 mb-0">
@@ -57,10 +57,10 @@
                         </div>
                         <div class="btn-col-1">
                             <button type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
-                                      <span class="fa fa-plus-circle"></span>   Agregar otro servicio
+                                      <span ><img *ngIf="!Formulario" src="assets/images/plus.svg"><img *ngIf="Formulario" src="assets/images/plus-gray.svg"></span>   Agregar otro servicio
                                     </button>
-                            <button type="button" [disabled]="Formulario" (click)="EnviarServicios()" class="mt-3 btn-eureca-green text-white" [class.btn-disabled]="Formulario">
-                                     Finalizar
+                            <button type="button" [disabled]="Formulario" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulario">
+                                     FINALIZAR
                                     </button>
                         </div>
                     </div>

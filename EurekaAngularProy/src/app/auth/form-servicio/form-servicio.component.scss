@@ -255,6 +255,25 @@ body {
 }
 
 .simbolos{
-    @include font-text(14px, $weight: 500);
+    @include font-text(16px, $weight: 500);
     color: $negro;
 }
+
+.ventanilla{
+    @include font-text(10px, $weight: normal);
+    color: $negro;
+}
+
+/*
+.mat-form-field .mat-form-field-label { 
+    font-size: 10px; 
+}
+ 
+:host ::ng-deep .mat-radio-label  { 
+   // font-size: 10px; 
+}  
+*/
+.btn-eureca-green {
+    @include font-text(14px !important, 500 !important);
+     
+  }

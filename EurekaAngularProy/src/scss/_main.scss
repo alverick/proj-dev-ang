@@ -43,8 +43,9 @@ body {
         margin-right: 2px;
     }
     .mat-form-field-label {
-        @include font-text(14px);
-        color: $textblack !important;
+        @include font-text(12px);
+        font-weight: 500;
+        color: #0d131d !important; 
         top: 21px;
     }
     .mat-form-field-ripple {
@@ -113,15 +114,16 @@ body {
 .btn-eureca-green {
     @include font-text(16px !important, 500 !important);
     color: #ffffff !important;
+    
     background-color: $green !important;
     @include border-radius(4px !important);
     border: solid 1px $green !important;
     &:hover {
         background-color: $green !important;
     }
-    &:focus {
+  /*  &:focus {
         background-color: $greenclaro !important;
-    }
+    } */
     &.btn-disabled {
         background-color: #9b9b9b !important;
         border: solid 1px #9b9b9b !important;
@@ -161,7 +163,7 @@ body {
 
 .texto-azul {
     @include font-text(32px, $weight: 500);
-    color: #2f4a9f;
+    color: #0032a0;
 }
 
 .font-black {
@@ -176,6 +178,6 @@ body {
 }
 
 .input-text {
-  @include font-text(14px !important, normal !important);
-    color: #333333 !important;
+  @include font-text(16px !important, normal !important);
+    color: #0d131d !important;
 }

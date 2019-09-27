@@ -163,7 +163,7 @@ img.bell {
     }
 
     .more {
-      @include font-text(12px, 500);
+      @include font-text(14px, normal);
       padding: 6px 12px;
       color: $textblack;
       text-align: center;
@@ -176,3 +176,9 @@ img.bell {
 }
 
 
+
+.text-notifications{
+  @include font-text(12px, 500);
+  color: $textblack;
+  text-align: center;
+} 

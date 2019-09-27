@@ -16,8 +16,9 @@ body{
   width: 100%;
 
   .title {
-    @include font-text(22px, 500);
+    @include font-text(18px, 500);
     padding: 20px 15px 10px 15px;
+    color: $negro;
   }
 
   .content {
@@ -425,11 +426,14 @@ body{
 }
 
 .text-foot {
-  @include font-text(16px);
+  @include font-text(16px,normal);
   display: block;
   width: 100%;
   text-align: center;
   padding: 40px 0px;
+}
+b{
+  @include font-text(16px,500);
 }
 
 :host ::ng-deep .ngx-pagination {
@@ -483,4 +487,12 @@ body{
       bottom: 0;
     }
   }
+}
+
+.btn-eureca-green {
+  @include font-text(12px !important, 500 !important); 
+}
+.text-danger{
+  @include font-text(12px, 500);
+  color:#ea0044  !important;
 }

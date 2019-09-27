@@ -129,7 +129,7 @@ div.mat-form-field-infix {
 /////////////////////////////////////////////////////////////
 .btn-eureca-green {
     @include btn-eureca;
-    @include font-text(16px);
+    @include font-text(14px !important);
     width: 232px;
     height: 48px;
     float: right;
@@ -138,7 +138,7 @@ div.mat-form-field-infix {
 
 // boton Rgistrate
 .btn-eureca-green-register {
-  @include font-text(16px);
+  @include font-text(14px !important);
     background-color: $blanco;
     border-radius: 4px;
     color: $green;

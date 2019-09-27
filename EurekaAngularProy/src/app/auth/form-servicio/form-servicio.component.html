@@ -2,7 +2,7 @@
     <div class="font-black">Edita el Servicios</div>
     <div class="form-group">
         <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre de Servicio">
+            <input class="input-text" matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
             <mat-error class="messsage-error">
                 <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                 <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
@@ -13,7 +13,7 @@
     </div>
     <div class="form-group">
         <mat-form-field class="w-100">
-            <mat-label>Codigo Deudor</mat-label>
+            <mat-label>Codigo deudor</mat-label>
             <mat-select class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
                 <mat-option class="input-text">Código Deudor</mat-option>
                 <mat-option class="input-text" *ngFor="let c of codDeudor" [value]="c.code">
@@ -114,7 +114,7 @@
                     </mat-checkbox>
                 </div>
                 <div class="card-title texto-black"> Tiendas <br>
-                    <small>(Ventanilla)</small>
+                    <div class="ventanilla">(Ventanilla)</div>
                 </div>
                 <div class="pt-2">
                     <div class="texto-d-medios">Lima y provincias </div>
@@ -158,7 +158,7 @@
         <div class="form-group col-6" *ngIf="cmoraporce" >
 
             <mat-radio-group class="radio-group" formControlName="tipoMora" (change)="changeTipoMora(true)">
-                <mat-radio-button class="radio-button" name="tipoMora" id="monto" value="M" class="texto-radio-small">Monto</mat-radio-button>
+                <mat-radio-button  class="radio-button" name="tipoMora" id="monto" value="M" class="texto-radio-small">Monto</mat-radio-button>
                 <mat-form-field class="w-100 pt-0 texto-mora">
                     <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
                     <span matSuffix class="simbolos">{{simboloMoneda}}&nbsp;&nbsp;</span>
@@ -186,5 +186,5 @@
         </div>
 
     </div>
-    <button type="submit" class="btn-eureca-green text-white"> Guardar</button>
+    <button type="submit" class="btn-eureca-green"> GUARDAR</button>
 </form>

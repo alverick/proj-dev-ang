@@ -156,10 +156,10 @@ export class ConfigurarEmpresaComponent implements OnInit {
     Swal.fire({
       title: titulo ,
       text: text,
-      showCloseButton: true,
-      showCancelButton: true,
-      showConfirmButton: false,
-      cancelButtonText:  'Cerrar',
+      showCloseButton: false,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText:  'Cerrar',
       onOpen: drawPopup
 
     });

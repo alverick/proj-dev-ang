@@ -3,7 +3,7 @@
             <div class="row py-4">
                 <!--////// L E F T /////-->
                 <div class="col-5">
-                    <h1 class="texto-azul">Mantén actualizada tu información de empresa</h1>
+                    <h1 class="texto-azul">Mantén actualizada la <br> información de la  <br> empresa</h1>
                 </div>
 
                 <!--///// R I G H T //// -->
@@ -19,12 +19,12 @@
                                 </div>
                                 <div class="form-group ">
                                     <mat-form-field class="w-100">
-                                        <input class="input-text" matInput [readonly]="true" type="text" formControlName="name" placeholder="Nombre">
+                                        <input class="input-text" matInput [readonly]="true" type="text" formControlName="name" placeholder="Nombre de la empresa">
                                     </mat-form-field>
                                 </div>
                                 <div class="input-text form-group  ">
                                     <mat-form-field class="w-100">
-                                        <mat-label>Rubro de tu empresa</mat-label>
+                                        <mat-label>Rubro</mat-label>
                                         <mat-select formControlName="entry">
                                             <mat-option *ngFor="let r of rubros" [value]="r.code">
                                                 {{r.name}}
@@ -100,7 +100,7 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="mt-4 pb-4">
-                                    <button color="primary" type="submit" class="btn-eureca-green text-white">Actualizar Campos</button>
+                                    <button   type="submit" class="btn-eureca-green ">GUARDAR</button>
                                 </div>
                         </form>
                     </div>

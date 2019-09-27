@@ -38,8 +38,8 @@
                         <div class="tiempo">{{getAgo(msg.create)}}</div>
                       </div>
 
-                      <div *ngIf="notify.messages.length == 0" >
-                         Usted tiene cero notificaciones
+                      <div class="text-notifications" *ngIf="notify.messages.length == 0" >
+                          No tienes notificaciones
                       </div>
                       <div *ngIf="notify.loadingMsg" class="loading">
                           <mat-spinner [diameter]="20" ></mat-spinner>
@@ -47,7 +47,7 @@
                     </perfect-scrollbar>
 
                     <div class="more">
-                      <div class="text" (click)="onScroll(); $event.stopPropagation();">Ver más</div>
+                      <div class="text-notifications" (click)="onScroll(); $event.stopPropagation();">Ver más</div>
                     </div>
 
                   </div>
