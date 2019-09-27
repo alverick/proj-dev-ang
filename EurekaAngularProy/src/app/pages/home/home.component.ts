@@ -453,13 +453,19 @@ orderList(index: number, asc: boolean) {
     limpiardate1() {
       this.inputDate1.nativeElement.value = '';
       this.filtro.dateFrom = null;
-      this.errores.dateFrom = 'Ingrese una fecha';
+      if (this.filtro.dateForFilter)
+        this.errores.dateFrom = 'Ingrese una fecha';
+      else
+        delete this.errores.dateFrom;
     }
 
     limpiardate2() {
       this.inputDate2.nativeElement.value = '';
       this.filtro.dateTo = null;
-      this.errores.dateTo = 'Ingrese una fecha';
+      if (this.filtro.dateForFilter)
+        this.errores.dateTo = 'Ingrese una fecha';
+      else
+        delete this.errores.dateTo;
     }
 
 
@@ -588,8 +594,10 @@ orderList(index: number, asc: boolean) {
       }
     }*/
     this.validaEmissionDate(item);
-    this.validaDueDate(item);
-    this.validaMonto(item);
+    if (item.dueDate) {
+      this.validaDueDate(item);
+      this.validaMonto(item);
+    }
     this.validaNombresApellidos(item);
 
     for(var s in item.errores) {
@@ -835,10 +843,8 @@ MostrarListaSelect() {
 
   limpiarDateForFilter() {
     this.filtro.dateForFilter=null;
-    this.filtro.dateFrom=null;
-    this.filtro.dateTo=null;
-    delete this.errores.dateFrom;
-    delete this.errores.dateTo;
+    this.limpiardate1();
+    this.limpiardate2();
   }
 
   private internalValidaDateFrom(e) {

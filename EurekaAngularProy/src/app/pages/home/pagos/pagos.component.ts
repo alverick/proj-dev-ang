@@ -197,7 +197,7 @@ export class PagosComponent implements OnInit {
 
   addItm() {
     //if (this.items[this.items.length-1] && this.items[this.items.length-1].id) {
-      this.items.push({ currency: this.currency, newAmount: 0, newDate: new Date(), newChannel: 'Efectivo', canEdit: true, editing: true });
+      this.items.push({ currency: this.currency, newAmount: 0, newDate: new Date(), newChannel: 'Efectivo', canEdit: true, editing: true, errores: {} });
     //}
   }
 
