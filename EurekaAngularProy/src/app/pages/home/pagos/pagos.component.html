@@ -42,13 +42,13 @@
         <td class="c3">
           <span *ngIf="!itm.editing">{{itm.channel}}</span>
           <div *ngIf="itm.editing">
-              <mat-form-field class="full-width inline-input">
-                <mat-select [(ngModel)]="itm.newChannel">
-                  <mat-option value="Efectivo">Efectivo</mat-option>
-                  <mat-option value="POS">POS</mat-option>
-                  <mat-option value="BCP">BCP</mat-option>
-                  <mat-option value="BBVA">BBVA</mat-option>
-                  <mat-option value="Otro banco">Otro banco</mat-option>
+              <mat-form-field class="full-width inline-input select-color">
+                <mat-select class="select-color" [(ngModel)]="itm.newChannel" >
+                  <mat-option class="select-color" value="Efectivo">Efectivo</mat-option>
+                  <mat-option class="select-color" value="POS">POS</mat-option>
+                  <mat-option class="select-color" value="BCP">BCP</mat-option>
+                  <mat-option class="select-color" value="BBVA">BBVA</mat-option>
+                  <mat-option class="select-color" value="Otro banco">Otro banco</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
