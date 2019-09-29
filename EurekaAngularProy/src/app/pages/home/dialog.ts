@@ -6,6 +6,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
 import Swal from "sweetalert2";
 import * as saveAs from 'file-saver';
 import { drawPopup } from "src/app/shared/services/popups";
+import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
 
 
 /*////////////////////////////////////////////////////////
@@ -32,8 +33,8 @@ import { drawPopup } from "src/app/shared/services/popups";
     constructor(public  snackBar: MatSnackBar,
                 public excelService: ExcelService,
                 public  formBuilder: FormBuilder,
-                public  dialogRef: MatDialogRef<DialogComponent>
-
+                public  dialogRef: MatDialogRef<DialogComponent>,
+                private gaService: GoogleAnalytics
               ) {
                }
 
@@ -118,6 +119,10 @@ import { drawPopup } from "src/app/shared/services/popups";
           this.excelService.errores = value.errors;
         }
         else if (value.status === 'COMPLETED') {
+          this.gaService.sendEvent('CargarExcel', {
+            'event_category': 'CargaExcel',
+            'event_label': 'cargar_excel'
+          });
           this.excelService.statusUpload = false;
           this.excelService.errores = [];
           this.dialogRef.close();
@@ -155,6 +160,10 @@ import { drawPopup } from "src/app/shared/services/popups";
     descargarPlantilla() {
       this.excelService.GetTemplate()
         .subscribe((r: Blob) => {
+          this.gaService.sendEvent('DescargaPlantilla', {
+            'event_category': 'CargaExcel',
+            'event_label': 'descarga_plantilla'
+          });
           saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
         });
     }

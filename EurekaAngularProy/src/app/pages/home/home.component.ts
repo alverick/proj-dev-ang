@@ -25,6 +25,7 @@ import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -163,7 +164,7 @@ export class HomeComponent implements OnInit {
     public snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
-    private el: ElementRef) {
+    private gaService: GoogleAnalytics) {
 
     }
 
@@ -265,6 +266,10 @@ orderList(index: number, asc: boolean) {
     this.filtro.pageNumber = 1;
     this.consultaDeuda();
 
+    this.gaService.sendEvent('Buscar', {
+      'event_category': 'Dashboard',
+      'event_label': 'buscar'
+    });
     if((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
        (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined)  &&
        (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
@@ -632,6 +637,10 @@ orderList(index: number, asc: boolean) {
         this.transactionService.editDeuda(item.id, debts).subscribe(
           debtsUpdate => {
             if (debtsUpdate.success) {
+              this.gaService.sendEvent('EditarDeuda', {
+                'event_category': 'Dashboard',
+                'event_label': 'editar_deuda'
+              });
               Swal.fire({
                 titleText: 'Editado!',
                 text: 'Su registro ha sido editado',
@@ -747,6 +756,10 @@ orderList(index: number, asc: boolean) {
           this.transactionService.deleteFiltered(this.filtro):
           this.transactionService.deleteAll(itemsParaEliminar);
         observable.subscribe(() => {
+          this.gaService.sendEvent('EliminarDeudas', {
+            'event_category': 'Dashboard',
+            'event_label': 'eliminar_deudas'
+          });
             this.consultaDeuda(() =>
               {
                 Swal.fire({
@@ -816,6 +829,10 @@ MostrarListaSelect() {
       if (this.validaFiltro()) {
         this.transactionService.report(this.filtro)
         .subscribe((r: Blob) => {
+          this.gaService.sendEvent('DescargaReporte', {
+            'event_category': 'Dashboard',
+            'event_label': 'descargar_reporte'
+          });
           saveAs(r, "reporte.xlsx");
         });
       }
