@@ -3,7 +3,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { StorageService } from './shared/services/storage.service';
 import { Router, NavigationEnd } from '@angular/router';
 
-declare let ga: Function;
+declare let gtag: Function;
 
 @Component({
   selector: 'app-root',
@@ -14,14 +14,10 @@ declare let ga: Function;
 export class AppComponent {
   title = 'EurekaAngularProy';
 
-  constructor(private router: Router,
-    private loginService: LoginService,
-    private storageService: StorageService) {
-
+  constructor(private router: Router) {
       this.router.events.subscribe(e => {
         if (e instanceof NavigationEnd) {
-          ga('set', 'page', e.urlAfterRedirects);
-          ga('send', 'pageview');
+          gtag('event', 'page_view');
         }
       });
   }
