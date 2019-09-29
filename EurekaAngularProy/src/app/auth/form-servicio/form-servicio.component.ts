@@ -97,23 +97,17 @@ export class FormServicioComponent implements OnInit {
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
     this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
-
-
+    console.log('cuentas');
+    console.table(this.cuentas);
     this.changeMora(false);
     this.changeTipoMora(false);
-    /*if (this.f.periodoMora.value === 1 || this.f.periodoMora.value === 2) {
-      this.cmoraporce = true;
-   } */
-    if(this.frm.get('cobraMora').value === 'N') {
+
+    if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');
-    // this.frm.get('monto').setValue('');
-    // this.frm.get('porcentaje').setValue('');
-     this.cmoraporce =false;
+     this.cmoraporce = false;
     }
-    if(this.frm.get('cobraMora').value === 'S') {
+    if (this.frm.get('cobraMora').value === 'S') {
        this.cmoraporce = true;
-       // periodoMora
-     // this.frm.get('periodoMora').setValue('');
     }
     // combo para ocultar si es data parcial
     if (this.frm.get('tipoDato').value === 'P') {
@@ -121,7 +115,7 @@ export class FormServicioComponent implements OnInit {
       this.tiposPago.pop();*/
       this.Dataparcial = false;
 
-   }else{
+   } else {
      this.Dataparcial = true;
    }
 

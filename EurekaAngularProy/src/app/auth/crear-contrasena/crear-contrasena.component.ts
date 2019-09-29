@@ -101,8 +101,7 @@ export class CrearContrasenaComponent implements OnInit {
             confirmButtonText: 'Cerrar',
             onOpen: drawPopup,
           });
-        }
-        else {
+        } else {
           Swal.fire({
            // type: 'warning',
             title: 'Abre tu Cuenta Negocios',
@@ -110,8 +109,8 @@ export class CrearContrasenaComponent implements OnInit {
             showConfirmButton: true,
             showCancelButton: false,
             showCloseButton: true,
-            confirmButtonText: 'Crear mi cuenta',  
-            onOpen: drawPopup, 
+            confirmButtonText: 'Crear mi cuenta',
+            onOpen: drawPopup,
           }).then(res => {
             if (res.value) {
               window.open('https://interbank.pe/cuenta-negocios');
@@ -120,17 +119,17 @@ export class CrearContrasenaComponent implements OnInit {
           });
         }
       }
-    }, err => { 
-      this.mensaje('error','Registrame','Ha ocurrido un error con el servidor<br />Intente de nuevo' );
+    }, err => {
+      this.mensaje('error', 'Regístrame', 'Ha ocurrido un error con el servidor<br />Intente de nuevo' );
 
     });
   }
 
 
-  terminos(){
+  terminos() {
     $('#terminos').modal('show');
   }
-  mensaje(tipo: any, titulo: string, text: string){
+  mensaje(tipo: any, titulo: string, text: string) {
     Swal.fire({
      // type: tipo ,
       title: titulo ,
@@ -145,8 +144,7 @@ export class CrearContrasenaComponent implements OnInit {
     });
   }
 
-  
-  //spaces in inputs
+
   nameSerInput(e) {
     let initalValue = this.f.nombre.value;
    /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
@@ -154,7 +152,7 @@ export class CrearContrasenaComponent implements OnInit {
     initalValue = initalValue.replace(/\s{2,}/g, " ");
     this.f.nombre.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
   }
-  
+
   nameSerBlur(e) {
     let initalValue = this.f.nombre.value;
     this.f.nombre.setValue(initalValue.trim());

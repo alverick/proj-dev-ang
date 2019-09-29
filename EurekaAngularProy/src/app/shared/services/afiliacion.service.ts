@@ -164,7 +164,7 @@ export class AfiliacionService {
       },
       {
         code: 'P',
-        name: "Tengo solo código y nombres"
+        name: "Tengo sólo código y nombres"
       }
     ]);
   }

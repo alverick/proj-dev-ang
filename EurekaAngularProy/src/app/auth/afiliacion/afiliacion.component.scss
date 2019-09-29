@@ -1,59 +1,77 @@
-@import '~src/scss/normalize'; /*Reset Styles*/
+@import '~src/scss/normalize';
+
+/*Reset Styles*/
+
 @import '~src/scss/variables';
 @import '~src/scss/mixin';
 @import '~src/scss/landing';
 @import '~src/scss/main';
-
-body{
+body {
     background: #f4f5f7 !important;
-  }
+}
 
-  .descripcion {
-    @include font-text(18 px, $weight:normal);
+.descripcion {
+    @include font-text(18px !important, $weight: normal !important);
     color: $negro;
-  }
-  .texto-tipos {
-    @include font-text(18px, $weight:500);
+}
+
+.texto-tipos {
+    @include font-text(18px, $weight: 500);
     color: $negro;
-  }
-  .text-green {
-    @include font-text(18px, $weight:500);
+}
+
+.text-green {
+    @include font-text(18px, $weight: 500);
     color: $green;
     text-align: center;
-  }
-  .text-titulo{
-    @include font-text(18px, $weight:500);
+}
+
+.text-titulo {
+    @include font-text(18px, $weight: 500);
     color: $negro;
-  }
-  .texto-descripcion-comisiones{
-    @include font-text(10px, $weight:normal);
+}
+
+.c-descripcion {
+    @include font-text(10px, $weight: normal);
     color: $negro;
     text-align: center;
-  }
+}
 
-  .cuadro-descripcion {
+.c-subtitulo {
+    @include font-text(12px !important, $weight: normal);
+    color: $negro;
+    text-align: center;
+}
+
+.cuadro-descripcion {
     @include cuadro(621px, 127px);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
-  }
-  .cuadro-comisiones{
+}
+
+.cuadro-comisiones {
     @include cuadro(621px, 352px);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
-  }
-  .cuadro-canales{
+}
+
+.cuadro-canales {
     @include cuadro(179px, 179px);
     background-color: #ffffff;
     border: solid 1px #bebebe;
-  }
+}
 
-  .button-afiliacion{
+.button-afiliacion {
     @include btn-eureca;
     width: 207px;
     height: 48px;
-    display:block;
+    display: block;
     margin-left: auto;
     margin-right: auto;
-  }
+}
 
-
+.c3-agencias {
+    @include font-text(12px !important, $weight: 500 !important);
+    color: $negro;
+    text-align: center;
+}

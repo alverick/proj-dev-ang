@@ -247,7 +247,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     if (this.inEdit && this.afiliacionService.services[index].id) {
       this.afiliacionService.CanDeleteService(index).subscribe(r => {
-        let title = 'Eliminación total el servicio';
+        let title = 'Eliminación total del servicio';
         let msg = 'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
         if (r.hasPayed) {
           title = 'Eliminacion Parcial del Servicio';
