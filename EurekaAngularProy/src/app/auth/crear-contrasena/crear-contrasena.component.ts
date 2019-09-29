@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { RubroModel } from 'src/app/shared/models';
 import { drawPopup } from 'src/app/shared/services/popups';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 
 declare var $: any;
 @Component({
@@ -21,7 +22,8 @@ export class CrearContrasenaComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private afiliacionService: AfiliacionService,
-    private router: Router
+    private router: Router,
+    private gaService: GoogleAnalytics
   ) {}
 
   rubros: RubroModel[] = [];
@@ -52,7 +54,7 @@ export class CrearContrasenaComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    var ruc  = this.registerForm.value.ruc.toString(); 
+    var ruc  = this.registerForm.value.ruc.toString();
     // stop here if form is invalid
 
     if (this.registerForm.invalid) {
@@ -63,12 +65,12 @@ export class CrearContrasenaComponent implements OnInit {
     }else{
       this.mensaje('warning','Registrame','Debe ingresar un Ruc valido' );
       return;
-    } 
+    }
     if(!this.registerForm.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
       this.mensaje('warning','Registrame','Debe ingresar un email valido' );
       return;
     }
- 
+
 
    //  if(this.registerForm.value.ruc)
     if (this.registerForm.value.acceptterms == false) {
@@ -110,17 +112,21 @@ export class CrearContrasenaComponent implements OnInit {
             showConfirmButton: true,
             showCancelButton: false,
             showCloseButton: true,
-            confirmButtonText: 'Crear mi cuenta',  
-            onOpen: drawPopup, 
+            confirmButtonText: 'Crear mi cuenta',
+            onOpen: drawPopup,
           }).then(res => {
             if (res.value) {
+              this.gaService.sendEvent('IrACrearCuenta', {
+                'event_category': GoogleAnalytics.Afiliacion,
+                'event_label': 'ir_a_crear_cuenta'
+              });
               window.open('https://interbank.pe/cuenta-negocios');
               this.router.navigate(['/login']);
             }
           });
         }
       }
-    }, err => { 
+    }, err => {
       this.mensaje('error','Registrame','Ha ocurrido un error con el servidor<br />Intente de nuevo' );
 
     });
@@ -145,19 +151,26 @@ export class CrearContrasenaComponent implements OnInit {
     });
   }
 
-  
+
   //spaces in inputs
   nameSerInput(e) {
     let initalValue = this.f.nombre.value;
-   /* initalValue = initalValue.replace(/[ ]{2}/g, ' '); 
+   /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
     initalValue = initalValue.replace(/\s{2,}/g, " ");
     this.f.nombre.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
   }
-  
+
   nameSerBlur(e) {
     let initalValue = this.f.nombre.value;
     this.f.nombre.setValue(initalValue.trim());
+  }
+
+  enviarDatosEmpresa() {
+    this.gaService.sendEvent('EnviarDatosEmpresa', {
+      'event_category': 'Afiliación',
+      'event-label': 'enviar_datos_empresa'
+    });
   }
 }
 

@@ -50,7 +50,7 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
       return r;
     }))
     .pipe(catchError(err => {
-      this.gaService.sendEvent('exception', { description: err.message, fatal: true });
+      this.gaService.sendException(err)
       return throwError(err);
     }));
  }
