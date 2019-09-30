@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { drawPopup } from "src/app/shared/services/popups";
 import { TransactionService } from "src/app/shared/services/transaction.service";
 import { PagoService } from "src/app/shared/services/pago.service";
+import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
 
 @Component({
   selector: 'app-pagos',
@@ -25,7 +26,7 @@ export class PagosComponent implements OnInit {
   private removeOutside: () => void = null;
 
   constructor(private transaction: TransactionService, private pagoService: PagoService,
-    private _elementRef: ElementRef, private renderer: Renderer2) {
+    private _elementRef: ElementRef, private renderer: Renderer2, private gaService: GoogleAnalytics) {
     pagoService.closeAll.subscribe(() => {
       this.showed = false;
       this.showChange.emit(this.showed);
@@ -156,6 +157,18 @@ export class PagosComponent implements OnInit {
           this.transaction.addPayment(this.debtId, payment);
         response.subscribe(r => {
           if (r.success) {
+            if (itm.id) {
+              this.gaService.sendEvent('EditaPago', {
+                'event_category': 'Dashboard',
+                'event_label': 'edita_pago'
+              });
+            }
+            else {
+              this.gaService.sendEvent('AgregaPago', {
+                'event_category': 'Dashboard',
+                'event_label': 'agrega_pago'
+              });
+            }
             this.statusChange.emit(r.status);
             this.loadData();
             Swal.fire({
@@ -214,6 +227,10 @@ export class PagosComponent implements OnInit {
         this.transaction.deletePayment(this.debtId, itm.id)
           .subscribe(r => {
             if (r.success) {
+              this.gaService.sendEvent('EliminarPagos', {
+                'event_category': 'Dashboard',
+                'event_label': 'eliminar_pagos'
+              });
               this.statusChange.emit(r.status);
               this.loadData();
             }

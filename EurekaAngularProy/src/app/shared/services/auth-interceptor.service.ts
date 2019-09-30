@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material';
 import { LoginService } from './login.service';
 import { StorageService } from './storage.service';
 import { drawPopup } from './popups';
+import { GoogleAnalytics } from './googleAnalytics.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ import { drawPopup } from './popups';
 export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private router: Router, public snackBar: MatSnackBar, private login: LoginService,
-    private storage: StorageService) { }
+    private storage: StorageService, private gaService: GoogleAnalytics) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
     this.login.refresh();
@@ -41,12 +42,12 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     return next.handle(request)
       .pipe(catchError((err: HttpErrorResponse)=>{
+        this.gaService.sendException(err);
         if (!request.url.includes('notification')) {
           if(err.status === 401){
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();
             Swal.fire({
-             // imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
               title: 'Su sesión ha sido cerrada por inactividad',
               showCloseButton: false,
               showCancelButton: false,
@@ -55,7 +56,6 @@ export class AuthInterceptorService implements HttpInterceptor {
               allowOutsideClick: false,
               onOpen: drawPopup,
               onClose: () =>{
-                //this.router.navigateByUrl('/login')
                 location.href = '/login';
               }
             });
@@ -63,7 +63,6 @@ export class AuthInterceptorService implements HttpInterceptor {
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();
             Swal.fire({
-             // imageUrl: '/assets/images/complain.svg',   imageHeight: 100,
               title: 'Ha ocurrido un error en el servidor',
               showCloseButton: false,
               showCancelButton: false,

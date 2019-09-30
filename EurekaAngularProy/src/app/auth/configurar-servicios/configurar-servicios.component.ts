@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
 import { drawPopup } from 'src/app/shared/services/popups';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -24,7 +25,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
   constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router, private gaService: GoogleAnalytics) { }
 
     @HostListener('window:beforeunload', ['$event'])
     public closeWindow($event: any) {
@@ -195,6 +196,10 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
       return;
     }
+    this.gaService.sendEvent('EnviarServicios', {
+      'event_category': GoogleAnalytics.Afiliacion,
+      'event_label': 'enviar_servicios'
+    });
     this.afiliacionService.GrabarServicios()
       .subscribe(r => {
         if (this.inEdit) {
@@ -268,6 +273,10 @@ export class ConfigurarServiciosComponent implements OnInit {
           if (r.value) {
             this.afiliacionService.SendDelService(index)
               .subscribe(r => {
+                this.gaService.sendEvent('ServicioEliminado', {
+                  'event_category': GoogleAnalytics.Afiliacion,
+                  'event_label': 'servicio_eliminado'
+                });
                 Swal.fire({
                   text: 'Se ha eliminado el Servicio',
                   title: title,
@@ -317,7 +326,6 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   onGrabar(svc: ServiceModel) {
-    console.log(svc);
     if (this.indiceActual >= 0) {
       if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({
@@ -328,6 +336,12 @@ export class ConfigurarServiciosComponent implements OnInit {
       }
       this.afiliacionService.services[this.indiceActual] = svc;
       this.indiceActual = -1;
+      if (!svc.id) {
+        this.gaService.sendEvent('ServicioAgregado', {
+          'event_category': GoogleAnalytics.Afiliacion,
+          'event_label': 'servicio_agregado'
+        });
+      }
     }
     else {
       let nro = 1;

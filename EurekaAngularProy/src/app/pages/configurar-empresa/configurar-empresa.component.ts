@@ -7,6 +7,7 @@ import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { RubroModel } from 'src/app/shared/models';
 import { Router } from '@angular/router';
 import { drawPopup } from 'src/app/shared/services/popups';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 
 
 @Component({
@@ -25,7 +26,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
   rubros: RubroModel[] = [];
   constructor(private formBuilder: FormBuilder,
               private configEmpresaService: ConfiguracionService,
-              public afiliacionService: AfiliacionService, private router: Router) { }
+              public afiliacionService: AfiliacionService,
+              private router: Router,
+              private gaService: GoogleAnalytics) { }
 
   ngOnInit() {
     this.createForm();
@@ -118,8 +121,11 @@ export class ConfigurarEmpresaComponent implements OnInit {
         subscribe(
         enterpriseUpdate => {
           console.table(enterpriseUpdate);
-          if ( enterpriseUpdate.success === true ) {
-
+          if( enterpriseUpdate.success == true ){
+            this.gaService.sendEvent('ActualizaDatosEmpresa', {
+              'event_category': 'Configuración',
+              'event_label': 'actualiza_datos_empresa'
+            });;
             Swal.fire({
               title: 'Datos de Empresa guardados',
               text: 'Sus datos han sido actualizados',

@@ -91,7 +91,7 @@
 
                                 <mat-error class="messsage-error" *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
                             </div>
-                            <button type="submit" class="btn-big btn-eureca-green w-100 text-white">
+                            <button type="submit" class="btn-big btn-eureca-green w-100 text-white" (click)="enviarDatosEmpresa()">
                                   SIGUIENTE</button>
                         </form>
                     </div>
