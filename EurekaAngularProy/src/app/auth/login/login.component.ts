@@ -110,13 +110,13 @@ export class LoginComponent implements OnInit {
 
   get f() { return this.loginForm.controls; }
 
-  resolved(captchaResponse: string) : boolean{
-    
+  resolved(captchaResponse: string): boolean {
+
     this.isCaptchaValidate = true;
     return true;
   }
 
-  mensaje(tipo: any, titulo: string, text: string){
+  mensaje(tipo: any, titulo: string, text: string) {
     Swal.fire({
      // type: tipo ,
       title: titulo ,
@@ -125,33 +125,32 @@ export class LoginComponent implements OnInit {
       showCancelButton: false,
       showConfirmButton: true,
       cancelButtonColor: '#d33',
-      //cancelButtonText:  'Cerrar',
-      allowOutsideClick: false, 
-      confirmButtonText: 'Cerrar',
-      onOpen: drawPopup, 
+      // cancelButtonText:  'CERRAR',
+      allowOutsideClick: false,
+      confirmButtonText: 'CERRAR',
+      onOpen: drawPopup,
     });
   }
 
   focusFunctionRuc(){
     this.inputUsuaValid = false;
     this.validarCantRuc = false;
-    this.codigo2=false;
+    this.codigo2 = false;
   }
-  focusFunctionPass(){
+  focusFunctionPass() {
     this.inputPassValid = false;
-    this.validarCantPass =false;
-    this.codigo2=false;
+    this.validarCantPass = false;
+    this.codigo2 = false;
   }
 
   /* /////// L O G I N ////////////  */
-  public try(): void{
+  public try(): void {
 
   }
 
-  public submitLogin() : any {
+  public submitLogin(): any {
 
 
-    
 
     let continuar = true;
 
@@ -196,14 +195,14 @@ export class LoginComponent implements OnInit {
              // imageUrl: '/assets/images/complain.svg',
               imageHeight: 100,
               title:'Existe una Sesión Activa',
-             // cancelButtonText: 'Cerrar', 
+             // cancelButtonText: 'CERRAR', 
               showCloseButton: true,
               showCancelButton: false,
               showConfirmButton: true,
               cancelButtonColor: '#d33',
-              //cancelButtonText:  'Cerrar',
+              //cancelButtonText:  'CERRAR',
               allowOutsideClick: false, 
-              confirmButtonText: 'Cerrar',
+              confirmButtonText: 'CERRAR',
               onOpen: drawPopup, 
             })
           }else if(value.estado===true && this.intentos<=6){

@@ -168,7 +168,7 @@ export class FormServicioComponent implements OnInit {
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonText:  'Cerrar',
+                cancelButtonText:  'CERRAR',
                 allowOutsideClick: false,
                 onOpen: drawPopup
               });
@@ -180,7 +180,7 @@ export class FormServicioComponent implements OnInit {
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonText:  'Cerrar',
+                cancelButtonText:  'CERRAR',
                 allowOutsideClick: false,
                 onOpen: drawPopup
               });
@@ -192,7 +192,7 @@ export class FormServicioComponent implements OnInit {
                   showCloseButton: true,
                   showCancelButton: true,
                   showConfirmButton: false,
-                  cancelButtonText:  'Cerrar',
+                  cancelButtonText:  'CERRAR',
                   allowOutsideClick: false,
                   onOpen: drawPopup
                 });
@@ -227,7 +227,7 @@ export class FormServicioComponent implements OnInit {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup
             });
@@ -241,7 +241,7 @@ export class FormServicioComponent implements OnInit {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup
 
@@ -254,7 +254,7 @@ export class FormServicioComponent implements OnInit {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup
 
@@ -267,7 +267,7 @@ export class FormServicioComponent implements OnInit {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup
 
@@ -280,7 +280,7 @@ export class FormServicioComponent implements OnInit {
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonText:  'Cerrar',
+                cancelButtonText:  'CERRAR',
                 allowOutsideClick: false,
                 onOpen: drawPopup
                });
@@ -316,7 +316,7 @@ export class FormServicioComponent implements OnInit {
                         showCancelButton: true,
                         showConfirmButton: false,
                         cancelButtonColor: '#d33',
-                        cancelButtonText:  'Cerrar',
+                        cancelButtonText:  'CERRAR',
                         allowOutsideClick: false,
                         onOpen: drawPopup
                       });

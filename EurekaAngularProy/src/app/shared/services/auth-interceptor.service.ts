@@ -51,7 +51,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               showCloseButton: false,
               showCancelButton: false,
               showConfirmButton: true,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup,
               onClose: () =>{
@@ -68,7 +68,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               showCloseButton: false,
               showCancelButton: false,
               showConfirmButton: true,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup,
               onClose: () =>{

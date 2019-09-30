@@ -28,7 +28,7 @@
     <small *ngIf="ready">Archivo seleccionado</small>
     <div *ngIf="ready; else landing" class="text-center">
         <div class="input-file">
-            <span class="text">{{fileName}}</span>
+            <span class="text-input-file">{{fileName}}</span>
         </div>
     </div>
     <div *ngIf="excelService.statusUpload" class="progress-text">{{progress.status}}</div>

@@ -291,7 +291,7 @@ orderList(index: number, asc: boolean) {
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
-      confirmButtonText:  'Cerrar',
+      confirmButtonText:  'CANCELAR',
       onOpen: drawPopup
     });
   }
@@ -610,8 +610,8 @@ orderList(index: number, asc: boolean) {
       text: '¡No podrás revertir esto!',
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'Si, Actualizar!',
-      cancelButtonText: 'Cerrar',
+      confirmButtonText: 'SI, ACTUALIZAR!',
+      cancelButtonText: 'CERRAR',
       onOpen: drawPopup
     }).then((result) => {
 
@@ -694,7 +694,7 @@ orderList(index: number, asc: boolean) {
           );
         }
     }
-  })
+  });
 
 }
 
@@ -727,7 +727,7 @@ orderList(index: number, asc: boolean) {
 
     let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : itemsParaEliminar.length;
     if (totalForDelete === 0 ) {
-      this.mensaje( 'error', 'Error al Eliminar','¡Seleccione las filas a eliminar por favor!');
+      this.mensaje( 'error', 'Error al Eliminar', '¡Seleccione las filas a eliminar por favor!');
       return;
     }
 
@@ -736,8 +736,8 @@ orderList(index: number, asc: boolean) {
       text: `Esta acción va a eliminar ${totalForDelete} deudas`,
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'CONFIRMAR',
+      cancelButtonText: 'CANCELAR',
       onOpen: drawPopup
     }).then((result) => {
       if (result.value) {
@@ -770,8 +770,8 @@ orderList(index: number, asc: boolean) {
     title: "¿Esta Seguro de Eliminar el Registro? ",
     showCancelButton: true,
     showCloseButton: true,
-    confirmButtonText: 'Si, Borralo',
-    cancelButtonText: 'Cerrar',
+    confirmButtonText: 'SI, BORRALO',
+    cancelButtonText: 'CERRAR',
     onOpen: drawPopup
   }).then((result) => {
     if (result.value) {

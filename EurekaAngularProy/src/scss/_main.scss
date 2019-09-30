@@ -45,7 +45,7 @@ body {
     .mat-form-field-label {
         @include font-text(12px);
         font-weight: 500;
-        color: #0d131d !important; 
+        color: #0d131d !important;
         top: 21px;
     }
     .mat-form-field-ripple {
@@ -69,7 +69,7 @@ body {
         background-color: $green !important;
     }
     .mat-select-arrow {
-      color: $textgreen !important;
+        color: $textgreen !important;
     }
 }
 
@@ -112,16 +112,15 @@ body {
 }
 
 .btn-eureca-green {
-    @include font-text(16px !important, 500 !important);
+    @include font-text(14px !important, 500 !important);
     color: #ffffff !important;
-    
     background-color: $green !important;
     @include border-radius(4px !important);
     border: solid 1px $green !important;
     &:hover {
         background-color: $green !important;
     }
-  /*  &:focus {
+    /*  &:focus {
         background-color: $greenclaro !important;
     } */
     &.btn-disabled {
@@ -141,8 +140,19 @@ body {
     }
 }
 
+.btn-outline-green-alert {
+    @include font-text(14px !important, 500 !important);
+    @include border-radius(4px !important);
+    background-color: $blanco !important;
+    border: solid 1px $blanco !important;
+    color: $green !important;
+    &.btn-disabled {
+        color: #9b9b9b !important;
+    }
+}
+
 .messsage-error {
-  @include font-text(12px, 500);
+    @include font-text(12px, 500);
     color: $rojo;
 }
 
@@ -168,16 +178,16 @@ body {
 
 .font-black {
     @include font-text(18px, $weight: 600);
-    color: $negro;
+    color: #0d131d;
 }
 
 .swal2-content {
     @include font-text(16px, $weight: 500);
-    color: $negro;
+    color: #0d131d !important;
     text-align: center;
 }
 
 .input-text {
-  @include font-text(16px !important, normal !important);
+    @include font-text(16px !important, normal !important);
     color: #0d131d !important;
 }

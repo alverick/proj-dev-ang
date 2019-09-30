@@ -20,7 +20,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   Formulario: boolean = false;
   buttonServicios ='';
   private inEdit: boolean = false;
-
+  public titulo: string;
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
   constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
@@ -40,6 +40,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       if (d.isEdit) {
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
+        this.titulo = 'Edita el servicio';
       } else {
         // siempre entra ahí
         window['_url_loop_'] = 'configurarServicios';
@@ -47,8 +48,10 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.afiliacionService.Clear();
         this.buttonServicios = 'Guardar';
         this.editService(this.afiliacionService.services[0], 0);
+        this.titulo = 'Agrega un nuevo servicio';
       }
     });
+
   }
 
   public indiceActual: number = -1;
@@ -62,8 +65,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         showConfirmButton: true,
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: 'Descartar',
-        cancelButtonText: 'Regresar',
+        confirmButtonText: 'DESCARTAR',
+        cancelButtonText: 'REGRESAR',
         onOpen: drawPopup
       }).then(r => {
         if (r.value) {
@@ -126,8 +129,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         showConfirmButton: true,
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: 'Guardar',
-        cancelButtonText: 'Deshacer cambios',
+        confirmButtonText: 'GUARDAR',
+        cancelButtonText: 'DESHACER CAMBIOS',
         onOpen: drawPopup
       }).then(r => {
         this.addNewAfterSave = true;
@@ -165,8 +168,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         showCancelButton: true,
         showConfirmButton: true,
         cancelButtonColor: '#d33',
-        cancelButtonText:  'Deshacer cambios',
-        confirmButtonText: 'Guardar',
+        cancelButtonText:  'DESHACER CAMBIOS',
+        confirmButtonText: 'GUARDAR',
         onOpen: drawPopup
       }).then(r => {
         this.sendAfterSave = true;
@@ -241,7 +244,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         showCloseButton: true,
         showConfirmButton: false,
         showCancelButton: true,
-        cancelButtonText: 'Cerrar'
+        cancelButtonText: 'CERRAR'
       });*/
       return;
     }
@@ -258,8 +261,8 @@ export class ConfigurarServiciosComponent implements OnInit {
           title: title,
           showCancelButton: true,
           showConfirmButton: true,
-          confirmButtonText: 'Confirmar',
-          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'CONFIRMAR',
+          cancelButtonText: 'CANCELAR',
           onOpen: drawPopup
         }).then(r => {
           if (r.value) {
@@ -281,8 +284,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         title: 'Eliminación total el servicio',
         showCancelButton: true,
         showConfirmButton: true,
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'CONFIRMAR',
+        cancelButtonText: 'CANCELAR',
         allowOutsideClick: false,
         onOpen: drawPopup
       }).then(r => {
@@ -302,7 +305,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         showCloseButton: true,
         showConfirmButton: false,
         showCancelButton: true,
-        cancelButtonText: 'Cerrar'
+        cancelButtonText: 'CERRAR'
       });*/
       return;
     }
@@ -354,7 +357,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         showCloseButton: true,
         showCancelButton: false,
         showConfirmButton: true,
-        confirmButtonText: "Cerrar",
+        confirmButtonText: "CERRAR",
         onOpen: drawPopup
       });
     }

@@ -98,7 +98,7 @@ export class CrearContrasenaComponent implements OnInit {
             showConfirmButton:true ,
             showCancelButton: false,
             showCloseButton: true,
-            confirmButtonText: 'Cerrar',
+            confirmButtonText: 'CERRAR',
             onOpen: drawPopup,
           });
         } else {
@@ -109,7 +109,7 @@ export class CrearContrasenaComponent implements OnInit {
             showConfirmButton: true,
             showCancelButton: false,
             showCloseButton: true,
-            confirmButtonText: 'Crear mi cuenta',
+            confirmButtonText: 'CREAR MI CUENTA',
             onOpen: drawPopup,
           }).then(res => {
             if (res.value) {
@@ -138,7 +138,7 @@ export class CrearContrasenaComponent implements OnInit {
       showCancelButton: false,
       showConfirmButton: true,
       cancelButtonColor: '#d33',
-      cancelButtonText:  'Cerrar',
+      cancelButtonText:  'CERRAR',
       onOpen: drawPopup,
 
     });

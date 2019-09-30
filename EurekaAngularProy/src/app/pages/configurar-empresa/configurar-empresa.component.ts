@@ -116,15 +116,15 @@ export class ConfigurarEmpresaComponent implements OnInit {
       };
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
-        enterpriseUpdate =>{
+        enterpriseUpdate => {
           console.table(enterpriseUpdate);
-          if( enterpriseUpdate.success == true ){
+          if ( enterpriseUpdate.success === true ) {
 
             Swal.fire({
               title: 'Datos de Empresa guardados',
               text: 'Sus datos han sido actualizados',
               showCloseButton: true,
-              confirmButtonText: 'Aceptar',
+              confirmButtonText: 'ACEPTAR',
               onOpen: drawPopup
 
             }).then((result) => {
@@ -159,7 +159,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       showCloseButton: false,
       showCancelButton: false,
       showConfirmButton: true,
-      confirmButtonText:  'Cerrar',
+      confirmButtonText:  'CERRAR',
       onOpen: drawPopup
 
     });

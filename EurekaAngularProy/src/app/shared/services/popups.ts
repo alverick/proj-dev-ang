@@ -3,12 +3,13 @@ declare var $: any;
 export function drawPopup(el) {
   $(el).find('.swal2-title')
     .css('font-family', 'Geometria')
-    .css('font-size', '28px')
+    .css('font-size', '24px')
     .css('font-weight', '500')
     .css('font-style', 'normal')
     .css('font-stretch', 'normal')
     .css('line-height', 'normal')
-    .css('letter-spacing', 'normal');
+    .css('letter-spacing', 'normal')
+    .css('color', '#0d131d');
   $(el).find('.swal2-content')
     .css('font-family', 'Geometria')
     .css('font-size', '16px')
@@ -16,7 +17,8 @@ export function drawPopup(el) {
     .css('font-style', 'normal')
     .css('font-stretch', 'normal')
     .css('line-height', 'normal')
-    .css('letter-spacing', 'normal');
+    .css('letter-spacing', '#0d131d')
+    .css('color', 'normal');
   $(el).find('.swal2-actions').css('display', 'grid');
   $(el).find('.swal2-confirm')
     .css('background-color', '')
@@ -25,5 +27,5 @@ export function drawPopup(el) {
     .addClass('btn-eureca-green');
   $(el).find('.swal2-cancel')
     .css('background-color', '')
-    .addClass('btn-outline-green');
+    .addClass('btn-outline-green-alert');
 }

@@ -1,498 +1,422 @@
 @import "../../../scss/_variables.scss";
 @import "../../../scss/_mixin.scss";
-
-body{
-  background: #f4f5f7  !important;
-
+body {
+    background: #f4f5f7 !important;
 }
 
 .container {
-  width: 1230px;
-  max-width: 1230px;
+    width: 1230px;
+    max-width: 1230px;
 }
 
-
 .widget {
-  width: 100%;
-
-  .title {
-    @include font-text(18px, 500);
-    padding: 20px 15px 10px 15px;
-    color: $negro;
-  }
-
-  .content {
     width: 100%;
-    min-height: 15px;
-    @include border-radius(5px);
-    background-color: #fff;
-    padding: 5px 15px;
-    @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, .1), 0);
-  }
+    .title {
+        @include font-text(18px, 500);
+        padding: 20px 15px 10px 15px;
+        color: $negro;
+    }
+    .content {
+        width: 100%;
+        min-height: 15px;
+        @include border-radius(5px);
+        background-color: #fff;
+        padding: 5px 15px;
+        @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, .1), 0);
+    }
 }
 
 .widget.filtros {
-  .content {
-    .mat-form-field.f1 {
-      width: 280px;
+    .content {
+        .mat-form-field.f1 {
+            width: 280px;
+        }
+        .mat-form-field.f2 {
+            margin-left: 10px;
+            width: 137px;
+        }
+        .f3 {
+            width: 140px;
+            margin-left: 8px;
+            height: 32px;
+        }
     }
-
-    .mat-form-field.f2 {
-      margin-left: 10px;
-      width: 137px;
-    }
-
-    .f3 {
-      width: 140px;
-      margin-left: 8px;
-      height: 32px;
-    }
-  }
 }
 
 .widget.lista {
-  .content {
-    padding-left: 0px;
-    padding-right: 0px;
-
-    .actions {
-      height: 51px;
-      padding-left: 15px;
-      padding-right: 15px;
-      border-bottom: solid 1px #f0f0f0;
-
-      .al-left {
-        display: flex;
-
-        .act-label {
-          @include font-text(10px, 500);
-          color: #9b9b9b;
-        }
-
-        .seleccionado {
-          color: $textgreen;
-        }
-
-        .btn-eliminar {
-          margin-left: 25px;
-          color: $textgreen;
-          display: block;
-          width: 40px;
-          text-align: center;
-
-          img {
-            cursor: pointer;
-            width: 20px;
-            height: 20px;
-            line-height: 0;
-          }
-
-          .icono {
-            width: 20px;
-            height: 20px;
-          }
-
-          .act-label {
-            color: $textgreen;
-          }
-        }
-      }
-
-      .al-right {
-        padding-top: 12px;
-
-        .lnk-label {
-          display: inline;
-          @include font-text(14px, 500);
-          color: $textgreen;
-          margin-left: 20px;
-          cursor: pointer;
-        }
-
-        .sobresale {
-          position: absolute;
-          right: 20px;
-          background-color: white;
-          z-index: 99;
-
-          .card {
-            padding: 8px;
-
-            .selecciona-servicio{
-              @include font-text(10px, 500);
-              color: #333333;
-              padding: 6px 2px;
-            }
-
-            .option-item {
-              @include font-text(14px);
-              color: #333333;
-              width: 100%;
-              padding: 6px;
-
-              .mano{
-                cursor: pointer;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .counter {
-      height: 51px;
-      padding: 15px;
-      border-bottom: solid 1px #f0f0f0;
-      text-align: center;
-
-      .text {
-        @include font-text(14px);
-
-        .btn-select-all {
-          padding: 5px 10px;
-          font-weight: 500;
-          color: #05be50;
-          background-color: #fff;
-          @include border-radius(4px);
-          border: 0;
-
-          &:hover {
-            background-color: rgba(0, 169, 79, 0.2);
-          }
-        }
-      }
-    }
-
-    .lista {
-      padding-top: 8px;
-
-      table {
-        width: 100%;
-
-        thead {
-          tr {
+    .content {
+        padding-left: 0px;
+        padding-right: 0px;
+        .actions {
+            height: 51px;
+            padding-left: 15px;
+            padding-right: 15px;
             border-bottom: solid 1px #f0f0f0;
-
-            th {
-              @include font-text(12px, 500);
-              color: $textblue;
-              padding: 2px;
-
-              .text {
-                display: inline-block;
-                height: 30px;
-                vertical-align: middle;
-                text-align: center;
-              }
-
-              .ord {
-                margin-left: 5px;
-                display: inline-block;
-
-                .up {
-                  display: block;
-                  margin-bottom: 5px;
-                  cursor: pointer;
-                  width: 0;
-                  height: 0;
-                  border-left: 5px solid transparent;
-                  border-right: 5px solid transparent;
-                  border-bottom: 5px solid $textblue;
-
-                  &.seleccionado {
-                    border-bottom: 5px solid #9b9b9b;
-                  }
+            .al-left {
+                display: flex;
+                .act-label {
+                    @include font-text(10px, 500);
+                    color: #9b9b9b;
                 }
-
-                .down {
-                  display: block;
-                  margin-bottom: 5px;
-                  cursor: pointer;
-                  width: 0;
-                  height: 0;
-                  border-left: 5px solid transparent;
-                  border-right: 5px solid transparent;
-                  border-top: 5px solid $textblue;
-
-                  &.seleccionado {
-                    border-top: 5px solid #9b9b9b;
-                  }
+                .seleccionado {
+                    color: $textgreen;
                 }
-              }
+                .btn-eliminar {
+                    margin-left: 25px;
+                    color: $textgreen;
+                    display: block;
+                    width: 40px;
+                    text-align: center;
+                    img {
+                        cursor: pointer;
+                        width: 20px;
+                        height: 20px;
+                        line-height: 0;
+                    }
+                    .icono {
+                        width: 20px;
+                        height: 20px;
+                    }
+                    .act-label {
+                        color: $textgreen;
+                    }
+                }
             }
-          }
+            .al-right {
+                padding-top: 12px;
+                .lnk-label {
+                    display: inline;
+                    @include font-text(14px, 500);
+                    color: $textgreen;
+                    margin-left: 20px;
+                    cursor: pointer;
+                }
+                .sobresale {
+                    position: absolute;
+                    right: 20px;
+                    background-color: white;
+                    z-index: 99;
+                    .card {
+                        padding: 8px;
+                        .selecciona-servicio {
+                            @include font-text(10px, 500);
+                            color: #333333 !important;
+                            padding: 6px 2px;
+                        }
+                        .option-item {
+                            @include font-text(14px);
+                            color: #333333 !important;
+                            width: 100%;
+                            padding: 6px;
+                            .mano {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+            }
         }
-
-        tbody {
-          tr {
+        .counter {
+            height: 51px;
+            padding: 15px;
             border-bottom: solid 1px #f0f0f0;
-
-            &.seleccionado {
-              background-color: rgba(0, 169, 79, 0.05);
+            text-align: center;
+            .text {
+                @include font-text(14px);
+                .btn-select-all {
+                    padding: 5px 10px;
+                    font-weight: 500;
+                    color: #05be50;
+                    background-color: #fff;
+                    @include border-radius(4px);
+                    border: 0;
+                    &:hover {
+                        background-color: rgba(0, 169, 79, 0.2);
+                    }
+                }
             }
-
-            &.edit-pago {
-              background-color: rgba(0, 169, 79, 0.05)
+        }
+        .lista {
+            padding-top: 8px;
+            table {
+                width: 100%;
+                thead {
+                    tr {
+                        border-bottom: solid 1px #f0f0f0;
+                        th {
+                            @include font-text(12px, 500);
+                            color: $textblue;
+                            padding: 2px;
+                            .text {
+                                display: inline-block;
+                                height: 30px;
+                                vertical-align: middle;
+                                text-align: center;
+                            }
+                            .ord {
+                                margin-left: 5px;
+                                display: inline-block;
+                                .up {
+                                    display: block;
+                                    margin-bottom: 5px;
+                                    cursor: pointer;
+                                    width: 0;
+                                    height: 0;
+                                    border-left: 5px solid transparent;
+                                    border-right: 5px solid transparent;
+                                    border-bottom: 5px solid $textblue;
+                                    &.seleccionado {
+                                        border-bottom: 5px solid #9b9b9b;
+                                    }
+                                }
+                                .down {
+                                    display: block;
+                                    margin-bottom: 5px;
+                                    cursor: pointer;
+                                    width: 0;
+                                    height: 0;
+                                    border-left: 5px solid transparent;
+                                    border-right: 5px solid transparent;
+                                    border-top: 5px solid $textblue;
+                                    &.seleccionado {
+                                        border-top: 5px solid #9b9b9b;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                tbody {
+                    tr {
+                        border-bottom: solid 1px #f0f0f0;
+                        &.seleccionado {
+                            background-color: rgba(0, 169, 79, 0.05);
+                            td {
+                                color: #333333 !important;
+                            }
+                        }
+                        &.edit-pago {
+                            background-color: rgba(0, 169, 79, 0.05)
+                        }
+                        td {
+                            @include font-text(12px);
+                            color: $textblack;
+                            padding: 8px 3px;
+                            text-overflow: ellipsis;
+                            &.texto-after {
+                                @include font-text(28px, 500);
+                                text-align: center;
+                                height: 300px;
+                                color: #333333 !important;
+                                img {
+                                    position: absolute;
+                                    top: 47%;
+                                    right: 10%;
+                                }
+                            }
+                            &.c8,
+                            &.c9,
+                            &.c10 {
+                                text-align: right;
+                            }
+                            .cnt-status {
+                                position: relative;
+                                .lnk-status {
+                                    cursor: pointer;
+                                }
+                            }
+                            .msg-error {
+                                margin-top: 0px;
+                            }
+                            .btn-edit {
+                                cursor: pointer;
+                                img {
+                                    width: 15px;
+                                    height: 15px;
+                                }
+                            }
+                            .btn-ok {
+                                cursor: pointer;
+                                img {
+                                    width: 20px;
+                                    height: 20px;
+                                }
+                            }
+                            .btn-cancel {
+                                cursor: pointer;
+                                img {
+                                    width: 20px;
+                                    height: 20px;
+                                }
+                            }
+                        }
+                    }
+                }
+                .c0 {
+                    width: 26px;
+                }
+                .c1 {
+                    width: 70px;
+                    .text {
+                        width: 49px;
+                    }
+                }
+                .c2 {
+                    width: 70px;
+                    .text {
+                        width: 37px;
+                    }
+                }
+                .c3 {
+                    width: 145px;
+                    .text {
+                        width: 107px;
+                    }
+                }
+                .c4 {
+                    width: 120px;
+                    .text {
+                        width: 58px;
+                    }
+                }
+                .c5 {
+                    width: 120px;
+                    .text {
+                        width: 57px;
+                    }
+                }
+                .c6 {
+                    width: 145px;
+                    .text {
+                        width: 50px;
+                    }
+                }
+                .c7 {
+                    width: 100px;
+                    .text {
+                        width: 60px;
+                    }
+                }
+                .c8 {
+                    width: 100px;
+                    .text {
+                        width: 38px;
+                    }
+                    .msg-error {
+                        margin-left: -15px;
+                    }
+                }
+                .c9 {
+                    width: 100px;
+                    .text {
+                        width: 31px;
+                    }
+                }
+                .c10 {
+                    width: 100px;
+                    .text {
+                        width: 31px;
+                    }
+                }
+                .c11 {
+                    width: 85px;
+                    .text {
+                        width: 52px;
+                    }
+                }
+                .c12 {
+                    width: 45px;
+                    .text {
+                        width: 37px;
+                    }
+                }
             }
-
-            td {
-              @include font-text(12px);
-              color: $textblack;
-              padding: 8px 3px;
-              text-overflow: ellipsis;
-
-              &.texto-after {
-                @include font-text(28px, 500);
-                text-align: center;
-                height: 300px;
-                color: #333333;
-
-                img {
-                  position: absolute;
-                  top: 47%;
-                  right: 10%;
-                }
-              }
-
-              &.c8, &.c9, &.c10 {
-                text-align: right;
-              }
-
-              .cnt-status {
-                position: relative;
-
-                .lnk-status {
-                  cursor: pointer;
-                }
-              }
-
-              .msg-error {
-                margin-top: 0px;
-              }
-
-              .btn-edit {
-                cursor: pointer;
-
-                img {
-                  width: 15px;
-                  height: 15px;
-                }
-              }
-
-              .btn-ok {
-                cursor: pointer;
-
-                img {
-                  width: 20px;
-                  height: 20px;
-                }
-              }
-
-              .btn-cancel {
-                cursor: pointer;
-
-                img {
-                  width: 20px;
-                  height: 20px;
-                }
-              }
+        }
+        .pagination {
+            display: block;
+            text-align: right;
+            width: 100%;
+            padding: 8px 0px 0px 8px;
+            .text {
+                float: right;
+                color: #9ea1a5;
+                @include font-text(14px, 500);
             }
-          }
+            .ctrl {
+                float: right;
+            }
         }
-
-        .c0 {
-          width: 26px;
-        }
-
-        .c1 {
-          width: 70px;
-
-          .text {
-            width: 49px;
-          }
-        }
-
-        .c2 {
-          width: 70px;
-
-          .text {
-            width: 37px;
-          }
-        }
-
-        .c3 {
-          width: 145px;
-
-          .text {
-            width: 107px;
-          }
-        }
-
-        .c4 {
-          width: 120px;
-
-          .text {
-            width: 58px;
-          }
-        }
-
-        .c5 {
-          width: 120px;
-
-          .text {
-            width: 57px;
-          }
-        }
-
-        .c6 {
-          width: 145px;
-
-          .text {
-            width: 50px;
-          }
-        }
-
-        .c7 {
-          width: 100px;
-
-          .text {
-            width: 60px;
-          }
-        }
-
-        .c8 {
-          width: 100px;
-
-          .text {
-            width: 38px;
-          }
-
-          .msg-error {
-            margin-left: -15px;
-          }
-        }
-
-        .c9 {
-          width: 100px;
-
-          .text {
-            width: 31px;
-          }
-        }
-
-        .c10 {
-          width: 100px;
-
-          .text {
-            width: 31px;
-          }
-        }
-
-        .c11 {
-          width: 85px;
-
-          .text {
-            width: 52px;
-          }
-        }
-
-        .c12 {
-          width: 45px;
-
-          .text {
-            width: 37px;
-          }
-        }
-      }
     }
-
-    .pagination {
-      display: block;
-      text-align: right;
-      width: 100%;
-      padding: 8px 0px 0px 8px;
-
-      .text {
-        float: right;
-        color: #9b9b9b;
-        @include font-text(14px, 500);
-      }
-
-      .ctrl {
-        float: right;
-      }
-    }
-  }
 }
 
 .text-foot {
-  @include font-text(16px,normal);
-  display: block;
-  width: 100%;
-  text-align: center;
-  padding: 40px 0px;
+    @include font-text(16px, normal);
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 40px 0px;
+    color: #9ea1a5 !important;
 }
-b{
-  @include font-text(16px,500);
+
+b {
+    @include font-text(16px, 500);
 }
 
 :host ::ng-deep .ngx-pagination {
-  @include font-text(14px, 500);
-  color: #9b9b9b;
-
-  &::before, &::after {
-    content: none !important;
-  }
-
-  .pagination-previous {
-    a::before, &.disabled::before {
-      content: none !important;
+    @include font-text(14px, 500);
+    color: #9b9b9b;
+    &::before,
+    &::after {
+        content: none !important;
     }
-  }
-
-  .pagination-next {
-    a::after, &.disabled::after {
-      content: none !important  ;
+    .pagination-previous {
+        a::before,
+        &.disabled::before {
+            content: none !important;
+        }
     }
-  }
-
-  .current {
-    background: transparent !important;
-    color: $textgreen !important;
-    text-decoration: underline !important;
-  }
+    .pagination-next {
+        a::after,
+        &.disabled::after {
+            content: none !important;
+        }
+    }
+    .current {
+        background: transparent !important;
+        color: $textgreen !important;
+        text-decoration: underline !important;
+    }
 }
 
 .mat-form-field {
-  .msg-error {
-    @include font-text(10px, 500);
-    position: absolute;
-    color: #f44336;
-    margin-top: 10px;
-    width: 200px;
-    background-color: white;
-  }
+    .msg-error {
+        @include font-text(10px, 500);
+        position: absolute;
+        color: #f44336;
+        margin-top: 10px;
+        width: 200px;
+        background-color: white;
+    }
 }
 
 :host ::ng-deep .inline-input {
-  .mat-form-field-wrapper {
-    padding-bottom: 0;
-
-    .mat-form-field-infix {
-      padding: 0;
-      border-top: none;
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+        .mat-form-field-infix {
+            padding: 0;
+            border-top: none;
+        }
+        .mat-form-field-underline {
+            bottom: 0;
+        }
     }
-
-    .mat-form-field-underline {
-      bottom: 0;
-    }
-  }
 }
 
 .btn-eureca-green {
-  @include font-text(12px !important, 500 !important); 
+    @include font-text(12px !important, 500 !important);
 }
-.text-danger{
-  @include font-text(12px, 500);
-  color:#ea0044  !important;
+
+.text-danger {
+    @include font-text(12px, 500);
+    color: #ea0044 !important;
 }

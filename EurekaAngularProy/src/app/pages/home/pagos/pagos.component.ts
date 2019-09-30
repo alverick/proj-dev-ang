@@ -93,7 +93,7 @@ export class PagosComponent implements OnInit {
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
-      confirmButtonText:  'Cerrar',
+      confirmButtonText:  'CERRAR',
       onOpen: drawPopup
     });
   }
@@ -141,8 +141,8 @@ export class PagosComponent implements OnInit {
       text: '¡No podrás revertir esto!',
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'Si, Actualizar!',
-      cancelButtonText: 'Cerrar',
+      confirmButtonText: 'SI, ACTUALIZAR!',
+      cancelButtonText: 'CERRAR',
       onOpen: drawPopup
     }).then((result) => {
       if (result.value) {
@@ -206,8 +206,8 @@ export class PagosComponent implements OnInit {
       title: "¿Esta Seguro de Eliminar el Pago? ",
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'Si, Borralo',
-      cancelButtonText: 'Cerrar',
+      confirmButtonText: 'SI, BORRALO',
+      cancelButtonText: 'CERRAR',
       onOpen: drawPopup
     }).then((result) => {
       if (result.value) {
