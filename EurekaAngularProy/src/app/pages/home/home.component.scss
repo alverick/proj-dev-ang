@@ -100,12 +100,12 @@ body {
                         padding: 8px;
                         .selecciona-servicio {
                             @include font-text(10px, 500);
-                            color: #333333 !important;
+                            color: #0d131d !important;
                             padding: 6px 2px;
                         }
                         .option-item {
                             @include font-text(14px);
-                            color: #333333 !important;
+                            color: #0d131d !important;
                             width: 100%;
                             padding: 6px;
                             .mano {
@@ -207,7 +207,7 @@ body {
                                 @include font-text(28px, 500);
                                 text-align: center;
                                 height: 300px;
-                                color: #333333 !important;
+                                color: #0d131d !important;
                                 img {
                                     position: absolute;
                                     top: 47%;

@@ -24,7 +24,7 @@
                     <div class="d-flex justify-content-end">
                         <div class=" cuadro-form pb-2">
                             <!--/////// F O R M ////////-->
-                            <div class="texto-azul pt-4 pb-3 mb-4  ">Iniciar Sesión</div>
+                            <div class="texto-azul pt-4 pb-3 mb-4  ">Inicia Sesión</div>
                             <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
 
                                 <div class="d-flex   mr-1 pb-3">
@@ -43,9 +43,9 @@
                                                 Ingrese un RUC válido de 11 dígitos
                                             </mat-error>
                                         </mat-form-field>
-                                        <div class="mt-4 text-check">
+                                        <div class="mt-4">
                                             <mat-checkbox type="checkbox" [(ngModel)]="rememberMe" autocomplete="on" formControlName="rememberme">
-                                                Recordar
+                                                <label class="text-check">Recordar</label>
                                             </mat-checkbox>
                                         </div>
                                     </div>

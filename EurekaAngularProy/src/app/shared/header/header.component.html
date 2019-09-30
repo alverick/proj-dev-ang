@@ -9,11 +9,11 @@
         </button>
         <div *ngIf="show()" class="collapse navbar-collapse" id="navbarResponsive">
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active px-1">
-                    <a class="mano nav-link" [routerLink]="['/home']">Movimientos</a>
+            <ul class="navbar-nav ml-auto ">
+                <li class="nav-item active"  >
+                    <a class="mano nav-link mb-3" [routerLink]="['/home']">Movimientos</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" style="margin-top: -12px;">
                   <a href="#" class="nav-link dropdown-toggle no-caret" id="lnkMessages" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     <div *ngIf="notify.total > 0" class="badge" >
@@ -52,7 +52,7 @@
 
                   </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" style="margin-top: -12px;">
                   <a href="#" class="nav-link dropdown-toggle" id="lnkPerfil" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="perfil" src="assets/images/person.svg" alt="Perfil" >
                   </a>
