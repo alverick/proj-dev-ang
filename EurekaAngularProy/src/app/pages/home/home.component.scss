@@ -302,13 +302,14 @@ body {
                     }
                 }
                 .c7 {
-                    width: 100px;
+                    width: 100px; 
                     .text {
                         width: 60px;
                     }
                 }
                 .c8 {
                     width: 100px;
+                   // text-align: justify;
                     .text {
                         width: 38px;
                     }
@@ -318,6 +319,7 @@ body {
                 }
                 .c9 {
                     width: 100px;
+                    text-align: ce;
                     .text {
                         width: 31px;
                     }
@@ -445,4 +447,10 @@ b {
 .input-text-dash{
     @include font-text(12px!important, normal);
     color: #0d131d;
+}
+
+
+.content-container {
+    overflow-y: auto;
+    max-height: 250px; 
 }

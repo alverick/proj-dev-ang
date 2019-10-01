@@ -199,6 +199,7 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.visibleFixedHead = true;
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
     this.homeService.getServices(true).subscribe(

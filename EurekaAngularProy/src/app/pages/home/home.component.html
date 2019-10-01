@@ -103,11 +103,13 @@
                 <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
                     <div class="card">
                         <div class="selecciona-servicio">Selecciona el servicio</div>
-                        <div *ngFor="let service of typeList" class="option-item" (click)="openDialog(service)"  >
-                            <div class="mano"  >
-                                {{service.name}}
-                            </div>
-                        </div>
+                        <perfect-scrollbar class="content-container">
+                          <div *ngFor="let service of typeList" class="option-item" (click)="openDialog(service)"  >
+                              <div class="mano"  >
+                                  {{service.name}}
+                              </div>
+                          </div>
+                        </perfect-scrollbar >
                     </div>
                 </div>
               </div>
@@ -309,7 +311,7 @@
                           <div class="down" [class.seleccionado]="orderBy === 7 && orderDef[7].asc === false"
                           (click)="orderList(7, false)"></div>
                         </div>
-                      </th>
+                    </th>
                     <th class="c9">
                       <div class="text">Mora</div>
                       <div class="ord">

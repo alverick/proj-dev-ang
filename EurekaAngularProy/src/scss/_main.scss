@@ -133,7 +133,7 @@ body {
     @include font-text(16px !important, 500 !important);
     @include border-radius(4px !important);
     background-color: $blanco !important;
-    // border: solid 1px $blanco !important;
+    border: solid 1px $blanco !important;
     color: $green !important;
     &.btn-disabled {
         color: #9b9b9b !important;
@@ -144,7 +144,7 @@ body {
     @include font-text(14px !important, 500 !important);
     @include border-radius(4px !important);
     background-color: $blanco !important;
-    // border: solid 1px $blanco !important;
+    border: solid 1px $blanco !important;
     color: $green !important;
     &.btn-disabled {
         color: #9b9b9b !important;
