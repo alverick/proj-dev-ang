@@ -439,8 +439,13 @@ b {
 }
 
 :host ::ng-deep .mat-form-field .mat-form-field-label  {
-    @include font-text(14px!important, normal !important); 
-    color: #0d131d !important; 
+    @include font-text(14px, normal !important);
+    color: #0d131d !important;
+}
+
+:host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
+  font-size: 10px;
 }
 
 
