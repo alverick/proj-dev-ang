@@ -123,8 +123,119 @@
               </div>
             </section>
             <section class="lista">
+              <div *ngIf="!visibleFixedHead" class="head-fixed">
+                <table>
+                    <thead>
+                        <tr>
+                          <th class="c0">&nbsp;</th>
+                          <th class="c1">
+                            <div class="text">Fecha emisión</div>
+                            <div class="ord">
+                              <div class="up" [class.seleccionado]="orderBy === 0 && orderDef[0].asc === true"
+                                (click)="orderList(0, true)"></div>
+                              <div class="down" [class.seleccionado]="orderBy === 0 && orderDef[0].asc === false"
+                                (click)="orderList(0, false)"></div>
+                            </div>
+                          </th>
+                          <th class="c2">
+                            <div class="text">Fecha vcto.</div>
+                            <div class="ord">
+                                <div class="up" [class.seleccionado]="orderBy === 1 && orderDef[1].asc === true"
+                                (click)="orderList(1, true)"></div>
+                                <div class="down" [class.seleccionado]="orderBy === 1 && orderDef[1].asc === false"
+                                (click)="orderList(1, false)"></div>
+                              </div>
+                            </th>
+                          <th class="c3">
+                            <div class="text">Código de deudor</div>
+                            <div class="ord">
+                                <div class="up" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === true"
+                                (click)="orderList(2, true)"></div>
+                                <div class="down" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === false"
+                                (click)="orderList(2, false)"></div>
+                              </div>
+                            </th>
+                          <th class="c4">
+                            <div class="text">Nombres</div>
+                            <div class="ord">
+                                <div class="up" [class.seleccionado]="orderBy === 3 && orderDef[3].asc === true"
+                                (click)="orderList(3, true)"></div>
+                                <div class="down" [class.seleccionado]="orderBy === 3 && orderDef[3].asc === false"
+                                (click)="orderList(3, false)"></div>
+                              </div>
+                            </th>
+                          <th class="c5">
+                            <div class="text">Apellidos</div>
+                            <div class="ord">
+                                <div class="up" [class.seleccionado]="orderBy === 4 && orderDef[4].asc === true"
+                                (click)="orderList(4, true)"></div>
+                                <div class="down" [class.seleccionado]="orderBy === 4 && orderDef[4].asc === false"
+                                (click)="orderList(4, false)"></div>
+                              </div>
+                            </th>
+                          <th class="c6">
+                            <div class="text">Servicio</div>
+                            <div class="ord">
+                              <div class="up" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === true"
+                                (click)="orderList(5, true)"></div>
+                              <div class="down" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === false"
+                                (click)="orderList(5, false)"></div>
+                            </div>
+                          </th>
+                          <th class="c7">
+                            <div class="text">Concepto</div>
+                              <div class="ord">
+                                <div class="up" [class.seleccionado]="orderBy === 6 && orderDef[6].asc === true"
+                                  (click)="orderList(6, true)"></div>
+                                <div class="down" [class.seleccionado]="orderBy === 6 && orderDef[6].asc === false"
+                                  (click)="orderList(6, false)"></div>
+                              </div>
+                            </th>
+                          <th class="c8">
+                            <div class="text">Cuota</div>
+                            <div class="ord">
+                                <div class="up" [class.seleccionado]="orderBy === 7 && orderDef[7].asc === true"
+                                (click)="orderList(7, true)"></div>
+                                <div class="down" [class.seleccionado]="orderBy === 7 && orderDef[7].asc === false"
+                                (click)="orderList(7, false)"></div>
+                              </div>
+                            </th>
+                          <th class="c9">
+                            <div class="text">Mora</div>
+                            <div class="ord">
+                                <div class="up" [class.seleccionado]="orderBy === 8 && orderDef[8].asc === true"
+                                (click)="orderList(8, true)"></div>
+                                <div class="down" [class.seleccionado]="orderBy === 8 && orderDef[8].asc === false"
+                                (click)="orderList(8, false)"></div>
+                              </div>
+                            </th>
+                          <th class="c10">
+                            <div class="text">Total</div>
+                            <div class="ord">
+                                <div class="up" [class.seleccionado]="orderBy === 9 && orderDef[9].asc === true"
+                                (click)="orderList(9, true)"></div>
+                                <div class="down" [class.seleccionado]="orderBy === 9 && orderDef[9].asc === false"
+                                (click)="orderList(9, false)"></div>
+                              </div>
+                            </th>
+                          <th class="c11">
+                            <div class="text">Estado del pago</div>
+                            <div class="ord">
+                                <div class="up" [class.seleccionado]="orderBy === 10 && orderDef[10].asc === true"
+                                (click)="orderList(10, true)"></div>
+                                <div class="down" [class.seleccionado]="orderBy === 10 && orderDef[10].asc === false"
+                                (click)="orderList(10, false)"></div>
+                              </div>
+                            </th>
+                          <th class="c12">
+                            <div class="text">Editar</div>
+                          </th>
+                        </tr>
+                      </thead>
+                </table>
+              </div>
               <table>
-                <thead>
+                <thead class="head-static">
                   <tr>
                     <th class="c0">&nbsp;</th>
                     <th class="c1">

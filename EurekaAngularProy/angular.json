@@ -29,7 +29,8 @@
             ],
             "scripts": [
               "node_modules/core-js/client/shim.min.js",
-              "node_modules/web-animations-js/web-animations.min.js"
+              "node_modules/web-animations-js/web-animations.min.js",
+              "node_modules/jquery/dist/jquery.min.js"
             ]
           },
           "configurations": {

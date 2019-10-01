@@ -180,6 +180,24 @@ export class HomeComponent implements OnInit {
       e.preventDefault();
     }
 
+    visibleFixedHead = false;
+
+    @HostListener('window:scroll', ['$event'])
+    onWindowScroll(e) {
+      let esVisible = false;
+
+      let posicionHead = $(".head-static").get(0).getBoundingClientRect();
+      if (posicionHead.top >= 0 && posicionHead.left >= 0
+        && posicionHead.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+        && posicionHead.right <= (window.innerWidth || document.documentElement.clientWidth)) {
+          esVisible = true;
+      }
+
+      if (this.visibleFixedHead !== esVisible) {
+        this.visibleFixedHead = esVisible;
+      }
+    }
+
   ngOnInit() {
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();

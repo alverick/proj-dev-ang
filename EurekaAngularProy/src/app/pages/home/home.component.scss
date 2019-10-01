@@ -138,6 +138,16 @@ body {
         }
         .lista {
             padding-top: 8px;
+
+            .head-fixed {
+              position: fixed;
+              top: 0;
+              background-color: white;
+              width: 1200px;
+              z-index: 1;
+              padding-top: 10px;
+            }
+
             table {
                 width: 100%;
                 thead {
@@ -253,7 +263,7 @@ body {
                     }
                 }
                 .c0 {
-                    width: 26px;
+                    width: 47px;
                 }
                 .c1 {
                     width: 70px;
