@@ -243,7 +243,7 @@
                       <span *ngIf="!items.editPending">{{items.emissionDate | date:'dd/MM/yy' }}</span>
                       <div *ngIf="items.editPending" class="content-input-icon position-relative">
                         <mat-form-field class="inline-input" style="width: 80px">
-                          <input appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="edp"
+                          <input class="input-text-dash" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="edp"
                             [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text"
                             (ngModelChange)="items.errores.emissionDate = null;">
                           <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
@@ -256,7 +256,7 @@
                       <span *ngIf="!items.editInput">{{items.dueDate | date:'dd/MM/yy' }}</span>
                       <div *ngIf="items.editInput && items.dueDate !== null" class="content-input-icon position-relative">
                         <mat-form-field class="inline-input" style="width: 80px">
-                          <input appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp"
+                          <input class="input-text-dash" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp"
                             [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text"
                             (ngModelChange)="items.errores.dueDate = null">
                           <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
@@ -270,7 +270,7 @@
                       <span *ngIf="!items.editInput">{{items.firstName}}</span>
                       <div *ngIf="items.editInput" class="content-input-icon position-relative">
                         <mat-form-field class="inline-input" style="width: 80px">
-                          <input matInput [(ngModel)]="items.newFirstName" maxlength="10"
+                          <input class="input-text-dash" matInput [(ngModel)]="items.newFirstName" maxlength="10"
                             minlength="3" type="text" (ngModelChange)="items.errores.firstName = null">
                           <div class="msg-error" *ngIf="items.errores.firstName">{{items.errores.firstName}}</div>
                         </mat-form-field>
@@ -280,7 +280,7 @@
                       <span *ngIf="!items.editInput">{{items.lastName}}</span>
                       <div *ngIf="items.editInput" class="content-input-icon position-relative">
                         <mat-form-field class="inline-input" style="width: 90px">
-                          <input matInput [(ngModel)]="items.newLastName" maxlength="20"
+                          <input class="input-text-dash" matInput [(ngModel)]="items.newLastName" maxlength="20"
                             minlength="3" type="text" (ngModelChange)="items.errores.lastName = null">
                           <div class="msg-error" *ngIf="items.errores.lastName">{{items.errores.lastName}}</div>
                         </mat-form-field>
@@ -292,7 +292,7 @@
                         <span *ngIf="!items.editInput && items.amount > 0">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
                         <div *ngIf="items.editInput && items.dueDate !== null">
                           <mat-form-field class="inline-input" style="width: 100px">
-                            <input type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px"
+                            <input class="input-text-dash" type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px"
                               maxlength="12" minlength="4" (blur)="MontoBlur(items)" (ngModelChange)="items.errores.amount = null"/>
                             <span matPrefix>{{items.currency}}&nbsp;</span>
                             <div class="msg-error" *ngIf="items.errores.amount">{{items.errores.amount}}</div>

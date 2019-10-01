@@ -49,9 +49,9 @@ export class AuthInterceptorService implements HttpInterceptor {
             this.snackBar.dismiss();
             Swal.fire({
               title: 'Su sesión ha sido cerrada por inactividad',
-              showCloseButton: false,
-              showCancelButton: false,
-              showConfirmButton: true,
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
               cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup,
@@ -64,9 +64,9 @@ export class AuthInterceptorService implements HttpInterceptor {
             this.snackBar.dismiss();
             Swal.fire({
               title: 'Ha ocurrido un error en el servidor',
-              showCloseButton: false,
-              showCancelButton: false,
-              showConfirmButton: true,
+              showCloseButton: true,
+              showCancelButton: true,
+              showConfirmButton: false,
               cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup,

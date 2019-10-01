@@ -133,7 +133,7 @@ body {
     @include font-text(16px !important, 500 !important);
     @include border-radius(4px !important);
     background-color: $blanco !important;
-    border: solid 1px $blanco !important;
+    // border: solid 1px $blanco !important;
     color: $green !important;
     &.btn-disabled {
         color: #9b9b9b !important;
@@ -144,7 +144,7 @@ body {
     @include font-text(14px !important, 500 !important);
     @include border-radius(4px !important);
     background-color: $blanco !important;
-    border: solid 1px $blanco !important;
+    // border: solid 1px $blanco !important;
     color: $green !important;
     &.btn-disabled {
         color: #9b9b9b !important;
@@ -191,3 +191,19 @@ body {
     @include font-text(16px !important, normal !important);
     color: #0d131d !important;
 }
+
+.mat-calendar-body-selected {
+    background-color: $green;
+    color: #fff;
+}
+
+
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 1px;
+}
+
+
+.swal2-styled { 
+    border-style: none;
+}
+

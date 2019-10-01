@@ -420,3 +420,19 @@ b {
     @include font-text(12px, 500);
     color: #ea0044 !important;
 }
+
+.input-text{
+    @include font-text(14px!important, normal);
+    color: #0d131d;
+}
+
+:host ::ng-deep .mat-form-field .mat-form-field-label  {
+    @include font-text(14px!important, normal !important); 
+    color: #0d131d !important; 
+}
+
+
+.input-text-dash{
+    @include font-text(12px!important, normal);
+    color: #0d131d;
+}

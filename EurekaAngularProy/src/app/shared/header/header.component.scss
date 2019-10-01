@@ -182,3 +182,10 @@ img.bell {
   color: $textblack;
   text-align: center;
 } 
+
+
+:host ::ng-deep   .dropdown-item:active {
+  color: #05be50!important;
+  text-decoration: none;
+  background-color: #ffffff;
+}
