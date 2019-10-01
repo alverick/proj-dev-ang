@@ -47,14 +47,14 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100">
-                                        <input class="input-text"  matInput type="text" (Keydown.space)="$event.preventDefault()" placeholder="Teléfono ó celular" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
+                                        <input class="input-text"  matInput type="text" (Keydown.space)="$event.preventDefault()" placeholder="Teléfono o celular" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
                                     <!-- <mat-error *ngIf="!formGroup.controls['movilNumber'].valid || formGroup.controls['movilNumber'].touched">
                                             {{ getErrorPhone() }}
                                         </mat-error> -->
                                         <mat-error class="messsage-error">
-                                            <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required')">El Teléfono ó Celular obligatorio</mat-error>
-                                            <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('pattern')"> Ingrese un Telefono ó Celular valido </mat-error>
-                                            <mat-error *ngIf="f.movilNumber.invalid  && !f.movilNumber.hasError('pattern') && f.movilNumber.hasError('minlength')"> El Telefono ó Celular debe tener mínimo 6 dígitos</mat-error>
+                                            <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required')">El Teléfono o Celular obligatorio</mat-error>
+                                            <mat-error *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('pattern')"> Ingrese un Telefono o Celular valido </mat-error>
+                                            <mat-error *ngIf="f.movilNumber.invalid  && !f.movilNumber.hasError('pattern') && f.movilNumber.hasError('minlength')"> El Telefono o Celular debe tener mínimo 6 dígitos</mat-error>
                                         </mat-error> 
                                     </mat-form-field>
                                 </div>

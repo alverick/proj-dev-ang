@@ -249,8 +249,8 @@ div.mat-form-field-infix {
 
 .text-check {
     @include font-text(14px,
-    $weight: 300);
-    color: $negro;
+    $weight: normal);
+    color: #0d131d;
 }
 
 .texto-negro {
