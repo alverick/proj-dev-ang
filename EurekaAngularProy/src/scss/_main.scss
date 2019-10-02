@@ -43,8 +43,8 @@ body {
         margin-right: 2px;
     }
     .mat-form-field-label {
-        @include font-text(12px);
-        font-weight: 500;
+        @include font-text(16px);
+        font-weight: normal;
         color: #0d131d !important;
         top: 21px;
     }
@@ -153,7 +153,7 @@ body {
 
 .messsage-error {
     @include font-text(12px, 500);
-    color: $rojo;
+    color: #ea0044 !important;
 }
 
 .w-35 {
@@ -197,13 +197,20 @@ body {
     color: #fff;
 }
 
-
+/*
 .mat-form-field-appearance-legacy .mat-form-field-underline {
     height: 1px;
 }
-
+*/
 
 .swal2-styled { 
     border-style: none;
 }
+
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
+    font-size: 12px;
+    font-weight: 500;
+  }
 

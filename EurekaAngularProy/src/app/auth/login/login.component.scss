@@ -258,13 +258,13 @@ div.mat-form-field-infix {
     500);
     color: #0d131d;
 }
-
+/*
 small {
     @include font-text(14px!important,
     normal!important);
     color: #0d131d;
 }
-
+*/
 .cuadro-form {
     @include cuadro(381px,
     auto);
@@ -274,4 +274,11 @@ small {
     border-width: 2vw 4.7vw!important;
     border-color: white !important;
     margin-top: 5vw !important;
+}
+
+small {
+    @include font-text(14px, $weight: 500!important);
+    color: $green;
+    text-decoration: underline;
+    cursor: pointer;
 }
