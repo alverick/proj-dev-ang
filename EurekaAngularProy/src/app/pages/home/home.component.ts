@@ -180,7 +180,7 @@ export class HomeComponent implements OnInit {
       e.preventDefault();
     }
 
-    visibleFixedHead = false;
+    visibleFixedHead = true;
 
     @HostListener('window:scroll', ['$event'])
     onWindowScroll(e) {
