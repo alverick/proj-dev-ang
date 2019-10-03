@@ -55,7 +55,8 @@ export class AuthInterceptorService implements HttpInterceptor {
               allowOutsideClick: false,
               onOpen: drawPopup,
               onClose: () =>{
-                this.router.navigateByUrl('/login')
+                //this.router.navigateByUrl('/login')
+                location.href = '/login';
               }
             });
           } else if (err.status !== 400) {
@@ -71,7 +72,8 @@ export class AuthInterceptorService implements HttpInterceptor {
               allowOutsideClick: false,
               onOpen: drawPopup,
               onClose: () =>{
-                this.router.navigateByUrl('/login')
+                //this.router.navigateByUrl('/login')
+                location.href = '/login';
               }
             })
           }

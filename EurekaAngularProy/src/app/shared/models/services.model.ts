@@ -7,6 +7,7 @@ export interface ServiceModel {
     tipoDato: string;
     tipoPago?: string;
     nroCuenta: string;
+    idCuenta: number;
     moneda: string;
     simboloMoneda?: string;
     usaWebApp: boolean;
@@ -18,4 +19,5 @@ export interface ServiceModel {
     monto?: number;
     porcentaje?: number;
     inReview?: boolean;
+    pagoPartes?: string;
 }

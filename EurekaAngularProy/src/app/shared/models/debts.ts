@@ -27,6 +27,8 @@ export interface Debts {
     editPending: boolean;
     editInput: boolean;
     editButton: boolean;
+
+    errores?: any;
 }
 
 export interface DebtsPagedList {

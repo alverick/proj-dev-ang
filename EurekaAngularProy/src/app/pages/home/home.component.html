@@ -242,37 +242,47 @@
                     <td class="c1">
                       <span *ngIf="!items.editPending">{{items.emissionDate | date:'dd/MM/yy' }}</span>
                       <div *ngIf="items.editPending" class="content-input-icon position-relative">
-                        <mat-form-field style="width: 90px">
-                          <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text">
+                        <mat-form-field class="inline-input" style="width: 80px">
+                          <input appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="edp"
+                            [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text"
+                            (ngModelChange)="items.errores.emissionDate = null;">
                           <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                           <mat-datepicker #edp></mat-datepicker>
+                          <div class="msg-error" *ngIf="items.errores.emissionDate">{{items.errores.emissionDate}}</div>
                         </mat-form-field>
                       </div>
                     </td>
                     <td class="c2">
-                          <span *ngIf="!items.editInput">{{items.dueDate | date:'dd/MM/yy' }}</span>
-                          <div *ngIf="items.editInput && items.dueDate !== null" class="content-input-icon position-relative">
-                              <mat-form-field style="width: 90px">
-                                  <input style="font-size: 14px;" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text">
-                                  <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
-                                  <mat-datepicker #ddp></mat-datepicker>
-                              </mat-form-field>
-                          </div>
+                      <span *ngIf="!items.editInput">{{items.dueDate | date:'dd/MM/yy' }}</span>
+                      <div *ngIf="items.editInput && items.dueDate !== null" class="content-input-icon position-relative">
+                        <mat-form-field class="inline-input" style="width: 80px">
+                          <input appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp"
+                            [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text"
+                            (ngModelChange)="items.errores.dueDate = null">
+                          <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
+                          <mat-datepicker #ddp></mat-datepicker>
+                          <div class="msg-error" *ngIf="items.errores.dueDate">{{items.errores.dueDate}}</div>
+                        </mat-form-field>
+                      </div>
                     </td>
                     <td class="c3">{{items.code}}</td>
                     <td class="c4">
                       <span *ngIf="!items.editInput">{{items.firstName}}</span>
                       <div *ngIf="items.editInput" class="content-input-icon position-relative">
-                        <mat-form-field style="width: 90px">
-                          <input style="font-size: 14px;" matInput [(ngModel)]="items.newFirstName" maxlength="10" minlength="3" type="text">
+                        <mat-form-field class="inline-input" style="width: 80px">
+                          <input matInput [(ngModel)]="items.newFirstName" maxlength="10"
+                            minlength="3" type="text" (ngModelChange)="items.errores.firstName = null">
+                          <div class="msg-error" *ngIf="items.errores.firstName">{{items.errores.firstName}}</div>
                         </mat-form-field>
                       </div>
                     </td>
                     <td class="c5">
                       <span *ngIf="!items.editInput">{{items.lastName}}</span>
                       <div *ngIf="items.editInput" class="content-input-icon position-relative">
-                        <mat-form-field style="width: 90px">
-                          <input style="font-size: 14px;" matInput [(ngModel)]="items.newLastName" maxlength="20" minlength="3" type="text">
+                        <mat-form-field class="inline-input" style="width: 90px">
+                          <input matInput [(ngModel)]="items.newLastName" maxlength="20"
+                            minlength="3" type="text" (ngModelChange)="items.errores.lastName = null">
+                          <div class="msg-error" *ngIf="items.errores.lastName">{{items.errores.lastName}}</div>
                         </mat-form-field>
                       </div>
                     </td>
@@ -281,8 +291,11 @@
                     <td class="c8">
                         <span *ngIf="!items.editInput && items.amount > 0">{{items.currency}} {{items.amount| number : '1.2-2'}}</span>
                         <div *ngIf="items.editInput && items.dueDate !== null">
-                          <mat-form-field style="width: 90px">
-                            <input type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" (blur)="MontoBlur(items)"/>
+                          <mat-form-field class="inline-input" style="width: 100px">
+                            <input type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px"
+                              maxlength="12" minlength="4" (blur)="MontoBlur(items)" (ngModelChange)="items.errores.amount = null"/>
+                            <span matPrefix>{{items.currency}}&nbsp;</span>
+                            <div class="msg-error" *ngIf="items.errores.amount">{{items.errores.amount}}</div>
                           </mat-form-field>
                         </div>
                     </td>
@@ -297,6 +310,9 @@
                         <div class="lnk-status" (click)="appPagos.show()">
                           <span *ngIf="items.status === 'PAGADO'" class="text-success">
                             Pagado <img src="assets/images/ok.svg" alt="ok">
+                          </span>
+                          <span *ngIf="items.status === 'VENCIDO'" class="text-danger">
+                            Vencido <img src="assets/images/cancel.svg" alt="cancel">
                           </span>
                           <span *ngIf="items.status === 'PARCIAL'" [class.text-danger]="estaVencido(items)">
                             Parcial <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">

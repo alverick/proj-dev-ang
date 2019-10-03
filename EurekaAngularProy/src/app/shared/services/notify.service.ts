@@ -8,6 +8,8 @@ import { faBell as farBell, faCircle as farCircle } from '@fortawesome/free-regu
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
 
+const time_call_notify = 2000;
+
 @Injectable()
 export class NotifyService {
   constructor(private http: HttpClient, private storage: StorageService) { }
@@ -34,11 +36,13 @@ export class NotifyService {
                 this.existMore = true;
                 this.loadMsgs();
               }
-              Observable.of({}).pipe(delay(5000)).subscribe(() => callNotify());
+              Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
+            }, err => {
+              Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
             });
         }
       };
-      Observable.of({}).pipe(delay(1000)).subscribe(() => callNotify());
+      Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
     }
   }
 

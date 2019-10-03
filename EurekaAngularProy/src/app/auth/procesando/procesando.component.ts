@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 
 @Component({
   selector: 'app-procesando',
@@ -6,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./procesando.component.scss']
 })
 export class ProcesandoComponent implements OnInit {
-
-  constructor() { }
+   public email: string; 
+  constructor(public afiliacion: AfiliacionService) { }
 
   ngOnInit() {
     window['_url_loop_'] = 'procesando';
+    this.email = this.afiliacion.email;
   }
 
 }

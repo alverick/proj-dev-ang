@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener, ViewChild, ElementRef, Renderer2 } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, Renderer2 } from "@angular/core";
 import Swal from "sweetalert2";
 import { drawPopup } from "src/app/shared/services/popups";
 import { TransactionService } from "src/app/shared/services/transaction.service";
@@ -16,7 +16,7 @@ export class PagosComponent implements OnInit {
   ];
   cargando = false;
 
-  @Input() debtId: number;
+  @Input() debtId: number = 1288900;
   @Input() status: string;
   @Input() currency: string;
   @Output() statusChange = new EventEmitter<string>();
@@ -35,7 +35,6 @@ export class PagosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadData();
   }
 
   private loadData() {
@@ -49,10 +48,10 @@ export class PagosComponent implements OnInit {
   }
 
   public show() {
-    console.log('pagos - show', this.debtId);
     if (!this.showed) {
       this.pagoService.closeAll.emit();
       this.showed = true;
+      this.loadData();
       setTimeout(() => {
         this.removeOutside = this.renderer.listen('document', 'click', (e) => this.outsideClick(e.target));
       }, 100);
@@ -63,10 +62,22 @@ export class PagosComponent implements OnInit {
     this.showChange.emit(this.showed);
   }
 
-  private outsideClick(target) {
-      if (!(this._elementRef.nativeElement as HTMLElement).contains(target)) {
+  private outsideClick(target: HTMLElement) {
+    if (!(this._elementRef.nativeElement as HTMLElement).contains(target)) {
+      const cdkContainer = document.getElementsByClassName('cdk-overlay-container');
+      if (cdkContainer.length === 0) {
+        const swalContainer = document.getElementsByClassName('swal2-container');
+        if (swalContainer.length === 0) {
+          this.pagoService.closeAll.emit();
+        }
+        else if (!swalContainer[0].contains(target)) {
+          this.pagoService.closeAll.emit();
+        }
+      }
+      else if (!cdkContainer[0].contains(target)) {
         this.pagoService.closeAll.emit();
       }
+    }
   }
 
   mensaje(tipo: any, titulo: string, text: string){
@@ -96,43 +107,33 @@ export class PagosComponent implements OnInit {
 
   saveItm(itm) {
     if(itm.newAmount.toString() ==='' ||itm.newAmount.toString() === null){
-      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
-      return;
+      itm.errores.amount = 'Ingrese un monto'
     }
     if(itm.newAmount.toString().length < 1){
-      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
-      return;
+      itm.errores.amount = 'Ingrese un monto correcto';
     }
     if(parseInt(itm.newAmount.toString()) < 1){
-      this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
-      return;
+      itm.errores.amount = 'Ingrese un monto correcto';
     }
 
     if(!itm.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)){
-      this.mensaje( 'error', 'Error en el monto','Ingrese un monto válido mínimo de 1 y máximo de 9 caracteres enteros y 2 decimales como máximo');
-      return;
+      itm.errores.amount = 'Ingrese un monto válido';
     }
 
     var lenghted = new Date(itm.newDate).toDateString().length;
     var newdate = parseInt(new Date(itm.newDate).toDateString().substr(lenghted-4, lenghted));
 
     if (newdate <  2000 || newdate >  2050 ) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha válida para la fecha de pago');
-      return;
+      itm.errores.date = 'Ingrese una fecha válida';
     }
 
-    if(itm.newChannel.length <  3) {
-      this.mensaje( 'error', 'Error en el Medio','El medio tiene que tener como minimo 3 digitos');
-      return;
-    }
-
-    if(itm.newChannel === null || itm.newChannel === ""){
-      this.mensaje( 'error', 'Error en el Concepto','Ingrese el medio');
-      return;
-    }
     if (itm.newDate == null) {
-      this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de pago');
-      return;
+      itm.errores.date = 'Ingrese una fecha válida';
+    }
+
+    for (var s in itm.errores) {
+      if (itm.errores[s])
+        return;
     }
 
     Swal.fire({
@@ -196,7 +197,7 @@ export class PagosComponent implements OnInit {
 
   addItm() {
     //if (this.items[this.items.length-1] && this.items[this.items.length-1].id) {
-      this.items.push({ currency: this.currency, newAmount: 0, newDate: new Date(), newChannel: 'Efectivo', canEdit: true, editing: true });
+      this.items.push({ currency: this.currency, newAmount: 0, newDate: new Date(), newChannel: 'Efectivo', canEdit: true, editing: true, errores: {} });
     //}
   }
 
