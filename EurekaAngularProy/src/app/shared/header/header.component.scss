@@ -84,6 +84,12 @@ img.bell {
 }
 
 .navbar-nav {
+  .lnk-regresar {
+    @include font-text(18px, 500);
+    color: #9ea1a5 !important;
+    margin-bottom: auto;
+  }
+
   .dropdown-menu {
     @include border-radius(4px !important);
     margin: 0 !important;
