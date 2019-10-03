@@ -58,8 +58,8 @@
         <mat-form-field class="w-100">
             <mat-label>Nº de cuenta Interbank</mat-label>
             <mat-select class="input-text" formControlName="idCuenta" name="idCuenta" (ngModelChange)="changeCuenta($event)">
-                <mat-option >Nº de cuenta Interbank</mat-option>  
-                <mat-option *ngFor="let cta of cuentas" [value]="cta.id">{{cta.number}}</mat-option>
+                <mat-option class="input-text" >Nº de cuenta Interbank</mat-option>  
+                <mat-option class="input-text" *ngFor="let cta of cuentas" [value]="cta.id">{{cta.number}}</mat-option>
             </mat-select>
             <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('required')">Elija una opcion</mat-error>
             <!--POR AHORA VALIDA POR MEDIO DEL MINLENGTH-->
