@@ -227,7 +227,7 @@ body {
 }
 
 .texto-mora {
-    @include font-text(14px, $weight: normal);
+    @include font-text(16px !important, normal !important);
     color: $negro;
 }
 
@@ -277,3 +277,12 @@ body {
     @include font-text(14px !important, 500 !important);
      
   }
+
+  :host ::ng-deep .mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+    color: $green;
+}
+
+.text-radio{
+    @include font-text(16px !important, normal !important);
+    color: #0d131d;
+}

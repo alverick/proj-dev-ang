@@ -28,7 +28,7 @@
     <small *ngIf="ready">Archivo seleccionado</small>
     <div *ngIf="ready; else landing" class="text-center">
         <div class="input-file">
-            <span class="text-input-file">{{fileName}}</span>
+            <span class="text-input-file pl-1">{{fileName}}</span>
         </div>
     </div>
     <div *ngIf="excelService.statusUpload" class="progress-text">{{progress.status}}</div>
@@ -50,7 +50,7 @@
     <br />
     <div *ngIf="ready" class="text-center">
         <button class="btn-eureca-green" type="button" form="input-form" (click)="openSnackBar()">
-      SUBIR PLANTILLA
-    </button>
+            SUBIR PLANTILLA
+        </button> 
     </div>
 </div>
