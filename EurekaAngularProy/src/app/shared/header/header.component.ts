@@ -80,7 +80,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getAgo(date): string {
-    return moment.utc(date).format('DD/MM/YY [a las] hh:mm a');
+    return moment.utc(date).local().format('DD/MM/YY [a las] hh:mm a');
   }
 
   onScroll() {
