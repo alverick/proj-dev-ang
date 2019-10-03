@@ -24,7 +24,7 @@
                   <i class="fa fa-close"></i>
                 </button>
               </mat-form-field>
-              <mat-form-field class="f2">
+              <mat-form-field class="f2 input-text">
                 <mat-select class="input-text" placeholder="Estado de pago" [(ngModel)]="filtro.status" name="status">
                   <mat-option class="input-text">Estado de pago</mat-option>
                   <mat-option class="input-text" value="{{item.idWayPay}}"  *ngFor="let item of waypayList"> {{item.descripcion}} </mat-option>

@@ -133,8 +133,10 @@ export class CrearContrasenaComponent implements OnInit {
 
 
   terminos() {
-    $('#terminos').modal('show');
+   $('#terminos').modal('show'); 
+   // alert('hola');
   }
+  
   mensaje(tipo: any, titulo: string, text: string) {
     Swal.fire({
      // type: tipo ,

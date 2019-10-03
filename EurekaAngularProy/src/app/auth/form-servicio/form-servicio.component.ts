@@ -82,7 +82,7 @@ export class FormServicioComponent implements OnInit {
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
-      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: this.editMode }),
+      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true }),
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
@@ -100,6 +100,8 @@ export class FormServicioComponent implements OnInit {
     console.table(this.cuentas);
     this.changeMora(false);
     this.changeTipoMora(false);
+
+    //this.frm.get('usaWebApp').enabled;
 
     if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');

@@ -3,11 +3,11 @@
     <div class="form-group">
         <mat-form-field class="w-100">
             <input class="input-text" matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
-            <mat-error class="messsage-error">
-                <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
-                <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
-                <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
-                <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
+            <mat-error >
+                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
+                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
+                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
+                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
             </mat-error>
         </mat-form-field>
     </div>
@@ -22,11 +22,11 @@
             </mat-select>
             <input class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod" (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
             <div *ngIf="f.codDeudor.value === 'Otro'" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
-            <mat-error class="messsage-error">
-                <mat-error *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
-                <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
-                <mat-error *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
-                <mat-error *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
+            <mat-error >
+                <mat-error class="messsage-error" *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
+                <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
+                <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
+                <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
             </mat-error>
         </mat-form-field>
     </div>
@@ -149,22 +149,22 @@
                 <mat-form-field class="w-100 pt-0 texto-mora">
                     <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
                     <span matSuffix class="simbolos">{{simboloMoneda}}&nbsp;&nbsp;</span>
-                    <mat-error class="messsage-error">
-                        <mat-error *ngIf="f.monto.invalid && f.monto.hasError('required')">Debe ingresar un monto</mat-error>
-                        <mat-error *ngIf="f.monto.invalid && f.monto.hasError('maximo')">No puede ser mayor a 1000.00 <br></mat-error>
-                        <mat-error *ngIf="f.monto.invalid && f.monto.hasError('minimo')">No puede ser menor a 1.00</mat-error>
-                        <mat-error *ngIf="f.monto.invalid && !f.monto.hasError('maximo') && !f.monto.hasError('minimo') && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error>
+                    <mat-error >
+                        <mat-error class="messsage-error" *ngIf="f.monto.invalid && f.monto.hasError('required')">Debe ingresar un monto</mat-error>
+                        <mat-error class="messsage-error" *ngIf="f.monto.invalid && f.monto.hasError('maximo')">No puede ser mayor a 1000.00 <br></mat-error>
+                        <mat-error class="messsage-error" *ngIf="f.monto.invalid && f.monto.hasError('minimo')">No puede ser menor a 1.00</mat-error>
+                        <mat-error class="messsage-error" *ngIf="f.monto.invalid && !f.monto.hasError('maximo') && !f.monto.hasError('minimo') && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error>
                     </mat-error>
                 </mat-form-field>
                 <mat-radio-button class="radio-button" name="tipoMora" id="porcentaje" value="P" class="texto-radio-small">Porcentaje</mat-radio-button>
                 <mat-form-field class="w-100 texto-mora">
                     <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
                     <span matSuffix class="simbolos">%</span>
-                    <mat-error class="messsage-error">
-                        <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('required')">Debe ingresar un porcentaje</mat-error>
-                        <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')">No puede ser mayor a 100.00</mat-error>
-                        <mat-error *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')">No puede ser menor a 0.01</mat-error>
-                        <mat-error *ngIf="f.porcentaje.invalid && !f.porcentaje.hasError('maximo')  && !f.porcentaje.hasError('minimo') && f.porcentaje.hasError('pattern')">No tiene el formato correcto</mat-error>
+                    <mat-error >
+                        <mat-error class="messsage-error" *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('required')">Debe ingresar un porcentaje</mat-error>
+                        <mat-error class="messsage-error" *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')">No puede ser mayor a 100.00</mat-error>
+                        <mat-error class="messsage-error" *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')">No puede ser menor a 0.01</mat-error>
+                        <mat-error class="messsage-error" *ngIf="f.porcentaje.invalid && !f.porcentaje.hasError('maximo')  && !f.porcentaje.hasError('minimo') && f.porcentaje.hasError('pattern')">No tiene el formato correcto</mat-error>
                     </mat-error>
                 </mat-form-field>
             </mat-radio-group>

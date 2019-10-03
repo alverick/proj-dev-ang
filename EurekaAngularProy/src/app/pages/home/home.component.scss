@@ -435,7 +435,7 @@ b {
 
 .input-text{
     @include font-text(14px!important, normal);
-    color: #0d131d;
+    color: #0d131d !important;
 }
 
 :host ::ng-deep .mat-form-field .mat-form-field-label  {
@@ -451,7 +451,7 @@ b {
 
 .input-text-dash{
     @include font-text(12px!important, normal);
-    color: #0d131d;
+    color: #0d131d !important;
 }
 
 
