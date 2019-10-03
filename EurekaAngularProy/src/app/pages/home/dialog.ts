@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import * as saveAs from 'file-saver';
 import { drawPopup } from "src/app/shared/services/popups";
 import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
+import { Observable } from "rxjs";
 
 
 /*////////////////////////////////////////////////////////
@@ -125,12 +126,15 @@ import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service
           });
           this.excelService.statusUpload = false;
           this.excelService.errores = [];
-          this.dialogRef.close();
-          Swal.fire({
-            text: `Se cargaron ${value.rowsUploaded} registros`,
-            showCloseButton: true,
-            onOpen: drawPopup
+          var obsClose = new Observable(observer => {
+            Swal.fire({
+              text: `Se cargaron ${value.rowsUploaded} registros`,
+              showCloseButton: true,
+              onOpen: drawPopup,
+              onAfterClose: () => { observer.next(); observer.complete(); }
+            });
           });
+          this.dialogRef.close(obsClose);
         }
         else {
           this.progress.mode = 'determinate';

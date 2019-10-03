@@ -26,6 +26,7 @@ import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { Observable } from 'rxjs';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -855,8 +856,12 @@ MostrarListaSelect() {
     this.cargaExcel = false;
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-
+    dialogRef.afterClosed().subscribe((result: Observable<any>) => {
+      if (result) {
+        result.subscribe(() => {
+          this.consultaDeuda();
+        });
+      }
     });
   }
 
