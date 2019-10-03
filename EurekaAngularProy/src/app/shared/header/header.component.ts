@@ -24,8 +24,12 @@ export class HeaderComponent implements OnInit {
               public notify: NotifyService ) {
   }
 
+  scrollConfig = {
+    suppressScrollX: true
+  };
+
   ngOnInit() {
-    this.notify.messages = [];
+    this.notify.clear();
     this.spinner.hide();
     this.notify.iniciar();
   }

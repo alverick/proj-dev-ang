@@ -8,6 +8,7 @@ import { StorageService } from "./storage.service";
 import { Router } from "@angular/router";
 import * as moment from 'moment';
 import { GoogleAnalytics } from "./googleAnalytics.service";
+import { NotifyService } from "./notify.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ import { GoogleAnalytics } from "./googleAnalytics.service";
 export class LoginService {
 
 constructor(public http: HttpClient, private storage: StorageService,
-  private router: Router, private gaService: GoogleAnalytics){ }
+  private router: Router, private notify: NotifyService,
+  private gaService: GoogleAnalytics){ }
 
 private URI_API: string = environment.END_POINT;
 public errores: number;
@@ -25,6 +27,7 @@ public errores: number;
 private callingRefresh = false;
 
 login(ruc: string, psw: string): Observable<RespuestaLogin> {
+  this.notify.clear();
   const url = `${this.URI_API}/login?_=` + new Date().getTime();
   const data = `username=${ruc}&password=${psw}`;
   const opts = {
@@ -43,6 +46,7 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
           refresh: r.rfs
         });
         this.gaService.sendEvent('login', { method: 'OAUTH' });
+        this.notify.iniciar();
       }
       else {
         this.gaService.sendEvent('exception', { description: 'No Login', fatal: false });

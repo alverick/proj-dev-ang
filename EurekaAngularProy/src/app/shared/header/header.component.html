@@ -31,7 +31,7 @@
                       <div class="clear-float"></div>
                     </div>
 
-                    <perfect-scrollbar class="notifies" (psYReachEnd)="onScroll()">
+                    <perfect-scrollbar class="notifies" [config]="scrollConfig" (psYReachEnd)="onScroll()">
                       <div *ngFor="let msg of notify.messages " class="dropdown-item " (click)="$event.stopPropagation();" >
                         <img class="item-icono" *ngIf="msg.isNew" title="{{msg.title}}" src="assets/images/badge-bg.svg" (click)="notify.changeRead(msg); $event.stopPropagation();">
                         <div class="texto">{{msg.message}}</div>

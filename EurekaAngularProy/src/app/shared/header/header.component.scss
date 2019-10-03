@@ -130,6 +130,7 @@ img.bell {
 
       .dropdown-item {
         padding: 8px;
+        white-space: normal;
         cursor: default;
 
         .item-icono {
@@ -181,7 +182,7 @@ img.bell {
   @include font-text(12px, 500);
   color: $textblack;
   text-align: center;
-} 
+}
 
 
 :host ::ng-deep   .dropdown-item:active {
