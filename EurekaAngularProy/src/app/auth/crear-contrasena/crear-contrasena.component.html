@@ -32,7 +32,8 @@
                             <div class="form-group">
                                 <mat-form-field class="super-full-width">
                                     <mat-label>Rubro</mat-label>
-                                    <mat-select class="input-text" formControlName="rubro">
+                                    <mat-select class="input-text" formControlName="rubro" disableOptionCentering
+                                      panelClass="pts30" >
                                         <mat-option class="input-text">Rubro</mat-option>
                                         <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
                                             {{r.name}}

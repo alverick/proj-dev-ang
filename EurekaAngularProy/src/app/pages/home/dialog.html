@@ -30,9 +30,15 @@
         <div class="input-file">
             <span class="text-input-file pl-1">{{fileName}}</span>
         </div>
+        <br />
     </div>
     <div *ngIf="excelService.statusUpload" class="progress-text">{{progress.status}}</div>
     <mat-progress-bar *ngIf="excelService.statusUpload" [mode]="progress.mode" [value]="progress.value" [bufferValue]="100"></mat-progress-bar>
+    <div *ngIf="ready && !excelService.statusUpload && excelService.errores.length == 0" class="text-center">
+      <button class="btn-eureca-green" type="button" form="input-form" (click)="openSnackBar()">
+        SUBIR PLANTILLA
+      </button>
+    </div>
     <div *ngIf="excelService.errores.length > 0" class="errores">
         <div class="header">
             <div class="texto">Se encontraron los siguientes errores:</div>
@@ -46,11 +52,14 @@
             <div class="err-item" *ngFor="let err of excelService.errores"><span *ngIf="err.row > 0">File {{err.row}} : </span>{{err.description}}</div>
         </perfect-scrollbar>
         <div class="footer">Corrige los errores y vuelve a subir la plantilla</div>
-    </div>
-    <br />
-    <div *ngIf="ready" class="text-center">
-        <button class="btn-eureca-green" type="button" form="input-form" (click)="openSnackBar()">
-            SUBIR PLANTILLA
-        </button> 
+        <div class="text-center">
+            <form id="input-form" [formGroup]="inputXlsForm">
+                <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
+            </form>
+            <br />
+            <button class="btn-eureca-green" type="button" form="input-form" (click)="uploadFile.click()">
+              SELECCIONAR PLANTILLA
+            </button>
+        </div>
     </div>
 </div>

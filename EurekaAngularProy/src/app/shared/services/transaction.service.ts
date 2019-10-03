@@ -21,7 +21,7 @@ export class TransactionService {
 
     constructor(public http: HttpClient, private storage: StorageService)  { }
 
-    public pageMessage: string = "Mostrando 0 elementos";
+    public pageMessage: string = "Mostrando 0 de 0 elementos";
     public debtItems: DebtsPagedList = { count:0, data: [] };
 
     getDateFormat(date: Date): string {
@@ -77,7 +77,7 @@ export class TransactionService {
           }))
           .pipe(map(r => {
             if (r.count == 0) {
-              this.pageMessage = "Mostrando 0 elementos";
+              this.pageMessage = "Mostrando 0 de 0 elementos";
             }
             else {
               let beg = ((filtro.pageNumber - 1) * 50) + 1;

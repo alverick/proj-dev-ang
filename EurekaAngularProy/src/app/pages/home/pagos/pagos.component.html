@@ -46,7 +46,8 @@
           <span class="select-color" *ngIf="!itm.editing">{{itm.channel}}</span>
           <div *ngIf="itm.editing">
               <mat-form-field class="select-color full-width inline-input ">
-                <mat-select class="select-color" [(ngModel)]="itm.newChannel" >
+                <mat-select class="select-color" [(ngModel)]="itm.newChannel" disableOptionCentering
+                  panelClass="pts16">
                   <mat-option class="select-color" value="Efectivo">Efectivo</mat-option>
                   <mat-option class="select-color" value="POS">POS</mat-option>
                   <mat-option class="select-color" value="BCP">BCP</mat-option>
@@ -79,7 +80,7 @@
         <td class="action" colspan="5">
           <button type="button" class="pl-4 btn-outline-green " (click)="addItm()">
             <img src="assets/images/plus_circle.svg" alt="agregar">
-             <small> Agregar un pago </small> 
+             <small> Agregar un pago </small>
           </button>
         </td>
       </tr>

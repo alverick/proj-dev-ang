@@ -26,6 +26,7 @@ import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { Observable } from 'rxjs';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -137,6 +138,17 @@ export class HomeComponent implements OnInit {
 
   showEdit: boolean = false;
 
+  currentFiltro: DebstFilter = {
+    pageNumber: 1,
+    columnName: '',
+    asc: true,
+    inputSearch: '',
+    service: '',
+    status: '',
+    dateForFilter: '',
+    dateFrom: null,
+    dateTo: null
+  };
   filtro: DebstFilter = {
     pageNumber: 1,
     columnName: '',
@@ -274,15 +286,21 @@ orderList(index: number, asc: boolean) {
   this.orderBy = index;
   this.orderDef[index].asc = asc;
 
-  this.filtro.asc = asc;
-  this.filtro.columnName = this.orderDef[index].name;
+  this.currentFiltro.asc = asc;
+  this.currentFiltro.columnName = this.orderDef[index].name;
   this.consultaDeuda();
 }
 
   sendFiltro() {
     this.messagetablecode1 = false;
     this.messagetablecode2 = false;
-    this.filtro.pageNumber = 1;
+    this.currentFiltro.inputSearch = this.filtro.inputSearch;
+    this.currentFiltro.service = this.filtro.service;
+    this.currentFiltro.status = this.filtro.status;
+    this.currentFiltro.dateForFilter = this.filtro.dateForFilter;
+    this.currentFiltro.dateFrom = this.filtro.dateFrom;
+    this.currentFiltro.dateTo = this.filtro.dateTo;
+    this.currentFiltro.pageNumber = 1;
     this.consultaDeuda();
 
     this.gaService.sendEvent('Buscar', {
@@ -424,7 +442,7 @@ orderList(index: number, asc: boolean) {
 
     if (this.validaFiltro2()){
                 this.spinner.show();
-                this.transactionService.getDeuda(this.filtro)
+                this.transactionService.getDeuda(this.currentFiltro)
                   .subscribe(debts => {
                   this.selectedAll = false;
                   this.selectedUniverse = false;
@@ -739,7 +757,7 @@ orderList(index: number, asc: boolean) {
   changePage(nro: number) {
     this.selectedAll = false;
     this.selectedUniverse = false;
-    this.filtro.pageNumber = nro;
+    this.currentFiltro.pageNumber = nro;
     this.numeroPagina = nro;
     this.consultaDeuda();
   }
@@ -838,15 +856,19 @@ MostrarListaSelect() {
     this.cargaExcel = false;
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-
+    dialogRef.afterClosed().subscribe((result: Observable<any>) => {
+      if (result) {
+        result.subscribe(() => {
+          this.consultaDeuda();
+        });
+      }
     });
   }
 
   DescargarReporte() {
     if( this.transactionService.debtItems.data.length > 0){
       if (this.validaFiltro()) {
-        this.transactionService.report(this.filtro)
+        this.transactionService.report(this.currentFiltro)
         .subscribe((r: Blob) => {
           this.gaService.sendEvent('DescargaReporte', {
             'event_category': 'Dashboard',
