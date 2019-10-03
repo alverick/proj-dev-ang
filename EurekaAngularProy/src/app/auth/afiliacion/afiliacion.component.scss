@@ -16,12 +16,12 @@ body {
 }
 
 .texto-tipos {
-    @include font-text(18px, $weight: 500);
+    @include font-text(18px, $weight: normal!important);
     color: $negro;
 }
 
 .text-green {
-    @include font-text(18px, $weight: 500);
+    @include font-text(22px, $weight: 500);
     color: $green;
     text-align: center;
 }

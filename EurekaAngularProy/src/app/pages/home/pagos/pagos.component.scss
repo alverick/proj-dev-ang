@@ -46,10 +46,16 @@
 
         td {
           @include font-text(12px);
-          color: $textblack;
+          color: #0d131d;
           padding: 8px 3px;
           text-align: center;
 
+          &.c0 {
+             width:10px;
+          }
+          &.c6 {
+            width:10px;
+         }
           &.c1 {
             text-align: right;
 
@@ -151,12 +157,26 @@
 }
 
 
-.select-color{
+.select-color  {
+  @include font-text(12px, normal);
+  color: #0d131d !important;
+}
+
+/*:host ::ng-deep .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: #0d131d;
+} */
+
+small{
+  @include font-text(14px, 500);
+  color: #05be50;
+}
+
+.moneda{
   @include font-text(12px, normal);
   color: #0d131d;
 }
-
-:host ::ng-deep .mat-option.mat-selected:not(.mat-option-disabled) {
-    color: #0d131d;
-}
-
+ .btn-outline-green{
+   margin-left: auto;
+   margin-right: auto;
+   display: block;
+ }

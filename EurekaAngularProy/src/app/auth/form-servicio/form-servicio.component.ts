@@ -58,8 +58,7 @@ export class FormServicioComponent implements OnInit {
   tiposPago: any[] = [];
   monedas: MonedaModel[] = [];
   tiposMora: any[] = [];
-  cuentas: any[] = [];
-
+  cuentas: any[] = []; 
   simboloMoneda: string = 'S/';
   cobraMora: boolean = false;
   cobraMonto: boolean = true;

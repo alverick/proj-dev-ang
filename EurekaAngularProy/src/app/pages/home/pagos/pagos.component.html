@@ -2,11 +2,13 @@
   <table>
     <thead>
       <tr>
+        <th class="c0"></th>
         <th class="c1">Monto<br/>Pagado</th>
         <th class="c2">Fecha<br/>de Pago</th>
         <th class="c3">Medio</th>
         <th class="c4">Nro. de<br/>Operación</th>
         <th>&nbsp;</th>
+        <th class="c6"> </th>
       </tr>
     </thead>
     <tbody>
@@ -16,13 +18,14 @@
         </td>
       </tr>
       <tr *ngFor="let itm of items">
+        <td class="c0"></td>
         <td class="c1">
           <span *ngIf="!itm.editing">{{itm.currency}} {{itm.amount | number:'1.2-2'}}</span>
           <div *ngIf="itm.editing">
             <mat-form-field class="full-width inline-input">
               <input type="text" matInput appOnlyNumbersForm [(ngModel)]="itm.newAmount" maxlength="12"
                 minlength="4" (blur)="AmountBlur(itm)" (ngModelChange)="itm.errores.amount = null" />
-              <span matPrefix>{{itm.currency}}&nbsp;</span>
+              <span class="moneda" matPrefix>{{itm.currency}}&nbsp;</span>
               <div class="msg-error" *ngIf="itm.errores.amount">{{itm.errores.amount}}</div>
             </mat-form-field>
           </div>
@@ -40,9 +43,9 @@
           </div>
         </td>
         <td class="c3">
-          <span *ngIf="!itm.editing">{{itm.channel}}</span>
+          <span class="select-color" *ngIf="!itm.editing">{{itm.channel}}</span>
           <div *ngIf="itm.editing">
-              <mat-form-field class="full-width inline-input select-color">
+              <mat-form-field class="select-color full-width inline-input ">
                 <mat-select class="select-color" [(ngModel)]="itm.newChannel" >
                   <mat-option class="select-color" value="Efectivo">Efectivo</mat-option>
                   <mat-option class="select-color" value="POS">POS</mat-option>
@@ -70,12 +73,13 @@
             </div>
           </div>
         </td>
+        <td></td>
       </tr>
       <tr *ngIf="status !== 'PAGADO'">
         <td class="action" colspan="5">
-          <button type="button" class="btn-outline-green" (click)="addItm()">
+          <button type="button" class="pl-4 btn-outline-green " (click)="addItm()">
             <img src="assets/images/plus_circle.svg" alt="agregar">
-            Agregar un pago
+             <small> Agregar un pago </small> 
           </button>
         </td>
       </tr>
