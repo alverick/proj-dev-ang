@@ -40,12 +40,13 @@
       max-height: 350px;
       width: 800px;
   }
-
-
-  :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(0.001px);
-    font-size: 12px !important;
-    font-weight: 500;
+  
+   :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+      transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(0.001px);
+      font-size: 12px !important;
+      font-weight: 500;
   }
-
- 
+  
+   :host ::ng-deep .mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+      color: #05be50;
+  }

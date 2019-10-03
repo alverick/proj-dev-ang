@@ -66,6 +66,7 @@
         width: 517px;
         @include border-radius(23.5px);
         border: solid 1px #9b9b9b;
+        text-align: left;
         margin-bottom: 15px;
         .text {
             @include font-text(14px, 500);
@@ -112,4 +113,5 @@ small {
 .text-input-file {
     @include font-text(16px, normal);
     color: #0d131d;
+    text-align: left;
 }

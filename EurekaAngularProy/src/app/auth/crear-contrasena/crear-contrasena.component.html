@@ -31,9 +31,9 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width">
-                                    <mat-label class="input-text">Rubro</mat-label>
+                                    <mat-label>Rubro</mat-label>
                                     <mat-select class="input-text" formControlName="rubro">
-                                        <mat-option class="input-text">Rubro de tu empresa</mat-option>
+                                        <mat-option class="input-text">Rubro</mat-option>
                                         <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
                                             {{r.name}}
                                         </mat-option>
