@@ -87,6 +87,8 @@ export class NotifyService {
 
   public markAll() {
     this.http.post(`${environment.END_POINT}/notification/mark?_=${new Date().getTime()}`, {})
-      .subscribe(() => { });
+      .subscribe(() => {
+        this.total = -1;
+      });
   }
 }

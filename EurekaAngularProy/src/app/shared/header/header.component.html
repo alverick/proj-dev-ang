@@ -8,8 +8,12 @@
                <span class="navbar-toggler-icon"></span>
         </button>
         <div *ngIf="show()" class="collapse navbar-collapse" id="navbarResponsive">
-
-            <ul class="navbar-nav ml-auto ">
+            <ul *ngIf="!IsHome" class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link lnk-regresar" [routerLink]="['/home']"><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
+              </li>
+            </ul>
+            <ul *ngIf="IsHome" class="navbar-nav ml-auto ">
                 <li class="nav-item active"  >
                     <a class="mano nav-link mb-3" [routerLink]="['/home']">Movimientos</a>
                 </li>

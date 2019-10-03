@@ -66,17 +66,21 @@ export class HeaderComponent implements OnInit {
 
   public show(): boolean {
     if (this.router.url.includes('/login') ||
-     this.router.url.includes('/afiliacion') ||
-     this.router.url.includes('/crearContrasena') ||
-     this.router.url.includes('/configurarServicios') ||
-     this.router.url.includes('/procesando')) {
+      this.router.url.includes('/afiliacion') ||
+      this.router.url.includes('/crearContrasena') ||
+      this.router.url.includes('/configurarServicios') ||
+      this.router.url.includes('/procesando')) {
       return false;
     }
     return true;
   }
 
+  get IsHome(): boolean {
+    return this.router.url.includes('/home');
+  }
+
   getAgo(date): string {
-    return moment.utc(date).fromNow();
+    return moment.utc(date).format('DD/MM/YY [a las] hh:mm a');
   }
 
   onScroll() {
