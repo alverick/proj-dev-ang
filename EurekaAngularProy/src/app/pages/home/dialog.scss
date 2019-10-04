@@ -23,17 +23,24 @@
             @include font-text(14px, 500);
             .texto {
                 float: left;
+                color: #0d131d !important;
             }
             .resumen {
                 float: right;
                 span {
-                    margin-right: 10px;
+                    margin-right: 10px; 
+                }
+                .bien{
+                    color: #05be50
+                }
+                .mal{
+                    color: #ea0044
                 }
             }
         }
         .list {
             display: block;
-            border: solid 1px #d93549;
+            border: solid 1px #ea0044;
             height: 144px;
             width: 517px;
             overflow-y: auto;
@@ -46,6 +53,7 @@
         }
         .footer {
             @include font-text(14px, 500);
+            color: #0d131d !important;
         }
     }
 }
@@ -64,8 +72,9 @@
     text-align: center;
     .input-file {
         width: 517px;
+        //height: 40px;
         @include border-radius(23.5px);
-        border: solid 1px #9b9b9b;
+        border: solid 1px #9ea1a5;
         text-align: left;
         margin-bottom: 15px;
         .text {
@@ -115,3 +124,4 @@ small {
     color: #0d131d;
     text-align: left;
 }
+

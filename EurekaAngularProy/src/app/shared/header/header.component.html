@@ -40,8 +40,8 @@
                             <div class="notiificacion"  *ngIf="msg.isNew" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); "> 
                                 <img class="item-icono "  src="assets/images/badge-bg.svg" >
                             </div>   
-                            <div class="pl-3 texto">{{msg.message}}</div>
-                            <div class="pl-3 tiempo">{{getAgo(msg.create)}}</div> 
+                            <div class="pl-2 pr-2 texto">{{msg.message}}</div>
+                            <div class="pl-2 pr-2 tiempo">{{getAgo(msg.create)}}</div> 
                       </div>
 
                       <div class="text-notifications" *ngIf="notify.messages.length == 0" >

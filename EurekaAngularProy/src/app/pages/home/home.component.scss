@@ -342,6 +342,9 @@ body {
                         width: 37px;
                     }
                 }
+                .c13 {
+                    width: 10px; 
+                }
             }
         }
         .pagination {
@@ -356,6 +359,7 @@ body {
             }
             .ctrl {
                 float: right;
+                padding-right: 20px;
             }
         }
     }
@@ -367,7 +371,7 @@ body {
     width: 100%;
     text-align: center;
     padding: 40px 0px;
-    color: #9ea1a5 !important;
+    color: #333333 !important;
 }
 
 b {

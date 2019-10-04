@@ -82,7 +82,7 @@ export class FormServicioComponent implements OnInit {
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
-      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true }),
+      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true,}),
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
@@ -100,9 +100,7 @@ export class FormServicioComponent implements OnInit {
     console.table(this.cuentas);
     this.changeMora(false);
     this.changeTipoMora(false);
-
-    //this.frm.get('usaWebApp').enabled;
-
+ 
     if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');
      this.cmoraporce = false;
@@ -150,6 +148,7 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
+    console.log('ingresa');
     if (this.frm.valid)
     {
       const monto  = parseFloat(this.frm.get('monto').value);
@@ -200,6 +199,8 @@ export class FormServicioComponent implements OnInit {
               } else {
 
                 let value: ServiceModel;
+                console.log('ingresa 1');
+                // value.usaWebApp = true;
                 if (this.editMode) {
                   value = this._service;
                   value.idCuenta = this.frm.value.idCuenta;
@@ -210,13 +211,19 @@ export class FormServicioComponent implements OnInit {
                   value.monto = this.frm.value.monto;
                   value.porcentaje = this.frm.value.porcentaje;
                   value.pagoPartes = this.frm.value.pagoPartes;
+                  console.log('ingresa 1.1');
+                  value.usaWebApp = true;
                 }
                 else {
                   value = this.frm.value;
+                  console.log('ingresa 1.2');
+                  value.usaWebApp = true;
                 }
                 let cta = this.cuentas.find(c => c.id === value.idCuenta);
                 value.nroCuenta = cta.number;
                 value.simboloMoneda = this.simboloMoneda;
+                console.log('ingresa 1.3');
+                value.usaWebApp = true;
                 this.grabar.emit(value);
               }
 
@@ -287,6 +294,8 @@ export class FormServicioComponent implements OnInit {
                });
             } else {
               let value: ServiceModel;
+              console.log('ingresa 2');
+             // value.usaWebApp = true;
               if (this.editMode) {
                 value = this._service;
                 value.idCuenta = this.frm.value.idCuenta;
@@ -296,7 +305,7 @@ export class FormServicioComponent implements OnInit {
                 value.tipoMora = this.frm.value.tipoMora;
                 value.monto = this.frm.value.monto;
                 value.porcentaje = this.frm.value.porcentaje;
-                value.pagoPartes = this.frm.value.pagoPartes;
+                value.pagoPartes = this.frm.value.pagoPartes; 
               }
               else {
                 value = this.frm.value;
@@ -304,6 +313,7 @@ export class FormServicioComponent implements OnInit {
               let cta = this.cuentas.find(c => c.id === value.idCuenta);
               value.nroCuenta = cta.number;
               value.simboloMoneda = this.simboloMoneda;
+             
               this.grabar.emit(value);
             }
           }
@@ -323,6 +333,8 @@ export class FormServicioComponent implements OnInit {
                       });
           } else {
             let value: ServiceModel;
+            console.log('ingresa 3');
+            
             if (this.editMode) {
               value = this._service;
               value.idCuenta = this.frm.value.idCuenta;
@@ -333,6 +345,8 @@ export class FormServicioComponent implements OnInit {
               value.monto = this.frm.value.monto;
               value.porcentaje = this.frm.value.porcentaje;
               value.pagoPartes = this.frm.value.pagoPartes;
+              console.log('ingresa 3.1');
+              value.usaWebApp = true;
             }
             else {
               value = this.frm.value;
@@ -340,6 +354,9 @@ export class FormServicioComponent implements OnInit {
             let cta = this.cuentas.find(c => c.id === value.idCuenta);
             value.nroCuenta = cta.number;
             value.simboloMoneda = this.simboloMoneda;
+            console.log('ingresa 3.2');
+            value.usaWebApp = true;
+
             this.grabar.emit(value);
           }
       }

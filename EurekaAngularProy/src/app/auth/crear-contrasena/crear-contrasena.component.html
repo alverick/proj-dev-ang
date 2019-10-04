@@ -39,7 +39,7 @@
                                             {{r.name}}
                                         </mat-option>
                                     </mat-select>
-                                    <mat-error class="messsage-error" *ngIf="f.rubro.invalid && f.rubro.hasError('required')">Elija una opcion</mat-error>
+                                    <mat-error class="messsage-error" *ngIf="f.rubro.invalid && f.rubro.hasError('required')">Elija una opción</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
@@ -56,9 +56,9 @@
                                 <mat-form-field class="input-text super-full-width ">
                                     <input formControlName="telefono" (Keydown.space)="$event.preventDefault()" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Teléfono o celular" minlength="6" maxlength="9">
                                     <mat-error class="messsage-error">
-                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('required')">Teléfono o Celular es obligatorio</mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('pattern')"> Ingrese un Telefono o Celular valido </mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid  && !f.telefono.hasError('pattern') && f.telefono.hasError('minlength')"> El Teléfono o Celular debe tener mínimo 6 dígitos</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('required')">Teléfono o celular es obligatorio</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('pattern')"> Ingrese un telefono o celular valido </mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid  && !f.telefono.hasError('pattern') && f.telefono.hasError('minlength')"> El teléfono o celular debe tener mínimo 6 dígitos</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>

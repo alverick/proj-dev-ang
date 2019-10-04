@@ -28,7 +28,7 @@
     <small *ngIf="ready">Archivo seleccionado</small>
     <div *ngIf="ready; else landing" class="text-center">
         <div class="input-file">
-            <span class="text-input-file pl-1">{{fileName}}</span>
+            <span class="text-input-file pl-4 pt-4">{{fileName}}</span>
         </div>
         <br />
     </div>
@@ -43,8 +43,8 @@
         <div class="header">
             <div class="texto">Se encontraron los siguientes errores:</div>
             <div class="resumen">
-                <span *ngIf="rowsAccepted > 0"><img src="assets/images/ok.svg"> {{rowsAccepted}}</span>
-                <span *ngIf="rowsRejected > 0"><img src="assets/images/cancel.svg"> {{rowsRejected}}</span>
+                <span *ngIf="rowsAccepted > 0" class="bien"><img src="assets/images/ok.svg"> {{rowsAccepted}}</span>
+                <span *ngIf="rowsRejected > 0" class="mal"><img src="assets/images/cancel.svg"> {{rowsRejected}}</span>
             </div>
             <div class="clear-float"></div>
         </div>
