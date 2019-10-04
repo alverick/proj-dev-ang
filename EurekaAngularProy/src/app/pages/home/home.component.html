@@ -351,11 +351,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }"
+                  <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFiltro.pageNumber, totalItems: transactionService.debtItems.count }"
                     [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
                     <td class="c0">
                       <div class="chk-vertical">
-                        <mat-checkbox [(ngModel)]="items.selected"></mat-checkbox>
+                        <mat-checkbox [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)"></mat-checkbox>
                       </div>
                     </td>
                     <td class="c1">
@@ -475,7 +475,37 @@
             </section>
             <section class="pagination">
               <div class="ctrl">
-                <pagination-controls responsive="true" maxSize="5" previousLabel="&lt;" nextLabel="&gt;" (pageChange)="changePage($event)"> </pagination-controls>
+                <pagination-template  #p="paginationApi" [maxSize]="5" (pageChange)="changePage($event)">
+                  <ul class="ngx-pagination" role="navigation">
+                    <li class="pagination-previous" [class.disabled]="p.isFirstPage()">
+                      <a tabindex="0" *ngIf="1 < p.getCurrent()" (keyup.enter)="p.previous()" (click)="p.previous()">
+                        &lt;
+                      </a>
+                      <span *ngIf="p.isFirstPage()">
+                        &lt;
+                      </span>
+                    </li>
+                    <li *ngIf="p.pages.length === 0" class="current">
+                      <span>1</span>
+                    </li>
+                    <li *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value" [class.ellipsis]="page.label === '...'">
+                      <a tabindex="0" (keyup.enter)="p.setCurrent(page.value)" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                        <span>{{ (page.label === '...') ? page.label : (page.label | number:'') }}</span>
+                      </a>
+                      <ng-container *ngIf="p.getCurrent() === page.value">
+                        <span>{{ (page.label === '...') ? page.label : (page.label | number:'') }}</span>
+                      </ng-container>
+                    </li>
+                    <li class="pagination-next" [class.disabled]="p.isLastPage()">
+                      <a tabindex="0" *ngIf="!p.isLastPage()" (keyup.enter)="p.next()" (click)="p.next()" >
+                        &gt;
+                      </a>
+                      <span *ngIf="p.isLastPage()">
+                        &gt;
+                      </span>
+                    </li>
+                  </ul>
+                </pagination-template>
               </div>
               <div class="text" >
                   {{transactionService.pageMessage}}

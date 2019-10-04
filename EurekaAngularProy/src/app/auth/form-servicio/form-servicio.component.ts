@@ -58,7 +58,7 @@ export class FormServicioComponent implements OnInit {
   tiposPago: any[] = [];
   monedas: MonedaModel[] = [];
   tiposMora: any[] = [];
-  cuentas: any[] = []; 
+  cuentas: any[] = [];
   simboloMoneda: string = 'S/';
   cobraMora: boolean = false;
   cobraMonto: boolean = true;
@@ -96,8 +96,6 @@ export class FormServicioComponent implements OnInit {
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
     this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
-    console.log('cuentas');
-    console.table(this.cuentas);
     this.changeMora(false);
     this.changeTipoMora(false);
  
@@ -126,10 +124,8 @@ export class FormServicioComponent implements OnInit {
       this.tiposPago.pop();*/
       this.Dataparcial = false;
       // cobraMora
-      console.log('cambia radio'); //pagaPartes
       this.frm.get('cobraMora').setValue('N');
       this.frm.get('pagoPartes').setValue('N');
-      console.log('EL RADIO BUTTON ES '+this.frm.get('cobraMora').value);
 
       this.frm.get('monto').setValue('1.00');
       this.frm.get('porcentaje').setValue('1.00');
@@ -220,7 +216,7 @@ export class FormServicioComponent implements OnInit {
                   value.usaWebApp = true;
                 }
                 let cta = this.cuentas.find(c => c.id === value.idCuenta);
-                value.nroCuenta = cta.number;
+                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
                 value.simboloMoneda = this.simboloMoneda;
                 console.log('ingresa 1.3');
                 value.usaWebApp = true;
@@ -311,7 +307,7 @@ export class FormServicioComponent implements OnInit {
                 value = this.frm.value;
               }
               let cta = this.cuentas.find(c => c.id === value.idCuenta);
-              value.nroCuenta = cta.number;
+              value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
               value.simboloMoneda = this.simboloMoneda;
              
               this.grabar.emit(value);
@@ -352,7 +348,7 @@ export class FormServicioComponent implements OnInit {
               value = this.frm.value;
             }
             let cta = this.cuentas.find(c => c.id === value.idCuenta);
-            value.nroCuenta = cta.number;
+            value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
             value.simboloMoneda = this.simboloMoneda;
             console.log('ingresa 3.2');
             value.usaWebApp = true;

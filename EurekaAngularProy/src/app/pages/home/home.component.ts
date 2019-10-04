@@ -27,6 +27,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { Observable } from 'rxjs';
+import { isNgTemplate } from '@angular/compiler';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -301,6 +302,7 @@ orderList(index: number, asc: boolean) {
     this.currentFiltro.dateFrom = this.filtro.dateFrom;
     this.currentFiltro.dateTo = this.filtro.dateTo;
     this.currentFiltro.pageNumber = 1;
+    this.transactionService.clearMarksForDeletes();
     this.consultaDeuda();
 
     this.gaService.sendEvent('Buscar', {
@@ -444,7 +446,7 @@ orderList(index: number, asc: boolean) {
                 this.spinner.show();
                 this.transactionService.getDeuda(this.currentFiltro)
                   .subscribe(debts => {
-                  this.selectedAll = false;
+                  this.selectedAll = this.transactionService.isMarkedAll();
                   this.selectedUniverse = false;
                   this.spinner.hide();
                   if (cb) {
@@ -764,14 +766,7 @@ orderList(index: number, asc: boolean) {
 
 
   EliminarSeleccionados() {
-    const itemsParaEliminar = [];
-    this.transactionService.debtItems.data.forEach(c => {
-      if (c.selected) {
-        itemsParaEliminar.push(c.id);
-      }
-    });
-
-    let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : itemsParaEliminar.length;
+    let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : this.transactionService.countMarksForDelete();
     if (totalForDelete === 0 ) {
       this.mensaje( 'error', 'Error al Eliminar', '¡Seleccione las filas a eliminar por favor!');
       return;
@@ -791,7 +786,7 @@ orderList(index: number, asc: boolean) {
 
         let observable = this.selectedUniverse ?
           this.transactionService.deleteFiltered(this.filtro):
-          this.transactionService.deleteAll(itemsParaEliminar);
+          this.transactionService.deleteAll();
         observable.subscribe(() => {
           this.gaService.sendEvent('EliminarDeudas', {
             'event_category': 'Dashboard',
@@ -840,9 +835,12 @@ orderList(index: number, asc: boolean) {
 }
 
   SeleccionarTodos() {
-    this.transactionService.debtItems.data.forEach(itm => itm.selected = this.selectedAll);
-    if (!this.selectedAll) {
+    if (this.selectedAll) {
+      this.transactionService.debtItems.data.forEach(itm => this.transactionService.deleteDebt(itm.id, itm.selected = true));
+    }
+    else {
       this.selectedUniverse = false;
+      this.transactionService.debtItems.data.forEach(itm => this.transactionService.deleteDebt(itm.id, itm.selected = false));
     }
   }
 
@@ -1011,6 +1009,11 @@ MostrarListaSelect() {
       else {
         delete items.errores.amount;
       }
+  }
+
+  selectForDelete(itm: Debts) {
+    this.transactionService.deleteDebt(itm.id, itm.selected);
+    this.selectedAll = this.transactionService.isMarkedAll();
   }
 }
 
