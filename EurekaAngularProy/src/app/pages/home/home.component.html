@@ -348,11 +348,11 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: filtro.pageNumber, totalItems: transactionService.debtItems.count }"
+                  <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFiltro.pageNumber, totalItems: transactionService.debtItems.count }"
                     [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
                     <td class="c0">
                       <div class="chk-vertical">
-                        <mat-checkbox [(ngModel)]="items.selected"></mat-checkbox>
+                        <mat-checkbox [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)"></mat-checkbox>
                       </div>
                     </td>
                     <td class="c1">
@@ -489,7 +489,7 @@
                       </ng-container>
                     </li>
                     <li class="pagination-next" [class.disabled]="p.isLastPage()">
-                      <a tabindex="0" *ngIf="!p.isLastPage()" (keyup.enter)="p.next()" (click)="p.next()" [attr.aria-label]="nextLabel + ' ' + screenReaderPageLabel">
+                      <a tabindex="0" *ngIf="!p.isLastPage()" (keyup.enter)="p.next()" (click)="p.next()" >
                         &gt;
                       </a>
                       <span *ngIf="p.isLastPage()">
