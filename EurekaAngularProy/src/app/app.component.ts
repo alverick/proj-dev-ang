@@ -23,6 +23,7 @@ export class AppComponent {
             'page_title': e.urlAfterRedirects.substr(1),
             'page_path': e.urlAfterRedirects
           });
+          window.scrollTo(0, 0);
           //gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
         }
       });
