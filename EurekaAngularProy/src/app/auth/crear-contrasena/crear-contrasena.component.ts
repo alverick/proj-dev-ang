@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { MustMatch } from './must-match.validator';
 import { AfiliacionService } from '../../shared/services/afiliacion.service';
@@ -27,6 +27,13 @@ export class CrearContrasenaComponent implements OnInit {
   ) {}
 
   rubros: RubroModel[] = [];
+
+  @HostListener('window:beforeunload', ['$event'])
+  public closeWindow($event: any) {
+    if (!this.afiliacionService.Guardado) {
+      $event.returnValue = 'Se van a perder los cambios.';
+    }
+  }
 
   ngOnInit() {
     window['_url_loop_'] = 'crearContrasena';
@@ -133,10 +140,10 @@ export class CrearContrasenaComponent implements OnInit {
 
 
   terminos() {
-   $('#terminos').modal('show'); 
+   $('#terminos').modal('show');
    // alert('hola');
   }
-  
+
   mensaje(tipo: any, titulo: string, text: string) {
     Swal.fire({
      // type: tipo ,

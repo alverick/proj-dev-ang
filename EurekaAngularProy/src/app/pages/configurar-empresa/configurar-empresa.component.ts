@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/auth/crear-contrasena/must-match.validator';
 import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
@@ -30,6 +30,13 @@ export class ConfigurarEmpresaComponent implements OnInit {
               private router: Router,
               private gaService: GoogleAnalytics) { }
 
+    @HostListener('window:beforeunload', ['$event'])
+    public closeWindow($event: any) {
+      if (!this.afiliacionService.Guardado) {
+        $event.returnValue = 'Se van a perder los cambios.';
+      }
+    }
+
   ngOnInit() {
     this.createForm();
     this.getInfoEmpresa();
@@ -48,7 +55,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   createForm() {
     this.formGroup = this.formBuilder.group({
       ruc: new FormControl({ value: '', disabled: true }),
-      name: new FormControl({ value: '', disabled: true }),
+      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
       entry: new FormControl({ value: '', disabled: true }),
       email: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       movilNumber: new FormControl('', [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
