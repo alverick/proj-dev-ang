@@ -38,6 +38,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
     }
 
   ngOnInit() {
+    window['_url_loop_'] = 'configuracionEmpresa';
     this.createForm();
     this.getInfoEmpresa();
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);

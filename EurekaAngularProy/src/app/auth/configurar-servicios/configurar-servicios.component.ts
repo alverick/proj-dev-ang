@@ -39,6 +39,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     this.route.data.subscribe(d => {
       this.inEdit = d.isEdit;
       if (d.isEdit) {
+        window['_url_loop_'] = 'editarServicios';
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
         this.titulo = 'Edita el servicio';

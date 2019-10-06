@@ -191,7 +191,7 @@ export class HomeComponent implements OnInit {
 
     @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
       e.preventDefault();
-    }  
+    }
     */
     visibleFixedHead = true;
 
