@@ -10,7 +10,7 @@
         <div *ngIf="show()" class="collapse navbar-collapse" id="navbarResponsive">
             <ul *ngIf="!IsHome" class="navbar-nav ml-auto">
               <li class="nav-item">
-                <a class="nav-link lnk-regresar" [routerLink]="['/home']"><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
+                <a class="nav-link lnk-regresar" (click)="goBack()" ><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
               </li>
             </ul>
             <ul *ngIf="IsHome" class="navbar-nav ml-auto ">
@@ -36,12 +36,12 @@
                     </div>
 
                     <perfect-scrollbar class="notifies" [config]="scrollConfig" (psYReachEnd)="onScroll()">
-                      <div *ngFor="let msg of notify.messages " class="dropdown-item " (click)="$event.stopPropagation();" >  
-                            <div class="notiificacion"  *ngIf="msg.isNew" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); "> 
+                      <div *ngFor="let msg of notify.messages " class="dropdown-item " (click)="$event.stopPropagation();" >
+                            <div class="notiificacion"  *ngIf="msg.isNew" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); ">
                                 <img class="item-icono "  src="assets/images/badge-bg.svg" >
-                            </div>   
+                            </div>
                             <div class="pl-2 pr-2 texto">{{msg.message}}</div>
-                            <div class="pl-2 pr-2 tiempo">{{getAgo(msg.create)}}</div> 
+                            <div class="pl-2 pr-2 tiempo">{{getAgo(msg.create)}}</div>
                       </div>
 
                       <div class="text-notifications" *ngIf="notify.messages.length == 0" >
