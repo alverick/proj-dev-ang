@@ -88,6 +88,7 @@ img.bell {
     @include font-text(18px, 500);
     color: #9ea1a5 !important;
     margin-bottom: auto;
+    cursor: pointer;
   }
 
   .dropdown-menu {

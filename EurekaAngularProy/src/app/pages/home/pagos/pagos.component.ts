@@ -17,7 +17,7 @@ export class PagosComponent implements OnInit {
   ];
   cargando = false;
 
-  @Input() debtId: number = 1288900;
+  @Input() debtId: number;
   @Input() status: string;
   @Input() currency: string;
   @Output() statusChange = new EventEmitter<string>();
@@ -65,19 +65,32 @@ export class PagosComponent implements OnInit {
 
   private outsideClick(target: HTMLElement) {
     if (!(this._elementRef.nativeElement as HTMLElement).contains(target)) {
-      const cdkContainer = document.getElementsByClassName('cdk-overlay-container');
-      if (cdkContainer.length === 0) {
+      let existsInCdk = (): boolean => {
+        const cdkContainer = document.getElementsByClassName('cdk-overlay-container');
+        if (cdkContainer.length > 0) {
+          for(let i=0; i < cdkContainer.length; i++) {
+            return cdkContainer[i].contains(target);
+          }
+        }
+        return false;
+      }
+      let existsInSwal = (): boolean => {
         const swalContainer = document.getElementsByClassName('swal2-container');
-        if (swalContainer.length === 0) {
-          this.pagoService.closeAll.emit();
+        if (swalContainer.length > 0) {
+          for(let i=0; i < swalContainer.length; i++) {
+            return swalContainer[i].contains(target);
+          }
         }
-        else if (!swalContainer[0].contains(target)) {
-          this.pagoService.closeAll.emit();
-        }
+        return false;
       }
-      else if (!cdkContainer[0].contains(target)) {
-        this.pagoService.closeAll.emit();
+
+      if (existsInCdk()) {
+        return;
       }
+      if (existsInSwal()) {
+        return;
+      }
+      this.pagoService.closeAll.emit();
     }
   }
 

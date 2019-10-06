@@ -91,4 +91,10 @@ export class HeaderComponent implements OnInit {
 
   onShowMessages() {
   }
+
+  goBack() {
+    if (confirm('Es posible que los cambios no se guarden.')) {
+      this.router.navigate(['/home']);
+    }
+  }
 }
