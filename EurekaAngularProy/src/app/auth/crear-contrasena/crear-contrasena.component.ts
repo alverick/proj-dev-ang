@@ -39,7 +39,7 @@ export class CrearContrasenaComponent implements OnInit {
     window['_url_loop_'] = 'crearContrasena';
     this.registerForm = this.formBuilder.group({
       ruc: new FormControl('',  [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
-      nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
+      nombre: new FormControl('', [Validators.required, Validators.pattern('^\w([\.-]?\w)') , Validators.minLength(3), Validators.maxLength(80)]),
       rubro: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required , Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       telefono: new FormControl('', [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
