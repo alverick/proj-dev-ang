@@ -107,6 +107,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   sendAfterSave: boolean = false;
 
   MostarFormulario() {
+    console.table(this.afiliacionService.services);
     if(this.afiliacionService.services.length >= 99){
       Swal.fire({
         text: 'Usted solo puede tener 99 servicios como máximo',

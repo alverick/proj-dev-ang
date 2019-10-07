@@ -247,11 +247,14 @@ export class HomeComponent implements OnInit {
    this.transactionService.debtItems = { data: [], count : 0 };
    this.consultaDeuda();
    this.cargaExcel = false;
-
+    
    // check
    //this.SeleccionarTodos();
    this.selectedAll = false;
    this.selectedUniverse = false;
+  
+   console.log(this.selectedAll);
+    
   }
 
   statusOpt(){
@@ -446,7 +449,10 @@ orderList(index: number, asc: boolean) {
                 this.spinner.show();
                 this.transactionService.getDeuda(this.currentFiltro)
                   .subscribe(debts => {
-                  this.selectedAll = this.transactionService.isMarkedAll();
+                  if(this.transactionService.debtItems.data.length > 0){
+                    this.selectedAll = this.transactionService.isMarkedAll();
+                  }
+                  
                   this.selectedUniverse = false;
                   this.spinner.hide();
                   if (cb) {

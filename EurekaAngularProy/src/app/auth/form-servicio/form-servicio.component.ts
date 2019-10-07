@@ -144,7 +144,8 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    console.log('ingresa');
+    console.log('CODIGO DEL DEUDOR');
+    console.log(this.frm.get('codDeudor').value);
     if (this.frm.valid)
     {
       const monto  = parseFloat(this.frm.get('monto').value);
@@ -446,6 +447,7 @@ export class FormServicioComponent implements OnInit {
 
   selectCodigo(event){
     if(event === 'Otro'){
+    //  this.f.codDeudor.reset();
       this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
     }
     else {
