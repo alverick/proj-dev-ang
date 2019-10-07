@@ -526,7 +526,7 @@ orderList(index: number, asc: boolean) {
     item.newLastName = item.lastName;
 
     console.log('fechas');
- 
+
   }
 
   selectEstPag(event, item: Debts){
@@ -924,7 +924,13 @@ Ocultar() {
       this.errores['dateFrom'] = 'No es una fecha válida';
     }
     else {
-      delete this.errores.dateFrom;
+      let yearFrom = e.getFullYear();
+      if (yearFrom <  2000 || yearFrom >  2050 ) {
+        this.errores['dateFrom'] = 'Ingrese una fecha válida';
+      }
+      else {
+        delete this.errores.dateFrom;
+      }
     }
   }
 
@@ -932,11 +938,17 @@ Ocultar() {
     if (e === null) {
       this.errores['dateTo'] = 'No es una fecha válida';
     }
-    else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
-      this.errores['dateTo'] = "No puede ser menor a la emisión"
-    }
     else {
-      delete this.errores.dateTo;
+      let yearTo = e.getFullYear();
+      if (yearTo <  2000 || yearTo >  2050 ) {
+        this.errores['dateTo'] = 'Ingrese una fecha válida';
+      }
+      else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
+        this.errores['dateTo'] = "No puede ser menor a la emisión"
+      }
+      else {
+        delete this.errores.dateTo;
+      }
     }
   }
 
@@ -959,7 +971,13 @@ Ocultar() {
       items.errores.emissionDate = 'Ingrese una fecha válida';
     }
     else {
-      delete items.errores.emissionDate;
+      let emidate = items.newEmissionDate.getFullYear();
+      if (emidate <  2000 || emidate >  2050 ) {
+        items.errores.emissionDate = 'Ingrese una fecha válida';
+      }
+      else {
+        delete items.errores.emissionDate;
+      }
     }
   }
 
@@ -967,11 +985,17 @@ Ocultar() {
     if (!items.newDueDate) {
       items.errores.dueDate = 'Ingrese una fecha válida';
     }
-    else if (items.newEmissionDate && items.newDueDate < items.newEmissionDate) {
-      items.errores.dueDate = 'No debe ser menor a la fecha de emisión';
-    }
     else {
-      delete items.errores.dueDate;
+      let dueyear = items.newEmissionDate.getFullYear();
+      if (dueyear <  2000 || dueyear >  2050 ) {
+        items.errores.dueDate = 'Ingrese una fecha válida';
+      }
+      else if (items.newEmissionDate && items.newDueDate < items.newEmissionDate) {
+        items.errores.dueDate = 'No debe ser menor a la fecha de emisión';
+      }
+      else {
+        delete items.errores.dueDate;
+      }
     }
   }
 
