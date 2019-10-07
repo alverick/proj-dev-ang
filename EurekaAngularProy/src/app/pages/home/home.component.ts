@@ -524,6 +524,9 @@ orderList(index: number, asc: boolean) {
     item.newAmount = item.amount.toFixed(2);
     item.newFirstName = item.firstName;
     item.newLastName = item.lastName;
+
+    console.log('fechas');
+ 
   }
 
   selectEstPag(event, item: Debts){
@@ -751,9 +754,16 @@ orderList(index: number, asc: boolean) {
 
   BotonCancela(item: Debts) {
    //  item.edit = false;
-   item.editInput =false;
+   item.editInput = false;
    item.editButton = false;
    item.editPending = false;
+   console.log('limpia errores ');
+   delete item.errores.dueDate;
+   delete item.errores.dateFrom;
+   delete item.errores.lastName;
+   delete item.errores.amount;
+   delete item.errores.firstName;
+
   }
 
   changePage(nro: number) {

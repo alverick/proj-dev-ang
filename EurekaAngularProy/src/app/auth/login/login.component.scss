@@ -258,6 +258,8 @@ div.mat-form-field-infix {
     500);
     color: #0d131d;
 }
+
+
 /*
 small {
     @include font-text(14px!important,
@@ -265,6 +267,7 @@ small {
     color: #0d131d;
 }
 */
+
 .cuadro-form {
     @include cuadro(381px,
     auto);
@@ -277,8 +280,15 @@ small {
 }
 
 small {
-    @include font-text(14px, $weight: 500!important);
+    @include font-text(14px,
+    $weight: 500!important);
     color: $green;
     text-decoration: underline;
     cursor: pointer;
+}
+
+:host ::ng-deep .mat-form-field .mat-form-field-underline {
+    background-color: #cfd0d2;
+    // height: 0.10vw !important;
+    height: 1px !important;
 }
