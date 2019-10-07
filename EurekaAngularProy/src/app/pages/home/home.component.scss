@@ -99,7 +99,7 @@ body {
                     .card {
                         padding: 8px;
                         .selecciona-servicio {
-                            @include font-text(10px, 500);
+                            @include font-text(10px!important, 500!important);
                             color: #0d131d !important;
                             padding: 6px 2px;
                         }
@@ -264,9 +264,10 @@ body {
                     width: 47px;
                 }
                 .c1 {
-                    width: 70px;
+                    width: 80px;
                     .text {
                         width: 49px;
+                        text-align: left;
                     }
                 }
                 .c2 {
@@ -341,7 +342,7 @@ body {
                     }
                 }
                 .c13 {
-                    width: 12px;
+                    width: 5px;
                 }
             }
         }
@@ -564,4 +565,32 @@ b {
 
 :host ::ng-deep .mat-select-value {
     color: #0d131d !important;
+}
+
+.btn {
+    @include font-text(14px, 500 !important);
+    font-weight: 400;
+    color: #05be50;
+}
+
+.dropdown-toggle::after {
+    color: #ffffff;
+}
+
+.addDeuda {
+    float: right;
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+.selecciona-servicio {
+    @include font-text(10px!important, 500!important);
+    color: #0d131d !important;
+    padding: 6px 2px;
+}
+
+.servicio-Opern {
+    @include font-text(14px!important, 500!important);
+    color: #0d131d !important;
+    padding: 6px 2px;
 }

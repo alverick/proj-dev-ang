@@ -858,6 +858,12 @@ orderList(index: number, asc: boolean) {
 MostrarListaSelect() {
   this.OcultaListaExcel = true;
 }
+Ocultar() {
+  if (this.OcultaListaExcel === true) {
+   //  this.OcultaListaExcel = false;
+  }
+
+}
 
   openDialog(service: string) {
     this.OcultaListaExcel = false;

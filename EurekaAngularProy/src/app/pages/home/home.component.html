@@ -82,25 +82,44 @@
                                 </div>
                             </div>
 
-                            <div class="al-right">
-                                <div class="lnk-label" (click)="DescargarReporte()">
-                                    <img src="assets/images/download.svg" alt="download"> Descargar Movimientos
-                                </div>
-                                <div class="lnk-label" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseDeudas">
+                            <div class="addDeuda">
+                                <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                     <img src="assets/images/plus_circle.svg" alt="plus_circle"> Agregar Deudas
                                 </div>
-                                <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
-                                    <div class="card">
+                                <div class="dropdown-menu lnk-label" role="menu">
+                                    <div class="pl-4 ">
                                         <div class="selecciona-servicio">Selecciona el servicio</div>
                                         <perfect-scrollbar class="content-container">
                                             <div *ngFor="let service of typeList" class="option-item" (click)="openDialog(service)">
-                                                <div class="mano">
+                                                <div class="servicio-Opern">
                                                     {{service.name}}
                                                 </div>
                                             </div>
                                         </perfect-scrollbar>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="al-right">
+                                <div class="lnk-label" (click)="DescargarReporte()">
+                                    <img src="assets/images/download.svg" alt="download"> Descargar Movimientos
+                                </div>
+                                <!---
+                                    <div class="lnk-label" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseDeudas">
+                                        <img src="assets/images/plus_circle.svg" alt="plus_circle"> Agregar Deudas
+                                    </div>
+                                    <div *ngIf="OcultaListaExcel" class="collapse sobresale " id="collapseExample">
+                                        <div class="card">
+                                            <div class="selecciona-servicio">Selecciona el servicio</div>
+                                            <perfect-scrollbar class="content-container">
+                                                <div *ngFor="let service of typeList" class="option-item" (click)="openDialog(service)">
+                                                    <div class="mano">
+                                                        {{service.name}}
+                                                    </div>
+                                                </div>
+                                            </perfect-scrollbar>
+                                        </div>
+                                    </div> -->
+
                             </div>
                             <div class="clear-float"></div>
                         </section>
