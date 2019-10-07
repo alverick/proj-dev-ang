@@ -232,7 +232,7 @@ export class AfiliacionService {
             tipoDato: s.dataType,
             tipoPago: s.paymentType,
             idCuenta: s.idAccount,
-            nroCuenta: `${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
+            nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
             moneda: s.currency,
             simboloMoneda: s.currencySymbol,
             usaWebApp: s.useAppWeb,

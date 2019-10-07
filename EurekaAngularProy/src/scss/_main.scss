@@ -111,6 +111,11 @@ body {
     background-color: $green;
 }
 
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .btn-eureca-green {
     @include font-text(14px !important, 500 !important);
     color: #ffffff !important;
@@ -120,9 +125,10 @@ body {
     &:hover {
         background-color: $green !important;
     }
-    /*  &:focus {
-        background-color: $greenclaro !important;
-    } */
+    &:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
     &.btn-disabled {
         background-color: #9b9b9b !important;
         border: solid 1px #9b9b9b !important;
