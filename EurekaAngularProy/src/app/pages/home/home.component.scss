@@ -405,13 +405,14 @@ b {
 }
 
 .mat-form-field {
+   
     .msg-error {
         @include font-text(10px, 500);
         position: absolute;
-        color: #f44336;
+        color: #ea0044;
         margin-top: 10px;
-        width: 200px;
-        background-color: white;
+        width: 200px; 
+        background-color: rgba(0, 169, 79, 0.05);
     }
 }
 

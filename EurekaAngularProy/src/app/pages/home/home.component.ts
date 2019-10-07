@@ -759,7 +759,7 @@ orderList(index: number, asc: boolean) {
    item.editPending = false;
    console.log('limpia errores ');
    delete item.errores.dueDate;
-   delete item.errores.dateFrom;
+   delete item.errores.emissionDate;
    delete item.errores.lastName;
    delete item.errores.amount;
    delete item.errores.firstName;
