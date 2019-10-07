@@ -924,7 +924,7 @@ Ocultar() {
       this.errores['dateFrom'] = 'No es una fecha válida';
     }
     else {
-      let yearFrom = e.getFullYear();
+      let yearFrom = new Date(e).getFullYear();
       if (yearFrom <  2000 || yearFrom >  2050 ) {
         this.errores['dateFrom'] = 'Ingrese una fecha válida';
       }
@@ -939,7 +939,7 @@ Ocultar() {
       this.errores['dateTo'] = 'No es una fecha válida';
     }
     else {
-      let yearTo = e.getFullYear();
+      let yearTo = new Date(e).getFullYear();
       if (yearTo <  2000 || yearTo >  2050 ) {
         this.errores['dateTo'] = 'Ingrese una fecha válida';
       }
@@ -971,7 +971,7 @@ Ocultar() {
       items.errores.emissionDate = 'Ingrese una fecha válida';
     }
     else {
-      let emidate = items.newEmissionDate.getFullYear();
+      let emidate = new Date(items.newEmissionDate).getFullYear();
       if (emidate <  2000 || emidate >  2050 ) {
         items.errores.emissionDate = 'Ingrese una fecha válida';
       }
@@ -986,7 +986,7 @@ Ocultar() {
       items.errores.dueDate = 'Ingrese una fecha válida';
     }
     else {
-      let dueyear = items.newEmissionDate.getFullYear();
+      let dueyear = new Date(items.newDueDate).getFullYear();
       if (dueyear <  2000 || dueyear >  2050 ) {
         items.errores.dueDate = 'Ingrese una fecha válida';
       }
