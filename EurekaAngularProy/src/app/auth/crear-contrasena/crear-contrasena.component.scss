@@ -50,3 +50,8 @@
    :host ::ng-deep .mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
       color: #05be50;
   }
+
+
+  .swal2-close{
+    background-image: url('/assets/images/buscar.svg');
+  }

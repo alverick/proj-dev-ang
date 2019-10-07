@@ -459,6 +459,7 @@ b {
 :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
     font-size: 10px;
+    font-weight: 500 !important;
 }
 
 .input-text-dash {
@@ -595,11 +596,12 @@ b {
 .selecciona-servicio {
     @include font-text(10px!important, 500!important);
     color: #0d131d !important;
-    padding: 6px 2px;
+    padding: 8px 2px;
 }
 
 .servicio-Opern {
-    @include font-text(14px!important, 500!important);
+    @include font-text(14px!important, normal!important);
     color: #0d131d !important;
-    padding: 6px 2px;
+    padding-bottom: 10px;
+   // padding: 6px 2px;
 }

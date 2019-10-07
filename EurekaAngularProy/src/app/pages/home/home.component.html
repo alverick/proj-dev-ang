@@ -8,10 +8,10 @@
                         <form>
                             <mat-form-field class="f1">
                                 <input class="input-text" matInput [(ngModel)]="filtro.inputSearch" name="inputSearch" type="text" appShear maxlength="20" placeholder="Nombre o código del deudor">
-                                <span matPrefix class="fa fa-search"></span>
+                                <span matPrefix class="pr-1" ><img src="assets/images/buscar.svg"> </span>
                                 <button mat-button *ngIf="filtro.inputSearch" matSuffix mat-icon-button aria-label="Clear" (click)="filtro.inputSearch=''">
-                  <i class="fa fa-close"></i>
-                </button>
+                                    <i class="fa fa-close"></i>
+                                </button>
                             </mat-form-field>
                             <mat-form-field class="f2">
                                 <mat-select placeholder="Servicio" class="input-text selectpicker filter-slt" disableOptionCentering panelClass="pts26" [(ngModel)]="filtro.service" name="servicio">
@@ -19,10 +19,10 @@
                                     <mat-option class="input-text" value="{{service.name}}" *ngFor="let service of services"> {{service.name}}</mat-option>
                                 </mat-select>
                                 <button mat-button *ngIf="filtro.service" matSuffix mat-icon-button aria-label="Clear" (click)="filtro.service=null; $event.stopPropagation();">
-                  <i class="fa fa-close"></i>
-                </button>
+                                     <i class="fa fa-close"></i>
+                                </button>
                             </mat-form-field>
-                            <mat-form-field class="f2 input-text">
+                            <mat-form-field class="f2">
                                 <mat-select class="input-text" placeholder="Estado de pago" disableOptionCentering panelClass="pts26" [(ngModel)]="filtro.status" name="status">
                                     <mat-option class="input-text">Estado de pago</mat-option>
                                     <mat-option class="input-text" value="{{item.idWayPay}}" *ngFor="let item of waypayList"> {{item.descripcion}} </mat-option>
@@ -84,10 +84,10 @@
 
                             <div class="addDeuda">
                                 <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <img src="assets/images/plus_circle.svg" alt="plus_circle"> Agregar Deudas
+                                    <img src="assets/images/plus_circle.svg" alt="plus_circle"> Agregar deudas
                                 </div>
-                                <div class="dropdown-menu lnk-label" role="menu">
-                                    <div class="pl-4 ">
+                                <div class="dropdown-menu lnk-label" role="menu" >
+                                    <div class="pl-4">
                                         <div class="selecciona-servicio">Selecciona el servicio</div>
                                         <perfect-scrollbar class="content-container">
                                             <div *ngFor="let service of typeList" class="option-item" (click)="openDialog(service)">
@@ -101,7 +101,7 @@
                             </div>
                             <div class="al-right">
                                 <div class="lnk-label" (click)="DescargarReporte()">
-                                    <img src="assets/images/download.svg" alt="download"> Descargar Movimientos
+                                    <img src="assets/images/download.svg" alt="download"> Descargar movimientos
                                 </div>
                                 <!---
                                     <div class="lnk-label" (click)="MostrarListaSelect()" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseDeudas">
@@ -413,8 +413,8 @@
                                     <tr *ngIf="ceroRegistros()">
                                         <td colspan="13" class="texto-after">
                                             <span>{{messageTable}}</span>
-                                            <div *ngIf="showArrow">
-                                                <img src="assets/images/path.svg" alt="arrow">
+                                            <div *ngIf="showArrow" class="">
+                                                <img class="mt-3" src="assets/images/path.svg" alt="arrow">
                                             </div>
                                         </td>
                                     </tr>

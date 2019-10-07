@@ -1,6 +1,11 @@
 declare var $: any;
 
 export function drawPopup(el) {
+  $(el).find('.swal2-close')
+  .css('background-image', 'url("/assets/images/cerrar.svg")')
+  .css('background-repeat', 'no-repeat')
+  .css('background-position', 'center')
+  .html('');
   $(el).find('.swal2-title')
     .css('font-family', 'Geometria')
     .css('font-size', '24px')
