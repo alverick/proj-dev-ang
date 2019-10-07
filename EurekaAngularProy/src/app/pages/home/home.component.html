@@ -386,11 +386,11 @@
                                                     <span *ngIf="items.status === 'VENCIDO'" class="text-danger">
                             Vencido <img src="assets/images/cancel.svg" alt="cancel">
                           </span>
-                                                    <span *ngIf="items.status === 'PARCIAL'" [class.text-danger]="estaVencido(items)">
-                            Parcial <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
+                                                    <span *ngIf="items.status === 'PARCIAL'">
+                            Parcial
                           </span>
-                                                    <span *ngIf="items.status === 'PENDIENTE'" [class.text-danger]="estaVencido(items)">
-                            Pendiente <img *ngIf="estaVencido(items)" src="assets/images/cancel.svg" alt="cancel">
+                                                    <span *ngIf="items.status === 'PENDIENTE'">
+                            Pendiente
                           </span>
                                                 </div>
                                                 <app-pagos #appPagos [debtId]="items.id" [(status)]="items.status" [currency]="items.currency" (showChange)="items.verPagos = $event"></app-pagos>
