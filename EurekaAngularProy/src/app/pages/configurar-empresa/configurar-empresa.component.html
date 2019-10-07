@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100" floatLabel="always">
-                                        <mat-label>Nueva contraseña</mat-label>
+                                        <mat-label>Repite la contraseña</mat-label>
                                         <input class="input-text" matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Dejar en blanco para mantener contraseña actual" formControlName="newPassword" minlength="6" maxlength="20" >
                                     <!--   <mat-error *ngIf="!formGroup.controls['newPassword'].valid || formGroup.controls['newPassword'].touched">
                                             {{ getErrorNewPassword() }}
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100" floatLabel="always">
-                                      <mat-label>Repita Nueva contraseña</mat-label>
+                                      <mat-label>Repite la contraseña</mat-label>
                                         <input class="input-text" matInput type="password" (Keydown.space)="$event.preventDefault()"  placeholder="Dejar en blanco para mantener contraseña actual" formControlName="confirmNewPassword" minlength="6" maxlength="20" >
                                     <!-- <mat-error *ngIf="!formGroup.controls['confirmNewPassword'].valid || formGroup.controls['confirmNewPassword'].touched">
                                             {{ getErrorConfirmNewPassword() }}
