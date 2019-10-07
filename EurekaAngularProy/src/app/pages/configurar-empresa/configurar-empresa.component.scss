@@ -41,3 +41,7 @@ body {
     background-repeat: repeat-x;
 }
 
+:host ::ng-deep .mat-select-disabled .mat-select-value {
+    @include font-text(16px !important, normal !important);
+    color: #0d131d;
+}
