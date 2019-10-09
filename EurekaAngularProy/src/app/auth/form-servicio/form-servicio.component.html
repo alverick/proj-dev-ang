@@ -12,9 +12,9 @@
         </mat-form-field>
     </div>
     <div class="form-group">
-        <mat-form-field class="w-100">
-            <mat-label>Código deudor</mat-label>
-            <mat-select class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering
+        <mat-form-field   class="w-100">
+            <mat-label class="label">Código deudor</mat-label>
+            <mat-select   class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering
               panelClass="pts30" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
                 <mat-option class="input-text">Código Deudor</mat-option>
                 <mat-option class="input-text" *ngFor="let c of codDeudor" [value]="c.code">
@@ -33,7 +33,7 @@
     </div>
     <div class="form-group">
         <mat-form-field class="w-100">
-            <mat-label>¿Qué datos tienes de tus clientes?</mat-label>
+            <mat-label class="label">¿Qué datos tienes de tus clientes?</mat-label>
             <mat-select class="input-text" formControlName="tipoDato" name="tipoDato" disableOptionCentering
               panelClass="pts30" (ngModelChange)="onChangeTipoDato()">
                 <mat-option class="input-text">¿Qué datos tienes de tus clientes?</mat-option>
@@ -46,7 +46,7 @@
     </div>
     <div class="form-group" *ngIf="Dataparcial">
         <mat-form-field class="w-100">
-            <mat-label>¿Cómo quieres que te paguen tus clientes?</mat-label>
+            <mat-label class="label">¿Cómo quieres que te paguen tus clientes?</mat-label>
             <mat-select class="input-text" formControlName="tipoPago" name="tipoPago" disableOptionCentering
               panelClass="pts30" >
                 <mat-option class="input-text">¿Cómo quieres que te paguen tus clientes?</mat-option>
@@ -59,7 +59,7 @@
     </div>
     <div class="form-group">
         <mat-form-field class="w-100">
-            <mat-label>Nº de cuenta Interbank</mat-label>
+            <mat-label class="label">Nº de cuenta Interbank</mat-label>
             <mat-select class="input-text" formControlName="idCuenta" name="idCuenta" disableOptionCentering
               panelClass="pts30" (ngModelChange)="changeCuenta($event)">
                 <mat-option class="input-text" >Nº de cuenta Interbank</mat-option>

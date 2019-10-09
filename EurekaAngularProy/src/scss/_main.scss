@@ -231,3 +231,21 @@ button:focus {
   .pts30 {
     margin-top: 30px !important;
   }
+
+mat-icon.svg-custom {
+  svg {
+    width: 24px;
+    height: 24px;
+
+    path {
+      fill: inherit;
+    }
+  }
+} 
+.mat-checkbox-frame {
+    border-color: #9EA1A5;
+}
+ 
+.mat-radio-outer-circle {
+    border-color: #9EA1A5;
+}

@@ -260,7 +260,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         let title = 'Eliminación total del servicio';
         let msg = 'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
         if (r.hasPayed) {
-          title = 'Eliminacion Parcial del Servicio';
+          title = 'Eliminación Parcial del Servicio';
           msg = 'Ya existe un historial de pagos realizados con este servicio, sólo se eliminarán las deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
         }
         Swal.fire({

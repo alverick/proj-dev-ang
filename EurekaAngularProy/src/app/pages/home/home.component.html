@@ -43,7 +43,9 @@
                             <mat-form-field class="f2">
                                 <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1 placeholder="Desde" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)" type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2"
                                     maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
-                                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+                                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
+                                    <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
+                                </mat-datepicker-toggle>
                                 <mat-datepicker #myDatepicker2></mat-datepicker>
                                 <button mat-button *ngIf="filtro.dateFrom || inputDate1.value" matSuffix mat-icon-button aria-label="Clear" (click)="limpiardate1()">
                                     <i class="fa fa-close"></i>
@@ -53,7 +55,9 @@
                             <mat-form-field class="f2">
                                 <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2 placeholder="Hasta" (ngModelChange)="validaDateTo($event)" type="text" name="dateTo" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo"
                                     maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
-                                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker">
+                                        <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
+                                    </mat-datepicker-toggle>
                                 <mat-datepicker #myDatepicker></mat-datepicker>
                                 <button mat-button *ngIf="filtro.dateTo || inputDate2.value" matSuffix mat-icon-button aria-label="Clear" (click)="limpiardate2()">
                   <i class="fa fa-close"></i>
@@ -69,7 +73,7 @@
                     <div class="title">Movimientos</div>
                     <div class="content">
                         <section class="actions">
-                            <div class="al-left">
+                            <div style="padding-left: -10px" class="al-left">
                                 <div class="chk-vertical">
                                     <mat-checkbox id="chk-all" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos()"></mat-checkbox>
                                     <label class="act-label" for="chk-all" aria-label="chk-all" [class.seleccionado]="selectedAll">Seleccionar</label>
@@ -313,7 +317,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFiltro.pageNumber, totalItems: transactionService.debtItems.count }" [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
-                                        <td class="c0">
+                                        <td class="c0 pl-3">
                                             <div class="chk-vertical">
                                                 <mat-checkbox [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)"></mat-checkbox>
                                             </div>
@@ -442,7 +446,7 @@
                                             <span>1</span>
                                         </li>
                                         <li *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value" [class.ellipsis]="page.label === '...'">
-                                            <a tabindex="0" (keyup.enter)="p.setCurrent(page.value)" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                                            <a class="numpag" tabindex="0" (keyup.enter)="p.setCurrent(page.value)" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
                                                 <span>{{ (page.label === '...') ? page.label : (page.label | number:'') }}</span>
                                             </a>
                                             <ng-container *ngIf="p.getCurrent() === page.value">
@@ -460,7 +464,7 @@
                                     </ul>
                                 </pagination-template>
                             </div>
-                            <div class="text">
+                            <div class="text pt-1">
                                 {{transactionService.pageMessage}}
                             </div>
                             <div class="clear-float"></div>

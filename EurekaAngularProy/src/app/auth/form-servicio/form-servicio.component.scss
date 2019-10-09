@@ -242,6 +242,7 @@ body {
 
 :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
   font-size: 10px !important;
+  color: #0d131d !important;
 }
 
 .radio-group {
@@ -290,10 +291,19 @@ body {
 
 .text-radio{
     @include font-text(16px !important, normal !important);
-    color: #0d131d;
+    color: #0d131d !important;
 }
 
 :host ::ng-deep .mat-select-disabled .mat-select-value {
     @include font-text(16px !important, normal !important);
-    color: #0d131d;
+    color: #0d131d !important;
+}
+
+
+.input-text{
+    color: #0d131d !important;
+}
+
+.label{
+    color: #0d131d !important;
 }
