@@ -405,13 +405,13 @@ b {
 }
 
 .mat-form-field {
-   
+
     .msg-error {
         @include font-text(10px, 500);
         position: absolute;
         color: #ea0044;
         margin-top: 10px;
-        width: 200px; 
+        width: 200px;
        // background-color: rgba(0, 169, 79, 0.05);
     }
     .msg-error-filtro {
@@ -419,7 +419,7 @@ b {
         position: absolute;
         color: #ea0044;
         margin-top: 10px;
-        width: 200px; 
+        width: 200px;
         background-color: #ffffff;
     }
 }
@@ -604,4 +604,8 @@ b {
     color: #0d131d !important;
     padding-bottom: 10px;
    // padding: 6px 2px;
+}
+
+.btn-calendar {
+  background-image: url(/assets/images/calendar.svg);
 }

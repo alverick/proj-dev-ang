@@ -43,7 +43,9 @@
                             <mat-form-field class="f2">
                                 <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1 placeholder="Desde" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)" type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2"
                                     maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
-                                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+                                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
+                                    <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
+                                </mat-datepicker-toggle>
                                 <mat-datepicker #myDatepicker2></mat-datepicker>
                                 <button mat-button *ngIf="filtro.dateFrom || inputDate1.value" matSuffix mat-icon-button aria-label="Clear" (click)="limpiardate1()">
                                     <i class="fa fa-close"></i>
@@ -53,7 +55,9 @@
                             <mat-form-field class="f2">
                                 <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2 placeholder="Hasta" (ngModelChange)="validaDateTo($event)" type="text" name="dateTo" matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo"
                                     maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
-                                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                                    <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker">
+                                        <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
+                                    </mat-datepicker-toggle>
                                 <mat-datepicker #myDatepicker></mat-datepicker>
                                 <button mat-button *ngIf="filtro.dateTo || inputDate2.value" matSuffix mat-icon-button aria-label="Clear" (click)="limpiardate2()">
                   <i class="fa fa-close"></i>
