@@ -544,8 +544,8 @@ b {
 .ngx-pagination .pagination-next a::after,
 .ngx-pagination .pagination-next.disabled::after {
     content: '»';
-    display: inline-block;
-    margin-left: 0.5rem;
+    //display: inline-block;
+    //margin-left: 0.5rem;
 }
 
 .ngx-pagination .show-for-sr {
@@ -605,3 +605,5 @@ b {
     padding-bottom: 10px;
    // padding: 6px 2px;
 }
+
+ 

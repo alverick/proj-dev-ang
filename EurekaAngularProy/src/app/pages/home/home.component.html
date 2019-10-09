@@ -432,11 +432,11 @@
                                     <ul class="ngx-pagination" role="navigation">
                                         <li class="pagination-previous" [class.disabled]="p.isFirstPage()">
                                             <a tabindex="0" *ngIf="1 < p.getCurrent()" (keyup.enter)="p.previous()" (click)="p.previous()">
-                        &lt;
-                      </a>
+                                                <img src="assets/images/before.svg">
+                                            </a>
                                             <span *ngIf="p.isFirstPage()">
-                        &lt;
-                      </span>
+                                                <img src="assets/images/before.svg">
+                                            </span>
                                         </li>
                                         <li *ngIf="p.pages.length === 0" class="current">
                                             <span>1</span>
@@ -450,12 +450,12 @@
                                             </ng-container>
                                         </li>
                                         <li class="pagination-next" [class.disabled]="p.isLastPage()">
-                                            <a tabindex="0" *ngIf="!p.isLastPage()" (keyup.enter)="p.next()" (click)="p.next()">
-                        &gt;
-                      </a>
-                                            <span *ngIf="p.isLastPage()">
-                        &gt;
-                      </span>
+                                            <a class="pr-0" tabindex="0" *ngIf="!p.isLastPage()" (keyup.enter)="p.next()" (click)="p.next()">
+                                                <img  src="assets/images/after.svg">
+                                            </a>
+                                            <span class="pr-0" *ngIf="p.isLastPage()">
+                                                <img  src="assets/images/after.svg">
+                                            </span>
                                         </li>
                                     </ul>
                                 </pagination-template>
