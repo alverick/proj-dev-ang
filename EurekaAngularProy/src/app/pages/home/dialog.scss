@@ -28,7 +28,7 @@
             .resumen {
                 float: right;
                 span {
-                    margin-right: 10px; 
+                    margin-right: 10px;
                 }
                 .bien{
                     color: #05be50
@@ -126,3 +126,12 @@ small {
     text-align: left;
 }
 
+.mat-dialog-actions {
+  position: absolute;
+  right: calc(50% - 250px);
+  top: 30px;
+}
+
+:host ::ng-deep .cdk-overlay-dark-backdrop {
+  background-color: #f3f3f3;
+}
