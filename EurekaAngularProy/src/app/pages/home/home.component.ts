@@ -193,26 +193,19 @@ export class HomeComponent implements OnInit {
       e.preventDefault();
     }
     */
-    visibleFixedHead = true;
-
+   innerHeight = 0;
     @HostListener('window:scroll', ['$event'])
     onWindowScroll(e) {
-      let esVisible = false;
-
-      let posicionHead = $(".head-static").get(0).getBoundingClientRect();
-      if (posicionHead.top >= 0 && posicionHead.left >= 0
-        && posicionHead.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-        && posicionHead.right <= (window.innerWidth || document.documentElement.clientWidth)) {
-          esVisible = true;
-      }
-
-      if (this.visibleFixedHead !== esVisible) {
-        this.visibleFixedHead = esVisible;
+      let height = window.innerHeight;
+      if (!height)
+        height = document.documentElement.clientHeight;
+      if (height !== this.innerHeight) {
+        height -= 150;
+        $('.ps-body .ps-content').css('height', height + 'px');
       }
     }
 
   ngOnInit() {
-    this.visibleFixedHead = true;
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
     this.homeService.getServices(true).subscribe(
@@ -247,14 +240,13 @@ export class HomeComponent implements OnInit {
    this.transactionService.debtItems = { data: [], count : 0 };
    this.consultaDeuda();
    this.cargaExcel = false;
-    
+
    // check
    //this.SeleccionarTodos();
    this.selectedAll = false;
    this.selectedUniverse = false;
-  
-   console.log(this.selectedAll);
-    
+ 
+
   }
 
   statusOpt(){
@@ -452,7 +444,7 @@ orderList(index: number, asc: boolean) {
                   if(this.transactionService.debtItems.data.length > 0){
                     this.selectedAll = this.transactionService.isMarkedAll();
                   }
-                  
+
                   this.selectedUniverse = false;
                   this.spinner.hide();
                   if (cb) {
@@ -883,6 +875,8 @@ Ocultar() {
         });
       }
     });
+    console.log('SERVICIOS');
+   console.table(this.typeList);
   }
 
   DescargarReporte() {

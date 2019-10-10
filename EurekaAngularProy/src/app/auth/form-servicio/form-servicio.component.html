@@ -134,8 +134,8 @@
                 <mat-radio-button name="cobraMora" id="mora-si" value="S" class="texto-mora">Si</mat-radio-button>
             </mat-radio-group>
         </div>
-        <div class="form-group col-4" *ngIf="cobraMora">
-            <mat-form-field class="w-100">
+        <div class="form-group col-5" *ngIf="cobraMora">
+            <mat-form-field class="w-80 ml-3">
                 <mat-label>Tipo de Cobro</mat-label>
                 <mat-select class="texto-mora" formControlName="periodoMora" (ngModelChange)="TipoCobro()" disableOptionCentering
                   panelClass="pts30" >
@@ -147,11 +147,11 @@
                 <mat-error class="messsage-error" *ngIf="f.periodoMora.invalid && f.periodoMora.hasError('required')">Elija una opcion</mat-error>
             </mat-form-field>
         </div>
-        <div class="form-group col-6" *ngIf="cmoraporce">
+        <div class="form-group col-5" *ngIf="cmoraporce">
 
             <mat-radio-group class="radio-group" formControlName="tipoMora" (change)="changeTipoMora(true)">
                 <mat-radio-button class="radio-button" name="tipoMora" id="monto" value="M" class="texto-radio-small">Monto</mat-radio-button>
-                <mat-form-field class="w-100 pt-0 texto-mora">
+                <mat-form-field style="margin-top: -14px" class="ml-4 w-80 texto-mora">
                     <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
                     <span matSuffix class="simbolos">{{simboloMoneda}}&nbsp;&nbsp;</span>
                     <mat-error >
@@ -161,8 +161,8 @@
                         <mat-error class="messsage-error" *ngIf="f.monto.invalid && !f.monto.hasError('maximo') && !f.monto.hasError('minimo') && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error>
                     </mat-error>
                 </mat-form-field>
-                <mat-radio-button class="radio-button" name="tipoMora" id="porcentaje" value="P" class="texto-radio-small">Porcentaje</mat-radio-button>
-                <mat-form-field class="w-100 texto-mora">
+                <mat-radio-button class="radio-button " style="padding-top: 10px" name="tipoMora" id="porcentaje" value="P" class="texto-radio-small">Porcentaje</mat-radio-button>
+                <mat-form-field style="margin-top: -14px" class="ml-4  w-80 texto-mora">
                     <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
                     <span matSuffix class="simbolos">%</span>
                     <mat-error >

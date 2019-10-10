@@ -248,7 +248,7 @@ body {
 .radio-group {
     display: flex;
     flex-direction: column;
-    margin: 15px 0;
+    margin: 0px 0;
 }
 
 .radio-button {
@@ -306,4 +306,9 @@ body {
 
 .label{
     color: #0d131d !important;
+}
+
+
+.w-80{
+    width: 80%;
 }
