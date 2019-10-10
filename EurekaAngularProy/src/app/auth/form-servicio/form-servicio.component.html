@@ -2,7 +2,7 @@
 
     <div class="form-group">
         <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
+            <input class="input-text"   matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
             <mat-error >
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
@@ -117,7 +117,7 @@
         </div>
     </div>
     <span class="texto-medios" *ngIf="Dataparcial">¿Quieres que tus clientes te puedan pagar en partes?</span>
-    <div class="form-group" *ngIf="Dataparcial">
+    <div class="form-group pt-2" *ngIf="Dataparcial">
         <div class="form-group col-2 pl-0">
             <mat-radio-group formControlName="pagoPartes">
                 <mat-radio-button name="pagoPartes" id="pagoPartes-no" value="N" class="texto-mora">No</mat-radio-button>
@@ -125,8 +125,8 @@
             </mat-radio-group>
         </div>
     </div>
-    <span class="texto-medios" *ngIf="Dataparcial">Cobro de mora</span>
-    <div class="form-row" *ngIf="Dataparcial">
+    <span class="texto-medios " *ngIf="Dataparcial">Cobro de mora</span>
+    <div class="form-row pt-2" *ngIf="Dataparcial">
 
         <div class="form-group col-2">
             <mat-radio-group formControlName="cobraMora" (change)="changeMora()">

@@ -863,12 +863,15 @@ Ocultar() {
 
 }
 
-  openDialog(service: string) {
+  openDialog(service: any) {
     this.OcultaListaExcel = false;
     this.cargaExcel = false;
     this.excelService.service = service;
-    const dialogRef = this.dialog.open(DialogComponent);
+    const dialogRef = this.dialog.open(DialogComponent,{
+      width: '899px', 
+    });
     dialogRef.afterClosed().subscribe((result: Observable<any>) => {
+     
       if (result) {
         result.subscribe(() => {
           this.consultaDeuda();

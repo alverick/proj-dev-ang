@@ -77,7 +77,8 @@ getServicesActive(): Observable<any[]> {
       let data: any[] = [];
       r.forEach(s => data.push({
         id: s.id,
-        name: s.name
+        name: s.name,
+        dataType: s.dataType
       }));
       return data;
     }))

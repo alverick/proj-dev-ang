@@ -55,3 +55,14 @@
   .swal2-close{
     background-image: url('/assets/images/buscar.svg');
   }
+
+  :host ::ng-deep .mat-select-value {
+    color: #0d131d !important;
+    }
+
+    :host ::ng-deep   .mat-select-placeholder {
+        color:#0d131d !important;
+    }
+    :host ::ng-deep   .mat-input-element {
+        caret-color: #0d131d !important;
+    }
