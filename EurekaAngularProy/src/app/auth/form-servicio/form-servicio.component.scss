@@ -312,3 +312,14 @@ body {
 .w-80{
     width: 80%;
 }
+
+:host ::ng-deep .mat-radio-inner-circle { 
+    height: 16px !important; 
+    width: 16px !important; 
+     
+ }
+
+ :host ::ng-deep .mat-radio-outer-circle { 
+    height: 16px !important; 
+    width: 16px !important; 
+}

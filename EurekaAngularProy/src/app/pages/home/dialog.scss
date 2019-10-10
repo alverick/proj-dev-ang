@@ -128,10 +128,6 @@ small {
 
 .mat-dialog-actions {
   position: absolute;
-  right: calc(50% - 250px);
+  right: calc(50% - 430px);
   top: 30px;
-}
-
-:host ::ng-deep .cdk-overlay-dark-backdrop {
-  background-color: #f3f3f3;
 }

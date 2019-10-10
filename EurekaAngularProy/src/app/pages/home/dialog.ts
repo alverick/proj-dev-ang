@@ -50,6 +50,7 @@ declare var $: any;
             this.excelService.errores = [];
           }
         });
+
     }
 
     ngAfterContentInit() {
@@ -131,10 +132,20 @@ declare var $: any;
           this.excelService.statusUpload = false;
           this.excelService.errores = [];
           var obsClose = new Observable(observer => {
+            let msg = '';
+            if(this.excelService.service.dataType === 'C'){
+              // msg = `Se cargaron ${value.rowsUploaded} registros`;
+              msg =  `¡Listo! Se agregaron nuevos clientes`
+            }
+            else {
+              msg = `¡Listo! Se agregaron nuevas deudas`
+            }
             Swal.fire({
-              text: `Se cargaron ${value.rowsUploaded} registros`,
+              title:msg,
+              text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
               showCloseButton: true,
               onOpen: drawPopup,
+              confirmButtonText:  'CERRAR',
               onAfterClose: () => { observer.next(); observer.complete(); }
             });
           });
