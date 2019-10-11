@@ -251,9 +251,7 @@
                     <th class="c12">
                       <div class="text">Editar</div>
                     </th>
-                    <th class="c13">
-
-                    </th>
+                   
                   </tr>
                 </thead>
               </table>
@@ -263,7 +261,7 @@
                     <tr
                       *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFiltro.pageNumber, totalItems: transactionService.debtItems.count }"
                       [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
-                      <td class="c0 pl-3">
+                      <td class="c0 pl-3 ">
                         <div class="chk-vertical">
                           <mat-checkbox [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)">
                           </mat-checkbox>
@@ -375,18 +373,15 @@
                         </div>
                       </td>
                     </tr>
-                    <tr *ngIf="ceroRegistros()">
+                    <tr style="border-bottom: #13131300" *ngIf="ceroRegistros()">
                       <td colspan="13" class="texto-after">
                         <span>{{messageTable}}</span>
                         <div *ngIf="showArrow" class="">
-                          <img class="mt-3" src="assets/images/path.svg" alt="arrow">
+                          <img src="assets/images/path.svg" alt="arrow">
                         </div>
                       </td>
                     </tr>
-                    <tr>
-                      <td class="c13">
-                      </td>
-                    </tr>
+                     
 
                   </tbody>
                 </table>

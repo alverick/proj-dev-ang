@@ -60,7 +60,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       entry: new FormControl({ value: '', disabled: true }),
       email: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       movilNumber: new FormControl('', [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
-      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20),UnaLetra ]),
+      password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20) ]),
       newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
       confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
     }, {
@@ -98,8 +98,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
     var Pass =  parseInt(this.formGroup.value.password.toString().length);
     var newPass =  parseInt(this.formGroup.value.newPassword.toString().length);
-
+    console.log('aun no se valida');
     if (this.formGroup.valid) {
+      console.log('es valido');
        if(correo==0){
         return;
       }

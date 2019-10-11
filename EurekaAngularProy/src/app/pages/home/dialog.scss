@@ -21,14 +21,16 @@
     .errores {
         .header {
             @include font-text(14px, 500);
+            margin-right: 165px;
             .texto {
+                
                 float: left;
                 color: #0d131d !important;
             }
             .resumen {
                 float: right;
                 span {
-                    margin-right: 10px; 
+                    margin-right: 10px;
                 }
                 .bien{
                     color: #05be50
@@ -69,6 +71,7 @@
 }
 
 .text-center {
+     
     text-align: center;
     .input-file {
         width: 517px;
@@ -113,6 +116,8 @@ b {
 small {
     @include font-text(14px, 500);
     color: #0d131d;
+    text-align: center !important;
+    margin-left: 160px;
 }
 
 .cancelar {
@@ -126,11 +131,19 @@ small {
     text-align: left;
 }
 
-
-/*
-.cdk-overlay-dark-backdrop {
-    background: #f3f3f3 !important;
+.mat-dialog-actions {
+  position: absolute;
+  right: calc(50% - 430px);
+  top: 30px;
 }
 
-*/
 
+:host ::ng-deep .mat-dialog-container {
+    object-fit: contain;
+    border-radius: 4px !important;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1) !important;
+    background-color: #ffffff  !important;
+    padding: 0px !important; 
+   // color: rgba(255, 255, 255, 0.87);
+} 
+ 

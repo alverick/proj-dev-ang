@@ -5,6 +5,11 @@ export function drawPopup(el) {
   .css('background-image', 'url("/assets/images/cerrar.svg")')
   .css('background-repeat', 'no-repeat')
   .css('background-position', 'center')
+   .css('width', '16px')
+   .css('height', '16px')
+   .css('margin-top', '10px')
+   .css('margin-right', '10px')
+  .css('background-position', 'center')
   .html('');
   $(el).find('.swal2-title')
     .css('font-family', 'Geometria')

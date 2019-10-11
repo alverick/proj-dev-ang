@@ -219,7 +219,7 @@ body {
                                 color: #0d131d !important;
                                 img {
                                     position: absolute;
-                                    top: 47%;
+                                    top: 15px;
                                     right: 10%;
                                 }
                             }
@@ -262,7 +262,7 @@ body {
                     }
                 }
                 .c0 {
-                    width: 47px;
+                    width: 55px;
                 }
                 .c1 {
                     width: 80px;
@@ -619,4 +619,8 @@ b {
 
 .chk-vertical {
     margin-left: -10px !important; 
+}
+
+:host ::ng-deep .mat-checkbox-inner-container-no-side-margin{
+    margin-left: 12px !important;
 }

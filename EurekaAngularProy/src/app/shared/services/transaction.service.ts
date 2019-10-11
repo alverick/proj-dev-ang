@@ -86,7 +86,7 @@ export class TransactionService {
               let end = filtro.pageNumber * 50;
               if (end > r.count)
                 end = r.count;
-              this.pageMessage = `Mostrando de ${beg} - ${end} de ${r.count} elementos`;
+              this.pageMessage = `Mostrando ${beg} - ${end} de ${r.count} elementos`;
             }
             return r;
           }))

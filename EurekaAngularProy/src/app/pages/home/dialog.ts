@@ -1,4 +1,4 @@
-import { OnInit, Component } from "@angular/core";
+import { OnInit, Component, AfterContentInit } from "@angular/core";
 import { UploadProgressComponent } from "./upload-progress";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar, MatDialogRef } from "@angular/material";
@@ -13,7 +13,7 @@ import { Observable } from "rxjs";
 /*////////////////////////////////////////////////////////
 ///////////////// D I A L O G //////////////////////////
 ///////////////////////////////////////////////////////// */
-
+declare var $: any;
 
 @Component({
     selector: 'dialog-data-example-dialog',
@@ -22,7 +22,7 @@ import { Observable } from "rxjs";
   })
 
   // tslint:disable-next-line:component-class-suffix
-  export class DialogComponent implements OnInit {
+  export class DialogComponent implements OnInit, AfterContentInit {
     public inputXlsForm: FormGroup;
     public xlsValid: boolean;
     public codigoCliente: String = 'Codigo de Cliente';
@@ -50,10 +50,12 @@ import { Observable } from "rxjs";
             this.excelService.errores = [];
           }
         });
-       
+
     }
 
-     
+    ngAfterContentInit() {
+      $('.cdk-overlay-dark-backdrop').css('background-color', '#f3f3f3');
+    }
 
     mostrarInput() {
       this.ready = true;
@@ -133,10 +135,10 @@ import { Observable } from "rxjs";
             let msg = '';
             if(this.excelService.service.dataType === 'C'){
               // msg = `Se cargaron ${value.rowsUploaded} registros`;
-              msg =  `¡Listo! Se agregaron nuevos clientes`
+              msg =  `¡Listo! Se agregaron nuevas deudas `
             }
             else {
-              msg = `¡Listo! Se agregaron nuevas deudas`
+              msg = `¡Listo! Se agregaron nuevos clientes`
             }
             Swal.fire({
               title:msg,

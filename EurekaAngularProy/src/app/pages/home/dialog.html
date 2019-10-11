@@ -1,17 +1,17 @@
 <mat-dialog-actions align="end">
     <div style="cursor: pointer;" class="pt-2" (click)="close()">
         <span style="cursor: pointer;" class="cancelar m-0 pr-2  ">Cancelar</span>
-        <img style="cursor: pointer;" src="assets/images/cerrar.svg">
+        <img height="20" width="20" style="cursor: pointer;" src="assets/images/cerrar.svg">
     </div>
 </mat-dialog-actions>
 
-<div class="content">
-    <div class="title">Agrega deudas del servicio <span class="resaltado">{{excelService.service.name}}</span></div>
+<div class="content p-0">
+    <div class="title ">Agrega deudas del servicio <span class="resaltado">{{excelService.service.name}}</span></div>
     <br/>
     <ng-template #landing>
         <div class="landing">
             <div class="text">Sube la plantilla con las nuevas deudas de tus clientes</div>
-            <div class="text">¿No tienes la plantilla excel del servicio {{excelService.service.name}} <span class="link" (click)="descargarPlantilla()">Descárgala aquí</span></div>
+            <div class="text">¿No tienes la plantilla excel del servicio {{excelService.service.name}} ? <span class="link" (click)="descargarPlantilla()">Descárgala aquí</span></div>
             <i class="fa fa-file-excel"></i>
         </div>
         <img class="pb-3 img-excel" src="assets/images/excel.svg" alt="excel">
@@ -24,14 +24,16 @@
       </button>
         </div>
     </ng-template>
-
-    <small *ngIf="ready">Archivo seleccionado</small>
-    <div *ngIf="ready; else landing" class="text-center">
-        <div class="input-file">
-            <span class="text-input-file"><div class="pl-4 pt-2">{{fileName}}</div></span>
+       
+        <small  *ngIf="ready">Archivo seleccionado</small>  
+        <div style="margin-left: 160px;" *ngIf="ready; else landing" class="text-center">
+            <div class="input-file">
+                <span class="text-input-file"><div class="pl-4 pt-2">{{fileName}}</div></span>
+            </div>
+            <br/>
         </div>
-        <br />
-    </div>
+        
+  
     <div *ngIf="excelService.statusUpload" class="progress-text">{{progress.status}}</div>
     <mat-progress-bar *ngIf="excelService.statusUpload" [mode]="progress.mode" [value]="progress.value" [bufferValue]="100"></mat-progress-bar>
     <div *ngIf="ready && !excelService.statusUpload && excelService.errores.length == 0" class="text-center">
@@ -39,7 +41,7 @@
         SUBIR PLANTILLA
       </button>
     </div>
-    <div *ngIf="excelService.errores.length > 0" class="errores">
+    <div  style="margin-left: 160px;" *ngIf="excelService.errores.length > 0" class="errores">
         <div class="header">
             <div class="texto">Se encontraron los siguientes errores:</div>
             <div class="resumen">
@@ -57,7 +59,7 @@
                 <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
             </form>
             <br />
-            <button class="btn-eureca-green" type="button" form="input-form" (click)="uploadFile.click()">
+            <button class="btn-eureca-green "  style="margin-right: 180px;" type="button" form="input-form" (click)="uploadFile.click()">
               SELECCIONAR PLANTILLA
             </button>
         </div>

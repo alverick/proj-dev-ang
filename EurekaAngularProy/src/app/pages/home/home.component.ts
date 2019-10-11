@@ -810,6 +810,8 @@ orderList(index: number, asc: boolean) {
                   onOpen: drawPopup
                 })
               });
+              this.selectedAll = false;
+              this.selectedUniverse = false;
           }, err => { this.spinner.hide(); });
       }
     });
@@ -869,6 +871,8 @@ Ocultar() {
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogComponent,{
       width: '899px', 
+     // height: '377px', 
+     // disableClose: true
     });
     dialogRef.afterClosed().subscribe((result: Observable<any>) => {
      
@@ -929,7 +933,7 @@ Ocultar() {
     else {
       let yearFrom = new Date(e).getFullYear();
       if (yearFrom <  2000 || yearFrom >  2050 ) {
-        this.errores['dateFrom'] = 'Ingrese una fecha válida';
+        this.errores['dateFrom'] = 'Fecha invalida';
       }
       else {
         delete this.errores.dateFrom;
@@ -944,7 +948,7 @@ Ocultar() {
     else {
       let yearTo = new Date(e).getFullYear();
       if (yearTo <  2000 || yearTo >  2050 ) {
-        this.errores['dateTo'] = 'Ingrese una fecha válida';
+        this.errores['dateTo'] = 'Fecha invalida';
       }
       else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
         this.errores['dateTo'] = "No puede ser menor a la emisión"
@@ -971,12 +975,12 @@ Ocultar() {
 
   validaEmissionDate(items: Debts) {
     if (!items.newEmissionDate) {
-      items.errores.emissionDate = 'Ingrese una fecha válida';
+      items.errores.emissionDate = 'Fecha invalida';
     }
     else {
       let emidate = new Date(items.newEmissionDate).getFullYear();
       if (emidate <  2000 || emidate >  2050 ) {
-        items.errores.emissionDate = 'Ingrese una fecha válida';
+        items.errores.emissionDate = 'Fecha invalida';
       }
       else {
         delete items.errores.emissionDate;
@@ -986,12 +990,12 @@ Ocultar() {
 
   validaDueDate(items: Debts) {
     if (!items.newDueDate) {
-      items.errores.dueDate = 'Ingrese una fecha válida';
+      items.errores.dueDate = 'Fecha invalida';
     }
     else {
       let dueyear = new Date(items.newDueDate).getFullYear();
       if (dueyear <  2000 || dueyear >  2050 ) {
-        items.errores.dueDate = 'Ingrese una fecha válida';
+        items.errores.dueDate = 'Fecha invalida';
       }
       else if (items.newEmissionDate && items.newDueDate < items.newEmissionDate) {
         items.errores.dueDate = 'No debe ser menor a la fecha de emisión';
