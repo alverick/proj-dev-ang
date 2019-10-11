@@ -53,7 +53,7 @@ import { Observable } from "rxjs";
        
     }
 
-    DialogComponent
+     
 
     mostrarInput() {
       this.ready = true;
