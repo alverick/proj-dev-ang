@@ -73,7 +73,7 @@ export class FormServicioComponent implements OnInit {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3), Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+      nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3), Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
       codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
       nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode}),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
@@ -527,4 +527,12 @@ function Minimo(min: number) {
     }
     return null;
   }
+}
+
+function Alfanumerico(c: FormControl) {
+  let regex = /[0-9a-zA-Z]/g;
+  if (c.value && !regex.test(c.value)) {
+    return { alfa: true };
+  }
+  return null;
 }
