@@ -25,6 +25,7 @@ import { CloseViewGuard } from '../shared/guards/close-view.guard';
 import { SharedModule } from '../shared/shared.module';
 import { NumberAccountDirective } from './form-servicio/number-account.directive';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 
 @NgModule({
   imports: [
@@ -59,7 +60,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
     CrearContrasenaComponent,
     BlockCopyPasteDirective,
     OnlyNumbersFormDirective, 
-    NumberAccountDirective
+    NumberAccountDirective, RecuperarContrasenaComponent
   ],
   exports: [
     OnlyNumbersFormDirective

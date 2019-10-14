@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public menu(): boolean {
-    if (this.router.url.includes('/login')) {
+    if (this.router.url.includes('/login') || this.router.url.includes('/recupera')) {
       return false;
 
     } else {
@@ -66,6 +66,7 @@ export class HeaderComponent implements OnInit {
 
   public show(): boolean {
     if (this.router.url.includes('/login') ||
+      this.router.url.includes('/recupera') ||
       this.router.url.includes('/afiliacion') ||
       this.router.url.includes('/crearContrasena') ||
       this.router.url.includes('/configurarServicios') ||

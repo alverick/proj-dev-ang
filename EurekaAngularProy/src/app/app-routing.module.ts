@@ -15,12 +15,13 @@ import { LogoutGuard } from './shared/guards/logout.guard';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { CloseViewGuard } from './shared/guards/close-view.guard';
 import { ClientGuard } from './shared/guards/client.guard';
+import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recuperar-contrasena.component';
 
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
-
+  { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
   { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard ] },
