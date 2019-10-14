@@ -16,11 +16,14 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
 import { CloseViewGuard } from './shared/guards/close-view.guard';
 import { ClientGuard } from './shared/guards/client.guard';
 import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recuperar-contrasena.component';
+import { CambiaContrasenaComponent } from './auth/cambia-contrasena/cambia-contrasena.component';
 
+// CambiaContrasenaComponent
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
+  { path: 'cambiaContra', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },

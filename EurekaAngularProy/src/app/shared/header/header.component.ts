@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public menu(): boolean {
-    if (this.router.url.includes('/login') || this.router.url.includes('/recupera')) {
+    if (this.router.url.includes('/cambiaContra')|| this.router.url.includes('/recupera')  || this.router.url.includes('/login') ) {
       return false;
 
     } else {
@@ -66,10 +66,12 @@ export class HeaderComponent implements OnInit {
 
   public show(): boolean {
     if (this.router.url.includes('/login') ||
+    this.router.url.includes('/cambiaContra') ||
       this.router.url.includes('/recupera') ||
       this.router.url.includes('/afiliacion') ||
       this.router.url.includes('/crearContrasena') ||
       this.router.url.includes('/configurarServicios') ||
+      
       this.router.url.includes('/procesando')) {
       return false;
     }

@@ -19,7 +19,7 @@ body {
 }
 .cuadro-form {
     @include cuadro(381px,
-    auto);
+    464px);
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
@@ -37,8 +37,8 @@ body {
 }
 
 .margen{
-    padding-left: 36px;
-    padding-right: 56px;
+    margin-left: 35px;
+    margin-right: 58px;
 }
 
 .texto-negro {
@@ -103,7 +103,7 @@ body {
 
 .cuadro-form-Listo {
     @include cuadro(381px,
-    302px);
+    464px);
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
@@ -120,3 +120,4 @@ body {
         font-weight: 500;
      }
 }
+
