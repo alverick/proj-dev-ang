@@ -227,9 +227,21 @@ export class LoginComponent implements OnInit {
             'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' );
           }else if(this.intentos< 4 && this.codRespuesta == 5){
             this.codigo2= false;
+ 
+              Swal.fire({
+               // type: tipo ,
+                title: 'Tu cuenta está siendo procesada',
+                text: 'Estamos procesando la información de tu registro, Esto puede tomar hasta 24 horas. Cuando esté lista te enviaremos un mail de Bienvenida. (Horario de atención Lunes a Viernes 8:00am 6:00pm)',
+                showCloseButton: true,
+                showCancelButton: false,
+                showConfirmButton: true,
+                cancelButtonColor: '#d33',
+                // cancelButtonText:  'CERRAR',
+                allowOutsideClick: false,
+                confirmButtonText: 'ENTENDIDO',
+                onOpen: drawPopup,
+              })
 
-            this.mensaje( 'error', 'Cuenta Inactiva',
-            'Su cuenta se encuentra inactiva' );
 
           }else if(this.intentos == 4 && this.codRespuesta == 2){
 
