@@ -22,8 +22,20 @@
                 <!--/////// R I G H T ////////-->
                 <div class="col-md-6  pb-3">
                     <div class="d-flex justify-content-end">
-                        <div *ngIf="formulario" class=" cuadro-form pb-2">
-                            <!--/////// F O R M ////////-->
+                         <!---LISTO-->
+
+                         <div *ngIf="!formulario"  class="cuadro-form-Listo">
+                                <div class="texto-azul  mb-4 ">¡Listo!</div>
+                                <div class="texto-azul-text pb-4">Hemos enviado las instrucciones a tu <br>correo electrónico</div>
+                                <div class="reenviar mb-4">Reenviar correo en <small>3:00 minutos</small> </div>
+                                <div class="d-flex justify-content-center">
+                                        <button type="button" (click)="Reenviar()"  class="mano focus-elements btn-eureca-green">
+                                            REENVIAR CORREO
+                                        </button>
+                                </div>
+                        </div>
+                         <!---FORMULARIO-->
+                        <div *ngIf="formulario" class=" cuadro-form pb-2"> 
                             <div class="texto-azul  mb-4 ">Recuperar contraseña</div>
                             <div class="texto-azul-text pb-4">¡Está bien! Todos nos olvidamos de <br> algo alguna vez</div>
                             
@@ -57,7 +69,7 @@
                                         <div class="flex-fill mt-2 ">
                                             <label class="d-block texto-negro">Ingresa tu correo</label>
                                             <mat-form-field class="w-100 margen-inputs"  >
-                                                <input formControlName="email" [class.is-invalid]="f.email.invalid" matInput type="text" minlength="10" maxlength="100" placeholder="E-mail">
+                                                <input matInput class="input-text" formControlName="email" [class.is-invalid]="f.email.invalid"  type="text" minlength="10" maxlength="100"  >
                                                 <mat-error class="messsage-error">
                                                     <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required')">El E-mail es obligatorio</mat-error>
                                                     <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
@@ -90,18 +102,7 @@
 
                              
                         </div>
-                        <!---LISTO-->
-
-                        <div *ngIf="!formulario"  class="cuadro-form-Listo">
-                                <div class="texto-azul  mb-4 ">¡Listo!</div>
-                                <div class="texto-azul-text pb-4">Hemos enviado las instrucciones a tu <br>correo electrónico</div>
-                                <div class="reenviar mb-4">Reenviar correo en <small>3:00 minutos</small> </div>
-                                <div class="d-flex justify-content-center">
-                                        <button type="button" (click)="Reenviar()"  class="mano focus-elements btn-eureca-green">
-                                            REENVIAR CORREO
-                                        </button>
-                                </div>
-                        </div>
+                       
 
 
                     </div>

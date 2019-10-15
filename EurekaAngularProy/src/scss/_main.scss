@@ -144,14 +144,15 @@ button:focus {
     color: $green !important;
     &:hover {
       //  background-color: $greenclaro !important;
-      background-color: $green-oscuro!important;
+      background-color: #E5E5E5!important;
     }
     &:active {
-        background-color: $green !important;
+        background-color: $blanco !important;
         background-image:none !important;
     }
     &.btn-disabled {
         color: #9b9b9b !important;
+        background-color: $blanco !important;
     }
 }
 

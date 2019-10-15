@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { RecuperaService } from 'src/app/shared/services/recupera.service';
 import { drawPopup } from 'src/app/shared/services/popups';
@@ -17,6 +17,14 @@ export class RecuperarContrasenaComponent implements OnInit {
    public  submitted: Boolean = false;
    isCaptchaValidate: boolean = false;
 
+
+   @HostListener('window:beforeunload', ['$event'])
+    public closeWindow($event: any) {
+      if ( !this.formulario ) {
+        $event.returnValue = 'Se van a perder los cambios.';
+      }
+    }
+
   ngOnInit(   ) {
 
     this.recupera = this.formBuilder.group({
@@ -24,7 +32,12 @@ export class RecuperarContrasenaComponent implements OnInit {
       email:new FormControl('',  [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       //captcha: new FormControl( '',  [Validators.required])
     });
-    
+
+    // borra el back del navegador
+    window['_url_loop_'] = 'recupera';
+    history.pushState(null, null, 'recupera');
+    // mantiene la pagina con el scroll en la parte superior
+    window.scrollTo(0, 0);
   }
 
   get f(): any {
@@ -49,22 +62,23 @@ export class RecuperarContrasenaComponent implements OnInit {
               this.f.ruc.clearValidators();
               this.f.email.reset();
               this.f.email.clearValidators(); 
-      
+              // al ocultar la pantalla se mostrara en la parte de arriba la pagina
+              window.scrollTo(0, 0);
             }else{
-              this.mensaje('Hemos recibido tus datos','Ingrese una datos validos');
+              this.mensaje('Hemos recibido tus datos','Ingrese datos validos');
             }
         });
     }  
   }
 
   Reenviar(){
-    this.recuperaService.RecoverPassword({RUC: this.recupera.value.ruc,
-      Email: this.recupera.value.email}).subscribe(d =>{ 
+    this.recuperaService.RecoverPassword({RUC: this.recuperaService.ruc,
+      Email:this.recuperaService.email}).subscribe(d =>{ 
           if(d===true){
-            this.mensaje('Hemos recibido tus datos','Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta');
+            this.mensaje('Hemos recibido tus datos','Se ha reenviado un correo electrónico con indicaciones para acceder a tu cuenta');
             this.formulario =false;
           }else{
-            this.mensaje('Hemos recibido tus datos','Ingrese una datos validos');
+            this.mensaje('Hemos recibido tus datos','Ingrese datos validos');
           }
       });
   }

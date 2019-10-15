@@ -807,6 +807,7 @@ orderList(index: number, asc: boolean) {
                   text: 'Se han eliminado ' + totalForDelete + ' registros',
                   showCloseButton: true,
                   showCancelButton: false,
+                  confirmButtonText: 'CERRAR',
                   onOpen: drawPopup
                 })
 
