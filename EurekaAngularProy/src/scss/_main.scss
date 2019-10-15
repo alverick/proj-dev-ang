@@ -123,11 +123,54 @@ button:focus {
     @include border-radius(4px !important);
     border: solid 1px $green !important;
     &:hover {
-        background-color: $green !important;
+      //  background-color: $greenclaro !important;
+      background-color: $green-oscuro!important;
     }
-    &:focus {
-      outline: none !important;
-      box-shadow: none !important;
+    &:active {
+        background-color: $green !important;
+        background-image:none !important;
+    }
+    &.btn-disabled {
+        background-color: #9b9b9b !important;
+        border: solid 1px #9b9b9b !important;
+    }
+}
+.btn-outline-green {
+    
+    @include font-text(16px !important, 500 !important);
+    @include border-radius(4px !important);
+    background-color: $blanco !important;
+    border: solid 1px $blanco !important;
+    color: $green !important;
+    &:hover {
+      //  background-color: $greenclaro !important;
+      background-color: $green-oscuro!important;
+    }
+    &:active {
+        background-color: $green !important;
+        background-image:none !important;
+    }
+    &.btn-disabled {
+        color: #9b9b9b !important;
+    }
+}
+
+.btn-eureca-green-alert {
+    height: 48px;
+    width: 207px;
+    @include font-text(14px !important, normal !important);
+    color: #ffffff !important;
+     background-color: $green !important;
+     
+    @include border-radius(4px !important);
+    border: solid 1px $green !important;
+    &:hover {
+      //  background-color: $greenclaro !important;
+      background-color: $green-oscuro!important;
+    }
+    &:active {
+        background-color: $green !important;
+        background-image:none !important;
     }
     &.btn-disabled {
         background-color: #9b9b9b !important;
@@ -135,23 +178,25 @@ button:focus {
     }
 }
 
-.btn-outline-green {
-    @include font-text(16px !important, 500 !important);
-    @include border-radius(4px !important);
-    background-color: $blanco !important;
-    border: solid 1px $blanco !important;
-    color: $green !important;
-    &.btn-disabled {
-        color: #9b9b9b !important;
-    }
-}
+
 
 .btn-outline-green-alert {
-    @include font-text(14px !important, 500 !important);
+
+    height: 48px;
+    width: 207px;
+    @include font-text(14px !important, normal !important);
     @include border-radius(4px !important);
     background-color: $blanco !important;
     border: solid 1px $blanco !important;
     color: $green !important;
+    &:hover {
+       
+        background-color: #E5E5E5!important;
+      }
+      &:active {
+          background-color:$blanco!important;
+          background-image:none !important;
+      }
     &.btn-disabled {
         color: #9b9b9b !important;
     }

@@ -7,8 +7,8 @@ export function drawPopup(el) {
   .css('background-position', 'center')
    .css('width', '16px')
    .css('height', '16px')
-   .css('margin-top', '10px')
-   .css('margin-right', '10px')
+   .css('margin-top', '16px')
+   .css('margin-right', '16px')
   .css('background-position', 'center')
   .html('');
   $(el).find('.swal2-title')
@@ -34,7 +34,7 @@ export function drawPopup(el) {
     .css('background-color', '')
     .css('border-left-color', '')
     .css('border-right-color', '')
-    .addClass('btn-eureca-green');
+    .addClass('btn-eureca-green-alert');
   $(el).find('.swal2-cancel')
     .css('background-color', '')
     .addClass('btn-outline-green-alert');

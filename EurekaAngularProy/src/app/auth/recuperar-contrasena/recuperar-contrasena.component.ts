@@ -45,6 +45,11 @@ export class RecuperarContrasenaComponent implements OnInit {
             if(d===true){
               this.mensaje('Hemos recibido tus datos','Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta');
               this.formulario =false;
+              this.f.ruc.reset();
+              this.f.ruc.clearValidators();
+              this.f.email.reset();
+              this.f.email.clearValidators(); 
+      
             }else{
               this.mensaje('Hemos recibido tus datos','Ingrese una datos validos');
             }
