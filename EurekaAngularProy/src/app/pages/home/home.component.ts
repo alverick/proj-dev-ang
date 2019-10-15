@@ -809,12 +809,23 @@ orderList(index: number, asc: boolean) {
                   showCancelButton: false,
                   onOpen: drawPopup
                 })
+
+                
               });
               this.selectedAll = false;
               this.selectedUniverse = false;
+
+              this.transactionService.debtItems.data = [];
+              this.transactionService.itemsForDelete = [];
+             
+              console.log('arra limpio');
+              
+              console.log(totalForDelete)
           }, err => { this.spinner.hide(); });
       }
     });
+    console.log('arra limpio');
+    
   }
 
 
@@ -845,8 +856,10 @@ orderList(index: number, asc: boolean) {
 }
 
   SeleccionarTodos() {
+
     if (this.selectedAll) {
       this.transactionService.debtItems.data.forEach(itm => this.transactionService.deleteDebt(itm.id, itm.selected = true));
+      
     }
     else {
       this.selectedUniverse = false;

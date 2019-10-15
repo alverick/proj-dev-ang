@@ -13,13 +13,18 @@ export class RecuperaService {
 
   constructor(private http: HttpClient, private spinner: NgxSpinnerService) { }
 
-
+  public ruc: number;
+  public email: number;
 
   public   RecoverPassword(data:any): Observable<any>{
     this.spinner.show(); 
+    
      return this.http.post<any>(`${environment.END_POINT}/Login/Verifying?_=`+ new Date().getTime(), data)
      .pipe(map(r =>{
-            
+          this.ruc = data.RUC;
+          this.email = data.Email;
+
+          console.log('datos:'+ this.ruc + this.email );
           this.spinner.hide();
           return r;
      }))

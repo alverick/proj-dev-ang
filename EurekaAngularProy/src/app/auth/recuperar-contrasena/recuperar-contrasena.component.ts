@@ -15,6 +15,7 @@ export class RecuperarContrasenaComponent implements OnInit {
    public formulario :boolean =true;
    recupera: FormGroup;
    public  submitted: Boolean = false;
+   isCaptchaValidate: boolean = false;
 
   ngOnInit(   ) {
 
@@ -30,23 +31,39 @@ export class RecuperarContrasenaComponent implements OnInit {
     return this.recupera.controls;
   }
 
+  
+  resolved(captchaResponse: string) : boolean{ 
+    this.isCaptchaValidate = true;
+    return true;
+  }
+
   SubmitRecupera(){ 
 
-    if (this.recupera.invalid) {
-      return;
-    }
-    console.log('entra a metodo');
+    if (this.recupera.valid && this.isCaptchaValidate == true) {
+      this.recuperaService.RecoverPassword({RUC: this.recupera.value.ruc,
+        Email: this.recupera.value.email}).subscribe(d =>{ 
+            if(d===true){
+              this.mensaje('Hemos recibido tus datos','Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta');
+              this.formulario =false;
+            }else{
+              this.mensaje('Hemos recibido tus datos','Ingrese una datos validos');
+            }
+        });
+    }  
+  }
+
+  Reenviar(){
     this.recuperaService.RecoverPassword({RUC: this.recupera.value.ruc,
-      Email: this.recupera.value.email}).subscribe(d =>{
-        console.log('entra a recuperar');
-         
+      Email: this.recupera.value.email}).subscribe(d =>{ 
           if(d===true){
             this.mensaje('Hemos recibido tus datos','Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta');
+            this.formulario =false;
           }else{
-            this.mensaje('Hemos recibido tus datos','Ingrese una cuenta valida');
+            this.mensaje('Hemos recibido tus datos','Ingrese una datos validos');
           }
       });
   }
+
 
 
   mensaje( titulo: string, text: string) {

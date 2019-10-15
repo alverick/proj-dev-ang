@@ -23,7 +23,7 @@ export class TransactionService {
 
     public pageMessage: string = "Mostrando 0 de 0 elementos";
     public debtItems: DebtsPagedList = { count:0, data: [] };
-    private itemsForDelete: number[] = [];
+    public itemsForDelete: number[] = [];
 
     getDateFormat(date: Date): string {
       if (date) {
