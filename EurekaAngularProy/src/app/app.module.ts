@@ -1,3 +1,4 @@
+import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -57,6 +58,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     AppComponent,
     HeaderComponent,
     HomeComponent,
+    GtpGrillaComponent,
     PagosComponent,
     AnalisisComponent,
     SubirPlantillaComponent,

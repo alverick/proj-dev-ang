@@ -1,6 +1,6 @@
 <mat-dialog-actions align="end">
-    <div style="cursor: pointer;" class="pt-2" (click)="close()">
-        <span style="cursor: pointer;" class="cancelar m-0 pr-2  ">Cancelar</span>
+    <div  style="cursor: pointer;" class="pt-2" (click)="close()">
+        <span height="77" width="23" style="cursor: pointer;" class="cancelar m-0 pr-2 pt-1">Cancelar</span>
         <img height="20" width="20" style="cursor: pointer;" src="assets/images/cerrar.svg">
     </div>
 </mat-dialog-actions>
@@ -51,7 +51,7 @@
             <div class="clear-float"></div>
         </div>
         <perfect-scrollbar class="list">
-            <div class="err-item" *ngFor="let err of excelService.errores"><span *ngIf="err.row > 0">File {{err.row}} : </span>{{err.description}}</div>
+            <div class="err-item" *ngFor="let err of excelService.errores"><span *ngIf="err.row > 0">Fila {{err.row}} : </span>{{err.description}}</div>
         </perfect-scrollbar>
         <div class="footer">Corrige los errores y vuelve a subir la plantilla</div>
         <div class="text-center">

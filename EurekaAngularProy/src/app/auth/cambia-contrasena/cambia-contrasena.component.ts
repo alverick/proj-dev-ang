@@ -2,6 +2,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MustMatch } from '../crear-contrasena/must-match.validator';
 
 @Component({
   selector: 'app-cambia-contrasena',
@@ -14,11 +15,11 @@ export class CambiaContrasenaComponent implements OnInit {
   constructor(public formBuilder: FormBuilder, private rutaActiva: ActivatedRoute, private router: Router) { }
   public Cambia: FormGroup;
   ngOnInit() {
-    this.Cambia = this.formBuilder.group({
-      /*  password: new FormControl('', [Validators.required]),
-        newpassword: new FormControl('', [Validators.required]) */
+    this.Cambia = this.formBuilder.group({ 
         contrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
         repcontrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
+    }, {
+      validator: MustMatch('contrasena', 'repcontrasena')
     })
     this.llave =  this.rutaActiva.snapshot.params.llave;
     console.log('cambia contraseña');
@@ -30,7 +31,8 @@ export class CambiaContrasenaComponent implements OnInit {
     */
   }
 
-  f():any{
+  
+  get f():any{
     return this.Cambia.controls;
   }
 

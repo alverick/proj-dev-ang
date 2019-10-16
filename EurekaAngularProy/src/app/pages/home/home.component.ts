@@ -779,10 +779,18 @@ orderList(index: number, asc: boolean) {
       this.mensaje( 'error', 'Error al Eliminar', '¡Seleccione las filas a eliminar por favor!');
       return;
     }
+    let mensaje='';
+    let mensaje_final ='';
+    if (totalForDelete === 1 ) {
+      mensaje = `Esta acción va a eliminar ${totalForDelete} deuda`;
+    }
+    if (totalForDelete > 1 ) {
+      mensaje = `Esta acción va a eliminar ${totalForDelete} deudas`;
+    }
 
     Swal.fire({
       title: '¿Seguro que quieres continuar?',
-      text: `Esta acción va a eliminar ${totalForDelete} deudas`,
+      text: mensaje,
       showCancelButton: true,
       showCloseButton: true,
       confirmButtonText: 'CONFIRMAR',
@@ -802,9 +810,16 @@ orderList(index: number, asc: boolean) {
           });
             this.consultaDeuda(() =>
               {
+                if (totalForDelete === 1 ) {
+                  mensaje_final = 'Se han eliminado ' + totalForDelete + ' registro';
+                }
+                if (totalForDelete > 1 ) {
+                  mensaje_final = 'Se han eliminado ' + totalForDelete + ' registros';
+                }
+
                 Swal.fire({
                   title: 'Eliminado!',
-                  text: 'Se han eliminado ' + totalForDelete + ' registros',
+                  text: mensaje_final,
                   showCloseButton: true,
                   showCancelButton: false,
                   confirmButtonText: 'CERRAR',

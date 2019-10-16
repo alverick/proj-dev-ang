@@ -86,27 +86,34 @@
             </form>
           </div>
         </div>
+
         <div class="widget lista">
           <div class="title">Movimientos</div>
           <div class="content">
             <section class="actions">
               <div class="al-left" style="padding-left: -10px">
                 <div class="chk-vertical">
-                  <mat-checkbox id="chk-all" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos()">
+                  <mat-checkbox id="chk-all" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos()" [disabled]="ceroRegistros()">
                   </mat-checkbox>
                   <label class="act-label" for="chk-all" aria-label="chk-all"
                     [class.seleccionado]="selectedAll">Seleccionar</label>
                 </div>
-                <div class="btn-eliminar">
-                  <div (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
+                <div *ngIf="!ceroRegistros()"  class="btn-eliminar" >
+                  <div (click)="EliminarSeleccionados()"  data-toggle="modal" data-target="#ModalNotificacion">
                     <img class="icono" src="assets/images/trash.svg" alt="trash">
                   </div>
                   <label class="act-label">Eliminar</label>
                 </div>
+                <div *ngIf="ceroRegistros()" class="btn-eliminar" >
+                    <div data-toggle="modal" data-target="#ModalNotificacion">
+                      <img  src="assets/images/trash.svg" alt="trash">
+                    </div>
+                    <label class="act-label">Eliminar</label>
+                  </div>
               </div>
 
               <div class="addDeuda">
-                <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <div class="btn btn-default dropdown-toggle" data-toggle="dropdown" >
                   <img src="assets/images/plus_circle.svg" alt="plus_circle"> Agregar deudas
                 </div>
                 <div class="dropdown-menu lnk-label" role="menu">
@@ -130,7 +137,7 @@
               <div class="clear-float"></div>
             </section>
             <section *ngIf="selectedAll" class="counter">
-              <div class="text">
+              <div class="text" *ngIf="transactionService.debtItems.count > 1">
                 Se han seleccionado los <span *ngIf="!selectedUniverse"
                   style="font-weight: 500;">{{transactionService.debtItems.data.length}}</span><span
                   *ngIf="selectedUniverse" style="font-weight: 500;">{{transactionService.debtItems.count}}</span>
@@ -143,6 +150,23 @@
                   <span *ngIf="selectedUniverse">Anular la selección</span>
                 </button>
               </div>
+
+
+              <div class="text" *ngIf="transactionService.debtItems.count == 1" >
+                  Se ha seleccionado  <span *ngIf="!selectedUniverse"
+                    style="font-weight: 500;">{{transactionService.debtItems.data.length}}</span><span
+                    *ngIf="selectedUniverse" style="font-weight: 500;">{{transactionService.debtItems.count}}</span>
+                  registro de esta página
+                  <button type="button"
+                    *ngIf="transactionService.debtItems.count > transactionService.debtItems.data.length"
+                    class="btn-select-all" (click)="selectedUniverse = !selectedUniverse">
+                    <span *ngIf="!selectedUniverse">Seleccionar los {{transactionService.debtItems.count}}
+                      registros</span>
+                    <span *ngIf="selectedUniverse">Anular la selección</span>
+                  </button>
+                </div>
+
+
             </section>
             <section class="lista">
               <table>

@@ -120,8 +120,11 @@ small {
     margin-left: 160px;
 }
 
+ 
 .cancelar {
-    @include font-text(18px, 500);
+    width: 77px !important;
+    height: 23px !important;
+    @include font-text(18px !important, 500 !important);
     color: #9ea1a5;
 }
 

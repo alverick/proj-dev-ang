@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { ConfigurarEmpresaComponent } from './configurar-empresa/configurar-empresa.component';
 import { SubirPlantillaComponent } from './subir-plantilla/subir-plantilla.component';
 import { AnalisisComponent } from './analisis/analisis.component';
+import { GtpGrillaComponent } from './gtp-grilla/gtp-grilla.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { AnalisisComponent } from './analisis/analisis.component';
     //ConfigurarEmpresaComponent,
     //SubirPlantillaComponent,
     //AnalisisComponent
-  ]
+  GtpGrillaComponent]
 })
 export class PagesModule {
   constructor (@Optional() @SkipSelf() parentModule: PagesModule) {
