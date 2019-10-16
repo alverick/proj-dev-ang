@@ -39,8 +39,10 @@
                                                     <div class="flex-fill mt-2 ">
                                                         <label class="d-block texto-negro">Nueva contraseña</label>
                                                         <mat-form-field class="w-100 margen-inputs"  >
-                                                                <input matInput class="input-text" type="password"     minlength="6" maxlength="20" formControlName="password"    >
-                                                            
+                                                                <input matInput class="input-text" type="password"     minlength="6" maxlength="20" formControlName="contrasena"    >
+                                                             <!--   <mat-error class="messsage-error" *ngIf="f.newpassword.invalid && f.newpassword.hasError('required')">Contraseña es obligatorio</mat-error>
+                                                                <mat-error class="messsage-error" *ngIf="f.newpassword.invalid && f.newpassword.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
+                                                                <mat-error class="messsage-error" *ngIf="f.newpassword.invalid && !f.newpassword.hasError('minlength') && f.newpassword.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error> -->
                                                                 
                                                         </mat-form-field> 
                                                     </div>
@@ -54,8 +56,11 @@
                                                     <div class="flex-fill mt-2 ">
                                                         <label class="d-block texto-negro">Repite la contraseña</label>
                                                         <mat-form-field class="w-100 margen-inputs"  >
-                                                            <input type="password" formControlName="newpassword"  matInput   minlength="10" maxlength="100" >
-                                                            
+                                                            <input type="password" formControlName="repcontrasena"  matInput   minlength="10" maxlength="100" >
+                                                        <!--    <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required')">Debe repetir la contraseña</mat-error>
+                                                            <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
+                                                            <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
+                                                            <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && !f.repcontrasena.hasError('minlength') && f.repcontrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error> -->
                                                                 
                                                         </mat-form-field> 
                                                     </div>

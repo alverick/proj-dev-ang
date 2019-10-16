@@ -50,7 +50,7 @@
                                         <div class="flex-fill mt-2">
                                             <label class="d-block texto-negro h6">RUC</label>
                                             <mat-form-field class="w-100 " style="height: 1.9px !important">
-                                                <input matInput class="input-text" type="text" name="ruc" appOnlynumbers autocomplete="on" minlength="11" maxlength="11" required formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors">
+                                                <input matInput class="input-text" (Keydown.space)="$event.preventDefault()" type="text" name="ruc" appOnlynumbers autocomplete="on" minlength="11" maxlength="11" required formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors">
                                                 <mat-error class="messsage-error">
                                                     <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
                                                     <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
@@ -69,7 +69,7 @@
                                         <div class="flex-fill mt-2 ">
                                             <label class="d-block texto-negro">Ingresa tu correo</label>
                                             <mat-form-field class="w-100 margen-inputs"  >
-                                                <input matInput class="input-text" formControlName="email" [class.is-invalid]="f.email.invalid"  type="text" minlength="10" maxlength="100"  >
+                                                <input matInput class="input-text" (Keydown.space)="$event.preventDefault()" formControlName="email" [class.is-invalid]="f.email.invalid"  type="text" minlength="10" maxlength="100"  >
                                                 <mat-error class="messsage-error">
                                                     <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required')">El E-mail es obligatorio</mat-error>
                                                     <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>

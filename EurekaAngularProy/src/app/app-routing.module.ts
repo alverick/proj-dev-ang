@@ -23,7 +23,7 @@ import { CambiaContrasenaComponent } from './auth/cambia-contrasena/cambia-contr
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
-  { path: 'cambiaContra', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
+  { path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },

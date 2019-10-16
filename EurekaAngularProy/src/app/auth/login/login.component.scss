@@ -146,19 +146,17 @@ div.mat-form-field-infix {
     width: 232px;
     height: 48px;
     float: right;
-    @include box-shadows(0,
-    1px,
-    4px,
-    0,
-    rgba(252,
-    154,
-    0,
-    0.2));
+   // @include box-shadows(0,1px,4px, 0,rgba(252, 154, 0, 0.2));
     &:hover {
-        background-color: $blanco;
+        background-color: $green;
         border-radius: 4px;
         border: solid 1px $greenclaro;
+        color: $blanco;
+    }
+    &:active {
+        background-color: $blanco;
         color: $green;
+        border: solid 1px $green;
     }
 }
 
