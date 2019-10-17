@@ -7,8 +7,10 @@
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
+                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error> 
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && f.nombre.hasError('alfa')">El nombre debe tener por lo menos una letra o un numero</mat-error>
+             <!---   <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && !f.nombre.hasError('alfa') && f.nombre.hasError('alfabetico')">El nombre debe tener por lo menos una letra </mat-error> -->
+
             </mat-error>
         </mat-form-field>
     </div>

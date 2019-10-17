@@ -16,7 +16,7 @@ export class RecuperaService {
   public ruc: number;
   public email: number;
 
-  public   RecoverPassword(data:any): Observable<any>{
+  public RecoverPassword(data:any): Observable<any>{
     this.spinner.show(); 
     
      return this.http.post<any>(`${environment.END_POINT}/Login/Verifying?_=`+ new Date().getTime(), data)
@@ -33,5 +33,36 @@ export class RecuperaService {
       return throwError(err);
      })); 
   }
+
+  public VerifingToken(data:any): Observable<any>{
+    this.spinner.show(); 
+    
+     return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=`+ new Date().getTime(), data)
+     .pipe(map(r =>{
+
+          this.spinner.hide();
+          return r;
+     }))
+     .pipe(catchError(err => {
+      this.spinner.hide();
+      return throwError(err);
+     })); 
+  }
+
+
+  public ChangePassword(data:any): Observable<any>{
+    this.spinner.show();  
+     return this.http.post<any>(`${environment.END_POINT}/Login/changepassword?_=`+ new Date().getTime(), data)
+     .pipe(map(r =>{
+
+          this.spinner.hide();
+          return r;
+     }))
+     .pipe(catchError(err => {
+      this.spinner.hide();
+      return throwError(err);
+     })); 
+  }
+
 
 }

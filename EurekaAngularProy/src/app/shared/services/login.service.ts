@@ -35,8 +35,10 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
     'Cache-Control': 'no-cache',
   }
   };
+ 
   return this.http.post(url, data, opts)
     .pipe(map((r: RespuestaLogin) => {
+      console.table(r);
       if (r.estado) {
         this.storage.setCurrentSession({
           user: { ruc: ruc },

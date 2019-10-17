@@ -962,7 +962,7 @@ Ocultar() {
     else {
       let yearFrom = new Date(e).getFullYear();
       if (yearFrom <  2000 || yearFrom >  2050 ) {
-        this.errores['dateFrom'] = 'Fecha invalida';
+        this.errores['dateFrom'] = 'Fecha Inválida';
       }
       else {
         delete this.errores.dateFrom;
@@ -977,7 +977,7 @@ Ocultar() {
     else {
       let yearTo = new Date(e).getFullYear();
       if (yearTo <  2000 || yearTo >  2050 ) {
-        this.errores['dateTo'] = 'Fecha invalida';
+        this.errores['dateTo'] = 'Fecha Inválida';
       }
       else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
         this.errores['dateTo'] = "No puede ser menor a la emisión"
@@ -1004,12 +1004,12 @@ Ocultar() {
 
   validaEmissionDate(items: Debts) {
     if (!items.newEmissionDate) {
-      items.errores.emissionDate = 'Fecha invalida';
+      items.errores.emissionDate = 'Fecha Inválida';
     }
     else {
       let emidate = new Date(items.newEmissionDate).getFullYear();
       if (emidate <  2000 || emidate >  2050 ) {
-        items.errores.emissionDate = 'Fecha invalida';
+        items.errores.emissionDate = 'Fecha Inválida';
       }
       else {
         delete items.errores.emissionDate;
@@ -1019,12 +1019,12 @@ Ocultar() {
 
   validaDueDate(items: Debts) {
     if (!items.newDueDate) {
-      items.errores.dueDate = 'Fecha invalida';
+      items.errores.dueDate = 'Fecha Inválida';
     }
     else {
       let dueyear = new Date(items.newDueDate).getFullYear();
       if (dueyear <  2000 || dueyear >  2050 ) {
-        items.errores.dueDate = 'Fecha invalida';
+        items.errores.dueDate = 'Fecha Inválida';
       }
       else if (items.newEmissionDate && items.newDueDate < items.newEmissionDate) {
         items.errores.dueDate = 'No debe ser menor a la fecha de emisión';

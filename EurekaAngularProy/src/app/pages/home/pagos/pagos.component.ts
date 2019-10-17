@@ -4,7 +4,7 @@ import { drawPopup } from "src/app/shared/services/popups";
 import { TransactionService } from "src/app/shared/services/transaction.service";
 import { PagoService } from "src/app/shared/services/pago.service";
 import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
-
+declare var $: any;
 @Component({
   selector: 'app-pagos',
   templateUrl: './pagos.component.html',
@@ -36,8 +36,13 @@ export class PagosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   
   }
 
+  ngAfterContentInit() {
+    $('.cdk-overlay-dark-backdrop').css('background-color', '#f3f3f3');
+  }
+  
   private loadData() {
     this.items = [];
     this.cargando = true;
