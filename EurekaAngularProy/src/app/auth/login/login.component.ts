@@ -231,7 +231,7 @@ export class LoginComponent implements OnInit {
               Swal.fire({
                // type: tipo ,
                 title: 'Tu cuenta está siendo procesada',
-                text: 'Estamos procesando la información de tu registro, Esto puede tomar hasta 24 horas. Cuando esté lista te enviaremos un mail de Bienvenida. (Horario de atención Lunes a Viernes 8:00am 6:00pm)',
+                html: 'Estamos procesando la información de tu registro, esto puede tomar hasta 24 horas. Cuando esté lista te enviaremos un mail de Bienvenida.<br> (Horario de atención: Lunes a Viernes 8:00am - 6:00pm)',
                 showCloseButton: true,
                 showCancelButton: false,
                 showConfirmButton: true,

@@ -10,18 +10,17 @@ body {
 }
 
 .widget {
-    width: 100%;
-    .title { 
+    width: 88%;
+    margin-left: auto;
+    margin-right: auto;
+    .title {
         @include font-text(18px, 500);
         padding: 20px 15px 10px 15px;
         color: $negro;
     }
     .content {
-        width: 88%;
+        width: 100%;
         min-height: 15px;
-        margin-left: auto;
-        
-
         @include border-radius(5px);
         background-color: #fff;
         padding: 5px 15px;
@@ -30,7 +29,6 @@ body {
 }
 
 .widget.filtros {
-    
     .content {
         .mat-form-field.f1 {
             width: 280px;
@@ -45,13 +43,102 @@ body {
             height: 32px;
         }
     }
-} 
+}
+
 .widget.lista {
- 
     .content {
         padding-left: 0px;
         padding-right: 0px;
-       
+        .actions {
+            height: 51px;
+            padding-left: 15px;
+            padding-right: 15px;
+            border-bottom: solid 1px #f0f0f0;
+            .al-left {
+                display: flex;
+                .act-label {
+                    @include font-text(10px, 500);
+                    color: #9b9b9b;
+                }
+                .seleccionado {
+                    color: $textgreen;
+                }
+                .btn-eliminar {
+                    margin-left: 25px;
+                    color: $textgreen;
+                    display: block;
+                    width: 40px;
+                    text-align: center;
+                    img {
+                        cursor: pointer;
+                        width: 20px;
+                        height: 20px;
+                        line-height: 0;
+                    }
+                    .icono {
+                        width: 20px;
+                        height: 20px;
+                    }
+                    .act-label {
+                        color: $textgreen;
+                    }
+                }
+            }
+            .al-right {
+                padding-top: 12px;
+                .lnk-label {
+                    display: inline;
+                    @include font-text(14px, 500);
+                    color: $textgreen;
+                    margin-left: 20px;
+                    cursor: pointer;
+                }
+                .sobresale {
+                    position: absolute;
+                    right: 20px;
+                    background-color: white;
+                    z-index: 99;
+                    .card {
+                        padding: 8px;
+                        .selecciona-servicio {
+                            @include font-text(10px!important, 500!important);
+                            color: #0d131d !important;
+                            padding: 6px 2px;
+                        }
+                        .option-item {
+                            @include font-text(14px);
+                            color: #0d131d !important;
+                            width: 100%;
+                            padding: 6px;
+                            .mano {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .counter {
+            height: 51px;
+            padding: 15px;
+            border-bottom: solid 1px #f0f0f0;
+            text-align: center;
+            .text {
+                @include font-text(14px);
+                color: #0d131d;
+                .btn-select-all {
+                    padding: 5px 10px;
+                    font-weight: 500;
+                    color: #05be50 !important;
+                    background-color: #fff;
+                    @include border-radius(4px);
+                    border: 0;
+                    &:hover {
+                        background-color: rgba(5, 190, 80, 0.2);
+                    }
+                }
+            }
+        }
         .lista {
             padding-top: 8px;
             .head-fixed {
@@ -176,38 +263,44 @@ body {
                         }
                     }
                 }
-                 
+                .c0 {
+                    width: 20px;
+                }
                 .c1 {
-                    width: 100px;
-                    .text {
-                        width: 150px;
-                      //  text-align: left;
-                    }
+                    width: 130px;
+                    text-align: left;
+                   /* .text {
+                        width: 49px;
+                        text-align: left;
+                    } */
                 }
                 .c2 {
-                    width: 60px;
-                    .text {
-                        width: 60px;
-                        text-align: left;
-                    }
+                    width: 90px;
+                    text-align: left;
+                   /* .text {
+                        width: 37px;
+                    } */
                 }
                 .c3 {
-                    width: 70px;
-                    .text {
-                        width: 70px;
-                    }
+                    width: 90px;
+                    text-align: left;
+                   /* .text {
+                        width: 107px;
+                    } */
                 }
                 .c4 {
                     width: 150px;
-                    .text {
-                        width: 150px;
-                    }
+                    text-align: left;
+                   /* .text {
+                        width: 58px;
+                    } */
                 }
                 .c5 {
-                    width: 150px;
-                    .text {
-                        width: 150px;
-                    }
+                    width: 120px;
+                    text-align: left;
+                   /* .text {
+                        width: 57px;
+                    }  */
                 }
                 .c6 {
                     width: 145px;
@@ -220,8 +313,45 @@ body {
                     .text {
                         width: 60px;
                     }
-                } 
-                
+                }
+                /*.c8 {
+                    width: 100px;
+                    // text-align: justify;
+                    .text {
+                        width: 38px;
+                    }
+                    .msg-error {
+                        margin-left: -15px;
+                    }
+                }
+                .c9 {
+                    width: 100px;
+                    text-align: ce;
+                    .text {
+                        width: 31px;
+                    }
+                }
+                .c10 {
+                    width: 100px;
+                    .text {
+                        width: 31px;
+                    }
+                }
+                .c11 {
+                    width: 85px;
+                    .text {
+                        width: 52px;
+                    }
+                }
+                .c12 {
+                    width: 45px;
+                    .text {
+                        width: 37px;
+                    }
+                }
+                .c13 {
+                    width: 5px;
+                }*/
             }
         }
         .pagination {
@@ -322,6 +452,10 @@ b {
 .text-danger {
     @include font-text(12px, 500);
     color: #ea0044 !important;
+}
+.text-partial {
+    @include font-text(12px, 500);
+    color: #ff8900 !important;
 }
 
 .input-text {

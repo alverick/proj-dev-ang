@@ -8,37 +8,56 @@
                             <div class="content">
                               <form> 
                                 <mat-form-field class="f1">
-                                  <input class="input-text" matInput   name="inputSearch" type="text"
+                                  <input class="input-text" matInput  [(ngModel)]="filtro.inputSearch"  name="inputSearch" type="text"
                                       maxlength="20" placeholder="Nombre de empresa, RUC o CU">
                                       <span matPrefix class="pr-1"><img src="assets/images/buscar.svg"> </span>
-                                   
+                                      <button mat-button *ngIf="filtro.inputSearch" matSuffix mat-icon-button aria-label="Clear"
+                                      (click)="filtro.inputSearch=''">
+                                      <i class="fa fa-close"></i>
+                                    </button>
                                 </mat-form-field>
                                 <mat-form-field class="f2">
-                                  <mat-select placeholder="Rubro"     name="servicio">
+                                  <mat-select class="input-text"  [(ngModel)]="filtro.entry"  placeholder="Rubro" name="servicio" disableOptionCentering>
                                     <mat-option class="input-text">Rubro</mat-option>
-                                    <mat-option class="input-text">Rubro</mat-option>
-                                    <mat-option class="input-text">Rubro</mat-option>
+                                    <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
+                                        {{r.name}}
+                                    </mat-option>
                                   </mat-select> 
+                                  <button mat-button *ngIf="filtro.entry" matSuffix mat-icon-button aria-label="Clear"
+                                    (click)="filtro.entry=null; $event.stopPropagation();">
+                                    <i class="fa fa-close"></i>
+                                  </button>
                                 </mat-form-field>
+
                                 <mat-form-field class="f2">
-                                  <mat-select placeholder="Estado"     name="servicio">
+                                  <mat-select class="input-text" [(ngModel)]="filtro.status" placeholder="Estado" name="servicio" disableOptionCentering>
                                     <mat-option class="input-text">Estado</mat-option>
-                                    <mat-option class="input-text">Estado</mat-option>
-                                    <mat-option class="input-text">Estado</mat-option>
+                                    <mat-option class="input-text" *ngFor="let r of states" [value]="r.idState">
+                                        {{r.descripcion}}
+                                    </mat-option>
                                   </mat-select> 
+                                  <button mat-button *ngIf="filtro.status" matSuffix mat-icon-button aria-label="Clear"
+                                  (click)="filtro.status=null; $event.stopPropagation();">
+                                  <i class="fa fa-close"></i>
+                                </button>
                                 </mat-form-field>
+                                
                                 <mat-form-field class="f2">
-                                  <input class="input-text" #inputDate1 placeholder="Desde" 
+                                  <input class="input-text" [(ngModel)]="filtro.dateFrom" #inputDate1 placeholder="Desde" 
                                     type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" maxlength="10" minlength="10" >
                                   <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
                                     <mat-icon class="svg-custom" ></mat-icon>
                                   </mat-datepicker-toggle>
                                   <mat-datepicker #myDatepicker2></mat-datepicker> 
+                                  <button mat-button *ngIf="filtro.dateFrom || inputDate1.value" matSuffix mat-icon-button
+                                    aria-label="Clear" (click)="limpiardate1()">
+                                    <i class="fa fa-close"></i>
+                                  </button>
                                 </mat-form-field>
                                
 
                                 <mat-form-field class="f2">
-                                  <input class="input-text" [min]="minDate" [max]="maxDate" appDate  
+                                  <input class="input-text" [(ngModel)]="filtro.dateTo" [min]="minDate" [max]="maxDate" appDate  
                                     #inputDate2 placeholder="Hasta"  type="text" name="dateTo"
                                     matInput [matDatepicker]="myDatepicker"   maxlength="10" minlength="10"
                                     appBlockCopyPaste  >
@@ -46,6 +65,10 @@
                                     <mat-icon class="svg-custom" ></mat-icon>
                                   </mat-datepicker-toggle>
                                   <mat-datepicker #myDatepicker></mat-datepicker> 
+                                  <button mat-button *ngIf="filtro.dateTo || inputDate2.value" matSuffix mat-icon-button
+                                    aria-label="Clear" (click)="limpiardate2()">
+                                    <i class="fa fa-close"></i>
+                                  </button>
                                 </mat-form-field>
                                 
                                  
@@ -63,6 +86,7 @@
                               <table>
                                 <thead>
                                   <tr> 
+                                    <th class="c0"></th>
                                     <th class="c1">
                                       <div class="text">Fecha de solicitud</div>
                                       <div class="ord">

@@ -12,7 +12,7 @@
       </tr>
     </thead>
   </table>
-  <perfect-scrollbar class="content-container">
+   <div style="overflow-y: scroll; height:160px; min-height:60px">
   <table> 
     <tbody>
       <tr *ngIf="cargando">
@@ -79,15 +79,16 @@
         </td>
         <td></td>
       </tr>
-      <tr *ngIf="status !== 'PAGADO'">
-        <td class="action" colspan="5">
-          <button type="button" class="pl-4 btn-outline-green " (click)="addItm()">
-            <img src="assets/images/plus_circle.svg" alt="agregar">
-             <small> Agregar un pago </small>
-          </button>
-        </td>
-      </tr>
+      
     </tbody>
   </table>
-</perfect-scrollbar>
+</div>
+<tr *ngIf="status !== 'PAGADO'">
+  <td class="action" style="padding-left: 70px;" colspan="5">
+    <button type="button" class=" btn-outline-green " (click)="addItm()">
+      <img src="assets/images/plus_circle.svg" alt="agregar">
+       <small> Agregar un pago </small>
+    </button>
+  </td>
+</tr>
 </div>

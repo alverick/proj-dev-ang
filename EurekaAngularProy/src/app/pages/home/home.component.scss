@@ -446,6 +446,10 @@ b {
     @include font-text(12px, 500);
     color: #ea0044 !important;
 }
+.text-partial {
+    @include font-text(12px, 500);
+    color: #ff8900 !important;
+}
 
 .input-text {
     @include font-text(14px !important, normal);
