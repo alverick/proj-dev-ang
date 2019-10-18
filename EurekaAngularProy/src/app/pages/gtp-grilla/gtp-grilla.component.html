@@ -20,7 +20,7 @@
                                   <mat-select class="input-text"  [(ngModel)]="filtro.entry"  placeholder="Rubro" name="servicio" disableOptionCentering>
                                     <mat-option class="input-text">Rubro</mat-option>
                                     <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
-                                        {{r.name}}
+                                        {{r.code}} {{r.name}} 
                                     </mat-option>
                                   </mat-select> 
                                   <button mat-button *ngIf="filtro.entry" matSuffix mat-icon-button aria-label="Clear"
@@ -41,7 +41,7 @@
                                   <i class="fa fa-close"></i>
                                 </button>
                                 </mat-form-field>
-                                
+                                <label class="mt-4 px-4 input-text">Fecha de <br> solicitud</label>
                                 <mat-form-field class="f2">
                                   <input class="input-text" [(ngModel)]="filtro.dateFrom" #inputDate1 placeholder="Desde" 
                                     type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" maxlength="10" minlength="10" >
@@ -72,7 +72,7 @@
                                 </mat-form-field>
                                 
                                  
-                                <button type="button" class="f3 btn-eureca-green" >BUSCAR
+                                <button type="button" class="f3 btn-eureca-green"  >BUSCAR
                                 </button>
                               </form>
                           </div>
@@ -80,7 +80,7 @@
                         
                         
                         <div class="widget lista">
-                            <div class="title">Aprobaciones</div>
+                            <div class="title">Empresas</div>
                           <div class="content">  
                             <section class="lista"> 
                               <table>

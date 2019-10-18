@@ -436,7 +436,7 @@ orderList(index: number, asc: boolean) {
 
   consultaDeuda(cb: () => void = null) {
   // tslint:disable-next-line:prefer-const
-
+   
     if (this.validaFiltro2()){
                 this.spinner.show();
                 this.transactionService.getDeuda(this.currentFiltro)
