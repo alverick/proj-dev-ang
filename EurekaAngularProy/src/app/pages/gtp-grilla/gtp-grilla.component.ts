@@ -10,6 +10,7 @@ import * as _moment from 'moment';  // dejalo si sale error
 import { default as _rollupMoment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -56,11 +57,11 @@ export class GtpGrillaComponent implements OnInit {
     dateTo: null
   };
 
-
+  
   constructor(private afiliacionService: AfiliacionService, private gtpService: GtpService) { }
   rubros: RubroModel[] = [];
   states: StatesGtp[] =[];
-
+  empresasftp: EnterprisesGtp[] =[];
 
 
   ngOnInit() { 
@@ -68,6 +69,8 @@ export class GtpGrillaComponent implements OnInit {
     this.gtpService.getStates().subscribe(d => this.states = d);
     console.log('Rubros');
     console.table(this.rubros);
+    this.consultaGtp();
+    console.table(this.empresasftp);
   }
 
 
@@ -83,6 +86,10 @@ export class GtpGrillaComponent implements OnInit {
   limpiardate2() {
     this.inputDate2.nativeElement.value = '';
     this.filtro.dateTo = null; 
+  }
+
+  consultaGtp(){
+    this.gtpService.getEnterprisesGtp().subscribe(d=> this.empresasftp = d);
   }
  
 }

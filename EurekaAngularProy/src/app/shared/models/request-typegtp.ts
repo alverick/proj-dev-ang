@@ -1,5 +1,4 @@
 export interface RequestTypegtp {
-    type:string;
-    accion:string;
-    cantidad:number;
+    texto:string;
+    type:number; 
 }

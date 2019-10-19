@@ -7,6 +7,7 @@ import { ConfigurarEmpresaComponent } from './configurar-empresa/configurar-empr
 import { SubirPlantillaComponent } from './subir-plantilla/subir-plantilla.component';
 import { AnalisisComponent } from './analisis/analisis.component';
 import { GtpGrillaComponent } from './gtp-grilla/gtp-grilla.component';
+import { AprobacionesComponent } from './aprobaciones/aprobaciones.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { GtpGrillaComponent } from './gtp-grilla/gtp-grilla.component';
     //ConfigurarEmpresaComponent,
     //SubirPlantillaComponent,
     //AnalisisComponent
-  GtpGrillaComponent]
+  GtpGrillaComponent,
+    AprobacionesComponent]
 })
 export class PagesModule {
   constructor (@Optional() @SkipSelf() parentModule: PagesModule) {

@@ -141,16 +141,40 @@
                                           (click)="orderList(5, false)"></div>
                                       </div>
                                     </th>
-                                    <th class="c7">
-                                       
-                                    </th>
-                                    
-                                    
-                                   
-                                   
+                                    <th class="c7"> 
+                                    </th> 
                                   </tr>
                                 </thead>
                               </table>
+                               
+                                <table>
+                                  <tbody>
+                                    <tr *ngFor="let items of empresasftp  ">  
+                                      <td class="c0"></td> 
+                                      <td class="c1">{{items.RequestDate | date:'dd/MM/yy' }}</td> 
+                                      <td class="c2">{{items.Ruc}}</td> 
+                                      <td class="c3">{{items.Cu}}</td>
+                                      <td class="c4">{{items.NameEnterprises}}</td>
+                                      <td  class="c5">   
+                                        <div style="width:100px ;" *ngFor="let request of items?.requestType"> 
+                                            <div *ngIf="request.type == 0"  > <span class="badge badge-primary">{{request.texto}}</span>  </div>
+                                        </div>
+                                        <div style="width:80px ;" *ngFor="let request of items?.requestType"> 
+                                            <div *ngIf="request.type == 1"  > <span class="badge badge-warning">{{request.texto}}</span> </div>
+                                            <div *ngIf="request.type == 2"  > <span class="badge badge-success">{{request.texto}}</span> </div>
+                                        </div>
+                                        <!-- -->  
+                                      </td>
+
+                                      <td class="c6">{{items.Status}}</td>
+                                      <td class="c7">
+                                          <button type="button" class="f3 btn-eureca-green"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                          </button>
+                                      </td> 
+                                      
+                                  </tbody>
+                                </table>
+                              
  
                             </section>
                             

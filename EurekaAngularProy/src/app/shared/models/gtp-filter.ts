@@ -1,4 +1,4 @@
-export interface GtpFilter {
+export interface GtpFilter { 
     pageNumber : number;
     columnName : string;
     asc : boolean;

@@ -18,6 +18,7 @@ import { ClientGuard } from './shared/guards/client.guard';
 import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recuperar-contrasena.component';
 import { CambiaContrasenaComponent } from './auth/cambia-contrasena/cambia-contrasena.component';
 import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
+import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
 
 // CambiaContrasenaComponent
 
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
   { path: 'configuracion', component: ConfigurarServiciosComponent},
   { path: 'gtp', component: GtpGrillaComponent},
+  { path: 'AprobacionGtp', component: AprobacionesComponent},
   { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard]},
  
 

@@ -52,6 +52,7 @@ import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.di
 import { NotifyService } from './shared/services/notify.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     HeaderComponent,
     HomeComponent,
     GtpGrillaComponent,
+    AprobacionesComponent,
     PagosComponent,
     AnalisisComponent,
     SubirPlantillaComponent,
