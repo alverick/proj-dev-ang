@@ -4,6 +4,7 @@ export interface EnterprisesGtp {
       RequestDate?: Date; 
       Ruc: string;
       Cu: String;
+      BusinessHeading: String;
       NameEnterprises:String;
       requestType: RequestTypegtp[];
       Status:  string; 

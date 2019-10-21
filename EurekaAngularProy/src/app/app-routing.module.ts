@@ -33,8 +33,8 @@ const routes: Routes = [
   { path: 'crearContrasena', component: CrearContrasenaComponent},
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
   { path: 'configuracion', component: ConfigurarServiciosComponent},
-  { path: 'gtp', component: GtpGrillaComponent},
-  { path: 'AprobacionGtp', component: AprobacionesComponent},
+  { path: 'gtp', component: GtpGrillaComponent,  canActivate: [AuthGuard]},
+  { path: 'AprobacionGtp/:llave', component: AprobacionesComponent, canActivate: [AuthGuard]},
   { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard]},
  
 

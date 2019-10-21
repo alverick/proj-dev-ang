@@ -3,7 +3,7 @@ export interface GtpFilter {
     columnName : string;
     asc : boolean;
     inputSearch  : String;
-    entry: String;
+    BusinessHeading: String;
     status: String;
     dateFrom?: Date;
     dateTo?: Date;

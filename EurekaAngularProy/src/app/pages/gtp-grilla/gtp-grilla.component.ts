@@ -57,7 +57,7 @@ export class GtpGrillaComponent implements OnInit {
     dateTo: null
   };
 
-  
+// gtpServiceEmpresas  
   constructor(private afiliacionService: AfiliacionService, private gtpService: GtpService) { }
   rubros: RubroModel[] = [];
   states: StatesGtp[] =[];

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PendingResquest } from 'src/app/shared/models/pending-resquest';
+import { GtpService } from 'src/app/shared/services/gtp.service';
+import { ActivatedRoute } from '@angular/router';
+import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
 
 @Component({
   selector: 'app-aprobaciones',
@@ -6,10 +10,42 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./aprobaciones.component.scss']
 })
 export class AprobacionesComponent implements OnInit {
-
-  constructor() { }
-
+  public llave:number;
+  public Empresa:EnterprisesGtp ;
+  pending: PendingResquest[];
+  constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute) { }
+  OcultarDatosActualEmpresa: boolean = true
   ngOnInit() {
+    this.getPendingGtp();
+    let emp = this.pending.find((v) => v.type === 0).type;
+     
+     if(emp === 0) {
+       this.OcultarDatosActualEmpresa =false;
+     }else{
+      this.OcultarDatosActualEmpresa =true;
+     }
+
+     this.llave =  this.rutaActiva.snapshot.params.llave;
+     console.log('empresassss');
+     this.getEmpresa(this.llave);
+     console.table(this.getEmpresa(this.llave));
+
   }
 
+  getEmpresa(id:any){
+      this.Empresa = this.gtpService.Empresas.find((v) => v.ClientId= id);
+   // return this.gtpService.getEnterprisesGtp().subscribe(d => this.Empresa = d);
+  }
+
+  getPendingGtp(){
+    return this.gtpService.getPendingResquest().subscribe(d => this.pending = d);
+  }
+
+
+
+  VerCampos(){
+    
+  }
+
+ 
 }

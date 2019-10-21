@@ -8,6 +8,7 @@ import { SubirPlantillaComponent } from './subir-plantilla/subir-plantilla.compo
 import { AnalisisComponent } from './analisis/analisis.component';
 import { GtpGrillaComponent } from './gtp-grilla/gtp-grilla.component';
 import { AprobacionesComponent } from './aprobaciones/aprobaciones.component';
+import { RevisarComponent } from './revisar/revisar.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { AprobacionesComponent } from './aprobaciones/aprobaciones.component';
     //SubirPlantillaComponent,
     //AnalisisComponent
   GtpGrillaComponent,
-    AprobacionesComponent]
+    AprobacionesComponent,
+    RevisarComponent]
 })
 export class PagesModule {
   constructor (@Optional() @SkipSelf() parentModule: PagesModule) {
