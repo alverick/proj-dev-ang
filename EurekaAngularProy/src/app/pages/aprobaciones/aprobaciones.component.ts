@@ -3,6 +3,7 @@ import { PendingResquest } from 'src/app/shared/models/pending-resquest';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { ActivatedRoute } from '@angular/router';
 import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
+import { CheckFields } from 'src/app/shared/models/check-fields';
 
 @Component({
   selector: 'app-aprobaciones',
@@ -13,6 +14,7 @@ export class AprobacionesComponent implements OnInit {
   public llave:number;
   public Empresa:EnterprisesGtp ;
   pending: PendingResquest[];
+  public Check:CheckFields[];
   constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute) { }
   OcultarDatosActualEmpresa: boolean = true
   ngOnInit() {
@@ -43,8 +45,10 @@ export class AprobacionesComponent implements OnInit {
 
 
 
-  VerCampos(){
-    
+  VerCampos(id:number){
+    this.Check = this.gtpService.PendingResqs.find((r) => r.idSolicitud = id).checkFields;
+    console.table(this.Check);
+ 
   }
 
  

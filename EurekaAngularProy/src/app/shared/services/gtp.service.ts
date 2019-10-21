@@ -21,19 +21,7 @@ export class GtpService {
     {idState: 'Devuelto', descripcion:'devuelto'},
   ];
 
-  /*public Pruebas(){
-    this.Empresas.push (
-      { ClientId:1, RequestDate: new Date(Date.now()),Ruc:'20000000018', Cu:'20',
-       NameEnterprises:'Demo Empresa',Status:'pendiente',requestType:[{type:0,texto:'Nueva Empresa 2 servicios',}] },
-       {ClientId:2, RequestDate: new Date(Date.now()),Ruc:'20000000019', Cu:'20',
-       NameEnterprises:'Demo Empresa2',Status:'resuelto',requestType:[{type:1,texto:'EMP'},{type:1,texto:'2 SERV'},{type:2,texto:'3 SERV'}] },
-       {ClientId:3, RequestDate: new Date(Date.now()),Ruc:'20000000020', Cu:'20',
-       NameEnterprises:'Demo Empresa3',Status:'resuelto',requestType:[{type:1,texto:'2 SERV'},{type:2,texto:'3 SERV'}] },
-       {ClientId:4, RequestDate: new Date(Date.now()),Ruc:'20000000017', Cu:'20',
-       NameEnterprises:'Demo Empresa4',Status:'pendiente',requestType:[{type:1,texto:'EMP'},{type:2,texto:'2 SERV'}] }
-    
-    );
-  } */
+ 
   public Empresas: EnterprisesGtp[] = [
     { ClientId:1, RequestDate: new Date(Date.now()),Ruc:'20000000018', Cu:'20',BusinessHeading: 'Colegio',
        NameEnterprises:'Demo Empresa0',Status:'pendiente',requestType:[{type:0,texto:'Nueva Empresa 2 servicios',}] },
@@ -46,10 +34,10 @@ export class GtpService {
   ];
  
 
-   private PendingResqs: PendingResquest[] = [
-     {type:0,texto:'DatosEmpresa', state:'por revisar', checkFields:[{NombreCampo:'Nombre de la Empresa', Campo:'Colegio de Ing de Peru', aprobado:false}]},
-     {type:1,texto:'Servicio Demo1', state:'por revisar', checkFields:[{NombreCampo:'Nombre del Servicio1', Campo:'Mensualidad', aprobado:false}, {NombreCampo:'Codigo Deudor', Campo:'Cod Alumno', aprobado:false}]},
-     {type:1,texto:'Servicio Demo2', state:'por revisar',checkFields:[{NombreCampo:'Nombre del Servicio2', Campo:'Mensualidad', aprobado:false}]},
+  public PendingResqs: PendingResquest[] = [
+     {idSolicitud:1,type:0,texto:'DatosEmpresa', state:'por revisar', checkFields:[{NombreCampo:'Nombre de la Empresa', Campo:'Colegio de Ing de Peru', aprobado:false}]},
+     {idSolicitud:2,type:1,texto:'Servicio Demo1', state:'por revisar', checkFields:[{NombreCampo:'Nombre del Servicio1', Campo:'Mensualidad', aprobado:false}, {NombreCampo:'Codigo Deudor', Campo:'Cod Alumno', aprobado:false}]},
+     {idSolicitud:3,type:1,texto:'Servicio Demo2', state:'por revisar',checkFields:[{NombreCampo:'Nombre del Servicio2', Campo:'Mensualidad', aprobado:false}]},
      
    ]
 

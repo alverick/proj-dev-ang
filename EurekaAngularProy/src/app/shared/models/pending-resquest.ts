@@ -5,7 +5,7 @@ export interface PendingResquest {
 /* type: string;
  accion: string;
  state: string;*/
-
+ idSolicitud: number;
  type: number;
  texto: string;
  state: string;

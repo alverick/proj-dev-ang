@@ -61,7 +61,7 @@
                                                     </tr>
                                                     <tr> 
                                                         <td class="font-black-servicios-des-list">{{ slt.state }}</td>
-                                                        <td><button type="button" class="f3 btn-outline-green"  >Ver </button></td>
+                                                        <td><button type="button" (click)="VerCampos(slt.idSolicitud)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr> 
                                                     
                                                 </table>
@@ -85,7 +85,18 @@
                             <div class="formulario p-5 bg-white ">
                                 <div class="form-row">
                                     <div class="form-group col-md-10">
-                                        
+                                        <table class="table table-sm table-borderless " *ngFor="let chk of Check">
+                                                    
+                                                    <tr  >
+                                                            <td class="font-black-servicios-list">{{chk.NombreCampo}} </td> 
+                                                            <td class="font-black-servicios-list">¿Es Correcto? </td> 
+                                                    </tr>
+                                                     <tr>
+                                                            <td class="font-black-servicios-des-list">{{chk.Campo}}</td> 
+                                                            <td class="font-black-servicios-des-list">  </td> 
+                                                     </tr>
+                                                    
+                                                </table>
                                     </div>
                                      
                                 </div>
