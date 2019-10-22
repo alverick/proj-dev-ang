@@ -93,7 +93,8 @@ refresh(): void {
               isAuthenticate: true,
               token: r.paramStr,
               expire: r.exp,
-              refresh: r.rfs
+              refresh: r.rfs,
+              prfl: r.prfl
             });
           this.callingRefresh = false;
           return r;

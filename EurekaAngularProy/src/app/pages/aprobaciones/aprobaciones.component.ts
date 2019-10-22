@@ -37,7 +37,7 @@ export class AprobacionesComponent implements OnInit {
     // prubea
     console.log(this.llave);
     this.getPendingGtp();
-
+    
   /*  let emp = this.pending.find((v) => v.type === 0).type;
      
      if(emp === 0) {

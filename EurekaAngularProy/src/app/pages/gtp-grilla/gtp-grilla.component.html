@@ -44,7 +44,7 @@
                                 </mat-form-field>
                                 <label class="mt-4 px-4 input-text">Fecha de <br> solicitud</label>
                                 <mat-form-field class="f2">
-                                  <input class="input-text" [(ngModel)]="filtro.dateFrom" #inputDate1 placeholder="Desde" 
+                                  <input [min]="minDate" [max]="maxDate"  class="input-text" [(ngModel)]="filtro.dateFrom" #inputDate1 placeholder="Desde" 
                                     type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" maxlength="10" minlength="10" >
                                   <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
                                     <mat-icon class="svg-custom" ></mat-icon>
@@ -150,7 +150,7 @@
                                
                                 <table>
                                   <tbody>
-                                    <tr *ngFor="let items of empresasftp  ">  
+                                    <tr *ngFor="let items of gtpService.EnterprisesItems.listCompanyGTP | paginate:{itemsPerPage:50,currentPage:currentFiltro.pageNumber,totalItems:gtpService.EnterprisesItems.count } ">  
                                       <td class="c0"></td> 
                                       <td class="c1">{{items.RequestDate | date:'dd/MM/yy' }}</td> 
                                       <td class="c2">{{items.Ruc}}</td> 
@@ -172,7 +172,7 @@
                                           <button type="button" class="f3 btn-eureca-green" (click)="Aprobar(items.ClientId)"    ><i class="fa fa-arrow-right" aria-hidden="true"></i>
                                           </button>
                                       </td> 
-                                      
+                                       </tr>
                                   </tbody>
                                 </table>
                               

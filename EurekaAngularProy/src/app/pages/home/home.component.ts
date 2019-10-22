@@ -26,8 +26,7 @@ import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { Observable } from 'rxjs';
-import { isNgTemplate } from '@angular/compiler';
+import { Observable } from 'rxjs'; 
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;

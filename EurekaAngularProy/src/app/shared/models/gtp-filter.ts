@@ -1,6 +1,6 @@
 export interface GtpFilter { 
     pageNumber : number;
-    columnName : string;
+    ColumnName : string;
     asc : boolean;
     inputSearch  : String;
     BusinessHeading: String;

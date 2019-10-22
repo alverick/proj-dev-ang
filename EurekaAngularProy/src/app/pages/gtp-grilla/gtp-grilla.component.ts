@@ -10,8 +10,9 @@ import * as _moment from 'moment';  // dejalo si sale error
 import { default as _rollupMoment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
+import { EnterprisesGtp, EnterprisesPagedList } from 'src/app/shared/models/enterprises-gtp';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -42,7 +43,9 @@ export const MY_FORMATS = {
   ],
 })
 export class GtpGrillaComponent implements OnInit {
-
+  
+  minDate = new Date(2000, 0, 1);
+  maxDate = new Date(2050, 0, 1);
   @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
   @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
   messageTable: string ='';
@@ -50,7 +53,7 @@ export class GtpGrillaComponent implements OnInit {
 
   currentFiltro: GtpFilter = {
     pageNumber: 1,
-    columnName: '',
+    ColumnName: '',
     asc: true,
     inputSearch: '', 
     BusinessHeading:'',
@@ -60,7 +63,7 @@ export class GtpGrillaComponent implements OnInit {
   };
   filtro: GtpFilter = {
     pageNumber: 1,
-    columnName: '',
+    ColumnName: '',
     asc: true,
     inputSearch: '', 
     BusinessHeading:'',
@@ -68,31 +71,34 @@ export class GtpGrillaComponent implements OnInit {
     dateFrom: null,
     dateTo: null
   };
+  errores: any = {};
+  
 
 // gtpServiceEmpresas  
-  constructor(private afiliacionService: AfiliacionService, private gtpService: GtpService,private router: Router) { }
+  constructor(private spinner: NgxSpinnerService,private afiliacionService: AfiliacionService, private gtpService: GtpService,private router: Router) { }
   rubros: RubroModel[] = [];
   states: StatesGtp[] =[];
-  empresasftp: EnterprisesGtp[] =[];
-
-
+ 
+ 
   ngOnInit() { 
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
-    this.gtpService.getStates().subscribe(d => this.states = d);
-    console.log('Rubros');
-    console.table(this.rubros);
+    this.gtpService.getStates().subscribe(d => this.states = d); 
     this.consultaGtp();
-    console.table(this.empresasftp);
+    console.log('imprime las solicitudes');
+    console.log( this.gtpService.EnterprisesItems.listCompanyGTP); 
+  }
+  limpiardate1() {
+    this.inputDate1.nativeElement.value = '';
+    this.filtro.dateFrom = null; 
+  }
+  limpiardate2() {
+    this.inputDate2.nativeElement.value = '';
+    this.filtro.dateTo = null; 
+  } 
+  Aprobar( ClientId: number){ 
+   location.href = '/AprobacionGtp/'+ClientId; 
   }
 
-
-  Aprobar( ClientId: number){
-     
-   // this.router.navigate(['/AprobacionGtp/'+ClientId]);
-   /// window.location.reload();
-   location.href = '/AprobacionGtp/'+ClientId;
-
-  }
   
   sendFiltro() {
     this.currentFiltro.inputSearch = this.filtro.inputSearch;
@@ -100,6 +106,8 @@ export class GtpGrillaComponent implements OnInit {
     this.currentFiltro.status = this.filtro.status; 
     this.currentFiltro.dateFrom = this.filtro.dateFrom;
     this.currentFiltro.dateTo = this.filtro.dateTo;
+
+    this.consultaGtp();
 
     if((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) && 
     (this.filtro.BusinessHeading === '' || this.filtro.BusinessHeading === null || this.filtro.BusinessHeading === undefined) &&
@@ -111,23 +119,21 @@ export class GtpGrillaComponent implements OnInit {
       this.messageTable ='No se encontro ningún registro para esta búsqueda';
       this.showArrow = false;
     }
-    
+
   }
 
+  // callback:  cuando se termine de ejecutar la consulta se ejecuta el callback
+ // consultaDeuda(cb: () => void = null) {
 
-
-  limpiardate1() {
-    this.inputDate1.nativeElement.value = '';
-    this.filtro.dateFrom = null; 
+ consultaGtp(){
+    this.spinner.show(); 
+    this.gtpService.getEmpresas(this.filtro).subscribe(d => {});
+    this.spinner.hide();
   }
-  limpiardate2() {
-    this.inputDate2.nativeElement.value = '';
-    this.filtro.dateTo = null; 
-  }
-
-  consultaGtp(){
+ /* 
+   consultaGtp(){
     this.gtpService.getEnterprisesGtp().subscribe(d=> this.empresasftp = d);
-  }
- 
+  } 
+ */
 }
 

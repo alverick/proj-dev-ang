@@ -72,7 +72,8 @@ export class CambiaContrasenaComponent implements OnInit {
                   isAuthenticate: true,
                   token: d.paramStr,
                   expire: d.exp,
-                  refresh: d.rfs
+                  refresh: d.rfs, 
+                  prfl: d.prfl
                 });
                 this.router.navigate(['/home']);
               }

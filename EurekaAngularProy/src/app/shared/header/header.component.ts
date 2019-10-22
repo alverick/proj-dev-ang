@@ -90,7 +90,7 @@ export class HeaderComponent implements OnInit {
     return this.router.url.includes('/home');
   }
   get IsGtp(): boolean {
-    console.log(this.router.url.includes('/gtp'));
+    
     return this.router.url.includes('/gtp');
   }
 
