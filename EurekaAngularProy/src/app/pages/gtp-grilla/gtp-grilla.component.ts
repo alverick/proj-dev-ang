@@ -11,6 +11,7 @@ import { default as _rollupMoment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
+import { Router } from '@angular/router';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -69,7 +70,7 @@ export class GtpGrillaComponent implements OnInit {
   };
 
 // gtpServiceEmpresas  
-  constructor(private afiliacionService: AfiliacionService, private gtpService: GtpService) { }
+  constructor(private afiliacionService: AfiliacionService, private gtpService: GtpService,private router: Router) { }
   rubros: RubroModel[] = [];
   states: StatesGtp[] =[];
   empresasftp: EnterprisesGtp[] =[];
@@ -85,7 +86,13 @@ export class GtpGrillaComponent implements OnInit {
   }
 
 
+  Aprobar( ClientId: number){
+     
+   // this.router.navigate(['/AprobacionGtp/'+ClientId]);
+   /// window.location.reload();
+   location.href = '/AprobacionGtp/'+ClientId;
 
+  }
   
   sendFiltro() {
     this.currentFiltro.inputSearch = this.filtro.inputSearch;

@@ -169,7 +169,7 @@
 
                                       <td class="c6">{{items.Status}}</td>
                                       <td class="c7">
-                                          <button type="button" class="f3 btn-eureca-green" [routerLink]="['/AprobacionGtp',items.ClientId]" routerLinkActive="router-link-active"  ><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                          <button type="button" class="f3 btn-eureca-green" (click)="Aprobar(items.ClientId)"    ><i class="fa fa-arrow-right" aria-hidden="true"></i>
                                           </button>
                                       </td> 
                                       

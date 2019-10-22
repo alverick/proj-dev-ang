@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.notify.clear();
     this.spinner.hide();
-    this.notify.iniciar();
+    this.notify.iniciar(); 
   }
 
   public menu(): boolean {
