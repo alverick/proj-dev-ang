@@ -44,14 +44,25 @@ export class GtpGrillaComponent implements OnInit {
 
   @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
   @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
+  messageTable: string ='';
+  showArrow: boolean = false;
 
-  
+  currentFiltro: GtpFilter = {
+    pageNumber: 1,
+    columnName: '',
+    asc: true,
+    inputSearch: '', 
+    BusinessHeading:'',
+    status: '',  
+    dateFrom: null,
+    dateTo: null
+  };
   filtro: GtpFilter = {
     pageNumber: 1,
     columnName: '',
     asc: true,
     inputSearch: '', 
-    entry:'',
+    BusinessHeading:'',
     status: '',  
     dateFrom: null,
     dateTo: null
@@ -76,6 +87,25 @@ export class GtpGrillaComponent implements OnInit {
 
 
   
+  sendFiltro() {
+    this.currentFiltro.inputSearch = this.filtro.inputSearch;
+    this.currentFiltro.BusinessHeading = this.filtro.BusinessHeading;
+    this.currentFiltro.status = this.filtro.status; 
+    this.currentFiltro.dateFrom = this.filtro.dateFrom;
+    this.currentFiltro.dateTo = this.filtro.dateTo;
+
+    if((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) && 
+    (this.filtro.BusinessHeading === '' || this.filtro.BusinessHeading === null || this.filtro.BusinessHeading === undefined) &&
+    (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
+    ( /*this.filtro.dateFrom == ''  ||*/ this.filtro.dateFrom === null || this.filtro.dateFrom === undefined)){
+      this.messageTable = 'Para empezar, agrega la lista de las deudas';
+       this.showArrow = true; 
+    }else{
+      this.messageTable ='No se encontro ningún registro para esta búsqueda';
+      this.showArrow = false;
+    }
+    
+  }
 
 
 

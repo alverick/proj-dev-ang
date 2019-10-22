@@ -38,17 +38,22 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
  
   return this.http.post(url, data, opts)
     .pipe(map((r: RespuestaLogin) => {
-      console.table(r);
+      
       if (r.estado) {
+        console.table(r);
         this.storage.setCurrentSession({
           user: { ruc: ruc },
           isAuthenticate: true,
           token: r.paramStr,
           expire: r.exp,
-          refresh: r.rfs
+          refresh: r.rfs,
+          prfl: r.prfl
         });
         this.gaService.sendEvent('login', { method: 'OAUTH' });
-        this.notify.iniciar();
+        if(r.prfl = 0){
+          this.notify.iniciar();
+        }
+        
       }
       else {
         this.gaService.sendEvent('exception', { description: 'No Login', fatal: false });

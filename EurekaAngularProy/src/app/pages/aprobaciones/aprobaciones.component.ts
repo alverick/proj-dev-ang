@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { PendingResquest } from 'src/app/shared/models/pending-resquest';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,8 +15,17 @@ export class AprobacionesComponent implements OnInit {
   public Empresa:EnterprisesGtp ;
   pending: PendingResquest[];
   public Check:CheckFields[];
+  public formulario :boolean =true;
   constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute) { }
   OcultarDatosActualEmpresa: boolean = true
+  @HostListener('window:beforeunload', ['$event'])
+  public closeWindow($event: any) {
+    if (  this.formulario ) {
+      $event.returnValue = 'Se van a perder los cambios.';
+    }
+  }
+
+  
   ngOnInit() {
     this.getPendingGtp();
     let emp = this.pending.find((v) => v.type === 0).type;
@@ -31,6 +40,11 @@ export class AprobacionesComponent implements OnInit {
      console.log('empresassss');
      this.getEmpresa(this.llave);
      console.table(this.getEmpresa(this.llave));
+      // borra el back del navegador
+    window['_url_loop_'] = 'AprobacionGtp/'+this.llave;
+    history.pushState(null, null, 'AprobacionGtp/'+this.llave);
+    // mantiene la pagina con el scroll en la parte superior
+    window.scrollTo(0, 0);
 
   }
 

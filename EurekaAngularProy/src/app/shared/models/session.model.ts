@@ -6,4 +6,5 @@ export class Session {
     public user: User;
     public expire?: string;
     public refresh?: string;
+    public prfl?:number;
   }

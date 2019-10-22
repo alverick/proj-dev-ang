@@ -32,7 +32,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatFormFieldModule } from '@angular/material';
+import { MatFormFieldModule, MatRadioModule } from '@angular/material';
 import { AfiliacionService } from './shared/services/afiliacion.service';
 import { NumberDirectiveHome } from './pages/home/number.directive';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -77,6 +77,7 @@ import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.compone
     DecimalesDirective,
     EmailDirective,
     OnlyNumbersDirective,
+    
 
 
     ],
@@ -113,7 +114,8 @@ import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.compone
     MatProgressSpinnerModule,
     FontAwesomeModule,
     PerfectScrollbarModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    MatRadioModule
   ],
   providers: [
     ExcelService,

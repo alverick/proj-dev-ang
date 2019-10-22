@@ -290,6 +290,7 @@ orderList(index: number, asc: boolean) {
   sendFiltro() {
     this.messagetablecode1 = false;
     this.messagetablecode2 = false;
+    //filtro
     this.currentFiltro.inputSearch = this.filtro.inputSearch;
     this.currentFiltro.service = this.filtro.service;
     this.currentFiltro.status = this.filtro.status;
@@ -297,9 +298,10 @@ orderList(index: number, asc: boolean) {
     this.currentFiltro.dateFrom = this.filtro.dateFrom;
     this.currentFiltro.dateTo = this.filtro.dateTo;
     this.currentFiltro.pageNumber = 1;
+    // borrar marcas para eliminaciones
     this.transactionService.clearMarksForDeletes();
     this.consultaDeuda();
-
+    // google analytics
     this.gaService.sendEvent('Buscar', {
       'event_category': 'Dashboard',
       'event_label': 'buscar'
@@ -523,8 +525,7 @@ orderList(index: number, asc: boolean) {
     item.newFirstName = item.firstName;
     item.newLastName = item.lastName;
 
-    console.log('fechas');
-
+    console.log('fechas'); 
   }
 
   selectEstPag(event, item: Debts){
@@ -535,8 +536,7 @@ orderList(index: number, asc: boolean) {
     if(event == '2'){
       item.editInput = false;
       item.editPending = false;
-    }
-
+    } 
   }
 
   clearDatePicker(event){

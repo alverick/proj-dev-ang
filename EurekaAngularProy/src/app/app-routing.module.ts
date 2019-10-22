@@ -19,23 +19,25 @@ import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recupe
 import { CambiaContrasenaComponent } from './auth/cambia-contrasena/cambia-contrasena.component';
 import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
 import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
+import { GtpInputGuard } from './shared/guards/gtp-input.guard';
+import { GtpOutputGuard } from './shared/guards/gtp-output.guard';
 
 // CambiaContrasenaComponent
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard ,GtpOutputGuard] },
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
   { path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
-  { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard ] },
+  { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard,GtpOutputGuard ] },
   { path: 'crearContrasena', component: CrearContrasenaComponent},
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
   { path: 'configuracion', component: ConfigurarServiciosComponent},
-  { path: 'gtp', component: GtpGrillaComponent,  canActivate: [AuthGuard]},
-  { path: 'AprobacionGtp/:llave', component: AprobacionesComponent, canActivate: [AuthGuard]},
-  { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard]},
+  { path: 'gtp', component: GtpGrillaComponent,  canActivate: [AuthGuard, GtpInputGuard] },
+  { path: 'AprobacionGtp/:llave', component: AprobacionesComponent, canActivate: [AuthGuard, GtpInputGuard]},
+  { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard,GtpOutputGuard]},
  
 
   { path: 'subirPlantilla', component: SubirPlantillaComponent},

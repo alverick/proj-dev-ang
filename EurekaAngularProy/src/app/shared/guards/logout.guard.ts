@@ -17,8 +17,11 @@ export class LogoutGuard implements CanActivate {
         this.spinner.hide();
         return true;
       }
+      // si el token existe
      if ( localStorage.getItem('tk') ) {
+       // entonces enviame al home
        this.router.navigate(['/home']);
+       // que no me deje ver el login o 
          return false;
      }
   }

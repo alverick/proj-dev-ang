@@ -38,12 +38,14 @@ export class TransactionService {
       return '';
     }
 
+    //opcional
     getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
-
+      // ultimo filtro aplicado
       if (filtro === null) {
         filtro = this.lastFilter;
       }
       else {
+        // el nuevo filtro
         this.lastFilter = filtro;
       }
 

@@ -35,11 +35,19 @@ export class HeaderComponent implements OnInit {
   }
 
   public menu(): boolean {
-    if (this.router.url.includes('/cambiaContra')|| this.router.url.includes('/recupera')  || this.router.url.includes('/login') ) {
+    if (this.router.url.includes('/cambiaContra')|| this.router.url.includes('/recupera')  || this.router.url.includes('/login') || this.router.url.includes('/gtp') ) {
       return false;
 
     } else {
       return true;
+    }
+  }
+  public menuGtp(): boolean {
+    if (  this.router.url.includes('/gtp') ) {
+      return true;
+
+    } else {
+      return false;
     }
   }
   mesageeError(tipo: any, titulo: string, text: string) {
@@ -81,6 +89,10 @@ export class HeaderComponent implements OnInit {
   get IsHome(): boolean {
     return this.router.url.includes('/home');
   }
+  get IsGtp(): boolean {
+    console.log(this.router.url.includes('/gtp'));
+    return this.router.url.includes('/gtp');
+  }
 
   getAgo(date): string {
     return moment.utc(date).local().format('DD/MM/YY [a las] hh:mm a');
@@ -98,6 +110,11 @@ export class HeaderComponent implements OnInit {
   goBack() {
     if (confirm('Es posible que los cambios no se guarden.')) {
       this.router.navigate(['/home']);
+    }
+  }
+  goBackGtp(){
+    if (confirm('Es posible que los cambios no se guarden.')) {
+      this.router.navigate(['/gtp']);
     }
   }
 }
