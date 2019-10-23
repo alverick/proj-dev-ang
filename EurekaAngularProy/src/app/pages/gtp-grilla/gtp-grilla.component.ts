@@ -86,7 +86,8 @@ export class GtpGrillaComponent implements OnInit {
     this.consultaGtp();
     console.log('imprime las solicitudes');
     console.table( this.gtpService.EnterprisesItems.listCompanyGTP); 
-    console.log('TERMINA DE imprime las solicitudes');
+    console.log('total de itrms');
+    console.log(this.gtpService.EnterprisesItems.totalCompanies)
   }
   limpiardate1() {
     this.inputDate1.nativeElement.value = '';

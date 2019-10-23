@@ -150,7 +150,7 @@
                               <perfect-scrollbar class="content-container">
                                 <table>
                                   <tbody>
-                                    <tr *ngFor="let items of gtpService.EnterprisesItems.listCompanyGTP | paginate:{itemsPerPage:50,currentPage:currentFiltro.pageNumber,totalItems:gtpService.EnterprisesItems.count } ">  
+                                    <tr *ngFor="let items of gtpService.EnterprisesItems.listCompanyGTP | paginate:{itemsPerPage:50,currentPage:currentFiltro.pageNumber,totalItems:gtpService.EnterprisesItems.totalCompanies } ">  
                                       <td class="c0"></td> 
                                       <td class="c1">{{items.RequestDate | date:'dd/MM/yy' }}</td> 
                                       <td class="c2">{{items.Ruc}}</td> 

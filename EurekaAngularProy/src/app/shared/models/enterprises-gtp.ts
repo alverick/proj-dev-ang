@@ -11,7 +11,7 @@ export interface EnterprisesGtp {
       requestTypeList: RequestTypegtp[];
      
 }
-export interface EnterprisesPagedList {
-      count: number;
+export interface EnterprisesPagedList { 
       listCompanyGTP: EnterprisesGtp[];
+      totalCompanies: number;
   }
