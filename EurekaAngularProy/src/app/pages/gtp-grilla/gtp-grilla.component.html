@@ -152,10 +152,10 @@
                                   <tbody>
                                     <tr *ngFor="let items of gtpService.EnterprisesItems.listCompanyGTP | paginate:{itemsPerPage:50,currentPage:currentFiltro.pageNumber,totalItems:gtpService.EnterprisesItems.totalCompanies } ">  
                                       <td class="c0"></td> 
-                                      <td class="c1">{{items.RequestDate | date:'dd/MM/yy' }}</td> 
-                                      <td class="c2">{{items.Ruc}}</td> 
-                                      <td class="c3">{{items.Cu}}</td>
-                                      <td class="c4">{{items.NameEnterprises}}</td>
+                                      <td class="c1">{{items.requestDate | date:'dd/MM/yy' }}</td> 
+                                      <td class="c2">{{items.ruc}}</td> 
+                                      <td class="c3">{{items.cu}}</td>
+                                      <td class="c4">{{items.nameEnterprise}}</td>
                                       <td  class="c5">   
                                         <div style="width:100px ;" *ngFor="let request of items?.requestTypeList"> 
                                             <div *ngIf="request.type == 0"> <span class="badge badge-primary">{{request.texto}}</span>  </div>
@@ -167,9 +167,9 @@
                                         <!-- -->  
                                       </td>
 
-                                      <td class="c6">{{items.Status}}</td>
+                                      <td class="c6">{{items.status}}</td>
                                       <td class="c7">
-                                          <button type="button" class="f3 btn-eureca-green" (click)="Aprobar(items.ClientId)"    ><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                          <button type="button" class="f3 btn-eureca-green" (click)="Aprobar(items.clientId)"    ><i class="fa fa-arrow-right" aria-hidden="true"></i>
                                           </button>
                                       </td> 
                                     </tr>

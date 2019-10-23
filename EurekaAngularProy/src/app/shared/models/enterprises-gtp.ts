@@ -1,12 +1,12 @@
 import { RequestTypegtp } from './request-typegtp';
 export interface EnterprisesGtp {
-      ClientId: number ;
-      RequestDate?: Date; 
-      Ruc: string;
-      Cu: String;  
-      NameEnterprises:String;
-      Status:  string; 
-      BusinessHeading:String;
+      clientId: number ;
+      requestDate: Date; 
+      ruc: string;
+      cu: String;  
+      nameEnterprise:String;
+      status:  string; 
+      businessHeading:String;
       requesType:string;
       requestTypeList: RequestTypegtp[];
      

@@ -21,7 +21,7 @@ export class GtpService {
   public pageMessage: string = "Mostrando 0 de 0 elementos";
   constructor(private http: HttpClient, private storage: StorageService) { }
 
-  public EnterprisesItems: EnterprisesPagedList = { count:0, listCompanyGTP: [] };
+  public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
 
   private States:StatesGtp [] =[
     {idState: 'Pendiente', descripcion:'pendiente'},
