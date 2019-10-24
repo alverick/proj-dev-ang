@@ -134,11 +134,7 @@ export class GtpGrillaComponent implements OnInit {
     return res;
   }
 
-  sendFiltro() {
-
-    
-
-
+  sendFiltro() { 
     this.currentFiltro.inputSearch = this.filtro.inputSearch;
     this.currentFiltro.BusinessHeading = this.filtro.BusinessHeading;
     this.currentFiltro.status = this.filtro.status; 
@@ -162,17 +158,13 @@ export class GtpGrillaComponent implements OnInit {
   // callback:  cuando se termine de ejecutar la consulta se ejecuta el callback
  // consultaDeuda(cb: () => void = null) {
  
- consultaGtp(){ 
-    
-
+ consultaGtp(){  
     if (this.validaFiltro()){
       this.spinner.show(); 
       this.gtpService.getEmpresas(this.currentFiltro).subscribe(d => {
         this.spinner.hide();
-      }, err => { this.spinner.hide(); });
-      
-    }
-
+      }, err => { this.spinner.hide(); }); 
+    } 
   }
  
   ceroRegistros(): boolean {
