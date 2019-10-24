@@ -213,7 +213,7 @@ export class AfiliacionService {
 
   public GetServicios(incDeactivates: boolean = false) {
 
-    const headers: any = {
+      const headers: any = {
         "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": "true"
       };
@@ -247,11 +247,8 @@ export class AfiliacionService {
             pagoPartes: s.partialPayment
           });
         });
-        this.services = servicios;
-        console.log(this.services);
-      });
-
-
+        this.services = servicios; 
+      }); 
   }
 
   public GrabarServicios(): Observable<any> {

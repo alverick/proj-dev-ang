@@ -10,6 +10,8 @@ import moment from 'moment';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
 import { map, catchError } from 'rxjs/operators';
+import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
+import { DataServiceGTP } from '../models/data-service-gtp';
  
 
 @Injectable({
@@ -20,7 +22,7 @@ export class GtpService {
   private URI_API: string = environment.END_POINT
   public pageMessage: string = "Mostrando 0 de 0 elementos";
   constructor(private http: HttpClient, private storage: StorageService) { }
-
+  public services: DataServiceGTP[] = [];
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
 
   private States:StatesGtp [] =[
@@ -28,7 +30,7 @@ export class GtpService {
     {idState: 'Resuelto ', descripcion:'resuelto '},
     {idState: 'Devuelto', descripcion:'devuelto'},
   ];
- 
+  
 
   public PendingResqs: PendingResquest[] = [
       {idSolicitud:2,type:0,texto:'DatosEmpresa', state:'por revisar', 
@@ -44,9 +46,7 @@ export class GtpService {
   } 
  
   //opcional
-  getEmpresas(filtro: GtpFilter = null):Observable<EnterprisesPagedList>{
-
-    
+  getEmpresas(filtro: GtpFilter = null):Observable<EnterprisesPagedList>{  
     // si es nulo que aplique el ultimo filtro
     if (filtro === null) {
       filtro = this.lastFilter;
@@ -86,12 +86,66 @@ export class GtpService {
           }
           return r;
         }))
-        .pipe(catchError(error => throwError(error)));
-
+        .pipe(catchError(error => throwError(error))); 
    }
 
   getPendingResquest():Observable<PendingResquest[]>{
     return of(this.PendingResqs);
   }
+
+   GetEnterpriseGtp(id:any):Observable<DataEnterpriseGTP>{
+    const url = `${environment.END_POINT}/company?ClienteId=${id}&_=`+ new Date().getTime();
+    const opts = {
+      headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
+    };
+    return this.http.get<DataEnterpriseGTP>(url, opts)
+    .pipe(map(r => {  
+      return r;
+    }))
+    .pipe(catchError(err => throwError(err))); 
+
+    } 
+  
+   GetServicesGtp (id:any){ 
+    const url = `${environment.END_POINT}/services?ClienteId=${id}&_=`+ new Date().getTime();
+    const opts = {
+      headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
+    }; 
+    this.http.get<any[]>(url,opts).subscribe(d=> {
+      let servicios = [];
+      d.forEach(s => {
+        servicios.push({
+          id: s.id,
+          nombre: s.name,
+          rubro: s.entry,
+          codDeudor: s.debtorCode,
+          tipoDato: s.dataType,
+          tipoPago: s.paymentType,
+          idCuenta: s.idAccount,
+          nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
+          moneda: s.currency,
+          simboloMoneda: s.currencySymbol,
+          usaWebApp: s.useAppWeb,
+          usaAgente: s.useAgent,
+          usaTienda: s.useStore,
+          cobraMora: s.chargeInterest,
+          periodoMora: s.chargeType.toString(),
+          tipoMora: s.interestType,
+          monto: s.amount,
+          porcentaje: s.percentage,
+          inReview: s.inReview,
+          pagoPartes: s.partialPayment,
+          Status: s.status  ,
+          NewNameCod: s.NewNameCod,
+          NewName: s.NewName
+        });
+      });
+      this.services = servicios;
+    });
+   }  
+
+
+  
+
 
 }

@@ -1,14 +1,9 @@
-import { DialogComponent } from './home/dialog';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared.module';
-import { HomeComponent } from './home/home.component';
-import { ConfigurarEmpresaComponent } from './configurar-empresa/configurar-empresa.component';
-import { SubirPlantillaComponent } from './subir-plantilla/subir-plantilla.component';
-import { AnalisisComponent } from './analisis/analisis.component';
+import { SharedModule } from '../shared/shared.module'; 
 import { GtpGrillaComponent } from './gtp-grilla/gtp-grilla.component';
 import { AprobacionesComponent } from './aprobaciones/aprobaciones.component';
-import { RevisarComponent } from './revisar/revisar.component';
+import { EmpresaGTPComponent } from './empresa-gtp/empresa-gtp.component';
 
 @NgModule({
   imports: [
@@ -21,9 +16,9 @@ import { RevisarComponent } from './revisar/revisar.component';
     //ConfigurarEmpresaComponent,
     //SubirPlantillaComponent,
     //AnalisisComponent
-  GtpGrillaComponent,
+    GtpGrillaComponent,
     AprobacionesComponent,
-    RevisarComponent]
+    EmpresaGTPComponent ]
 })
 export class PagesModule {
   constructor (@Optional() @SkipSelf() parentModule: PagesModule) {

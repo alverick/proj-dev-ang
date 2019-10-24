@@ -5,8 +5,7 @@
                     <div class="row">
                         <div class="col-sm-11"> 
                                 <br>
-                            <div   class="d-flex justify-content-start">
-                                 
+                            <div class="d-flex justify-content-start"> 
                                     <div class="card-servicios mb-2"  >
                                         <div class="px-2">
                                             <div class="pl-1 row pb-1">
@@ -19,31 +18,53 @@
                                                     <td class="font-black-servicios-list">Nombre de la Empresa</td> 
                                                 </tr>
                                                 <tr>
-                                                    <td class="font-black-servicios-des-list">{{Empresa.NameEnterprises}}</td> 
+                                                    <td class="font-black-servicios-des-list">{{enterprie.Name}}</td> 
                                                 </tr>
                                                  <tr>
                                                     <td class="font-black-servicios-list">Rubro </td> 
                                                 </tr>
                                                 <tr>
-                                                    <td class="font-black-servicios-des-list">{{Empresa.BusinessHeading}} </td> 
+                                                    <td class="font-black-servicios-des-list">{{enterprie.Entry}} </td> 
                                                 </tr>
                                                   <tr>
                                                     <td class="font-black-servicios-list">CU </td> 
                                                     <td class="font-black-servicios-list">RUC </td> 
                                                 </tr>
                                                 <tr>
-                                                    <td class="font-black-servicios-des-list">{{Empresa.Cu}} </td> 
-                                                    <td class="font-black-servicios-des-list">{{Empresa.Ruc}} </td> 
+                                                    <td class="font-black-servicios-des-list">{{enterprie.Cu}} </td> 
+                                                    <td class="font-black-servicios-des-list">{{enterprie.Ruc}} </td> 
                                                 </tr>
                                             </table>
                                         </div>
-                                    </div> 
-                                    
+                                    </div>  
                             </div>
                              
                             <div class="font-text-services">Revisiones Pendientes</div> 
                             <div class="d-flex justify-content-start">
                                     <perfect-scrollbar class="content-container mt-5 mb-3">
+                                        <div class="card-aprobaciones mb-2" >
+                                            <div class=" pl-4">
+                                                <div class="pl-1 row pb-0">
+                                                      <div class="col-sm-12 pt-3">
+                                                        <div class="font-text-services">Datos de Empresa</div> 
+                                                      </div>
+                                                    
+                                                </div>
+                                                <table class="table table-sm table-borderless ">
+                                                    <tr> 
+                                                        <td class="font-black-servicios-des-list" *ngIf="enterprie.Ruc"><span class="badge badge-primary" >Nueva Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 1"><span class="badge badge-primary" >Nueva Servicio</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 2"><span class="badge badge-primary" >Modificacion Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 3"><span class="badge badge-primary" >Edicion Servicio</span> </td>
+                                                    </tr>
+                                                    <tr> 
+                                                        <td class="font-black-servicios-des-list">{{ slt.state }}</td>
+                                                        <td><button type="button" (click)="VerCampos(slt.idSolicitud)" class="f3 btn-outline-green"  >Ver </button></td>
+                                                    </tr> 
+                                                    
+                                                </table>
+                                            </div>
+                                        </div>
                                         <div class="card-aprobaciones mb-2" *ngFor="let slt of pending"  >
                                             <div class=" pl-4">
                                                 <div class="pl-1 row pb-0">
@@ -79,36 +100,24 @@
                     <br>
     
                 </div>
-                <div class="col-sm-7 pb-3"  >
-                        <br>
-                        <div class="d-flex justify-content-end">
-                            <div class="formulario p-5 bg-white ">
-                                <div class="form-row">
-                                    <div class="form-group col-md-10">
-                                        <table class="table table-sm table-borderless " *ngFor="let chk of Check">
-                                                    
-                                                    <tr  >
-                                                            <td class="font-black-servicios-list">{{chk.NombreCampo}} </td> 
-                                                            <td class="font-black-servicios-list">¿Es Correcto? </td> 
-                                                    </tr>
-                                                     <tr>
-                                                            <td class="font-black-servicios-des-list">{{chk.Campo}}</td> 
-                                                            <td class="font-black-servicios-des-list"> 
-                                                                <mat-radio-group   >
-                                                                <mat-radio-button  id="mora-no" value="N" class="texto-mora">No</mat-radio-button>
-                                                                <mat-radio-button  id="mora-si" value="S" class="texto-mora">Si</mat-radio-button>
-                                                                </mat-radio-group>
-                                                            </td> 
-                                                     </tr>
-                                                    
-                                                </table>
-                                    </div>
-                                     
+                <div class="col-sm-7 pb-3" >
+                    <br>
+                    <div class="d-flex justify-content-end">
+                        <div class="formulario p-5 bg-white ">
+                            <div class="form-row">
+                                <div class="form-group col-md-10">
+                                    <div class="font-black"> </div>
                                 </div>
-                                
+                                <div class="form-group col-md-2">
+                                    <div style="float: right;"   class="mano font-cerrar">
+                                        <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                    </div>
+                                </div>
                             </div>
+                            <app-empresa-gtp></app-empresa-gtp>
                         </div>
                     </div>
+                </div>
                  
             </div>
         </div>

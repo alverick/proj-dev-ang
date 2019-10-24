@@ -1,9 +1,11 @@
+import { Enterprises } from './../../shared/models/enterprises.model';
 import { Component, OnInit, HostListener } from '@angular/core';
 import { PendingResquest } from 'src/app/shared/models/pending-resquest';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { ActivatedRoute } from '@angular/router';
 import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
 import { CheckFields } from 'src/app/shared/models/check-fields';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 
 @Component({
   selector: 'app-aprobaciones',
@@ -15,6 +17,8 @@ export class AprobacionesComponent implements OnInit {
   public Empresa:EnterprisesGtp ;
   pending: PendingResquest[];
   public Check:CheckFields[];
+  public enterprise: DataEnterpriseGTP;
+  enterprie : DataEnterpriseGTP;
   public formulario :boolean =true;
   constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute) { }
   OcultarDatosActualEmpresa: boolean = true
@@ -23,17 +27,28 @@ export class AprobacionesComponent implements OnInit {
     if (  this.formulario ) {
       $event.returnValue = 'Se van a perder los cambios.';
     }
-  }
+  } 
+/*
+NewName: string;
+    Name: string;
+    Ruc: number;
+    Email: string;
+    MovilNumber: number; 
+    Status:String;    
+    Entry: string;
+    Cu:string;
+    RequestDate:Date;
+*/
+  //Carga Empresa de prueba
 
-  
+
   ngOnInit() {
     this.llave =  this.rutaActiva.snapshot.params.llave;
     // borra el back del navegador
     window['_url_loop_'] = 'AprobacionGtp/'+this.llave;
     history.pushState(null, null, 'AprobacionGtp/'+this.llave);
     // mantiene la pagina con el scroll en la parte superior
-    window.scrollTo(0, 0);
-
+    window.scrollTo(0, 0); 
     // prubea
     console.log(this.llave);
     this.getPendingGtp();
@@ -45,15 +60,23 @@ export class AprobacionesComponent implements OnInit {
      }else{
       this.OcultarDatosActualEmpresa =true;
      } */
-
-    
-      
-    this.Empresa = this.gtpService.Empresas.find((v) => v.Ruc= '20000000020');
+ 
+   // this.Empresa = this.gtpService.Empresas.find((v) => v.Ruc= '20000000020');
    
-
-
+   this.enterprie = {
+    NewName:'Nuevo Nombre', 
+    Name:'nombre actual',
+    Ruc:12345678912,
+    Email: 'mnievafra@gmail.com',
+    MovilNumber: 123456 ,
+    Status: 'modificacion',
+    Entry: 'Colegios',
+    Cu: '1321321', 
+    RequestDate:new Date(Date.now()) 
+   }
   }
-/*
+
+  /*
   getEmpresa(id:any){
       this.Empresa = this.gtpService.Empresas.find((v) => v.ClientId= id);
    // return this.gtpService.getEnterprisesGtp().subscribe(d => this.Empresa = d);
@@ -61,16 +84,13 @@ export class AprobacionesComponent implements OnInit {
       console.log(this.Empresa);
   } */
 
-  getPendingGtp(){
+
+  getPendingGtp(){ 
     return this.gtpService.getPendingResquest().subscribe(d => this.pending = d);
   }
-
-
-
+  
   VerCampos(id:number){
     this.Check = this.gtpService.PendingResqs.find((r) => r.idSolicitud = id).checkFields;
-    console.table(this.Check);
- 
   }
 
  

@@ -53,6 +53,7 @@ import { NotifyService } from './shared/services/notify.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
+import { EmpresaGTPComponent } from './pages/empresa-gtp/empresa-gtp.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,7 @@ import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.compone
     EmailDirective,
     OnlyNumbersDirective,
     
-
+    EmpresaGTPComponent
 
     ],
   imports: [

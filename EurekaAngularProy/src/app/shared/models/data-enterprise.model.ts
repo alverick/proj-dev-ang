@@ -1,7 +1,7 @@
 export interface DataEnterpriseModel{
-    ruc?: number;
-    name: string;
-    entry: string;
+    Ruc: number;
+    Name: string;
+    Entry: string;
     email: string;
     movilNumber: number;    
     password: string;
