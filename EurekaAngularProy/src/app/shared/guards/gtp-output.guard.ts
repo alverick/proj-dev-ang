@@ -21,10 +21,7 @@ export class GtpOutputGuard implements CanActivate {
       else {
         this.router.navigate(['/gtp']);
           return true;
-      }
-    
-      return true;
-
+      }  
   }
   
 }

@@ -26,7 +26,8 @@ import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { Observable } from 'rxjs'; 
+import { Observable } from 'rxjs';
+import { isNgTemplate } from '@angular/compiler';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -297,7 +298,7 @@ orderList(index: number, asc: boolean) {
     this.currentFiltro.dateFrom = this.filtro.dateFrom;
     this.currentFiltro.dateTo = this.filtro.dateTo;
     this.currentFiltro.pageNumber = 1;
-    // borrar marcas para eliminaciones
+    //limpia anter
     this.transactionService.clearMarksForDeletes();
     this.consultaDeuda();
     // google analytics
@@ -377,7 +378,7 @@ orderList(index: number, asc: boolean) {
               return false;
             } else {
               return true;
-              }
+            }
           } else {
                   if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
                     this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
@@ -524,7 +525,8 @@ orderList(index: number, asc: boolean) {
     item.newFirstName = item.firstName;
     item.newLastName = item.lastName;
 
-    console.log('fechas'); 
+    console.log('fechas');
+
   }
 
   selectEstPag(event, item: Debts){
@@ -535,7 +537,8 @@ orderList(index: number, asc: boolean) {
     if(event == '2'){
       item.editInput = false;
       item.editPending = false;
-    } 
+    }
+
   }
 
   clearDatePicker(event){

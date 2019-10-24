@@ -48,8 +48,7 @@ export class TransactionService {
       else {
         // el nuevo filtro
         this.lastFilter = filtro;
-      }
-
+      } 
       var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
       var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
       //fechas

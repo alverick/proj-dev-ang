@@ -50,10 +50,7 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
           prfl: r.prfl
         });
         this.gaService.sendEvent('login', { method: 'OAUTH' });
-        if(r.prfl = 0){
           this.notify.iniciar();
-        }
-        
       }
       else {
         this.gaService.sendEvent('exception', { description: 'No Login', fatal: false });

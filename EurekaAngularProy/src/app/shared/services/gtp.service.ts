@@ -28,20 +28,7 @@ export class GtpService {
     {idState: 'Resuelto ', descripcion:'resuelto '},
     {idState: 'Devuelto', descripcion:'devuelto'},
   ];
-
- /*
-  public Empresas: EnterprisesGtp[] = [
-      {ClientId:'4', RequestDate: new Date(Date.now()),Ruc:'20000000017', Cu:'20' ,
-        NameEnterprises:'Demo Empresa4',Status:'pendiente',BusinessHeading:'A',requestType:[{type:1,texto:'EMP'},{type:2,texto:'2 SERV'}] },
-      { ClientId:'1', RequestDate: new Date(Date.now()),Ruc:'20000000018', Cu:'20', 
-       NameEnterprises:'Demo Empresa0',Status:'pendiente',BusinessHeading:'A',requestType:[{type:0,texto:'Nueva Empresa 2 servicios',}] },
-       {ClientId:'2', RequestDate: new Date(Date.now()),Ruc:'20000000019', Cu:'20' ,
-       NameEnterprises:'Demo Empresa2',Status:'resuelto',BusinessHeading:'A',requestType:[{type:1,texto:'EMP'},{type:1,texto:'2 SERV'},{type:2,texto:'3 SERV'}] },
-       {ClientId:'3', RequestDate: new Date(Date.now()),Ruc:'20000000020', Cu:'20' ,
-       NameEnterprises:'Demo Empresa3',Status:'resuelto',BusinessHeading:'A',requestType:[{type:1,texto:'2 SERV'},{type:2,texto:'3 SERV'}] },
-       
-  ];
- */
+ 
 
   public PendingResqs: PendingResquest[] = [
       {idSolicitud:2,type:0,texto:'DatosEmpresa', state:'por revisar', 
@@ -78,12 +65,27 @@ export class GtpService {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
         }; 
         return this.http.get<EnterprisesPagedList>(url, opts)
-        .pipe(map (r =>{
-
+        .pipe(map (r =>{ 
           this.EnterprisesItems = r;
-          return r;
-
+          return r; 
         })) 
+        .pipe(map(r => {
+          if (r.totalCompanies == 0) {
+            this.pageMessage = "Mostrando 0 de 0 elementos";
+          }
+          else {
+                      // (1 - 1*50)+1 =1
+            let beg = ((filtro.pageNumber - 1) * 50) + 1;
+                        // 1*50=50
+            let end = filtro.pageNumber * 50;
+              // 50 > 150
+            if (end > r.totalCompanies)
+              end = r.totalCompanies;
+              // Mostrando 1 - 50 de 150 elemtos
+            this.pageMessage = `Mostrando ${beg} - ${end} de ${r.totalCompanies} elementos`;
+          }
+          return r;
+        }))
         .pipe(catchError(error => throwError(error)));
 
    }
