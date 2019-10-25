@@ -1,10 +1,17 @@
 export interface DataEnterpriseModel{
-    Ruc: number;
-    Name: string;
-    Entry: string;
+     
+    ruc: number;
+    name: string;
+    entry: string;
     email: string;
-    movilNumber: number;    
+    movilNumber: number; 
+    newName: string;
+    status:String;  
+ //   uniqueCodeIBK:String; 
+    requestDate:Date;  
     password: string;
     newPassword: string;
     confirmNewPassword: string;
 }
+
+  

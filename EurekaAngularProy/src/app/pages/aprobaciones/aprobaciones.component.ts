@@ -1,3 +1,4 @@
+import { DataServiceGTP } from './../../shared/models/data-service-gtp';
  import { Component, OnInit, HostListener } from '@angular/core';
 import { PendingResquest } from 'src/app/shared/models/pending-resquest';
 import { GtpService } from 'src/app/shared/services/gtp.service';
@@ -18,6 +19,9 @@ export class AprobacionesComponent implements OnInit {
   public pending: PendingResquest[]; 
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise : DataEnterpriseGTP; 
+
+  public Service : DataServiceGTP; 
+
   constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute) { }
   public OcultarDatosActualEmpresa: boolean = true
   @HostListener('window:beforeunload', ['$event'])
@@ -38,30 +42,68 @@ export class AprobacionesComponent implements OnInit {
     // prubea
     console.log(this.llave);
     this.getPendingGtp();
-    
-  /*  let emp = this.pending.find((v) => v.type === 0).type;
      
-     if(emp === 0) {
-       this.OcultarDatosActualEmpresa =false;
-     }else{
-      this.OcultarDatosActualEmpresa =true;
-     } */
- 
-   // this.Empresa = this.gtpService.Empresas.find((v) => v.Ruc= '20000000020');
-   
    this.Enterprise  = {
-    NewName:'Nuevo Nombre', 
-    Name:'nombre actual',
-    Ruc:12345678912,
-    Email: 'mnievafra@gmail.com',
-    MovilNumber: 123456 ,
-    Status: 'modificacion',
-    Entry: 'Colegios',
-    Cu: '1321321', 
-    RequestDate:new Date(Date.now()),
-    NewNameApproved: ''
+    ruc:12345678912,
+    name:'nombre actual',
+    entry: '04', 
+    email: 'mnievafra@gmail.com',
+    movilNumber: 123456 , 
+    newName:'Nuevo Nombre', 
+    status: 'nueva empresa', 
+    uniqueCodeIBK: '1321321', 
+    requestDate:new Date(Date.now()),
+    NombreApproved: null
    }
+
+   /*
+    id?: number; //1
+    nombre: string; //1
+    rubro?: number; //1
+    codDeudor?: string; //1
+    nameCod?: string; //1
+    tipoDato: string; //1
+    tipoPago?: string; //1
+    nroCuenta: string; //1
+    idCuenta: number; //1
+    moneda: string; //1
+    simboloMoneda?: string; //1
+    usaWebApp: boolean; //1
+    usaAgente: boolean; //1
+    usaTienda: boolean; //1
+    cobraMora: string; //1
+    periodoMora: string; //1
+    tipoMora: string; //1
+    monto?: number; //1
+    porcentaje?: number; //1
+    inReview?: boolean;   //1
+    pagoPartes?: string; //1
+    Status:string;
+    NewNameCod:string;
+    NewName:string;
+   
+    
+   this.Service = {
+    nombre: 'Mensualidad', 
+    codDeudor: 'DNI',
+    tipoDato: 'C',
+    tipoPago: 'C',
+    idCuenta: 0,
+    nroCuenta: '',
+    moneda: '001',
+    simboloMoneda: 'S/',
+    usaWebApp: true,
+    usaAgente: false,
+    usaTienda: false,
+    cobraMora: 'N',
+    periodoMora: '1',
+    tipoMora: 'M',
+    pagoPartes: 'N'
+   }
+ */
   }
+
+
 
   /*
   getEmpresa(id:any){
@@ -82,6 +124,7 @@ export class AprobacionesComponent implements OnInit {
     this.Empgtp = etp;
 
   }
+
 
   getPendingGtp(){ 
     return this.gtpService.getPendingResquest().subscribe(d => this.pending = d);

@@ -21,7 +21,7 @@ export interface DataServiceGTP {
     inReview?: boolean;   //1
     pagoPartes?: string; //1
     Status:string;
-    NewNameCod:string;
-    NewName:string;
+    NewNameCod:boolean;
+    NewName:boolean;
     //24
 }

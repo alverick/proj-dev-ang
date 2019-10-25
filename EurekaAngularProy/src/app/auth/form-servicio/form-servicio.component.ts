@@ -540,12 +540,11 @@ function Alfanumerico(c: FormControl) {
 function Alfabetico(c: FormControl) {
   let regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
   let numero= /[0-9]/g
-  /*if (c.value && !regex.test(c.value)) {
-    
+  if (c.value && !regex.test(c.value)) { 
+    return { alfabetico: true };
+  }   
+ /* if(c.value && numero.test(c.value)){ 
     return { alfabetico: true };
   } */
-  if(c.value && numero.test(c.value)){ 
-    return { alfabetico: true };
-  }
   return null;
 }

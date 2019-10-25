@@ -1,12 +1,13 @@
-export interface DataEnterpriseGTP {
-    NewName: string;
-    Name: string;
-    Ruc: number;
-    Email: string;
-    MovilNumber: number; 
-    Status:String;    
-    Entry: string;
-    Cu:string;
-    RequestDate:Date;
-    NewNameApproved:string;
+export interface DataEnterpriseGTP { 
+    ruc: number;
+    name: string;
+    entry: string;
+    email: string;
+    movilNumber: number; 
+    newName: string;
+    status:String;  
+    uniqueCodeIBK:String; 
+    requestDate:Date; 
+    NombreApproved:boolean;
 }
+ 

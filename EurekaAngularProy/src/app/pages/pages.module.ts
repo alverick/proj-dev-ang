@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { GtpGrillaComponent } from './gtp-grilla/gtp-grilla.component';
 import { AprobacionesComponent } from './aprobaciones/aprobaciones.component';
 import { EmpresaGTPComponent } from './empresa-gtp/empresa-gtp.component';
+import { ServicesGTPComponent } from './services-gtp/services-gtp.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { EmpresaGTPComponent } from './empresa-gtp/empresa-gtp.component';
     //AnalisisComponent
     GtpGrillaComponent,
     AprobacionesComponent,
-    EmpresaGTPComponent ]
+    EmpresaGTPComponent,
+    ServicesGTPComponent ]
 })
 export class PagesModule {
   constructor (@Optional() @SkipSelf() parentModule: PagesModule) {

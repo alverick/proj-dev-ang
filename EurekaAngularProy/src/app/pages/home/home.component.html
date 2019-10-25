@@ -366,7 +366,7 @@
                       <td class="c11">
                         <div class="cnt-status">
                           <div class="lnk-status"   (click)="appPagos.show()">
-                            <span *ngIf="items.status === 'PAGADO'" class="text-success">
+                            <span *ngIf="items.status === 'PAGADO' && items.dueDate !== null" class="text-success">
                               Pagado <img src="assets/images/ok.svg" alt="ok">
                             </span>
                             <span *ngIf="items.status === 'VENCIDO'" class="text-danger">
@@ -375,8 +375,14 @@
                             <span *ngIf="items.status === 'PARCIAL'" class="text-partial">
                               Parcial
                             </span>
-                            <span *ngIf="items.status === 'PENDIENTE'">
+                            <span *ngIf="items.status === 'PENDIENTE'  && items.dueDate !== null">
                               Pendiente
+                            </span>
+                            <span *ngIf="items.status === 'PENDIENTE' && items.dueDate === null">
+                              Habilitado
+                            </span>
+                            <span *ngIf="items.status === 'PAGADO' && items.dueDate === null" class="text-success">
+                              Deshabilitado <img src="assets/images/ok.svg" alt="ok">
                             </span>
                           </div>
                           <app-pagos #appPagos [debtId]="items.id" [(status)]="items.status" [currency]="items.currency"
