@@ -52,14 +52,12 @@
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
                                                     <tr> 
-                                                        <td class="font-black-servicios-des-list" *ngIf="enterprie.Ruc"><span class="badge badge-primary" >Nueva Empresa</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 1"><span class="badge badge-primary" >Nueva Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 2"><span class="badge badge-primary" >Modificacion Empresa</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 3"><span class="badge badge-primary" >Edicion Servicio</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="enterprie.Status == 'nueva empresa'"><span class="badge badge-primary" >Nueva Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="enterprie.Status == 'modificacion'"><span class="badge badge-primary" >Nueva Servicio</span> </td> 
                                                     </tr>
                                                     <tr> 
-                                                        <td class="font-black-servicios-des-list">{{ slt.state }}</td>
-                                                        <td><button type="button" (click)="VerCampos(slt.idSolicitud)" class="f3 btn-outline-green"  >Ver </button></td>
+                                                        <td class="font-black-servicios-des-list">por Revisar</td> 
+                                                        <td><button type="button" (click)="VerCampos(enterprie)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr> 
                                                     
                                                 </table>
