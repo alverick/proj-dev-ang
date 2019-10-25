@@ -1,5 +1,4 @@
-import { CheckFields } from "./check-fields";
-
+ 
  
 export interface PendingResquest {
 /* type: string;
@@ -9,7 +8,7 @@ export interface PendingResquest {
  type: number;
  texto: string;
  state: string;
- checkFields:CheckFields[];
+ checkFields:any;
 
  /*type: es servicio o empresa 
  accion: es edicion  o nuevo , 
