@@ -372,7 +372,7 @@
                             <span *ngIf="items.status === 'VENCIDO'" class="text-danger">
                               Vencido <img src="assets/images/cancel.svg" alt="cancel">
                             </span>
-                            <span *ngIf="items.status === 'PARCIAL'" class="text-partial">
+                            <span *ngIf="items.status === 'PARCIAL' && items.dueDate !== null " class="text-partial">
                               Parcial
                             </span>
                             <span *ngIf="items.status === 'PENDIENTE'  && items.dueDate !== null">
@@ -381,6 +381,9 @@
                             <span *ngIf="items.status === 'PENDIENTE' && items.dueDate === null">
                               Habilitado
                             </span>
+                            <span *ngIf="items.status === 'PARCIAL' && items.dueDate === null"  >
+                                Habilitado
+                              </span>
                             <span *ngIf="items.status === 'PAGADO' && items.dueDate === null" class="text-success">
                               Deshabilitado <img src="assets/images/ok.svg" alt="ok">
                             </span>

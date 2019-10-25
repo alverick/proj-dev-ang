@@ -81,7 +81,7 @@ export class AprobacionesComponent implements OnInit {
     Status:string;
     NewNameCod:string;
     NewName:string;
-   
+    */
     
    this.Service = {
     nombre: 'Mensualidad', 
@@ -98,9 +98,12 @@ export class AprobacionesComponent implements OnInit {
     cobraMora: 'N',
     periodoMora: '1',
     tipoMora: 'M',
-    pagoPartes: 'N'
+    pagoPartes: 'N',
+    Status:'nuevo Servicio',
+    NewNameCod: null,
+    NewName: null
    }
- */
+
   }
 
 

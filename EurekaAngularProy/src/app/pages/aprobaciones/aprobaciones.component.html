@@ -64,17 +64,17 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="card-aprobaciones mb-2" *ngFor="let slt of pending"  >
+                                        <div class="card-aprobaciones mb-2"   >
                                             <div class=" pl-4">
                                                 <div class="pl-1 row pb-0">
                                                       <div class="col-sm-12 pt-3">
-                                                        <div class="font-text-services">{{slt.texto}}</div> 
+                                                        <div class="font-text-services">{{Service.nombre}}</div> 
                                                       </div>
                                                     
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
                                                     <tr> 
-                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 0"><span class="badge badge-primary" >Nueva Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="Service.Status == 'nuevo Servicio'"><span class="badge badge-primary" >Nuevo Servicio</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="slt.type == 1"><span class="badge badge-primary" >Nueva Servicio</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="slt.type == 2"><span class="badge badge-primary" >Edicion Empresa</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="slt.type == 3"><span class="badge badge-primary" >Edicion Servicio</span> </td>
