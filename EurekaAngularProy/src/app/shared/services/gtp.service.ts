@@ -32,9 +32,7 @@ export class GtpService {
   ];
   
 
-  public PendingResqs: PendingResquest[] = [
-      {idSolicitud:2,type:0,texto:'DatosEmpresa', state:'por revisar', 
-      checkFields:[{NombreCampo:'Nombre de la Empresa', Campo:'Colegio de Ing de Peru', aprobado:false}]},
+  public PendingResqs: PendingResquest[] = [ 
       {idSolicitud:2,type:1,texto:'Servicio Demo1', state:'por revisar', 
       checkFields:[{NombreCampo:'Nombre del Servicio1', Campo:'Mensualidad', aprobado:false}, {NombreCampo:'Codigo Deudor', Campo:'Cod Alumno', aprobado:false}]},
       {idSolicitud:3,type:1,texto:'Servicio Demo2', state:'por revisar',

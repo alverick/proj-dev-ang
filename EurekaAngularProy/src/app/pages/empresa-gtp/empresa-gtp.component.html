@@ -1,1 +1,37 @@
- 
+<form [formGroup]="formGroup" novalidate  (submit)="onSubmitEmpresa()" class="form">
+    <div class="form-group ">
+        <mat-form-field class="w-100">
+            <input class="input-text" matInput [readonly]="true" type="text" formControlName="ruc" placeholder="RUC">
+        </mat-form-field>
+    </div>
+    <div class="form-group ">
+        <mat-form-field class="w-60">
+            <input class="input-text" matInput type="text" formControlName="newName" placeholder="Nuevo Nombre de la empresa">
+        </mat-form-field>
+        <mat-radio-group  formControlName="NewNameApproved" aria-label="Select an option">
+            <mat-radio-button name="NewNameApproved" class="w-20" value="S">SI</mat-radio-button>
+            <mat-radio-button name="NewNameApproved" class="w-20" value="N">NO</mat-radio-button>
+        </mat-radio-group>
+        <mat-error class="messsage-error" *ngIf="f.NewNameApproved.invalid && f.NewNameApproved.hasError('required')">Debe seleccionar una opción</mat-error>
+    </div>
+    <div class="input-text form-group  "> 
+        <mat-form-field class="w-100">
+            <input class="input-text" matInput type="text" formControlName="entry" placeholder="Rubro">
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+        <mat-form-field class="w-100">
+            <input class="input-text" matInput type="email" placeholder="E-mail" minlength="10" maxlength="100" formControlName="email" (Keydown.space)="$event.preventDefault()" >
+            
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+        <mat-form-field class="w-100">
+            <input class="input-text"  matInput type="text" (Keydown.space)="$event.preventDefault()" placeholder="Teléfono o celular" minlength="6" maxlength="9" formControlName="movilNumber">
+        
+        </mat-form-field>
+    </div> 
+    <div class="mt-4 pb-4">
+        <button   type="submit" class="btn-eureca-green ">GUARDAR</button>
+    </div>
+</form>

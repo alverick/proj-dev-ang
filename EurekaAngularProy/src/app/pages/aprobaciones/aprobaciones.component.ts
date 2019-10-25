@@ -1,11 +1,9 @@
-import { Enterprises } from './../../shared/models/enterprises.model';
-import { Component, OnInit, HostListener } from '@angular/core';
+ import { Component, OnInit, HostListener } from '@angular/core';
 import { PendingResquest } from 'src/app/shared/models/pending-resquest';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { ActivatedRoute } from '@angular/router';
 import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
-import { CheckFields } from 'src/app/shared/models/check-fields';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+ import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 
 @Component({
   selector: 'app-aprobaciones',
@@ -13,34 +11,22 @@ import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
   styleUrls: ['./aprobaciones.component.scss']
 })
 export class AprobacionesComponent implements OnInit {
+
+  public Formulario: boolean = false;
   public llave:number;
   public Empresa:EnterprisesGtp ;
-  pending: PendingResquest[];
-  public Check:CheckFields[];
-  public enterprise: DataEnterpriseGTP;
-  enterprie : DataEnterpriseGTP;
-  public formulario :boolean =true;
+  public pending: PendingResquest[]; 
+  public Empgtp: DataEnterpriseGTP = null;
+  public Enterprise : DataEnterpriseGTP; 
   constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute) { }
-  OcultarDatosActualEmpresa: boolean = true
+  public OcultarDatosActualEmpresa: boolean = true
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
-    if (  this.formulario ) {
+    if (  this.Formulario ) {
       $event.returnValue = 'Se van a perder los cambios.';
     }
   } 
-/*
-NewName: string;
-    Name: string;
-    Ruc: number;
-    Email: string;
-    MovilNumber: number; 
-    Status:String;    
-    Entry: string;
-    Cu:string;
-    RequestDate:Date;
-*/
-  //Carga Empresa de prueba
-
+ 
 
   ngOnInit() {
     this.llave =  this.rutaActiva.snapshot.params.llave;
@@ -63,7 +49,7 @@ NewName: string;
  
    // this.Empresa = this.gtpService.Empresas.find((v) => v.Ruc= '20000000020');
    
-   this.enterprie = {
+   this.Enterprise  = {
     NewName:'Nuevo Nombre', 
     Name:'nombre actual',
     Ruc:12345678912,
@@ -72,7 +58,8 @@ NewName: string;
     Status: 'modificacion',
     Entry: 'Colegios',
     Cu: '1321321', 
-    RequestDate:new Date(Date.now()) 
+    RequestDate:new Date(Date.now()),
+    NewNameApproved: ''
    }
   }
 
@@ -84,14 +71,22 @@ NewName: string;
       console.log(this.Empresa);
   } */
 
+  onGrabar(emp: DataEnterpriseGTP) {
+    this.Enterprise = emp;
+    this.Formulario = false;
+    console.table(this.Enterprise);
+  }
+
+  VerCamposEnterprise(etp:DataEnterpriseGTP){
+    this.Formulario = true;
+    this.Empgtp = etp;
+
+  }
 
   getPendingGtp(){ 
     return this.gtpService.getPendingResquest().subscribe(d => this.pending = d);
   }
   
-  VerCampos(id:number){
-    this.Check = this.gtpService.PendingResqs.find((r) => r.idSolicitud = id).checkFields;
-  }
 
  
 }

@@ -18,21 +18,21 @@
                                                     <td class="font-black-servicios-list">Nombre de la Empresa</td> 
                                                 </tr>
                                                 <tr>
-                                                    <td class="font-black-servicios-des-list">{{enterprie.Name}}</td> 
+                                                    <td class="font-black-servicios-des-list">{{Enterprise.Name}}</td> 
                                                 </tr>
                                                  <tr>
                                                     <td class="font-black-servicios-list">Rubro </td> 
                                                 </tr>
                                                 <tr>
-                                                    <td class="font-black-servicios-des-list">{{enterprie.Entry}} </td> 
+                                                    <td class="font-black-servicios-des-list">{{Enterprise.Entry}} </td> 
                                                 </tr>
                                                   <tr>
                                                     <td class="font-black-servicios-list">CU </td> 
                                                     <td class="font-black-servicios-list">RUC </td> 
                                                 </tr>
                                                 <tr>
-                                                    <td class="font-black-servicios-des-list">{{enterprie.Cu}} </td> 
-                                                    <td class="font-black-servicios-des-list">{{enterprie.Ruc}} </td> 
+                                                    <td class="font-black-servicios-des-list">{{Enterprise.Cu}} </td> 
+                                                    <td class="font-black-servicios-des-list">{{Enterprise.Ruc}} </td> 
                                                 </tr>
                                             </table>
                                         </div>
@@ -52,12 +52,13 @@
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
                                                     <tr> 
-                                                        <td class="font-black-servicios-des-list" *ngIf="enterprie.Status == 'nueva empresa'"><span class="badge badge-primary" >Nueva Empresa</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="enterprie.Status == 'modificacion'"><span class="badge badge-primary" >Nueva Servicio</span> </td> 
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.Status == 'nueva empresa'"><span class="badge badge-primary" >Nueva Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.Status == 'modificacion'"><span class="badge badge-primary" >Nueva Servicio</span> </td> 
                                                     </tr>
                                                     <tr> 
-                                                        <td class="font-black-servicios-des-list">por Revisar</td> 
-                                                        <td><button type="button" (click)="VerCampos(enterprie)" class="f3 btn-outline-green"  >Ver </button></td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.NewNameApproved == '' ">por Revisar</td>  
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.NewNameApproved == 'S' || Enterprise.NewNameApproved == 'N' ">Revisado</td> 
+                                                        <td><button type="button" (click)="VerCamposEnterprise(Enterprise)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr> 
                                                     
                                                 </table>
@@ -98,21 +99,26 @@
                     <br>
     
                 </div>
-                <div class="col-sm-7 pb-3" >
+                <div class="col-sm-7 pb-3" *ngIf="Formulario">
                     <br>
                     <div class="d-flex justify-content-end">
                         <div class="formulario p-5 bg-white ">
                             <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <div class="font-black"> </div>
-                                </div>
+                                </div><!--
+                                        <div class="form-group col-md-2">
+                                            <div style="float: right;"   class="mano font-cerrar">
+                                                <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                            </div>
+                                        </div> -->
                                 <div class="form-group col-md-2">
-                                    <div style="float: right;"   class="mano font-cerrar">
-                                        <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                    <div style="float: right;" >
+                                       ¿Aprobado?
                                     </div>
                                 </div>
                             </div>
-                            <app-empresa-gtp></app-empresa-gtp>
+                            <app-empresa-gtp [enterprise]="Empgtp" (grabar)="onGrabar($event)"> </app-empresa-gtp>
                         </div>
                     </div>
                 </div>

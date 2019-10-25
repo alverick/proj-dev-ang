@@ -8,4 +8,5 @@ export interface DataEnterpriseGTP {
     Entry: string;
     Cu:string;
     RequestDate:Date;
+    NewNameApproved:string;
 }
