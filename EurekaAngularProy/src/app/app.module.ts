@@ -54,6 +54,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
 import { EmpresaGTPComponent } from './pages/empresa-gtp/empresa-gtp.component';
+import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.component';
 
 @NgModule({
   declarations: [
@@ -79,8 +80,8 @@ import { EmpresaGTPComponent } from './pages/empresa-gtp/empresa-gtp.component';
     EmailDirective,
     OnlyNumbersDirective,
     
-    EmpresaGTPComponent
-
+    EmpresaGTPComponent,
+    ServicesGTPComponent
     ],
   imports: [
     BrowserModule,

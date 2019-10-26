@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ServiceModel } from 'src/app/shared/models';
+import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
 
 @Component({
   selector: 'app-services-gtp',
@@ -9,6 +10,10 @@ import { ServiceModel } from 'src/app/shared/models';
 })
 export class ServicesGTPComponent implements OnInit {
   private _service: ServiceModel;
+  private _servicegtp: DataServiceGTP
+  @Input() set service(value: DataServiceGTP){
+    this._servicegtp = value;
+  }
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {

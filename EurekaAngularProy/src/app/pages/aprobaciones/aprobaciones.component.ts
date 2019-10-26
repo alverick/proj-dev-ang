@@ -14,13 +14,15 @@ import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
 export class AprobacionesComponent implements OnInit {
 
   public Formulario: boolean = false;
+  public ServiciosFormulario: boolean = false;
   public llave:number;
   public Empresa:EnterprisesGtp ;
   public pending: PendingResquest[]; 
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise : DataEnterpriseGTP; 
 
-  public Service : DataServiceGTP; 
+  public Service : DataServiceGTP;
+  public Servgtp : DataServiceGTP; 
 
   constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute) { }
   public OcultarDatosActualEmpresa: boolean = true
@@ -39,9 +41,7 @@ export class AprobacionesComponent implements OnInit {
     history.pushState(null, null, 'AprobacionGtp/'+this.llave);
     // mantiene la pagina con el scroll en la parte superior
     window.scrollTo(0, 0); 
-    // prubea
-    console.log(this.llave);
-    this.getPendingGtp();
+ 
      
    this.Enterprise  = {
     ruc:12345678912,
@@ -106,15 +106,7 @@ export class AprobacionesComponent implements OnInit {
 
   }
 
-
-
-  /*
-  getEmpresa(id:any){
-      this.Empresa = this.gtpService.Empresas.find((v) => v.ClientId= id);
-   // return this.gtpService.getEnterprisesGtp().subscribe(d => this.Empresa = d);
-   console.log('Empresa');
-      console.log(this.Empresa);
-  } */
+ 
 
   onGrabar(emp: DataEnterpriseGTP) {
     this.Enterprise = emp;
@@ -124,14 +116,16 @@ export class AprobacionesComponent implements OnInit {
 
   VerCamposEnterprise(etp:DataEnterpriseGTP){
     this.Formulario = true;
-    this.Empgtp = etp;
-
+    this.Empgtp = etp; 
   }
 
 
-  getPendingGtp(){ 
-    return this.gtpService.getPendingResquest().subscribe(d => this.pending = d);
+  VerCamposSer(etp:DataServiceGTP){
+    this.ServiciosFormulario = true;
+    this.Servgtp = etp;
+    console.table(etp); 
   }
+
   
 
  

@@ -75,13 +75,11 @@
                                                 <table class="table table-sm table-borderless ">
                                                     <tr> 
                                                         <td class="font-black-servicios-des-list" *ngIf="Service.Status == 'nuevo Servicio'"><span class="badge badge-primary" >Nuevo Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 1"><span class="badge badge-primary" >Nueva Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 2"><span class="badge badge-primary" >Edicion Empresa</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="slt.type == 3"><span class="badge badge-primary" >Edicion Servicio</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="Service.Status == 'edicion de Servicio'"><span class="badge badge-primary" >edicion de Servicio</span> </td> 
                                                     </tr>
                                                     <tr> 
-                                                        <td class="font-black-servicios-des-list">{{ slt.state }}</td>
-                                                        <td><button type="button" (click)="VerCampos(slt.idSolicitud)" class="f3 btn-outline-green"  >Ver </button></td>
+                                                        <td class="font-black-servicios-des-list">por Revisar</td>
+                                                        <td><button type="button" (click)="VerCamposSer(Service)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr> 
                                                     
                                                 </table>
@@ -122,6 +120,29 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-7 pb-3" *ngIf="ServiciosFormulario">
+                        <br>
+                        <div class="d-flex justify-content-end">
+                            <div class="formularioServ p-5 bg-white ">
+                                <div class="form-row">
+                                    <div class="form-group col-md-10">
+                                        <div class="font-black"> </div>
+                                    </div><!--
+                                            <div class="form-group col-md-2">
+                                                <div style="float: right;"   class="mano font-cerrar">
+                                                    <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                                </div>
+                                            </div> -->
+                                    <div class="form-group col-md-2">
+                                        <div style="float: right;" >
+                                           ¿Aprobado?
+                                        </div>
+                                    </div>
+                                </div>
+                                <app-services-gtp [service]="Servgtp" > </app-services-gtp>
+                            </div>
+                        </div>
+                    </div>
                  
             </div>
         </div>

@@ -1,3 +1,6 @@
+
+hoola
+<!--
 <form [formGroup]="frm" novalidate >
 
         <div class="form-group">
@@ -54,7 +57,7 @@
                     <mat-option class="input-text" *ngFor="let cta of cuentas" [value]="cta.id">{{cta.number}}</mat-option>
                 </mat-select>
                 <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('required')">Elija una opcion</mat-error>
-                <!--POR AHORA VALIDA POR MEDIO DEL MINLENGTH-->
+             
                 <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('minlength')">Elija una opcion</mat-error>
             </mat-form-field>
         </div>
@@ -156,6 +159,6 @@
             </div>
     
         </div>
-        <button type="submit" class="btn-eureca-green"> GUARDAR</button>
+        <button type="submit" class="btn-eureca-green"> GUARDAR</button> 
     </form>
-    
+       -->
