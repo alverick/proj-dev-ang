@@ -13,6 +13,7 @@ export class ServicesGTPComponent implements OnInit {
   private _servicegtp: DataServiceGTP
   @Input() set service(value: DataServiceGTP){
     this._servicegtp = value;
+    console.table(this._servicegtp);
   }
   constructor(private fb: FormBuilder) { }
 
