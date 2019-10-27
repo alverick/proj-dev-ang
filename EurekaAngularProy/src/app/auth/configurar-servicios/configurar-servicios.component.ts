@@ -42,7 +42,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         window['_url_loop_'] = 'editarServicios';
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
-        this.titulo = 'Edita el servicio';
+        this.titulo = 'Edita el servicio'; 
       } else {
         // siempre entra ahí
         window['_url_loop_'] = 'configurarServicios';

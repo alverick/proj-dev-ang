@@ -1,10 +1,11 @@
 import { DataServiceGTP } from './../../shared/models/data-service-gtp';
  import { Component, OnInit, HostListener } from '@angular/core';
-import { PendingResquest } from 'src/app/shared/models/pending-resquest';
-import { GtpService } from 'src/app/shared/services/gtp.service';
-import { ActivatedRoute } from '@angular/router';
+ import { GtpService } from 'src/app/shared/services/gtp.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
  import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import Swal from 'sweetalert2';
+import { drawPopup } from 'src/app/shared/services/popups'; 
 
 @Component({
   selector: 'app-aprobaciones',
@@ -17,14 +18,13 @@ export class AprobacionesComponent implements OnInit {
   public ServiciosFormulario: boolean = false;
   public llave:number;
   public Empresa:EnterprisesGtp ;
-  public pending: PendingResquest[]; 
-  public Empgtp: DataEnterpriseGTP = null;
+   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise : DataEnterpriseGTP; 
 
   public Service : DataServiceGTP;
   public Servgtp : DataServiceGTP; 
 
-  constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute) { }
+  constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute,public router: Router) { }
   public OcultarDatosActualEmpresa: boolean = true
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
@@ -32,7 +32,7 @@ export class AprobacionesComponent implements OnInit {
       $event.returnValue = 'Se van a perder los cambios.';
     }
   } 
- 
+  public indiceActual: number = -1;
 
   ngOnInit() {
     this.llave =  this.rutaActiva.snapshot.params.llave;
@@ -42,7 +42,7 @@ export class AprobacionesComponent implements OnInit {
     // mantiene la pagina con el scroll en la parte superior
     window.scrollTo(0, 0); 
  
-     
+    
    this.Enterprise  = {
     ruc:12345678912,
     name:'nombre actual',
@@ -55,55 +55,29 @@ export class AprobacionesComponent implements OnInit {
     requestDate:new Date(Date.now()),
     NombreApproved: null
    }
-
-   /*
-    id?: number; //1
-    nombre: string; //1
-    rubro?: number; //1
-    codDeudor?: string; //1
-    nameCod?: string; //1
-    tipoDato: string; //1
-    tipoPago?: string; //1
-    nroCuenta: string; //1
-    idCuenta: number; //1
-    moneda: string; //1
-    simboloMoneda?: string; //1
-    usaWebApp: boolean; //1
-    usaAgente: boolean; //1
-    usaTienda: boolean; //1
-    cobraMora: string; //1
-    periodoMora: string; //1
-    tipoMora: string; //1
-    monto?: number; //1
-    porcentaje?: number; //1
-    inReview?: boolean;   //1
-    pagoPartes?: string; //1
-    Status:string;
-    NewNameCod:string;
-    NewName:string;
-    */
     
    this.Service = {
     nombre: 'Mensualidad', 
     codDeudor: 'DNI',
     tipoDato: 'C',
     tipoPago: 'C',
-    idCuenta: 0,
-    nroCuenta: '',
+    idCuenta: 2,
+    nroCuenta: '*********7653 (dolares)',
     moneda: '001',
     simboloMoneda: 'S/',
     usaWebApp: true,
     usaAgente: false,
-    usaTienda: false,
-    cobraMora: 'N',
-    periodoMora: '1',
+    usaTienda: true,
+    cobraMora: 'S',
+    periodoMora: '2',
     tipoMora: 'M',
-    pagoPartes: 'N',
+    monto:12.2,
+    pagoPartes: 'S',
     Status:'nuevo Servicio',
     NewNameCod: null,
     NewName: null
-   }
-
+   } 
+   
   }
 
  
@@ -111,22 +85,103 @@ export class AprobacionesComponent implements OnInit {
   onGrabar(emp: DataEnterpriseGTP) {
     this.Enterprise = emp;
     this.Formulario = false;
-    console.table(this.Enterprise);
+    
+  }
+
+  onGrabarSer(etp:DataServiceGTP){
+    this.Service = etp;
+    this.ServiciosFormulario = false;
+    console.log(this.Service);
+    this.gtpService.Service[this.indiceActual] = etp
+    this.indiceActual = -1;
+    console.log(etp);
   }
 
   VerCamposEnterprise(etp:DataEnterpriseGTP){
+    if(this.ServiciosFormulario == true){
+      this.mensaje('Aprobando Servicio ',
+      'Actualmente se esta aprobando un Servicio' );
+      return;
+    }
     this.Formulario = true;
     this.Empgtp = etp; 
   }
 
 
-  VerCamposSer(etp:DataServiceGTP){
+  VerCamposSer(etp:DataServiceGTP, index: number){
+    if(this.Formulario == true){
+      this.mensaje('Aprobando Empresa',
+      'Actualmente se esta aprobando una Empresa' );
+      return;
+    }
     this.ServiciosFormulario = true;
     this.Servgtp = etp;
-    console.table(etp); 
+    this.indiceActual = index;
+  
   }
 
-  
+  EnviarAprobados(){
+   
+    let svcSinCta = this.gtpService.Service.filter((v) => v.NewName === null).length;
+    let sercant=0;
+    let cant = (svcSinCta * 2); 
+    console.log('APROBADO?' +this.Enterprise.NombreApproved);
+    
+    if(this.Enterprise.NombreApproved === null ){
+      sercant =  1; 
+    }
+    
+    let total = cant + sercant;
+
+    Swal.fire({
+      title: 'Aprobacion',
+      html: 'Existen '+total+' campos que no fueron aprobados. <br> ¿Desea terminar?',
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Si, Terminar',
+      cancelButtonText:'No, Cancelar',
+      onOpen: drawPopup
+
+    }).then((result) => {
+      if (result.value) { 
+        this.router.navigate(['/gtp']);
+      }
+    })
+    return;
+  }
+
+ /*
+  getInfoEmpresa() {
+    this.gtpService.GetEnterpriseGtp(this.llave)
+      .subscribe( dataEnterprise => {
+        console.table(dataEnterprise); 
+        this.Enterprise = dataEnterprise
+        console.table(this.Enterprise);
+        });
+
+  }
+ 
+
+*/
 
  
+
+  mensaje( titulo: string, text: string) {
+    Swal.fire({
+     // type: tipo ,
+      title: titulo ,
+      text: text,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      cancelButtonColor: '#d33',
+      // cancelButtonText:  'CERRAR',
+      allowOutsideClick: false,
+      confirmButtonText: 'CERRAR',
+      onOpen: drawPopup,
+    });
+  }
+
+ 
+  
 }

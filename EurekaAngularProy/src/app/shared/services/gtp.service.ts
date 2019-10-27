@@ -30,15 +30,71 @@ export class GtpService {
     {idState: 'Resuelto ', descripcion:'resuelto '},
     {idState: 'Devuelto', descripcion:'devuelto'},
   ];
-  
+   
+   public Service: DataServiceGTP[] = [
+ {
+    nombre: 'Mensualidad', 
+    codDeudor: 'DNI',
+    tipoDato: 'C',
+    tipoPago: 'C',
+    idCuenta: 2,
+    nroCuenta: '*********7653 (dolares)',
+    moneda: '001',
+    simboloMoneda: 'S/',
+    usaWebApp: true,
+    usaAgente: false,
+    usaTienda: true,
+    cobraMora: 'S',
+    periodoMora: '2',
+    tipoMora: 'M',
+    monto:12.2,
+    pagoPartes: 'S',
+    Status:'nuevo Servicio',
+    NewNameCod: null,
+    NewName: null
+   },{
+    nombre: 'Mensualidad2', 
+    codDeudor: 'DNI',
+    tipoDato: 'C',
+    tipoPago: 'C',
+    idCuenta: 2,
+    nroCuenta: '*********7653 (dolares)',
+    moneda: '001',
+    simboloMoneda: 'S/',
+    usaWebApp: true,
+    usaAgente: false,
+    usaTienda: true,
+    cobraMora: 'S',
+    periodoMora: '2',
+    tipoMora: 'M',
+    monto:12.2,
+    pagoPartes: 'S',
+    Status:'nuevo Servicio',
+    NewNameCod: null,
+    NewName: null
+   },{
+    nombre: 'Mensualidad3', 
+    codDeudor: 'DNI',
+    tipoDato: 'C',
+    tipoPago: 'C',
+    idCuenta: 2,
+    nroCuenta: '*********7653 (dolares)',
+    moneda: '001',
+    simboloMoneda: 'S/',
+    usaWebApp: true,
+    usaAgente: false,
+    usaTienda: true,
+    cobraMora: 'S',
+    periodoMora: '2',
+    tipoMora: 'M',
+    monto:12.2,
+    pagoPartes: 'S',
+    Status:'nuevo Servicio',
+    NewNameCod: null,
+    NewName: null
+   }
+  ]
 
-  public PendingResqs: PendingResquest[] = [ 
-      {idSolicitud:2,type:1,texto:'Servicio Demo1', state:'por revisar', 
-      checkFields:[{NombreCampo:'Nombre del Servicio1', Campo:'Mensualidad', aprobado:false}, {NombreCampo:'Codigo Deudor', Campo:'Cod Alumno', aprobado:false}]},
-      {idSolicitud:3,type:1,texto:'Servicio Demo2', state:'por revisar',
-      checkFields:[{NombreCampo:'Nombre del Servicio2', Campo:'Mensualidad', aprobado:false}]},  
-     
-   ]
   getStates(): Observable<StatesGtp[]>{
     return of(this.States);
   } 
@@ -86,23 +142,19 @@ export class GtpService {
         }))
         .pipe(catchError(error => throwError(error))); 
    }
+ 
+   GetEnterpriseGtp(id:any):Observable<DataEnterpriseGTP>{ 
+      const url = `${environment.END_POINT}/company/GTP/client?ClientId=${id}&_=`+ new Date().getTime();
+      const opts = {
+        headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
+      }; 
+      return this.http.get<DataEnterpriseGTP>(url, opts)
+      .pipe(map(r => {  
+        return r;
+      }))
+      .pipe(catchError(err => throwError(err))); 
 
-  getPendingResquest():Observable<PendingResquest[]>{
-    return of(this.PendingResqs);
-  }
-
-   GetEnterpriseGtp(id:any):Observable<DataEnterpriseGTP>{
-    const url = `${environment.END_POINT}/company?ClienteId=${id}&_=`+ new Date().getTime();
-    const opts = {
-      headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
-    };
-    return this.http.get<DataEnterpriseGTP>(url, opts)
-    .pipe(map(r => {  
-      return r;
-    }))
-    .pipe(catchError(err => throwError(err))); 
-
-    } 
+  } 
   
    GetServicesGtp (id:any){ 
     const url = `${environment.END_POINT}/services?ClienteId=${id}&_=`+ new Date().getTime();

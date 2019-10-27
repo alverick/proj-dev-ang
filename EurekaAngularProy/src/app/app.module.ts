@@ -78,10 +78,9 @@ import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.componen
     BlockCopyPasteDirective,
     DecimalesDirective,
     EmailDirective,
-    OnlyNumbersDirective,
-    
+    OnlyNumbersDirective, 
     EmpresaGTPComponent,
-    ServicesGTPComponent
+    ServicesGTPComponent,  
     ],
   imports: [
     BrowserModule,
