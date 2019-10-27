@@ -107,45 +107,55 @@
                 <div class="col-sm-7 pb-3" *ngIf="Formulario">
                     <br>
                     <div class="d-flex justify-content-end">
-                        <div class="formulario p-5 bg-white ">
+                        <div class="formulario px-5 pt-3 bg-white ">
                             <div class="form-row">
                                 <div class="form-group col-md-10">
                                     <div class="font-black"> </div>
-                                </div><!--
-                                        <div class="form-group col-md-2">
-                                            <div style="float: right;"   class="mano font-cerrar">
-                                                <img src="assets/images/cerrar.svg"> <br> Cerrar
-                                            </div>
-                                        </div> -->
+                                </div> 
                                 <div class="form-group col-md-2">
-                                    <div style="float: right;" >
-                                       ¿Aprobado?
+                                    <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
+                                        <img src="assets/images/cerrar.svg"> <br> Cerrar
                                     </div>
-                                </div>
+                                </div> 
                             </div>
-                            <app-empresa-gtp [enterprise]="Empgtp" (grabar)="onGrabar($event)"> </app-empresa-gtp>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-7 pb-3" *ngIf="ServiciosFormulario">
-                        <br>
-                        <div class="d-flex justify-content-end">
-                            <div class="formularioServ p-5 bg-white ">
-                                <div class="form-row">
+                            <div class="form-row">
                                     <div class="form-group col-md-10">
                                         <div class="font-black"> </div>
-                                    </div><!--
-                                            <div class="form-group col-md-2">
-                                                <div style="float: right;"   class="mano font-cerrar">
-                                                    <img src="assets/images/cerrar.svg"> <br> Cerrar
-                                                </div>
-                                            </div> -->
+                                    </div> 
                                     <div class="form-group col-md-2">
                                         <div style="float: right;" >
                                            ¿Aprobado?
                                         </div>
                                     </div>
                                 </div>
+                            <app-empresa-gtp [enterprise]="Empgtp" (grabar)="onGrabar($event)"> </app-empresa-gtp>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-7 pb-3" *ngIf="ServiciosFormulario">
+                        <br>
+                        <div class="d-flex justify-content-end ">
+                            <div class="formularioServ px-5 pt-3  pb-3 bg-white ">
+                                         <div class="form-row">
+                                            <div class="form-group col-md-10">
+                                                <div class="font-black"> </div>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                    <div style="float: right;" (click)="OcultarFormularioSer(true)" class="mano font-cerrar">
+                                                        <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                                    </div>
+                                                </div> 
+                                        </div>
+                                        <div class="form-row">
+                                                <div class="form-group col-md-10">
+                                                    <div class="font-black"> </div>
+                                                </div> 
+                                                <div class="form-group col-md-2">
+                                                    <div style="float: right;" >
+                                                       ¿Aprobado?
+                                                    </div>
+                                                </div>
+                                        </div> 
                                 <app-services-gtp [service]="Servgtp" (grabar)="onGrabarSer($event)"> </app-services-gtp>
                             </div>
                         </div>

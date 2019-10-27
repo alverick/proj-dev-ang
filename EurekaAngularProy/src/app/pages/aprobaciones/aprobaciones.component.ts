@@ -6,6 +6,7 @@ import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
  import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import Swal from 'sweetalert2';
 import { drawPopup } from 'src/app/shared/services/popups'; 
+import { GtpEmpresa, GtpServcegtp, GtpPost } from 'src/app/shared/models/gtp-post';
 
 @Component({
   selector: 'app-aprobaciones',
@@ -20,7 +21,9 @@ export class AprobacionesComponent implements OnInit {
   public Empresa:EnterprisesGtp ;
    public Empgtp: DataEnterpriseGTP = null;
   public Enterprise : DataEnterpriseGTP; 
-
+  public emp :GtpEmpresa
+  public scv:GtpServcegtp [] = [];
+  public gtppost:GtpPost ;
   public Service : DataServiceGTP;
   public Servgtp : DataServiceGTP; 
 
@@ -121,7 +124,9 @@ export class AprobacionesComponent implements OnInit {
   }
 
   EnviarAprobados(){
-   
+    this.gtppost = null;
+    this.scv =[] ;
+    this.emp = null;
     let svcSinCta = this.gtpService.Service.filter((v) => v.NewName === null).length;
     let sercant=0;
     let cant = (svcSinCta * 2); 
@@ -130,24 +135,56 @@ export class AprobacionesComponent implements OnInit {
     if(this.Enterprise.NombreApproved === null ){
       sercant =  1; 
     }
-    
-    let total = cant + sercant;
+      this.emp = {ClientId: this.llave, NombreAprobado:this.Enterprise.NombreApproved}; 
 
-    Swal.fire({
-      title: 'Aprobacion',
-      html: 'Existen '+total+' campos que no fueron aprobados. <br> ¿Desea terminar?',
-      showCloseButton: true,
-      showCancelButton: true,
-      confirmButtonText: 'Si, Terminar',
-      cancelButtonText:'No, Cancelar',
-      onOpen: drawPopup
+      this.gtpService.Service.forEach(s =>{
+        this.scv.push({
+          ServiceId: s.id,
+          NewName: s.NewName,
+          NewNameCod: s.NewNameCod
+        }); 
+      });
 
-    }).then((result) => {
-      if (result.value) { 
-        this.router.navigate(['/gtp']);
+      this.gtppost = {
+        empresa:  this.emp,
+        servicio: this.scv,
       }
-    })
-    return;
+      console.log('post');
+      console.log(this.gtppost);
+
+    let total = cant + sercant;
+    if(total == 0){
+      Swal.fire({
+        title: 'Aprobacion',
+        html: 'Todos los campos han sido revisados <br> ¿Desea terminar? <br> (Se enviara un correo a la empresa)',
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Si, Terminar',
+        cancelButtonText:'No, Cancelar',
+        onOpen: drawPopup
+  
+      }).then((result) => { 
+        if (result.value) { 
+          this.router.navigate(['/gtp']);
+        }
+      });
+    }
+    else{
+      Swal.fire({
+        title: 'Aprobacion',
+        html: 'Existen '+total+' campos que no fueron aprobados. <br> ¿Desea terminar?',
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Si, Terminar',
+        cancelButtonText:'No, Cancelar',
+        onOpen: drawPopup
+  
+      }).then((result) => { 
+        if (result.value) { 
+          this.router.navigate(['/gtp']);
+        }
+      });
+    } 
   }
 
  /*
@@ -163,6 +200,51 @@ export class AprobacionesComponent implements OnInit {
  
 
 */
+
+OcultarFormulario(requireConfirm: boolean) {
+  if (requireConfirm) {
+    Swal.fire({
+      title: 'Descartar Cambios',
+      text: 'Se van a descartar los cambios.',
+      showConfirmButton: true,
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonText: 'DESCARTAR',
+      cancelButtonText: 'REGRESAR',
+      onOpen: drawPopup
+    }).then(r => {
+      if (r.value) {
+        console.log('descartar');
+      
+        this.Formulario = false ;  
+        console.log(this.Formulario);
+      }
+    });
+  } 
+}
+
+OcultarFormularioSer(requireConfirm: boolean) {
+  if (requireConfirm) {
+    Swal.fire({
+      title: 'Descartar Cambios',
+      text: 'Se van a descartar los cambios.',
+      showConfirmButton: true,
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonText: 'DESCARTAR',
+      cancelButtonText: 'REGRESAR',
+      onOpen: drawPopup
+    }).then(r => {
+      if (r.value) {
+        console.log('descartar');
+      
+        this.ServiciosFormulario = false ; 
+        this.indiceActual = -1;
+        console.log(this.ServiciosFormulario);
+      }
+    });
+  } 
+}
 
  
 
