@@ -12,6 +12,7 @@ import { StorageService } from './storage.service';
 import { map, catchError } from 'rxjs/operators';
 import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
 import { DataServiceGTP } from '../models/data-service-gtp';
+import { GtpEmpresa } from '../models/gtp-post';
  
 
 @Injectable({
@@ -24,6 +25,7 @@ export class GtpService {
   constructor(private http: HttpClient, private storage: StorageService) { }
   public services: DataServiceGTP[] = [];
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
+  public emp :GtpEmpresa;
 
   private States:StatesGtp [] =[
     {idState: 'Pendiente', descripcion:'pendiente'},

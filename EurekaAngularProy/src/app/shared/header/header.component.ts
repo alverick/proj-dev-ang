@@ -35,7 +35,11 @@ export class HeaderComponent implements OnInit {
   }
 
   public menu(): boolean {
-    if (this.router.url.includes('/cambiaContra')|| this.router.url.includes('/recupera')  || this.router.url.includes('/login') || this.router.url.includes('/gtp') ) {
+    if (this.router.url.includes('/cambiaContra')|| 
+    this.router.url.includes('/recupera')  || 
+    this.router.url.includes('/login') || 
+    this.router.url.includes('/gtp') ||
+    this.router.url.includes('/gtp')  ) {
       return false;
 
     } else {
@@ -78,6 +82,7 @@ export class HeaderComponent implements OnInit {
       this.router.url.includes('/recupera') ||
       this.router.url.includes('/afiliacion') ||
       this.router.url.includes('/crearContrasena') ||
+      this.router.url.includes('/editaCuenta') ||
       this.router.url.includes('/configurarServicios') ||
       
       this.router.url.includes('/procesando')) {
