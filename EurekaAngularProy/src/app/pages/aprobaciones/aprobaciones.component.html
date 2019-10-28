@@ -3,64 +3,64 @@
             <div class="row">
                 <div class="col-sm-5">
                     <div class="row">
-                        <div class="col-sm-11"> 
+                        <div class="col-sm-11">
                                 <br>
-                            <div class="d-flex justify-content-start"> 
+                            <div class="d-flex justify-content-start">
                                     <div class="card-servicios mb-2"  >
                                         <div class="px-2">
                                             <div class="pl-1 row pb-1">
                                                 <div class="col-sm-12 pt-1">
-                                                    <div class="font-text-services">Datos actuales de la empresa</div> 
-                                                </div> 
+                                                    <div class="font-text-services">Datos actuales de la empresa</div>
+                                                </div>
                                             </div>
                                             <table class="table table-sm table-borderless ">
                                                <tr>
-                                                    <td class="font-black-servicios-list">Nombre de la Empresa</td> 
+                                                    <td class="font-black-servicios-list">Nombre de la Empresa</td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="font-black-servicios-des-list">{{Enterprise.name}}</td> 
+                                                    <td class="font-black-servicios-des-list">{{Enterprise.name}}</td>
                                                 </tr>
                                                  <tr>
-                                                    <td class="font-black-servicios-list">Rubro </td> 
+                                                    <td class="font-black-servicios-list">Rubro </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="font-black-servicios-des-list">{{Enterprise.entry}} </td> 
+                                                    <td class="font-black-servicios-des-list">{{Enterprise.entry}} </td>
                                                 </tr>
                                                   <tr>
-                                                    <td class="font-black-servicios-list">CU </td> 
-                                                    <td class="font-black-servicios-list">RUC </td> 
+                                                    <td class="font-black-servicios-list">CU </td>
+                                                    <td class="font-black-servicios-list">RUC </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="font-black-servicios-des-list">{{Enterprise.uniqueCodeIBK}} </td> 
-                                                    <td class="font-black-servicios-des-list">{{Enterprise.ruc}} </td> 
+                                                    <td class="font-black-servicios-des-list">{{Enterprise.uniqueCodeIBK}} </td>
+                                                    <td class="font-black-servicios-des-list">{{Enterprise.ruc}} </td>
                                                 </tr>
                                             </table>
                                         </div>
-                                    </div>  
+                                    </div>
                             </div>
-                             
-                            <div class="font-text-services">Revisiones Pendientes</div> 
+
+                            <div class="font-text-services">Revisiones Pendientes</div>
                             <div class="d-flex justify-content-start">
                                     <perfect-scrollbar class="content-container mt-5 mb-3">
                                         <div class="card-aprobaciones mb-2" >
                                             <div class=" pl-4">
                                                 <div class="pl-1 row pb-0">
                                                       <div class="col-sm-12 pt-3">
-                                                        <div class="font-text-services">Datos de Empresa</div> 
+                                                        <div class="font-text-services">Datos de Empresa</div>
                                                       </div>
-                                                    
+
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
-                                                    <tr> 
+                                                    <tr>
                                                         <td class="font-black-servicios-des-list" *ngIf="Enterprise.status == 'nueva empresa'"><span class="badge badge-primary" >Nueva Empresa</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.status == 'modificacion'"><span class="badge badge-primary" >Modificacion Empresa</span> </td> 
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.status == 'modificacion'"><span class="badge badge-primary" >Modificacion Empresa</span> </td>
                                                     </tr>
-                                                    <tr> 
-                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == null ">por Revisar</td>  
-                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == true || Enterprise.NombreApproved == false ">Revisado</td> 
+                                                    <tr>
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == null ">por Revisar</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == true || Enterprise.NombreApproved == false ">Revisado</td>
                                                         <td><button type="button" (click)="VerCamposEnterprise(Enterprise)" class="f3 btn-outline-green"  >Ver </button></td>
-                                                    </tr> 
-                                                    
+                                                    </tr>
+
                                                 </table>
                                             </div>
                                         </div>
@@ -68,28 +68,28 @@
                                             <div class=" pl-4">
                                                 <div class="pl-1 row pb-0">
                                                       <div class="col-sm-12 pt-3">
-                                                        <div class="font-text-services">{{Service.nombre}}</div> 
+                                                        <div class="font-text-services">{{Service.nombre}}</div>
                                                       </div>
-                                                    
+
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
-                                                    <tr> 
+                                                    <tr>
                                                         <td class="font-black-servicios-des-list" *ngIf="Service.Status == 'nuevo Servicio'"><span class="badge badge-primary" >Nuevo Servicio</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="slt.type == 1"><span class="badge badge-primary" >Nueva Servicio</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="slt.type == 2"><span class="badge badge-primary" >Edicion Empresa</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="slt.type == 3"><span class="badge badge-primary" >Edicion Servicio</span> </td>
                                                     </tr>
-                                                    <tr> 
+                                                    <tr>
                                                         <td class="font-black-servicios-des-list">{{ slt.state }}</td>
                                                         <td><button type="button" (click)="VerCampos(slt.idSolicitud)" class="f3 btn-outline-green"  >Ver </button></td>
-                                                    </tr> 
-                                                    
+                                                    </tr>
+
                                                 </table>
                                             </div>
                                         </div>
                                     </perfect-scrollbar>
                                 </div>
-                            <div class="btn-col-1"> 
+                            <div class="btn-col-1">
                                 <button type="button"  class="mt-3  btn-eureca-green text-white" >
                                          FINALIZAR
                                 </button>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <br>
-    
+
                 </div>
                 <div class="col-sm-7 pb-3" *ngIf="Formulario">
                     <br>
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                 </div>
-                 
+
             </div>
         </div>
     </div>
