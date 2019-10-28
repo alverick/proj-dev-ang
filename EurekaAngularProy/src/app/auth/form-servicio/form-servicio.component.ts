@@ -532,16 +532,21 @@ function Alfanumerico(c: FormControl) {
   let regex = /[0-9a-zA-Z]-?/g;
   if (c.value && !regex.test(c.value)) {
     return { alfa: true };
-  }
+  } 
   return null;
 }
 
 function Alfabetico(c: FormControl) {
   let regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
   let numero= /[0-9]/g
+  let raro= /[-{1,}]-?/g;
+  if (c.value && !raro.test(c.value)) { 
+    return { alfabetico: true };
+  }
   if (c.value && !regex.test(c.value)) { 
     return { alfabetico: true };
-  }   
+  } 
+    
  /* if(c.value && numero.test(c.value)){ 
     return { alfabetico: true };
   } */

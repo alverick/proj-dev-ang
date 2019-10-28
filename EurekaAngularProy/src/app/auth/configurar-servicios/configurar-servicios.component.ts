@@ -37,7 +37,12 @@ export class ConfigurarServiciosComponent implements OnInit {
   ngOnInit() {
     this.afiliacionService.services = []
     this.route.data.subscribe(d => {
-      this.inEdit = d.isEdit;
+      this.inEdit = d.isEdit; 
+      if(d.isgtp){
+        window['_url_loop_'] = 'editarSvcGTP';
+        history.pushState(null, null, 'editarSvcGTP');
+        this.titulo = 'Edita el Servicio';
+      }
       if (d.isEdit) {
         window['_url_loop_'] = 'editarServicios';
         this.afiliacionService.GetServicios();
@@ -52,7 +57,10 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.editService(this.afiliacionService.services[0], 0);
         this.titulo = 'Agrega un nuevo servicio';
       }
+      
     });
+
+    
 
   }
 

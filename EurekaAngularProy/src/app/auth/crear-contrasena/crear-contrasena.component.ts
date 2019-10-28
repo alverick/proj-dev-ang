@@ -60,6 +60,7 @@ export class CrearContrasenaComponent implements OnInit {
         requestDate:new Date(Date.now()),
         NombreApproved: false
       }
+
       if (d.isEdit) {
         this.llave =  this.rutaActiva.snapshot.params.llave;
         this.registerForm = this.formBuilder.group({
@@ -167,7 +168,7 @@ export class CrearContrasenaComponent implements OnInit {
       console.log('se guarda la nueva empresa');
       this.gtpService.emp= null;
       this.gtpService.emp = {ClientId: this.llave, NombreAprobado:this.registerForm.value.nombre.toString()}; 
-      this.router.navigate(["/configurarServicios"/*, this.registerForm.get('ruc')*/]);
+      this.router.navigate(["/editarSvcGTP"]);
 
       console.log( this.gtpService.emp);
     }
