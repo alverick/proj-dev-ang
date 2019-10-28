@@ -16,25 +16,26 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 export class CambiaContrasenaComponent implements OnInit {
 
   public llave: string;
-  
+  public formulario: boolean;
+
   constructor(public formBuilder: FormBuilder, private rutaActiva: ActivatedRoute, private router: Router, private recuperaService: RecuperaService, public storage: StorageService) { }
   public Cambia: FormGroup;
   ngOnInit() {
-    this.Cambia = this.formBuilder.group({ 
+    this.Cambia = this.formBuilder.group({
         contrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
         repcontrasena: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
     }, {
       validator: MustMatch('contrasena', 'repcontrasena')
     })
-    this.llave =  this.rutaActiva.snapshot.params.llave; 
-    
-     
+    this.llave =  this.rutaActiva.snapshot.params.llave;
+
+
      this.Verificar(this.llave);
 
   }
 
 
-  
+
   get f():any{
     return this.Cambia.controls;
   }
@@ -42,11 +43,11 @@ export class CambiaContrasenaComponent implements OnInit {
 
   //  los 6 primeros de adelante
   // 3173I1201910171716
-  Verificar(key:any){  
+  Verificar(key:any){
     console.log('entra a verificar');
     this.recuperaService.VerifingToken({TokenEncrypted:key}).subscribe(d => {
       console.log('entra a recuper????');
-      if(d===true){ 
+      if(d===true){
       }else{
         this.mensaje('Enlace expirado','El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro para recuperar tu contraseña');
          this.router.navigate(['/login']);
@@ -54,14 +55,14 @@ export class CambiaContrasenaComponent implements OnInit {
     });
   }
 
-  SubmitCambia(){ 
+  SubmitCambia(){
     if(this.Cambia.valid){
       this.recuperaService.ChangePassword({NewPassword:this.Cambia.value.contrasena,
            Token:this.llave })
-          .subscribe(d =>{ 
+          .subscribe(d =>{
               if(d == null){
                 this.mensaje('Actualizar Contraseña','Error al actualizar Contraseña');
-              }else{ 
+              }else{
                 console.table(d);
                 console.log('RUC');
                 console.log(d.ruc);
@@ -72,7 +73,7 @@ export class CambiaContrasenaComponent implements OnInit {
                   isAuthenticate: true,
                   token: d.paramStr,
                   expire: d.exp,
-                  refresh: d.rfs, 
+                  refresh: d.rfs,
                   prfl: d.prfl
                 });
                 this.router.navigate(['/home']);
@@ -82,7 +83,7 @@ export class CambiaContrasenaComponent implements OnInit {
   }
 
 
-  
+
   mensaje( titulo: string, text: string) {
     Swal.fire({
      // type: tipo ,
@@ -96,7 +97,7 @@ export class CambiaContrasenaComponent implements OnInit {
       onOpen: drawPopup,
 
     });
-  } 
+  }
 
 }
 

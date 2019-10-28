@@ -13,11 +13,10 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
 import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
 import { FormServicioComponent } from './form-servicio/form-servicio.component';
 import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
@@ -60,7 +59,7 @@ import { CambiaContrasenaComponent } from './cambia-contrasena/cambia-contrasena
     ProcesandoComponent,
     CrearContrasenaComponent,
     BlockCopyPasteDirective,
-    OnlyNumbersFormDirective, 
+    OnlyNumbersFormDirective,
     NumberAccountDirective, RecuperarContrasenaComponent, CambiaContrasenaComponent
   ],
   exports: [

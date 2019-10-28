@@ -27,7 +27,7 @@ export class ServicesGTPComponent implements OnInit {
   configEmpresaService: any;
 
   @Input() set service(value: DataServiceGTP){
-    this._service = value; 
+    this._service = value;
     console.log(value);
   }
   @Output() grabar = new EventEmitter<any>();
@@ -37,19 +37,19 @@ export class ServicesGTPComponent implements OnInit {
   frm: FormGroup;
   ngOnInit() {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
-    var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00'); 
+    var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
     this.frm = this.fb.group({
       nombre: new FormControl({ value: this._service.nombre, disabled: true }, [Validators.required, Validators.minLength(3),Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
       codDeudor: new FormControl({ value: this._service.codDeudor, disabled: true }, [Validators.required]),
       nameCod: new FormControl({ value: this._service.nameCod, disabled: true}),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: true }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: true }, Validators.required),
-      idCuenta:new FormControl({ value: this._service.idCuenta, disabled: true }, Validators.required), 
+      idCuenta:new FormControl({ value: this._service.idCuenta, disabled: true }, Validators.required),
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: true }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: true }),
       usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true,}),
-      cobraMora: new FormControl({ value: this._service.cobraMora, disabled: true }), 
+      cobraMora: new FormControl({ value: this._service.cobraMora, disabled: true }),
       periodoMora: new FormControl({ value: this._service.periodoMora, disabled: true }, [Validators.required]),
       tipoMora: ({ value: this._service.tipoMora, disabled: true }) ,
       monto: new FormControl({ value: montod, disabled: true }),
@@ -65,7 +65,7 @@ export class ServicesGTPComponent implements OnInit {
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
     this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
-  
+
     if (this.frm.get('cobraMora').value === 'S') {
       this.cmoraporce = true;
    }
@@ -73,7 +73,7 @@ export class ServicesGTPComponent implements OnInit {
      this.frm.get('periodoMora').setValue('');
      this.cmoraporce = false;
     }
-    
+
     // combo para ocultar si es data parcial
     if (this.frm.get('tipoDato').value === 'P') {
       /* this.frm.get('tipoPago').setValue('C');
@@ -94,12 +94,18 @@ export class ServicesGTPComponent implements OnInit {
     if (this.frm.valid)
       {
           let value: DataServiceGTP;
-          value = this._service; 
-          value.NewName = (this.frm.value.NewName =='S'); 
-          value.NewNameCod = (this.frm.value.NewNameCod =='S');  
+          value = this._service;
+          value.NewName = (this.frm.value.NewName =='S');
+          value.NewNameCod = (this.frm.value.NewNameCod =='S');
           this.grabar.emit(value);
-      } 
+      }
   }
-  
-   
+
+  nameSerInput(e) { }
+
+  nameSerBlur(e) { }
+
+  onChangeTipoDato() { }
+
+  changeCuenta(e) { }
 }

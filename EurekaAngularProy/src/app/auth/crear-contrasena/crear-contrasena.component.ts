@@ -21,9 +21,9 @@ export class CrearContrasenaComponent implements OnInit {
   registerForm: FormGroup;
   submitted: boolean = false;
   public llave: number;
-  private inEdit: boolean = false;
-  public empresa : DataEnterpriseGTP; 
-   
+  public inEdit: boolean = false;
+  public empresa : DataEnterpriseGTP;
+
   constructor(
     private formBuilder: FormBuilder,
     private afiliacionService: AfiliacionService,
@@ -38,7 +38,7 @@ export class CrearContrasenaComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
-   
+
     if (!this.afiliacionService.Guardado) {
       $event.returnValue = 'Se van a perder los cambios.';
     }
@@ -47,16 +47,16 @@ export class CrearContrasenaComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(d => {
       this.inEdit = d.isEdit;
-        
+
       this.empresa  = {
         ruc:12345678912,
         name:'nombre actual',
-        entry: '04', 
+        entry: '04',
         email: 'mnievafra@gmail.com',
-        movilNumber: 123456 , 
-        newName:'Nuevo Nombre', 
-        status: 'nueva empresa', 
-        uniqueCodeIBK: '1321321', 
+        movilNumber: 123456 ,
+        newName:'Nuevo Nombre',
+        status: 'nueva empresa',
+        uniqueCodeIBK: '1321321',
         requestDate:new Date(Date.now()),
         NombreApproved: false
       }
@@ -71,12 +71,12 @@ export class CrearContrasenaComponent implements OnInit {
           telefono: new FormControl({ value: this.empresa.movilNumber, disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
           contrasena: new FormControl({ value: '', disabled: this.inEdit }),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }),
-          acceptterms: new FormControl({ value: true, disabled: this.inEdit }),  
+          acceptterms: new FormControl({ value: true, disabled: this.inEdit }),
         }, {
           validator: MustMatch('contrasena', 'repcontrasena')
         });
-      }else{  
-        window['_url_loop_'] = 'crearContrasena'; 
+      }else{
+        window['_url_loop_'] = 'crearContrasena';
         this.registerForm = this.formBuilder.group({
           ruc: new FormControl({ value: '', disabled: this.inEdit },  [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
           nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
@@ -85,13 +85,13 @@ export class CrearContrasenaComponent implements OnInit {
           telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
           contrasena: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
-          acceptterms: new FormControl({ value: '', disabled: this.inEdit },Validators.requiredTrue),  
+          acceptterms: new FormControl({ value: '', disabled: this.inEdit },Validators.requiredTrue),
         }, {
           validator: MustMatch('contrasena', 'repcontrasena')
         });
       }
     });
-    
+
 
 
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
@@ -107,11 +107,11 @@ export class CrearContrasenaComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
    // var ruc  = this.registerForm.value.ruc.toString();
-    
+
     if (this.registerForm.invalid) {
       return;
     }
-    
+
     if(this.inEdit == false){
 
       this.afiliacionService.Registrar({
@@ -161,7 +161,7 @@ export class CrearContrasenaComponent implements OnInit {
         }
       }, err => {
         this.mensaje('error', 'Regístrame', 'Ha ocurrido un error con el servidor<br />Intente de nuevo' );
-  
+
       });
 
     }else{
@@ -173,7 +173,7 @@ export class CrearContrasenaComponent implements OnInit {
       console.log( this.gtpService.emp);
     }
 
-    
+
   }
 
 

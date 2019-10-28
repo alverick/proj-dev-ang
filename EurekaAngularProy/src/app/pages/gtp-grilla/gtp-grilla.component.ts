@@ -56,9 +56,9 @@ export class GtpGrillaComponent implements OnInit {
     pageNumber: 1,
     ColumnName: '',
     asc: true,
-    inputSearch: '', 
+    inputSearch: '',
     BusinessHeading:'',
-    status: '',  
+    status: '',
     dateFrom: null,
     dateTo: null
   };
@@ -66,14 +66,14 @@ export class GtpGrillaComponent implements OnInit {
     pageNumber: 1,
     ColumnName: '',
     asc: true,
-    inputSearch: '', 
+    inputSearch: '',
     BusinessHeading:'',
-    status: '',  
+    status: '',
     dateFrom: null,
     dateTo: null
   };
   errores: any = {};
-  orderBy = -1; 
+  orderBy = -1;
   orderDef = [
     { name: 'requestDate', asc: false },
     { name: 'ruc', asc: false },
@@ -81,38 +81,38 @@ export class GtpGrillaComponent implements OnInit {
     { name: 'nameEnterprise', asc: false },
     { name: 'status', asc: false },
     { name: 'requestTypeList', asc: false },
-    { name: 'businessHeading', asc: false }, 
-  ] 
-  constructor(private spinner: NgxSpinnerService,private afiliacionService: AfiliacionService, private gtpService: GtpService,private router: Router) { }
+    { name: 'businessHeading', asc: false },
+  ]
+  constructor(private spinner: NgxSpinnerService,private afiliacionService: AfiliacionService, public gtpService: GtpService,private router: Router) { }
   rubros: RubroModel[] = [];
   states: StatesGtp[] =[];
- 
- 
-  ngOnInit() { 
- 
+
+
+  ngOnInit() {
+
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
-    this.gtpService.getStates().subscribe(d => this.states = d); 
+    this.gtpService.getStates().subscribe(d => this.states = d);
     this.consultaGtp();
     console.log('imprime las solicitudes');
-    console.table( this.gtpService.EnterprisesItems.listCompanyGTP); 
+    console.table( this.gtpService.EnterprisesItems.listCompanyGTP);
     console.log('total de itrms');
     console.log(this.gtpService.EnterprisesItems.totalCompanies)
-   
+
   }
   limpiardate1() {
     this.inputDate1.nativeElement.value = '';
-    this.filtro.dateFrom = null; 
+    this.filtro.dateFrom = null;
   }
   limpiardate2() {
     this.inputDate2.nativeElement.value = '';
-    this.filtro.dateTo = null; 
-  } 
-  Aprobar( ClientId: number){ 
-   location.href = '/AprobacionGtp/'+ClientId; 
+    this.filtro.dateTo = null;
+  }
+  Aprobar( ClientId: number){
+   location.href = '/AprobacionGtp/'+ClientId;
   }
 
-  changePage(nro: number) {  
-    this.currentFiltro.pageNumber =nro;   
+  changePage(nro: number) {
+    this.currentFiltro.pageNumber =nro;
     this.consultaGtp();
   }
   ////ORDENAMIENTO OCULTAR LAS FLECHAS
@@ -134,39 +134,39 @@ export class GtpGrillaComponent implements OnInit {
     return res;
   }
 
-  sendFiltro() { 
+  sendFiltro() {
     this.currentFiltro.inputSearch = this.filtro.inputSearch;
     this.currentFiltro.BusinessHeading = this.filtro.BusinessHeading;
-    this.currentFiltro.status = this.filtro.status; 
+    this.currentFiltro.status = this.filtro.status;
     this.currentFiltro.dateFrom = this.filtro.dateFrom;
     this.currentFiltro.dateTo = this.filtro.dateTo;
-    
-    this.consultaGtp(); 
 
-    if((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) && 
+    this.consultaGtp();
+
+    if((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
     (this.filtro.BusinessHeading === '' || this.filtro.BusinessHeading === null || this.filtro.BusinessHeading === undefined) &&
     (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
     ( /*this.filtro.dateFrom == ''  ||*/ this.filtro.dateFrom === null || this.filtro.dateFrom === undefined)){
       this.messageTable = 'No se encontro ningún registro para esta búsqueda';
-       this.showArrow = true; 
+       this.showArrow = true;
     }else{
       this.messageTable ='No se encontro ningún registro para esta búsqueda';
       this.showArrow = false;
-    } 
+    }
   }
 
   // callback:  cuando se termine de ejecutar la consulta se ejecuta el callback
  // consultaDeuda(cb: () => void = null) {
- 
- consultaGtp(){  
+
+ consultaGtp(){
     if (this.validaFiltro()){
-      this.spinner.show(); 
+      this.spinner.show();
       this.gtpService.getEmpresas(this.currentFiltro).subscribe(d => {
         this.spinner.hide();
-      }, err => { this.spinner.hide(); }); 
-    } 
+      }, err => { this.spinner.hide(); });
+    }
   }
- 
+
   ceroRegistros(): boolean {
     if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
       //this.router.navigate(['/login']);
@@ -179,7 +179,7 @@ export class GtpGrillaComponent implements OnInit {
     }
     }
   }
- 
+
   /////////////FECHAS /////////////////////////////////////////////////////
 
   validaDateFrom(e) {
@@ -195,7 +195,11 @@ export class GtpGrillaComponent implements OnInit {
       this.internalValidaDateFrom(this.filtro.dateFrom);
     }
   }
- 
+
+  change(e) {
+
+  }
+
   private internalValidaDateFrom(e) {
     if (e === null) {
       this.errores['dateFrom'] = 'No es una fecha válida';
