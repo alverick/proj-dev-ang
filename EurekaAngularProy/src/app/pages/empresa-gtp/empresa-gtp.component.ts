@@ -5,6 +5,7 @@ import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { RubroModel } from 'src/app/shared/models';
+import { GtpService } from 'src/app/shared/services/gtp.service';
 
 @Component({
   selector: 'app-empresa-gtp',
@@ -22,7 +23,7 @@ export class EmpresaGTPComponent implements OnInit {
   }
   @Output() grabar = new EventEmitter<any>();
 
-  constructor(public afiliacionService: AfiliacionService,private formBuilder: FormBuilder) { }
+  constructor(public afiliacionService: AfiliacionService,private formBuilder: FormBuilder,public gtpService:GtpService) { }
 /*
 ruc:12345678912,
     name:'nombre actual',
@@ -44,7 +45,7 @@ ruc:12345678912,
     this.formGroup = this.formBuilder.group({
       ruc: new FormControl({ value: this._enterprise.ruc, disabled: true }),
       newName: new FormControl({ value: this._enterprise.newName, disabled: true }), 
-      NewNameApproved:  new FormControl({value: (this._enterprise.NombreApproved == true? 'S':'N')},   [Validators.required]),
+      NewNameApproved:  [(this._enterprise.NombreApproved == true? 'S':'N'), Validators.required],
       entry: new FormControl({ value: this._enterprise.entry, disabled: true }),
       email: new FormControl({ value: this._enterprise.email, disabled: true }),
       movilNumber: new FormControl({ value: this._enterprise.movilNumber, disabled: true }), 
@@ -53,18 +54,15 @@ ruc:12345678912,
  
   get f(): any { return this.formGroup.controls; }
  
-  onSubmitEmpresa(){
+  onSubmitEmpresa(){  
+     
     if (this.formGroup.valid)
       {
           let value: DataEnterpriseGTP;
           value = this._enterprise; 
-          value.NombreApproved = (this.formGroup.value.NewNameApproved =='S'); 
-        /*  console.table(value);
-          console.log('Aprobado');
-          console.log(this.formGroup.value.NewNameApproved =='S'?true:false); */
+          value.NombreApproved = (this.formGroup.value.NewNameApproved =='S');  
           this.grabar.emit(value);
       } 
   }
-
-
+ 
 }

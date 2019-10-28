@@ -5,6 +5,7 @@ import { GtpGrillaComponent } from './gtp-grilla/gtp-grilla.component';
 import { AprobacionesComponent } from './aprobaciones/aprobaciones.component';
 import { EmpresaGTPComponent } from './empresa-gtp/empresa-gtp.component';
 import { ServicesGTPComponent } from './services-gtp/services-gtp.component';
+import { CorrigeComponent } from './corrige/corrige.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { ServicesGTPComponent } from './services-gtp/services-gtp.component';
     //ConfigurarEmpresaComponent,
     //SubirPlantillaComponent,
     //AnalisisComponent
- ]
+    CorrigeComponent ]
 })
 export class PagesModule {
   constructor (@Optional() @SkipSelf() parentModule: PagesModule) {

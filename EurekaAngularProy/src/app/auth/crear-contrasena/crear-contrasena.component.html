@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-8">
                 <div class="d-flex justify-content-end">
-                    <div class="cuadro-form pr-5 pl-5 pt-4  bg-white">
+                    <div class="cuadro-form pr-5 pl-5 pt-4 pb-3  bg-white">
                         <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
@@ -20,7 +20,9 @@
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
+                                <label *ngIf="inEdit && !empresa.NombreApproved" class="messsage-error" style="float: right;">Campo a rechazado, vuelva a intenar con otro</label>
                                 <mat-form-field class="super-full-width ">
+                                   
                                     <input class="input-text" formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de la empresa" minlength="3" maxlength="80">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
@@ -92,7 +94,8 @@
                                 <mat-error class="messsage-error" *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
                             </div>
                             <button type="submit" class="btn-big btn-eureca-green w-100 text-white" (click)="enviarDatosEmpresa()">
-                                  SIGUIENTE</button>
+                                  SIGUIENTE
+                            </button>
                         </form>
                     </div>
                 </div>

@@ -98,6 +98,9 @@ export class FormServicioComponent implements OnInit {
     this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
     this.changeMora(false);
     this.changeTipoMora(false);
+
+    console.log('cuentas');
+    console.table(this.cuentas);
  
     if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');
@@ -196,8 +199,7 @@ export class FormServicioComponent implements OnInit {
               } else {
 
                 let value: ServiceModel;
-                console.log('ingresa 1');
-                // value.usaWebApp = true;
+                 // value.usaWebApp = true;
                 if (this.editMode) {
                   value = this._service;
                   value.idCuenta = this.frm.value.idCuenta;
@@ -208,19 +210,16 @@ export class FormServicioComponent implements OnInit {
                   value.monto = this.frm.value.monto;
                   value.porcentaje = this.frm.value.porcentaje;
                   value.pagoPartes = this.frm.value.pagoPartes;
-                  console.log('ingresa 1.1');
-                  value.usaWebApp = true;
+                   value.usaWebApp = true;
                 }
                 else {
                   value = this.frm.value;
-                  console.log('ingresa 1.2');
-                  value.usaWebApp = true;
+                   value.usaWebApp = true;
                 }
                 let cta = this.cuentas.find(c => c.id === value.idCuenta);
                 value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
                 value.simboloMoneda = this.simboloMoneda;
-                console.log('ingresa 1.3');
-                value.usaWebApp = true;
+                 value.usaWebApp = true;
                 this.grabar.emit(value);
               }
 

@@ -80,7 +80,7 @@ import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.componen
     EmailDirective,
     OnlyNumbersDirective,
     EmpresaGTPComponent,
-    ServicesGTPComponent
+    ServicesGTPComponent,
     ],
   imports: [
     BrowserModule,
