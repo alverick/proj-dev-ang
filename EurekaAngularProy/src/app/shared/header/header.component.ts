@@ -83,6 +83,7 @@ export class HeaderComponent implements OnInit {
       this.router.url.includes('/afiliacion') ||
       this.router.url.includes('/crearContrasena') ||
       this.router.url.includes('/editaCuenta') ||
+      this.router.url.includes('/editarSvcGTP') ||
       this.router.url.includes('/configurarServicios') ||
       
       this.router.url.includes('/procesando')) {
