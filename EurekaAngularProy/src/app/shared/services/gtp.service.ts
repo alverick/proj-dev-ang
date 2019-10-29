@@ -198,6 +198,27 @@ export class GtpService {
    }  
 
 
+
+   //post
+
+
+   public Registrar(data: any): Observable<any> {
+    this.spinner.show();
+    this.email = data.email;
+    return this.http.post<any>(`${environment.END_POINT}/company?_=`+ new Date().getTime(), data)
+      .pipe(map(r => {
+        this.spinner.hide();
+        if (r.success) {
+          this.idCompany = r.id;
+        }
+        return r;
+      }))
+      .pipe(catchError(err => {
+        this.spinner.hide();
+        return throwError(err);
+      }));
+  }
+
   
 
 
