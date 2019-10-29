@@ -55,8 +55,8 @@ export class ServicesGTPComponent implements OnInit {
       monto: new FormControl({ value: montod, disabled: true }),
       porcentaje: new FormControl({ value: porcentajed, disabled: true }),
       pagoPartes: new FormControl({ value: this._service.partialPayment, disabled: true }),
-      NewNameCod:  [(this._service.newNameCode == true? 'S':'N'), Validators.required],
-      NewName:  [(this._service.newName == true? 'S':'N'), Validators.required],
+      NewNameCod:  [(this._service.acceptednewNameCode == true? 'S':'N'), Validators.required],
+      NewName:  [(this._service.acceptednewName == true? 'S':'N'), Validators.required],
     });
 
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
@@ -95,8 +95,8 @@ export class ServicesGTPComponent implements OnInit {
       {
           let value: DataServiceGTP;
           value = this._service;
-          value.newName = (this.frm.value.NewName =='S');
-          value.newNameCode = (this.frm.value.NewNameCod =='S');
+          value.acceptednewName = (this.frm.value.NewName =='S');
+          value.acceptednewNameCode = (this.frm.value.NewNameCod =='S');
           this.grabar.emit(value);
       }
   }

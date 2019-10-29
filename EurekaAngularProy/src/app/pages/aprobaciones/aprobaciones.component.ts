@@ -123,8 +123,8 @@ export class AprobacionesComponent implements OnInit {
       this.gtpService.services.forEach(s =>{
         this.scv.push({
           ServiceId: s.id,
-          NombreAprobado: s.newName,
-          NombreCodAprobado: s.newNameCode
+          NombreAprobado: s.acceptednewName,
+          NombreCodAprobado: s.acceptednewNameCode
         }); 
       });
 
@@ -146,12 +146,14 @@ export class AprobacionesComponent implements OnInit {
   
       }).then((result) => { 
         if (result.value) {  
-            this.gtpService.Registrar({ gtppost: this.gtppost})
+            this.gtpService.Registrar({ rqst: this.gtppost})
             .subscribe(d =>{
               if(d===true){
+                console.log('sisisisisis');
                 this.router.navigate(['/gtp']);
               }else{
-                
+                console.log('nononon');
+
               }
             });
         }

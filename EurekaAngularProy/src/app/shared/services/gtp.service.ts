@@ -207,7 +207,7 @@ export class GtpService {
 
    public Registrar(data: any): Observable<any> {
     this.spinner.show(); 
-    return this.http.post<any>(`${environment.END_POINT}/company/gtp/approve?_=`+ new Date().getTime(), data)
+    return this.http.post<any>(`${environment.END_POINT}/company/gtp/approve`, data)
       .pipe(map(r => {
         this.spinner.hide();
         if (r.success) { 

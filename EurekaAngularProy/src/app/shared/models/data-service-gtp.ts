@@ -18,9 +18,12 @@ export interface DataServiceGTP {
     porcentage: number;
     currencySymbol:string;
     inReview:  boolean;
-    newNameCode:  boolean;
-    newName: boolean;
+    newNameCode:  string;
+    newName: string;
     status: string;
+    acceptednewNameCode:boolean;
+    acceptednewName:boolean;
+
     
 /*
        id?: number; //1
