@@ -85,8 +85,8 @@
                                                         <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr>
                                                     <tr *ngIf="!svc.inReview">
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.newName == null && svc.newNameCode == null  ">por Revisar</td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.newName == true || svc.newName == false ) && (svc.newNameCode == true || svc.newNameCode == false )">Revisado</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="svc.acceptednewName == null && svc.acceptednewNameCode == null">por Revisar</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.acceptednewName == true || svc.acceptednewName == false ) && (svc.acceptednewNameCode == true || svc.acceptednewNameCode == false )">Revisado</td>
                                                         <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr>
                                                     <tr>
