@@ -13,6 +13,7 @@ import { map, catchError } from 'rxjs/operators';
 import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
 import { DataServiceGTP } from '../models/data-service-gtp';
 import { GtpEmpresa } from '../models/gtp-post';
+import { NgxSpinnerService } from 'ngx-spinner';
  
 
 @Injectable({
@@ -22,7 +23,9 @@ export class GtpService {
   private lastFilter: GtpFilter = null;
   private URI_API: string = environment.END_POINT
   public pageMessage: string = "Mostrando 0 de 0 elementos";
-  constructor(private http: HttpClient, private storage: StorageService) { }
+
+  constructor(private http: HttpClient, private storage: StorageService, private spinner: NgxSpinnerService) { }
+
   public services: DataServiceGTP[] = [];
   public Service : DataServiceGTP;
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
@@ -203,13 +206,11 @@ export class GtpService {
 
 
    public Registrar(data: any): Observable<any> {
-    this.spinner.show();
-    this.email = data.email;
-    return this.http.post<any>(`${environment.END_POINT}/company?_=`+ new Date().getTime(), data)
+    this.spinner.show(); 
+    return this.http.post<any>(`${environment.END_POINT}/company/gtp/approve?_=`+ new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();
-        if (r.success) {
-          this.idCompany = r.id;
+        if (r.success) { 
         }
         return r;
       }))

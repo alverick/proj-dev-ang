@@ -62,11 +62,7 @@ export class CambiaContrasenaComponent implements OnInit {
           .subscribe(d =>{
               if(d == null){
                 this.mensaje('Actualizar Contraseña','Error al actualizar Contraseña');
-              }else{
-                console.table(d);
-                console.log('RUC');
-                console.log(d.ruc);
-                console.log(d.paramStr);
+              }else{ 
                 this.mensaje('Contraseña actualizada','Tu contraseña ha sido actualizada');
                 this.storage.setCurrentSession({
                   user: {ruc:''},

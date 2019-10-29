@@ -132,9 +132,7 @@ export class AprobacionesComponent implements OnInit {
         EnterproseObj:  this.emp,
         ListServiceObj: this.scv,
       }
-      console.log('post');
-      console.log(this.gtppost);
-
+ 
     let total = cant + sercant;
     if(total == 0){
       Swal.fire({
@@ -147,8 +145,15 @@ export class AprobacionesComponent implements OnInit {
         onOpen: drawPopup
   
       }).then((result) => { 
-        if (result.value) { 
-          this.router.navigate(['/gtp']);
+        if (result.value) {  
+            this.gtpService.Registrar({ gtppost: this.gtppost})
+            .subscribe(d =>{
+              if(d===true){
+                this.router.navigate(['/gtp']);
+              }else{
+                
+              }
+            });
         }
       });
     }
@@ -164,7 +169,14 @@ export class AprobacionesComponent implements OnInit {
   
       }).then((result) => { 
         if (result.value) { 
-          this.router.navigate(['/gtp']);
+            this.gtpService.Registrar({ gtppost: this.gtppost})
+            .subscribe(d =>{
+              if(d===true){
+                this.router.navigate(['/gtp']);
+              }else{
+                
+              }
+            });
         }
       });
     } 
