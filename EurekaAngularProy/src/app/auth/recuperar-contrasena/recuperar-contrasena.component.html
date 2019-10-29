@@ -1,0 +1,112 @@
+<body>
+    <!-- Navigation -->
+
+    <div class="container-style">
+        <div class="container pt-5 pl-5">
+            <a class="pl-4 navbar-brand" href="#">
+                <img style="max-width: 250px;" src="assets/images/logo-login.svg" alt="">
+            </a>
+        </div>
+
+        <div class="container">
+            <div class="row ">
+                <!--/////// L E F T ////////-->
+
+                <div class="col-md-6 pt-5  pl-5">
+                    <div class="pl-4  texto-login pt-3">Descubre una nueva forma de manejar tus cobros</div>
+                    <div class="pl-4  pt-5">
+                        <img class="pt-5" src="assets/images/mujer.svg">
+                    </div>
+                </div>
+
+                <!--/////// R I G H T ////////-->
+                <div class="col-md-6  pb-3">
+                    <div class="d-flex justify-content-end">
+                         <!---LISTO-->
+
+                         <div *ngIf="!formulario"  class="cuadro-form-Listo">
+                                <div class="texto-azul  mb-4 ">¡Listo!</div>
+                                <div class="texto-azul-text pb-4">Hemos enviado las instrucciones a tu <br>correo electrónico</div>
+                                <div class="reenviar mb-4">Reenviar correo en <small>3:00 minutos</small> </div>
+                                <div class="d-flex justify-content-center">
+                                        <button type="button" (click)="Reenviar()"  class="mano focus-elements btn-eureca-green">
+                                            REENVIAR CORREO
+                                        </button>
+                                </div>
+                        </div>
+                         <!---FORMULARIO-->
+                        <div *ngIf="formulario" class=" cuadro-form pb-2"> 
+                            <div class="texto-azul  mb-4 ">Recuperar contraseña</div>
+                            <div class="texto-azul-text pb-4">¡Está bien! Todos nos olvidamos de <br> algo alguna vez</div>
+                            
+                            <form id="login-form" [formGroup]="recupera" (ngSubmit)="SubmitRecupera()">
+
+                                <div class="margen">
+                                    <div class="d-flex    pb-3">
+                                        <div class="mr-2">
+                                            <img src="assets/images/user.svg" alt="">
+                                        </div>
+                                        <!-- ////////////// R U C /////////////////// -->
+                                        <div class="flex-fill mt-2">
+                                            <label class="d-block texto-negro h6">RUC</label>
+                                            <mat-form-field class="w-100 " style="height: 1.9px !important">
+                                                <input matInput class="input-text" (Keydown.space)="$event.preventDefault()" type="text" name="ruc" appOnlynumbers autocomplete="on" minlength="11" maxlength="11" required formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors">
+                                                <mat-error class="messsage-error">
+                                                    <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
+                                                    <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
+                                                    <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
+                                                </mat-error>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+
+
+                                    <div class="d-flex  ">
+                                        <div class="mr-2">
+                                            <img src="assets/images/correo.svg" alt="">
+                                        </div>
+                                        <!-- ////////////// R U C /////////////////// -->
+                                        <div class="flex-fill mt-2 ">
+                                            <label class="d-block texto-negro">Ingresa tu correo</label>
+                                            <mat-form-field class="w-100 margen-inputs"  >
+                                                <input matInput class="input-text" (Keydown.space)="$event.preventDefault()" formControlName="email" [class.is-invalid]="f.email.invalid"  type="text" minlength="10" maxlength="100"  >
+                                                <mat-error class="messsage-error">
+                                                    <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required')">El E-mail es obligatorio</mat-error>
+                                                    <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
+                                                    <mat-error class="messsage-error" *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
+                                                </mat-error>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+                                 
+                                    <div class="reCaptach pt-0">
+                                            <re-captcha #recaptchaRef="reCaptcha" (resolved)="resolved($event)"  siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
+                                    </div> 
+                                </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class=" focus-elements btn-eureca-green" form="login-form">RECUPERAR CONTRASEÑA</button>
+                                    </div>
+                                 
+                            </form>
+
+                                <div class="d-flex justify-content-center pb-4">
+                                    <button type="button" class="mano focus-elements btn-eureca-green-register" [routerLink]="['/login']" >
+                                    REGRESAR
+                                </button>
+                                </div>
+
+                             
+                        </div>
+                       
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</body>

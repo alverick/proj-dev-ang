@@ -15,19 +15,32 @@ import { LogoutGuard } from './shared/guards/logout.guard';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { CloseViewGuard } from './shared/guards/close-view.guard';
 import { ClientGuard } from './shared/guards/client.guard';
+import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recuperar-contrasena.component';
+import { CambiaContrasenaComponent } from './auth/cambia-contrasena/cambia-contrasena.component';
+import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
+import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
+import { GtpInputGuard } from './shared/guards/gtp-input.guard';
+import { GtpOutputGuard } from './shared/guards/gtp-output.guard';
 
+// CambiaContrasenaComponent
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard ,GtpOutputGuard] },
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
-
+  { path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
+  { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
+  { path: 'editarSvcGTP', component: ConfigurarServiciosComponent, data: {  isgtp:true }},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
-  { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard ] },
-  { path: 'crearContrasena', component: CrearContrasenaComponent},
+  { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard,GtpOutputGuard ] },
+  { path: 'crearContrasena', component: CrearContrasenaComponent, data: { isEdit: false }},
+  { path: 'editaCuenta/:llave', component: CrearContrasenaComponent , data: { isEdit: true }}, 
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
   { path: 'configuracion', component: ConfigurarServiciosComponent},
-  { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent},
+  { path: 'gtp', component: GtpGrillaComponent,  canActivate: [AuthGuard, GtpInputGuard] },
+  { path: 'AprobacionGtp/:llave', component: AprobacionesComponent, canActivate: [AuthGuard, GtpInputGuard]},
+  { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard,GtpOutputGuard]},
+ 
 
   { path: 'subirPlantilla', component: SubirPlantillaComponent},
   { path: 'analisis', component: AnalisisComponent},

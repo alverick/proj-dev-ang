@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/auth/crear-contrasena/must-match.validator';
 import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
@@ -7,6 +7,7 @@ import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { RubroModel } from 'src/app/shared/models';
 import { Router } from '@angular/router';
 import { drawPopup } from 'src/app/shared/services/popups';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 
 
 @Component({
@@ -25,9 +26,19 @@ export class ConfigurarEmpresaComponent implements OnInit {
   rubros: RubroModel[] = [];
   constructor(private formBuilder: FormBuilder,
               private configEmpresaService: ConfiguracionService,
-              public afiliacionService: AfiliacionService, private router: Router) { }
+              public afiliacionService: AfiliacionService,
+              private router: Router,
+              private gaService: GoogleAnalytics) { }
+
+    @HostListener('window:beforeunload', ['$event'])
+    public closeWindow($event: any) {
+      if (!this.afiliacionService.Guardado) {
+        $event.returnValue = 'Se van a perder los cambios.';
+      }
+    }
 
   ngOnInit() {
+    window['_url_loop_'] = 'configuracionEmpresa';
     this.createForm();
     this.getInfoEmpresa();
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
@@ -37,18 +48,25 @@ export class ConfigurarEmpresaComponent implements OnInit {
   getInfoEmpresa() {
     this.configEmpresaService.getDatosEmpresa()
       .subscribe( dataEnterprise => {
+        console.table(dataEnterprise);
         this.formGroup.setValue(dataEnterprise);
-      }
-  );
-  }
+       
+            }
+        );
 
+  }
+ 
   createForm() {
     this.formGroup = this.formBuilder.group({
+      
       ruc: new FormControl({ value: '', disabled: true }),
-      name: new FormControl({ value: '', disabled: true }),
+      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
       entry: new FormControl({ value: '', disabled: true }),
-      email: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
+      email: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       movilNumber: new FormControl('', [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
+      newName: new FormControl({ value: '', disabled: true }),
+      status: new FormControl({ value: '', disabled: true }), 
+      requestDate: new FormControl({ value: '', disabled: true }),
       password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20) ]),
       newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
       confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
@@ -87,8 +105,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
     var Pass =  parseInt(this.formGroup.value.password.toString().length);
     var newPass =  parseInt(this.formGroup.value.newPassword.toString().length);
-
+    console.log('aun no se valida');
     if (this.formGroup.valid) {
+      console.log('es valido');
        if(correo==0){
         return;
       }
@@ -116,15 +135,18 @@ export class ConfigurarEmpresaComponent implements OnInit {
       };
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
-        enterpriseUpdate =>{
+        enterpriseUpdate => {
           console.table(enterpriseUpdate);
           if( enterpriseUpdate.success == true ){
-
+            this.gaService.sendEvent('ActualizaDatosEmpresa', {
+              'event_category': 'Configuración',
+              'event_label': 'actualiza_datos_empresa'
+            });;
             Swal.fire({
               title: 'Datos de Empresa guardados',
               text: 'Sus datos han sido actualizados',
               showCloseButton: true,
-              confirmButtonText: 'Aceptar',
+              confirmButtonText: 'ACEPTAR',
               onOpen: drawPopup
 
             }).then((result) => {
@@ -156,10 +178,10 @@ export class ConfigurarEmpresaComponent implements OnInit {
     Swal.fire({
       title: titulo ,
       text: text,
-      showCloseButton: true,
-      showCancelButton: true,
-      showConfirmButton: false,
-      cancelButtonText:  'Cerrar',
+      showCloseButton: false,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonText:  'CERRAR',
       onOpen: drawPopup
 
     });

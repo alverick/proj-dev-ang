@@ -1,0 +1,238 @@
+
+<div>
+    <div class="container">
+          <div class="row">
+            <div class="col">
+                
+                    <div class="widget filtros">
+                            <div class="title">Buscar</div>
+                            <div class="content">
+                              <form> 
+                                <mat-form-field class="f1">
+                                  <input class="input-text" matInput  [(ngModel)]="filtro.inputSearch"  name="inputSearch" type="text"
+                                      maxlength="20" placeholder="Nombre de empresa, RUC o CU">
+                                      <span matPrefix class="pr-1"><img src="assets/images/buscar.svg"> </span>
+                                      <button mat-button *ngIf="filtro.inputSearch" matSuffix mat-icon-button aria-label="Clear"
+                                      (click)="filtro.inputSearch=''">
+                                      <i class="fa fa-close"></i>
+                                    </button>
+                                </mat-form-field>
+                                <mat-form-field class="f2">
+                                  <mat-select class="input-text"  [(ngModel)]="filtro.BusinessHeading"  placeholder="Rubro" name="servicio" disableOptionCentering>
+                                    <mat-option class="input-text">Rubro</mat-option>
+                                    <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
+                                        {{r.code}} {{r.name}} 
+                                    </mat-option>
+                                  </mat-select> 
+                                  <button mat-button *ngIf="filtro.BusinessHeading" matSuffix mat-icon-button aria-label="Clear"
+                                    (click)="filtro.entry=null; $event.stopPropagation();">
+                                    <i class="fa fa-close"></i>
+                                  </button>
+                                </mat-form-field>
+
+                                <mat-form-field class="f2">
+                                  <mat-select class="input-text" [(ngModel)]="filtro.status" placeholder="Estado" name="servicio" disableOptionCentering>
+                                    <mat-option class="input-text">Estado</mat-option>
+                                    <mat-option class="input-text" *ngFor="let r of states" [value]="r.idState">
+                                        {{r.descripcion}}
+                                    </mat-option>
+                                  </mat-select> 
+                                  <button mat-button *ngIf="filtro.status" matSuffix mat-icon-button aria-label="Clear"
+                                  (click)="filtro.status=null; $event.stopPropagation();">
+                                  <i class="fa fa-close"></i>
+                                </button>
+                                </mat-form-field>
+                                <label class="mt-4 px-4 input-text">Fecha de <br> solicitud</label>
+                                <mat-form-field class="f2">
+                                  <input [min]="minDate" [max]="maxDate"  class="input-text" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)" #inputDate1 placeholder="Desde" 
+                                    type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" maxlength="10" minlength="10" >
+                                  <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
+                                    <mat-icon class="svg-custom" ></mat-icon>
+                                  </mat-datepicker-toggle>
+                                  <mat-datepicker #myDatepicker2></mat-datepicker> 
+                                  <button mat-button *ngIf="filtro.dateFrom || inputDate1.value" matSuffix mat-icon-button
+                                    aria-label="Clear" (click)="limpiardate1()">
+                                    <i class="fa fa-close"></i>
+                                  </button>
+                                  <div class="msg-error" *ngIf="errores.dateFrom">{{errores.dateFrom}}</div>
+                                </mat-form-field>
+                               
+
+                                <mat-form-field class="f2">
+                                  <input class="input-text" [(ngModel)]="filtro.dateTo" (dateChange)="change($event)" [min]="minDate" [max]="maxDate" appDate  
+                                    #inputDate2 placeholder="Hasta"  type="text" name="dateTo"
+                                    matInput [matDatepicker]="myDatepicker"   maxlength="10" minlength="10"
+                                    appBlockCopyPaste  >
+                                  <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker">
+                                    <mat-icon class="svg-custom" ></mat-icon>
+                                  </mat-datepicker-toggle>
+                                  <mat-datepicker #myDatepicker></mat-datepicker> 
+                                  <button mat-button *ngIf="filtro.dateTo || inputDate2.value" matSuffix mat-icon-button
+                                    aria-label="Clear" (click)="limpiardate2()">
+                                    <i class="fa fa-close"></i>
+                                  </button>
+                                  <div class="msg-error" *ngIf="errores.dateTo">{{errores.dateTo}}</div>
+                                </mat-form-field>
+                                
+                                 
+                                <button type="button" class="f3 btn-eureca-green" (click)="sendFiltro()" >BUSCAR
+                                </button>
+                              </form>
+                          </div>
+                        </div>
+                        
+                        
+                        <div class="widget lista">
+                            <div class="title">Empresas</div>
+                          <div class="content">  
+                            <section class="lista"> 
+                              <table>
+                                <thead>
+                                  <tr> 
+                                    <th class="c0"></th>
+                                    <th class="c1">
+                                      <div class="text">Fecha de solicitud</div>
+                                      <div class="ord">
+                                        <div class="up" [class.seleccionado]="orderBy === 0 && orderDef[0].asc === true"
+                                          (click)="orderList(0, true)"></div>
+                                        <div class="down" [class.seleccionado]="orderBy === 0 && orderDef[0].asc === false"
+                                          (click)="orderList(0, false)"></div>
+                                      </div>
+                                    </th>
+                                    <th class="c2">
+                                      <div class="text">RUC</div>
+                                      <div class="ord">
+                                        <div class="up" [class.seleccionado]="orderBy === 1 && orderDef[1].asc === true"
+                                          (click)="orderList(1, true)"></div>
+                                        <div class="down" [class.seleccionado]="orderBy === 1 && orderDef[1].asc === false"
+                                          (click)="orderList(1, false)"></div>
+                                      </div>
+                                    </th>
+                                    <th class="c3">
+                                      <div class="text">CU</div>
+                                      <div class="ord">
+                                        <div class="up" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === true"
+                                          (click)="orderList(2, true)"></div>
+                                        <div class="down" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === false"
+                                          (click)="orderList(2, false)"></div>
+                                      </div>
+                                    </th>
+                                    <th class="c4">
+                                      <div class="text">Nombre de la empresa</div>
+                                      <div class="ord">
+                                        <div class="up" [class.seleccionado]="orderBy === 3 && orderDef[3].asc === true"
+                                          (click)="orderList(3, true)"></div>
+                                        <div class="down" [class.seleccionado]="orderBy === 3 && orderDef[3].asc === false"
+                                          (click)="orderList(3, false)"></div>
+                                      </div>
+                                    </th>
+                                    <th class="c5">
+                                      <div class="text">Tipo de solicitud</div>
+                                      <div class="ord">
+                                        <div class="up" [class.seleccionado]="orderBy === 4 && orderDef[4].asc === true"
+                                          (click)="orderList(4, true)"></div>
+                                        <div class="down" [class.seleccionado]="orderBy === 4 && orderDef[4].asc === false"
+                                          (click)="orderList(4, false)"></div>
+                                      </div>
+                                    </th>
+                                    <th class="c6">
+                                      <div class="text">Estado</div>
+                                      <div class="ord">
+                                        <div class="up" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === true"
+                                          (click)="orderList(5, true)"></div>
+                                        <div class="down" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === false"
+                                          (click)="orderList(5, false)"></div>
+                                      </div>
+                                    </th>
+                                    <th class="c7"> 
+                                    </th> 
+                                  </tr>
+                                </thead>
+                              </table>
+                              <perfect-scrollbar class="content-container">
+                                <table>
+                                  <tbody>
+                                    <tr *ngFor="let items of gtpService.EnterprisesItems.listCompanyGTP | paginate:{itemsPerPage:50,currentPage:currentFiltro.pageNumber,totalItems:gtpService.EnterprisesItems.totalCompanies } ">  
+                                      <td class="c0"></td> 
+                                      <td class="c1">{{items.requestDate | date:'dd/MM/yy' }}</td> 
+                                      <td class="c2">{{items.ruc}}</td> 
+                                      <td class="c3">{{items.cu}}</td>
+                                      <td class="c4">{{items.nameEnterprise}}</td>
+                                      <td  class="c5">   
+                                        <div style="width:100px ;" *ngFor="let request of items?.requestTypeList"> 
+                                            <div *ngIf="request.type == 0"> <span class="badge badge-primary">{{request.texto}}</span>  </div>
+                                        </div>
+                                        <div style="width:80px ;" *ngFor="let request of items?.requestTypeList"> 
+                                            <div *ngIf="request.type == 1"  > <span class="badge badge-warning">{{request.texto}}</span> </div>
+                                            <div *ngIf="request.type == 2"  > <span class="badge badge-success">{{request.texto}}</span> </div>
+                                        </div>
+                                        <!-- -->  
+                                      </td>
+
+                                      <td class="c6">{{items.status}}</td>
+                                      <td class="c7">
+                                          <button type="button" class="f3 btn-eureca-green" (click)="Aprobar(items.clientId)"    ><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                          </button>
+                                      </td> 
+                                    </tr>
+                                    <tr style="border-bottom: #13131300" *ngIf="ceroRegistros()">
+                                        <td colspan="13" class="texto-after">
+                                          <span>{{messageTable}}</span> 
+                                        </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </perfect-scrollbar> 
+                            </section> 
+                            <section class="pagination">
+                                <div class="ctrl">
+                                    <pagination-template #p="paginationApi" [maxSize]="5" (pageChange)="changePage($event)">
+                                        <ul class="ngx-pagination" role="navigation">
+                                            <li class="pagination-previous" [class.disabled]="p.isFirstPage()">
+                                                <a tabindex="0" *ngIf="1 < p.getCurrent()" (keyup.enter)="p.previous()" (click)="p.previous()">
+                                                    <img src="assets/images/before.svg">
+                                                </a>
+                                                <span *ngIf="p.isFirstPage()">
+                                                    <img src="assets/images/before.svg">
+                                                </span>
+                                            </li>
+                                            <li *ngIf="p.pages.length === 0" class="current">
+                                                <span>1</span>
+                                            </li>
+                                            <li *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value" [class.ellipsis]="page.label === '...'">
+                                                <a class="numpag" tabindex="0" (keyup.enter)="p.setCurrent(page.value)" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                                                    <span>{{ (page.label === '...') ? page.label : (page.label | number:'') }}</span>
+                                                </a>
+                                                <ng-container *ngIf="p.getCurrent() === page.value">
+                                                    <span>{{ (page.label === '...') ? page.label : (page.label | number:'') }}</span>
+                                                </ng-container>
+                                            </li>
+                                            <li class="pagination-next" [class.disabled]="p.isLastPage()">
+                                                <a class="pr-0" tabindex="0" *ngIf="!p.isLastPage()" (keyup.enter)="p.next()" (click)="p.next()">
+                                                    <img  src="assets/images/after.svg">
+                                                </a>
+                                                <span class="pr-0" *ngIf="p.isLastPage()">
+                                                    <img  src="assets/images/after.svg">
+                                                </span>
+                                            </li> 
+                                        </ul>
+                                  </pagination-template>
+                                  </div>
+                                <div class="text pt-1">
+                                    {{ gtpService.pageMessage}}
+                                </div>
+                                <div class="clear-float"></div> 
+                            </section>
+                          </div>
+                        </div> 
+            </div>
+        </div>
+        <div class="row" style="display: block;">
+            <div class="text-foot">
+              Para comunicarte con nosotros puedes llamar o escribir al <b>913718635</b>, o también a
+              <b>pilotos@intercorp.com.pe</b>
+            </div>
+          </div>
+    </div>
+
+</div>

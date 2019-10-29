@@ -1,63 +1,65 @@
-<div  >
+<div>
     <br>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                        <div class="texto-azul">Ingresa los datos de la empresa </div>
+                <div class="texto-azul">Ingresa los datos de la empresa </div>
             </div>
             <div class="col-md-8">
                 <div class="d-flex justify-content-end">
-                    <div class="cuadro-form pr-5 pl-5 pt-4  bg-white">
+                    <div class="cuadro-form pr-5 pl-5 pt-4 pb-3  bg-white">
                         <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
                                     <input class="input-text" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC" appOnlynumbers minlength="11" maxlength="11">
                                     <mat-error class="messsage-error">
-                                        <mat-error *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
-                                        <mat-error *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
-                                        <mat-error *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
+                                <label *ngIf="inEdit && !empresa.NombreApproved" class="messsage-error" style="float: right;">Campo a rechazado, vuelva a intenar con otro</label>
                                 <mat-form-field class="super-full-width ">
-                                    <input class="input-text" formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
+                                   
+                                    <input class="input-text" formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de la empresa" minlength="3" maxlength="80">
                                     <mat-error class="messsage-error">
-                                        <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
-                                        <mat-error *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
-                                        <mat-error *ngIf="f.nombre.invalid && !f.nombre.hasError('pattern') && f.nombre.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('pattern') && f.nombre.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width">
-                                    <mat-label class="input-text">Rubro</mat-label>
-                                    <mat-select class="input-text" formControlName="rubro">
-                                        <mat-option class="input-text">Rubro de tu empresa</mat-option>
+                                    <mat-label>Rubro</mat-label>
+                                    <mat-select class="input-text" formControlName="rubro" disableOptionCentering panelClass="pts30">
+                                        <mat-option class="input-text">Rubro</mat-option>
                                         <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
                                             {{r.name}}
                                         </mat-option>
                                     </mat-select>
-                                    <mat-error class="messsage-error" *ngIf="f.rubro.invalid && f.rubro.hasError('required')">Elija una opcion</mat-error>
+                                    <mat-error class="messsage-error" *ngIf="f.rubro.invalid && f.rubro.hasError('required')">Elija una opción</mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
                                     <input formControlName="email" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid" matInput type="text" minlength="10" maxlength="100" placeholder="E-mail">
                                     <mat-error class="messsage-error">
-                                        <mat-error *ngIf="f.email.invalid && f.email.hasError('required')">El E-mail es obligatorio</mat-error>
-                                        <mat-error *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
-                                        <mat-error *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required')">El E-mail es obligatorio</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="telefono" (Keydown.space)="$event.preventDefault()" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Teléfono ó celular" minlength="6" maxlength="9">
+                                    <input formControlName="telefono" (Keydown.space)="$event.preventDefault()" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Teléfono o celular" minlength="6" maxlength="9">
                                     <mat-error class="messsage-error">
-                                        <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('required')">Teléfono ó Celular es obligatorio</mat-error>
-                                        <mat-error *ngIf="f.telefono.invalid && f.telefono.hasError('pattern')"> Ingrese un Telefono ó Celular valido </mat-error>
-                                        <mat-error *ngIf="f.telefono.invalid  && !f.telefono.hasError('pattern') && f.telefono.hasError('minlength')"> El Teléfono ó Celular debe tener mínimo 6 dígitos</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('required')">Teléfono o celular es obligatorio</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('pattern')"> Ingrese un telefono o celular valido </mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid  && !f.telefono.hasError('pattern') && f.telefono.hasError('minlength')"> El teléfono o celular debe tener mínimo 6 dígitos</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -65,9 +67,9 @@
                                 <mat-form-field class="input-text super-full-width ">
                                     <input formControlName="contrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
                                     <mat-error class="messsage-error">
-                                        <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('required')">Contraseña es obligatorio</mat-error>
-                                        <mat-error *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
-                                        <mat-error *ngIf="f.contrasena.invalid && !f.contrasena.hasError('minlength') && f.contrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('required')">Contraseña es obligatorio</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && !f.contrasena.hasError('minlength') && f.contrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
                                     </mat-error>
                                 </mat-form-field>
                             </div>
@@ -75,24 +77,25 @@
                                 <mat-form-field class="input-text super-full-width ">
                                     <input formControlName="repcontrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repite Contraseña">
                                     <mat-error class="messsage-error">
-                                        <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required')">Debe repetir la contraseña</mat-error>
-                                        <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
-                                        <mat-error *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
-                                        <mat-error *ngIf="f.repcontrasena.invalid && !f.repcontrasena.hasError('minlength') && f.repcontrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required')">Debe repetir la contraseña</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
+                                        <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && !f.repcontrasena.hasError('minlength') && f.repcontrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
                                     </mat-error>
 
                                 </mat-form-field>
                             </div>
 
                             <div class="form-group">
-                                <mat-checkbox  formControlName="acceptterms"  id="styled-checkbox-1"  >
+                                <mat-checkbox formControlName="acceptterms" id="styled-checkbox-1">
                                 </mat-checkbox>
-                                &nbsp; <label for="styled-checkbox-1"> Acepto los </label>&nbsp; <small (click)="terminos()"> términos y condiciones </small>
+                                &nbsp; <label class="acepto" for="styled-checkbox-1"> Acepto los</label><small (click)="terminos()"> términos y condiciones </small>
 
                                 <mat-error class="messsage-error" *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
-                            </div> 
-                            <button type="submit" class="btn-big btn-eureca-green w-100 text-white">
-                                  Siguiente</button>
+                            </div>
+                            <button type="submit" class="btn-big btn-eureca-green w-100 text-white" (click)="enviarDatosEmpresa()">
+                                  SIGUIENTE
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -104,85 +107,55 @@
 
 
 <div class="modal fade" id="terminos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="pt-5 pl-5" > 
-            <div class="form-row">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="pt-5 pl-5">
+                <div class="form-row">
                     <div class="form-group col-md-10">
-                    <div class=" terminos-title" id="exampleModalLabel">Terminos y condiciones </div>
+                        <div class=" terminos-title" id="exampleModalLabel">Terminos y condiciones </div>
                     </div>
                     <div class="form-group col-md-2">
-                    <div style="float: right;" data-dismiss="modal" aria-label="Close"  class="pr-5 close mano font-cerrar">
-                            <img src="assets/images/cerrar.svg">  
+                        <div style="float: right;  cursor: pointer;" data-dismiss="modal" aria-label="Close" class="pr-5 close mano font-cerrar">
+                            <img src="assets/images/cerrar.svg">
+                        </div>
                     </div>
-                    </div>
-            
-            </div> 
-      </div>
-      
-      <div class="terminos-body p-5">
-          <perfect-scrollbar class="content-container">
-            <p>
-                1. Eureca es una web de Interbank, que funciona como una plataforma de pago de servicios mediante la cual el Cliente, una vez
-                que haya afiliado su tarjeta de crédito de Interbank, podrá realizar pago de servicios. Eureca, es un servicio adicional de Interbank,
-                que se encuentra a prueba, por lo cual podrá ser suprimido, modificado o eliminado en cualquier momento y sin previo aviso.
-                <br> <br>
-                2. El Cliente declara conocer que para acceder a la plataforma deberá contar con una tarjeta de crédito activa de Interbank y un
-                Smartphone con acceso a internet o alguna red inalámbrica.
-                <br> <br>
-                3. El Cliente deberá crear un usuario y clave para poder acceder a Eureca, luego de lo cual afiliará su tarjeta de crédito y los
-                servicios que quiere pagar.
-                <br> <br>
-                4. El Cliente, luego de haber accedido a la plataforma con su usuario y clave, podrá realizar los pagos con cargo a su tarjeta de
-                crédito a través de un clic, manifestando su voluntad de aceptación.
-                <br> <br>
-                5. El Cliente entiende que el proceso y/o los mecanismos de aceptación establecidos por Interbank en la presente plataforma de
-                pago, han sido claros y le han permitido manifestar su aceptación voluntaria, libre y expresa, habiendo podido despejar las dudas
-                que hubiera podido tener.
-                <br> <br>
-                6. El Cliente confirma su voluntad de recibir las constancias de sus pagos de servicios vía correo electrónico.
-                <br>
-                7. El Cliente conoce su obligación de mantener actualizados sus datos personales.
-                <br> <br>
-                8. El Cliente se obliga a operar personalmente su sesión. Toda operación realizada por el Cliente a través de Eureca se presumirá
-                hecha por el Cliente bajo su total responsabilidad. Interbank no asumirá responsabilidad alguna por las operaciones realizadas
-                por el Cliente.
-                <br> <br>
-                9. El Cliente asume plena responsabilidad por el resguardo de su celular Smartphone, así como de la pérdida o sustracción del
-                mismo. El Cliente deberá comunicar de inmediato a Interbank, enviando un correo al buzón Eureca@intercorp.com.pe, la pérdida
-                o sustracción de su celular Smartphone. Recibida la comunicación, Interbank bloqueará el número por lo que el Cliente no será
-                responsable por el uso irregular o fraudulento de la misma con posterioridad a tal comunicación. Todas las transacciones previas
-                a dicha comunicación serán de exclusiva responsabilidad del Cliente.
-                <br> <br>
-                10. Interbank no asumirá ninguna responsabilidad por cualquier problema o inconveniente técnico o físico por caso fortuito o
-                fuerza mayor que imposibilite, retrase, demore la ejecución o no permita la realización exitosa del servicio que se presta a través
-                de la plataforma de pago de servicios Eureca. Interbank no asumirá responsabilidad alguna por culpa leve o por cualquier
-                problema o inconveniente imputable a terceros, sea este de índole técnico, físico o producto de un caso fortuito o fuerza mayor
-                que imposible, retrase, demore la ejecución o no permita la realización exitosa del Servicio.
-                <br> <br>
-                11. El Cliente es el único responsable por el suministro de los datos, por lo que, se somete a las responsabilidades administrativas
-                y/o penales que la legislación peruana tenga prevista para el efecto.
-                <br>
-                12. Cualquier modificación sobre las condiciones del servicio de pago, las operaciones realizables o cualquier otro aspecto del
-                servicio se le informará a través del correo electrónico registrado en esta plataforma.
-                <br> <br>
-                13. Los Términos y Condiciones del servicio se encuentran a disposición del Cliente en la misma aplicación para su conservación
-                y posterior consulta. El Cliente declara conocer que estos Términos y Condiciones del Servicio podrán ser eventualmente
-                modificados, por lo que la versión que se encontrará disponible en el PlayStore será la vigente al momento de su consulta.
-                <br> <br>
-                14. El Cliente podrá desafiliar su cuenta del servicio en cualquier momento enviando un correo al buzón Eureca@intercorp.com.pe.
-                <br> <br> 
-                15. El Cliente declara que ante el mal uso de Eureca, Interbank podrá bloquearlo de su lista de Clientes permitidos para utilizar el
-                App sin aviso alguno, por lo tanto, un mal uso de la aplicación, aprovechamiento indebido del mismo o actos que desnaturalicen
-                o generen una situación de aprovechamiento y/o ventaja indebida por parte del Cliente que perjudique a Interbank, se encuentra
-                expresamente prohibido y será considerado como un acto de piratería de software que infringe las leyes de la propiedad intelectual
-                e industrial, de tal forma que Interbank podrá exigir responsabilidad por el incumplimiento de esta condición, según la normativa
-                vigente
-            </p>
-            </perfect-scrollbar>
 
-      </div>
- 
+                </div>
+            </div>
+
+            <div class="terminos-body p-5">
+                <perfect-scrollbar class="content-container">
+                    <p>
+                        1. Eureca es una web de Interbank, que funciona como una plataforma de pago de servicios mediante la cual el Cliente, una vez que haya afiliado su tarjeta de crédito de Interbank, podrá realizar pago de servicios. Eureca, es un servicio adicional de Interbank,
+                        que se encuentra a prueba, por lo cual podrá ser suprimido, modificado o eliminado en cualquier momento y sin previo aviso.
+                        <br> <br> 2. El Cliente declara conocer que para acceder a la plataforma deberá contar con una tarjeta de crédito activa de Interbank y un Smartphone con acceso a internet o alguna red inalámbrica.
+                        <br> <br> 3. El Cliente deberá crear un usuario y clave para poder acceder a Eureca, luego de lo cual afiliará su tarjeta de crédito y los servicios que quiere pagar.
+                        <br> <br> 4. El Cliente, luego de haber accedido a la plataforma con su usuario y clave, podrá realizar los pagos con cargo a su tarjeta de crédito a través de un clic, manifestando su voluntad de aceptación.
+                        <br> <br> 5. El Cliente entiende que el proceso y/o los mecanismos de aceptación establecidos por Interbank en la presente plataforma de pago, han sido claros y le han permitido manifestar su aceptación voluntaria, libre y expresa,
+                        habiendo podido despejar las dudas que hubiera podido tener.
+                        <br> <br> 6. El Cliente confirma su voluntad de recibir las constancias de sus pagos de servicios vía correo electrónico.
+                        <br> 7. El Cliente conoce su obligación de mantener actualizados sus datos personales.
+                        <br> <br> 8. El Cliente se obliga a operar personalmente su sesión. Toda operación realizada por el Cliente a través de Eureca se presumirá hecha por el Cliente bajo su total responsabilidad. Interbank no asumirá responsabilidad
+                        alguna por las operaciones realizadas por el Cliente.
+                        <br> <br> 9. El Cliente asume plena responsabilidad por el resguardo de su celular Smartphone, así como de la pérdida o sustracción del mismo. El Cliente deberá comunicar de inmediato a Interbank, enviando un correo al buzón Eureca@intercorp.com.pe,
+                        la pérdida o sustracción de su celular Smartphone. Recibida la comunicación, Interbank bloqueará el número por lo que el Cliente no será responsable por el uso irregular o fraudulento de la misma con posterioridad a tal comunicación.
+                        Todas las transacciones previas a dicha comunicación serán de exclusiva responsabilidad del Cliente.
+                        <br> <br> 10. Interbank no asumirá ninguna responsabilidad por cualquier problema o inconveniente técnico o físico por caso fortuito o fuerza mayor que imposibilite, retrase, demore la ejecución o no permita la realización exitosa
+                        del servicio que se presta a través de la plataforma de pago de servicios Eureca. Interbank no asumirá responsabilidad alguna por culpa leve o por cualquier problema o inconveniente imputable a terceros, sea este de índole técnico,
+                        físico o producto de un caso fortuito o fuerza mayor que imposible, retrase, demore la ejecución o no permita la realización exitosa del Servicio.
+                        <br> <br> 11. El Cliente es el único responsable por el suministro de los datos, por lo que, se somete a las responsabilidades administrativas y/o penales que la legislación peruana tenga prevista para el efecto.
+                        <br> 12. Cualquier modificación sobre las condiciones del servicio de pago, las operaciones realizables o cualquier otro aspecto del servicio se le informará a través del correo electrónico registrado en esta plataforma.
+                        <br> <br> 13. Los Términos y Condiciones del servicio se encuentran a disposición del Cliente en la misma aplicación para su conservación y posterior consulta. El Cliente declara conocer que estos Términos y Condiciones del Servicio
+                        podrán ser eventualmente modificados, por lo que la versión que se encontrará disponible en el PlayStore será la vigente al momento de su consulta.
+                        <br> <br> 14. El Cliente podrá desafiliar su cuenta del servicio en cualquier momento enviando un correo al buzón Eureca@intercorp.com.pe.
+                        <br> <br> 15. El Cliente declara que ante el mal uso de Eureca, Interbank podrá bloquearlo de su lista de Clientes permitidos para utilizar el App sin aviso alguno, por lo tanto, un mal uso de la aplicación, aprovechamiento indebido
+                        del mismo o actos que desnaturalicen o generen una situación de aprovechamiento y/o ventaja indebida por parte del Cliente que perjudique a Interbank, se encuentra expresamente prohibido y será considerado como un acto de piratería
+                        de software que infringe las leyes de la propiedad intelectual e industrial, de tal forma que Interbank podrá exigir responsabilidad por el incumplimiento de esta condición, según la normativa vigente
+                    </p>
+                </perfect-scrollbar>
+
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>

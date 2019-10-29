@@ -41,9 +41,17 @@ export class NotifyService {
               Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
             });
         }
+        else {
+          Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
+        }
       };
       Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
     }
+  }
+
+  public clear() {
+    this.messages = [];
+    this.total = -1;
   }
 
   public loadMsgs() {
@@ -79,6 +87,8 @@ export class NotifyService {
 
   public markAll() {
     this.http.post(`${environment.END_POINT}/notification/mark?_=${new Date().getTime()}`, {})
-      .subscribe(() => { });
+      .subscribe(() => {
+        this.total = -1;
+      });
   }
 }

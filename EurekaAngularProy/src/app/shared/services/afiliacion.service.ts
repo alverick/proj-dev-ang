@@ -21,6 +21,8 @@ export class AfiliacionService {
 
   public services: ServiceModel[] = [];
 
+
+
   public Clear() {
     this.Guardado = false;
     this.services.push({
@@ -38,7 +40,7 @@ export class AfiliacionService {
       cobraMora: 'N',
       periodoMora: '1',
       tipoMora: 'M',
-      pagoPartes: 'N'
+      pagoPartes: 'N', 
     });
   }
 
@@ -164,7 +166,7 @@ export class AfiliacionService {
       },
       {
         code: 'P',
-        name: "Tengo solo código y nombres"
+        name: "Tengo sólo código y nombres"
       }
     ]);
   }
@@ -213,7 +215,7 @@ export class AfiliacionService {
 
   public GetServicios(incDeactivates: boolean = false) {
 
-    const headers: any = {
+      const headers: any = {
         "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
         "Ocp-Apim-Trace": "true"
       };
@@ -232,7 +234,7 @@ export class AfiliacionService {
             tipoDato: s.dataType,
             tipoPago: s.paymentType,
             idCuenta: s.idAccount,
-            nroCuenta: s.accountNumber,
+            nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
             moneda: s.currency,
             simboloMoneda: s.currencySymbol,
             usaWebApp: s.useAppWeb,
@@ -247,14 +249,17 @@ export class AfiliacionService {
             pagoPartes: s.partialPayment
           });
         });
-        this.services = servicios;
-        console.log(this.services);
-      });
-
-
+        this.services = servicios; 
+        console.log(servicios);
+      }); 
   }
 
+
+
+
+
   public GrabarServicios(): Observable<any> {
+   
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
     this.services.forEach(s => {

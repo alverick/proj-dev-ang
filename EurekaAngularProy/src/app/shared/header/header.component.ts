@@ -24,18 +24,34 @@ export class HeaderComponent implements OnInit {
               public notify: NotifyService ) {
   }
 
+  scrollConfig = {
+    suppressScrollX: true
+  };
+
   ngOnInit() {
-    this.notify.messages = [];
+    this.notify.clear();
     this.spinner.hide();
-    this.notify.iniciar();
+    this.notify.iniciar(); 
   }
 
   public menu(): boolean {
-    if (this.router.url.includes('/login')) {
+    if (this.router.url.includes('/cambiaContra')|| 
+    this.router.url.includes('/recupera')  || 
+    this.router.url.includes('/login') || 
+    this.router.url.includes('/gtp') ||
+    this.router.url.includes('/gtp')  ) {
       return false;
 
     } else {
       return true;
+    }
+  }
+  public menuGtp(): boolean {
+    if (  this.router.url.includes('/gtp') ) {
+      return true;
+
+    } else {
+      return false;
     }
   }
   mesageeError(tipo: any, titulo: string, text: string) {
@@ -62,17 +78,30 @@ export class HeaderComponent implements OnInit {
 
   public show(): boolean {
     if (this.router.url.includes('/login') ||
-     this.router.url.includes('/afiliacion') ||
-     this.router.url.includes('/crearContrasena') ||
-     this.router.url.includes('/configurarServicios') ||
-     this.router.url.includes('/procesando')) {
+    this.router.url.includes('/cambiaContra') ||
+      this.router.url.includes('/recupera') ||
+      this.router.url.includes('/afiliacion') ||
+      this.router.url.includes('/crearContrasena') ||
+      this.router.url.includes('/editaCuenta') ||
+      this.router.url.includes('/editarSvcGTP') ||
+      this.router.url.includes('/configurarServicios') ||
+      
+      this.router.url.includes('/procesando')) {
       return false;
     }
     return true;
   }
 
+  get IsHome(): boolean {
+    return this.router.url.includes('/home');
+  }
+  get IsGtp(): boolean {
+    
+    return this.router.url.includes('/gtp');
+  }
+
   getAgo(date): string {
-    return moment.utc(date).fromNow();
+    return moment.utc(date).local().format('DD/MM/YY [a las] hh:mm a');
   }
 
   onScroll() {
@@ -82,5 +111,16 @@ export class HeaderComponent implements OnInit {
   }
 
   onShowMessages() {
+  }
+
+  goBack() {
+    if (confirm('Es posible que los cambios no se guarden.')) {
+      this.router.navigate(['/home']);
+    }
+  }
+  goBackGtp(){
+    if (confirm('Es posible que los cambios no se guarden.')) {
+      this.router.navigate(['/gtp']);
+    }
   }
 }

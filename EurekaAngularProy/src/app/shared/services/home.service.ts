@@ -22,15 +22,16 @@ export class HomeService {
   ];
 
   private wayPay: WayPay[] = [
-    {idWayPay: 'PENDIENTE', descripcion: 'PENDIENTE'},
-    {idWayPay: 'PAGADO', descripcion: 'PAGADO'},
-    {idWayPay: 'PARCIAL', descripcion: 'PARCIAL'},
-    {idWayPay: 'VENCIDO', descripcion: 'VENCIDO'},
+    {idWayPay: 'PENDIENTE', descripcion: 'Pendiente'},
+    {idWayPay: 'PAGADO', descripcion: 'Pagado'},
+    {idWayPay: 'PARCIAL', descripcion: 'Parcial'},
+    {idWayPay: 'VENCIDO', descripcion: 'Vencido'},
   ];
 
   private date:  Date[] = [
     {idDate: 'EmissionDate', descripcion: 'Emisión'},
-    {idDate: 'DueDate', descripcion: 'Vencimiento'}
+    {idDate: 'DueDate', descripcion: 'Vencimiento'},
+    {idDate: 'PaymentDate', descripcion: 'Pago'}
   ];
 
 
@@ -76,7 +77,8 @@ getServicesActive(): Observable<any[]> {
       let data: any[] = [];
       r.forEach(s => data.push({
         id: s.id,
-        name: s.name
+        name: s.name,
+        dataType: s.dataType
       }));
       return data;
     }))

@@ -16,6 +16,32 @@ body {
 }
 
 .cuadro-form {
-    @include cuadro(460px, auto);
+    @include cuadro(510px, auto);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+
+    .form {
+      width: 415px;
+    }
+}
+
+
+.texto-editar-empresa{
+    @include font-text(32px, 500);
+    color: #0032a0;
+}
+
+:host ::ng-deep .mat-form-field .mat-select.mat-select-disabled .mat-select-arrow {
+    color: #ffffff;
+}
+
+
+:host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline {
+    background-image: linear-gradient(to right,#ffffff 0,#ffffff 33%,#ffffff 0);
+    background-size: 4px 100%;
+    background-repeat: repeat-x;
+}
+
+:host ::ng-deep .mat-select-disabled .mat-select-value {
+    @include font-text(16px !important, normal !important);
+    color: #0d131d;
 }

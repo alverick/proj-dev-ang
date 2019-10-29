@@ -3,17 +3,21 @@
     <div class="container">
         <a class="navbar-brand" href="#">
             <img style="max-width: 250px;" src="assets/images/logo.svg" alt="">
-        </a>
+        </a> 
         <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                <span class="navbar-toggler-icon"></span>
         </button>
         <div *ngIf="show()" class="collapse navbar-collapse" id="navbarResponsive">
-
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active px-1">
-                    <a class="mano nav-link" [routerLink]="['/home']">Movimientos</a>
+            <ul *ngIf="!IsHome" class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link lnk-regresar" (click)="goBack()" ><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
+              </li>
+            </ul>
+            <ul *ngIf="IsHome" class="navbar-nav ml-auto ">
+                <li class="nav-item active"  >
+                    <a class="mano nav-link mb-3" [routerLink]="['/home']">Movimientos</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" style="margin-top: -18px;">
                   <a href="#" class="nav-link dropdown-toggle no-caret" id="lnkMessages" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
                     <div *ngIf="notify.total > 0" class="badge" >
@@ -31,15 +35,17 @@
                       <div class="clear-float"></div>
                     </div>
 
-                    <perfect-scrollbar class="notifies" (psYReachEnd)="onScroll()">
+                    <perfect-scrollbar class="notifies" [config]="scrollConfig" (psYReachEnd)="onScroll()">
                       <div *ngFor="let msg of notify.messages " class="dropdown-item " (click)="$event.stopPropagation();" >
-                        <img class="item-icono" *ngIf="msg.isNew" title="{{msg.title}}" src="assets/images/badge-bg.svg" (click)="notify.changeRead(msg); $event.stopPropagation();">
-                        <div class="texto">{{msg.message}}</div>
-                        <div class="tiempo">{{getAgo(msg.create)}}</div>
+                            <div class="notiificacion"  *ngIf="msg.isNew" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); ">
+                                <img class="item-icono "  src="assets/images/badge-bg.svg" >
+                            </div>
+                            <div class="pl-2 pr-2 texto">{{msg.message}}</div>
+                            <div class="pl-2 pr-2 tiempo">{{getAgo(msg.create)}}</div>
                       </div>
 
-                      <div *ngIf="notify.messages.length == 0" >
-                         Usted tiene cero notificaciones
+                      <div class="text-notifications" *ngIf="notify.messages.length == 0" >
+                          No tienes notificaciones
                       </div>
                       <div *ngIf="notify.loadingMsg" class="loading">
                           <mat-spinner [diameter]="20" ></mat-spinner>
@@ -47,18 +53,50 @@
                     </perfect-scrollbar>
 
                     <div class="more">
-                      <div class="text" (click)="onScroll(); $event.stopPropagation();">Ver más</div>
+                      <div class="text-notifications" style="cursor: pointer;" (click)="onScroll(); $event.stopPropagation();">Ver más</div>
                     </div>
 
                   </div>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" style="margin-top: -12px;">
                   <a href="#" class="nav-link dropdown-toggle" id="lnkPerfil" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="perfil" src="assets/images/person.svg" alt="Perfil" >
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="lnkPerfil">
                     <a class="dropdown-item" [routerLink]="['/configuracionEmpresa']"> Datos de la empresa</a>
                     <a class="dropdown-item" [routerLink]="['/editarServicios']"> Servicios</a>
+                    <a class="dropdown-item" (click)="logout()" >Cerrar Sesión</a>
+                  </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<nav class="navbar navbar-expand-lg" *ngIf="menuGtp()">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img style="max-width: 250px;" src="assets/images/logo.svg" alt="">
+        </a> 
+        <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+        </button>
+        <div  class="collapse navbar-collapse" id="navbarResponsive">
+            <ul *ngIf="!IsGtp" class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link lnk-regresar" (click)="goBackGtp()" ><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
+              </li>
+            </ul>
+            <ul *ngIf="IsGtp" class="navbar-nav ml-auto ">
+                
+                
+                <li class="nav-item dropdown" style="margin-top: -12px;">
+                  <a href="#" class="nav-link dropdown-toggle" id="lnkPerfil" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="perfil" src="assets/images/person.svg" alt="Perfil" >
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="lnkPerfil">
+                     
                     <a class="dropdown-item" (click)="logout()" >Cerrar Sesión</a>
                   </div>
                 </li>

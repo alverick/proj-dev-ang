@@ -59,7 +59,6 @@ export class FormServicioComponent implements OnInit {
   monedas: MonedaModel[] = [];
   tiposMora: any[] = [];
   cuentas: any[] = [];
-
   simboloMoneda: string = 'S/';
   cobraMora: boolean = false;
   cobraMonto: boolean = true;
@@ -74,7 +73,7 @@ export class FormServicioComponent implements OnInit {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3)]),
+      nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
       codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
       nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode}),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
@@ -83,7 +82,7 @@ export class FormServicioComponent implements OnInit {
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
-      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: this.editMode }),
+      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true,}),
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
@@ -97,23 +96,18 @@ export class FormServicioComponent implements OnInit {
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
     this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
-
-
     this.changeMora(false);
     this.changeTipoMora(false);
-    /*if (this.f.periodoMora.value === 1 || this.f.periodoMora.value === 2) {
-      this.cmoraporce = true;
-   } */
-    if(this.frm.get('cobraMora').value === 'N') {
+
+    console.log('cuentas');
+    console.table(this.cuentas);
+ 
+    if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');
-    // this.frm.get('monto').setValue('');
-    // this.frm.get('porcentaje').setValue('');
-     this.cmoraporce =false;
+     this.cmoraporce = false;
     }
-    if(this.frm.get('cobraMora').value === 'S') {
+    if (this.frm.get('cobraMora').value === 'S') {
        this.cmoraporce = true;
-       // periodoMora
-     // this.frm.get('periodoMora').setValue('');
     }
     // combo para ocultar si es data parcial
     if (this.frm.get('tipoDato').value === 'P') {
@@ -121,7 +115,7 @@ export class FormServicioComponent implements OnInit {
       this.tiposPago.pop();*/
       this.Dataparcial = false;
 
-   }else{
+   } else {
      this.Dataparcial = true;
    }
 
@@ -133,10 +127,8 @@ export class FormServicioComponent implements OnInit {
       this.tiposPago.pop();*/
       this.Dataparcial = false;
       // cobraMora
-      console.log('cambia radio'); //pagaPartes
       this.frm.get('cobraMora').setValue('N');
       this.frm.get('pagoPartes').setValue('N');
-      console.log('EL RADIO BUTTON ES '+this.frm.get('cobraMora').value);
 
       this.frm.get('monto').setValue('1.00');
       this.frm.get('porcentaje').setValue('1.00');
@@ -155,6 +147,8 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
+    console.log('CODIGO DEL DEUDOR');
+    console.log(this.frm.get('codDeudor').value);
     if (this.frm.valid)
     {
       const monto  = parseFloat(this.frm.get('monto').value);
@@ -174,7 +168,7 @@ export class FormServicioComponent implements OnInit {
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonText:  'Cerrar',
+                cancelButtonText:  'CERRAR',
                 allowOutsideClick: false,
                 onOpen: drawPopup
               });
@@ -186,7 +180,7 @@ export class FormServicioComponent implements OnInit {
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonText:  'Cerrar',
+                cancelButtonText:  'CERRAR',
                 allowOutsideClick: false,
                 onOpen: drawPopup
               });
@@ -198,13 +192,14 @@ export class FormServicioComponent implements OnInit {
                   showCloseButton: true,
                   showCancelButton: true,
                   showConfirmButton: false,
-                  cancelButtonText:  'Cerrar',
+                  cancelButtonText:  'CERRAR',
                   allowOutsideClick: false,
                   onOpen: drawPopup
                 });
               } else {
 
                 let value: ServiceModel;
+                 // value.usaWebApp = true;
                 if (this.editMode) {
                   value = this._service;
                   value.idCuenta = this.frm.value.idCuenta;
@@ -215,13 +210,16 @@ export class FormServicioComponent implements OnInit {
                   value.monto = this.frm.value.monto;
                   value.porcentaje = this.frm.value.porcentaje;
                   value.pagoPartes = this.frm.value.pagoPartes;
+                   value.usaWebApp = true;
                 }
                 else {
                   value = this.frm.value;
+                   value.usaWebApp = true;
                 }
                 let cta = this.cuentas.find(c => c.id === value.idCuenta);
-                value.nroCuenta = cta.number;
+                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
                 value.simboloMoneda = this.simboloMoneda;
+                 value.usaWebApp = true;
                 this.grabar.emit(value);
               }
 
@@ -233,7 +231,7 @@ export class FormServicioComponent implements OnInit {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup
             });
@@ -247,7 +245,7 @@ export class FormServicioComponent implements OnInit {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup
 
@@ -260,7 +258,7 @@ export class FormServicioComponent implements OnInit {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup
 
@@ -273,7 +271,7 @@ export class FormServicioComponent implements OnInit {
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText:  'Cerrar',
+              cancelButtonText:  'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup
 
@@ -286,12 +284,14 @@ export class FormServicioComponent implements OnInit {
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonText:  'Cerrar',
+                cancelButtonText:  'CERRAR',
                 allowOutsideClick: false,
                 onOpen: drawPopup
                });
             } else {
               let value: ServiceModel;
+              console.log('ingresa 2');
+             // value.usaWebApp = true;
               if (this.editMode) {
                 value = this._service;
                 value.idCuenta = this.frm.value.idCuenta;
@@ -301,14 +301,15 @@ export class FormServicioComponent implements OnInit {
                 value.tipoMora = this.frm.value.tipoMora;
                 value.monto = this.frm.value.monto;
                 value.porcentaje = this.frm.value.porcentaje;
-                value.pagoPartes = this.frm.value.pagoPartes;
+                value.pagoPartes = this.frm.value.pagoPartes; 
               }
               else {
                 value = this.frm.value;
               }
               let cta = this.cuentas.find(c => c.id === value.idCuenta);
-              value.nroCuenta = cta.number;
+              value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
               value.simboloMoneda = this.simboloMoneda;
+             
               this.grabar.emit(value);
             }
           }
@@ -322,12 +323,14 @@ export class FormServicioComponent implements OnInit {
                         showCancelButton: true,
                         showConfirmButton: false,
                         cancelButtonColor: '#d33',
-                        cancelButtonText:  'Cerrar',
+                        cancelButtonText:  'CERRAR',
                         allowOutsideClick: false,
                         onOpen: drawPopup
                       });
           } else {
             let value: ServiceModel;
+            console.log('ingresa 3');
+            
             if (this.editMode) {
               value = this._service;
               value.idCuenta = this.frm.value.idCuenta;
@@ -338,13 +341,18 @@ export class FormServicioComponent implements OnInit {
               value.monto = this.frm.value.monto;
               value.porcentaje = this.frm.value.porcentaje;
               value.pagoPartes = this.frm.value.pagoPartes;
+              console.log('ingresa 3.1');
+              value.usaWebApp = true;
             }
             else {
               value = this.frm.value;
             }
             let cta = this.cuentas.find(c => c.id === value.idCuenta);
-            value.nroCuenta = cta.number;
+            value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
             value.simboloMoneda = this.simboloMoneda;
+            console.log('ingresa 3.2');
+            value.usaWebApp = true;
+
             this.grabar.emit(value);
           }
       }
@@ -358,7 +366,6 @@ export class FormServicioComponent implements OnInit {
 
   changeCuenta(val) {
     let cta = this.cuentas.find(c => c.id == val);
-    this._service.nroCuenta = cta.number;
     this.simboloMoneda = (cta.currency === '001' ? 'S/' : '$');
     this.f.moneda.setValue(cta.currency);
   }
@@ -439,6 +446,7 @@ export class FormServicioComponent implements OnInit {
 
   selectCodigo(event){
     if(event === 'Otro'){
+    //  this.f.codDeudor.reset();
       this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
     }
     else {
@@ -485,7 +493,7 @@ export class FormServicioComponent implements OnInit {
    /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
     initalValue = initalValue.replace(/\s{2,}/g, " ");
-    this.f.nombre.setValue(initalValue.replace(/[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ-]*/g, ''));
+    this.f.nombre.setValue(initalValue.replace(/[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]*/g, ''));
   }
   // ^[0-9a-zA-ZÑñ]{3,30}$
   nameSerBlur(e) {
@@ -518,4 +526,29 @@ function Minimo(min: number) {
     }
     return null;
   }
+}
+
+function Alfanumerico(c: FormControl) {
+  let regex = /[0-9a-zA-Z]-?/g;
+  if (c.value && !regex.test(c.value)) {
+    return { alfa: true };
+  } 
+  return null;
+}
+
+function Alfabetico(c: FormControl) {
+  let regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
+  let numero= /[0-9]/g
+  let raro= /[-{1,}]-?/g;
+  if (c.value && !raro.test(c.value)) { 
+    return { alfabetico: true };
+  }
+  if (c.value && !regex.test(c.value)) { 
+    return { alfabetico: true };
+  } 
+    
+ /* if(c.value && numero.test(c.value)){ 
+    return { alfabetico: true };
+  } */
+  return null;
 }

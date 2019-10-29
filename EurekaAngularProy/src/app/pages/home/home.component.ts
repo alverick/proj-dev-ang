@@ -25,6 +25,9 @@ import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { Observable } from 'rxjs';
+import { isNgTemplate } from '@angular/compiler';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -136,6 +139,17 @@ export class HomeComponent implements OnInit {
 
   showEdit: boolean = false;
 
+  currentFiltro: DebstFilter = {
+    pageNumber: 1,
+    columnName: '',
+    asc: true,
+    inputSearch: '',
+    service: '',
+    status: '',
+    dateForFilter: '',
+    dateFrom: null,
+    dateTo: null
+  };
   filtro: DebstFilter = {
     pageNumber: 1,
     columnName: '',
@@ -163,11 +177,11 @@ export class HomeComponent implements OnInit {
     public snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
-    private el: ElementRef) {
+    private gaService: GoogleAnalytics) {
 
     }
-
-    @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
+     /*
+     @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
       e.preventDefault();
     }
 
@@ -177,6 +191,18 @@ export class HomeComponent implements OnInit {
 
     @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
       e.preventDefault();
+    }
+    */
+   innerHeight = 0;
+    @HostListener('window:scroll', ['$event'])
+    onWindowScroll(e) {
+      let height = window.innerHeight;
+      if (!height)
+        height = document.documentElement.clientHeight;
+      if (height !== this.innerHeight) {
+        height -= 150;
+        $('.ps-body .ps-content').css('height', height + 'px');
+      }
     }
 
   ngOnInit() {
@@ -219,6 +245,8 @@ export class HomeComponent implements OnInit {
    //this.SeleccionarTodos();
    this.selectedAll = false;
    this.selectedUniverse = false;
+ 
+
   }
 
   statusOpt(){
@@ -254,25 +282,38 @@ orderList(index: number, asc: boolean) {
   this.orderBy = index;
   this.orderDef[index].asc = asc;
 
-  this.filtro.asc = asc;
-  this.filtro.columnName = this.orderDef[index].name;
+  this.currentFiltro.asc = asc;
+  this.currentFiltro.columnName = this.orderDef[index].name;
   this.consultaDeuda();
 }
 
   sendFiltro() {
     this.messagetablecode1 = false;
     this.messagetablecode2 = false;
-    this.filtro.pageNumber = 1;
+    //filtro
+    this.currentFiltro.inputSearch = this.filtro.inputSearch;
+    this.currentFiltro.service = this.filtro.service;
+    this.currentFiltro.status = this.filtro.status;
+    this.currentFiltro.dateForFilter = this.filtro.dateForFilter;
+    this.currentFiltro.dateFrom = this.filtro.dateFrom;
+    this.currentFiltro.dateTo = this.filtro.dateTo;
+    this.currentFiltro.pageNumber = 1;
+    //limpia anter
+    this.transactionService.clearMarksForDeletes();
     this.consultaDeuda();
-
+    // google analytics
+    this.gaService.sendEvent('Buscar', {
+      'event_category': 'Dashboard',
+      'event_label': 'buscar'
+    });
     if((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
        (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined)  &&
        (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
        (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)){
-       this.messageTable = 'Para empezar, carga las deudas de tus clientes';
+       this.messageTable = 'Para empezar, agrega la lista de las deudas';
        this.showArrow = true;
       } else{
-       this.messageTable ='No se encontro ningun registro para esta busqueda';
+       this.messageTable ='No se encontro ningún registro para esta búsqueda';
        this.showArrow = false;
 
       }
@@ -291,7 +332,7 @@ orderList(index: number, asc: boolean) {
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
-      confirmButtonText:  'Cerrar',
+      confirmButtonText:  'CANCELAR',
       onOpen: drawPopup
     });
   }
@@ -337,7 +378,7 @@ orderList(index: number, asc: boolean) {
               return false;
             } else {
               return true;
-              }
+            }
           } else {
                   if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
                     this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
@@ -397,12 +438,15 @@ orderList(index: number, asc: boolean) {
 
   consultaDeuda(cb: () => void = null) {
   // tslint:disable-next-line:prefer-const
-
+   
     if (this.validaFiltro2()){
                 this.spinner.show();
-                this.transactionService.getDeuda(this.filtro)
+                this.transactionService.getDeuda(this.currentFiltro)
                   .subscribe(debts => {
-                  this.selectedAll = false;
+                  if(this.transactionService.debtItems.data.length > 0){
+                    this.selectedAll = this.transactionService.isMarkedAll();
+                  }
+
                   this.selectedUniverse = false;
                   this.spinner.hide();
                   if (cb) {
@@ -410,7 +454,7 @@ orderList(index: number, asc: boolean) {
                   }
                 }, err => { this.spinner.hide(); });
           }
-     this.messageTable = ' Para empezar, carga las deudas de tus clientes';
+     this.messageTable = 'Para empezar, agrega la lista de las deudas';
      this.showArrow = true;
 
 }
@@ -480,6 +524,9 @@ orderList(index: number, asc: boolean) {
     item.newAmount = item.amount.toFixed(2);
     item.newFirstName = item.firstName;
     item.newLastName = item.lastName;
+
+    console.log('fechas');
+
   }
 
   selectEstPag(event, item: Debts){
@@ -610,8 +657,8 @@ orderList(index: number, asc: boolean) {
       text: '¡No podrás revertir esto!',
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'Si, Actualizar!',
-      cancelButtonText: 'Cerrar',
+      confirmButtonText: 'SI, ACTUALIZAR!',
+      cancelButtonText: 'CERRAR',
       onOpen: drawPopup
     }).then((result) => {
 
@@ -632,6 +679,10 @@ orderList(index: number, asc: boolean) {
         this.transactionService.editDeuda(item.id, debts).subscribe(
           debtsUpdate => {
             if (debtsUpdate.success) {
+              this.gaService.sendEvent('EditarDeuda', {
+                'event_category': 'Dashboard',
+                'event_label': 'editar_deuda'
+              });
               Swal.fire({
                 titleText: 'Editado!',
                 text: 'Su registro ha sido editado',
@@ -694,7 +745,7 @@ orderList(index: number, asc: boolean) {
           );
         }
     }
-  })
+  });
 
 }
 
@@ -703,41 +754,49 @@ orderList(index: number, asc: boolean) {
 
   BotonCancela(item: Debts) {
    //  item.edit = false;
-   item.editInput =false;
+   item.editInput = false;
    item.editButton = false;
    item.editPending = false;
+   console.log('limpia errores ');
+   delete item.errores.dueDate;
+   delete item.errores.emissionDate;
+   delete item.errores.lastName;
+   delete item.errores.amount;
+   delete item.errores.firstName;
+
   }
 
   changePage(nro: number) {
     this.selectedAll = false;
     this.selectedUniverse = false;
-    this.filtro.pageNumber = nro;
+    this.currentFiltro.pageNumber = nro;
     this.numeroPagina = nro;
     this.consultaDeuda();
   }
 
 
   EliminarSeleccionados() {
-    const itemsParaEliminar = [];
-    this.transactionService.debtItems.data.forEach(c => {
-      if (c.selected) {
-        itemsParaEliminar.push(c.id);
-      }
-    });
-
-    let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : itemsParaEliminar.length;
+    let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : this.transactionService.countMarksForDelete();
     if (totalForDelete === 0 ) {
-      this.mensaje( 'error', 'Error al Eliminar','¡Seleccione las filas a eliminar por favor!');
+      this.mensaje( 'error', 'Error al Eliminar', '¡Seleccione las filas a eliminar por favor!');
       return;
+    }
+    let mensaje='';
+    let mensaje_final ='';
+    if (totalForDelete === 1 ) {
+      mensaje = `Esta acción va a eliminar ${totalForDelete} deuda`;
+    }
+    if (totalForDelete > 1 ) {
+      mensaje = `Esta acción va a eliminar ${totalForDelete} deudas`;
     }
 
     Swal.fire({
       title: '¿Seguro que quieres continuar?',
-      text: `Esta acción va a eliminar ${totalForDelete} deudas`,
+      text: mensaje,
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'CONFIRMAR',
+      cancelButtonText: 'CANCELAR',
       onOpen: drawPopup
     }).then((result) => {
       if (result.value) {
@@ -745,21 +804,46 @@ orderList(index: number, asc: boolean) {
 
         let observable = this.selectedUniverse ?
           this.transactionService.deleteFiltered(this.filtro):
-          this.transactionService.deleteAll(itemsParaEliminar);
+          this.transactionService.deleteAll();
         observable.subscribe(() => {
+          this.gaService.sendEvent('EliminarDeudas', {
+            'event_category': 'Dashboard',
+            'event_label': 'eliminar_deudas'
+          });
             this.consultaDeuda(() =>
               {
+                if (totalForDelete === 1 ) {
+                  mensaje_final = 'Se han eliminado ' + totalForDelete + ' registro';
+                }
+                if (totalForDelete > 1 ) {
+                  mensaje_final = 'Se han eliminado ' + totalForDelete + ' registros';
+                }
+
                 Swal.fire({
                   title: 'Eliminado!',
-                  text: 'Se han eliminado ' + totalForDelete + ' registros',
+                  text: mensaje_final,
                   showCloseButton: true,
                   showCancelButton: false,
+                  confirmButtonText: 'CERRAR',
                   onOpen: drawPopup
                 })
+
+                
               });
+              this.selectedAll = false;
+              this.selectedUniverse = false;
+
+              this.transactionService.debtItems.data = [];
+              this.transactionService.itemsForDelete = [];
+             
+              console.log('arra limpio');
+              
+              console.log(totalForDelete)
           }, err => { this.spinner.hide(); });
       }
     });
+    console.log('arra limpio');
+    
   }
 
 
@@ -770,8 +854,8 @@ orderList(index: number, asc: boolean) {
     title: "¿Esta Seguro de Eliminar el Registro? ",
     showCancelButton: true,
     showCloseButton: true,
-    confirmButtonText: 'Si, Borralo',
-    cancelButtonText: 'Cerrar',
+    confirmButtonText: 'SI, BORRALO',
+    cancelButtonText: 'CERRAR',
     onOpen: drawPopup
   }).then((result) => {
     if (result.value) {
@@ -790,9 +874,14 @@ orderList(index: number, asc: boolean) {
 }
 
   SeleccionarTodos() {
-    this.transactionService.debtItems.data.forEach(itm => itm.selected = this.selectedAll);
-    if (!this.selectedAll) {
+
+    if (this.selectedAll) {
+      this.transactionService.debtItems.data.forEach(itm => this.transactionService.deleteDebt(itm.id, itm.selected = true));
+      
+    }
+    else {
       this.selectedUniverse = false;
+      this.transactionService.debtItems.data.forEach(itm => this.transactionService.deleteDebt(itm.id, itm.selected = false));
     }
   }
 
@@ -800,22 +889,43 @@ orderList(index: number, asc: boolean) {
 MostrarListaSelect() {
   this.OcultaListaExcel = true;
 }
+Ocultar() {
+  if (this.OcultaListaExcel === true) {
+   //  this.OcultaListaExcel = false;
+  }
 
-  openDialog(service: string) {
+}
+
+  openDialog(service: any) {
     this.OcultaListaExcel = false;
     this.cargaExcel = false;
     this.excelService.service = service;
-    const dialogRef = this.dialog.open(DialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-
+    const dialogRef = this.dialog.open(DialogComponent,{
+      width: '899px', 
+     // height: '377px', 
+     // disableClose: true
     });
+    dialogRef.afterClosed().subscribe((result: Observable<any>) => {
+     
+      if (result) {
+        result.subscribe(() => {
+          this.consultaDeuda();
+        });
+      }
+    });
+    console.log('SERVICIOS');
+   console.table(this.typeList);
   }
 
   DescargarReporte() {
     if( this.transactionService.debtItems.data.length > 0){
       if (this.validaFiltro()) {
-        this.transactionService.report(this.filtro)
+        this.transactionService.report(this.currentFiltro)
         .subscribe((r: Blob) => {
+          this.gaService.sendEvent('DescargaReporte', {
+            'event_category': 'Dashboard',
+            'event_label': 'descargar_reporte'
+          });
           saveAs(r, "reporte.xlsx");
         });
       }
@@ -852,7 +962,13 @@ MostrarListaSelect() {
       this.errores['dateFrom'] = 'No es una fecha válida';
     }
     else {
-      delete this.errores.dateFrom;
+      let yearFrom = new Date(e).getFullYear();
+      if (yearFrom <  2000 || yearFrom >  2050 ) {
+        this.errores['dateFrom'] = 'Fecha Inválida';
+      }
+      else {
+        delete this.errores.dateFrom;
+      }
     }
   }
 
@@ -860,11 +976,17 @@ MostrarListaSelect() {
     if (e === null) {
       this.errores['dateTo'] = 'No es una fecha válida';
     }
-    else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
-      this.errores['dateTo'] = "No puede ser menor a la emisión"
-    }
     else {
-      delete this.errores.dateTo;
+      let yearTo = new Date(e).getFullYear();
+      if (yearTo <  2000 || yearTo >  2050 ) {
+        this.errores['dateTo'] = 'Fecha Inválida';
+      }
+      else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
+        this.errores['dateTo'] = "No puede ser menor a la emisión"
+      }
+      else {
+        delete this.errores.dateTo;
+      }
     }
   }
 
@@ -884,22 +1006,34 @@ MostrarListaSelect() {
 
   validaEmissionDate(items: Debts) {
     if (!items.newEmissionDate) {
-      items.errores.emissionDate = 'Ingrese una fecha válida';
+      items.errores.emissionDate = 'Fecha Inválida';
     }
     else {
-      delete items.errores.emissionDate;
+      let emidate = new Date(items.newEmissionDate).getFullYear();
+      if (emidate <  2000 || emidate >  2050 ) {
+        items.errores.emissionDate = 'Fecha Inválida';
+      }
+      else {
+        delete items.errores.emissionDate;
+      }
     }
   }
 
   validaDueDate(items: Debts) {
     if (!items.newDueDate) {
-      items.errores.dueDate = 'Ingrese una fecha válida';
-    }
-    else if (items.newEmissionDate && items.newDueDate < items.newEmissionDate) {
-      items.errores.dueDate = 'No debe ser menor a la fecha de emisión';
+      items.errores.dueDate = 'Fecha Inválida';
     }
     else {
-      delete items.errores.dueDate;
+      let dueyear = new Date(items.newDueDate).getFullYear();
+      if (dueyear <  2000 || dueyear >  2050 ) {
+        items.errores.dueDate = 'Fecha Inválida';
+      }
+      else if (items.newEmissionDate && items.newDueDate < items.newEmissionDate) {
+        items.errores.dueDate = 'No debe ser menor a la fecha de emisión';
+      }
+      else {
+        delete items.errores.dueDate;
+      }
     }
   }
 
@@ -953,6 +1087,11 @@ MostrarListaSelect() {
       else {
         delete items.errores.amount;
       }
+  }
+
+  selectForDelete(itm: Debts) {
+    this.transactionService.deleteDebt(itm.id, itm.selected);
+    this.selectedAll = this.transactionService.isMarkedAll();
   }
 }
 

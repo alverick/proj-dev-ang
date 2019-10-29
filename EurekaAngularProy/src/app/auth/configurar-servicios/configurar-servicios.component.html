@@ -12,7 +12,7 @@
                                     <div class=" pl-4">
                                         <div class="pl-1 row pb-0">
                                             <div class="col-sm-9 pt-3">
-                                                <div class="font-black">{{svc.nombre}}</div>
+                                                <div class="font-text-services">{{svc.nombre}}</div>
                                                 <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de revisión</mat-error>
                                             </div>
                                             <div class="col-sm-1 mb-0">
@@ -32,20 +32,20 @@
                                                 <td class="font-black-servicios-des-list">{{ getCanales(svc) }}</td>
                                             </tr>
                                             <tr>
-                                                <th style="width:150px;" class="font-black-servicios-list">Código Deudor</th>
+                                                <th style="width:150px;" class="font-black-servicios-list">Código deudor</th>
                                                 <td class="font-black-servicios-des-list">{{ getCodDebtor(svc) }}</td>
                                             </tr>
-                                            <tr *ngIf="svc.tipoDato === 'C'" >
+                                            <tr *ngIf="svc.tipoDato === 'C'">
                                                 <th style="width:150px;" class="font-black-servicios-list">Mora</th>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }} </td>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'P'">{{ svc.porcentaje }} % </td>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'N'">NO </td>
                                             </tr>
-                                       <!--<tr>
+                                            <!--<tr>
                                                  <th style="width:150px;" class="font-black-servicios-list">Paga por Partes</th>
                                                  <td class="font-black-servicios-des-list" *ngIf="svc.pagoPartes === 'N'">NO</td>
                                                  <td class="font-black-servicios-des-list" *ngIf="svc.pagoPartes === 'S'">SI</td>
-                                            </tr> -->    
+                                            </tr> -->
                                             <tr>
                                                 <th style="width:150px;" class="font-black-servicios-list">Cuenta</th>
                                                 <td class="font-black-servicios-des-list">{{ svc.nroCuenta }}</td>
@@ -57,10 +57,10 @@
                         </div>
                         <div class="btn-col-1">
                             <button type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
-                                      <span class="fa fa-plus-circle"></span>   Agregar otro servicio
+                                      <span ><img *ngIf="!Formulario" src="assets/images/plus.svg"><img *ngIf="Formulario" src="assets/images/plus-gray.svg"></span>   Agregar otro servicio
                                     </button>
-                            <button type="button" [disabled]="Formulario" (click)="EnviarServicios()" class="mt-3 btn-eureca-green text-white" [class.btn-disabled]="Formulario">
-                                     Finalizar
+                            <button type="button" [disabled]="Formulario" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulario">
+                                     FINALIZAR
                                     </button>
                         </div>
                     </div>
@@ -72,8 +72,15 @@
                 <br>
                 <div class="d-flex justify-content-end">
                     <div class="formulario p-5 bg-white ">
-                        <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
-                            <img src="assets/images/cerrar.svg"> <br> Cerrar
+                        <div class="form-row">
+                            <div class="form-group col-md-10">
+                                <div class="font-black">{{titulo}}</div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
+                                    <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                </div>
+                            </div>
                         </div>
                         <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
                     </div>

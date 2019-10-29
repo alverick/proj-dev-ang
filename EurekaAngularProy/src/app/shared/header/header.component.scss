@@ -84,6 +84,13 @@ img.bell {
 }
 
 .navbar-nav {
+  .lnk-regresar {
+    @include font-text(18px, 500);
+    color: #9ea1a5 !important;
+    margin-bottom: auto;
+    cursor: pointer;
+  }
+
   .dropdown-menu {
     @include border-radius(4px !important);
     margin: 0 !important;
@@ -130,6 +137,7 @@ img.bell {
 
       .dropdown-item {
         padding: 8px;
+        white-space: normal;
         cursor: default;
 
         .item-icono {
@@ -163,7 +171,7 @@ img.bell {
     }
 
     .more {
-      @include font-text(12px, 500);
+      @include font-text(14px, normal);
       padding: 6px 12px;
       color: $textblack;
       text-align: center;
@@ -176,3 +184,25 @@ img.bell {
 }
 
 
+
+.text-notifications{
+  @include font-text(12px, 500);
+  color: $textblack;
+  text-align: center;
+}
+
+
+:host ::ng-deep   .dropdown-item:active {
+  color: #05be50!important;
+  text-decoration: none;
+  background-color: #ffffff;
+}
+
+
+.notiificacion{
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  display: block;
+  float: left;
+}

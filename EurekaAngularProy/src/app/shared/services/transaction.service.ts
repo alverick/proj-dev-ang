@@ -21,8 +21,9 @@ export class TransactionService {
 
     constructor(public http: HttpClient, private storage: StorageService)  { }
 
-    public pageMessage: string = "Mostrando 0 elementos";
+    public pageMessage: string = "Mostrando 0 de 0 elementos";
     public debtItems: DebtsPagedList = { count:0, data: [] };
+    public itemsForDelete: number[] = [];
 
     getDateFormat(date: Date): string {
       if (date) {
@@ -37,15 +38,17 @@ export class TransactionService {
       return '';
     }
 
+    //opcional
+    
     getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
-
+      // ultimo filtro aplicado
       if (filtro === null) {
         filtro = this.lastFilter;
       }
       else {
+        // el nuevo filtro
         this.lastFilter = filtro;
-      }
-
+      } 
       var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
       var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
       //fechas
@@ -71,20 +74,21 @@ export class TransactionService {
               d.editButton = false;
               d.newStatus = '1';
               d.errores = {};
+              d.selected = (this.itemsForDelete.indexOf(d.id) >= 0);
             });
             this.debtItems = r;
             return r;
           }))
           .pipe(map(r => {
             if (r.count == 0) {
-              this.pageMessage = "Mostrando 0 elementos";
+              this.pageMessage = "Mostrando 0 de 0 elementos";
             }
             else {
               let beg = ((filtro.pageNumber - 1) * 50) + 1;
               let end = filtro.pageNumber * 50;
               if (end > r.count)
                 end = r.count;
-              this.pageMessage = `Mostrando de ${beg} - ${end} de ${r.count} elementos`;
+              this.pageMessage = `Mostrando ${beg} - ${end} de ${r.count} elementos`;
             }
             return r;
           }))
@@ -101,12 +105,12 @@ export class TransactionService {
       return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));
   }
 
-  deleteAll(ids: number[]): Observable<any> {
+  deleteAll(): Observable<any> {
     const url = `${this.URI_API}/debt/deleteAll?_=`+ new Date().getTime();
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
-    return this.http.put<Debts>(url, { ids: ids }, opts).pipe(catchError(error => throwError(error)));
+    return this.http.put<Debts>(url, { ids: this.itemsForDelete }, opts).pipe(catchError(error => throwError(error)));
   }
 
   deleteFiltered(filtro: DebstFilter = null) {
@@ -208,5 +212,34 @@ export class TransactionService {
     let url = `${this.URI_API}/payment/${paymentId}/ofDebt/${debtId}?_=${new Date().getTime()}`;
     return this.http.delete(url)
       .pipe(catchError(err => throwError(err)));
+  }
+
+  deleteDebt(id: number, forDelete: boolean) {
+    let index = this.itemsForDelete.indexOf(id);
+    if (forDelete) {
+      if (index < 0)
+        this.itemsForDelete.push(id);
+    }
+    else {
+      if (index >= 0)
+        this.itemsForDelete.splice(index, 1);
+    }
+  }
+
+  clearMarksForDeletes() {
+    this.itemsForDelete = [];
+  }
+
+  countMarksForDelete() {
+    return this.itemsForDelete.length;
+  }
+
+  isMarkedAll() {
+    let markAll = true;
+    this.debtItems.data.forEach(v => {
+      let idx = this.itemsForDelete.indexOf(v.id);
+      markAll = markAll && (idx >= 0);
+    });
+    return markAll;
   }
 }

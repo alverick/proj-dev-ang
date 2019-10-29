@@ -2,13 +2,18 @@
   <table>
     <thead>
       <tr>
+        <th class="c0"></th>
         <th class="c1">Monto<br/>Pagado</th>
         <th class="c2">Fecha<br/>de Pago</th>
         <th class="c3">Medio</th>
-        <th class="c4">Nro. de<br/>Operacion</th>
+        <th class="c4">Nro. de<br/>Operación</th>
         <th>&nbsp;</th>
+        <th class="c6"> </th>
       </tr>
     </thead>
+  </table>
+   <div style="overflow-y: scroll; height:160px; min-height:60px">
+  <table> 
     <tbody>
       <tr *ngIf="cargando">
         <td colspan="5" style="text-align: center">
@@ -16,13 +21,14 @@
         </td>
       </tr>
       <tr *ngFor="let itm of items">
+        <td class="c0"></td>
         <td class="c1">
           <span *ngIf="!itm.editing">{{itm.currency}} {{itm.amount | number:'1.2-2'}}</span>
           <div *ngIf="itm.editing">
             <mat-form-field class="full-width inline-input">
               <input type="text" matInput appOnlyNumbersForm [(ngModel)]="itm.newAmount" maxlength="12"
                 minlength="4" (blur)="AmountBlur(itm)" (ngModelChange)="itm.errores.amount = null" />
-              <span matPrefix>{{itm.currency}}&nbsp;</span>
+              <span class="moneda" matPrefix>{{itm.currency}}&nbsp;</span>
               <div class="msg-error" *ngIf="itm.errores.amount">{{itm.errores.amount}}</div>
             </mat-form-field>
           </div>
@@ -40,15 +46,16 @@
           </div>
         </td>
         <td class="c3">
-          <span *ngIf="!itm.editing">{{itm.channel}}</span>
+          <span class="select-color" *ngIf="!itm.editing">{{itm.channel}}</span>
           <div *ngIf="itm.editing">
-              <mat-form-field class="full-width inline-input">
-                <mat-select [(ngModel)]="itm.newChannel">
-                  <mat-option value="Efectivo">Efectivo</mat-option>
-                  <mat-option value="POS">POS</mat-option>
-                  <mat-option value="BCP">BCP</mat-option>
-                  <mat-option value="BBVA">BBVA</mat-option>
-                  <mat-option value="Otro banco">Otro banco</mat-option>
+              <mat-form-field class="select-color full-width inline-input ">
+                <mat-select class="select-color" [(ngModel)]="itm.newChannel" disableOptionCentering
+                  panelClass="pts16">
+                  <mat-option class="select-color" value="Efectivo">Efectivo</mat-option>
+                  <mat-option class="select-color" value="POS">POS</mat-option>
+                  <mat-option class="select-color" value="BCP">BCP</mat-option>
+                  <mat-option class="select-color" value="BBVA">BBVA</mat-option>
+                  <mat-option class="select-color" value="Otro banco">Otro banco</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -70,15 +77,18 @@
             </div>
           </div>
         </td>
+        <td></td>
       </tr>
-      <tr *ngIf="status !== 'PAGADO'">
-        <td class="action" colspan="5">
-          <button type="button" class="btn-outline-green" (click)="addItm()">
-            <img src="assets/images/plus_circle.svg" alt="agregar">
-            Agregar
-          </button>
-        </td>
-      </tr>
+      
     </tbody>
   </table>
+</div>
+<tr *ngIf="status !== 'PAGADO'">
+  <td class="action" style="padding-left: 70px;" colspan="5">
+    <button type="button" class=" btn-outline-green " (click)="addItm()">
+      <img src="assets/images/plus_circle.svg" alt="agregar">
+       <small> Agregar un pago </small>
+    </button>
+  </td>
+</tr>
 </div>

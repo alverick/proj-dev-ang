@@ -3,7 +3,8 @@ import Swal from "sweetalert2";
 import { drawPopup } from "src/app/shared/services/popups";
 import { TransactionService } from "src/app/shared/services/transaction.service";
 import { PagoService } from "src/app/shared/services/pago.service";
-
+import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
+declare var $: any;
 @Component({
   selector: 'app-pagos',
   templateUrl: './pagos.component.html',
@@ -16,7 +17,7 @@ export class PagosComponent implements OnInit {
   ];
   cargando = false;
 
-  @Input() debtId: number = 1288900;
+  @Input() debtId: number;
   @Input() status: string;
   @Input() currency: string;
   @Output() statusChange = new EventEmitter<string>();
@@ -25,7 +26,7 @@ export class PagosComponent implements OnInit {
   private removeOutside: () => void = null;
 
   constructor(private transaction: TransactionService, private pagoService: PagoService,
-    private _elementRef: ElementRef, private renderer: Renderer2) {
+    private _elementRef: ElementRef, private renderer: Renderer2, private gaService: GoogleAnalytics) {
     pagoService.closeAll.subscribe(() => {
       this.showed = false;
       this.showChange.emit(this.showed);
@@ -35,8 +36,13 @@ export class PagosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   
   }
 
+  ngAfterContentInit() {
+    $('.cdk-overlay-dark-backdrop').css('background-color', '#f3f3f3');
+  }
+  
   private loadData() {
     this.items = [];
     this.cargando = true;
@@ -64,19 +70,32 @@ export class PagosComponent implements OnInit {
 
   private outsideClick(target: HTMLElement) {
     if (!(this._elementRef.nativeElement as HTMLElement).contains(target)) {
-      const cdkContainer = document.getElementsByClassName('cdk-overlay-container');
-      if (cdkContainer.length === 0) {
+      let existsInCdk = (): boolean => {
+        const cdkContainer = document.getElementsByClassName('cdk-overlay-container');
+        if (cdkContainer.length > 0) {
+          for(let i=0; i < cdkContainer.length; i++) {
+            return cdkContainer[i].contains(target);
+          }
+        }
+        return false;
+      }
+      let existsInSwal = (): boolean => {
         const swalContainer = document.getElementsByClassName('swal2-container');
-        if (swalContainer.length === 0) {
-          this.pagoService.closeAll.emit();
+        if (swalContainer.length > 0) {
+          for(let i=0; i < swalContainer.length; i++) {
+            return swalContainer[i].contains(target);
+          }
         }
-        else if (!swalContainer[0].contains(target)) {
-          this.pagoService.closeAll.emit();
-        }
+        return false;
       }
-      else if (!cdkContainer[0].contains(target)) {
-        this.pagoService.closeAll.emit();
+
+      if (existsInCdk()) {
+        return;
       }
+      if (existsInSwal()) {
+        return;
+      }
+      this.pagoService.closeAll.emit();
     }
   }
 
@@ -93,7 +112,7 @@ export class PagosComponent implements OnInit {
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
-      confirmButtonText:  'Cerrar',
+      confirmButtonText:  'CERRAR',
       onOpen: drawPopup
     });
   }
@@ -141,8 +160,8 @@ export class PagosComponent implements OnInit {
       text: '¡No podrás revertir esto!',
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'Si, Actualizar!',
-      cancelButtonText: 'Cerrar',
+      confirmButtonText: 'SI, ACTUALIZAR!',
+      cancelButtonText: 'CERRAR',
       onOpen: drawPopup
     }).then((result) => {
       if (result.value) {
@@ -156,6 +175,18 @@ export class PagosComponent implements OnInit {
           this.transaction.addPayment(this.debtId, payment);
         response.subscribe(r => {
           if (r.success) {
+            if (itm.id) {
+              this.gaService.sendEvent('EditaPago', {
+                'event_category': 'Dashboard',
+                'event_label': 'edita_pago'
+              });
+            }
+            else {
+              this.gaService.sendEvent('AgregaPago', {
+                'event_category': 'Dashboard',
+                'event_label': 'agrega_pago'
+              });
+            }
             this.statusChange.emit(r.status);
             this.loadData();
             Swal.fire({
@@ -197,7 +228,7 @@ export class PagosComponent implements OnInit {
 
   addItm() {
     //if (this.items[this.items.length-1] && this.items[this.items.length-1].id) {
-      this.items.push({ currency: this.currency, newAmount: 0, newDate: new Date(), newChannel: 'Efectivo', canEdit: true, editing: true, errores: {} });
+      this.items.push({ currency: this.currency, newAmount: '' , newDate: new Date(), newChannel: 'Efectivo', canEdit: true, editing: true, errores: {} });
     //}
   }
 
@@ -206,14 +237,18 @@ export class PagosComponent implements OnInit {
       title: "¿Esta Seguro de Eliminar el Pago? ",
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'Si, Borralo',
-      cancelButtonText: 'Cerrar',
+      confirmButtonText: 'SI, BORRALO',
+      cancelButtonText: 'CERRAR',
       onOpen: drawPopup
     }).then((result) => {
       if (result.value) {
         this.transaction.deletePayment(this.debtId, itm.id)
           .subscribe(r => {
             if (r.success) {
+              this.gaService.sendEvent('EliminarPagos', {
+                'event_category': 'Dashboard',
+                'event_label': 'eliminar_pagos'
+              });
               this.statusChange.emit(r.status);
               this.loadData();
             }

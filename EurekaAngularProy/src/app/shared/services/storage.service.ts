@@ -28,6 +28,7 @@ export class StorageService {
       this.localStorageService.setItem('tk', session.token);
       this.localStorageService.setItem('exp', session.expire);
       this.localStorageService.setItem('rfs', session.refresh);
+      this.localStorageService.setItem('prfl', session.prfl);
     }
   }
 

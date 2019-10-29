@@ -1,3 +1,4 @@
+import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -31,7 +32,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatFormFieldModule } from '@angular/material';
+import { MatFormFieldModule, MatRadioModule } from '@angular/material';
 import { AfiliacionService } from './shared/services/afiliacion.service';
 import { NumberDirectiveHome } from './pages/home/number.directive';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -51,12 +52,17 @@ import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.di
 import { NotifyService } from './shared/services/notify.service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
+import { EmpresaGTPComponent } from './pages/empresa-gtp/empresa-gtp.component';
+import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
+    GtpGrillaComponent,
+    AprobacionesComponent,
     PagosComponent,
     AnalisisComponent,
     SubirPlantillaComponent,
@@ -73,8 +79,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     DecimalesDirective,
     EmailDirective,
     OnlyNumbersDirective,
-
-
+    EmpresaGTPComponent,
+    ServicesGTPComponent,
     ],
   imports: [
     BrowserModule,
@@ -109,7 +115,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MatProgressSpinnerModule,
     FontAwesomeModule,
     PerfectScrollbarModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    MatRadioModule
   ],
   providers: [
     ExcelService,

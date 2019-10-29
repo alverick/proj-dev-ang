@@ -43,8 +43,9 @@ body {
         margin-right: 2px;
     }
     .mat-form-field-label {
-        @include font-text(14px);
-        color: $textblack !important;
+        @include font-text(16px);
+        font-weight: normal;
+        color: #0d131d !important;
         top: 21px;
     }
     .mat-form-field-ripple {
@@ -68,7 +69,7 @@ body {
         background-color: $green !important;
     }
     .mat-select-arrow {
-      color: $textgreen !important;
+        color: $textgreen !important;
     }
 }
 
@@ -110,17 +111,67 @@ body {
     background-color: $green;
 }
 
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .btn-eureca-green {
-    @include font-text(16px !important, 500 !important);
+    @include font-text(14px !important, 500 !important);
     color: #ffffff !important;
     background-color: $green !important;
     @include border-radius(4px !important);
     border: solid 1px $green !important;
     &:hover {
-        background-color: $green !important;
+      //  background-color: $greenclaro !important;
+      background-color: $green-oscuro!important;
     }
-    &:focus {
-        background-color: $greenclaro !important;
+    &:active {
+        background-color: $green !important;
+        background-image:none !important;
+    }
+    &.btn-disabled {
+        background-color: #9b9b9b !important;
+        border: solid 1px #9b9b9b !important;
+    }
+}
+.btn-outline-green {
+    
+    @include font-text(16px !important, 500 !important);
+    @include border-radius(4px !important);
+    background-color: $blanco !important;
+    border: solid 1px $blanco !important;
+    color: $green !important;
+    &:hover {
+      //  background-color: $greenclaro !important;
+      background-color: #E5E5E5!important;
+    }
+    &:active {
+        background-color: $blanco !important;
+        background-image:none !important;
+    }
+    &.btn-disabled {
+        color: #9b9b9b !important;
+        background-color: $blanco !important;
+    }
+}
+
+.btn-eureca-green-alert {
+    height: 48px;
+    width: 207px;
+    @include font-text(14px !important, normal !important);
+    color: #ffffff !important;
+     background-color: $green !important;
+     
+    @include border-radius(4px !important);
+    border: solid 1px $green !important;
+    &:hover {
+      //  background-color: $greenclaro !important;
+      background-color: $green-oscuro!important;
+    }
+    &:active {
+        background-color: $green !important;
+        background-image:none !important;
     }
     &.btn-disabled {
         background-color: #9b9b9b !important;
@@ -128,20 +179,33 @@ body {
     }
 }
 
-.btn-outline-green {
-    @include font-text(16px !important, 500 !important);
+
+
+.btn-outline-green-alert {
+
+    height: 48px;
+    width: 207px;
+    @include font-text(14px !important, normal !important);
     @include border-radius(4px !important);
     background-color: $blanco !important;
     border: solid 1px $blanco !important;
     color: $green !important;
+    &:hover {
+       
+        background-color: #E5E5E5!important;
+      }
+      &:active {
+          background-color:$blanco!important;
+          background-image:none !important;
+      }
     &.btn-disabled {
         color: #9b9b9b !important;
     }
 }
 
 .messsage-error {
-  @include font-text(12px, 500);
-    color: $rojo;
+    @include font-text(12px, 500);
+    color: #ea0044 !important;
 }
 
 .w-35 {
@@ -161,21 +225,104 @@ body {
 
 .texto-azul {
     @include font-text(32px, $weight: 500);
-    color: #2f4a9f;
+    color: #0032a0;
 }
 
 .font-black {
     @include font-text(18px, $weight: 600);
-    color: $negro;
+    color: #0d131d;
 }
 
 .swal2-content {
     @include font-text(16px, $weight: 500);
-    color: $negro;
+    color: #0d131d !important;
     text-align: center;
 }
 
 .input-text {
-  @include font-text(14px !important, normal !important);
-    color: #333333 !important;
+    @include font-text(16px !important, normal !important);
+    color: #0d131d !important;
 }
+
+.mat-calendar-body-selected {
+    background-color: $green;
+    color: #fff;
+}
+
+/*
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 1px;
+}
+*/
+
+.swal2-styled {
+    border-style: none;
+}
+
+
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .pts16 {
+    margin-top: 16px !important;
+  }
+
+  .pts26 {
+    margin-top: 26px !important;
+  }
+
+  .pts30 {
+    margin-top: 30px !important;
+  }
+
+mat-icon.svg-custom {
+  svg {
+    width: 24px;
+    height: 24px;
+
+    path {
+      fill: inherit;
+    }
+  }
+} 
+.mat-checkbox-frame {
+    border-color: #9EA1A5;
+}
+ 
+.mat-radio-outer-circle {
+    border-color: #9EA1A5;
+}
+
+.mat-select-value {
+    color: #0d131d !important;
+    }
+    .mat-select-placeholder {
+    color:#0d131d !important;
+}
+  .mat-input-element {
+    caret-color: #0d131d !important;
+}
+
+ .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $green;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: $green;
+}
+
+ .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  font-size: 10px !important;
+  color: #0d131d !important;
+}
+.w-70{
+    width: 70%;
+}
+.w-15{
+    width: 15%;
+}
+
+

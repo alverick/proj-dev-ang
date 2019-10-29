@@ -2,11 +2,13 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { RespuestaLogin } from "../models/respuestaLogin.model";
-import { map } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { map, catchError } from "rxjs/operators";
+import { Observable, throwError } from "rxjs";
 import { StorageService } from "./storage.service";
 import { Router } from "@angular/router";
 import * as moment from 'moment';
+import { GoogleAnalytics } from "./googleAnalytics.service";
+import { NotifyService } from "./notify.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,33 +18,48 @@ import * as moment from 'moment';
 export class LoginService {
 
 constructor(public http: HttpClient, private storage: StorageService,
-  private router: Router){ }
+  private router: Router, private notify: NotifyService,
+  private gaService: GoogleAnalytics){ }
 
 private URI_API: string = environment.END_POINT;
 public errores: number;
 
 private callingRefresh = false;
 
-login(ruc: string, psw: string): Observable<RespuestaLogin> { 
+login(ruc: string, psw: string): Observable<RespuestaLogin> {
+  this.notify.clear();
   const url = `${this.URI_API}/login?_=` + new Date().getTime();
-  const data = `username=${ruc}&password=${psw}`; 
+  const data = `username=${ruc}&password=${psw}`;
   const opts = {
     headers: { "Content-Type": "application/x-www-form-urlencoded",
     'Cache-Control': 'no-cache',
   }
   };
+ 
   return this.http.post(url, data, opts)
-    .pipe(map((r: RespuestaLogin) => { 
+    .pipe(map((r: RespuestaLogin) => {
+      
       if (r.estado) {
+        console.table(r);
         this.storage.setCurrentSession({
           user: { ruc: ruc },
           isAuthenticate: true,
           token: r.paramStr,
           expire: r.exp,
-          refresh: r.rfs
+          refresh: r.rfs,
+          prfl: r.prfl
         });
+        this.gaService.sendEvent('login', { method: 'OAUTH' });
+          this.notify.iniciar();
+      }
+      else {
+        this.gaService.sendEvent('exception', { description: 'No Login', fatal: false });
       }
       return r;
+    }))
+    .pipe(catchError(err => {
+      this.gaService.sendException(err)
+      return throwError(err);
     }));
  }
 
@@ -73,7 +90,8 @@ refresh(): void {
               isAuthenticate: true,
               token: r.paramStr,
               expire: r.exp,
-              refresh: r.rfs
+              refresh: r.rfs,
+              prfl: r.prfl
             });
           this.callingRefresh = false;
           return r;

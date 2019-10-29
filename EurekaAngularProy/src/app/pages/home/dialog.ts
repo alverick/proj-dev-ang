@@ -1,4 +1,4 @@
-import { OnInit, Component } from "@angular/core";
+import { OnInit, Component, AfterContentInit } from "@angular/core";
 import { UploadProgressComponent } from "./upload-progress";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MatSnackBar, MatDialogRef } from "@angular/material";
@@ -6,12 +6,14 @@ import { ExcelService } from "src/app/shared/services/excel.service";
 import Swal from "sweetalert2";
 import * as saveAs from 'file-saver';
 import { drawPopup } from "src/app/shared/services/popups";
+import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
+import { Observable } from "rxjs";
 
 
 /*////////////////////////////////////////////////////////
 ///////////////// D I A L O G //////////////////////////
 ///////////////////////////////////////////////////////// */
-
+declare var $: any;
 
 @Component({
     selector: 'dialog-data-example-dialog',
@@ -20,7 +22,7 @@ import { drawPopup } from "src/app/shared/services/popups";
   })
 
   // tslint:disable-next-line:component-class-suffix
-  export class DialogComponent implements OnInit {
+  export class DialogComponent implements OnInit, AfterContentInit {
     public inputXlsForm: FormGroup;
     public xlsValid: boolean;
     public codigoCliente: String = 'Codigo de Cliente';
@@ -32,8 +34,8 @@ import { drawPopup } from "src/app/shared/services/popups";
     constructor(public  snackBar: MatSnackBar,
                 public excelService: ExcelService,
                 public  formBuilder: FormBuilder,
-                public  dialogRef: MatDialogRef<DialogComponent>
-
+                public  dialogRef: MatDialogRef<DialogComponent>,
+                private gaService: GoogleAnalytics
               ) {
                }
 
@@ -48,6 +50,11 @@ import { drawPopup } from "src/app/shared/services/popups";
             this.excelService.errores = [];
           }
         });
+
+    }
+
+    ngAfterContentInit() {
+      $('.cdk-overlay-dark-backdrop').css('background-color', '#f3f3f3');
     }
 
     mostrarInput() {
@@ -118,14 +125,31 @@ import { drawPopup } from "src/app/shared/services/popups";
           this.excelService.errores = value.errors;
         }
         else if (value.status === 'COMPLETED') {
+          this.gaService.sendEvent('CargarExcel', {
+            'event_category': 'CargaExcel',
+            'event_label': 'cargar_excel'
+          });
           this.excelService.statusUpload = false;
           this.excelService.errores = [];
-          this.dialogRef.close();
-          Swal.fire({
-            text: `Se cargaron ${value.rowsUploaded} registros`,
-            showCloseButton: true,
-            onOpen: drawPopup
+          var obsClose = new Observable(observer => {
+            let msg = '';
+            if(this.excelService.service.dataType === 'C'){
+              // msg = `Se cargaron ${value.rowsUploaded} registros`;
+              msg =  `¡Listo! Se agregaron nuevas deudas `
+            }
+            else {
+              msg = `¡Listo! Se agregaron nuevos clientes`
+            }
+            Swal.fire({
+              title:msg,
+              text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
+              showCloseButton: true,
+              onOpen: drawPopup,
+              confirmButtonText:  'CERRAR',
+              onAfterClose: () => { observer.next(); observer.complete(); }
+            });
           });
+          this.dialogRef.close(obsClose);
         }
         else {
           this.progress.mode = 'determinate';
@@ -155,6 +179,10 @@ import { drawPopup } from "src/app/shared/services/popups";
     descargarPlantilla() {
       this.excelService.GetTemplate()
         .subscribe((r: Blob) => {
+          this.gaService.sendEvent('DescargaPlantilla', {
+            'event_category': 'CargaExcel',
+            'event_label': 'descarga_plantilla'
+          });
           saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
         });
     }

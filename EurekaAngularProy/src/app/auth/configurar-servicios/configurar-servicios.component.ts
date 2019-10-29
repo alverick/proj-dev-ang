@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
 import { drawPopup } from 'src/app/shared/services/popups';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -20,11 +21,12 @@ export class ConfigurarServiciosComponent implements OnInit {
   Formulario: boolean = false;
   buttonServicios ='';
   private inEdit: boolean = false;
-
+  private inGTP: boolean = false;
+  public titulo: string;
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
   constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router, private gaService: GoogleAnalytics) { }
 
     @HostListener('window:beforeunload', ['$event'])
     public closeWindow($event: any) {
@@ -36,19 +38,78 @@ export class ConfigurarServiciosComponent implements OnInit {
   ngOnInit() {
     this.afiliacionService.services = []
     this.route.data.subscribe(d => {
-      this.inEdit = d.isEdit;
+      this.inEdit = d.isEdit; 
+      this.inGTP = d.isgtp;
+      
       if (d.isEdit) {
+        window['_url_loop_'] = 'editarServicios';
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
+        this.titulo = 'Edita el servicio'; 
+        console.log('entra a editar servicio')
       } else {
+        console.log('entra a crea servicio')
         // siempre entra ahí
         window['_url_loop_'] = 'configurarServicios';
         history.pushState(null, null, 'configurarServicios');
         this.afiliacionService.Clear();
         this.buttonServicios = 'Guardar';
         this.editService(this.afiliacionService.services[0], 0);
+        this.titulo = 'Agrega un nuevo servicio';
       }
+      if(d.isgtp == true){
+        console.log('entra a gtp')
+        window['_url_loop_'] = 'editarSvcGTP';
+        history.pushState(null, null, 'editarSvcGTP'); 
+        this.afiliacionService.services = [];
+        this.afiliacionService.services = [
+          {
+            nombre: 'Mensualidadxd', 
+            codDeudor: 'DNI',
+            tipoDato: 'C',
+            tipoPago: 'C',
+            idCuenta: 2,
+            nroCuenta: '*********7653 (dolares)',
+            moneda: '001',
+            simboloMoneda: 'S/',
+            usaWebApp: true,
+            usaAgente: false,
+            usaTienda: true,
+            cobraMora: 'S',
+            periodoMora: '2',
+            tipoMora: 'M',
+            monto:12.2,
+            pagoPartes: 'S',  
+            NewNameCod: true,
+            NewName: false
+          },
+          {
+            nombre: 'Mensualidad2', 
+            codDeudor: 'DNI',
+            tipoDato: 'P',
+            tipoPago: 'P',
+            idCuenta: 2,
+            nroCuenta: '*********7653 (dolares)',
+            moneda: '001',
+            simboloMoneda: 'S/',
+            usaWebApp: true,
+            usaAgente: false,
+            usaTienda: true,
+            cobraMora: 'S',
+            periodoMora: '2',
+            tipoMora: 'M',
+            monto:12.2,
+            pagoPartes: 'S', 
+            NewNameCod: null,
+            NewName: null
+           }
+        ]; 
+      }
+      
     });
+
+    
+
   }
 
   public indiceActual: number = -1;
@@ -62,8 +123,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         showConfirmButton: true,
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: 'Descartar',
-        cancelButtonText: 'Regresar',
+        confirmButtonText: 'DESCARTAR',
+        cancelButtonText: 'REGRESAR',
         onOpen: drawPopup
       }).then(r => {
         if (r.value) {
@@ -102,6 +163,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   sendAfterSave: boolean = false;
 
   MostarFormulario() {
+    console.table(this.afiliacionService.services);
     if(this.afiliacionService.services.length >= 99){
       Swal.fire({
         text: 'Usted solo puede tener 99 servicios como máximo',
@@ -126,8 +188,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         showConfirmButton: true,
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: 'Guardar',
-        cancelButtonText: 'Deshacer cambios',
+        confirmButtonText: 'GUARDAR',
+        cancelButtonText: 'DESHACER CAMBIOS',
         onOpen: drawPopup
       }).then(r => {
         this.addNewAfterSave = true;
@@ -165,8 +227,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         showCancelButton: true,
         showConfirmButton: true,
         cancelButtonColor: '#d33',
-        cancelButtonText:  'Deshacer cambios',
-        confirmButtonText: 'Guardar',
+        cancelButtonText:  'DESHACER CAMBIOS',
+        confirmButtonText: 'GUARDAR',
         onOpen: drawPopup
       }).then(r => {
         this.sendAfterSave = true;
@@ -192,6 +254,10 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
       return;
     }
+    this.gaService.sendEvent('EnviarServicios', {
+      'event_category': GoogleAnalytics.Afiliacion,
+      'event_label': 'enviar_servicios'
+    });
     this.afiliacionService.GrabarServicios()
       .subscribe(r => {
         if (this.inEdit) {
@@ -241,30 +307,34 @@ export class ConfigurarServiciosComponent implements OnInit {
         showCloseButton: true,
         showConfirmButton: false,
         showCancelButton: true,
-        cancelButtonText: 'Cerrar'
+        cancelButtonText: 'CERRAR'
       });*/
       return;
     }
     if (this.inEdit && this.afiliacionService.services[index].id) {
       this.afiliacionService.CanDeleteService(index).subscribe(r => {
-        let title = 'Eliminación total el servicio';
+        let title = 'Eliminación total del servicio';
         let msg = 'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
         if (r.hasPayed) {
-          title = 'Eliminacion Parcial del Servicio';
-          msg = 'Ya existe un historial de pagos realizados con este servicio, solo se eliminarán las deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
+          title = 'Eliminación Parcial del Servicio';
+          msg = 'Ya existe un historial de pagos realizados con este servicio, sólo se eliminarán las deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
         }
         Swal.fire({
           text: msg,
           title: title,
           showCancelButton: true,
           showConfirmButton: true,
-          confirmButtonText: 'Confirmar',
-          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'CONFIRMAR',
+          cancelButtonText: 'CANCELAR',
           onOpen: drawPopup
         }).then(r => {
           if (r.value) {
             this.afiliacionService.SendDelService(index)
               .subscribe(r => {
+                this.gaService.sendEvent('ServicioEliminado', {
+                  'event_category': GoogleAnalytics.Afiliacion,
+                  'event_label': 'servicio_eliminado'
+                });
                 Swal.fire({
                   text: 'Se ha eliminado el Servicio',
                   title: title,
@@ -281,8 +351,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         title: 'Eliminación total el servicio',
         showCancelButton: true,
         showConfirmButton: true,
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'CONFIRMAR',
+        cancelButtonText: 'CANCELAR',
         allowOutsideClick: false,
         onOpen: drawPopup
       }).then(r => {
@@ -302,7 +372,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         showCloseButton: true,
         showConfirmButton: false,
         showCancelButton: true,
-        cancelButtonText: 'Cerrar'
+        cancelButtonText: 'CERRAR'
       });*/
       return;
     }
@@ -314,7 +384,6 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   onGrabar(svc: ServiceModel) {
-    console.log(svc);
     if (this.indiceActual >= 0) {
       if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({
@@ -325,6 +394,12 @@ export class ConfigurarServiciosComponent implements OnInit {
       }
       this.afiliacionService.services[this.indiceActual] = svc;
       this.indiceActual = -1;
+      if (!svc.id) {
+        this.gaService.sendEvent('ServicioAgregado', {
+          'event_category': GoogleAnalytics.Afiliacion,
+          'event_label': 'servicio_agregado'
+        });
+      }
     }
     else {
       let nro = 1;
@@ -354,7 +429,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         showCloseButton: true,
         showCancelButton: false,
         showConfirmButton: true,
-        confirmButtonText: "Cerrar",
+        confirmButtonText: "CERRAR",
         onOpen: drawPopup
       });
     }
