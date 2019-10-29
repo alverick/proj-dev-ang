@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
  import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import Swal from 'sweetalert2';
-import { drawPopup } from 'src/app/shared/services/popups'; 
+import { drawPopup } from 'src/app/shared/services/popups';
 import { GtpEmpresa, GtpServcegtp, GtpPost } from 'src/app/shared/models/gtp-post';
 
 @Component({
@@ -20,12 +20,12 @@ export class AprobacionesComponent implements OnInit {
   public llave:number;
   public Empresa:EnterprisesGtp ;
    public Empgtp: DataEnterpriseGTP = null;
-  public Enterprise : DataEnterpriseGTP; 
+  public Enterprise : DataEnterpriseGTP;
   public emp :GtpEmpresa
   public scv:GtpServcegtp [] = [];
   public gtppost:GtpPost ;
   public Service : DataServiceGTP;
-  public Servgtp : DataServiceGTP; 
+  public Servgtp : DataServiceGTP;
 
   constructor(public gtpService:GtpService, private rutaActiva: ActivatedRoute,public router: Router) { }
   public OcultarDatosActualEmpresa: boolean = true
@@ -34,7 +34,7 @@ export class AprobacionesComponent implements OnInit {
     if (  this.Formulario && this.ServiciosFormulario ) {
       $event.returnValue = 'Se van a perder los cambios.';
     }
-  } 
+  }
   public indiceActual: number = -1;
 
   ngOnInit() {
@@ -43,37 +43,35 @@ export class AprobacionesComponent implements OnInit {
     window['_url_loop_'] = 'AprobacionGtp/'+this.llave;
     history.pushState(null, null, 'AprobacionGtp/'+this.llave);
     // mantiene la pagina con el scroll en la parte superior
-    window.scrollTo(0, 0); 
- 
-    
-  
- 
+    window.scrollTo(0, 0);
+
+
+
+
    this.gtpService.GetServicesGtp(this.llave);
    this.getInfoEmpresa();
   }
 
- 
+
   getInfoEmpresa() {
     this.gtpService.GetEnterpriseGtp(this.llave)
-      .subscribe( dataEnterprise => { 
-        this.Enterprise = dataEnterprise 
-        }); 
-  } 
- 
- 
+      .subscribe( dataEnterprise => {
+        this.Enterprise = dataEnterprise
+        });
+  }
+
 
   onGrabar(emp: DataEnterpriseGTP) {
     this.Enterprise = emp;
     this.Formulario = false;
-    
-    
+
   }
 
-  onGrabarSer(etp:DataServiceGTP){
+  onGrabarSer(etp: DataServiceGTP) {
     this.Service = etp;
-    this.ServiciosFormulario = false; 
+    this.ServiciosFormulario = false;
     this.gtpService.Service[this.indiceActual] = etp
-    this.indiceActual = -1; 
+    this.indiceActual = -1;
   }
 
   VerCamposEnterprise(etp:DataEnterpriseGTP){
@@ -82,8 +80,8 @@ export class AprobacionesComponent implements OnInit {
       'Actualmente se esta aprobando un Servicio' );
       return;
     }
-    this.Formulario = true; 
-    this.Empgtp = etp; 
+    this.Formulario = true;
+    this.Empgtp = etp;
   }
 
 
@@ -94,9 +92,9 @@ export class AprobacionesComponent implements OnInit {
       return;
     }
     this.ServiciosFormulario = true;
-    this.Servgtp = etp; 
+    this.Servgtp = etp;
     this.indiceActual = index;
-  
+
   }
 
   EnviarAprobados(){
@@ -105,27 +103,27 @@ export class AprobacionesComponent implements OnInit {
     this.emp = null;
     let svcSinCta = this.gtpService.services.filter((v) => v.newName === null).length;
     let sercant=0;
-    let cant = (svcSinCta * 2); 
+    let cant = (svcSinCta * 2);
     console.log('APROBADO?' +this.Enterprise.NombreApproved);
-    
+
     if(this.Enterprise.NombreApproved === null ){
-      sercant =  1; 
+      sercant =  1;
     }
-      this.emp = {ClientId: this.llave, NombreAprobado:this.Enterprise.NombreApproved}; 
+      this.emp = {ClientId: this.llave, NombreAprobado:this.Enterprise.NombreApproved};
 
       this.gtpService.services.forEach(s =>{
         this.scv.push({
           ServiceId: s.id,
           NombreAprobado: s.acceptednewName,
           NombreCodAprobado: s.acceptednewNameCode
-        }); 
+        });
       });
 
       this.gtppost = {
         EnterproseObj:  this.emp,
         ListServiceObj: this.scv,
       }
- 
+
     let total = cant + sercant;
     if(total == 0){
       Swal.fire({
@@ -136,9 +134,9 @@ export class AprobacionesComponent implements OnInit {
         confirmButtonText: 'Si, Terminar',
         cancelButtonText:'No, Cancelar',
         onOpen: drawPopup
-  
-      }).then((result) => { 
-        if (result.value) {  
+
+      }).then((result) => {
+        if (result.value) {
             this.gtpService.Registrar({ rqst: this.gtppost})
             .subscribe(d =>{
               if(d===true){
@@ -161,20 +159,20 @@ export class AprobacionesComponent implements OnInit {
         confirmButtonText: 'Si, Terminar',
         cancelButtonText:'No, Cancelar',
         onOpen: drawPopup
-  
-      }).then((result) => { 
-        if (result.value) { 
+
+      }).then((result) => {
+        if (result.value) {
             this.gtpService.Registrar({ gtppost: this.gtppost})
             .subscribe(d =>{
               if(d===true){
                 this.router.navigate(['/gtp']);
               }else{
-                
+
               }
             });
         }
       });
-    } 
+    }
   }
 
 
@@ -191,13 +189,10 @@ OcultarFormulario(requireConfirm: boolean) {
       onOpen: drawPopup
     }).then(r => {
       if (r.value) {
-        console.log('descartar');
-      
-        this.Formulario = false ;  
-        console.log(this.Formulario);
+        this.Formulario = false ;
       }
     });
-  } 
+  }
 }
 
 OcultarFormularioSer(requireConfirm: boolean) {
@@ -214,16 +209,15 @@ OcultarFormularioSer(requireConfirm: boolean) {
     }).then(r => {
       if (r.value) {
         console.log('descartar');
-      
-        this.ServiciosFormulario = false ; 
         this.indiceActual = -1;
-        console.log(this.ServiciosFormulario);
+        this.ServiciosFormulario = false ;
+
       }
     });
-  } 
+  }
 }
 
- 
+
 
   mensaje( titulo: string, text: string) {
     Swal.fire({
@@ -241,6 +235,6 @@ OcultarFormularioSer(requireConfirm: boolean) {
     });
   }
 
- 
-  
+
+
 }
