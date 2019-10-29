@@ -55,10 +55,8 @@ export class AprobacionesComponent implements OnInit {
  
   getInfoEmpresa() {
     this.gtpService.GetEnterpriseGtp(this.llave)
-      .subscribe( dataEnterprise => {
-        console.table(dataEnterprise); 
-        this.Enterprise = dataEnterprise
-        console.table(this.Enterprise);
+      .subscribe( dataEnterprise => { 
+        this.Enterprise = dataEnterprise 
         }); 
   } 
  
@@ -73,11 +71,9 @@ export class AprobacionesComponent implements OnInit {
 
   onGrabarSer(etp:DataServiceGTP){
     this.Service = etp;
-    this.ServiciosFormulario = false;
-    console.log(this.Service);
+    this.ServiciosFormulario = false; 
     this.gtpService.Service[this.indiceActual] = etp
-    this.indiceActual = -1;
-    console.log(etp);
+    this.indiceActual = -1; 
   }
 
   VerCamposEnterprise(etp:DataEnterpriseGTP){
@@ -86,9 +82,7 @@ export class AprobacionesComponent implements OnInit {
       'Actualmente se esta aprobando un Servicio' );
       return;
     }
-    this.Formulario = true;
-    console.log('nombre');
-    console.log(etp.name);
+    this.Formulario = true; 
     this.Empgtp = etp; 
   }
 
@@ -100,9 +94,7 @@ export class AprobacionesComponent implements OnInit {
       return;
     }
     this.ServiciosFormulario = true;
-    this.Servgtp = etp;
-    console.log('nombreServicio');
-    console.log(etp.name);
+    this.Servgtp = etp; 
     this.indiceActual = index;
   
   }
