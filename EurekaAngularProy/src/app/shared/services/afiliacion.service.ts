@@ -21,6 +21,8 @@ export class AfiliacionService {
 
   public services: ServiceModel[] = [];
 
+
+
   public Clear() {
     this.Guardado = false;
     this.services.push({
@@ -38,7 +40,7 @@ export class AfiliacionService {
       cobraMora: 'N',
       periodoMora: '1',
       tipoMora: 'M',
-      pagoPartes: 'N'
+      pagoPartes: 'N', 
     });
   }
 
@@ -251,6 +253,10 @@ export class AfiliacionService {
         console.log(servicios);
       }); 
   }
+
+
+
+
 
   public GrabarServicios(): Observable<any> {
    

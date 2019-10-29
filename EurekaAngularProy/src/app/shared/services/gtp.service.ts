@@ -24,6 +24,7 @@ export class GtpService {
   public pageMessage: string = "Mostrando 0 de 0 elementos";
   constructor(private http: HttpClient, private storage: StorageService) { }
   public services: DataServiceGTP[] = [];
+  public Service : DataServiceGTP;
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
   public emp :GtpEmpresa;
 
@@ -32,9 +33,9 @@ export class GtpService {
     {idState: 'Resuelto ', descripcion:'resuelto '},
     {idState: 'Devuelto', descripcion:'devuelto'},
   ];
-   
+  /* 
    public Service: DataServiceGTP[] = [
- {
+  {
     nombre: 'Mensualidad', 
     codDeudor: 'DNI',
     tipoDato: 'C',
@@ -96,7 +97,7 @@ export class GtpService {
     NewName: null
    }
   ]
-
+*/
   getStates(): Observable<StatesGtp[]>{
     return of(this.States);
   } 
@@ -146,7 +147,7 @@ export class GtpService {
    }
  
    GetEnterpriseGtp(id:any):Observable<DataEnterpriseGTP>{ 
-      const url = `${environment.END_POINT}/company/GTP/client?ClientId=${id}&_=`+ new Date().getTime();
+      const url = `${environment.END_POINT}/company/GTP/client/${id}`;
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
       }; 
@@ -159,7 +160,7 @@ export class GtpService {
   } 
   
    GetServicesGtp (id:any){ 
-    const url = `${environment.END_POINT}/services?ClienteId=${id}&_=`+ new Date().getTime();
+    const url = `${environment.END_POINT}/company/GTP/services/${id}/${true}`;
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     }; 
@@ -168,31 +169,31 @@ export class GtpService {
       d.forEach(s => {
         servicios.push({
           id: s.id,
-          nombre: s.name,
-          rubro: s.entry,
-          codDeudor: s.debtorCode,
-          tipoDato: s.dataType,
-          tipoPago: s.paymentType,
-          idCuenta: s.idAccount,
-          nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
-          moneda: s.currency,
-          simboloMoneda: s.currencySymbol,
+          name: s.name, 
+          debtorCode: s.debtorCode,
+          dataType: s.dataType,
+          paymentType: s.paymentType,
+          idAccount: s.idAccount,
+          accountNumber: s.accountNumber, 
+          currency: s.currency,
           usaWebApp: s.useAppWeb,
           usaAgente: s.useAgent,
           usaTienda: s.useStore,
-          cobraMora: s.chargeInterest,
-          periodoMora: s.chargeType.toString(),
-          tipoMora: s.interestType,
-          monto: s.amount,
-          porcentaje: s.percentage,
+          partialPayment: s.partialPayment,
+          chargeInterest: s.chargeInterest,
+          chargeType: s.chargeType.toString(),
+          interestType: s.interestType,
+          amount: s.amount,
+          porcentage: s.percentage,
+          currencySymbol: s.currencySymbol,
           inReview: s.inReview,
-          pagoPartes: s.partialPayment,
-          Status: s.status  ,
-          NewNameCod: s.NewNameCod,
-          NewName: s.NewName
+          newNameCode: s.newNameCode,
+          newName: s.newName,
+          status: s.status  
         });
       });
-      this.services = servicios;
+       this.services = servicios;
+      console.table( this.services);
     });
    }  
 

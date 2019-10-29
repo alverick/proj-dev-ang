@@ -32,7 +32,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="font-black-servicios-des-list">{{Enterprise.uniqueCodeIBK}} </td>
-                                                    <td class="font-black-servicios-des-list">{{Enterprise.ruc}} </td>
+                                                    <td class="font-black-servicios-des-list">{{Enterprise.ruc}} </td> 
                                                 </tr>
                                             </table>
                                         </div>
@@ -51,13 +51,13 @@
 
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
-                                                    <tr>
-                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.status == 'nueva empresa'"><span class="badge badge-primary" >Nueva Empresa</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.status == 'modificacion'"><span class="badge badge-primary" >Modificacion Empresa</span> </td>
-                                                    </tr>
+                                                    <tr>  
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.name == ''  "><span class="badge badge-primary" >Nueva Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.name !== Enterprise.newName"><span class="badge badge-primary" >Modificacion Empresa</span> </td>
+                                                     </tr>
                                                     <tr>
                                                         <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == null ">por Revisar</td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == true || Enterprise.NombreApproved == false ">Revisado</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == true || Enterprise.NombreApproved == false ">Revisado</td>   
                                                         <td><button type="button" (click)="VerCamposEnterprise(Enterprise)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr>
                                                     <tr>
@@ -66,28 +66,29 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="card-aprobaciones mb-2"   *ngFor="let svc of gtpService.Service; let i = index" [class.seleccionado]="indiceActual === i">
+                                        <div class="card-aprobaciones mb-2"   *ngFor="let svc of gtpService.services; let i = index" [class.seleccionado]="indiceActual === i">
                                             <div class=" pl-4">
                                                 <div class="pl-1 row pb-0">
                                                       <div class="col-sm-12 pt-3">
-                                                        <div class="font-text-services">{{svc.nombre}}</div>
+                                                        <div class="font-text-services">{{svc.name}}</div>
                                                       </div>
 
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
                                                     <tr>
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.Status == 'nuevo Servicio'"><span class="badge badge-primary" >Nuevo Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.Status == 'edicion de Servicio'"><span class="badge badge-primary" >edicion de Servicio</span> </td>
+                                                        
+                                                        <td class="font-black-servicios-des-list" *ngIf="svc.status == 'nuevo Servicio'"><span class="badge badge-primary" >Nuevo Servicio</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="svc.status == 'edicion de Servicio'"><span class="badge badge-primary" >edicion de Servicio</span> </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.NewName == null && svc.NewNameCod == null  ">por Revisar</td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.NewName == true || svc.NewName == false ) && (svc.NewNameCod == true || svc.NewNameCod == false )">Revisado</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="svc.newName == null && svc.newNameCode == null  ">por Revisar</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.newName == true || svc.newName == false ) && (svc.newNameCode == true || svc.newNameCode == false )">Revisado</td>
                                                         <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.NewName == false && svc.NewNameCod == true )">1 Error encontrado</td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.NewName == true && svc.NewNameCod == false )">1 Error encontrado</td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.NewName == false && svc.NewNameCod == false )">2 Error encontrado</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.newName == false && svc.newNameCode == true )">1 Error encontrado</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.newName == true && svc.newNameCode == false )">1 Error encontrado</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.newName == false && svc.newNameCode == false )">2 Error encontrado</td>
                                                     </tr>
                                                 </table>
                                             </div>

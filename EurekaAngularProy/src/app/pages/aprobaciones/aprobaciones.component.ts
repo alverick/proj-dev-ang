@@ -31,7 +31,7 @@ export class AprobacionesComponent implements OnInit {
   public OcultarDatosActualEmpresa: boolean = true
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
-    if (  this.Formulario ) {
+    if (  this.Formulario && this.ServiciosFormulario ) {
       $event.returnValue = 'Se van a perder los cambios.';
     }
   } 
@@ -46,43 +46,22 @@ export class AprobacionesComponent implements OnInit {
     window.scrollTo(0, 0); 
  
     
-   this.Enterprise  = {
-    ruc:12345678912,
-    name:'nombre actual',
-    entry: '04', 
-    email: 'mnievafra@gmail.com',
-    movilNumber: 123456 , 
-    newName:'Nuevo Nombre', 
-    status: 'nueva empresa', 
-    uniqueCodeIBK: '1321321', 
-    requestDate:new Date(Date.now()),
-    NombreApproved: null
-   }
-    
-   this.Service = {
-    nombre: 'Mensualidad', 
-    codDeudor: 'DNI',
-    tipoDato: 'C',
-    tipoPago: 'C',
-    idCuenta: 0,
-    nroCuenta: '',
-    moneda: '001',
-    simboloMoneda: 'S/',
-    usaWebApp: true,
-    usaAgente: false,
-    usaTienda: true,
-    cobraMora: 'S',
-    periodoMora: '2',
-    tipoMora: 'M',
-    monto:12.2,
-    pagoPartes: 'S',
-    Status:'nuevo Servicio',
-    NewNameCod: null,
-    NewName: null
-   } 
-   
+  
+ 
+   this.gtpService.GetServicesGtp(this.llave);
+   this.getInfoEmpresa();
   }
 
+ 
+  getInfoEmpresa() {
+    this.gtpService.GetEnterpriseGtp(this.llave)
+      .subscribe( dataEnterprise => {
+        console.table(dataEnterprise); 
+        this.Enterprise = dataEnterprise
+        console.table(this.Enterprise);
+        }); 
+  } 
+ 
  
 
   onGrabar(emp: DataEnterpriseGTP) {
@@ -107,6 +86,8 @@ export class AprobacionesComponent implements OnInit {
       return;
     }
     this.Formulario = true;
+    console.log('nombre');
+    console.log(etp.name);
     this.Empgtp = etp; 
   }
 
@@ -119,6 +100,8 @@ export class AprobacionesComponent implements OnInit {
     }
     this.ServiciosFormulario = true;
     this.Servgtp = etp;
+    console.log('nombreServicio');
+    console.log(etp.name);
     this.indiceActual = index;
   
   }
@@ -127,7 +110,7 @@ export class AprobacionesComponent implements OnInit {
     this.gtppost = null;
     this.scv =[] ;
     this.emp = null;
-    let svcSinCta = this.gtpService.Service.filter((v) => v.NewName === null).length;
+    let svcSinCta = this.gtpService.services.filter((v) => v.newName === null).length;
     let sercant=0;
     let cant = (svcSinCta * 2); 
     console.log('APROBADO?' +this.Enterprise.NombreApproved);
@@ -137,17 +120,17 @@ export class AprobacionesComponent implements OnInit {
     }
       this.emp = {ClientId: this.llave, NombreAprobado:this.Enterprise.NombreApproved}; 
 
-      this.gtpService.Service.forEach(s =>{
+      this.gtpService.services.forEach(s =>{
         this.scv.push({
           ServiceId: s.id,
-          NewName: s.NewName,
-          NewNameCod: s.NewNameCod
+          NombreAprobado: s.newName,
+          NombreCodAprobado: s.newNameCode
         }); 
       });
 
       this.gtppost = {
-        empresa:  this.emp,
-        servicio: this.scv,
+        EnterproseObj:  this.emp,
+        ListServiceObj: this.scv,
       }
       console.log('post');
       console.log(this.gtppost);
@@ -187,19 +170,6 @@ export class AprobacionesComponent implements OnInit {
     } 
   }
 
- /*
-  getInfoEmpresa() {
-    this.gtpService.GetEnterpriseGtp(this.llave)
-      .subscribe( dataEnterprise => {
-        console.table(dataEnterprise); 
-        this.Enterprise = dataEnterprise
-        console.table(this.Enterprise);
-        });
-
-  }
- 
-
-*/
 
 OcultarFormulario(requireConfirm: boolean) {
   if (requireConfirm) {

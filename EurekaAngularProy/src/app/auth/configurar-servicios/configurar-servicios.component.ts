@@ -21,6 +21,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   Formulario: boolean = false;
   buttonServicios ='';
   private inEdit: boolean = false;
+  private inGTP: boolean = false;
   public titulo: string;
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
@@ -38,17 +39,16 @@ export class ConfigurarServiciosComponent implements OnInit {
     this.afiliacionService.services = []
     this.route.data.subscribe(d => {
       this.inEdit = d.isEdit; 
-      if(d.isgtp){
-        window['_url_loop_'] = 'editarSvcGTP';
-        history.pushState(null, null, 'editarSvcGTP');
-        this.titulo = 'Edita el Servicio';
-      }
+      this.inGTP = d.isgtp;
+      
       if (d.isEdit) {
         window['_url_loop_'] = 'editarServicios';
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
         this.titulo = 'Edita el servicio'; 
+        console.log('entra a editar servicio')
       } else {
+        console.log('entra a crea servicio')
         // siempre entra ahí
         window['_url_loop_'] = 'configurarServicios';
         history.pushState(null, null, 'configurarServicios');
@@ -56,6 +56,54 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.buttonServicios = 'Guardar';
         this.editService(this.afiliacionService.services[0], 0);
         this.titulo = 'Agrega un nuevo servicio';
+      }
+      if(d.isgtp == true){
+        console.log('entra a gtp')
+        window['_url_loop_'] = 'editarSvcGTP';
+        history.pushState(null, null, 'editarSvcGTP'); 
+        this.afiliacionService.services = [];
+        this.afiliacionService.services = [
+          {
+            nombre: 'Mensualidadxd', 
+            codDeudor: 'DNI',
+            tipoDato: 'C',
+            tipoPago: 'C',
+            idCuenta: 2,
+            nroCuenta: '*********7653 (dolares)',
+            moneda: '001',
+            simboloMoneda: 'S/',
+            usaWebApp: true,
+            usaAgente: false,
+            usaTienda: true,
+            cobraMora: 'S',
+            periodoMora: '2',
+            tipoMora: 'M',
+            monto:12.2,
+            pagoPartes: 'S',  
+            NewNameCod: true,
+            NewName: false
+          },
+          {
+            nombre: 'Mensualidad2', 
+            codDeudor: 'DNI',
+            tipoDato: 'P',
+            tipoPago: 'P',
+            idCuenta: 2,
+            nroCuenta: '*********7653 (dolares)',
+            moneda: '001',
+            simboloMoneda: 'S/',
+            usaWebApp: true,
+            usaAgente: false,
+            usaTienda: true,
+            cobraMora: 'S',
+            periodoMora: '2',
+            tipoMora: 'M',
+            monto:12.2,
+            pagoPartes: 'S', 
+            NewNameCod: null,
+            NewName: null
+           }
+        ]; 
       }
       
     });

@@ -44,7 +44,7 @@ ruc:12345678912,
 
     this.formGroup = this.formBuilder.group({
       ruc: new FormControl({ value: this._enterprise.ruc, disabled: true }),
-      newName: new FormControl({ value: this._enterprise.newName, disabled: true }), 
+      newName: new FormControl({ value: this._enterprise.name, disabled: true }), 
       NewNameApproved:  [(this._enterprise.NombreApproved == true? 'S':'N'), Validators.required],
       entry: new FormControl({ value: this._enterprise.entry, disabled: true }),
       email: new FormControl({ value: this._enterprise.email, disabled: true }),

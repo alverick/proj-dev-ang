@@ -1,6 +1,6 @@
 export interface GtpPost {
-    empresa: GtpEmpresa;
-    servicio: GtpServcegtp[]; 
+    EnterproseObj: GtpEmpresa;
+    ListServiceObj: GtpServcegtp[]; 
 }
 
 
@@ -10,6 +10,6 @@ export interface GtpEmpresa {
 }
 export interface GtpServcegtp {
     ServiceId:number;
-    NewNameCod:boolean;
-    NewName:boolean;
+    NombreAprobado:boolean;
+    NombreCodAprobado:boolean;
 }

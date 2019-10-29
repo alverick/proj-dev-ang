@@ -49,7 +49,7 @@ export class CrearContrasenaComponent implements OnInit {
       this.inEdit = d.isEdit;
 
       this.empresa  = {
-        ruc:12345678912,
+        ruc:20000000018,
         name:'nombre actual',
         entry: '04',
         email: 'mnievafra@gmail.com',

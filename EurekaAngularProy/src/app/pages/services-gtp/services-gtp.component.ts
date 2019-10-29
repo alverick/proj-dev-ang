@@ -36,27 +36,27 @@ export class ServicesGTPComponent implements OnInit {
 
   frm: FormGroup;
   ngOnInit() {
-    var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
-    var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
+    var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
+    var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.nombre, disabled: true }, [Validators.required, Validators.minLength(3),Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: this._service.codDeudor, disabled: true }, [Validators.required]),
-      nameCod: new FormControl({ value: this._service.nameCod, disabled: true}),
-      tipoDato: new FormControl({ value: this._service.tipoDato, disabled: true }, Validators.required),
-      tipoPago: new FormControl({ value: this._service.tipoPago, disabled: true }, Validators.required),
-      idCuenta:new FormControl({ value: this._service.idCuenta, disabled: true }, Validators.required),
-      moneda: [this._service.moneda, Validators.required],
+      nombre: new FormControl({ value: this._service.name, disabled: true }, [Validators.required, Validators.minLength(3),Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+      codDeudor: new FormControl({ value: this._service.debtorCode, disabled: true }, [Validators.required]),
+      nameCod: new FormControl({ value: this._service.debtorCode, disabled: true}),
+      tipoDato: new FormControl({ value: this._service.dataType, disabled: true }, Validators.required),
+      tipoPago: new FormControl({ value: this._service.paymentType, disabled: true }, Validators.required),
+      idCuenta:new FormControl({ value: this._service.idAccount, disabled: true }, Validators.required),
+      moneda: [this._service.currency, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: true }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: true }),
       usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true,}),
-      cobraMora: new FormControl({ value: this._service.cobraMora, disabled: true }),
-      periodoMora: new FormControl({ value: this._service.periodoMora, disabled: true }, [Validators.required]),
-      tipoMora: ({ value: this._service.tipoMora, disabled: true }) ,
+      cobraMora: new FormControl({ value: this._service.chargeInterest, disabled: true }),
+      periodoMora: new FormControl({ value: this._service.chargeType, disabled: true }, [Validators.required]),
+      tipoMora: ({ value: this._service.interestType, disabled: true }) ,
       monto: new FormControl({ value: montod, disabled: true }),
       porcentaje: new FormControl({ value: porcentajed, disabled: true }),
-      pagoPartes: new FormControl({ value: this._service.pagoPartes, disabled: true }),
-      NewNameCod:  [(this._service.NewNameCod == true? 'S':'N'), Validators.required],
-      NewName:  [(this._service.NewName == true? 'S':'N'), Validators.required],
+      pagoPartes: new FormControl({ value: this._service.partialPayment, disabled: true }),
+      NewNameCod:  [(this._service.newNameCode == true? 'S':'N'), Validators.required],
+      NewName:  [(this._service.newName == true? 'S':'N'), Validators.required],
     });
 
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
@@ -95,8 +95,8 @@ export class ServicesGTPComponent implements OnInit {
       {
           let value: DataServiceGTP;
           value = this._service;
-          value.NewName = (this.frm.value.NewName =='S');
-          value.NewNameCod = (this.frm.value.NewNameCod =='S');
+          value.newName = (this.frm.value.NewName =='S');
+          value.newNameCode = (this.frm.value.NewNameCod =='S');
           this.grabar.emit(value);
       }
   }
