@@ -90,6 +90,9 @@
             },
             "local": {
               "browserTarget": "EurekaAngularProy:build:local"
+            },
+            "dev": {
+              "browserTarget": "EurekaAngularProy:build:devl"
             }
           }
         },
