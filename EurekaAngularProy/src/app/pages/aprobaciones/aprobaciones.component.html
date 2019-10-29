@@ -77,18 +77,22 @@
                                                 <table class="table table-sm table-borderless ">
                                                     <tr>
                                                         
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.name == '' &&   "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.status == 'edicion de Servicio'"><span class="badge badge-primary" >edicion de Servicio</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="svc.name == '' && svc.accountNumber == '' "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.name !== svc.newName)  &&  (svc.accountNumber !== svc.newNameCode)"><span class="badge badge-primary" >edicion de Servicio</span> </td> 
+                                                        <td class="font-black-servicios-des-list" *ngIf="svc.name == svc.newName  &&  svc.accountNumber == svc.newNameCode"><span class="badge badge-primary" >edicion de Servicio</span> </td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr *ngIf="svc.inReview" > 
+                                                        <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>
+                                                    </tr>
+                                                    <tr *ngIf="!svc.inReview">
                                                         <td class="font-black-servicios-des-list" *ngIf="svc.newName == null && svc.newNameCode == null  ">por Revisar</td>
                                                         <td class="font-black-servicios-des-list" *ngIf="(svc.newName == true || svc.newName == false ) && (svc.newNameCode == true || svc.newNameCode == false )">Revisado</td>
-                                                        <td><button type="button" [disabled]="ServiciosFormulario || !svc.inReview" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>
+                                                        <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.newName == false && svc.newNameCode == true )">1 Error encontrado</td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.newName == true && svc.newNameCode == false )">1 Error encontrado</td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.newName == false && svc.newNameCode == false )">2 Error encontrado</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.acceptednewName == false && svc.acceptednewNameCode == true )">1 Error encontrado</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.acceptednewName == true && svc.acceptednewNameCode == false )">1 Error encontrado</td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.acceptednewName == false && svc.acceptednewNameCode == false )">2 Error encontrado</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -141,7 +145,7 @@
                                             <div class="form-group col-md-10">
                                                 <div class="font-black"> </div>
                                             </div>
-                                            <div class="form-group col-md-2">
+                                                <div class="form-group col-md-2">
                                                     <div style="float: right;" (click)="OcultarFormularioSer(true)" class="mano font-cerrar">
                                                         <img src="assets/images/cerrar.svg"> <br> Cerrar
                                                     </div>

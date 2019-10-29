@@ -68,6 +68,7 @@ export class AprobacionesComponent implements OnInit {
     this.Enterprise = emp;
     this.Formulario = false;
     
+    
   }
 
   onGrabarSer(etp:DataServiceGTP){
