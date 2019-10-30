@@ -48,20 +48,22 @@ export class CrearContrasenaComponent implements OnInit {
     this.route.data.subscribe(d => {
       this.inEdit = d.isEdit;
 
-      this.empresa  = {
-        ruc:20000000018,
-        name:'nombre actual',
-        entry: '04',
-        email: 'mnievafra@gmail.com',
-        movilNumber: 123456 ,
-        newName:'Nuevo Nombre',
-        status: 'nueva empresa',
-        uniqueCodeIBK: '1321321',
-        requestDate:new Date(Date.now()),
-        NombreApproved: false
-      }
+      
 
       if (d.isEdit) {
+        this.empresa  = {
+          ruc:20000000018,
+          name:'nombre actual',
+          entry: '04',
+          email: 'mnievafra@gmail.com',
+          movilNumber: 123456 ,
+          newName:'Nuevo Nombre',
+          status: 'nueva empresa',
+          uniqueCodeIBK: '1321321',
+          requestDate:new Date(Date.now()),
+          NombreApproved: false
+        }
+        window['_url_loop_'] = 'editaCuenta';
         this.llave =  this.rutaActiva.snapshot.params.llave;
         this.registerForm = this.formBuilder.group({
           ruc: new FormControl({ value: this.empresa.ruc, disabled: this.inEdit },  [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
@@ -169,7 +171,7 @@ export class CrearContrasenaComponent implements OnInit {
       this.gtpService.emp= null;
       this.gtpService.emp = {ClientId: this.llave, NombreAprobado:this.registerForm.value.nombre.toString()}; 
       this.router.navigate(["/editarSvcGTP"]);
-
+      this.gtpService.llave = this.llave; 
       console.log( this.gtpService.emp);
     }
 
