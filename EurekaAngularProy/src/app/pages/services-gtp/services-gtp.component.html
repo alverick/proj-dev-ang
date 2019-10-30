@@ -7,13 +7,13 @@
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error> 
+                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && f.nombre.hasError('alfa')">El nombre debe tener por lo menos una letra o un numero</mat-error>
               <!--  <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && !f.nombre.hasError('alfa') && f.nombre.hasError('alfabetico')">El nombre debe tener por lo menos una letra </mat-error>   -->
 
             </mat-error>
         </mat-form-field>
-        <mat-radio-group  formControlName="NewName" aria-label="Select an option">
+        <mat-radio-group *ngIf="inReview == true"  formControlName="NewName" aria-label="Select an option">
             <mat-radio-button name="NewName" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewName" class="w-15"  value ="N">NO</mat-radio-button>
         </mat-radio-group>
@@ -37,7 +37,7 @@
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
             </mat-error>
         </mat-form-field>
-        <mat-radio-group  formControlName="NewNameCod" aria-label="Select an option">
+        <mat-radio-group *ngIf="inReview == true" formControlName="NewNameCod" aria-label="Select an option">
             <mat-radio-button name="NewNameCod" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewNameCod" class="w-15"  value ="N">NO</mat-radio-button>
         </mat-radio-group>
@@ -53,7 +53,7 @@
                 </mat-option>
             </mat-select>
             <mat-error class="messsage-error" *ngIf="f.tipoDato.invalid && f.tipoDato.hasError('required')">Elija una opcion</mat-error>
-        </mat-form-field> 
+        </mat-form-field>
     </div>
     <div class="form-group" *ngIf="Dataparcial">
         <mat-form-field class="w-100">
@@ -189,5 +189,5 @@
         </div>
 
     </div>
-    <button type="submit" class="btn-eureca-green "> GUARDAR</button>
+    <button *ngIf="inReview == true" type="submit" class="btn-eureca-green "> GUARDAR</button>
 </form>

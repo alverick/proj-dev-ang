@@ -1,15 +1,15 @@
 export interface GtpPost {
     EnterproseObj: GtpEmpresa;
-    ListServiceObj: GtpServcegtp[]; 
+    ListServiceObj: GtpServcegtp[];
 }
 
 
 export interface GtpEmpresa {
-    ClientId:number;
-    NombreAprobado:boolean;
+    ClientId: number;
+    NombreAprobado: boolean;
 }
 export interface GtpServcegtp {
-    ServiceId:number;
-    NombreAprobado:boolean;
-    NombreCodAprobado:boolean;
+    ServiceId: number;
+    NombreAprobado: boolean;
+    NombreCodAprobado: boolean;
 }
