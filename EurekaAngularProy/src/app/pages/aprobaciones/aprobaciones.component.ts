@@ -147,10 +147,7 @@ export class AprobacionesComponent implements OnInit {
         this.isOnlyEmpresa = false;
       }
 
-      /* this.gtppost = {
-        EnterpriseObj:  this.emp,
-        ListServiceObj: this.scv
-      }; */
+
       console.log('gtp post');
       console.log( this.gtppost);
 
@@ -177,6 +174,11 @@ export class AprobacionesComponent implements OnInit {
                   } else {
 
                   }
+                  this.gtppost = {
+                    EnterpriseObj:  this.emp,
+                    ListServiceObj: this.scv
+                  };
+                  console.log();
                 });
               }
               if (this.isOnlyEmpresa) {
@@ -187,6 +189,10 @@ export class AprobacionesComponent implements OnInit {
                   } else {
 
                   }
+                  this.gtppost = {
+                    EnterpriseObj:  this.emp,
+                    ListServiceObj: this.scv
+                  };
                 });
               } else {
                 this.gtpService.Registrar({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
@@ -196,6 +202,10 @@ export class AprobacionesComponent implements OnInit {
                   } else {
 
                   }
+                  this.gtppost = {
+                    EnterpriseObj:  this.emp,
+                    ListServiceObj: this.scv
+                  };
                 });
               }
 
@@ -222,6 +232,10 @@ export class AprobacionesComponent implements OnInit {
                 } else {
 
                 }
+                this.gtppost = {
+                  EnterpriseObj:  this.emp,
+                  ListServiceObj: this.scv
+                };
               });
             }
             if (this.isOnlyEmpresa) {
@@ -232,6 +246,10 @@ export class AprobacionesComponent implements OnInit {
                 } else {
 
                 }
+                this.gtppost = {
+                  EnterpriseObj:  this.emp,
+                  ListServiceObj: this.scv
+                };
               });
             } else {
               this.gtpService.Registrar({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
@@ -241,10 +259,17 @@ export class AprobacionesComponent implements OnInit {
                 } else {
 
                 }
+
               });
             }
           }
+          this.gtppost = {
+            EnterpriseObj:  this.emp,
+            ListServiceObj: this.scv
+          };
+          console.log(this.gtppost);
         });
+
       }
 
     } else {

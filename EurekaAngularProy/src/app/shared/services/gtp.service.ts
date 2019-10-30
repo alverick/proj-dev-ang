@@ -99,7 +99,7 @@ export class GtpService {
   }
 
    GetServicesGtp (id:any){
-    const url = `${environment.END_POINT}/company/GTP/services/${id}/${true}`;
+    const url = `${environment.END_POINT}/company/GTP/services/${id}/${false}`;
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
