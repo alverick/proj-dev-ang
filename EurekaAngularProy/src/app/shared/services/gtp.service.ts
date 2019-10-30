@@ -30,6 +30,7 @@ export class GtpService {
   public Service : DataServiceGTP;
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
   public emp :GtpEmpresa;
+  public llave:number; 
 
   private States:StatesGtp [] =[
     {idState: 'Pendiente', descripcion:'pendiente'},

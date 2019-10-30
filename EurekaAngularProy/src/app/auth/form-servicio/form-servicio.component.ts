@@ -13,6 +13,7 @@ import { drawPopup } from 'src/app/shared/services/popups';
 })
 export class FormServicioComponent implements OnInit {
   public editMode: boolean = false;
+  public gtpMode: boolean = false;
   public Dataparcial: boolean = true;
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder,private stateEdit: ConfigurarServiciosComponent ) {
@@ -70,6 +71,7 @@ export class FormServicioComponent implements OnInit {
 
   ngOnInit(): void {
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
+    this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
     this.frm = this.fb.group({
@@ -101,7 +103,7 @@ export class FormServicioComponent implements OnInit {
 
     console.log('cuentas');
     console.table(this.cuentas);
- 
+
     if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');
      this.cmoraporce = false;
@@ -301,7 +303,7 @@ export class FormServicioComponent implements OnInit {
                 value.tipoMora = this.frm.value.tipoMora;
                 value.monto = this.frm.value.monto;
                 value.porcentaje = this.frm.value.porcentaje;
-                value.pagoPartes = this.frm.value.pagoPartes; 
+                value.pagoPartes = this.frm.value.pagoPartes;
               }
               else {
                 value = this.frm.value;
@@ -309,7 +311,7 @@ export class FormServicioComponent implements OnInit {
               let cta = this.cuentas.find(c => c.id === value.idCuenta);
               value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
               value.simboloMoneda = this.simboloMoneda;
-             
+
               this.grabar.emit(value);
             }
           }
@@ -330,7 +332,7 @@ export class FormServicioComponent implements OnInit {
           } else {
             let value: ServiceModel;
             console.log('ingresa 3');
-            
+
             if (this.editMode) {
               value = this._service;
               value.idCuenta = this.frm.value.idCuenta;
@@ -532,7 +534,7 @@ function Alfanumerico(c: FormControl) {
   let regex = /[0-9a-zA-Z]-?/g;
   if (c.value && !regex.test(c.value)) {
     return { alfa: true };
-  } 
+  }
   return null;
 }
 
@@ -540,14 +542,14 @@ function Alfabetico(c: FormControl) {
   let regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
   let numero= /[0-9]/g
   let raro= /[-{1,}]-?/g;
-  if (c.value && !raro.test(c.value)) { 
+  if (c.value && !raro.test(c.value)) {
     return { alfabetico: true };
   }
-  if (c.value && !regex.test(c.value)) { 
+  if (c.value && !regex.test(c.value)) {
     return { alfabetico: true };
-  } 
-    
- /* if(c.value && numero.test(c.value)){ 
+  }
+
+ /* if(c.value && numero.test(c.value)){
     return { alfabetico: true };
   } */
   return null;
