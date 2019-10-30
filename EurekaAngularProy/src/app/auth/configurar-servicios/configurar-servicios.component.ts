@@ -59,8 +59,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.editService(this.afiliacionService.services[0], 0);
         this.titulo = 'Agrega un nuevo servicio';
       }
-      if(d.isgtp == true){
-        /////////////////////////PORTAL GTP//////////////////////////////////////
+      if (d.isgtp === true) {
+        /////////////////////////PORTAL GTP //////////////////////////////////////
         console.log('entra a gtp')
         window['_url_loop_'] = 'editarSvcGTP';
         history.pushState(null, null, 'editarSvcGTP');

@@ -76,47 +76,37 @@ export class FormServicioComponent implements OnInit {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
+
+
+    /*
+
+    */
+
+
     if (this.editMode) {
-      this.frm = this.fb.group({
-        nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-        codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
-        nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode}),
-        tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
-        tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
-        idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
-        moneda: [this._service.moneda, Validators.required],
-        usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
-        usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
-        usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true,}),
-        cobraMora: [this._service.cobraMora, Validators.required],
-        periodoMora: [this._service.periodoMora],
-        tipoMora: [this._service.tipoMora],
-        monto: new FormControl({ value: montod, disabled: true }),
-        porcentaje: new FormControl({ value: porcentajed, disabled: true }),
-        pagoPartes:[this._service.pagoPartes, Validators.required],
-      });
+      console.log('MODO DE EDITACION');
+        this.frm = this.fb.group({
+          nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+          codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
+          nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode}),
+          tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
+          tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
+          idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
+          moneda: [this._service.moneda, Validators.required],
+          usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
+          usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
+          usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true,}),
+          cobraMora: [this._service.cobraMora, Validators.required],
+          periodoMora: [this._service.periodoMora],
+          tipoMora: [this._service.tipoMora],
+          monto: new FormControl({ value: montod, disabled: true }),
+          porcentaje: new FormControl({ value: porcentajed, disabled: true }),
+          pagoPartes: [this._service.pagoPartes, Validators.required],
+        });
+        return;
     }
-    if(!this.editMode){
-      this.frm = this.fb.group({
-        nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode  }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-        codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode  }, [Validators.required]),
-        nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode }),
-        tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
-        tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
-        idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
-        moneda: [this._service.moneda, Validators.required],
-        usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
-        usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
-        usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true,}),
-        cobraMora: [this._service.cobraMora, Validators.required],
-        periodoMora: [this._service.periodoMora],
-        tipoMora: [this._service.tipoMora],
-        monto: new FormControl({ value: montod, disabled: true }),
-        porcentaje: new FormControl({ value: porcentajed, disabled: true }),
-        pagoPartes:[this._service.pagoPartes, Validators.required],
-      });
-    }
-    if(this.gtpMode){
+    if (this.gtpMode) {
+      console.log('MODO DE GTP');
       this.frm = this.fb.group({
         nombre: new FormControl({ value: this._service.nombre, disabled:  this._service.NewName }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
         codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this._service.NewNameCod }, [Validators.required]),
@@ -133,9 +123,33 @@ export class FormServicioComponent implements OnInit {
         tipoMora: [this._service.tipoMora],
         monto: new FormControl({ value: montod, disabled: true }),
         porcentaje: new FormControl({ value: porcentajed, disabled: true }),
-        pagoPartes:[this._service.pagoPartes, Validators.required],
+        pagoPartes: [this._service.pagoPartes, Validators.required],
       });
+      return;
+      }if (!this.editMode) {
+      console.log('MODO DE CREACION');
+      this.frm = this.fb.group({
+        nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode  }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+        codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode  }, [Validators.required]),
+        nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode }),
+        tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
+        tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
+        idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
+        moneda: [this._service.moneda, Validators.required],
+        usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
+        usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
+        usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true}),
+        cobraMora: [this._service.cobraMora, Validators.required],
+        periodoMora: [this._service.periodoMora],
+        tipoMora: [this._service.tipoMora],
+        monto: new FormControl({ value: montod, disabled: true }),
+        porcentaje: new FormControl({ value: porcentajed, disabled: true }),
+        pagoPartes: [this._service.pagoPartes, Validators.required],
+      });
+      return;
     }
+
+
 
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);

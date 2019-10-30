@@ -22,7 +22,7 @@ export class CrearContrasenaComponent implements OnInit {
   submitted: boolean = false;
   public llave: number;
   public inEdit: boolean = false;
-  public empresa : DataEnterpriseGTP;
+  public empresa: DataEnterpriseGTP;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,7 +31,7 @@ export class CrearContrasenaComponent implements OnInit {
     private gaService: GoogleAnalytics,
     private route: ActivatedRoute,
     private rutaActiva: ActivatedRoute,
-    public gtpService:GtpService
+    public gtpService: GtpService
   ) {}
 
   rubros: RubroModel[] = [];
@@ -48,21 +48,19 @@ export class CrearContrasenaComponent implements OnInit {
     this.route.data.subscribe(d => {
       this.inEdit = d.isEdit;
 
-      
-
       if (d.isEdit) {
         this.empresa  = {
-          ruc:20000000018,
-          name:'nombre actual',
+          ruc: 20000000018,
+          name: 'nombre actual',
           entry: '04',
           email: 'mnievafra@gmail.com',
           movilNumber: 123456 ,
-          newName:'Nuevo Nombre',
+          newName: 'Nuevo Nombre',
           status: 'nueva empresa',
           uniqueCodeIBK: '1321321',
-          requestDate:new Date(Date.now()),
+          requestDate: new Date(Date.now()),
           NombreApproved: false
-        }
+        };
         window['_url_loop_'] = 'editaCuenta';
         this.llave =  this.rutaActiva.snapshot.params.llave;
         this.registerForm = this.formBuilder.group({
@@ -77,15 +75,19 @@ export class CrearContrasenaComponent implements OnInit {
         }, {
           validator: MustMatch('contrasena', 'repcontrasena')
         });
-      }else{
+      } else {
         window['_url_loop_'] = 'crearContrasena';
         this.registerForm = this.formBuilder.group({
-          ruc: new FormControl({ value: '', disabled: this.inEdit },  [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
+          ruc: new FormControl({ value: '', disabled: this.inEdit },
+           [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
           nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
           rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
-          email: new FormControl( { value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
-          telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
-          contrasena: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
+          email: new FormControl( { value: '', disabled: this.inEdit },
+          [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'),
+           Validators.minLength(10),Validators.maxLength(100)]),
+          telefono: new FormControl({ value: '', disabled: this.inEdit },
+          [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
+          contrasena: new FormControl({ value: '', disabled: this.inEdit },[Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
           acceptterms: new FormControl({ value: '', disabled: this.inEdit },Validators.requiredTrue),
         }, {
@@ -114,7 +116,7 @@ export class CrearContrasenaComponent implements OnInit {
       return;
     }
 
-    if(this.inEdit == false){
+    if (this.inEdit === false) {
 
       this.afiliacionService.Registrar({
         ruc: this.registerForm.value.ruc,
@@ -133,7 +135,7 @@ export class CrearContrasenaComponent implements OnInit {
             //  type: 'warning',
               title: 'Crea tu cuenta',
               text: `El RUC: ${this.registerForm.value.ruc} ya se encuentra registrado en Eureca`,
-              showConfirmButton:true ,
+              showConfirmButton: true ,
               showCancelButton: false,
               showCloseButton: true,
               confirmButtonText: 'CERRAR',
@@ -166,12 +168,12 @@ export class CrearContrasenaComponent implements OnInit {
 
       });
 
-    }else{
+    } else {
       console.log('se guarda la nueva empresa');
-      this.gtpService.emp= null;
-      this.gtpService.emp = {ClientId: this.llave, NombreAprobado:this.registerForm.value.nombre.toString()}; 
+      this.gtpService.emp = null;
+      this.gtpService.emp = {ClientId: this.llave, NombreAprobado: this.registerForm.value.nombre.toString()};
       this.router.navigate(["/editarSvcGTP"]);
-      this.gtpService.llave = this.llave; 
+      this.gtpService.llave = this.llave;
       console.log( this.gtpService.emp);
     }
 

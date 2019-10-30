@@ -19,16 +19,18 @@ export class AprobacionesComponent implements OnInit {
   public ServiciosFormulario: boolean = false;
   public llave: number;
   public Empresa: EnterprisesGtp ;
-   public Empgtp: DataEnterpriseGTP = null;
-  public Enterprise: DataEnterpriseGTP;
+  public Empgtp: DataEnterpriseGTP = null;
+  public Enterprise: DataEnterpriseGTP = {ruc: 0 , name: '', entry: '', email: '',
+  movilNumber: 0 , newName: '' , status: '', uniqueCodeIBK: ''};
   public emp: GtpEmpresa;
   public scv: GtpServcegtp [] = [];
   public gtppost: GtpPost ;
   public Service: DataServiceGTP;
   public Servgtp: DataServiceGTP;
- public deshabilitar: boolean;
- public indiceActual: number = -1;
-
+  public deshabilitar: boolean;
+  public indiceActual: number = -1;
+  public isOnlyEmpresa: boolean;
+  public isOnlyService: boolean;
   constructor(public gtpService: GtpService, private rutaActiva: ActivatedRoute, public router: Router) { }
   public OcultarDatosActualEmpresa: boolean = true;
   @HostListener('window:beforeunload', ['$event'])
@@ -50,17 +52,16 @@ export class AprobacionesComponent implements OnInit {
 
    this.gtpService.GetServicesGtp(this.llave);
    this.getInfoEmpresa();
-/*
-   const num =  this.gtpService.services.filter((v) => v.acceptednewName === null && v.inReview === true ).length;
-   console.log('cantidad encontrada');
-   console.log(num);
-   if (num === 0) {
+    /*
+      const num =  this.gtpService.services.filter((v) => v.acceptednewName === null && v.inReview === true ).length;
+      console.log('cantidad encontrada');
+      console.log(num);
+      if (num === 0) {
 
-   } else {
-    this.deshabilitar = true;
-   }
-*/
-   console.table(this.gtpService.services);
+      } else {
+        this.deshabilitar = true;
+      }
+    */
   }
 
 
@@ -127,7 +128,8 @@ export class AprobacionesComponent implements OnInit {
     }
 
       this.emp = {ClientId: this.llave, NombreAprobado: this.Enterprise.NombreApproved};
-
+      console.log('Empresa');
+      console.log(this.Enterprise.NombreApproved);
       this.gtpService.services.forEach(s => {
         this.scv.push({
           ServiceId: s.id,
@@ -136,10 +138,19 @@ export class AprobacionesComponent implements OnInit {
         });
       });
 
-      this.gtppost = {
-        EnterproseObj:  this.emp,
-        ListServiceObj: this.scv,
-      };
+      if (this.Enterprise.name === this.Enterprise.newName) {
+        this.isOnlyService = true;
+      }
+      if (this.scv.length > 0 ) {
+        this.isOnlyEmpresa = true;
+      } else {
+        this.isOnlyEmpresa = false;
+      }
+
+      /* this.gtppost = {
+        EnterpriseObj:  this.emp,
+        ListServiceObj: this.scv
+      }; */
       console.log('gtp post');
       console.log( this.gtppost);
 
@@ -157,7 +168,9 @@ export class AprobacionesComponent implements OnInit {
             onOpen: drawPopup
           }).then((result) => {
             if (result.value) {
-                this.gtpService.Registrar({ rqst: this.gtppost})
+
+              if (this.isOnlyService) {
+                this.gtpService.Registrar({ EnterpriseObj: null , ListServiceObj: this.scv })
                 .subscribe(d => {
                   if (d === true) {
                     this.router.navigate(['/gtp']);
@@ -165,6 +178,27 @@ export class AprobacionesComponent implements OnInit {
 
                   }
                 });
+              }
+              if (this.isOnlyEmpresa) {
+                this.gtpService.Registrar({ EnterpriseObj: this.emp, ListServiceObj: null })
+                .subscribe(d => {
+                  if (d === true) {
+                    this.router.navigate(['/gtp']);
+                  } else {
+
+                  }
+                });
+              } else {
+                this.gtpService.Registrar({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
+                .subscribe(d => {
+                  if (d === true) {
+                    this.router.navigate(['/gtp']);
+                  } else {
+
+                  }
+                });
+              }
+
             }
           });
 
@@ -180,16 +214,35 @@ export class AprobacionesComponent implements OnInit {
 
         }).then((result) => {
           if (result.value) {
-              this.gtpService.Registrar({ rqst: this.gtppost})
+            if (this.isOnlyService) {
+              this.gtpService.Registrar({ EnterpriseObj: null , ListServiceObj: this.scv })
               .subscribe(d => {
                 if (d === true) {
-                  console.log('sisisisisis');
                   this.router.navigate(['/gtp']);
                 } else {
-                  console.log('nononon');
 
                 }
               });
+            }
+            if (this.isOnlyEmpresa) {
+              this.gtpService.Registrar({ EnterpriseObj: this.emp, ListServiceObj: null })
+              .subscribe(d => {
+                if (d === true) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+              });
+            } else {
+              this.gtpService.Registrar({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
+              .subscribe(d => {
+                if (d === true) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+              });
+            }
           }
         });
       }

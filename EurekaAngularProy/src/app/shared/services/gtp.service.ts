@@ -30,88 +30,24 @@ export class GtpService {
   public Service : DataServiceGTP;
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
   public emp :GtpEmpresa;
-  public llave:number; 
+  public llave:number;
 
   private States:StatesGtp [] =[
     {idState: 'Pendiente', descripcion:'pendiente'},
     {idState: 'Resuelto ', descripcion:'resuelto '},
     {idState: 'Devuelto', descripcion:'devuelto'},
   ];
-  /*
-   public Service: DataServiceGTP[] = [
-  {
-    nombre: 'Mensualidad',
-    codDeudor: 'DNI',
-    tipoDato: 'C',
-    tipoPago: 'C',
-    idCuenta: 2,
-    nroCuenta: '*********7653 (dolares)',
-    moneda: '001',
-    simboloMoneda: 'S/',
-    usaWebApp: true,
-    usaAgente: false,
-    usaTienda: true,
-    cobraMora: 'S',
-    periodoMora: '2',
-    tipoMora: 'M',
-    monto:12.2,
-    pagoPartes: 'S',
-    Status:'nuevo Servicio',
-    NewNameCod: null,
-    NewName: null
-   },{
-    nombre: 'Mensualidad2',
-    codDeudor: 'DNI',
-    tipoDato: 'P',
-    tipoPago: 'P',
-    idCuenta: 2,
-    nroCuenta: '*********7653 (dolares)',
-    moneda: '001',
-    simboloMoneda: 'S/',
-    usaWebApp: true,
-    usaAgente: false,
-    usaTienda: true,
-    cobraMora: 'S',
-    periodoMora: '2',
-    tipoMora: 'M',
-    monto:12.2,
-    pagoPartes: 'S',
-    Status:'nuevo Servicio',
-    NewNameCod: null,
-    NewName: null
-   },{
-    nombre: 'Mensualidad3',
-    codDeudor: 'DNI',
-    tipoDato: 'C',
-    tipoPago: 'C',
-    idCuenta: 2,
-    nroCuenta: '*********7653 (dolares)',
-    moneda: '001',
-    simboloMoneda: 'S/',
-    usaWebApp: true,
-    usaAgente: false,
-    usaTienda: true,
-    cobraMora: 'N',
-    periodoMora: '2',
-    tipoMora: 'M',
-    monto:12.2,
-    pagoPartes: 'S',
-    Status:'nuevo Servicio',
-    NewNameCod: null,
-    NewName: null
-   }
-  ]
-*/
+
   getStates(): Observable<StatesGtp[]>{
     return of(this.States);
   }
 
-  //opcional
-  getEmpresas(filtro: GtpFilter = null):Observable<EnterprisesPagedList>{
+  // opcional
+  getEmpresas(filtro: GtpFilter = null): Observable<EnterprisesPagedList>{
     // si es nulo que aplique el ultimo filtro
     if (filtro === null) {
       filtro = this.lastFilter;
-    }else{
+    } else {
       this.lastFilter = filtro;
     }
     var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
@@ -126,15 +62,14 @@ export class GtpService {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
         };
         return this.http.get<EnterprisesPagedList>(url, opts)
-        .pipe(map (r =>{
+        .pipe(map (r => {
           this.EnterprisesItems = r;
           return r;
         }))
         .pipe(map(r => {
           if (r.totalCompanies == 0) {
             this.pageMessage = "Mostrando 0 de 0 elementos";
-          }
-          else {
+          } else {
                       // (1 - 1*50)+1 =1
             let beg = ((filtro.pageNumber - 1) * 50) + 1;
                         // 1*50=50
@@ -217,6 +152,10 @@ export class GtpService {
         return throwError(err);
       }));
   }
+
+
+
+
 
 
 

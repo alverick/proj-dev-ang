@@ -245,11 +245,11 @@ export class HomeComponent implements OnInit {
    //this.SeleccionarTodos();
    this.selectedAll = false;
    this.selectedUniverse = false;
- 
+
 
   }
 
-  statusOpt(){
+  statusOpt() {
 
   }
 /*
@@ -438,7 +438,7 @@ orderList(index: number, asc: boolean) {
 
   consultaDeuda(cb: () => void = null) {
   // tslint:disable-next-line:prefer-const
-   
+
     if (this.validaFiltro2()){
                 this.spinner.show();
                 this.transactionService.getDeuda(this.currentFiltro)
@@ -828,22 +828,22 @@ orderList(index: number, asc: boolean) {
                   onOpen: drawPopup
                 })
 
-                
+
               });
               this.selectedAll = false;
               this.selectedUniverse = false;
 
               this.transactionService.debtItems.data = [];
               this.transactionService.itemsForDelete = [];
-             
+
               console.log('arra limpio');
-              
+
               console.log(totalForDelete)
           }, err => { this.spinner.hide(); });
       }
     });
     console.log('arra limpio');
-    
+
   }
 
 
@@ -877,7 +877,7 @@ orderList(index: number, asc: boolean) {
 
     if (this.selectedAll) {
       this.transactionService.debtItems.data.forEach(itm => this.transactionService.deleteDebt(itm.id, itm.selected = true));
-      
+
     }
     else {
       this.selectedUniverse = false;
@@ -901,12 +901,12 @@ Ocultar() {
     this.cargaExcel = false;
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogComponent,{
-      width: '899px', 
-     // height: '377px', 
+      width: '899px',
+     // height: '377px',
      // disableClose: true
     });
     dialogRef.afterClosed().subscribe((result: Observable<any>) => {
-     
+
       if (result) {
         result.subscribe(() => {
           this.consultaDeuda();

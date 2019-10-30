@@ -1,6 +1,6 @@
 export interface GtpPost {
-    EnterproseObj: GtpEmpresa;
-    ListServiceObj: GtpServcegtp[];
+    EnterpriseObj?: GtpEmpresa;
+    ListServiceObj?: GtpServcegtp[];
 }
 
 

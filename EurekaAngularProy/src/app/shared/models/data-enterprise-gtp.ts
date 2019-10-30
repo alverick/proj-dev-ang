@@ -7,6 +7,6 @@ export interface DataEnterpriseGTP {
     newName: string;
     status: String;
     uniqueCodeIBK: String;
-    requestDate: Date;
-    NombreApproved: boolean;
+    requestDate?: Date;
+    NombreApproved?: boolean;
 }
