@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { GtpService } from 'src/app/shared/services/gtp.service';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -25,8 +26,11 @@ export class ConfigurarServiciosComponent implements OnInit {
   public titulo: string;
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
-  constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
-    private router: Router, private gaService: GoogleAnalytics) { }
+  constructor(public afiliacionService: AfiliacionService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private gaService: GoogleAnalytics,
+              public gtpService:GtpService) { }
 
     @HostListener('window:beforeunload', ['$event'])
     public closeWindow($event: any) {
@@ -38,17 +42,15 @@ export class ConfigurarServiciosComponent implements OnInit {
   ngOnInit() {
     this.afiliacionService.services = []
     this.route.data.subscribe(d => {
-      this.inEdit = d.isEdit; 
+      this.inEdit = d.isEdit;
       this.inGTP = d.isgtp;
-      
       if (d.isEdit) {
         window['_url_loop_'] = 'editarServicios';
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
-        this.titulo = 'Edita el servicio'; 
-        console.log('entra a editar servicio')
+        this.titulo = 'Edita el servicio';
+
       } else {
-        console.log('entra a crea servicio')
         // siempre entra ahí
         window['_url_loop_'] = 'configurarServicios';
         history.pushState(null, null, 'configurarServicios');
@@ -58,13 +60,14 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.titulo = 'Agrega un nuevo servicio';
       }
       if(d.isgtp == true){
+        /////////////////////////PORTAL GTP//////////////////////////////////////
         console.log('entra a gtp')
         window['_url_loop_'] = 'editarSvcGTP';
-        history.pushState(null, null, 'editarSvcGTP'); 
+        history.pushState(null, null, 'editarSvcGTP');
         this.afiliacionService.services = [];
         this.afiliacionService.services = [
           {
-            nombre: 'Mensualidadxd', 
+            nombre: 'Mensualidadxd',
             codDeudor: 'DNI',
             tipoDato: 'C',
             tipoPago: 'C',
@@ -79,12 +82,12 @@ export class ConfigurarServiciosComponent implements OnInit {
             periodoMora: '2',
             tipoMora: 'M',
             monto:12.2,
-            pagoPartes: 'S',  
+            pagoPartes: 'S',
             NewNameCod: true,
             NewName: false
           },
           {
-            nombre: 'Mensualidad2', 
+            nombre: 'Mensualidad2',
             codDeudor: 'DNI',
             tipoDato: 'P',
             tipoPago: 'P',
@@ -99,16 +102,16 @@ export class ConfigurarServiciosComponent implements OnInit {
             periodoMora: '2',
             tipoMora: 'M',
             monto:12.2,
-            pagoPartes: 'S', 
-            NewNameCod: null,
-            NewName: null
+            pagoPartes: 'S',
+            NewNameCod: false,
+            NewName: true
            }
-        ]; 
+        ];
       }
-      
+
     });
 
-    
+
 
   }
 

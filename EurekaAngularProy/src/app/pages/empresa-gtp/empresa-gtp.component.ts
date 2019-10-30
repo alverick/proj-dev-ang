@@ -12,31 +12,18 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
   templateUrl: './empresa-gtp.component.html',
   styleUrls: ['./empresa-gtp.component.scss'
   ],
-   
+
 })
 export class EmpresaGTPComponent implements OnInit {
   private _enterprise: DataEnterpriseGTP;
   formGroup: FormGroup;
   rubros: RubroModel[] = [];
-  @Input() set enterprise(value: DataEnterpriseGTP){
+  @Input() set enterprise(value: DataEnterpriseGTP) {
     this._enterprise = value;
   }
   @Output() grabar = new EventEmitter<any>();
 
-  constructor(public afiliacionService: AfiliacionService,private formBuilder: FormBuilder,public gtpService:GtpService) { }
-/*
-ruc:12345678912,
-    name:'nombre actual',
-    entry: 'Colegios', 
-    email: 'mnievafra@gmail.com',
-    movilNumber: 123456 , 
-    newName:'Nuevo Nombre', 
-    status: 'modificacion', 
-    uniqueCodeIBK: '1321321', 
-    requestDate:new Date(Date.now()),
-    NombreApproved: null
-*/
-
+  constructor(public afiliacionService: AfiliacionService, private formBuilder: FormBuilder, public gtpService: GtpService) { }
 
   ngOnInit() {
     console.table(this._enterprise);
@@ -44,25 +31,24 @@ ruc:12345678912,
 
     this.formGroup = this.formBuilder.group({
       ruc: new FormControl({ value: this._enterprise.ruc, disabled: true }),
-      newName: new FormControl({ value: this._enterprise.name, disabled: true }), 
-      NewNameApproved:  [(this._enterprise.NombreApproved == true? 'S':'N'), Validators.required],
+      newName: new FormControl({ value: this._enterprise.newName, disabled: true }),
+      NewNameApproved:  [(this._enterprise.NombreApproved === true ? 'S' : 'N'), Validators.required],
       entry: new FormControl({ value: this._enterprise.entry, disabled: true }),
       email: new FormControl({ value: this._enterprise.email, disabled: true }),
-      movilNumber: new FormControl({ value: this._enterprise.movilNumber, disabled: true }), 
+      movilNumber: new FormControl({ value: this._enterprise.movilNumber, disabled: true }),
     });
   }
- 
+
   get f(): any { return this.formGroup.controls; }
- 
-  onSubmitEmpresa(){  
-     
-    if (this.formGroup.valid)
-      {
+
+  onSubmitEmpresa() {
+
+    if (this.formGroup.valid) {
           let value: DataEnterpriseGTP;
-          value = this._enterprise; 
-          value.NombreApproved = (this.formGroup.value.NewNameApproved =='S');  
+          value = this._enterprise;
+          value.NombreApproved = (this.formGroup.value.NewNameApproved === 'S');
           this.grabar.emit(value);
-      } 
+      }
   }
- 
+
 }

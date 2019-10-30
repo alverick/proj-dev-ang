@@ -1,6 +1,6 @@
- 
+
 import { Observable, of, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http'; 
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StatesGtp } from '../models/states-gtp';
 import { EnterprisesGtp, EnterprisesPagedList } from '../models/enterprises-gtp';
@@ -14,7 +14,7 @@ import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
 import { DataServiceGTP } from '../models/data-service-gtp';
 import { GtpEmpresa } from '../models/gtp-post';
 import { NgxSpinnerService } from 'ngx-spinner';
- 
+
 
 @Injectable({
   providedIn: 'root'
@@ -30,16 +30,17 @@ export class GtpService {
   public Service : DataServiceGTP;
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
   public emp :GtpEmpresa;
+  public llave:number; 
 
   private States:StatesGtp [] =[
     {idState: 'Pendiente', descripcion:'pendiente'},
     {idState: 'Resuelto ', descripcion:'resuelto '},
     {idState: 'Devuelto', descripcion:'devuelto'},
   ];
-  /* 
+  /*
    public Service: DataServiceGTP[] = [
   {
-    nombre: 'Mensualidad', 
+    nombre: 'Mensualidad',
     codDeudor: 'DNI',
     tipoDato: 'C',
     tipoPago: 'C',
@@ -59,7 +60,7 @@ export class GtpService {
     NewNameCod: null,
     NewName: null
    },{
-    nombre: 'Mensualidad2', 
+    nombre: 'Mensualidad2',
     codDeudor: 'DNI',
     tipoDato: 'P',
     tipoPago: 'P',
@@ -79,7 +80,7 @@ export class GtpService {
     NewNameCod: null,
     NewName: null
    },{
-    nombre: 'Mensualidad3', 
+    nombre: 'Mensualidad3',
     codDeudor: 'DNI',
     tipoDato: 'C',
     tipoPago: 'C',
@@ -103,10 +104,10 @@ export class GtpService {
 */
   getStates(): Observable<StatesGtp[]>{
     return of(this.States);
-  } 
- 
+  }
+
   //opcional
-  getEmpresas(filtro: GtpFilter = null):Observable<EnterprisesPagedList>{  
+  getEmpresas(filtro: GtpFilter = null):Observable<EnterprisesPagedList>{
     // si es nulo que aplique el ultimo filtro
     if (filtro === null) {
       filtro = this.lastFilter;
@@ -115,20 +116,20 @@ export class GtpService {
     }
     var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
     var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
-      
+
       if (filtro.BusinessHeading === null || filtro.BusinessHeading === undefined)
         filtro.BusinessHeading = '';
       if (filtro.status === null || filtro.status === undefined)
-        filtro.status = '';   
-        const url = `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();   
+        filtro.status = '';
+        const url = `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
-        }; 
+        };
         return this.http.get<EnterprisesPagedList>(url, opts)
-        .pipe(map (r =>{ 
+        .pipe(map (r =>{
           this.EnterprisesItems = r;
-          return r; 
-        })) 
+          return r;
+        }))
         .pipe(map(r => {
           if (r.totalCompanies == 0) {
             this.pageMessage = "Mostrando 0 de 0 elementos";
@@ -146,38 +147,38 @@ export class GtpService {
           }
           return r;
         }))
-        .pipe(catchError(error => throwError(error))); 
+        .pipe(catchError(error => throwError(error)));
    }
- 
-   GetEnterpriseGtp(id:any):Observable<DataEnterpriseGTP>{ 
+
+   GetEnterpriseGtp(id: any): Observable<DataEnterpriseGTP> {
       const url = `${environment.END_POINT}/company/GTP/client/${id}`;
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
-      }; 
+      };
       return this.http.get<DataEnterpriseGTP>(url, opts)
-      .pipe(map(r => {  
+      .pipe(map(r => {
         return r;
       }))
-      .pipe(catchError(err => throwError(err))); 
+      .pipe(catchError(err => throwError(err)));
 
-  } 
-  
-   GetServicesGtp (id:any){ 
+  }
+
+   GetServicesGtp (id:any){
     const url = `${environment.END_POINT}/company/GTP/services/${id}/${true}`;
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
-    }; 
+    };
     this.http.get<any[]>(url,opts).subscribe(d=> {
       let servicios = [];
       d.forEach(s => {
         servicios.push({
           id: s.id,
-          name: s.name, 
+          name: s.name,
           debtorCode: s.debtorCode,
           dataType: s.dataType,
           paymentType: s.paymentType,
           idAccount: s.idAccount,
-          accountNumber: s.accountNumber, 
+          accountNumber: s.accountNumber,
           currency: s.currency,
           usaWebApp: s.useAppWeb,
           usaAgente: s.useAgent,
@@ -192,25 +193,22 @@ export class GtpService {
           inReview: s.inReview,
           newNameCode: s.newNameCode,
           newName: s.newName,
-          status: s.status  
+          status: s.status,
+          acceptednewNameCode: null,
+          acceptednewName: null
         });
       });
        this.services = servicios;
       console.table( this.services);
     });
-   }  
-
-
-
-   //post
-
+   }
 
    public Registrar(data: any): Observable<any> {
-    this.spinner.show(); 
+    this.spinner.show();
     return this.http.post<any>(`${environment.END_POINT}/company/gtp/approve`, data)
       .pipe(map(r => {
         this.spinner.hide();
-        if (r.success) { 
+        if (r.success) {
         }
         return r;
       }))
@@ -220,7 +218,7 @@ export class GtpService {
       }));
   }
 
-  
+
 
 
 }
