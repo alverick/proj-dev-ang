@@ -103,8 +103,8 @@ export class ConfigurarServiciosComponent implements OnInit {
             tipoMora: 'M',
             monto:12.2,
             pagoPartes: 'S',
-            NewNameCod: null,
-            NewName: null
+            NewNameCod: false,
+            NewName: true
            }
         ];
       }
