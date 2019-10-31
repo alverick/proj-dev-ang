@@ -81,7 +81,8 @@ export class ConfigurarServiciosComponent implements OnInit {
             cobraMora: 'S',
             periodoMora: '2',
             tipoMora: 'M',
-            monto:12.2,
+            monto: 12.2,
+            inReview: true,
             pagoPartes: 'S',
             NewNameCod: true,
             NewName: false
@@ -101,11 +102,33 @@ export class ConfigurarServiciosComponent implements OnInit {
             cobraMora: 'S',
             periodoMora: '2',
             tipoMora: 'M',
-            monto:12.2,
+            monto: 12.2,
+            inReview: true,
             pagoPartes: 'S',
             NewNameCod: false,
             NewName: true
-           }
+           },
+           {
+             nombre: 'Mensualidad2',
+             codDeudor: 'DNI',
+             tipoDato: 'P',
+             tipoPago: 'P',
+             idCuenta: 2,
+             nroCuenta: '*********7653 (dolares)',
+             moneda: '001',
+             simboloMoneda: 'S/',
+             usaWebApp: true,
+             usaAgente: false,
+             usaTienda: true,
+             cobraMora: 'S',
+             periodoMora: '2',
+             tipoMora: 'M',
+             monto: 12.2,
+             inReview: false,
+             pagoPartes: 'S',
+             NewNameCod: false,
+             NewName: true
+            }
         ];
       }
 

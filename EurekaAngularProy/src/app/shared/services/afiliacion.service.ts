@@ -135,7 +135,7 @@ export class AfiliacionService {
 
 
   public GetRubros(): Observable<RubroModel[]> {
-    return this.http.get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading?_=`+ new Date().getTime())
+    return this.http.get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading?_=` + new Date().getTime())
       .pipe(catchError(err => throwError(err)));
   }
 

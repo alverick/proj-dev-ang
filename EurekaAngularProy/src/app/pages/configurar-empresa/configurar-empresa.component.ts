@@ -8,6 +8,7 @@ import { RubroModel } from 'src/app/shared/models';
 import { Router } from '@angular/router';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   submitted: boolean= false;
   butDisabled: boolean = true;
   rubros: RubroModel[] = [];
+  dataEmpresa: DataEnterpriseModel;
   constructor(private formBuilder: FormBuilder,
               private configEmpresaService: ConfiguracionService,
               public afiliacionService: AfiliacionService,
@@ -49,9 +51,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
     this.configEmpresaService.getDatosEmpresa()
       .subscribe( dataEnterprise => {
         console.table(dataEnterprise);
+        this.dataEmpresa = dataEnterprise;
         this.formGroup.setValue(dataEnterprise);
-
-            }
+          }
         );
 
   }
@@ -127,7 +129,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       const datosEmpresa = this.formGroup.value;
       const enterprise = {
         ruc: datosEmpresa.ruc,
-        name: datosEmpresa.name,
+        newName: datosEmpresa.name,
         email: datosEmpresa.email,
         movilNumber: datosEmpresa.movilNumber,
         password: datosEmpresa.password,

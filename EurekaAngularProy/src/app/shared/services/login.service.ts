@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, ɵConsole } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { RespuestaLogin } from "../models/respuestaLogin.model";
@@ -35,10 +35,10 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
     'Cache-Control': 'no-cache',
   }
   };
- 
+
   return this.http.post(url, data, opts)
     .pipe(map((r: RespuestaLogin) => {
-      
+
       if (r.estado) {
         console.table(r);
         this.storage.setCurrentSession({
@@ -51,14 +51,13 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
         });
         this.gaService.sendEvent('login', { method: 'OAUTH' });
           this.notify.iniciar();
-      }
-      else {
+      } else {
         this.gaService.sendEvent('exception', { description: 'No Login', fatal: false });
       }
       return r;
     }))
     .pipe(catchError(err => {
-      this.gaService.sendException(err)
+      this.gaService.sendException(err);
       return throwError(err);
     }));
  }
