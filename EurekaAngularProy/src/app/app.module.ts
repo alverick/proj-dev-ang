@@ -81,6 +81,7 @@ import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.componen
     OnlyNumbersDirective,
     EmpresaGTPComponent,
     ServicesGTPComponent,
+
     ],
   imports: [
     BrowserModule,

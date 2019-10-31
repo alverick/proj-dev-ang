@@ -1,28 +1,28 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener } from "@angular/core";
-import { FormBuilder, Validators, FormGroup, FormControl } from "@angular/forms";
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { MonedaModel, ServiceModel } from "src/app/shared/models";
-import Swal from "sweetalert2";
-import { ConfigurarServiciosComponent } from "../configurar-servicios/configurar-servicios.component";
+import { Component, OnInit, Input, Output, EventEmitter, ɵConsole } from '@angular/core';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ConfigurarServiciosComponent } from '../configurar-servicios/configurar-servicios.component';
+import { ServiceModel, MonedaModel } from 'src/app/shared/models';
 import { drawPopup } from 'src/app/shared/services/popups';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-form-servicio',
-  templateUrl: './form-servicio.component.html',
-  styleUrls: ['./form-servicio.component.scss']
+  selector: 'app-form-servicio-gtp',
+  templateUrl: './form-servicio-gtp.component.html',
+  styleUrls: ['./form-servicio-gtp.component.scss']
 })
-export class FormServicioComponent implements OnInit {
+export class FormServicioGtpComponent implements OnInit {
   public createMode: boolean = false;
   public editMode: boolean = false;
   public gtpMode: boolean = false;
   public Dataparcial: boolean = true;
   constructor(private afiliacionService: AfiliacionService,
-    private fb: FormBuilder,private stateEdit: ConfigurarServiciosComponent ) {
+    private fb: FormBuilder, private stateEdit: ConfigurarServiciosComponent ) {
       stateEdit.onFormAction.subscribe(e => this.formAction(e));
     }
 
   @Input() set service(value: ServiceModel) {
-    if (value === null || value === undefined) {
+   /* if (value === null || value === undefined) {
       this._service = {
         nombre: 'Mensualidad',
         codDeudor: 'DNI',
@@ -42,10 +42,11 @@ export class FormServicioComponent implements OnInit {
       this.simboloMoneda = 'S/';
     }
     else {
+
+    } */
       this._service = value;
-      this.simboloMoneda = value.simboloMoneda
+      this.simboloMoneda = value.simboloMoneda;
       this._service.simboloMoneda = this.simboloMoneda;
-    }
   }
 
   get f(): any {
@@ -70,31 +71,33 @@ export class FormServicioComponent implements OnInit {
   @Output() grabar = new EventEmitter<any>();
   public services: ServiceModel[] = [];
 
+
   ngOnInit(): void {
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
+    console.log('ES GTP ' + this.gtpMode);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
 
-    this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
-      nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode}),
-      tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
-      tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
-      idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
-      moneda: [this._service.moneda, Validators.required],
-      usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
-      usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
-      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true,}),
-      cobraMora: [this._service.cobraMora, Validators.required],
-      periodoMora: [this._service.periodoMora],
-      tipoMora: [this._service.tipoMora],
-      monto: new FormControl({ value: montod, disabled: true }),
-      porcentaje: new FormControl({ value: porcentajed, disabled: true }),
-      pagoPartes: [this._service.pagoPartes, Validators.required],
-    });
+        this.frm = this.fb.group({
+        nombre: new FormControl({ value: this._service.nombre, disabled:  this._service.NewName }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+        codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this._service.NewNameCod }, [Validators.required]),
+        nameCod: new FormControl({ value: this._service.nameCod, disabled: this._service.NewNameCod}),
+        tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
+        tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
+        idCuenta: new FormControl({ value: this._service.idCuenta, disabled: this.gtpMode }, [Validators.required,Validators.minLength(13)]),
+        moneda: new FormControl({ value: this._service.moneda, disabled: this.gtpMode }, Validators.required),
+        usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.gtpMode }),
+        usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.gtpMode }),
+        usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true}),
+        cobraMora: [this._service.cobraMora, Validators.required],
+        periodoMora: [this._service.periodoMora],
+        tipoMora: [this._service.tipoMora],
+        monto: new FormControl({ value: montod, disabled: true }),
+        porcentaje: new FormControl({ value: porcentajed, disabled: true }),
+        pagoPartes: [this._service.pagoPartes, Validators.required],
+      });
 
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
@@ -127,6 +130,8 @@ export class FormServicioComponent implements OnInit {
 
   }
 
+
+
   onChangeTipoDato() {
     if (this.frm.get('tipoDato').value === 'P') {
      /* this.frm.get('tipoPago').setValue('C');
@@ -140,7 +145,7 @@ export class FormServicioComponent implements OnInit {
       this.frm.get('porcentaje').setValue('1.00');
       this.cmoraporce = false;
       this.cobraMora = false;
-    } else {
+    }else{
       this.Dataparcial = true;
     }
    /* else if (this.tiposPago.length === 1) {
@@ -155,7 +160,8 @@ export class FormServicioComponent implements OnInit {
   onSubmitServicio() {
     console.log('CODIGO DEL DEUDOR');
     console.log(this.frm.get('codDeudor').value);
-    if (this.frm.valid) {
+    if (this.frm.valid)
+    {
       const monto  = parseFloat(this.frm.get('monto').value);
       const porcentaje  = parseFloat(this.frm.get('porcentaje').value);
       const montofix = monto.toFixed(2);
@@ -179,7 +185,7 @@ export class FormServicioComponent implements OnInit {
               });
               return;
             }
-            if (monto < 1 ) {
+            if(monto < 1 ) {
               Swal.fire({
                 text: 'el minimo monto que se puede ingresa es 1',
                 showCloseButton: true,
@@ -216,7 +222,8 @@ export class FormServicioComponent implements OnInit {
                   value.porcentaje = this.frm.value.porcentaje;
                   value.pagoPartes = this.frm.value.pagoPartes;
                    value.usaWebApp = true;
-                } else {
+                }
+                else {
                   value = this.frm.value;
                    value.usaWebApp = true;
                 }
@@ -229,7 +236,7 @@ export class FormServicioComponent implements OnInit {
 
             }
 
-          } else {
+          }else {
             Swal.fire({
               text: 'Ingrese el monto',
               showCloseButton: true,
@@ -306,7 +313,8 @@ export class FormServicioComponent implements OnInit {
                 value.monto = this.frm.value.monto;
                 value.porcentaje = this.frm.value.porcentaje;
                 value.pagoPartes = this.frm.value.pagoPartes;
-              } else {
+              }
+              else {
                 value = this.frm.value;
               }
               let cta = this.cuentas.find(c => c.id === value.idCuenta);
@@ -346,7 +354,8 @@ export class FormServicioComponent implements OnInit {
               value.pagoPartes = this.frm.value.pagoPartes;
               console.log('ingresa 3.1');
               value.usaWebApp = true;
-            } else {
+            }
+            else {
               value = this.frm.value;
             }
             let cta = this.cuentas.find(c => c.id === value.idCuenta);
@@ -375,14 +384,15 @@ export class FormServicioComponent implements OnInit {
   TipoCobro() {
     if ( this.frm.get('periodoMora').value === '1' || this.frm.get('periodoMora').value === '2') {
           this.cmoraporce = true;
-    } else {
+    }else {
       this.cmoraporce = false;
     }
   }
  Codigo(event){
-    if (event === 'Otro'){
+    if(event === 'Otro'){
       this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
-    } else {
+    }
+    else {
       this.f.nameCod.clearValidators();
       this.f.nameCod.reset();
     }

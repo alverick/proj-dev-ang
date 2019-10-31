@@ -20,7 +20,7 @@ declare var $: any;
 export class CrearContrasenaComponent implements OnInit {
   registerForm: FormGroup;
   submitted: boolean = false;
-  public llave: number;
+  public llave: string;
   public inEdit: boolean = false;
   public empresa: DataEnterpriseGTP;
 
@@ -63,7 +63,7 @@ export class CrearContrasenaComponent implements OnInit {
           NombreApproved: false
         };
         window['_url_loop_'] = 'editaCuenta';
-        this.llave =  this.rutaActiva.snapshot.params.llave;
+        this.llave =  this.rutaActiva.snapshot.params.llave.toString();
         this.registerForm = this.formBuilder.group({
           ruc: new FormControl({ value: this.empresa.ruc, disabled: this.inEdit },  [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
           nombre: new FormControl({ value: this.empresa.name, disabled: this.empresa.NombreApproved }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
@@ -166,7 +166,7 @@ export class CrearContrasenaComponent implements OnInit {
           }
         }
       }, err => {
-        this.mensaje('error', 'Regístrame', 'Ha ocurrido un error con el servidor<br />Intente de nuevo' );
+        this.mensaje(  'Regístrame', 'Ha ocurrido un error con el servidor<br />Intente de nuevo' );
 
       });
 
@@ -175,22 +175,22 @@ export class CrearContrasenaComponent implements OnInit {
 
 
       this.gtpService.emp = null;
-      this.gtpService.emp = {ClientId: this.llave, NombreAprobado: this.registerForm.value.nombre.toString()};
+     // this.gtpService.emp = {ClientId: this.llave, NombreAprobado: this.registerForm.value.nombre.toString()};
       this.router.navigate(["/editarSvcGTP"]);
       this.gtpService.llave = this.llave;
       console.log( this.gtpService.emp);
-
+     // this.ObtenerDatos();
     }
 
-    this.ObtenerDatos();
+
   }
 
 
-    ObtenerDatos(){
+    ObtenerDatos()  {
       this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
       .subscribe( d => {
-        if ( d === null || d === '') {
-          this.mensaje('Enlace expirado','El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
+        if ( d === null  ) {
+          this.mensaje( 'Enlace expirado','El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
           this.router.navigate(['/login']);
         } else {
           this.gtpService.EdtEmpServ = d;
@@ -218,7 +218,7 @@ export class CrearContrasenaComponent implements OnInit {
    // alert('hola');
   }
 
-  mensaje(tipo: any, titulo: string, text: string) {
+  mensaje(  titulo: string, text: string) {
     Swal.fire({
      // type: tipo ,
       title: titulo ,

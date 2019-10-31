@@ -11,12 +11,21 @@
                                 <div class="card-servicios mb-2" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
                                     <div class=" pl-4">
                                         <div class="pl-1 row pb-0">
-                                            <div class="col-sm-9 pt-3">
+                                            <div *ngIf="inGTP" class="col-sm-9 pt-3">
+                                                <div class="font-text-services">{{svc.nombre}}</div>
+                                                <mat-error *ngIf="svc.inReview" class="messsage-error">Actualizar Datos</mat-error>
+                                            </div>
+                                            <div *ngIf="!inGTP" class="col-sm-9 pt-3">
                                                 <div class="font-text-services">{{svc.nombre}}</div>
                                                 <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de revisión</mat-error>
                                             </div>
                                             <div class="col-sm-1 mb-0">
-                                                <ul class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
+                                                <ul *ngIf="inGTP" class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
+                                                    <li *ngIf="svc.inReview && indiceActual!==i">
+                                                        <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
+                                                    </li>
+                                                </ul>
+                                                <ul *ngIf="!inGTP" class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
                                                     <li *ngIf="!svc.inReview && indiceActual!==i">
                                                         <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
                                                     </li>
@@ -26,7 +35,7 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <table class="table table-sm table-borderless ">
+                                        <table  class="table table-sm table-borderless ">
                                             <tr>
                                                 <th style="width:150px;" class="font-black-servicios-list">Canales</th>
                                                 <td class="font-black-servicios-des-list">{{ getCanales(svc) }}</td>
@@ -86,6 +95,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-7 pb-3" *ngIf="Formulariogtp">
+                <br>
+                <div class="d-flex justify-content-end">
+                    <div class="formulario p-5 bg-white ">
+                        <div class="form-row">
+                            <div class="form-group col-md-10">
+                                <div class="font-black">Corregir</div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
+                                    <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                </div>
+                            </div>
+                        </div>
+                        <app-form-servicio-gtp [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio-gtp>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

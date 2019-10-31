@@ -20,6 +20,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   public stateEdit: boolean = false;
   public input: FormServicioComponent;
   Formulario: boolean = false;
+  Formulariogtp: boolean = false;
   buttonServicios ='';
   private inEdit: boolean = false;
   private inGTP: boolean = false;
@@ -30,7 +31,7 @@ export class ConfigurarServiciosComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private gaService: GoogleAnalytics,
-              public gtpService:GtpService) { }
+              public gtpService: GtpService) { }
 
     @HostListener('window:beforeunload', ['$event'])
     public closeWindow($event: any) {
@@ -40,31 +41,17 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.afiliacionService.services = []
+    this.afiliacionService.services = [];
     this.route.data.subscribe(d => {
       this.inEdit = d.isEdit;
       this.inGTP = d.isgtp;
-      if (d.isEdit) {
-        window['_url_loop_'] = 'editarServicios';
-        this.afiliacionService.GetServicios();
-        this.buttonServicios = 'Actualizar';
-        this.titulo = 'Edita el servicio';
-
-      } else {
-        // siempre entra ahí
-        window['_url_loop_'] = 'configurarServicios';
-        history.pushState(null, null, 'configurarServicios');
-        this.afiliacionService.Clear();
-        this.buttonServicios = 'Guardar';
-        this.editService(this.afiliacionService.services[0], 0);
-        this.titulo = 'Agrega un nuevo servicio';
-      }
       if (d.isgtp === true) {
         /////////////////////////PORTAL GTP //////////////////////////////////////
-        console.log('entra a gtp')
+        console.log('GTP');
         window['_url_loop_'] = 'editarSvcGTP';
         history.pushState(null, null, 'editarSvcGTP');
         this.afiliacionService.services = [];
+        // console.log('Servicio'+this.afiliacionService.services);
         this.afiliacionService.services = [
           {
             nombre: 'Mensualidadxd',
@@ -109,7 +96,7 @@ export class ConfigurarServiciosComponent implements OnInit {
             NewName: true
            },
            {
-             nombre: 'Mensualidad2',
+             nombre: 'Mensualidad3',
              codDeudor: 'DNI',
              tipoDato: 'P',
              tipoPago: 'P',
@@ -130,7 +117,25 @@ export class ConfigurarServiciosComponent implements OnInit {
              NewName: true
             }
         ];
+        return;
       }
+      if (d.isEdit) {
+        console.log('EDITAR');
+        window['_url_loop_'] = 'editarServicios';
+        this.afiliacionService.GetServicios();
+        this.buttonServicios = 'Actualizar';
+        this.titulo = 'Edita el servicio';
+
+      } else {
+        console.log('CREACION');
+        window['_url_loop_'] = 'configurarServicios';
+        history.pushState(null, null, 'configurarServicios');
+        this.afiliacionService.Clear();
+        this.buttonServicios = 'Guardar';
+        this.editService(this.afiliacionService.services[0], 0);
+        this.titulo = 'Agrega un nuevo servicio';
+      }
+
 
     });
 
@@ -162,6 +167,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           this.addNewAfterSave = false;
           this.sendAfterSave = false;
           this.indiceActual = -1;
+          this.Formulariogtp = false;
           console.log(this.Formulario);
         }
       });
@@ -190,7 +196,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   MostarFormulario() {
     console.table(this.afiliacionService.services);
-    if(this.afiliacionService.services.length >= 99){
+    if (this.afiliacionService.services.length >= 99) {
       Swal.fire({
         text: 'Usted solo puede tener 99 servicios como máximo',
         onOpen: drawPopup
@@ -199,7 +205,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
 
     let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
-    if(svcSinCta) {
+    if (svcSinCta) {
       Swal.fire({
         text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
         onOpen: drawPopup
@@ -402,6 +408,15 @@ export class ConfigurarServiciosComponent implements OnInit {
       });*/
       return;
     }
+
+    if (this.inGTP) {
+       this.Formulariogtp = true;
+       this.stateEdit = true;
+      this.stateCreate = false;
+      this.indiceActual = index;
+      this.serviceActual = svc;
+       return;
+    }
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
@@ -426,8 +441,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           'event_label': 'servicio_agregado'
         });
       }
-    }
-    else {
+    } else {
       let nro = 1;
       this.afiliacionService.services.forEach((s, i) => {
         if (s.nombre.startsWith(svc.nombre)) {
@@ -444,11 +458,9 @@ export class ConfigurarServiciosComponent implements OnInit {
     this.Formulario = false;
     if (this.addNewAfterSave) {
       setTimeout(() => this.MostarFormulario(), 600);
-    }
-    else if (this.sendAfterSave) {
+    } else if (this.sendAfterSave) {
       setTimeout(() => this.EnviarServicios(), 600);
-    }
-    else {
+    } else {
       Swal.fire({
         title: 'Guardar',
         text: 'Los datos han sido guardados',
