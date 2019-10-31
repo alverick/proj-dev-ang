@@ -1,3 +1,5 @@
+import { DataServiceGTP } from "./data-service-gtp";
+
 export interface DataEnterpriseGTP {
     ruc: number;
     name: string;
@@ -8,5 +10,6 @@ export interface DataEnterpriseGTP {
     status: String;
     uniqueCodeIBK: String;
     requestDate?: Date;
+    arrayServices?: DataServiceGTP;
     NombreApproved?: boolean;
 }

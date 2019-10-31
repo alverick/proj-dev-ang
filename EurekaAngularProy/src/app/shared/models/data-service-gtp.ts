@@ -21,8 +21,8 @@ export interface DataServiceGTP {
     newNameCode:  string;
     newName: string;
     status: string;
-    acceptednewNameCode: boolean;
-    acceptednewName: boolean;
+    acceptednewNameCode?: boolean;
+    acceptednewName?: boolean;
 
 
 

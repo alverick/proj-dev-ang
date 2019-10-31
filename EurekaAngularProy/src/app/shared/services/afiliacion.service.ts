@@ -40,7 +40,7 @@ export class AfiliacionService {
       cobraMora: 'N',
       periodoMora: '1',
       tipoMora: 'M',
-      pagoPartes: 'N', 
+      pagoPartes: 'N',
     });
   }
 
@@ -249,9 +249,9 @@ export class AfiliacionService {
             pagoPartes: s.partialPayment
           });
         });
-        this.services = servicios; 
+        this.services = servicios;
         console.log(servicios);
-      }); 
+      });
   }
 
 
@@ -259,7 +259,7 @@ export class AfiliacionService {
 
 
   public GrabarServicios(): Observable<any> {
-   
+
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
     this.services.forEach(s => {

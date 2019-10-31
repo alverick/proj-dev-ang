@@ -49,6 +49,7 @@ export class CrearContrasenaComponent implements OnInit {
       this.inEdit = d.isEdit;
 
       if (d.isEdit) {
+        console.log('EDITAR EMPRESA');
         this.empresa  = {
           ruc: 20000000018,
           name: 'nombre actual',
@@ -76,6 +77,7 @@ export class CrearContrasenaComponent implements OnInit {
           validator: MustMatch('contrasena', 'repcontrasena')
         });
       } else {
+        console.log('CREA EMPRESA');
         window['_url_loop_'] = 'crearContrasena';
         this.registerForm = this.formBuilder.group({
           ruc: new FormControl({ value: '', disabled: this.inEdit },
@@ -170,16 +172,46 @@ export class CrearContrasenaComponent implements OnInit {
 
     } else {
       console.log('se guarda la nueva empresa');
+
+
       this.gtpService.emp = null;
       this.gtpService.emp = {ClientId: this.llave, NombreAprobado: this.registerForm.value.nombre.toString()};
       this.router.navigate(["/editarSvcGTP"]);
       this.gtpService.llave = this.llave;
       console.log( this.gtpService.emp);
+
     }
 
-
+    this.ObtenerDatos();
   }
 
+
+    ObtenerDatos(){
+      this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
+      .subscribe( d => {
+        if ( d === null || d === '') {
+          this.mensaje('Enlace expirado','El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
+          this.router.navigate(['/login']);
+        } else {
+          this.gtpService.EdtEmpServ = d;
+        }
+      });
+
+    }
+
+  /*
+    Verificar(key:any){
+    console.log('entra a verificar');
+    this.recuperaService.VerifingToken({TokenEncrypted:key}).subscribe(d => {
+      console.log('entra a recuper????');
+      if(d===true){
+      }else{
+        this.mensaje('Enlace expirado','El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro para recuperar tu contraseña');
+         this.router.navigate(['/login']);
+      }
+    });
+  }
+  */
 
   terminos() {
    $('#terminos').modal('show');

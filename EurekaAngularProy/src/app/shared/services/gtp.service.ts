@@ -27,12 +27,12 @@ export class GtpService {
   constructor(private http: HttpClient, private storage: StorageService, private spinner: NgxSpinnerService) { }
 
   public services: DataServiceGTP[] = [];
-  public Service : DataServiceGTP;
-  public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
-  public emp :GtpEmpresa;
-  public llave:number;
-
-  private States:StatesGtp [] =[
+  public Service: DataServiceGTP;
+  public EnterprisesItems: EnterprisesPagedList = { totalCompanies: 0, listCompanyGTP: [] };
+  public emp: GtpEmpresa;
+  public llave: string;
+ public EdtEmpServ: DataEnterpriseGTP;
+  private States: StatesGtp [] = [
     {idState: 'Pendiente', descripcion:'pendiente'},
     {idState: 'Resuelto ', descripcion:'resuelto '},
     {idState: 'Devuelto', descripcion:'devuelto'},
@@ -98,12 +98,12 @@ export class GtpService {
 
   }
 
-   GetServicesGtp (id:any){
+   GetServicesGtp (id: any) {
     const url = `${environment.END_POINT}/company/GTP/services/${id}/${false}`;
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
-    this.http.get<any[]>(url,opts).subscribe(d=> {
+    this.http.get<any[]>(url, opts).subscribe(d => {
       let servicios = [];
       d.forEach(s => {
         servicios.push({
@@ -152,6 +152,23 @@ export class GtpService {
         return throwError(err);
       }));
   }
+
+
+  public GetEnterpriseServices(data: any): Observable<any> {
+    this.spinner.show();
+
+     return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(), data)
+     .pipe(map(r => {
+
+          this.spinner.hide();
+          return r;
+     }))
+     .pipe(catchError(err => {
+      this.spinner.hide();
+      return throwError(err);
+     }));
+  }
+
 
 
 
