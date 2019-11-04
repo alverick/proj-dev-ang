@@ -153,8 +153,9 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    console.log('CODIGO DEL DEUDOR');
+    console.log('LOS CODIGOS DE DEUDOR');
     console.log(this.frm.get('codDeudor').value);
+    console.log(this.frm.get('nameCod').value);
     if (this.frm.valid) {
       const monto  = parseFloat(this.frm.get('monto').value);
       const porcentaje  = parseFloat(this.frm.get('porcentaje').value);

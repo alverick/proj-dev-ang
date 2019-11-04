@@ -24,8 +24,6 @@ export interface DataServiceGTP {
     acceptednewNameCode?: boolean;
     acceptednewName?: boolean;
 
-
-
 /*
        id?: number; //1
     name: string; //1
@@ -49,4 +47,33 @@ export interface DataServiceGTP {
     NewNameCod:boolean;
     NewName:boolean;
     Status:string; */
+
+    /*
+    id: number;
+    idAccount:  number;
+    accountNumber: string;
+    currency:  string;
+    currencySymbol: string;
+    amount:  number;
+    porcentage: number;
+    chargeType: number;
+    interestType: string;
+    chargeInterest: string;
+    name: string;
+    debtorCode: string;
+    partialPayment: string;
+    paymentType: string;
+    dataType: string;
+    usaAgente: boolean;
+    usaTienda: boolean;
+    usaWebApp: boolean;
+    inReview:  boolean;
+     newNameCode:  string;
+    newName: string;
+    status: string;
+    acceptednewNameCode?: boolean;
+    acceptednewName?: boolean;
+
+    */
+
 }

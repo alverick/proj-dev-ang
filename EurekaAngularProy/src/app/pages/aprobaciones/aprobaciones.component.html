@@ -52,8 +52,8 @@
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
                                                     <tr>
-                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.name == '' ||  Enterprise.name == null "><span class="badge badge-primary" >Nueva Empresa</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="Enterprise.name !== Enterprise.newName"><span class="badge badge-primary" >Modificacion Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview "><span class="badge badge-primary" >Nueva Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name !==  Enterprise.newName) &&  Enterprise.inReview"><span class="badge badge-primary" >Modificacion Empresa</span> </td>
                                                      </tr>
                                                     <tr>
                                                         <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == null ">por Revisar</td>
@@ -77,9 +77,11 @@
                                                 <table class="table table-sm table-borderless ">
                                                     <tr>
 
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.name == '' && svc.accountNumber == '' "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
+                                                      <td class="font-black-servicios-des-list" *ngIf="(svc.name == svc.newName  &&  svc.accountNumber == svc.newNameCode) &&  svc.inReview "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
+                                                      <td class="font-black-servicios-des-list" *ngIf="(svc.name !== svc.newName  &&  svc.accountNumber !== svc.newNameCode) &&  svc.inReview "><span class="badge badge-warning" >Edicion de Servicio</span> </td>
+                                                     <!--   <td class="font-black-servicios-des-list" *ngIf="svc.name == '' && svc.accountNumber == '' "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="(svc.name !== svc.newName)  &&  (svc.accountNumber !== svc.newNameCode)"><span class="badge badge-primary" >edicion de Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.name == svc.newName  &&  svc.accountNumber == svc.newNameCode"><span class="badge badge-primary" >edicion de Servicio</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="svc.name == svc.newName  &&  svc.accountNumber == svc.newNameCode"><span class="badge badge-primary" >edicion de Servicio</span> </td> -->
                                                     </tr>
                                                     <tr *ngIf="svc.inReview == false" >
                                                         <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>

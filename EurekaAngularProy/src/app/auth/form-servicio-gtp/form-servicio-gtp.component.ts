@@ -16,6 +16,9 @@ export class FormServicioGtpComponent implements OnInit {
   public editMode: boolean = false;
   public gtpMode: boolean = false;
   public Dataparcial: boolean = true;
+
+  public codDeu: String;
+
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder, private stateEdit: ConfigurarServiciosComponent ) {
       stateEdit.onFormAction.subscribe(e => this.formAction(e));
@@ -73,9 +76,11 @@ export class FormServicioGtpComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
-    console.log('ES GTP ' + this.gtpMode);
+    this.codDeu = (this._service.codDeudor == null || this._service.codDeudor === '' ) ? this._service.nameCod : this._service.codDeudor;
+
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
@@ -86,17 +91,17 @@ export class FormServicioGtpComponent implements OnInit {
         nameCod: new FormControl({ value: this._service.nameCod, disabled: this._service.NewNameCod}),
         tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
         tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
-        idCuenta: new FormControl({ value: this._service.idCuenta, disabled: this.gtpMode }, [Validators.required,Validators.minLength(13)]),
-        moneda: new FormControl({ value: this._service.moneda, disabled: this.gtpMode }, Validators.required),
-        usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.gtpMode }),
-        usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.gtpMode }),
+        idCuenta: new FormControl({ value: this._service.idCuenta, disabled: true}, [Validators.required,Validators.minLength(13)]),
+        moneda: new FormControl({ value: this._service.moneda, disabled: true }, Validators.required),
+        usaAgente: new FormControl({ value: this._service.usaAgente, disabled: true}),
+        usaTienda: new FormControl({ value: this._service.usaTienda, disabled: true }),
         usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true}),
-        cobraMora: [this._service.cobraMora, Validators.required],
-        periodoMora: [this._service.periodoMora],
-        tipoMora: [this._service.tipoMora],
+        cobraMora: new FormControl({ value: this._service.cobraMora, disabled: true }, Validators.required ),
+        periodoMora:new FormControl({ value: this._service.periodoMora, disabled: true }),
+        tipoMora: new FormControl({ value: this._service.tipoMora, disabled: true }),
         monto: new FormControl({ value: montod, disabled: true }),
         porcentaje: new FormControl({ value: porcentajed, disabled: true }),
-        pagoPartes: [this._service.pagoPartes, Validators.required],
+        pagoPartes: new FormControl({ value: this._service.pagoPartes, disabled: true }, Validators.required),
       });
 
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
@@ -108,8 +113,6 @@ export class FormServicioGtpComponent implements OnInit {
     this.changeMora(false);
     this.changeTipoMora(false);
 
-    console.log('cuentas');
-    console.table(this.cuentas);
 
     if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');
@@ -158,215 +161,29 @@ export class FormServicioGtpComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    console.log('CODIGO DEL DEUDOR');
+    console.log('CODIGOs DEL DEUDOR');
     console.log(this.frm.get('codDeudor').value);
-    if (this.frm.valid)
-    {
-      const monto  = parseFloat(this.frm.get('monto').value);
-      const porcentaje  = parseFloat(this.frm.get('porcentaje').value);
-      const montofix = monto.toFixed(2);
-      const porcentajefix = porcentaje.toFixed(2);
-      this.frm.value.monto = montofix;
-      this.frm.value.porcentaje = porcentajefix;
+    console.log(this.frm.get('nameCod').value);
+    if (this.frm.valid) {
 
-      if (this.frm.get('cobraMora').value === 'S') {
-        if (this.frm.get('tipoMora').value === 'M') {
+            let value: ServiceModel;
 
-          if (monto !== null ) {
-            if (monto > 1000 ) {
-              Swal.fire({
-                text: 'el maximo monto que se puede ingresa es 1000',
-                showCloseButton: true,
-                showCancelButton: true,
-                showConfirmButton: false,
-                cancelButtonText:  'CERRAR',
-                allowOutsideClick: false,
-                onOpen: drawPopup
-              });
-              return;
-            }
-            if(monto < 1 ) {
-              Swal.fire({
-                text: 'el minimo monto que se puede ingresa es 1',
-                showCloseButton: true,
-                showCancelButton: true,
-                showConfirmButton: false,
-                cancelButtonText:  'CERRAR',
-                allowOutsideClick: false,
-                onOpen: drawPopup
-              });
-              return;
+            value = this._service;
+
+            if (this._service.NewName) {
+              value.codDeudor = this.frm.value.codDeudor;
+              value.nameCod = this.frm.value.nameCod;
+              this.grabar.emit(value);
             } else {
-              if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-                Swal.fire({
-                  text: 'Debe escoger un medio de pago',
-                  showCloseButton: true,
-                  showCancelButton: true,
-                  showConfirmButton: false,
-                  cancelButtonText:  'CERRAR',
-                  allowOutsideClick: false,
-                  onOpen: drawPopup
-                });
+              value.nombre = this.frm.value.nombre;
+              if (this._service.NewNameCod) {
+                this.grabar.emit(value);
               } else {
-
-                let value: ServiceModel;
-                 // value.usaWebApp = true;
-                if (this.editMode) {
-                  value = this._service;
-                  value.idCuenta = this.frm.value.idCuenta;
-                  value.moneda = this.frm.value.moneda;
-                  value.cobraMora = this.frm.value.cobraMora;
-                  value.periodoMora = this.frm.value.periodoMora;
-                  value.tipoMora = this.frm.value.tipoMora;
-                  value.monto = this.frm.value.monto;
-                  value.porcentaje = this.frm.value.porcentaje;
-                  value.pagoPartes = this.frm.value.pagoPartes;
-                   value.usaWebApp = true;
-                }
-                else {
-                  value = this.frm.value;
-                   value.usaWebApp = true;
-                }
-                let cta = this.cuentas.find(c => c.id === value.idCuenta);
-                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
-                value.simboloMoneda = this.simboloMoneda;
-                 value.usaWebApp = true;
+                value.codDeudor = this.frm.value.codDeudor;
+                value.nameCod = this.frm.value.nameCod;
                 this.grabar.emit(value);
               }
-
             }
-
-          }else {
-            Swal.fire({
-              text: 'Ingrese el monto',
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonText:  'CERRAR',
-              allowOutsideClick: false,
-              onOpen: drawPopup
-            });
-            return;
-          }
-
-        } else {
-          if (porcentaje === null) {
-            Swal.fire({
-              text: 'Ingrese el porcentaje',
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonText:  'CERRAR',
-              allowOutsideClick: false,
-              onOpen: drawPopup
-
-            });
-            return;
-          }
-          if (porcentaje > 100 ) {
-            Swal.fire({
-              text: 'el maximo porcentaje que se puede ingresa es 100',
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonText:  'CERRAR',
-              allowOutsideClick: false,
-              onOpen: drawPopup
-
-            });
-            return;
-          }
-          if (porcentaje < 0.01 ) {
-            Swal.fire({
-              text: 'el minimo porcentaje 0.01%',
-              showCloseButton: true,
-              showCancelButton: true,
-              showConfirmButton: false,
-              cancelButtonText:  'CERRAR',
-              allowOutsideClick: false,
-              onOpen: drawPopup
-
-            });
-            return;
-          } else {
-            if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-              Swal.fire({
-                html: 'Debe escoger un medio de pago',
-                showCloseButton: true,
-                showCancelButton: true,
-                showConfirmButton: false,
-                cancelButtonText:  'CERRAR',
-                allowOutsideClick: false,
-                onOpen: drawPopup
-               });
-            } else {
-              let value: ServiceModel;
-              console.log('ingresa 2');
-             // value.usaWebApp = true;
-              if (this.editMode) {
-                value = this._service;
-                value.idCuenta = this.frm.value.idCuenta;
-                value.moneda = this.frm.value.moneda;
-                value.cobraMora = this.frm.value.cobraMora;
-                value.periodoMora = this.frm.value.periodoMora;
-                value.tipoMora = this.frm.value.tipoMora;
-                value.monto = this.frm.value.monto;
-                value.porcentaje = this.frm.value.porcentaje;
-                value.pagoPartes = this.frm.value.pagoPartes;
-              }
-              else {
-                value = this.frm.value;
-              }
-              let cta = this.cuentas.find(c => c.id === value.idCuenta);
-              value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
-              value.simboloMoneda = this.simboloMoneda;
-
-              this.grabar.emit(value);
-            }
-          }
-
-        }
-      } else {
-          if (this.f.usaAgente.value === false && this.f.usaTienda.value === false && this.f.usaWebApp.value === false) {
-            Swal.fire({
-                        html: 'Debe escoger un medio de pago',
-                        showCloseButton: true,
-                        showCancelButton: true,
-                        showConfirmButton: false,
-                        cancelButtonColor: '#d33',
-                        cancelButtonText:  'CERRAR',
-                        allowOutsideClick: false,
-                        onOpen: drawPopup
-                      });
-          } else {
-            let value: ServiceModel;
-            console.log('ingresa 3');
-
-            if (this.editMode) {
-              value = this._service;
-              value.idCuenta = this.frm.value.idCuenta;
-              value.moneda = this.frm.value.moneda;
-              value.cobraMora = this.frm.value.cobraMora;
-              value.periodoMora = this.frm.value.periodoMora;
-              value.tipoMora = this.frm.value.tipoMora;
-              value.monto = this.frm.value.monto;
-              value.porcentaje = this.frm.value.porcentaje;
-              value.pagoPartes = this.frm.value.pagoPartes;
-              console.log('ingresa 3.1');
-              value.usaWebApp = true;
-            }
-            else {
-              value = this.frm.value;
-            }
-            let cta = this.cuentas.find(c => c.id === value.idCuenta);
-            value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
-            value.simboloMoneda = this.simboloMoneda;
-            console.log('ingresa 3.2');
-            value.usaWebApp = true;
-
-            this.grabar.emit(value);
-          }
-      }
     }
   }
 

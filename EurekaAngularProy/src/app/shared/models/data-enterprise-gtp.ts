@@ -10,6 +10,7 @@ export interface DataEnterpriseGTP {
     status: String;
     uniqueCodeIBK: String;
     requestDate?: Date;
+    inReview?: boolean;
     arrayServices?: DataServiceGTP;
     NombreApproved?: boolean;
 }

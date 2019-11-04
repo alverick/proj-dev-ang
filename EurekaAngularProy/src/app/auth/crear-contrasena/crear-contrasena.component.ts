@@ -60,7 +60,7 @@ export class CrearContrasenaComponent implements OnInit {
           status: 'nueva empresa',
           uniqueCodeIBK: '1321321',
           requestDate: new Date(Date.now()),
-          NombreApproved: false
+          NombreApproved: true
         };
         window['_url_loop_'] = 'editaCuenta';
         this.llave =  this.rutaActiva.snapshot.params.llave.toString();
@@ -174,11 +174,12 @@ export class CrearContrasenaComponent implements OnInit {
       console.log('se guarda la nueva empresa');
 
 
-      this.gtpService.emp = null;
-     // this.gtpService.emp = {ClientId: this.llave, NombreAprobado: this.registerForm.value.nombre.toString()};
-      this.router.navigate(["/editarSvcGTP"]);
+    // this.gtpService.EdtEmpServ = null;
+     this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
+
+     this.router.navigate(["/editarSvcGTP"]);
       this.gtpService.llave = this.llave;
-      console.log( this.gtpService.emp);
+      console.log( this.gtpService.EdtEmpServ);
      // this.ObtenerDatos();
     }
 

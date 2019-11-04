@@ -7,6 +7,7 @@ import { FormServicioComponent } from '../form-servicio/form-servicio.component'
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
+import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -25,6 +26,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   private inEdit: boolean = false;
   private inGTP: boolean = false;
   public titulo: string;
+  public SvcEdit: ServicesGTPChange[];
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
   constructor(public afiliacionService: AfiliacionService,
@@ -54,8 +56,10 @@ export class ConfigurarServiciosComponent implements OnInit {
         // console.log('Servicio'+this.afiliacionService.services);
         this.afiliacionService.services = [
           {
+            id: 1,
             nombre: 'Mensualidadxd',
-            codDeudor: 'DNI',
+            codDeudor: 'Otro',
+            nameCod: 'Codigo de Alumno',
             tipoDato: 'C',
             tipoPago: 'C',
             idCuenta: 2,
@@ -67,14 +71,15 @@ export class ConfigurarServiciosComponent implements OnInit {
             usaTienda: true,
             cobraMora: 'S',
             periodoMora: '2',
-            tipoMora: 'M',
+            tipoMora: 'P',
             monto: 12.2,
-            inReview: true,
+            inReview: false,
             pagoPartes: 'S',
             NewNameCod: true,
             NewName: false
           },
           {
+            id: 2,
             nombre: 'Mensualidad2',
             codDeudor: 'DNI',
             tipoDato: 'P',
@@ -90,12 +95,36 @@ export class ConfigurarServiciosComponent implements OnInit {
             periodoMora: '2',
             tipoMora: 'M',
             monto: 12.2,
-            inReview: true,
+            inReview: false,
             pagoPartes: 'S',
             NewNameCod: false,
             NewName: true
            },
            {
+            id: 3,
+             nombre: 'Mensualidad4',
+             codDeudor: 'Otro',
+             nameCod: 'Codigo de Alumno',
+             tipoDato: 'P',
+             tipoPago: 'P',
+             idCuenta: 2,
+             nroCuenta: '*********7653 (dolares)',
+             moneda: '001',
+             simboloMoneda: 'S/',
+             usaWebApp: true,
+             usaAgente: false,
+             usaTienda: true,
+             cobraMora: 'S',
+             periodoMora: '2',
+             tipoMora: 'M',
+             monto: 12.2,
+             inReview: false,
+             pagoPartes: 'S',
+             NewNameCod: false,
+             NewName: false
+            },
+           {
+             id: 4,
              nombre: 'Mensualidad3',
              codDeudor: 'DNI',
              tipoDato: 'P',
@@ -135,8 +164,6 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.editService(this.afiliacionService.services[0], 0);
         this.titulo = 'Agrega un nuevo servicio';
       }
-
-
     });
 
 
@@ -248,10 +275,72 @@ export class ConfigurarServiciosComponent implements OnInit {
 
 
   EnviarServicios() {
- //   if(this.afiliacionService.services.forEach)
+
+    if (this.inGTP) {
+
+      let Svc = [] ;
+      let svcinReview = this.afiliacionService.services.filter((v) => v.inReview === true);
+      console.log('ESTAS EN GTP marcelo');
+      console.log(svcinReview);
+
+      svcinReview.forEach(s => {
+       Svc.push({
+          ServiceId: s.id,
+          NewName: s.nombre,
+          NewNameCod: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor
+        });
+      });
+      console.log('ESTAS EN GTP marcelo 2');
+
+      console.log(this.gtpService.EdtEmpServ);
+      if (Svc.length === 0) {
+        console.log('SERV cero' + Svc.length);
+      }
+      console.log(Svc);
+
+      Swal.fire({
+        title: 'Editar',
+        text: `Desea Guardar los Cambios`,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        cancelButtonColor: '#d33',
+        cancelButtonText:  'DESHACER CAMBIOS',
+        confirmButtonText: 'GUARDAR',
+        onOpen: drawPopup
+      }).then(r => {
+        this.sendAfterSave = true;
+          if (r.value) {
+            if (Svc.length === 0) {
+              this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
+                NewName: this.gtpService.EdtEmpServ.NewName, ArrayService : null })
+              .subscribe(d => {
+            if (d === true) {
+              this.router.navigate(['/login']);
+            } else {
+
+            }
+
+            });
+
+            } else {
+              this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
+                NewName: this.gtpService.EdtEmpServ.NewName, ArrayService : Svc })
+              .subscribe(d => {
+              if (d === true) {
+                this.router.navigate(['/login']);
+              } else {
+
+              }
+              });
+            }
+          }
+      });
 
 
-    if(this.Formulario === true){
+    } else {
+
+    if (this.Formulario === true) {
       Swal.fire({
         title: 'Servicio no guardado',
         text: `Guarde los cambios del servicio ${this.serviceActual === null ? '' : this.serviceActual.nombre} para poder continuar al siguiente paso`,
@@ -278,33 +367,37 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     // this.frm.get('monto').value
 
-    let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
-    if(svcSinCta) {
-      Swal.fire({
-        text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
-        onOpen: drawPopup
-      });
-      return;
-    }
-    this.gaService.sendEvent('EnviarServicios', {
-      'event_category': GoogleAnalytics.Afiliacion,
-      'event_label': 'enviar_servicios'
-    });
-    this.afiliacionService.GrabarServicios()
-      .subscribe(r => {
-        if (this.inEdit) {
-          this.router.navigate(['/home']);
-          /*for(let i=0; i<this.afiliacionService.services.length; i++) {
-            if (this.afiliacionService.services[i].inReview == false) {
-              return;
+        let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
+        if(svcSinCta) {
+          Swal.fire({
+            text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
+            onOpen: drawPopup
+          });
+          return;
+        }
+        this.gaService.sendEvent('EnviarServicios', {
+          'event_category': GoogleAnalytics.Afiliacion,
+          'event_label': 'enviar_servicios'
+        });
+        /*console.log('SERVICIOS A GUARDAR');
+        console.table(this.afiliacionService.services); */
+        this.afiliacionService.GrabarServicios()
+          .subscribe(r => {
+            if (this.inEdit) {
+              this.router.navigate(['/home']);
+              /*for(let i=0; i<this.afiliacionService.services.length; i++) {
+                if (this.afiliacionService.services[i].inReview == false) {
+                  return;
+                }
+              }
+              this.router.navigate(['/procesando']);*/
             }
-          }
-          this.router.navigate(['/procesando']);*/
-        }
-        else {
-          this.router.navigate(['/procesando']);
-        }
-       });
+            else {
+              this.router.navigate(['/procesando']);
+            }
+          });
+
+      }
   }
 
 
@@ -408,6 +501,9 @@ export class ConfigurarServiciosComponent implements OnInit {
       });*/
       return;
     }
+    if (this.Formulariogtp && this.indiceActual !== index) {
+      return;
+    }
 
     if (this.inGTP) {
        this.Formulariogtp = true;
@@ -425,6 +521,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   onGrabar(svc: ServiceModel) {
+    console.log('CIERRA EL FORMIULARIO');
     if (this.indiceActual >= 0) {
       if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({
@@ -456,6 +553,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       this.afiliacionService.services.push(svc);
     }
     this.Formulario = false;
+    this.Formulariogtp = false;
     if (this.addNewAfterSave) {
       setTimeout(() => this.MostarFormulario(), 600);
     } else if (this.sendAfterSave) {

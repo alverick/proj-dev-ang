@@ -3,8 +3,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StatesGtp } from '../models/states-gtp';
-import { EnterprisesGtp, EnterprisesPagedList } from '../models/enterprises-gtp';
-import { PendingResquest } from '../models/pending-resquest';
+import { EnterprisesPagedList } from '../models/enterprises-gtp';
 import { GtpFilter } from '../models/gtp-filter';
 import moment from 'moment';
 import { environment } from 'src/environments/environment';
@@ -14,6 +13,7 @@ import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
 import { DataServiceGTP } from '../models/data-service-gtp';
 import { GtpEmpresa } from '../models/gtp-post';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DataGTPChange } from '../models/data-gtpchange';
 
 
 @Injectable({
@@ -29,9 +29,9 @@ export class GtpService {
   public services: DataServiceGTP[] = [];
   public Service: DataServiceGTP;
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies: 0, listCompanyGTP: [] };
-  public emp: GtpEmpresa;
+  //public emp: DataGTPChange;
   public llave: string;
- public EdtEmpServ: DataEnterpriseGTP;
+  public EdtEmpServ: DataGTPChange;
   private States: StatesGtp [] = [
     {idState: 'Pendiente', descripcion:'pendiente'},
     {idState: 'Resuelto ', descripcion:'resuelto '},
@@ -138,7 +138,7 @@ export class GtpService {
     });
    }
 
-   public Registrar(data: any): Observable<any> {
+   public AprobarEmpresaServ(data: any): Observable<any> {
     this.spinner.show();
     return this.http.post<any>(`${environment.END_POINT}/company/gtp/approve`, data)
       .pipe(map(r => {
@@ -171,7 +171,18 @@ export class GtpService {
 
 
 
-
+  public EditChangeGTP(data: any) {
+    this.spinner.show();
+    return this.http.post<any>(`${environment.END_POINT}/company/gtp/client/update`, data)
+      .pipe(map(r => {
+        this.spinner.hide();
+        return r;
+      }))
+      .pipe(catchError(err => {
+        this.spinner.hide();
+        return throwError(err);
+      }));
+  }
 
 
 
