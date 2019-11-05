@@ -546,6 +546,13 @@ getName(svc: ServiceModel) {
         });
         return;
       }
+     /* if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+        Swal.fire({
+          text: 'Ya existe un servicio con este nombre',
+          onOpen: drawPopup
+        });
+        return;
+      } */
       this.afiliacionService.services[this.indiceActual] = svc;
       this.indiceActual = -1;
       if (!svc.id) {
@@ -567,6 +574,7 @@ getName(svc: ServiceModel) {
         svc.nombre += nro.toString();
       }
       this.afiliacionService.services.push(svc);
+       
     }
     this.Formulario = false;
     this.Formulariogtp = false;
