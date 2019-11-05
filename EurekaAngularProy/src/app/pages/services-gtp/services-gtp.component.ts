@@ -41,11 +41,11 @@ export class ServicesGTPComponent implements OnInit {
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.name, disabled: true },
+      nombre: new FormControl({ value: this._service.newName === '?' ? 'nombre de servicio aun no aprobado': this._service.newName, disabled: true },
         [Validators.required, Validators.minLength(3),
         Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: this._service.debtorCode, disabled: true }, [Validators.required]),
-      nameCod: new FormControl({ value: this._service.debtorCode, disabled: true}),
+      codDeudor: new FormControl({ value: this._service.newNameCode === '?' ? 'codigo deudor aun no aprobado': this._service.newNameCode, disabled: true }, [Validators.required]),
+      nameCod: new FormControl({ value: this._service.newNameCode === '?' ? 'codigo deudor aun no aprobado': this._service.newNameCode, disabled: true}),
       tipoDato: new FormControl({ value: this._service.dataType, disabled: true }, Validators.required),
       tipoPago: new FormControl({ value: this._service.paymentType, disabled: true }, Validators.required),
       idCuenta: new FormControl({ value: this._service.idAccount, disabled: true }, Validators.required),

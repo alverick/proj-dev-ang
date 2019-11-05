@@ -8,6 +8,7 @@ import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
+import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -418,10 +419,25 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   getCodDebtor(svc: ServiceModel) {
-    if (svc.codDeudor === 'Otro')
+    if (svc.codDeudor === '') {
+      return svc.newNameCode;
+    }else{
+      if (svc.codDeudor === 'Otro')
       return svc.nameCod;
-    return svc.codDeudor;
+      return svc.codDeudor;
+    }
+
   }
+/*
+ newName : s.newName,
+            newNameCode : s.newNameCode,
+*/
+getName(svc: ServiceModel) {
+  if (svc.nombre === '?')
+    return svc.newName;
+  return svc.nombre;
+}
+
 
   delService(index: number) {
     if (this.Formulario) {

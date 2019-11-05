@@ -1,6 +1,8 @@
 export interface ServiceModel {
     id?: number;
     nombre: string;
+    newName?: string;
+    newNameCode?: string;
     rubro?: number;
     codDeudor?: string;
     nameCod?: string;

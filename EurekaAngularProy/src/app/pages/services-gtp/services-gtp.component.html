@@ -13,7 +13,7 @@
 
             </mat-error>
         </mat-form-field>
-        <mat-radio-group *ngIf="inReview == true"  formControlName="NewName" aria-label="Select an option">
+        <mat-radio-group *ngIf="inReview == true && (_service.name  !== _service.NewName  )"  formControlName="NewName" aria-label="Select an option">
             <mat-radio-button name="NewName" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewName" class="w-15"  value ="N">NO</mat-radio-button>
         </mat-radio-group>
@@ -21,14 +21,14 @@
     <div class="form-group">
         <mat-form-field   class="w-70">
             <mat-label class="label">Código deudor</mat-label>
-            <mat-select   class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering
+           <!-- <mat-select   class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering
               panelClass="pts30" formControlName="codDeudor" name="codDeudor" >
                 <mat-option class="input-text">Código Deudor</mat-option>
                 <mat-option class="input-text" *ngFor="let c of codDeudor" [value]="c.code">
                     {{c.name}}
                 </mat-option>
-            </mat-select>
-            <input class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod"  >
+            </mat-select> -->
+            <input class="input-text"   matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod"  >
             <div *ngIf="f.codDeudor.value === 'Otro'" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
             <mat-error >
                 <mat-error class="messsage-error" *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
@@ -37,7 +37,7 @@
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
             </mat-error>
         </mat-form-field>
-        <mat-radio-group *ngIf="inReview == true" formControlName="NewNameCod" aria-label="Select an option">
+        <mat-radio-group *ngIf="inReview == true && (_service.codDeudor !==   _service.newNameCode )"  formControlName="NewNameCod" aria-label="Select an option">
             <mat-radio-button name="NewNameCod" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewNameCod" class="w-15"  value ="N">NO</mat-radio-button>
         </mat-radio-group>
@@ -189,5 +189,5 @@
         </div>
 
     </div>
-    <button *ngIf="inReview == true" type="submit" class="btn-eureca-green "> GUARDAR</button>
+    <button *ngIf="inReview == true && ( ( _service.codDeudor !==  _service.newNameCode')&& ( _service.name !==   _service.NewName))"  type="submit" class="btn-eureca-green "> GUARDAR</button>
 </form>

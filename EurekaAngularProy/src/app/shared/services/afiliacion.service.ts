@@ -231,6 +231,8 @@ export class AfiliacionService {
           servicios.push({
             id: s.id,
             nombre: s.name,
+            newName : s.newName,
+            newNameCode : s.newNameCode,
             rubro: s.entry,
             codDeudor: s.debtorCode,
             tipoDato: s.dataType,
@@ -252,7 +254,8 @@ export class AfiliacionService {
           });
         });
         this.services = servicios;
-        console.log(servicios);
+        console.log('TERMINA');
+        console.log(this.services);
       });
   }
 
