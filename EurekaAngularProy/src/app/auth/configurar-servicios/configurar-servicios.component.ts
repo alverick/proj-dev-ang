@@ -58,7 +58,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.afiliacionService.services = [
           {
             id: 1,
-            nombre: 'Mensualidadxd',
+            nombre: 'Mensualidad',
             codDeudor: 'Otro',
             nameCod: 'Codigo de Alumno',
             tipoDato: 'C',
@@ -77,7 +77,7 @@ export class ConfigurarServiciosComponent implements OnInit {
             inReview: false,
             pagoPartes: 'S',
             NewNameCod: true,
-            NewName: false
+            NewName: true
           },
           {
             id: 2,
@@ -98,7 +98,7 @@ export class ConfigurarServiciosComponent implements OnInit {
             monto: 12.2,
             inReview: false,
             pagoPartes: 'S',
-            NewNameCod: false,
+            NewNameCod: true,
             NewName: true
            },
            {
@@ -121,7 +121,7 @@ export class ConfigurarServiciosComponent implements OnInit {
              monto: 12.2,
              inReview: false,
              pagoPartes: 'S',
-             NewNameCod: false,
+             NewNameCod: true,
              NewName: false
             },
            {
@@ -143,7 +143,7 @@ export class ConfigurarServiciosComponent implements OnInit {
              monto: 12.2,
              inReview: false,
              pagoPartes: 'S',
-             NewNameCod: false,
+             NewNameCod: true,
              NewName: true
             }
         ];
