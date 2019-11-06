@@ -24,16 +24,16 @@
       </button>
         </div>
     </ng-template>
-       
-        <small  *ngIf="ready">Archivo seleccionado</small>  
+
+        <small  *ngIf="ready">Archivo seleccionado</small>
         <div style="margin-left: 160px;" *ngIf="ready; else landing" class="text-center">
             <div class="input-file">
                 <span class="text-input-file"><div class="pl-4 pt-2">{{fileName}}</div></span>
             </div>
             <br/>
         </div>
-        
-  
+
+
     <div *ngIf="excelService.statusUpload" class="progress-text">{{progress.status}}</div>
     <mat-progress-bar *ngIf="excelService.statusUpload" [mode]="progress.mode" [value]="progress.value" [bufferValue]="100"></mat-progress-bar>
     <div *ngIf="ready && !excelService.statusUpload && excelService.errores.length == 0" class="text-center">
@@ -51,7 +51,7 @@
             <div class="clear-float"></div>
         </div>
         <perfect-scrollbar class="list">
-            <div class="err-item" *ngFor="let err of excelService.errores"><span *ngIf="err.row > 0">Fila {{err.row}} : </span>{{err.description}}</div>
+            <div class="err-item" *ngFor="let err of excelService.errores"><span *ngIf="err.row > 0"><strong class="resaltado">Fila {{err.row}}</strong> : </span>{{err.description}}</div>
         </perfect-scrollbar>
         <div class="footer">Corrige los errores y vuelve a subir la plantilla</div>
         <div class="text-center">
@@ -61,7 +61,7 @@
             <br />
             <button class="btn-eureca-green "  style="margin-right: 180px;" type="button" form="input-form" (click)="uploadFile.click()">
               SELECCIONAR PLANTILLA
-            </button>
+            </button><strong> </strong>
         </div>
     </div>
 </div>

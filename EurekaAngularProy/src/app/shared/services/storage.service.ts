@@ -44,7 +44,7 @@ export class StorageService {
   }
 
   getCurrentSession(): Session {
-    if (this.currentSession === null || this.currentSession === undefined) { 
+    if (this.currentSession === null || this.currentSession === undefined) {
       var tk = this.localStorageService.getItem('tk');
       this.currentSession = {
         user: { ruc: '' },
@@ -83,8 +83,12 @@ export class StorageService {
     this.localStorageService.setItem('intento', intentos );
   }
 
-  getIntentos() : number{
+  getIntentos(): number {
     return this.localStorageService.getItem('intento');
+  }
+
+  getPerfil(): number {
+    return this.localStorageService.getItem('prfl');
   }
 
 }

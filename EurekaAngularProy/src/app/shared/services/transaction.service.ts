@@ -39,7 +39,7 @@ export class TransactionService {
     }
 
     //opcional
-    
+
     getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
       // ultimo filtro aplicado
       if (filtro === null) {
@@ -48,7 +48,7 @@ export class TransactionService {
       else {
         // el nuevo filtro
         this.lastFilter = filtro;
-      } 
+      }
       var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
       var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
       //fechas
@@ -77,6 +77,7 @@ export class TransactionService {
               d.selected = (this.itemsForDelete.indexOf(d.id) >= 0);
             });
             this.debtItems = r;
+            console.table(this.debtItems.data);
             return r;
           }))
           .pipe(map(r => {
