@@ -22,6 +22,7 @@ export interface ServiceModel {
     porcentaje?: number;
     inReview?: boolean;
     pagoPartes?: string;
-    NewNameCod?: boolean,
-    NewName?: boolean
+    NewNameCod?: boolean;
+    NewName?: boolean;
+    status?: string;
 }

@@ -10,6 +10,9 @@ import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import { GtpEmpresa } from 'src/app/shared/models/gtp-post';
 import { GtpService } from 'src/app/shared/services/gtp.service';
+import { Observable } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 
 declare var $: any;
 @Component({
@@ -23,7 +26,7 @@ export class CrearContrasenaComponent implements OnInit {
   public llave: string;
   public inEdit: boolean = false;
   public empresa: DataEnterpriseGTP;
-
+  public empresasEdit: DataEnterpriseModel;
   constructor(
     private formBuilder: FormBuilder,
     private afiliacionService: AfiliacionService,
@@ -31,7 +34,8 @@ export class CrearContrasenaComponent implements OnInit {
     private gaService: GoogleAnalytics,
     private route: ActivatedRoute,
     private rutaActiva: ActivatedRoute,
-    public gtpService: GtpService
+    public gtpService: GtpService,
+    private spinner: NgxSpinnerService
   ) {}
 
   rubros: RubroModel[] = [];
@@ -49,34 +53,43 @@ export class CrearContrasenaComponent implements OnInit {
       this.inEdit = d.isEdit;
 
       if (d.isEdit) {
-        console.log('EDITAR EMPRESA');
- 
-        this.empresa  = {
-          ruc: this.gtpService.EmpresaServicios.ruc,
-          name:  this.gtpService.EmpresaServicios.name,
-          entry: this.gtpService.EmpresaServicios.entry,
-          email: this.gtpService.EmpresaServicios.email,
-          movilNumber: this.gtpService.EmpresaServicios.movilNumber,
-          newName:  this.gtpService.EmpresaServicios.newName,
-          status:   this.gtpService.EmpresaServicios.newName,
-          uniqueCodeIBK:  this.gtpService.EmpresaServicios.uniqueCodeIBK,
-          requestDate: this.gtpService.EmpresaServicios.requestDate,
-          NombreApproved: true
-        };
+        this.llave =  this.rutaActiva.snapshot.params.llave.toString();
+        console.log('EDITAR EMPRESA' + d.isEdit +   this.llave );
         window['_url_loop_'] = 'editaCuenta';
         this.llave =  this.rutaActiva.snapshot.params.llave.toString();
         this.registerForm = this.formBuilder.group({
-          ruc: new FormControl({ value: this.empresa.ruc, disabled: this.inEdit },  [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
-          nombre: new FormControl({ value: this.empresa.name, disabled: this.empresa.NombreApproved }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
-          rubro: new FormControl({ value: this.empresa.entry, disabled: this.inEdit }, [Validators.required]),
-          email: new FormControl( {value: this.empresa.email, disabled: this.inEdit }, [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
-          telefono: new FormControl({ value: this.empresa.movilNumber, disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
+          ruc: new FormControl({ value: '', disabled: this.inEdit },
+          [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
+          nombre: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
+          rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
+          email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
+          telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
           contrasena: new FormControl({ value: '', disabled: this.inEdit }),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }),
           acceptterms: new FormControl({ value: true, disabled: this.inEdit }),
         }, {
           validator: MustMatch('contrasena', 'repcontrasena')
         });
+
+        this.ObtenerDatos()
+        .subscribe(() => {
+
+           console.log('RUC SSSS ' + this.gtpService.EmpresaServicios.ruc);
+          this.empresasEdit  = {
+            ruc: this.gtpService.EmpresaServicios.ruc,
+            name: this.gtpService.EmpresaServicios.name,
+            entry: this.gtpService.EmpresaServicios.entry,
+            email: this.gtpService.EmpresaServicios.email,
+            movilNumber: this.gtpService.EmpresaServicios.movilNumber ,
+            newName: this.gtpService.EmpresaServicios.newName,
+            status: this.gtpService.EmpresaServicios.status,
+            requestDate: this.gtpService.EmpresaServicios.requestDate
+          };
+
+          this.registerForm.setValue({ ruc: this.gtpService.EmpresaServicios.ruc, nombre: this.gtpService.EmpresaServicios.name,
+          rubro: this.gtpService.EmpresaServicios.entry, email: this.gtpService.EmpresaServicios.email,
+          telefono: this.gtpService.EmpresaServicios.movilNumber, contrasena: '', repcontrasena: '',  acceptterms: true });
+      });
       } else {
         console.log('CREA EMPRESA');
         window['_url_loop_'] = 'crearContrasena';
@@ -87,9 +100,9 @@ export class CrearContrasenaComponent implements OnInit {
           rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
           email: new FormControl( { value: '', disabled: this.inEdit },
           [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'),
-           Validators.minLength(10),Validators.maxLength(100)]),
+           Validators.minLength(10), Validators.maxLength(100)]),
           telefono: new FormControl({ value: '', disabled: this.inEdit },
-          [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
+          [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
           contrasena: new FormControl({ value: '', disabled: this.inEdit },[Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
           acceptterms: new FormControl({ value: '', disabled: this.inEdit },Validators.requiredTrue),
@@ -120,7 +133,7 @@ export class CrearContrasenaComponent implements OnInit {
     }
 
     if (this.inEdit === false) {
-
+     
       this.afiliacionService.Registrar({
         ruc: this.registerForm.value.ruc,
         name: this.registerForm.value.nombre,
@@ -188,35 +201,61 @@ export class CrearContrasenaComponent implements OnInit {
   }
 
 
-    ObtenerDatos()  {
-      this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
-      .subscribe( d => {
-        if ( d === null  ) {
-          this.mensaje( 'Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
-          this.router.navigate(['/login']);
-        } else {
-          // empresa
-          console.log('EMPRESAS Y SERVICIOS');
-          console.table(d);
-          this.gtpService.EmpresaServicios = d;
-        }
+    ObtenerDatos(): Observable<any>  {
+      this.spinner.show();
+      return new Observable(obs => {
+        this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
+          .subscribe( d => {
+            
+            if ( d === null  ) {
+             
+              this.mensaje( 'Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
+              this.router.navigate(['/login']);
+              obs.error();
+            } else {
+              this.gtpService.EmpresaServicios = d;
+              console.log('empresa ser');
+              console.table(this.gtpService.EmpresaServicios);
+           /*   let servicios = [];
+              this.gtpService.EmpresaServicios.arrayServices = [];
+              d.ArrayServices.array.forEach(s => {
+                servicios.push({
+                  id: s.id,
+                  name: s.name,
+                  debtorCode: s.debtorCode,
+                  dataType: s.dataType,
+                  paymentType: s.paymentType,
+                  idAccount: s.idAccount,
+                  accountNumber: s.accountNumber,
+                  currency: s.currency,
+                  usaWebApp: s.useAppWeb,
+                  usaAgente: s.useAgent,
+                  usaTienda: s.useStore,
+                  partialPayment: s.partialPayment,
+                  chargeInterest: s.chargeInterest,
+                  chargeType: s.chargeType.toString(),
+                  interestType: s.interestType,
+                  amount: s.amount,
+                  porcentage: s.percentage,
+                  currencySymbol: s.currencySymbol,
+                  inReview: s.inReview,
+                  newNameCode: s.newNameCode,
+                  newName: s.newName,
+                  status: s.status
+                });
+              });
+              this.gtpService.EmpresaServicios.arrayServices = servicios;
+             console.log('Servicios rechazado');
+             console.log(this.gtpService.EmpresaServicios.arrayServices); */
+              obs.next();
+              obs.complete();
+         // this.empresa = this.gtpService.EmpresaServicios;
+            }
+            this.spinner.hide();
+          });
       });
 
     }
-
- /*   Verificar(key: any) {
-    console.log('entra a verificar');
-    this.recuperaService.VerifingToken({TokenEncrypted: key}).subscribe(d => {
-      console.log('entra a recuper????');
-      if (d == null) {
-        // tslint:disable-next-line:max-line-length
-        this.mensaje('Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro para recuperar tu contraseña');
-        this.router.navigate(['/login']);
-      } else {
-        
-      }
-    });
-  } */
 
 
   terminos() {

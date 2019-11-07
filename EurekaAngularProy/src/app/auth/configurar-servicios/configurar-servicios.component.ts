@@ -54,99 +54,35 @@ export class ConfigurarServiciosComponent implements OnInit {
         window['_url_loop_'] = 'editarSvcGTP';
         history.pushState(null, null, 'editarSvcGTP');
         this.afiliacionService.services = [];
-        // console.log('Servicio'+this.afiliacionService.services);
-        this.afiliacionService.services = [
-          {
-            id: 1,
-            nombre: 'Mensualidad',
-            codDeudor: 'Otro',
-            nameCod: 'Codigo de Alumno',
-            tipoDato: 'C',
-            tipoPago: 'C',
-            idCuenta: 2,
-            nroCuenta: '*********7653 (dolares)',
-            moneda: '001',
-            simboloMoneda: 'S/',
-            usaWebApp: true,
-            usaAgente: false,
-            usaTienda: true,
-            cobraMora: 'S',
-            periodoMora: '2',
-            tipoMora: 'P',
-            monto: 12.2,
-            inReview: false,
-            pagoPartes: 'S',
-            NewNameCod: true,
-            NewName: true
-          },
-          {
-            id: 2,
-            nombre: 'Mensualidad2',
-            codDeudor: 'DNI',
-            tipoDato: 'P',
-            tipoPago: 'P',
-            idCuenta: 2,
-            nroCuenta: '*********7653 (dolares)',
-            moneda: '001',
-            simboloMoneda: 'S/',
-            usaWebApp: true,
-            usaAgente: false,
-            usaTienda: true,
-            cobraMora: 'S',
-            periodoMora: '2',
-            tipoMora: 'M',
-            monto: 12.2,
-            inReview: false,
-            pagoPartes: 'S',
-            NewNameCod: true,
-            NewName: true
-           },
-           {
-            id: 3,
-             nombre: 'Mensualidad4',
-             codDeudor: 'Otro',
-             nameCod: 'Codigo de Alumno',
-             tipoDato: 'P',
-             tipoPago: 'P',
-             idCuenta: 2,
-             nroCuenta: '*********7653 (dolares)',
-             moneda: '001',
-             simboloMoneda: 'S/',
-             usaWebApp: true,
-             usaAgente: false,
-             usaTienda: true,
-             cobraMora: 'S',
-             periodoMora: '2',
-             tipoMora: 'M',
-             monto: 12.2,
-             inReview: false,
-             pagoPartes: 'S',
-             NewNameCod: true,
-             NewName: false
-            },
-           {
-             id: 4,
-             nombre: 'Mensualidad3',
-             codDeudor: 'DNI',
-             tipoDato: 'P',
-             tipoPago: 'P',
-             idCuenta: 2,
-             nroCuenta: '*********7653 (dolares)',
-             moneda: '001',
-             simboloMoneda: 'S/',
-             usaWebApp: true,
-             usaAgente: false,
-             usaTienda: true,
-             cobraMora: 'S',
-             periodoMora: '2',
-             tipoMora: 'M',
-             monto: 12.2,
-             inReview: false,
-             pagoPartes: 'S',
-             NewNameCod: true,
-             NewName: true
-            }
-        ];
+       // this.afiliacionService.services = this.gtpService.EmpresaServicios.arrayServices;
+       // this.gtpService.EmpresaServicios.arrayServices = [];
+        this.gtpService.EmpresaServicios.arrayServices.forEach(s => {
+          this.afiliacionService.services.push({
+            id: s.id,
+            nombre: s.name,
+            newName : s.newName,
+            newNameCode : s.newNameCode,
+            //rubro: s.entry,
+            codDeudor: s.debtorCode,
+            tipoDato: s.dataType,
+            tipoPago: s.paymentType,
+            idCuenta: s.idAccount,
+            nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
+            moneda: s.currency,
+            simboloMoneda: s.currencySymbol,
+            usaWebApp: s.usaWebApp,
+            usaAgente: s.usaAgente,
+            usaTienda: s.usaTienda,
+            cobraMora: s.chargeInterest,
+            periodoMora: s.chargeType.toString(),
+            tipoMora: s.interestType,
+            monto: s.amount,
+            porcentaje: s.porcentage,
+            inReview: s.inReview,
+            pagoPartes: s.partialPayment,
+            status: s.status
+          });
+        });
         return;
       }
       if (d.isEdit) {
@@ -432,6 +368,18 @@ export class ConfigurarServiciosComponent implements OnInit {
  newName : s.newName,
             newNameCode : s.newNameCode,
 */
+getNameGTP(svc: ServiceModel) {
+  if (svc.nombre === '?' &&  svc.newName === '?' ) {
+     return 'Serv no aprobado';
+  }
+}
+getCodigoNameGTP(svc: ServiceModel) {
+  if (svc.codDeudor === '?' &&  svc.newNameCode === '?' ) {
+     return 'Cod Deudor no aprobado';
+  }
+}
+
+
 getName(svc: ServiceModel) {
   if (svc.nombre === '?')
     return svc.newName;
