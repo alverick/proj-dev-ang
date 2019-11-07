@@ -13,7 +13,7 @@
 
             </mat-error>
         </mat-form-field>
-        <mat-radio-group *ngIf="inReview == true && (_service.name  !== _service.NewName  )"  formControlName="NewName" aria-label="Select an option">
+        <mat-radio-group *ngIf="inReview && (_service.name  !== _service.newName  )"  formControlName="NewName" aria-label="Select an option">
             <mat-radio-button name="NewName" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewName" class="w-15"  value ="N">NO</mat-radio-button>
         </mat-radio-group>
@@ -37,7 +37,7 @@
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
             </mat-error>
         </mat-form-field>
-        <mat-radio-group *ngIf="inReview == true && (_service.codDeudor !==   _service.newNameCode )"  formControlName="NewNameCod" aria-label="Select an option">
+        <mat-radio-group *ngIf="inReview && (_service.debtorCode !==   _service.newNameCode )"  formControlName="NewNameCod" aria-label="Select an option">
             <mat-radio-button name="NewNameCod" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewNameCod" class="w-15"  value ="N">NO</mat-radio-button>
         </mat-radio-group>
