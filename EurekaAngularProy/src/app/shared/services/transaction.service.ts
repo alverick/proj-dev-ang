@@ -22,7 +22,7 @@ export class TransactionService {
     constructor(public http: HttpClient, private storage: StorageService)  { }
 
     public pageMessage: string = "Mostrando 0 de 0 elementos";
-    public debtItems: DebtsPagedList = { count:0, data: [] };
+    public debtItems: DebtsPagedList = { count:0, countNoIbkPayments: 0, data: [] };
     public itemsForDelete: number[] = [];
 
     getDateFormat(date: Date): string {
@@ -238,8 +238,10 @@ export class TransactionService {
   isMarkedAll() {
     let markAll = true;
     this.debtItems.data.forEach(v => {
-      let idx = this.itemsForDelete.indexOf(v.id);
-      markAll = markAll && (idx >= 0);
+      if (!v.hasIBKPayments) {
+        let idx = this.itemsForDelete.indexOf(v.id);
+        markAll = markAll && (idx >= 0);
+      }
     });
     return markAll;
   }

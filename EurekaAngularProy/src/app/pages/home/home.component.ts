@@ -26,8 +26,10 @@ import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { isNgTemplate } from '@angular/compiler';
+import { Popover } from './popover/popover.service';
+import { PagosComponent } from './pagos/pagos.component';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -177,6 +179,7 @@ export class HomeComponent implements OnInit {
     public snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
+    private popover: Popover,
     private gaService: GoogleAnalytics) {
 
     }
@@ -237,7 +240,7 @@ export class HomeComponent implements OnInit {
 
 
 
-   this.transactionService.debtItems = { data: [], count : 0 };
+   this.transactionService.debtItems = { data: [], countNoIbkPayments: 0, count : 0 };
    this.consultaDeuda();
    this.cargaExcel = false;
 
@@ -876,8 +879,11 @@ orderList(index: number, asc: boolean) {
   SeleccionarTodos() {
 
     if (this.selectedAll) {
-      this.transactionService.debtItems.data.forEach(itm => this.transactionService.deleteDebt(itm.id, itm.selected = true));
-
+      this.transactionService.debtItems.data.forEach(itm => {
+        if (!itm.hasIBKPayments && itm.status !== 'PAGADO') {
+          this.transactionService.deleteDebt(itm.id, itm.selected = true);
+        }
+      });
     }
     else {
       this.selectedUniverse = false;
@@ -1039,8 +1045,12 @@ Ocultar() {
 
   private internalValidaNombres(items: Debts){
     if (items.newFirstName) {
+      const re = new RegExp("^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$");
       if (items.newFirstName.length < 3) {
         items.errores.firstName = 'Debe tener 3 carácteres como mínimo';
+      }
+      else if (!re.test(items.newFirstName)) {
+        items.errores.firstName = 'No cumple con el formato';
       }
       else {
         delete items.errores.firstName;
@@ -1056,8 +1066,12 @@ Ocultar() {
 
   private internalValidaApellidos(items: Debts) {
     if (items.newLastName) {
+      const re = new RegExp("^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$");
       if (items.newLastName.length < 3) {
         items.errores.lastName = 'Deben tener 3 carácteres como mínimo';
+      }
+      else if (!re.test(items.newLastName)) {
+        items.errores.lastName = 'No cumple con el formato';
       }
       else {
         delete items.errores.lastName;
@@ -1092,6 +1106,21 @@ Ocultar() {
   selectForDelete(itm: Debts) {
     this.transactionService.deleteDebt(itm.id, itm.selected);
     this.selectedAll = this.transactionService.isMarkedAll();
+  }
+
+  showPopover(itm: any, origin) {
+    let ref = this.popover.open({
+      origin,
+      content: PagosComponent,
+      data: {
+        debtId: itm.id,
+        status: itm.status,
+        currency: itm.currency
+      }
+    });
+    ref.statusChange$.subscribe(d => {
+      itm.status = d.data;
+    });
   }
 }
 

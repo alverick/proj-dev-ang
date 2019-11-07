@@ -4,6 +4,8 @@ import { drawPopup } from "src/app/shared/services/popups";
 import { TransactionService } from "src/app/shared/services/transaction.service";
 import { PagoService } from "src/app/shared/services/pago.service";
 import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
+import { PopoverRef } from "../popover/popover-ref";
+
 declare var $: any;
 @Component({
   selector: 'app-pagos',
@@ -17,32 +19,22 @@ export class PagosComponent implements OnInit {
   ];
   cargando = false;
 
-  @Input() debtId: number;
-  @Input() status: string;
-  @Input() currency: string;
+  debtId: number;
+  status: string;
+  currency: string;
   @Output() statusChange = new EventEmitter<string>();
-  @Output() showChange = new EventEmitter<boolean>();
-
-  private removeOutside: () => void = null;
 
   constructor(private transaction: TransactionService, private pagoService: PagoService,
-    private _elementRef: ElementRef, private renderer: Renderer2, private gaService: GoogleAnalytics) {
-    pagoService.closeAll.subscribe(() => {
-      this.showed = false;
-      this.showChange.emit(this.showed);
-      if (this.removeOutside !== null)
-        this.removeOutside();
-    });
+    private popoverRef: PopoverRef, private gaService: GoogleAnalytics) {
+      this.debtId = popoverRef.data.debtId;
+      this.status = popoverRef.data.status;
+      this.currency = popoverRef.data.currency;
   }
 
   ngOnInit(): void {
-   
+    this.loadData();
   }
 
-  ngAfterContentInit() {
-    $('.cdk-overlay-dark-backdrop').css('background-color', '#f3f3f3');
-  }
-  
   private loadData() {
     this.items = [];
     this.cargando = true;
@@ -58,44 +50,9 @@ export class PagosComponent implements OnInit {
       this.pagoService.closeAll.emit();
       this.showed = true;
       this.loadData();
-      setTimeout(() => {
-        this.removeOutside = this.renderer.listen('document', 'click', (e) => this.outsideClick(e.target));
-      }, 100);
     }
     else {
       this.showed = false;
-    }
-    this.showChange.emit(this.showed);
-  }
-
-  private outsideClick(target: HTMLElement) {
-    if (!(this._elementRef.nativeElement as HTMLElement).contains(target)) {
-      let existsInCdk = (): boolean => {
-        const cdkContainer = document.getElementsByClassName('cdk-overlay-container');
-        if (cdkContainer.length > 0) {
-          for(let i=0; i < cdkContainer.length; i++) {
-            return cdkContainer[i].contains(target);
-          }
-        }
-        return false;
-      }
-      let existsInSwal = (): boolean => {
-        const swalContainer = document.getElementsByClassName('swal2-container');
-        if (swalContainer.length > 0) {
-          for(let i=0; i < swalContainer.length; i++) {
-            return swalContainer[i].contains(target);
-          }
-        }
-        return false;
-      }
-
-      if (existsInCdk()) {
-        return;
-      }
-      if (existsInSwal()) {
-        return;
-      }
-      this.pagoService.closeAll.emit();
     }
   }
 
@@ -187,7 +144,9 @@ export class PagosComponent implements OnInit {
                 'event_label': 'agrega_pago'
               });
             }
-            this.statusChange.emit(r.status);
+            this.status = r.status;
+            //this.statusChange.emit(r.status);
+            this.popoverRef.changeStatus(r.status);
             this.loadData();
             Swal.fire({
               titleText: 'Editado!',
@@ -249,7 +208,9 @@ export class PagosComponent implements OnInit {
                 'event_category': 'Dashboard',
                 'event_label': 'eliminar_pagos'
               });
-              this.statusChange.emit(r.status);
+              this.status = r.status;
+              //this.statusChange.emit(r.status);
+              this.popoverRef.changeStatus(r.status);
               this.loadData();
             }
             else {
