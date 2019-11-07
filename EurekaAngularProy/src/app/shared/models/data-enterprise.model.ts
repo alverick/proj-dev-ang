@@ -8,10 +8,10 @@ export interface DataEnterpriseModel{
     newName: string;
     status:String;  
  //   uniqueCodeIBK:String; 
-    requestDate:Date;  
-    password: string;
-    newPassword: string;
-    confirmNewPassword: string;
+    requestDate?:Date;  
+    password?: string;
+    newPassword?: string;
+    confirmNewPassword?: string;
 }
 
   
