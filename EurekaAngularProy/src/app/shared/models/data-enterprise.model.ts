@@ -7,9 +7,9 @@ export interface DataEnterpriseModel {
     movilNumber: number;
     newName: string;
     status: String;
- //   uniqueCodeIBK:String;
     requestDate?: Date;
     password?: string;
     newPassword?: string;
     confirmNewPassword?: string;
+    inReview: boolean  ;
 }

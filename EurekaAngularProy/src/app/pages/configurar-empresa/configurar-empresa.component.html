@@ -18,7 +18,8 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="form-group">
-                                   <label *ngIf=" dataEmpresa.name  !== dataEmpresa.newName " class="messsage-error" style="float: right;">El cambio esta siendo procesado</label> 
+                                   <label *ngIf="( dataEmpresa.name  !== dataEmpresa.newName)  " class="messsage-error" style="float: right;">El cambio esta siendo procesado</label> 
+                                 <!--<label *ngIf="( dataEmpresa.name  == dataEmpresa.newName)  && dataEmpresa.inReview" class="messsage-error" style="float: right;">El nombre debe corregisrse</label> -->
                                     <mat-form-field class="w-100">
                                         <input class="input-text" matInput type="text" formControlName="name" placeholder="Nombre de la empresa">
                                     </mat-form-field>
