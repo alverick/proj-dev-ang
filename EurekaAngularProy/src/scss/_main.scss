@@ -136,7 +136,7 @@ button:focus {
     }
 }
 .btn-outline-green {
-    
+
     @include font-text(16px !important, 500 !important);
     @include border-radius(4px !important);
     background-color: $blanco !important;
@@ -162,7 +162,7 @@ button:focus {
     @include font-text(14px !important, normal !important);
     color: #ffffff !important;
      background-color: $green !important;
-     
+
     @include border-radius(4px !important);
     border: solid 1px $green !important;
     &:hover {
@@ -191,7 +191,7 @@ button:focus {
     border: solid 1px $blanco !important;
     color: $green !important;
     &:hover {
-       
+
         background-color: #E5E5E5!important;
       }
       &:active {
@@ -287,11 +287,11 @@ mat-icon.svg-custom {
       fill: inherit;
     }
   }
-} 
+}
 .mat-checkbox-frame {
     border-color: #9EA1A5;
 }
- 
+
 .mat-radio-outer-circle {
     border-color: #9EA1A5;
 }
