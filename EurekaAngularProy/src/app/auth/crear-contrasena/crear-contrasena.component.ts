@@ -50,16 +50,17 @@ export class CrearContrasenaComponent implements OnInit {
 
       if (d.isEdit) {
         console.log('EDITAR EMPRESA');
+ 
         this.empresa  = {
-          ruc: 20000000018,
-          name: 'nombre actual',
-          entry: '04',
-          email: 'mnievafra@gmail.com',
-          movilNumber: 123456 ,
-          newName: 'Nuevo Nombre',
-          status: 'nueva empresa',
-          uniqueCodeIBK: '1321321',
-          requestDate: new Date(Date.now()),
+          ruc: this.gtpService.EmpresaServicios.ruc,
+          name:  this.gtpService.EmpresaServicios.name,
+          entry: this.gtpService.EmpresaServicios.entry,
+          email: this.gtpService.EmpresaServicios.email,
+          movilNumber: this.gtpService.EmpresaServicios.movilNumber,
+          newName:  this.gtpService.EmpresaServicios.newName,
+          status:   this.gtpService.EmpresaServicios.newName,
+          uniqueCodeIBK:  this.gtpService.EmpresaServicios.uniqueCodeIBK,
+          requestDate: this.gtpService.EmpresaServicios.requestDate,
           NombreApproved: true
         };
         window['_url_loop_'] = 'editaCuenta';
@@ -191,28 +192,32 @@ export class CrearContrasenaComponent implements OnInit {
       this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
       .subscribe( d => {
         if ( d === null  ) {
-          this.mensaje( 'Enlace expirado','El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
+          this.mensaje( 'Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
           this.router.navigate(['/login']);
         } else {
-          this.gtpService.EdtEmpServ = d;
+          // empresa
+          console.log('EMPRESAS Y SERVICIOS');
+          console.table(d);
+          this.gtpService.EmpresaServicios = d;
         }
       });
 
     }
 
-  /*
-    Verificar(key:any){
+ /*   Verificar(key: any) {
     console.log('entra a verificar');
-    this.recuperaService.VerifingToken({TokenEncrypted:key}).subscribe(d => {
+    this.recuperaService.VerifingToken({TokenEncrypted: key}).subscribe(d => {
       console.log('entra a recuper????');
-      if(d===true){
-      }else{
-        this.mensaje('Enlace expirado','El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro para recuperar tu contraseña');
-         this.router.navigate(['/login']);
+      if (d == null) {
+        // tslint:disable-next-line:max-line-length
+        this.mensaje('Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro para recuperar tu contraseña');
+        this.router.navigate(['/login']);
+      } else {
+        
       }
     });
-  }
-  */
+  } */
+
 
   terminos() {
    $('#terminos').modal('show');
