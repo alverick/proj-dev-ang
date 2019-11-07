@@ -156,7 +156,7 @@ export class CrearContrasenaComponent implements OnInit {
               onOpen: drawPopup,
             }).then(res => {
               if (res.value) {
-                this.gaService.sendEvent('IrACrearCuenta', {
+                this.gaService.sendEvent('CrearCuentaNegocio', {
                   'event_category': GoogleAnalytics.Afiliacion,
                   'event_label': 'ir_a_crear_cuenta'
                 });

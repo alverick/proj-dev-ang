@@ -134,12 +134,12 @@ small {
     @include font-text(16px, normal);
     color: #0d131d;
     text-align: left;
-    text-overflow: ellipsis;
 }
 
 .name-file{
   text-overflow: ellipsis;
-  width: 517px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .mat-dialog-actions {

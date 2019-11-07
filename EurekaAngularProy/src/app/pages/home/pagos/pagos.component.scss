@@ -70,10 +70,10 @@
           &.c0 {
              width:10px;
           }
-          
+
           &.c1 {
             width:90px;
-            text-align: right; 
+            text-align: right;
             .msg-error {
               margin-left: -15px;
             }
@@ -103,10 +103,8 @@
               }
             }
             .btn-delete {
-              img {
-                width: 15px;
-                height: 15px;
-              }
+              cursor: pointer;
+              color: $textgreen;
             }
           }
           &.c6 {
@@ -170,6 +168,13 @@
     .mat-form-field-underline {
       bottom: 0;
     }
+  }
+}
+
+:host ::ng-deep mat-icon.svg-custom {
+  svg {
+    width: 20px;
+    height: 20px;
   }
 }
 
