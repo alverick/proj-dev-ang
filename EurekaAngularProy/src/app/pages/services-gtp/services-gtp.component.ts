@@ -41,11 +41,11 @@ export class ServicesGTPComponent implements OnInit {
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.name, disabled: true },
+      nombre: new FormControl({ value: this._service.newName === '?' ? 'nombre de servicio aun no aprobado': this._service.newName, disabled: true },
         [Validators.required, Validators.minLength(3),
         Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: this._service.debtorCode, disabled: true }, [Validators.required]),
-      nameCod: new FormControl({ value: this._service.debtorCode, disabled: true}),
+      codDeudor: new FormControl({ value: this._service.newNameCode === '?' ? 'codigo deudor aun no aprobado': this._service.newNameCode, disabled: true }, [Validators.required]),
+      nameCod: new FormControl({ value: this._service.newNameCode === '?' ? 'codigo deudor aun no aprobado': this._service.newNameCode, disabled: true}),
       tipoDato: new FormControl({ value: this._service.dataType, disabled: true }, Validators.required),
       tipoPago: new FormControl({ value: this._service.paymentType, disabled: true }, Validators.required),
       idCuenta: new FormControl({ value: this._service.idAccount, disabled: true }, Validators.required),
@@ -94,13 +94,16 @@ export class ServicesGTPComponent implements OnInit {
     return this.frm.controls;
   }
 
-  onSubmitServicio(){
-    if (this.frm.valid)
-      {
+  onSubmitServicio() {
+    if (this.frm.valid) {
           let value: DataServiceGTP;
           value = this._service;
-          value.acceptednewName = (this.frm.value.NewName =='S');
-          value.acceptednewNameCode = (this.frm.value.NewNameCod =='S');
+         // value.acceptednewName = (this.frm.value.NewName === 'S');
+         // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
+          // tslint:disable-next-line:max-line-length
+          value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
+          // tslint:disable-next-line:max-line-length
+          value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
           this.grabar.emit(value);
       }
   }

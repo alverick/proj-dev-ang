@@ -12,11 +12,11 @@
                                     <div class=" pl-4">
                                         <div class="pl-1 row pb-0">
                                             <div *ngIf="inGTP" class="col-sm-9 pt-3">
-                                                <div class="font-text-services">{{svc.nombre}}</div>
+                                                <div class="font-text-services">{{getNameGTP(svc)}}</div>
                                                 <mat-error *ngIf="svc.inReview" class="messsage-error">Actualizar Datos</mat-error>
                                             </div>
                                             <div *ngIf="!inGTP" class="col-sm-9 pt-3">
-                                                <div class="font-text-services">{{svc.nombre}}</div>
+                                                <div class="font-text-services">{{getName(svc)}}</div>
                                                 <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de revisión</mat-error>
                                             </div>
                                             <div class="col-sm-1 mb-0">
@@ -42,8 +42,10 @@
                                             </tr>
                                             <tr>
                                                 <th style="width:150px;" class="font-black-servicios-list">Código deudor</th>
-                                                <td class="font-black-servicios-des-list">{{ getCodDebtor(svc) }}</td>
+                                                <td *ngIf="inGTP" class="font-black-servicios-des-list">{{ getCodigoNameGTP(svc) }}</td>
+                                                <td *ngIf="!inGTP" class="font-black-servicios-des-list">{{ getCodDebtor(svc) }}</td>
                                             </tr>
+                                            
                                             <tr *ngIf="svc.tipoDato === 'C'">
                                                 <th style="width:150px;" class="font-black-servicios-list">Mora</th>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }} </td>

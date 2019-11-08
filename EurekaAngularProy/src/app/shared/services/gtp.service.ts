@@ -32,6 +32,7 @@ export class GtpService {
   //public emp: DataGTPChange;
   public llave: string;
   public EdtEmpServ: DataGTPChange;
+  public EmpresaServicios: DataEnterpriseGTP;
   private States: StatesGtp [] = [
     {idState: 'Pendiente', descripcion:'pendiente'},
     {idState: 'Resuelto ', descripcion:'resuelto '},
@@ -155,16 +156,14 @@ export class GtpService {
 
 
   public GetEnterpriseServices(data: any): Observable<any> {
-    this.spinner.show();
-
+     this.spinner.show();
      return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(), data)
      .pipe(map(r => {
-
-          this.spinner.hide();
+           this.spinner.hide();
           return r;
      }))
      .pipe(catchError(err => {
-      this.spinner.hide();
+       this.spinner.hide();
       return throwError(err);
      }));
   }

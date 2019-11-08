@@ -26,7 +26,6 @@ export class NotifyService {
     if (!this.inExecution) {
       this.inExecution = true;
       const callNotify = () => {
-        console.log('PERFIL' + this.storage.getPerfil());
         if (this.storage.isAuthenticated() && (this.storage.getPerfil().toString() === '0') ) {
           this.http.get(`${environment.END_POINT}/notification/total?_=${new Date().getTime()}`)
             .subscribe((d: any) => {

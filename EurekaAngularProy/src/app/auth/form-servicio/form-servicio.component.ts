@@ -78,9 +78,11 @@ export class FormServicioComponent implements OnInit {
 
 
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.nombre, disabled: this.editMode }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this.editMode }, [Validators.required]),
-      nameCod: new FormControl({ value: this._service.nameCod, disabled: this.editMode}),
+      nombre: new FormControl({ value: this._service.nombre, disabled: false }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+      codDeudor: new FormControl({ value: (this._service.codDeudor   === 'RUC' ||
+      this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro'
+      , disabled: false }, [Validators.required]),
+      nameCod: new FormControl({ value: this._service.codDeudor, disabled: false}),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
@@ -153,9 +155,10 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    console.log('LOS CODIGOS DE DEUDOR');
+   /* console.log('LOS CODIGOS DE DEUDOR');
     console.log(this.frm.get('codDeudor').value);
-    console.log(this.frm.get('nameCod').value);
+    console.log(this.frm.get('nameCod').value); */
+    console.log('NOMBRE DE SRV Y CODI');
     if (this.frm.valid) {
       const monto  = parseFloat(this.frm.get('monto').value);
       const porcentaje  = parseFloat(this.frm.get('porcentaje').value);
@@ -208,6 +211,9 @@ export class FormServicioComponent implements OnInit {
                  // value.usaWebApp = true;
                 if (this.editMode) {
                   value = this._service;
+                  value.nombre = this.frm.value.nombre;
+                  value.nameCod = this.frm.value.nameCod;
+                  value.codDeudor = this.frm.value.codDeudor;
                   value.idCuenta = this.frm.value.idCuenta;
                   value.moneda = this.frm.value.moneda;
                   value.cobraMora = this.frm.value.cobraMora;
@@ -216,7 +222,7 @@ export class FormServicioComponent implements OnInit {
                   value.monto = this.frm.value.monto;
                   value.porcentaje = this.frm.value.porcentaje;
                   value.pagoPartes = this.frm.value.pagoPartes;
-                   value.usaWebApp = true;
+                  value.usaWebApp = true;
                 } else {
                   value = this.frm.value;
                    value.usaWebApp = true;
@@ -300,6 +306,9 @@ export class FormServicioComponent implements OnInit {
               if (this.editMode) {
                 value = this._service;
                 value.idCuenta = this.frm.value.idCuenta;
+                value.nombre = this.frm.value.nombre;
+                  value.nameCod = this.frm.value.nameCod;
+                  value.codDeudor = this.frm.value.codDeudor;
                 value.moneda = this.frm.value.moneda;
                 value.cobraMora = this.frm.value.cobraMora;
                 value.periodoMora = this.frm.value.periodoMora;
@@ -338,6 +347,9 @@ export class FormServicioComponent implements OnInit {
             if (this.editMode) {
               value = this._service;
               value.idCuenta = this.frm.value.idCuenta;
+              value.nombre = this.frm.value.nombre;
+                  value.nameCod = this.frm.value.nameCod;
+                  value.codDeudor = this.frm.value.codDeudor;
               value.moneda = this.frm.value.moneda;
               value.cobraMora = this.frm.value.cobraMora;
               value.periodoMora = this.frm.value.periodoMora;

@@ -49,6 +49,7 @@ export class AfiliacionService {
     let nombre: string = 'Mensualidad';
     let nro = 1;
     this.services.forEach((s, i) => {
+      //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada. 
       if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
         if (!isNaN(parseInt(s.nombre.substr(nombre.length))) || s.nombre.substr(nombre.length) === ''){
           let aux = parseInt(s.nombre.substr(nombre.length));
@@ -231,6 +232,8 @@ export class AfiliacionService {
           servicios.push({
             id: s.id,
             nombre: s.name,
+            newName : s.newName,
+            newNameCode : s.newNameCode,
             rubro: s.entry,
             codDeudor: s.debtorCode,
             tipoDato: s.dataType,
@@ -252,7 +255,8 @@ export class AfiliacionService {
           });
         });
         this.services = servicios;
-        console.log(servicios);
+        console.log('TERMINA');
+        console.log(this.services);
       });
   }
 
@@ -269,7 +273,7 @@ export class AfiliacionService {
     this.services.forEach(s => {
       data.services.push({
         id: s.id,
-        name: s.nombre,
+        name: (s.nombre === '?') ? '' : s.nombre ,
         entry: s.rubro,
         debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
         dataType: s.tipoDato,

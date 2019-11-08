@@ -1,6 +1,8 @@
 export interface ServiceModel {
     id?: number;
     nombre: string;
+    newName?: string;
+    newNameCode?: string;
     rubro?: number;
     codDeudor?: string;
     nameCod?: string;
@@ -20,6 +22,7 @@ export interface ServiceModel {
     porcentaje?: number;
     inReview?: boolean;
     pagoPartes?: string;
-    NewNameCod?: boolean,
-    NewName?: boolean
+    NewNameCod?: boolean;
+    NewName?: boolean;
+    status?: string;
 }

@@ -15,6 +15,7 @@ export interface Debts {
     status: string;
     payDate: Date;
     channel: string;
+    hasIBKPayments: boolean;
     newEmissionDate?: Date;
     newDueDate?: Date;
     newConcept?: string;
@@ -33,5 +34,6 @@ export interface Debts {
 
 export interface DebtsPagedList {
     count: number;
+    countNoIbkPayments: number;
     data: Debts[];
 }
