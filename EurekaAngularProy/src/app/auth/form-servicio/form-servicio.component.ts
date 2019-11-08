@@ -79,8 +79,10 @@ export class FormServicioComponent implements OnInit {
 
     this.frm = this.fb.group({
       nombre: new FormControl({ value: this._service.nombre, disabled: false }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: this._service.codDeudor, disabled: false }, [Validators.required]),
-      nameCod: new FormControl({ value: this._service.nameCod, disabled: false}),
+      codDeudor: new FormControl({ value: (this._service.codDeudor   === 'RUC' ||
+      this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro'
+      , disabled: false }, [Validators.required]),
+      nameCod: new FormControl({ value: this._service.codDeudor, disabled: false}),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],

@@ -77,16 +77,11 @@
 
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
-                                                    <tr>
+                                                  <tr>
 
                                                       <td class="font-black-servicios-des-list" *ngIf="(svc.name == '?'  &&  svc.debtorCode ==  '?') &&  svc.inReview "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
-                                                      
-                                                      <td class="font-black-servicios-des-list" *ngIf="(svc.name !== '?' ||  svc.debtorCode !==  '?') &&  svc.inReview "><span class="badge badge-warning" >Edicion de Servicio</span> </td>
-                                                      <td class="font-black-servicios-des-list" *ngIf="(svc.name  ==   svc.newName )&&  svc.inReview"><span class="badge badge-warning" >Edicion de Servicio</span> </td>
 
-                                                     <!--   <td class="font-black-servicios-des-list" *ngIf="svc.name == '' && svc.accountNumber == '' "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.name !== svc.newName)  &&  (svc.accountNumber !== svc.newNameCode)"><span class="badge badge-primary" >edicion de Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.name == svc.newName  &&  svc.accountNumber == svc.newNameCode"><span class="badge badge-primary" >edicion de Servicio</span> </td> -->
+                                                      <td class="font-black-servicios-des-list" *ngIf="((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) &&  svc.inReview "><span class="badge badge-warning" >Edicion de Servicio</span> </td>
                                                     </tr>
                                                     <tr *ngIf="svc.inReview == false" >
                                                         <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>

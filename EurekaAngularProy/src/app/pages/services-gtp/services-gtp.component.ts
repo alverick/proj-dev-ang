@@ -94,13 +94,16 @@ export class ServicesGTPComponent implements OnInit {
     return this.frm.controls;
   }
 
-  onSubmitServicio(){
-    if (this.frm.valid)
-      {
+  onSubmitServicio() {
+    if (this.frm.valid) {
           let value: DataServiceGTP;
           value = this._service;
-          value.acceptednewName = (this.frm.value.NewName =='S');
-          value.acceptednewNameCode = (this.frm.value.NewNameCod =='S');
+         // value.acceptednewName = (this.frm.value.NewName === 'S');
+         // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
+          // tslint:disable-next-line:max-line-length
+          value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
+          // tslint:disable-next-line:max-line-length
+          value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
           this.grabar.emit(value);
       }
   }

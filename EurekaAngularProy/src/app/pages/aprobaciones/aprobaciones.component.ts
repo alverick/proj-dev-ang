@@ -197,8 +197,6 @@ export class AprobacionesComponent implements OnInit {
               }
 
               if (this.Enterprise.name === this.Enterprise.newName) {
-
-                console.log('SOLO ENVIA SERVICIOS');
                 this.gtpService.AprobarEmpresaServ({ EnterpriseObj: null , ListServiceObj: this.scv })
                 .subscribe(d => {
                   if (d) {
