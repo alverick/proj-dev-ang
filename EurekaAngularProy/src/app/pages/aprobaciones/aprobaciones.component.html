@@ -69,20 +69,20 @@
                                         <div class="card-aprobaciones mb-2"   *ngFor="let svc of gtpService.services; let i = index" [class.seleccionado]="indiceActual === i" >
                                             <div   class=" pl-4">
                                                 <div class="pl-1 row pb-0">
-                                                      <div class="col-sm-12 pt-3">
-                                                        <div class="font-text-services">{{svc.name}}</div>
-                                                      </div>
+                                                  <div class="col-sm-12 pt-3">
+                                                    <div *ngIf="svc.name == '?' && svc.newName == '?'" class="font-text-services" >Servicio no aprobado </div>
+                                                    <div *ngIf="svc.name  == '?' && svc.newName !== '?'" class="font-text-services" >{{svc.newName}} </div>
+                                                    <div *ngIf="svc.name  !== '?' && svc.newName !== '?'" class="font-text-services" >{{svc.name}} </div>
+                                                  </div>
 
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
-                                                    <tr>
+                                                  <tr>
 
-                                                      <td class="font-black-servicios-des-list" *ngIf="(svc.name == svc.newName  &&  svc.accountNumber == svc.newNameCode) &&  svc.inReview "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
-                                                      <td class="font-black-servicios-des-list" *ngIf="(svc.name !== svc.newName  &&  svc.accountNumber !== svc.newNameCode) &&  svc.inReview "><span class="badge badge-warning" >Edicion de Servicio</span> </td>
-                                                     <!--   <td class="font-black-servicios-des-list" *ngIf="svc.name == '' && svc.accountNumber == '' "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(svc.name !== svc.newName)  &&  (svc.accountNumber !== svc.newNameCode)"><span class="badge badge-primary" >edicion de Servicio</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="svc.name == svc.newName  &&  svc.accountNumber == svc.newNameCode"><span class="badge badge-primary" >edicion de Servicio</span> </td> -->
-                                                    </tr>
+                                                    <td class="font-black-servicios-des-list" *ngIf="(svc.name == '?'  &&  svc.debtorCode ==  '?') &&  svc.inReview "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
+
+                                                    <td class="font-black-servicios-des-list" *ngIf="((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) &&  svc.inReview "><span class="badge badge-warning" >Edicion de Servicio</span> </td>
+                                                  </tr>
                                                     <tr *ngIf="svc.inReview == false" >
                                                         <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr>
