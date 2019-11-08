@@ -57,6 +57,7 @@ import { EmpresaGTPComponent } from './pages/empresa-gtp/empresa-gtp.component';
 import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PopoverComponent } from './pages/home/popover/popover.component';
+import { LoadFileComponent } from './shared/load-file/load-file.component';
 
 @NgModule({
   declarations: [
@@ -83,8 +84,9 @@ import { PopoverComponent } from './pages/home/popover/popover.component';
     OnlyNumbersDirective,
     EmpresaGTPComponent,
     ServicesGTPComponent,
-    PopoverComponent
-    ],
+    PopoverComponent,
+    LoadFileComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -146,7 +148,8 @@ import { PopoverComponent } from './pages/home/popover/popover.component';
                     UploadProgressComponent,
                     ValidationComponent,
                     PagosComponent,
-                    PopoverComponent
+                    PopoverComponent,
+                    LoadFileComponent
                     ]
 })
 export class AppModule { }

@@ -1,14 +1,14 @@
 <mat-dialog-actions align="end">
-    <div  style="cursor: pointer;" class="pt-2" (click)="close()">
-        <span class="pr-2 pt-1"><span  style="cursor: pointer;" class="cancelar">Cancelar</span> </span>
-        <img height="20" width="20" style="cursor: pointer;" src="assets/images/cerrar.svg">
+    <div style="cursor: pointer;" class="pt-2" (click)="close()">
+        <span  class="pr-2 pt-1"><span  style="cursor: pointer;" class="cancelar">Minimizar</span> </span>
+        <mat-icon class="svg_custom" svgIcon="eurc_minimize"></mat-icon>
     </div>
 </mat-dialog-actions>
 
 <div class="content p-0">
     <div class="title ">Agrega deudas del servicio <span class="resaltado">{{excelService.service.name}}</span></div>
     <br/>
-    <ng-template #landing>
+    <div *ngIf="!excelService.statusUpload && !ready">
         <div class="landing">
             <div class="text">Sube la plantilla con las nuevas deudas de tus clientes</div>
             <div class="text">¿No tienes la plantilla excel del servicio {{excelService.service.name}} ? <span class="link" (click)="descargarPlantilla()">Descárgala aquí</span></div>
@@ -23,10 +23,10 @@
         SELECCIONAR PLANTILLA
       </button>
         </div>
-    </ng-template>
+    </div>
 
-        <small  *ngIf="ready">Archivo seleccionado</small>
-        <div style="margin-left: 160px;" *ngIf="ready; else landing" class="text-center">
+        <small  *ngIf="!excelService.statusUpload && ready">Archivo seleccionado</small>
+        <div style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
             <div class="input-file">
                 <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{fileName}}</div></span>
             </div>

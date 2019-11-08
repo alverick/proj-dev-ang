@@ -1,5 +1,5 @@
 import { Date } from './../../shared/models/date';
-import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild} from '@angular/core';
+import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -30,11 +30,12 @@ import { Observable, Subject } from 'rxjs';
 import { isNgTemplate } from '@angular/compiler';
 import { Popover } from './popover/popover.service';
 import { PagosComponent } from './pagos/pagos.component';
+import { LoadFileService } from 'src/app/shared/load-file/load-file.service';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
 
-export const MY_FORMATS = {
+const MY_FORMATS = {
   parse: {
     dateInput: 'DD/MM/YYYY',
   },
@@ -170,6 +171,8 @@ export class HomeComponent implements OnInit {
   messageTable: string ='';
   showArrow: boolean = false;
 
+  @ViewChild('fileLoad', { read: ViewContainerRef, static: true }) fileLoadContainer : ViewContainerRef;
+
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
@@ -180,8 +183,9 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
     private popover: Popover,
-    private gaService: GoogleAnalytics) {
-
+    private gaService: GoogleAnalytics,
+    private fileLoad: LoadFileService) {
+      transactionService.itemsForDelete = [];
     }
      /*
      @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
@@ -209,6 +213,7 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.fileLoad.verify(this.fileLoadContainer);
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
     this.homeService.getServices(true).subscribe(
@@ -519,7 +524,7 @@ orderList(index: number, asc: boolean) {
   BotonEditar(item: Debts) {
     item.editInput =true;
     item.editButton = true;
-    item.editPending = (item.status === 'PENDIENTE');
+    item.editPending = (item.status === 'PENDIENTE' || (item.status === 'VENCIDO' && item.amountPayed === 0));
     item.newStatus =  '1';
     item.newDueDate = item.dueDate;
     item.newEmissionDate = item.emissionDate;
@@ -527,9 +532,6 @@ orderList(index: number, asc: boolean) {
     item.newAmount = item.amount.toFixed(2);
     item.newFirstName = item.firstName;
     item.newLastName = item.lastName;
-
-    console.log('fechas');
-
   }
 
   selectEstPag(event, item: Debts){
@@ -903,6 +905,7 @@ Ocultar() {
 }
 
   openDialog(service: any) {
+    this.fileLoad.close();
     this.OcultaListaExcel = false;
     this.cargaExcel = false;
     this.excelService.service = service;
@@ -912,7 +915,8 @@ Ocultar() {
      // disableClose: true
     });
     dialogRef.afterClosed().subscribe((result: Observable<any>) => {
-
+      dialogRef.componentInstance.ready = false;
+      this.fileLoad.verify(this.fileLoadContainer);
       if (result) {
         result.subscribe(() => {
           this.consultaDeuda();
@@ -920,7 +924,7 @@ Ocultar() {
       }
     });
     console.log('SERVICIOS');
-   console.table(this.typeList);
+    console.table(this.typeList);
   }
 
   DescargarReporte() {

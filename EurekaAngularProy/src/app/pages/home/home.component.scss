@@ -62,7 +62,8 @@ body {
                     color: $textgreen;
                 }
                 .btn-eliminar {
-                    margin-left: 25px;
+                  cursor: pointer;
+                  margin-left: 25px;
                     color: $textgreen;
                     display: block;
                     width: 40px;
@@ -74,7 +75,6 @@ body {
                       }
                     }
                     img {
-                        cursor: pointer;
                         width: 20px;
                         height: 20px;
                         line-height: 0;
