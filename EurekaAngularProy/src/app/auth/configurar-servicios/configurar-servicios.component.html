@@ -42,10 +42,12 @@
                                             </tr>
                                             <tr>
                                                 <th style="width:150px;" class="font-black-servicios-list">Código deudor</th>
-                                                <td *ngIf="inGTP" class="font-black-servicios-des-list">{{ getCodigoNameGTP(svc) }}</td>
-                                                <td *ngIf="!inGTP" class="font-black-servicios-des-list">{{ getCodDebtor(svc) }}</td>
+                                                <td *ngIf="!inEdit  && !inGTP" class="font-black-servicios-des-list">{{ getCodDebtorCreate(svc) }} </td>
+                                                <td *ngIf="inGTP" class="font-black-servicios-des-list">{{ getCodigoNameGTP(svc)}} </td>
+                                                <td *ngIf="inEdit" class="font-black-servicios-des-list">{{ getCodDebtor(svc) }} </td>
+
                                             </tr>
-                                            
+
                                             <tr *ngIf="svc.tipoDato === 'C'">
                                                 <th style="width:150px;" class="font-black-servicios-list">Mora</th>
                                                 <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }} </td>

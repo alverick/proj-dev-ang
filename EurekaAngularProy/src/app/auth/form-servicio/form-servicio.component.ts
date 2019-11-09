@@ -82,7 +82,7 @@ export class FormServicioComponent implements OnInit {
       codDeudor: new FormControl({ value: (this._service.codDeudor   === 'RUC' ||
       this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro'
       , disabled: false }, [Validators.required]),
-      nameCod: new FormControl({ value: this._service.codDeudor, disabled: false}),
+      nameCod: new FormControl({ value: (this._service.codDeudor == 'Otro')? this._service.nameCod : this._service.codDeudor , disabled: false}),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],

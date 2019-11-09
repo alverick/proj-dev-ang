@@ -11,5 +11,5 @@ export interface DataEnterpriseModel {
     password?: string;
     newPassword?: string;
     confirmNewPassword?: string;
-    inReview: boolean  ;
+    inReview?: boolean  ;
 }

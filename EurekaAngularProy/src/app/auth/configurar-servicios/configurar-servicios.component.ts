@@ -50,12 +50,13 @@ export class ConfigurarServiciosComponent implements OnInit {
       this.inGTP = d.isgtp;
       if (d.isgtp === true) {
         /////////////////////////PORTAL GTP //////////////////////////////////////
-        console.log('GTP');
+
         window['_url_loop_'] = 'editarSvcGTP';
         history.pushState(null, null, 'editarSvcGTP');
         this.afiliacionService.services = [];
-       // this.afiliacionService.services = this.gtpService.EmpresaServicios.arrayServices;
-       // this.gtpService.EmpresaServicios.arrayServices = [];
+        console.log('GTP');
+        console.log(this.gtpService.EmpresaServicios.arrayServices);
+        console.log('CIERRA');
         this.gtpService.EmpresaServicios.arrayServices.forEach(s => {
           this.afiliacionService.services.push({
             id: s.id,
@@ -70,9 +71,9 @@ export class ConfigurarServiciosComponent implements OnInit {
             nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
             moneda: s.currency,
             simboloMoneda: s.currencySymbol,
-            usaWebApp: s.usaWebApp,
-            usaAgente: s.usaAgente,
-            usaTienda: s.usaTienda,
+            usaWebApp: s.useAppWeb,
+            usaAgente: s.useAgent,
+            usaTienda: s.useStore,
             cobraMora: s.chargeInterest,
             periodoMora: s.chargeType.toString(),
             tipoMora: s.interestType,
@@ -355,15 +356,27 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   getCodDebtor(svc: ServiceModel) {
+
     if (svc.codDeudor === '') {
       return svc.newNameCode;
-    }else{
-      if (svc.codDeudor === 'Otro')
-      return svc.nameCod;
-      return svc.codDeudor;
+    } else {
+      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+        // tslint:disable-next-line: no-unused-expression
+        return svc.codDeudor;
+      }
+      svc.codDeudor = 'Otro';
+      return svc.newNameCode;
     }
-
   }
+  getCodDebtorCreate(svc: ServiceModel) {
+    if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+        // tslint:disable-next-line: no-unused-expression
+        return svc.codDeudor;
+      }
+      svc.codDeudor = 'Otro';
+      return svc.nameCod;
+  }
+
 /*
  newName : s.newName,
             newNameCode : s.newNameCode,
@@ -372,11 +385,17 @@ getNameGTP(svc: ServiceModel) {
   if (svc.nombre === '?' &&  svc.newName === '?' ) {
      return 'Serv no aprobado';
   }
+  if (svc.nombre !== '?' &&  svc.newName !==  '?' ) {
+    return svc.nombre;
+ }
 }
 getCodigoNameGTP(svc: ServiceModel) {
   if (svc.codDeudor === '?' &&  svc.newNameCode === '?' ) {
      return 'Cod Deudor no aprobado';
   }
+  if (svc.codDeudor !== '?' ||  svc.newNameCode !== '?' ) {
+    return  svc.newNameCode;
+ }
 }
 
 
@@ -522,7 +541,7 @@ getName(svc: ServiceModel) {
         svc.nombre += nro.toString();
       }
       this.afiliacionService.services.push(svc);
-       
+
     }
     this.Formulario = false;
     this.Formulariogtp = false;
