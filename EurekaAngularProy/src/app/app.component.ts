@@ -36,7 +36,11 @@ export class AppComponent {
         'eurc_trash',
         domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/trash.svg'),
         { viewBox: '0 0 20 20' });
-    }
+      matIconRegistry.addSvgIcon(
+        'eurc_minimize',
+        domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/minimize.svg'),
+        { viewBox: '0 0 24 24' });
+      }
 
   public show(): boolean{
     if(this.router.url.includes('/login')){

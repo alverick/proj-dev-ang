@@ -1,5 +1,5 @@
 import { Error } from './../models/error.model';
-import { Injectable } from '@angular/core';
+import { Injectable, ɵɵtextInterpolateV } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { StorageService } from "./storage.service";
@@ -88,5 +88,17 @@ export class ExcelService {
       headers: headers,
       responseType: 'blob'
     });
+  }
+
+  GetLastProcess(): Observable<any> {
+    const url = `${this.URI_API}/debt/process/last?_=${new Date().getTime()}`;
+    return this.http.get<any>(url)
+      .pipe(map(v => {
+        if (v.status !== 'COMPLETED' && v.status !== 'REJECTED') {
+          this.statusUpload = true;
+          this.idProcess = v.id;
+        }
+        return v;
+      }));
   }
 }

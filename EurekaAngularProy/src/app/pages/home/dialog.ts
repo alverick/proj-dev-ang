@@ -50,7 +50,12 @@ declare var $: any;
             this.excelService.errores = [];
           }
         });
-
+      this.excelService.GetLastProcess()
+        .subscribe(r => {
+          if (r.status !== 'COMPLETED' && r.status !== 'REJECTED') {
+            this.verifyStatus();
+          }
+        });
     }
 
     ngAfterContentInit() {
@@ -117,7 +122,10 @@ declare var $: any;
     };
 
     private verifyStatus() {
+      this.ready = true;
       let recursiveFunc = (value) => {
+        console.log('verify status dialog');
+        if (!this.ready) return;
         if (value.status === "REJECTED") {
           this.excelService.statusUpload = false;
           this.rowsAccepted = value.rowsUploaded;

@@ -5,12 +5,34 @@ import { TransactionService } from "src/app/shared/services/transaction.service"
 import { PagoService } from "src/app/shared/services/pago.service";
 import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
 import { PopoverRef } from "../popover/popover-ref";
+import * as _moment from 'moment';  // dejalo si sale error
+import { default as _rollupMoment } from 'moment';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { MomentDateAdapter } from "@angular/material-moment-adapter";
+
+const moment = _rollupMoment || _moment;
+
+const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 declare var $: any;
 @Component({
   selector: 'app-pagos',
   templateUrl: './pagos.component.html',
-  styleUrls: ['./pagos.component.scss']
+  styleUrls: ['./pagos.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ]
 })
 export class PagosComponent implements OnInit {
   showed = false;
