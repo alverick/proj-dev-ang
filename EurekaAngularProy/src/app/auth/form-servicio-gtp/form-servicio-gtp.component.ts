@@ -86,9 +86,16 @@ export class FormServicioGtpComponent implements OnInit {
 
 
         this.frm = this.fb.group({
-        nombre: new FormControl({ value: this._service.nombre, disabled:  this._service.NewName }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-        codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this._service.NewNameCod }, [Validators.required]),
-        nameCod: new FormControl({ value: this._service.nameCod, disabled: this._service.NewNameCod}),
+        nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName.substring(3, this._service.newName.length).toString(),
+          disabled:  this._service.NewName }, [Validators.required, Validators.minLength(3), Alfanumerico,
+            Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+        codDeudor: new FormControl({ value: (this._service.codDeudor !== '?')? this._service.codDeudor: ( (this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'RUC' ||
+        this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'DNI' ||
+        this._service.newNameCode.substring(3, this._service.newNameCode.length)  === 'Codigo Interno') ?
+        this._service.newNameCode.substring(3, this._service.newNameCode.length).toString() : 'Otro'),
+        disabled: this._service.NewNameCod }, [Validators.required]),
+        nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : (this._service.newNameCode.substring(3, this._service.newNameCode.length).toString()),
+           disabled: this._service.NewNameCod}),
         tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
         tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
         idCuenta: new FormControl({ value: this._service.idCuenta, disabled: true}, [Validators.required,Validators.minLength(13)]),

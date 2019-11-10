@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, EventEmitter, HostListener, ɵConsole } from '@angular/core';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
@@ -218,23 +218,23 @@ export class ConfigurarServiciosComponent implements OnInit {
 
       let Svc = [] ;
       let svcinReview = this.afiliacionService.services.filter((v) => v.inReview === true);
-      console.log('ESTAS EN GTP marcelo');
-      console.log(svcinReview);
+    /*  console.log('ESTAS EN GTP marcelo');
+      console.log(svcinReview);*/
 
       svcinReview.forEach(s => {
        Svc.push({
           ServiceId: s.id,
           NewName: s.nombre,
-          NewNameCod: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor
+          NewCodName: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor
         });
       });
-      console.log('ESTAS EN GTP marcelo 2');
+   /*   console.log('ESTAS EN GTP marcelo 2');
 
       console.log(this.gtpService.EdtEmpServ);
       if (Svc.length === 0) {
         console.log('SERV cero' + Svc.length);
       }
-      console.log(Svc);
+      console.log(Svc);*/
 
       Swal.fire({
         title: 'Editar',
@@ -251,24 +251,29 @@ export class ConfigurarServiciosComponent implements OnInit {
           if (r.value) {
             if (Svc.length === 0) {
               this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
-                NewName: this.gtpService.EdtEmpServ.NewName, ArrayService : null })
+                NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : null })
               .subscribe(d => {
+                console.log('ESTA API DEVUELVE '+ d);
             if (d === true) {
               this.router.navigate(['/login']);
             } else {
-
+              console.log('HOLA 1');
+              console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName, Svc);
             }
 
             });
 
             } else {
               this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
-                NewName: this.gtpService.EdtEmpServ.NewName, ArrayService : Svc })
+                NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : Svc })
               .subscribe(d => {
+                console.log('ESTA API DEVUELVE '+ d);
               if (d === true) {
                 this.router.navigate(['/login']);
               } else {
-
+                console.log('HOLA 2');
+                console.log('lenght de servicio'+ Svc.length);
+                console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName,Svc);
               }
               });
             }
@@ -374,7 +379,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         return svc.codDeudor;
       }
       svc.codDeudor = 'Otro';
-      return svc.nameCod;
+      return svc.newNameCode;
   }
 
 /*
@@ -382,28 +387,33 @@ export class ConfigurarServiciosComponent implements OnInit {
             newNameCode : s.newNameCode,
 */
 getNameGTP(svc: ServiceModel) {
-  if (svc.nombre === '?' &&  svc.newName === '?' ) {
-     return 'Serv no aprobado';
-  }
-  if (svc.nombre !== '?' &&  svc.newName !==  '?' ) {
+  if (svc.nombre  !== '?') {
     return svc.nombre;
  }
-}
-getCodigoNameGTP(svc: ServiceModel) {
-  if (svc.codDeudor === '?' &&  svc.newNameCode === '?' ) {
-     return 'Cod Deudor no aprobado';
-  }
-  if (svc.codDeudor !== '?' ||  svc.newNameCode !== '?' ) {
-    return  svc.newNameCode;
+  if (svc.nombre  === '?') {
+    return svc.newName.substring(3, svc.newName.length).toString();
  }
 }
-
 
 getName(svc: ServiceModel) {
   if (svc.nombre === '?')
     return svc.newName;
   return svc.nombre;
 }
+
+getCodigoNameGTP(svc: ServiceModel) {
+  if (svc.codDeudor !== '?' ) {
+    if (svc.codDeudor === 'Otro' ) {
+      return  svc.nameCod;
+    }
+    return  svc.codDeudor;
+ }
+  if (svc.codDeudor === '?' ) {
+    return  svc.newNameCode.substring(3, svc.newNameCode.length).toString();
+ }
+}
+
+
 
 
   delService(index: number) {
@@ -504,7 +514,9 @@ getName(svc: ServiceModel) {
   }
 
   onGrabar(svc: ServiceModel) {
-    console.log('CIERRA EL FORMIULARIO');
+    console.log('Servicios');
+    console.table( this.afiliacionService.services);
+    console.log('cierra');
     if (this.indiceActual >= 0) {
       if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({

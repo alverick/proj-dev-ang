@@ -41,12 +41,12 @@ export class ServicesGTPComponent implements OnInit {
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.newName === '?' ? 'nombre de servicio aun no aprobado': this._service.newName, disabled: true },
+      nombre: new FormControl({ value: (this._service.name === '?')?(this._service.newName.substring(3, this._service.newName.length)):this._service.name , disabled: true },
         [Validators.required, Validators.minLength(3),
         Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
       codDeudor: new FormControl({ value: (this._service.debtorCode   === 'RUC' ||  this._service.debtorCode  === 'DNI' ||
       this._service.debtorCode === 'Codigo Interno') ? this._service.debtorCode : 'Otro', disabled: true }, [Validators.required]),
-      nameCod: new FormControl({ value: (this._service.debtorCode == 'Otro')? this._service.newNameCode : this._service.debtorCode , disabled: true}),
+      nameCod: new FormControl({ value: (this._service.debtorCode == '?')? this._service.newNameCode.substring(3, this._service.newNameCode.length) : this._service.debtorCode , disabled: true}),
       tipoDato: new FormControl({ value: this._service.dataType, disabled: true }, Validators.required),
       tipoPago: new FormControl({ value: this._service.paymentType, disabled: true }, Validators.required),
       idCuenta: new FormControl({ value: this._service.idAccount, disabled: true }, Validators.required),
@@ -93,6 +93,32 @@ export class ServicesGTPComponent implements OnInit {
 
   get f(): any {
     return this.frm.controls;
+  }
+
+  RadioAprovveName() {
+    if (( this._service.inReview && this._service.name !== '?') && (this._service.name  !== this._service.newName  )) {
+      return true;
+    }
+    if ( this._service.newName.substring(0, 3) === '???') {
+      return false;
+    }
+  }
+  RadioAprovveNameCod() {
+    if (( this._service.inReview && this._service.debtorCode !== '?') && (this._service.debtorCode  !== this._service.newNameCode  )) {
+      return true;
+    }
+    if ( this._service.newNameCode.substring(0, 3) === '???') {
+      return false;
+    }
+  }
+
+  Button() {
+    if((( this._service.inReview && this._service.name !== '?') && (this._service.name  !== this._service.newName  )) ||  (( this._service.inReview && this._service.debtorCode !== '?') && (this._service.debtorCode  !== this._service.newNameCode  ))){
+      return true;
+    }
+    if( ( this._service.newNameCode.substring(0, 3) === '???') || ( this._service.newName.substring(0, 3) === '???')){
+      return false;
+    }
   }
 
   onSubmitServicio() {

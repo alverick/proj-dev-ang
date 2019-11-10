@@ -50,7 +50,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   getInfoEmpresa() {
     this.configEmpresaService.getDatosEmpresa()
       .subscribe( dataEnterprise => {
-        console.table(dataEnterprise);
+
         this.dataEmpresa = dataEnterprise;
         this.formGroup.setValue(dataEnterprise);
           }

@@ -93,6 +93,15 @@ export class AprobacionesComponent implements OnInit {
     }
   }
 
+
+  getNameSvc(svc: DataServiceGTP) {
+    if (svc.name  !== '?') {
+      return svc.name;
+   }
+    if (svc.name  === '?') {
+      return svc.newName.substring(3, svc.newName.length).toString();
+   }
+  }
   VerCamposEnterprise(etp: DataEnterpriseGTP) {
     if (this.ServiciosFormulario === true) {
       this.mensaje('Aprobando Servicio ',
@@ -281,7 +290,7 @@ export class AprobacionesComponent implements OnInit {
                 console.log(d);
                 if (d) {
                   this.router.navigate(['/gtp']);
-                } else {  
+                } else {
 
                 }
 
@@ -328,12 +337,26 @@ export class AprobacionesComponent implements OnInit {
       this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + total + ' observaciones' );
     }
   }
-  getName(svc: DataServiceGTP) {
-    if (svc.name === '?')
-      return svc.newName;
-    return svc.name;
-  }
 
+  getName(svc: DataServiceGTP) {
+    if (svc.name  === '?' && svc.newName !== '?' ){
+      return svc.newName.substring(3, svc.newName.length).toString();
+    }
+    if ( svc.name  !== '?' && svc.newName !== '?') {
+      return svc.name;
+    }
+  }
+   getState(svc: DataServiceGTP) {
+    if (((svc.name === '?'  &&  svc.debtorCode === '?') &&  svc.inReview) && (svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???') ) {
+      return 'Nuevo Servicio';
+    }
+    if(svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???') {
+      return 'Servicio Rechazado';
+    }
+    if (((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) &&  svc.inReview) {
+      return 'Edicion de Servicio';
+    }
+  }
 OcultarFormulario(requireConfirm: boolean) {
   if (requireConfirm) {
     Swal.fire({
