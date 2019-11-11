@@ -135,18 +135,19 @@ export class AprobacionesComponent implements OnInit {
     const nombreApp = this.gtpService.services.filter((v) => v.acceptednewName === false && v.inReview === true ).length;
     // cuantos Codigos deudores fueron deshaprobados
     const CodDeuApp = this.gtpService.services.filter((v) => v.acceptednewNameCode === false && v.inReview === true ).length;
+    // filtra los que estan en estado inReview y los quye no estan devueltos
     const ListInReview = this.gtpService.services.filter((svc) =>  (svc.inReview === true) &&
      (svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???'));
-     // suma codigo deudor y nombre de serivicio
+     // suma codigo deudor y nombre de serivicio deshaprobados
     let notAprov = CodDeuApp + nombreApp;
     let sercant = 0;
-    // duplica por que calcula por los 2
+    // duplica por que calcula por los 2 la cantidad que falta
     let cant = (svcSinCta * 2);
 
     if (this.Enterprise.NombreApproved === null ) {
       sercant =  1;
     }
-    // suma la empresa
+    // suma la empresa  desaprobada
     if (this.Enterprise.NombreApproved === false ) {
       notAprov + 1;
     }

@@ -218,8 +218,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
       let Svc = [] ;
       let svcinReview = this.afiliacionService.services.filter((v) => v.inReview === true);
-    /*  console.log('ESTAS EN GTP marcelo');
-      console.log(svcinReview);*/
+
 
       svcinReview.forEach(s => {
        Svc.push({
@@ -228,13 +227,13 @@ export class ConfigurarServiciosComponent implements OnInit {
           NewCodName: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor
         });
       });
-   /*   console.log('ESTAS EN GTP marcelo 2');
+      console.log('ESTAS EN GTP marcelo 2');
 
       console.log(this.gtpService.EdtEmpServ);
       if (Svc.length === 0) {
         console.log('SERV cero' + Svc.length);
       }
-      console.log(Svc);*/
+      console.log(Svc);
 
       Swal.fire({
         title: 'Editar',
@@ -281,7 +280,9 @@ export class ConfigurarServiciosComponent implements OnInit {
       });
 
 
-    } else {
+    }
+
+    else {
 
     if (this.Formulario === true) {
       Swal.fire({

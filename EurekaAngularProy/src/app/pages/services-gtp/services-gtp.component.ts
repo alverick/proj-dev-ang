@@ -101,45 +101,48 @@ export class ServicesGTPComponent implements OnInit {
   }
 
   RadioAprovveName() {
-    if ( (this._service.name  !== this._service.newName  ) ){
+   /* if ( (this._service.name  !== this._service.newName  ) ) {
       return true;
-    }
+    } */
     if (( this._service.inReview && this._service.name !== '?') && (this._service.name  !== this._service.newName  )) {
       return true;
     }
-    if (( this._service.inReview && this._service.name === '?') && (this._service.name  !== this._service.newName  )) {
+    if (( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) {
       return true;
     }
-    if ( this._service.newName.substring(0, 3) === '???') {
+   /* if ( this._service.newName.substring(0, 3) === '???') {
+      return false;
+    } */
+    if( (this._service.name === '?' || this._service.newName.substring(0, 3) === '???' )){
       return false;
     }
   }
   RadioAprovveNameCod() {
-    if ( (this._service.debtorCode  !== this._service.newNameCode  )) {
+   /* if ( (this._service.debtorCode  !== this._service.newNameCode  )) {
       return true;
-    }
+    } */
     if (( this._service.inReview && this._service.debtorCode !== '?') && (this._service.debtorCode  !== this._service.newNameCode  )) {
       return true;
     }
-    if (( this._service.inReview && this._service.debtorCode === '?') && (this._service.debtorCode  !== this._service.newNameCode  )) {
+    if (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???')) {
       return true;
     }
-    if ( this._service.newNameCode.substring(0, 3) === '???') {
+    if ( this._service.debtorCode === '?'  || this._service.newNameCode.substring(0, 3) === '???') {
       return false;
     }
   }
 
   Button() {
-    if((this._service.name  !== this._service.newName  ) || (this._service.debtorCode  !== this._service.newNameCode  )){
+  /*  if((this._service.name  !== this._service.newName  ) || (this._service.debtorCode  !== this._service.newNameCode  )){
+      return true;
+    } */
+    if( (( this._service.inReview && this._service.name !== '?') && (this._service.name  !== this._service.newName  )) ||  (( this._service.inReview && this._service.debtorCode !== '?') && (this._service.debtorCode  !== this._service.newNameCode  ))){
       return true;
     }
-    if((( this._service.inReview && this._service.name === '?') && (this._service.name  !== this._service.newName  )) ||  (( this._service.inReview && this._service.debtorCode === '?') && (this._service.debtorCode  !== this._service.newNameCode  ))){
+    if((( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) ||  (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???'))){
       return true;
     }
-    if((( this._service.inReview && this._service.name !== '?') && (this._service.name  !== this._service.newName  )) ||  (( this._service.inReview && this._service.debtorCode !== '?') && (this._service.debtorCode  !== this._service.newNameCode  ))){
-      return true;
-    }
-    if( ( this._service.newNameCode.substring(0, 3) === '???') || ( this._service.newName.substring(0, 3) === '???')){
+    if( ( this._service.debtorCode === '?'  || this._service.newNameCode.substring(0, 3) === '???') || (this._service.name === '?' || this._service.newName.substring(0, 3) === '???' )){
       return false;
     }
   }
