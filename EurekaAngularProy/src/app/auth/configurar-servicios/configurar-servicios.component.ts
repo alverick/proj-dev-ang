@@ -362,15 +362,24 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   getCodDebtor(svc: ServiceModel) {
 
-    if (svc.codDeudor === '') {
-      return svc.newNameCode;
-    } else {
+      if(svc.codDeudor === svc.newNameCode){
+        return svc.newNameCode;
+      }
+      if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
+          return svc.nameCod;
+      }
+      if (svc.codDeudor === '?') {
+        if (svc.newNameCode.substring(0, 3) === '???') {
+          return svc.newNameCode.substring(3, svc.newNameCode.length);
+        }
+        return svc.newNameCode;
+      } else {
       if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
         // tslint:disable-next-line: no-unused-expression
         return svc.codDeudor;
       }
-      svc.codDeudor = 'Otro';
-      return svc.newNameCode;
+     // svc.codDeudor = 'Otro';
+     // return svc.newNameCode.substring(3, svc.newNameCode.length);
     }
   }
   getCodDebtorCreate(svc: ServiceModel) {
@@ -396,8 +405,14 @@ getNameGTP(svc: ServiceModel) {
 }
 
 getName(svc: ServiceModel) {
-  if (svc.nombre === '?')
-    return svc.newName;
+  if (svc.nombre === '?'){
+    if(svc.newName.substring(0,3) === '???'){
+      return svc.newName.substring(3, svc.newName.length);
+    }else{
+      return svc.newName;
+    }
+  }
+
   return svc.nombre;
 }
 

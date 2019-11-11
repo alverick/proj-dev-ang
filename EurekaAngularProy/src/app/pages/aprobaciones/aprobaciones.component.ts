@@ -129,17 +129,24 @@ export class AprobacionesComponent implements OnInit {
     this.gtppost = null;
     this.scv = [] ;
     this.emp = null;
+    // cuantos faltan??
     const svcSinCta = this.gtpService.services.filter((v) => v.acceptednewName === null && v.inReview === true ).length;
+    // cuantos nombres fueron deshaprobados
     const nombreApp = this.gtpService.services.filter((v) => v.acceptednewName === false && v.inReview === true ).length;
+    // cuantos Codigos deudores fueron deshaprobados
     const CodDeuApp = this.gtpService.services.filter((v) => v.acceptednewNameCode === false && v.inReview === true ).length;
-    const ListInReview = this.gtpService.services.filter((v) =>  v.inReview === true );
+    const ListInReview = this.gtpService.services.filter((svc) =>  (svc.inReview === true) &&
+     (svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???'));
+     // suma codigo deudor y nombre de serivicio
     let notAprov = CodDeuApp + nombreApp;
     let sercant = 0;
+    // duplica por que calcula por los 2
     let cant = (svcSinCta * 2);
 
     if (this.Enterprise.NombreApproved === null ) {
       sercant =  1;
     }
+    // suma la empresa
     if (this.Enterprise.NombreApproved === false ) {
       notAprov + 1;
     }
@@ -339,8 +346,11 @@ export class AprobacionesComponent implements OnInit {
   }
 
   getName(svc: DataServiceGTP) {
-    if (svc.name  === '?' && svc.newName !== '?' ){
-      return svc.newName.substring(3, svc.newName.length).toString();
+    if (svc.name  === '?' && svc.newName !== '?' ) {
+      if (svc.newName.substring(0,3).toString() === '???' ) {
+        return svc.newName.substring(3, svc.newName.length).toString();
+      }
+      return svc.newName;
     }
     if ( svc.name  !== '?' && svc.newName !== '?') {
       return svc.name;

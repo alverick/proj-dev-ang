@@ -29,8 +29,7 @@
                 </mat-option>
             </mat-select> -->
             <input class="input-text"   matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod"  >
-            <div *ngIf="f.codDeudor.value === 'Otro'" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
-            <mat-error >
+             <mat-error >
                 <mat-error class="messsage-error" *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
