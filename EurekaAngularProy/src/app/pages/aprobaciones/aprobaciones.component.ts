@@ -137,7 +137,10 @@ export class AprobacionesComponent implements OnInit {
     const CodDeuApp = this.gtpService.services.filter((v) => v.acceptednewNameCode === false && v.inReview === true ).length;
     // filtra los que estan en estado inReview y los quye no estan devueltos
     const ListInReview = this.gtpService.services.filter((svc) =>  (svc.inReview === true) &&
-     (svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???'));
+     // tslint:disable-next-line:max-line-length
+     (/*(svc.newName.substring(0, 3).toString() !== '???') ||
+     (svc.newNameCode.substring(0, 3).toString() !== '???') ||*/
+     (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode)));
      // suma codigo deudor y nombre de serivicio deshaprobados
     let notAprov = CodDeuApp + nombreApp;
     let sercant = 0;

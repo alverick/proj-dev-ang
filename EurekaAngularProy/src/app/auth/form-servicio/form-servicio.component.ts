@@ -369,6 +369,9 @@ export class FormServicioComponent implements OnInit {
             console.log('ingresa 3.2');
             value.usaWebApp = true;
 
+            console.log('SERVICIO --MARCE');
+            console.log(value);
+            
             this.grabar.emit(value);
           }
       }

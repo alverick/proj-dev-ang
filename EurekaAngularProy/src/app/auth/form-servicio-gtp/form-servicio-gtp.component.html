@@ -1,8 +1,8 @@
 <form [formGroup]="frm" novalidate (submit)="onSubmitServicio()">
 
     <div class="form-group">
-        <mat-form-field class="w-100">
-            <label *ngIf="gtpMode && !_service.NewName" class="messsage-error" style="float: right;">Corregir este campo</label>
+        
+        <mat-form-field class="w-100">  
             <input class="input-text"   matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
             <mat-error >
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
@@ -11,14 +11,14 @@
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 30 caracteres</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && f.nombre.hasError('alfa')">El nombre debe tener por lo menos una letra o un numero</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && !f.nombre.hasError('alfa') && f.nombre.hasError('alfabetico')">El nombre debe tener por lo menos una letra </mat-error>
-
-            </mat-error>
+               
+            </mat-error> 
         </mat-form-field>
+        <div  *ngIf="!nombreAlert()" class="messsage-error" >Corregir este campo</div> 
     </div>
     <div class="form-group">
         <mat-form-field   class="w-100">
-            <label *ngIf="gtpMode && !_service.NewNameCod" class="messsage-error" style="float: right;">Corregir este campo</label>
-            <mat-label class="label">Código deudor</mat-label>
+             <mat-label class="label">Código deudor</mat-label>
             <mat-select   class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering
               panelClass="pts30" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
                 <mat-option class="input-text">Código Deudor</mat-option>
@@ -26,6 +26,7 @@
                     {{c.name}}
                 </mat-option>
             </mat-select>
+           
             <input  class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod" (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
             <div   *ngIf="!_service.NewNameCod && (f.codDeudor.value === 'Otro')" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
             <mat-error >
@@ -33,8 +34,10 @@
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
               <!--  <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>-->
-            </mat-error>
+             
+            </mat-error> 
         </mat-form-field>
+        <div  *ngIf="!CodiAlert()" class="messsage-error" >Corregir este campo</div>
     </div>
     <div class="form-group">
         <mat-form-field class="w-100">

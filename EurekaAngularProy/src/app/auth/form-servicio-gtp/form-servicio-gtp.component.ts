@@ -143,6 +143,12 @@ export class FormServicioGtpComponent implements OnInit {
 
   }
 
+  nombreAlert() {
+    return (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true;
+  }
+  CodiAlert() {
+    return (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true;
+  }
 
 
   onChangeTipoDato() {
@@ -180,7 +186,7 @@ export class FormServicioGtpComponent implements OnInit {
 
             value = this._service;
 
-            if (this._service.NewName) {
+           /* if (this._service.NewName) {
               value.codDeudor = this.frm.value.codDeudor;
               value.nameCod = this.frm.value.nameCod;
               this.grabar.emit(value);
@@ -193,7 +199,26 @@ export class FormServicioGtpComponent implements OnInit {
                 value.nameCod = this.frm.value.nameCod;
                 this.grabar.emit(value);
               }
+            } */
+          /*  if ( this._service.newName.substring(0, 3) === '???' ) {
+              value.nombre = this.frm.value.nombre;
+            } else {
+              value.nombre = null;
             }
+            if ( this._service.newNameCode.substring(0, 3) === '???') {
+              value.codDeudor = this.frm.value.codDeudor;
+              value.nameCod = this.frm.value.nameCod;
+            } else {
+              value.codDeudor = null;
+              value.nameCod = null;
+            } */
+            value.nombre = ( this._service.newName.substring(0, 3) === '???') ? this.frm.value.nombre : value.nombre ;
+            // tslint:disable-next-line:max-line-length
+            value.codDeudor = ( this._service.newNameCode.substring(0, 3) === '???') ?  this.frm.value.codDeudor : this._service.newNameCode;
+            value.nameCod = ( this._service.newNameCode.substring(0, 3) === '???') ? this.frm.value.nameCod : this._service.newNameCode;
+            console.log('valores' +  value.nombre + 'f'+  value.codDeudor+ 'f'+  value.nameCod );
+            this.grabar.emit(value);
+
     }
   }
 

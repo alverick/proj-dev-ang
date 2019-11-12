@@ -14,15 +14,15 @@
                         <form [formGroup]="formGroup" novalidate (ngSubmit)="onSubmit()" class="form">
                                 <div class="form-group ">
                                     <mat-form-field class="w-100">
-                                        <input class="input-text" matInput [readonly]="true" type="text" formControlName="ruc" placeholder="RUC">
+                                        <input class="input-text"  matInput [readonly]="true" type="text" formControlName="ruc" placeholder="RUC">
                                     </mat-form-field>
                                 </div>
-                                <div class="form-group">
-                                   <label *ngIf="( dataEmpresa.name  !== dataEmpresa.newName)  " class="messsage-error" style="float: right;">El cambio esta siendo procesado</label>
-                                  <label *ngIf="( dataEmpresa.name  == dataEmpresa.newName)  && dataEmpresa.inReview" class="messsage-error" style="float: right;">El nombre no fue aprobado, debe corregisrse</label>
+                                <div class="form-group"> 
+                                <!--  <label *ngIf="( dataEmpresa.name  == dataEmpresa.newName)  && dataEmpresa.inReview" class="messsage-error" style="float: right;">El nombre no fue aprobado, debe corregisrse</label> -->
                                     <mat-form-field class="w-100">
                                         <input class="input-text" matInput type="text" formControlName="name" placeholder="Nombre de la empresa">
                                     </mat-form-field>
+                                    <div  *ngIf="( dataEmpresa.name  !== dataEmpresa.newName)" class="messsage-error">El nuevo nombre {{ dataEmpresa.newName }} esta siendo procesado</div> 
                                 </div>
                                 <div class="input-text form-group  ">
                                     <mat-form-field class="w-100">

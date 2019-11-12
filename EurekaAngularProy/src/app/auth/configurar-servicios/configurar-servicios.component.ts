@@ -199,7 +199,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         else {
           this.addNewAfterSave = false;
         }
-      });
+       });
     }
     else {
       this.indiceActual = this.afiliacionService.services.length;
@@ -214,6 +214,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   EnviarServicios() {
 
+    // GTP
     if (this.inGTP) {
 
       let Svc = [] ;
@@ -223,10 +224,12 @@ export class ConfigurarServiciosComponent implements OnInit {
       svcinReview.forEach(s => {
        Svc.push({
           ServiceId: s.id,
-          NewName: s.nombre,
-          NewCodName: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor
+          NewName: (s.newName.substring(0, 3) === '???') ? s.nombre : null ,
+          // tslint:disable-next-line:max-line-length
+          NewCodName: (s.codDeudor === '?' && s.newNameCode.substring(0, 3) === '???') ? s.codDeudor : null,
         });
       });
+      // (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true
       console.log('ESTAS EN GTP marcelo 2');
 
       console.log(this.gtpService.EdtEmpServ);
