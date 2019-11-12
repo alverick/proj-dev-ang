@@ -246,6 +246,8 @@ export class ConfigurarServiciosComponent implements OnInit {
         confirmButtonText: 'GUARDAR',
         onOpen: drawPopup
       }).then(r => {
+
+        console.log('Lo que devuelve el token es '+r);
         this.sendAfterSave = true;
           if (r.value) {
             if (Svc.length === 0) {

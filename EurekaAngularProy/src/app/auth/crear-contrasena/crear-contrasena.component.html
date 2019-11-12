@@ -20,10 +20,10 @@
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
-                                <label *ngIf="inEdit " class="messsage-error" style="float: right;">Corregir este campo</label>
+                                <label *ngIf=" MensajeName()" class="messsage-error" style="float: right;">Corregir este campo</label>
                                 <mat-form-field class="super-full-width ">
 
-                                    <input class="input-text" formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de la empresa" minlength="3" maxlength="80">
+                                    <input class="input-text"   formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de la empresa" minlength="3" maxlength="80">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
