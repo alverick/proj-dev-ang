@@ -83,7 +83,8 @@ export class CrearContrasenaComponent implements OnInit {
             movilNumber: this.gtpService.EmpresaServicios.movilNumber ,
             newName: this.gtpService.EmpresaServicios.newName,
             status: this.gtpService.EmpresaServicios.status,
-            requestDate: this.gtpService.EmpresaServicios.requestDate
+            requestDate: this.gtpService.EmpresaServicios.requestDate,
+            inReview: false
           };
 
           this.registerForm.setValue({ ruc: this.gtpService.EmpresaServicios.ruc, nombre: this.gtpService.EmpresaServicios.name,
@@ -133,7 +134,7 @@ export class CrearContrasenaComponent implements OnInit {
     }
 
     if (this.inEdit === false) {
-     
+
       this.afiliacionService.Registrar({
         ruc: this.registerForm.value.ruc,
         name: this.registerForm.value.nombre,
@@ -206,9 +207,9 @@ export class CrearContrasenaComponent implements OnInit {
       return new Observable(obs => {
         this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
           .subscribe( d => {
-            
+
             if ( d === null  ) {
-             
+
               this.mensaje( 'Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
               this.router.navigate(['/login']);
               obs.error();
