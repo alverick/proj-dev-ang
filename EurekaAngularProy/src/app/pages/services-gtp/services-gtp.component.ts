@@ -119,9 +119,6 @@ export class ServicesGTPComponent implements OnInit {
     if (( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) {
       return true;
     }
-
-    // esta en revision
-
   }
   RadioAprovveNameCod() {
    /* if ( (this._service.debtorCode  !== this._service.newNameCode  )) {

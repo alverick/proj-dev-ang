@@ -410,6 +410,19 @@ getNameGTP(svc: ServiceModel) {
  }
 }
 
+
+pendienteRevision(svc: ServiceModel) {
+ if (this.inEdit ) {
+  if (((svc.nombre !== svc.newName) || (svc.nombre === '?' && svc.newName.substring(0, 3) === '???' )) || ((svc.codDeudor  !== svc.newNameCode ) || (svc.codDeudor === '?'  && svc.newNameCode.substring(0, 3) === '???') )) {
+    return true;
+  }
+ }else {
+  return false;
+ }
+
+
+}
+
 getName(svc: ServiceModel) {
   if (svc.nombre === '?'){
     if(svc.newName.substring(0,3) === '???'){

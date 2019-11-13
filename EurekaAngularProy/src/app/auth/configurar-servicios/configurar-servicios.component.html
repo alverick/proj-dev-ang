@@ -17,7 +17,7 @@
                                             </div>
                                             <div *ngIf="!inGTP" class="col-sm-9 pt-3">
                                                 <div class="font-text-services">{{getName(svc)}}</div>
-                                                <mat-error *ngIf="svc.inReview" class="messsage-error">Pendiente de revisión</mat-error>
+                                                <mat-error *ngIf="pendienteRevision(svc)" class="messsage-error">Pendiente de revisión</mat-error>
                                             </div>
                                             <div class="col-sm-1 mb-0">
                                                 <ul *ngIf="inGTP" class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
