@@ -26,7 +26,7 @@
                                                     </li>
                                                 </ul>
                                                 <ul *ngIf="!inGTP" class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
-                                                    <li *ngIf="!svc.inReview && indiceActual!==i">
+                                                    <li> <!-- *ngIf="!svc.inReview && indiceActual!==i"-->
                                                         <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
                                                     </li>
                                                     <li class="ml-2" *ngIf="!inGTP &&  afiliacionService.services.length > 1">

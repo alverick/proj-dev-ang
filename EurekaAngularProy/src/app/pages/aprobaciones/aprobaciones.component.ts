@@ -125,7 +125,206 @@ export class AprobacionesComponent implements OnInit {
 
   }
 
-  EnviarAprobados() {
+  EnviarAprobados(){
+    // limpiar el array
+    this.scv = [] ;
+    // NO APROBADOS
+    const nombreApp = this.gtpService.services.filter((svc) => svc.acceptednewName === false && (svc.name !== svc.newName)).length;
+    const CodDeuApp = this.gtpService.services.filter((svc) => svc.acceptednewNameCode === false && (svc.debtorCode !== svc.newNameCode)).length;
+
+    // tslint:disable-next-line: max-line-length cunatos son los que faltan revisar
+    const ListCantidadNombre = this.gtpService.services.filter((svc) =>  ((svc.name !== svc.newName) && (svc.acceptednewName === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */ ).length;
+    const ListCantidadCodigoDeudor = this.gtpService.services.filter((svc) =>  ( (svc.debtorCode !== svc.newNameCode) && (svc.acceptednewNameCode === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */ ).length;
+
+    // tslint:disable-next-line: max-line-length
+    const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
+    let total = ListCantidadNombre + ListCantidadCodigoDeudor;
+    let notAprov = CodDeuApp + nombreApp;
+    console.log('Cantidad que falta aprobar de nombres ' + ListCantidadNombre);
+    console.log('Cantidad que falta aprobar de codigo ' + ListCantidadCodigoDeudor);
+    console.log('cantidad de no aprobados' + notAprov);
+
+    this.emp = {ClientId: this.llave, NombreAprobado: this.Enterprise.NombreApproved};
+    console.log('SERVICIOS M');
+    // console.log(ListInReview);
+    ListInAprobacion.forEach(s => {
+      this.scv.push({
+        ServiceId: s.id,
+        NombreAprobado:  (s.name  === s.newName)? true : s.acceptednewName,
+        NombreCodAprobado: (s.debtorCode  === s.newNameCode)? true : s.acceptednewNameCode
+      });
+    });
+
+    console.log(this.scv);
+    if (total === 0) {
+      if (notAprov > 0) {
+        Swal.fire({
+          title: 'Aprobacion',
+          html: 'Existen ' + notAprov + ' campos que no fueron aprobados. <br> ¿Desea terminar?',
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Si, Terminar',
+          cancelButtonText: 'No, Cancelar',
+          onOpen: drawPopup
+        }).then((result) => {
+          if (result.value) {
+
+            if (this.Enterprise.name === this.Enterprise.newName && this.scv.length === 0) {
+              console.log('NO ENVIA NADA');
+              this.router.navigate(['/gtp']);
+              return;
+            }
+            if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview) {
+              console.log('ENVIA AMBOS');
+              this.gtpService.AprobarEmpresaServ({ EnterpriseObj:  this.emp , ListServiceObj: this.scv })
+              .subscribe(d => {
+                if (d) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+
+              });
+              return;
+            }
+
+            if (this.Enterprise.name === this.Enterprise.newName) {
+              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: null , ListServiceObj: this.scv })
+              .subscribe(d => {
+                if (d) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+
+              });
+              return;
+            }
+            if (  this.scv.length === 0 ) {
+              console.log('SOLO ENVIA EMPRESA');
+              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: null })
+              .subscribe(d => {
+                if (d) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+              });
+              return;
+            } else {
+              console.log('ENVIA AMBOS');
+              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
+              .subscribe(d => {
+                if (d) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+              });
+              return;
+            }
+
+          }
+        });
+
+      } else {
+        Swal.fire({
+          title: 'Aprobacion',
+          html: 'Todos los campos han sido revisados <br> ¿Desea terminar? <br> (Se enviara un correo a la empresa)',
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Si, Terminar',
+          cancelButtonText: 'No, Cancelar',
+          onOpen: drawPopup
+
+        }).then((result) => {
+          if (result.value) {
+
+            if (this.Enterprise.name === this.Enterprise.newName && this.scv.length === 0) {
+              console.log('NO ENVIA NADA');
+             /* this.gtppost = {
+                EnterpriseObj:  null,
+                ListServiceObj: this.scv
+              };
+              console.log(this.gtppost); */
+              console.log('IMPRESION FINAL');
+              console.log(this.scv);
+              this.router.navigate(['/gtp']);
+              return;
+            }
+            if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview) {
+              console.log('ENVIA AMBOS');
+              this.gtpService.AprobarEmpresaServ({ EnterpriseObj:  this.emp , ListServiceObj: this.scv })
+              .subscribe(d => {
+                if (d) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+
+              });
+              return;
+            }
+            if (this.Enterprise.name === this.Enterprise.newName) {
+
+              console.log('SOLO ENVIA SERVICIOS');
+              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: null , ListServiceObj: this.scv })
+              .subscribe(d => {
+                console.log(d);
+                if (d) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+
+              });
+              return;
+            }
+            if (  this.scv.length === 0 ) {
+              console.log('SOLO ENVIA EMPRESA');
+              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: null })
+              .subscribe(d => {
+                if (d) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+              });
+              return;
+            } else {
+              console.log('ENVIA AMBOS');
+              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
+              .subscribe(d => {
+                if (d) {
+                  this.router.navigate(['/gtp']);
+                } else {
+
+                }
+              });
+              return;
+            }
+
+
+          }
+          this.gtppost = {
+            EnterpriseObj:  this.emp,
+            ListServiceObj: this.scv
+          };
+          console.log('IMPRESION FINAL');
+          console.log(this.gtppost);
+        });
+
+      }
+
+
+
+    } else {
+      this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + total + ' observaciones' );
+    }
+  }
+
+
+  thisEnviarAprobados () {
     this.gtppost = null;
     this.scv = [] ;
     this.emp = null;
