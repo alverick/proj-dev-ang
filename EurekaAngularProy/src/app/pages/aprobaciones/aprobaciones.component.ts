@@ -93,6 +93,15 @@ export class AprobacionesComponent implements OnInit {
     }
   }
 
+
+  getNameSvc(svc: DataServiceGTP) {
+    if (svc.name  !== '?') {
+      return svc.name;
+   }
+    if (svc.name  === '?') {
+      return svc.newName.substring(3, svc.newName.length).toString();
+   }
+  }
   VerCamposEnterprise(etp: DataEnterpriseGTP) {
     if (this.ServiciosFormulario === true) {
       this.mensaje('Aprobando Servicio ',
@@ -120,17 +129,28 @@ export class AprobacionesComponent implements OnInit {
     this.gtppost = null;
     this.scv = [] ;
     this.emp = null;
+    // cuantos faltan??
     const svcSinCta = this.gtpService.services.filter((v) => v.acceptednewName === null && v.inReview === true ).length;
+    // cuantos nombres fueron deshaprobados
     const nombreApp = this.gtpService.services.filter((v) => v.acceptednewName === false && v.inReview === true ).length;
+    // cuantos Codigos deudores fueron deshaprobados
     const CodDeuApp = this.gtpService.services.filter((v) => v.acceptednewNameCode === false && v.inReview === true ).length;
-    const ListInReview = this.gtpService.services.filter((v) =>  v.inReview === true );
+    // filtra los que estan en estado inReview y los quye no estan devueltos
+    const ListInReview = this.gtpService.services.filter((svc) =>  (svc.inReview === true) &&
+     // tslint:disable-next-line:max-line-length
+     (/*(svc.newName.substring(0, 3).toString() !== '???') ||
+     (svc.newNameCode.substring(0, 3).toString() !== '???') ||*/
+     (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode)));
+     // suma codigo deudor y nombre de serivicio deshaprobados
     let notAprov = CodDeuApp + nombreApp;
     let sercant = 0;
+    // duplica por que calcula por los 2 la cantidad que falta
     let cant = (svcSinCta * 2);
 
     if (this.Enterprise.NombreApproved === null ) {
       sercant =  1;
     }
+    // suma la empresa  desaprobada
     if (this.Enterprise.NombreApproved === false ) {
       notAprov + 1;
     }
@@ -281,7 +301,7 @@ export class AprobacionesComponent implements OnInit {
                 console.log(d);
                 if (d) {
                   this.router.navigate(['/gtp']);
-                } else {  
+                } else {
 
                 }
 
@@ -328,12 +348,29 @@ export class AprobacionesComponent implements OnInit {
       this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + total + ' observaciones' );
     }
   }
-  getName(svc: DataServiceGTP) {
-    if (svc.name === '?')
-      return svc.newName;
-    return svc.name;
-  }
 
+  getName(svc: DataServiceGTP) {
+    if (svc.name  === '?' && svc.newName !== '?' ) {
+      if (svc.newName.substring(0,3).toString() === '???' ) {
+        return svc.newName.substring(3, svc.newName.length).toString();
+      }
+      return svc.newName;
+    }
+    if ( svc.name  !== '?' && svc.newName !== '?') {
+      return svc.name;
+    }
+  }
+   getState(svc: DataServiceGTP) {
+    if (((svc.name === '?'  &&  svc.debtorCode === '?') &&  svc.inReview) && (svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???') ) {
+      return 'Nuevo Servicio';
+    }
+    if(svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???') {
+      return 'Servicio Rechazado';
+    }
+    if (((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) &&  svc.inReview) {
+      return 'Edicion de Servicio';
+    }
+  }
 OcultarFormulario(requireConfirm: boolean) {
   if (requireConfirm) {
     Swal.fire({

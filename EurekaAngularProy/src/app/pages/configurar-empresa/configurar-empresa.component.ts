@@ -24,6 +24,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   post: any = '';
   submitted: boolean= false;
   butDisabled: boolean = true;
+  nombre: boolean = true;
   rubros: RubroModel[] = [];
   dataEmpresa: DataEnterpriseModel;
   constructor(private formBuilder: FormBuilder,
@@ -47,22 +48,14 @@ export class ConfigurarEmpresaComponent implements OnInit {
   }
 
 
-  getInfoEmpresa() {
-    this.configEmpresaService.getDatosEmpresa()
-      .subscribe( dataEnterprise => {
-        console.table(dataEnterprise);
-        this.dataEmpresa = dataEnterprise;
-        this.formGroup.setValue(dataEnterprise);
-          }
-        );
 
-  }
 
   createForm() {
+
     this.formGroup = this.formBuilder.group({
 
       ruc: new FormControl({ value: '', disabled: true }),
-      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
+      name: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
       entry: new FormControl({ value: '', disabled: true }),
       email: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       movilNumber: new FormControl('', [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
@@ -77,6 +70,21 @@ export class ConfigurarEmpresaComponent implements OnInit {
     });
   }
 
+
+  getInfoEmpresa() {
+    this.configEmpresaService.getDatosEmpresa()
+      .subscribe( dataEnterprise => {
+
+        this.dataEmpresa = dataEnterprise;
+
+        /* if (this.dataEmpresa.name !== this.dataEmpresa.newName ) {
+          return  this.nombre =  true;
+        } */
+        this.formGroup.setValue(dataEnterprise);
+          }
+        );
+
+  }
   get f(): any { return this.formGroup.controls; }
 
 

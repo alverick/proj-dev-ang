@@ -50,12 +50,12 @@ declare var $: any;
             this.excelService.errores = [];
           }
         });
-      this.excelService.GetLastProcess()
+     /* this.excelService.GetLastProcess()
         .subscribe(r => {
           if (r.status !== 'COMPLETED' && r.status !== 'REJECTED') {
             this.verifyStatus();
           }
-        });
+        }); */
     }
 
     ngAfterContentInit() {

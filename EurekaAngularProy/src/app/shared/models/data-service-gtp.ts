@@ -7,9 +7,9 @@ export interface DataServiceGTP {
     idAccount:  number;
     accountNumber: string;
     currency:  string;
-    usaWebApp: boolean;
-    usaAgente: boolean;
-    usaTienda: boolean;
+    useAppWeb: boolean;
+    useAgent: boolean;
+    useStore: boolean;
     partialPayment: string;
     chargeInterest: string;
     chargeType: number;

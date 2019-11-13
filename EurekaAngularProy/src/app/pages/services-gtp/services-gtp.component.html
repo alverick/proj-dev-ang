@@ -13,7 +13,7 @@
 
             </mat-error>
         </mat-form-field>
-        <mat-radio-group *ngIf="inReview && (_service.name  !== _service.newName  )"  formControlName="NewName" aria-label="Select an option">
+        <mat-radio-group *ngIf="RadioAprovveName()"  formControlName="NewName" aria-label="Select an option">
             <mat-radio-button name="NewName" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewName" class="w-15"  value ="N">NO</mat-radio-button>
         </mat-radio-group>
@@ -29,15 +29,14 @@
                 </mat-option>
             </mat-select> -->
             <input class="input-text"   matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod"  >
-            <div *ngIf="f.codDeudor.value === 'Otro'" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
-            <mat-error >
+             <mat-error >
                 <mat-error class="messsage-error" *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>
             </mat-error>
         </mat-form-field>
-        <mat-radio-group *ngIf="inReview && (_service.debtorCode !==   _service.newNameCode )"  formControlName="NewNameCod" aria-label="Select an option">
+        <mat-radio-group *ngIf="RadioAprovveNameCod()"  formControlName="NewNameCod" aria-label="Select an option">
             <mat-radio-button name="NewNameCod" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewNameCod" class="w-15"  value ="N">NO</mat-radio-button>
         </mat-radio-group>
@@ -189,5 +188,5 @@
         </div>
 
     </div>
-    <button *ngIf="inReview == true "  type="submit" class="btn-eureca-green "> GUARDAR</button>
+    <button *ngIf="Button()"  type="submit" class="btn-eureca-green "> GUARDAR</button>
 </form>

@@ -186,12 +186,18 @@ export class CrearContrasenaComponent implements OnInit {
       });
 
     } else {
-      console.log('se guarda la nueva empresa');
+      console.log('GTP AMIGOS');
 
 
     // this.gtpService.EdtEmpServ = null;
-     this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
-
+    // tslint:disable-next-line:max-line-length
+    if (( this.gtpService.EmpresaServicios.name === this.gtpService.EmpresaServicios.newName) && (this.gtpService.EmpresaServicios.inReview === false)) {
+     this.gtpService.EdtEmpServ = {token: this.llave, NewName: null};
+    }
+    // tslint:disable-next-line:max-line-length
+    if (( this.gtpService.EmpresaServicios.name !== this.gtpService.EmpresaServicios.newName) && (this.gtpService.EmpresaServicios.inReview === true)) {
+      this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
+    } 
      this.router.navigate(["/editarSvcGTP"]);
       this.gtpService.llave = this.llave;
       console.log( this.gtpService.EdtEmpServ);
@@ -257,7 +263,21 @@ export class CrearContrasenaComponent implements OnInit {
       });
 
     }
+    MensajeName() {
+      if (this.inEdit) {
+        if ((this.gtpService.EmpresaServicios.newName === this.gtpService.EmpresaServicios.newName) && this.gtpService.EmpresaServicios.inReview) {
+          return false;
+      }
+      if ((this.gtpService.EmpresaServicios.newName !== this.gtpService.EmpresaServicios.newName) && this.gtpService.EmpresaServicios.inReview === false){
+        return true;
+      }
+      } else {
+        return false;
+      }
+      
+    }
 
+ 
 
   terminos() {
    $('#terminos').modal('show');

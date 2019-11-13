@@ -53,6 +53,7 @@
                                                 <table class="table table-sm table-borderless ">
                                                     <tr>
                                                         <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview "><span class="badge badge-primary" >Nueva Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="((Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview ) && Enterprise.status == 'Devuelto' "><span class="badge badge-primary" >Empresa devuelta</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name !==  Enterprise.newName) &&  Enterprise.inReview"><span class="badge badge-warning" >Modificacion Empresa</span> </td>
                                                      </tr>
                                                     <tr>
@@ -70,18 +71,12 @@
                                             <div   class=" pl-4">
                                                 <div class="pl-1 row pb-0">
                                                       <div class="col-sm-12 pt-3">
-                                                        <div *ngIf="svc.name == '?' && svc.newName == '?'" class="font-text-services" >Servicio no aprobado </div>
-                                                        <div *ngIf="svc.name  == '?' && svc.newName !== '?'" class="font-text-services" >{{svc.newName}} </div>
-                                                        <div *ngIf="svc.name  !== '?' && svc.newName !== '?'" class="font-text-services" >{{svc.name}} </div>
+                                                        <div class="font-black-servicios-des-list" >{{getName(svc)}} </div>
                                                       </div>
-
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
                                                   <tr>
-
-                                                      <td class="font-black-servicios-des-list" *ngIf="(svc.name == '?'  &&  svc.debtorCode ==  '?') &&  svc.inReview "><span class="badge badge-primary" >Nuevo Servicio</span> </td>
-
-                                                      <td class="font-black-servicios-des-list" *ngIf="((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) &&  svc.inReview "><span class="badge badge-warning" >Edicion de Servicio</span> </td>
+                                                    <td class="font-black-servicios-des-list" ><span class="badge badge-primary" >{{getState(svc)}}</span> </td>
                                                     </tr>
                                                     <tr *ngIf="svc.inReview == false" >
                                                         <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>

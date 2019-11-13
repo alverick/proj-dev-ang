@@ -41,18 +41,24 @@ export class ServicesGTPComponent implements OnInit {
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.newName === '?' ? 'nombre de servicio aun no aprobado': this._service.newName, disabled: true },
+      nombre: new FormControl({ value:  (this._service.name === '?') ?
+      ( ((this._service.newName.substring(0, 3) === '???')?
+      (this._service.newName.substring(3, this._service.newName.length)):this._service.newName)):((this._service.name === this._service.newName)? this._service.name : this._service.newName ) , disabled: true },
         [Validators.required, Validators.minLength(3),
         Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: this._service.newNameCode === '?' ? 'codigo deudor aun no aprobado': this._service.newNameCode, disabled: true }, [Validators.required]),
-      nameCod: new FormControl({ value: this._service.newNameCode === '?' ? 'codigo deudor aun no aprobado': this._service.newNameCode, disabled: true}),
+      codDeudor: new FormControl({ value: (this._service.debtorCode   === 'RUC' ||  this._service.debtorCode  === 'DNI' ||
+      this._service.debtorCode === 'Codigo Interno') ? this._service.debtorCode : 'Otro', disabled: true }, [Validators.required]),
+      nameCod: new FormControl({ value: (this._service.debtorCode === '?')?
+      (( (this._service.newNameCode.substring(0,3) === '???')?
+      (this._service.newNameCode.substring(3, this._service.newNameCode.length)): this._service.newNameCode)) : (this._service.debtorCode === this._service.newNameCode)? this._service.debtorCode :this._service.newNameCode , disabled: true}),
+
       tipoDato: new FormControl({ value: this._service.dataType, disabled: true }, Validators.required),
       tipoPago: new FormControl({ value: this._service.paymentType, disabled: true }, Validators.required),
       idCuenta: new FormControl({ value: this._service.idAccount, disabled: true }, Validators.required),
       moneda: [this._service.currency, Validators.required],
-      usaAgente: new FormControl({ value: this._service.usaAgente, disabled: true }),
-      usaTienda: new FormControl({ value: this._service.usaTienda, disabled: true }),
-      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true}),
+      usaAgente: new FormControl({ value: this._service.useAgent, disabled: true }),
+      usaTienda: new FormControl({ value: this._service.useStore, disabled: true }),
+      usaWebApp: new FormControl({ value: this._service.useAppWeb, disabled: true}),
       cobraMora: new FormControl({ value: this._service.chargeInterest, disabled: true }),
       periodoMora: new FormControl({ value: this._service.chargeType, disabled: true }, [Validators.required]),
       tipoMora: ({ value: this._service.interestType, disabled: true }) ,
@@ -92,6 +98,54 @@ export class ServicesGTPComponent implements OnInit {
 
   get f(): any {
     return this.frm.controls;
+  }
+
+  
+  RadioAprovveName() {
+   /* if ( (this._service.name  !== this._service.newName  ) ) {
+      return true;
+    } */
+    if (( this._service.inReview && this._service.name !== '?') || (this._service.name  !== this._service.newName  )) {
+      return true;
+    }
+    if (( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) {
+      return true;
+    }
+   /* if ( this._service.newName.substring(0, 3) === '???') {
+      return false;
+    } */
+    if ( (this._service.name === '?' || this._service.newName.substring(0, 3) === '???' )){
+      return false;
+    }
+  }
+  RadioAprovveNameCod() {
+   /* if ( (this._service.debtorCode  !== this._service.newNameCode  )) {
+      return true;
+    } */
+    if (( this._service.inReview && this._service.debtorCode !== '?') || (this._service.debtorCode  !== this._service.newNameCode  )) {
+      return true;
+    }
+    if (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???')) {
+      return true;
+    }
+    if ( this._service.debtorCode === '?'  || this._service.newNameCode.substring(0, 3) === '???') {
+      return false;
+    }
+  }
+
+  Button() {
+  /*  if((this._service.name  !== this._service.newName  ) || (this._service.debtorCode  !== this._service.newNameCode  )){
+      return true;
+    } */
+    if( (( this._service.inReview && this._service.name !== '?') || (this._service.name  !== this._service.newName  )) ||  (( this._service.inReview && this._service.debtorCode !== '?') || (this._service.debtorCode  !== this._service.newNameCode  ))){
+      return true;
+    }
+    if((( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) ||  (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???'))){
+      return true;
+    }
+    if( ( this._service.debtorCode === '?'  || this._service.newNameCode.substring(0, 3) === '???') || (this._service.name === '?' || this._service.newName.substring(0, 3) === '???' )){
+      return false;
+    }
   }
 
   onSubmitServicio() {

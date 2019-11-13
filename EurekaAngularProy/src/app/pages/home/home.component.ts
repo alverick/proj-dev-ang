@@ -213,7 +213,7 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.fileLoad.verify(this.fileLoadContainer);
+   // this.fileLoad.verify(this.fileLoadContainer);
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
     this.homeService.getServices(true).subscribe(
@@ -222,8 +222,6 @@ export class HomeComponent implements OnInit {
         this.serviceSelected = value[0];
       }
     );
-
-
     this.homeService.getServicesActive().subscribe(
       value => {
         this.typeList = value;
@@ -242,9 +240,6 @@ export class HomeComponent implements OnInit {
       bdColor: "rgba(100,149,237, .8)",
       color: "white"
     });
-
-
-
    this.transactionService.debtItems = { data: [], countNoIbkPayments: 0, count : 0 };
    this.consultaDeuda();
    this.cargaExcel = false;
@@ -253,8 +248,6 @@ export class HomeComponent implements OnInit {
    //this.SeleccionarTodos();
    this.selectedAll = false;
    this.selectedUniverse = false;
-
-
   }
 
   statusOpt() {

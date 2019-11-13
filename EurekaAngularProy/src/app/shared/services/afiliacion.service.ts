@@ -266,7 +266,7 @@ export class AfiliacionService {
 
   public GrabarServicios(): Observable<any> {
     let codigo ;
-    console.log('SERVICIOS QUE SE GURADAN EN LOS SERVICES');
+    console.log('SERVICIOS FINALES');
     console.table(this.services);
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
