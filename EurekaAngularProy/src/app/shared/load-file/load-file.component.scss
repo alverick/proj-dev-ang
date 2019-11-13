@@ -1,0 +1,12 @@
+@import "../../../scss/_variables.scss";
+@import "../../../scss/_mixin.scss";
+
+.container {
+  position: sticky;
+  bottom: 0;
+  width: 350px;
+  @include border-radius(5px);
+  background-color: #fff;
+  padding: 5px 15px;
+  @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, 0.432), 0);
+}

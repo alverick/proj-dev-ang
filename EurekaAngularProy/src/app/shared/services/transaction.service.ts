@@ -22,7 +22,7 @@ export class TransactionService {
     constructor(public http: HttpClient, private storage: StorageService)  { }
 
     public pageMessage: string = "Mostrando 0 de 0 elementos";
-    public debtItems: DebtsPagedList = { count:0, data: [] };
+    public debtItems: DebtsPagedList = { count:0, countNoIbkPayments: 0, data: [] };
     public itemsForDelete: number[] = [];
 
     getDateFormat(date: Date): string {
@@ -39,7 +39,7 @@ export class TransactionService {
     }
 
     //opcional
-    
+
     getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
       // ultimo filtro aplicado
       if (filtro === null) {
@@ -48,7 +48,7 @@ export class TransactionService {
       else {
         // el nuevo filtro
         this.lastFilter = filtro;
-      } 
+      }
       var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
       var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
       //fechas
@@ -77,6 +77,7 @@ export class TransactionService {
               d.selected = (this.itemsForDelete.indexOf(d.id) >= 0);
             });
             this.debtItems = r;
+            console.table(this.debtItems.data);
             return r;
           }))
           .pipe(map(r => {
@@ -237,8 +238,10 @@ export class TransactionService {
   isMarkedAll() {
     let markAll = true;
     this.debtItems.data.forEach(v => {
-      let idx = this.itemsForDelete.indexOf(v.id);
-      markAll = markAll && (idx >= 0);
+      if (!v.hasIBKPayments) {
+        let idx = this.itemsForDelete.indexOf(v.id);
+        markAll = markAll && (idx >= 0);
+      }
     });
     return markAll;
   }

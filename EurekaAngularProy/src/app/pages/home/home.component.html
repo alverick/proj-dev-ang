@@ -100,13 +100,13 @@
                 </div>
                 <div *ngIf="!ceroRegistros()"  class="btn-eliminar" >
                   <div (click)="EliminarSeleccionados()"  data-toggle="modal" data-target="#ModalNotificacion">
-                    <img class="icono" src="assets/images/trash.svg" alt="trash">
+                    <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
                   </div>
                   <label class="act-label">Eliminar</label>
                 </div>
-                <div *ngIf="ceroRegistros()" class="btn-eliminar" >
+                <div *ngIf="ceroRegistros()" class="btn-eliminar disable" >
                     <div data-toggle="modal" data-target="#ModalNotificacion">
-                      <img  src="assets/images/trash.svg" alt="trash">
+                      <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
                     </div>
                     <label class="act-label">Eliminar</label>
                   </div>
@@ -137,36 +137,19 @@
               <div class="clear-float"></div>
             </section>
             <section *ngIf="selectedAll" class="counter">
-              <div class="text" *ngIf="transactionService.debtItems.count > 1">
-                Se han seleccionado los <span *ngIf="!selectedUniverse"
-                  style="font-weight: 500;">{{transactionService.debtItems.data.length}}</span><span
-                  *ngIf="selectedUniverse" style="font-weight: 500;">{{transactionService.debtItems.count}}</span>
+              <div class="text" >
+                Se <span *ngIf="transactionService.debtItems.count > 1">han</span><span *ngIf="transactionService.debtItems.count == 1">ha</span> seleccionado los <span *ngIf="!selectedUniverse"
+                  style="font-weight: 500;">{{transactionService.itemsForDelete.length}}</span><span
+                  *ngIf="selectedUniverse" style="font-weight: 500;">{{transactionService.debtItems.countNoIbkPayments}}</span>
                 registros de esta página
                 <button type="button"
                   *ngIf="transactionService.debtItems.count > transactionService.debtItems.data.length"
                   class="btn-select-all" (click)="selectedUniverse = !selectedUniverse">
-                  <span *ngIf="!selectedUniverse">Seleccionar los {{transactionService.debtItems.count}}
+                  <span *ngIf="!selectedUniverse">Seleccionar los {{transactionService.debtItems.countNoIbkPayments}}
                     registros</span>
                   <span *ngIf="selectedUniverse">Anular la selección</span>
                 </button>
               </div>
-
-
-              <div class="text" *ngIf="transactionService.debtItems.count == 1" >
-                  Se ha seleccionado  <span *ngIf="!selectedUniverse"
-                    style="font-weight: 500;">{{transactionService.debtItems.data.length}}</span><span
-                    *ngIf="selectedUniverse" style="font-weight: 500;">{{transactionService.debtItems.count}}</span>
-                  registro de esta página
-                  <button type="button"
-                    *ngIf="transactionService.debtItems.count > transactionService.debtItems.data.length"
-                    class="btn-select-all" (click)="selectedUniverse = !selectedUniverse">
-                    <span *ngIf="!selectedUniverse">Seleccionar los {{transactionService.debtItems.count}}
-                      registros</span>
-                    <span *ngIf="selectedUniverse">Anular la selección</span>
-                  </button>
-                </div>
-
-
             </section>
             <section class="lista">
               <table>
@@ -275,7 +258,7 @@
                     <th class="c12">
                       <div class="text">Editar</div>
                     </th>
-                   
+
                   </tr>
                 </thead>
               </table>
@@ -287,7 +270,7 @@
                       [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
                       <td class="c0 pl-3 ">
                         <div class="chk-vertical">
-                          <mat-checkbox [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)">
+                          <mat-checkbox *ngIf="items.status !== 'PAGADO' && !items.hasIBKPayments" [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)">
                           </mat-checkbox>
                         </div>
                       </td>
@@ -321,8 +304,8 @@
                       </td>
                       <td class="c3">{{items.code}}</td>
                       <td class="c4">
-                        <span *ngIf="!items.editInput">{{items.firstName}}</span>
-                        <div *ngIf="items.editInput" class="content-input-icon position-relative">
+                        <span *ngIf="!items.editInput || items.hasIBKPayments">{{items.firstName}}</span>
+                        <div *ngIf="items.editInput && !items.hasIBKPayments" class="content-input-icon position-relative">
                           <mat-form-field class="inline-input" style="width: 80px">
                             <input class="input-text-dash" matInput [(ngModel)]="items.newFirstName" maxlength="10"
                               minlength="3" type="text" (ngModelChange)="items.errores.firstName = null">
@@ -331,8 +314,8 @@
                         </div>
                       </td>
                       <td class="c5">
-                        <span *ngIf="!items.editInput">{{items.lastName}}</span>
-                        <div *ngIf="items.editInput" class="content-input-icon position-relative">
+                        <span *ngIf="!items.editInput || items.hasIBKPayments">{{items.lastName}}</span>
+                        <div *ngIf="items.editInput && !items.hasIBKPayments" class="content-input-icon position-relative">
                           <mat-form-field class="inline-input" style="width: 90px">
                             <input class="input-text-dash" matInput [(ngModel)]="items.newLastName" maxlength="20"
                               minlength="3" type="text" (ngModelChange)="items.errores.lastName = null">
@@ -365,7 +348,7 @@
                       </td>
                       <td class="c11">
                         <div class="cnt-status">
-                          <div class="lnk-status"   (click)="appPagos.show()">
+                          <div class="lnk-status" (click)="showPopover(items, origin)" #origin>
                             <span *ngIf="items.status === 'PAGADO' && items.dueDate !== null" class="text-success">
                               Pagado <img src="assets/images/ok.svg" alt="ok">
                             </span>
@@ -388,12 +371,10 @@
                               Deshabilitado <img src="assets/images/ok.svg" alt="ok">
                             </span>
                           </div>
-                          <app-pagos #appPagos [debtId]="items.id" [(status)]="items.status" [currency]="items.currency"
-                            (showChange)="items.verPagos = $event"></app-pagos>
                         </div>
                       </td>
                       <td class="c12">
-                        <div *ngIf="items.svcStatus !== 1" class="d-flex">
+                        <div *ngIf="items.svcStatus !== 1 && items.status !== 'PAGADO'" class="d-flex">
                           <div *ngIf="!items.editButton" class="btn-edit" (click)="BotonEditar(items)">
                             <img src="assets/images/pencil.svg" alt="editar">
                           </div>
@@ -414,7 +395,7 @@
                         </div>
                       </td>
                     </tr>
-                     
+
 
                   </tbody>
                 </table>
@@ -471,3 +452,4 @@
       </div>
   </div>
 </div>
+<template #fileLoad class="file-load"></template>

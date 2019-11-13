@@ -8,6 +8,7 @@ import { RubroModel } from 'src/app/shared/models';
 import { Router } from '@angular/router';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 
 
 @Component({
@@ -23,7 +24,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
   post: any = '';
   submitted: boolean= false;
   butDisabled: boolean = true;
+  nombre: boolean = true;
   rubros: RubroModel[] = [];
+  dataEmpresa: DataEnterpriseModel;
   constructor(private formBuilder: FormBuilder,
               private configEmpresaService: ConfiguracionService,
               public afiliacionService: AfiliacionService,
@@ -45,36 +48,43 @@ export class ConfigurarEmpresaComponent implements OnInit {
   }
 
 
-  getInfoEmpresa() {
-    this.configEmpresaService.getDatosEmpresa()
-      .subscribe( dataEnterprise => {
-        console.table(dataEnterprise);
-        this.formGroup.setValue(dataEnterprise);
-       
-            }
-        );
 
-  }
- 
+
   createForm() {
+
     this.formGroup = this.formBuilder.group({
-      
+
       ruc: new FormControl({ value: '', disabled: true }),
-      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
+      name: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
       entry: new FormControl({ value: '', disabled: true }),
       email: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       movilNumber: new FormControl('', [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
       newName: new FormControl({ value: '', disabled: true }),
-      status: new FormControl({ value: '', disabled: true }), 
+      status: new FormControl({ value: '', disabled: true }),
       requestDate: new FormControl({ value: '', disabled: true }),
       password: new FormControl('',   [Validators.minLength(6), Validators.maxLength(20) ]),
-      newPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
-      confirmNewPassword: new FormControl('',[Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
+      newPassword: new FormControl('', [Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
+      confirmNewPassword: new FormControl('', [Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
     }, {
       validator: ValidateConfigEmpresa()
     });
   }
 
+
+  getInfoEmpresa() {
+    this.configEmpresaService.getDatosEmpresa()
+      .subscribe( dataEnterprise => {
+
+        this.dataEmpresa = dataEnterprise;
+
+        /* if (this.dataEmpresa.name !== this.dataEmpresa.newName ) {
+          return  this.nombre =  true;
+        } */
+        this.formGroup.setValue(dataEnterprise);
+          }
+        );
+
+  }
   get f(): any { return this.formGroup.controls; }
 
 
@@ -108,25 +118,26 @@ export class ConfigurarEmpresaComponent implements OnInit {
     console.log('aun no se valida');
     if (this.formGroup.valid) {
       console.log('es valido');
-       if(correo==0){
+       if (correo === 0 ) {
         return;
       }
-       if(!this.formGroup.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
-        this.mensaje('warning','Edicion de Empresa','Debe ingresar un email valido' );
+       if (!this.formGroup.value.email.toString().match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+        this.mensaje('warning', 'Edicion de Empresa', 'Debe ingresar un email valido' );
         return;
       }
 
-      if(newPass > 0 &&  Pass == 0){
-        this.mensaje('warning','Edicion de Empresa','Debe ingresar su contraseña Actual para continuar' );
+      if (newPass > 0 &&  Pass === 0) {
+        this.mensaje('warning', 'Edicion de Empresa', 'Debe ingresar su contraseña Actual para continuar' );
         return;
       }
-      if(Pass > 0 && newPass == 0){
-        this.mensaje('warning','Edicion de Empresa','Debe ingresar la nueva contraseña para continuar' );
+      if (Pass > 0 && newPass === 0) {
+        this.mensaje('warning', 'Edicion de Empresa', 'Debe ingresar la nueva contraseña para continuar' );
         return;
       }
       const datosEmpresa = this.formGroup.value;
       const enterprise = {
         ruc: datosEmpresa.ruc,
+        newName: datosEmpresa.name,
         email: datosEmpresa.email,
         movilNumber: datosEmpresa.movilNumber,
         password: datosEmpresa.password,
@@ -137,11 +148,11 @@ export class ConfigurarEmpresaComponent implements OnInit {
         subscribe(
         enterpriseUpdate => {
           console.table(enterpriseUpdate);
-          if( enterpriseUpdate.success == true ){
+          if ( enterpriseUpdate.success === true ) {
             this.gaService.sendEvent('ActualizaDatosEmpresa', {
               'event_category': 'Configuración',
               'event_label': 'actualiza_datos_empresa'
-            });;
+            });
             Swal.fire({
               title: 'Datos de Empresa guardados',
               text: 'Sus datos han sido actualizados',
@@ -158,12 +169,12 @@ export class ConfigurarEmpresaComponent implements OnInit {
                 }
                 this.router.navigate(['/home']);
               }
-            })
+            });
 
 
           }
-         if(enterpriseUpdate.success == false ) {
-          this.mensaje('warning','Edicion de Empresa','La contraseña no coincide con la contraseña actual' );
+         if (enterpriseUpdate.success === false ) {
+          this.mensaje('warning', 'Edicion de Empresa', 'La contraseña no coincide con la contraseña actual' );
           return;
          }
 
@@ -217,7 +228,7 @@ function UnaLetra(c: FormControl) {
 function ValidateNewPasswordRequired(f: FormGroup) {
   let pwdCtrl = f.get('password');
   let newPwdCtrl = f.get('newPassword');
-9
+
   /*if (pwdCtrl.valid && pwdCtrl.dirty && pwdCtrl.value) {
     if (!newPwdCtrl.value) {
       newPwdCtrl.markAsDirty();

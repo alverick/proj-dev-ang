@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, ɵConsole } from "@angular/core";
 import { ServiceModel, RubroModel, MonedaModel } from '../models';
 import { Observable, throwError, of } from "rxjs";
 import { HttpClient } from "@angular/common/http";
@@ -40,7 +40,7 @@ export class AfiliacionService {
       cobraMora: 'N',
       periodoMora: '1',
       tipoMora: 'M',
-      pagoPartes: 'N', 
+      pagoPartes: 'N',
     });
   }
 
@@ -49,6 +49,7 @@ export class AfiliacionService {
     let nombre: string = 'Mensualidad';
     let nro = 1;
     this.services.forEach((s, i) => {
+      //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada. 
       if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
         if (!isNaN(parseInt(s.nombre.substr(nombre.length))) || s.nombre.substr(nombre.length) === ''){
           let aux = parseInt(s.nombre.substr(nombre.length));
@@ -135,7 +136,7 @@ export class AfiliacionService {
 
 
   public GetRubros(): Observable<RubroModel[]> {
-    return this.http.get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading?_=`+ new Date().getTime())
+    return this.http.get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading?_=` + new Date().getTime())
       .pipe(catchError(err => throwError(err)));
   }
 
@@ -224,11 +225,15 @@ export class AfiliacionService {
       }
     this.http.get<any[]>(`${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=`+ new Date().getTime(), { headers: headers })
       .subscribe(d => {
+        console.log('SERVICIOS DEL SERVICIO');
+        console.log(d);
         let servicios = [];
         d.forEach(s => {
           servicios.push({
             id: s.id,
             nombre: s.name,
+            newName : s.newName,
+            newNameCode : s.newNameCode,
             rubro: s.entry,
             codDeudor: s.debtorCode,
             tipoDato: s.dataType,
@@ -249,9 +254,10 @@ export class AfiliacionService {
             pagoPartes: s.partialPayment
           });
         });
-        this.services = servicios; 
-        console.log(servicios);
-      }); 
+        this.services = servicios;
+        console.log('TERMINA');
+        console.log(this.services);
+      });
   }
 
 
@@ -259,15 +265,17 @@ export class AfiliacionService {
 
 
   public GrabarServicios(): Observable<any> {
-   
+    let codigo ;
+    console.log('SERVICIOS FINALES');
+    console.table(this.services);
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
     this.services.forEach(s => {
       data.services.push({
         id: s.id,
-        name: s.nombre,
+        name: (s.nombre === '?') ? '' : s.nombre ,
         entry: s.rubro,
-        debtorCode: s.codDeudor,
+        debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
         dataType: s.tipoDato,
         paymentType: s.tipoPago,
         idAccount: s.idCuenta,
@@ -284,6 +292,8 @@ export class AfiliacionService {
         partialPayment: s.pagoPartes
       });
     });
+    console.log('SE IMPRIME TODO' );
+    console.table(data.services);
     return this.http.post<any>(`${environment.END_POINT}/company/service?_=`+ new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();

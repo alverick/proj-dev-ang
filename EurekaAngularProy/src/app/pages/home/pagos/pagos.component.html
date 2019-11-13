@@ -1,4 +1,4 @@
-<div class="contenedor" [class.block]="showed" [class.none]="!showed">
+<div class="contenedor block">
   <table>
     <thead>
       <tr>
@@ -12,8 +12,8 @@
       </tr>
     </thead>
   </table>
-   <div style="overflow-y: scroll; height:160px; min-height:60px">
-  <table> 
+   <div style="overflow-y: scroll; max-height:160px;  ">
+  <table>
     <tbody>
       <tr *ngIf="cargando">
         <td colspan="5" style="text-align: center">
@@ -67,7 +67,7 @@
               <img src="assets/images/pencil.svg" alt="editar">
             </div>
             <div *ngIf="!itm.editing" class="btn-delete" (click)="delItm(itm); $event.stopPropagation();">
-              <img src="assets/images/trash.svg" alt="editar">
+              <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
             </div>
             <div *ngIf="itm.editing" class="btn-ok" (click)="saveItm(itm); $event.stopPropagation();">
               <img src="assets/images/circle_ok.svg" alt="Aceptar">
@@ -79,7 +79,7 @@
         </td>
         <td></td>
       </tr>
-      
+
     </tbody>
   </table>
 </div>

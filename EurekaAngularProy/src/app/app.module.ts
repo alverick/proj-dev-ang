@@ -55,6 +55,9 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
 import { EmpresaGTPComponent } from './pages/empresa-gtp/empresa-gtp.component';
 import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PopoverComponent } from './pages/home/popover/popover.component';
+import { LoadFileComponent } from './shared/load-file/load-file.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +84,9 @@ import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.componen
     OnlyNumbersDirective,
     EmpresaGTPComponent,
     ServicesGTPComponent,
-    ],
+    PopoverComponent,
+    LoadFileComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -116,7 +121,8 @@ import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.componen
     FontAwesomeModule,
     PerfectScrollbarModule,
     MaterialFileInputModule,
-    MatRadioModule
+    MatRadioModule,
+    OverlayModule
   ],
   providers: [
     ExcelService,
@@ -141,7 +147,9 @@ import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.componen
   entryComponents: [DialogComponent,
                     UploadProgressComponent,
                     ValidationComponent,
-                    PagosComponent
+                    PagosComponent,
+                    PopoverComponent,
+                    LoadFileComponent
                     ]
 })
 export class AppModule { }

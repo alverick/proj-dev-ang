@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { Injectable } from '@angular/core'; 
+import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from 'src/environments/environment';
 import { map, catchError } from 'rxjs/operators';
@@ -16,29 +16,29 @@ export class RecuperaService {
   public ruc: number;
   public email: number;
 
-  public RecoverPassword(data:any): Observable<any>{
-    this.spinner.show(); 
-    
-     return this.http.post<any>(`${environment.END_POINT}/Login/Verifying?_=`+ new Date().getTime(), data)
-     .pipe(map(r =>{
+  public RecoverPassword(data: any): Observable<any> {
+    this.spinner.show();
+
+     return this.http.post<any>(`${environment.END_POINT}/Login/Verifying?_=` + new Date().getTime(), data)
+     .pipe(map(r => {
           this.ruc = data.RUC;
           this.email = data.Email;
 
-          console.log('datos:'+ this.ruc + this.email );
+          console.log('datos:' + this.ruc + this.email );
           this.spinner.hide();
           return r;
      }))
      .pipe(catchError(err => {
       this.spinner.hide();
       return throwError(err);
-     })); 
+     }));
   }
 
-  public VerifingToken(data:any): Observable<any>{
-    this.spinner.show(); 
-    
-     return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=`+ new Date().getTime(), data)
-     .pipe(map(r =>{
+  public VerifingToken(data: any): Observable<any> {
+    this.spinner.show();
+
+     return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(), data)
+     .pipe(map(r => {
 
           this.spinner.hide();
           return r;
@@ -46,14 +46,14 @@ export class RecuperaService {
      .pipe(catchError(err => {
       this.spinner.hide();
       return throwError(err);
-     })); 
+     }));
   }
 
 
-  public ChangePassword(data:any): Observable<any>{
-    this.spinner.show();  
-     return this.http.post<any>(`${environment.END_POINT}/Login/changepassword?_=`+ new Date().getTime(), data)
-     .pipe(map(r =>{
+  public ChangePassword(data: any): Observable<any> {
+    this.spinner.show();
+     return this.http.post<any>(`${environment.END_POINT}/Login/changepassword?_=` + new Date().getTime(), data)
+     .pipe(map(r => {
 
           this.spinner.hide();
           return r;
@@ -61,7 +61,7 @@ export class RecuperaService {
      .pipe(catchError(err => {
       this.spinner.hide();
       return throwError(err);
-     })); 
+     }));
   }
 
 

@@ -1,5 +1,5 @@
 import { Date } from './../../shared/models/date';
-import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild} from '@angular/core';
+import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
@@ -26,13 +26,16 @@ import { DialogComponent } from './dialog';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { isNgTemplate } from '@angular/compiler';
+import { Popover } from './popover/popover.service';
+import { PagosComponent } from './pagos/pagos.component';
+import { LoadFileService } from 'src/app/shared/load-file/load-file.service';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
 
-export const MY_FORMATS = {
+const MY_FORMATS = {
   parse: {
     dateInput: 'DD/MM/YYYY',
   },
@@ -168,6 +171,8 @@ export class HomeComponent implements OnInit {
   messageTable: string ='';
   showArrow: boolean = false;
 
+  @ViewChild('fileLoad', { read: ViewContainerRef, static: true }) fileLoadContainer : ViewContainerRef;
+
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
@@ -177,8 +182,10 @@ export class HomeComponent implements OnInit {
     public snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
-    private gaService: GoogleAnalytics) {
-
+    private popover: Popover,
+    private gaService: GoogleAnalytics,
+    private fileLoad: LoadFileService) {
+      transactionService.itemsForDelete = [];
     }
      /*
      @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
@@ -206,6 +213,7 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
+   // this.fileLoad.verify(this.fileLoadContainer);
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
     this.homeService.getServices(true).subscribe(
@@ -214,8 +222,6 @@ export class HomeComponent implements OnInit {
         this.serviceSelected = value[0];
       }
     );
-
-
     this.homeService.getServicesActive().subscribe(
       value => {
         this.typeList = value;
@@ -234,10 +240,7 @@ export class HomeComponent implements OnInit {
       bdColor: "rgba(100,149,237, .8)",
       color: "white"
     });
-
-
-
-   this.transactionService.debtItems = { data: [], count : 0 };
+   this.transactionService.debtItems = { data: [], countNoIbkPayments: 0, count : 0 };
    this.consultaDeuda();
    this.cargaExcel = false;
 
@@ -245,11 +248,9 @@ export class HomeComponent implements OnInit {
    //this.SeleccionarTodos();
    this.selectedAll = false;
    this.selectedUniverse = false;
- 
-
   }
 
-  statusOpt(){
+  statusOpt() {
 
   }
 /*
@@ -438,7 +439,7 @@ orderList(index: number, asc: boolean) {
 
   consultaDeuda(cb: () => void = null) {
   // tslint:disable-next-line:prefer-const
-   
+
     if (this.validaFiltro2()){
                 this.spinner.show();
                 this.transactionService.getDeuda(this.currentFiltro)
@@ -516,7 +517,7 @@ orderList(index: number, asc: boolean) {
   BotonEditar(item: Debts) {
     item.editInput =true;
     item.editButton = true;
-    item.editPending = (item.status === 'PENDIENTE');
+    item.editPending = (item.status === 'PENDIENTE' || (item.status === 'VENCIDO' && item.amountPayed === 0));
     item.newStatus =  '1';
     item.newDueDate = item.dueDate;
     item.newEmissionDate = item.emissionDate;
@@ -524,9 +525,6 @@ orderList(index: number, asc: boolean) {
     item.newAmount = item.amount.toFixed(2);
     item.newFirstName = item.firstName;
     item.newLastName = item.lastName;
-
-    console.log('fechas');
-
   }
 
   selectEstPag(event, item: Debts){
@@ -828,22 +826,22 @@ orderList(index: number, asc: boolean) {
                   onOpen: drawPopup
                 })
 
-                
+
               });
               this.selectedAll = false;
               this.selectedUniverse = false;
 
               this.transactionService.debtItems.data = [];
               this.transactionService.itemsForDelete = [];
-             
+
               console.log('arra limpio');
-              
+
               console.log(totalForDelete)
           }, err => { this.spinner.hide(); });
       }
     });
     console.log('arra limpio');
-    
+
   }
 
 
@@ -876,8 +874,11 @@ orderList(index: number, asc: boolean) {
   SeleccionarTodos() {
 
     if (this.selectedAll) {
-      this.transactionService.debtItems.data.forEach(itm => this.transactionService.deleteDebt(itm.id, itm.selected = true));
-      
+      this.transactionService.debtItems.data.forEach(itm => {
+        if (!itm.hasIBKPayments && itm.status !== 'PAGADO') {
+          this.transactionService.deleteDebt(itm.id, itm.selected = true);
+        }
+      });
     }
     else {
       this.selectedUniverse = false;
@@ -897,16 +898,18 @@ Ocultar() {
 }
 
   openDialog(service: any) {
+    this.fileLoad.close();
     this.OcultaListaExcel = false;
     this.cargaExcel = false;
     this.excelService.service = service;
     const dialogRef = this.dialog.open(DialogComponent,{
-      width: '899px', 
-     // height: '377px', 
+      width: '899px',
+     // height: '377px',
      // disableClose: true
     });
     dialogRef.afterClosed().subscribe((result: Observable<any>) => {
-     
+      dialogRef.componentInstance.ready = false;
+      this.fileLoad.verify(this.fileLoadContainer);
       if (result) {
         result.subscribe(() => {
           this.consultaDeuda();
@@ -914,7 +917,7 @@ Ocultar() {
       }
     });
     console.log('SERVICIOS');
-   console.table(this.typeList);
+    console.table(this.typeList);
   }
 
   DescargarReporte() {
@@ -1039,8 +1042,12 @@ Ocultar() {
 
   private internalValidaNombres(items: Debts){
     if (items.newFirstName) {
+      const re = new RegExp("^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$");
       if (items.newFirstName.length < 3) {
         items.errores.firstName = 'Debe tener 3 carácteres como mínimo';
+      }
+      else if (!re.test(items.newFirstName)) {
+        items.errores.firstName = 'No cumple con el formato';
       }
       else {
         delete items.errores.firstName;
@@ -1056,8 +1063,12 @@ Ocultar() {
 
   private internalValidaApellidos(items: Debts) {
     if (items.newLastName) {
+      const re = new RegExp("^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$");
       if (items.newLastName.length < 3) {
         items.errores.lastName = 'Deben tener 3 carácteres como mínimo';
+      }
+      else if (!re.test(items.newLastName)) {
+        items.errores.lastName = 'No cumple con el formato';
       }
       else {
         delete items.errores.lastName;
@@ -1092,6 +1103,21 @@ Ocultar() {
   selectForDelete(itm: Debts) {
     this.transactionService.deleteDebt(itm.id, itm.selected);
     this.selectedAll = this.transactionService.isMarkedAll();
+  }
+
+  showPopover(itm: any, origin) {
+    let ref = this.popover.open({
+      origin,
+      content: PagosComponent,
+      data: {
+        debtId: itm.id,
+        status: itm.status,
+        currency: itm.currency
+      }
+    });
+    ref.statusChange$.subscribe(d => {
+      itm.status = d.data;
+    });
   }
 }
 

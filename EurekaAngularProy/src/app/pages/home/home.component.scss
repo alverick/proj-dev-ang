@@ -62,13 +62,19 @@ body {
                     color: $textgreen;
                 }
                 .btn-eliminar {
-                    margin-left: 25px;
+                  cursor: pointer;
+                  margin-left: 25px;
                     color: $textgreen;
                     display: block;
                     width: 40px;
                     text-align: center;
+                    &.disable {
+                      color: #9b9b9b;
+                      .act-label {
+                        color: #9b9b9b;
+                      }
+                    }
                     img {
-                        cursor: pointer;
                         width: 20px;
                         height: 20px;
                         line-height: 0;
@@ -622,7 +628,7 @@ b {
 }
 
 .chk-vertical {
-    margin-left: -10px !important; 
+    margin-left: -10px !important;
 }
 
 :host ::ng-deep .mat-checkbox-inner-container-no-side-margin{

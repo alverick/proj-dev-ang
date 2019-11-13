@@ -1,10 +1,9 @@
- 
+
 import { Observable, of, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http'; 
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StatesGtp } from '../models/states-gtp';
-import { EnterprisesGtp, EnterprisesPagedList } from '../models/enterprises-gtp';
-import { PendingResquest } from '../models/pending-resquest';
+import { EnterprisesPagedList } from '../models/enterprises-gtp';
 import { GtpFilter } from '../models/gtp-filter';
 import moment from 'moment';
 import { environment } from 'src/environments/environment';
@@ -14,7 +13,8 @@ import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
 import { DataServiceGTP } from '../models/data-service-gtp';
 import { GtpEmpresa } from '../models/gtp-post';
 import { NgxSpinnerService } from 'ngx-spinner';
- 
+import { DataGTPChange } from '../models/data-gtpchange';
+
 
 @Injectable({
   providedIn: 'root'
@@ -27,113 +27,50 @@ export class GtpService {
   constructor(private http: HttpClient, private storage: StorageService, private spinner: NgxSpinnerService) { }
 
   public services: DataServiceGTP[] = [];
-  public Service : DataServiceGTP;
-  public EnterprisesItems: EnterprisesPagedList = { totalCompanies:0, listCompanyGTP: [] };
-  public emp :GtpEmpresa;
-
-  private States:StatesGtp [] =[
+  public Service: DataServiceGTP;
+  public EnterprisesItems: EnterprisesPagedList = { totalCompanies: 0, listCompanyGTP: [] };
+  //public emp: DataGTPChange;
+  public llave: string;
+  public EdtEmpServ: DataGTPChange;
+  public EmpresaServicios: DataEnterpriseGTP;
+  private States: StatesGtp [] = [
     {idState: 'Pendiente', descripcion:'pendiente'},
     {idState: 'Resuelto ', descripcion:'resuelto '},
     {idState: 'Devuelto', descripcion:'devuelto'},
   ];
-  /* 
-   public Service: DataServiceGTP[] = [
-  {
-    nombre: 'Mensualidad', 
-    codDeudor: 'DNI',
-    tipoDato: 'C',
-    tipoPago: 'C',
-    idCuenta: 2,
-    nroCuenta: '*********7653 (dolares)',
-    moneda: '001',
-    simboloMoneda: 'S/',
-    usaWebApp: true,
-    usaAgente: false,
-    usaTienda: true,
-    cobraMora: 'S',
-    periodoMora: '2',
-    tipoMora: 'M',
-    monto:12.2,
-    pagoPartes: 'S',
-    Status:'nuevo Servicio',
-    NewNameCod: null,
-    NewName: null
-   },{
-    nombre: 'Mensualidad2', 
-    codDeudor: 'DNI',
-    tipoDato: 'P',
-    tipoPago: 'P',
-    idCuenta: 2,
-    nroCuenta: '*********7653 (dolares)',
-    moneda: '001',
-    simboloMoneda: 'S/',
-    usaWebApp: true,
-    usaAgente: false,
-    usaTienda: true,
-    cobraMora: 'S',
-    periodoMora: '2',
-    tipoMora: 'M',
-    monto:12.2,
-    pagoPartes: 'S',
-    Status:'nuevo Servicio',
-    NewNameCod: null,
-    NewName: null
-   },{
-    nombre: 'Mensualidad3', 
-    codDeudor: 'DNI',
-    tipoDato: 'C',
-    tipoPago: 'C',
-    idCuenta: 2,
-    nroCuenta: '*********7653 (dolares)',
-    moneda: '001',
-    simboloMoneda: 'S/',
-    usaWebApp: true,
-    usaAgente: false,
-    usaTienda: true,
-    cobraMora: 'N',
-    periodoMora: '2',
-    tipoMora: 'M',
-    monto:12.2,
-    pagoPartes: 'S',
-    Status:'nuevo Servicio',
-    NewNameCod: null,
-    NewName: null
-   }
-  ]
-*/
+
   getStates(): Observable<StatesGtp[]>{
     return of(this.States);
-  } 
- 
-  //opcional
-  getEmpresas(filtro: GtpFilter = null):Observable<EnterprisesPagedList>{  
+  }
+
+  // opcional
+  getEmpresas(filtro: GtpFilter = null): Observable<EnterprisesPagedList>{
     // si es nulo que aplique el ultimo filtro
     if (filtro === null) {
       filtro = this.lastFilter;
-    }else{
+    } else {
       this.lastFilter = filtro;
     }
     var strDateFrom = (filtro.dateFrom === null ? '' : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD')));
     var strDateTo = (filtro.dateTo === null ? '' : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD')));
-      
+
       if (filtro.BusinessHeading === null || filtro.BusinessHeading === undefined)
         filtro.BusinessHeading = '';
       if (filtro.status === null || filtro.status === undefined)
-        filtro.status = '';   
-        const url = `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();   
+        filtro.status = '';
+        const url = `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
-        }; 
+        };
         return this.http.get<EnterprisesPagedList>(url, opts)
-        .pipe(map (r =>{ 
+        .pipe(map (r => {
           this.EnterprisesItems = r;
-          return r; 
-        })) 
+          return r;
+        }))
         .pipe(map(r => {
           if (r.totalCompanies == 0) {
             this.pageMessage = "Mostrando 0 de 0 elementos";
-          }
-          else {
+          } else {
                       // (1 - 1*50)+1 =1
             let beg = ((filtro.pageNumber - 1) * 50) + 1;
                         // 1*50=50
@@ -146,38 +83,38 @@ export class GtpService {
           }
           return r;
         }))
-        .pipe(catchError(error => throwError(error))); 
+        .pipe(catchError(error => throwError(error)));
    }
- 
-   GetEnterpriseGtp(id:any):Observable<DataEnterpriseGTP>{ 
+
+   GetEnterpriseGtp(id: any): Observable<DataEnterpriseGTP> {
       const url = `${environment.END_POINT}/company/GTP/client/${id}`;
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
-      }; 
+      };
       return this.http.get<DataEnterpriseGTP>(url, opts)
-      .pipe(map(r => {  
+      .pipe(map(r => {
         return r;
       }))
-      .pipe(catchError(err => throwError(err))); 
+      .pipe(catchError(err => throwError(err)));
 
-  } 
-  
-   GetServicesGtp (id:any){ 
-    const url = `${environment.END_POINT}/company/GTP/services/${id}/${true}`;
+  }
+
+   GetServicesGtp (id: any) {
+    const url = `${environment.END_POINT}/company/GTP/services/${id}/${false}`;
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
-    }; 
-    this.http.get<any[]>(url,opts).subscribe(d=> {
+    };
+    this.http.get<any[]>(url, opts).subscribe(d => {
       let servicios = [];
       d.forEach(s => {
         servicios.push({
           id: s.id,
-          name: s.name, 
+          name: s.name,
           debtorCode: s.debtorCode,
           dataType: s.dataType,
           paymentType: s.paymentType,
           idAccount: s.idAccount,
-          accountNumber: s.accountNumber, 
+          accountNumber: s.accountNumber,
           currency: s.currency,
           usaWebApp: s.useAppWeb,
           usaAgente: s.useAgent,
@@ -192,25 +129,22 @@ export class GtpService {
           inReview: s.inReview,
           newNameCode: s.newNameCode,
           newName: s.newName,
-          status: s.status  
+          status: s.status,
+          acceptednewNameCode: null,
+          acceptednewName: null
         });
       });
        this.services = servicios;
       console.table( this.services);
     });
-   }  
+   }
 
-
-
-   //post
-
-
-   public Registrar(data: any): Observable<any> {
-    this.spinner.show(); 
+   public AprobarEmpresaServ(data: any): Observable<any> {
+    this.spinner.show();
     return this.http.post<any>(`${environment.END_POINT}/company/gtp/approve`, data)
       .pipe(map(r => {
         this.spinner.hide();
-        if (r.success) { 
+        if (r.success) {
         }
         return r;
       }))
@@ -220,7 +154,37 @@ export class GtpService {
       }));
   }
 
-  
+
+  public GetEnterpriseServices(data: any): Observable<any> {
+     this.spinner.show();
+     return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(), data)
+     .pipe(map(r => {
+           this.spinner.hide();
+          return r;
+     }))
+     .pipe(catchError(err => {
+       this.spinner.hide();
+      return throwError(err);
+     }));
+  }
+
+
+
+  public EditChangeGTP(data: any) {
+    this.spinner.show();
+    return this.http.post<any>(`${environment.END_POINT}/company/gtp/client/update`, data)
+      .pipe(map(r => {
+        this.spinner.hide();
+        return r;
+      }))
+      .pipe(catchError(err => {
+        this.spinner.hide();
+        return throwError(err);
+      }));
+  }
+
+
+
 
 
 }

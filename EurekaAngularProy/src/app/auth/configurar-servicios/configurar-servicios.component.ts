@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, EventEmitter, HostListener, ɵConsole } from '@angular/core';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
@@ -6,6 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { GtpService } from 'src/app/shared/services/gtp.service';
+import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
+import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -19,14 +22,19 @@ export class ConfigurarServiciosComponent implements OnInit {
   public stateEdit: boolean = false;
   public input: FormServicioComponent;
   Formulario: boolean = false;
+  Formulariogtp: boolean = false;
   buttonServicios ='';
   private inEdit: boolean = false;
   private inGTP: boolean = false;
   public titulo: string;
+  public SvcEdit: ServicesGTPChange[];
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
-  constructor(public afiliacionService: AfiliacionService, private route: ActivatedRoute,
-    private router: Router, private gaService: GoogleAnalytics) { }
+  constructor(public afiliacionService: AfiliacionService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private gaService: GoogleAnalytics,
+              public gtpService: GtpService) { }
 
     @HostListener('window:beforeunload', ['$event'])
     public closeWindow($event: any) {
@@ -36,20 +44,57 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.afiliacionService.services = []
+    this.afiliacionService.services = [];
     this.route.data.subscribe(d => {
-      this.inEdit = d.isEdit; 
+      this.inEdit = d.isEdit;
       this.inGTP = d.isgtp;
-      
+      if (d.isgtp === true) {
+        /////////////////////////PORTAL GTP //////////////////////////////////////
+
+        window['_url_loop_'] = 'editarSvcGTP';
+        history.pushState(null, null, 'editarSvcGTP');
+        this.afiliacionService.services = [];
+        console.log('GTP');
+        console.log(this.gtpService.EmpresaServicios.arrayServices);
+        console.log('CIERRA');
+        this.gtpService.EmpresaServicios.arrayServices.forEach(s => {
+          this.afiliacionService.services.push({
+            id: s.id,
+            nombre: s.name,
+            newName : s.newName,
+            newNameCode : s.newNameCode,
+            //rubro: s.entry,
+            codDeudor: s.debtorCode,
+            tipoDato: s.dataType,
+            tipoPago: s.paymentType,
+            idCuenta: s.idAccount,
+            nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
+            moneda: s.currency,
+            simboloMoneda: s.currencySymbol,
+            usaWebApp: s.useAppWeb,
+            usaAgente: s.useAgent,
+            usaTienda: s.useStore,
+            cobraMora: s.chargeInterest,
+            periodoMora: s.chargeType.toString(),
+            tipoMora: s.interestType,
+            monto: s.amount,
+            porcentaje: s.porcentage,
+            inReview: s.inReview,
+            pagoPartes: s.partialPayment,
+            status: s.status
+          });
+        });
+        return;
+      }
       if (d.isEdit) {
+        console.log('EDITAR');
         window['_url_loop_'] = 'editarServicios';
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
-        this.titulo = 'Edita el servicio'; 
-        console.log('entra a editar servicio')
+        this.titulo = 'Edita el servicio';
+
       } else {
-        console.log('entra a crea servicio')
-        // siempre entra ahí
+        console.log('CREACION');
         window['_url_loop_'] = 'configurarServicios';
         history.pushState(null, null, 'configurarServicios');
         this.afiliacionService.Clear();
@@ -57,58 +102,9 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.editService(this.afiliacionService.services[0], 0);
         this.titulo = 'Agrega un nuevo servicio';
       }
-      if(d.isgtp == true){
-        console.log('entra a gtp')
-        window['_url_loop_'] = 'editarSvcGTP';
-        history.pushState(null, null, 'editarSvcGTP'); 
-        this.afiliacionService.services = [];
-        this.afiliacionService.services = [
-          {
-            nombre: 'Mensualidadxd', 
-            codDeudor: 'DNI',
-            tipoDato: 'C',
-            tipoPago: 'C',
-            idCuenta: 2,
-            nroCuenta: '*********7653 (dolares)',
-            moneda: '001',
-            simboloMoneda: 'S/',
-            usaWebApp: true,
-            usaAgente: false,
-            usaTienda: true,
-            cobraMora: 'S',
-            periodoMora: '2',
-            tipoMora: 'M',
-            monto:12.2,
-            pagoPartes: 'S',  
-            NewNameCod: true,
-            NewName: false
-          },
-          {
-            nombre: 'Mensualidad2', 
-            codDeudor: 'DNI',
-            tipoDato: 'P',
-            tipoPago: 'P',
-            idCuenta: 2,
-            nroCuenta: '*********7653 (dolares)',
-            moneda: '001',
-            simboloMoneda: 'S/',
-            usaWebApp: true,
-            usaAgente: false,
-            usaTienda: true,
-            cobraMora: 'S',
-            periodoMora: '2',
-            tipoMora: 'M',
-            monto:12.2,
-            pagoPartes: 'S', 
-            NewNameCod: null,
-            NewName: null
-           }
-        ]; 
-      }
-      
     });
 
-    
+
 
   }
 
@@ -136,6 +132,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           this.addNewAfterSave = false;
           this.sendAfterSave = false;
           this.indiceActual = -1;
+          this.Formulariogtp = false;
           console.log(this.Formulario);
         }
       });
@@ -164,7 +161,7 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   MostarFormulario() {
     console.table(this.afiliacionService.services);
-    if(this.afiliacionService.services.length >= 99){
+    if (this.afiliacionService.services.length >= 99) {
       Swal.fire({
         text: 'Usted solo puede tener 99 servicios como máximo',
         onOpen: drawPopup
@@ -173,7 +170,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
 
     let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
-    if(svcSinCta) {
+    if (svcSinCta) {
       Swal.fire({
         text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
         onOpen: drawPopup
@@ -202,7 +199,7 @@ export class ConfigurarServiciosComponent implements OnInit {
         else {
           this.addNewAfterSave = false;
         }
-      });
+       });
     }
     else {
       this.indiceActual = this.afiliacionService.services.length;
@@ -216,10 +213,83 @@ export class ConfigurarServiciosComponent implements OnInit {
 
 
   EnviarServicios() {
- //   if(this.afiliacionService.services.forEach)
+
+    // GTP
+    if (this.inGTP) {
+
+      let Svc = [] ;
+      let svcinReview = this.afiliacionService.services.filter((v) => v.inReview === true);
 
 
-    if(this.Formulario === true){
+      svcinReview.forEach(s => {
+       Svc.push({
+          ServiceId: s.id,
+          NewName: (s.newName.substring(0, 3) === '???') ? s.nombre : null ,
+          // tslint:disable-next-line:max-line-length
+          NewCodName: (s.codDeudor === '?' && s.newNameCode.substring(0, 3) === '???') ? s.codDeudor : null,
+        });
+      });
+      // (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true
+      console.log('ESTAS EN GTP marcelo 2');
+
+      console.log(this.gtpService.EdtEmpServ);
+      if (Svc.length === 0) {
+        console.log('SERV cero' + Svc.length);
+      }
+      console.log(Svc);
+
+      Swal.fire({
+        title: 'Editar',
+        text: `Desea Guardar los Cambios`,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        cancelButtonColor: '#d33',
+        cancelButtonText:  'DESHACER CAMBIOS',
+        confirmButtonText: 'GUARDAR',
+        onOpen: drawPopup
+      }).then(r => {
+
+        console.log('Lo que devuelve el token es '+r);
+        this.sendAfterSave = true;
+          if (r.value) {
+            if (Svc.length === 0) {
+              this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
+                NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : null })
+              .subscribe(d => {
+                console.log('ESTA API DEVUELVE '+ d);
+            if (d === true) {
+              this.router.navigate(['/login']);
+            } else {
+              console.log('HOLA 1');
+              console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName, Svc);
+            }
+
+            });
+
+            } else {
+              this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
+                NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : Svc })
+              .subscribe(d => {
+                console.log('ESTA API DEVUELVE '+ d);
+              if (d === true) {
+                this.router.navigate(['/login']);
+              } else {
+                console.log('HOLA 2');
+                console.log('lenght de servicio'+ Svc.length);
+                console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName,Svc);
+              }
+              });
+            }
+          }
+      });
+
+
+    }
+
+    else {
+
+    if (this.Formulario === true) {
       Swal.fire({
         title: 'Servicio no guardado',
         text: `Guarde los cambios del servicio ${this.serviceActual === null ? '' : this.serviceActual.nombre} para poder continuar al siguiente paso`,
@@ -246,33 +316,37 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     // this.frm.get('monto').value
 
-    let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
-    if(svcSinCta) {
-      Swal.fire({
-        text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
-        onOpen: drawPopup
-      });
-      return;
-    }
-    this.gaService.sendEvent('EnviarServicios', {
-      'event_category': GoogleAnalytics.Afiliacion,
-      'event_label': 'enviar_servicios'
-    });
-    this.afiliacionService.GrabarServicios()
-      .subscribe(r => {
-        if (this.inEdit) {
-          this.router.navigate(['/home']);
-          /*for(let i=0; i<this.afiliacionService.services.length; i++) {
-            if (this.afiliacionService.services[i].inReview == false) {
-              return;
+        let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
+        if(svcSinCta) {
+          Swal.fire({
+            text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
+            onOpen: drawPopup
+          });
+          return;
+        }
+        this.gaService.sendEvent('EnviarServicios', {
+          'event_category': GoogleAnalytics.Afiliacion,
+          'event_label': 'enviar_servicios'
+        });
+        /*console.log('SERVICIOS A GUARDAR');
+        console.table(this.afiliacionService.services); */
+        this.afiliacionService.GrabarServicios()
+          .subscribe(r => {
+            if (this.inEdit) {
+              this.router.navigate(['/home']);
+              /*for(let i=0; i<this.afiliacionService.services.length; i++) {
+                if (this.afiliacionService.services[i].inReview == false) {
+                  return;
+                }
+              }
+              this.router.navigate(['/procesando']);*/
             }
-          }
-          this.router.navigate(['/procesando']);*/
-        }
-        else {
-          this.router.navigate(['/procesando']);
-        }
-       });
+            else {
+              this.router.navigate(['/procesando']);
+            }
+          });
+
+      }
   }
 
 
@@ -293,10 +367,88 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   getCodDebtor(svc: ServiceModel) {
-    if (svc.codDeudor === 'Otro')
-      return svc.nameCod;
-    return svc.codDeudor;
+
+      if(svc.codDeudor === svc.newNameCode){
+        return svc.newNameCode;
+      }
+      if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
+          return svc.nameCod;
+      }
+      if (svc.codDeudor === '?') {
+        if (svc.newNameCode.substring(0, 3) === '???') {
+          return svc.newNameCode.substring(3, svc.newNameCode.length);
+        }
+        return svc.newNameCode;
+      } else {
+      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+        // tslint:disable-next-line: no-unused-expression
+        return svc.codDeudor;
+      }
+     // svc.codDeudor = 'Otro';
+     // return svc.newNameCode.substring(3, svc.newNameCode.length);
+    }
   }
+  getCodDebtorCreate(svc: ServiceModel) {
+    if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+        // tslint:disable-next-line: no-unused-expression
+        return svc.codDeudor;
+      }
+      svc.codDeudor = 'Otro';
+      return svc.newNameCode;
+  }
+
+/*
+ newName : s.newName,
+            newNameCode : s.newNameCode,
+*/
+getNameGTP(svc: ServiceModel) {
+  if (svc.nombre  !== '?') {
+    return svc.nombre;
+ }
+  if (svc.nombre  === '?') {
+    return svc.newName.substring(3, svc.newName.length).toString();
+ }
+}
+
+
+pendienteRevision(svc: ServiceModel) {
+ if (this.inEdit ) {
+  if (((svc.nombre !== svc.newName) || (svc.nombre === '?' && svc.newName.substring(0, 3) === '???' )) || ((svc.codDeudor  !== svc.newNameCode ) || (svc.codDeudor === '?'  && svc.newNameCode.substring(0, 3) === '???') )) {
+    return true;
+  }
+ }else {
+  return false;
+ }
+
+
+}
+
+getName(svc: ServiceModel) {
+  if (svc.nombre === '?'){
+    if(svc.newName.substring(0,3) === '???'){
+      return svc.newName.substring(3, svc.newName.length);
+    }else{
+      return svc.newName;
+    }
+  }
+
+  return svc.nombre;
+}
+
+getCodigoNameGTP(svc: ServiceModel) {
+  if (svc.codDeudor !== '?' ) {
+    if (svc.codDeudor === 'Otro' ) {
+      return  svc.nameCod;
+    }
+    return  svc.codDeudor;
+ }
+  if (svc.codDeudor === '?' ) {
+    return  svc.newNameCode.substring(3, svc.newNameCode.length).toString();
+ }
+}
+
+
+
 
   delService(index: number) {
     if (this.Formulario) {
@@ -376,6 +528,18 @@ export class ConfigurarServiciosComponent implements OnInit {
       });*/
       return;
     }
+    if (this.Formulariogtp && this.indiceActual !== index) {
+      return;
+    }
+
+    if (this.inGTP) {
+       this.Formulariogtp = true;
+       this.stateEdit = true;
+      this.stateCreate = false;
+      this.indiceActual = index;
+      this.serviceActual = svc;
+       return;
+    }
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
@@ -384,6 +548,9 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   onGrabar(svc: ServiceModel) {
+    console.log('Servicios');
+    console.table( this.afiliacionService.services);
+    console.log('cierra');
     if (this.indiceActual >= 0) {
       if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({
@@ -392,6 +559,13 @@ export class ConfigurarServiciosComponent implements OnInit {
         });
         return;
       }
+     /* if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+        Swal.fire({
+          text: 'Ya existe un servicio con este nombre',
+          onOpen: drawPopup
+        });
+        return;
+      } */
       this.afiliacionService.services[this.indiceActual] = svc;
       this.indiceActual = -1;
       if (!svc.id) {
@@ -400,8 +574,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           'event_label': 'servicio_agregado'
         });
       }
-    }
-    else {
+    } else {
       let nro = 1;
       this.afiliacionService.services.forEach((s, i) => {
         if (s.nombre.startsWith(svc.nombre)) {
@@ -414,15 +587,15 @@ export class ConfigurarServiciosComponent implements OnInit {
         svc.nombre += nro.toString();
       }
       this.afiliacionService.services.push(svc);
+
     }
     this.Formulario = false;
+    this.Formulariogtp = false;
     if (this.addNewAfterSave) {
       setTimeout(() => this.MostarFormulario(), 600);
-    }
-    else if (this.sendAfterSave) {
+    } else if (this.sendAfterSave) {
       setTimeout(() => this.EnviarServicios(), 600);
-    }
-    else {
+    } else {
       Swal.fire({
         title: 'Guardar',
         text: 'Los datos han sido guardados',

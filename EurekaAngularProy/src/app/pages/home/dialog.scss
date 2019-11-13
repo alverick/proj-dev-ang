@@ -23,7 +23,7 @@
             @include font-text(14px, 500);
             margin-right: 165px;
             .texto {
-                
+
                 float: left;
                 color: #0d131d !important;
             }
@@ -71,7 +71,7 @@
 }
 
 .text-center {
-     
+
     text-align: center;
     .input-file {
         width: 517px;
@@ -80,10 +80,12 @@
         border: solid 1px #9ea1a5;
         text-align: left;
         margin-bottom: 15px;
+        text-overflow: ellipsis;
         .text {
           //  padding-top: 10px;
             @include font-text(14px, 500);
             color: $textblack !important;
+            text-overflow: ellipsis;
         }
     }
 }
@@ -120,7 +122,7 @@ small {
     margin-left: 160px;
 }
 
- 
+
 .cancelar {
     width: 77px !important;
     height: 23px !important;
@@ -132,6 +134,12 @@ small {
     @include font-text(16px, normal);
     color: #0d131d;
     text-align: left;
+}
+
+.name-file{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .mat-dialog-actions {
@@ -146,7 +154,14 @@ small {
     border-radius: 4px !important;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1) !important;
     background-color: #ffffff  !important;
-    padding: 0px !important; 
+    padding: 0px !important;
    // color: rgba(255, 255, 255, 0.87);
-} 
- 
+}
+
+.resaltado {
+  font-weight: 500;
+}
+
+.svg_custom {
+  color: #9ea1a5;
+}
