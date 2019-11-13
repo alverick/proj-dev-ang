@@ -219,72 +219,75 @@ export class ConfigurarServiciosComponent implements OnInit {
 
       let Svc = [] ;
       let svcinReview = this.afiliacionService.services.filter((v) => v.inReview === true);
-
-
+      let cantName = this.afiliacionService.services.filter((v) => (v.inReview === true) && (v.nombre === '?')).length;
+      let cantNameServ = this.afiliacionService.services.filter((v) => (v.inReview === true) && (v.codDeudor === '?')).length;
+      let total = cantName + cantNameServ;
       svcinReview.forEach(s => {
        Svc.push({
           ServiceId: s.id,
           NewName: (s.newName.substring(0, 3) === '???') ? s.nombre : null ,
           // tslint:disable-next-line:max-line-length
-          NewCodName: (s.codDeudor === '?' && s.newNameCode.substring(0, 3) === '???') ? s.codDeudor : null,
+          NewCodName: ( s.newNameCode.substring(0, 3) === '???') ? s.codDeudor : null,
         });
       });
       // (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true
       console.log('ESTAS EN GTP marcelo 2');
 
-      console.log(this.gtpService.EdtEmpServ);
+    // alert(this.gtpService.EdtEmpServ.token);
       if (Svc.length === 0) {
         console.log('SERV cero' + Svc.length);
       }
       console.log(Svc);
 
-      Swal.fire({
-        title: 'Editar',
-        text: `Desea Guardar los Cambios`,
-        showCloseButton: true,
-        showCancelButton: true,
-        showConfirmButton: true,
-        cancelButtonColor: '#d33',
-        cancelButtonText:  'DESHACER CAMBIOS',
-        confirmButtonText: 'GUARDAR',
-        onOpen: drawPopup
-      }).then(r => {
-
-        console.log('Lo que devuelve el token es '+r);
-        this.sendAfterSave = true;
-          if (r.value) {
-            if (Svc.length === 0) {
-              this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
-                NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : null })
-              .subscribe(d => {
-                console.log('ESTA API DEVUELVE '+ d);
-            if (d === true) {
-              this.router.navigate(['/login']);
-            } else {
-              console.log('HOLA 1');
-              console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName, Svc);
-            }
-
-            });
-
-            } else {
-              this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
-                NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : Svc })
-              .subscribe(d => {
-                console.log('ESTA API DEVUELVE '+ d);
+      if (total === 0) {
+        Swal.fire({
+          title: 'Editar',
+          text: `Desea Guardar los Cambios`,
+          showCloseButton: true,
+          showCancelButton: true,
+          showConfirmButton: true,
+          cancelButtonColor: '#d33',
+          cancelButtonText:  'DESHACER CAMBIOS',
+          confirmButtonText: 'GUARDAR',
+          onOpen: drawPopup
+        }).then(r => {
+  
+          console.log('Lo que devuelve el token es '+r);
+          this.sendAfterSave = true;
+            if (r.value) {
+              if (Svc.length === 0) {
+                this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
+                  NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : null })
+                .subscribe(d => {
+                  console.log('ESTA API DEVUELVE '+ d);
               if (d === true) {
                 this.router.navigate(['/login']);
               } else {
-                console.log('HOLA 2');
-                console.log('lenght de servicio'+ Svc.length);
-                console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName,Svc);
+                console.log('HOLA 1');
+                console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName, Svc);
               }
+  
               });
+  
+              } else {
+                this.gtpService.EditChangeGTP({ Token:  this.gtpService.llave ,
+                  NewName:  this.gtpService.nombre, ArrayServices : Svc })
+                .subscribe(d => {
+                  console.log('ESTA API DEVUELVE '+ d);
+                if (d === true) {
+                  this.router.navigate(['/login']);
+                } else {
+                  console.log('HOLA 2');
+                  console.log('lenght de servicio'+ Svc.length);
+                  console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName,Svc);
+                }
+                });
+              }
             }
-          }
-      });
-
-
+        });
+      } else {
+        this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + total + ' observaciones' );
+      }
     }
 
     else {
@@ -350,6 +353,21 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
 
+  mensaje( titulo: string, text: string) {
+    Swal.fire({
+     // type: tipo ,
+      title: titulo ,
+      text: text,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      cancelButtonColor: '#d33',
+      // cancelButtonText:  'CERRAR',
+      allowOutsideClick: false,
+      confirmButtonText: 'CERRAR',
+      onOpen: drawPopup,
+    });
+  }
 
   getCanales(svc: ServiceModel) {
     let str = '';
@@ -368,12 +386,16 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   getCodDebtor(svc: ServiceModel) {
 
-      if(svc.codDeudor === svc.newNameCode){
+      if(svc.codDeudor === svc.newNameCode) {
         return svc.newNameCode;
-      }
+      } 
       if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
-          return svc.nameCod;
+           return svc.nameCod;
       }
+      if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
+        // return svc.nameCod;
+        return svc.newNameCode;
+     }
       if (svc.codDeudor === '?') {
         if (svc.newNameCode.substring(0, 3) === '???') {
           return svc.newNameCode.substring(3, svc.newNameCode.length);

@@ -212,7 +212,8 @@ export class FormServicioComponent implements OnInit {
                  // value.usaWebApp = true;
                 if (this.editMode) {
                   value = this._service;
-                  value.nombre = this.frm.value.nombre;
+                // value.nombre = this.frm.value.nombre;
+                value.newName = this.frm.value.nombre;
                   value.nameCod = this.frm.value.nameCod;
                   value.codDeudor = this.frm.value.codDeudor;
                   value.idCuenta = this.frm.value.idCuenta;
@@ -307,7 +308,8 @@ export class FormServicioComponent implements OnInit {
               if (this.editMode) {
                 value = this._service;
                 value.idCuenta = this.frm.value.idCuenta;
-                value.nombre = this.frm.value.nombre;
+                // value.nombre = this.frm.value.nombre;
+                value.newName = this.frm.value.nombre;
                   value.nameCod = this.frm.value.nameCod;
                   value.codDeudor = this.frm.value.codDeudor;
                 value.moneda = this.frm.value.moneda;
@@ -348,7 +350,8 @@ export class FormServicioComponent implements OnInit {
             if (this.editMode) {
               value = this._service;
               value.idCuenta = this.frm.value.idCuenta;
-              value.nombre = this.frm.value.nombre;
+               // value.nombre = this.frm.value.nombre;
+               value.newName = this.frm.value.nombre;
                   value.nameCod = this.frm.value.nameCod;
                   value.codDeudor = this.frm.value.codDeudor;
               value.moneda = this.frm.value.moneda;
@@ -361,7 +364,12 @@ export class FormServicioComponent implements OnInit {
               console.log('ingresa 3.1');
               value.usaWebApp = true;
             } else {
+              console.log('entra a nombre xdeeeeee');
+
               value = this.frm.value;
+              value.newName = this.frm.value.nombre;
+              value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor  ;
+              // value.newNameCode = this.frm.value.codDeudor;
             }
             let cta = this.cuentas.find(c => c.id === value.idCuenta);
             value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;

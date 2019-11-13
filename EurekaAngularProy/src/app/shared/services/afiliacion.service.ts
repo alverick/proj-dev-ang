@@ -274,8 +274,10 @@ export class AfiliacionService {
       data.services.push({
         id: s.id,
         name: (s.nombre === '?') ? '' : s.nombre ,
+        newName: s.newName,
         entry: s.rubro,
-        debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
+        debtorCode: (s.codDeudor === '?') ? '' : (( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor) ,
+        newNameCode: s.newNameCode,
         dataType: s.tipoDato,
         paymentType: s.tipoPago,
         idAccount: s.idCuenta,

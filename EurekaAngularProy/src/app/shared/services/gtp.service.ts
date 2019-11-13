@@ -31,6 +31,7 @@ export class GtpService {
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies: 0, listCompanyGTP: [] };
   //public emp: DataGTPChange;
   public llave: string;
+  public nombre: string;
   public EdtEmpServ: DataGTPChange;
   public EmpresaServicios: DataEnterpriseGTP;
   private States: StatesGtp [] = [
