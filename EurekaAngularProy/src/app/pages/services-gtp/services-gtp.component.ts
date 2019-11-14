@@ -100,37 +100,47 @@ export class ServicesGTPComponent implements OnInit {
     return this.frm.controls;
   }
 
-  
+
   RadioAprovveName() {
-   /* if ( (this._service.name  !== this._service.newName  ) ) {
+
+    if (this._service.name  === this._service.newName  ) {
+      return false;
+    }
+    if ( (this._service.name === '?' && this._service.newName.substring(0, 3) === '???' )){
+      return false;
+    }
+    if (( this._service.name === '?')) {
       return true;
-    } */
-    if (( this._service.inReview && this._service.name !== '?') || (this._service.name  !== this._service.newName  )) {
+    }
+
+    if (this._service.name  !== this._service.newName  ) {
       return true;
     }
     if (( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) {
       return true;
-    }
-   /* if ( this._service.newName.substring(0, 3) === '???') {
-      return false;
-    } */
-    if ( (this._service.name === '?' || this._service.newName.substring(0, 3) === '???' )){
-      return false;
     }
   }
   RadioAprovveNameCod() {
    /* if ( (this._service.debtorCode  !== this._service.newNameCode  )) {
       return true;
     } */
-    if (( this._service.inReview && this._service.debtorCode !== '?') || (this._service.debtorCode  !== this._service.newNameCode  )) {
+
+    if (this._service.debtorCode  === this._service.newNameCode ){
+      return false;
+    }
+    if ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') {
+      return false;
+    }
+    if (( this._service.debtorCode === '?')  ) {
+      return true;
+    }
+    if (this._service.debtorCode  !== this._service.newNameCode ){
       return true;
     }
     if (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???')) {
       return true;
     }
-    if ( this._service.debtorCode === '?'  || this._service.newNameCode.substring(0, 3) === '???') {
-      return false;
-    }
+
   }
 
   Button() {

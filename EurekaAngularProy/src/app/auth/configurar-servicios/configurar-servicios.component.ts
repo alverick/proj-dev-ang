@@ -389,18 +389,17 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
   }
   getCodDebtorCreate(svc: ServiceModel) {
-    if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+     if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
         // tslint:disable-next-line: no-unused-expression
         return svc.codDeudor;
       }
-      svc.codDeudor = 'Otro';
-      return svc.newNameCode;
+      if (svc.codDeudor === 'Otro') {
+        return svc.nameCod;
+      }
+     /* svc.codDeudor = 'Otro';
+      return svc.newNameCode; */
   }
 
-/*
- newName : s.newName,
-            newNameCode : s.newNameCode,
-*/
 getNameGTP(svc: ServiceModel) {
   if (svc.nombre  !== '?') {
     return svc.nombre;
@@ -408,6 +407,19 @@ getNameGTP(svc: ServiceModel) {
   if (svc.nombre  === '?') {
     return svc.newName.substring(3, svc.newName.length).toString();
  }
+}
+
+
+pendienteRevision(svc: ServiceModel) {
+ if (this.inEdit ) {
+  if (((svc.nombre !== svc.newName) && (svc.nombre === '?')) || ((svc.codDeudor  !== svc.newNameCode ) && (svc.codDeudor === '?') )) {
+    return true;
+  }
+ }else {
+  return false;
+ }
+
+
 }
 
 getName(svc: ServiceModel) {
