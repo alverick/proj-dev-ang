@@ -60,7 +60,7 @@ export class CrearContrasenaComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
           ruc: new FormControl({ value: '', disabled: this.inEdit },
           [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
-          nombre: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
+          nombre: new FormControl({ value: '', disabled:this.inEdit }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
           rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
           email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
           telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
@@ -86,6 +86,9 @@ export class CrearContrasenaComponent implements OnInit {
             requestDate: this.gtpService.EmpresaServicios.requestDate
           };
 
+          if ( this.empresasEdit.name !== this.empresasEdit.newName ) {
+            this.registerForm.get('nombre').disable();
+           }
           this.registerForm.setValue({ ruc: this.gtpService.EmpresaServicios.ruc, nombre: this.gtpService.EmpresaServicios.name,
           rubro: this.gtpService.EmpresaServicios.entry, email: this.gtpService.EmpresaServicios.email,
           telefono: this.gtpService.EmpresaServicios.movilNumber, contrasena: '', repcontrasena: '',  acceptterms: true });
@@ -239,8 +242,6 @@ export class CrearContrasenaComponent implements OnInit {
       });
 
     } else {
-
-      alert(this.llave);
       console.log('GTP AMIGOS' + this.llave);
 
     // this.gtpService.EdtEmpServ = null;

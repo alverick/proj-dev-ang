@@ -78,12 +78,12 @@ export class FormServicioComponent implements OnInit {
 
 
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: this._service.nombre , disabled: false },
+      nombre: new FormControl({ value: (this._service.nombre === '?') ? ((this._service.newName.substring(0,3) === '???' )? this._service.newName.substring(3,this._service.newName.length):this._service.newName ):this._service.nombre , disabled: false },
       [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: (this._service.codDeudor   === 'RUC' ||
-      this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro'
+      codDeudor: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode : ((this._service.codDeudor   === 'RUC' ||
+      this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro')
       , disabled: false }, [Validators.required]),
-      nameCod: new FormControl({ value: (this._service.codDeudor == 'Otro')? this._service.nameCod : this._service.codDeudor , disabled: false}),
+      nameCod: new FormControl({ value:(this._service.codDeudor === '?') ? this._service.newNameCode : (this._service.codDeudor == 'Otro')? this._service.nameCod : this._service.codDeudor , disabled: false}),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
@@ -154,6 +154,28 @@ export class FormServicioComponent implements OnInit {
     }  */
 
   }
+  nombreAlert(){
+    if (this.editMode === true){
+      if (this._service.newName.substring(0, 3) === '???'){
+        return false;
+      }
+      if ( this._service.nombre  !== this._service.newName){
+        return true;
+    }
+    }
+  }
+
+  CodiAlert() {
+    // editMode === true && ( _service.codDeudor  !== _service.newNameCode)
+    if (this.editMode === true){
+      if (this._service.newNameCode.substring(0, 3) === '???'){
+        return false;
+      }
+      if ( this._service.codDeudor  !== this._service.newNameCode){
+        return true;
+    }
+    }
+  }
 
   onSubmitServicio() {
    /* console.log('LOS CODIGOS DE DEUDOR');
@@ -210,7 +232,7 @@ export class FormServicioComponent implements OnInit {
 
                 let value: ServiceModel;
                  // value.usaWebApp = true;
-                if (this.editMode) {
+                if (this.editMode)  {
                   value = this._service;
                 // value.nombre = this.frm.value.nombre;
                 value.newName = this.frm.value.nombre;
@@ -226,6 +248,7 @@ export class FormServicioComponent implements OnInit {
                   value.pagoPartes = this.frm.value.pagoPartes;
                   value.usaWebApp = true;
                 } else {
+                  console.log('crea un nuevo');
                   value = this.frm.value;
                    value.usaWebApp = true;
                 }
@@ -320,6 +343,7 @@ export class FormServicioComponent implements OnInit {
                 value.porcentaje = this.frm.value.porcentaje;
                 value.pagoPartes = this.frm.value.pagoPartes;
               } else {
+                console.log('crea un nuevo 2');
                 value = this.frm.value;
               }
               let cta = this.cuentas.find(c => c.id === value.idCuenta);
@@ -350,10 +374,11 @@ export class FormServicioComponent implements OnInit {
             if (this.editMode) {
               value = this._service;
               value.idCuenta = this.frm.value.idCuenta;
-               // value.nombre = this.frm.value.nombre;
-               value.newName = this.frm.value.nombre;
-                  value.nameCod = this.frm.value.nameCod;
-                  value.codDeudor = this.frm.value.codDeudor;
+               // tslint:disable-next-line:max-line-length
+               value.newName =  (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre;  //this.frm.value.nombre;  /* (value.newName !== value.nombre) ? value.newName : (this.frm.value.nombre === value.nombre) ? value.nombre : this.frm.value.nombre; */
+
+               // tslint:disable-next-line:max-line-length
+              value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? (this.frm.value.nameCod === value.nameCod) ? value.newNameCode : this.frm.value.nameCod       : (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor;
               value.moneda = this.frm.value.moneda;
               value.cobraMora = this.frm.value.cobraMora;
               value.periodoMora = this.frm.value.periodoMora;
@@ -364,12 +389,11 @@ export class FormServicioComponent implements OnInit {
               console.log('ingresa 3.1');
               value.usaWebApp = true;
             } else {
-              console.log('entra a nombre xdeeeeee');
-
+              console.log('crea un nuevo 3');
               value = this.frm.value;
-              value.newName = this.frm.value.nombre;
-              value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor  ;
-              // value.newNameCode = this.frm.value.codDeudor;
+              value.newName =   this.frm.value.nombre;
+              value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
+              console.log('crea un nuevo 3 en edicion' + value.newName);
             }
             let cta = this.cuentas.find(c => c.id === value.idCuenta);
             value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
@@ -379,7 +403,7 @@ export class FormServicioComponent implements OnInit {
 
             console.log('SERVICIO --MARCE');
             console.log(value);
-            
+
             this.grabar.emit(value);
           }
       }

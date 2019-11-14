@@ -96,7 +96,7 @@ export class FormServicioGtpComponent implements OnInit {
         this._service.newNameCode.substring(3, this._service.newNameCode.length).toString() : 'Otro'),
         // tslint:disable-next-line:max-line-length
         disabled: (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true}, [Validators.required]),
-        
+
         nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : (this._service.newNameCode.substring(3, this._service.newNameCode.length).toString()),
            disabled: this._service.NewNameCod }),
         tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
@@ -144,11 +144,13 @@ export class FormServicioGtpComponent implements OnInit {
   }
 
   nombreAlert() {
+    /*editMode === true && ( _service.nombre  !== _service.newName) */
     return (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true;
   }
   CodiAlert() {
     return (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true;
   }
+
 
 
   onChangeTipoDato() {

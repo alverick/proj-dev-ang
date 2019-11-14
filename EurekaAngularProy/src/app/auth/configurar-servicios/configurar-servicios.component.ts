@@ -273,12 +273,12 @@ export class ConfigurarServiciosComponent implements OnInit {
                 this.gtpService.EditChangeGTP({ Token:  this.gtpService.llave ,
                   NewName:  this.gtpService.nombre, ArrayServices : Svc })
                 .subscribe(d => {
-                  console.log('ESTA API DEVUELVE '+ d);
+                  console.log('ESTA API DEVUELVE ' + d);
                 if (d === true) {
                   this.router.navigate(['/login']);
                 } else {
                   console.log('HOLA 2');
-                  console.log('lenght de servicio'+ Svc.length);
+                  console.log('lenght de servicio' + Svc.length);
                   console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName,Svc);
                 }
                 });
@@ -286,7 +286,7 @@ export class ConfigurarServiciosComponent implements OnInit {
             }
         });
       } else {
-        this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + total + ' observaciones' );
+        this.mensaje( 'Correxiones', 'Aun faltan corregir ' + total + ' observaciones' );
       }
     }
 
@@ -387,22 +387,27 @@ export class ConfigurarServiciosComponent implements OnInit {
   getCodDebtor(svc: ServiceModel) {
 
       if(svc.codDeudor === svc.newNameCode) {
-        return svc.newNameCode;
+        console.log('codigo deudor 1');
+        return svc.newNameCode;  
       } 
       if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
+        console.log('codigo deudor 2');
            return svc.nameCod;
       }
       if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
         // return svc.nameCod;
+        console.log('codigo deudor 3');
         return svc.newNameCode;
      }
       if (svc.codDeudor === '?') {
+        console.log('codigo deudor 4');
         if (svc.newNameCode.substring(0, 3) === '???') {
           return svc.newNameCode.substring(3, svc.newNameCode.length);
         }
         return svc.newNameCode;
       } else {
       if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+        console.log('codigo deudor 5');
         // tslint:disable-next-line: no-unused-expression
         return svc.codDeudor;
       }
@@ -411,18 +416,17 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
   }
   getCodDebtorCreate(svc: ServiceModel) {
-    if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+     if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
         // tslint:disable-next-line: no-unused-expression
         return svc.codDeudor;
       }
-      svc.codDeudor = 'Otro';
-      return svc.newNameCode;
+      if (svc.codDeudor === 'Otro') {
+        return svc.nameCod;
+      }
+     /* svc.codDeudor = 'Otro';
+      return svc.newNameCode; */
   }
 
-/*
- newName : s.newName,
-            newNameCode : s.newNameCode,
-*/
 getNameGTP(svc: ServiceModel) {
   if (svc.nombre  !== '?') {
     return svc.nombre;
@@ -435,24 +439,36 @@ getNameGTP(svc: ServiceModel) {
 
 pendienteRevision(svc: ServiceModel) {
  if (this.inEdit ) {
-  if (((svc.nombre !== svc.newName) || (svc.nombre === '?' && svc.newName.substring(0, 3) === '???' )) || ((svc.codDeudor  !== svc.newNameCode ) || (svc.codDeudor === '?'  && svc.newNameCode.substring(0, 3) === '???') )) {
+   if ((svc.nombre === svc.newName) && ((svc.codDeudor  === svc.newNameCode ) || (svc.nameCod  === svc.newNameCode ) )) {
+    return false;
+   }
+  if (((svc.nombre !== svc.newName) && (svc.nombre === '?')) || ((svc.codDeudor  !== svc.newNameCode ) && (svc.codDeudor === '?') )) {
     return true;
   }
- }else {
+
+  if((svc.nombre !== svc.newName) || ((svc.nameCod  !== svc.newNameCode) || (svc.codDeudor  !== svc.newNameCode) )){
+    return true;
+  }
+ } else {
   return false;
  }
-
 
 }
 
 getName(svc: ServiceModel) {
-  if (svc.nombre === '?'){
-    if(svc.newName.substring(0,3) === '???'){
+  if (svc.nombre === '?') {
+    if (svc.newName.substring(0, 3) === '???') {
       return svc.newName.substring(3, svc.newName.length);
-    }else{
+    } else {
       return svc.newName;
     }
-  }
+ /* } else {
+    if ( svc.nombre === svc.newName) {
+      return svc.newName;
+    } else {
+      return svc.newName;
+    }*/
+  } 
 
   return svc.nombre;
 }
@@ -574,13 +590,26 @@ getCodigoNameGTP(svc: ServiceModel) {
     console.table( this.afiliacionService.services);
     console.log('cierra');
     if (this.indiceActual >= 0) {
-      if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
-        Swal.fire({
-          text: 'Ya existe un servicio con este nombre',
-          onOpen: drawPopup
-        });
-        return;
+
+      if (this.inEdit) {
+        console.log('Edit name se cae xdeee');
+        if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+          Swal.fire({
+            text: 'Ya existe un servicio con este nombre',
+            onOpen: drawPopup
+          });
+          return;
+        }
+      } else {
+        if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
+          Swal.fire({
+            text: 'Ya existe un servicio con este nombre',
+            onOpen: drawPopup
+          });
+          return;
+        }
       }
+      
      /* if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({
           text: 'Ya existe un servicio con este nombre',
