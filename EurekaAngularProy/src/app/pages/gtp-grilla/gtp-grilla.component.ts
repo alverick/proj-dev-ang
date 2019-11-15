@@ -108,11 +108,12 @@ export class GtpGrillaComponent implements OnInit {
     this.filtro.dateTo = null;
   }
   Aprobar( ClientId: number){
-   location.href = '/AprobacionGtp/'+ClientId;
+    this.router.navigate(['/AprobacionGtp/' + ClientId]);
+   // location.href = '/AprobacionGtp/'+ClientId;
   }
 
   changePage(nro: number) {
-    this.currentFiltro.pageNumber =nro;
+    this.currentFiltro.pageNumber = nro;
     this.consultaGtp();
   }
   ////ORDENAMIENTO OCULTAR LAS FLECHAS

@@ -60,7 +60,7 @@ export class CrearContrasenaComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
           ruc: new FormControl({ value: '', disabled: this.inEdit },
           [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
-          nombre: new FormControl({ value: '', disabled:this.inEdit }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
+          nombre: new FormControl({ value: '' }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
           rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
           email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
           telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
@@ -85,9 +85,12 @@ export class CrearContrasenaComponent implements OnInit {
             status: this.gtpService.EmpresaServicios.status,
             requestDate: this.gtpService.EmpresaServicios.requestDate
           };
-
-          if ( this.empresasEdit.name !== this.empresasEdit.newName ) {
-            this.registerForm.get('nombre').disable();
+          this.f.nombre.disable();
+          console.log('CORREGIR GTP');
+           if ( this.gtpService.EmpresaServicios.inReview) {
+           // this.f.nombre.disable();
+             this.registerForm.get('nombre').enable();
+            console.log('nombre  de empresa' + this.registerForm.get('nombre').enable());
            }
           this.registerForm.setValue({ ruc: this.gtpService.EmpresaServicios.ruc, nombre: this.gtpService.EmpresaServicios.name,
           rubro: this.gtpService.EmpresaServicios.entry, email: this.gtpService.EmpresaServicios.email,
@@ -268,19 +271,14 @@ export class CrearContrasenaComponent implements OnInit {
 
     MensajeName() {
       if (this.inEdit) {
-        if ((this.gtpService.EmpresaServicios.newName === this.gtpService.EmpresaServicios.newName) && this.gtpService.EmpresaServicios.inReview) {
-          return false;
+        if ( this.gtpService.EmpresaServicios.inReview) {
+          return true;
       }
-      if ((this.gtpService.EmpresaServicios.newName !== this.gtpService.EmpresaServicios.newName) && this.gtpService.EmpresaServicios.inReview === false){
-        return true;
-      }
-      } else {
+      if ( this.gtpService.EmpresaServicios.inReview === false) {
         return false;
       }
-      
     }
-
- 
+  }
 
   terminos() {
    $('#terminos').modal('show');
