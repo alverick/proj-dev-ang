@@ -252,7 +252,10 @@ export class AfiliacionService {
             monto: s.amount,
             porcentaje: s.percentage,
             inReview: s.inReview,
-            pagoPartes: s.partialPayment
+            pagoPartes: s.partialPayment,
+            nombreHabilitado: (s.name === s.newName) ? false : true,
+            nombreCodHabilitado:  (s.codDeudor === s.newNameCode) ?  false : true,
+
           });
         });
         this.services = servicios;

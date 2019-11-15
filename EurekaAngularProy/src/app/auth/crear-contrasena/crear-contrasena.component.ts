@@ -62,7 +62,7 @@ export class CrearContrasenaComponent implements OnInit {
           [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
           nombre: new FormControl({ value: '' }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
           rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
-          email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
+          email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern('^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'), Validators.minLength(10), Validators.maxLength(100)]),
           telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
           contrasena: new FormControl({ value: '', disabled: this.inEdit }),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }),

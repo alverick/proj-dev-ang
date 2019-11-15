@@ -107,7 +107,7 @@ export class GtpGrillaComponent implements OnInit {
     this.inputDate2.nativeElement.value = '';
     this.filtro.dateTo = null;
   }
-  Aprobar( ClientId: number){
+  Aprobar( ClientId: number) {
     this.router.navigate(['/AprobacionGtp/' + ClientId]);
    // location.href = '/AprobacionGtp/'+ClientId;
   }
