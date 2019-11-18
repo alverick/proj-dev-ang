@@ -17,7 +17,7 @@
 
        <!-- <div *ngIf="editMode === true && ( _service.nombre  !== _service.newName)" class="messsage-error">El nuevo nombre {{ _service.newName }} esta siendo procesado</div> -->
 
-        <div  *ngIf="nombreAlert()" class="messsage-error">El nuevo nombre {{ _service.newName }} esta siendo procesado</div>
+        <div  *ngIf="nombreAlert()" class="messsage-error">El nuevo nombre <strong> {{ _service.newName }} </strong> esta siendo procesado</div>
 
     </div>
     <div class="form-group">
@@ -43,7 +43,7 @@
 
         <!-- <div  *ngIf="editMode === true && ( _service.codDeudor  !== _service.newNameCode)" class="messsage-error">El nuevo codigo {{ _service.newNameCode }} esta siendo procesado</div> -->
 
-        <div  *ngIf="CodiAlert()" class="messsage-error">El nuevo codigo {{ _service.newNameCode }} esta siendo procesado</div>
+        <div  *ngIf="CodiAlert()" class="messsage-error">El nuevo codigo  <strong>{{ _service.newNameCode }} </strong> esta siendo procesado</div>
 
     </div>
     <div class="form-group">

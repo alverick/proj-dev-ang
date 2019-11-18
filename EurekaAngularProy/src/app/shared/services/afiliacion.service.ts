@@ -254,7 +254,7 @@ export class AfiliacionService {
             inReview: s.inReview,
             pagoPartes: s.partialPayment,
             nombreHabilitado: (s.name === s.newName) ? false : true,
-            nombreCodHabilitado:  (s.codDeudor === s.newNameCode) ?  false : true,
+            nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  false : true,
 
           });
         });
