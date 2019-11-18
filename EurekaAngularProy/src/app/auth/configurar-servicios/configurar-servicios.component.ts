@@ -251,7 +251,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           confirmButtonText: 'GUARDAR',
           onOpen: drawPopup
         }).then(r => {
-  
+
           console.log('Lo que devuelve el token es '+r);
           this.sendAfterSave = true;
             if (r.value) {
@@ -266,9 +266,9 @@ export class ConfigurarServiciosComponent implements OnInit {
                 console.log('HOLA 1');
                 console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName, Svc);
               }
-  
+
               });
-  
+
               } else {
                 this.gtpService.EditChangeGTP({ Token:  this.gtpService.llave ,
                   NewName:  this.gtpService.nombre, ArrayServices : Svc })
@@ -387,44 +387,33 @@ export class ConfigurarServiciosComponent implements OnInit {
   getCodDebtor(svc: ServiceModel) {
 
       if(svc.codDeudor === svc.newNameCode) {
-        console.log('codigo deudor 1');
-        return svc.newNameCode;  
-      } 
+         return svc.newNameCode;
+      }
       if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
-        console.log('codigo deudor 2');
-           return svc.nameCod;
+            return svc.nameCod;
       }
       if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
         // return svc.nameCod;
-        console.log('codigo deudor 3');
-        return svc.newNameCode;
+         return svc.newNameCode;
      }
       if (svc.codDeudor === '?') {
-        console.log('codigo deudor 4');
-        if (svc.newNameCode.substring(0, 3) === '???') {
+         if (svc.newNameCode.substring(0, 3) === '???') {
           return svc.newNameCode.substring(3, svc.newNameCode.length);
         }
         return svc.newNameCode;
       } else {
       if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
-        console.log('codigo deudor 5');
-        // tslint:disable-next-line: no-unused-expression
-        return svc.codDeudor;
+         return svc.codDeudor;
       }
-     // svc.codDeudor = 'Otro';
-     // return svc.newNameCode.substring(3, svc.newNameCode.length);
     }
   }
   getCodDebtorCreate(svc: ServiceModel) {
      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
-        // tslint:disable-next-line: no-unused-expression
-        return svc.codDeudor;
+         return svc.codDeudor;
       }
       if (svc.codDeudor === 'Otro') {
         return svc.nameCod;
       }
-     /* svc.codDeudor = 'Otro';
-      return svc.newNameCode; */
   }
 
 getNameGTP(svc: ServiceModel) {
@@ -468,7 +457,7 @@ getName(svc: ServiceModel) {
     } else {
       return svc.newName;
     }*/
-  } 
+  }
 
   return svc.nombre;
 }
@@ -578,6 +567,8 @@ getCodigoNameGTP(svc: ServiceModel) {
       this.serviceActual = svc;
        return;
     }
+    console.log('Editar servicio');
+    console.log(svc);
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
@@ -592,7 +583,7 @@ getCodigoNameGTP(svc: ServiceModel) {
     if (this.indiceActual >= 0) {
 
       if (this.inEdit) {
-        console.log('Edit name se cae xdeee');
+        console.log('Edit name se cae xdeee' +svc.newName );
         if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
@@ -609,7 +600,7 @@ getCodigoNameGTP(svc: ServiceModel) {
           return;
         }
       }
-      
+
      /* if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({
           text: 'Ya existe un servicio con este nombre',

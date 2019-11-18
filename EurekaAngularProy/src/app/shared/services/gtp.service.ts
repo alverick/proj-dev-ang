@@ -25,7 +25,7 @@ export class GtpService {
   public pageMessage: string = "Mostrando 0 de 0 elementos";
 
   constructor(private http: HttpClient, private storage: StorageService, private spinner: NgxSpinnerService) { }
-
+/// para los servicios que estan en eprobacin
   public services: DataServiceGTP[] = [];
   public Service: DataServiceGTP;
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies: 0, listCompanyGTP: [] };
@@ -117,9 +117,9 @@ export class GtpService {
           idAccount: s.idAccount,
           accountNumber: s.accountNumber,
           currency: s.currency,
-          usaWebApp: s.useAppWeb,
-          usaAgente: s.useAgent,
-          usaTienda: s.useStore,
+          useAppWeb: s.useAppWeb,
+          useAgent: s.useAgent,
+          useStore: s.useStore,
           partialPayment: s.partialPayment,
           chargeInterest: s.chargeInterest,
           chargeType: s.chargeType.toString(),
