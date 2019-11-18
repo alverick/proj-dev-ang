@@ -18,7 +18,8 @@ import { CorrigeComponent } from './corrige/corrige.component';
     //ConfigurarEmpresaComponent,
     //SubirPlantillaComponent,
     //AnalisisComponent
-    CorrigeComponent ]
+    CorrigeComponent,
+      ]
 })
 export class PagesModule {
   constructor (@Optional() @SkipSelf() parentModule: PagesModule) {

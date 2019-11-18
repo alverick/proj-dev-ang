@@ -74,16 +74,15 @@ export class ConfigurarEmpresaComponent implements OnInit {
   getInfoEmpresa() {
     this.configEmpresaService.getDatosEmpresa()
       .subscribe( dataEnterprise => {
+         this.dataEmpresa = dataEnterprise;
 
-        this.dataEmpresa = dataEnterprise;
-
-        /* if (this.dataEmpresa.name !== this.dataEmpresa.newName ) {
-          return  this.nombre =  true;
-        } */
+         if ( this.dataEmpresa.name !== this.dataEmpresa.newName ) {
+          this.formGroup.get('name').disable();
+         }
         this.formGroup.setValue(dataEnterprise);
-          }
-        );
 
+          }
+        ); 
   }
   get f(): any { return this.formGroup.controls; }
 

@@ -60,9 +60,9 @@ export class CrearContrasenaComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
           ruc: new FormControl({ value: '', disabled: this.inEdit },
           [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
-          nombre: new FormControl({ value: '', disabled: false }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
+          nombre: new FormControl({ value: '' }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
           rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
-          email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
+          email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern('^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'), Validators.minLength(10), Validators.maxLength(100)]),
           telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
           contrasena: new FormControl({ value: '', disabled: this.inEdit }),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }),
@@ -86,7 +86,13 @@ export class CrearContrasenaComponent implements OnInit {
             requestDate: this.gtpService.EmpresaServicios.requestDate,
             inReview: false
           };
-
+          this.f.nombre.disable();
+          console.log('CORREGIR GTP');
+           if ( this.gtpService.EmpresaServicios.inReview) {
+           // this.f.nombre.disable();
+             this.registerForm.get('nombre').enable();
+            console.log('nombre  de empresa' + this.registerForm.get('nombre').enable());
+           }
           this.registerForm.setValue({ ruc: this.gtpService.EmpresaServicios.ruc, nombre: this.gtpService.EmpresaServicios.name,
           rubro: this.gtpService.EmpresaServicios.entry, email: this.gtpService.EmpresaServicios.email,
           telefono: this.gtpService.EmpresaServicios.movilNumber, contrasena: '', repcontrasena: '',  acceptterms: true });
@@ -123,7 +129,61 @@ export class CrearContrasenaComponent implements OnInit {
     return this.registerForm.controls;
   }
 
+  ObtenerDatos(): Observable<any>  {
+    this.spinner.show();
+    return new Observable(obs => {
+      this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
+        .subscribe( d => {
 
+          if ( d === null  ) {
+
+            this.mensaje( 'Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
+            this.router.navigate(['/login']);
+            obs.error();
+          } else {
+            this.gtpService.EmpresaServicios = d;
+            console.log('empresa ser');
+            console.table(this.gtpService.EmpresaServicios);
+         /*   let servicios = [];
+            this.gtpService.EmpresaServicios.arrayServices = [];
+            d.ArrayServices.array.forEach(s => {
+              servicios.push({
+                id: s.id,
+                name: s.name,
+                debtorCode: s.debtorCode,
+                dataType: s.dataType,
+                paymentType: s.paymentType,
+                idAccount: s.idAccount,
+                accountNumber: s.accountNumber,
+                currency: s.currency,
+                usaWebApp: s.useAppWeb,
+                usaAgente: s.useAgent,
+                usaTienda: s.useStore,
+                partialPayment: s.partialPayment,
+                chargeInterest: s.chargeInterest,
+                chargeType: s.chargeType.toString(),
+                interestType: s.interestType,
+                amount: s.amount,
+                porcentage: s.percentage,
+                currencySymbol: s.currencySymbol,
+                inReview: s.inReview,
+                newNameCode: s.newNameCode,
+                newName: s.newName,
+                status: s.status
+              });
+            });
+            this.gtpService.EmpresaServicios.arrayServices = servicios;
+           console.log('Servicios rechazado');
+           console.log(this.gtpService.EmpresaServicios.arrayServices); */
+            obs.next();
+            obs.complete();
+       // this.empresa = this.gtpService.EmpresaServicios;
+          }
+          this.spinner.hide();
+        });
+    });
+
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -186,21 +246,22 @@ export class CrearContrasenaComponent implements OnInit {
       });
 
     } else {
-      console.log('GTP AMIGOS');
-
+      console.log('GTP AMIGOS' + this.llave);
 
     // this.gtpService.EdtEmpServ = null;
     // tslint:disable-next-line:max-line-length
     if (( this.gtpService.EmpresaServicios.name === this.gtpService.EmpresaServicios.newName) && (this.gtpService.EmpresaServicios.inReview === false)) {
      this.gtpService.EdtEmpServ = {token: this.llave, NewName: null};
+     this.gtpService.nombre = null;
     }
     // tslint:disable-next-line:max-line-length
     if (( this.gtpService.EmpresaServicios.name !== this.gtpService.EmpresaServicios.newName) && (this.gtpService.EmpresaServicios.inReview === true)) {
       this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
-    } 
+      this.gtpService.nombre = this.registerForm.value.nombre.toString();
+    }
      this.router.navigate(["/editarSvcGTP"]);
       this.gtpService.llave = this.llave;
-      console.log( this.gtpService.EdtEmpServ);
+     // console.log( 'El token xdee' + this.gtpService.EdtEmpServ.token);
      // this.ObtenerDatos();
     }
 
@@ -208,76 +269,17 @@ export class CrearContrasenaComponent implements OnInit {
   }
 
 
-    ObtenerDatos(): Observable<any>  {
-      this.spinner.show();
-      return new Observable(obs => {
-        this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
-          .subscribe( d => {
 
-            if ( d === null  ) {
-
-              this.mensaje( 'Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
-              this.router.navigate(['/login']);
-              obs.error();
-            } else {
-              this.gtpService.EmpresaServicios = d;
-              console.log('empresa ser');
-              console.table(this.gtpService.EmpresaServicios);
-           /*   let servicios = [];
-              this.gtpService.EmpresaServicios.arrayServices = [];
-              d.ArrayServices.array.forEach(s => {
-                servicios.push({
-                  id: s.id,
-                  name: s.name,
-                  debtorCode: s.debtorCode,
-                  dataType: s.dataType,
-                  paymentType: s.paymentType,
-                  idAccount: s.idAccount,
-                  accountNumber: s.accountNumber,
-                  currency: s.currency,
-                  usaWebApp: s.useAppWeb,
-                  usaAgente: s.useAgent,
-                  usaTienda: s.useStore,
-                  partialPayment: s.partialPayment,
-                  chargeInterest: s.chargeInterest,
-                  chargeType: s.chargeType.toString(),
-                  interestType: s.interestType,
-                  amount: s.amount,
-                  porcentage: s.percentage,
-                  currencySymbol: s.currencySymbol,
-                  inReview: s.inReview,
-                  newNameCode: s.newNameCode,
-                  newName: s.newName,
-                  status: s.status
-                });
-              });
-              this.gtpService.EmpresaServicios.arrayServices = servicios;
-             console.log('Servicios rechazado');
-             console.log(this.gtpService.EmpresaServicios.arrayServices); */
-              obs.next();
-              obs.complete();
-         // this.empresa = this.gtpService.EmpresaServicios;
-            }
-            this.spinner.hide();
-          });
-      });
-
-    }
     MensajeName() {
       if (this.inEdit) {
-        if ((this.gtpService.EmpresaServicios.newName === this.gtpService.EmpresaServicios.newName) && this.gtpService.EmpresaServicios.inReview) {
-          return false;
+        if ( this.gtpService.EmpresaServicios.inReview) {
+          return true;
       }
-      if ((this.gtpService.EmpresaServicios.newName !== this.gtpService.EmpresaServicios.newName) && this.gtpService.EmpresaServicios.inReview === false){
-        return true;
-      }
-      } else {
+      if ( this.gtpService.EmpresaServicios.inReview === false) {
         return false;
       }
-      
     }
-
- 
+  }
 
   terminos() {
    $('#terminos').modal('show');

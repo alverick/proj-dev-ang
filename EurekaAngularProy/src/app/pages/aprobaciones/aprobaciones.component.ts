@@ -7,6 +7,8 @@ import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
 import Swal from 'sweetalert2';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GtpEmpresa, GtpServcegtp, GtpPost } from 'src/app/shared/models/gtp-post';
+import { RubroModel } from 'src/app/shared/models';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 
 @Component({
   selector: 'app-aprobaciones',
@@ -31,7 +33,11 @@ export class AprobacionesComponent implements OnInit {
   public indiceActual: number = -1;
   public isOnlyEmpresa: boolean;
   public isOnlyService: boolean;
-  constructor(public gtpService: GtpService, private rutaActiva: ActivatedRoute, public router: Router) { }
+  public rubro:string;
+  rubros: RubroModel[] = [];
+
+  constructor(public gtpService: GtpService, private rutaActiva: ActivatedRoute,
+    public afiliacionService: AfiliacionService,public router: Router) { }
   public OcultarDatosActualEmpresa: boolean = true;
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
@@ -62,6 +68,7 @@ export class AprobacionesComponent implements OnInit {
         this.deshabilitar = true;
       }
     */
+   this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
   }
 
 
@@ -69,8 +76,7 @@ export class AprobacionesComponent implements OnInit {
     this.gtpService.GetEnterpriseGtp(this.llave)
       .subscribe( dataEnterprise => {
         this.Enterprise = dataEnterprise;
-        console.log('EMPRESAS TRAIDASS');
-        console.table(dataEnterprise);
+        this.rubro =  this.rubros.find((v) => v.code = this.Enterprise.entry).name;
         });
   }
 
@@ -122,7 +128,7 @@ export class AprobacionesComponent implements OnInit {
     this.ServiciosFormulario = true;
     this.Servgtp = etp;
     this.indiceActual = index;
-
+    console.log('USA WEB'+ etp.useAppWeb);
   }
 
   EnviarAprobados(){
@@ -366,20 +372,7 @@ export class AprobacionesComponent implements OnInit {
       });
 
       console.log(this.scv);
-     /* if (this.Enterprise.name === this.Enterprise.newName && this.scv.length === 0) {
-        console.log('NO ENVIA NADA');
-      }
-      if (this.Enterprise.name === this.Enterprise.newName) {
-        console.log('SOLO ENVIA SERVICIOS');
-        this.isOnlyService = true;
-      }
-      if (this.scv.length === 0 ) {
-        console.log('SOLO ENVIA EMPRESA');
-        this.isOnlyEmpresa = true;
-      } else {
-        console.log('ENVIA AMBOS');
-        this.isOnlyEmpresa = false;
-      } */
+
 
     let total = cant + sercant;
 
@@ -570,6 +563,7 @@ export class AprobacionesComponent implements OnInit {
       return 'Edicion de Servicio';
     }
   }
+
 OcultarFormulario(requireConfirm: boolean) {
   if (requireConfirm) {
     Swal.fire({

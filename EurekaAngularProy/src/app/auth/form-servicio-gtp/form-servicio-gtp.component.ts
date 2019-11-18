@@ -143,11 +143,11 @@ export class FormServicioGtpComponent implements OnInit {
 
   }
 
-  nombreAlerts() {
+  nombreAlert() {
     /*editMode === true && ( _service.nombre  !== _service.newName) */
     return (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true;
   }
-  CodiAlerts() {
+  CodiAlert() {
     return (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true;
   }
 

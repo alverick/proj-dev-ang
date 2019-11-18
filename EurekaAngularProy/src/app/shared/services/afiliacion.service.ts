@@ -65,6 +65,7 @@ export class AfiliacionService {
     }
     let svc: ServiceModel = {
       nombre: nombre,
+      newName : nombre,
       codDeudor: 'DNI',
       tipoDato: 'C',
       tipoPago: 'C',
@@ -251,7 +252,10 @@ export class AfiliacionService {
             monto: s.amount,
             porcentaje: s.percentage,
             inReview: s.inReview,
-            pagoPartes: s.partialPayment
+            pagoPartes: s.partialPayment,
+            nombreHabilitado: (s.name === s.newName) ? false : true,
+            nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  false : true,
+
           });
         });
         this.services = servicios;
@@ -276,8 +280,9 @@ export class AfiliacionService {
         name: (s.nombre === '?') ? '' : s.nombre ,
         newName: s.newName,
         entry: s.rubro,
-        debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
-        newNameCode: s.newNameCode,
+        debtorCode: (s.codDeudor === '?') ? '' : (( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor) ,
+     //   debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
+         newNameCode: s.newNameCode,
         dataType: s.tipoDato,
         paymentType: s.tipoPago,
         idAccount: s.idCuenta,

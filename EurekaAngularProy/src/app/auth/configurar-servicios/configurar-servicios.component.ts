@@ -219,72 +219,75 @@ export class ConfigurarServiciosComponent implements OnInit {
 
       let Svc = [] ;
       let svcinReview = this.afiliacionService.services.filter((v) => v.inReview === true);
-
-
+      let cantName = this.afiliacionService.services.filter((v) => (v.inReview === true) && (v.nombre === '?')).length;
+      let cantNameServ = this.afiliacionService.services.filter((v) => (v.inReview === true) && (v.codDeudor === '?')).length;
+      let total = cantName + cantNameServ;
       svcinReview.forEach(s => {
        Svc.push({
           ServiceId: s.id,
           NewName: (s.newName.substring(0, 3) === '???') ? s.nombre : null ,
           // tslint:disable-next-line:max-line-length
-          NewCodName: (s.codDeudor === '?' && s.newNameCode.substring(0, 3) === '???') ? s.codDeudor : null,
+          NewCodName: ( s.newNameCode.substring(0, 3) === '???') ? s.codDeudor : null,
         });
       });
       // (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true
       console.log('ESTAS EN GTP marcelo 2');
 
-      console.log(this.gtpService.EdtEmpServ);
+    // alert(this.gtpService.EdtEmpServ.token);
       if (Svc.length === 0) {
         console.log('SERV cero' + Svc.length);
       }
       console.log(Svc);
 
-      Swal.fire({
-        title: 'Editar',
-        text: `Desea Guardar los Cambios`,
-        showCloseButton: true,
-        showCancelButton: true,
-        showConfirmButton: true,
-        cancelButtonColor: '#d33',
-        cancelButtonText:  'DESHACER CAMBIOS',
-        confirmButtonText: 'GUARDAR',
-        onOpen: drawPopup
-      }).then(r => {
+      if (total === 0) {
+        Swal.fire({
+          title: 'Editar',
+          text: `Desea Guardar los Cambios`,
+          showCloseButton: true,
+          showCancelButton: true,
+          showConfirmButton: true,
+          cancelButtonColor: '#d33',
+          cancelButtonText:  'DESHACER CAMBIOS',
+          confirmButtonText: 'GUARDAR',
+          onOpen: drawPopup
+        }).then(r => {
 
-        console.log('Lo que devuelve el token es '+r);
-        this.sendAfterSave = true;
-          if (r.value) {
-            if (Svc.length === 0) {
-              this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
-                NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : null })
-              .subscribe(d => {
-                console.log('ESTA API DEVUELVE '+ d);
-            if (d === true) {
-              this.router.navigate(['/login']);
-            } else {
-              console.log('HOLA 1');
-              console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName, Svc);
-            }
-
-            });
-
-            } else {
-              this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
-                NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : Svc })
-              .subscribe(d => {
-                console.log('ESTA API DEVUELVE '+ d);
+          console.log('Lo que devuelve el token es '+r);
+          this.sendAfterSave = true;
+            if (r.value) {
+              if (Svc.length === 0) {
+                this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
+                  NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : null })
+                .subscribe(d => {
+                  console.log('ESTA API DEVUELVE '+ d);
               if (d === true) {
                 this.router.navigate(['/login']);
               } else {
-                console.log('HOLA 2');
-                console.log('lenght de servicio'+ Svc.length);
-                console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName,Svc);
+                console.log('HOLA 1');
+                console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName, Svc);
               }
+
               });
+
+              } else {
+                this.gtpService.EditChangeGTP({ Token:  this.gtpService.llave ,
+                  NewName:  this.gtpService.nombre, ArrayServices : Svc })
+                .subscribe(d => {
+                  console.log('ESTA API DEVUELVE ' + d);
+                if (d === true) {
+                  this.router.navigate(['/login']);
+                } else {
+                  console.log('HOLA 2');
+                  console.log('lenght de servicio' + Svc.length);
+                  console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName,Svc);
+                }
+                });
+              }
             }
-          }
-      });
-
-
+        });
+      } else {
+        this.mensaje( 'Correxiones', 'Aun faltan corregir ' + total + ' observaciones' );
+      }
     }
 
     else {
@@ -350,6 +353,21 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
 
+  mensaje( titulo: string, text: string) {
+    Swal.fire({
+     // type: tipo ,
+      title: titulo ,
+      text: text,
+      showCloseButton: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      cancelButtonColor: '#d33',
+      // cancelButtonText:  'CERRAR',
+      allowOutsideClick: false,
+      confirmButtonText: 'CERRAR',
+      onOpen: drawPopup,
+    });
+  }
 
   getCanales(svc: ServiceModel) {
     let str = '';
@@ -368,36 +386,34 @@ export class ConfigurarServiciosComponent implements OnInit {
 
   getCodDebtor(svc: ServiceModel) {
 
-      if(svc.codDeudor === svc.newNameCode){
-        return svc.newNameCode;
+      if(svc.codDeudor === svc.newNameCode) {
+         return svc.newNameCode;
       }
       if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
-          return svc.nameCod;
+            return svc.nameCod;
       }
+      if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
+        // return svc.nameCod;
+         return svc.newNameCode;
+     }
       if (svc.codDeudor === '?') {
-        if (svc.newNameCode.substring(0, 3) === '???') {
+         if (svc.newNameCode.substring(0, 3) === '???') {
           return svc.newNameCode.substring(3, svc.newNameCode.length);
         }
         return svc.newNameCode;
       } else {
       if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
-        // tslint:disable-next-line: no-unused-expression
-        return svc.codDeudor;
+         return svc.codDeudor;
       }
-     // svc.codDeudor = 'Otro';
-     // return svc.newNameCode.substring(3, svc.newNameCode.length);
     }
   }
   getCodDebtorCreate(svc: ServiceModel) {
      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
-        // tslint:disable-next-line: no-unused-expression
-        return svc.codDeudor;
+         return svc.codDeudor;
       }
       if (svc.codDeudor === 'Otro') {
         return svc.nameCod;
       }
-     /* svc.codDeudor = 'Otro';
-      return svc.newNameCode; */
   }
 
 getNameGTP(svc: ServiceModel) {
@@ -412,23 +428,35 @@ getNameGTP(svc: ServiceModel) {
 
 pendienteRevision(svc: ServiceModel) {
  if (this.inEdit ) {
+   if ((svc.nombre === svc.newName) && ((svc.codDeudor  === svc.newNameCode ) || (svc.nameCod  === svc.newNameCode ) )) {
+    return false;
+   }
   if (((svc.nombre !== svc.newName) && (svc.nombre === '?')) || ((svc.codDeudor  !== svc.newNameCode ) && (svc.codDeudor === '?') )) {
     return true;
   }
- }else {
+
+  if((svc.nombre !== svc.newName) || ((svc.nameCod  !== svc.newNameCode) || (svc.codDeudor  !== svc.newNameCode) )){
+    return true;
+  }
+ } else {
   return false;
  }
-
 
 }
 
 getName(svc: ServiceModel) {
-  if (svc.nombre === '?'){
-    if(svc.newName.substring(0,3) === '???'){
+  if (svc.nombre === '?') {
+    if (svc.newName.substring(0, 3) === '???') {
       return svc.newName.substring(3, svc.newName.length);
-    }else{
+    } else {
       return svc.newName;
     }
+ /* } else {
+    if ( svc.nombre === svc.newName) {
+      return svc.newName;
+    } else {
+      return svc.newName;
+    }*/
   }
 
   return svc.nombre;
@@ -539,6 +567,8 @@ getCodigoNameGTP(svc: ServiceModel) {
       this.serviceActual = svc;
        return;
     }
+    console.log('Editar servicio');
+    console.log(svc);
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
@@ -551,13 +581,26 @@ getCodigoNameGTP(svc: ServiceModel) {
     console.table( this.afiliacionService.services);
     console.log('cierra');
     if (this.indiceActual >= 0) {
-      if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
-        Swal.fire({
-          text: 'Ya existe un servicio con este nombre',
-          onOpen: drawPopup
-        });
-        return;
+
+      if (this.inEdit) {
+        console.log('Edit name se cae xdeee' +svc.newName );
+        if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+          Swal.fire({
+            text: 'Ya existe un servicio con este nombre',
+            onOpen: drawPopup
+          });
+          return;
+        }
+      } else {
+        if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
+          Swal.fire({
+            text: 'Ya existe un servicio con este nombre',
+            onOpen: drawPopup
+          });
+          return;
+        }
       }
+
      /* if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
         Swal.fire({
           text: 'Ya existe un servicio con este nombre',
