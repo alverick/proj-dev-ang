@@ -83,7 +83,8 @@ export class CrearContrasenaComponent implements OnInit {
             movilNumber: this.gtpService.EmpresaServicios.movilNumber ,
             newName: this.gtpService.EmpresaServicios.newName,
             status: this.gtpService.EmpresaServicios.status,
-            requestDate: this.gtpService.EmpresaServicios.requestDate
+            requestDate: this.gtpService.EmpresaServicios.requestDate,
+            inReview: false
           };
           this.f.nombre.disable();
           console.log('CORREGIR GTP');
@@ -133,9 +134,9 @@ export class CrearContrasenaComponent implements OnInit {
     return new Observable(obs => {
       this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
         .subscribe( d => {
-          
+
           if ( d === null  ) {
-           
+
             this.mensaje( 'Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
             this.router.navigate(['/login']);
             obs.error();

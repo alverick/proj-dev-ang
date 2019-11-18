@@ -1,5 +1,9 @@
 <mat-dialog-actions align="end">
-    <div style="cursor: pointer;" class="pt-2" (click)="close()">
+    <div *ngIf="!excelService.statusUpload" style="cursor: pointer;" class="pt-2" (click)="close()">
+        <span  class="pr-2 pt-1"><span  style="cursor: pointer;" class="cancelar">Cancelar</span> </span>
+        <img height="20" width="20" style="cursor: pointer;" src="assets/images/cerrar.svg">
+    </div>
+    <div *ngIf="excelService.statusUpload" style="cursor: pointer;" class="pt-2" (click)="close()">
         <span  class="pr-2 pt-1"><span  style="cursor: pointer;" class="cancelar">Minimizar</span> </span>
         <mat-icon class="svg_custom" svgIcon="eurc_minimize"></mat-icon>
     </div>
