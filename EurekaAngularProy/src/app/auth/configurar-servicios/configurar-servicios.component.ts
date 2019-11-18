@@ -394,7 +394,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       }
       if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
         // return svc.nameCod;
-         return svc.newNameCode;
+         return svc.codDeudor;
      }
       if (svc.codDeudor === '?') {
          if (svc.newNameCode.substring(0, 3) === '???') {
@@ -437,7 +437,7 @@ pendienteRevision(svc: ServiceModel) {
   }
 
   if ((svc.nombre !== svc.newName) || ((svc.nameCod  !== svc.newNameCode) ||
-   (svc.codDeudor  !== svc.newNameCode) || (svc.codDeudor === '' || svc.codDeudor === null))){
+   (svc.codDeudor  !== svc.newNameCode)  )) {
     return true;
   }
  } else {
