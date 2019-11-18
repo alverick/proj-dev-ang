@@ -428,6 +428,7 @@ getNameGTP(svc: ServiceModel) {
 
 pendienteRevision(svc: ServiceModel) {
  if (this.inEdit ) {
+
    if ((svc.nombre === svc.newName) && ((svc.codDeudor  === svc.newNameCode ) || (svc.nameCod  === svc.newNameCode ) )) {
     return false;
    }
@@ -435,7 +436,8 @@ pendienteRevision(svc: ServiceModel) {
     return true;
   }
 
-  if((svc.nombre !== svc.newName) || ((svc.nameCod  !== svc.newNameCode) || (svc.codDeudor  !== svc.newNameCode) )){
+  if ((svc.nombre !== svc.newName) || ((svc.nameCod  !== svc.newNameCode) ||
+   (svc.codDeudor  !== svc.newNameCode) || (svc.codDeudor === '' || svc.codDeudor === null))){
     return true;
   }
  } else {

@@ -240,9 +240,14 @@ export class FormServicioComponent implements OnInit {
                 if (this.editMode)  {
                   value = this._service;
                 // value.nombre = this.frm.value.nombre;
-                value.newName = this.frm.value.nombre;
-                  value.nameCod = this.frm.value.nameCod;
-                  value.codDeudor = this.frm.value.codDeudor;
+              //   value.newName = this.frm.value.nombre;
+                 // value.nameCod = this.frm.value.nameCod;
+                 //  value.codDeudor = this.frm.value.codDeudor;
+                 // tslint:disable-next-line:max-line-length
+                 value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
+                 value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
+                    ((this.frm.value.nameCod === value.codDeudor) ? value.newNameCode : this.frm.value.nameCod ) :
+                    (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor ;
                   value.idCuenta = this.frm.value.idCuenta;
                   value.moneda = this.frm.value.moneda;
                   value.cobraMora = this.frm.value.cobraMora;
@@ -340,9 +345,11 @@ export class FormServicioComponent implements OnInit {
                 value = this._service;
                 value.idCuenta = this.frm.value.idCuenta;
                 // value.nombre = this.frm.value.nombre;
-                value.newName = this.frm.value.nombre;
-                  value.nameCod = this.frm.value.nameCod;
-                  value.codDeudor = this.frm.value.codDeudor;
+                // tslint:disable-next-line:max-line-length
+                value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
+               value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
+               ((this.frm.value.nameCod === value.codDeudor) ? value.newNameCode : this.frm.value.nameCod ) :
+               (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor ;
                 value.moneda = this.frm.value.moneda;
                 value.cobraMora = this.frm.value.cobraMora;
                 value.periodoMora = this.frm.value.periodoMora;
@@ -386,10 +393,10 @@ export class FormServicioComponent implements OnInit {
               value = this._service;
               value.idCuenta = this.frm.value.idCuenta;
                // tslint:disable-next-line:max-line-length
-               value.newName =  (value.nombre === value.newName) ? (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre :  value.newName ;
-               //this.frm.value.nombre;  /* (value.newName !== value.nombre) ? value.newName : (this.frm.value.nombre === value.nombre) ? value.nombre : this.frm.value.nombre; */
-              // tslint:disable-next-line:max-line-length
-              value.newNameCode = (value.codDeudor === value.newNameCode) ? (this.frm.value.codDeudor === 'Otro') ? (this.frm.value.nameCod === value.nameCod) ? value.newNameCode : this.frm.value.nameCod : (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor : value.newNameCode;
+               value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
+               value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
+               ((this.frm.value.nameCod === value.codDeudor) ? value.newNameCode : this.frm.value.nameCod ) :
+               (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor ;
               value.moneda = this.frm.value.moneda;
               value.cobraMora = this.frm.value.cobraMora;
               value.periodoMora = this.frm.value.periodoMora;

@@ -67,6 +67,7 @@ export class AfiliacionService {
       nombre: nombre,
       newName : nombre,
       codDeudor: 'DNI',
+     //  nameCod: '',
       tipoDato: 'C',
       tipoPago: 'C',
       idCuenta: 0,

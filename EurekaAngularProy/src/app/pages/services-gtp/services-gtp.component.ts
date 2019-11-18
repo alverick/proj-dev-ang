@@ -156,20 +156,7 @@ export class ServicesGTPComponent implements OnInit {
   }
 
   Button() {
-  /*  if((this._service.name  !== this._service.newName  ) || (this._service.debtorCode  !== this._service.newNameCode  )){
-      return true;
-    } */
-  /*  if( (( this._service.inReview && this._service.name !== '?') || (this._service.name  !== this._service.newName  )) ||  (( this._service.inReview && this._service.debtorCode !== '?') || (this._service.debtorCode  !== this._service.newNameCode  ))){
-      return true;
-    }
-    if((( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) ||  (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???'))){
-      return true;
-    }
-    if( ( this._service.debtorCode === '?'  || this._service.newNameCode.substring(0, 3) === '???') || (this._service.name === '?' || this._service.newName.substring(0, 3) === '???' )){
-      return false;
-    } */
-
-    if ((this._service.name  === this._service.newName  ) ||  (this._service.debtorCode  === this._service.newNameCode ) ) {
+    if ((this._service.name  === this._service.newName  ) &&  (this._service.debtorCode  === this._service.newNameCode ) ) {
       return false;
     }
     if ( (this._service.name === '?' && this._service.newName.substring(0, 3) === '???' )||   ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') ){
@@ -179,7 +166,7 @@ export class ServicesGTPComponent implements OnInit {
     if (( this._service.name === '?') || ( this._service.debtorCode === '?') ) {
       return true;
     }
-    if ((this._service.name  !== this._service.newName  ) ||  (this._service.name  !== this._service.newName  )) {
+    if ((this._service.name  !== this._service.newName  ) ||  (this._service.debtorCode  !== this._service.newNameCode  )) {
       return true;
     }
     if ((( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) || (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???'))) {
