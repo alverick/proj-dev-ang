@@ -86,9 +86,19 @@ export class FormServicioGtpComponent implements OnInit {
 
 
         this.frm = this.fb.group({
-        nombre: new FormControl({ value: this._service.nombre, disabled:  this._service.NewName }, [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-        codDeudor: new FormControl({ value: this._service.codDeudor, disabled: this._service.NewNameCod }, [Validators.required]),
-        nameCod: new FormControl({ value: this._service.nameCod, disabled: this._service.NewNameCod}),
+        nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName.substring(3, this._service.newName.length).toString(),
+          disabled:  (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true },
+          [Validators.required, Validators.minLength(3), Alfanumerico,
+            Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+        codDeudor: new FormControl({ value: (this._service.codDeudor !== '?')? this._service.codDeudor: ( (this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'RUC' ||
+        this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'DNI' ||
+        this._service.newNameCode.substring(3, this._service.newNameCode.length)  === 'Codigo Interno') ?
+        this._service.newNameCode.substring(3, this._service.newNameCode.length).toString() : 'Otro'),
+        // tslint:disable-next-line:max-line-length
+        disabled: (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true}, [Validators.required]),
+
+        nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : (this._service.newNameCode.substring(3, this._service.newNameCode.length).toString()),
+           disabled: this._service.NewNameCod }),
         tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
         tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
         idCuenta: new FormControl({ value: this._service.idCuenta, disabled: true}, [Validators.required,Validators.minLength(13)]),
@@ -133,6 +143,14 @@ export class FormServicioGtpComponent implements OnInit {
 
   }
 
+  nombreAlert() {
+    /*editMode === true && ( _service.nombre  !== _service.newName) */
+    return (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true;
+  }
+  CodiAlert() {
+    return (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true;
+  }
+
 
 
   onChangeTipoDato() {
@@ -170,7 +188,7 @@ export class FormServicioGtpComponent implements OnInit {
 
             value = this._service;
 
-            if (this._service.NewName) {
+           /* if (this._service.NewName) {
               value.codDeudor = this.frm.value.codDeudor;
               value.nameCod = this.frm.value.nameCod;
               this.grabar.emit(value);
@@ -183,7 +201,26 @@ export class FormServicioGtpComponent implements OnInit {
                 value.nameCod = this.frm.value.nameCod;
                 this.grabar.emit(value);
               }
+            } */
+          /*  if ( this._service.newName.substring(0, 3) === '???' ) {
+              value.nombre = this.frm.value.nombre;
+            } else {
+              value.nombre = null;
             }
+            if ( this._service.newNameCode.substring(0, 3) === '???') {
+              value.codDeudor = this.frm.value.codDeudor;
+              value.nameCod = this.frm.value.nameCod;
+            } else {
+              value.codDeudor = null;
+              value.nameCod = null;
+            } */
+            value.nombre = ( this._service.newName.substring(0, 3) === '???') ? this.frm.value.nombre : value.nombre ;
+            // tslint:disable-next-line:max-line-length
+            value.codDeudor = ( this._service.newNameCode.substring(0, 3) === '???') ?  this.frm.value.codDeudor : this._service.newNameCode;
+            value.nameCod = ( this._service.newNameCode.substring(0, 3) === '???') ? this.frm.value.nameCod : this._service.newNameCode;
+            console.log('valores' +  value.nombre + 'f'+  value.codDeudor+ 'f'+  value.nameCod );
+            this.grabar.emit(value);
+
     }
   }
 

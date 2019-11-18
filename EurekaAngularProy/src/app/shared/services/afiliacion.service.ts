@@ -49,7 +49,7 @@ export class AfiliacionService {
     let nombre: string = 'Mensualidad';
     let nro = 1;
     this.services.forEach((s, i) => {
-      //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada. 
+      //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
       if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
         if (!isNaN(parseInt(s.nombre.substr(nombre.length))) || s.nombre.substr(nombre.length) === ''){
           let aux = parseInt(s.nombre.substr(nombre.length));
@@ -65,6 +65,7 @@ export class AfiliacionService {
     }
     let svc: ServiceModel = {
       nombre: nombre,
+      newName : nombre,
       codDeudor: 'DNI',
       tipoDato: 'C',
       tipoPago: 'C',
@@ -251,7 +252,10 @@ export class AfiliacionService {
             monto: s.amount,
             porcentaje: s.percentage,
             inReview: s.inReview,
-            pagoPartes: s.partialPayment
+            pagoPartes: s.partialPayment,
+            nombreHabilitado: (s.name === s.newName) ? false : true,
+            nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  false : true,
+
           });
         });
         this.services = servicios;
@@ -266,7 +270,7 @@ export class AfiliacionService {
 
   public GrabarServicios(): Observable<any> {
     let codigo ;
-    console.log('SERVICIOS QUE SE GURADAN EN LOS SERVICES');
+    console.log('SERVICIOS FINALES');
     console.table(this.services);
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
@@ -274,8 +278,11 @@ export class AfiliacionService {
       data.services.push({
         id: s.id,
         name: (s.nombre === '?') ? '' : s.nombre ,
+        newName: s.newName,
         entry: s.rubro,
-        debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
+        debtorCode: (s.codDeudor === '?') ? '' : (( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor) ,
+     //   debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
+         newNameCode: s.newNameCode,
         dataType: s.tipoDato,
         paymentType: s.tipoPago,
         idAccount: s.idCuenta,

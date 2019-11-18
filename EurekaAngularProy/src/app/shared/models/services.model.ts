@@ -25,4 +25,6 @@ export interface ServiceModel {
     NewNameCod?: boolean;
     NewName?: boolean;
     status?: string;
+    nombreHabilitado?: boolean;
+    nombreCodHabilitado?: boolean;
 }
