@@ -23,7 +23,7 @@
     <div class="form-group">
         <mat-form-field   class="w-100">
            <!--  <label *ngIf="gtpMode && !_service.NewNameCod" class="messsage-error" style="float: right;">Corregir este campo</label> -->
-            <mat-label class="label">Código deudor</mat-label>
+            <mat-label class="label">Código cliente</mat-label>
             <mat-select   class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering
               panelClass="pts30" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
                 <mat-option class="input-text">Código Deudor</mat-option>

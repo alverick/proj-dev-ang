@@ -8,7 +8,7 @@
             <form>
               <mat-form-field class="f1">
                 <input class="input-text" matInput [(ngModel)]="filtro.inputSearch" name="inputSearch" type="text"
-                  appShear maxlength="20" placeholder="Nombre o código del deudor">
+                  appShear maxlength="20" placeholder="Nombre o código del cliente">
                 <span matPrefix class="pr-1"><img src="assets/images/buscar.svg"> </span>
                 <button mat-button *ngIf="filtro.inputSearch" matSuffix mat-icon-button aria-label="Clear"
                   (click)="filtro.inputSearch=''">
@@ -114,7 +114,7 @@
 
               <div class="addDeuda">
                 <div class="btn btn-default dropdown-toggle" data-toggle="dropdown" >
-                  <img src="assets/images/plus_circle.svg" alt="plus_circle"> Agregar deudas
+                  <img src="assets/images/plus_circle.svg" alt="plus_circle"> Agregar cobros
                 </div>
                 <div class="dropdown-menu lnk-label" role="menu">
                   <div class="pl-4">
@@ -175,7 +175,7 @@
                       </div>
                     </th>
                     <th class="c3">
-                      <div class="text">Código de deudor</div>
+                      <div class="text">Código de cliente</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === true"
                           (click)="orderList(2, true)"></div>

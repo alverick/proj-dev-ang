@@ -27,7 +27,7 @@ import { GtpOutputGuard } from './shared/guards/gtp-output.guard';
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard , GtpOutputGuard] },
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
-  { path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
+ /* { path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
   { path: 'editarSvcGTP', component: ConfigurarServiciosComponent, data: {  isgtp: true }},
@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'configuracion', component: ConfigurarServiciosComponent},
   { path: 'gtp', component: GtpGrillaComponent,  canActivate: [AuthGuard, GtpInputGuard] },
   { path: 'AprobacionGtp/:llave', component: AprobacionesComponent, canActivate: [AuthGuard, GtpInputGuard]},
-  { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard, GtpOutputGuard]},
+  { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard, GtpOutputGuard]}, */
 
   { path: 'subirPlantilla', component: SubirPlantillaComponent},
   { path: 'analisis', component: AnalisisComponent},

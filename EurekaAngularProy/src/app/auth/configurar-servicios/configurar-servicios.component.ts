@@ -116,7 +116,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   OcultarFormulario(requireConfirm: boolean) {
     if (requireConfirm) {
       Swal.fire({
-        title: 'Descartar Cambios',
+        title: 'Descartar cambios',
         text: 'Se van a descartar los cambios.',
         showConfirmButton: true,
         showCancelButton: true,
@@ -648,7 +648,7 @@ getCodigoNameGTP(svc: ServiceModel) {
       setTimeout(() => this.EnviarServicios(), 600);
     } else {
       Swal.fire({
-        title: 'Guardar',
+        title: 'Servicio Guardado',
         text: 'Los datos han sido guardados',
         showCloseButton: true,
         showCancelButton: false,

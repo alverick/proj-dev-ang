@@ -194,7 +194,7 @@ body {
 }
 
 .texto-d-medios {
-    @include font-text(10px, $weight: normal);
+    @include font-text(12px, $weight: normal);
     color: $negro;
     text-align: center;
 }
@@ -207,7 +207,7 @@ body {
 
 .card-medio-pago {
     @include cuadro( 116px, 161px);
-    border: solid 1px #bebebe;
+    border: solid 1px  #bebebe;
 }
 
 .seleccionado-card {

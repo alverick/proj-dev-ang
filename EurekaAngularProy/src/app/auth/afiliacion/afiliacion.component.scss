@@ -16,7 +16,7 @@ body {
 }
 
 .texto-tipos {
-    @include font-text(18px, $weight: normal!important);
+    @include font-text(20px, $weight: normal!important);
     color: $negro;
 }
 

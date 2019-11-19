@@ -311,7 +311,7 @@ orderList(index: number, asc: boolean) {
        (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined)  &&
        (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
        (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)){
-       this.messageTable = 'Para empezar, agrega la lista de las deudas';
+       this.messageTable = 'Para empezar, agrega la lista de los cobros';
        this.showArrow = true;
       } else{
        this.messageTable ='No se encontro ningún registro para esta búsqueda';
