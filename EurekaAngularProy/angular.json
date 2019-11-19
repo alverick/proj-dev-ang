@@ -19,7 +19,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/faviconIbk.ico",
               "src/assets"
             ],
             "styles": [
@@ -124,7 +124,7 @@
             "scripts": ["node_modules/core-js/client/shim.min.js",
               "node_modules/web-animations-js/web-animations.min.js"],
             "assets": [
-              "src/favicon.ico",
+              "src/faviconIbk.ico",
               "src/assets"
             ]
           }

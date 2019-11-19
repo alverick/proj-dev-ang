@@ -11,6 +11,7 @@
   .acepto {
       @include font-text(14px, $weight: normal!important);
       color: #0d131d;
+      padding-top: 0px;
   }
   
   small {
