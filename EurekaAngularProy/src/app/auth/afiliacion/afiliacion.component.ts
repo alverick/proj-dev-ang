@@ -20,4 +20,5 @@ export class AfiliacionComponent implements OnInit {
       'event_label': 'quiero_registrarme'
     });
   }
+
 }
