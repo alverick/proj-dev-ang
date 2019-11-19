@@ -84,8 +84,8 @@ export class FormServicioComponent implements OnInit {
       this._service.newName.substring(3, this._service.newName.length) : this._service.newName ) : this._service.nombre ,
       disabled: this._service.nombreHabilitado },
       [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode : 
-      ((this._service.codDeudor   === 'RUC' || this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? 
+      codDeudor: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode :
+      ((this._service.codDeudor   === 'RUC' || this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ?
       this._service.codDeudor : 'Otro') ,   disabled:    this._service.nombreCodHabilitado   }, [Validators.required]),
       nameCod: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode : (this._service.codDeudor == 'Otro')?
        this._service.nameCod : this._service.codDeudor,  disabled:   this._service.nombreCodHabilitado }),
@@ -240,9 +240,14 @@ export class FormServicioComponent implements OnInit {
                 if (this.editMode)  {
                   value = this._service;
                 // value.nombre = this.frm.value.nombre;
-                value.newName = this.frm.value.nombre;
-                  value.nameCod = this.frm.value.nameCod;
-                  value.codDeudor = this.frm.value.codDeudor;
+              //   value.newName = this.frm.value.nombre;
+                 // value.nameCod = this.frm.value.nameCod;
+                 //  value.codDeudor = this.frm.value.codDeudor;
+                 // tslint:disable-next-line:max-line-length
+                 value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
+                 value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
+                    ((this.frm.value.nameCod === value.codDeudor) ? value.newNameCode : this.frm.value.nameCod ) :
+                    (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor ;
                   value.idCuenta = this.frm.value.idCuenta;
                   value.moneda = this.frm.value.moneda;
                   value.cobraMora = this.frm.value.cobraMora;
@@ -255,6 +260,7 @@ export class FormServicioComponent implements OnInit {
                 } else {
                   console.log('crea un nuevo');
                   value = this.frm.value;
+                  value.id = null;
                    value.usaWebApp = true;
                    value.newName =   this.frm.value.nombre;
                    value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
@@ -340,9 +346,11 @@ export class FormServicioComponent implements OnInit {
                 value = this._service;
                 value.idCuenta = this.frm.value.idCuenta;
                 // value.nombre = this.frm.value.nombre;
-                value.newName = this.frm.value.nombre;
-                  value.nameCod = this.frm.value.nameCod;
-                  value.codDeudor = this.frm.value.codDeudor;
+                // tslint:disable-next-line:max-line-length
+               value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
+               value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
+               ((this.frm.value.nameCod === value.codDeudor) ? value.newNameCode : this.frm.value.nameCod ) :
+               (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor ;
                 value.moneda = this.frm.value.moneda;
                 value.cobraMora = this.frm.value.cobraMora;
                 value.periodoMora = this.frm.value.periodoMora;
@@ -353,6 +361,7 @@ export class FormServicioComponent implements OnInit {
               } else {
                 console.log('crea un nuevo 2');
                 value = this.frm.value;
+                value.id = null;
                 value.newName =   this.frm.value.nombre;
                 value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
                 console.log('crea un nuevo 3 en edicion' + value.newName);
@@ -386,10 +395,10 @@ export class FormServicioComponent implements OnInit {
               value = this._service;
               value.idCuenta = this.frm.value.idCuenta;
                // tslint:disable-next-line:max-line-length
-               value.newName =  (value.nombre === value.newName) ? (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre :  value.newName ;
-               //this.frm.value.nombre;  /* (value.newName !== value.nombre) ? value.newName : (this.frm.value.nombre === value.nombre) ? value.nombre : this.frm.value.nombre; */
-              // tslint:disable-next-line:max-line-length
-              value.newNameCode = (value.codDeudor === value.newNameCode) ? (this.frm.value.codDeudor === 'Otro') ? (this.frm.value.nameCod === value.nameCod) ? value.newNameCode : this.frm.value.nameCod : (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor : value.newNameCode;
+               value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
+               value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
+               ((this.frm.value.nameCod === value.codDeudor) ? value.newNameCode : this.frm.value.nameCod ) :
+               (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor ;
               value.moneda = this.frm.value.moneda;
               value.cobraMora = this.frm.value.cobraMora;
               value.periodoMora = this.frm.value.periodoMora;
@@ -402,6 +411,7 @@ export class FormServicioComponent implements OnInit {
             } else {
               console.log('crea un nuevo 3');
               value = this.frm.value;
+              value.id = null;
               value.newName =   this.frm.value.nombre;
               value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
               console.log('crea un nuevo 3 en edicion' + value.newName);

@@ -81,7 +81,9 @@ export class ConfigurarServiciosComponent implements OnInit {
             porcentaje: s.porcentage,
             inReview: s.inReview,
             pagoPartes: s.partialPayment,
-            status: s.status
+            status: s.status,
+            nombreHabilitado: (s.name === s.newName) ? false : true,
+            nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  false : true,
           });
         });
         return;
@@ -389,23 +391,25 @@ export class ConfigurarServiciosComponent implements OnInit {
       if(svc.codDeudor === svc.newNameCode) {
          return svc.newNameCode;
       }
+      if (svc.codDeudor === '?') {
+        if (svc.newNameCode.substring(0, 3) === '???') {
+         return svc.newNameCode.substring(3, svc.newNameCode.length);
+       }
+       return svc.newNameCode;
+     } else {
+      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+          return svc.codDeudor;
+      }
+      }
+
       if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
             return svc.nameCod;
       }
       if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
         // return svc.nameCod;
-         return svc.newNameCode;
-     }
-      if (svc.codDeudor === '?') {
-         if (svc.newNameCode.substring(0, 3) === '???') {
-          return svc.newNameCode.substring(3, svc.newNameCode.length);
-        }
-        return svc.newNameCode;
-      } else {
-      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
          return svc.codDeudor;
-      }
-    }
+     }
+
   }
   getCodDebtorCreate(svc: ServiceModel) {
      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
@@ -428,6 +432,10 @@ getNameGTP(svc: ServiceModel) {
 
 pendienteRevision(svc: ServiceModel) {
  if (this.inEdit ) {
+
+  if(svc.id === null){
+    return true;
+  }
    if ((svc.nombre === svc.newName) && ((svc.codDeudor  === svc.newNameCode ) || (svc.nameCod  === svc.newNameCode ) )) {
     return false;
    }
@@ -435,7 +443,8 @@ pendienteRevision(svc: ServiceModel) {
     return true;
   }
 
-  if((svc.nombre !== svc.newName) || ((svc.nameCod  !== svc.newNameCode) || (svc.codDeudor  !== svc.newNameCode) )){
+  if ((svc.nombre !== svc.newName) || ((svc.nameCod  !== svc.newNameCode) ||
+   (svc.codDeudor  !== svc.newNameCode)  )) {
     return true;
   }
  } else {

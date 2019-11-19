@@ -22,7 +22,7 @@
                                     <mat-form-field class="w-100">
                                         <input class="input-text" matInput type="text" formControlName="name" placeholder="Nombre de la empresa">
                                     </mat-form-field>
-                                    <div  *ngIf="( dataEmpresa.name  !== dataEmpresa.newName)" class="messsage-error">El nuevo nombre {{ dataEmpresa.newName }} esta siendo procesado</div> 
+                                    <div  *ngIf="( dataEmpresa.name  !== dataEmpresa.newName)" class="messsage-error">El nuevo nombre <strong> {{ dataEmpresa.newName }} </strong> esta siendo procesado</div> 
                                 </div>
                                 <div class="input-text form-group  ">
                                     <mat-form-field class="w-100">

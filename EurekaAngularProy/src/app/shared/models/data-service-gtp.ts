@@ -23,4 +23,8 @@ export interface DataServiceGTP {
     status: string;
     acceptednewNameCode?: boolean;
     acceptednewName?: boolean;
+    nombreHabilitado?: boolean;
+    nombreCodHabilitado?: boolean;
+
+
 }
