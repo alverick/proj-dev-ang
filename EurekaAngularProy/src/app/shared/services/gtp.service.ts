@@ -132,7 +132,9 @@ export class GtpService {
           newName: s.newName,
           status: s.status,
           acceptednewNameCode: null,
-          acceptednewName: null
+          acceptednewName: null,
+          nombreHabilitado :  (s.name === s.newName) ? false : true,
+          nombreCodHabilitado :  (s.debtorCode === s.newNameCode) ?  false : true,
         });
       });
        this.services = servicios;

@@ -64,9 +64,11 @@ export class AfiliacionService {
       nombre += nro.toString();
     }
     let svc: ServiceModel = {
+      id: null,
       nombre: nombre,
       newName : nombre,
       codDeudor: 'DNI',
+     // newNameCode: '',
       tipoDato: 'C',
       tipoPago: 'C',
       idCuenta: 0,
