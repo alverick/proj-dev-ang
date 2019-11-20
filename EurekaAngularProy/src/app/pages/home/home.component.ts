@@ -651,11 +651,11 @@ orderList(index: number, asc: boolean) {
     }
 
     Swal.fire({
-      title: '¿Deseas Actualizar?',
+      title: '¿Deseas actualizar?',
       text: '¡No podrás revertir esto!',
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'SI, ACTUALIZAR!',
+      confirmButtonText: 'SI, ACTUALIZAR',
       cancelButtonText: 'CERRAR',
       onOpen: drawPopup
     }).then((result) => {
@@ -682,7 +682,7 @@ orderList(index: number, asc: boolean) {
                 'event_label': 'editar_deuda'
               });
               Swal.fire({
-                titleText: 'Editado!',
+                titleText: 'Editado',
                 text: 'Su registro ha sido editado',
                 showCloseButton: true,
                 showCancelButton: false,
@@ -722,7 +722,7 @@ orderList(index: number, asc: boolean) {
           this.transactionService.updateDeuda(item.id, true).subscribe(
             statusUpdate=>{
               Swal.fire({
-                titleText: 'Editado!',
+                titleText: 'Editado',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
                 showCancelButton: false,
@@ -776,7 +776,7 @@ orderList(index: number, asc: boolean) {
   EliminarSeleccionados() {
     let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : this.transactionService.countMarksForDelete();
     if (totalForDelete === 0 ) {
-      this.mensaje( 'error', 'Error al Eliminar', '¡Seleccione las filas a eliminar por favor!');
+      this.mensaje( 'error', 'Eliminar cobros', 'Seleccione los cobros a eliminar por favor');
       return;
     }
     let mensaje='';
@@ -789,7 +789,7 @@ orderList(index: number, asc: boolean) {
     }
 
     Swal.fire({
-      title: '¿Seguro que quieres continuar?',
+      title: '¿Seguro que deseas continuar?',
       text: mensaje,
       showCancelButton: true,
       showCloseButton: true,
@@ -818,7 +818,7 @@ orderList(index: number, asc: boolean) {
                 }
 
                 Swal.fire({
-                  title: 'Eliminado!',
+                  title: 'Eliminado',
                   text: mensaje_final,
                   showCloseButton: true,
                   showCancelButton: false,
@@ -862,7 +862,7 @@ orderList(index: number, asc: boolean) {
       .subscribe(() => this.consultaDeuda(() =>
       {
         Swal.fire(
-          'Eliminado!',
+          'Eliminado',
           'Tu registro ha sido eliminado',
           'success'
         )

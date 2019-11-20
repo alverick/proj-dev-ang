@@ -190,16 +190,21 @@ button:focus {
     background-color: $blanco !important;
     border: solid 1px $blanco !important;
     color: $green !important;
-    &:hover {
-
-        background-color: #E5E5E5!important;
+    &:hover { 
+        background-color: #ffffff!important;
+        color: $green;
+        text-decoration: underline;
+        cursor: pointer;
       }
       &:active {
           background-color:$blanco!important;
           background-image:none !important;
       }
     &.btn-disabled {
-        color: #9b9b9b !important;
+        // color: #9b9b9b !important;
+        color: $green;
+        text-decoration: underline;
+        cursor: pointer;
     }
 }
 
