@@ -165,6 +165,7 @@ export class HomeComponent implements OnInit {
     dateTo: null
   };
   errores: any = {};
+  querySearch: boolean = false;
   control: any;
  // mensaje grila
 
@@ -291,6 +292,7 @@ orderList(index: number, asc: boolean) {
   sendFiltro() {
     this.messagetablecode1 = false;
     this.messagetablecode2 = false;
+    this.querySearch = true;
     //filtro
     this.currentFiltro.inputSearch = this.filtro.inputSearch;
     this.currentFiltro.service = this.filtro.service;
@@ -447,7 +449,7 @@ orderList(index: number, asc: boolean) {
                   if(this.transactionService.debtItems.data.length > 0){
                     this.selectedAll = this.transactionService.isMarkedAll();
                   }
-
+                  this.querySearch = false;
                   this.selectedUniverse = false;
                   this.spinner.hide();
                   if (cb) {
@@ -547,6 +549,7 @@ orderList(index: number, asc: boolean) {
     else {
       this.limpiardate1();
       this.limpiardate2();
+      this.querySearch = false;
       delete this.errores.dateFrom;
       delete this.errores.dateTo;
     }
@@ -958,6 +961,7 @@ Ocultar() {
     this.filtro.dateForFilter=null;
     this.limpiardate1();
     this.limpiardate2();
+    this.querySearch = false;
   }
 
   private internalValidaDateFrom(e) {
