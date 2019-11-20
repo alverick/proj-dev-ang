@@ -64,7 +64,7 @@
                   aria-label="Clear" (click)="limpiardate1()">
                   <i class="fa fa-close"></i>
                 </button>
-                <div class="msg-error" *ngIf="errores.dateFrom">{{errores.dateFrom}}</div>
+                <div class="msg-error" *ngIf="errores.dateFrom && querySearch">{{errores.dateFrom}}</div>
               </mat-form-field>
               <mat-form-field class="f2">
                 <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)"
@@ -79,7 +79,7 @@
                   aria-label="Clear" (click)="limpiardate2()">
                   <i class="fa fa-close"></i>
                 </button>
-                <div class="msg-error" *ngIf="errores.dateTo">{{errores.dateTo}}</div>
+                <div class="msg-error" *ngIf="errores.dateTo && querySearch">{{errores.dateTo}}</div>
               </mat-form-field>
               <button type="button" class="f3 btn-eureca-green" (click)="sendFiltro()">BUSCAR
               </button>
