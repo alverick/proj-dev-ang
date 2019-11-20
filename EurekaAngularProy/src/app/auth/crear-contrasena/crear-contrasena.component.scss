@@ -67,3 +67,9 @@
     :host ::ng-deep   .mat-input-element {
         caret-color: #0d131d !important;
     }
+
+    :host ::ng-deep  .mat-checkbox-inner-container-no-side-margin {
+        margin-left: 12p;
+        margin-right: 0;
+        margin-top: 5px;
+    }

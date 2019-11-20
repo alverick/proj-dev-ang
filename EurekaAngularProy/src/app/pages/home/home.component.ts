@@ -363,8 +363,12 @@ orderList(index: number, asc: boolean) {
       let msg = faltaDesde ? 'La fecha "desde" no puede estar en blanco' : '';
       msg += faltaHasta ? (faltaDesde ? '<br />' : '') + 'La fecha "hasta" no puede estar en blanco' : '';
       if (faltaDesde || faltaHasta) {
-        this.mensaje( 'error', 'Error en la fecha',msg);
-        return false;
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateFrom == null;
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateTo  == null;
+        // this.mensaje( 'error', 'Error en la fecha',msg);
+        return true;
       }
     }
 
@@ -375,6 +379,10 @@ orderList(index: number, asc: boolean) {
 
 
             if (this.filtro.dateFrom > this.filtro.dateTo   ) {
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateFrom == null;
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateTo  == null;
               this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
               return false;
             } else {
@@ -382,12 +390,20 @@ orderList(index: number, asc: boolean) {
             }
           } else {
                   if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
-                    this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
-                    return false;
+                   // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
+                      // tslint:disable-next-line:no-unused-expression
+                      this.filtro.dateFrom == null;
+                      // tslint:disable-next-line:no-unused-expression
+                      this.filtro.dateTo  == null;
+                   return false;
                   }
                   if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
-                    this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
-                    return false;
+                   // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
+                    // tslint:disable-next-line:no-unused-expression
+                    this.filtro.dateFrom == null;
+                    // tslint:disable-next-line:no-unused-expression
+                    this.filtro.dateTo  == null;
+                   return false;
                   } else {
                     return true;
                   }
@@ -395,16 +411,32 @@ orderList(index: number, asc: boolean) {
            /// change
         } else {
             if ( this.inputDate1.nativeElement.value === '') {
-                this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
-                return false;
+               // this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
+               // tslint:disable-next-line:no-unused-expression
+               this.filtro.dateFrom == null;
+               // tslint:disable-next-line:no-unused-expression
+               this.filtro.dateTo  == null;
+               return false;
             } else if ( this.inputDate2.nativeElement.value === '') {
-                this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateFrom == null;
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateTo  == null;
+              //  this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
                 return false;
             } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
-                this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateFrom == null;
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateTo  == null;
+               // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
                 return false;
             } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) {
-              this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateFrom == null;
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateTo  == null;
+              // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
               return false;
             }
 
