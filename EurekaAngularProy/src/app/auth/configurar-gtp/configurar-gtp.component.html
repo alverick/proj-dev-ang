@@ -1,0 +1,107 @@
+<div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <br>
+                            <div class="texto-azul ">Configura tus servicios </div>
+                            <div class="d-flex justify-content-start">
+                                <perfect-scrollbar class="content-container mt-5 mb-3">
+                                    <div class="card-servicios mb-2" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
+                                        <div class=" pl-4">
+                                            <div class="pl-1 row pb-0">
+                                                <div *ngIf="inGTP" class="col-sm-9 pt-3">
+                                                    <div class="font-text-services">{{getNameGTP(svc)}}</div>
+                                                    <mat-error *ngIf="svc.inReview" class="messsage-error">Actualizar Datos</mat-error>
+                                                </div>
+                                                <div *ngIf="!inGTP" class="col-sm-9 pt-3">
+                                                    <div class="font-text-services">{{getName(svc)}}</div>
+                                                    <mat-error *ngIf="pendienteRevision(svc)" class="messsage-error">Pendiente de revisión</mat-error>
+                                                </div>
+                                                <div class="col-sm-1 mb-0">
+                                                    <ul *ngIf="inGTP" class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
+                                                        <li *ngIf="svc.inReview && indiceActual!==i">
+                                                            <a class="texto-azul" [class.mano]="!Formulariogtp" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
+                                                        </li>
+                                                    </ul>
+                                                    <ul *ngIf="!inGTP" class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
+                                                        <li> <!-- *ngIf="!svc.inReview && indiceActual!==i"-->
+                                                            <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
+                                                        </li>
+                                                        <li class="ml-2" *ngIf="!inGTP &&  afiliacionService.services.length > 1">
+                                                            <a class="texto-azul borrar" [class.mano]="!Formulario" (click)="delService(i,svc)"><img src="assets/images/eliminar.svg"></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <table  class="table table-sm table-borderless ">
+                                                <tr>
+                                                    <th style="width:150px;" class="font-black-servicios-list">Canales</th>
+                                                    <td class="font-black-servicios-des-list">{{ getCanales(svc) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:150px;" class="font-black-servicios-list">Código cliente</th>
+                                                    <td *ngIf="!inEdit  && !inGTP" class="font-black-servicios-des-list">{{ getCodDebtorCreate(svc) }} </td>
+                                                    <td *ngIf="inGTP" class="font-black-servicios-des-list">{{ getCodigoNameGTP(svc)}} </td>
+                                                    <td *ngIf="inEdit" class="font-black-servicios-des-list">{{ getCodDebtor(svc) }} </td>
+    
+                                                </tr>
+    
+                                                <tr *ngIf="svc.tipoDato === 'C'">
+                                                    <th style="width:150px;" class="font-black-servicios-list">Mora</th>
+                                                    <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'M'">{{ svc.simboloMoneda }} {{ svc.monto }} </td>
+                                                    <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'S' && svc.tipoMora === 'P'">{{ svc.porcentaje }} % </td>
+                                                    <td class="font-black-servicios-des-list" *ngIf="svc.cobraMora === 'N'">NO </td>
+                                                </tr>
+                                                <!--<tr>
+                                                     <th style="width:150px;" class="font-black-servicios-list">Paga por Partes</th>
+                                                     <td class="font-black-servicios-des-list" *ngIf="svc.pagoPartes === 'N'">NO</td>
+                                                     <td class="font-black-servicios-des-list" *ngIf="svc.pagoPartes === 'S'">SI</td>
+                                                </tr> -->
+                                                <tr>
+                                                    <th style="width:150px;" class="font-black-servicios-list">Cuenta</th>
+                                                    <td class="font-black-servicios-des-list">{{ svc.nroCuenta }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </perfect-scrollbar>
+                            </div>
+                            <div class="btn-col-1">
+                                <button  *ngIf="!inGTP" type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
+                                          <span ><img *ngIf="!Formulario" src="assets/images/plus.svg"><img *ngIf="Formulario" src="assets/images/plus-gray.svg"></span>   Agregar otro servicio
+                                </button> 
+                                <button *ngIf="inGTP" type="button" [disabled]="Formulariogtp" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulariogtp">
+                                  FINALIZAR
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+    
+                </div>
+                <div class="col-sm-7 pb-3" *ngIf="Formulario">
+                    <br>
+                    <div class="d-flex justify-content-end">
+                        <div class="formulario p-5 bg-white ">
+                            <div class="form-row">
+                                <div class="form-group col-md-10">
+                                    <div class="font-black">{{titulo}}</div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
+                                        <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                    </div>
+                                </div>
+                            </div>
+                            <app-ser-form-gtp [service]="serviceActual" (grabar)="onGrabar($event)"></app-ser-form-gtp>
+                        </div>
+                    </div>
+                </div>
+ 
+    
+            </div>
+        </div>
+    </div>
+    
