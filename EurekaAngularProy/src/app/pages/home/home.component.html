@@ -154,7 +154,7 @@
             <section class="lista">
               <table>
                 <thead>
-                  <tr>
+                  <tr *ngIf="!ceroRegistros()">
                     <th class="c0">&nbsp;</th>
                     <th class="c1">
                       <div class="text">Fecha emisión</div>
@@ -265,7 +265,7 @@
               <perfect-scrollbar class="ps-body">
                 <table>
                   <tbody>
-                    <tr
+                    <tr 
                       *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFiltro.pageNumber, totalItems: transactionService.debtItems.count }"
                       [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
                       <td class="c0 pl-3 ">

@@ -75,6 +75,7 @@ declare var $: any;
       this.files = el.files;
       this.excelService.errores = [];
       this.ready = true;
+      console.log('file name'+ fileName);
     }
 
     SalirsnackBar() {
@@ -84,6 +85,7 @@ declare var $: any;
     get f(): any { return this.inputXlsForm.controls;}
 
      changestatus =true;
+
     openSnackBar() {
         if(this.excelService.statusUpload == false) {
           this.progress.status = "Subiendo";
