@@ -315,6 +315,8 @@ orderList(index: number, asc: boolean) {
     this.currentFiltro.dateTo = this.filtro.dateTo;
     this.currentFiltro.pageNumber = 1;
     //limpia anter
+    this.selectedAll = false;
+    this.selectedUniverse = false;
     this.transactionService.clearMarksForDeletes();
     this.consultaDeuda();
     // google analytics
@@ -457,13 +459,13 @@ orderList(index: number, asc: boolean) {
 
     if (this.validaFiltro2()){
                 this.spinner.show();
-                this.transactionService.getDeuda(this.currentFiltro)
+                this.transactionService.getDeuda(this.currentFiltro, this.selectedUniverse)
                   .subscribe(debts => {
                   if(this.transactionService.debtItems.data.length > 0){
-                    this.selectedAll = this.transactionService.isMarkedAll();
+                    this.selectedAll = this.transactionService.isMarkedAll(this.selectedUniverse);
                   }
 
-                  this.selectedUniverse = false;
+                  //this.selectedUniverse = false;
                   this.spinner.hide();
                   if (cb) {
                     cb();
@@ -569,90 +571,7 @@ orderList(index: number, asc: boolean) {
 
 
   BotonActualizar(item: Debts) {
-    // MONTO
-    /*if(item.newStatus==='1') {
-      if(item.dueDate && (item.newAmount.toString() ==='' ||item.newAmount.toString() === null)){
-        this.mensaje( 'error', 'Error en el monto','Ingrese un Monto');
-        return;
-      }
-      if(item.dueDate && (item.newAmount.toString().length < 1)){
-        this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
-        return;
-      }
-      if(item.dueDate && (parseInt(item.newAmount.toString()) < 1)){
-        this.mensaje( 'error', 'Error en el monto','Ingrese un Monto correcto');
-        return;
-      }
 
-      if(item.dueDate && (!item.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/))){
-        this.mensaje( 'error', 'Error en el monto','Ingrese un Monto valido minimo de 1 y maximo de 9 caracteres enteros y 2 decimales como maximo');
-        return;
-      }
-
-      /// EMISION DATE
-      var lenghted = new Date(item.newEmissionDate).toDateString().length;
-      var emidate = parseInt(new Date(item.newEmissionDate).toDateString().substr(lenghted-4, lenghted));
-      /// DUE DATE
-      var lenghtdd = new Date(item.newDueDate).toDateString().length;
-      var duadate = parseInt(new Date(item.newDueDate).toDateString().substr(lenghtdd-4, lenghtdd));
-
-      if (emidate <  2000 || emidate >  2050 ) {
-        this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Emision');
-        return;
-      }
-
-      if (item.dueDate && (duadate <  2000 || duadate >  2050)) {
-        this.mensaje( 'error', 'Error en la fecha','Ingrese una fecha valida para la fecha de Vencimiento');
-        return;
-      }
-
-      if(item.dueDate && (item.newConcept.length <  8)) {
-        this.mensaje( 'error', 'Error en el Concepto','El concepto tiene que tener como minimo 8 digitos');
-        return;
-      }
-
-      if(item.dueDate && (item.newConcept === null || item.newConcept === "")){
-        this.mensaje( 'error', 'Error en el Concepto','Ingrese El concepto');
-        return;
-      }
-      if (item.newEmissionDate == null) {
-        this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de emision');
-        return;
-      }
-      if (item.dueDate && (item.newDueDate == null)) {
-        this.mensaje( 'error', 'Error en la fecha','Ingrese la fecha de vencimiento');
-        return;
-      }
-      if (item.dueDate && (item.newConcept === '')) {
-        this.mensaje( 'error', 'Error en el Concepto','Ingrese el concepto');
-        return;
-      }
-
-      if (item.dueDate && (item.newEmissionDate > item.newDueDate)) {
-        this.mensaje( 'error', 'Error en la fecha','La fecha de Emision no puede ser mayor a la fecha de vencimiento');
-        return;
-      }
-
-      if (item.newFirstName !== null && item.newFirstName !== undefined && item.newFirstName !== '') {
-        if (item.newFirstName.length < 3) {
-          this.mensaje( 'error', 'Error en el nombre','El nombre no debe tener menos de 3 carácteres');
-          return;
-        }
-      }
-
-      if (item.newLastName !== null && item.newLastName !== undefined && item.newLastName !== '') {
-        if (item.newLastName.length < 3) {
-          this.mensaje( 'error', 'Error en el apellido','El apellido no debe tener menos de 3 carácteres');
-          return;
-        }
-      }
-
-      if ((item.newFirstName === null || item.newFirstName === undefined || item.newFirstName === '') &&
-        (item.newLastName === null && item.newLastName === undefined && item.newLastName === '')) {
-        this.mensaje('error', 'Error en nombre o apellido', 'El nombre o el apellido debe tener un valor');
-        return;
-      }
-    }*/
     this.validaEmissionDate(item);
     if (item.dueDate) {
       this.validaDueDate(item);
@@ -704,19 +623,6 @@ orderList(index: number, asc: boolean) {
                 onOpen: drawPopup,
                 onAfterClose: () => {
                   this.consultaDeuda();
-                  /*item.status = debtsUpdate.status;
-                  item.emissionDate = item.newEmissionDate;
-                  item.dueDate = item.newDueDate;
-                  item.concept = item.newConcept;
-                  item.amount  = parseFloat(item.newAmount);
-                  item.totalAmount = item.amount + item.interestAmount;
-                  item.firstName = item.newFirstName,
-                  item.lastName = item.newLastName,
-                 // item.edit = false;
-                 item.editInput =false;
-                 item.editButton = false;
-                 item.editPending = false;
-                 item.newStatus = '1';*/
                 }
               });
             }
@@ -780,11 +686,10 @@ orderList(index: number, asc: boolean) {
   }
 
   changePage(nro: number) {
-    this.selectedAll = false;
-    this.selectedUniverse = false;
     this.currentFiltro.pageNumber = nro;
     this.numeroPagina = nro;
     this.consultaDeuda();
+    this.selectedAll = this.transactionService.isMarkedAll(this.selectedUniverse);
   }
 
 
