@@ -165,6 +165,7 @@ export class HomeComponent implements OnInit {
     dateTo: null
   };
   errores: any = {};
+  querySearch: boolean = false;
   control: any;
  // mensaje grila
 
@@ -213,7 +214,22 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
-   // this.fileLoad.verify(this.fileLoadContainer);
+    this.fileLoad.onClose.subscribe(m => {
+      console.log(m.status);
+      if (m.status === 'completed') {
+        this.consultaDeuda();
+      }
+      else if (m.status === 'rejected') {
+        this.excelService.statusUpload = false;
+        const dialogRef = this.dialog.open(DialogComponent,{
+          width: '899px',
+        });
+        dialogRef.componentInstance.ready = true;
+        dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
+        dialogRef.componentInstance.rowsRejected = m.rowsRejected;
+      }
+    });
+    this.fileLoad.verify(this.fileLoadContainer);
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
     this.homeService.getServices(true).subscribe(
@@ -291,6 +307,7 @@ orderList(index: number, asc: boolean) {
   sendFiltro() {
     this.messagetablecode1 = false;
     this.messagetablecode2 = false;
+    this.querySearch = true;
     //filtro
     this.currentFiltro.inputSearch = this.filtro.inputSearch;
     this.currentFiltro.service = this.filtro.service;
@@ -311,7 +328,7 @@ orderList(index: number, asc: boolean) {
        (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined)  &&
        (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
        (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)){
-       this.messageTable = 'Para empezar, agrega la lista de las deudas';
+       this.messageTable = 'Para empezar, agrega la lista de los cobros';
        this.showArrow = true;
       } else{
        this.messageTable ='No se encontro ningún registro para esta búsqueda';
@@ -363,8 +380,12 @@ orderList(index: number, asc: boolean) {
       let msg = faltaDesde ? 'La fecha "desde" no puede estar en blanco' : '';
       msg += faltaHasta ? (faltaDesde ? '<br />' : '') + 'La fecha "hasta" no puede estar en blanco' : '';
       if (faltaDesde || faltaHasta) {
-        this.mensaje( 'error', 'Error en la fecha',msg);
-        return false;
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateFrom == null;
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateTo  == null;
+        // this.mensaje( 'error', 'Error en la fecha',msg);
+        return true;
       }
     }
 
@@ -375,6 +396,10 @@ orderList(index: number, asc: boolean) {
 
 
             if (this.filtro.dateFrom > this.filtro.dateTo   ) {
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateFrom == null;
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateTo  == null;
               this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
               return false;
             } else {
@@ -382,12 +407,20 @@ orderList(index: number, asc: boolean) {
             }
           } else {
                   if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
-                    this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
-                    return false;
+                   // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
+                      // tslint:disable-next-line:no-unused-expression
+                      this.filtro.dateFrom == null;
+                      // tslint:disable-next-line:no-unused-expression
+                      this.filtro.dateTo  == null;
+                   return false;
                   }
                   if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
-                    this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
-                    return false;
+                   // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
+                    // tslint:disable-next-line:no-unused-expression
+                    this.filtro.dateFrom == null;
+                    // tslint:disable-next-line:no-unused-expression
+                    this.filtro.dateTo  == null;
+                   return false;
                   } else {
                     return true;
                   }
@@ -395,16 +428,32 @@ orderList(index: number, asc: boolean) {
            /// change
         } else {
             if ( this.inputDate1.nativeElement.value === '') {
-                this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
-                return false;
+               // this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
+               // tslint:disable-next-line:no-unused-expression
+               this.filtro.dateFrom == null;
+               // tslint:disable-next-line:no-unused-expression
+               this.filtro.dateTo  == null;
+               return false;
             } else if ( this.inputDate2.nativeElement.value === '') {
-                this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateFrom == null;
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateTo  == null;
+              //  this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
                 return false;
             } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
-                this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateFrom == null;
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateTo  == null;
+               // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
                 return false;
             } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) {
-              this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateFrom == null;
+              // tslint:disable-next-line:no-unused-expression
+              this.filtro.dateTo  == null;
+              // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
               return false;
             }
 
@@ -447,7 +496,7 @@ orderList(index: number, asc: boolean) {
                   if(this.transactionService.debtItems.data.length > 0){
                     this.selectedAll = this.transactionService.isMarkedAll();
                   }
-
+                  this.querySearch = false;
                   this.selectedUniverse = false;
                   this.spinner.hide();
                   if (cb) {
@@ -547,6 +596,7 @@ orderList(index: number, asc: boolean) {
     else {
       this.limpiardate1();
       this.limpiardate2();
+      this.querySearch = false;
       delete this.errores.dateFrom;
       delete this.errores.dateTo;
     }
@@ -651,11 +701,11 @@ orderList(index: number, asc: boolean) {
     }
 
     Swal.fire({
-      title: '¿Deseas Actualizar?',
+      title: '¿Deseas actualizar?',
       text: '¡No podrás revertir esto!',
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'SI, ACTUALIZAR!',
+      confirmButtonText: 'SI, ACTUALIZAR',
       cancelButtonText: 'CERRAR',
       onOpen: drawPopup
     }).then((result) => {
@@ -682,7 +732,7 @@ orderList(index: number, asc: boolean) {
                 'event_label': 'editar_deuda'
               });
               Swal.fire({
-                titleText: 'Editado!',
+                titleText: 'Editado',
                 text: 'Su registro ha sido editado',
                 showCloseButton: true,
                 showCancelButton: false,
@@ -722,7 +772,7 @@ orderList(index: number, asc: boolean) {
           this.transactionService.updateDeuda(item.id, true).subscribe(
             statusUpdate=>{
               Swal.fire({
-                titleText: 'Editado!',
+                titleText: 'Editado',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
                 showCancelButton: false,
@@ -776,7 +826,7 @@ orderList(index: number, asc: boolean) {
   EliminarSeleccionados() {
     let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : this.transactionService.countMarksForDelete();
     if (totalForDelete === 0 ) {
-      this.mensaje( 'error', 'Error al Eliminar', '¡Seleccione las filas a eliminar por favor!');
+      this.mensaje( 'error', 'Eliminar cobros', 'Seleccione los cobros a eliminar por favor');
       return;
     }
     let mensaje='';
@@ -789,7 +839,7 @@ orderList(index: number, asc: boolean) {
     }
 
     Swal.fire({
-      title: '¿Seguro que quieres continuar?',
+      title: '¿Seguro que deseas continuar?',
       text: mensaje,
       showCancelButton: true,
       showCloseButton: true,
@@ -818,7 +868,7 @@ orderList(index: number, asc: boolean) {
                 }
 
                 Swal.fire({
-                  title: 'Eliminado!',
+                  title: 'Eliminado',
                   text: mensaje_final,
                   showCloseButton: true,
                   showCancelButton: false,
@@ -862,7 +912,7 @@ orderList(index: number, asc: boolean) {
       .subscribe(() => this.consultaDeuda(() =>
       {
         Swal.fire(
-          'Eliminado!',
+          'Eliminado',
           'Tu registro ha sido eliminado',
           'success'
         )
@@ -958,6 +1008,7 @@ Ocultar() {
     this.filtro.dateForFilter=null;
     this.limpiardate1();
     this.limpiardate2();
+    this.querySearch = false;
   }
 
   private internalValidaDateFrom(e) {

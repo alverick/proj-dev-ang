@@ -13,7 +13,7 @@ declare let gtag: Function;
   providers: [ LoginService]
 })
 export class AppComponent {
-  title = 'EurekaAngularProy';
+  title = 'Mis Cobros – Interbank';
 
   constructor(private router: Router, matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
       this.router.events.subscribe(e => {

@@ -71,7 +71,7 @@ declare var $: any;
       let names: string[] = el.value.split("/");
       if (names.length <= 1)
         names = el.value.split("\\");
-      this.fileName = names[names.length-1];
+      this.excelService.fileName = names[names.length-1];
       this.files = el.files;
       this.excelService.errores = [];
       this.ready = true;
@@ -84,6 +84,7 @@ declare var $: any;
     get f(): any { return this.inputXlsForm.controls;}
 
      changestatus =true;
+
     openSnackBar() {
         if(this.excelService.statusUpload == false) {
           this.progress.status = "Subiendo";

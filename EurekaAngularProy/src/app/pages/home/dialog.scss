@@ -69,7 +69,11 @@
         font-weight: 500;
     }
 }
-
+.paso {
+    @include font-text(24px, 500);
+    color: #64b1e7;
+    text-align: center; 
+}
 .text-center {
 
     text-align: center;
@@ -91,6 +95,11 @@
 }
 
 .btn-eureca-green {
+    width: 216px;
+    height: 48px;
+    @include font-text(14px !important, 500 !important);
+}
+.btn-outline-green {
     width: 216px;
     height: 48px;
     @include font-text(14px !important, 500 !important);

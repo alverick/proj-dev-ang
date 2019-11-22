@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, HostListener, ɵConsole } from '@angular/core';
+ import { Component, OnInit, EventEmitter, HostListener, ɵConsole } from '@angular/core';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
@@ -8,14 +8,13 @@ import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
-import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
 
 @Component({
-  selector: 'app-configurar-servicios',
-  templateUrl: './configurar-servicios.component.html',
-  styleUrls: ['./configurar-servicios.component.scss']
+  selector: 'app-configurar-gtp',
+  templateUrl: './configurar-gtp.component.html',
+  styleUrls: ['./configurar-gtp.component.scss']
 })
-export class ConfigurarServiciosComponent implements OnInit {
+export class ConfigurarGtpComponent implements OnInit {
 
   protected ruc: number;
   public stateCreate: boolean = false;

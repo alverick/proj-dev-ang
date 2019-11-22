@@ -10,29 +10,40 @@
 </mat-dialog-actions>
 
 <div class="content p-0">
-    <div class="title ">Agrega deudas del servicio <span class="resaltado">{{excelService.service.name}}</span></div>
+    <div *ngIf="!excelService.statusUpload && !ready" class="paso"> PASO 1 DE 2  <img class="pl-3" style="cursor: pointer;" (click)="ready = true" src="assets/images/arrow-right.svg" ></div>
+    <div *ngIf="!excelService.statusUpload && ready" class="paso"> PASO 2 DE 2  <img class="pl-3 " style="cursor: pointer;" (click)="ready = false" src="assets/images/arrow-left.svg" ></div>
+
+    <div class="title pt-2">Agrega cobros del servicio <span class="resaltado">{{excelService.service.name}}</span></div>
     <br/>
     <div *ngIf="!excelService.statusUpload && !ready">
         <div class="landing">
-            <div class="text">Sube la plantilla con las nuevas deudas de tus clientes</div>
-            <div class="text">¿No tienes la plantilla excel del servicio {{excelService.service.name}} ? <span class="link" (click)="descargarPlantilla()">Descárgala aquí</span></div>
+            <div class="text">Descarga la plantilla donde podrás llenar la informacion de los <br>cobros de tus clientes</div>
+          <!---  <div class="text">¿No tienes la plantilla excel del servicio {{excelService.service.name}} ? </div> -->
             <i class="fa fa-file-excel"></i>
         </div>
-        <img class="pb-3 img-excel" src="assets/images/excel.svg" alt="excel">
+        <img class="pb-3 img-excel" src="assets/images/excel.svg" alt="excel" >
         <div class="text-center">
-            <form id="input-form" [formGroup]="inputXlsForm">
-                <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
-            </form>
-            <button class="btn-eureca-green" type="button" form="input-form" (click)="uploadFile.click()">
-        SELECCIONAR PLANTILLA
-      </button>
+
+
+            <button class="btn-eureca-green" type="button" form="input-form" (click)="descargarPlantilla()">
+                DESCARGAR LA PLANTILLA
+            </button> <br>
+            <button class="pt-3 btn-outline-green" type="button" form="input-form" (click)="ready = true" >
+              YA TENGO LA PLANTILLA
+            </button>
+           <!-- <button class="pt-3 btn-outline-green" type="button" form="input-form" (click)="uploadFile.click()">
+              YA TENGO LA PLANTILLA
+            </button> -->
+
         </div>
     </div>
-
+         <form id="input-form" [formGroup]="inputXlsForm">
+            <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
+        </form>
         <small  *ngIf="!excelService.statusUpload && ready">Archivo seleccionado</small>
         <div style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
             <div class="input-file">
-                <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{fileName}}</div></span>
+                <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{excelService.fileName}}</div></span>
             </div>
             <br/>
         </div>
@@ -41,7 +52,7 @@
     <div *ngIf="excelService.statusUpload" class="progress-text">{{progress.status}}</div>
     <mat-progress-bar *ngIf="excelService.statusUpload" [mode]="progress.mode" [value]="progress.value" [bufferValue]="100"></mat-progress-bar>
     <div *ngIf="ready && !excelService.statusUpload && excelService.errores.length == 0" class="text-center">
-      <button class="btn-eureca-green" type="button" form="input-form" (click)="openSnackBar()">
+      <button class="btn-eureca-green" type="button" form="input-form" (click)="(fileName === undefined)? uploadFile.click() : openSnackBar()">
         SUBIR PLANTILLA
       </button>
     </div>

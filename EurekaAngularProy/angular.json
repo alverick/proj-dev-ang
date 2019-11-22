@@ -19,7 +19,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/faviconIbk.ico",
               "src/assets"
             ],
             "styles": [
@@ -45,10 +45,10 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
+              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": false
             },
             "local": {
               "fileReplacements": [
@@ -102,6 +102,9 @@
             },
             "dev": {
               "browserTarget": "EurekaAngularProy:build:dev"
+            },
+            "uat": {
+              "browserTarget": "EurekaAngularProy:build:uat"
             }
           }
         },
@@ -124,7 +127,7 @@
             "scripts": ["node_modules/core-js/client/shim.min.js",
               "node_modules/web-animations-js/web-animations.min.js"],
             "assets": [
-              "src/favicon.ico",
+              "src/faviconIbk.ico",
               "src/assets"
             ]
           }

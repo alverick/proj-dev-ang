@@ -53,6 +53,9 @@ body {
     }
     .mat-select-arrow {
         color: $textgreen;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid;
     }
     .mat-datepicker-toggle {
         .mat-icon-button {
@@ -190,16 +193,21 @@ button:focus {
     background-color: $blanco !important;
     border: solid 1px $blanco !important;
     color: $green !important;
-    &:hover {
-
-        background-color: #E5E5E5!important;
+    &:hover { 
+        background-color: #ffffff!important;
+        color: $green;
+        text-decoration: underline;
+        cursor: pointer;
       }
       &:active {
           background-color:$blanco!important;
           background-image:none !important;
       }
     &.btn-disabled {
-        color: #9b9b9b !important;
+        // color: #9b9b9b !important;
+        color: $green;
+        text-decoration: underline;
+        cursor: pointer;
     }
 }
 

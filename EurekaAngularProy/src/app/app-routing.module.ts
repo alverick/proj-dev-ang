@@ -21,25 +21,28 @@ import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
 import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
 import { GtpInputGuard } from './shared/guards/gtp-input.guard';
 import { GtpOutputGuard } from './shared/guards/gtp-output.guard';
+import { ConfigurarGtpComponent } from './auth/configurar-gtp/configurar-gtp.component';
 
 // CambiaContrasenaComponent
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard , GtpOutputGuard] },
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
-  { path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
-  { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
+  //{ path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
+  //{ path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
-  { path: 'editarSvcGTP', component: ConfigurarServiciosComponent, data: {  isgtp: true }},
+  //{ path: 'editarSvcGTP', component: ConfigurarServiciosComponent, data: {  isgtp: true }},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
-  { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard, GtpOutputGuard ] },
+  //{ path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard, GtpOutputGuard ] },
   { path: 'crearContrasena', component: CrearContrasenaComponent, data: { isEdit: false }},
-  { path: 'editaCuenta/:llave', component: CrearContrasenaComponent , data: { isEdit: true }},
+  //{ path: 'editaCuenta/:llave', component: CrearContrasenaComponent , data: { isEdit: true }},
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
   { path: 'configuracion', component: ConfigurarServiciosComponent},
   { path: 'gtp', component: GtpGrillaComponent,  canActivate: [AuthGuard, GtpInputGuard] },
   { path: 'AprobacionGtp/:llave', component: AprobacionesComponent, canActivate: [AuthGuard, GtpInputGuard]},
-  { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard, GtpOutputGuard]},
+  //{ path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard, GtpOutputGuard]},
+  { path: 'ApGTP/:llave',  component: ConfigurarGtpComponent, canActivate: [AuthGuard, GtpInputGuard]},
+  // { path: 'ApGTP', component: ConfigurarGtpComponent},
 
   { path: 'subirPlantilla', component: SubirPlantillaComponent},
   { path: 'analisis', component: AnalisisComponent},
