@@ -75,7 +75,6 @@ declare var $: any;
       this.files = el.files;
       this.excelService.errores = [];
       this.ready = true;
-      console.log('file name'+ fileName);
     }
 
     SalirsnackBar() {

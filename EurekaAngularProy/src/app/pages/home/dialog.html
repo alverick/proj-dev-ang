@@ -23,8 +23,8 @@
         </div>
         <img class="pb-3 img-excel" src="assets/images/excel.svg" alt="excel" >
         <div class="text-center">
-            
-            
+
+
             <button class="btn-eureca-green" type="button" form="input-form" (click)="descargarPlantilla()">
                 DESCARGAR LA PLANTILLA
             </button> <br>
@@ -34,22 +34,16 @@
            <!-- <button class="pt-3 btn-outline-green" type="button" form="input-form" (click)="uploadFile.click()">
               YA TENGO LA PLANTILLA
             </button> -->
-            
+
         </div>
     </div>
          <form id="input-form" [formGroup]="inputXlsForm">
             <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
         </form>
         <small  *ngIf="!excelService.statusUpload && ready">Archivo seleccionado</small>
-<<<<<<< HEAD
-        <div  style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
-            <div class="input-file" (click)="uploadFile.click()">
-                <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{fileName}}</div></span>
-=======
         <div style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
             <div class="input-file">
                 <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{excelService.fileName}}</div></span>
->>>>>>> grilla
             </div>
             <br/>
         </div>
