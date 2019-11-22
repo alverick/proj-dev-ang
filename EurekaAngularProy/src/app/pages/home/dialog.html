@@ -41,9 +41,15 @@
             <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
         </form>
         <small  *ngIf="!excelService.statusUpload && ready">Archivo seleccionado</small>
+<<<<<<< HEAD
         <div  style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
             <div class="input-file" (click)="uploadFile.click()">
                 <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{fileName}}</div></span>
+=======
+        <div style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
+            <div class="input-file">
+                <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{excelService.fileName}}</div></span>
+>>>>>>> grilla
             </div>
             <br/>
         </div>
