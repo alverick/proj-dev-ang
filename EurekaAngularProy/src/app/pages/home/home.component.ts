@@ -213,7 +213,22 @@ export class HomeComponent implements OnInit {
     }
 
   ngOnInit() {
-   // this.fileLoad.verify(this.fileLoadContainer);
+    this.fileLoad.onClose.subscribe(m => {
+      console.log(m.status);
+      if (m.status === 'completed') {
+        this.consultaDeuda();
+      }
+      else if (m.status === 'rejected') {
+        this.excelService.statusUpload = false;
+        const dialogRef = this.dialog.open(DialogComponent,{
+          width: '899px',
+        });
+        dialogRef.componentInstance.ready = true;
+        dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
+        dialogRef.componentInstance.rowsRejected = m.rowsRejected;
+      }
+    });
+    this.fileLoad.verify(this.fileLoadContainer);
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
     this.homeService.getServices(true).subscribe(

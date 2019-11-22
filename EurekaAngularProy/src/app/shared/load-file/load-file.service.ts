@@ -1,9 +1,10 @@
-import { Injectable, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from "@angular/core";
+import { Injectable, ComponentFactoryResolver, ViewContainerRef, ComponentRef, EventEmitter } from "@angular/core";
 import { ExcelService } from "../services/excel.service";
 import { LoadFileComponent } from "./load-file.component";
 import Swal from "sweetalert2";
 import { Observable } from "rxjs";
 import { GoogleAnalytics } from "../services/googleAnalytics.service";
+import { drawPopup } from "src/app/shared/services/popups";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class LoadFileService {
 
   private componentRef: ComponentRef<LoadFileComponent> = null;
   private cancel = true;
+  public onClose = new EventEmitter<any>();
 
   public verify(container: ViewContainerRef) {
     container.clear();
@@ -46,11 +48,15 @@ export class LoadFileService {
   private verifyStatus() {
     this.cancel = false;
     let recursiveFunc = (value) => {
-      console.log('verify status bar');
       if (this.cancel) return;
       if (value.status === "REJECTED") {
-        this.excelService.statusUpload = false;
+        this.excelService.errores = value.errors;
         this.componentRef.destroy();
+        this.onClose.emit({
+          status: 'rejected',
+          rowsAccepted: value.rowsUploaded,
+          rowsRejected: value.rowsRejected
+        });
       }
       else if (value.status === 'COMPLETED') {
         this.gaService.sendEvent('CargarExcel', {
@@ -60,7 +66,23 @@ export class LoadFileService {
         this.excelService.statusUpload = false;
         this.excelService.errores = [];
         this.componentRef.destroy();
-      }
+        let msg = '';
+        if(this.excelService.service.dataType === 'C'){
+          // msg = `Se cargaron ${value.rowsUploaded} registros`;
+          msg =  `¡Listo! Se agregaron nuevas deudas `
+        }
+        else {
+          msg = `¡Listo! Se agregaron nuevos clientes`
+        }
+        Swal.fire({
+          title:msg,
+          text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
+          showCloseButton: true,
+          onOpen: drawPopup,
+          confirmButtonText:  'CERRAR',
+          onAfterClose: () => { this.onClose.emit({ status: 'completed' }); }
+        });
+    }
       else {
         this.componentRef.instance.progress.mode = 'determinate';
         this.componentRef.instance.progress.value = value.advance;

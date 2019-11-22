@@ -32,7 +32,7 @@
         <small  *ngIf="!excelService.statusUpload && ready">Archivo seleccionado</small>
         <div style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
             <div class="input-file">
-                <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{fileName}}</div></span>
+                <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{excelService.fileName}}</div></span>
             </div>
             <br/>
         </div>

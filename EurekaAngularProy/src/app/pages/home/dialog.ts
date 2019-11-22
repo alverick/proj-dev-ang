@@ -71,7 +71,7 @@ declare var $: any;
       let names: string[] = el.value.split("/");
       if (names.length <= 1)
         names = el.value.split("\\");
-      this.fileName = names[names.length-1];
+      this.excelService.fileName = names[names.length-1];
       this.files = el.files;
       this.excelService.errores = [];
       this.ready = true;

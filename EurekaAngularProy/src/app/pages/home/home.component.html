@@ -375,7 +375,7 @@
                       </td>
                       <td class="c12">
                         <div *ngIf="items.svcStatus !== 1 && items.status !== 'PAGADO'" class="d-flex">
-                          <div *ngIf="!items.editButton" class="btn-edit" (click)="BotonEditar(items)">
+                          <div *ngIf="!items.editButton && ((items.dueDate === null && !items.hasIBKPayments) || items.dueDate !== null)" class="btn-edit" (click)="BotonEditar(items)">
                             <img src="assets/images/pencil.svg" alt="editar">
                           </div>
                           <div *ngIf="items.editButton" class="btn-ok" (click)="BotonActualizar(items)">
