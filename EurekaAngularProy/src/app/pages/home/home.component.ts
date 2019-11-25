@@ -858,7 +858,11 @@ Ocultar() {
             });
             this.barLoad.close();
             this.enDescarga = false;
-            saveAs(r, "reporte.xlsx");
+            saveAs(r, "Reporte - Interbank_MisCobros.xlsx");
+          }, err => {
+            this.barLoad.close();
+            this.enDescarga = false;
+            this.mensaje('error', 'Descarga','No se pudo descargar el reporte');
           });
         }
       }else{
