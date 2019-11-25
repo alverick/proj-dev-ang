@@ -40,7 +40,13 @@ export class TransactionService {
 
     //opcional
 
-    getDeuda(filtro: DebstFilter = null): Observable<DebtsPagedList>{
+    private mustBeSelected(d: Debts, selectedUniverse: boolean = false): boolean {
+      if (d.hasIBKPayments || d.status === "PAGADO")
+        return false;
+      return (selectedUniverse || (this.itemsForDelete.indexOf(d.id) >= 0));
+    }
+
+    getDeuda(filtro: DebstFilter = null, selectedUniverse: boolean = false): Observable<DebtsPagedList>{
       // ultimo filtro aplicado
       if (filtro === null) {
         filtro = this.lastFilter;
@@ -66,6 +72,8 @@ export class TransactionService {
         };
         return this.http.get<DebtsPagedList>(url, opts)
           .pipe<DebtsPagedList>(map(r => {
+            if (selectedUniverse)
+              this.itemsForDelete = [];
             r.data.forEach(d => {
               d.emissionDate = new Date(d.emissionDate);
               if (d.dueDate !== null && d.dueDate !== undefined)
@@ -74,7 +82,10 @@ export class TransactionService {
               d.editButton = false;
               d.newStatus = '1';
               d.errores = {};
-              d.selected = (this.itemsForDelete.indexOf(d.id) >= 0);
+              d.selected = this.mustBeSelected(d, selectedUniverse);
+
+              if (selectedUniverse && d.selected)
+                this.itemsForDelete.push(d.id);
             });
             this.debtItems = r;
             console.table(this.debtItems.data);
@@ -235,12 +246,19 @@ export class TransactionService {
     return this.itemsForDelete.length;
   }
 
-  isMarkedAll() {
+  isMarkedAll(selectedUniverse: boolean = false) {
     let markAll = true;
     this.debtItems.data.forEach(v => {
-      if (!v.hasIBKPayments) {
-        let idx = this.itemsForDelete.indexOf(v.id);
-        markAll = markAll && (idx >= 0);
+      if (selectedUniverse) {
+        if ( this.mustBeSelected(v, selectedUniverse)) {
+          markAll = markAll && v.selected;
+        }
+      }
+      else {
+        if (!v.hasIBKPayments && v.status !== 'PAGADO') {
+          let idx = this.itemsForDelete.indexOf(v.id);
+          markAll = markAll && (idx >= 0);
+        }
       }
     });
     return markAll;

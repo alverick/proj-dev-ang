@@ -32,7 +32,7 @@ export class ConfigurarGtpComponent implements OnInit {
   public SvcEdit: ServicesGTPChange[];
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {
-    ruc: 0 ,
+    ruc: '0',
     name: '',
     entry: '',
     email: '',
