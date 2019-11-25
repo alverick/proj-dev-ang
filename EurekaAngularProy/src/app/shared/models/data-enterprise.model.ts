@@ -1,6 +1,6 @@
 export interface DataEnterpriseModel {
 
-    ruc: number;
+    ruc: number|string;
     name: string;
     entry: string;
     email: string;

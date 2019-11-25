@@ -1,19 +1,20 @@
 import { DataServiceGTP } from "./data-service-gtp";
 
 export interface DataEnterpriseGTP {
-    ruc: string;
+    cu?: string;
+    ruc: string|number;
     name: string;
     entry: string;
     email: string;
     movilNumber: number;
     newName: string;
-    status: String;
+    status: string;
     uniqueCodeIBK: String;
     requestDate?: Date;
     inReview?: boolean;
     arrayServices?: DataServiceGTP[];
     NombreApproved?: boolean;
-    enabled: boolean;
+    enabled?: boolean;
 }
 /**
 

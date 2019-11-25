@@ -28,4 +28,6 @@ export interface ServiceModel {
     status?: string;
     nombreHabilitado?: boolean;
     nombreCodHabilitado?: boolean;
+    acceptednewName?: boolean;
+    acceptednewNameCode?: boolean;
 }

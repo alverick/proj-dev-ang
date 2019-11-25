@@ -32,6 +32,7 @@ export class ConfigurarGtpComponent implements OnInit {
   public SvcEdit: ServicesGTPChange[];
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {
+    cu: '',
     ruc: '0',
     name: '',
     entry: '',
@@ -444,15 +445,15 @@ getCodigoNameGTP(svc: ServiceModel) {
     this.Formulario = true;
   }
 
-  onGrabar(svc: ServiceModel) {
+  onGrabar(svc: any) {
     console.log('Servicios');
-    console.table( this.afiliacionService.services);
+    console.table( this.gtpService.services);
     console.log('cierra');
     if (this.indiceActual >= 0) {
 
       if (this.inEdit) {
         console.log('Edit name se cae xdeee' +svc.newName );
-        if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+        if (this.gtpService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
             onOpen: drawPopup
@@ -460,7 +461,7 @@ getCodigoNameGTP(svc: ServiceModel) {
           return;
         }
       } else {
-        if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
+        if (this.gtpService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
             onOpen: drawPopup
@@ -469,14 +470,7 @@ getCodigoNameGTP(svc: ServiceModel) {
         }
       }
 
-     /* if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
-        Swal.fire({
-          text: 'Ya existe un servicio con este nombre',
-          onOpen: drawPopup
-        });
-        return;
-      } */
-      this.afiliacionService.services[this.indiceActual] = svc;
+      this.gtpService.services[this.indiceActual] = svc;
       this.indiceActual = -1;
       if (!svc.id) {
         this.gaService.sendEvent('ServicioAgregado', {
@@ -486,7 +480,7 @@ getCodigoNameGTP(svc: ServiceModel) {
       }
     } else {
       let nro = 1;
-      this.afiliacionService.services.forEach((s, i) => {
+      this.gtpService.services.forEach((s, i) => {
         if (s.nombre.startsWith(svc.nombre)) {
           if (!isNaN(parseInt(s.nombre.substr(svc.nombre.length))) || s.nombre.substr(svc.nombre.length) === ''){
             nro += 1;
@@ -496,7 +490,7 @@ getCodigoNameGTP(svc: ServiceModel) {
       if (nro > 1) {
         svc.nombre += nro.toString();
       }
-      this.afiliacionService.services.push(svc);
+      this.gtpService.services.push(svc);
 
     }
     this.Formulario = false;

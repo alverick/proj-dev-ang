@@ -280,6 +280,7 @@ export class GtpService {
     this.services.forEach(s => {
       data.services.push({
         id: s.id,
+        res: s.res,
         name: s.nombre ,
         newName: s.newName,
         entry: s.rubro,
