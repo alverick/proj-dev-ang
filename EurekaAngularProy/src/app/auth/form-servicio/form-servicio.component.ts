@@ -24,6 +24,7 @@ export class FormServicioComponent implements OnInit {
   @Input() set service(value: ServiceModel) {
     if (value === null || value === undefined) {
       this._service = {
+        res: '',
         nombre: 'Mensualidad',
         codDeudor: 'DNI',
         tipoDato: 'C',

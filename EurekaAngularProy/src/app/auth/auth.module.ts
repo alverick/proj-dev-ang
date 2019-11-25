@@ -29,6 +29,7 @@ import { CambiaContrasenaComponent } from './cambia-contrasena/cambia-contrasena
 import { FormServicioGtpComponent } from './form-servicio-gtp/form-servicio-gtp.component';
 import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.component';
 import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
+import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.component';
 
 @NgModule({
   imports: [
@@ -59,11 +60,17 @@ import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
     AfiliacionComponent,
     ConfigurarServiciosComponent,
     FormServicioComponent,
+    FormEmpresaGTPComponent,
     ProcesandoComponent,
     CrearContrasenaComponent,
     BlockCopyPasteDirective,
     OnlyNumbersFormDirective,
-    NumberAccountDirective, RecuperarContrasenaComponent, CambiaContrasenaComponent, FormServicioGtpComponent, ConfigurarGtpComponent, SerFormGtpComponent
+    NumberAccountDirective,
+    RecuperarContrasenaComponent,
+    CambiaContrasenaComponent,
+    FormServicioGtpComponent,
+    ConfigurarGtpComponent,
+    SerFormGtpComponent
   ],
   exports: [
     OnlyNumbersFormDirective

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, ɵConsole } from '@angular/core';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { ConfigurarServiciosComponent } from '../configurar-servicios/configurar-servicios.component';
 import { ServiceModel, MonedaModel } from 'src/app/shared/models';
 import { drawPopup } from 'src/app/shared/services/popups';
 import Swal from 'sweetalert2';
+import { ConfigurarGtpComponent } from '../configurar-gtp/configurar-gtp.component';
 
 @Component({
   selector: 'app-form-servicio-gtp',
@@ -20,33 +20,11 @@ export class FormServicioGtpComponent implements OnInit {
   public codDeu: String;
 
   constructor(private afiliacionService: AfiliacionService,
-    private fb: FormBuilder, private stateEdit: ConfigurarServiciosComponent ) {
+    private fb: FormBuilder, stateEdit: ConfigurarGtpComponent ) {
       stateEdit.onFormAction.subscribe(e => this.formAction(e));
     }
 
   @Input() set service(value: ServiceModel) {
-   /* if (value === null || value === undefined) {
-      this._service = {
-        nombre: 'Mensualidad',
-        codDeudor: 'DNI',
-        tipoDato: 'C',
-        tipoPago: 'C',
-        idCuenta: 0,
-        nroCuenta: '',
-        moneda: '001',
-        simboloMoneda: 'S/',
-        usaWebApp: true,
-        usaAgente: false,
-        usaTienda: false,
-        cobraMora: 'N',
-        periodoMora: '1',
-        tipoMora: 'M'
-      }
-      this.simboloMoneda = 'S/';
-    }
-    else {
-
-    } */
       this._service = value;
       this.simboloMoneda = value.simboloMoneda;
       this._service.simboloMoneda = this.simboloMoneda;
@@ -78,16 +56,17 @@ export class FormServicioGtpComponent implements OnInit {
   ngOnInit(): void {
 
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
-    this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
+    this.gtpMode = false;
     this.codDeu = (this._service.codDeudor == null || this._service.codDeudor === '' ) ? this._service.nameCod : this._service.codDeudor;
 
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
 
-        this.frm = this.fb.group({
+      this.frm = this.fb.group({
+        res: [this._service.res, [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(7)]],
         nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName.substring(3, this._service.newName.length).toString(),
-          disabled:  (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true },
+          disabled: false },
           [Validators.required, Validators.minLength(3), Alfanumerico,
             Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
         codDeudor: new FormControl({ value: (this._service.codDeudor !== '?')? this._service.codDeudor: ( (this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'RUC' ||
@@ -95,23 +74,23 @@ export class FormServicioGtpComponent implements OnInit {
         this._service.newNameCode.substring(3, this._service.newNameCode.length)  === 'Codigo Interno') ?
         this._service.newNameCode.substring(3, this._service.newNameCode.length).toString() : 'Otro'),
         // tslint:disable-next-line:max-line-length
-        disabled: (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true}, [Validators.required]),
+        disabled: false }, [Validators.required]),
 
         nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : (this._service.newNameCode.substring(3, this._service.newNameCode.length).toString()),
-           disabled: this._service.NewNameCod }),
+           disabled: false }),
         tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
         tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
-        idCuenta: new FormControl({ value: this._service.idCuenta, disabled: true}, [Validators.required,Validators.minLength(13)]),
-        moneda: new FormControl({ value: this._service.moneda, disabled: true }, Validators.required),
-        usaAgente: new FormControl({ value: this._service.usaAgente, disabled: true}),
-        usaTienda: new FormControl({ value: this._service.usaTienda, disabled: true }),
-        usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true}),
-        cobraMora: new FormControl({ value: this._service.cobraMora, disabled: true }, Validators.required ),
-        periodoMora:new FormControl({ value: this._service.periodoMora, disabled: true }),
-        tipoMora: new FormControl({ value: this._service.tipoMora, disabled: true }),
-        monto: new FormControl({ value: montod, disabled: true }),
-        porcentaje: new FormControl({ value: porcentajed, disabled: true }),
-        pagoPartes: new FormControl({ value: this._service.pagoPartes, disabled: true }, Validators.required),
+        nroCuenta: [this._service.nroCuenta, [Validators.required, Validators.minLength(13)]],
+        moneda: [this._service.moneda, Validators.required],
+        usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.gtpMode}),
+        usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.gtpMode }),
+        usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: this.gtpMode}),
+        cobraMora: new FormControl({ value: this._service.cobraMora, disabled: false }, Validators.required ),
+        periodoMora:new FormControl({ value: this._service.periodoMora, disabled: false }),
+        tipoMora: new FormControl({ value: this._service.tipoMora, disabled: false }),
+        monto: new FormControl({ value: montod, disabled: false }),
+        porcentaje: new FormControl({ value: porcentajed, disabled: false }),
+        pagoPartes: new FormControl({ value: this._service.pagoPartes, disabled: false }, Validators.required),
       });
 
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
@@ -179,46 +158,32 @@ export class FormServicioGtpComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    console.log('CODIGOs DEL DEUDOR');
-    console.log(this.frm.get('codDeudor').value);
-    console.log(this.frm.get('nameCod').value);
     if (this.frm.valid) {
 
             let value: ServiceModel;
 
             value = this._service;
 
-           /* if (this._service.NewName) {
-              value.codDeudor = this.frm.value.codDeudor;
-              value.nameCod = this.frm.value.nameCod;
-              this.grabar.emit(value);
-            } else {
-              value.nombre = this.frm.value.nombre;
-              if (this._service.NewNameCod) {
-                this.grabar.emit(value);
-              } else {
-                value.codDeudor = this.frm.value.codDeudor;
-                value.nameCod = this.frm.value.nameCod;
-                this.grabar.emit(value);
-              }
-            } */
-          /*  if ( this._service.newName.substring(0, 3) === '???' ) {
-              value.nombre = this.frm.value.nombre;
-            } else {
-              value.nombre = null;
-            }
-            if ( this._service.newNameCode.substring(0, 3) === '???') {
-              value.codDeudor = this.frm.value.codDeudor;
-              value.nameCod = this.frm.value.nameCod;
-            } else {
-              value.codDeudor = null;
-              value.nameCod = null;
-            } */
-            value.nombre = ( this._service.newName.substring(0, 3) === '???') ? this.frm.value.nombre : value.nombre ;
-            // tslint:disable-next-line:max-line-length
-            value.codDeudor = ( this._service.newNameCode.substring(0, 3) === '???') ?  this.frm.value.codDeudor : this._service.newNameCode;
-            value.nameCod = ( this._service.newNameCode.substring(0, 3) === '???') ? this.frm.value.nameCod : this._service.newNameCode;
-            console.log('valores' +  value.nombre + 'f'+  value.codDeudor+ 'f'+  value.nameCod );
+            value.res = this.frm.value.res;
+            value.nombre = this.frm.value.nombre;
+            value.codDeudor = this.frm.value.codDeudor;
+            value.nameCod = this.frm.value.nameCod;
+            value.tipoDato = this.frm.value.tipoDato;
+            value.tipoPago = this.frm.value.tipoPago;
+            value.nroCuenta = this.frm.value.nroCuenta;
+            value.moneda = this.frm.value.moneda;
+            value.usaAgente = this.frm.value.usaAgente;
+            value.usaTienda = this.frm.value.usaTienda;
+            value.usaWebApp = this.frm.value.usaWebApp;
+            value.cobraMora = this.frm.value.cobraMora;
+            value.periodoMora = this.frm.value.periodoMora;
+            value.tipoMora = this.frm.value.tipoMora;
+            value.monto = this.frm.value.monto;
+            value.porcentaje = this.frm.value.porcentaje;
+            value.pagoPartes = this.frm.value.pagoPartes;
+            value.acceptednewName = true;
+            value.acceptednewNameCode = true;
+            console.log(value);
             this.grabar.emit(value);
 
     }
@@ -335,6 +300,11 @@ export class FormServicioGtpComponent implements OnInit {
     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
     initalValue = initalValue.replace(/\s{2,}/g, " ");
     this.f.nameCod.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
+  }
+
+  resInput(e) {
+    let initalValue = this.f.res.value;
+    this.f.res.setValue(initalValue.replace(/[^0-9]/g, ''));
   }
 
   MoraMontoBlur(e) {

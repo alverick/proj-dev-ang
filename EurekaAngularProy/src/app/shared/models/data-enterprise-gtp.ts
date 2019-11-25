@@ -1,7 +1,7 @@
 import { DataServiceGTP } from "./data-service-gtp";
 
 export interface DataEnterpriseGTP {
-    ruc: number;
+    ruc: string;
     name: string;
     entry: string;
     email: string;
@@ -13,6 +13,7 @@ export interface DataEnterpriseGTP {
     inReview?: boolean;
     arrayServices?: DataServiceGTP[];
     NombreApproved?: boolean;
+    enabled: boolean;
 }
 /**
 

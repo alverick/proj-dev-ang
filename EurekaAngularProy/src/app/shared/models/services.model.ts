@@ -1,4 +1,5 @@
 export interface ServiceModel {
+    res?: string;
     id?: number;
     nombre: string;
     newName?: string;

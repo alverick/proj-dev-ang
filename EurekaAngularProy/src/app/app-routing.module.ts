@@ -41,7 +41,7 @@ const routes: Routes = [
   { path: 'gtp', component: GtpGrillaComponent,  canActivate: [AuthGuard, GtpInputGuard] },
   { path: 'AprobacionGtp/:llave', component: AprobacionesComponent, canActivate: [AuthGuard, GtpInputGuard]},
   //{ path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard, GtpOutputGuard]},
-  { path: 'ApGTP/:llave',  component: ConfigurarGtpComponent, canActivate: [AuthGuard, GtpInputGuard]},
+  { path: 'ApGTP/:llave',  component: ConfigurarGtpComponent,  data: { isEdit: true }, canActivate: [AuthGuard, GtpInputGuard]},
   // { path: 'ApGTP', component: ConfigurarGtpComponent},
 
   { path: 'subirPlantilla', component: SubirPlantillaComponent},
