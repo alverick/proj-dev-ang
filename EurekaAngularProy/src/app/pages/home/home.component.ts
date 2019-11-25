@@ -31,6 +31,7 @@ import { isNgTemplate } from '@angular/compiler';
 import { Popover } from './popover/popover.service';
 import { PagosComponent } from './pagos/pagos.component';
 import { LoadFileService } from 'src/app/shared/load-file/load-file.service';
+import { LoadBarService } from 'src/app/shared/load-bar/load-bar.service';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -184,7 +185,8 @@ export class HomeComponent implements OnInit {
     private loginService: LoginService,
     private popover: Popover,
     private gaService: GoogleAnalytics,
-    private fileLoad: LoadFileService) {
+    private fileLoad: LoadFileService,
+    private barLoad: LoadBarService) {
       transactionService.itemsForDelete = [];
     }
      /*
@@ -840,22 +842,29 @@ Ocultar() {
     console.table(this.typeList);
   }
 
-  DescargarReporte() {
-    if( this.transactionService.debtItems.data.length > 0){
-      if (this.validaFiltro()) {
-        this.transactionService.report(this.currentFiltro)
-        .subscribe((r: Blob) => {
-          this.gaService.sendEvent('DescargaReporte', {
-            'event_category': 'Dashboard',
-            'event_label': 'descargar_reporte'
-          });
-          saveAs(r, "reporte.xlsx");
-        });
-      }
-    }else{
-      this.mensaje('warning', 'Descarga','No tiene registros para descargar');
-    }
+  public enDescarga: boolean = false;
 
+  DescargarReporte() {
+    if (this.enDescarga === false) {
+      if( this.transactionService.debtItems.data.length > 0){
+        if (this.validaFiltro()) {
+          this.enDescarga = true;
+          this.barLoad.show(this.fileLoadContainer);
+          this.transactionService.report(this.currentFiltro)
+          .subscribe((r: Blob) => {
+            this.gaService.sendEvent('DescargaReporte', {
+              'event_category': 'Dashboard',
+              'event_label': 'descargar_reporte'
+            });
+            this.barLoad.close();
+            this.enDescarga = false;
+            saveAs(r, "reporte.xlsx");
+          });
+        }
+      }else{
+        this.mensaje('warning', 'Descarga','No tiene registros para descargar');
+      }
+    }
   }
 
   estaVencido(itm: Debts): boolean{

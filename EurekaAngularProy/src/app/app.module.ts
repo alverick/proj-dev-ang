@@ -58,6 +58,7 @@ import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.componen
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PopoverComponent } from './pages/home/popover/popover.component';
 import { LoadFileComponent } from './shared/load-file/load-file.component';
+import { LoadBarComponent } from './shared/load-bar/load-bar.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { LoadFileComponent } from './shared/load-file/load-file.component';
     EmpresaGTPComponent,
     ServicesGTPComponent,
     PopoverComponent,
-    LoadFileComponent
+    LoadFileComponent,
+    LoadBarComponent
   ],
   imports: [
     BrowserModule,
@@ -149,7 +151,8 @@ import { LoadFileComponent } from './shared/load-file/load-file.component';
                     ValidationComponent,
                     PagosComponent,
                     PopoverComponent,
-                    LoadFileComponent
+                    LoadFileComponent,
+                    LoadBarComponent
                     ]
 })
 export class AppModule { }

@@ -91,7 +91,7 @@ export class FormServicioComponent implements OnInit {
        this._service.nameCod : this._service.codDeudor,  disabled:   this._service.nombreCodHabilitado }),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
-      idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
+      nroCuenta: [this._service.nroCuenta, [Validators.required, Validators.minLength(13)]],
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
@@ -248,7 +248,7 @@ export class FormServicioComponent implements OnInit {
                  value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
                     ((this.frm.value.nameCod === value.codDeudor) ? value.newNameCode : this.frm.value.nameCod ) :
                     (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor ;
-                  value.idCuenta = this.frm.value.idCuenta;
+                  value.nroCuenta = this.frm.value.nroCuenta;
                   value.moneda = this.frm.value.moneda;
                   value.cobraMora = this.frm.value.cobraMora;
                   value.periodoMora = this.frm.value.periodoMora;
@@ -266,8 +266,6 @@ export class FormServicioComponent implements OnInit {
                    value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
                    console.log('crea un nuevo 3 en edicion' + value.newName);
                 }
-                let cta = this.cuentas.find(c => c.id === value.idCuenta);
-                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
                 value.simboloMoneda = this.simboloMoneda;
                  value.usaWebApp = true;
                 this.grabar.emit(value);
@@ -344,7 +342,8 @@ export class FormServicioComponent implements OnInit {
              // value.usaWebApp = true;
               if (this.editMode) {
                 value = this._service;
-                value.idCuenta = this.frm.value.idCuenta;
+                //value.idCuenta = this.frm.value.idCuenta;
+                value.nroCuenta = this.frm.value.nroCuenta;
                 // value.nombre = this.frm.value.nombre;
                 // tslint:disable-next-line:max-line-length
                value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
@@ -366,8 +365,8 @@ export class FormServicioComponent implements OnInit {
                 value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
                 console.log('crea un nuevo 3 en edicion' + value.newName);
               }
-              let cta = this.cuentas.find(c => c.id === value.idCuenta);
-              value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
+              //let cta = this.cuentas.find(c => c.id === value.idCuenta);
+              //value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
               value.simboloMoneda = this.simboloMoneda;
 
               this.grabar.emit(value);
@@ -393,7 +392,8 @@ export class FormServicioComponent implements OnInit {
 
             if (this.editMode) {
               value = this._service;
-              value.idCuenta = this.frm.value.idCuenta;
+              //value.idCuenta = this.frm.value.idCuenta;
+              value.nroCuenta = this.frm.value.nroCuenta;
                // tslint:disable-next-line:max-line-length
                value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
                value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
@@ -416,8 +416,8 @@ export class FormServicioComponent implements OnInit {
               value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
               console.log('crea un nuevo 3 en edicion' + value.newName);
             }
-            let cta = this.cuentas.find(c => c.id === value.idCuenta);
-            value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
+            //let cta = this.cuentas.find(c => c.id === value.idCuenta);
+            //value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
             value.simboloMoneda = this.simboloMoneda;
             console.log('ingresa 3.2');
             value.usaWebApp = true;

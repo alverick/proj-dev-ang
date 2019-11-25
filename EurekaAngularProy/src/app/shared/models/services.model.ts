@@ -1,4 +1,5 @@
 export interface ServiceModel {
+    res?: string;
     id?: number;
     nombre: string;
     newName?: string;
@@ -6,6 +7,7 @@ export interface ServiceModel {
     rubro?: number;
     codDeudor?: string;
     nameCod?: string;
+    debtorCode?: string;
     tipoDato: string;
     tipoPago?: string;
     nroCuenta: string;
@@ -27,4 +29,6 @@ export interface ServiceModel {
     status?: string;
     nombreHabilitado?: boolean;
     nombreCodHabilitado?: boolean;
+    acceptednewName?: boolean;
+    acceptednewNameCode?: boolean;
 }

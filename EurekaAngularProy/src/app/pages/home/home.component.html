@@ -130,8 +130,8 @@
                 </div>
               </div>
               <div class="al-right">
-                <div class="lnk-label" (click)="DescargarReporte()">
-                  <img src="assets/images/download.svg" alt="download"> Descargar movimientos
+                <div class="lnk-label" [class.disabled]="enDescarga" (click)="DescargarReporte()">
+                  <img *ngIf="!enDescarga" src="assets/images/download.svg" alt="download"><img *ngIf="enDescarga" src="assets/images/download-d.svg" alt="download"> Descargar movimientos
                 </div>
               </div>
               <div class="clear-float"></div>
