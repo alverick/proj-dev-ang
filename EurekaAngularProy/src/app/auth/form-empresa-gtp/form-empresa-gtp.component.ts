@@ -28,7 +28,7 @@ export class FormEmpresaGTPComponent implements OnInit {
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
 
     this.formGroup = this.formBuilder.group({
-      cu: new FormControl(this._enterprise.uniqueCodeIBK, [Validators.required,  Validators.pattern('[0-9]*')]),
+      cu: new FormControl(this._enterprise.uniqueCodeIBK, [Validators.required]),
       ruc: new FormControl(this._enterprise.ruc, [Validators.required, Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
       newName: new FormControl(this._enterprise.newName, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
       entry: new FormControl(this._enterprise.entry, [Validators.required]),
@@ -53,6 +53,16 @@ export class FormEmpresaGTPComponent implements OnInit {
           value.NombreApproved = true;
           this.grabar.emit(value);
       }
+  }
+
+  onBlurCu(e) {
+    let cu = this.f.cu.value.replace(/[^0-9]*/g, '');
+    if (cu !== '') {
+      while (cu.length < 10) {
+        cu = '0' + cu;
+      }
+      this.f.cu.setValue(cu);
+    }
   }
 
 }

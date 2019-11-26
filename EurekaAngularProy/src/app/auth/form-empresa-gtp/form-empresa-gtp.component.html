@@ -1,10 +1,10 @@
 <form [formGroup]="formGroup" novalidate  (submit)="onSubmitEmpresa()" class="form">
     <div class="form-group ">
         <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" formControlName="cu" placeholder="Código Único" [class.is-invalid]="f.cu.invalid">
+            <input class="input-text" matInput type="text" formControlName="cu" (blur)="onBlurCu($event)" placeholder="Código Único" [class.is-invalid]="f.cu.invalid" appOnlynumbers maxlength="10">
             <mat-error class="messsage-error">
-              <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('required')">El RUC es obligatorio</mat-error>
-              <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('pattern')"> Ingrese un ruc valido </mat-error>
+              <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('required')">El CU es obligatorio</mat-error>
+              <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('pattern')"> Ingrese un CU valido </mat-error>
           </mat-error>
         </mat-form-field>
     </div>

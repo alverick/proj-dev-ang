@@ -66,13 +66,11 @@ export class FormServicioComponent implements OnInit {
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
   cmoraporce: boolean = false;
-  private _service: ServiceModel;
+  public _service: ServiceModel;
   @Output() grabar = new EventEmitter<any>();
   public services: ServiceModel[] = [];
 
   ngOnInit(): void {
-    console.log('nombreCodHabilitado');
-    console.log(this._service.nombreCodHabilitado);
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
@@ -87,8 +85,7 @@ export class FormServicioComponent implements OnInit {
       codDeudor: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode :
       ((this._service.codDeudor   === 'RUC' || this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ?
       this._service.codDeudor : 'Otro') ,   disabled:    this._service.nombreCodHabilitado   }, [Validators.required]),
-      nameCod: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode : (this._service.codDeudor == 'Otro')?
-       this._service.nameCod : this._service.codDeudor,  disabled:   this._service.nombreCodHabilitado }),
+      nameCod: new FormControl({ value: (this._service.codDeudor === 'Otro') ? this._service.newNameCode : '',  disabled:   this._service.nombreCodHabilitado }),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       nroCuenta: [this._service.nroCuenta, [Validators.required, Validators.minLength(13)]],
@@ -112,9 +109,6 @@ export class FormServicioComponent implements OnInit {
     this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
     this.changeMora(false);
     this.changeTipoMora(false);
-
-    console.log('cuentas');
-    console.table(this.cuentas);
 
     if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');
@@ -368,7 +362,7 @@ export class FormServicioComponent implements OnInit {
               //let cta = this.cuentas.find(c => c.id === value.idCuenta);
               //value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
               value.simboloMoneda = this.simboloMoneda;
-
+              value.usaWebApp = true;
               this.grabar.emit(value);
             }
           }
@@ -419,11 +413,7 @@ export class FormServicioComponent implements OnInit {
             //let cta = this.cuentas.find(c => c.id === value.idCuenta);
             //value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
             value.simboloMoneda = this.simboloMoneda;
-            console.log('ingresa 3.2');
             value.usaWebApp = true;
-
-            console.log('SERVICIO --MARCE');
-            console.log(value);
 
             this.grabar.emit(value);
           }

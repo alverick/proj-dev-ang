@@ -60,9 +60,9 @@ export class ConfigurarGtpComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
     this.inEdit = true;
-    window['_url_loop_'] = `ApGTp/${this.route.snapshot.paramMap.get('llave')}`;
+    window['_url_loop_'] = `ApGTP/${this.route.snapshot.paramMap.get('llave')}`;
+    history.pushState(null, null, `ApGTP/${this.route.snapshot.paramMap.get('llave')}`);
     this.gtpService.GetServicesGtp(this.route.snapshot.paramMap.get('llave'));
     this.getInfoEmpresa();
     this.buttonServicios = 'Actualizar';
@@ -195,17 +195,36 @@ export class ConfigurarGtpComponent implements OnInit {
     }
     // this.frm.get('monto').value
     let res = '';
+    let resVacio = false;
     let resValido = true;
     this.gtpService.services.forEach(s => {
-      if (res === '' || res === null) {
-        res = s.res;
-      }
-      else {
-        if (res.substring(0, 5) !== s.res.substring(0, 5)) {
-          resValido = false;
+      if (s.res !== '' && s.res !== null) {
+        if (res === '' || res === null) {
+          res = s.res;
+        }
+        else {
+          if (res.substring(0, 5) !== s.res.substring(0, 5)) {
+            resValido = false;
+          }
         }
       }
+      else {
+        resVacio = true;
+      }
     });
+    if (resVacio && this.Enterprise.enabled) {
+      Swal.fire({
+        title: 'Error en RES',
+        html: `Uno de los servicios no tiene RES asignada.<br />No puede poner este cliente como activo`,
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonColor: '#d33',
+        cancelButtonText:  'CERRAR',
+        onOpen: drawPopup
+      });
+      return;
+    }
     if (!resValido) {
       Swal.fire({
         title: 'Error en RES',
@@ -271,29 +290,13 @@ export class ConfigurarGtpComponent implements OnInit {
   }
 
   getCodDebtor(svc: ServiceModel) {
-
-      if(svc.codDeudor === svc.newNameCode) {
-         return svc.newNameCode;
-      }
       if (svc.codDeudor === '?') {
         if (svc.newNameCode.substring(0, 3) === '???') {
-         return svc.newNameCode.substring(3, svc.newNameCode.length);
-       }
-       return svc.newNameCode;
-     } else {
-      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
-          return svc.codDeudor;
+          return svc.newNameCode.substring(3, svc.newNameCode.length);
+        }
+        return svc.newNameCode;
       }
-      }
-
-      if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
-            return svc.nameCod;
-      }
-      if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
-        // return svc.nameCod;
-         return svc.codDeudor;
-     }
-
+      return svc.newNameCode;
   }
   getCodDebtorCreate(svc: ServiceModel) {
      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
@@ -344,12 +347,6 @@ getName(svc: ServiceModel) {
     } else {
       return svc.newName;
     }
- /* } else {
-    if ( svc.nombre === svc.newName) {
-      return svc.newName;
-    } else {
-      return svc.newName;
-    }*/
   }
 
   return svc.nombre;
@@ -372,15 +369,6 @@ getCodigoNameGTP(svc: ServiceModel) {
 
   delService(index: number) {
     if (this.EmpresaFormulario || this.Formulario) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Eliminación del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
       return;
     }
     if (this.inEdit && this.gtpService.services[index].id) {
@@ -437,15 +425,6 @@ getCodigoNameGTP(svc: ServiceModel) {
 
   editService(svc: ServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Edición del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
       return;
     }
     if (this.Formulariogtp && this.indiceActual !== index) {
@@ -460,8 +439,6 @@ getCodigoNameGTP(svc: ServiceModel) {
       this.serviceActual = svc;
        return;
     }
-    console.log('Editar servicio');
-    console.log(svc);
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
@@ -470,13 +447,9 @@ getCodigoNameGTP(svc: ServiceModel) {
   }
 
   onGrabar(svc: any) {
-    console.log('Servicios');
-    console.table( this.gtpService.services);
-    console.log('cierra');
     if (this.indiceActual >= 0) {
 
       if (this.inEdit) {
-        console.log('Edit name se cae xdeee' +svc.newName );
         if (this.gtpService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',

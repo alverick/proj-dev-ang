@@ -47,6 +47,10 @@
   @include font-text(18px, $weight:500);
   color: #0d131d;
 }
+.font-subtext-services {
+  @include font-text(12px, $weight:500);
+  color: #0d131d;
+}
 .font-black-servicios-list {
     @include font-text(14px, $weight:300);
     color: #0d131d;
@@ -61,6 +65,9 @@
     @include box-shadows();
     background-color: #ffffff;
 
+    .table {
+      margin-bottom: 0;
+    }
 }
 .card-empresa {
   @include  cuadro(361px, 127px);

@@ -4,6 +4,7 @@ export interface DataEnterpriseGTP {
   ruc: any;
   name: string;
   entry: string;
+  entryName?: string;
   email: string;
   movilNumber: number;
   newName: string;

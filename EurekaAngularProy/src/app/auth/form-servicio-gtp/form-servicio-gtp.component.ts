@@ -62,22 +62,22 @@ export class FormServicioGtpComponent implements OnInit {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
-console.log(this._service);
-      this.frm = this.fb.group({
+    console.log(this._service);
+    let debtorCode = this._service.newNameCode;
+    let nameCode = '';
+    if (debtorCode != 'DNI' && debtorCode != 'RUC' && debtorCode != 'Codigo Interno') {
+      nameCode = debtorCode;
+      debtorCode = 'Otro';
+    }
+
+    this.frm = this.fb.group({
         res: [this._service.res, [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(7)]],
         nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName,
           disabled: false },
           [Validators.required, Validators.minLength(3), Alfanumerico,
             Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-        codDeudor: new FormControl({ value: (this._service.codDeudor !== '?')? this._service.codDeudor: ( (this._service.newNameCode  === 'RUC' ||
-        this._service.newNameCode === 'DNI' ||
-        this._service.newNameCode === 'Codigo Interno') ?
-        this._service.newNameCode : 'Otro'),
-        // tslint:disable-next-line:max-line-length
-        disabled: false }, [Validators.required]),
-
-        nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : this._service.newNameCode,
-           disabled: false }),
+        codDeudor: new FormControl({ value: debtorCode, disabled: false }, [Validators.required]),
+        nameCod: new FormControl({ value: nameCode, disabled: false }),
         tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
         tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
         nroCuenta: [this._service.nroCuenta, [Validators.required, Validators.minLength(13)]],
@@ -165,17 +165,15 @@ console.log(this._service);
             value = this._service;
 
             value.res = this.frm.value.res;
-            value.nombre = this.frm.value.nombre;
-            value.codDeudor = this.frm.value.codDeudor;
-            value.debtorCode = this.frm.value.codDeudor;
-            value.nameCod = this.frm.value.nameCod;
+            value.newName = this.frm.value.nombre;
+            value.newNameCode = (this.frm.value.codDeudor === 'Otro' ? this.frm.value.nameCod : this.frm.value.codDeudor);
             value.tipoDato = this.frm.value.tipoDato;
             value.tipoPago = this.frm.value.tipoPago;
             value.nroCuenta = this.frm.value.nroCuenta;
             value.moneda = this.frm.value.moneda;
             value.usaAgente = this.frm.value.usaAgente;
             value.usaTienda = this.frm.value.usaTienda;
-            value.usaWebApp = this.frm.value.usaWebApp;
+            value.usaWebApp = true;
             value.cobraMora = this.frm.value.cobraMora;
             value.periodoMora = this.frm.value.periodoMora;
             value.tipoMora = this.frm.value.tipoMora;
@@ -184,6 +182,7 @@ console.log(this._service);
             value.pagoPartes = this.frm.value.pagoPartes;
             value.acceptednewName = true;
             value.acceptednewNameCode = true;
+            value.inReview = false;
             console.log(value);
             console.log('emitir grabar');
             this.grabar.emit(value);
