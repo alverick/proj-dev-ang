@@ -115,6 +115,7 @@
                                       <table class="table table-sm table-borderless ">
                                         <tr>
                                           <td class="font-black-servicios-des-list" ><span class="badge badge-primary" >{{getState(svc)}}</span> </td>
+                                          <td class="font-black-servicios-des-list" *ngIf="svc.acceptednewName !== null && svc.acceptednewNameCode !== null ">Revisado</td>
                                         </tr>
                                       </table>
                                   </div>

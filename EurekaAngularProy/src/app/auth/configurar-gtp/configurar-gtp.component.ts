@@ -32,7 +32,6 @@ export class ConfigurarGtpComponent implements OnInit {
   public SvcEdit: ServicesGTPChange[];
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {
-    cu: '',
     ruc: '0',
     name: '',
     entry: '',
@@ -385,7 +384,7 @@ getCodigoNameGTP(svc: ServiceModel) {
       return;
     }
     if (this.inEdit && this.gtpService.services[index].id) {
-      this.afiliacionService.CanDeleteService(index).subscribe(r => {
+      this.gtpService.CanDeleteService(index).subscribe(r => {
         let title = 'Eliminación total del servicio';
         let msg = 'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
         if (r.hasPayed) {
@@ -402,7 +401,7 @@ getCodigoNameGTP(svc: ServiceModel) {
           onOpen: drawPopup
         }).then(r => {
           if (r.value) {
-            this.afiliacionService.SendDelService(index)
+            this.gtpService.SendDelService(index)
               .subscribe(r => {
                 this.gaService.sendEvent('ServicioEliminado', {
                   'event_category': GoogleAnalytics.Afiliacion,
@@ -540,8 +539,7 @@ getCodigoNameGTP(svc: ServiceModel) {
   }
 
   getState(svc: DataServiceGTP) {
-    console.log('getState', svc);
-    if(svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???') {
+    if(svc.newName !== undefined && svc.newName !== null && (svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???')) {
       return 'Servicio Rechazado';
     }
     if (((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) &&  svc.inReview) {

@@ -1,7 +1,6 @@
 import { DataServiceGTP } from "./data-service-gtp";
 
 export interface DataEnterpriseGTP {
-  cu?: string;
   ruc: any;
   name: string;
   entry: string;

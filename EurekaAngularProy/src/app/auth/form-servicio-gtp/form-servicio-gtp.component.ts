@@ -62,21 +62,21 @@ export class FormServicioGtpComponent implements OnInit {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
-
+console.log(this._service);
       this.frm = this.fb.group({
         res: [this._service.res, [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(7)]],
-        nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName.substring(3, this._service.newName.length).toString(),
+        nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName,
           disabled: false },
           [Validators.required, Validators.minLength(3), Alfanumerico,
             Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-        codDeudor: new FormControl({ value: (this._service.codDeudor !== '?')? this._service.codDeudor: ( (this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'RUC' ||
-        this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'DNI' ||
-        this._service.newNameCode.substring(3, this._service.newNameCode.length)  === 'Codigo Interno') ?
-        this._service.newNameCode.substring(3, this._service.newNameCode.length).toString() : 'Otro'),
+        codDeudor: new FormControl({ value: (this._service.codDeudor !== '?')? this._service.codDeudor: ( (this._service.newNameCode  === 'RUC' ||
+        this._service.newNameCode === 'DNI' ||
+        this._service.newNameCode === 'Codigo Interno') ?
+        this._service.newNameCode : 'Otro'),
         // tslint:disable-next-line:max-line-length
         disabled: false }, [Validators.required]),
 
-        nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : (this._service.newNameCode.substring(3, this._service.newNameCode.length).toString()),
+        nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : this._service.newNameCode,
            disabled: false }),
         tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
         tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),

@@ -44,7 +44,7 @@ export class FormEmpresaGTPComponent implements OnInit {
     if (this.formGroup.valid) {
           let value: DataEnterpriseGTP;
           value = this._enterprise;
-          value.cu = this.f.cu.value;
+          value.uniqueCodeIBK = this.f.cu.value;
           value.ruc = this.f.ruc.value;
           value.newName = this.f.newName.value;
           value.entry = this.f.entry.value;

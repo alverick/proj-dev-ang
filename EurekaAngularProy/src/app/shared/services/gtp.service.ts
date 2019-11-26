@@ -225,10 +225,10 @@ export class GtpService {
     }
     let svc: any = {
       id: null,
-      nombre: nombre,
+      nombre: '?',
       newName : nombre,
-      codDeudor: 'DNI',
-     // newNameCode: '',
+      codDeudor: '?',
+      newNameCode: 'DNI',
       tipoDato: 'C',
       tipoPago: 'C',
       idCuenta: 0,
@@ -241,7 +241,12 @@ export class GtpService {
       cobraMora: 'N',
       periodoMora: '',
       tipoMora: 'M',
-      pagoPartes: 'N'
+      pagoPartes: 'N',
+      acceptednewName : null,
+      acceptednewNameCode: null,
+      inReview: true,
+      name: '?',
+      debtorCode: '?'
     };
     this.services.push(svc);
     return svc;
@@ -262,7 +267,7 @@ export class GtpService {
   }
 
   public SendDelService(index: number) {
-    let url = `${environment.END_POINT}/service/${this.services[index].id}`;
+    let url = `${environment.END_POINT}/company/GTP/service/${this.services[index].id}`;
     return this.http.delete(url)
       .pipe(map(r => {
         this.services.splice(index, 1);
@@ -271,7 +276,7 @@ export class GtpService {
   }
 
   public CanDeleteService(index: number) {
-    let url = `${environment.END_POINT}/service/${this.services[index].id}/canDelete`;
+    let url = `${environment.END_POINT}/company/GTP/service/${this.services[index].id}/canDelete`;
     return this.http.get<any>(url);
   }
 
