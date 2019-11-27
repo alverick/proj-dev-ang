@@ -41,6 +41,7 @@ export class FormEmpresaGTPComponent implements OnInit {
 
   onSubmitEmpresa() {
 
+    let entryName = this.rubros.find(r => r.code === this.f.entry.value).name;
     if (this.formGroup.valid) {
           let value: DataEnterpriseGTP;
           value = this._enterprise;
@@ -48,9 +49,11 @@ export class FormEmpresaGTPComponent implements OnInit {
           value.ruc = this.f.ruc.value;
           value.newName = this.f.newName.value;
           value.entry = this.f.entry.value;
+          value.entryName = entryName;
           value.email = this.f.email.value;
           value.movilNumber = this.f.movilNumber.value;
           value.NombreApproved = true;
+          value.inReview = false;
           this.grabar.emit(value);
       }
   }
