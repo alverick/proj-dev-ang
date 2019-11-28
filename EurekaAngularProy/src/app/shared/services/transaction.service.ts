@@ -243,24 +243,28 @@ export class TransactionService {
   }
 
   countMarksForDelete() {
+    console.log(this.itemsForDelete);
     return this.itemsForDelete.length;
   }
 
   isMarkedAll(selectedUniverse: boolean = false) {
     let markAll = true;
+    let mustBeChecked = false;
     this.debtItems.data.forEach(v => {
       if (selectedUniverse) {
         if ( this.mustBeSelected(v, selectedUniverse)) {
           markAll = markAll && v.selected;
+          mustBeChecked = true;
         }
       }
       else {
         if (!v.hasIBKPayments && v.status !== 'PAGADO') {
           let idx = this.itemsForDelete.indexOf(v.id);
           markAll = markAll && (idx >= 0);
+          mustBeChecked = true;
         }
       }
     });
-    return markAll;
+    return (markAll && mustBeChecked);
   }
 }

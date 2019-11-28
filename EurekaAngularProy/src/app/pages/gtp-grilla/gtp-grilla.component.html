@@ -18,26 +18,26 @@
                                     </button>
                                 </mat-form-field>
                                 <mat-form-field class="f2">
-                                  <mat-select class="input-text"  [(ngModel)]="filtro.BusinessHeading"  placeholder="Rubro" name="servicio" disableOptionCentering>
+                                  <mat-select class="input-text"  [(ngModel)]="filtro.BusinessHeading"  placeholder="Rubro" name="rubro" disableOptionCentering>
                                     <mat-option class="input-text">Rubro</mat-option>
                                     <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
                                         {{r.code}} {{r.name}}
                                     </mat-option>
                                   </mat-select>
-                                  <button mat-button *ngIf="filtro.BusinessHeading" matSuffix mat-icon-button aria-label="Clear"
-                                    (click)="filtro.BusinessHeading=null; $event.stopPropagation();">
+                                  <button mat-button *ngIf="filtro.BusinessHeading" matSuffix mat-icon-button
+                                    (click)="filtro.BusinessHeading=''; $event.stopPropagation();">
                                     <i class="fa fa-close"></i>
                                   </button>
                                 </mat-form-field>
 
                                 <mat-form-field class="f2">
-                                  <mat-select class="input-text" [(ngModel)]="filtro.status" placeholder="Estado" name="servicio" disableOptionCentering>
+                                  <mat-select class="input-text" [(ngModel)]="filtro.status" placeholder="Estado" name="estado" disableOptionCentering>
                                     <mat-option class="input-text">Estado</mat-option>
                                     <mat-option class="input-text" *ngFor="let r of states" [value]="r.idState">
                                         {{r.descripcion}}
                                     </mat-option>
                                   </mat-select>
-                                  <button mat-button *ngIf="filtro.status" matSuffix mat-icon-button aria-label="Clear"
+                                  <button mat-button *ngIf="filtro.status" matSuffix mat-icon-button
                                   (click)="filtro.status=null; $event.stopPropagation();">
                                   <i class="fa fa-close"></i>
                                 </button>
