@@ -197,15 +197,15 @@ export class LoginComponent implements OnInit {
              // imageUrl: '/assets/images/complain.svg',
               imageHeight: 100,
               title:'Existe una Sesión Activa',
-             // cancelButtonText: 'CERRAR', 
+             // cancelButtonText: 'CERRAR',
               showCloseButton: true,
               showCancelButton: false,
               showConfirmButton: true,
               cancelButtonColor: '#d33',
               //cancelButtonText:  'CERRAR',
-              allowOutsideClick: false, 
+              allowOutsideClick: false,
               confirmButtonText: 'CERRAR',
-              onOpen: drawPopup, 
+              onOpen: drawPopup,
             })
           }else if(value.estado===true && this.intentos<=6){
 
@@ -227,7 +227,7 @@ export class LoginComponent implements OnInit {
             'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  '+this.intentosRestantes+' intentos restantes' );
           }else if(this.intentos< 4 && this.codRespuesta == 5){
             this.codigo2= false;
- 
+
               Swal.fire({
                // type: tipo ,
                 title: 'Tu cuenta está siendo procesada',
@@ -299,7 +299,7 @@ export class LoginComponent implements OnInit {
           else if(this.intentos >= 6 || value.paramStr==='Vuelva a intentarlo mas tarde' || value.paramStr==='El usuario esta bloqueado'){
             this.codigo2= false;
 
-            this.mensaje( 'error', 'Contraseña Incorrecta','Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a pilotos@intercorp.com.pe '  );
+            this.mensaje( 'error', 'Contraseña Incorrecta','Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a solucionempresa@intercorp.com.pe '  );
             this.intento6= true;
             this.isTrue = false;
           }

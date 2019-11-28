@@ -378,6 +378,11 @@ body {
     text-align: center;
     padding: 40px 0px;
     color: #333333 !important;
+
+    .link {
+      @include font-text(16px, 500);
+      color: #333333 !important;
+    }
 }
 
 b {
@@ -629,7 +634,7 @@ b {
 }
 
 .chk-vertical {
-    margin-left: -10px !important; 
+    margin-left: -10px !important;
 }
 
 :host ::ng-deep .mat-checkbox-inner-container-no-side-margin{

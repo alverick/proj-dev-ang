@@ -382,6 +382,11 @@ body {
     text-align: center;
     padding: 40px 0px;
     color: #333333 !important;
+
+    .link {
+      @include font-text(16px, 500);
+      color: #333333 !important;
+    }
 }
 
 b {

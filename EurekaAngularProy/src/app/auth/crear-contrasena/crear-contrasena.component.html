@@ -19,7 +19,7 @@
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                            <div class="form-group"> 
+                            <div class="form-group">
                                 <mat-form-field class="super-full-width ">
 
                                     <input class="input-text"   formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de la empresa" minlength="3" maxlength="80">
@@ -27,7 +27,7 @@
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('pattern') && f.nombre.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
-                                    </mat-error> 
+                                    </mat-error>
                                 </mat-form-field>
                                 <div *ngIf="MensajeName()" class="messsage-error"  >Escribe un nuevo nombre de la empresa</div>
                             </div>
@@ -137,7 +137,7 @@
                         <br> 7. El Cliente conoce su obligación de mantener actualizados sus datos personales.
                         <br> <br> 8. El Cliente se obliga a operar personalmente su sesión. Toda operación realizada por el Cliente a través de Eureca se presumirá hecha por el Cliente bajo su total responsabilidad. Interbank no asumirá responsabilidad
                         alguna por las operaciones realizadas por el Cliente.
-                        <br> <br> 9. El Cliente asume plena responsabilidad por el resguardo de su celular Smartphone, así como de la pérdida o sustracción del mismo. El Cliente deberá comunicar de inmediato a Interbank, enviando un correo al buzón Eureca@intercorp.com.pe,
+                        <br> <br> 9. El Cliente asume plena responsabilidad por el resguardo de su celular Smartphone, así como de la pérdida o sustracción del mismo. El Cliente deberá comunicar de inmediato a Interbank, enviando un correo al buzón solucionempresa@intercorp.com.pe,
                         la pérdida o sustracción de su celular Smartphone. Recibida la comunicación, Interbank bloqueará el número por lo que el Cliente no será responsable por el uso irregular o fraudulento de la misma con posterioridad a tal comunicación.
                         Todas las transacciones previas a dicha comunicación serán de exclusiva responsabilidad del Cliente.
                         <br> <br> 10. Interbank no asumirá ninguna responsabilidad por cualquier problema o inconveniente técnico o físico por caso fortuito o fuerza mayor que imposibilite, retrase, demore la ejecución o no permita la realización exitosa
@@ -147,7 +147,7 @@
                         <br> 12. Cualquier modificación sobre las condiciones del servicio de pago, las operaciones realizables o cualquier otro aspecto del servicio se le informará a través del correo electrónico registrado en esta plataforma.
                         <br> <br> 13. Los Términos y Condiciones del servicio se encuentran a disposición del Cliente en la misma aplicación para su conservación y posterior consulta. El Cliente declara conocer que estos Términos y Condiciones del Servicio
                         podrán ser eventualmente modificados, por lo que la versión que se encontrará disponible en el PlayStore será la vigente al momento de su consulta.
-                        <br> <br> 14. El Cliente podrá desafiliar su cuenta del servicio en cualquier momento enviando un correo al buzón Eureca@intercorp.com.pe.
+                        <br> <br> 14. El Cliente podrá desafiliar su cuenta del servicio en cualquier momento enviando un correo al buzón solucionempresa@intercorp.com.pe.
                         <br> <br> 15. El Cliente declara que ante el mal uso de Eureca, Interbank podrá bloquearlo de su lista de Clientes permitidos para utilizar el App sin aviso alguno, por lo tanto, un mal uso de la aplicación, aprovechamiento indebido
                         del mismo o actos que desnaturalicen o generen una situación de aprovechamiento y/o ventaja indebida por parte del Cliente que perjudique a Interbank, se encuentra expresamente prohibido y será considerado como un acto de piratería
                         de software que infringe las leyes de la propiedad intelectual e industrial, de tal forma que Interbank podrá exigir responsabilidad por el incumplimiento de esta condición, según la normativa vigente

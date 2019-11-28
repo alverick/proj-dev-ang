@@ -32,8 +32,8 @@ export class FormEmpresaGTPComponent implements OnInit {
       ruc: new FormControl(this._enterprise.ruc, [Validators.required, Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
       newName: new FormControl(this._enterprise.newName, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
       entry: new FormControl(this._enterprise.entry, [Validators.required]),
-      email: new FormControl(this._enterprise.email, [Validators.required , Validators.pattern(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i), Validators.minLength(10), Validators.maxLength(100)]),
-      movilNumber: new FormControl(this._enterprise.movilNumber, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)])
+      email: new FormControl(this._enterprise.email, [Validators.required , Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/), Validators.minLength(10), Validators.maxLength(100)]),
+      movilNumber: new FormControl(this._enterprise.movilNumber, [Validators.required,Validators.pattern(/^([9][0-9]{8})?([1-8][0-9]{5,6})?$/), Validators.minLength(6), Validators.maxLength(9)])
     });
   }
 
