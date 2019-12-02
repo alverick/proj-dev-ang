@@ -349,7 +349,7 @@ getName(svc: ServiceModel) {
     }
   }
 
-  return svc.nombre;
+  return svc.newName;
 }
 
 getCodigoNameGTP(svc: ServiceModel) {

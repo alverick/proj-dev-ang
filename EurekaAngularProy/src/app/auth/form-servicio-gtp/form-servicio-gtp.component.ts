@@ -84,7 +84,7 @@ export class FormServicioGtpComponent implements OnInit {
         moneda: [this._service.moneda, Validators.required],
         usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.gtpMode}),
         usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.gtpMode }),
-        usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: this.gtpMode}),
+        usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true}),
         cobraMora: new FormControl({ value: this._service.cobraMora, disabled: false }, Validators.required ),
         periodoMora:new FormControl({ value: this._service.periodoMora, disabled: false }),
         tipoMora: new FormControl({ value: this._service.tipoMora, disabled: false }),
@@ -165,7 +165,9 @@ export class FormServicioGtpComponent implements OnInit {
             value = this._service;
 
             value.res = this.frm.value.res;
+            value.nombre = this.frm.value.nombre;
             value.newName = this.frm.value.nombre;
+            value.codDeudor = (this.frm.value.codDeudor === 'Otro' ? this.frm.value.nameCod : this.frm.value.codDeudor);
             value.newNameCode = (this.frm.value.codDeudor === 'Otro' ? this.frm.value.nameCod : this.frm.value.codDeudor);
             value.tipoDato = this.frm.value.tipoDato;
             value.tipoPago = this.frm.value.tipoPago;
