@@ -4,7 +4,7 @@
     <div class="container-style">
         <div class="container pt-5 pl-5">
             <a class="pl-4 navbar-brand" href="#">
-                <img style="max-width: 250px;" src="assets/images/logo-login.svg" alt="">
+                <img style="max-width: 250px;" src="assets/images/cobrosimple-blanco.svg" alt="">
             </a>
         </div>
 
@@ -21,12 +21,12 @@
 
                 <!--/////// R I G H T ////////-->
                 <div class="col-md-6  pb-3">
-                    <div class="d-flex justify-content-end"> 
+                    <div class="d-flex justify-content-end">
                         <!---LISTO-->
 
                         <div *ngIf="!formulario"  class="cuadro-form-Listo">
                                 <div class="texto-azul  mb-4 ">Crea una <br> nueva contraseña</div>
-                               
+
 
                                 <form id="login-form" [formGroup]="Cambia" (ngSubmit)="SubmitCambia()" autocomplete="off">
 
@@ -43,11 +43,11 @@
                                                                 <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('required')">Contraseña es obligatorio</mat-error>
                                                                 <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
                                                                 <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && !f.contrasena.hasError('minlength') && f.contrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
-                                                                
-                                                        </mat-form-field> 
+
+                                                        </mat-form-field>
                                                     </div>
                                             </div>
-                                            
+
                                             <div class="d-flex   mr-1 pb-3">
                                                     <div class="mr-2">
                                                         <img src="assets/images/password.svg" alt="">
@@ -61,7 +61,7 @@
                                                             <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
                                                             <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
                                                             <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && !f.repcontrasena.hasError('minlength') && f.repcontrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
-                                                        </mat-form-field> 
+                                                        </mat-form-field>
                                                     </div>
                                             </div>
                                         </div>
@@ -74,7 +74,7 @@
                                     </div>
                                 </form>
 
-                                
+
                         </div>
 
 
