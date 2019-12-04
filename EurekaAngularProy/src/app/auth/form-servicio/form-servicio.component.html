@@ -86,7 +86,7 @@
             <div class="form-group col-md-6">
                 <mat-form-field>
                     <mat-label>Tipo de Moneda</mat-label>
-                    <mat-select class="input-text" formControlName="moneda" name="moneda" (ngModelChange)="changeMoneda()">
+                    <mat-select class="input-text" formControlName="moneda" name="moneda" (ngModelChange)="changeMoneda($event)">
                         <mat-option class="input-text">Tipo de Moneda</mat-option>
                         <mat-option class="input-text" *ngFor="let m of monedas" [value]="m.code">
                             {{m.name}}

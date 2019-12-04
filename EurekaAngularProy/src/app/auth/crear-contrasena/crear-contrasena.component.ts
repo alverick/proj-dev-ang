@@ -93,15 +93,15 @@ export class CrearContrasenaComponent implements OnInit {
              this.registerForm.get('nombre').enable();
             console.log('nombre  de empresa' + this.registerForm.get('nombre').enable());
            }
-          this.registerForm.setValue({ 
-            ruc: this.gtpService.EmpresaServicios.ruc, 
+          this.registerForm.setValue({
+            ruc: this.gtpService.EmpresaServicios.ruc,
             nombre: this.gtpService.EmpresaServicios.name,
-            rubro: this.gtpService.EmpresaServicios.entry, 
+            rubro: this.gtpService.EmpresaServicios.entry,
             email: this.gtpService.EmpresaServicios.email,
-            telefono: this.gtpService.EmpresaServicios.movilNumber, 
-            contrasena: '', 
-            repcontrasena: '',  
-            acceptterms: true 
+            telefono: this.gtpService.EmpresaServicios.movilNumber,
+            contrasena: '',
+            repcontrasena: '',
+            acceptterms: true
           });
       });
       } else {
@@ -218,7 +218,7 @@ export class CrearContrasenaComponent implements OnInit {
             Swal.fire({
             //  type: 'warning',
               title: 'Crea tu cuenta',
-              text: `El RUC: ${this.registerForm.value.ruc} ya se encuentra registrado en Eureca`,
+              text: `El RUC: ${this.registerForm.value.ruc} ya se encuentra registrado en Cobro Simple`,
               showConfirmButton: true ,
               showCancelButton: false,
               showCloseButton: true,

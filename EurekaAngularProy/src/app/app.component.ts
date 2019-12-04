@@ -13,7 +13,7 @@ declare let gtag: Function;
   providers: [ LoginService]
 })
 export class AppComponent {
-  title = 'Mis Cobros – Interbank';
+  title = 'Cobro Simple – Interbank';
 
   constructor(private router: Router, matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
       this.router.events.subscribe(e => {

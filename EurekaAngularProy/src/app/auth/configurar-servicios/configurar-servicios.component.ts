@@ -24,8 +24,8 @@ export class ConfigurarServiciosComponent implements OnInit {
   Formulario: boolean = false;
   Formulariogtp: boolean = false;
   buttonServicios ='';
-  private inEdit: boolean = false;
-  private inGTP: boolean = false;
+  public inEdit: boolean = false;
+  public inGTP: boolean = false;
   public titulo: string;
   public SvcEdit: ServicesGTPChange[];
   public onFormAction: EventEmitter<string> = new EventEmitter();
