@@ -77,9 +77,9 @@
                <!-- <mat-option class="input-text" >Nº de cuenta Interbank</mat-option> -->
                 <mat-option class="input-text" *ngFor="let cta of cuentas" [value]="cta.id">{{cta.number}}</mat-option>
             </mat-select>
-            <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('required')">Elija una opcion</mat-error>
+            <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('required')">Elija una opciona</mat-error>
             <!--POR AHORA VALIDA POR MEDIO DEL MINLENGTH-->
-            <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('minlength')">Elija una opcion</mat-error>
+           <!-- <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('minlength')">Elija una opcionb</mat-error>-->
         </mat-form-field>
     </div>
     <span class="texto-medios ">  Elige los medios por los cuales tus clientes te pagarán  </span>

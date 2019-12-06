@@ -3,7 +3,7 @@ import { DataServiceGTP } from './../../shared/models/data-service-gtp';
  import { GtpService } from 'src/app/shared/services/gtp.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
- import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import Swal from 'sweetalert2';
 import { drawPopup } from 'src/app/shared/services/popups';
 import { GtpEmpresa, GtpServcegtp, GtpPost } from 'src/app/shared/models/gtp-post';
@@ -33,7 +33,9 @@ export class AprobacionesComponent implements OnInit {
   public indiceActual: number = -1;
   public isOnlyEmpresa: boolean;
   public isOnlyService: boolean;
-  public rubro:string;
+  public rubro: string;
+  public serFormAprob: boolean;
+
   rubros: RubroModel[] = [];
 
   constructor(public gtpService: GtpService, private rutaActiva: ActivatedRoute,
@@ -132,6 +134,18 @@ export class AprobacionesComponent implements OnInit {
     console.log('USA WEB'+ etp.useAppWeb);
   }
 
+  MostrarEmpresa() {
+    if (this.Enterprise.inReview === false) {
+      return false;
+    }
+    if (this.Enterprise.name !== this.Enterprise.newName ) {
+        return true;
+    }
+    if (this.Enterprise.name === this.Enterprise.newName  || this.Enterprise.inReview === true) {
+      return true;
+    }
+  }
+
   EnviarAprobados(){
     // limpiar el array
     this.scv = [] ;
@@ -143,17 +157,27 @@ export class AprobacionesComponent implements OnInit {
     const ListCantidadNombre = this.gtpService.services.filter((svc) =>  ((svc.name !== svc.newName) && (svc.acceptednewName === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */ ).length;
     const ListCantidadCodigoDeudor = this.gtpService.services.filter((svc) =>  ( (svc.debtorCode !== svc.newNameCode) && (svc.acceptednewNameCode === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */ ).length;
 
+    let Empcant = 0;
+    // duplica por que calcula por los 2 la cantidad que falta
+
+    if (this.Enterprise.NombreApproved === null  || this.Enterprise.NombreApproved === undefined ) {
+      Empcant =  1;
+    }
     // tslint:disable-next-line: max-line-length
     const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
-    let total = ListCantidadNombre + ListCantidadCodigoDeudor;
-    let notAprov = CodDeuApp + nombreApp;
-    console.log('Cantidad que falta aprobar de nombres ' + ListCantidadNombre);
+    const total = ListCantidadNombre + ListCantidadCodigoDeudor + Empcant; 
+
+    let desap = 0;
+    if (this.Enterprise.NombreApproved === false ) {
+      desap = 1;
+    }
+    const notAprov = CodDeuApp + nombreApp + desap;
+ /*   console.log('Cantidad que falta aprobar de nombres ' + ListCantidadNombre);
     console.log('Cantidad que falta aprobar de codigo ' + ListCantidadCodigoDeudor);
     console.log('cantidad de no aprobados' + notAprov);
-
+    console.log('EMPRESA'+ this.Enterprise.NombreApproved +' ' + Empcant ); */
     this.emp = {ClientId: this.llave, NombreAprobado: this.Enterprise.NombreApproved};
-    console.log('SERVICIOS M');
-    // console.log(ListInReview);
+
     ListInAprobacion.forEach(s => {
       this.scv.push({
         ServiceId: s.id,
@@ -162,7 +186,7 @@ export class AprobacionesComponent implements OnInit {
       });
     });
 
-    console.log(this.scv);
+
     if (total === 0) {
       if (notAprov > 0) {
         Swal.fire({
@@ -315,15 +339,12 @@ export class AprobacionesComponent implements OnInit {
         });
 
       }
-
-
-
     } else {
       this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + total + ' observaciones' );
     }
   }
 
-
+///////NO SIRVE/////
   thisEnviarAprobados () {
     this.gtppost = null;
     this.scv = [] ;
@@ -342,12 +363,12 @@ export class AprobacionesComponent implements OnInit {
      (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode)));
      // suma codigo deudor y nombre de serivicio deshaprobados
     let notAprov = CodDeuApp + nombreApp;
-    let sercant = 0;
+    let Empcant;
     // duplica por que calcula por los 2 la cantidad que falta
     let cant = (svcSinCta * 2);
 
-    if (this.Enterprise.NombreApproved === null ) {
-      sercant =  1;
+    if (this.Enterprise.NombreApproved === null || this.Enterprise.NombreApproved === undefined) {
+      Empcant =  1;
     }
     // suma la empresa  desaprobada
     if (this.Enterprise.NombreApproved === false ) {
@@ -355,7 +376,7 @@ export class AprobacionesComponent implements OnInit {
     }
 
       this.emp = {ClientId: this.llave, NombreAprobado: this.Enterprise.NombreApproved};
-      console.log('SERVICIOS M');
+      console.log('SERVICIOS MARA');
       // console.log(ListInReview);
       ListInReview.forEach(s => {
         this.scv.push({
@@ -365,10 +386,11 @@ export class AprobacionesComponent implements OnInit {
         });
       });
 
-      console.log(this.scv);
-
-
-    let total = cant + sercant;
+      // console.log(this.scv);
+      console.log('EMPRESA EN APROBACIONES'  );
+      //console.log(this.Enterprise.NombreApproved);
+      //console.log(Empcant);
+      let total = cant + Empcant;
 
     if (total === 0) {
         if (notAprov > 0) {
@@ -546,15 +568,36 @@ export class AprobacionesComponent implements OnInit {
       return svc.name;
     }
   }
+
+  getStateEnterprise (data: DataEnterpriseGTP ) {
+      if ((data.name === data.newName) &&  data.inReview) {
+          return 'Nueva Empresa';
+      }
+      if ((data.name === data.newName) &&  data.inReview) {
+        return 'Nueva Empresa';
+      }
+      if ((data.name === data.newName) &&  data.inReview) {
+        return 'Nueva Empresa';
+    }
+  }
+
    getState(svc: DataServiceGTP) {
-    if (((svc.name === '?'  &&  svc.debtorCode === '?') &&  svc.inReview) || (svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???') ) {
-      return 'Nuevo Servicio';
+    // tslint:disable-next-line:max-line-length
+    if (((svc.name === '?' || svc.debtorCode === '?') &&  svc.inReview) && ((svc.newName.substring(0, 3).toString() !== '???' && svc.newNameCode.substring(0, 3).toString() !== '???') )) {
+      this.serFormAprob = true;
+      return 'Nuevo servicio';
     }
-    if(svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???') {
-      return 'Servicio Rechazado';
+    if ((svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???') && ( (svc.name === svc.newName) && (svc.debtorCode === svc.newNameCode)) ) {
+      this.serFormAprob = false;
+      return 'Servicio habilitado';
     }
-    if (((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) &&  svc.inReview) {
-      return 'Edicion de Servicio';
+    if (svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???') {
+      this.serFormAprob = false;
+      return 'Servicio rechazado';
+    }
+    if (((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) /*&&  svc.inReview */) {
+      this.serFormAprob = false;
+      return 'Servicio editado';
     }
 
    /* if((svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???')){

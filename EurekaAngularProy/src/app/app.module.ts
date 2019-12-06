@@ -58,6 +58,8 @@ import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.componen
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PopoverComponent } from './pages/home/popover/popover.component';
 import { LoadFileComponent } from './shared/load-file/load-file.component';
+import { FormServicioGtpComponent } from './auth/form-servicio-gtp/form-servicio-gtp.component';
+import { ConfigurarGtpComponent } from './auth/configurar-gtp/configurar-gtp.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +87,9 @@ import { LoadFileComponent } from './shared/load-file/load-file.component';
     EmpresaGTPComponent,
     ServicesGTPComponent,
     PopoverComponent,
-    LoadFileComponent
+    LoadFileComponent,
+   // FormServicioGtpComponent,
+   // ConfigurarGtpComponent
   ],
   imports: [
     BrowserModule,

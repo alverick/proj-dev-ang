@@ -82,8 +82,8 @@ export class ConfigurarServiciosComponent implements OnInit {
             inReview: s.inReview,
             pagoPartes: s.partialPayment,
             status: s.status,
-            nombreHabilitado: (s.name === s.newName) ? false : true,
-            nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  false : true,
+            nombreHabilitado: (s.name === s.newName) ? true : false,
+            nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  true : false,
           });
         });
         return;

@@ -92,7 +92,7 @@ export class FormServicioComponent implements OnInit {
        this._service.nameCod : this._service.codDeudor,  disabled:   this._service.nombreCodHabilitado }),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
-      idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
+      idCuenta: [this._service.idCuenta, [Validators.required /*, Validators.minLength(10) */]],
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),

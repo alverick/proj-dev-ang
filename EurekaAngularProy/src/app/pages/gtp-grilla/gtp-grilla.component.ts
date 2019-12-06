@@ -109,7 +109,7 @@ export class GtpGrillaComponent implements OnInit {
   }
   Aprobar( ClientId: number) {
     console.log('ingresa a probacion');
-    this.router.navigate(['/ApGTP/' + ClientId]);
+    this.router.navigate(['/AprobacionGtp/' + ClientId]);
    // location.href = '/AprobacionGtp/'+ClientId;
   }
 

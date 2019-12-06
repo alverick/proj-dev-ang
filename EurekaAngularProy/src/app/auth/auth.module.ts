@@ -68,9 +68,9 @@ import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.com
     NumberAccountDirective,
     RecuperarContrasenaComponent,
     CambiaContrasenaComponent,
+    SerFormGtpComponent,
     FormServicioGtpComponent,
-    ConfigurarGtpComponent,
-    SerFormGtpComponent
+    ConfigurarGtpComponent
   ],
   exports: [
     OnlyNumbersFormDirective

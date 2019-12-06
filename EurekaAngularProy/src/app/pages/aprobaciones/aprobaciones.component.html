@@ -42,7 +42,7 @@
                             <div class="font-text-services">Revisiones Pendientes</div>
                             <div class="d-flex justify-content-start">
                                     <perfect-scrollbar class="content-container mt-5 mb-3">
-                                        <div class="card-aprobaciones mb-2" *ngIf="Enterprise.name !== Enterprise.newName || Enterprise.inReview === true  "   [class.seleccionado]="Formulario">
+                                        <div class="card-aprobaciones mb-2" *ngIf="MostrarEmpresa()"   [class.seleccionado]="Formulario">
                                             <div class=" pl-4">
                                                 <div class="pl-1 row pb-0">
                                                       <div class="col-sm-12 pt-3">
@@ -52,8 +52,8 @@
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
                                                     <tr>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview "><span class="badge badge-primary" >Nueva Empresa</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="((Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview ) && Enterprise.status === 'Devuelto' "><span class="badge badge-primary" >Empresa devuelta</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview "><span class="badge badge-info" >Nueva Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="((Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview ) && Enterprise.status === 'Devuelto' "><span class="badge badge-info" >Empresa devuelta</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name !==  Enterprise.newName) &&  Enterprise.inReview"><span class="badge badge-warning" >Modificacion Empresa</span> </td>
                                                      </tr>
                                                     <tr>
@@ -76,7 +76,15 @@
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
                                                   <tr>
-                                                    <td class="font-black-servicios-des-list" ><span class="badge badge-primary" >{{getState(svc)}}</span> </td>
+                                                    <td class="font-black-servicios-des-list" >
+                                                        <span class="badge badge-info"  *ngIf="getState(svc) === 'Nuevo servicio'">{{getState(svc)}}</span>
+                                                        <span class="badge badge-primary"  *ngIf="getState(svc) === 'Servicio habilitado'">{{getState(svc)}}</span> 
+                                                        <span class="badge badge-info"  *ngIf="getState(svc) === 'Servicio rechazado'">{{getState(svc)}}</span>
+                                                        <span class="badge badge-warning"  *ngIf="getState(svc) === 'Servicio editado'">{{getState(svc)}}</span> 
+ 
+
+ 
+                                                    </td>
                                                     </tr>
                                                     <tr *ngIf="svc.inReview == false" >
                                                         <td><button type="button" [disabled]="ServiciosFormulario" (click)="VerCamposSer(svc,i)" class="f3 btn-outline-green"  >Ver </button></td>
@@ -148,7 +156,7 @@
                                                     </div>
                                                 </div>
                                         </div>
-                                        <div *ngIf="Servgtp.inReview == true" class="form-row">
+                                        <div *ngIf="serFormAprob" class="form-row">
                                                 <div class="form-group col-md-10">
                                                     <div class="font-black"> </div>
                                                 </div>

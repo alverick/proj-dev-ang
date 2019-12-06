@@ -46,9 +46,9 @@ export class ServicesGTPComponent implements OnInit {
 
   frm: FormGroup;
   ngOnInit() {
-    console.log('el servivio elegido en apro '+this._service.useAppWeb + this._service.useAgent );
-    console.table( this._service);
-
+  //  console.log('el servivio elegido en apro '+this._service.useAppWeb + this._service.useAgent );
+ // console.table( this._service);
+    console.log('nombre ser aprobado '+ this._service.acceptednewName);
     this.inReview = this._service.inReview;
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
@@ -77,10 +77,12 @@ export class ServicesGTPComponent implements OnInit {
       monto: new FormControl({ value: montod, disabled: true }),
       porcentaje: new FormControl({ value: porcentajed, disabled: true }),
       pagoPartes: new FormControl({ value: this._service.partialPayment, disabled: true }),
-      NewNameCod:  [(this._service.acceptednewNameCode == true? 'S':'N'), Validators.required],
-      NewName:  [(this._service.acceptednewName == true? 'S':'N'), Validators.required],
+      // tslint:disable-next-line:max-line-length
+      NewNameCod:  [ (this._service.acceptednewNameCode === null) ? '' : (this._service.acceptednewNameCode === true ? 'S' : 'N'), Validators.required],
+      // tslint:disable-next-line:max-line-length
+      NewName:  [(this._service.acceptednewName === null) ? '' : (this._service.acceptednewName === true ? 'S' : 'N'), Validators.required],
     });
-
+    this.changeMora(false);
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
     this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
@@ -114,19 +116,23 @@ export class ServicesGTPComponent implements OnInit {
 
 
   RadioAprovveName() {
-
+  //  console.log('llegas aca');
     if (this._service.name  === this._service.newName  ) {
+      //console.log('se activo la limieza 1.1');
+      // this.f.NewName.clearValidators();
       return false;
     }
     if ( (this._service.name === '?' && this._service.newName.substring(0, 3) === '???' )){
+    //  console.log('se activo la limieza 1.2');
+      // this.f.NewName.clearValidators();
       return false;
     }
     if (( this._service.name === '?')) {
-      return true;
+       return true;
     }
 
     if (this._service.name  !== this._service.newName  ) {
-      return true;
+       return true;
     }
     if (( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) {
       return true;
@@ -136,18 +142,22 @@ export class ServicesGTPComponent implements OnInit {
    /* if ( (this._service.debtorCode  !== this._service.newNameCode  )) {
       return true;
     } */
-
-    if (this._service.debtorCode  === this._service.newNameCode ){
+   // console.log('llegas aca 2' );
+    if (this._service.debtorCode  === this._service.newNameCode ) {
+   //   console.log('se activo la limieza 2.1');
+   //   this.f.NewNameCod.clearValidators();
       return false;
     }
     if ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') {
+     // console.log('se activo la limieza 2.2');
+    //  this.f.NewNameCod.clearValidators();
       return false;
     }
     if (( this._service.debtorCode === '?')  ) {
       return true;
     }
     if (this._service.debtorCode  !== this._service.newNameCode ){
-      return true;
+       return true;
     }
     if (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???')) {
       return true;
@@ -161,8 +171,7 @@ export class ServicesGTPComponent implements OnInit {
     }
     if ( (this._service.name === '?' && this._service.newName.substring(0, 3) === '???' )||   ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') ){
       return false;
-    }
-
+    } 
     if (( this._service.name === '?') || ( this._service.debtorCode === '?') ) {
       return true;
     }
@@ -177,7 +186,34 @@ export class ServicesGTPComponent implements OnInit {
   }
 
   onSubmitServicio() {
+    console.log('ingresa a la aprobacion');
+    console.log('nombre serv apr ' + this.f.NewName.value);
+    console.log('nombre codigo apr ' + this.f.NewNameCod.value);
+    // NOMBRE DE SERVICIO
+    if (this._service.name  === this._service.newName  ) {
+      console.log('se activo la limieza 1.1');
+      this.f.NewName.clearValidators();
+      this.f.NewName.reset();
+     }
+    if ( (this._service.name === '?' && this._service.newName.substring(0, 3) === '???' )){
+      console.log('se activo la limieza 1.2');
+      this.f.NewName.clearValidators();
+      this.f.NewName.reset();
+     }
+    // CODIGO DEUDOR
+      if (this._service.debtorCode  === this._service.newNameCode ) {
+      console.log('se activo la limieza 2.1');
+      this.f.NewNameCod.clearValidators();
+      this.f.NewNameCod.reset();
+      }
+      if ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') {
+        console.log('se activo la limieza 2.2');
+        this.f.NewNameCod.clearValidators();
+        this.f.NewNameCod.reset();
+       }
+
     if (this.frm.valid) {
+      console.log('el form es valido');
           let value: DataServiceGTP;
           value = this._service;
          // value.acceptednewName = (this.frm.value.NewName === 'S');
@@ -188,6 +224,7 @@ export class ServicesGTPComponent implements OnInit {
           value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
           this.grabar.emit(value);
       }
+      console.log('el form no es valido');
   }
 
   onChangeTipoDato() {
@@ -203,7 +240,7 @@ export class ServicesGTPComponent implements OnInit {
       this.frm.get('porcentaje').setValue('1.00');
       this.cmoraporce = false;
       this.cobraMora = false;
-    }else{
+    } else {
       this.Dataparcial = true;
     }
    /* else if (this.tiposPago.length === 1) {
