@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatRadioModule, MatIconModule } from '@angular/material';
 import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
 import { FormServicioComponent } from './form-servicio/form-servicio.component';
 import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
@@ -43,6 +43,7 @@ import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.componen
     MatFormFieldModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatIconModule,
     SharedModule,
     MatRadioModule,
     PerfectScrollbarModule

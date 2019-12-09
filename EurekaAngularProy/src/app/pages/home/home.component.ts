@@ -696,7 +696,7 @@ orderList(index: number, asc: boolean) {
 
 
   EliminarSeleccionados() {
-    let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.count : this.transactionService.countMarksForDelete();
+    let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.countNoIbkPayments : this.transactionService.countMarksForDelete();
     if (totalForDelete === 0 ) {
       this.mensaje( 'error', 'Error al Eliminar', '¡Seleccione las filas a eliminar por favor!');
       return;

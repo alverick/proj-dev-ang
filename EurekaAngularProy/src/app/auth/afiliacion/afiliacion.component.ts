@@ -21,4 +21,7 @@ export class AfiliacionComponent implements OnInit {
     });
   }
 
+  crearCuenta() {
+    window.open('https://interbank.pe/pequena-empresa/cuentas/para-mi-dia-a-dia/cuenta-negocios#cuenta-negocios');
+  }
 }

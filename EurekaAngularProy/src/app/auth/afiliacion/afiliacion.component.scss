@@ -50,9 +50,10 @@ body {
 }
 
 .cuadro-comisiones {
-    @include cuadro(621px, 352px);
+    @include cuadro(621px, 502px);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
+    margin-bottom: 10px;
 }
 
 .cuadro-canales {
@@ -63,11 +64,21 @@ body {
 
 .btn-eureca-green {
    // @include btn-eureca;
-    width: 207px;
+    width: 277px;
     height: 48px;
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.btn-outline-green {
+  border: solid 1px $green !important;
+  width: 277px;
+  height: 48px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
 }
 
 .c3-agencias {

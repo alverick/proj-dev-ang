@@ -44,6 +44,10 @@ export class AppComponent {
         'eurc_minimize',
         domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/minimize.svg'),
         { viewBox: '0 0 24 24' });
+      matIconRegistry.addSvgIcon(
+        'eurc_new_tab',
+        domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
+        { viewBox: '0 0 24 24' });
     }
 
   public show(): boolean{

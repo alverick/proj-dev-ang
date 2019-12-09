@@ -22,7 +22,7 @@
   }
   
   .cuadro-form {
-      @include cuadro(460px, $height: 730px);
+      @include cuadro(460px, $height: 760px);
       box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   }
   
@@ -32,7 +32,7 @@
   }
   
   .terminos-body {
-      @include font-text(16px, $weight: 200);
+      @include font-text(16px, $weight: 300);
       color: #0d131d;
   }
   
