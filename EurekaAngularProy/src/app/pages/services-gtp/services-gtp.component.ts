@@ -48,18 +48,25 @@ export class ServicesGTPComponent implements OnInit {
   ngOnInit() {
   //  console.log('el servivio elegido en apro '+this._service.useAppWeb + this._service.useAgent );
  // console.table( this._service);
-    console.log('nombre ser aprobado '+ this._service.acceptednewName);
+    console.log('nombre ser aprobado ' + this._service.acceptednewName);
     this.inReview = this._service.inReview;
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
     this.frm = this.fb.group({
+     /*  nombres :  new FormControl({value: (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 2) ? this._service.newName : this._service.name , disabled: true  },
+       [Validators.required, Validators.minLength(3), Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
       nombre: new FormControl({ value:  (this._service.name === '?') ?
       ( ((this._service.newName.substring(0, 3) === '???')?
       (this._service.newName.substring(3, this._service.newName.length)):this._service.newName)):((this._service.name === this._service.newName)? this._service.name : this._service.newName ) , disabled: true },
         [Validators.required, Validators.minLength(3),
         Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+
       codDeudor: new FormControl({ value: (this._service.debtorCode   === 'RUC' ||  this._service.debtorCode  === 'DNI' ||
       this._service.debtorCode === 'Codigo Interno') ? this._service.debtorCode : 'Otro', disabled: true }, [Validators.required]),
+
+      // tslint:disable-next-line:max-line-length
+      // nameCods: new FormControl ({ value: ( this._service.newNameCodeGtpStatus === 0  || this._service.newNameCodeGtpStatus === 2 })? this._service.newNameCode : this._service.debtorCode     , disabled: true}),
+
       nameCod: new FormControl({ value: (this._service.debtorCode === '?')?
       (( (this._service.newNameCode.substring(0,3) === '???')?
       (this._service.newNameCode.substring(3, this._service.newNameCode.length)): this._service.newNameCode)) : (this._service.debtorCode === this._service.newNameCode)? this._service.debtorCode :this._service.newNameCode , disabled: true}),
@@ -138,19 +145,27 @@ export class ServicesGTPComponent implements OnInit {
       return true;
     }
   }
+
+  RadioAprovveName2() {
+      if (this._service.newNameGtpStatus === 'Aprobado'  ) {
+        return false;
+      }
+      if (this._service.newNameGtpStatus === 'Rechazado'  ) {
+        return false;
+      }
+      if (this._service.newNameGtpStatus === 'Nuevo'  ) {
+        return true;
+      }
+      if (this._service.newNameGtpStatus === 'Editado'  ) {
+        return true;
+      }
+    }
+
   RadioAprovveNameCod() {
-   /* if ( (this._service.debtorCode  !== this._service.newNameCode  )) {
-      return true;
-    } */
-   // console.log('llegas aca 2' );
-    if (this._service.debtorCode  === this._service.newNameCode ) {
-   //   console.log('se activo la limieza 2.1');
-   //   this.f.NewNameCod.clearValidators();
+    if (this._service.debtorCode  === this._service.newNameCode ) { 
       return false;
     }
     if ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') {
-     // console.log('se activo la limieza 2.2');
-    //  this.f.NewNameCod.clearValidators();
       return false;
     }
     if (( this._service.debtorCode === '?')  ) {
@@ -161,11 +176,25 @@ export class ServicesGTPComponent implements OnInit {
     }
     if (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???')) {
       return true;
-    }
-
+    } 
   }
 
+  RadioAprovveNameCod2 () {
+    if (this._service.newNameCodeGtpStatus === 'Aprobado' ) {
+      return false;
+    }
+    if (this._service.newNameCodeGtpStatus === 'Rechazado' ) {
+      return false;
+    }
+    if (this._service.newNameCodeGtpStatus === 'Nuevo') {
+      return true;
+    }
+    if (this._service.newNameCodeGtpStatus === 'Editado') {
+      return true;
+    }
+  }
   Button() {
+
     if ((this._service.name  === this._service.newName  ) &&  (this._service.debtorCode  === this._service.newNameCode ) ) {
       return false;
     }
@@ -180,15 +209,28 @@ export class ServicesGTPComponent implements OnInit {
     }
     if ((( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) || (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???'))) {
       return true;
+    } 
+  }
+
+  Button2() {
+    if ((this._service.newNameGtpStatus === 'Aprobado'  ) && (this._service.newNameCodeGtpStatus === 'Aprobado' )) {
+      return false;
     }
-
-
+    if ((this._service.newNameGtpStatus === 'Rechazado' ) || (this._service.newNameCodeGtpStatus === 'Rechazado' ) )  {
+      return false;
+    }
+    if ((this._service.newNameGtpStatus === 'Nuevo') || (this._service.newNameCodeGtpStatus === 'Nuevo')) {
+      return true;
+    }
+    if ((this._service.newNameGtpStatus === 'Editado') || (this._service.newNameCodeGtpStatus === 'Editado' )) {
+      return true;
+    }
   }
 
   onSubmitServicio() {
-    console.log('ingresa a la aprobacion');
+   /* console.log('ingresa a la aprobacion');
     console.log('nombre serv apr ' + this.f.NewName.value);
-    console.log('nombre codigo apr ' + this.f.NewNameCod.value);
+    console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
     // NOMBRE DE SERVICIO
     if (this._service.name  === this._service.newName  ) {
       console.log('se activo la limieza 1.1');
@@ -226,6 +268,55 @@ export class ServicesGTPComponent implements OnInit {
       }
       console.log('el form no es valido');
   }
+  /*
+      newName         name
+    minimarket         ''       NUEVO     0  -
+      ''            minimarket  APROBADO  1
+      sm            minimarket  EDITADO   2  -
+      sm            minimarket  RECHAZADO 3
+      ''               sm       APROBADO  1
+  */
+  onSubmitServicio2() {
+    /* console.log('ingresa a la aprobacion');
+     console.log('nombre serv apr ' + this.f.NewName.value);
+     console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
+     // NOMBRE DE SERVICIO
+     if (this._service.newNameGtpStatus === 'Aprobado'  ) {
+       console.log('se activo la limieza 1.1');
+       this.f.NewName.clearValidators();
+       this.f.NewName.reset();
+      }
+      if (this._service.newNameGtpStatus === 'Rechazado') {
+       console.log('se activo la limieza 1.2');
+       this.f.NewName.clearValidators();
+       this.f.NewName.reset();
+      }
+     // CODIGO DEUDOR
+     if (this._service.newNameCodeGtpStatus === 'Aprobado') {
+       console.log('se activo la limieza 2.1');
+       this.f.NewNameCod.clearValidators();
+       this.f.NewNameCod.reset();
+       }
+      if (this._service.newNameCodeGtpStatus === 'Rechazado' ) {
+         console.log('se activo la limieza 2.2');
+         this.f.NewNameCod.clearValidators();
+         this.f.NewNameCod.reset();
+      }
+
+     if (this.frm.valid) {
+       console.log('el form es valido');
+           let value: DataServiceGTP;
+           value = this._service;
+          // value.acceptednewName = (this.frm.value.NewName === 'S');
+          // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
+           // tslint:disable-next-line:max-line-length
+           value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
+           // tslint:disable-next-line:max-line-length
+           value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
+           this.grabar.emit(value);
+       }
+       console.log('el form no es valido');
+   }
 
   onChangeTipoDato() {
     if (this.frm.get('tipoDato').value === 'P') {

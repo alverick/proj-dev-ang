@@ -79,8 +79,19 @@ export class FormServicioComponent implements OnInit {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
+    /*
+      newName         name
+    minimarket         ''       NUEVO     0  -
+    minimarket         ''       RECHAZADO 3  - 
+      ''            minimarket  APROBADO  1
+      sm            minimarket  EDITADO   2 
+      sm            minimarket  RECHAZADO 3
+      ''               sm       APROBADO  1
+  */
 
     this.frm = this.fb.group({
+    /*  nombres: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ? 
+      this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado }, */
       nombre: new FormControl({ value: (this._service.nombre === '?') ? ((this._service.newName.substring(0, 3) === '???' ) ?
       this._service.newName.substring(3, this._service.newName.length) : this._service.newName ) : this._service.nombre ,
       disabled: this._service.nombreHabilitado },

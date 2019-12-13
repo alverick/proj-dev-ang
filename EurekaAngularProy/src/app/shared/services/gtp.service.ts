@@ -95,7 +95,10 @@ export class GtpService {
       };
       return this.http.get<DataEnterpriseGTP>(url, opts)
       .pipe(map(r => {
+        console.log('EMPRESA');
+        console.log(r);
         return r;
+
       }))
       .pipe(catchError(err => throwError(err)));
 
@@ -107,6 +110,8 @@ export class GtpService {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
     this.http.get<any[]>(url, opts).subscribe(d => {
+      console.log('SERVICIOS');
+      console.table( d);
       let servicios = [];
       d.forEach(s => {
         servicios.push({
@@ -136,6 +141,8 @@ export class GtpService {
           acceptednewName: null,
           nombreHabilitado :  (s.name === s.newName) ? false : true,
           nombreCodHabilitado :  (s.debtorCode === s.newNameCode) ?  false : true,
+          newNameGtpStatus: s.NewNameGTPStatus,
+          newNameCodeGtpStatus: s.NewNameCodeGTPStatus,
           nombre: s.name,
           rubro: s.entry,
           codDeudor: s.debtorCode,
@@ -153,10 +160,11 @@ export class GtpService {
           monto: s.amount,
           porcentaje: s.percentage,
           pagoPartes: s.partialPayment,
+        
       });
       });
        this.services = servicios;
-      console.table( this.services);
+      
     });
    }
 

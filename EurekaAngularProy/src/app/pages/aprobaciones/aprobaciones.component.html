@@ -52,9 +52,9 @@
                                                 </div>
                                                 <table class="table table-sm table-borderless ">
                                                     <tr>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview "><span class="badge badge-info" >Nueva Empresa</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="((Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview ) && Enterprise.status === 'Devuelto' "><span class="badge badge-info" >Empresa devuelta</span> </td>
-                                                        <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name !==  Enterprise.newName) &&  Enterprise.inReview"><span class="badge badge-warning" >Modificacion Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="getStateEnterprise() === 'Nueva Empresa'"><span class="badge badge-info" >Nueva Empresa</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="getStateEnterprise() === 'Empresa Rechazada'"><span class="badge badge-info" >Empresa Rechazada</span> </td>
+                                                        <td class="font-black-servicios-des-list" *ngIf="getStateEnterprise() === 'Empresa Editada'"><span class="badge badge-warning" >Empresa Editada</span> </td>
                                                      </tr>
                                                     <tr>
                                                         <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == null  ">por Revisar</td>

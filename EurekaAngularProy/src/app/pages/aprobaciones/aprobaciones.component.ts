@@ -20,7 +20,7 @@ export class AprobacionesComponent implements OnInit {
   public Formulario: boolean = false;
   public ServiciosFormulario: boolean = false;
   public llave: number;
-  public Empresa: EnterprisesGtp ;
+  // public Empresa: EnterprisesGtp ;
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {ruc: 0 , name: '', entry: '', email: '',
   movilNumber: 0 , newName: '' , status: '', uniqueCodeIBK: ''};
@@ -57,19 +57,9 @@ export class AprobacionesComponent implements OnInit {
     // mantiene la pagina con el scroll en la parte superior
     window.scrollTo(0, 0);
 
-
+   /// TRAE LOS SERVICIOS
    this.gtpService.GetServicesGtp(this.llave);
    this.getInfoEmpresa();
-    /*
-      const num =  this.gtpService.services.filter((v) => v.acceptednewName === null && v.inReview === true ).length;
-      console.log('cantidad encontrada');
-      console.log(num);
-      if (num === 0) {
-
-      } else {
-        this.deshabilitar = true;
-      }
-    */
    this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
   }
 
@@ -82,7 +72,6 @@ export class AprobacionesComponent implements OnInit {
         this.rubro =  this.rubros.find((v) => v.code = this.Enterprise.entry).name;
         });
   }
-
 
   onGrabar(emp: DataEnterpriseGTP) {
     this.Enterprise = emp;
@@ -102,7 +91,7 @@ export class AprobacionesComponent implements OnInit {
     }
   }
 
-
+/*
   getNameSvc(svc: DataServiceGTP) {
     if (svc.name  !== '?') {
       return svc.name;
@@ -110,7 +99,7 @@ export class AprobacionesComponent implements OnInit {
     if (svc.name  === '?') {
       return svc.newName.substring(3, svc.newName.length).toString();
    }
-  }
+  } */
   VerCamposEnterprise(etp: DataEnterpriseGTP) {
     if (this.ServiciosFormulario === true) {
       this.mensaje('Aprobando Servicio ',
@@ -131,7 +120,7 @@ export class AprobacionesComponent implements OnInit {
     this.ServiciosFormulario = true;
     this.Servgtp = etp;
     this.indiceActual = index;
-    console.log('USA WEB'+ etp.useAppWeb);
+    console.log('USA WEB' + etp.useAppWeb);
   }
 
   MostrarEmpresa() {
@@ -146,7 +135,7 @@ export class AprobacionesComponent implements OnInit {
     }
   }
 
-  EnviarAprobados(){
+  EnviarAprobados() {
     // limpiar el array
     this.scv = [] ;
     // NO APROBADOS
@@ -160,12 +149,14 @@ export class AprobacionesComponent implements OnInit {
     let Empcant = 0;
     // duplica por que calcula por los 2 la cantidad que falta
 
-    if (this.Enterprise.NombreApproved === null  || this.Enterprise.NombreApproved === undefined ) {
-      Empcant =  1;
+    if (this.Enterprise.name !== this.Enterprise.newName) {
+      if (this.Enterprise.NombreApproved === null  || this.Enterprise.NombreApproved === undefined ) {
+        Empcant =  1;
+      }
     }
     // tslint:disable-next-line: max-line-length
     const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
-    const total = ListCantidadNombre + ListCantidadCodigoDeudor + Empcant; 
+    const total = ListCantidadNombre + ListCantidadCodigoDeudor + Empcant;
 
     let desap = 0;
     if (this.Enterprise.NombreApproved === false ) {
@@ -340,226 +331,24 @@ export class AprobacionesComponent implements OnInit {
 
       }
     } else {
-      this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + total + ' observaciones' );
+      this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + 
+      total + ' observaciones' );
     }
   }
 
-///////NO SIRVE/////
-  thisEnviarAprobados () {
-    this.gtppost = null;
-    this.scv = [] ;
-    this.emp = null;
-    // cuantos faltan??
-    const svcSinCta = this.gtpService.services.filter((v) => v.acceptednewName === null && v.inReview === true ).length;
-    // cuantos nombres fueron deshaprobados
-    const nombreApp = this.gtpService.services.filter((v) => v.acceptednewName === false && v.inReview === true ).length;
-    // cuantos Codigos deudores fueron deshaprobados
-    const CodDeuApp = this.gtpService.services.filter((v) => v.acceptednewNameCode === false && v.inReview === true ).length;
-    // filtra los que estan en estado inReview y los quye no estan devueltos
-    const ListInReview = this.gtpService.services.filter((svc) =>  (svc.inReview === true) &&
-     // tslint:disable-next-line:max-line-length
-     (/*(svc.newName.substring(0, 3).toString() !== '???') ||
-     (svc.newNameCode.substring(0, 3).toString() !== '???') ||*/
-     (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode)));
-     // suma codigo deudor y nombre de serivicio deshaprobados
-    let notAprov = CodDeuApp + nombreApp;
-    let Empcant;
-    // duplica por que calcula por los 2 la cantidad que falta
-    let cant = (svcSinCta * 2);
+  /*
+      newName         name
+    minimarket         ''       NUEVO     0  -
+      ''            minimarket  APROBADO  1
+      sm            minimarket  EDITADO   2  -
+      sm            minimarket  RECHAZADO 3
+      ''               sm       APROBADO  1
+  */
 
-    if (this.Enterprise.NombreApproved === null || this.Enterprise.NombreApproved === undefined) {
-      Empcant =  1;
-    }
-    // suma la empresa  desaprobada
-    if (this.Enterprise.NombreApproved === false ) {
-      notAprov + 1;
-    }
-
-      this.emp = {ClientId: this.llave, NombreAprobado: this.Enterprise.NombreApproved};
-      console.log('SERVICIOS MARA');
-      // console.log(ListInReview);
-      ListInReview.forEach(s => {
-        this.scv.push({
-          ServiceId: s.id,
-          NombreAprobado: s.acceptednewName,
-          NombreCodAprobado: s.acceptednewNameCode
-        });
-      });
-
-      // console.log(this.scv);
-      console.log('EMPRESA EN APROBACIONES'  );
-      //console.log(this.Enterprise.NombreApproved);
-      //console.log(Empcant);
-      let total = cant + Empcant;
-
-    if (total === 0) {
-        if (notAprov > 0) {
-          Swal.fire({
-            title: 'Aprobacion',
-            html: 'Existen ' + notAprov + ' campos que no fueron aprobados. <br> ¿Desea terminar?',
-            showCloseButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Si, Terminar',
-            cancelButtonText: 'No, Cancelar',
-            onOpen: drawPopup
-          }).then((result) => {
-            if (result.value) {
-
-              if (this.Enterprise.name === this.Enterprise.newName && this.scv.length === 0) {
-                console.log('NO ENVIA NADA');
-                this.router.navigate(['/gtp']);
-                return;
-              }
-              if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview) {
-                console.log('ENVIA AMBOS');
-                this.gtpService.AprobarEmpresaServ({ EnterpriseObj:  this.emp , ListServiceObj: this.scv })
-                .subscribe(d => {
-                  if (d) {
-                    this.router.navigate(['/gtp']);
-                  } else {
-
-                  }
-
-                });
-                return;
-              }
-
-              if (this.Enterprise.name === this.Enterprise.newName) {
-                this.gtpService.AprobarEmpresaServ({ EnterpriseObj: null , ListServiceObj: this.scv })
-                .subscribe(d => {
-                  if (d) {
-                    this.router.navigate(['/gtp']);
-                  } else {
-
-                  }
-
-                });
-                return;
-              }
-              if (  this.scv.length === 0 ) {
-                console.log('SOLO ENVIA EMPRESA');
-                this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: null })
-                .subscribe(d => {
-                  if (d) {
-                    this.router.navigate(['/gtp']);
-                  } else {
-
-                  }
-                });
-                return;
-              } else {
-                console.log('ENVIA AMBOS');
-                this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                .subscribe(d => {
-                  if (d) {
-                    this.router.navigate(['/gtp']);
-                  } else {
-
-                  }
-                });
-                return;
-              }
-
-            }
-          });
-
-        } else {
-        Swal.fire({
-          title: 'Aprobacion',
-          html: 'Todos los campos han sido revisados <br> ¿Desea terminar? <br> (Se enviara un correo a la empresa)',
-          showCloseButton: true,
-          showCancelButton: true,
-          confirmButtonText: 'Si, Terminar',
-          cancelButtonText: 'No, Cancelar',
-          onOpen: drawPopup
-
-        }).then((result) => {
-          if (result.value) {
-
-            if (this.Enterprise.name === this.Enterprise.newName && this.scv.length === 0) {
-              console.log('NO ENVIA NADA');
-             /* this.gtppost = {
-                EnterpriseObj:  null,
-                ListServiceObj: this.scv
-              };
-              console.log(this.gtppost); */
-              console.log('IMPRESION FINAL');
-              console.log(this.scv);
-              this.router.navigate(['/gtp']);
-              return;
-            }
-            if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview) {
-              console.log('ENVIA AMBOS');
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj:  this.emp , ListServiceObj: this.scv })
-              .subscribe(d => {
-                if (d) {
-                  this.router.navigate(['/gtp']);
-                } else {
-
-                }
-
-              });
-              return;
-            }
-            if (this.Enterprise.name === this.Enterprise.newName) {
-
-              console.log('SOLO ENVIA SERVICIOS');
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: null , ListServiceObj: this.scv })
-              .subscribe(d => {
-                console.log(d);
-                if (d) {
-                  this.router.navigate(['/gtp']);
-                } else {
-
-                }
-
-              });
-              return;
-            }
-            if (  this.scv.length === 0 ) {
-              console.log('SOLO ENVIA EMPRESA');
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: null })
-              .subscribe(d => {
-                if (d) {
-                  this.router.navigate(['/gtp']);
-                } else {
-
-                }
-              });
-              return;
-            } else {
-              console.log('ENVIA AMBOS');
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
-              .subscribe(d => {
-                if (d) {
-                  this.router.navigate(['/gtp']);
-                } else {
-
-                }
-              });
-              return;
-            }
-
-
-          }
-          this.gtppost = {
-            EnterpriseObj:  this.emp,
-            ListServiceObj: this.scv
-          };
-          console.log('IMPRESION FINAL');
-          console.log(this.gtppost);
-        });
-
-      }
-
-    } else {
-      this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + total + ' observaciones' );
-    }
-  }
 
   getName(svc: DataServiceGTP) {
     if (svc.name  === '?' && svc.newName !== '?' ) {
-      if (svc.newName.substring(0,3).toString() === '???' ) {
+      if (svc.newName.substring(0, 3).toString() === '???' ) {
         return svc.newName.substring(3, svc.newName.length).toString();
       }
       return svc.newName;
@@ -569,16 +358,28 @@ export class AprobacionesComponent implements OnInit {
     }
   }
 
-  getStateEnterprise (data: DataEnterpriseGTP ) {
-      if ((data.name === data.newName) &&  data.inReview) {
-          return 'Nueva Empresa';
-      }
-      if ((data.name === data.newName) &&  data.inReview) {
-        return 'Nueva Empresa';
-      }
-      if ((data.name === data.newName) &&  data.inReview) {
-        return 'Nueva Empresa';
+  getNames(svc: DataServiceGTP) {
+    if (svc.newNameGtpStatus === 0 && svc.newNameCodeGtpStatus === 0) {
+      return svc.newName;
     }
+    if (svc.newNameGtpStatus > 0 && svc.newNameCodeGtpStatus > 0) {
+      return svc.name;
+    }
+  }
+
+  getStateEnterprise (data: DataEnterpriseGTP ) {
+      if (data.newNameGTPStatus = 0) {
+        return 'Nueva Empresa';
+      }
+      if (data.newNameGTPStatus = 1) {
+        return 'Empresa Aprobada';
+      }
+      if (data.newNameGTPStatus = 2) {
+        return 'Empresa Rechazada';
+      }
+      if (data.newNameGTPStatus = 3) {
+        return 'Empresa Editada';
+      }
   }
 
    getState(svc: DataServiceGTP) {
@@ -599,15 +400,22 @@ export class AprobacionesComponent implements OnInit {
       this.serFormAprob = false;
       return 'Servicio editado';
     }
-
-   /* if((svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???')){
-      return 'Servicio Modificado';
-    }
-    if( ((svc.name === '?'  &&  svc.debtorCode === '?') &&  svc.inReview)){
-      return 'Servicio Modificado';
-    }  */
   }
 
+  getStateSrv (data: DataServiceGTP ) {
+    if (data.newNameGtpStatus === 0 && data.newNameCodeGtpStatus === 0) {
+      return 'Nueva servicio';
+    }
+    if  (data.newNameGtpStatus === 1 && data.newNameCodeGtpStatus === 1) {
+      return 'Servicio aprobada';
+    }
+    if (data.newNameGtpStatus === 2 || data.newNameCodeGtpStatus === 2) {
+      return 'Empresa Rechazada';
+    }
+    if (data.newNameGtpStatus === 3 || data.newNameCodeGtpStatus === 3) {
+      return 'Empresa Editada';
+    }
+}
 OcultarFormulario(requireConfirm: boolean) {
   if (requireConfirm) {
     Swal.fire({
@@ -647,9 +455,7 @@ OcultarFormularioSer(requireConfirm: boolean) {
     });
   }
 }
-
-
-
+ 
   mensaje( titulo: string, text: string) {
     Swal.fire({
      // type: tipo ,
