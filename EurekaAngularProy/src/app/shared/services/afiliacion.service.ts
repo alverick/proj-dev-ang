@@ -108,7 +108,7 @@ export class AfiliacionService {
 
   public SendDelService(index: number) {
     let url = `${environment.END_POINT}/service/${this.services[index].id}`;
-    return this.http.delete(url)
+    return this.http.post(url, null)
       .pipe(map(r => {
         this.services.splice(index, 1);
         return r;
@@ -228,8 +228,7 @@ export class AfiliacionService {
       }
     this.http.get<any[]>(`${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=`+ new Date().getTime(), { headers: headers })
       .subscribe(d => {
-        console.log('SERVICIOS DEL SERVICIO');
-        console.log(d);
+ 
         let servicios = [];
         d.forEach(s => {
           servicios.push({
@@ -255,8 +254,10 @@ export class AfiliacionService {
             porcentaje: s.percentage,
             inReview: s.inReview,
             pagoPartes: s.partialPayment,
-            nombreHabilitado: (s.name === s.newName) ? false : true,
-            nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  false : true,
+            newNameGtpStatus : s.newNameGTPStatus,
+            newNameCodeGtpStatus : s.newNameCodeGTPStatus,
+            nombreHabilitado: ( s.newNameGtpStatus === 1 ||  s.newNameGtpStatus === 3 || s.newName !== '') ? true : false,
+            nombreCodHabilitado: (s.newNameCodeGtpStatus === 1 ||  s.newNameCodeGtpStatus === 3 || s.newNameCode !== '') ? true : false,
 
           });
         });

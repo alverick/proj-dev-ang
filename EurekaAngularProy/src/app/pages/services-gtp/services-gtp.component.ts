@@ -53,13 +53,13 @@ export class ServicesGTPComponent implements OnInit {
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
     this.frm = this.fb.group({
-     /*  nombres :  new FormControl({value: (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 2) ? this._service.newName : this._service.name , disabled: true  },
-       [Validators.required, Validators.minLength(3), Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
-      nombre: new FormControl({ value:  (this._service.name === '?') ?
+       nombre :  new FormControl({value: (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 2) ? this._service.newName : this._service.name , disabled: true  },
+       [Validators.required, Validators.minLength(3), Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),  
+    /*  nombre: new FormControl({ value:  (this._service.name === '?') ?
       ( ((this._service.newName.substring(0, 3) === '???')?
       (this._service.newName.substring(3, this._service.newName.length)):this._service.newName)):((this._service.name === this._service.newName)? this._service.name : this._service.newName ) , disabled: true },
         [Validators.required, Validators.minLength(3),
-        Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+        Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
 
       codDeudor: new FormControl({ value: (this._service.debtorCode   === 'RUC' ||  this._service.debtorCode  === 'DNI' ||
       this._service.debtorCode === 'Codigo Interno') ? this._service.debtorCode : 'Otro', disabled: true }, [Validators.required]),
@@ -122,7 +122,7 @@ export class ServicesGTPComponent implements OnInit {
   }
 
 
-  RadioAprovveName() {
+  RadioAprovveName2() {
   //  console.log('llegas aca');
     if (this._service.name  === this._service.newName  ) {
       //console.log('se activo la limieza 1.1');
@@ -146,22 +146,22 @@ export class ServicesGTPComponent implements OnInit {
     }
   }
 
-  RadioAprovveName2() {
-      if (this._service.newNameGtpStatus === 'Aprobado'  ) {
+    RadioAprovveName() {
+      if (this._service.newNameGtpStatus === 1  ) {
         return false;
       }
-      if (this._service.newNameGtpStatus === 'Rechazado'  ) {
+      if (this._service.newNameGtpStatus === 3 ) {
         return false;
       }
-      if (this._service.newNameGtpStatus === 'Nuevo'  ) {
+      if (this._service.newNameGtpStatus === 0 ) {
         return true;
       }
-      if (this._service.newNameGtpStatus === 'Editado'  ) {
+      if (this._service.newNameGtpStatus === 2  ) {
         return true;
       }
     }
 
-  RadioAprovveNameCod() {
+  RadioAprovveNameCod2() {
     if (this._service.debtorCode  === this._service.newNameCode ) { 
       return false;
     }
@@ -176,24 +176,24 @@ export class ServicesGTPComponent implements OnInit {
     }
     if (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???')) {
       return true;
-    } 
+    }
   }
 
-  RadioAprovveNameCod2 () {
-    if (this._service.newNameCodeGtpStatus === 'Aprobado' ) {
+   RadioAprovveNameCod() {
+    if (this._service.newNameCodeGtpStatus === 1 ) {
       return false;
     }
-    if (this._service.newNameCodeGtpStatus === 'Rechazado' ) {
+    if (this._service.newNameCodeGtpStatus === 3 ) {
       return false;
     }
-    if (this._service.newNameCodeGtpStatus === 'Nuevo') {
+    if (this._service.newNameCodeGtpStatus === 0) {
       return true;
     }
-    if (this._service.newNameCodeGtpStatus === 'Editado') {
+    if (this._service.newNameCodeGtpStatus === 2) {
       return true;
     }
   }
-  Button() {
+  Button2() {
 
     if ((this._service.name  === this._service.newName  ) &&  (this._service.debtorCode  === this._service.newNameCode ) ) {
       return false;
@@ -209,30 +209,27 @@ export class ServicesGTPComponent implements OnInit {
     }
     if ((( this._service.inReview && this._service.name === '?') && (this._service.newName.substring(0, 3) !== '???' )) || (( this._service.inReview && this._service.debtorCode === '?') && (this._service.newNameCode.substring(0, 3) !== '???'))) {
       return true;
-    } 
-  }
-
-  Button2() {
-    if ((this._service.newNameGtpStatus === 'Aprobado'  ) && (this._service.newNameCodeGtpStatus === 'Aprobado' )) {
-      return false;
-    }
-    if ((this._service.newNameGtpStatus === 'Rechazado' ) || (this._service.newNameCodeGtpStatus === 'Rechazado' ) )  {
-      return false;
-    }
-    if ((this._service.newNameGtpStatus === 'Nuevo') || (this._service.newNameCodeGtpStatus === 'Nuevo')) {
-      return true;
-    }
-    if ((this._service.newNameGtpStatus === 'Editado') || (this._service.newNameCodeGtpStatus === 'Editado' )) {
-      return true;
     }
   }
 
-  onSubmitServicio() {
-   /* console.log('ingresa a la aprobacion');
-    console.log('nombre serv apr ' + this.f.NewName.value);
-    console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
-    // NOMBRE DE SERVICIO
-    if (this._service.name  === this._service.newName  ) {
+  Button() {
+    if ((this._service.newNameGtpStatus === 1  ) && (this._service.newNameCodeGtpStatus === 1 )) {
+      return false;
+    }
+    if ((this._service.newNameGtpStatus === 3 ) || (this._service.newNameCodeGtpStatus === 3 ) )  {
+      return false;
+    }
+    if ((this._service.newNameGtpStatus === 0) || (this._service.newNameCodeGtpStatus === 0)) {
+      return true;
+    }
+    if ((this._service.newNameGtpStatus === 2) || (this._service.newNameCodeGtpStatus === 2 )) {
+      return true;
+    }
+  }
+
+ /* onSubmitServicio2() {
+   
+    if (this._service.newNameGtpStatus === 1   ) {
       console.log('se activo la limieza 1.1');
       this.f.NewName.clearValidators();
       this.f.NewName.reset();
@@ -265,9 +262,53 @@ export class ServicesGTPComponent implements OnInit {
           // tslint:disable-next-line:max-line-length
           value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
           this.grabar.emit(value);
+          console.log('TERMINO DFE VALI');
       }
-      console.log('el form no es valido');
-  }
+  } */
+
+  onSubmitServicio() {
+    /* console.log('ingresa a la aprobacion');
+     console.log('nombre serv apr ' + this.f.NewName.value);
+     console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
+     // NOMBRE DE SERVICIO
+     if (this._service.newNameGtpStatus === 1   ) {
+       console.log('se activo la limieza 1.1');
+       this.f.NewName.clearValidators();
+       this.f.NewName.reset();
+      }
+     if ( (this._service.newNameGtpStatus === 3   && this._service.name !== ''  && this._service.newName !== ''  )) {
+       console.log('se activo la limieza 1.2');
+       this.f.NewName.clearValidators();
+       this.f.NewName.reset();
+      }
+     // CODIGO DEUDOR
+       if (this._service.newNameCodeGtpStatus === 1  ) {
+       console.log('se activo la limieza 2.1');
+       this.f.NewNameCod.clearValidators();
+       this.f.NewNameCod.reset();
+       }
+       if ( this._service.newNameCodeGtpStatus === 3 &&  this._service.debtorCode !== ''  && this._service.newNameCode !== '') {
+         console.log('se activo la limieza 2.2');
+         this.f.NewNameCod.clearValidators();
+         this.f.NewNameCod.reset();
+        }
+
+     if (this.frm.valid) {
+       console.log('el form es valido');
+           let value: DataServiceGTP;
+           value = this._service;
+          // value.acceptednewName = (this.frm.value.NewName === 'S');
+          // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
+           // tslint:disable-next-line:max-line-length
+           value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
+           // tslint:disable-next-line:max-line-length
+           value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
+           this.grabar.emit(value);
+           console.log('TERMINO DFE VALI');
+       }
+   }
+
+
   /*
       newName         name
     minimarket         ''       NUEVO     0  -
@@ -281,23 +322,23 @@ export class ServicesGTPComponent implements OnInit {
      console.log('nombre serv apr ' + this.f.NewName.value);
      console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
      // NOMBRE DE SERVICIO
-     if (this._service.newNameGtpStatus === 'Aprobado'  ) {
+     if (this._service.newNameGtpStatus === 1  ) {
        console.log('se activo la limieza 1.1');
        this.f.NewName.clearValidators();
        this.f.NewName.reset();
       }
-      if (this._service.newNameGtpStatus === 'Rechazado') {
+      if (this._service.newNameGtpStatus === 3) {
        console.log('se activo la limieza 1.2');
        this.f.NewName.clearValidators();
        this.f.NewName.reset();
       }
      // CODIGO DEUDOR
-     if (this._service.newNameCodeGtpStatus === 'Aprobado') {
+     if (this._service.newNameCodeGtpStatus === 1) {
        console.log('se activo la limieza 2.1');
        this.f.NewNameCod.clearValidators();
        this.f.NewNameCod.reset();
        }
-      if (this._service.newNameCodeGtpStatus === 'Rechazado' ) {
+      if (this._service.newNameCodeGtpStatus === 3 ) {
          console.log('se activo la limieza 2.2');
          this.f.NewNameCod.clearValidators();
          this.f.NewNameCod.reset();
@@ -316,7 +357,7 @@ export class ServicesGTPComponent implements OnInit {
            this.grabar.emit(value);
        }
        console.log('el form no es valido');
-   }
+    }  
 
   onChangeTipoDato() {
     if (this.frm.get('tipoDato').value === 'P') {

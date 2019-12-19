@@ -80,7 +80,7 @@ export class GtpService {
               // 50 > 150
             if (end > r.totalCompanies)
               end = r.totalCompanies;
-              // Mostrando 1 - 50 de 150 elemtos
+              // Mostrando 1 - 50 de 1s50 elemtos
             this.pageMessage = `Mostrando ${beg} - ${end} de ${r.totalCompanies} elementos`;
           }
           return r;
@@ -95,14 +95,29 @@ export class GtpService {
       };
       return this.http.get<DataEnterpriseGTP>(url, opts)
       .pipe(map(r => {
-        console.log('EMPRESA');
-        console.log(r);
+        // console.log('EMPRESA');
+         console.log(r);
         return r;
 
       }))
       .pipe(catchError(err => throwError(err)));
-
   }
+
+  GetEnterpriseGtp2(id: any): Observable<any> {
+    const url = `${environment.END_POINT}/company/GTP/client/${id}`;
+    const opts = {
+      headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
+    };
+    return this.http.get<any>(url, opts)
+    .pipe(map(r => {
+      console.log('empresaR');
+      console.log( r);
+      console.log('end empresaR');
+      return r;
+
+    }))
+    .pipe(catchError(err => throwError(err)));
+}
 
    GetServicesGtp (id: any) {
     const url = `${environment.END_POINT}/company/GTP/services/${id}/${false}`;
@@ -110,8 +125,8 @@ export class GtpService {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
     this.http.get<any[]>(url, opts).subscribe(d => {
-      console.log('SERVICIOS');
-      console.table( d);
+      console.log('SERVICIOS ');
+      console.table(d);
       let servicios = [];
       d.forEach(s => {
         servicios.push({
@@ -141,8 +156,8 @@ export class GtpService {
           acceptednewName: null,
           nombreHabilitado :  (s.name === s.newName) ? false : true,
           nombreCodHabilitado :  (s.debtorCode === s.newNameCode) ?  false : true,
-          newNameGtpStatus: s.NewNameGTPStatus,
-          newNameCodeGtpStatus: s.NewNameCodeGTPStatus,
+          newNameGtpStatus: s.newNameGTPStatus,
+          newNameCodeGtpStatus: s.newNameCodeGTPStatus,
           nombre: s.name,
           rubro: s.entry,
           codDeudor: s.debtorCode,
@@ -163,6 +178,8 @@ export class GtpService {
         
       });
       });
+      console.log('SERVICIOS..s');
+      console.table(servicios);
        this.services = servicios;
       
     });

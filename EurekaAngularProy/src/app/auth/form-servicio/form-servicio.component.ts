@@ -72,35 +72,31 @@ export class FormServicioComponent implements OnInit {
   public services: ServiceModel[] = [];
 
   ngOnInit(): void {
-    console.log('nombreCodHabilitado');
-    console.log(this._service.nombreCodHabilitado);
+
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
-    /*
-      newName         name
-    minimarket         ''       NUEVO     0  -
-    minimarket         ''       RECHAZADO 3  - 
-      ''            minimarket  APROBADO  1
-      sm            minimarket  EDITADO   2 
-      sm            minimarket  RECHAZADO 3
-      ''               sm       APROBADO  1
-  */
-
     this.frm = this.fb.group({
     /*  nombres: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ? 
-      this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado }, */
-      nombre: new FormControl({ value: (this._service.nombre === '?') ? ((this._service.newName.substring(0, 3) === '???' ) ?
+      this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado }), */
+     /* nombre: new FormControl({ value: (this._service.nombre === '?') ? ((this._service.newName.substring(0, 3) === '???' ) ?
       this._service.newName.substring(3, this._service.newName.length) : this._service.newName ) : this._service.nombre ,
       disabled: this._service.nombreHabilitado },
-      [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode :
+      [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
+      nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ?
+      this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado}),
+
+      codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? 
+      this._service.codDeudor :  this._service.newNameCode
+      /*   (this._service.codDeudor === null) ? this._service.newNameCode :
       ((this._service.codDeudor   === 'RUC' || this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ?
-      this._service.codDeudor : 'Otro') ,   disabled:    this._service.nombreCodHabilitado   }, [Validators.required]),
-      nameCod: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode : (this._service.codDeudor == 'Otro')?
-       this._service.nameCod : this._service.codDeudor,  disabled:   this._service.nombreCodHabilitado }),
+      this._service.codDeudor : 'Otro') , */,  disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
+
+      // tslint:disable-next-line:max-line-length
+      nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode : (this._service.codDeudor === 'Otro') ?
+       this._service.nameCod : this._service.codDeudor,  disabled: this._service.nombreCodHabilitado }),
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       idCuenta: [this._service.idCuenta, [Validators.required /*, Validators.minLength(10) */]],
@@ -171,18 +167,32 @@ export class FormServicioComponent implements OnInit {
     }  */
 
   }
-  nombreAlert(){
+ /* nombreAlert2(){
     if (this.editMode === true){
       if (this._service.newName.substring(0, 3) === '???'){
         return false;
       }
       if ( this._service.nombre  !== this._service.newName){
         return true;
+      }
     }
+  }  */
+  nombreAlert() {
+    if (this.editMode === true) {
+      /*if (this._service.newNameGtpStatus === 1 || this._service.newNameGtpStatus === 3) {
+        return false;
+      }
+      if  (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 2) {
+        return true;
+      } */
+      if (   this._service.newName !== '') {
+        return true;
+      }
+      return false;
     }
   }
 
-  CodiAlert() {
+/*  CodiAlert2() {
     // editMode === true && ( _service.codDeudor  !== _service.newNameCode)
     if (this.editMode === true){
       if (this._service.newNameCode.substring(0, 3) === '???'){
@@ -190,7 +200,22 @@ export class FormServicioComponent implements OnInit {
       }
       if ( this._service.codDeudor  !== this._service.newNameCode){
         return true;
+      }
     }
+  } */
+  CodiAlert () {
+    // editMode === true && ( _service.codDeudor  !== _service.newNameCode)
+    if (this.editMode === true) {
+     /* if (this._service.newNameCodeGtpStatus  === 1 || this._service.newNameCodeGtpStatus === 3) {
+        return false;
+      }
+      if  (this._service.newNameCodeGtpStatus === 0 || this._service.newNameCodeGtpStatus === 2) {
+          return true;
+      } */
+      if ( this._service.newNameCode  !== '') {
+        return true;
+      }
+      return false;
     }
   }
 
@@ -250,6 +275,7 @@ export class FormServicioComponent implements OnInit {
                 let value: ServiceModel;
                  // value.usaWebApp = true;
                 if (this.editMode)  {
+                 console.log('ENTRO A EDICION DE SERVICIOS');
                   value = this._service;
                 // value.nombre = this.frm.value.nombre;
               //   value.newName = this.frm.value.nombre;
@@ -402,8 +428,17 @@ export class FormServicioComponent implements OnInit {
           } else {
             let value: ServiceModel;
             console.log('ingresa 3');
-
+              /*
+                newName         name
+              minimarket         ''       NUEVO     0  -
+              minimarket         ''       RECHAZADO 3  - 
+                ''            minimarket  APROBADO  1
+                sm            minimarket  EDITADO   2 
+                sm            minimarket  RECHAZADO 3
+                ''               sm       APROBADO  1
+              */
             if (this.editMode) {
+              console.log('ENTRO A EDICION DE SERVICIOS----');
               value = this._service;
               value.idCuenta = this.frm.value.idCuenta;
                // tslint:disable-next-line:max-line-length

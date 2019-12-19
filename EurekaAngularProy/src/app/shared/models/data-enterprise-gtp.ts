@@ -1,6 +1,6 @@
 import { DataServiceGTP } from "./data-service-gtp";
 
-export interface DataEnterpriseGTP {
+ export interface DataEnterpriseGTP {
     cu?: string;
     ruc: string|number;
     name: string;
@@ -8,7 +8,7 @@ export interface DataEnterpriseGTP {
     email: string;
     movilNumber: number;
     newName: string;
-    newNameGTPStatus?: number;
+    newNameGTPStatus?: any;
     status: string;
     uniqueCodeIBK: String;
     requestDate?: Date;
