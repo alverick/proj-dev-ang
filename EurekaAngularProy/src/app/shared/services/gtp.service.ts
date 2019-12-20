@@ -200,12 +200,15 @@ export class GtpService {
       }));
   }
 
+//////////////////////////////////////////////////
 
   public GetEnterpriseServices(data: any): Observable<any> {
      this.spinner.show();
      return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(), data)
      .pipe(map(r => {
            this.spinner.hide();
+           console.log('todo lo que trae esto');
+           console.log(r);
           return r;
      }))
      .pipe(catchError(err => {

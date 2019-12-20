@@ -6,6 +6,7 @@ export interface DataEnterpriseModel {
     email: string;
     movilNumber: number;
     newName: string;
+    newNameGTPStatus?: number;
     status: String;
     requestDate?: Date;
     password?: string;

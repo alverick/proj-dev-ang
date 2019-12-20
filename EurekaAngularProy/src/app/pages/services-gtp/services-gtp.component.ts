@@ -282,7 +282,7 @@ export class ServicesGTPComponent implements OnInit {
        this.f.NewName.reset();
       }
      // CODIGO DEUDOR
-       if (this._service.newNameCodeGtpStatus === 1  ) {
+       if (this._service.newNameCodeGtpStatus === 1) {
        console.log('se activo la limieza 2.1');
        this.f.NewNameCod.clearValidators();
        this.f.NewNameCod.reset();
@@ -300,14 +300,18 @@ export class ServicesGTPComponent implements OnInit {
           // value.acceptednewName = (this.frm.value.NewName === 'S');
           // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
            // tslint:disable-next-line:max-line-length
-           value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
+         //  value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
+         // tslint:disable-next-line:max-line-length
+         value.acceptednewName = ((this._service.newNameGtpStatus === 1   ) || ( (this._service.newNameGtpStatus === 3   && this._service.name !== ''  && this._service.newName !== ''  )) ) ? true : ((this.frm.value.NewName === 'S') ? true : false) ;
            // tslint:disable-next-line:max-line-length
-           value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
-           this.grabar.emit(value);
-           console.log('TERMINO DFE VALI');
+          //  value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
+          // tslint:disable-next-line:max-line-length
+          value.acceptednewNameCode = ((this._service.newNameCodeGtpStatus === 1) || ( this._service.newNameCodeGtpStatus === 3 &&  this._service.debtorCode !== ''  && this._service.newNameCode !== '')) ? true :  ( (this.frm.value.NewNameCod === 'S') ? true : false);
+
+          this.grabar.emit(value);
+           console.log('TERMINO DFE VALI' + value.acceptednewName + ' ' + value.acceptednewNameCode);
        }
    }
-
 
   /*
       newName         name

@@ -63,12 +63,11 @@ export class ConfigurarServiciosComponent implements OnInit {
             nombre: s.name,
             newName : s.newName,
             newNameCode : s.newNameCode,
-            //rubro: s.entry,
             codDeudor: s.debtorCode,
             tipoDato: s.dataType,
             tipoPago: s.paymentType,
             idCuenta: s.idAccount,
-            nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
+            nroCuenta: s.accountNumber,
             moneda: s.currency,
             simboloMoneda: s.currencySymbol,
             usaWebApp: s.useAppWeb,
@@ -84,8 +83,12 @@ export class ConfigurarServiciosComponent implements OnInit {
             status: s.status,
             nombreHabilitado: (s.name === s.newName) ? true : false,
             nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  true : false,
+            newNameGtpStatus : s.newNameGtpStatus,
+            newNameCodeGtpStatus : s.newNameCodeGtpStatus
           });
         });
+        console.log('SERVICIOS nievita');
+        console.log(this.afiliacionService.services);
         return;
       }
       if (d.isEdit) {
@@ -416,10 +419,10 @@ export class ConfigurarServiciosComponent implements OnInit {
       return svc.newNameCode;
     }
     if (svc.newNameCodeGtpStatus === 3 ) {
-      if (svc.newNameCode !== '' || svc.codDeudor !== ''  || svc.nameCod !== '' ) {
-        return svc.codDeudor;
-      } else {
+      if ( svc.codDeudor  == null  || svc.nameCod !== '' ) {
         return svc.newNameCode;
+      } else {
+        return svc.codDeudor;
       }
     } else {
     if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
@@ -432,7 +435,8 @@ export class ConfigurarServiciosComponent implements OnInit {
     if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
       // return svc.nameCod;
        return svc.codDeudor;
-   } 
+   }
+   console.log('codigo deudor.........');
 }
 
 
@@ -445,7 +449,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       }
   }
 
-getNameGTP(svc: ServiceModel) {
+getNameGTP2(svc: ServiceModel) {
   if (svc.nombre  !== '?') {
     return svc.nombre;
  }
@@ -453,8 +457,8 @@ getNameGTP(svc: ServiceModel) {
     return svc.newName.substring(3, svc.newName.length).toString();
  }
 }
-
-getNameGTP2(svc: ServiceModel) {
+getNameGTP(svc: ServiceModel) {
+  console.log('EL ESTADO DE GTP ' + svc.newNameGtpStatus);
   if (svc.newNameGtpStatus === 1) {
     return svc.nombre;
   }
@@ -666,9 +670,10 @@ getCodigoNameGTP2(svc: ServiceModel) {
     console.log('cierra');
     if (this.indiceActual >= 0) {
 
-      /*if (this.inEdit) {
-        console.log('Edit name se cae xdeee' +svc.nombre );
-        if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+      if (this.inEdit) {
+        console.log('EL NOMBRE YA EXISTE 1');
+        console.log('Edit name se cae xdeee' + svc.newName );
+        if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
             onOpen: drawPopup
@@ -676,20 +681,15 @@ getCodigoNameGTP2(svc: ServiceModel) {
           return;
         }
       } else {
+        console.log('EL NOMBRE YA EXISTE 2');
         if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
             onOpen: drawPopup
           });
+         
           return;
         }
-      } */
-      if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
-        Swal.fire({
-          text: 'Ya existe un servicio con este nombre',
-          onOpen: drawPopup
-        });
-        return;
       }
 
      /* if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {

@@ -83,6 +83,7 @@ export class CrearContrasenaComponent implements OnInit {
             movilNumber: this.gtpService.EmpresaServicios.movilNumber ,
             newName: this.gtpService.EmpresaServicios.newName,
             status: this.gtpService.EmpresaServicios.status,
+            newNameGTPStatus: this.gtpService.EmpresaServicios.newNameGTPStatus,
             requestDate: this.gtpService.EmpresaServicios.requestDate,
             inReview: false
           };
@@ -250,14 +251,14 @@ export class CrearContrasenaComponent implements OnInit {
 
     // this.gtpService.EdtEmpServ = null;
     // tslint:disable-next-line:max-line-length
-    if (( this.gtpService.EmpresaServicios.name === this.gtpService.EmpresaServicios.newName) && (this.gtpService.EmpresaServicios.inReview === false)) {
+    if (this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
+      console.log('NO llena el nombre de la empresa');
      this.gtpService.EdtEmpServ = {token: this.llave, NewName: null};
      this.gtpService.nombre = null;
-    }
-    // tslint:disable-next-line:max-line-length
-    if (( this.gtpService.EmpresaServicios.name !== this.gtpService.EmpresaServicios.newName) && (this.gtpService.EmpresaServicios.inReview === true)) {
+    } else { 
       this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
       this.gtpService.nombre = this.registerForm.value.nombre.toString();
+      console.log('llena el nombre de la empresa ' +this.gtpService.nombre );
     }
      this.router.navigate(["/editarSvcGTP"]);
       this.gtpService.llave = this.llave;
@@ -272,14 +273,14 @@ export class CrearContrasenaComponent implements OnInit {
 
     MensajeName() {
       if (this.inEdit) {
-        if ( this.gtpService.EmpresaServicios.inReview) {
+        if ( this.gtpService.EmpresaServicios.newNameGTPStatus === 1 ) {
+          return false;
+        } else {
           return true;
+        }
       }
-      if ( this.gtpService.EmpresaServicios.inReview === false) {
-        return false;
-      }
+      return false;
     }
-  }
 
   terminos() {
    $('#terminos').modal('show');

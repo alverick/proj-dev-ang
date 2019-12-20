@@ -177,7 +177,9 @@ export class AprobacionesComponent implements OnInit {
       }
     }
     // tslint:disable-next-line: max-line-length
-    const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
+    // const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
+    // tslint:disable-next-line:max-line-length
+    const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.newNameGtpStatus === 2) || (svc.newNameCodeGtpStatus === 2) || (svc.newNameCodeGtpStatus === 0) || ( (svc.newNameGtpStatus === 3   && svc.name !== ''  && svc.newName !== ''  )));
     const total = ListCantidadNombre + ListCantidadCodigoDeudor + Empcant;
 
     let desap = 0;
@@ -185,7 +187,7 @@ export class AprobacionesComponent implements OnInit {
       desap = 1;
     }
     const notAprov = CodDeuApp + nombreApp + desap;
- /*   console.log('Cantidad que falta aprobar de nombres ' + ListCantidadNombre);
+    /* console.log('Cantidad que falta aprobar de nombres ' + ListCantidadNombre);
     console.log('Cantidad que falta aprobar de codigo ' + ListCantidadCodigoDeudor);
     console.log('cantidad de no aprobados' + notAprov);
     console.log('EMPRESA'+ this.Enterprise.NombreApproved +' ' + Empcant ); */
@@ -285,9 +287,9 @@ export class AprobacionesComponent implements OnInit {
         }).then((result) => {
           if (result.value) {
 
-            console.log('TODOS LOS CAMPOS AN SIDO APROBADO0.......');
+            console.log('TODOS LOS CAMPOS AN SIDO APROBADO.......');
             if ( (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false)  && this.scv.length === 0) {
-              console.log('NO ENVIA NADA');
+              console.log('NO ENVIA NADA ' + this.scv.length);
               this.router.navigate(['/gtp']);
               return;
             }

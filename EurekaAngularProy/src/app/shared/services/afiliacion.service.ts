@@ -47,18 +47,34 @@ export class AfiliacionService {
   public CrearSevice(): ServiceModel {
     this.Guardado = false;
     let nombre: string = 'Mensualidad';
+    let newName: string = 'Mensualidad';
     let nro = 1;
     this.services.forEach((s, i) => {
       //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
-      if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
-        if (!isNaN(parseInt(s.nombre.substr(nombre.length))) || s.nombre.substr(nombre.length) === ''){
-          let aux = parseInt(s.nombre.substr(nombre.length));
-          if (isNaN(aux))
-            nro = 2;
-          else if (aux >= nro)
-            nro = aux + 1;
+      if (s.nombre === null) {
+        if (s.newName.toUpperCase().startsWith(newName.toUpperCase())) {
+          if (!isNaN(parseInt(s.newName.substr(newName.length))) || s.newName.substr(newName.length) === ''){
+            let aux = parseInt(s.newName.substr(newName.length));
+            if (isNaN(aux))
+              nro = 2;
+            else if (aux >= nro)
+              nro = aux + 1;
+          }
+        }
+      } else {
+        if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
+          if (!isNaN(parseInt(s.nombre.substr(nombre.length))) || s.nombre.substr(nombre.length) === ''){
+            let aux = parseInt(s.nombre.substr(nombre.length));
+            if (isNaN(aux))
+              nro = 2;
+            else if (aux >= nro)
+              nro = aux + 1;
+          }
         }
       }
+
+
+
     });
     if (nro > 1) {
       nombre += nro.toString();
@@ -228,7 +244,8 @@ export class AfiliacionService {
       }
     this.http.get<any[]>(`${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=`+ new Date().getTime(), { headers: headers })
       .subscribe(d => {
- 
+        console.log('SERVICIOS MARCELO');
+        console.log(d);
         let servicios = [];
         d.forEach(s => {
           servicios.push({
@@ -256,14 +273,13 @@ export class AfiliacionService {
             pagoPartes: s.partialPayment,
             newNameGtpStatus : s.newNameGTPStatus,
             newNameCodeGtpStatus : s.newNameCodeGTPStatus,
-            nombreHabilitado: ( s.newNameGtpStatus === 1 ||  s.newNameGtpStatus === 3 || s.newName !== '') ? true : false,
+            // tslint:disable-next-line:max-line-length
+            nombreHabilitado: ( s.newNameGtpStatus === 1 ||  s.newNameGtpStatus === 3 || s.newName !== '' ) ? true : false,
             nombreCodHabilitado: (s.newNameCodeGtpStatus === 1 ||  s.newNameCodeGtpStatus === 3 || s.newNameCode !== '') ? true : false,
 
           });
         });
         this.services = servicios;
-        console.log('TERMINA');
-        console.log(this.services);
       });
   }
 
