@@ -175,13 +175,13 @@ export class GtpService {
           monto: s.amount,
           porcentaje: s.percentage,
           pagoPartes: s.partialPayment,
-        
+
       });
       });
       console.log('SERVICIOS..s');
       console.table(servicios);
        this.services = servicios;
-      
+
     });
    }
 
@@ -200,14 +200,14 @@ export class GtpService {
       }));
   }
 
-//////////////////////////////////////////////////
+/*ESTO ME TRAE EN LA CORRECION*/
 
   public GetEnterpriseServices(data: any): Observable<any> {
      this.spinner.show();
      return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(), data)
      .pipe(map(r => {
            this.spinner.hide();
-           console.log('todo lo que trae esto');
+           console.log('MACHILON, LOS SERVICIOS TRAEN ESTOs');
            console.log(r);
           return r;
      }))

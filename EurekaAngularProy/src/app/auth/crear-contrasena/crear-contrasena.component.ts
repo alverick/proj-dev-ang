@@ -94,9 +94,11 @@ export class CrearContrasenaComponent implements OnInit {
              this.registerForm.get('nombre').enable();
             console.log('nombre  de empresa' + this.registerForm.get('nombre').enable());
            }
-          this.registerForm.setValue({ ruc: this.gtpService.EmpresaServicios.ruc, nombre: this.gtpService.EmpresaServicios.name,
-          rubro: this.gtpService.EmpresaServicios.entry, email: this.gtpService.EmpresaServicios.email,
-          telefono: this.gtpService.EmpresaServicios.movilNumber, contrasena: '', repcontrasena: '',  acceptterms: true });
+          this.registerForm.setValue({ ruc: this.gtpService.EmpresaServicios.ruc,
+            nombre: ( this.gtpService.EmpresaServicios.newNameGTPStatus === 3) ? this.gtpService.EmpresaServicios.newName :
+            this.gtpService.EmpresaServicios.name, rubro: this.gtpService.EmpresaServicios.entry,
+            email: this.gtpService.EmpresaServicios.email, telefono: this.gtpService.EmpresaServicios.movilNumber,
+             contrasena: '', repcontrasena: '',  acceptterms: true });
       });
       } else {
         console.log('CREA EMPRESA');
@@ -135,15 +137,13 @@ export class CrearContrasenaComponent implements OnInit {
     return new Observable(obs => {
       this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
         .subscribe( d => {
-
           if ( d === null  ) {
-
             this.mensaje( 'Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
             this.router.navigate(['/login']);
             obs.error();
           } else {
             this.gtpService.EmpresaServicios = d;
-            console.log('empresa ser');
+            console.log('Empresasa y servicios Escarno');
             console.table(this.gtpService.EmpresaServicios);
          /*   let servicios = [];
             this.gtpService.EmpresaServicios.arrayServices = [];
@@ -255,7 +255,7 @@ export class CrearContrasenaComponent implements OnInit {
       console.log('NO llena el nombre de la empresa');
      this.gtpService.EdtEmpServ = {token: this.llave, NewName: null};
      this.gtpService.nombre = null;
-    } else { 
+    } else {
       this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
       this.gtpService.nombre = this.registerForm.value.nombre.toString();
       console.log('llena el nombre de la empresa ' +this.gtpService.nombre );

@@ -86,19 +86,30 @@ export class FormServicioGtpComponent implements OnInit {
 
 
         this.frm = this.fb.group({
-        nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName.substring(3, this._service.newName.length).toString(),
-        disabled:  this._service.nombreHabilitado /*(this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true */ },
+        /*nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName.substring(3, this._service.newName.length).toString(),
+        disabled:  this._service.nombreHabilitado  },
           [Validators.required, Validators.minLength(3), Alfanumerico,
-            Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-        codDeudor: new FormControl({ value: (this._service.codDeudor !== '?')? this._service.codDeudor: ( (this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'RUC' ||
+            Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
+            nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ?
+            this._service.newName :  this._service.nombre  , disabled:  this._service.nombreHabilitado  }, [Validators.required,
+            Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+
+      /* codDeudor: new FormControl({ value: (this._service.codDeudor !== '?')? this._service.codDeudor: ( (this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'RUC' ||
         this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'DNI' ||
         this._service.newNameCode.substring(3, this._service.newNameCode.length)  === 'Codigo Interno') ?
         this._service.newNameCode.substring(3, this._service.newNameCode.length).toString() : 'Otro'),
-        // tslint:disable-next-line:max-line-length
-          disabled:  this._service.nombreCodHabilitado /* (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true */}, [Validators.required]),
+        disabled:  this._service.nombreCodHabilitado  }, [Validators.required]), */
+        codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ?
+          this._service.codDeudor : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
+          this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',  disabled: this._service.nombreCodHabilitado },
+           [Validators.required]),
 
-        nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : (this._service.newNameCode.substring(3, this._service.newNameCode.length).toString()),
-           disabled: this._service.nombreCodHabilitado /*this._service.NewNameCod*/ }),
+       /* nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : (this._service.newNameCode.substring(3, this._service.newNameCode.length).toString()),
+           disabled: this._service.nombreCodHabilitado }), */
+
+       /* nameCod: new FormControl({ value: (this._service.codDeudor === '') ? this._service.newNameCode : (this._service.codDeudor === 'Otro') ?
+        this._service.nameCod : this._service.codDeudor,  disabled: this._service.nombreCodHabilitado }), */
+        nameCod: new FormControl({ value:  this._service.newNameCode, disabled: ( this._service.newNameCodeGtpStatus === 3  ) ? false : true }),
         tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
         tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
         idCuenta: new FormControl({ value: this._service.idCuenta, disabled: true}, [Validators.required,Validators.minLength(13)]),
@@ -143,12 +154,17 @@ export class FormServicioGtpComponent implements OnInit {
 
   }
 
-  nombreAlert() {
-    /*editMode === true && ( _service.nombre  !== _service.newName) */
+ /* nombreAlert2() {
     return (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true;
+  } */
+  nombreAlert() {
+     return ( this._service.newNameGtpStatus === 3 ) ? false : true;
   }
-  CodiAlert() {
+ /* CodiAlert2() {
     return (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true;
+  } */
+  CodiAlert() {
+    return  ( this._service.newNameCodeGtpStatus === 3 ) ? false : true;
   }
 
 
@@ -185,7 +201,6 @@ export class FormServicioGtpComponent implements OnInit {
     if (this.frm.valid) {
 
             let value: ServiceModel;
-
             value = this._service;
 
            /* if (this._service.NewName) {
@@ -214,10 +229,21 @@ export class FormServicioGtpComponent implements OnInit {
               value.codDeudor = null;
               value.nameCod = null;
             } */
-            value.nombre = ( this._service.newName.substring(0, 3) === '???') ? this.frm.value.nombre : value.nombre ;
+           // value.nombre = ( this._service.newName.substring(0, 3) === '???') ? this.frm.value.nombre : value.nombre ;
+            value.newName = ( this._service.newNameGtpStatus === 3 ) ? this.frm.value.nombre : value.nombre ;
             // tslint:disable-next-line:max-line-length
-            value.codDeudor = ( this._service.newNameCode.substring(0, 3) === '???') ?  this.frm.value.codDeudor : this._service.newNameCode;
-            value.nameCod = ( this._service.newNameCode.substring(0, 3) === '???') ? this.frm.value.nameCod : this._service.newNameCode;
+           /* if (value.newNameCode === 'RUC' || value.newNameCode === 'DNI' || value.newNameCode === 'Codigo Interno' || value.newNameCode === 'Codigo') {
+              value.newNameCode = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.codDeudor : this._service.newNameCode;
+            } else {
+              value.newNameCode = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.nameCod : this._service.newNameCode;
+            } */
+
+            if (this.frm.value.codDeudor === 'RUC' || this.frm.value.codDeudor === 'DNI' || this.frm.value.codDeudor === 'Codigo Interno' || this.frm.value.codDeudor === 'Codigo') {
+              value.newNameCode = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.codDeudor : this._service.newNameCode;
+            } else {
+              value.newNameCode = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.nameCod : this._service.newNameCode;
+              value.nameCod = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.nameCod : this._service.newNameCode;
+            }
             console.log('valores' +  value.nombre + 'f'+  value.codDeudor+ 'f'+  value.nameCod );
             this.grabar.emit(value);
 

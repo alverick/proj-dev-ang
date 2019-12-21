@@ -81,10 +81,10 @@ export class ConfigurarServiciosComponent implements OnInit {
             inReview: s.inReview,
             pagoPartes: s.partialPayment,
             status: s.status,
-            nombreHabilitado: (s.name === s.newName) ? true : false,
-            nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  true : false,
-            newNameGtpStatus : s.newNameGtpStatus,
-            newNameCodeGtpStatus : s.newNameCodeGtpStatus
+            nombreHabilitado: ( s.newNameGTPStatus === 3 ) ? false : true,
+            nombreCodHabilitado:  ( s.newNameCodeGTPStatus === 3  ) ? false : true,
+            newNameGtpStatus : s.newNameGTPStatus,
+            newNameCodeGtpStatus : s.newNameCodeGTPStatus
           });
         });
         console.log('SERVICIOS nievita');
@@ -400,7 +400,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
           return svc.codDeudor;
       }
-      } 
+      }
       if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
             return svc.nameCod;
       }
@@ -449,23 +449,22 @@ export class ConfigurarServiciosComponent implements OnInit {
       }
   }
 
-getNameGTP2(svc: ServiceModel) {
+/*getNameGTP2(svc: ServiceModel) {
   if (svc.nombre  !== '?') {
     return svc.nombre;
  }
   if (svc.nombre  === '?') {
     return svc.newName.substring(3, svc.newName.length).toString();
  }
-}
+} */
 getNameGTP(svc: ServiceModel) {
-  console.log('EL ESTADO DE GTP ' + svc.newNameGtpStatus);
-  if (svc.newNameGtpStatus === 1) {
+   if (svc.newNameGtpStatus === 1) {
     return svc.nombre;
   }
   if (svc.newNameGtpStatus === 3) {
     return svc.newName;
   }
-} 
+}
 /* pendienteRevision2(svc: ServiceModel) {
  if (this.inEdit ) {
   if (svc.id === null) {
@@ -525,8 +524,8 @@ getNameGTP(svc: ServiceModel) {
       return svc.newName.substring(3, svc.newName.length);
     } else {
       return svc.newName;
-    } 
-  } 
+    }
+  }
   return svc.nombre;
 }  */
 getName  (svc: ServiceModel) {
@@ -539,7 +538,7 @@ getName  (svc: ServiceModel) {
   return svc.nombre;
 }
 
-getCodigoNameGTP(svc: ServiceModel) {
+getCodigoNameGTP2(svc: ServiceModel) {
   if (svc.codDeudor !== '?' ) {
     if (svc.codDeudor === 'Otro' ) {
       return  svc.nameCod;
@@ -551,7 +550,7 @@ getCodigoNameGTP(svc: ServiceModel) {
   }
 }
 
-getCodigoNameGTP2(svc: ServiceModel) {
+getCodigoNameGTP (svc: ServiceModel) {
   if (svc.newNameCodeGtpStatus === 1) {
     if (svc.codDeudor === 'Otro' ) {
       return  svc.nameCod;
@@ -670,6 +669,7 @@ getCodigoNameGTP2(svc: ServiceModel) {
     console.log('cierra');
     if (this.indiceActual >= 0) {
 
+
       if (this.inEdit) {
         console.log('EL NOMBRE YA EXISTE 1');
         console.log('Edit name se cae xdeee' + svc.newName );
@@ -681,24 +681,28 @@ getCodigoNameGTP2(svc: ServiceModel) {
           return;
         }
       } else {
-        console.log('EL NOMBRE YA EXISTE 2');
-        if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
-          Swal.fire({
-            text: 'Ya existe un servicio con este nombre',
-            onOpen: drawPopup
-          });
-         
-          return;
+        console.log('EL NOMBRE YA EXISTE 2 gtp');
+        if (svc.newNameGtpStatus === 3){
+          if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+            Swal.fire({
+              text: 'Ya existe un servicio con este nombre',
+              onOpen: drawPopup
+            });
+            return;
+          }
+        } else {
+          if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
+            Swal.fire({
+              text: 'Ya existe un servicio con este nombre',
+              onOpen: drawPopup
+            });
+            return;
+          }
         }
+
       }
 
-     /* if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
-        Swal.fire({
-          text: 'Ya existe un servicio con este nombre',
-          onOpen: drawPopup
-        });
-        return;
-      } */
+
       this.afiliacionService.services[this.indiceActual] = svc;
       this.indiceActual = -1;
       if (!svc.id) {

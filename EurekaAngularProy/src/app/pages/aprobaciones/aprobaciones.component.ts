@@ -301,14 +301,14 @@ export class AprobacionesComponent implements OnInit {
                   this.router.navigate(['/gtp']);
                 } else {
 
-                } 
+                }
               });
               return;
             }
             if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) {
 
               console.log('SOLO ENVIA SERVICIOS');
-              
+
               console.log('IMPRESION FINAL MACHILO');
               console.log(this.scv);
               this.gtpService.AprobarEmpresaServ({ EnterpriseObj: null , ListServiceObj: this.scv })
@@ -318,7 +318,7 @@ export class AprobacionesComponent implements OnInit {
                   this.router.navigate(['/gtp']);
                 } else {
 
-                } 
+                }
               });
               return;
             }
@@ -356,7 +356,7 @@ export class AprobacionesComponent implements OnInit {
 
       }
     } else {
-      this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' + 
+      this.mensaje( 'Aprobacion', 'Aun faltan aprobar ' +
       total + ' observaciones' );
     }
   }
@@ -382,12 +382,20 @@ export class AprobacionesComponent implements OnInit {
       return svc.name;
     }
   }
-
-  getName(svc: DataServiceGTP) {
+/*
+  getName2(svc: DataServiceGTP) {
     if (svc.newNameGtpStatus === 0 && svc.newNameCodeGtpStatus === 0) {
       return svc.newName;
     }
     if (svc.newNameGtpStatus > 0 && svc.newNameCodeGtpStatus > 0) {
+      return svc.name;
+    }
+  } */
+  getName(svc: DataServiceGTP) {
+    if (svc.newNameGTPStatus === 0 && svc.newNameCodeGTPStatus === 0) {
+      return svc.newName;
+    }
+    if (svc.newNameGTPStatus > 0 && svc.newNameCodeGTPStatus > 0) {
       return svc.name;
     }
   }
@@ -442,7 +450,7 @@ export class AprobacionesComponent implements OnInit {
     if (svc.newNameGtpStatus === 3 || svc.newNameCodeGtpStatus === 3) {
       return 'Servicio rechazado';
     }
-    
+
    // console.log('MARCELO');
 }
 OcultarFormulario(requireConfirm: boolean) {
@@ -484,7 +492,7 @@ OcultarFormularioSer(requireConfirm: boolean) {
     });
   }
 }
- 
+
   mensaje( titulo: string, text: string) {
     Swal.fire({
      // type: tipo ,

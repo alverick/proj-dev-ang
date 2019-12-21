@@ -21,8 +21,10 @@ export interface DataServiceGTP {
     newNameCode:  string;
     newName: string;
     status: string;
-    newNameGtpStatus?: number;
-    newNameCodeGtpStatus?: number;
+    // newNameGtpStatus?: number;
+    // newNameCodeGtpStatus?: number;
+    newNameGTPStatus: number;
+    newNameCodeGTPStatus: number;
     acceptednewNameCode?: boolean;
     acceptednewName?: boolean;
     nombreHabilitado?: boolean;

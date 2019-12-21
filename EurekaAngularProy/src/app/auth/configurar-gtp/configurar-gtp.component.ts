@@ -452,8 +452,9 @@ getCodigoNameGTP(svc: ServiceModel) {
     if (this.indiceActual >= 0) {
 
       if (this.inEdit) {
-        console.log('Edit name se cae xdeee' +svc.newName );
-        if (this.gtpService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+        console.log('EL NOMBRE YA EXISTE 1');
+        console.log('Edit name se cae xdeee' + svc.newName );
+        if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
             onOpen: drawPopup
@@ -461,11 +462,13 @@ getCodigoNameGTP(svc: ServiceModel) {
           return;
         }
       } else {
-        if (this.gtpService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
+        console.log('EL NOMBRE YA EXISTE 2 GTP');
+        if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
             onOpen: drawPopup
           });
+
           return;
         }
       }
