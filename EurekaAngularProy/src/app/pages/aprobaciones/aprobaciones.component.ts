@@ -164,9 +164,9 @@ export class AprobacionesComponent implements OnInit {
     const CodDeuApp = this.gtpService.services.filter((svc) => svc.acceptednewNameCode === false && (svc.debtorCode !== svc.newNameCode)).length;
 
     // tslint:disable-next-line: max-line-length cunatos son los que faltan revisar
-    const ListCantidadNombre = this.gtpService.services.filter((svc) =>  ((svc.newNameGtpStatus === 0 || svc.newNameGtpStatus === 2  ) && (svc.acceptednewName === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */ ).length;
+    const ListCantidadNombre = this.gtpService.services.filter((svc) =>  ((svc.newNameGTPStatus === 0 || svc.newNameGTPStatus === 2  ) && (svc.acceptednewName === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */ ).length;
     // tslint:disable-next-line:max-line-length
-    const ListCantidadCodigoDeudor = this.gtpService.services.filter((svc) =>  ( (svc.newNameCodeGtpStatus === 0 || svc.newNameCodeGtpStatus === 2  )  && (svc.acceptednewNameCode === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */ ).length;
+    const ListCantidadCodigoDeudor = this.gtpService.services.filter((svc) =>  ( (svc.newNameCodeGTPStatus === 0 || svc.newNameCodeGTPStatus === 2  )  && (svc.acceptednewNameCode === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */ ).length;
 
     let Empcant = 0;
     // duplica por que calcula por los 2 la cantidad que falta
@@ -179,7 +179,7 @@ export class AprobacionesComponent implements OnInit {
     // tslint:disable-next-line: max-line-length
     // const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
     // tslint:disable-next-line:max-line-length
-    const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.newNameGtpStatus === 2) || (svc.newNameCodeGtpStatus === 2) || (svc.newNameCodeGtpStatus === 0) || ( (svc.newNameGtpStatus === 3   && svc.name !== ''  && svc.newName !== ''  )));
+    const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.newNameGTPStatus === 2) || (svc.newNameCodeGTPStatus === 2) || (svc.newNameCodeGTPStatus === 0) /*|| ( (svc.newNameGTPStatus === 3   && svc.name !== ''  && svc.newName !== ''  ))*/);
     const total = ListCantidadNombre + ListCantidadCodigoDeudor + Empcant;
 
     let desap = 0;
@@ -392,10 +392,10 @@ export class AprobacionesComponent implements OnInit {
     }
   } */
   getName(svc: DataServiceGTP) {
-    if (svc.newNameGTPStatus === 0 && svc.newNameCodeGTPStatus === 0) {
+    if ((svc.newNameGTPStatus === 0 && svc.newNameCodeGTPStatus === 0) || (svc.newNameGTPStatus === 3 && svc.newNameCodeGTPStatus === 3)) {
       return svc.newName;
     }
-    if (svc.newNameGTPStatus > 0 && svc.newNameCodeGTPStatus > 0) {
+    if ((svc.newNameGTPStatus === 1 && svc.newNameCodeGTPStatus === 1 ) || (svc.newNameGTPStatus === 2 && svc.newNameCodeGTPStatus === 2 )) {
       return svc.name;
     }
   }
@@ -438,16 +438,16 @@ export class AprobacionesComponent implements OnInit {
   getState(svc: DataServiceGTP ) {
    // console.log('servicios' + svc.newNameGtpStatus + ' ' +  svc.newNameCodeGtpStatus);
 
-    if (svc.newNameGtpStatus === 0 && svc.newNameCodeGtpStatus === 0) {
+    if (svc.newNameGTPStatus === 0 && svc.newNameCodeGTPStatus === 0) {
       return 'Nueva servicio';
     }
-    if  (svc.newNameGtpStatus === 1 && svc.newNameCodeGtpStatus === 1) {
+    if  (svc.newNameGTPStatus === 1 && svc.newNameCodeGTPStatus === 1) {
       return 'Servicio aprobado';
     }
-    if (svc.newNameGtpStatus === 2 || svc.newNameCodeGtpStatus === 2) {
+    if (svc.newNameGTPStatus === 2 || svc.newNameCodeGTPStatus === 2) {
       return 'Servicio editado';
     }
-    if (svc.newNameGtpStatus === 3 || svc.newNameCodeGtpStatus === 3) {
+    if (svc.newNameGTPStatus === 3 || svc.newNameCodeGTPStatus === 3) {
       return 'Servicio rechazado';
     }
 

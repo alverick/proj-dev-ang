@@ -86,30 +86,18 @@ export class FormServicioGtpComponent implements OnInit {
 
 
         this.frm = this.fb.group({
-        /*nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName.substring(3, this._service.newName.length).toString(),
-        disabled:  this._service.nombreHabilitado  },
-          [Validators.required, Validators.minLength(3), Alfanumerico,
-            Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
-            nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ?
-            this._service.newName :  this._service.nombre  , disabled:  this._service.nombreHabilitado  }, [Validators.required,
-            Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
 
-      /* codDeudor: new FormControl({ value: (this._service.codDeudor !== '?')? this._service.codDeudor: ( (this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'RUC' ||
-        this._service.newNameCode.substring(3, this._service.newNameCode.length)   === 'DNI' ||
-        this._service.newNameCode.substring(3, this._service.newNameCode.length)  === 'Codigo Interno') ?
-        this._service.newNameCode.substring(3, this._service.newNameCode.length).toString() : 'Otro'),
-        disabled:  this._service.nombreCodHabilitado  }, [Validators.required]), */
+          nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ?
+        this._service.newName :  this._service.nombre  , disabled:  this._service.nombreHabilitado  }, [Validators.required,
+        Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+
         codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ?
-          this._service.codDeudor : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
-          this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',  disabled: this._service.nombreCodHabilitado },
-           [Validators.required]),
+        this._service.codDeudor : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
+        this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',  disabled: this._service.nombreCodHabilitado },
+        [Validators.required]),
 
-       /* nameCod: new FormControl({ value: (this._service.nameCod !== '?')?this._service.nameCod : (this._service.newNameCode.substring(3, this._service.newNameCode.length).toString()),
-           disabled: this._service.nombreCodHabilitado }), */
-
-       /* nameCod: new FormControl({ value: (this._service.codDeudor === '') ? this._service.newNameCode : (this._service.codDeudor === 'Otro') ?
-        this._service.nameCod : this._service.codDeudor,  disabled: this._service.nombreCodHabilitado }), */
         nameCod: new FormControl({ value:  this._service.newNameCode, disabled: ( this._service.newNameCodeGtpStatus === 3  ) ? false : true }),
+
         tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
         tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
         idCuenta: new FormControl({ value: this._service.idCuenta, disabled: true}, [Validators.required,Validators.minLength(13)]),
@@ -339,6 +327,7 @@ export class FormServicioGtpComponent implements OnInit {
     if(event === 'Otro'){
     //  this.f.codDeudor.reset();
       this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
+      this.f.nameCod.reset();
     }
     else {
       this.f.nameCod.clearValidators();

@@ -79,24 +79,23 @@ export class FormServicioComponent implements OnInit {
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
     this.frm = this.fb.group({
-    /*  nombres: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ? 
-      this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado }), */
-     /* nombre: new FormControl({ value: (this._service.nombre === '?') ? ((this._service.newName.substring(0, 3) === '???' ) ?
-      this._service.newName.substring(3, this._service.newName.length) : this._service.newName ) : this._service.nombre ,
-      disabled: this._service.nombreHabilitado },
-      [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
       nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ?
       this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado}),
 
-      codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? 
-      this._service.codDeudor :  this._service.newNameCode
-      /*   (this._service.codDeudor === null) ? this._service.newNameCode :
-      ((this._service.codDeudor   === 'RUC' || this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ?
-      this._service.codDeudor : 'Otro') , */,  disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
+      codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 ||
+        this._service.newNameCodeGtpStatus === 2) ?  this._service.codDeudor : ( this._service.newNameCode === 'RUC' ||
+        this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
+          disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
+
+
+         nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :( (this._service.codDeudor === 'Otro') ?
+       this._service.nameCod : this._service.codDeudor ),  disabled: this._service.nombreCodHabilitado }),
 
       // tslint:disable-next-line:max-line-length
-      nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode : (this._service.codDeudor === 'Otro') ?
-       this._service.nameCod : this._service.codDeudor,  disabled: this._service.nombreCodHabilitado }),
+     /* nameCod: new FormControl({ value: ( this._service.newNameCodeGtpStatus === 1  || this._service.newNameCodeGtpStatus === 2  || (this._service.newNameCodeGtpStatus === 3 &&  this._service.codDeudor !== '' &&  this._service.newNameCode !== '' )) ?
+      this._service.codDeudor  : this._service.newNameCode ,
+       disabled: this._service.nombreCodHabilitado }), */
+
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
       idCuenta: [this._service.idCuenta, [Validators.required /*, Validators.minLength(10) */]],
@@ -431,9 +430,9 @@ export class FormServicioComponent implements OnInit {
               /*
                 newName         name
               minimarket         ''       NUEVO     0  -
-              minimarket         ''       RECHAZADO 3  - 
+              minimarket         ''       RECHAZADO 3  -
                 ''            minimarket  APROBADO  1
-                sm            minimarket  EDITADO   2 
+                sm            minimarket  EDITADO   2
                 sm            minimarket  RECHAZADO 3
                 ''               sm       APROBADO  1
               */
@@ -566,6 +565,7 @@ export class FormServicioComponent implements OnInit {
     if(event === 'Otro'){
     //  this.f.codDeudor.reset();
       this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
+      this.f.nameCod.reset();
     }
     else {
       this.f.nameCod.clearValidators();

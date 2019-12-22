@@ -220,16 +220,16 @@ export class ConfigurarServiciosComponent implements OnInit {
     if (this.inGTP) {
 
       let Svc = [] ;
-      let svcinReview = this.afiliacionService.services.filter((v) => v.inReview === true);
+      let svcinReview = this.afiliacionService.services.filter((v) => v.newNameGtpStatus === 3 || v.newNameCodeGtpStatus === 3 );
       let cantName = this.afiliacionService.services.filter((v) => (v.inReview === true) && (v.nombre === '?')).length;
       let cantNameServ = this.afiliacionService.services.filter((v) => (v.inReview === true) && (v.codDeudor === '?')).length;
       let total = cantName + cantNameServ;
+
       svcinReview.forEach(s => {
        Svc.push({
           ServiceId: s.id,
-          NewName: (s.newName.substring(0, 3) === '???') ? s.nombre : null ,
-          // tslint:disable-next-line:max-line-length
-          NewCodName: ( s.newNameCode.substring(0, 3) === '???') ? s.codDeudor : null,
+          NewName: (s.newNameGtpStatus === 1) ? null : s.newName ,
+          NewCodName: (s.newNameCodeGtpStatus === 1) ? null : s.newNameCode,
         });
       });
       // (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true
@@ -244,7 +244,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       if (total === 0) {
         Swal.fire({
           title: 'Editar',
-          text: `Desea Guardar los Cambios`,
+          text: `Desea enviar los cambios`,
           showCloseButton: true,
           showCancelButton: true,
           showConfirmButton: true,
@@ -411,12 +411,11 @@ export class ConfigurarServiciosComponent implements OnInit {
   } */
 
   getCodDebtor (svc: ServiceModel) {
-
-    if (svc.newNameCodeGtpStatus === 1 ) {
-      return svc.codDeudor;
-    }
     if (svc.newNameCodeGtpStatus === 0 ) {
       return svc.newNameCode;
+    }
+    if (svc.newNameCodeGtpStatus === 1 ) {
+      return svc.codDeudor;
     }
     if (svc.newNameCodeGtpStatus === 3 ) {
       if ( svc.codDeudor  == null  || svc.nameCod !== '' ) {
@@ -425,19 +424,18 @@ export class ConfigurarServiciosComponent implements OnInit {
         return svc.codDeudor;
       }
     } else {
-    if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
         return svc.codDeudor;
-    }
+      }
     }
     if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
           return svc.nameCod;
     }
     if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
       // return svc.nameCod;
-       return svc.codDeudor;
+       return svc.nameCod;
    }
-   console.log('codigo deudor.........');
-}
+ }
 
 
   getCodDebtorCreate(svc: ServiceModel) {
@@ -673,13 +671,24 @@ getCodigoNameGTP (svc: ServiceModel) {
       if (this.inEdit) {
         console.log('EL NOMBRE YA EXISTE 1');
         console.log('Edit name se cae xdeee' + svc.newName );
-        if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
-          Swal.fire({
-            text: 'Ya existe un servicio con este nombre',
-            onOpen: drawPopup
-          });
-          return;
+        if (svc.newNameGtpStatus === 3){
+          if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+            Swal.fire({
+              text: 'Ya existe un servicio con este nombre',
+              onOpen: drawPopup
+            });
+            return;
+          }
+        }else{
+          if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
+            Swal.fire({
+              text: 'Ya existe un servicio con este nombre',
+              onOpen: drawPopup
+            });
+            return;
+          }
         }
+
       } else {
         console.log('EL NOMBRE YA EXISTE 2 gtp');
         if (svc.newNameGtpStatus === 3){

@@ -53,8 +53,8 @@ export class ServicesGTPComponent implements OnInit {
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
     this.frm = this.fb.group({
-       nombre :  new FormControl({value: (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 2) ? this._service.newName : this._service.name , disabled: true  },
-       [Validators.required, Validators.minLength(3), Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),  
+       nombre :  new FormControl({value: (this._service.newNameGTPStatus === 0 || this._service.newNameGTPStatus === 2 || this._service.newNameGTPStatus === 3) ? this._service.newName : this._service.name , disabled: true  },
+       [Validators.required, Validators.minLength(3), Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
     /*  nombre: new FormControl({ value:  (this._service.name === '?') ?
       ( ((this._service.newName.substring(0, 3) === '???')?
       (this._service.newName.substring(3, this._service.newName.length)):this._service.newName)):((this._service.name === this._service.newName)? this._service.name : this._service.newName ) , disabled: true },
@@ -67,10 +67,11 @@ export class ServicesGTPComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       // nameCods: new FormControl ({ value: ( this._service.newNameCodeGtpStatus === 0  || this._service.newNameCodeGtpStatus === 2 })? this._service.newNameCode : this._service.debtorCode     , disabled: true}),
 
-      nameCod: new FormControl({ value: (this._service.debtorCode === '?')?
+    /*  nameCod: new FormControl({ value: (this._service.debtorCode === '?')?
       (( (this._service.newNameCode.substring(0,3) === '???')?
-      (this._service.newNameCode.substring(3, this._service.newNameCode.length)): this._service.newNameCode)) : (this._service.debtorCode === this._service.newNameCode)? this._service.debtorCode :this._service.newNameCode , disabled: true}),
-
+      (this._service.newNameCode.substring(3, this._service.newNameCode.length)): this._service.newNameCode)) : (this._service.debtorCode === this._service.newNameCode)? this._service.debtorCode :this._service.newNameCode , disabled: true}), */
+      nameCod: new FormControl({ value:  (this._service.codDeudor === null) ? this._service.newNameCode : (this._service.codDeudor === 'Otro') ?
+      this._service.nameCod : this._service.codDeudor, disabled: true}),
       tipoDato: new FormControl({ value: this._service.dataType, disabled: true }, Validators.required),
       tipoPago: new FormControl({ value: this._service.paymentType, disabled: true }, Validators.required),
       idCuenta: new FormControl({ value: this._service.idAccount, disabled: true }, Validators.required),
@@ -147,22 +148,22 @@ export class ServicesGTPComponent implements OnInit {
   }
 
     RadioAprovveName() {
-      if (this._service.newNameGtpStatus === 1  ) {
+      if (this._service.newNameGTPStatus === 1  ) {
         return false;
       }
-      if (this._service.newNameGtpStatus === 3 ) {
+      if (this._service.newNameGTPStatus === 3 ) {
         return false;
       }
-      if (this._service.newNameGtpStatus === 0 ) {
+      if (this._service.newNameGTPStatus === 0 ) {
         return true;
       }
-      if (this._service.newNameGtpStatus === 2  ) {
+      if (this._service.newNameGTPStatus === 2  ) {
         return true;
       }
     }
 
   RadioAprovveNameCod2() {
-    if (this._service.debtorCode  === this._service.newNameCode ) { 
+    if (this._service.debtorCode  === this._service.newNameCode ) {
       return false;
     }
     if ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') {
@@ -180,16 +181,16 @@ export class ServicesGTPComponent implements OnInit {
   }
 
    RadioAprovveNameCod() {
-    if (this._service.newNameCodeGtpStatus === 1 ) {
+    if (this._service.newNameCodeGTPStatus === 1 ) {
       return false;
     }
-    if (this._service.newNameCodeGtpStatus === 3 ) {
+    if (this._service.newNameCodeGTPStatus === 3 ) {
       return false;
     }
-    if (this._service.newNameCodeGtpStatus === 0) {
+    if (this._service.newNameCodeGTPStatus === 0) {
       return true;
     }
-    if (this._service.newNameCodeGtpStatus === 2) {
+    if (this._service.newNameCodeGTPStatus === 2) {
       return true;
     }
   }
@@ -200,7 +201,7 @@ export class ServicesGTPComponent implements OnInit {
     }
     if ( (this._service.name === '?' && this._service.newName.substring(0, 3) === '???' )||   ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') ){
       return false;
-    } 
+    }
     if (( this._service.name === '?') || ( this._service.debtorCode === '?') ) {
       return true;
     }
@@ -213,22 +214,22 @@ export class ServicesGTPComponent implements OnInit {
   }
 
   Button() {
-    if ((this._service.newNameGtpStatus === 1  ) && (this._service.newNameCodeGtpStatus === 1 )) {
+    if ((this._service.newNameGTPStatus === 1  ) && (this._service.newNameCodeGTPStatus === 1 )) {
       return false;
     }
-    if ((this._service.newNameGtpStatus === 3 ) || (this._service.newNameCodeGtpStatus === 3 ) )  {
+    if ((this._service.newNameGTPStatus === 3 ) || (this._service.newNameCodeGTPStatus === 3 ) )  {
       return false;
     }
-    if ((this._service.newNameGtpStatus === 0) || (this._service.newNameCodeGtpStatus === 0)) {
+    if ((this._service.newNameGTPStatus === 0) || (this._service.newNameCodeGTPStatus === 0)) {
       return true;
     }
-    if ((this._service.newNameGtpStatus === 2) || (this._service.newNameCodeGtpStatus === 2 )) {
+    if ((this._service.newNameGTPStatus === 2) || (this._service.newNameCodeGTPStatus === 2 )) {
       return true;
     }
   }
 
  /* onSubmitServicio2() {
-   
+
     if (this._service.newNameGtpStatus === 1   ) {
       console.log('se activo la limieza 1.1');
       this.f.NewName.clearValidators();
@@ -271,23 +272,23 @@ export class ServicesGTPComponent implements OnInit {
      console.log('nombre serv apr ' + this.f.NewName.value);
      console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
      // NOMBRE DE SERVICIO
-     if (this._service.newNameGtpStatus === 1   ) {
+     if (this._service.newNameGTPStatus === 1   ) {
        console.log('se activo la limieza 1.1');
        this.f.NewName.clearValidators();
        this.f.NewName.reset();
       }
-     if ( (this._service.newNameGtpStatus === 3   && this._service.name !== ''  && this._service.newName !== ''  )) {
+     if ( (this._service.newNameGTPStatus === 3   && this._service.name !== ''  && this._service.newName !== ''  )) {
        console.log('se activo la limieza 1.2');
        this.f.NewName.clearValidators();
        this.f.NewName.reset();
       }
      // CODIGO DEUDOR
-       if (this._service.newNameCodeGtpStatus === 1) {
+       if (this._service.newNameCodeGTPStatus === 1) {
        console.log('se activo la limieza 2.1');
        this.f.NewNameCod.clearValidators();
        this.f.NewNameCod.reset();
        }
-       if ( this._service.newNameCodeGtpStatus === 3 &&  this._service.debtorCode !== ''  && this._service.newNameCode !== '') {
+       if ( this._service.newNameCodeGTPStatus === 3 &&  this._service.debtorCode !== ''  && this._service.newNameCode !== '') {
          console.log('se activo la limieza 2.2');
          this.f.NewNameCod.clearValidators();
          this.f.NewNameCod.reset();
@@ -302,11 +303,11 @@ export class ServicesGTPComponent implements OnInit {
            // tslint:disable-next-line:max-line-length
          //  value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
          // tslint:disable-next-line:max-line-length
-         value.acceptednewName = ((this._service.newNameGtpStatus === 1   ) || ( (this._service.newNameGtpStatus === 3   && this._service.name !== ''  && this._service.newName !== ''  )) ) ? true : ((this.frm.value.NewName === 'S') ? true : false) ;
+         value.acceptednewName = ((this._service.newNameGTPStatus === 1   ) || ( (this._service.newNameGTPStatus === 3   && this._service.name !== ''  && this._service.newName !== ''  )) ) ? true : ((this.frm.value.NewName === 'S') ? true : false) ;
            // tslint:disable-next-line:max-line-length
           //  value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
           // tslint:disable-next-line:max-line-length
-          value.acceptednewNameCode = ((this._service.newNameCodeGtpStatus === 1) || ( this._service.newNameCodeGtpStatus === 3 &&  this._service.debtorCode !== ''  && this._service.newNameCode !== '')) ? true :  ( (this.frm.value.NewNameCod === 'S') ? true : false);
+          value.acceptednewNameCode = ((this._service.newNameCodeGTPStatus === 1) || ( this._service.newNameCodeGTPStatus === 3 &&  this._service.debtorCode !== ''  && this._service.newNameCode !== '')) ? true :  ( (this.frm.value.NewNameCod === 'S') ? true : false);
 
           this.grabar.emit(value);
            console.log('TERMINO DFE VALI' + value.acceptednewName + ' ' + value.acceptednewNameCode);
@@ -326,23 +327,23 @@ export class ServicesGTPComponent implements OnInit {
      console.log('nombre serv apr ' + this.f.NewName.value);
      console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
      // NOMBRE DE SERVICIO
-     if (this._service.newNameGtpStatus === 1  ) {
+     if (this._service.newNameGTPStatus === 1  ) {
        console.log('se activo la limieza 1.1');
        this.f.NewName.clearValidators();
        this.f.NewName.reset();
       }
-      if (this._service.newNameGtpStatus === 3) {
+      if (this._service.newNameGTPStatus === 3) {
        console.log('se activo la limieza 1.2');
        this.f.NewName.clearValidators();
        this.f.NewName.reset();
       }
      // CODIGO DEUDOR
-     if (this._service.newNameCodeGtpStatus === 1) {
+     if (this._service.newNameCodeGTPStatus === 1) {
        console.log('se activo la limieza 2.1');
        this.f.NewNameCod.clearValidators();
        this.f.NewNameCod.reset();
        }
-      if (this._service.newNameCodeGtpStatus === 3 ) {
+      if (this._service.newNameCodeGTPStatus === 3 ) {
          console.log('se activo la limieza 2.2');
          this.f.NewNameCod.clearValidators();
          this.f.NewNameCod.reset();
@@ -361,7 +362,7 @@ export class ServicesGTPComponent implements OnInit {
            this.grabar.emit(value);
        }
        console.log('el form no es valido');
-    }  
+    }
 
   onChangeTipoDato() {
     if (this.frm.get('tipoDato').value === 'P') {

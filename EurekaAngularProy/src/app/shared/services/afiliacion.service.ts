@@ -89,6 +89,7 @@ export class AfiliacionService {
       tipoPago: 'C',
       idCuenta: 0,
       nroCuenta: '',
+      newNameCodeGtpStatus: null,
       moneda: '001',
       simboloMoneda: 'S/',
       usaWebApp: true,
@@ -274,8 +275,8 @@ export class AfiliacionService {
             newNameGtpStatus : s.newNameGTPStatus,
             newNameCodeGtpStatus : s.newNameCodeGTPStatus,
             // tslint:disable-next-line:max-line-length
-            nombreHabilitado: ( s.newNameGtpStatus === 1 ||  s.newNameGtpStatus === 3 || s.newName !== '' ) ? true : false,
-            nombreCodHabilitado: (s.newNameCodeGtpStatus === 1 ||  s.newNameCodeGtpStatus === 3 || s.newNameCode !== '') ? true : false,
+            nombreHabilitado: (   s.newNameGTPStatus === 1 || s.newNameGTPStatus === 3 ) ? false : true,
+            nombreCodHabilitado: (s.newNameCodeGTPStatus === 1 ||  s.newNameCodeGTPStatus === 3  ) ? false : true,
 
           });
         });
