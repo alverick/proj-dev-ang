@@ -273,7 +273,7 @@ export class HomeComponent implements OnInit {
 /*
   validandoListado() {
 
-    if (localStorage.getItem('tk') === null  ) {
+    if (sessionStorage.getItem('tk') === null  ) {
       this.router.navigate(['/login']);
     } else {
       this.getDeuda();
@@ -283,7 +283,7 @@ export class HomeComponent implements OnInit {
 
 
   ceroRegistros(): boolean {
-      if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
+      if (sessionStorage.getItem('tk') === null ||  sessionStorage.getItem('tk') ===  '') {
         //this.router.navigate(['/login']);
         return false;
       } else {
@@ -340,7 +340,7 @@ orderList(index: number, asc: boolean) {
   }
 
    mensaje(tipo: any, titulo: string, text: string){
-    if (localStorage.getItem('tk') !== null  ) {
+    if (sessionStorage.getItem('tk') !== null  ) {
       this. mesageeError(tipo,titulo,text);
     }
   }

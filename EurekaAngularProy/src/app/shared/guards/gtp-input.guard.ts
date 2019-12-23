@@ -10,12 +10,12 @@ export class GtpInputGuard implements CanActivate  {
 
   constructor(private router: Router,
     private storageService: StorageService) {}
-    
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    
-      if (parseInt( localStorage.getItem('prfl')) == 1 ) {
+
+      if (parseInt( sessionStorage.getItem('prfl')) == 1 ) {
         //this.router.navigate(['/gtp']);
           return true;
       }
@@ -23,8 +23,7 @@ export class GtpInputGuard implements CanActivate  {
         this.router.navigate(['/home']);
           return true;
       }
-       
+
     }
 
 }
- 

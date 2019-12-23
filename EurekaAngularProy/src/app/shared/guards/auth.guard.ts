@@ -21,11 +21,11 @@ export class AuthGuard implements CanActivate {
   checkLogin(url: string): boolean {
     let session = this.storageService.getCurrentSession();
     if (session && session.isAuthenticate) {
-      
+
       return true;
     }
     else {
-      this.router.navigate(['/login']);
+      //this.router.navigate(['/login']);
       location.href = '/login';
       return false;
     }

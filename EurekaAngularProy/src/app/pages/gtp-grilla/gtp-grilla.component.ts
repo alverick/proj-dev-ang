@@ -165,7 +165,7 @@ export class GtpGrillaComponent implements OnInit {
   }
 
   ceroRegistros(): boolean {
-    if (localStorage.getItem('tk') === null ||  localStorage.getItem('tk') ===  '') {
+    if (sessionStorage.getItem('tk') === null ||  sessionStorage.getItem('tk') ===  '') {
       //this.router.navigate(['/login']);
       return false;
     } else {
