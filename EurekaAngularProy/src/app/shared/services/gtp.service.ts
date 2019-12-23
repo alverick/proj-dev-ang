@@ -1,4 +1,3 @@
-
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -80,7 +79,7 @@ export class GtpService {
               // 50 > 150
             if (end > r.totalCompanies)
               end = r.totalCompanies;
-              // Mostrando 1 - 50 de 150 elemtos
+              // Mostrando 1 - 50 de 1s50 elemtos
             this.pageMessage = `Mostrando ${beg} - ${end} de ${r.totalCompanies} elementos`;
           }
           return r;
@@ -95,11 +94,29 @@ export class GtpService {
       };
       return this.http.get<DataEnterpriseGTP>(url, opts)
       .pipe(map(r => {
+        // console.log('EMPRESA');
+         console.log(r);
         return r;
+
       }))
       .pipe(catchError(err => throwError(err)));
-
   }
+
+  GetEnterpriseGtp2(id: any): Observable<any> {
+    const url = `${environment.END_POINT}/company/GTP/client/${id}`;
+    const opts = {
+      headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
+    };
+    return this.http.get<any>(url, opts)
+    .pipe(map(r => {
+      console.log('empresaR');
+      console.log( r);
+      console.log('end empresaR');
+      return r;
+
+    }))
+    .pipe(catchError(err => throwError(err)));
+}
 
    GetServicesGtp (id: any) {
     const url = `${environment.END_POINT}/company/GTP/services/${id}/${false}`;
@@ -107,6 +124,8 @@ export class GtpService {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
     this.http.get<any[]>(url, opts).subscribe(d => {
+      console.log('SERVICIOS ');
+      console.table(d);
       let servicios = [];
       d.forEach(s => {
         servicios.push({
@@ -137,6 +156,8 @@ export class GtpService {
           acceptednewName: null,
           nombreHabilitado :  (s.name === s.newName) ? false : true,
           nombreCodHabilitado :  (s.debtorCode === s.newNameCode) ?  false : true,
+          newNameGTPStatus: s.newNameGTPStatus,
+          newNameCodeGTPStatus: s.newNameCodeGTPStatus,
           nombre: s.name,
           rubro: s.entry,
           codDeudor: s.debtorCode,
@@ -154,10 +175,12 @@ export class GtpService {
           monto: s.amount,
           porcentaje: s.percentage,
           pagoPartes: s.partialPayment,
+        });
       });
-      });
+      console.log('SERVICIOS..s');
+      console.table(servicios);
        this.services = servicios;
-      console.table( this.services);
+
     });
    }
 
@@ -176,12 +199,15 @@ export class GtpService {
       }));
   }
 
+/*ESTO ME TRAE EN LA CORRECION*/
 
   public GetEnterpriseServices(data: any): Observable<any> {
      this.spinner.show();
      return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(), data)
      .pipe(map(r => {
            this.spinner.hide();
+           console.log('MACHILON, LOS SERVICIOS TRAEN ESTOs');
+           console.log(r);
           return r;
      }))
      .pipe(catchError(err => {
@@ -225,10 +251,10 @@ export class GtpService {
     }
     let svc: any = {
       id: null,
-      nombre: '?',
+      nombre: nombre,
       newName : nombre,
-      codDeudor: '?',
-      newNameCode: 'DNI',
+      codDeudor: 'DNI',
+     // newNameCode: '',
       tipoDato: 'C',
       tipoPago: 'C',
       idCuenta: 0,
@@ -261,13 +287,12 @@ export class GtpService {
     }
   }
 
-
   public DelService(index: number) {
     this.services.splice(index, 1);
   }
 
   public SendDelService(index: number) {
-    let url = `${environment.END_POINT}/company/GTP/service/${this.services[index].id}`;
+    let url = `${environment.END_POINT}/service/${this.services[index].id}`;
     return this.http.delete(url)
       .pipe(map(r => {
         this.services.splice(index, 1);
@@ -276,7 +301,7 @@ export class GtpService {
   }
 
   public CanDeleteService(index: number) {
-    let url = `${environment.END_POINT}/company/GTP/service/${this.services[index].id}/canDelete`;
+    let url = `${environment.END_POINT}/service/${this.services[index].id}/canDelete`;
     return this.http.get<any>(url);
   }
 

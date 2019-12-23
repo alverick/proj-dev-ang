@@ -26,13 +26,15 @@ export class EmpresaGTPComponent implements OnInit {
   constructor(public afiliacionService: AfiliacionService, private formBuilder: FormBuilder, public gtpService: GtpService) { }
 
   ngOnInit() {
-    console.table(this._enterprise);
+    console.log('EMPRESA ENTERPRISE');
+    console.table(this._enterprise );
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
 
     this.formGroup = this.formBuilder.group({
       ruc: new FormControl({ value: this._enterprise.ruc, disabled: true }),
       newName: new FormControl({ value: this._enterprise.newName, disabled: true }),
-      NewNameApproved:  [(this._enterprise.NombreApproved === true ? 'S' : 'N'), Validators.required],
+      // tslint:disable-next-line:max-line-length
+      NewNameApproved:  [(this._enterprise.NombreApproved === undefined) ? '' : (this._enterprise.NombreApproved === true ? 'S' : 'N'), Validators.required],
       entry: new FormControl({ value: this._enterprise.entry, disabled: true }),
       email: new FormControl({ value: this._enterprise.email, disabled: true }),
       movilNumber: new FormControl({ value: this._enterprise.movilNumber, disabled: true }),

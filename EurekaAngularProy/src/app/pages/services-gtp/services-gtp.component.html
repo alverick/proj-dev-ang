@@ -16,7 +16,10 @@
         <mat-radio-group *ngIf="RadioAprovveName()"  formControlName="NewName" aria-label="Select an option">
             <mat-radio-button name="NewName" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewName" class="w-15"  value ="N">NO</mat-radio-button>
+            <mat-error class="messsage-error" *ngIf="f.NewName.invalid && f.NewName.hasError('required')">Debe seleccionar una opción</mat-error>
+
         </mat-radio-group>
+
     </div>
     <div class="form-group">
         <mat-form-field   class="w-70">
@@ -39,7 +42,10 @@
         <mat-radio-group *ngIf="RadioAprovveNameCod()"  formControlName="NewNameCod" aria-label="Select an option">
             <mat-radio-button name="NewNameCod" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewNameCod" class="w-15"  value ="N">NO</mat-radio-button>
+            <mat-error class="messsage-error" *ngIf="f.NewNameCod.invalid && f.NewNameCod.hasError('required')">Debe seleccionar una opción</mat-error>
+
         </mat-radio-group>
+
     </div>
     <div class="form-group">
       <mat-form-field class="w-100">
@@ -144,7 +150,7 @@
               <mat-radio-button name="cobraMora" id="mora-si" value="S" class="texto-mora">Si</mat-radio-button>
           </mat-radio-group>
       </div>
-      <div class="form-group col-5" *ngIf="cobraMora">
+      <div class="form-group col-5" *ngIf="cobraMora ">
           <mat-form-field class="w-80 ml-3">
               <mat-label>Tipo de Cobro</mat-label>
               <mat-select class="texto-mora" formControlName="periodoMora" (ngModelChange)="TipoCobro()" disableOptionCentering

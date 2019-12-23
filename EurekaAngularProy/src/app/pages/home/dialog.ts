@@ -84,6 +84,7 @@ declare var $: any;
     get f(): any { return this.inputXlsForm.controls;}
 
      changestatus =true;
+
     openSnackBar() {
         if(this.excelService.statusUpload == false) {
           this.progress.status = "Subiendo";

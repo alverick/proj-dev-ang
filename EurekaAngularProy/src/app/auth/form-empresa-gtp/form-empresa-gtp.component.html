@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup" novalidate  (submit)="onSubmitEmpresa()" class="form">
     <div class="form-group ">
         <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" formControlName="cu" (blur)="onBlurCu($event)" placeholder="Código Único" [class.is-invalid]="f.cu.invalid" appOnlynumbers maxlength="10">
+            <input class="input-text" matInput type="text" formControlName="cu" (blur)="onBlurCu($event)" placeholder="Código Único" [class.is-invalid]="f.cu.invalid" appOnlynumbers maxlength="10" readonly>
             <mat-error class="messsage-error">
               <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('required')">El CU es obligatorio</mat-error>
               <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('pattern')"> Ingrese un CU valido </mat-error>
@@ -41,10 +41,10 @@
         </div>
     <div class="form-group">
         <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" placeholder="E-mail" minlength="10" maxlength="100" formControlName="email" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid" >
+            <input class="input-text" matInput type="email" placeholder="E-mail" minlength="10" maxlength="100" formControlName="email" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid" >
             <mat-error class="messsage-error">
               <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required')">El E-mail es obligatorio</mat-error>
-              <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail válido </mat-error>
+              <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
               <mat-error class="messsage-error" *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
             </mat-error>
         </mat-form-field>

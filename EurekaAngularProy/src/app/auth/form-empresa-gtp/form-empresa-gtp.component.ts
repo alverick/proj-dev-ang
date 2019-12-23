@@ -28,7 +28,7 @@ export class FormEmpresaGTPComponent implements OnInit {
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
 
     this.formGroup = this.formBuilder.group({
-      cu: new FormControl(this._enterprise.uniqueCodeIBK, [Validators.required]),
+      cu: new FormControl(this._enterprise.uniqueCodeIBK, [Validators.required, Validators.pattern('[0-9]*')]),
       ruc: new FormControl(this._enterprise.ruc, [Validators.required, Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
       newName: new FormControl(this._enterprise.newName, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
       entry: new FormControl(this._enterprise.entry, [Validators.required]),
@@ -45,7 +45,7 @@ export class FormEmpresaGTPComponent implements OnInit {
     if (this.formGroup.valid) {
           let value: DataEnterpriseGTP;
           value = this._enterprise;
-          value.uniqueCodeIBK = this.f.cu.value;
+          value.cu = this.f.cu.value;
           value.ruc = this.f.ruc.value;
           value.newName = this.f.newName.value;
           value.entry = this.f.entry.value;

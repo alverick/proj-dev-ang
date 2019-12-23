@@ -70,28 +70,29 @@ export class FormServicioGtpComponent implements OnInit {
       debtorCode = 'Otro';
     }
 
-    this.frm = this.fb.group({
-        res: [this._service.res, [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(7)]],
-        nombre: new FormControl({ value: (this._service.nombre !== '?')? this._service.nombre : this._service.newName,
-          disabled: false },
-          [Validators.required, Validators.minLength(3), Alfanumerico,
-            Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-        codDeudor: new FormControl({ value: debtorCode, disabled: false }, [Validators.required]),
-        nameCod: new FormControl({ value: nameCode, disabled: false }),
-        tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
-        tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
-        nroCuenta: [this._service.nroCuenta, [Validators.required, Validators.minLength(13)]],
-        moneda: [this._service.moneda, Validators.required],
-        usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.gtpMode}),
-        usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.gtpMode }),
-        usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true}),
-        cobraMora: new FormControl({ value: this._service.cobraMora, disabled: false }, Validators.required ),
-        periodoMora:new FormControl({ value: this._service.periodoMora, disabled: false }),
-        tipoMora: new FormControl({ value: this._service.tipoMora, disabled: false }),
-        monto: new FormControl({ value: montod, disabled: false }),
-        porcentaje: new FormControl({ value: porcentajed, disabled: false }),
-        pagoPartes: new FormControl({ value: this._service.pagoPartes, disabled: false }, Validators.required),
-      });
+        this.frm = this.fb.group({
+          nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ?
+            this._service.newName :  this._service.nombre  , disabled:  this._service.nombreHabilitado  }, [Validators.required,
+            Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+          codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ?
+            this._service.codDeudor : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
+            this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',  disabled: this._service.nombreCodHabilitado },
+            [Validators.required]),
+          nameCod: new FormControl({ value:  this._service.newNameCode, disabled: ( this._service.newNameCodeGtpStatus === 3  ) ? false : true }),
+          tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.gtpMode }, Validators.required),
+          tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.gtpMode }, Validators.required),
+          nroCuenta: [this._service.nroCuenta, [Validators.required, Validators.minLength(13)]],
+          moneda: [this._service.moneda, Validators.required],
+          usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.gtpMode}),
+          usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.gtpMode }),
+          usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true}),
+          cobraMora: new FormControl({ value: this._service.cobraMora, disabled: false }, Validators.required ),
+          periodoMora:new FormControl({ value: this._service.periodoMora, disabled: false }),
+          tipoMora: new FormControl({ value: this._service.tipoMora, disabled: false }),
+          monto: new FormControl({ value: montod, disabled: false }),
+          porcentaje: new FormControl({ value: porcentajed, disabled: false }),
+          pagoPartes: new FormControl({ value: this._service.pagoPartes, disabled: false }, Validators.required),
+        });
 
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
@@ -122,12 +123,17 @@ export class FormServicioGtpComponent implements OnInit {
 
   }
 
-  nombreAlert() {
-    /*editMode === true && ( _service.nombre  !== _service.newName) */
+ /* nombreAlert2() {
     return (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true;
+  } */
+  nombreAlert() {
+     return ( this._service.newNameGtpStatus === 3 ) ? false : true;
   }
-  CodiAlert() {
+ /* CodiAlert2() {
     return (this._service.codDeudor === '?' && this._service.newNameCode.substring(0, 3) === '???' ) ? false :  true;
+  } */
+  CodiAlert() {
+    return  ( this._service.newNameCodeGtpStatus === 3 ) ? false : true;
   }
 
 
@@ -161,34 +167,16 @@ export class FormServicioGtpComponent implements OnInit {
     if (this.frm.valid) {
 
             let value: ServiceModel;
-
             value = this._service;
-
-            value.res = this.frm.value.res;
-            value.nombre = this.frm.value.nombre;
-            value.newName = this.frm.value.nombre;
-            value.codDeudor = (this.frm.value.codDeudor === 'Otro' ? this.frm.value.nameCod : this.frm.value.codDeudor);
-            value.newNameCode = (this.frm.value.codDeudor === 'Otro' ? this.frm.value.nameCod : this.frm.value.codDeudor);
-            value.tipoDato = this.frm.value.tipoDato;
-            value.tipoPago = this.frm.value.tipoPago;
-            value.nroCuenta = this.frm.value.nroCuenta;
-            value.moneda = this.frm.value.moneda;
-            value.usaAgente = this.frm.value.usaAgente;
-            value.usaTienda = this.frm.value.usaTienda;
-            value.usaWebApp = true;
-            value.cobraMora = this.frm.value.cobraMora;
-            value.periodoMora = this.frm.value.periodoMora;
-            value.tipoMora = this.frm.value.tipoMora;
-            value.monto = this.frm.value.monto;
-            value.porcentaje = this.frm.value.porcentaje;
-            value.pagoPartes = this.frm.value.pagoPartes;
-            value.acceptednewName = true;
-            value.acceptednewNameCode = true;
-            value.inReview = false;
-            console.log(value);
-            console.log('emitir grabar');
+            value.newName = ( this._service.newNameGtpStatus === 3 ) ? this.frm.value.nombre : value.nombre ;
+            if (this.frm.value.codDeudor === 'RUC' || this.frm.value.codDeudor === 'DNI' || this.frm.value.codDeudor === 'Codigo Interno' || this.frm.value.codDeudor === 'Codigo') {
+              value.newNameCode = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.codDeudor : this._service.newNameCode;
+            } else {
+              value.newNameCode = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.nameCod : this._service.newNameCode;
+              value.nameCod = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.nameCod : this._service.newNameCode;
+            }
+            console.log('valores' +  value.nombre + 'f'+  value.codDeudor+ 'f'+  value.nameCod );
             this.grabar.emit(value);
-
     }
   }
 
@@ -281,6 +269,7 @@ export class FormServicioGtpComponent implements OnInit {
     if(event === 'Otro'){
     //  this.f.codDeudor.reset();
       this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
+      this.f.nameCod.reset();
     }
     else {
       this.f.nameCod.clearValidators();

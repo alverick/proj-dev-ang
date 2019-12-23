@@ -110,11 +110,11 @@ export class TransactionService {
 
   deleteDeuda(idDebt: number): Observable<Debts>{
       // cambia link
-      const url = `${this.URI_API}/debt/${idDebt}?_=`+ new Date().getTime();
+      const url = `${this.URI_API}/debt//${idDebt}?_=`+ new Date().getTime();
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
       };
-      return this.http.delete<Debts>(url, opts).pipe(catchError(error => throwError(error)));
+      return this.http.post<Debts>(url, opts).pipe(catchError(error => throwError(error)));
   }
 
   deleteAll(): Observable<any> {
@@ -122,7 +122,7 @@ export class TransactionService {
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
-    return this.http.put<Debts>(url, { ids: this.itemsForDelete }, opts).pipe(catchError(error => throwError(error)));
+    return this.http.post<Debts>(url, { ids: this.itemsForDelete }, opts).pipe(catchError(error => throwError(error)));
   }
 
   deleteFiltered(filtro: DebstFilter = null) {
@@ -147,11 +147,11 @@ export class TransactionService {
   // ESITAR LA DEUDA
     editDeuda(id: number, debts: DebtEdit): Observable<any>{
       // cambia link
-      const url = `${this.URI_API}/debt/${id}?_=`+ new Date().getTime();;
+      const url = `${this.URI_API}/debt/put/${id}?_=`+ new Date().getTime();;
       const opts = {
         headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
       };
-      return this.http.put(url, debts ,opts).pipe(catchError(error => throwError(error)));
+      return this.http.post(url, debts ,opts).pipe(catchError(error => throwError(error)));
     }
 
     report(filtro: DebstFilter): Observable<any>{
@@ -183,7 +183,7 @@ export class TransactionService {
 
     updateDeuda(id: number, paid: boolean): Observable<any>{
       const url = `${this.URI_API}/debt/pay?_=`+ new Date().getTime();
-      const opts={
+      const opts= {
         headers: { "Authorization":"bearer" + this.storage.getCurrentToken()}
       };
       const data ={
@@ -195,7 +195,7 @@ export class TransactionService {
 
   getPayments(debtId: number): Observable<any[]> {
     let url = `${this.URI_API}/payment/ofDebt/${debtId}?_=${new Date().getTime()}`;
-    return this.http.get<any[]>(url)
+    return this.http.post<any[]>(url, null)
       .pipe(map(p => {
         p.forEach(v => {
           v.editing = false;
@@ -216,14 +216,13 @@ export class TransactionService {
   editPayment(debtId: number, paymentId: number, payment: any): Observable<any> {
     let url = `${this.URI_API}/payment/${paymentId}?_=${new Date().getTime()}`;
     payment.debtId = debtId;
-    return this.http.put(url, payment)
+    return this.http.post(url, payment)
       .pipe(catchError(err => throwError(err)));
   }
 
   deletePayment(debtId: number, paymentId: number): Observable<any> {
     let url = `${this.URI_API}/payment/${paymentId}/ofDebt/${debtId}?_=${new Date().getTime()}`;
-    return this.http.delete(url)
-      .pipe(catchError(err => throwError(err)));
+    return this.http.post(url, null).pipe(catchError(err => throwError(err)));
   }
 
   deleteDebt(id: number, forDelete: boolean) {

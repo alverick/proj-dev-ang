@@ -12,49 +12,49 @@
                 <span matPrefix class="pr-1"><img src="assets/images/buscar.svg"> </span>
                 <button mat-button *ngIf="filtro.inputSearch" matSuffix mat-icon-button aria-label="Clear"
                   (click)="filtro.inputSearch=''">
-                  <i class="fa fa-close"></i>
+                  <i class="fa fa-times-circle"></i>
                 </button>
               </mat-form-field>
               <mat-form-field class="f2">
                 <mat-select placeholder="Servicio" class="input-text selectpicker filter-slt" disableOptionCentering
                   panelClass="pts26" [(ngModel)]="filtro.service" name="servicio">
-                  <mat-option class="input-text">Servicio</mat-option>
+               <!--   <mat-option class="input-text">Servicio</mat-option> -->
                   <mat-option class="input-text" value="{{service.name}}" *ngFor="let service of services">
                     {{service.name}}</mat-option>
                 </mat-select>
                 <button mat-button *ngIf="filtro.service" matSuffix mat-icon-button aria-label="Clear"
                   (click)="filtro.service=null; $event.stopPropagation();">
-                  <i class="fa fa-close"></i>
+                  <i class="fa fa-times-circle"></i>
                 </button>
               </mat-form-field>
               <mat-form-field class="f2">
                 <mat-select class="input-text" placeholder="Estado de pago" disableOptionCentering panelClass="pts26"
                   [(ngModel)]="filtro.status" name="status">
-                  <mat-option class="input-text">Estado de pago</mat-option>
+                 <!-- <mat-option class="input-text">Estado de pago</mat-option> -->
                   <mat-option class="input-text" value="{{item.idWayPay}}" *ngFor="let item of waypayList">
                     {{item.descripcion}} </mat-option>
                 </mat-select>
                 <button mat-button *ngIf="filtro.status" matSuffix mat-icon-button aria-label="Clear"
                   (click)="filtro.status=null; $event.stopPropagation();">
-                  <i class="fa fa-close"></i>
+                 <i class="fa fa-times-circle"></i>
                 </button>
               </mat-form-field>
               <mat-form-field class="f2">
                 <mat-select class="input-text" placeholder="Fecha" disableOptionCentering panelClass="pts26"
                   [(ngModel)]="filtro.dateForFilter" name="dateForFilter" (ngModelChange)="clearDatePicker($event)">
-                  <mat-option class="input-text">Fecha</mat-option>
+                 <!-- <mat-option class="input-text">Fecha</mat-option> -->
                   <mat-option class="input-text" value="{{item.idDate}}" *ngFor="let item of DateList">
                     {{item.descripcion}} </mat-option>
                 </mat-select>
                 <button mat-button *ngIf="filtro.dateForFilter" matSuffix mat-icon-button aria-label="Clear"
                   (click)="limpiarDateForFilter(); $event.stopPropagation();">
-                  <i class="fa fa-close"></i>
+                  <i class="fa fa-times-circle"></i>
                 </button>
               </mat-form-field>
               <mat-form-field class="f2">
                 <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)"
                   #inputDate1 placeholder="Desde" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)"
-                  type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" maxlength="10" minlength="10"
+                  type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" (click)="myDatepicker2.open()"  maxlength="10" minlength="10"
                   appBlockCopyPaste [disabled]="!filtro.dateForFilter">
                 <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
                   <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
@@ -62,14 +62,14 @@
                 <mat-datepicker #myDatepicker2></mat-datepicker>
                 <button mat-button *ngIf="filtro.dateFrom || inputDate1.value" matSuffix mat-icon-button
                   aria-label="Clear" (click)="limpiardate1()">
-                  <i class="fa fa-close"></i>
+                  <i class="fa fa-times-circle"></i>
                 </button>
-                <div class="msg-error" *ngIf="errores.dateFrom">{{errores.dateFrom}}</div>
+                <div class="msg-error" *ngIf="errores.dateFrom && querySearch">{{errores.dateFrom}}</div>
               </mat-form-field>
               <mat-form-field class="f2">
                 <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)"
                   #inputDate2 placeholder="Hasta" (ngModelChange)="validaDateTo($event)" type="text" name="dateTo"
-                  matInput [matDatepicker]="myDatepicker" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"
+                  matInput [matDatepicker]="myDatepicker"  (click)="myDatepicker.open()" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"
                   appBlockCopyPaste [disabled]="!filtro.dateForFilter">
                 <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker">
                   <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
@@ -77,9 +77,9 @@
                 <mat-datepicker #myDatepicker></mat-datepicker>
                 <button mat-button *ngIf="filtro.dateTo || inputDate2.value" matSuffix mat-icon-button
                   aria-label="Clear" (click)="limpiardate2()">
-                  <i class="fa fa-close"></i>
+                  <i class="fa fa-times-circle"></i>
                 </button>
-                <div class="msg-error" *ngIf="errores.dateTo">{{errores.dateTo}}</div>
+                <div class="msg-error" *ngIf="errores.dateTo && querySearch">{{errores.dateTo}}</div>
               </mat-form-field>
               <button type="button" class="f3 btn-eureca-green" (click)="sendFiltro()">BUSCAR
               </button>
@@ -154,7 +154,7 @@
             <section class="lista">
               <table>
                 <thead>
-                  <tr>
+                  <tr *ngIf="!ceroRegistros()">
                     <th class="c0">&nbsp;</th>
                     <th class="c1">
                       <div class="text">Fecha emisión</div>
@@ -265,7 +265,7 @@
               <perfect-scrollbar class="ps-body">
                 <table>
                   <tbody>
-                    <tr
+                    <tr 
                       *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFiltro.pageNumber, totalItems: transactionService.debtItems.count }"
                       [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
                       <td class="c0 pl-3 ">
@@ -278,9 +278,10 @@
                         <span *ngIf="!items.editPending">{{items.emissionDate | date:'dd/MM/yy' }}</span>
                         <div *ngIf="items.editPending" class="content-input-icon position-relative">
                           <mat-form-field class="inline-input" style="width: 80px">
-                            <input class="input-text-dash" appDate [min]="minDate" [max]="maxDate" matInput
-                              [matDatepicker]="edp" [(ngModel)]="items.newEmissionDate" formC maxlength="10"
-                              minlength="10" type="text" (ngModelChange)="items.errores.emissionDate = null;">
+                            <input matInput [matDatepicker]="edp"   (click)="edp.open()"
+                            class="input-text-dash" appDate [min]="minDate"  [max]="maxDate" 
+                            [(ngModel)]="items.newEmissionDate" formC maxlength="10"
+                             minlength="10" type="text" (ngModelChange)="items.errores.emissionDate = null;">
                             <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                             <mat-datepicker #edp></mat-datepicker>
                             <div class="msg-error" *ngIf="items.errores.emissionDate">{{items.errores.emissionDate}}

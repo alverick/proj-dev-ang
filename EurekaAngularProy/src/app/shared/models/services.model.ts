@@ -31,4 +31,6 @@ export interface ServiceModel {
     nombreCodHabilitado?: boolean;
     acceptednewName?: boolean;
     acceptednewNameCode?: boolean;
+    newNameGtpStatus?: number;
+    newNameCodeGtpStatus?: number;
 }

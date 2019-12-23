@@ -18,13 +18,13 @@
                                         <td class="font-black-servicios-list">Nombre de la Empresa</td>
                                     </tr>
                                     <tr>
-                                        <td class="font-black-servicios-des-list">{{Enterprise.newName}}</td>
+                                        <td class="font-black-servicios-des-list">{{Enterprise.name}}</td>
                                     </tr>
                                      <tr>
                                         <td class="font-black-servicios-list">Rubro </td>
                                     </tr>
                                     <tr>
-                                        <td class="font-black-servicios-des-list">{{Enterprise.entryName}} </td>
+                                        <td class="font-black-servicios-des-list">{{rubro}} </td>
                                     </tr>
                                       <tr>
                                         <td class="font-black-servicios-list">CU </td>
@@ -41,7 +41,7 @@
 
                       <div class="d-flex justify-content-start">
                           <perfect-scrollbar class="content-container mt-5 mb-3">
-                            <div class="card-empresa mb-2" [class.seleccionado]="EmpresaFormulario">
+                            <div class="card-empresa mb-2" *ngIf="Enterprise.name !== Enterprise.newName || Enterprise.inReview === true  "   [class.seleccionado]="Formulario">
                               <div class=" pl-4">
                                   <div class="pl-1 row pb-0">
                                         <div class="col-sm-12 pt-3">
@@ -52,9 +52,11 @@
                                   <table class="table table-sm table-borderless ">
                                       <tr>
                                           <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview "><span class="badge badge-primary" >Nueva Empresa</span> </td>
+                                          <td class="font-black-servicios-des-list" *ngIf="((Enterprise.name ===  Enterprise.newName) &&  Enterprise.inReview ) && Enterprise.status === 'Devuelto' "><span class="badge badge-primary" >Empresa devuelta</span> </td>
+                                          <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name !==  Enterprise.newName) &&  Enterprise.inReview"><span class="badge badge-warning" >Modificacion Empresa</span> </td>
                                        </tr>
                                       <tr>
-                                          <td class="font-black-servicios-des-list" *ngIf="(Enterprise.name ===  Enterprise.newName) && Enterprise.inReview ">por Revisar</td>
+                                          <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == null  ">por Revisar</td>
                                           <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == true || Enterprise.NombreApproved == false ">Revisado</td>
                                           <td><button type="button" (click)="VerCamposEnterprise(Enterprise)" class="f3 btn-outline-green"  >Ver </button></td>
                                       </tr>
@@ -89,7 +91,9 @@
                                           </tr>
                                           <tr>
                                               <th style="width:150px;" class="font-black-servicios-list">Código cliente</th>
-                                              <td class="font-black-servicios-des-list">{{ getCodDebtor(svc) }} </td>
+                                              <td *ngIf="!inEdit  && !inGTP" class="font-black-servicios-des-list">{{ getCodDebtorCreate(svc) }} </td>
+                                              <td *ngIf="inGTP" class="font-black-servicios-des-list">{{ getCodigoNameGTP(svc)}} </td>
+                                              <td *ngIf="inEdit" class="font-black-servicios-des-list">{{ getCodDebtor(svc) }} </td>
 
                                           </tr>
 
@@ -112,7 +116,6 @@
                                       <table class="table table-sm table-borderless ">
                                         <tr>
                                           <td class="font-black-servicios-des-list" ><span class="badge badge-primary" >{{getState(svc)}}</span> </td>
-                                          <td class="font-black-servicios-des-list" *ngIf="svc.acceptednewName !== null && svc.acceptednewNameCode !== null ">Revisado</td>
                                         </tr>
                                       </table>
                                   </div>
@@ -154,7 +157,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-7 pb-3" *ngIf="Formulario">
+      <!-- <div class="col-sm-7 pb-3" *ngIf="Formulario">
               <br>
               <div class="d-flex justify-content-end">
                   <div class="formulario p-5 bg-white ">
@@ -171,7 +174,7 @@
                       <app-form-servicio-gtp [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio-gtp>
                   </div>
               </div>
-          </div>
+          </div>-->
 
       </div>
   </div>

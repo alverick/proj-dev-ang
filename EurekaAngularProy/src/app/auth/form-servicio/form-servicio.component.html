@@ -26,7 +26,7 @@
             <mat-label class="label">Código cliente</mat-label>
             <mat-select   class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering
               panelClass="pts30" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
-                <mat-option class="input-text">Código Deudor</mat-option>
+             <!--   <mat-option class="input-text">Código Deudor</mat-option>-->
                 <mat-option class="input-text" *ngFor="let c of codDeudor" [value]="c.code">
                     {{c.name}}
                 </mat-option>
@@ -37,11 +37,8 @@
                 <mat-error class="messsage-error" *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('required')">Escriba una opcion</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
-              <!--  <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && !f.nameCod.hasError('pattern') && f.nameCod.hasError('minlength')">El codigo no puede tener menos de 3 caracteres</mat-error>-->
             </mat-error>
         </mat-form-field>
-
-        <!-- <div  *ngIf="editMode === true && ( _service.codDeudor  !== _service.newNameCode)" class="messsage-error">El nuevo codigo {{ _service.newNameCode }} esta siendo procesado</div> -->
 
         <div  *ngIf="CodiAlert()" class="messsage-error">El nuevo codigo  <strong>{{ _service.newNameCode }} </strong> esta siendo procesado</div>
 
@@ -51,7 +48,7 @@
             <mat-label class="label">¿Qué datos tienes de tus clientes?</mat-label>
             <mat-select class="input-text" formControlName="tipoDato" name="tipoDato" disableOptionCentering
               panelClass="pts30" (ngModelChange)="onChangeTipoDato()">
-                <mat-option class="input-text">¿Qué datos tienes de tus clientes?</mat-option>
+               <!-- <mat-option class="input-text">¿Qué datos tienes de tus clientes?</mat-option> -->
                 <mat-option class="input-text" *ngFor="let t of tiposDato" [value]="t.code">
                     {{t.name}}
                 </mat-option>
@@ -61,10 +58,10 @@
     </div>
     <div class="form-group" *ngIf="Dataparcial">
         <mat-form-field class="w-100">
-            <mat-label class="label">¿Cómo quieres que te paguen tus clientes?</mat-label>
+           <mat-label class="label">¿Cómo quieres que te paguen tus clientes?</mat-label>
             <mat-select class="input-text" formControlName="tipoPago" name="tipoPago" disableOptionCentering
               panelClass="pts30" >
-                <mat-option class="input-text">¿Cómo quieres que te paguen tus clientes?</mat-option>
+              <!--  <mat-option class="input-text">¿Cómo quieres que te paguen tus clientes?</mat-option> -->
                 <mat-option class="input-text" *ngFor="let t of tiposPago" [value]="t.code">
                     {{t.name}}
                 </mat-option>
@@ -73,34 +70,22 @@
         </mat-form-field>
     </div>
     <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <mat-form-field>
-                    <input class="input-text" matInput type="text" appNumberAccount maxlength="13" formControlName="nroCuenta" name="nroCuenta" placeholder="Nº de cuenta Interbank">
-                    <mat-error class="messsage-error">
-                        <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('required')">El numero de cuenta es obligatorio</mat-error>
-                        <mat-error *ngIf="f.nroCuenta.invalid && f.nroCuenta.hasError('minlength')">El numero de cuenta debe tener 13 carácteres</mat-error>
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="form-group col-md-6">
-                <mat-form-field>
-                    <mat-label>Tipo de Moneda</mat-label>
-                    <mat-select class="input-text" formControlName="moneda" name="moneda" (ngModelChange)="changeMoneda($event)">
-                        <mat-option class="input-text">Tipo de Moneda</mat-option>
-                        <mat-option class="input-text" *ngFor="let m of monedas" [value]="m.code">
-                            {{m.name}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error class="messsage-error" *ngIf="f.moneda.hasError('required')">Elija una opcion</mat-error>
-                </mat-form-field>
-            </div>
-        </div>
-      </div>
+        <mat-form-field class="w-100">
+            <mat-label class="label">Nº de cuenta Interbank</mat-label>
+            <mat-select class="input-text" formControlName="idCuenta" name="idCuenta" disableOptionCentering
+              panelClass="pts30" (ngModelChange)="changeCuenta($event)">
+               <!-- <mat-option class="input-text" >Nº de cuenta Interbank</mat-option> -->
+                <mat-option class="input-text" *ngFor="let cta of cuentas" [value]="cta.id">{{cta.number}}</mat-option>
+            </mat-select>
+            <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('required')">Elija una opciona</mat-error>
+            <!--POR AHORA VALIDA POR MEDIO DEL MINLENGTH-->
+           <!-- <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('minlength')">Elija una opcionb</mat-error>-->
+        </mat-form-field>
+    </div>
     <span class="texto-medios ">  Elige los medios por los cuales tus clientes te pagarán  </span>
     <div class="row card-deck mt-2 mb-3 text-center">
-        <div class="card-medio-pago ml-3">
-            <div [class.seleccionado-card]="f.usaWebApp.value" style="height: 161px;" >
+        <div class="card-medio-pago ml-3" [class.seleccionado-card]="f.usaWebApp.value">
+            <div   style="height: 161px;" >
                 <div class="pt-2">
                     <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-1"  >
                     </mat-checkbox>
@@ -112,8 +97,8 @@
                 </div>
             </div>
         </div>
-        <div class="card-medio-pago ml-2">
-            <div [class.seleccionado-card]="f.usaAgente.value" style="height: 161px;">
+        <div class="card-medio-pago ml-2" [class.seleccionado-card]="f.usaAgente.value">
+            <div  style="height: 161px;">
                 <div class="pt-2">
                     <mat-checkbox formControlName="usaAgente" id="styled-checkbox-2">
                     </mat-checkbox>
@@ -126,8 +111,8 @@
                 </div>
             </div>
         </div>
-        <div class="card-medio-pago ml-2">
-            <div [class.seleccionado-card]="f.usaTienda.value" style="height: 161px;">
+        <div class="card-medio-pago  ml-2"  [class.seleccionado-card]="f.usaTienda.value">
+            <div >
                 <div class="pt-2">
                     <mat-checkbox formControlName="usaTienda" id="styled-checkbox-3">
                     </mat-checkbox>
@@ -166,8 +151,8 @@
                 <mat-label>Tipo de Cobro</mat-label>
                 <mat-select class="texto-mora" formControlName="periodoMora" (ngModelChange)="TipoCobro()" disableOptionCentering
                   panelClass="pts30" >
-                    <mat-option class="texto-mora">Tipo de Cobro</mat-option>
-                    <mat-option class="texto-mora" *ngFor="let t of tiposMora" [value]="t.code">
+                   <!-- <mat-option class="texto-mora">Tipo de Cobro</mat-option> -->
+                    <mat-option class="input-text" class="input-text" *ngFor="let t of tiposMora" [value]="t.code">
                         {{t.name}}
                     </mat-option>
                 </mat-select>

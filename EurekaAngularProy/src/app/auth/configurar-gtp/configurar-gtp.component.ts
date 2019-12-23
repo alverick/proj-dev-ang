@@ -32,9 +32,11 @@ export class ConfigurarGtpComponent implements OnInit {
   public SvcEdit: ServicesGTPChange[];
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {
+    cu: '',
     ruc: '0',
     name: '',
     entry: '',
+    entryName: '',
     email: '',
     movilNumber: 0 ,
     newName: '' ,
@@ -60,6 +62,7 @@ export class ConfigurarGtpComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
     this.inEdit = true;
     window['_url_loop_'] = `ApGTP/${this.route.snapshot.paramMap.get('llave')}`;
     history.pushState(null, null, `ApGTP/${this.route.snapshot.paramMap.get('llave')}`);
@@ -194,50 +197,6 @@ export class ConfigurarGtpComponent implements OnInit {
       return;
     }
     // this.frm.get('monto').value
-    let res = '';
-    let resVacio = false;
-    let resValido = true;
-    this.gtpService.services.forEach(s => {
-      if (s.res !== '' && s.res !== null) {
-        if (res === '' || res === null) {
-          res = s.res;
-        }
-        else {
-          if (res.substring(0, 5) !== s.res.substring(0, 5)) {
-            resValido = false;
-          }
-        }
-      }
-      else {
-        resVacio = true;
-      }
-    });
-    if (resVacio && this.Enterprise.enabled) {
-      Swal.fire({
-        title: 'Error en RES',
-        html: `Uno de los servicios no tiene RES asignada.<br />No puede poner este cliente como activo`,
-        showCloseButton: true,
-        showCancelButton: true,
-        showConfirmButton: false,
-        cancelButtonColor: '#d33',
-        cancelButtonText:  'CERRAR',
-        onOpen: drawPopup
-      });
-      return;
-    }
-    if (!resValido) {
-      Swal.fire({
-        title: 'Error en RES',
-        text: `Uno de los RES no coincide. Por favor corrija.`,
-        showCloseButton: true,
-        showCancelButton: true,
-        showConfirmButton: false,
-        cancelButtonColor: '#d33',
-        cancelButtonText:  'CERRAR',
-        onOpen: drawPopup
-      });
-      return;
-    }
 
         let svcSinCta = this.gtpService.services.find((v) => v.nroCuenta === '');
         if(svcSinCta) {
@@ -290,13 +249,29 @@ export class ConfigurarGtpComponent implements OnInit {
   }
 
   getCodDebtor(svc: ServiceModel) {
+
+      if(svc.codDeudor === svc.newNameCode) {
+         return svc.newNameCode;
+      }
       if (svc.codDeudor === '?') {
         if (svc.newNameCode.substring(0, 3) === '???') {
-          return svc.newNameCode.substring(3, svc.newNameCode.length);
-        }
-        return svc.newNameCode;
+         return svc.newNameCode.substring(3, svc.newNameCode.length);
+       }
+       return svc.newNameCode;
+     } else {
+      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
+          return svc.codDeudor;
       }
-      return svc.newNameCode;
+      }
+
+      if((svc.codDeudor  === 'Otro' ) && (svc.nameCod !== svc.newNameCode)) {
+            return svc.nameCod;
+      }
+      if((svc.codDeudor  === 'Otro' ) || (svc.nameCod !== svc.newNameCode)) {
+        // return svc.nameCod;
+         return svc.codDeudor;
+     }
+
   }
   getCodDebtorCreate(svc: ServiceModel) {
      if (svc.codDeudor   === 'RUC' || svc.codDeudor  === 'DNI' || svc.codDeudor === 'Codigo Interno') {
@@ -349,7 +324,7 @@ getName(svc: ServiceModel) {
     }
   }
 
-  return svc.newName;
+  return svc.nombre;
 }
 
 getCodigoNameGTP(svc: ServiceModel) {
@@ -372,7 +347,7 @@ getCodigoNameGTP(svc: ServiceModel) {
       return;
     }
     if (this.inEdit && this.gtpService.services[index].id) {
-      this.gtpService.CanDeleteService(index).subscribe(r => {
+      this.afiliacionService.CanDeleteService(index).subscribe(r => {
         let title = 'Eliminación total del servicio';
         let msg = 'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
         if (r.hasPayed) {
@@ -389,7 +364,7 @@ getCodigoNameGTP(svc: ServiceModel) {
           onOpen: drawPopup
         }).then(r => {
           if (r.value) {
-            this.gtpService.SendDelService(index)
+            this.afiliacionService.SendDelService(index)
               .subscribe(r => {
                 this.gaService.sendEvent('ServicioEliminado', {
                   'event_category': GoogleAnalytics.Afiliacion,
@@ -447,10 +422,15 @@ getCodigoNameGTP(svc: ServiceModel) {
   }
 
   onGrabar(svc: any) {
+    console.log('Servicios');
+    console.table( this.gtpService.services);
+    console.log('cierra');
     if (this.indiceActual >= 0) {
 
       if (this.inEdit) {
-        if (this.gtpService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+        console.log('EL NOMBRE YA EXISTE 1');
+        console.log('Edit name se cae xdeee' + svc.newName );
+        if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
             onOpen: drawPopup
@@ -458,7 +438,8 @@ getCodigoNameGTP(svc: ServiceModel) {
           return;
         }
       } else {
-        if (this.gtpService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
+        console.log('EL NOMBRE YA EXISTE 2 GTP');
+        if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
             onOpen: drawPopup
@@ -512,16 +493,15 @@ getCodigoNameGTP(svc: ServiceModel) {
   }
 
   getState(svc: DataServiceGTP) {
-    if(svc.newName !== undefined && svc.newName !== null && (svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???')) {
+    if (((svc.name === '?'  &&  svc.debtorCode === '?') &&  svc.inReview) || (svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???') ) {
+      return 'Nuevo Servicio';
+    }
+    if(svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???') {
       return 'Servicio Rechazado';
     }
     if (((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) &&  svc.inReview) {
       return 'Edicion de Servicio';
     }
-    if (((svc.name === '?'  &&  svc.debtorCode === '?') &&  svc.inReview)) {
-      return 'Nuevo Servicio';
-    }
-    return '';
   }
 
   VerCamposEnterprise(etp: DataEnterpriseGTP) {

@@ -155,7 +155,17 @@
 ///TAGS
 :host ::ng-deep  .badge-primary {
   color: #fff;
+  //background-color: #8024b9;
+  font-size: 14px;
+}
+
+:host ::ng-deep  .badge-info {
+  color: #fff;
   background-color: #8024b9;
+  font-size: 14px;
+}
+:host ::ng-deep  .badge-warning{
+  color: #fff; 
   font-size: 14px;
 }
 .seleccionado {
