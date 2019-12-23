@@ -23,7 +23,7 @@ export class AprobacionesComponent implements OnInit {
   public llave: number;
   // public Empresa: EnterprisesGtp ;
   public Empgtp: DataEnterpriseGTP = null;
-  public Enterprise: DataEnterpriseGTP = {ruc: 0 , name: '', entry: '', email: '',
+  public Enterprise: DataEnterpriseGTP = {ruc: 0 , name: '', entry: '', entryName: '', email: '',
   movilNumber: 0 , newName: '', newNameGTPStatus: 0, status: '', uniqueCodeIBK: ''};
   public emp: GtpEmpresa;
   public scv: GtpServcegtp [] = [];
