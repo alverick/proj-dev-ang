@@ -72,6 +72,7 @@ export class FormServicioComponent implements OnInit {
   public services: ServiceModel[] = [];
 
   ngOnInit(): void {
+    console.log('EL NUMERO DE CUENTA ES ' + this._service.idCuenta);
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
@@ -82,13 +83,11 @@ export class FormServicioComponent implements OnInit {
       this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado}),
 
       codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 ||
-        this._service.newNameCodeGtpStatus === 2) ?  this._service.codDeudor : ( this._service.newNameCode === 'RUC' ||
-        this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
-          disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
-
-
-         nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :( (this._service.codDeudor === 'Otro') ?
-       this._service.nameCod : this._service.codDeudor ),  disabled: this._service.nombreCodHabilitado }),
+      this._service.newNameCodeGtpStatus === 2) ?  this._service.codDeudor : ( this._service.newNameCode === 'RUC' ||
+      this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
+      disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
+      nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :( (this._service.codDeudor === 'Otro') ?
+      this._service.nameCod : this._service.codDeudor ),  disabled: this._service.nombreCodHabilitado }),
 
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
@@ -96,7 +95,7 @@ export class FormServicioComponent implements OnInit {
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
-      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true,}),
+      usaWebApp: new FormControl({ value: this._service.usaWebApp, disabled: true}),
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
@@ -107,11 +106,20 @@ export class FormServicioComponent implements OnInit {
 
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
-    this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
+    this.afiliacionService.GetTipoPago().subscribe(d => {
+      this.tiposPago = d;
+      console.log('tipos de pago');
+      console.log(this.tiposPago);
+    });
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
-    this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
-    this.changeMora(false);
+    this.afiliacionService.GetCards().subscribe(d => {
+      this.cuentas = d;
+      console.log('NUMEROS DE CUENTA');
+      console.log(this.cuentas);
+    });
+
+     this.changeMora(false);
     this.changeTipoMora(false);
 
     if (this.frm.get('cobraMora').value === 'N') {
@@ -393,8 +401,8 @@ export class FormServicioComponent implements OnInit {
                 value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
                 console.log('crea un nuevo 3 en edicion' + value.newName);
               }
-              //let cta = this.cuentas.find(c => c.id === value.idCuenta);
-              //value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
+               let cta = this.cuentas.find(c => c.id === value.idCuenta);
+               value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
               value.simboloMoneda = this.simboloMoneda;
               value.usaWebApp = true;
               this.grabar.emit(value);
@@ -453,8 +461,8 @@ export class FormServicioComponent implements OnInit {
               value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
               console.log('crea un nuevo 3 en edicion' + value.newName);
             }
-            //let cta = this.cuentas.find(c => c.id === value.idCuenta);
-            //value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
+             let cta = this.cuentas.find(c => c.id === value.idCuenta);
+             value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
             value.simboloMoneda = this.simboloMoneda;
             value.usaWebApp = true;
 

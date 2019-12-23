@@ -47,6 +47,7 @@ export class ExcelService {
   public idProcess: number = 0;
   public fileName: string = '';
   public errores: Error[] = [];
+  // public cuadro_errores: boolean;
   // public messageUploadExcel: boolean = true;
 
 
