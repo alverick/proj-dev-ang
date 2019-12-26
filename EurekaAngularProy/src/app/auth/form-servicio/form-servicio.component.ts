@@ -82,16 +82,24 @@ export class FormServicioComponent implements OnInit {
       nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ?
       this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado}),
 
-      codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 ||
+     /* codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 ||
       this._service.newNameCodeGtpStatus === 2) ?  this._service.codDeudor : ( this._service.newNameCode === 'RUC' ||
       this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
-      disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
+      disabled: this._service.nombreCodHabilitado  }, [Validators.required]), */
+
+      codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
+      this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
+      this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
+       : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' || 
+       this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
+        disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
+
       nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :( (this._service.codDeudor === 'Otro') ?
       this._service.nameCod : this._service.codDeudor ),  disabled: this._service.nombreCodHabilitado }),
 
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
-      idCuenta: [this._service.idCuenta, [Validators.required /*, Validators.minLength(10) */]],
+      idCuenta: new FormControl({ value: this._service.idCuenta.toString(), disabled: false }, Validators.required),
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
@@ -302,8 +310,10 @@ export class FormServicioComponent implements OnInit {
                    value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
                    console.log('crea un nuevo 3 en edicion' + value.newName);
                 }
+                let cta = this.cuentas.find(c => c.id === value.idCuenta);
+                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
                 value.simboloMoneda = this.simboloMoneda;
-                 value.usaWebApp = true;
+                value.usaWebApp = true;
                 this.grabar.emit(value);
               }
 

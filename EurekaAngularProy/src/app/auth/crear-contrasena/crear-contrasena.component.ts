@@ -87,8 +87,10 @@ export class CrearContrasenaComponent implements OnInit {
             requestDate: this.gtpService.EmpresaServicios.requestDate,
             inReview: false
           };
+
           this.f.nombre.disable();
-          console.log('CORREGIR GTP');
+          console.log('HABUILITADO');
+          console.log( this.gtpService.EmpresaServicios.newNameGTPStatus);
            if ( this.gtpService.EmpresaServicios.inReview) {
            // this.f.nombre.disable();
              this.registerForm.get('nombre').enable();
@@ -269,14 +271,13 @@ export class CrearContrasenaComponent implements OnInit {
       this.gtpService.llave = this.llave;
      // console.log( 'El token xdee' + this.gtpService.EdtEmpServ.token);
      // this.ObtenerDatos();
-    }
-
-
+    } 
   }
 
 
 
     MensajeName() {
+      //console.log('el estatus del nombre es v' + this.gtpService.EmpresaServicios.newNameGTPStatus);
       if (this.inEdit) {
         if ( this.gtpService.EmpresaServicios.newNameGTPStatus === 1 ) {
           return false;
@@ -284,6 +285,7 @@ export class CrearContrasenaComponent implements OnInit {
           return true;
         }
       }
+      console.log('');
       return false;
     }
 

@@ -68,7 +68,7 @@
             </mat-select>
             <mat-error class="messsage-error" *ngIf="f.tipoPago.invalid && f.tipoPago.hasError('required')">Elija una opcion</mat-error>
         </mat-form-field>
-    </div>
+    </div> 
     <div class="form-group">
         <mat-form-field class="w-100">
             <mat-label class="label">Nº de cuenta Interbank</mat-label>
@@ -81,7 +81,7 @@
             <!--POR AHORA VALIDA POR MEDIO DEL MINLENGTH-->
            <!-- <mat-error  class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('minlength')">Elija una opcionb</mat-error>-->
         </mat-form-field>
-    </div>
+    </div> 
     <span class="texto-medios ">  Elige los medios por los cuales tus clientes te pagarán  </span>
     <div class="row card-deck mt-2 mb-3 text-center">
         <div class="card-medio-pago ml-3" [class.seleccionado-card]="f.usaWebApp.value">
