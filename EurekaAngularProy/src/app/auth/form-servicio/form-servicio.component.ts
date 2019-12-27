@@ -83,21 +83,21 @@ export class FormServicioComponent implements OnInit {
       nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  (this._service.newNameGtpStatus === 3 && this._service.nombre == null)) ?
       this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado}),
 
-    /*  codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
-      this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
-      this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
-       : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
-       this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
-        disabled: this._service.nombreCodHabilitado  }, [Validators.required]), */
+      codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
+        this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
+        this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
+         : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' || 
+         this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
+          disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
 
-        codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
+      /*  codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
           this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
           this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
            : (this._service.newNameCodeGtpStatus === 0  || (this._service.newNameCodeGtpStatus === 3 && this._service.codDeudor == null &&
               this._service.newNameCode !== null )) ? (this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
            this._service.newNameCode === 'Codigo Interno') ? this._service.newNameCode : 'Otro' : this._service.codDeudor,
             disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
-
+      */
       nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :
         ( (this._service.codDeudor === 'Otro') ? this._service.nameCod : this._service.codDeudor ), 
          disabled: this._service.nombreCodHabilitado }),
@@ -196,28 +196,26 @@ export class FormServicioComponent implements OnInit {
       if  (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 2) {
         return true;
       } */
-      /*if (   this._service.newName !== '') {
-        return true;
-      } */
-
-// getCodDebtor  ConfigurarServiciosComponent
-
-      if (this._service.newNameCodeGtpStatus === 0  || this._service.newNameCodeGtpStatus === 2) {
+      if (   this._service.newName !== '') {
         return true;
       }
-      if (this._service.newNameCodeGtpStatus === 1 ) {
-        return false;
-      }
-      if (this._service.newNameCodeGtpStatus === 3 ) {
-        if ( this._service.codDeudor == null  && this._service.newNameCode  !== null  ) {
-          return true;
-        } else {
-          return false;
-        }
-      }
 
-
-
+    // getCodDebtor  ConfigurarServiciosComponent
+    /*
+          if (this._service.newNameCodeGtpStatus === 0  || this._service.newNameCodeGtpStatus === 2) {
+            return true;
+          }
+          if (this._service.newNameCodeGtpStatus === 1 ) {
+            return false;
+          }
+          if (this._service.newNameCodeGtpStatus === 3 ) {
+            if ( this._service.codDeudor == null  && this._service.newNameCode  !== null  ) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+    */ 
       return false;
     }
   }

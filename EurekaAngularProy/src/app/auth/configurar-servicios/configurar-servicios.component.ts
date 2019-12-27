@@ -418,7 +418,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       return svc.codDeudor;
     }
     if (svc.newNameCodeGtpStatus === 3 ) {
-      if ( svc.codDeudor == null  && svc.newNameCode  !== null  ) {
+      if ( svc.codDeudor  == null  || svc.nameCod !== '' ) {
         return svc.newNameCode;
       } else {
         return svc.codDeudor;
