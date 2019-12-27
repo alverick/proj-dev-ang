@@ -418,7 +418,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       return svc.codDeudor;
     }
     if (svc.newNameCodeGtpStatus === 3 ) {
-      if ( svc.codDeudor  == null  || svc.nameCod !== '' ) {
+      if ( svc.codDeudor == null  && svc.newNameCode  !== null  ) {
         return svc.newNameCode;
       } else {
         return svc.codDeudor;
@@ -680,13 +680,26 @@ getCodigoNameGTP (svc: ServiceModel) {
             return;
           }
         }else{
-          if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
-            Swal.fire({
-              text: 'Ya existe un servicio con este nombre',
-              onOpen: drawPopup
-            });
-            return;
-          }
+          if (svc.newNameGtpStatus === 0) {
+            console.log('ERntra a la empresa nueva al editar ');
+            if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+              Swal.fire({
+                text: 'Ya existe un servicio con este nombre',
+                onOpen: drawPopup
+              });
+              return;
+            }
+          } else {
+            if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
+              Swal.fire({
+                text: 'Ya existe un servicio con este nombre',
+                onOpen: drawPopup
+              });
+              return;
+            }
+           }
+          
+          
         }
 
       } else {

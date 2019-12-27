@@ -79,23 +79,28 @@ export class FormServicioComponent implements OnInit {
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ?
+      // tslint:disable-next-line:max-line-length
+      nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  (this._service.newNameGtpStatus === 3 && this._service.nombre == null)) ?
       this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado}),
 
-     /* codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 ||
-      this._service.newNameCodeGtpStatus === 2) ?  this._service.codDeudor : ( this._service.newNameCode === 'RUC' ||
-      this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
-      disabled: this._service.nombreCodHabilitado  }, [Validators.required]), */
-
-      codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
+    /*  codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
       this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
       this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
-       : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' || 
+       : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
        this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
-        disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
+        disabled: this._service.nombreCodHabilitado  }, [Validators.required]), */
 
-      nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :( (this._service.codDeudor === 'Otro') ?
-      this._service.nameCod : this._service.codDeudor ),  disabled: this._service.nombreCodHabilitado }),
+        codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
+          this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
+          this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
+           : (this._service.newNameCodeGtpStatus === 0  || (this._service.newNameCodeGtpStatus === 3 && this._service.codDeudor == null &&
+              this._service.newNameCode !== null )) ? (this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
+           this._service.newNameCode === 'Codigo Interno') ? this._service.newNameCode : 'Otro' : this._service.codDeudor,
+            disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
+
+      nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :
+        ( (this._service.codDeudor === 'Otro') ? this._service.nameCod : this._service.codDeudor ), 
+         disabled: this._service.nombreCodHabilitado }),
 
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
@@ -191,9 +196,28 @@ export class FormServicioComponent implements OnInit {
       if  (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 2) {
         return true;
       } */
-      if (   this._service.newName !== '') {
+      /*if (   this._service.newName !== '') {
+        return true;
+      } */
+
+// getCodDebtor  ConfigurarServiciosComponent
+
+      if (this._service.newNameCodeGtpStatus === 0  || this._service.newNameCodeGtpStatus === 2) {
         return true;
       }
+      if (this._service.newNameCodeGtpStatus === 1 ) {
+        return false;
+      }
+      if (this._service.newNameCodeGtpStatus === 3 ) {
+        if ( this._service.codDeudor == null  && this._service.newNameCode  !== null  ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+
+
       return false;
     }
   }
@@ -283,6 +307,7 @@ export class FormServicioComponent implements OnInit {
                 if (this.editMode)  {
                  console.log('ENTRO A EDICION DE SERVICIOS');
                   value = this._service;
+                  value.idCuenta = this.frm.value.idCuenta;
                 // value.nombre = this.frm.value.nombre;
               //   value.newName = this.frm.value.nombre;
                  // value.nameCod = this.frm.value.nameCod;
@@ -292,7 +317,7 @@ export class FormServicioComponent implements OnInit {
                  value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
                     ((this.frm.value.nameCod === value.codDeudor) ? value.newNameCode : this.frm.value.nameCod ) :
                     (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor ;
-                  value.nroCuenta = this.frm.value.nroCuenta;
+                 // value.nroCuenta = this.frm.value.nroCuenta;
                   value.moneda = this.frm.value.moneda;
                   value.cobraMora = this.frm.value.cobraMora;
                   value.periodoMora = this.frm.value.periodoMora;
@@ -311,6 +336,7 @@ export class FormServicioComponent implements OnInit {
                    console.log('crea un nuevo 3 en edicion' + value.newName);
                 }
                 let cta = this.cuentas.find(c => c.id === value.idCuenta);
+                console.log('el num de cuenta es ' + value.nroCuenta);
                 value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
                 value.simboloMoneda = this.simboloMoneda;
                 value.usaWebApp = true;
@@ -388,8 +414,8 @@ export class FormServicioComponent implements OnInit {
              // value.usaWebApp = true;
               if (this.editMode) {
                 value = this._service;
-                //value.idCuenta = this.frm.value.idCuenta;
-                value.nroCuenta = this.frm.value.nroCuenta;
+                value.idCuenta = this.frm.value.idCuenta;
+               // value.nroCuenta = this.frm.value.nroCuenta;
                 // value.nombre = this.frm.value.nombre;
                 // tslint:disable-next-line:max-line-length
                value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
@@ -447,8 +473,8 @@ export class FormServicioComponent implements OnInit {
             if (this.editMode) {
               console.log('ENTRO A EDICION DE SERVICIOS----');
               value = this._service;
-              //value.idCuenta = this.frm.value.idCuenta;
-              value.nroCuenta = this.frm.value.nroCuenta;
+               value.idCuenta = this.frm.value.idCuenta;
+             // value.nroCuenta = this.frm.value.nroCuenta;
                // tslint:disable-next-line:max-line-length
                value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
                value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
@@ -471,9 +497,11 @@ export class FormServicioComponent implements OnInit {
               value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
               console.log('crea un nuevo 3 en edicion' + value.newName);
             }
+            console.log('crea un nuevo 3.2');
              let cta = this.cuentas.find(c => c.id === value.idCuenta);
              value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
-            value.simboloMoneda = this.simboloMoneda;
+             console.log('numero de cuenta es 3.2' + value.nroCuenta);
+             value.simboloMoneda = this.simboloMoneda;
             value.usaWebApp = true;
 
             this.grabar.emit(value);
