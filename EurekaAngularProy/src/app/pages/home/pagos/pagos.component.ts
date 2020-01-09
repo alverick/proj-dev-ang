@@ -79,7 +79,7 @@ export class PagosComponent implements OnInit {
   }
 
   mensaje(tipo: any, titulo: string, text: string){
-    if (localStorage.getItem('tk') !== null  ) {
+    if (sessionStorage.getItem('tk') !== null  ) {
       this.mesageeError(tipo,titulo,text);
     }
   }

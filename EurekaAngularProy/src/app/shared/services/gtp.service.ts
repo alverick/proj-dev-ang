@@ -1,4 +1,3 @@
-
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -14,6 +13,7 @@ import { DataServiceGTP } from '../models/data-service-gtp';
 import { GtpEmpresa } from '../models/gtp-post';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataGTPChange } from '../models/data-gtpchange';
+import { ServiceModel } from '../models';
 
 
 @Injectable({
@@ -79,7 +79,7 @@ export class GtpService {
               // 50 > 150
             if (end > r.totalCompanies)
               end = r.totalCompanies;
-              // Mostrando 1 - 50 de 150 elemtos
+              // Mostrando 1 - 50 de 1s50 elemtos
             this.pageMessage = `Mostrando ${beg} - ${end} de ${r.totalCompanies} elementos`;
           }
           return r;
@@ -94,11 +94,29 @@ export class GtpService {
       };
       return this.http.get<DataEnterpriseGTP>(url, opts)
       .pipe(map(r => {
+        // console.log('EMPRESA');
+         console.log(r);
         return r;
+
       }))
       .pipe(catchError(err => throwError(err)));
-
   }
+
+  GetEnterpriseGtp2(id: any): Observable<any> {
+    const url = `${environment.END_POINT}/company/GTP/client/${id}`;
+    const opts = {
+      headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
+    };
+    return this.http.get<any>(url, opts)
+    .pipe(map(r => {
+      console.log('empresaR');
+      console.log( r);
+      console.log('end empresaR');
+      return r;
+
+    }))
+    .pipe(catchError(err => throwError(err)));
+}
 
    GetServicesGtp (id: any) {
     const url = `${environment.END_POINT}/company/GTP/services/${id}/${false}`;
@@ -106,11 +124,16 @@ export class GtpService {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
     this.http.get<any[]>(url, opts).subscribe(d => {
+      console.log('SERVICIOS ');
+      console.table(d);
       let servicios = [];
       d.forEach(s => {
         servicios.push({
           id: s.id,
+          res: s.res,
           name: s.name,
+          newName: s.newName,
+          newNameCode: s.newNameCode,
           debtorCode: s.debtorCode,
           dataType: s.dataType,
           paymentType: s.paymentType,
@@ -128,17 +151,36 @@ export class GtpService {
           porcentage: s.percentage,
           currencySymbol: s.currencySymbol,
           inReview: s.inReview,
-          newNameCode: s.newNameCode,
-          newName: s.newName,
           status: s.status,
           acceptednewNameCode: null,
           acceptednewName: null,
           nombreHabilitado :  (s.name === s.newName) ? false : true,
           nombreCodHabilitado :  (s.debtorCode === s.newNameCode) ?  false : true,
+          newNameGTPStatus: s.newNameGTPStatus,
+          newNameCodeGTPStatus: s.newNameCodeGTPStatus,
+          nombre: s.name,
+          rubro: s.entry,
+          codDeudor: s.debtorCode,
+          tipoDato: s.dataType,
+          tipoPago: s.paymentType,
+          nroCuenta: s.accountNumber,
+          moneda: s.currency,
+          simboloMoneda: s.currencySymbol,
+          usaWebApp: s.useAppWeb,
+          usaAgente: s.useAgent,
+          usaTienda: s.useStore,
+          cobraMora: s.chargeInterest,
+          periodoMora: s.chargeType.toString(),
+          tipoMora: s.interestType,
+          monto: s.amount,
+          porcentaje: s.percentage,
+          pagoPartes: s.partialPayment,
         });
       });
+      console.log('SERVICIOS..s');
+      console.table(servicios);
        this.services = servicios;
-      console.table( this.services);
+
     });
    }
 
@@ -157,12 +199,15 @@ export class GtpService {
       }));
   }
 
+/*ESTO ME TRAE EN LA CORRECION*/
 
   public GetEnterpriseServices(data: any): Observable<any> {
      this.spinner.show();
      return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(), data)
      .pipe(map(r => {
            this.spinner.hide();
+           console.log('MACHILON, LOS SERVICIOS TRAEN ESTOs');
+           console.log(r);
           return r;
      }))
      .pipe(catchError(err => {
@@ -186,8 +231,117 @@ export class GtpService {
       }));
   }
 
+  public CrearSevice(): ServiceModel {
+    let nombre: string = 'Mensualidad';
+    let nro = 1;
+    this.services.forEach((s, i) => {
+      //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
+      if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
+        if (!isNaN(parseInt(s.nombre.substr(nombre.length))) || s.nombre.substr(nombre.length) === ''){
+          let aux = parseInt(s.nombre.substr(nombre.length));
+          if (isNaN(aux))
+            nro = 2;
+          else if (aux >= nro)
+            nro = aux + 1;
+        }
+      }
+    });
+    if (nro > 1) {
+      nombre += nro.toString();
+    }
+    let svc: any = {
+      id: null,
+      nombre: nombre,
+      newName : nombre,
+      codDeudor: 'DNI',
+     // newNameCode: '',
+      tipoDato: 'C',
+      tipoPago: 'C',
+      idCuenta: 0,
+      nroCuenta: '',
+      moneda: '001',
+      simboloMoneda: 'S/',
+      usaWebApp: true,
+      usaAgente: false,
+      usaTienda: false,
+      cobraMora: 'N',
+      periodoMora: '',
+      tipoMora: 'M',
+      pagoPartes: 'N',
+      acceptednewName : null,
+      acceptednewNameCode: null,
+      inReview: true,
+      name: '?',
+      debtorCode: '?'
+    };
+    this.services.push(svc);
+    return svc;
+  }
 
+  Descartar(indice: number, isNew: boolean) {
+    if (isNew && this.services.length > 1 && indice >= 0 && indice === (this.services.length - 1)) {
+      let svc = this.services[this.services.length-1];
+      if (svc.id === null || svc.id === undefined || svc.id < 0) {
+        this.services.pop();
+      }
+    }
+  }
 
+  public DelService(index: number) {
+    this.services.splice(index, 1);
+  }
 
+  public SendDelService(index: number) {
+    let url = `${environment.END_POINT}/service/${this.services[index].id}`;
+    return this.http.delete(url)
+      .pipe(map(r => {
+        this.services.splice(index, 1);
+        return r;
+      }));
+  }
+
+  public CanDeleteService(index: number) {
+    let url = `${environment.END_POINT}/service/${this.services[index].id}/canDelete`;
+    return this.http.get<any>(url);
+  }
+
+  public GrabarServicios(id: number, emp: DataEnterpriseGTP): Observable<any> {
+    this.spinner.show();
+    const data = { clientId: id, company: emp, services: [], deleted: [] };
+    this.services.forEach(s => {
+      data.services.push({
+        id: s.id,
+        res: s.res,
+        name: s.nombre ,
+        newName: s.newName,
+        entry: s.rubro,
+        debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
+        newNameCode: s.newNameCode,
+        dataType: s.tipoDato,
+        paymentType: s.tipoPago,
+        accountNumber: s.nroCuenta,
+        currency: s.moneda,
+        useAppWeb: s.usaWebApp,
+        useAgent: s.usaAgente,
+        useStore: s.usaTienda,
+        chargeInterest: s.cobraMora,
+        chargeType: s.periodoMora,
+        interestType: s.tipoMora,
+        amount: s.monto,
+        percentage: s.porcentaje,
+        partialPayment: s.pagoPartes
+      });
+    });
+    return this.http.post<any>(`${environment.END_POINT}/company/GTP/company/update?_=`+ new Date().getTime(), data)
+      .pipe(map(r => {
+        this.spinner.hide();
+        return r;
+      }))
+      .pipe(catchError(err => {
+        this.spinner.hide();
+        throw throwError(err);
+      }));
+
+  }
 
 }

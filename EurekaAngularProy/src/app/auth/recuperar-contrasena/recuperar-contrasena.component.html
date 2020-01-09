@@ -4,7 +4,7 @@
     <div class="container-style">
         <div class="container pt-5 pl-5">
             <a class="pl-4 navbar-brand" href="#">
-                <img style="max-width: 250px;" src="assets/images/logo-login.svg" alt="">
+                <img style="max-width: 250px;" src="assets/images/cobrosimple-blanco.svg" alt="">
             </a>
         </div>
 
@@ -35,10 +35,10 @@
                                 </div>
                         </div>
                          <!---FORMULARIO-->
-                        <div *ngIf="formulario" class=" cuadro-form pb-2"> 
+                        <div *ngIf="formulario" class=" cuadro-form pb-2">
                             <div class="texto-azul  mb-4 ">Recuperar contraseña</div>
                             <div class="texto-azul-text pb-4">¡Está bien! Todos nos olvidamos de <br> algo alguna vez</div>
-                            
+
                             <form id="login-form" [formGroup]="recupera" (ngSubmit)="SubmitRecupera()">
 
                                 <div class="margen">
@@ -56,7 +56,7 @@
                                                     <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
                                                     <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
                                                 </mat-error>
-                                            </mat-form-field> 
+                                            </mat-form-field>
                                         </div>
                                     </div>
 
@@ -75,19 +75,19 @@
                                                     <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
                                                     <mat-error class="messsage-error" *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
                                                 </mat-error>
-                                            </mat-form-field> 
+                                            </mat-form-field>
                                         </div>
                                     </div>
-                                 
+
                                     <div class="reCaptach pt-0">
                                             <re-captcha #recaptchaRef="reCaptcha" (resolved)="resolved($event)"  siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
-                                    </div> 
+                                    </div>
                                 </div>
 
                                     <div class="d-flex justify-content-center">
                                         <button type="submit" class=" focus-elements btn-eureca-green" form="login-form">RECUPERAR CONTRASEÑA</button>
                                     </div>
-                                 
+
                             </form>
 
                                 <div class="d-flex justify-content-center pb-4">
@@ -96,9 +96,9 @@
                                 </button>
                                 </div>
 
-                             
+
                         </div>
-                       
+
 
 
                     </div>

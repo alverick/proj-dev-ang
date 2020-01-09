@@ -96,6 +96,11 @@ body {
                     color: $textgreen;
                     margin-left: 20px;
                     cursor: pointer;
+
+                    &.disabled {
+                      color: #9ea1a5;
+                      cursor: default;
+                    }
                 }
                 .sobresale {
                     position: absolute;
@@ -377,6 +382,11 @@ body {
     text-align: center;
     padding: 40px 0px;
     color: #333333 !important;
+
+    .link {
+      @include font-text(16px, 500);
+      color: #333333 !important;
+    }
 }
 
 b {

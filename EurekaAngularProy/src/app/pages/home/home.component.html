@@ -130,8 +130,8 @@
                 </div>
               </div>
               <div class="al-right">
-                <div class="lnk-label" (click)="DescargarReporte()">
-                  <img src="assets/images/download.svg" alt="download"> Descargar movimientos
+                <div class="lnk-label" [class.disabled]="enDescarga" (click)="DescargarReporte()">
+                  <img *ngIf="!enDescarga" src="assets/images/download.svg" alt="download"><img *ngIf="enDescarga" src="assets/images/download-d.svg" alt="download"> Descargar movimientos
                 </div>
               </div>
               <div class="clear-float"></div>
@@ -448,7 +448,7 @@
     <div class="row" style="display: block;">
         <div class="text-foot">
           Para comunicarte con nosotros puedes llamar o escribir al <b>913718635</b>, o también a
-          <b>pilotos@intercorp.com.pe</b>
+          <a class="link" href="mailto:solucionempresa@intercorp.com.pe">solucionempresa@intercorp.com.pe</a>
         </div>
       </div>
   </div>

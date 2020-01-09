@@ -13,7 +13,7 @@ declare let gtag: Function;
   providers: [ LoginService]
 })
 export class AppComponent {
-  title = 'Mis Cobros – Interbank';
+  title = 'Cobro Simple – Interbank';
 
   constructor(private router: Router, matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
       this.router.events.subscribe(e => {
@@ -37,10 +37,18 @@ export class AppComponent {
         domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/trash.svg'),
         { viewBox: '0 0 20 20' });
       matIconRegistry.addSvgIcon(
+        'eurc_download',
+        domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/download.svg'),
+        { viewBox: '0 0 20 20' });
+      matIconRegistry.addSvgIcon(
         'eurc_minimize',
         domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/minimize.svg'),
         { viewBox: '0 0 24 24' });
-      }
+      matIconRegistry.addSvgIcon(
+        'eurc_new_tab',
+        domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
+        { viewBox: '0 0 24 24' });
+    }
 
   public show(): boolean{
     if(this.router.url.includes('/login')){

@@ -21,10 +21,32 @@ export interface DataServiceGTP {
     newNameCode:  string;
     newName: string;
     status: string;
+    // newNameGtpStatus?: number;
+    // newNameCodeGtpStatus?: number;
+    newNameGTPStatus: number;
+    newNameCodeGTPStatus: number;
     acceptednewNameCode?: boolean;
     acceptednewName?: boolean;
     nombreHabilitado?: boolean;
     nombreCodHabilitado?: boolean;
 
-
+    res?: string;
+    nombre?: string;
+    tipoDato?: string;
+    cobraMora?: string;
+    tipoMora?: string;
+    simboloMoneda?: string;
+    porcentaje?: number;
+    monto?: number;
+    nroCuenta?: string;
+    tipoPago?: string;
+    rubro?: string;
+    codDeudor?: string;
+    nameCod?: string;
+    moneda?: string;
+    usaWebApp?: boolean;
+    usaAgente?: boolean;
+    usaTienda?: boolean;
+    periodoMora?: string;
+    pagoPartes?: string;
 }

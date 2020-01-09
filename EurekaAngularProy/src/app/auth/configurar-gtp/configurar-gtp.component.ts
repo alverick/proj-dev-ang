@@ -1,5 +1,5 @@
  import { Component, OnInit, EventEmitter, HostListener, ɵConsole } from '@angular/core';
-import { ServiceModel } from 'src/app/shared/models';
+import { ServiceModel, RubroModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import Swal from 'sweetalert2';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,6 +8,8 @@ import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
+import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 
 @Component({
   selector: 'app-configurar-gtp',
@@ -20,13 +22,30 @@ export class ConfigurarGtpComponent implements OnInit {
   public stateCreate: boolean = false;
   public stateEdit: boolean = false;
   public input: FormServicioComponent;
+  EmpresaFormulario: boolean = false;
   Formulario: boolean = false;
   Formulariogtp: boolean = false;
   buttonServicios ='';
-  private inEdit: boolean = false;
-  private inGTP: boolean = false;
+  public inEdit: boolean = false;
+  public inGTP: boolean = false;
   public titulo: string;
   public SvcEdit: ServicesGTPChange[];
+  public Empgtp: DataEnterpriseGTP = null;
+  public Enterprise: DataEnterpriseGTP = {
+    cu: '',
+    ruc: '0',
+    name: '',
+    entry: '',
+    entryName: '',
+    email: '',
+    movilNumber: 0 ,
+    newName: '' ,
+    status: '',
+    uniqueCodeIBK: '',
+    enabled: false
+  };
+  public rubro:string;
+  rubros: RubroModel[] = [];
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
   constructor(public afiliacionService: AfiliacionService,
@@ -43,70 +62,14 @@ export class ConfigurarGtpComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.afiliacionService.services = [];
-    this.route.data.subscribe(d => {
-      this.inEdit = d.isEdit;
-      this.inGTP = d.isgtp;
-      if (d.isgtp === true) {
-        /////////////////////////PORTAL GTP //////////////////////////////////////
-
-        window['_url_loop_'] = 'editarSvcGTP';
-        history.pushState(null, null, 'editarSvcGTP');
-        this.afiliacionService.services = [];
-        console.log('GTP');
-        console.log(this.gtpService.EmpresaServicios.arrayServices);
-        console.log('CIERRA');
-        this.gtpService.EmpresaServicios.arrayServices.forEach(s => {
-          this.afiliacionService.services.push({
-            id: s.id,
-            nombre: s.name,
-            newName : s.newName,
-            newNameCode : s.newNameCode,
-            //rubro: s.entry,
-            codDeudor: s.debtorCode,
-            tipoDato: s.dataType,
-            tipoPago: s.paymentType,
-            idCuenta: s.idAccount,
-            nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
-            moneda: s.currency,
-            simboloMoneda: s.currencySymbol,
-            usaWebApp: s.useAppWeb,
-            usaAgente: s.useAgent,
-            usaTienda: s.useStore,
-            cobraMora: s.chargeInterest,
-            periodoMora: s.chargeType.toString(),
-            tipoMora: s.interestType,
-            monto: s.amount,
-            porcentaje: s.porcentage,
-            inReview: s.inReview,
-            pagoPartes: s.partialPayment,
-            status: s.status,
-            nombreHabilitado: (s.name === s.newName) ? false : true,
-            nombreCodHabilitado:  (s.debtorCode === s.newNameCode) ?  false : true,
-          });
-        });
-        return;
-      }
-      if (d.isEdit) {
-        console.log('EDITAR');
-        window['_url_loop_'] = 'editarServicios';
-        this.afiliacionService.GetServicios();
-        this.buttonServicios = 'Actualizar';
-        this.titulo = 'Edita el servicio';
-
-      } else {
-        console.log('CREACION');
-        window['_url_loop_'] = 'configurarServicios';
-        history.pushState(null, null, 'configurarServicios');
-        this.afiliacionService.Clear();
-        this.buttonServicios = 'Guardar';
-        this.editService(this.afiliacionService.services[0], 0);
-        this.titulo = 'Agrega un nuevo servicio';
-      }
-    });
-
-
-
+    this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
+    this.inEdit = true;
+    window['_url_loop_'] = `ApGTP/${this.route.snapshot.paramMap.get('llave')}`;
+    history.pushState(null, null, `ApGTP/${this.route.snapshot.paramMap.get('llave')}`);
+    this.gtpService.GetServicesGtp(this.route.snapshot.paramMap.get('llave'));
+    this.getInfoEmpresa();
+    this.buttonServicios = 'Actualizar';
+    this.titulo = 'Edita el servicio';
   }
 
   public indiceActual: number = -1;
@@ -126,7 +89,8 @@ export class ConfigurarGtpComponent implements OnInit {
       }).then(r => {
         if (r.value) {
           console.log('descartar');
-          this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
+          this.gtpService.Descartar(this.indiceActual, this.stateCreate);
+          this.EmpresaFormulario = false;
           this.Formulario = false ;
           this.stateCreate = false;
           this.stateEdit = false;
@@ -138,31 +102,23 @@ export class ConfigurarGtpComponent implements OnInit {
         }
       });
     }
-   /* else {
-      console.log('entra else');
-      this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
-      this.Formulario = false;
-      this.stateCreate = false;
-      this.stateEdit =false;
-      if (this.addNewAfterSave && this.indiceActual > 0) {
-        setTimeout(() => this.MostarFormulario(), 600);
-      }
-      else if (this.sendAfterSave) {
-        setTimeout(() => this.EnviarServicios(), 600);
-      }
-      this.indiceActual = -1;
-      this.addNewAfterSave = false;
-      this.sendAfterSave = false;
-    } */
   }
 
+  getInfoEmpresa() {
+    this.gtpService.GetEnterpriseGtp(this.route.snapshot.paramMap.get('llave'))
+      .subscribe( dataEnterprise => {
+        this.Enterprise = dataEnterprise;
+        console.log(this.Enterprise);
+        this.rubro =  this.rubros.find((v) => v.code = this.Enterprise.entry).name;
+        });
+  }
 
   addNewAfterSave: boolean = false;
   sendAfterSave: boolean = false;
 
   MostarFormulario() {
-    console.table(this.afiliacionService.services);
-    if (this.afiliacionService.services.length >= 99) {
+    console.table(this.gtpService.services);
+    if (this.gtpService.services.length >= 99) {
       Swal.fire({
         text: 'Usted solo puede tener 99 servicios como máximo',
         onOpen: drawPopup
@@ -170,7 +126,7 @@ export class ConfigurarGtpComponent implements OnInit {
       return;
     }
 
-    let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
+    let svcSinCta = this.gtpService.services.find((v) => v.nroCuenta === '');
     if (svcSinCta) {
       Swal.fire({
         text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
@@ -203,8 +159,8 @@ export class ConfigurarGtpComponent implements OnInit {
        });
     }
     else {
-      this.indiceActual = this.afiliacionService.services.length;
-      this.serviceActual = this.afiliacionService.CrearSevice();
+      this.indiceActual = this.gtpService.services.length;
+      this.serviceActual = this.gtpService.CrearSevice();
       this.stateEdit = true;
       this.stateCreate = true;
       this.Formulario = true;
@@ -214,84 +170,6 @@ export class ConfigurarGtpComponent implements OnInit {
 
 
   EnviarServicios() {
-
-    // GTP
-    if (this.inGTP) {
-
-      let Svc = [] ;
-      let svcinReview = this.afiliacionService.services.filter((v) => v.inReview === true);
-      let cantName = this.afiliacionService.services.filter((v) => (v.inReview === true) && (v.nombre === '?')).length;
-      let cantNameServ = this.afiliacionService.services.filter((v) => (v.inReview === true) && (v.codDeudor === '?')).length;
-      let total = cantName + cantNameServ;
-      svcinReview.forEach(s => {
-       Svc.push({
-          ServiceId: s.id,
-          NewName: (s.newName.substring(0, 3) === '???') ? s.nombre : null ,
-          // tslint:disable-next-line:max-line-length
-          NewCodName: ( s.newNameCode.substring(0, 3) === '???') ? s.codDeudor : null,
-        });
-      });
-      // (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true
-      console.log('ESTAS EN GTP marcelo 2');
-
-    // alert(this.gtpService.EdtEmpServ.token);
-      if (Svc.length === 0) {
-        console.log('SERV cero' + Svc.length);
-      }
-      console.log(Svc);
-
-      if (total === 0) {
-        Swal.fire({
-          title: 'Editar',
-          text: `Desea Guardar los Cambios`,
-          showCloseButton: true,
-          showCancelButton: true,
-          showConfirmButton: true,
-          cancelButtonColor: '#d33',
-          cancelButtonText:  'DESHACER CAMBIOS',
-          confirmButtonText: 'GUARDAR',
-          onOpen: drawPopup
-        }).then(r => {
-
-          console.log('Lo que devuelve el token es '+r);
-          this.sendAfterSave = true;
-            if (r.value) {
-              if (Svc.length === 0) {
-                this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
-                  NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : null })
-                .subscribe(d => {
-                  console.log('ESTA API DEVUELVE '+ d);
-              if (d === true) {
-                this.router.navigate(['/login']);
-              } else {
-                console.log('HOLA 1');
-                console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName, Svc);
-              }
-
-              });
-
-              } else {
-                this.gtpService.EditChangeGTP({ Token:  this.gtpService.llave ,
-                  NewName:  this.gtpService.nombre, ArrayServices : Svc })
-                .subscribe(d => {
-                  console.log('ESTA API DEVUELVE ' + d);
-                if (d === true) {
-                  this.router.navigate(['/login']);
-                } else {
-                  console.log('HOLA 2');
-                  console.log('lenght de servicio' + Svc.length);
-                  console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName,Svc);
-                }
-                });
-              }
-            }
-        });
-      } else {
-        this.mensaje( 'Correxiones', 'Aun faltan corregir ' + total + ' observaciones' );
-      }
-    }
-
-    else {
 
     if (this.Formulario === true) {
       Swal.fire({
@@ -320,7 +198,7 @@ export class ConfigurarGtpComponent implements OnInit {
     }
     // this.frm.get('monto').value
 
-        let svcSinCta = this.afiliacionService.services.find((v) => v.nroCuenta === '');
+        let svcSinCta = this.gtpService.services.find((v) => v.nroCuenta === '');
         if(svcSinCta) {
           Swal.fire({
             text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
@@ -332,25 +210,10 @@ export class ConfigurarGtpComponent implements OnInit {
           'event_category': GoogleAnalytics.Afiliacion,
           'event_label': 'enviar_servicios'
         });
-        /*console.log('SERVICIOS A GUARDAR');
-        console.table(this.afiliacionService.services); */
-        this.afiliacionService.GrabarServicios()
+        this.gtpService.GrabarServicios(parseInt(this.route.snapshot.paramMap.get('llave')), this.Enterprise)
           .subscribe(r => {
-            if (this.inEdit) {
-              this.router.navigate(['/home']);
-              /*for(let i=0; i<this.afiliacionService.services.length; i++) {
-                if (this.afiliacionService.services[i].inReview == false) {
-                  return;
-                }
-              }
-              this.router.navigate(['/procesando']);*/
-            }
-            else {
-              this.router.navigate(['/procesando']);
-            }
+            this.router.navigate(['/gtp']);
           });
-
-      }
   }
 
 
@@ -459,12 +322,6 @@ getName(svc: ServiceModel) {
     } else {
       return svc.newName;
     }
- /* } else {
-    if ( svc.nombre === svc.newName) {
-      return svc.newName;
-    } else {
-      return svc.newName;
-    }*/
   }
 
   return svc.nombre;
@@ -486,19 +343,10 @@ getCodigoNameGTP(svc: ServiceModel) {
 
 
   delService(index: number) {
-    if (this.Formulario) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Eliminación del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
+    if (this.EmpresaFormulario || this.Formulario) {
       return;
     }
-    if (this.inEdit && this.afiliacionService.services[index].id) {
+    if (this.inEdit && this.gtpService.services[index].id) {
       this.afiliacionService.CanDeleteService(index).subscribe(r => {
         let title = 'Eliminación total del servicio';
         let msg = 'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
@@ -552,15 +400,6 @@ getCodigoNameGTP(svc: ServiceModel) {
 
   editService(svc: ServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Edición del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
       return;
     }
     if (this.Formulariogtp && this.indiceActual !== index) {
@@ -575,8 +414,6 @@ getCodigoNameGTP(svc: ServiceModel) {
       this.serviceActual = svc;
        return;
     }
-    console.log('Editar servicio');
-    console.log(svc);
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
@@ -584,15 +421,16 @@ getCodigoNameGTP(svc: ServiceModel) {
     this.Formulario = true;
   }
 
-  onGrabar(svc: ServiceModel) {
+  onGrabar(svc: any) {
     console.log('Servicios');
-    console.table( this.afiliacionService.services);
+    console.table( this.gtpService.services);
     console.log('cierra');
     if (this.indiceActual >= 0) {
 
       if (this.inEdit) {
-        console.log('Edit name se cae xdeee' +svc.newName );
-        if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+        console.log('EL NOMBRE YA EXISTE 1');
+        console.log('Edit name se cae xdeee' + svc.newName );
+        if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
             onOpen: drawPopup
@@ -600,6 +438,7 @@ getCodigoNameGTP(svc: ServiceModel) {
           return;
         }
       } else {
+        console.log('EL NOMBRE YA EXISTE 2 GTP');
         if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
@@ -609,14 +448,7 @@ getCodigoNameGTP(svc: ServiceModel) {
         }
       }
 
-     /* if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
-        Swal.fire({
-          text: 'Ya existe un servicio con este nombre',
-          onOpen: drawPopup
-        });
-        return;
-      } */
-      this.afiliacionService.services[this.indiceActual] = svc;
+      this.gtpService.services[this.indiceActual] = svc;
       this.indiceActual = -1;
       if (!svc.id) {
         this.gaService.sendEvent('ServicioAgregado', {
@@ -626,7 +458,7 @@ getCodigoNameGTP(svc: ServiceModel) {
       }
     } else {
       let nro = 1;
-      this.afiliacionService.services.forEach((s, i) => {
+      this.gtpService.services.forEach((s, i) => {
         if (s.nombre.startsWith(svc.nombre)) {
           if (!isNaN(parseInt(s.nombre.substr(svc.nombre.length))) || s.nombre.substr(svc.nombre.length) === ''){
             nro += 1;
@@ -636,7 +468,7 @@ getCodigoNameGTP(svc: ServiceModel) {
       if (nro > 1) {
         svc.nombre += nro.toString();
       }
-      this.afiliacionService.services.push(svc);
+      this.gtpService.services.push(svc);
 
     }
     this.Formulario = false;
@@ -658,6 +490,45 @@ getCodigoNameGTP(svc: ServiceModel) {
     }
     this.addNewAfterSave = false;
     this.sendAfterSave = false;
+  }
+
+  getState(svc: DataServiceGTP) {
+    if (((svc.name === '?'  &&  svc.debtorCode === '?') &&  svc.inReview) || (svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???') ) {
+      return 'Nuevo Servicio';
+    }
+    if(svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???') {
+      return 'Servicio Rechazado';
+    }
+    if (((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode)) &&  svc.inReview) {
+      return 'Edicion de Servicio';
+    }
+  }
+
+  VerCamposEnterprise(etp: DataEnterpriseGTP) {
+    if (this.Formulario === true) {
+      this.mensaje('Aprobando Servicio ',
+      'Actualmente se esta aprobando un Servicio' );
+      return;
+    }
+    this.EmpresaFormulario = true;
+    this.Empgtp = etp;
+  }
+
+  VerCamposSer(etp: DataServiceGTP, index: number) {
+    if (this.EmpresaFormulario === true) {
+      this.mensaje('Aprobando Empresa',
+      'Actualmente se esta aprobando una Empresa' );
+      return;
+    }
+    this.Formulario = true;
+    this.indiceActual = index;
+  }
+
+
+  onGrabarEmp(emp: DataEnterpriseGTP) {
+    console.log(emp);
+    this.Enterprise = emp;
+    this.EmpresaFormulario = false;
   }
 
 }

@@ -15,7 +15,7 @@ export class StorageService {
   private currentSession: Session = null;
 
   constructor(private cookieStorage: CookieService) {
-    this.localStorageService = localStorage;
+    this.localStorageService = window.sessionStorage;
     this.currentSession = this.loadSessionData();
   }
 

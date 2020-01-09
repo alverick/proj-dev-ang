@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatRadioModule, MatIconModule } from '@angular/material';
 import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
 import { FormServicioComponent } from './form-servicio/form-servicio.component';
 import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
@@ -29,6 +29,7 @@ import { CambiaContrasenaComponent } from './cambia-contrasena/cambia-contrasena
 import { FormServicioGtpComponent } from './form-servicio-gtp/form-servicio-gtp.component';
 import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.component';
 import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
+import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
     MatFormFieldModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatIconModule,
     SharedModule,
     MatRadioModule,
     PerfectScrollbarModule
@@ -59,11 +61,18 @@ import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
     AfiliacionComponent,
     ConfigurarServiciosComponent,
     FormServicioComponent,
+    FormEmpresaGTPComponent,
     ProcesandoComponent,
     CrearContrasenaComponent,
     BlockCopyPasteDirective,
     OnlyNumbersFormDirective,
-    NumberAccountDirective, RecuperarContrasenaComponent, CambiaContrasenaComponent, FormServicioGtpComponent, ConfigurarGtpComponent, SerFormGtpComponent
+    NumberAccountDirective,
+    RecuperarContrasenaComponent,
+    CambiaContrasenaComponent,
+    FormServicioGtpComponent,
+    FormEmpresaGTPComponent,
+    SerFormGtpComponent,
+    ConfigurarGtpComponent
   ],
   exports: [
     OnlyNumbersFormDirective

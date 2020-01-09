@@ -73,7 +73,7 @@ export class NotifyService {
   }
 
   public changeRead(msg: any) {
-    this.http.put(`${environment.END_POINT}/notification/mark/${msg.id}?_=${new Date().getTime()}`, {})
+    this.http.post(`${environment.END_POINT}/notification/mark/${msg.id}?_=${new Date().getTime()}`, {})
       .subscribe(() => { });
     msg.isNew = !msg.isNew;
     if (msg.isNew) {

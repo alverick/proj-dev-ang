@@ -12,16 +12,16 @@ export class LogoutGuard implements CanActivate {
 
   }
   canActivate(next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean { 
-      if (localStorage.getItem('tk') == null || localStorage.getItem('tk')=='El usuario esta bloqueado' || localStorage.getItem('tk')=='Vuelva a intentarlo mas tarde') {
+    state: RouterStateSnapshot): boolean {
+      if (sessionStorage.getItem('tk') == null || sessionStorage.getItem('tk')=='El usuario esta bloqueado' || sessionStorage.getItem('tk')=='Vuelva a intentarlo mas tarde') {
         this.spinner.hide();
         return true;
       }
       // si el token existe
-     if ( localStorage.getItem('tk') ) {
+     if ( sessionStorage.getItem('tk') ) {
        // entonces enviame al home
        this.router.navigate(['/home']);
-       // que no me deje ver el login o 
+       // que no me deje ver el login o
          return false;
      }
   }

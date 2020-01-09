@@ -62,8 +62,8 @@ export class CrearContrasenaComponent implements OnInit {
           [Validators.required,  Validators.pattern('[1-2]0[0-9]+?'), Validators.minLength(11)]),
           nombre: new FormControl({ value: '' }, [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
           rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
-          email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern('^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'), Validators.minLength(10), Validators.maxLength(100)]),
-          telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
+          email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/), Validators.minLength(10), Validators.maxLength(100)]),
+          telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern(/^([9][0-9]{8})?([1-8][0-9]{5,6})?$/), Validators.minLength(6), Validators.maxLength(9)]),
           contrasena: new FormControl({ value: '', disabled: this.inEdit }),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }),
           acceptterms: new FormControl({ value: true, disabled: this.inEdit }),
@@ -83,6 +83,7 @@ export class CrearContrasenaComponent implements OnInit {
             movilNumber: this.gtpService.EmpresaServicios.movilNumber ,
             newName: this.gtpService.EmpresaServicios.newName,
             status: this.gtpService.EmpresaServicios.status,
+            newNameGTPStatus: this.gtpService.EmpresaServicios.newNameGTPStatus,
             requestDate: this.gtpService.EmpresaServicios.requestDate,
             inReview: false
           };
@@ -93,10 +94,17 @@ export class CrearContrasenaComponent implements OnInit {
              this.registerForm.get('nombre').enable();
             console.log('nombre  de empresa' + this.registerForm.get('nombre').enable());
            }
-          this.registerForm.setValue({ ruc: this.gtpService.EmpresaServicios.ruc, nombre: this.gtpService.EmpresaServicios.name,
-          rubro: this.gtpService.EmpresaServicios.entry, email: this.gtpService.EmpresaServicios.email,
-          telefono: this.gtpService.EmpresaServicios.movilNumber, contrasena: '', repcontrasena: '',  acceptterms: true });
-      });
+          this.registerForm.setValue({
+            ruc: this.gtpService.EmpresaServicios.ruc,
+            nombre: (this.gtpService.EmpresaServicios.newNameGTPStatus === 3) ? this.gtpService.EmpresaServicios.newName : this.gtpService.EmpresaServicios.name,
+            rubro: this.gtpService.EmpresaServicios.entry,
+            email: this.gtpService.EmpresaServicios.email,
+            telefono: this.gtpService.EmpresaServicios.movilNumber,
+            contrasena: '',
+            repcontrasena: '',
+            acceptterms: true
+          });
+        });
       } else {
         console.log('CREA EMPRESA');
         window['_url_loop_'] = 'crearContrasena';
@@ -106,7 +114,7 @@ export class CrearContrasenaComponent implements OnInit {
           nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(80)]),
           rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
           email: new FormControl( { value: '', disabled: this.inEdit },
-          [Validators.required , Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'),
+          [Validators.required , Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
            Validators.minLength(10), Validators.maxLength(100)]),
           telefono: new FormControl({ value: '', disabled: this.inEdit },
           [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
@@ -134,15 +142,13 @@ export class CrearContrasenaComponent implements OnInit {
     return new Observable(obs => {
       this.gtpService.GetEnterpriseServices({ TokenEncrypted: this.llave})
         .subscribe( d => {
-
           if ( d === null  ) {
-
             this.mensaje( 'Enlace expirado', 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro');
             this.router.navigate(['/login']);
             obs.error();
           } else {
             this.gtpService.EmpresaServicios = d;
-            console.log('empresa ser');
+            console.log('Empresasa y servicios Escarno');
             console.table(this.gtpService.EmpresaServicios);
          /*   let servicios = [];
             this.gtpService.EmpresaServicios.arrayServices = [];
@@ -211,7 +217,7 @@ export class CrearContrasenaComponent implements OnInit {
             Swal.fire({
             //  type: 'warning',
               title: 'Crea tu cuenta',
-              text: `El RUC: ${this.registerForm.value.ruc} ya se encuentra registrado en Eureca`,
+              text: `El RUC: ${this.registerForm.value.ruc} ya se encuentra registrado en Cobro Simple`,
               showConfirmButton: true ,
               showCancelButton: false,
               showCloseButton: true,
@@ -250,14 +256,14 @@ export class CrearContrasenaComponent implements OnInit {
 
     // this.gtpService.EdtEmpServ = null;
     // tslint:disable-next-line:max-line-length
-    if (( this.gtpService.EmpresaServicios.name === this.gtpService.EmpresaServicios.newName) && (this.gtpService.EmpresaServicios.inReview === false)) {
+    if (this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
+      console.log('NO llena el nombre de la empresa');
      this.gtpService.EdtEmpServ = {token: this.llave, NewName: null};
      this.gtpService.nombre = null;
-    }
-    // tslint:disable-next-line:max-line-length
-    if (( this.gtpService.EmpresaServicios.name !== this.gtpService.EmpresaServicios.newName) && (this.gtpService.EmpresaServicios.inReview === true)) {
+    } else {
       this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
       this.gtpService.nombre = this.registerForm.value.nombre.toString();
+      console.log('llena el nombre de la empresa ' +this.gtpService.nombre );
     }
      this.router.navigate(["/editarSvcGTP"]);
       this.gtpService.llave = this.llave;
@@ -272,14 +278,14 @@ export class CrearContrasenaComponent implements OnInit {
 
     MensajeName() {
       if (this.inEdit) {
-        if ( this.gtpService.EmpresaServicios.inReview) {
+        if ( this.gtpService.EmpresaServicios.newNameGTPStatus === 1 ) {
+          return false;
+        } else {
           return true;
+        }
       }
-      if ( this.gtpService.EmpresaServicios.inReview === false) {
-        return false;
-      }
+      return false;
     }
-  }
 
   terminos() {
    $('#terminos').modal('show');

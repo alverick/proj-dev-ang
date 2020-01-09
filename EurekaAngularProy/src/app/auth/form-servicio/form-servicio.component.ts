@@ -24,6 +24,7 @@ export class FormServicioComponent implements OnInit {
   @Input() set service(value: ServiceModel) {
     if (value === null || value === undefined) {
       this._service = {
+        res: '',
         nombre: 'Mensualidad',
         codDeudor: 'DNI',
         tipoDato: 'C',
@@ -66,32 +67,32 @@ export class FormServicioComponent implements OnInit {
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
   cmoraporce: boolean = false;
-  private _service: ServiceModel;
+  public _service: ServiceModel;
   @Output() grabar = new EventEmitter<any>();
   public services: ServiceModel[] = [];
 
   ngOnInit(): void {
-    console.log('nombreCodHabilitado');
-    console.log(this._service.nombreCodHabilitado);
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
-
     this.frm = this.fb.group({
-      nombre: new FormControl({ value: (this._service.nombre === '?') ? ((this._service.newName.substring(0, 3) === '???' ) ?
-      this._service.newName.substring(3, this._service.newName.length) : this._service.newName ) : this._service.nombre ,
-      disabled: this._service.nombreHabilitado },
-      [Validators.required, Validators.minLength(3),Alfanumerico,Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      codDeudor: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode :
-      ((this._service.codDeudor   === 'RUC' || this._service.codDeudor  === 'DNI' || this._service.codDeudor === 'Codigo Interno') ?
-      this._service.codDeudor : 'Otro') ,   disabled:    this._service.nombreCodHabilitado   }, [Validators.required]),
-      nameCod: new FormControl({ value: (this._service.codDeudor === '?') ? this._service.newNameCode : (this._service.codDeudor == 'Otro')?
-       this._service.nameCod : this._service.codDeudor,  disabled:   this._service.nombreCodHabilitado }),
+      nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  this._service.newNameGtpStatus === 3) ?
+      this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado}),
+
+      codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 ||
+        this._service.newNameCodeGtpStatus === 2) ?  this._service.codDeudor : ( this._service.newNameCode === 'RUC' ||
+        this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
+          disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
+
+
+         nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :( (this._service.codDeudor === 'Otro') ?
+       this._service.nameCod : this._service.codDeudor ),  disabled: this._service.nombreCodHabilitado }),
+
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
-      idCuenta: [this._service.idCuenta, [Validators.required, Validators.minLength(13)]],
+      idCuenta: [this._service.idCuenta, [Validators.required /*, Validators.minLength(10) */]],
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),
@@ -112,9 +113,6 @@ export class FormServicioComponent implements OnInit {
     this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
     this.changeMora(false);
     this.changeTipoMora(false);
-
-    console.log('cuentas');
-    console.table(this.cuentas);
 
     if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');
@@ -159,18 +157,32 @@ export class FormServicioComponent implements OnInit {
     }  */
 
   }
-  nombreAlert(){
+ /* nombreAlert2(){
     if (this.editMode === true){
       if (this._service.newName.substring(0, 3) === '???'){
         return false;
       }
       if ( this._service.nombre  !== this._service.newName){
         return true;
+      }
     }
+  }  */
+  nombreAlert() {
+    if (this.editMode === true) {
+      /*if (this._service.newNameGtpStatus === 1 || this._service.newNameGtpStatus === 3) {
+        return false;
+      }
+      if  (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 2) {
+        return true;
+      } */
+      if (   this._service.newName !== '') {
+        return true;
+      }
+      return false;
     }
   }
 
-  CodiAlert() {
+/*  CodiAlert2() {
     // editMode === true && ( _service.codDeudor  !== _service.newNameCode)
     if (this.editMode === true){
       if (this._service.newNameCode.substring(0, 3) === '???'){
@@ -178,7 +190,22 @@ export class FormServicioComponent implements OnInit {
       }
       if ( this._service.codDeudor  !== this._service.newNameCode){
         return true;
+      }
     }
+  } */
+  CodiAlert () {
+    // editMode === true && ( _service.codDeudor  !== _service.newNameCode)
+    if (this.editMode === true) {
+     /* if (this._service.newNameCodeGtpStatus  === 1 || this._service.newNameCodeGtpStatus === 3) {
+        return false;
+      }
+      if  (this._service.newNameCodeGtpStatus === 0 || this._service.newNameCodeGtpStatus === 2) {
+          return true;
+      } */
+      if ( this._service.newNameCode  !== '') {
+        return true;
+      }
+      return false;
     }
   }
 
@@ -238,6 +265,7 @@ export class FormServicioComponent implements OnInit {
                 let value: ServiceModel;
                  // value.usaWebApp = true;
                 if (this.editMode)  {
+                 console.log('ENTRO A EDICION DE SERVICIOS');
                   value = this._service;
                 // value.nombre = this.frm.value.nombre;
               //   value.newName = this.frm.value.nombre;
@@ -248,7 +276,7 @@ export class FormServicioComponent implements OnInit {
                  value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
                     ((this.frm.value.nameCod === value.codDeudor) ? value.newNameCode : this.frm.value.nameCod ) :
                     (this.frm.value.codDeudor === value.codDeudor) ? value.newNameCode : this.frm.value.codDeudor ;
-                  value.idCuenta = this.frm.value.idCuenta;
+                  value.nroCuenta = this.frm.value.nroCuenta;
                   value.moneda = this.frm.value.moneda;
                   value.cobraMora = this.frm.value.cobraMora;
                   value.periodoMora = this.frm.value.periodoMora;
@@ -266,8 +294,6 @@ export class FormServicioComponent implements OnInit {
                    value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
                    console.log('crea un nuevo 3 en edicion' + value.newName);
                 }
-                let cta = this.cuentas.find(c => c.id === value.idCuenta);
-                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
                 value.simboloMoneda = this.simboloMoneda;
                  value.usaWebApp = true;
                 this.grabar.emit(value);
@@ -344,7 +370,8 @@ export class FormServicioComponent implements OnInit {
              // value.usaWebApp = true;
               if (this.editMode) {
                 value = this._service;
-                value.idCuenta = this.frm.value.idCuenta;
+                //value.idCuenta = this.frm.value.idCuenta;
+                value.nroCuenta = this.frm.value.nroCuenta;
                 // value.nombre = this.frm.value.nombre;
                 // tslint:disable-next-line:max-line-length
                value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
@@ -366,10 +393,10 @@ export class FormServicioComponent implements OnInit {
                 value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
                 console.log('crea un nuevo 3 en edicion' + value.newName);
               }
-              let cta = this.cuentas.find(c => c.id === value.idCuenta);
-              value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
+              //let cta = this.cuentas.find(c => c.id === value.idCuenta);
+              //value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
               value.simboloMoneda = this.simboloMoneda;
-
+              value.usaWebApp = true;
               this.grabar.emit(value);
             }
           }
@@ -390,10 +417,20 @@ export class FormServicioComponent implements OnInit {
           } else {
             let value: ServiceModel;
             console.log('ingresa 3');
-
+              /*
+                newName         name
+              minimarket         ''       NUEVO     0  -
+              minimarket         ''       RECHAZADO 3  -
+                ''            minimarket  APROBADO  1
+                sm            minimarket  EDITADO   2
+                sm            minimarket  RECHAZADO 3
+                ''               sm       APROBADO  1
+              */
             if (this.editMode) {
+              console.log('ENTRO A EDICION DE SERVICIOS----');
               value = this._service;
-              value.idCuenta = this.frm.value.idCuenta;
+              //value.idCuenta = this.frm.value.idCuenta;
+              value.nroCuenta = this.frm.value.nroCuenta;
                // tslint:disable-next-line:max-line-length
                value.newName =  (value.nombreHabilitado) ?  value.newName : ( (this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre )  ;
                value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode :  (this.frm.value.codDeudor === 'Otro') ?
@@ -416,14 +453,10 @@ export class FormServicioComponent implements OnInit {
               value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
               console.log('crea un nuevo 3 en edicion' + value.newName);
             }
-            let cta = this.cuentas.find(c => c.id === value.idCuenta);
-            value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
+            //let cta = this.cuentas.find(c => c.id === value.idCuenta);
+            //value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
             value.simboloMoneda = this.simboloMoneda;
-            console.log('ingresa 3.2');
             value.usaWebApp = true;
-
-            console.log('SERVICIO --MARCE');
-            console.log(value);
 
             this.grabar.emit(value);
           }
@@ -519,6 +552,7 @@ export class FormServicioComponent implements OnInit {
     if(event === 'Otro'){
     //  this.f.codDeudor.reset();
       this.f.nameCod.setValidators([Validators.required, Validators.minLength(3)]);
+      this.f.nameCod.reset();
     }
     else {
       this.f.nameCod.clearValidators();

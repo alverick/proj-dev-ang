@@ -1,11 +1,12 @@
 export interface DataEnterpriseModel {
 
-    ruc: number;
+    ruc: number|string;
     name: string;
     entry: string;
     email: string;
     movilNumber: number;
     newName: string;
+    newNameGTPStatus?: number;
     status: String;
     requestDate?: Date;
     password?: string;

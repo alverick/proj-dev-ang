@@ -4,7 +4,7 @@
         <div class="row ">
             <!--////// L E F T /////-->
             <div class="col-sm-5 ">
-                <div class="texto-azul">Antes de registrarte, ¡conoce Eureca!</div>
+                <div class="texto-azul">Antes de registrarte, ¡Conoce Cobro Simple!</div>
             </div>
 
             <!--///// R I G H T //// -->
@@ -15,7 +15,7 @@
                 <div class="d-flex justify-content-end">
                     <div class="cuadro-descripcion p-4  ">
                         <p class="descripcion pl-1">
-                            Con Eureca tus clientes te podrán pagar a través de los <br> diferentes canales de Interbank y podrás manejar la información de tus cobros de manera fácil.
+                            Con Cobro Simple tus clientes te podrán pagar a través de los <br> diferentes canales de Interbank y podrás manejar la información de tus cobros de manera fácil.
                         </p>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="pt-3 pricing-card-title text-green">S/1</div>
                                 <div class="c-descripcion mt-4">
-                                    Costos que se le cobrará a tus clientes
+                                    Costo que se le cobrará a tus clientes
                                 </div>
                             </div>
                             <!--/////// C O M I S I O N - 3 //////// -->
@@ -62,16 +62,22 @@
                                 </div>
 
                                 <div class="pt-4 card-title pricing-card-title text-green">S/7</div>
-                                <div class="c-descripcion mt-3">
-                                    Costo que podrá ser asumido por la empresa o por los clientes
+                                <div class="c-descripcion mt-4">
+                                  Costo que se le cobrará a tus clientes
                                 </div>
 
                             </div>
                         </div>
                         <div class="pt-3">
+                          <p class="descripcion">
+                              <b>Recuerda que</b> para usar Cobro Simple debes tener una Cuenta Negocios o una cuenta como Persona Jurídica (corriente o ahorros) con Interbank.
+                          </p>
                             <!--//// T E R C E R // B L O Q U E //////-->
                             <button class="btn-eureca-green" [routerLink]="['/crearContrasena']">
-                                 QUIERO REGISTRARME
+                              YA TENGO CUENTA INTERBANK
+                            </button>
+                            <button type="button" class="btn-outline-green" (click)="crearCuenta()">
+                              ABRIR CUENTA NEGOCIOS <mat-icon svgIcon="eurc_new_tab"></mat-icon>
                             </button>
                         </div>
                     </div>
