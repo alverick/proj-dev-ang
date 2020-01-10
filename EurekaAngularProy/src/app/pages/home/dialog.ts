@@ -30,6 +30,7 @@ declare var $: any;
     public errores: any[] = [];
     public ready: boolean = false;
     public fileName: string;
+    public cuadro_errores = true;
 
     constructor(public  snackBar: MatSnackBar,
                 public excelService: ExcelService,
@@ -71,10 +72,11 @@ declare var $: any;
       let names: string[] = el.value.split("/");
       if (names.length <= 1)
         names = el.value.split("\\");
-      this.excelService.fileName = names[names.length-1];
+      this.fileName = names[names.length-1];
       this.files = el.files;
       this.excelService.errores = [];
       this.ready = true;
+     // console.log('file name' + fileName);
     }
 
     SalirsnackBar() {
@@ -132,8 +134,8 @@ declare var $: any;
           this.rowsAccepted = value.rowsUploaded;
           this.rowsRejected = value.rowsRejected;
           this.excelService.errores = value.errors;
-        }
-        else if (value.status === 'COMPLETED') {
+          this.cuadro_errores = true;
+        } else if (value.status === 'COMPLETED') {
           this.gaService.sendEvent('CargarExcel', {
             'event_category': 'CargaExcel',
             'event_label': 'cargar_excel'
@@ -159,8 +161,7 @@ declare var $: any;
             });
           });
           this.dialogRef.close(obsClose);
-        }
-        else {
+        } else {
           this.progress.mode = 'determinate';
           this.progress.value = value.advance;
           if (value.status == "VALIDATING") {
@@ -185,6 +186,18 @@ declare var $: any;
       }, 800);
     }
 
+    right() {
+      console.log('cuadro');
+      this.ready = true;
+      if (this.excelService.errores.length > 0) {
+        this.cuadro_errores = true;
+      }
+    }
+    left() {
+      console.log('cuadro');
+      this.cuadro_errores = false;
+      this.ready = false;
+    }
     descargarPlantilla() {
       this.excelService.GetTemplate()
         .subscribe((r: Blob) => {

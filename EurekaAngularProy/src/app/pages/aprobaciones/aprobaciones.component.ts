@@ -442,7 +442,7 @@ export class AprobacionesComponent implements OnInit {
       return 'Nueva servicio';
     }
     if  (svc.newNameGTPStatus === 1 && svc.newNameCodeGTPStatus === 1) {
-      return 'Servicio aprobado';
+      return 'Servicio habilitado';
     }
     if (svc.newNameGTPStatus === 2 || svc.newNameCodeGTPStatus === 2) {
       return 'Servicio editado';

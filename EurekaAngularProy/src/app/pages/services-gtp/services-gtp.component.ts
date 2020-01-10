@@ -74,7 +74,7 @@ export class ServicesGTPComponent implements OnInit {
       this._service.nameCod : this._service.codDeudor, disabled: true}),
       tipoDato: new FormControl({ value: this._service.dataType, disabled: true }, Validators.required),
       tipoPago: new FormControl({ value: this._service.paymentType, disabled: true }, Validators.required),
-      idCuenta: new FormControl({ value: this._service.idAccount, disabled: true }, Validators.required),
+      idCuenta: new FormControl({ value: this._service.idAccount.toString(), disabled: true }, Validators.required),
       moneda: [this._service.currency, Validators.required],
       usaAgente: new FormControl({ value: this._service.useAgent, disabled: true }),
       usaTienda: new FormControl({ value: this._service.useStore, disabled: true }),

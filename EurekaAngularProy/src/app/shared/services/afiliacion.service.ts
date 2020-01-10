@@ -274,9 +274,8 @@ export class AfiliacionService {
             pagoPartes: s.partialPayment,
             newNameGtpStatus : s.newNameGTPStatus,
             newNameCodeGtpStatus : s.newNameCodeGTPStatus,
-            // tslint:disable-next-line:max-line-length
             nombreHabilitado: (   s.newNameGTPStatus === 1 || s.newNameGTPStatus === 3 ) ? false : true,
-            nombreCodHabilitado: (s.newNameCodeGTPStatus === 1 ||  s.newNameCodeGTPStatus === 3  ) ? false : true,
+           nombreCodHabilitado: (s.newNameCodeGTPStatus === 1 ||  s.newNameCodeGTPStatus === 3  ) ? false : true,
 
           });
         });

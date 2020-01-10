@@ -10,8 +10,8 @@
 </mat-dialog-actions>
 
 <div class="content p-0">
-    <div *ngIf="!excelService.statusUpload && !ready" class="paso"> PASO 1 DE 2  <img class="pl-3" style="cursor: pointer;" (click)="ready = true" src="assets/images/arrow-right.svg" ></div>
-    <div *ngIf="!excelService.statusUpload && ready" class="paso"> PASO 2 DE 2  <img class="pl-3 " style="cursor: pointer;" (click)="ready = false" src="assets/images/arrow-left.svg" ></div>
+    <div *ngIf="!excelService.statusUpload && !ready" class="paso"> PASO 1 DE 2  <img class="pl-3" style="cursor: pointer;" (click)="right() " src="assets/images/arrow-right.svg" ></div>
+    <div *ngIf="!excelService.statusUpload && ready" class="paso"> PASO 2 DE 2  <img class="pl-3 " style="cursor: pointer;" (click)="left()" src="assets/images/arrow-left.svg" ></div>
 
     <div class="title pt-2">Agrega cobros del servicio <span class="resaltado">{{excelService.service.name}}</span></div>
     <br/>
@@ -23,8 +23,8 @@
         </div>
         <img class="pb-3 img-excel" src="assets/images/excel.svg" alt="excel" >
         <div class="text-center">
-
-
+            
+            
             <button class="btn-eureca-green" type="button" form="input-form" (click)="descargarPlantilla()">
                 DESCARGAR LA PLANTILLA
             </button> <br>
@@ -34,16 +34,16 @@
            <!-- <button class="pt-3 btn-outline-green" type="button" form="input-form" (click)="uploadFile.click()">
               YA TENGO LA PLANTILLA
             </button> -->
-
+            
         </div>
     </div>
          <form id="input-form" [formGroup]="inputXlsForm">
             <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
         </form>
         <small  *ngIf="!excelService.statusUpload && ready">Archivo seleccionado</small>
-        <div style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
-            <div class="input-file">
-                <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{excelService.fileName}}</div></span>
+        <div  style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
+            <div class="input-file" (click)="uploadFile.click()">
+                <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{fileName}}</div></span>
             </div>
             <br/>
         </div>
@@ -56,7 +56,7 @@
         SUBIR PLANTILLA
       </button>
     </div>
-    <div  style="margin-left: 160px;" *ngIf="excelService.errores.length > 0" class="errores">
+    <div  style="margin-left: 160px;" *ngIf="excelService.errores.length > 0 &&  cuadro_errores === true" class="errores">
         <div class="header">
             <div class="texto">Se encontraron los siguientes errores:</div>
             <div class="resumen">
@@ -73,7 +73,7 @@
             <form id="input-form" [formGroup]="inputXlsForm">
                 <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
             </form>
-            <br />
+            <br/>
             <button class="btn-eureca-green "  style="margin-right: 180px;" type="button" form="input-form" (click)="uploadFile.click()">
               SELECCIONAR PLANTILLA
             </button><strong> </strong>
