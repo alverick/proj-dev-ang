@@ -80,6 +80,7 @@ export class HomeComponent implements OnInit {
     { name: 'amount', asc: false },
     { name: 'interestAmount', asc: false },
     { name: 'totalAmount', asc: false },
+    { name: 'totalAmountPayed', asc: false },
     { name: 'status', asc: false }
   ]
   orderBy = -1;

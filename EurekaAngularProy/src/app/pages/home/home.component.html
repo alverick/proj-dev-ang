@@ -247,7 +247,7 @@
                       </div>
                     </th>
                     <th class="c11">
-                      <div class="text">Estado del pago</div>
+                      <div class="text">Total Pagado</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 10 && orderDef[10].asc === true"
                           (click)="orderList(10, true)"></div>
@@ -256,7 +256,16 @@
                       </div>
                     </th>
                     <th class="c12">
-                      <div class="text">Editar</div>
+                      <div class="text">Estado del pago</div>
+                      <div class="ord">
+                        <div class="up" [class.seleccionado]="orderBy === 11 && orderDef[11].asc === true"
+                          (click)="orderList(11, true)"></div>
+                        <div class="down" [class.seleccionado]="orderBy === 11 && orderDef[11].asc === false"
+                          (click)="orderList(11, false)"></div>
+                      </div>
+                    </th>
+                    <th class="c13">
+                      <div class="text" >Editar</div>
                     </th>
 
                   </tr>
@@ -348,8 +357,18 @@
                           {{items.totalAmount| number : '1.2-2'}}</span>
                       </td>
                       <td class="c11">
-                        <div class="cnt-status">
-                          <div class="lnk-status" (click)="showPopover(items, origin)" #origin>
+                        <span *ngIf="items.totalAmountPayed > 0">{{items.currency}}
+                          {{items.totalAmountPayed| number : '1.2-2'}}
+                          <div class="cnt-status">
+                            <div class="text-success lnk-status" (click)="showPopover(items, origin)"  #origin>
+                              Ver Detalle
+                            </div>
+                          </div>
+                        </span>
+                      </td>
+                      <td class="c12">
+                          <div class="cnt-status">
+                            <div class="lnk-status" (click)="showPopover(items, origin)"  #origin>
                             <span *ngIf="items.status === 'PAGADO' && items.dueDate !== null" class="text-success">
                               Pagado <img src="assets/images/ok.svg" alt="ok">
                             </span>
@@ -372,9 +391,9 @@
                               Deshabilitado <img src="assets/images/ok.svg" alt="ok">
                             </span>
                           </div>
-                        </div>
+                          </div>
                       </td>
-                      <td class="c12">
+                      <td class="c13">
                         <div *ngIf="items.svcStatus !== 1 && items.status !== 'PAGADO'" class="d-flex">
                           <div *ngIf="!items.editButton && ((items.dueDate === null && !items.hasIBKPayments) || items.dueDate !== null)" class="btn-edit" (click)="BotonEditar(items)">
                             <img src="assets/images/pencil.svg" alt="editar">
@@ -389,7 +408,7 @@
                       </td>
                     </tr>
                     <tr style="border-bottom: #13131300" *ngIf="ceroRegistros()">
-                      <td colspan="13" class="texto-after">
+                      <td colspan="14" class="texto-after">
                         <span>{{messageTable}}</span>
                         <div *ngIf="showArrow" class="">
                           <img src="assets/images/path.svg" alt="arrow">
