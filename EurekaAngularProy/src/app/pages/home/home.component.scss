@@ -29,7 +29,7 @@ body {
 .widget.filtros {
     .content {
         .mat-form-field.f1 {
-            width: 280px;
+            width: 230px;
         }
         .mat-form-field.f2 {
             margin-left: 10px;
@@ -651,3 +651,23 @@ b {
 :host ::ng-deep .mat-checkbox-inner-container-no-side-margin{
     margin-left: 12px !important;
 }
+
+/*TOOLTIP*/
+
+.title {
+    padding: 6px 12px;
+    border-bottom: $separador;
+
+    .text {
+      @include font-text(12px, 500);
+      color: $textblack;
+    }
+
+    .mark-all {
+      @include font-text(12px);
+      color: $textgreen;
+      cursor: pointer;
+    }
+  }
+  
+  /*[END] TOOLTIP BOOSTRAP*/

@@ -135,6 +135,8 @@ export class HomeComponent implements OnInit {
   selectedAll: boolean = true;
   selectedUniverse = false;
 
+  selectedAtLeastOneDebt: boolean = false;
+
   statusOptions : Array<Object> = [
     {  option:'PENDIENTE', state: '1'},
     {  option:'PAGADO', state : '2'}
@@ -728,6 +730,7 @@ orderList(index: number, asc: boolean) {
     this.numeroPagina = nro;
     this.consultaDeuda();
     this.selectedAll = this.transactionService.isMarkedAll(this.selectedUniverse);
+    this.DebtsAreSelected();
   }
 
 
@@ -799,7 +802,7 @@ orderList(index: number, asc: boolean) {
       }
     });
     console.log('arra limpio');
-
+    this.DebtsAreSelected();
   }
 
 
@@ -827,7 +830,8 @@ orderList(index: number, asc: boolean) {
       }), err => { this.spinner.hide(); });
     }
   });
-}
+  this.DebtsAreSelected();
+  }
 
   SeleccionarTodos() {
 
@@ -842,6 +846,7 @@ orderList(index: number, asc: boolean) {
       this.selectedUniverse = false;
       this.transactionService.debtItems.data.forEach(itm => this.transactionService.deleteDebt(itm.id, itm.selected = false));
     }
+    this.DebtsAreSelected();
   }
 
 /*//////// O P E N  - D I A L O G ///////////////////// */
@@ -1073,6 +1078,7 @@ Ocultar() {
   selectForDelete(itm: Debts) {
     this.transactionService.deleteDebt(itm.id, itm.selected);
     this.selectedAll = this.transactionService.isMarkedAll();
+    this.DebtsAreSelected();
   }
 
   showPopover(itm: any, origin) {
@@ -1089,6 +1095,21 @@ Ocultar() {
       itm.status = d.data;
     });
   }
+
+  DebtsAreSelected(){
+    this.selectedAtLeastOneDebt = (this.transactionService.itemsForDelete.length > 0);
+    console.log('ItemsForDelete',this.transactionService.itemsForDelete);
+    console.log('this.selectedAtLeastOneDebt ',this.selectedAtLeastOneDebt);
+  }
+
+  CleanAllFilters(){
+    this.filtro.inputSearch='';
+    this.filtro.service=null;
+    this.filtro.status=null;
+    this.limpiarDateForFilter();
+  }
+
+
 }
 
 

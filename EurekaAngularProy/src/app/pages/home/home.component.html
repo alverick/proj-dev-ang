@@ -83,6 +83,8 @@
               </mat-form-field>
               <button type="button" class="f3 btn-eureca-green" (click)="sendFiltro()">BUSCAR
               </button>
+              <button type="button" class="f3 btn-eureca-green" (click)="CleanAllFilters()">Limpiar Filtros
+              </button>
             </form>
           </div>
         </div>
@@ -98,18 +100,31 @@
                   <label class="act-label" for="chk-all" aria-label="chk-all"
                     [class.seleccionado]="selectedAll">Seleccionar</label>
                 </div>
-                <div *ngIf="!ceroRegistros()"  class="btn-eliminar" >
-                  <div (click)="EliminarSeleccionados()"  data-toggle="modal" data-target="#ModalNotificacion">
-                    <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
-                  </div>
-                  <label class="act-label">Eliminar</label>
-                </div>
-                <div *ngIf="ceroRegistros()" class="btn-eliminar disable" >
-                    <div data-toggle="modal" data-target="#ModalNotificacion">
-                      <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
+                <div *ngIf="!ceroRegistros()" class="btn-eliminar" >
+                  <div *ngIf="!selectedAtLeastOneDebt">
+                    <div (click)="EliminarSeleccionados()"  title="Debe seleccionar al menos una fila para eliminar"  data-toggle="modal" data-target="#ModalNotificacion">
+                      <mat-icon class="svg-custom" svgIcon="eurc_trash">
+                      </mat-icon>
                     </div>
-                    <label class="act-label">Eliminar</label>
                   </div>
+                  <div *ngIf="selectedAtLeastOneDebt">
+                    <div (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
+                      <mat-icon class="svg-custom" svgIcon="eurc_trash">
+                      </mat-icon>
+                    </div>
+                  </div>
+                    <label class="act-label">
+                      Eliminar
+                    </label>
+                </div>
+                <div *ngIf="ceroRegistros()" class="btn-eliminar disable">
+                    <div data-toggle="modal" data-target="#ModalNotificacion">
+                        <mat-icon class="svg-custom" svgIcon="eurc_trash" ></mat-icon>
+                    </div>
+                    <label class="act-label">Eliminar
+                    </label>
+                </div>
+                
               </div>
 
               <div class="addDeuda">
