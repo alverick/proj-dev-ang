@@ -335,7 +335,7 @@ orderList(index: number, asc: boolean) {
        this.messageTable = 'Para empezar, agrega la lista de los cobros';
        this.showArrow = true;
       } else{
-       this.messageTable ='No se encontro ningún registro para esta búsqueda';
+       this.messageTable ='No se encontró ningún registro para esta búsqueda';
        this.showArrow = false;
 
       }

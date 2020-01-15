@@ -24,7 +24,7 @@ export class AprobacionesComponent implements OnInit {
   // public Empresa: EnterprisesGtp ;
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {ruc: 0 , name: '', entry: '', entryName: '', email: '',
-  movilNumber: 0 , newName: '', newNameGTPStatus: 0, status: '', uniqueCodeIBK: ''};
+  movilNumber: 0, movilOperator: '', newName: '', newNameGTPStatus: 0, status: '', uniqueCodeIBK: ''};
   public emp: GtpEmpresa;
   public scv: GtpServcegtp [] = [];
   public gtppost: GtpPost ;
@@ -206,37 +206,51 @@ export class AprobacionesComponent implements OnInit {
       if (notAprov > 0) {
         Swal.fire({
           title: 'Aprobacion',
-          html: 'Existen ' + notAprov + ' campos que no fueron aprobados. <br> ¿Desea terminar?',
+          html: 'Existen ' + notAprov + ' campos que no fueron aprobados. <br> ¿Desea rechazar la Afiliación?',
           showCloseButton: true,
           showCancelButton: true,
-          confirmButtonText: 'Si, Terminar',
-          cancelButtonText: 'No, Cancelar',
+          confirmButtonText: 'Si, Rechazar afiliación',
+          cancelButtonText: 'No, Solicitar corrección de datos',
           onOpen: drawPopup
         }).then((result) => {
           if (result.value) {
-
+            this.gtpService.AprobarEmpresaServ({ Rechaza: true, EnterpriseObj:  this.emp , ListServiceObj: this.scv })
+              .subscribe(d => {
+                if (d) {
+                  this.router.navigate(['/gtp']);
+                }
+              });
+            return;
+          }
+          else {
             if ((this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) && this.scv.length === 0) {
               console.log('NO ENVIA NADA');
-              this.router.navigate(['/gtp']);
+              this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj:  this.emp , ListServiceObj: this.scv })
+                .subscribe(d => {
+                  if (d) {
+                    this.router.navigate(['/gtp']);
+                  } else {
+
+                  }
+                });
               return;
             }
             if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview  && this.scv.length > 0) {
               console.log('ENVIA AMBOS');
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj:  this.emp , ListServiceObj: this.scv })
-              .subscribe(d => {
-                if (d) {
-                  this.router.navigate(['/gtp']);
-                } else {
+              this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj:  this.emp , ListServiceObj: this.scv })
+                .subscribe(d => {
+                  if (d) {
+                    this.router.navigate(['/gtp']);
+                  } else {
 
-                }
-
-              });
+                  }
+                });
               return;
             }
 
             if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) {
               console.log('SOLO ENVIA serv');
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: null , ListServiceObj: this.scv })
+              this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: null , ListServiceObj: this.scv })
               .subscribe(d => {
                 if (d) {
                   this.router.navigate(['/gtp']);
@@ -249,7 +263,7 @@ export class AprobacionesComponent implements OnInit {
             }
             if (  this.scv.length === 0  ) {
               console.log('SOLO ENVIA EMPRESA');
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: null })
+              this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: null })
               .subscribe(d => {
                 if (d) {
                   this.router.navigate(['/gtp']);
@@ -260,7 +274,7 @@ export class AprobacionesComponent implements OnInit {
               return;
             } else {
               console.log('ENVIA AMBOS');
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
+              this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: this.scv })
               .subscribe(d => {
                 if (d) {
                   this.router.navigate(['/gtp']);

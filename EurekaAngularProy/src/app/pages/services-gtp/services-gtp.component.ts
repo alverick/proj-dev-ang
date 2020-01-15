@@ -27,6 +27,7 @@ export class ServicesGTPComponent implements OnInit {
   private _service:   DataServiceGTP;
   configEmpresaService: any;
 
+  @Input() public idCompany: number;
   @Input() set service(value: DataServiceGTP) {
     this._service = value;
     console.log(value);
@@ -74,7 +75,7 @@ export class ServicesGTPComponent implements OnInit {
       this._service.nameCod : this._service.codDeudor, disabled: true}),
       tipoDato: new FormControl({ value: this._service.dataType, disabled: true }, Validators.required),
       tipoPago: new FormControl({ value: this._service.paymentType, disabled: true }, Validators.required),
-      idCuenta: new FormControl({ value: this._service.idAccount.toString(), disabled: true }, Validators.required),
+      idCuenta: new FormControl({ value: this._service.idAccount, disabled: true }, Validators.required),
       moneda: [this._service.currency, Validators.required],
       usaAgente: new FormControl({ value: this._service.useAgent, disabled: true }),
       usaTienda: new FormControl({ value: this._service.useStore, disabled: true }),
@@ -90,13 +91,17 @@ export class ServicesGTPComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       NewName:  [(this._service.acceptednewName === null) ? '' : (this._service.acceptednewName === true ? 'S' : 'N'), Validators.required],
     });
+    this.afiliacionService.idCompany = this.idCompany;
     this.changeMora(false);
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
     this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
-    this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
+    this.afiliacionService.GetCards().subscribe(d => {
+      this.cuentas = d;
+      this.frm.get('idCuenta').setValue(this._service.idAccount);
+    });
 
     if (this.frm.get('cobraMora').value === 'S') {
       this.cmoraporce = true;

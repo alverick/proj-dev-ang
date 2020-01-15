@@ -144,10 +144,10 @@ export class GtpGrillaComponent implements OnInit {
     (this.filtro.BusinessHeading === '' || this.filtro.BusinessHeading === null || this.filtro.BusinessHeading === undefined) &&
     (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
     ( /*this.filtro.dateFrom == ''  ||*/ this.filtro.dateFrom === null || this.filtro.dateFrom === undefined)){
-      this.messageTable = 'No se encontro ningún registro para esta búsqueda';
+      this.messageTable = 'No se encontró ningún registro para esta búsqueda';
        this.showArrow = true;
     }else{
-      this.messageTable ='No se encontro ningún registro para esta búsqueda';
+      this.messageTable ='No se encontró ningún registro para esta búsqueda';
       this.showArrow = false;
     }
   }

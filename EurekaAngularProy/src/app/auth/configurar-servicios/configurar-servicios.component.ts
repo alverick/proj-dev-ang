@@ -87,8 +87,6 @@ export class ConfigurarServiciosComponent implements OnInit {
             newNameCodeGtpStatus : s.newNameCodeGTPStatus
           });
         });
-        console.log('SERVICIOS nievita');
-        console.log(this.afiliacionService.services);
         return;
       }
       if (d.isEdit) {
@@ -698,8 +696,8 @@ getCodigoNameGTP (svc: ServiceModel) {
               return;
             }
            }
-          
-          
+
+
         }
 
       } else {

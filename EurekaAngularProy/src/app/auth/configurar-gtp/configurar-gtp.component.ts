@@ -39,6 +39,7 @@ export class ConfigurarGtpComponent implements OnInit {
     entryName: '',
     email: '',
     movilNumber: 0 ,
+    movilOperator: '',
     newName: '' ,
     status: '',
     uniqueCodeIBK: '',
