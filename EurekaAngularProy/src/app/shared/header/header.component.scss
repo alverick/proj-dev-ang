@@ -134,30 +134,36 @@ img.bell {
     .notifies {
       max-height: 388px;
       overflow-y: auto;
-
+      
       .dropdown-item {
-        padding: 8px;
+        padding: 0px;
         white-space: normal;
         cursor: default;
 
-        .item-icono {
-          float: left;
-          width: 8px;
-          height: 8px;
-          margin: 4px;
-          cursor: pointer;
-        }
+        .espacio {
 
-        .texto {
-          @include font-text(14px);
-          color: $textblack;
-          margin-left: 15px;
-        }
+          padding: 8px;
+          
+          .item-icono {
+            float: left;
+            width: 8px;
+            height: 8px;
+            margin: 4px;
+            cursor: pointer;
+          }
 
-        .tiempo {
-          @include font-text(14px, 300);
-          color: $textblack;
-          margin-left: 15px;
+          .texto {
+            @include font-text(14px);
+            color: $textblack;
+            margin-left: 15px;
+          }
+
+          .tiempo {
+            @include font-text(14px, 300);
+            color: $textblack;
+            margin-left: 15px;
+          }
+        
         }
       }
 

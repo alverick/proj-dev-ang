@@ -26,8 +26,6 @@ export class EmpresaGTPComponent implements OnInit {
   constructor(public afiliacionService: AfiliacionService, private formBuilder: FormBuilder, public gtpService: GtpService) { }
 
   ngOnInit() {
-    console.log('EMPRESA ENTERPRISE');
-    console.table(this._enterprise );
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
 
     this.formGroup = this.formBuilder.group({
@@ -38,6 +36,7 @@ export class EmpresaGTPComponent implements OnInit {
       entry: new FormControl({ value: this._enterprise.entry, disabled: true }),
       email: new FormControl({ value: this._enterprise.email, disabled: true }),
       movilNumber: new FormControl({ value: this._enterprise.movilNumber, disabled: true }),
+      movilOperator: new FormControl({ value: this._enterprise.movilOperator, disabled: true })
     });
   }
 

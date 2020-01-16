@@ -64,6 +64,18 @@
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
+                                <mat-form-field class="w-100">
+                                  <mat-label>Operador</mat-label>
+                                  <mat-select formControlName="movilOperator">
+                                      <mat-option value="M">Movistar</mat-option>
+                                      <mat-option value="C">Claro</mat-option>
+                                      <mat-option value="E">Entel</mat-option>
+                                      <mat-option value="B">Bitel</mat-option>
+                                  </mat-select>
+                                  <mat-error class="messsage-error" *ngIf="f.movilOperator.invalid && f.movilOperator.hasError('required')">Elija una opción</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
                                     <input formControlName="contrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
                                     <mat-error class="messsage-error">
@@ -141,8 +153,8 @@
                             INTERBANK prestará el servicio de recaudación a favor del CLIENTE a través de su red de Tiendas dentro del horario de atención al público establecido para este tipo de servicios, así como mediante su Banca por Internet e Interbank Agente, de acuerdo con los lineamientos y condiciones establecidas por el cliente en el apartado “Configura tus servicios”.<br /><br />
                             EL CLIENTE entiende que el proceso y/o los mecanismos establecidos por INTERBANK en la presente plataforma de cobro, han sido claros, y que mediante la aceptación de los términos y condiciones del servicio, manifiesta su voluntad y aceptación para afiliarse al Servicio de Recaudación puesto a disposición por INTERBANK, cuyas características y funcionalidades se encuentran descritas la plataforma web de Interbank Cobro Simple y han sido configuradas por EL CLIENTE en el apartado “Configura tus servicios”.
                         </p>
-                        <p>                                
-                            2.	Obligaciones de Interbank 
+                        <p>
+                            2.	Obligaciones de Interbank
                         </p>
                         <p>
                             Sobre la base de la información proporcionada por EL CLIENTE, INTERBANK cobrará, procesará, registrará e informará de los pagos efectuados por los CLIENTES PAGADORES en la misma plataforma web de Interbank Cobro Simple. Siendo EL CLIENTE responsable por la exactitud de la información que proporcione a INTERBANK para efectos del Servicio de Recaudación, incluida la información contenida en las liquidaciones, recibos, facturas u otros documentos de crédito, así como por el sustento formal o legal de las sumas consignadas en los mismos, entre otros.  <br /><br />

@@ -55,7 +55,7 @@ export class CrearContrasenaComponent implements OnInit {
       if (d.isEdit) {
         this.llave =  this.rutaActiva.snapshot.params.llave.toString();
         console.log('EDITAR EMPRESA' + d.isEdit +   this.llave );
-        window['_url_loop_'] = 'editaCuenta';
+        window['_url_loop_'] = `editaCuenta/${this.llave}`;
         this.llave =  this.rutaActiva.snapshot.params.llave.toString();
         this.registerForm = this.formBuilder.group({
           ruc: new FormControl({ value: '', disabled: this.inEdit },
@@ -64,6 +64,7 @@ export class CrearContrasenaComponent implements OnInit {
           rubro: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required]),
           email: new FormControl( {value: '', disabled: this.inEdit }, [Validators.required , Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/), Validators.minLength(10), Validators.maxLength(100)]),
           telefono: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required,Validators.pattern(/^([9][0-9]{8})?([1-8][0-9]{5,6})?$/), Validators.minLength(6), Validators.maxLength(9)]),
+          movilOperator: new FormControl({ value: 'M', disabled: this.inEdit }, [ Validators.required]),
           contrasena: new FormControl({ value: '', disabled: this.inEdit }),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }),
           acceptterms: new FormControl({ value: true, disabled: this.inEdit }),
@@ -80,7 +81,8 @@ export class CrearContrasenaComponent implements OnInit {
             name: this.gtpService.EmpresaServicios.name,
             entry: this.gtpService.EmpresaServicios.entry,
             email: this.gtpService.EmpresaServicios.email,
-            movilNumber: this.gtpService.EmpresaServicios.movilNumber ,
+            movilNumber: this.gtpService.EmpresaServicios.movilNumber,
+            movilOperator: this.gtpService.EmpresaServicios.movilOperator,
             newName: this.gtpService.EmpresaServicios.newName,
             status: this.gtpService.EmpresaServicios.status,
             newNameGTPStatus: this.gtpService.EmpresaServicios.newNameGTPStatus,
@@ -102,6 +104,7 @@ export class CrearContrasenaComponent implements OnInit {
             rubro: this.gtpService.EmpresaServicios.entry,
             email: this.gtpService.EmpresaServicios.email,
             telefono: this.gtpService.EmpresaServicios.movilNumber,
+            movilOperator: this.gtpService.EmpresaServicios.movilOperator,
             contrasena: '',
             repcontrasena: '',
             acceptterms: true
@@ -120,6 +123,7 @@ export class CrearContrasenaComponent implements OnInit {
            Validators.minLength(10), Validators.maxLength(100)]),
           telefono: new FormControl({ value: '', disabled: this.inEdit },
           [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
+          movilOperator: new FormControl('', [Validators.required]),
           contrasena: new FormControl({ value: '', disabled: this.inEdit },[Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
           repcontrasena: new FormControl({ value: '', disabled: this.inEdit }, [Validators.required, Validators.minLength(6), Validators.maxLength(20), UnaLetra]),
           acceptterms: new FormControl({ value: '', disabled: this.inEdit },Validators.requiredTrue),
@@ -149,6 +153,7 @@ export class CrearContrasenaComponent implements OnInit {
             this.router.navigate(['/login']);
             obs.error();
           } else {
+            this.afiliacionService.idCompany = d.id;
             this.gtpService.EmpresaServicios = d;
             console.log('Empresasa y servicios Escarno');
             console.table(this.gtpService.EmpresaServicios);
@@ -209,6 +214,7 @@ export class CrearContrasenaComponent implements OnInit {
         entry: this.registerForm.value.rubro,
         email: this.registerForm.value.email,
         movilNumber: this.registerForm.value.telefono,
+        movilOperator: this.registerForm.value.movilOperator,
         password: this.registerForm.value.contrasena,
         acceptTerms: this.registerForm.value.acceptterms
       }).subscribe(d => {
@@ -271,7 +277,7 @@ export class CrearContrasenaComponent implements OnInit {
       this.gtpService.llave = this.llave;
      // console.log( 'El token xdee' + this.gtpService.EdtEmpServ.token);
      // this.ObtenerDatos();
-    } 
+    }
   }
 
 
@@ -279,13 +285,12 @@ export class CrearContrasenaComponent implements OnInit {
     MensajeName() {
       //console.log('el estatus del nombre es v' + this.gtpService.EmpresaServicios.newNameGTPStatus);
       if (this.inEdit) {
-        if ( this.gtpService.EmpresaServicios.newNameGTPStatus === 1 ) {
+        if (this.gtpService.EmpresaServicios && this.gtpService.EmpresaServicios.newNameGTPStatus === 1 ) {
           return false;
         } else {
           return true;
         }
       }
-      console.log('');
       return false;
     }
 

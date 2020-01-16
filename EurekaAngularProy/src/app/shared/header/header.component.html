@@ -35,13 +35,27 @@
                       <div class="clear-float"></div>
                     </div>
 
-                    <perfect-scrollbar class="notifies" [config]="scrollConfig" (psYReachEnd)="onScroll()">
-                      <div *ngFor="let msg of notify.messages " class="dropdown-item " (click)="$event.stopPropagation();" >
-                            <div class="notiificacion"  *ngIf="msg.isNew" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); ">
-                                <img class="item-icono "  src="assets/images/badge-bg.svg" >
-                            </div>
-                            <div class="pl-2 pr-2 texto">{{msg.message}}</div>
-                            <div class="pl-2 pr-2 tiempo">{{getAgo(msg.create)}}</div>
+                    <perfect-scrollbar class="notifies" [config]="scrollConfig" (psYReachEnd)="onScroll()" >
+                      <div *ngFor="let msg of notify.messages " class="dropdown-item" (click)="$event.stopPropagation();" [class.dropdown-item-readed]="!msg.IsNew">
+                        <div  *ngIf="msg.isNew" style="background-color: #84CEA22E;">
+                          <div class="espacio">
+                          <div class="notiificacion" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); ">
+                              <img class="item-icono "  src="assets/images/badge-bg.svg" >
+                          </div>                   
+                          <div class="pl-2 pr-2 texto">{{msg.message}}</div>
+                          <div class="pl-2 pr-2 tiempo">{{getAgo(msg.create)}}</div>
+                        </div>
+                        </div>  
+                        <div  *ngIf="!msg.isNew" style="background-color: #ffffff;">
+                          <div class="espacio">
+                            <div class="notiificacion" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); ">
+                              <!-- <img class="item-icono "  src="assets/images/badge-bg-green.svg" > -->
+                              <img class="item-icono "  src="assets/images/ok.svg" >
+                          </div>   
+                          <div class="pl-2 pr-2 texto">{{msg.message}}</div>
+                          <div class="pl-2 pr-2 tiempo">{{getAgo(msg.create)}}</div>
+                        </div>
+                        </div>     
                       </div>
 
                       <div class="text-notifications" *ngIf="notify.messages.length == 0" >

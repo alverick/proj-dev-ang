@@ -231,6 +231,9 @@ export class AfiliacionService {
   }
 
   public GetCards(): Observable<any[]> {
+    if (this.idCompany) {
+      return this.http.get<any[]>(`${environment.END_POINT}/company/${this.idCompany}/cards?_=${new Date().getTime()}`);
+    }
     return this.http.get<any[]>(`${environment.END_POINT}/company/cards?_=${new Date().getTime()}`);
   }
 

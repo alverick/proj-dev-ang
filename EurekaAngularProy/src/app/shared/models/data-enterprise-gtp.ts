@@ -8,6 +8,7 @@ import { DataServiceGTP } from "./data-service-gtp";
     entryName: string;
     email: string;
     movilNumber: number;
+    movilOperator: string;
     newName: string;
     newNameGTPStatus?: any;
     status: string;

@@ -161,7 +161,7 @@
                                                     </div>
                                                 </div>
                                         </div>
-                                        <div *ngIf="serFormAprob" class="form-row">
+                                        <div class="form-row">
                                                 <div class="form-group col-md-10">
                                                     <div class="font-black"> </div>
                                                 </div>
@@ -171,7 +171,7 @@
                                                     </div>
                                                 </div>
                                         </div>
-                                <app-services-gtp [service]="Servgtp" (grabar)="onGrabarSer($event)"> </app-services-gtp>
+                                <app-services-gtp [service]="Servgtp" [idCompany]="llave" (grabar)="onGrabarSer($event)"> </app-services-gtp>
                             </div>
                         </div>
                     </div>

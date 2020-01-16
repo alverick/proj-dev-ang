@@ -22,6 +22,7 @@ export class CorrigeComponent implements OnInit {
     entryName: '',
     email: 'mnievafra@gmail.com',
     movilNumber: 123456 ,
+    movilOperator: 'C',
     newName:'Nuevo Nombre',
     status: 'nueva empresa',
     uniqueCodeIBK: '1321321',
