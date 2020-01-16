@@ -28,8 +28,8 @@ import { ConfigurarGtpComponent } from './auth/configurar-gtp/configurar-gtp.com
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard , GtpOutputGuard] },
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
-  //{ path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
-  //{ path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
+  { path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
+  { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
   { path: 'editarSvcGTP', component: ConfigurarServiciosComponent, data: {  isgtp: true }},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
