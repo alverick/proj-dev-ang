@@ -1,20 +1,23 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg" *ngIf="menu()">
-    <div class="container">
+    <div class="custom-container">
         <a class="navbar-brand" href="#">
             <img style="max-width: 250px;" src="assets/images/cobrosimple-verde.svg" alt="">
         </a>
-        <button  class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-        </button>
-        <div *ngIf="show()" class="collapse navbar-collapse" id="navbarResponsive">
+        <div *ngIf="show()" class="collapse custom-navbar-collapse">
             <ul *ngIf="!IsHome" class="navbar-nav ml-auto">
               <li class="nav-item">
                 <a class="nav-link lnk-regresar" (click)="goBack()" ><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
               </li>
             </ul>
             <ul *ngIf="IsHome" class="navbar-nav ml-auto ">
-                <li class="nav-item active"  >
+              <li class="nav-item"  >
+                <a class="mano nav-link mb-3" [routerLink]="['/editarServicios']">Servicios</a>
+              </li>
+              <li class="nav-item"  >
+                <a class="mano nav-link mb-3" [routerLink]="['/configuracionEmpresa']">Mi empresa</a>
+              </li>
+              <li class="nav-item active"  >
                     <a class="mano nav-link mb-3" [routerLink]="['/home']">Movimientos</a>
                 </li>
                 <li class="nav-item dropdown" style="margin-top: -18px;">
@@ -41,21 +44,21 @@
                           <div class="espacio">
                           <div class="notiificacion" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); ">
                               <img class="item-icono "  src="assets/images/badge-bg.svg" >
-                          </div>                   
+                          </div>
                           <div class="pl-2 pr-2 texto">{{msg.message}}</div>
                           <div class="pl-2 pr-2 tiempo">{{getAgo(msg.create)}}</div>
                         </div>
-                        </div>  
+                        </div>
                         <div  *ngIf="!msg.isNew" style="background-color: #ffffff;">
                           <div class="espacio">
                             <div class="notiificacion" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); ">
                               <!-- <img class="item-icono "  src="assets/images/badge-bg-green.svg" > -->
                               <img class="item-icono "  src="assets/images/ok.svg" >
-                          </div>   
+                          </div>
                           <div class="pl-2 pr-2 texto">{{msg.message}}</div>
                           <div class="pl-2 pr-2 tiempo">{{getAgo(msg.create)}}</div>
                         </div>
-                        </div>     
+                        </div>
                       </div>
 
                       <div class="text-notifications" *ngIf="notify.messages.length == 0" >
@@ -78,7 +81,7 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="lnkPerfil">
                     <a class="dropdown-item" [routerLink]="['/configuracionEmpresa']"> Datos de la empresa</a>
-                    <a class="dropdown-item" [routerLink]="['/editarServicios']"> Servicios</a> 
+                    <a class="dropdown-item" [routerLink]="['/editarServicios']"> Servicios</a>
                     <a class="dropdown-item" (click)="logout()" >Cerrar Sesión</a>
                   </div>
                 </li>

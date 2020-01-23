@@ -64,7 +64,8 @@ getServices(incDeactivates: boolean = false): Observable<any[]> {
       let data: any[] = [];
       r.forEach(s => data.push({
         id: s.id,
-        name: s.name
+        name: s.name,
+        dataType: s.dataType
       }));
       return data;
     }))
@@ -88,4 +89,15 @@ getServicesActive(): Observable<any[]> {
 
 }
 
+getDebtorCode(service: string, code: string): Observable<any> {
+  const url =`${environment.END_POINT}/debt/service/${service}/debtor/${code}?_=`+ new Date().getTime();;
+  return this.http.get<any> (url)
+    .pipe(catchError(err => throwError(err)));
+}
+
+postNewDebt(service: string, data: any): Observable<any> {
+  const url =`${environment.END_POINT}/debt/service/${service}/debtor?_=`+ new Date().getTime();;
+  return this.http.post<any> (url, data)
+    .pipe(catchError(err => throwError(err)));
+}
 }

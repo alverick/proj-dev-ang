@@ -1109,7 +1109,190 @@ Ocultar() {
     this.limpiarDateForFilter();
   }
 
+  public agregandoDeuda: boolean = false;
+  public newPartial: boolean = false;
+  public nuevaDeuda: any = {
+    errores: {}
+  };
 
+  AgregarDeuda() {
+    if (this.services.length == 0) {
+      this.mensaje( 'error', 'Agregar Deuda', 'No tiene servicios configurados');
+      return;
+    }
+    this.agregandoDeuda = true;
+    this.nuevaDeuda = {
+      emissionDate: new Date(),
+      dueDate: new Date(),
+      service: this.services[0].name,
+      errores: {}
+    };
+  }
+
+  cancelaNuevo() {
+    this.agregandoDeuda = false;
+    this.nuevaDeuda = { errores: {} };
+  }
+
+  grabarNuevo() {
+    if (!this.nuevaDeuda.emissionDate) {
+      this.nuevaDeuda.errores.emissionDate = 'Fecha Inválida';
+    }
+    else {
+      let emidate = new Date(this.nuevaDeuda.emissionDate).getFullYear();
+      if (emidate <  2000 || emidate >  2050 ) {
+        this.nuevaDeuda.errores.emissionDate = 'Fecha Inválida';
+      }
+      else {
+        delete this.nuevaDeuda.errores.emissionDate;
+      }
+    }
+
+    if (this.newPartial) {
+      if (!this.nuevaDeuda.dueDate) {
+        this.nuevaDeuda.errores.dueDate = 'Fecha Inválida';
+      }
+      else {
+        let dueyear = new Date(this.nuevaDeuda.dueDate).getFullYear();
+        if (dueyear <  2000 || dueyear >  2050 ) {
+          this.nuevaDeuda.errores.dueDate = 'Fecha Inválida';
+        }
+        else if (this.nuevaDeuda.emissionDate && this.nuevaDeuda.dueDate < this.nuevaDeuda.emissionDate) {
+          this.nuevaDeuda.errores.dueDate = 'No debe ser menor a la fecha de emisión';
+        }
+        else {
+          delete this.nuevaDeuda.errores.dueDate;
+        }
+      }
+
+      if (this.nuevaDeuda.code) {
+        const re = new RegExp("^[0-9a-zA-Z]+$");
+        if (this.nuevaDeuda.code.length < 1) {
+          this.nuevaDeuda.errores.code = 'Debe tener 1 carácter como mínimo';
+        }
+        else if (!re.test(this.nuevaDeuda.code)) {
+          this.nuevaDeuda.errores.code = 'No cumple con el formato';
+        }
+        else {
+          delete this.nuevaDeuda.errores.code;
+        }
+      }
+      else if (!this.nuevaDeuda.code) {
+        this.nuevaDeuda.errores.code = 'Debe ingresar un valor'
+      }
+      else {
+        delete this.nuevaDeuda.errores.code;
+      }
+
+      if (this.nuevaDeuda.concept) {
+        const re = new RegExp("^[0-9a-zA-Z]+$");
+        if (this.nuevaDeuda.concept.length < 1) {
+          this.nuevaDeuda.errores.concept = 'Debe tener 1 carácter como mínimo';
+        }
+        else if (!re.test(this.nuevaDeuda.concept)) {
+          this.nuevaDeuda.errores.concept = 'No cumple con el formato';
+        }
+        else {
+          delete this.nuevaDeuda.errores.concept;
+        }
+      }
+      else if (!this.nuevaDeuda.concept) {
+        this.nuevaDeuda.errores.concept = 'Debe ingresar un valor'
+      }
+      else {
+        delete this.nuevaDeuda.errores.concept;
+      }
+
+      let amount = parseFloat(this.nuevaDeuda.amount);
+      if (!amount) {
+        this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
+      }
+      else if (amount < 1) {
+        this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
+      }
+      else if (amount > 999999999.99) {
+        this.nuevaDeuda.errores.amount = 'Ingrese un monto válido'
+      }
+      else {
+        delete this.nuevaDeuda.errores.amount;
+      }
+    }
+
+    if (this.nuevaDeuda.firstName) {
+      const re = new RegExp("^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$");
+      if (this.nuevaDeuda.firstName.length < 3) {
+        this.nuevaDeuda.errores.firstName = 'Debe tener 3 carácteres como mínimo';
+      }
+      else if (!re.test(this.nuevaDeuda.firstName)) {
+        this.nuevaDeuda.errores.firstName = 'No cumple con el formato';
+      }
+      else {
+        delete this.nuevaDeuda.errores.firstName;
+      }
+    }
+    else if (!this.nuevaDeuda.lastName) {
+      this.nuevaDeuda.errores.firstName = 'Debe ingresar un valor'
+    }
+    else {
+      delete this.nuevaDeuda.errores.firstName;
+    }
+
+    for(var s in this.nuevaDeuda.errores) {
+      if (this.nuevaDeuda.errores[s])
+        return;
+    }
+
+    Swal.fire({
+      title: 'Nueva Deuda',
+      text: '¿Deseas continuar?',
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonText: 'SI, GRABAR',
+      cancelButtonText: 'CERRAR',
+      onOpen: drawPopup
+    }).then(result => {
+      if (result.value) {
+        let debt: any;
+        if (this.newPartial) {
+          debt = {
+            emissionDate: this.nuevaDeuda.emissionDate,
+            code: this.nuevaDeuda.code,
+            firstName: this.nuevaDeuda.firstName,
+          };
+        }
+        else {
+          debt = {
+            emissionDate: this.nuevaDeuda.emissionDate,
+            dueDate: this.nuevaDeuda.dueDate,
+            code: this.nuevaDeuda.code,
+            firstName: this.nuevaDeuda.firstName,
+            concept: this.nuevaDeuda.concept,
+            amount: this.nuevaDeuda.amount
+          };
+        }
+        this.homeService.postNewDebt(this.nuevaDeuda.service, debt)
+          .subscribe(_ => {
+            this.agregandoDeuda = false;
+            this.nuevaDeuda = { errores: {} };
+            this.consultaDeuda();
+          });
+      }
+    });
+  }
+
+  cmbNewService() {
+    let svc = this.services.find(s => s.name === this.nuevaDeuda.service);
+    this.newPartial = (svc.dataType === 'P');
+  }
+
+  buscarNewCode() {
+    this.homeService.getDebtorCode(this.nuevaDeuda.service, this.nuevaDeuda.code)
+      .subscribe(d => {
+        if (d.id) {
+          this.nuevaDeuda.firstName = d.firstName;
+        }
+      });
+  }
 }
 
 

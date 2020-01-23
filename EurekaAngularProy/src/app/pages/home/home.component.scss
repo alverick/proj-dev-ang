@@ -87,6 +87,26 @@ body {
                         color: $textgreen;
                     }
                 }
+                .btn-agregar {
+                  cursor: pointer;
+                  margin-left: 25px;
+                  color: #05be50;
+                  display: block;
+                  width: 40px;
+                  text-align: center;
+                  img {
+                    width: 20px;
+                    height: 20px;
+                    line-height: 0;
+                  }
+                  .icono {
+                    width: 20px;
+                    height: 20px;
+                  }
+                  .act-label {
+                    color: $textgreen;
+                  }
+                }
             }
             .al-right {
                 padding-top: 12px;
@@ -271,6 +291,16 @@ body {
                                 }
                             }
                         }
+
+                      &.new-row {
+                        td {
+                          padding: 8px 0px;
+
+                          .input-text-dash {
+                            font-size: 10px !important;
+                          }
+                        }
+                      }
                     }
                 }
                 .c0 {
@@ -284,7 +314,7 @@ body {
                     }
                 }
                 .c2 {
-                    width: 70px;
+                    width: 80px;
                     .text {
                         width: 37px;
                     }
@@ -358,7 +388,7 @@ body {
                     width: 45px;
                     .text {
                         width: 37px;
-                    }   
+                    }
                 }
                 .c14 {
                     width: 5px;
@@ -669,5 +699,5 @@ b {
       cursor: pointer;
     }
   }
-  
+
   /*[END] TOOLTIP BOOSTRAP*/
