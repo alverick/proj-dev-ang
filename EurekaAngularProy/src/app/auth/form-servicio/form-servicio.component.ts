@@ -86,7 +86,7 @@ export class FormServicioComponent implements OnInit {
       codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
         this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
         this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
-         : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' || 
+         : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
          this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
           disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
 
@@ -99,7 +99,7 @@ export class FormServicioComponent implements OnInit {
             disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
       */
       nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :
-        ( (this._service.codDeudor === 'Otro') ? this._service.nameCod : this._service.codDeudor ), 
+        ( (this._service.codDeudor === 'Otro') ? this._service.nameCod : this._service.codDeudor ),
          disabled: this._service.nombreCodHabilitado }),
 
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
@@ -215,7 +215,7 @@ export class FormServicioComponent implements OnInit {
               return false;
             }
           }
-    */ 
+    */
       return false;
     }
   }
@@ -335,7 +335,7 @@ export class FormServicioComponent implements OnInit {
                 }
                 let cta = this.cuentas.find(c => c.id === value.idCuenta);
                 console.log('el num de cuenta es ' + value.nroCuenta);
-                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
+                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dolares')})`;
                 value.simboloMoneda = this.simboloMoneda;
                 value.usaWebApp = true;
                 this.grabar.emit(value);
@@ -436,7 +436,7 @@ export class FormServicioComponent implements OnInit {
                 console.log('crea un nuevo 3 en edicion' + value.newName);
               }
                let cta = this.cuentas.find(c => c.id === value.idCuenta);
-               value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
+               value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dolares')})`;
               value.simboloMoneda = this.simboloMoneda;
               value.usaWebApp = true;
               this.grabar.emit(value);
@@ -497,7 +497,7 @@ export class FormServicioComponent implements OnInit {
             }
             console.log('crea un nuevo 3.2');
              let cta = this.cuentas.find(c => c.id === value.idCuenta);
-             value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
+             value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dolares')})`;
              console.log('numero de cuenta es 3.2' + value.nroCuenta);
              value.simboloMoneda = this.simboloMoneda;
             value.usaWebApp = true;

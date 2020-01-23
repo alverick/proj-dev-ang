@@ -118,7 +118,10 @@ export class FormServicioGtpComponent implements OnInit {
     this.afiliacionService.GetTipoPago().subscribe(d => this.tiposPago = d);
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
-    this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
+    this.afiliacionService.GetCards().subscribe(d => {
+      this.cuentas = d;
+      this.frm.get('idCuenta').setValue(this._service.idCuenta);
+    });
     this.changeMora(false);
     this.changeTipoMora(false);
 

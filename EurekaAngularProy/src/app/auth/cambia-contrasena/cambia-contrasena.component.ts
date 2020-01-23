@@ -60,19 +60,10 @@ export class CambiaContrasenaComponent implements OnInit {
       this.recuperaService.ChangePassword({NewPassword:this.Cambia.value.contrasena,
            Token:this.llave })
           .subscribe(d =>{
-              if(d == null){
+              if(d == false){
                 this.mensaje('Actualizar Contraseña','Error al actualizar Contraseña');
-              }else{ 
-                this.mensaje('Contraseña actualizada','Tu contraseña ha sido actualizada');
-                this.storage.setCurrentSession({
-                  user: {ruc:''},
-                  isAuthenticate: true,
-                  token: d.paramStr,
-                  expire: d.exp,
-                  refresh: d.rfs,
-                  prfl: d.prfl
-                });
-                this.router.navigate(['/home']);
+              }else if(d == true){ 
+                this.PopUpWithOneButon('Contraseña actualizada','Tu contraseña ha sido actualizada','Iniciar sesión');
               }
           })
     }
@@ -89,9 +80,26 @@ export class CambiaContrasenaComponent implements OnInit {
       showCancelButton: false,
       showConfirmButton: true,
       cancelButtonColor: '#d33',
-      confirmButtonText:  'ENTENDIDO',
+      confirmButtonText:  'ENTIENDO',
       onOpen: drawPopup,
 
+    });
+  }
+
+  PopUpWithOneButon( titulo: string, text: string, firstButton: string) {
+    Swal.fire({
+     // type: tipo ,
+      title: titulo ,
+      html: text,
+      showCloseButton: false,
+      showCancelButton: false,
+      showConfirmButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText:  firstButton,
+      onOpen: drawPopup,
+
+    }).then((result) => {
+        this.router.navigate(['/login']);
     });
   }
 

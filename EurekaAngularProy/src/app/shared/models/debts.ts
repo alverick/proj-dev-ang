@@ -12,6 +12,7 @@ export interface Debts {
     amountPayed?: number;
     interestAmount?: number;
     totalAmount?: number;
+    totalAmountPayed?: number;
     status: string;
     payDate: Date;
     channel: string;

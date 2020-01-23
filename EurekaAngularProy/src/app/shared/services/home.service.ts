@@ -26,6 +26,8 @@ export class HomeService {
     {idWayPay: 'PAGADO', descripcion: 'Pagado'},
     {idWayPay: 'PARCIAL', descripcion: 'Parcial'},
     {idWayPay: 'VENCIDO', descripcion: 'Vencido'},
+    {idWayPay: 'HABILITADO', descripcion: 'Habilitado'},
+    {idWayPay: 'DESHABILITADO', descripcion: 'Deshabilitado'},
   ];
 
   private date:  Date[] = [
