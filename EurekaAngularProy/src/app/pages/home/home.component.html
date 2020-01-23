@@ -206,7 +206,7 @@
                       </div>
                     </th>
                     <th class="c4">
-                      <div class="text">Nombres</div>
+                      <div class="text">Nombre del Cliente</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 3 && orderDef[3].asc === true"
                           (click)="orderList(3, true)"></div>
@@ -215,15 +215,6 @@
                       </div>
                     </th>
                     <th class="c5">
-                      <div class="text">Apellidos</div>
-                      <div class="ord">
-                        <div class="up" [class.seleccionado]="orderBy === 4 && orderDef[4].asc === true"
-                          (click)="orderList(4, true)"></div>
-                        <div class="down" [class.seleccionado]="orderBy === 4 && orderDef[4].asc === false"
-                          (click)="orderList(4, false)"></div>
-                      </div>
-                    </th>
-                    <th class="c6">
                       <div class="text">Servicio</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === true"
@@ -232,7 +223,7 @@
                           (click)="orderList(5, false)"></div>
                       </div>
                     </th>
-                    <th class="c7">
+                    <th class="c6">
                       <div class="text">Concepto</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 6 && orderDef[6].asc === true"
@@ -241,7 +232,7 @@
                           (click)="orderList(6, false)"></div>
                       </div>
                     </th>
-                    <th class="c8">
+                    <th class="c7">
                       <div class="text">Cuota</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 7 && orderDef[7].asc === true"
@@ -250,7 +241,7 @@
                           (click)="orderList(7, false)"></div>
                       </div>
                     </th>
-                    <th class="c9">
+                    <th class="c8">
                       <div class="text">Mora</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 8 && orderDef[8].asc === true"
@@ -259,7 +250,7 @@
                           (click)="orderList(8, false)"></div>
                       </div>
                     </th>
-                    <th class="c10">
+                    <th class="c9">
                       <div class="text">Total</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 9 && orderDef[9].asc === true"
@@ -268,7 +259,7 @@
                           (click)="orderList(9, false)"></div>
                       </div>
                     </th>
-                    <th class="c11">
+                    <th class="c10">
                       <div class="text">Total Pagado</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 10 && orderDef[10].asc === true"
@@ -277,7 +268,7 @@
                           (click)="orderList(10, false)"></div>
                       </div>
                     </th>
-                    <th class="c12">
+                    <th class="c11">
                       <div class="text">Estado del pago</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 11 && orderDef[11].asc === true"
@@ -286,7 +277,7 @@
                           (click)="orderList(11, false)"></div>
                       </div>
                     </th>
-                    <th class="c13">
+                    <th class="c12">
                       <div class="text" >Editar</div>
                     </th>
 
@@ -430,19 +421,9 @@
                           </mat-form-field>
                         </div>
                       </td>
-                      <td class="c5">
-                        <span *ngIf="!items.editInput || items.hasIBKPayments">{{items.lastName}}</span>
-                        <div *ngIf="items.editInput && !items.hasIBKPayments" class="content-input-icon position-relative">
-                          <mat-form-field class="inline-input" style="width: 90px">
-                            <input class="input-text-dash" matInput [(ngModel)]="items.newLastName" maxlength="20"
-                              minlength="3" type="text" (ngModelChange)="items.errores.lastName = null">
-                            <div class="msg-error" *ngIf="items.errores.lastName">{{items.errores.lastName}}</div>
-                          </mat-form-field>
-                        </div>
-                      </td>
-                      <td class="c6">{{items.service}}</td>
-                      <td class="c7">{{items.concept}}</td>
-                      <td class="c8">
+                      <td class="c5">{{items.service}}</td>
+                      <td class="c6">{{items.concept}}</td>
+                      <td class="c7">
                         <span *ngIf="!items.editInput && items.amount > 0">{{items.currency}}
                           {{items.amount| number : '1.2-2'}}</span>
                         <div *ngIf="items.editInput && items.dueDate !== null">
@@ -455,15 +436,15 @@
                           </mat-form-field>
                         </div>
                       </td>
-                      <td class="c9">
+                      <td class="c8">
                         <span *ngIf="items.interestAmount > 0">{{items.currency}}
                           {{items.interestAmount| number : '1.2-2'}}</span>
                       </td>
-                      <td class="c10">
+                      <td class="c9">
                         <span *ngIf="items.totalAmount > 0">{{items.currency}}
                           {{items.totalAmount| number : '1.2-2'}}</span>
                       </td>
-                      <td class="c11">
+                      <td class="c10">
                         <span *ngIf="items.totalAmountPayed > 0">{{items.currency}}
                           {{items.totalAmountPayed| number : '1.2-2'}}
                           <div class="cnt-status">
@@ -473,7 +454,7 @@
                           </div>
                         </span>
                       </td>
-                      <td class="c12">
+                      <td class="c11">
                           <div class="cnt-status">
                             <div class="lnk-status" (click)="showPopover(items, origin)"  #origin>
                             <span *ngIf="items.status === 'PAGADO' && items.dueDate !== null" class="text-success">
@@ -500,7 +481,7 @@
                           </div>
                           </div>
                       </td>
-                      <td class="c13">
+                      <td class="c12">
                         <div *ngIf="items.svcStatus !== 1 && items.status !== 'PAGADO'" class="d-flex">
                           <div *ngIf="!items.editButton && ((items.dueDate === null && !items.hasIBKPayments) || items.dueDate !== null)" class="btn-edit" (click)="BotonEditar(items)">
                             <img src="assets/images/pencil.svg" alt="editar">
@@ -515,7 +496,7 @@
                       </td>
                     </tr>
                     <tr style="border-bottom: #13131300" *ngIf="ceroRegistros()">
-                      <td colspan="14" class="texto-after">
+                      <td colspan="13" class="texto-after">
                         <span>{{messageTable}}</span>
                         <div *ngIf="showArrow" class="">
                           <img src="assets/images/path.svg" alt="arrow">

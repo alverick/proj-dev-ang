@@ -78,35 +78,21 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-
-                                    <div class="reCaptach pt-0">
-                                            <re-captcha #recaptchaRef="reCaptcha" (resolved)="resolved($event)"  siteKey="6Lf_I8wUAAAAAKbBj6Ukb9mDD434RU8UBuhSaeLl" secretKey="6Lf_I8wUAAAAAL420IJXIn5Wp3MXa5ItYWJ8C3qW"></re-captcha>
+                                    <div class="reCaptach pt-0 pb-4">
+                                            <re-captcha #recaptchaRef="reCaptcha" (resolved)="resolved($event)"  siteKey="6LdAxK8UAAAAAFLqBmEXIXF-5F_x99yygkQDMfPL" secretKey="6LdAxK8UAAAAANdVGiLyYxA_FnOj1H7AQbg2XY2g"></re-captcha>
                                     </div>
                                 </div>
 
                                     <div class="d-flex justify-content-center">
-                                        <button type="submit" class=" focus-elements btn-eureca-green" form="login-form">RECUPERAR CONTRASEÑA</button>
+                                        <button type="submit" class=" focus-elements btn-eureca-green" form="login-form">ENVIAR</button>
                                     </div>
 
                             </form>
-
-                                <div class="d-flex justify-content-center pb-4">
-                                    <button type="button" class="mano focus-elements btn-eureca-green-register" [routerLink]="['/login']" >
-                                    REGRESAR
-                                </button>
-                                </div>
-
-
-                        </div>
-
-
-
+                        </div>                        
                     </div>
                 </div>
-
             </div>
         </div>
-
-
     </div>
 </body>
+
