@@ -12,11 +12,9 @@
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
                                     <input class="input-text" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC" appOnlynumbers minlength="11" maxlength="11">
-                                    <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
-                                    </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="form-group">
@@ -66,11 +64,12 @@
                             <div class="form-group">
                                 <mat-form-field class="w-100">
                                   <mat-label>Operador</mat-label>
-                                  <mat-select formControlName="movilOperator">
-                                      <mat-option value="M">Movistar</mat-option>
-                                      <mat-option value="C">Claro</mat-option>
-                                      <mat-option value="E">Entel</mat-option>
-                                      <mat-option value="B">Bitel</mat-option>
+                                  <mat-select class="input-text" formControlName="movilOperator" disableOptionCentering panelClass="pts30">
+                                      <mat-option class="input-text" >Operador</mat-option>
+                                      <mat-option class="input-text" value="M">Movistar</mat-option>
+                                      <mat-option class="input-text" value="C">Claro</mat-option>
+                                      <mat-option class="input-text" value="E">Entel</mat-option>
+                                      <mat-option class="input-text" value="B">Bitel</mat-option>
                                   </mat-select>
                                   <mat-error class="messsage-error" *ngIf="f.movilOperator.invalid && f.movilOperator.hasError('required')">Elija una opción</mat-error>
                                 </mat-form-field>

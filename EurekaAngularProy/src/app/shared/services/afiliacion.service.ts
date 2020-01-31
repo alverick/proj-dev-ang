@@ -30,7 +30,7 @@ export class AfiliacionService {
       codDeudor: 'DNI',
       tipoDato: 'C',
       tipoPago: 'C',
-      idCuenta: 0,
+      idCuenta: '',
       nroCuenta: '',
       moneda: '001',
       simboloMoneda: 'S/',
@@ -87,7 +87,7 @@ export class AfiliacionService {
      // newNameCode: '',
       tipoDato: 'C',
       tipoPago: 'C',
-      idCuenta: 0,
+      idCuenta: '',
       nroCuenta: '',
       newNameCodeGtpStatus: null,
       moneda: '001',
@@ -292,8 +292,6 @@ export class AfiliacionService {
 
   public GrabarServicios(): Observable<any> {
     let codigo ;
-    console.log('SERVICIOS FINALES');
-    console.table(this.services);
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
     this.services.forEach(s => {
@@ -321,8 +319,6 @@ export class AfiliacionService {
         partialPayment: s.pagoPartes
       });
     });
-    console.log('SE IMPRIME TODO' );
-    console.table(data.services);
     return this.http.post<any>(`${environment.END_POINT}/company/service?_=`+ new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();
@@ -345,5 +341,9 @@ export class AfiliacionService {
         this.services.pop();
       }
     }
+  }
+
+  GetTipoCambio(): Observable<number> {
+    return Observable.of(3.37);
   }
 }

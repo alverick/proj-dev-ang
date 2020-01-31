@@ -26,6 +26,10 @@ export class ServicesGTPComponent implements OnInit {
   inReview: boolean;
   private _service:   DataServiceGTP;
   configEmpresaService: any;
+  private _tc = 3.37;
+
+  public comAgente: number = 1;
+  public comTienda: number = 7;
 
   @Input() public idCompany: number;
   @Input() set service(value: DataServiceGTP) {
@@ -43,16 +47,19 @@ export class ServicesGTPComponent implements OnInit {
 
   @Output() grabar = new EventEmitter<any>();
 
-  constructor(private fb: FormBuilder, private afiliacionService: AfiliacionService, public gtpService: GtpService) { }
+  constructor(private fb: FormBuilder, private afiliacionService: AfiliacionService, public gtpService: GtpService)
+  {
+    afiliacionService.GetTipoCambio().subscribe(t => this._tc = t);
+  }
 
   frm: FormGroup;
   ngOnInit() {
-  //  console.log('el servivio elegido en apro '+this._service.useAppWeb + this._service.useAgent );
- // console.table( this._service);
-    console.log('nombre ser aprobado ' + this._service.acceptednewName);
     this.inReview = this._service.inReview;
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
+    var nameCode = (this._service.codDeudor === 'Otro') ? this._service.nameCod : this._service.codDeudor;
+    if (this._service.newNameCodeGTPStatus === 0 || this._service.newNameCodeGTPStatus === 2)
+      nameCode = this._service.newNameCode;
     this.frm = this.fb.group({
        nombre :  new FormControl({value: (this._service.newNameGTPStatus === 0 || this._service.newNameGTPStatus === 2 || this._service.newNameGTPStatus === 3) ? this._service.newName : this._service.name , disabled: true  },
        [Validators.required, Validators.minLength(3), Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
@@ -71,8 +78,7 @@ export class ServicesGTPComponent implements OnInit {
     /*  nameCod: new FormControl({ value: (this._service.debtorCode === '?')?
       (( (this._service.newNameCode.substring(0,3) === '???')?
       (this._service.newNameCode.substring(3, this._service.newNameCode.length)): this._service.newNameCode)) : (this._service.debtorCode === this._service.newNameCode)? this._service.debtorCode :this._service.newNameCode , disabled: true}), */
-      nameCod: new FormControl({ value:  (this._service.codDeudor === null) ? this._service.newNameCode : (this._service.codDeudor === 'Otro') ?
-      this._service.nameCod : this._service.codDeudor, disabled: true}),
+      nameCod: new FormControl({ value:  nameCode, disabled: true}),
       tipoDato: new FormControl({ value: this._service.dataType, disabled: true }, Validators.required),
       tipoPago: new FormControl({ value: this._service.paymentType, disabled: true }, Validators.required),
       idCuenta: new FormControl({ value: this._service.idAccount, disabled: true }, Validators.required),
@@ -399,12 +405,28 @@ export class ServicesGTPComponent implements OnInit {
   changeMoneda(event) {
     console.log('hola '+ event);
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
+    if (this.f.moneda.value !== "001"){
+      this.comAgente = Math.round(1 / this._tc * 100) / 100;
+      this.comTienda = Math.round(7 / this._tc * 100) / 100;
+    }
+    else {
+      this.comAgente = 1;
+      this.comTienda = 7;
+    }
   }
 
   changeCuenta(val) {
     let cta = this.cuentas.find(c => c.id == val);
     this.simboloMoneda = (cta.currency === '001' ? 'S/' : '$');
     this.f.moneda.setValue(cta.currency);
+    if (this.f.moneda.value !== "001"){
+      this.comAgente = Math.round(1 / this._tc * 100) / 100;
+      this.comTienda = Math.round(7 / this._tc * 100) / 100;
+    }
+    else {
+      this.comAgente = 1;
+      this.comTienda = 7;
+    }
   }
 
   TipoCobro() {

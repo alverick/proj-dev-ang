@@ -57,7 +57,7 @@ body {
 }
 
 .cuadro-canales {
-    @include cuadro(179px, 179px);
+    @include cuadro(179px, 185px);
     background-color: #ffffff;
     border: solid 1px #bebebe;
 }
@@ -85,4 +85,8 @@ body {
     @include font-text(12px !important, $weight: 500 !important);
     color: $negro;
     text-align: center;
+}
+
+.subpricing-card-title {
+  font-size: 12px;
 }

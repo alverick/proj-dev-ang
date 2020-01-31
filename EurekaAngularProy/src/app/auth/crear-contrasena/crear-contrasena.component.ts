@@ -54,7 +54,6 @@ export class CrearContrasenaComponent implements OnInit {
 
       if (d.isEdit) {
         this.llave =  this.rutaActiva.snapshot.params.llave.toString();
-        console.log('EDITAR EMPRESA' + d.isEdit +   this.llave );
         window['_url_loop_'] = `editaCuenta/${this.llave}`;
         this.llave =  this.rutaActiva.snapshot.params.llave.toString();
         this.registerForm = this.formBuilder.group({
@@ -155,8 +154,6 @@ export class CrearContrasenaComponent implements OnInit {
           } else {
             this.afiliacionService.idCompany = d.id;
             this.gtpService.EmpresaServicios = d;
-            console.log('Empresasa y servicios Escarno');
-            console.table(this.gtpService.EmpresaServicios);
          /*   let servicios = [];
             this.gtpService.EmpresaServicios.arrayServices = [];
             d.ArrayServices.array.forEach(s => {

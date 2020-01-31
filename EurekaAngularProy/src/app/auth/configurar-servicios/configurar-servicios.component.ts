@@ -54,9 +54,6 @@ export class ConfigurarServiciosComponent implements OnInit {
         window['_url_loop_'] = 'editarSvcGTP';
         history.pushState(null, null, 'editarSvcGTP');
         this.afiliacionService.services = [];
-       /* console.log('GTP');
-        console.log(this.gtpService.EmpresaServicios.arrayServices);
-        console.log('CIERRA'); */
         this.gtpService.EmpresaServicios.arrayServices.forEach(s => {
           this.afiliacionService.services.push({
             id: s.id,
@@ -90,14 +87,12 @@ export class ConfigurarServiciosComponent implements OnInit {
         return;
       }
       if (d.isEdit) {
-        console.log('EDITAR');
         window['_url_loop_'] = 'editarServicios';
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
         this.titulo = 'Edita el servicio';
 
       } else {
-        console.log('CREACION');
         window['_url_loop_'] = 'configurarServicios';
         history.pushState(null, null, 'configurarServicios');
         this.afiliacionService.Clear();
@@ -124,7 +119,6 @@ export class ConfigurarServiciosComponent implements OnInit {
         onOpen: drawPopup
       }).then(r => {
         if (r.value) {
-          console.log('descartar');
           this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
           this.Formulario = false ;
           this.stateCreate = false;
@@ -133,12 +127,10 @@ export class ConfigurarServiciosComponent implements OnInit {
           this.sendAfterSave = false;
           this.indiceActual = -1;
           this.Formulariogtp = false;
-          console.log(this.Formulario);
         }
       });
     }
    /* else {
-      console.log('entra else');
       this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
       this.Formulario = false;
       this.stateCreate = false;
@@ -160,7 +152,6 @@ export class ConfigurarServiciosComponent implements OnInit {
   sendAfterSave: boolean = false;
 
   MostarFormulario() {
-    console.table(this.afiliacionService.services);
     if (this.afiliacionService.services.length >= 99) {
       Swal.fire({
         text: 'Usted solo puede tener 99 servicios como máximo',
@@ -230,41 +221,16 @@ export class ConfigurarServiciosComponent implements OnInit {
           NewCodName: (s.newNameCodeGtpStatus === 1) ? null : s.newNameCode,
         });
       });
-      // (this._service.nombre === '?' && this._service.newName.substring(0, 3) === '???') ? false : true
-      console.log('ESTAS EN GTP marcelo 2');
-
-    // alert(this.gtpService.EdtEmpServ.token);
-      if (Svc.length === 0) {
-        console.log('SERV cero' + Svc.length);
-      }
-      console.log(Svc);
 
       if (total === 0) {
-        Swal.fire({
-          title: 'Editar',
-          text: `Desea enviar los cambios`,
-          showCloseButton: true,
-          showCancelButton: true,
-          showConfirmButton: true,
-          cancelButtonColor: '#d33',
-          cancelButtonText:  'DESHACER CAMBIOS',
-          confirmButtonText: 'GUARDAR',
-          onOpen: drawPopup
-        }).then(r => {
-
-          console.log('Lo que devuelve el token es '+r);
           this.sendAfterSave = true;
-            if (r.value) {
               if (Svc.length === 0) {
                 this.gtpService.EditChangeGTP({ Token: this.gtpService.EdtEmpServ.token ,
                   NewName: this.gtpService.EdtEmpServ.NewName, ArrayServices : null })
                 .subscribe(d => {
-                  console.log('ESTA API DEVUELVE '+ d);
               if (d === true) {
-                this.router.navigate(['/login']);
+                this.router.navigate(['/procesando']);
               } else {
-                console.log('HOLA 1');
-                console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName, Svc);
               }
 
               });
@@ -273,18 +239,12 @@ export class ConfigurarServiciosComponent implements OnInit {
                 this.gtpService.EditChangeGTP({ Token:  this.gtpService.llave ,
                   NewName:  this.gtpService.nombre, ArrayServices : Svc })
                 .subscribe(d => {
-                  console.log('ESTA API DEVUELVE ' + d);
                 if (d === true) {
-                  this.router.navigate(['/login']);
+                  this.router.navigate(['/procesando']);
                 } else {
-                  console.log('HOLA 2');
-                  console.log('lenght de servicio' + Svc.length);
-                  console.log(this.gtpService.EdtEmpServ.token, this.gtpService.EdtEmpServ.NewName,Svc);
                 }
                 });
               }
-            }
-        });
       } else {
         this.mensaje( 'Correxiones', 'Aun faltan corregir ' + total + ' observaciones' );
       }
@@ -331,8 +291,6 @@ export class ConfigurarServiciosComponent implements OnInit {
           'event_category': GoogleAnalytics.Afiliacion,
           'event_label': 'enviar_servicios'
         });
-        /*console.log('SERVICIOS A GUARDAR');
-        console.table(this.afiliacionService.services); */
         this.afiliacionService.GrabarServicios()
           .subscribe(r => {
             if (this.inEdit) {
@@ -486,7 +444,6 @@ getNameGTP(svc: ServiceModel) {
   if (this.inEdit ) {
 
    if (svc.id === null) {
-    // console.log('CAEEEEEE');
      return true;
    }
    if (svc.newName !== '' || svc.newNameCode !== '') {
@@ -650,8 +607,6 @@ getCodigoNameGTP (svc: ServiceModel) {
       this.serviceActual = svc;
        return;
     }
-    console.log('Editar servicio');
-    console.log(svc);
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
@@ -660,15 +615,10 @@ getCodigoNameGTP (svc: ServiceModel) {
   }
 
   onGrabar(svc: ServiceModel) {
-    console.log('Servicios');
-    console.table( this.afiliacionService.services);
-    console.log('cierra');
     if (this.indiceActual >= 0) {
 
 
       if (this.inEdit) {
-        console.log('EL NOMBRE YA EXISTE 1');
-        console.log('Edit name se cae xdeee' + svc.newName );
         if (svc.newNameGtpStatus === 3){
           if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
             Swal.fire({
@@ -679,7 +629,6 @@ getCodigoNameGTP (svc: ServiceModel) {
           }
         }else{
           if (svc.newNameGtpStatus === 0) {
-            console.log('ERntra a la empresa nueva al editar ');
             if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
               Swal.fire({
                 text: 'Ya existe un servicio con este nombre',
@@ -701,7 +650,6 @@ getCodigoNameGTP (svc: ServiceModel) {
         }
 
       } else {
-        console.log('EL NOMBRE YA EXISTE 2 gtp');
         if (svc.newNameGtpStatus === 3){
           if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
             Swal.fire({

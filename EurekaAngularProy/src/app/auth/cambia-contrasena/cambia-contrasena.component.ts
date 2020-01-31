@@ -44,9 +44,7 @@ export class CambiaContrasenaComponent implements OnInit {
   //  los 6 primeros de adelante
   // 3173I1201910171716
   Verificar(key:any){
-    console.log('entra a verificar');
     this.recuperaService.VerifingToken({TokenEncrypted:key}).subscribe(d => {
-      console.log('entra a recuper????');
       if(d===true){
       }else{
         this.mensaje('Enlace expirado','El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro para recuperar tu contraseña');
@@ -62,7 +60,7 @@ export class CambiaContrasenaComponent implements OnInit {
           .subscribe(d =>{
               if(d == false){
                 this.mensaje('Actualizar Contraseña','Error al actualizar Contraseña');
-              }else if(d == true){ 
+              }else if(d == true){
                 this.PopUpWithOneButon('Contraseña actualizada','Tu contraseña ha sido actualizada','Iniciar sesión');
               }
           })

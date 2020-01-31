@@ -17,7 +17,10 @@ export class FormServicioGtpComponent implements OnInit {
   public gtpMode: boolean = false;
   public Dataparcial: boolean = true;
 
+  private tc = 3.37;
   public codDeu: String;
+  public comAgente = 1;
+  public comTienda = 7;
 
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder, private stateEdit: ConfigurarServiciosComponent ) {
@@ -50,6 +53,14 @@ export class FormServicioGtpComponent implements OnInit {
       this._service = value;
       this.simboloMoneda = value.simboloMoneda;
       this._service.simboloMoneda = this.simboloMoneda;
+      if (this.simboloMoneda === 'S/') {
+        this.comAgente = 1;
+        this.comTienda = 7;
+      }
+      else {
+        this.comAgente = Math.round((1 / this.tc) * 100) / 100;
+        this.comTienda = Math.round((7 / this.tc) * 100) / 100;
+      }
   }
 
   get f(): any {
@@ -76,7 +87,7 @@ export class FormServicioGtpComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.afiliacionService.GetTipoCambio().subscribe(d => this.tc = d);
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
     this.codDeu = (this._service.codDeudor == null || this._service.codDeudor === '' ) ? this._service.nameCod : this._service.codDeudor;
@@ -186,9 +197,6 @@ export class FormServicioGtpComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    console.log('CODIGOs DEL DEUDOR');
-    console.log(this.frm.get('codDeudor').value);
-    console.log(this.frm.get('nameCod').value);
     if (this.frm.valid) {
 
             let value: ServiceModel;

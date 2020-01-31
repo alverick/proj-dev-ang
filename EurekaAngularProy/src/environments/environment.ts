@@ -9,12 +9,9 @@ export const environment = {
 
  ////////// D E V E L O P ///////////////////////*
  /* */
-  END_POINT: 'https://localhost:5001/api',
-  OCP_KEY: "3b8700ab20814ee58e07ffc89e16c86d"
- /*
   END_POINT: 'http://40.84.21.50/api',
   OCP_KEY: "3b8700ab20814ee58e07ffc89e16c86d"
-*/
+/* */
 
 /*END_POINT: 'https://apis.dev.interbank.pe/eureca/api',
   OCP_KEY: "3b8700ab20814ee58e07ffc89e16c86d"*/

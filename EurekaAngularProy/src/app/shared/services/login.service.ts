@@ -40,7 +40,6 @@ login(ruc: string, psw: string): Observable<RespuestaLogin> {
     .pipe(map((r: RespuestaLogin) => {
 
       if (r.estado) {
-        console.table(r);
         this.storage.setCurrentSession({
           user: { ruc: ruc },
           isAuthenticate: true,

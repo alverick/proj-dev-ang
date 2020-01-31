@@ -43,11 +43,12 @@
 
                                 <div class="card-title text-titulo p-2">Agentes</div>
 
-                                <div class="mt-1 c-subtitulo">
+                                <div class="c-subtitulo">
                                     Lima y provincias. <br><br>
                                 </div>
-                                <div class="pt-3 pricing-card-title text-green">S/1</div>
-                                <div class="c-descripcion mt-4">
+                                <div class="pt-3 pricing-card-title text-green">S/ {{solAgente}}</div>
+                                <div class="subpricing-card-title text-green">$ {{dolAgente}}</div>
+                                <div class="c-descripcion mt-3 mb-1">
                                     Costo que se le cobrará a tus clientes
                                 </div>
                             </div>
@@ -61,8 +62,9 @@
                                     Lima y provincias.
                                 </div>
 
-                                <div class="pt-4 card-title pricing-card-title text-green">S/7</div>
-                                <div class="c-descripcion mt-4">
+                                <div class="pt-3 pricing-card-title text-green">S/ {{solTienda}}</div>
+                                <div class="subpricing-card-title text-green">$ {{dolTienda}}</div>
+                                <div class="c-descripcion mt-3 mb-1">
                                   Costo que se le cobrará a tus clientes
                                 </div>
 
@@ -74,7 +76,7 @@
                           </p>
                             <!--//// T E R C E R // B L O Q U E //////-->
                             <button class="btn-eureca-green" [routerLink]="['/crearContrasena']">
-                              SIGUIENTE
+                              CONTINUAR
                             </button>
                         </div>
                     </div>

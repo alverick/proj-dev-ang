@@ -156,6 +156,7 @@ export class GtpGrillaComponent implements OnInit {
  // consultaDeuda(cb: () => void = null) {
 
  consultaGtp(){
+   console.log("consultaGTP");
     if (this.validaFiltro()){
       this.spinner.show();
       this.gtpService.getEmpresas(this.currentFiltro).subscribe(d => {

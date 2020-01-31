@@ -82,7 +82,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
         this.formGroup.setValue(dataEnterprise);
 
           }
-        ); 
+        );
   }
   get f(): any { return this.formGroup.controls; }
 
@@ -146,7 +146,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
         enterpriseUpdate => {
-          console.table(enterpriseUpdate);
           if ( enterpriseUpdate.success === true ) {
             this.gaService.sendEvent('ActualizaDatosEmpresa', {
               'event_category': 'Configuración',

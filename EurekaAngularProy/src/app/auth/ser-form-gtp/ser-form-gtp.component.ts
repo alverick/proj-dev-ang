@@ -30,7 +30,7 @@ export class SerFormGtpComponent implements OnInit {
         codDeudor: 'DNI',
         tipoDato: 'C',
         tipoPago: 'C',
-        idCuenta: 0,
+        idCuenta: '',
         nroCuenta: '',
         moneda: '001',
         simboloMoneda: 'S/',
@@ -114,9 +114,6 @@ export class SerFormGtpComponent implements OnInit {
     this.afiliacionService.GetCards().subscribe(d => this.cuentas = d);
     this.changeMora(false);
     this.changeTipoMora(false);
-
-    console.log('cuentas');
-    console.table(this.cuentas);
 
     if (this.frm.get('cobraMora').value === 'N') {
      this.frm.get('periodoMora').setValue('');

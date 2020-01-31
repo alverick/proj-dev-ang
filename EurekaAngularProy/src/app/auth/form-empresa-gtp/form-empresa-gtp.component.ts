@@ -24,7 +24,6 @@ export class FormEmpresaGTPComponent implements OnInit {
   constructor(public afiliacionService: AfiliacionService, private formBuilder: FormBuilder, public gtpService: GtpService) { }
 
   ngOnInit() {
-    console.table(this._enterprise);
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
 
     this.formGroup = this.formBuilder.group({

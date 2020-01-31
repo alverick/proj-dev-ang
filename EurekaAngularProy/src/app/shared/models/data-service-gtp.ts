@@ -4,7 +4,7 @@ export interface DataServiceGTP {
     debtorCode: string;
     dataType: string;
     paymentType: string;
-    idAccount:  number;
+    idAccount:  string;
     accountNumber: string;
     currency:  string;
     useAppWeb: boolean;

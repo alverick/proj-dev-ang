@@ -61,19 +61,19 @@ export class AprobacionesComponent implements OnInit {
 
    /// TRAE LOS SERVICIOS
    this.gtpService.GetServicesGtp(this.llave);
-   this.getInfoEmpresa();
-   this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
-
+   this.afiliacionService.GetRubros().subscribe(d => {
+     this.rubros = d;
+      this.getInfoEmpresa();
+   });
   }
 
   getInfoEmpresa() {
     this.gtpService.GetEnterpriseGtp(this.llave)
       .subscribe( dataEnterprise => {
         this.Enterprise = dataEnterprise;
-        console.log('Empresa 1');
-        console.log(dataEnterprise);
-         console.log(this.Enterprise);
-        this.rubro =  this.rubros.find((v) => v.code = this.Enterprise.entry).name;
+        console.log(this.Enterprise);
+         console.log(this.rubros);
+        this.rubro =  this.rubros.find((v) => v.code === this.Enterprise.entry).name;
         });
       /*  this.gtpService.GetEnterpriseGtp2(this.llave)
         .subscribe( data => {
@@ -406,26 +406,26 @@ export class AprobacionesComponent implements OnInit {
     }
   } */
   getName(svc: DataServiceGTP) {
-    if ((svc.newNameGTPStatus === 0 && svc.newNameCodeGTPStatus === 0) || (svc.newNameGTPStatus === 3 && svc.newNameCodeGTPStatus === 3)) {
+    if (svc.newNameGTPStatus === 0 && svc.newNameCodeGTPStatus === 0) {
       return svc.newName;
     }
-    if ((svc.newNameGTPStatus === 1 && svc.newNameCodeGTPStatus === 1 ) || (svc.newNameGTPStatus === 2 && svc.newNameCodeGTPStatus === 2 )) {
-      return svc.name;
+    else {
+      return (svc.name === null ? svc.newName : svc.name);
     }
   }
 
   getStateEnterprise (Enterprise: DataEnterpriseGTP ) {
     //  console.log('estado de la empresa' + data.newNameGTPStatus);
-      if (Enterprise.newNameGTPStatus = 0) {
+      if (Enterprise.newNameGTPStatus === 0) {
         return 'Nueva Empresa';
       }
-      if (Enterprise.newNameGTPStatus = 1) {
+      if (Enterprise.newNameGTPStatus === 1) {
         return 'Empresa Aprobada';
       }
-      if (Enterprise.newNameGTPStatus = 2) {
+      if (Enterprise.newNameGTPStatus === 2) {
         return 'Empresa Editada';
       }
-      if (Enterprise.newNameGTPStatus = 3) {
+      if (Enterprise.newNameGTPStatus === 3) {
         return 'Empresa Rechazada';
       }
   }

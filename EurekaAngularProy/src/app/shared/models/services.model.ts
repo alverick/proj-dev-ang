@@ -11,7 +11,7 @@ export interface ServiceModel {
     tipoDato: string;
     tipoPago?: string;
     nroCuenta: string;
-    idCuenta: number;
+    idCuenta: string;
     moneda: string;
     simboloMoneda?: string;
     usaWebApp: boolean;

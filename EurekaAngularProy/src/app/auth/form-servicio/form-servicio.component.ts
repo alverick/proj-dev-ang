@@ -16,6 +16,11 @@ export class FormServicioComponent implements OnInit {
   public editMode: boolean = false;
   public gtpMode: boolean = false;
   public Dataparcial: boolean = true;
+  public comAgente = 1;
+  public comTienda = 7;
+
+  private tc: number = 3.37;
+
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder,private stateEdit: ConfigurarServiciosComponent ) {
       stateEdit.onFormAction.subscribe(e => this.formAction(e));
@@ -29,7 +34,7 @@ export class FormServicioComponent implements OnInit {
         codDeudor: 'DNI',
         tipoDato: 'C',
         tipoPago: 'C',
-        idCuenta: 0,
+        idCuenta: '',
         nroCuenta: '',
         moneda: '001',
         simboloMoneda: 'S/',
@@ -46,6 +51,14 @@ export class FormServicioComponent implements OnInit {
       this._service = value;
       this.simboloMoneda = value.simboloMoneda
       this._service.simboloMoneda = this.simboloMoneda;
+      if (this.simboloMoneda === 'S/') {
+        this.comAgente = 1;
+        this.comTienda = 7;
+      }
+      else {
+        this.comAgente = Math.round((1 / this.tc) * 100) / 100;
+        this.comTienda = Math.round((7 / this.tc) * 100) / 100;
+      }
     }
   }
 
@@ -72,7 +85,8 @@ export class FormServicioComponent implements OnInit {
   public services: ServiceModel[] = [];
 
   ngOnInit(): void {
-    console.log('EL NUMERO DE CUENTA ES ' + this._service.idCuenta);
+    this.afiliacionService.GetTipoCambio()
+      .subscribe(d => this.tc = d);
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
@@ -121,15 +135,11 @@ export class FormServicioComponent implements OnInit {
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
     this.afiliacionService.GetTipoPago().subscribe(d => {
       this.tiposPago = d;
-      console.log('tipos de pago');
-      console.log(this.tiposPago);
     });
     this.afiliacionService.GetMoneda().subscribe(d => this.monedas = d);
     this.afiliacionService.GetPeriodoMora().subscribe(d => this.tiposMora = d);
     this.afiliacionService.GetCards().subscribe(d => {
       this.cuentas = d;
-      console.log('NUMEROS DE CUENTA');
-      console.log(this.cuentas);
     });
 
      this.changeMora(false);
@@ -248,10 +258,7 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
-   /* console.log('LOS CODIGOS DE DEUDOR');
-    console.log(this.frm.get('codDeudor').value);
-    console.log(this.frm.get('nameCod').value); */
-    console.log('NOMBRE DE SRV Y CODI');
+    console.log(this.frm.value);
     if (this.frm.valid) {
       const monto  = parseFloat(this.frm.get('monto').value);
       const porcentaje  = parseFloat(this.frm.get('porcentaje').value);
@@ -303,7 +310,6 @@ export class FormServicioComponent implements OnInit {
                 let value: ServiceModel;
                  // value.usaWebApp = true;
                 if (this.editMode)  {
-                 console.log('ENTRO A EDICION DE SERVICIOS');
                   value = this._service;
                   value.idCuenta = this.frm.value.idCuenta;
                 // value.nombre = this.frm.value.nombre;
@@ -325,17 +331,14 @@ export class FormServicioComponent implements OnInit {
                   value.pagoPartes = this.frm.value.pagoPartes;
                   value.usaWebApp = true;
                 } else {
-                  console.log('crea un nuevo');
                   value = this.frm.value;
                   value.id = null;
                    value.usaWebApp = true;
                    value.newName =   this.frm.value.nombre;
                    value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
-                   console.log('crea un nuevo 3 en edicion' + value.newName);
                 }
                 let cta = this.cuentas.find(c => c.id === value.idCuenta);
-                console.log('el num de cuenta es ' + value.nroCuenta);
-                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dolares')})`;
+                value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dólares')})`;
                 value.simboloMoneda = this.simboloMoneda;
                 value.usaWebApp = true;
                 this.grabar.emit(value);
@@ -436,7 +439,7 @@ export class FormServicioComponent implements OnInit {
                 console.log('crea un nuevo 3 en edicion' + value.newName);
               }
                let cta = this.cuentas.find(c => c.id === value.idCuenta);
-               value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dolares')})`;
+               value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dólares')})`;
               value.simboloMoneda = this.simboloMoneda;
               value.usaWebApp = true;
               this.grabar.emit(value);
@@ -458,18 +461,7 @@ export class FormServicioComponent implements OnInit {
                       });
           } else {
             let value: ServiceModel;
-            console.log('ingresa 3');
-              /*
-                newName         name
-              minimarket         ''       NUEVO     0  -
-              minimarket         ''       RECHAZADO 3  -
-                ''            minimarket  APROBADO  1
-                sm            minimarket  EDITADO   2
-                sm            minimarket  RECHAZADO 3
-                ''               sm       APROBADO  1
-              */
             if (this.editMode) {
-              console.log('ENTRO A EDICION DE SERVICIOS----');
               value = this._service;
                value.idCuenta = this.frm.value.idCuenta;
              // value.nroCuenta = this.frm.value.nroCuenta;
@@ -485,21 +477,16 @@ export class FormServicioComponent implements OnInit {
               value.monto = this.frm.value.monto;
               value.porcentaje = this.frm.value.porcentaje;
               value.pagoPartes = this.frm.value.pagoPartes;
-              console.log('ingresa 3.1');
               value.usaWebApp = true;
             } else {
-              console.log('crea un nuevo 3');
               value = this.frm.value;
               value.id = null;
               value.newName =   this.frm.value.nombre;
               value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
-              console.log('crea un nuevo 3 en edicion' + value.newName);
             }
-            console.log('crea un nuevo 3.2');
-             let cta = this.cuentas.find(c => c.id === value.idCuenta);
-             value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dolares')})`;
-             console.log('numero de cuenta es 3.2' + value.nroCuenta);
-             value.simboloMoneda = this.simboloMoneda;
+            let cta = this.cuentas.find(c => c.id === value.idCuenta);
+            value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dólares')})`;
+            value.simboloMoneda = this.simboloMoneda;
             value.usaWebApp = true;
 
             this.grabar.emit(value);
@@ -509,14 +496,29 @@ export class FormServicioComponent implements OnInit {
   }
 
   changeMoneda(event) {
-    console.log('hola '+ event);
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
+    if (this.simboloMoneda === 'S/') {
+      this.comAgente = 1;
+      this.comTienda = 7;
+    }
+    else {
+      this.comAgente = Math.round((1 / this.tc) * 100) / 100;
+      this.comTienda = Math.round((7 / this.tc) * 100) / 100;
+    }
   }
 
   changeCuenta(val) {
     let cta = this.cuentas.find(c => c.id == val);
     this.simboloMoneda = (cta.currency === '001' ? 'S/' : '$');
     this.f.moneda.setValue(cta.currency);
+    if (this.simboloMoneda === 'S/') {
+      this.comAgente = 1;
+      this.comTienda = 7;
+    }
+    else {
+      this.comAgente = Math.round((1 / this.tc) * 100) / 100;
+      this.comTienda = Math.round((7 / this.tc) * 100) / 100;
+    }
   }
 
   TipoCobro() {

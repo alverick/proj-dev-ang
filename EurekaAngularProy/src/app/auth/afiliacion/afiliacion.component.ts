@@ -9,10 +9,22 @@ import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service
 })
 export class AfiliacionComponent implements OnInit {
 
-  constructor(private gaService: GoogleAnalytics) { }
+  constructor(private gaService: GoogleAnalytics, private afiliacion: AfiliacionService) { }
 
   ngOnInit() {
+    this.afiliacion.GetTipoCambio()
+      .subscribe(d => {
+        if (d === 0)
+          d = 1;
+        this.dolAgente = Math.round((this.solAgente / d) * 100) / 100;
+        this.dolTienda = Math.round((this.dolTienda / d) * 100) / 100;
+      });
   }
+
+  public solAgente = 1;
+  public solTienda = 7;
+  public dolAgente = 1;
+  public dolTienda = 7;
 
   clickRegistrarme() {
     this.gaService.sendEvent('QuieroRegistrarme', {

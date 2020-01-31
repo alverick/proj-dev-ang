@@ -6,7 +6,9 @@
     </div>
     <div class="form-group ">
         <mat-form-field class="w-70">
-            <input class="input-text" matInput type="text" formControlName="newName" placeholder="Nuevo Nombre de la empresa">
+            <textarea class="input-text" matInput formControlName="newName"
+              cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+              placeholder="Nuevo Nombre de la empresa" style="overflow: hidden;"></textarea>
         </mat-form-field>
         <mat-radio-group  formControlName="NewNameApproved" aria-label="Select an option">
             <mat-radio-button name="NewNameApproved" class="w-15"  value ="S">SI</mat-radio-button>

@@ -879,8 +879,6 @@ Ocultar() {
         });
       }
     });
-    console.log('SERVICIOS');
-    console.table(this.typeList);
   }
 
   public enDescarga: boolean = false;

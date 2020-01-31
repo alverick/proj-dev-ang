@@ -22,8 +22,6 @@ export class ConfiguracionService {
             r.newPassword = '';
             r.password = '';
             r.confirmNewPassword  = '';
-            console.log('EMPRESA');
-             console.table(r);
             return r;
           }))
           .pipe(catchError(err => throwError(err)));

@@ -18,7 +18,6 @@ export class AppComponent {
   constructor(private router: Router, matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
       this.router.events.subscribe(e => {
         if (e instanceof NavigationEnd) {
-          console.log('va a google', e.urlAfterRedirects);
           gtag('config', 'UA-148142629-1', {
             'page_title': e.urlAfterRedirects.substr(1),
             'page_path': e.urlAfterRedirects

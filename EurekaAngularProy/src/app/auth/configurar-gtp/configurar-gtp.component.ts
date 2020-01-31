@@ -89,7 +89,6 @@ export class ConfigurarGtpComponent implements OnInit {
         onOpen: drawPopup
       }).then(r => {
         if (r.value) {
-          console.log('descartar');
           this.gtpService.Descartar(this.indiceActual, this.stateCreate);
           this.EmpresaFormulario = false;
           this.Formulario = false ;
@@ -99,7 +98,6 @@ export class ConfigurarGtpComponent implements OnInit {
           this.sendAfterSave = false;
           this.indiceActual = -1;
           this.Formulariogtp = false;
-          console.log(this.Formulario);
         }
       });
     }
@@ -109,7 +107,6 @@ export class ConfigurarGtpComponent implements OnInit {
     this.gtpService.GetEnterpriseGtp(this.route.snapshot.paramMap.get('llave'))
       .subscribe( dataEnterprise => {
         this.Enterprise = dataEnterprise;
-        console.log(this.Enterprise);
         this.rubro =  this.rubros.find((v) => v.code = this.Enterprise.entry).name;
         });
   }
@@ -118,7 +115,6 @@ export class ConfigurarGtpComponent implements OnInit {
   sendAfterSave: boolean = false;
 
   MostarFormulario() {
-    console.table(this.gtpService.services);
     if (this.gtpService.services.length >= 99) {
       Swal.fire({
         text: 'Usted solo puede tener 99 servicios como máximo',
@@ -423,14 +419,9 @@ getCodigoNameGTP(svc: ServiceModel) {
   }
 
   onGrabar(svc: any) {
-    console.log('Servicios');
-    console.table( this.gtpService.services);
-    console.log('cierra');
     if (this.indiceActual >= 0) {
 
       if (this.inEdit) {
-        console.log('EL NOMBRE YA EXISTE 1');
-        console.log('Edit name se cae xdeee' + svc.newName );
         if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
@@ -439,7 +430,6 @@ getCodigoNameGTP(svc: ServiceModel) {
           return;
         }
       } else {
-        console.log('EL NOMBRE YA EXISTE 2 GTP');
         if (this.afiliacionService.services.find((s, i) => s.nombre.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
           Swal.fire({
             text: 'Ya existe un servicio con este nombre',
@@ -527,7 +517,6 @@ getCodigoNameGTP(svc: ServiceModel) {
 
 
   onGrabarEmp(emp: DataEnterpriseGTP) {
-    console.log(emp);
     this.Enterprise = emp;
     this.EmpresaFormulario = false;
   }

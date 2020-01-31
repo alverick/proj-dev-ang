@@ -94,8 +94,6 @@ export class GtpService {
       };
       return this.http.get<DataEnterpriseGTP>(url, opts)
       .pipe(map(r => {
-        // console.log('EMPRESA');
-         console.log(r);
         return r;
 
       }))
@@ -124,8 +122,6 @@ export class GtpService {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken()}
     };
     this.http.get<any[]>(url, opts).subscribe(d => {
-      console.log('SERVICIOS ');
-      console.table(d);
       let servicios = [];
       d.forEach(s => {
         servicios.push({
@@ -177,8 +173,6 @@ export class GtpService {
           pagoPartes: s.partialPayment,
         });
       });
-      console.log('SERVICIOS..s');
-      console.table(servicios);
        this.services = servicios;
 
     });

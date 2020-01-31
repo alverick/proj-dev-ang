@@ -88,7 +88,6 @@ export class TransactionService {
                 this.itemsForDelete.push(d.id);
             });
             this.debtItems = r;
-            console.table(this.debtItems.data);
             return r;
           }))
           .pipe(map(r => {
