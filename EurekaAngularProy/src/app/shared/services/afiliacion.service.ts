@@ -346,4 +346,10 @@ export class AfiliacionService {
   GetTipoCambio(): Observable<number> {
     return Observable.of(3.37);
   }
+
+  IniciarServicios() {
+    if (this.storage.isAuthenticated()) {
+      delete this.idCompany;
+    }
+  }
 }
