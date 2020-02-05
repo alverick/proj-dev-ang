@@ -174,7 +174,7 @@ export class GtpService {
         });
       });
        this.services = servicios;
-
+       console.log(this.services);
     });
    }
 

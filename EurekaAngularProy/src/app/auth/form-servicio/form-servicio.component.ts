@@ -85,6 +85,7 @@ export class FormServicioComponent implements OnInit {
   public services: ServiceModel[] = [];
 
   ngOnInit(): void {
+    this.cuentas = [];
     this.afiliacionService.GetTipoCambio()
       .subscribe(d => this.tc = d);
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
@@ -92,26 +93,18 @@ export class FormServicioComponent implements OnInit {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
+    let codDeudor = (this._service.newNameCodeGtpStatus === null ||
+      this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
+      this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
+       : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
+       this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro';
     this.frm = this.fb.group({
       // tslint:disable-next-line:max-line-length
       nombre: new FormControl({ value: (this._service.newNameGtpStatus === 0 ||  (this._service.newNameGtpStatus === 3 && this._service.nombre == null)) ?
       this._service.newName :  this._service.nombre, disabled: this._service.nombreHabilitado}),
 
-      codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
-        this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
-        this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
-         : ( this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
-         this._service.newNameCode === 'Codigo Interno' ) ? this._service.newNameCode : 'Otro',
+      codDeudor: new FormControl({ value: codDeudor,
           disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
-
-      /*  codDeudor: new FormControl({ value: (this._service.newNameCodeGtpStatus === null ||
-          this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? ( this._service.codDeudor  === 'RUC' ||
-          this._service.codDeudor  === 'DNI' || this._service.codDeudor  === 'Codigo Interno' ) ? this._service.codDeudor  : 'Otro'
-           : (this._service.newNameCodeGtpStatus === 0  || (this._service.newNameCodeGtpStatus === 3 && this._service.codDeudor == null &&
-              this._service.newNameCode !== null )) ? (this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
-           this._service.newNameCode === 'Codigo Interno') ? this._service.newNameCode : 'Otro' : this._service.codDeudor,
-            disabled: this._service.nombreCodHabilitado  }, [Validators.required]),
-      */
       nameCod: new FormControl({ value: (this._service.codDeudor === null) ? this._service.newNameCode :
         ( (this._service.codDeudor === 'Otro') ? this._service.nameCod : this._service.codDeudor ),
          disabled: this._service.nombreCodHabilitado }),
@@ -258,7 +251,6 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    console.log(this.frm.value);
     if (this.frm.valid) {
       const monto  = parseFloat(this.frm.get('monto').value);
       const porcentaje  = parseFloat(this.frm.get('porcentaje').value);

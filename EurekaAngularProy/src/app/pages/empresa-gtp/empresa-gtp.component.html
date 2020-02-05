@@ -10,11 +10,11 @@
               cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
               placeholder="Nuevo Nombre de la empresa" style="overflow: hidden;"></textarea>
         </mat-form-field>
-        <mat-radio-group  formControlName="NewNameApproved" aria-label="Select an option">
+        <mat-radio-group *ngIf="_enterprise.newNameGTPStatus === 0 || _enterprise.newNameGTPStatus === 2" formControlName="NewNameApproved" aria-label="Select an option">
             <mat-radio-button name="NewNameApproved" class="w-15"  value ="S">SI</mat-radio-button>
             <mat-radio-button name="NewNameApproved" class="w-15"  value ="N">NO</mat-radio-button>
         </mat-radio-group>
-        <mat-error class="messsage-error" *ngIf="f.NewNameApproved.invalid && f.NewNameApproved.hasError('required')">Debe seleccionar una opción</mat-error>
+        <mat-error class="messsage-error" *ngIf="f.NewNameApproved.invalid && f.NewNameApproved.hasError('required') && (_enterprise.newNameGTPStatus === 0 || _enterprise.newNameGTPStatus === 2)">Debe seleccionar una opción</mat-error>
     </div>
     <div class="input-text form-group  ">
             <mat-form-field class="w-100">
@@ -49,7 +49,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div class="mt-4 pb-4">
+    <div *ngIf="_enterprise.newNameGTPStatus === 0 || _enterprise.newNameGTPStatus === 2"  class="mt-4 pb-4">
         <button   type="submit" class="btn-eureca-green ">GUARDAR</button>
     </div>
 </form>

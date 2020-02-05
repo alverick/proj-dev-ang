@@ -15,7 +15,7 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
 
 })
 export class EmpresaGTPComponent implements OnInit {
-  private _enterprise: DataEnterpriseGTP;
+  public _enterprise: DataEnterpriseGTP;
   formGroup: FormGroup;
   rubros: RubroModel[] = [];
   @Input() set enterprise(value: DataEnterpriseGTP) {

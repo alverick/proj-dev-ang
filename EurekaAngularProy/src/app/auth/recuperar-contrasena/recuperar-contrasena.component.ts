@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { RecuperaService } from 'src/app/shared/services/recupera.service';
 import { drawPopup } from 'src/app/shared/services/popups';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recuperar-contrasena',
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class RecuperarContrasenaComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private recuperaService: RecuperaService) { }
+  constructor(private formBuilder: FormBuilder, private recuperaService: RecuperaService, private router: Router) { }
    public formulario :boolean =true;
    recupera: FormGroup;
    public  submitted: Boolean = false;
@@ -44,36 +45,37 @@ export class RecuperarContrasenaComponent implements OnInit {
     return this.recupera.controls;
   }
 
-  
-  resolved(captchaResponse: string) : boolean{ 
+
+  resolved(captchaResponse: string) : boolean{
     this.isCaptchaValidate = true;
     return true;
   }
 
-  SubmitRecupera(){ 
+  SubmitRecupera(){
 
     if (this.recupera.valid && this.isCaptchaValidate == true) {
       this.recuperaService.RecoverPassword({RUC: this.recupera.value.ruc,
-        Email: this.recupera.value.email}).subscribe(d =>{ 
+        Email: this.recupera.value.email}).subscribe(d =>{
             if(d===true){
               this.mensaje('Hemos recibido tus datos','Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta');
               this.formulario =false;
               this.f.ruc.reset();
               this.f.ruc.clearValidators();
               this.f.email.reset();
-              this.f.email.clearValidators(); 
+              this.f.email.clearValidators();
               // al ocultar la pantalla se mostrara en la parte de arriba la pagina
-              window.scrollTo(0, 0);
+              //window.scrollTo(0, 0);
+              this.router.navigate(["/login"]);
             }else{
               this.mensaje('Hemos recibido tus datos','Ingrese datos validos');
             }
         });
-    }  
+    }
   }
 
   Reenviar(){
     this.recuperaService.RecoverPassword({RUC: this.recuperaService.ruc,
-      Email:this.recuperaService.email}).subscribe(d =>{ 
+      Email:this.recuperaService.email}).subscribe(d =>{
           if(d===true){
             this.mensaje('Hemos recibido tus datos','Se ha reenviado un correo electrónico con indicaciones para acceder a tu cuenta');
             this.formulario =false;

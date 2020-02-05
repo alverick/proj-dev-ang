@@ -76,7 +76,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       .subscribe( dataEnterprise => {
          this.dataEmpresa = dataEnterprise;
 
-         if ( this.dataEmpresa.name !== this.dataEmpresa.newName ) {
+         if (this.dataEmpresa.newNameGTPStatus === 0 || this.dataEmpresa.newNameGTPStatus === 2) {
           this.formGroup.get('name').disable();
          }
         this.formGroup.setValue(dataEnterprise);

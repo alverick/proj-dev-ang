@@ -44,6 +44,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.afiliacionService.IniciarServicios();
     this.afiliacionService.services = [];
     this.route.data.subscribe(d => {
       this.inEdit = d.isEdit;
@@ -615,6 +616,8 @@ getCodigoNameGTP (svc: ServiceModel) {
   }
 
   onGrabar(svc: ServiceModel) {
+    console.log(svc);
+    console.log(this.afiliacionService.services);
     if (this.indiceActual >= 0) {
 
 
@@ -629,7 +632,7 @@ getCodigoNameGTP (svc: ServiceModel) {
           }
         }else{
           if (svc.newNameGtpStatus === 0) {
-            if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
+            if (this.afiliacionService.services.find((s, i) => (s.newName.toUpperCase() === svc.newName.toUpperCase()) && i !== this.indiceActual)) {
               Swal.fire({
                 text: 'Ya existe un servicio con este nombre',
                 onOpen: drawPopup
@@ -637,7 +640,7 @@ getCodigoNameGTP (svc: ServiceModel) {
               return;
             }
           } else {
-            if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.nombre.toUpperCase() && i !== this.indiceActual)) {
+            if (this.afiliacionService.services.find((s, i) => (s.nombre === null ? s.newName : s.nombre).toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
               Swal.fire({
                 text: 'Ya existe un servicio con este nombre',
                 onOpen: drawPopup

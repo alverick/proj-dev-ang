@@ -18,4 +18,5 @@ import { DataServiceGTP } from "./data-service-gtp";
     arrayServices?: DataServiceGTP[];
     NombreApproved?: boolean;
     enabled?: boolean;
+    isNewEnterprise?: boolean;
 }
