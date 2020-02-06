@@ -132,7 +132,7 @@ div.mat-form-field-infix {
     @include font-text(14px !important);
     width: 232px;
     height: 48px;
-    float: right;
+    
     margin-bottom: 23px;
 }
 
@@ -145,7 +145,7 @@ div.mat-form-field-infix {
     border: solid 1px $green;
     width: 232px;
     height: 48px;
-    float: right;
+    float: center;
    // @include box-shadows(0,1px,4px, 0,rgba(252, 154, 0, 0.2));
     &:hover {
         background-color: $green;
@@ -267,14 +267,14 @@ small {
 */
 
 .cuadro-form {
-    @include cuadro(381px,
+    @include cuadro(335px,
     auto);
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
-    border-width: 2vw 4.7vw!important;
+    border-width: 2vw 2.7vw!important;
     border-color: white !important;
-    margin-top: 5vw !important;
+    /*margin-top: 5vw !important;*/
 }
 
 small {
@@ -289,4 +289,25 @@ small {
     background-color: #cfd0d2;
     // height: 0.10vw !important;
     height: 1px !important;
+}
+
+.title-landing {
+    @include font-text(30px,
+    500);
+    color: #ffffff;
+    margin-left: 80px;
+}
+
+.subtitle-landing {
+    @include font-text(16px,
+    500);
+    color: #ffffff;
+    margin-left: 80px;
+}
+
+.content-landing {
+    @include font-text(15px,
+    500);
+    color: #ffffff;
+    margin-left: 80px;
 }
