@@ -59,6 +59,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
       entry: new FormControl({ value: '', disabled: true }),
       email: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
       movilNumber: new FormControl('', [Validators.required, Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'), Validators.minLength(6), Validators.maxLength(9)]),
+      movilOperator: new FormControl('', [ Validators.required]),
       newName: new FormControl({ value: '', disabled: true }),
       status: new FormControl({ value: '', disabled: true }),
       requestDate: new FormControl({ value: '', disabled: true }),
@@ -139,6 +140,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
         newName: datosEmpresa.name,
         email: datosEmpresa.email,
         movilNumber: datosEmpresa.movilNumber,
+        movilOperator: datosEmpresa.movilOperator,
         password: datosEmpresa.password,
         newPassword: datosEmpresa.newPassword,
         confirmNewPassword: datosEmpresa.confirmNewPassword

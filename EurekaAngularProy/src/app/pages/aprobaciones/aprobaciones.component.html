@@ -57,7 +57,7 @@
                                                         <td class="font-black-servicios-des-list" *ngIf="getStateEnterprise(Enterprise) === 'Empresa Rechazada'"><span class="badge badge-info" >Empresa Rechazada</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="getStateEnterprise(Enterprise) === 'Empresa Editada'"><span class="badge badge-warning" >Empresa Editada</span> </td>
                                                      </tr>
-                                                     <tr *ngIf="!Enterprise.inReview">
+                                                     <tr *ngIf="Enterprise.newNameGTPStatus >= 0">
                                                       <td><button type="button" (click)="VerCamposEnterprise(Enterprise)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr>
                                                     <tr *ngIf="Enterprise.inReview">

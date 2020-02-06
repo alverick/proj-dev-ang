@@ -60,7 +60,19 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-
+                                <div class="form-group">
+                                  <mat-form-field class="w-100">
+                                    <mat-label>Operador</mat-label>
+                                    <mat-select class="input-text" formControlName="movilOperator" disableOptionCentering panelClass="pts30">
+                                        <mat-option class="input-text" >Operador</mat-option>
+                                        <mat-option class="input-text" value="M">Movistar</mat-option>
+                                        <mat-option class="input-text" value="C">Claro</mat-option>
+                                        <mat-option class="input-text" value="E">Entel</mat-option>
+                                        <mat-option class="input-text" value="B">Bitel</mat-option>
+                                    </mat-select>
+                                    <mat-error class="messsage-error" *ngIf="f.movilOperator.invalid && f.movilOperator.hasError('required')">Elija una opción</mat-error>
+                                  </mat-form-field>
+                                </div>
                                 <div class="form-group">
                                     <mat-form-field class="w-100" floatLabel="always">
                                             <mat-label>Contraseña actual</mat-label>
