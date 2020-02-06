@@ -120,3 +120,24 @@ body {
         border: solid 1px $green;
     }
 }
+
+.title-landing {
+    @include font-text(30px,
+    500);
+    color: #ffffff;
+    margin-left: 80px;
+}
+
+.subtitle-landing {
+    @include font-text(16px,
+    500);
+    color: #ffffff;
+    margin-left: 80px;
+}
+
+.content-landing {
+    @include font-text(15px,
+    500);
+    color: #ffffff;
+    margin-left: 80px;
+}
