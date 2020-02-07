@@ -320,7 +320,7 @@
                     </td>
                     <td class="c4">
                       <mat-form-field class="inline-input" style="width: 110px">
-                        <input class="input-text-dash" matInput [(ngModel)]="nuevaDeuda.firstName" maxlength="10"
+                        <input class="input-text-dash" matInput [(ngModel)]="nuevaDeuda.firstName" maxlength="80"
                           autocomplete="off"
                           minlength="3" type="text" (ngModelChange)="nuevaDeuda.errores.firstName = null">
                         <div class="msg-error" *ngIf="nuevaDeuda.errores.firstName">{{nuevaDeuda.errores.firstName}}</div>
@@ -376,7 +376,7 @@
                       [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
                       <td class="c0 pl-3 ">
                         <div class="chk-vertical">
-                          <mat-checkbox *ngIf="items.status !== 'PAGADO' && !items.hasIBKPayments" [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)">
+                          <mat-checkbox *ngIf="(items.totalAmount == '0' && items.status != 'PAGADO') || (items.status !== 'PAGADO' && !items.hasIBKPayments)" [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)">
                           </mat-checkbox>
                         </div>
                       </td>

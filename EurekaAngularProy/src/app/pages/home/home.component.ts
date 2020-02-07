@@ -265,6 +265,8 @@ export class HomeComponent implements OnInit {
    this.consultaDeuda();
    this.cargaExcel = false;
 
+   
+   console.log(this.transactionService.debtItems.data);
    // check
    //this.SeleccionarTodos();
    this.selectedAll = false;
@@ -835,9 +837,10 @@ orderList(index: number, asc: boolean) {
 
   SeleccionarTodos() {
 
+    console.log(this.transactionService.debtItems.data);
     if (this.selectedAll) {
       this.transactionService.debtItems.data.forEach(itm => {
-        if (!itm.hasIBKPayments && itm.status !== 'PAGADO') {
+        if ((!itm.hasIBKPayments && itm.status !== 'PAGADO')) {
           this.transactionService.deleteDebt(itm.id, itm.selected = true);
         }
       });
