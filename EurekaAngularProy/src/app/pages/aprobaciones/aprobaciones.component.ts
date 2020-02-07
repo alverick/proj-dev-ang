@@ -125,7 +125,6 @@ export class AprobacionesComponent implements OnInit {
     this.ServiciosFormulario = true;
     this.Servgtp = etp;
     this.indiceActual = index;
-    console.log('USA WEB' + etp.useAppWeb);
   }
 
   MostrarEmpresa() {

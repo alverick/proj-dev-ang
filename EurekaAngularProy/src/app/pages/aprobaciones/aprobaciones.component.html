@@ -57,14 +57,14 @@
                                                         <td class="font-black-servicios-des-list" *ngIf="getStateEnterprise(Enterprise) === 'Empresa Rechazada'"><span class="badge badge-info" >Empresa Rechazada</span> </td>
                                                         <td class="font-black-servicios-des-list" *ngIf="getStateEnterprise(Enterprise) === 'Empresa Editada'"><span class="badge badge-warning" >Empresa Editada</span> </td>
                                                      </tr>
-                                                     <tr *ngIf="Enterprise.newNameGTPStatus >= 0">
-                                                      <td><button type="button" (click)="VerCamposEnterprise(Enterprise)" class="f3 btn-outline-green"  >Ver </button></td>
+                                                    <tr *ngIf="!Enterprise.inReview">
+                                                      <td *ngIf="Enterprise.newNameGTPStatus >= 0"><button type="button" (click)="VerCamposEnterprise(Enterprise)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr>
-                                                    <tr *ngIf="Enterprise.inReview">
+                                                  <tr *ngIf="Enterprise.inReview">
 
                                                         <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == null  ">por Revisar</td>
                                                         <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == true || Enterprise.NombreApproved == false ">Revisado</td>
-                                                        <td><button type="button" (click)="VerCamposEnterprise(Enterprise)" class="f3 btn-outline-green"  >Ver </button></td>
+                                                        <td *ngIf="Enterprise.newNameGTPStatus >= 0"><button type="button" (click)="VerCamposEnterprise(Enterprise)" class="f3 btn-outline-green"  >Ver </button></td>
                                                     </tr>
                                                     <tr>
                                                         <td class="font-black-servicios-des-list" *ngIf="Enterprise.NombreApproved == false ">1 Error encontrado</td>
