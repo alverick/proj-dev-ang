@@ -200,8 +200,6 @@ export class GtpService {
      return this.http.post<any>(`${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(), data)
      .pipe(map(r => {
            this.spinner.hide();
-           console.log('MACHILON, LOS SERVICIOS TRAEN ESTOs');
-           console.log(r);
           return r;
      }))
      .pipe(catchError(err => {
