@@ -264,8 +264,11 @@ export class HomeComponent implements OnInit {
     });
    this.transactionService.debtItems = { data: [], countNoIbkPayments: 0, count : 0 };
    this.consultaDeuda();
+   this.recortarNombres();
    this.cargaExcel = false;
 
+   
+   console.log(this.transactionService.debtItems.data);
    // check
    //this.SeleccionarTodos();
    this.selectedAll = false;
@@ -515,7 +518,16 @@ orderList(index: number, asc: boolean) {
      this.messageTable = 'Para empezar, agrega la lista de las deudas';
      this.showArrow = true;
 
-}
+  }
+
+  recortarNombres()
+  {
+    this.transactionService.debtItems.data.forEach(element => {
+      element.firstName
+    });    
+
+  }
+
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
   ////////////////////////////////////////////////*/
@@ -642,8 +654,7 @@ orderList(index: number, asc: boolean) {
           dueDate: item.newDueDate,
           concept: item.newConcept,
           amount: parseFloat(item.newAmount.toString()),
-          firstName: item.newFirstName,
-          lastName: item.newLastName
+          firstName: item.newFirstName
         };
 
 
@@ -836,9 +847,10 @@ orderList(index: number, asc: boolean) {
 
   SeleccionarTodos() {
 
+    console.log(this.transactionService.debtItems.data);
     if (this.selectedAll) {
       this.transactionService.debtItems.data.forEach(itm => {
-        if (!itm.hasIBKPayments && itm.status !== 'PAGADO') {
+        if ((!itm.hasIBKPayments && itm.status !== 'PAGADO')) {
           this.transactionService.deleteDebt(itm.id, itm.selected = true);
         }
       });
