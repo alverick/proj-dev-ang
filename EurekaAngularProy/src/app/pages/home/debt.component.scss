@@ -1,0 +1,20 @@
+@import "../../../scss/_variables.scss";
+@import "../../../scss/_mixin.scss";
+
+mat-form-field {
+  width: 100%;
+
+  .msg-error {
+    @include font-text(10px, 500);
+    position: absolute;
+    color: #ea0044;
+    margin-top: 10px;
+    width: 200px;
+  }
+}
+
+.btn {
+  text-align: center;
+  width: 120px;
+  padding: 8px;
+}
