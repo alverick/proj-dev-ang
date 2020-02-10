@@ -32,6 +32,7 @@ import { Popover } from './popover/popover.service';
 import { PagosComponent } from './pagos/pagos.component';
 import { LoadFileService } from 'src/app/shared/load-file/load-file.service';
 import { LoadBarService } from 'src/app/shared/load-bar/load-bar.service';
+import { DebtComponent } from './debt.component';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -1127,17 +1128,18 @@ Ocultar() {
   };
 
   AgregarDeuda() {
-    if (this.services.length == 0) {
+    if (this.services == null || this.services.length == 0) {
       this.mensaje( 'error', 'Agregar Deuda', 'No tiene servicios configurados');
       return;
     }
-    this.agregandoDeuda = true;
-    this.nuevaDeuda = {
-      emissionDate: new Date(),
-      dueDate: new Date(),
-      service: this.services[0].name,
-      errores: {}
-    };
+    let dlg = this.dialog.open(DebtComponent, {
+      width: '300px'
+    });
+    dlg.afterClosed().subscribe(r => {
+      if (r && r.grabado) {
+        this.consultaDeuda();
+      }
+    });
   }
 
   cancelaNuevo() {

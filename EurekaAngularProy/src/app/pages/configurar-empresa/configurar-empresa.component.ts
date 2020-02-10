@@ -23,7 +23,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   titleAlert: string = 'This field is required';
   post: any = '';
   submitted: boolean= false;
-  butDisabled: boolean = true;
+  butDisabled: boolean = false;
   nombre: boolean = true;
   rubros: RubroModel[] = [];
   dataEmpresa: DataEnterpriseModel;
@@ -145,6 +145,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
         newPassword: datosEmpresa.newPassword,
         confirmNewPassword: datosEmpresa.confirmNewPassword
       };
+      this.butDisabled = true;
       this.configEmpresaService.saveDatosEmpresa(enterprise).
         subscribe(
         enterpriseUpdate => {
@@ -258,4 +259,4 @@ function ValidateNewPasswordRequired(f: FormGroup) {
     }
   }*/
 }
-7
+

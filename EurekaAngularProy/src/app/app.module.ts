@@ -59,6 +59,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PopoverComponent } from './pages/home/popover/popover.component';
 import { LoadFileComponent } from './shared/load-file/load-file.component';
 import { LoadBarComponent } from './shared/load-bar/load-bar.component';
+import { DebtComponent } from './pages/home/debt.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { LoadBarComponent } from './shared/load-bar/load-bar.component';
     ServicesGTPComponent,
     PopoverComponent,
     LoadFileComponent,
-    LoadBarComponent
+    LoadBarComponent,
+    DebtComponent
   ],
   imports: [
     BrowserModule,
@@ -146,13 +148,15 @@ import { LoadBarComponent } from './shared/load-bar/load-bar.component';
     ValidationComponent
   ],
   bootstrap: [AppComponent],
-  entryComponents: [DialogComponent,
-                    UploadProgressComponent,
-                    ValidationComponent,
-                    PagosComponent,
-                    PopoverComponent,
-                    LoadFileComponent,
-                    LoadBarComponent
-                    ]
+  entryComponents: [
+    DialogComponent,
+    UploadProgressComponent,
+    ValidationComponent,
+    PagosComponent,
+    PopoverComponent,
+    LoadFileComponent,
+    LoadBarComponent,
+    DebtComponent
+  ]
 })
 export class AppModule { }
