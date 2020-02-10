@@ -154,6 +154,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
               'event_category': 'Configuración',
               'event_label': 'actualiza_datos_empresa'
             });
+            this.butDisabled = false;
             Swal.fire({
               title: 'Datos de Empresa guardados',
               text: 'Sus datos han sido actualizados',

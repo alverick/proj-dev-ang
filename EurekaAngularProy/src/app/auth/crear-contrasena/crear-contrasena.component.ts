@@ -73,8 +73,10 @@ export class CrearContrasenaComponent implements OnInit {
 
         this.ObtenerDatos()
         .subscribe(() => {
-
-           console.log('RUC SSSS ' + this.gtpService.EmpresaServicios.ruc);
+          if (!this.gtpService.EmpresaServicios.inReview) {
+            this.onSubmit();
+            return;
+          }
           this.empresasEdit  = {
             ruc: this.gtpService.EmpresaServicios.ruc,
             name: this.gtpService.EmpresaServicios.name,
@@ -90,12 +92,9 @@ export class CrearContrasenaComponent implements OnInit {
           };
 
           this.f.nombre.disable();
-          console.log('HABUILITADO');
-          console.log( this.gtpService.EmpresaServicios.newNameGTPStatus);
            if ( this.gtpService.EmpresaServicios.inReview) {
            // this.f.nombre.disable();
              this.registerForm.get('nombre').enable();
-            console.log('nombre  de empresa' + this.registerForm.get('nombre').enable());
            }
           this.registerForm.setValue({
             ruc: this.gtpService.EmpresaServicios.ruc,
@@ -257,23 +256,15 @@ export class CrearContrasenaComponent implements OnInit {
       });
 
     } else {
-      console.log('GTP AMIGOS' + this.llave);
-
-    // this.gtpService.EdtEmpServ = null;
-    // tslint:disable-next-line:max-line-length
-    if (this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
-      console.log('NO llena el nombre de la empresa');
-     this.gtpService.EdtEmpServ = {token: this.llave, NewName: null};
-     this.gtpService.nombre = null;
-    } else {
-      this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
-      this.gtpService.nombre = this.registerForm.value.nombre.toString();
-      console.log('llena el nombre de la empresa ' +this.gtpService.nombre );
-    }
-     this.router.navigate(["/editarSvcGTP"]);
+      if (this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
+        this.gtpService.EdtEmpServ = {token: this.llave, NewName: null};
+        this.gtpService.nombre = null;
+      } else {
+        this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
+        this.gtpService.nombre = this.registerForm.value.nombre.toString();
+      }
+      this.router.navigate(["/editarSvcGTP"]);
       this.gtpService.llave = this.llave;
-     // console.log( 'El token xdee' + this.gtpService.EdtEmpServ.token);
-     // this.ObtenerDatos();
     }
   }
 
