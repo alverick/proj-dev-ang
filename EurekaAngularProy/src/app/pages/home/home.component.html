@@ -376,7 +376,7 @@
                       [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
                       <td class="c0 pl-3 ">
                         <div class="chk-vertical">
-                          <mat-checkbox *ngIf="(items.totalAmount == '0' && items.status != 'PAGADO') || (items.status !== 'PAGADO' && !items.hasIBKPayments)" [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)">
+                          <mat-checkbox *ngIf="items.status != 'PAGADO' && (items.totalAmount == '0' || !items.hasIBKPayments)" [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)">
                           </mat-checkbox>
                         </div>
                       </td>

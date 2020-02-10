@@ -263,6 +263,7 @@ export class HomeComponent implements OnInit {
     });
    this.transactionService.debtItems = { data: [], countNoIbkPayments: 0, count : 0 };
    this.consultaDeuda();
+   this.recortarNombres();
    this.cargaExcel = false;
 
    
@@ -516,7 +517,16 @@ orderList(index: number, asc: boolean) {
      this.messageTable = 'Para empezar, agrega la lista de las deudas';
      this.showArrow = true;
 
-}
+  }
+
+  recortarNombres()
+  {
+    this.transactionService.debtItems.data.forEach(element => {
+      element.firstName
+    });    
+
+  }
+
   /*//////////////////////////////
   //////////  C R U D ///////////////////////
   ////////////////////////////////////////////////*/
