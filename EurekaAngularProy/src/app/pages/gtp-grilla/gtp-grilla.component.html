@@ -44,13 +44,15 @@
                                 </mat-form-field>
                                 <label class="mt-4 px-4 input-text">Fecha de <br> solicitud</label>
                                 <mat-form-field class="f2">
-                                  <input [min]="minDate" [max]="maxDate"  class="input-text" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)"
-                                  #inputDate1 placeholder="Desde" type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" maxlength="10" minlength="10" >
-
+                                 <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)"
+                                    #inputDate1 placeholder="Desde" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)"
+                                    type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" (click)="myDatepicker2.open()"  maxlength="10" minlength="10"
+                                    appBlockCopyPaste>
                                   <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
-                                    <mat-icon class="svg-custom" ></mat-icon>
-                                  </mat-datepicker-toggle>
+                                    <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
+                                    </mat-datepicker-toggle>
                                   <mat-datepicker #myDatepicker2></mat-datepicker>
+
                                   <button mat-button *ngIf="filtro.dateFrom || inputDate1.value" matSuffix mat-icon-button
                                     aria-label="Clear" (click)="limpiardate1()">
                                     <i class="fa fa-close"></i>
@@ -58,16 +60,23 @@
                                   <div class="msg-error" *ngIf="errores.dateFrom">{{errores.dateFrom}}</div>
                                 </mat-form-field>
 
-
                                 <mat-form-field class="f2">
-                                  <input class="input-text" [(ngModel)]="filtro.dateTo" (dateChange)="change($event)" [min]="minDate" [max]="maxDate" appDate
-                                    #inputDate2 placeholder="Hasta"  type="text" name="dateTo"  (ngModelChange)="validaDateTo($event)"
-                                    matInput [matDatepicker]="myDatepicker"   maxlength="10" minlength="10"
-                                    appBlockCopyPaste  >
+                                 <!-- <input class="input-text" [(ngModel)]="filtro.dateTo" [min]="minDate" [max]="maxDate" appDate #inputDate2 placeholder="Hasta"
+                                  type="text" name="dateTo"  (ngModelChange)="validaDateTo($event)" matInput [matDatepicker]="myDatepicker"   maxlength="10" minlength="10"
+                                    appBlockCopyPaste>
                                   <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker">
                                     <mat-icon class="svg-custom" ></mat-icon>
                                   </mat-datepicker-toggle>
-                                  <mat-datepicker #myDatepicker></mat-datepicker>
+                                  <mat-datepicker #myDatepicker></mat-datepicker>-->
+                                  <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)"
+                                  #inputDate2 placeholder="Hasta" (ngModelChange)="validaDateTo($event)" type="text" name="dateTo"
+                                  matInput [matDatepicker]="myDatepicker"  (click)="myDatepicker.open()" [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10"
+                                  appBlockCopyPaste >
+                                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker">
+                                  <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #myDatepicker></mat-datepicker>
+
                                   <button mat-button *ngIf="filtro.dateTo || inputDate2.value" matSuffix mat-icon-button
                                     aria-label="Clear" (click)="limpiardate2()">
                                     <i class="fa fa-close"></i>
@@ -75,13 +84,11 @@
                                   <div class="msg-error" *ngIf="errores.dateTo">{{errores.dateTo}}</div>
                                 </mat-form-field>
 
-
                                 <button type="button" class="f3 btn-eureca-green" (click)="sendFiltro()" >BUSCAR
                                 </button>
                               </form>
                           </div>
                         </div>
-
 
                         <div class="widget lista">
                             <div class="title">Empresas</div>

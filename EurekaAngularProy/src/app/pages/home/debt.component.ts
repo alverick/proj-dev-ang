@@ -117,9 +117,9 @@ export class DebtComponent implements OnInit {
       }
 
       if (this.nuevaDeuda.concept) {
-        const re = new RegExp("^[0-9a-zA-Z]+$");
-        if (this.nuevaDeuda.concept.length < 1) {
-          this.nuevaDeuda.errores.concept = 'Debe tener 1 carácter como mínimo';
+        const re = new RegExp("^[ 0-9a-zA-Z]+$");
+        if (this.nuevaDeuda.concept.length < 2) {
+          this.nuevaDeuda.errores.concept = 'Debe tener 2 carácteres como mínimo';
         }
         else if (!re.test(this.nuevaDeuda.concept)) {
           this.nuevaDeuda.errores.concept = 'No cumple con el formato';

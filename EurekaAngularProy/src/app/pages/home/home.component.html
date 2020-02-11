@@ -416,7 +416,7 @@
                         <span *ngIf="!items.editInput || items.hasIBKPayments">{{items.firstName}}</span>
                         <div *ngIf="items.editInput && !items.hasIBKPayments" class="content-input-icon position-relative">
                           <mat-form-field class="inline-input" style="width: 80px">
-                            <input class="input-text-dash" matInput [(ngModel)]="items.newFirstName" maxlength="10"
+                            <input class="input-text-dash" matInput [(ngModel)]="items.newFirstName" maxlength="80"
                               minlength="3" type="text" (ngModelChange)="items.errores.firstName = null">
                             <div class="msg-error" *ngIf="items.errores.firstName">{{items.errores.firstName}}</div>
                           </mat-form-field>
