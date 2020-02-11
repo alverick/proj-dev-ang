@@ -654,8 +654,7 @@ orderList(index: number, asc: boolean) {
           dueDate: item.newDueDate,
           concept: item.newConcept,
           amount: parseFloat(item.newAmount.toString()),
-          firstName: item.newFirstName,
-          lastName: item.newLastName
+          firstName: item.newFirstName
         };
 
 
