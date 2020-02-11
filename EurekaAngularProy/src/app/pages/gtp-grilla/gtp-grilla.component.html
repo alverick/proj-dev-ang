@@ -44,8 +44,13 @@
                                 </mat-form-field>
                                 <label class="mt-4 px-4 input-text">Fecha de <br> solicitud</label>
                                 <mat-form-field class="f2">
-                                  <input [min]="minDate" [max]="maxDate"  class="input-text" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)" #inputDate1 placeholder="Desde"
-                                    type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" maxlength="10" minlength="10" >
+                            <!--
+                                  <input [min]="minDate" [max]="maxDate"  class="input-text" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)"
+                                  #inputDate1 placeholder="Desde" type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" maxlength="10" minlength="10" >
+                                -->
+                                <input [min]="minDate" [max]="maxDate" class="input-text" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)"
+                                #inputDate1 placeholder="Desde" type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2"  maxlength="10" minlength="10" >
+
                                   <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
                                     <mat-icon class="svg-custom" ></mat-icon>
                                   </mat-datepicker-toggle>
@@ -60,7 +65,7 @@
 
                                 <mat-form-field class="f2">
                                   <input class="input-text" [(ngModel)]="filtro.dateTo" (dateChange)="change($event)" [min]="minDate" [max]="maxDate" appDate
-                                    #inputDate2 placeholder="Hasta"  type="text" name="dateTo"
+                                    #inputDate2 placeholder="Hasta"  type="text" name="dateTo"  (ngModelChange)="validaDateTo($event)"
                                     matInput [matDatepicker]="myDatepicker"   maxlength="10" minlength="10"
                                     appBlockCopyPaste  >
                                   <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker">
