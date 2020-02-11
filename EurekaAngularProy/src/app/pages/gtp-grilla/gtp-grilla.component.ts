@@ -199,12 +199,11 @@ export class GtpGrillaComponent implements OnInit {
   }
 
   private internalValidaDateFrom(e) {
+    console.log(e);
     if (e === null) {
       this.errores['dateFrom'] = 'No es una fecha válida';
     }
-    if (!this.usDatePattern.test(e)) {
-      this.errores['dateFrom'] = 'No es una fecha válida';
-    }  else {
+    else {
       let yearFrom = new Date(e).getFullYear();
       if (yearFrom <  2000 || yearFrom >  2050 ) {
         this.errores['dateFrom'] = 'Fecha Inválida';
@@ -219,10 +218,6 @@ export class GtpGrillaComponent implements OnInit {
     if (e === null) {
       this.errores['dateTo'] = 'No es una fecha válida';
     }
-    if (!e.match(this.usDatePattern)) {
-      this.errores['dateTo'] = 'No es una fecha válida2';
-    }
-
     else {
       let yearTo = new Date(e).getFullYear();
       if (yearTo <  2000 || yearTo >  2050 ) {
