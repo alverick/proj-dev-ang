@@ -204,6 +204,14 @@ small{
   color: #05be50;
 }
 
+.noPagos{  
+  @include font-text(18px, 500);
+  color: #0d2416;
+  text-align: center;
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+
 .moneda{
   @include font-text(12px, normal);
   color: #0d131d;
