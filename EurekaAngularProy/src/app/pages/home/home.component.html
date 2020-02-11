@@ -124,13 +124,15 @@
                     <label class="act-label">Eliminar
                     </label>
                 </div>
+                <!--
                 <div (click)="AgregarDeuda()" class="btn-agregar">
                   <div data-toggle="modal" data-target="#ModalNotificacion">
                     <img src="assets/images/plus_circle.svg" alt="plus_circle">
                   </div>
-                  <label class="act-label">Agregar
+                  <label class="act-label">Agregar un cobro
                   </label>
                 </div>
+                -->
 
               </div>
 
@@ -260,7 +262,7 @@
                       </div>
                     </th>
                     <th class="c10">
-                      <div class="text">Total Pagado</div>
+                      <div class="text">Monto Pagado</div>
                       <div class="ord">
                         <div class="up" [class.seleccionado]="orderBy === 10 && orderDef[10].asc === true"
                           (click)="orderList(10, true)"></div>
@@ -414,7 +416,7 @@
                         <span *ngIf="!items.editInput || items.hasIBKPayments">{{items.firstName}}</span>
                         <div *ngIf="items.editInput && !items.hasIBKPayments" class="content-input-icon position-relative">
                           <mat-form-field class="inline-input" style="width: 80px">
-                            <input class="input-text-dash" matInput [(ngModel)]="items.newFirstName" maxlength="10"
+                            <input class="input-text-dash" matInput [(ngModel)]="items.newFirstName" maxlength="80"
                               minlength="3" type="text" (ngModelChange)="items.errores.firstName = null">
                             <div class="msg-error" *ngIf="items.errores.firstName">{{items.errores.firstName}}</div>
                           </mat-form-field>
@@ -446,12 +448,12 @@
                       <td class="c10">
                         <span *ngIf="items.totalAmountPayed > 0">{{items.currency}}
                           {{items.totalAmountPayed| number : '1.2-2'}}
-                          <div class="cnt-status">
-                            <div class="text-success lnk-status" (click)="showPopover(items, origin)"  #origin>
-                              Ver Detalle
-                            </div>
-                          </div>
                         </span>
+                        <div class="cnt-status">
+                          <div class="text-success lnk-status" (click)="showPopover(items, origin)"  #origin>
+                            Ver Detalle
+                          </div>
+                        </div>
                       </td>
                       <td class="c11">
                           <div class="cnt-status">

@@ -23,8 +23,6 @@
         </div>
         <img class="pb-3 img-excel" src="assets/images/excel.svg" alt="excel" >
         <div class="text-center">
-            
-            
             <button class="btn-eureca-green" type="button" form="input-form" (click)="descargarPlantilla()">
                 DESCARGAR LA PLANTILLA
             </button> <br>
@@ -40,19 +38,28 @@
          <form id="input-form" [formGroup]="inputXlsForm">
             <input hidden formControlName="xls" type="file" #uploadFile (change)="onChangeFile($event)" />
         </form>
-        <small  *ngIf="!excelService.statusUpload && ready">Archivo seleccionado</small>
-        <div  style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center">
+        <div class="landing">
+            <div *ngIf="!excelService.statusUpload && ready" class="text">Selecciona el archivo y sube la plantilla con la información de los
+                <br>cobros de tus clientes</div><br>
+          <!---  <div class="text">¿No tienes la plantilla excel del servicio {{excelService.service.name}} ? </div> -->
+        </div>
+        <div  style="margin-left: 160px;" *ngIf="!excelService.statusUpload && ready" class="text-center pt-1">
             <div class="input-file" (click)="uploadFile.click()">
-                <span class="text-input-file"><div class="name-file pl-4 pt-2 pr-4">{{fileName}}</div></span>
+                <span class="text-input-file">
+                    <div class="name-file pl-4 pt-2 pr-4">{{fileName}}</div>
+                    <div *ngIf="!fileName" class="name-file pl-4 pr-4">Seleccione el archivo aquí</div>
+                </span>
             </div>
             <br/>
         </div>
 
-
     <div *ngIf="excelService.statusUpload" class="progress-text">{{progress.status}}</div>
     <mat-progress-bar *ngIf="excelService.statusUpload" [mode]="progress.mode" [value]="progress.value" [bufferValue]="100"></mat-progress-bar>
     <div *ngIf="ready && !excelService.statusUpload && excelService.errores.length == 0" class="text-center">
-      <button class="btn-eureca-green" type="button" form="input-form" (click)="(fileName === undefined)? uploadFile.click() : openSnackBar()">
+      <button  *ngIf="fileName"  class="btn-eureca-green" type="button" form="input-form" (click)="(fileName === undefined)? uploadFile.click() : openSnackBar()">
+        SUBIR PLANTILLA
+      </button>
+      <button *ngIf="!fileName"  class="btn-eureka-block" type="button" form="input-form" (click)="(fileName === undefined)? uploadFile.click() : openSnackBar()">
         SUBIR PLANTILLA
       </button>
     </div>

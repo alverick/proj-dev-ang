@@ -4,6 +4,7 @@ import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { HomeService } from "src/app/shared/services/home.service";
 import Swal from "sweetalert2";
 import { drawPopup } from "src/app/shared/services/popups";
+import { ExcelService } from "src/app/shared/services/excel.service";
 
 const MY_FORMATS = {
   parse: {
@@ -31,8 +32,10 @@ const MY_FORMATS = {
 // tslint:disable-next-line:directive-class-suffix
 export class DebtComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<DebtComponent>,
-    private homeService: HomeService) { }
+    private homeService: HomeService,
+    public excelService: ExcelService) { }
 
+  public grabado = false;
   public services: any[];
   public minDate = new Date(2000, 0, 1);
   public maxDate = new Date(2050, 0, 1);
@@ -42,6 +45,8 @@ export class DebtComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.nuevaDeuda.service = this.excelService.service.name;
+    this.isPartial = (this.excelService.service.dataType === 'P');
     this.homeService.getServicesActive()
       .subscribe(d => this.services = d);
   }
@@ -68,6 +73,7 @@ export class DebtComponent implements OnInit {
       .subscribe(d => {
         if (d.id) {
           this.nuevaDeuda.firstName = d.firstName;
+          delete this.nuevaDeuda.errores.firstName;
         }
       });
   }
@@ -111,9 +117,9 @@ export class DebtComponent implements OnInit {
       }
 
       if (this.nuevaDeuda.concept) {
-        const re = new RegExp("^[0-9a-zA-Z]+$");
-        if (this.nuevaDeuda.concept.length < 1) {
-          this.nuevaDeuda.errores.concept = 'Debe tener 1 carácter como mínimo';
+        const re = new RegExp("^[ 0-9a-zA-Z]+$");
+        if (this.nuevaDeuda.concept.length < 2) {
+          this.nuevaDeuda.errores.concept = 'Debe tener 2 carácteres como mínimo';
         }
         else if (!re.test(this.nuevaDeuda.concept)) {
           this.nuevaDeuda.errores.concept = 'No cumple con el formato';
@@ -187,57 +193,60 @@ export class DebtComponent implements OnInit {
       }
     }
 
-    Swal.fire({
-      title: 'Nueva Deuda',
-      text: '¿Deseas continuar?',
-      showCancelButton: true,
-      showCloseButton: true,
-      confirmButtonText: 'SI, GRABAR',
-      cancelButtonText: 'CERRAR',
-      onOpen: drawPopup
-    }).then(result => {
-      if (result.value) {
-        let debt: any;
-        if (this.isPartial) {
-          debt = {
-            emissionDate: this.nuevaDeuda.emissionDate,
-            code: this.nuevaDeuda.code,
-            firstName: this.nuevaDeuda.firstName,
-          };
-        }
-        else {
-          debt = {
-            emissionDate: this.nuevaDeuda.emissionDate,
-            dueDate: this.nuevaDeuda.dueDate,
-            code: this.nuevaDeuda.code,
-            firstName: this.nuevaDeuda.firstName,
-            concept: this.nuevaDeuda.concept,
-            amount: this.nuevaDeuda.amount
-          };
-        }
-        this.homeService.postNewDebt(this.nuevaDeuda.service, debt)
-          .subscribe(r => {
-            if (r.success) {
-              this.nuevaDeuda = { errores: {} };
-              this.dialogRef.close({ grabado: true });
+    let debt: any;
+    if (this.isPartial) {
+      debt = {
+        emissionDate: this.nuevaDeuda.emissionDate,
+        code: this.nuevaDeuda.code,
+        firstName: this.nuevaDeuda.firstName,
+      };
+    }
+    else {
+      debt = {
+        emissionDate: this.nuevaDeuda.emissionDate,
+        dueDate: this.nuevaDeuda.dueDate,
+        code: this.nuevaDeuda.code,
+        firstName: this.nuevaDeuda.firstName,
+        concept: this.nuevaDeuda.concept,
+        amount: this.nuevaDeuda.amount
+      };
+    }
+    this.homeService.postNewDebt(this.nuevaDeuda.service, debt)
+      .subscribe(r => {
+        if (r.success) {
+          this.grabado = true;
+          Swal.fire({
+            title: 'Agregar Cobro' ,
+            html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',
+            showCancelButton: true,
+            showCloseButton: true,
+            confirmButtonText: 'AGREGRA OTRO',
+            cancelButtonText: 'CERRAR',
+            onOpen: drawPopup
+          }).then(result => {
+            if (result.value) {
+              this.nuevaDeuda = { service: this.excelService.service.name, errores: {} };
             }
             else {
-              Swal.fire({
-                title: 'Nueva Deuda' ,
-                html: r.message,
-                showCloseButton: true,
-                showCancelButton: false,
-                showConfirmButton: true,
-                confirmButtonText: 'CERRAR',
-                onOpen: drawPopup
-              });
+              this.dialogRef.close({ grabado: this.grabado });
             }
           });
-      }
-    });
+        }
+        else {
+          Swal.fire({
+            title: 'Agregar Cobro' ,
+            html: r.message,
+            showCloseButton: true,
+            showCancelButton: false,
+            showConfirmButton: true,
+            confirmButtonText: 'CERRAR',
+            onOpen: drawPopup
+          });
+        }
+      });
   }
 
   cerrarDialog() {
-    this.dialogRef.close();
+    this.dialogRef.close({ grabado: this.grabado });
   }
 }

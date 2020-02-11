@@ -20,7 +20,7 @@ export class AfiliacionService {
   public Guardado: boolean = false;
 
   public services: ServiceModel[] = [];
-
+  private _rubros: RubroModel[] = null;
 
 
   public Clear() {
@@ -156,7 +156,13 @@ export class AfiliacionService {
 
 
   public GetRubros(): Observable<RubroModel[]> {
+    if (this._rubros !== null)
+      return Observable.of(this._rubros);
     return this.http.get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading?_=` + new Date().getTime())
+      .pipe(map(r => {
+        this._rubros = r;
+        return r;
+      }))
       .pipe(catchError(err => throwError(err)));
   }
 

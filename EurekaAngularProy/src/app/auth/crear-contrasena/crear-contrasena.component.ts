@@ -263,6 +263,7 @@ export class CrearContrasenaComponent implements OnInit {
         this.gtpService.EdtEmpServ = {token: this.llave, NewName: this.registerForm.value.nombre.toString()};
         this.gtpService.nombre = this.registerForm.value.nombre.toString();
       }
+      this.afiliacionService.email = this.gtpService.EmpresaServicios.email;
       this.router.navigate(["/editarSvcGTP"]);
       this.gtpService.llave = this.llave;
     }
