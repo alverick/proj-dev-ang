@@ -1,8 +1,17 @@
 @import "../../../scss/_variables.scss";
 @import "../../../scss/_mixin.scss";
 
+.row {
+  padding: 0 14px;
+}
+
 mat-form-field {
   width: 100%;
+
+  &.inline-ctrl {
+    width: 130px;
+    margin-right: 6px;
+  }
 
   .msg-error {
     @include font-text(10px, 500);
@@ -10,7 +19,19 @@ mat-form-field {
     color: #ea0044;
     margin-top: 10px;
     width: 200px;
+
+    &.inline {
+      width: 130px;
+    }
   }
+}
+
+.titulo {
+  @include font-text(24px, 500);
+}
+
+.subtitulo {
+  @include font-text(12px, normal);
 }
 
 .btn {

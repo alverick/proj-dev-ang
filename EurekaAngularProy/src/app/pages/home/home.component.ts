@@ -33,6 +33,7 @@ import { PagosComponent } from './pagos/pagos.component';
 import { LoadFileService } from 'src/app/shared/load-file/load-file.service';
 import { LoadBarService } from 'src/app/shared/load-bar/load-bar.service';
 import { DebtComponent } from './debt.component';
+import { AgregaCobroComponent } from './agrega-cobro.component';
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -267,7 +268,7 @@ export class HomeComponent implements OnInit {
    this.recortarNombres();
    this.cargaExcel = false;
 
-   
+
    console.log(this.transactionService.debtItems.data);
    // check
    //this.SeleccionarTodos();
@@ -524,7 +525,7 @@ orderList(index: number, asc: boolean) {
   {
     this.transactionService.debtItems.data.forEach(element => {
       element.firstName
-    });    
+    });
 
   }
 
@@ -874,24 +875,56 @@ Ocultar() {
 }
 
   openDialog(service: any) {
-    this.fileLoad.close();
     this.OcultaListaExcel = false;
     this.cargaExcel = false;
+    this.fileLoad.close();
     this.excelService.service = service;
-    const dialogRef = this.dialog.open(DialogComponent,{
-      width: '899px',
-     // height: '377px',
-     // disableClose: true
-    });
-    dialogRef.afterClosed().subscribe((result: Observable<any>) => {
-      dialogRef.componentInstance.ready = false;
-      this.fileLoad.verify(this.fileLoadContainer);
-      if (result) {
-        result.subscribe(() => {
-          this.consultaDeuda();
+    if (this.fileLoad.isRunning()) {
+      const dialogRef = this.dialog.open(DialogComponent,{
+        width: '899px',
+       // height: '377px',
+       // disableClose: true
+      });
+      dialogRef.afterClosed().subscribe((result: Observable<any>) => {
+        dialogRef.componentInstance.ready = false;
+        this.fileLoad.verify(this.fileLoadContainer);
+        if (result) {
+          result.subscribe(() => {
+            this.consultaDeuda();
+          });
+        }
+      });
+    } else {
+      this.dialog.open(AgregaCobroComponent, { width: '899px' })
+        .afterClosed().subscribe(r => {
+          if (r) {
+            if (r.medio === 'web') {
+              let dlg = this.dialog.open(DebtComponent, {
+                width: '330px'
+              });
+              dlg.afterClosed().subscribe(r => {
+                if (r && r.grabado) {
+                  this.consultaDeuda();
+                }
+              });
+            }
+            else {
+              const dialogRef = this.dialog.open(DialogComponent,{
+                width: '899px'
+              });
+              dialogRef.afterClosed().subscribe((result: Observable<any>) => {
+                dialogRef.componentInstance.ready = false;
+                this.fileLoad.verify(this.fileLoadContainer);
+                if (result) {
+                  result.subscribe(() => {
+                    this.consultaDeuda();
+                  });
+                }
+              });
+            }
+          }
         });
-      }
-    });
+    }
   }
 
   public enDescarga: boolean = false;

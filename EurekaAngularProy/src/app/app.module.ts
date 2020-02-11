@@ -60,6 +60,7 @@ import { PopoverComponent } from './pages/home/popover/popover.component';
 import { LoadFileComponent } from './shared/load-file/load-file.component';
 import { LoadBarComponent } from './shared/load-bar/load-bar.component';
 import { DebtComponent } from './pages/home/debt.component';
+import { AgregaCobroComponent } from './pages/home/agrega-cobro.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { DebtComponent } from './pages/home/debt.component';
     PopoverComponent,
     LoadFileComponent,
     LoadBarComponent,
-    DebtComponent
+    DebtComponent,
+    AgregaCobroComponent
   ],
   imports: [
     BrowserModule,
@@ -156,7 +158,8 @@ import { DebtComponent } from './pages/home/debt.component';
     PopoverComponent,
     LoadFileComponent,
     LoadBarComponent,
-    DebtComponent
+    DebtComponent,
+    AgregaCobroComponent
   ]
 })
 export class AppModule { }

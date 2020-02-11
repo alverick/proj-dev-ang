@@ -202,7 +202,7 @@ export class GtpGrillaComponent implements OnInit {
     if (e === null) {
       this.errores['dateFrom'] = 'No es una fecha válida';
     }
-    if (!this.usDatePattern.test(e)) {
+    if (!e.match(this.usDatePattern)) {
       this.errores['dateFrom'] = 'No es una fecha válida';
     }  else {
       let yearFrom = new Date(e).getFullYear();

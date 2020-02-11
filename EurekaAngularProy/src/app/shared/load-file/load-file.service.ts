@@ -38,6 +38,10 @@ export class LoadFileService {
     }
   }
 
+  public isRunning() {
+    return (this.componentRef !== null && this.componentRef !== undefined);
+  }
+
   public close() {
     if (this.componentRef) {
       this.cancel = true;

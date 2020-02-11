@@ -44,12 +44,8 @@
                                 </mat-form-field>
                                 <label class="mt-4 px-4 input-text">Fecha de <br> solicitud</label>
                                 <mat-form-field class="f2">
-                            <!--
                                   <input [min]="minDate" [max]="maxDate"  class="input-text" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)"
                                   #inputDate1 placeholder="Desde" type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2" maxlength="10" minlength="10" >
-                                -->
-                                <input [min]="minDate" [max]="maxDate" class="input-text" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)"
-                                #inputDate1 placeholder="Desde" type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2"  maxlength="10" minlength="10" >
 
                                   <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
                                     <mat-icon class="svg-custom" ></mat-icon>
