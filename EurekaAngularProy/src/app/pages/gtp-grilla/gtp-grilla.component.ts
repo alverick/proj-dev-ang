@@ -44,7 +44,7 @@ export const MY_FORMATS = {
   ],
 })
 export class GtpGrillaComponent implements OnInit {
-  usDatePattern:any =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+  usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(2050, 0, 1);
   @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
@@ -202,11 +202,9 @@ export class GtpGrillaComponent implements OnInit {
     if (e === null) {
       this.errores['dateFrom'] = 'No es una fecha válida';
     }
-    if (!e.match(this.usDatePattern)) {
+    if (!this.usDatePattern.test(e)) {
       this.errores['dateFrom'] = 'No es una fecha válida';
-    }
-
-    else {
+    }  else {
       let yearFrom = new Date(e).getFullYear();
       if (yearFrom <  2000 || yearFrom >  2050 ) {
         this.errores['dateFrom'] = 'Fecha Inválida';
