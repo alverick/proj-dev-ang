@@ -231,4 +231,22 @@ small{
  // min-height: 60px;
  // max-height: 160px;
   //width: 800px;
-}
+ }
+
+ .contenedor-cargando{
+  margin-top: 3px;
+  position: absolute;
+  @include box-shadows();
+  @include border-radius(4px);
+  background-color: #ffffff;
+  right: 0px;
+  width: 400px;
+  z-index: 1;
+  border: solid 1px #f0f0f0;
+  text-align: center;
+
+  &.block {
+  text-align: center;
+    display: block;
+  }
+  }
