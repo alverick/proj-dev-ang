@@ -64,7 +64,6 @@ export class PagosComponent implements OnInit {
       .subscribe(p => {
         this.cargando = false;
         this.items = p;
-        console.log("detalle2",this.items)
       });
   }
 
