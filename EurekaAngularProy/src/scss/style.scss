@@ -8,3 +8,14 @@
 /*@import "~@angular/material/prebuilt-themes/indigo-pink.css";*/
 @import '~@angular/cdk/overlay-prebuilt.css';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.mat-select-panel{
+    min-width: 220px  !important;
+  }
+  
+:-ms-input-placeholder.mat-input-element {
+    color: rgba(0, 0, 0, 0.42) !important;
+}
+.swal2-styled{
+    margin: .5em 10vh !important;
+}

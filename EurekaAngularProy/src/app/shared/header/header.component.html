@@ -40,7 +40,7 @@
 
                     <perfect-scrollbar class="notifies" [config]="scrollConfig" (psYReachEnd)="onScroll()" >
                       <div *ngFor="let msg of notify.messages " class="dropdown-item" (click)="$event.stopPropagation();" [class.dropdown-item-readed]="!msg.IsNew">
-                        <div  *ngIf="msg.isNew" style="background-color: #84CEA22E;">
+                        <div  *ngIf="msg.isNew" style="background-color: rgba(132, 206, 162, 0.1803921568627451);">
                           <div class="espacio">
                           <div class="notiificacion" title="{{msg.title}}" (click)="notify.changeRead(msg); $event.stopPropagation(); ">
                               <img class="item-icono "  src="assets/images/badge-bg.svg" >

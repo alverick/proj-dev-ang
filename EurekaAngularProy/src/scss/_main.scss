@@ -1,4 +1,5 @@
 @import "_variables.scss";
+
 body {
     background-color: #f4f5f7 !important;
 }
@@ -25,12 +26,12 @@ body {
 
 .scroll-div::-webkit-scrollbar-thumb {
     background-color: #333333;
-    border-radius: 4px;
+    border-radius   : 4px;
 }
 
 .scroll-div::-webkit-scrollbar-track {
     background-color: #f3f3f3;
-    border-radius: 4px;
+    border-radius   : 4px;
 }
 
 .mat-progress-spinner circle,
@@ -42,21 +43,25 @@ body {
     .mat-form-field-prefix {
         margin-right: 2px;
     }
+
     .mat-form-field-label {
         @include font-text(16px);
         font-weight: normal;
-        color: #0d131d !important;
-        top: 21px;
+        color      : #0d131d !important;
+        top        : 21px;
     }
+
     .mat-form-field-ripple {
         background-color: $textblack !important;
     }
+
     .mat-select-arrow {
-        color: $textgreen;
-        border-left: 8px solid transparent;
+        color       : $textgreen;
+        border-left : 8px solid transparent;
         border-right: 8px solid transparent;
-        border-top: 8px solid;
+        border-top  : 8px solid;
     }
+
     .mat-datepicker-toggle {
         .mat-icon-button {
             color: $textgreen;
@@ -68,9 +73,11 @@ body {
     .mat-form-field-label {
         color: $textblack !important;
     }
+
     .mat-form-field-ripple {
         background-color: $green !important;
     }
+
     .mat-select-arrow {
         color: $textgreen !important;
     }
@@ -85,15 +92,17 @@ body {
 }
 
 .chk-vertical {
-    display: block;
-    width: 40px;
+    display   : block;
+    width     : 40px;
     text-align: center;
+
     .mat-checkbox-ripple {
-        left: calc(50% - 12px);
-        top: calc(50% - 12px);
+        left  : calc(50% - 12px);
+        top   : calc(50% - 12px);
         height: 24px;
-        width: 24px;
+        width : 24px;
     }
+
     .mat-checkbox-layout {
         margin-bottom: 0;
     }
@@ -115,70 +124,80 @@ body {
 }
 
 button:focus {
-  outline: none !important;
-  box-shadow: none !important;
+    outline   : none !important;
+    box-shadow: none !important;
 }
 
 .btn-eureca-green {
     @include font-text(14px !important, 500 !important);
-    color: #ffffff !important;
+    color           : #ffffff !important;
     background-color: $green !important;
     @include border-radius(4px !important);
     border: solid 1px $green !important;
+
     &:hover {
-      //  background-color: $greenclaro !important;
-      background-color: $green-oscuro!important;
+        //  background-color: $greenclaro !important;
+        background-color    : $green-oscuro !important;
     }
+
     &:active {
         background-color: $green !important;
-        background-image:none !important;
+        background-image: none !important;
     }
+
     &.btn-disabled {
         background-color: #9b9b9b !important;
-        border: solid 1px #9b9b9b !important;
+        border          : solid 1px #9b9b9b !important;
     }
 }
+
 .btn-outline-green {
 
     @include font-text(16px !important, 500 !important);
     @include border-radius(4px !important);
     background-color: $blanco !important;
-    border: solid 1px $blanco !important;
-    color: $green !important;
+    border          : solid 1px $blanco !important;
+    color           : $green !important;
+
     &:hover {
-      //  background-color: $greenclaro !important;
-      background-color: #E5E5E5!important;
+        //  background-color: $greenclaro !important;
+        background-color    : #E5E5E5 !important;
     }
+
     &:active {
         background-color: $blanco !important;
-        background-image:none !important;
+        background-image: none !important;
     }
+
     &.btn-disabled {
-        color: #9b9b9b !important;
+        color           : #9b9b9b !important;
         background-color: $blanco !important;
     }
 }
 
 .btn-eureca-green-alert {
     height: 48px;
-    width: 207px;
+    width : 207px;
     @include font-text(14px !important, normal !important);
-    color: #ffffff !important;
-     background-color: $green !important;
+    color           : #ffffff !important;
+    background-color: $green !important;
 
     @include border-radius(4px !important);
     border: solid 1px $green !important;
+
     &:hover {
-      //  background-color: $greenclaro !important;
-      background-color: $green-oscuro!important;
+        //  background-color: $greenclaro !important;
+        background-color    : $green-oscuro !important;
     }
+
     &:active {
         background-color: $green !important;
-        background-image:none !important;
+        background-image: none !important;
     }
+
     &.btn-disabled {
         background-color: #9b9b9b !important;
-        border: solid 1px #9b9b9b !important;
+        border          : solid 1px #9b9b9b !important;
     }
 }
 
@@ -187,27 +206,30 @@ button:focus {
 .btn-outline-green-alert {
 
     height: 48px;
-    width: 207px;
+    width : 207px;
     @include font-text(14px !important, normal !important);
     @include border-radius(4px !important);
     background-color: $blanco !important;
-    border: solid 1px $blanco !important;
-    color: $green !important;
-    &:hover { 
-        background-color: #ffffff!important;
-        color: $green;
-        text-decoration: underline;
-        cursor: pointer;
-      }
-      &:active {
-          background-color:$blanco!important;
-          background-image:none !important;
-      }
+    border          : solid 1px $blanco !important;
+    color           : $green !important;
+
+    &:hover {
+        background-color: #ffffff !important;
+        color           : $green;
+        text-decoration : underline;
+        cursor          : pointer;
+    }
+
+    &:active {
+        background-color: $blanco !important;
+        background-image: none !important;
+    }
+
     &.btn-disabled {
-        // color: #9b9b9b !important;
-        color: $green;
+        // color       : #9b9b9b !important;
+        color          : $green;
         text-decoration: underline;
-        cursor: pointer;
+        cursor         : pointer;
     }
 }
 
@@ -225,26 +247,26 @@ button:focus {
 }
 
 .btn-big {
-    font-size: 16px;
-    padding-left: 45px;
+    font-size    : 16px;
+    padding-left : 45px;
     padding-right: 45px;
-    height: 48px;
+    height       : 48px;
 }
 
 .texto-azul {
     @include font-text(32px, $weight: 500);
-    color: #0032a0;
+    color                           : #0032a0;
 }
 
 .font-black {
     @include font-text(18px, $weight: 600);
-    color: #0d131d;
+    color                           : #0d131d;
 }
 
 .swal2-content {
     @include font-text(16px, $weight: 500);
-    color: #0d131d !important;
-    text-align: center;
+    color                           : #0d131d !important;
+    text-align                      : center;
 }
 
 .input-text {
@@ -254,7 +276,7 @@ button:focus {
 
 .mat-calendar-body-selected {
     background-color: $green;
-    color: #fff;
+    color           : #fff;
 }
 
 /*
@@ -269,33 +291,34 @@ button:focus {
 
 
 .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
-    font-size: 12px;
+    transform  : translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
+    font-size  : 12px;
     font-weight: 500;
-  }
+}
 
-  .pts16 {
+.pts16 {
     margin-top: 16px !important;
-  }
+}
 
-  .pts26 {
+.pts26 {
     margin-top: 26px !important;
-  }
+}
 
-  .pts30 {
+.pts30 {
     margin-top: 30px !important;
-  }
+}
 
 mat-icon.svg-custom {
-  svg {
-    width: 24px;
-    height: 24px;
+    svg {
+        width : 24px;
+        height: 24px;
 
-    path {
-      fill: inherit;
+        path {
+            fill: inherit;
+        }
     }
-  }
 }
+
 .mat-checkbox-frame {
     border-color: #9EA1A5;
 }
@@ -306,15 +329,17 @@ mat-icon.svg-custom {
 
 .mat-select-value {
     color: #0d131d !important;
-    }
-    .mat-select-placeholder {
-    color:#0d131d !important;
 }
-  .mat-input-element {
+
+.mat-select-placeholder {
+    color: #0d131d !important;
+}
+
+.mat-input-element {
     caret-color: #0d131d !important;
 }
 
- .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
     border-color: $green;
 }
 
@@ -322,15 +347,15 @@ mat-icon.svg-custom {
     background-color: $green;
 }
 
- .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-  font-size: 10px !important;
-  color: #0d131d !important;
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    font-size: 10px !important;
+    color    : #0d131d !important;
 }
-.w-70{
+
+.w-70 {
     width: 70%;
 }
-.w-15{
+
+.w-15 {
     width: 15%;
 }
-
-
