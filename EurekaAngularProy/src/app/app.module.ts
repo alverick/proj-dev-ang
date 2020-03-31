@@ -61,7 +61,6 @@ import { LoadFileComponent } from './shared/load-file/load-file.component';
 import { LoadBarComponent } from './shared/load-bar/load-bar.component';
 import { DebtComponent } from './pages/home/debt.component';
 import { AgregaCobroComponent } from './pages/home/agrega-cobro.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -128,7 +127,8 @@ import { AgregaCobroComponent } from './pages/home/agrega-cobro.component';
     PerfectScrollbarModule,
     MaterialFileInputModule,
     MatRadioModule,
-    OverlayModule
+    OverlayModule,
+
   ],
   providers: [
     ExcelService,

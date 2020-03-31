@@ -12,7 +12,7 @@ import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { DigitOnlyModule } from '@uiowa/digit-only';
@@ -30,6 +30,7 @@ import { FormServicioGtpComponent } from './form-servicio-gtp/form-servicio-gtp.
 import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.component';
 import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
 import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.component';
+import { TooltipModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.com
     MatIconModule,
     SharedModule,
     MatRadioModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    TooltipModule.forRoot()
   ],
   providers: [
     StorageService,
@@ -72,7 +74,7 @@ import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.com
     FormEmpresaGTPComponent,
     SerFormGtpComponent,
     FormServicioGtpComponent,
-    ConfigurarGtpComponent
+    ConfigurarGtpComponent,
   ],
   exports: [
     OnlyNumbersFormDirective
@@ -80,10 +82,10 @@ import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.com
 })
 
 export class AuthModule {
-  constructor (@Optional() @SkipSelf() parentModule: AuthModule) {
+  constructor(@Optional() @SkipSelf() parentModule: AuthModule) {
     if (parentModule) {
       throw new Error(
         'CoreModule is already loaded. Import it in the AppModule only');
     }
   }
- }
+}

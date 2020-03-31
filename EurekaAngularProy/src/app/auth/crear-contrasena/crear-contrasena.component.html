@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <div class="texto-azul">Ingresa los datos de la empresa </div>
+                <div class="texto-azul">Ingresa los datos de tu empresa </div>
             </div>
             <div class="col-md-8">
                 <div class="d-flex justify-content-end">
@@ -11,7 +11,7 @@
                         <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input class="input-text" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC" appOnlynumbers minlength="11" maxlength="11">
+                                    <input class="input-text" tooltip="El RUC de tu empresa con el que ingresarás a la plataforma" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC de tu empresa" appOnlynumbers minlength="11" maxlength="11">
                                         <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
@@ -20,7 +20,7 @@
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
 
-                                    <input class="input-text"   formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de la empresa" minlength="3" maxlength="80">
+                                    <input class="input-text" tooltip="Nombre con el que tus clientes te buscarán en los canales de Interbank al momento de pagarte"  formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid" matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
@@ -31,9 +31,9 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="super-full-width">
-                                    <mat-label>Rubro</mat-label>
+                                    <mat-label>Rubro de tu empresa</mat-label>
                                     <mat-select class="input-text" formControlName="rubro" disableOptionCentering panelClass="pts30">
-                                        <mat-option class="input-text">Rubro</mat-option>
+                                        <mat-option class="input-text">Rubro de tu empresa</mat-option>
                                         <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
                                             {{r.name}}
                                         </mat-option>
@@ -86,7 +86,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="repcontrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repite Contraseña">
+                                    <input formControlName="repcontrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repite la Contraseña">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required')">Debe repetir la contraseña</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
