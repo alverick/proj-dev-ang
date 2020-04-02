@@ -44,20 +44,21 @@ export const MY_FORMATS = {
   ],
 })
 export class GtpGrillaComponent implements OnInit {
-  usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+  usDatePattern = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(2050, 0, 1);
   @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
   @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
-  messageTable: string ='';
+  messageTable: string = '';
   showArrow: boolean = false;
-
+  asc = true;
+  orderBys = 0;
   currentFiltro: GtpFilter = {
     pageNumber: 1,
-    ColumnName: '',
-    asc: true,
+    ColumnName: 'requestDate',
+    asc: false,
     inputSearch: '',
-    BusinessHeading:'',
+    BusinessHeading: '',
     status: '',
     dateFrom: null,
     dateTo: null
@@ -67,7 +68,7 @@ export class GtpGrillaComponent implements OnInit {
     ColumnName: '',
     asc: true,
     inputSearch: '',
-    BusinessHeading:'',
+    BusinessHeading: '',
     status: '',
     dateFrom: null,
     dateTo: null
@@ -83,15 +84,31 @@ export class GtpGrillaComponent implements OnInit {
     { name: 'requestTypeList', asc: false },
     { name: 'businessHeading', asc: false },
   ]
-  constructor(private spinner: NgxSpinnerService,private afiliacionService: AfiliacionService, public gtpService: GtpService,private router: Router) { }
+
+  herderTable: any[] = [
+    { name: 'Fecha de solicitud', asc: false, orderBy: 0, class: 'c1' },
+    { name: 'RUC', asc: false, orderBy: 1, class: 'c2' },
+    { name: 'CU', asc: false, orderBy: 2, class: 'c3' },
+    { name: 'Nombre de la empresa', asc: false, orderBy: 3, class: 'c4' },
+    { name: 'Tipo de solicitud', asc: false, orderBy: 4, class: 'c5' },
+    { name: 'Estado', asc: false, orderBy: 5, class: 'c6' },
+
+
+  ]
+
+  constructor(private spinner: NgxSpinnerService, private afiliacionService: AfiliacionService, public gtpService: GtpService, private router: Router) { }
   rubros: RubroModel[] = [];
-  states: StatesGtp[] =[];
+  states: StatesGtp[] = [];
 
 
   ngOnInit() {
 
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
-    this.gtpService.getStates().subscribe(d => this.states = d);
+    this.gtpService.getStates().subscribe(d => {
+      console.log('stado', d)
+      this.states = d;
+
+    });
     this.consultaGtp();
   }
   limpiardate1() {
@@ -102,10 +119,10 @@ export class GtpGrillaComponent implements OnInit {
     this.inputDate2.nativeElement.value = '';
     this.filtro.dateTo = null;
   }
-  Aprobar( ClientId: number) {
+  Aprobar(ClientId: number) {
     console.log('ingresa a probacion');
     this.router.navigate(['/AprobacionGtp/' + ClientId]);
-   // location.href = '/AprobacionGtp/'+ClientId;
+    // location.href = '/AprobacionGtp/'+ClientId;
   }
 
   changePage(nro: number) {
@@ -113,18 +130,31 @@ export class GtpGrillaComponent implements OnInit {
     this.consultaGtp();
   }
   ////ORDENAMIENTO OCULTAR LAS FLECHAS
-  orderList(index: number, asc: boolean) {
-    this.orderBy = index;
-    this.orderDef[index].asc = asc;
-
-    this.currentFiltro.asc = asc;
-    this.currentFiltro.ColumnName = this.orderDef[index].name;
+  orderList(items: any) {
+    items.asc = !items.asc;
+    this.orderBy = items.orderBy;
+    this.orderDef[items.orderBy].asc = items.asc;
+    this.currentFiltro.asc =  items.asc;
+    this.currentFiltro.ColumnName = this.orderDef[items.orderBy].name;
     this.consultaGtp();
   }
+  // orderList(index: number, asc: boolean) {
+  //   this.orderBy = index;
+  //   this.orderDef[index].asc = asc;
+
+  //   this.currentFiltro.asc = asc;
+  //   this.currentFiltro.ColumnName = this.orderDef[index].name;
+  //   console.log('filter ', this.currentFiltro)
+  //   this.consultaGtp();
+  // }
+  orderByColum() {
+
+  }
+
 
   private validaFiltro() {
     let res: boolean = true;
-    for(var s in this.errores) {
+    for (var s in this.errores) {
       if (this.errores[s])
         res = false;
     }
@@ -140,41 +170,44 @@ export class GtpGrillaComponent implements OnInit {
 
     this.consultaGtp();
 
-    if((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
-    (this.filtro.BusinessHeading === '' || this.filtro.BusinessHeading === null || this.filtro.BusinessHeading === undefined) &&
-    (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
-    ( /*this.filtro.dateFrom == ''  ||*/ this.filtro.dateFrom === null || this.filtro.dateFrom === undefined)){
-      this.messageTable = 'No se encontró ningún registro para esta búsqueda';
-       this.showArrow = true;
-    }else{
-      this.messageTable ='No se encontró ningún registro para esta búsqueda';
+    if ((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
+      (this.filtro.BusinessHeading === '' || this.filtro.BusinessHeading === null || this.filtro.BusinessHeading === undefined) &&
+      (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined) &&
+      ( /*this.filtro.dateFrom == ''  ||*/ this.filtro.dateFrom === null || this.filtro.dateFrom === undefined)) {
+      this.messageTable = 'No se encontraron empresas para esta búsqueda';
+      this.showArrow = true;
+    } else {
+      this.messageTable = 'No se encontraron empresas para esta búsqueda';
       this.showArrow = false;
     }
   }
 
   // callback:  cuando se termine de ejecutar la consulta se ejecuta el callback
- // consultaDeuda(cb: () => void = null) {
+  // consultaDeuda(cb: () => void = null) {
 
- consultaGtp(){
-   console.log("consultaGTP");
-    if (this.validaFiltro()){
+  consultaGtp() {
+    console.log("consultaGTP");
+    if (this.validaFiltro()) {
       this.spinner.show();
       this.gtpService.getEmpresas(this.currentFiltro).subscribe(d => {
+        // console.log('empresa', this.gtpService.EnterprisesItems)
         this.spinner.hide();
       }, err => { this.spinner.hide(); });
     }
+
+
   }
 
   ceroRegistros(): boolean {
-    if (sessionStorage.getItem('tk') === null ||  sessionStorage.getItem('tk') ===  '') {
+    if (sessionStorage.getItem('tk') === null || sessionStorage.getItem('tk') === '') {
       //this.router.navigate(['/login']);
       return false;
     } else {
       if (this.gtpService.EnterprisesItems.totalCompanies === 0) {
         return true;
-    } else {
+      } else {
         return false;
-    }
+      }
     }
   }
 
@@ -205,7 +238,7 @@ export class GtpGrillaComponent implements OnInit {
     }
     else {
       let yearFrom = new Date(e).getFullYear();
-      if (yearFrom <  2000 || yearFrom >  2050 ) {
+      if (yearFrom < 2000 || yearFrom > 2050) {
         this.errores['dateFrom'] = 'Fecha Inválida';
       }
       else {
@@ -220,7 +253,7 @@ export class GtpGrillaComponent implements OnInit {
     }
     else {
       let yearTo = new Date(e).getFullYear();
-      if (yearTo <  2000 || yearTo >  2050 ) {
+      if (yearTo < 2000 || yearTo > 2050) {
         this.errores['dateTo'] = 'Fecha Inválida';
       }
       else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
