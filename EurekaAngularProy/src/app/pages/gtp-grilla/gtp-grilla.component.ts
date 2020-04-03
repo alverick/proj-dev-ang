@@ -124,7 +124,10 @@ export class GtpGrillaComponent implements OnInit {
     this.router.navigate(['/AprobacionGtp/' + ClientId]);
     // location.href = '/AprobacionGtp/'+ClientId;
   }
-
+  onUpdateEAG(ClientId: number) {
+    console.log('ClientId', ClientId);
+    this.consultaGtp();
+  }
   changePage(nro: number) {
     this.currentFiltro.pageNumber = nro;
     this.consultaGtp();
@@ -134,7 +137,7 @@ export class GtpGrillaComponent implements OnInit {
     items.asc = !items.asc;
     this.orderBy = items.orderBy;
     this.orderDef[items.orderBy].asc = items.asc;
-    this.currentFiltro.asc =  items.asc;
+    this.currentFiltro.asc = items.asc;
     this.currentFiltro.ColumnName = this.orderDef[items.orderBy].name;
     this.consultaGtp();
   }
@@ -190,7 +193,7 @@ export class GtpGrillaComponent implements OnInit {
     if (this.validaFiltro()) {
       this.spinner.show();
       this.gtpService.getEmpresas(this.currentFiltro).subscribe(d => {
-        // console.log('empresa', this.gtpService.EnterprisesItems)
+        console.log('empresa', this.gtpService.EnterprisesItems)
         this.spinner.hide();
       }, err => { this.spinner.hide(); });
     }

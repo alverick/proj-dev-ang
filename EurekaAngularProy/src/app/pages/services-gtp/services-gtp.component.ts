@@ -54,8 +54,16 @@ export class ServicesGTPComponent implements OnInit {
 
   frm: FormGroup;
   ngOnInit() {
-    console.log('_service', this._service)
 
+    // console.log('_service', this._service)
+    let ResValue = [];
+    this._service.res = this._service.res == '' || this._service.res == null ? '' : this._service.res;
+
+    if (this._service.res != '') {
+      ResValue = [Validators.required, Validators.maxLength(7), Validators.minLength(7), Validators.pattern('^[0-9]*$')];
+    } else {
+      ResValue = [Validators.minLength(7)]
+    }
     this.inReview = this._service.inReview;
     var montod = ((this._service.amount !== null && this._service.amount !== undefined) ? this._service.amount : '1.00');
     var porcentajed = ((this._service.porcentage !== null && this._service.porcentage !== undefined) ? this._service.porcentage : '1.00');
@@ -70,7 +78,8 @@ export class ServicesGTPComponent implements OnInit {
         (this._service.newName.substring(3, this._service.newName.length)):this._service.newName)):((this._service.name === this._service.newName)? this._service.name : this._service.newName ) , disabled: true },
           [Validators.required, Validators.minLength(3),
           Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
-      res: new FormControl({ value: this._service.res, disabled: false }, [Validators.required, Validators.maxLength(7), Validators.minLength(7), Validators.pattern('^[0-9]*$')]),
+
+      res: new FormControl({ value: this._service.res, disabled: false }, ResValue),
       codDeudor: new FormControl({
         value: (this._service.debtorCode === 'RUC' || this._service.debtorCode === 'DNI' ||
           this._service.debtorCode === 'Codigo Interno') ? this._service.debtorCode : 'Otro', disabled: true
@@ -315,8 +324,8 @@ export class ServicesGTPComponent implements OnInit {
       console.log('el form es valido');
       let value: DataServiceGTP;
       value = this._service;
-      console.log('resvalue', this.update);
-      console.log('frm', this.frm.value.res);
+      // console.log('resvalue', this.update);
+      // console.log('frm', this.frm.value.res);
       value.res = (this.frm.value.res);
       // value.acceptednewName = (this.frm.value.NewName === 'S');
       // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
@@ -328,8 +337,9 @@ export class ServicesGTPComponent implements OnInit {
       //  value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
       // tslint:disable-next-line:max-line-length
       value.acceptednewNameCode = ((this._service.newNameCodeGTPStatus === 1) || (this._service.newNameCodeGTPStatus === 3 && this._service.debtorCode !== '' && this._service.newNameCode !== '')) ? true : ((this.frm.value.NewNameCod === 'S') ? true : false);
-      console.log('value enviar', value)
+      // console.log('value enviar', value)
       this.grabar.emit(value);
+      this.update = false;
       console.log('TERMINO DFE VALI' + value.acceptednewName + ' ' + value.acceptednewNameCode);
     }
   }

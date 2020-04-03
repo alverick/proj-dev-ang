@@ -14,29 +14,21 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="w-70">
-            <input class="input-text" (keypress)="onUpdateRes()" matInput type="text" maxlength="7" pattern="^[0-9]*$" formControlName="res" name="res" placeholder="Res">
-            <mat-error class="messsage-error" *ngIf="f.res.invalid && f.res.hasError('required')">El nombre es obligatorio</mat-error>
-            <mat-error class="messsage-error" *ngIf="f.res.invalid && f.res.hasError('maxlength')">El Res no puede tener mas de 7 caracteres</mat-error>
-            <mat-error class="messsage-error" *ngIf="f.res.invalid && f.res.hasError('minlength') && !f.res.hasError('pattern')">El Res no puede tener menos de 7 caracteres</mat-error>
-            <mat-error class="messsage-error" *ngIf="f.res.invalid && f.res.hasError('pattern')">Debe contener solo números</mat-error>
-
-
-
-            <!-- <mat-error >
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && f.nombre.hasError('alfa')">El nombre debe tener por lo menos una letra o un numero</mat-error>
-            </mat-error> -->
-        </mat-form-field>
-
         <mat-radio-group *ngIf="RadioAprovveName()" formControlName="NewName" aria-label="Select an option">
             <mat-radio-button name="NewName" class="w-15" value="S">SI</mat-radio-button>
             <mat-radio-button name="NewName" class="w-15" value="N">NO</mat-radio-button>
             <mat-error class="messsage-error" *ngIf="f.NewName.invalid && f.NewName.hasError('required')">Debe seleccionar una opción</mat-error>
-
         </mat-radio-group>
+
+        <mat-form-field class="w-70">
+            <input class="input-text" (keypress)="onUpdateRes()" matInput type="text" maxlength="7" pattern="^[0-9]*$" formControlName="res" name="res" placeholder="Código de servicio">
+            <mat-error class="messsage-error" *ngIf="f.res.invalid && f.res.hasError('required')">El Código de servicio es obligatorio</mat-error>
+            <mat-error class="messsage-error" *ngIf="f.res.invalid && f.res.hasError('maxlength')">El Código de servicio no puede tener mas de 7 caracteres</mat-error>
+            <mat-error class="messsage-error" *ngIf="f.res.invalid && f.res.hasError('minlength') && !f.res.hasError('pattern')">El Código de servicio no puede tener menos de 7 caracteres</mat-error>
+            <mat-error class="messsage-error" *ngIf="f.res.invalid && f.res.hasError('pattern')">Debe contener solo números</mat-error>
+        </mat-form-field>
+
+
 
     </div>
     <div class="form-group">
@@ -209,6 +201,6 @@
 
     </div>
 
-    <button *ngIf="update==true" type="submit" class="btn-eureca-green"> GUARDAR</button>
-    <button *ngIf="Button()" type="submit" class="btn-eureca-green"> GUARDAR</button>
+    <!-- <button *ngIf="update==true && _service.res != ''" type="submit" class="btn-eureca-green"> GUARDAR X</button> -->
+    <button *ngIf="Button() || update==true" type="submit" class="btn-eureca-green"> GUARDAR</button>
 </form>

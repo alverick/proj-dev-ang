@@ -12,4 +12,5 @@ export interface GtpServcegtp {
     ServiceId: number;
     NombreAprobado: boolean;
     NombreCodAprobado: boolean;
+    Res: number | string;
 }
