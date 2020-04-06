@@ -26,7 +26,8 @@
                                                     </li>
                                                 </ul>
                                                 <ul *ngIf="!inGTP" class="list-unstyled position-absolute d-flex flex-row mb-0 tools">
-                                                    <li> <!-- *ngIf="!svc.inReview && indiceActual!==i"-->
+                                                    <li>
+                                                        <!-- *ngIf="!svc.inReview && indiceActual!==i"-->
                                                         <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
                                                     </li>
                                                     <li class="ml-2" *ngIf="!inGTP &&  afiliacionService.services.length > 1">
@@ -35,7 +36,11 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <table  class="table table-sm table-borderless ">
+                                        <table class="table table-sm table-borderless ">
+                                            <tr>
+                                                <th style="width:150px;" class="font-black-servicios-list">Código servicio</th>
+                                                <td class="font-black-servicios-des-list">{{ svc.res }}</td>
+                                            </tr>
                                             <tr>
                                                 <th style="width:150px;" class="font-black-servicios-list">Canales</th>
                                                 <td class="font-black-servicios-des-list">{{ getCanales(svc) }}</td>
@@ -45,7 +50,7 @@
                                                 <td *ngIf="!inEdit  && !inGTP" class="font-black-servicios-des-list">{{ getCodDebtorCreate(svc) }} </td>
                                                 <td *ngIf="inGTP" class="font-black-servicios-des-list">{{ getCodigoNameGTP(svc)}} </td>
                                                 <td *ngIf="inEdit" class="font-black-servicios-des-list">{{ getCodDebtor(svc) }} </td>
-                                                   
+
                                             </tr>
 
                                             <tr *ngIf="svc.tipoDato === 'C'">
@@ -69,7 +74,7 @@
                             </perfect-scrollbar>
                         </div>
                         <div class="btn-col-1">
-                            <button  *ngIf="!inGTP" type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
+                            <button *ngIf="!inGTP" type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
                                       <span ><img *ngIf="!Formulario" src="assets/images/plus.svg"><img *ngIf="Formulario" src="assets/images/plus-gray.svg"></span>   Agregar otro servicio
                             </button>
                             <button *ngIf="!inGTP" type="button" [disabled]="Formulario" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulario">

@@ -13,10 +13,10 @@ import { drawPopup } from "./popups";
 @Injectable()
 export class AfiliacionService {
   constructor(private http: HttpClient,
-    private spinner: NgxSpinnerService, private storage: StorageService) {}
+    private spinner: NgxSpinnerService, private storage: StorageService) { }
 
   public idCompany: number = 0;
-  public email:string;
+  public email: string;
   public Guardado: boolean = false;
 
   public services: ServiceModel[] = [];
@@ -53,7 +53,7 @@ export class AfiliacionService {
       //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
       if (s.nombre === null) {
         if (s.newName.toUpperCase().startsWith(newName.toUpperCase())) {
-          if (!isNaN(parseInt(s.newName.substr(newName.length))) || s.newName.substr(newName.length) === ''){
+          if (!isNaN(parseInt(s.newName.substr(newName.length))) || s.newName.substr(newName.length) === '') {
             let aux = parseInt(s.newName.substr(newName.length));
             if (isNaN(aux))
               nro = 2;
@@ -63,7 +63,7 @@ export class AfiliacionService {
         }
       } else {
         if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
-          if (!isNaN(parseInt(s.nombre.substr(nombre.length))) || s.nombre.substr(nombre.length) === ''){
+          if (!isNaN(parseInt(s.nombre.substr(nombre.length))) || s.nombre.substr(nombre.length) === '') {
             let aux = parseInt(s.nombre.substr(nombre.length));
             if (isNaN(aux))
               nro = 2;
@@ -82,9 +82,9 @@ export class AfiliacionService {
     let svc: ServiceModel = {
       id: null,
       nombre: nombre,
-      newName : nombre,
+      newName: nombre,
       codDeudor: 'DNI',
-     // newNameCode: '',
+      // newNameCode: '',
       tipoDato: 'C',
       tipoPago: 'C',
       idCuenta: '',
@@ -140,7 +140,7 @@ export class AfiliacionService {
   public Registrar(data: any): Observable<any> {
     this.spinner.show();
     this.email = data.email;
-    return this.http.post<any>(`${environment.END_POINT}/company?_=`+ new Date().getTime(), data)
+    return this.http.post<any>(`${environment.END_POINT}/company?_=` + new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();
         if (r.success) {
@@ -166,73 +166,73 @@ export class AfiliacionService {
       .pipe(catchError(err => throwError(err)));
   }
 
-  public GetCodDeudor(): Observable < any[] > {
+  public GetCodDeudor(): Observable<any[]> {
     return of<any[]>([{
-        code: 'DNI',
-        name: "DNI"
-      },
-      {
-        code: 'RUC',
-        name: "RUC"
-      },
-      {
-        code: 'Codigo Interno',
-        name: "Código"
-      },
-      {
-        code: 'Otro',
-        name: "Otro"
-      }
+      code: 'DNI',
+      name: "DNI"
+    },
+    {
+      code: 'RUC',
+      name: "RUC"
+    },
+    {
+      code: 'Codigo Interno',
+      name: "Código"
+    },
+    {
+      code: 'Otro',
+      name: "Otro"
+    }
     ]);
   }
 
-  public GetTipoDato(): Observable < any[] > {
+  public GetTipoDato(): Observable<any[]> {
     return of<any[]>([{
-        code: 'C',
-        name: "Tengo su código, nombres y deuda"
-      },
-      {
-        code: 'P',
-        name: "Tengo sólo código y nombres"
-      }
+      code: 'C',
+      name: "Tengo su código, nombres y deuda"
+    },
+    {
+      code: 'P',
+      name: "Tengo sólo código y nombres"
+    }
     ]);
   }
 
-  public GetTipoPago(): Observable < any[] > {
+  public GetTipoPago(): Observable<any[]> {
     return of<any[]>([{
-        code: 'C',
-        name: "Pueden elegir qué deuda quieren pagar"
-      },
-      {
-        code: 'P',
-        name: "Siempre la deuda que vence primero"
-      }
+      code: 'C',
+      name: "Pueden elegir qué deuda quieren pagar"
+    },
+    {
+      code: 'P',
+      name: "Siempre la deuda que vence primero"
+    }
     ]);
   }
 
-  public GetMoneda(): Observable < MonedaModel[] > {
+  public GetMoneda(): Observable<MonedaModel[]> {
     return of<MonedaModel[]>([{
-        code: '001',
-        name: 'Soles',
-        symbol: 'S/'
-      },
-      {
-        code: '002',
-        name: 'Dólares',
-        symbol: '$'
-      }
+      code: '001',
+      name: 'Soles',
+      symbol: 'S/'
+    },
+    {
+      code: '002',
+      name: 'Dólares',
+      symbol: '$'
+    }
     ]);
   }
 
   public GetPeriodoMora(): Observable<any[]> {
-    return of<any[]> ([{
-        code: '1',
-        name: 'Diario'
-      },
-      {
-        code: '2',
-        name: 'Fijo'
-      }
+    return of<any[]>([{
+      code: '1',
+      name: 'Diario'
+    },
+    {
+      code: '2',
+      name: 'Fijo'
+    }
     ]);
   }
 
@@ -245,14 +245,14 @@ export class AfiliacionService {
 
   public GetServicios(incDeactivates: boolean = false) {
 
-      const headers: any = {
-        "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
-        "Ocp-Apim-Trace": "true"
-      };
-      if(this.storage.isAuthenticated) {
-        headers["Authorization"] = "bearer " + this.storage.getCurrentToken();
-      }
-    this.http.get<any[]>(`${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=`+ new Date().getTime(), { headers: headers })
+    const headers: any = {
+      "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
+      "Ocp-Apim-Trace": "true"
+    };
+    if (this.storage.isAuthenticated) {
+      headers["Authorization"] = "bearer " + this.storage.getCurrentToken();
+    }
+    this.http.get<any[]>(`${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=` + new Date().getTime(), { headers: headers })
       .subscribe(d => {
         console.log('SERVICIOS MARCELO');
         console.log(d);
@@ -261,8 +261,9 @@ export class AfiliacionService {
           servicios.push({
             id: s.id,
             nombre: s.name,
-            newName : s.newName,
-            newNameCode : s.newNameCode,
+            res:  s.res === null ? '' : s.res,
+            newName: s.newName,
+            newNameCode: s.newNameCode,
             rubro: s.entry,
             codDeudor: s.debtorCode,
             tipoDato: s.dataType,
@@ -281,10 +282,10 @@ export class AfiliacionService {
             porcentaje: s.percentage,
             inReview: s.inReview,
             pagoPartes: s.partialPayment,
-            newNameGtpStatus : s.newNameGTPStatus,
-            newNameCodeGtpStatus : s.newNameCodeGTPStatus,
-            nombreHabilitado: (   s.newNameGTPStatus === 1 || s.newNameGTPStatus === 3 ) ? false : true,
-           nombreCodHabilitado: (s.newNameCodeGTPStatus === 1 ||  s.newNameCodeGTPStatus === 3  ) ? false : true,
+            newNameGtpStatus: s.newNameGTPStatus,
+            newNameCodeGtpStatus: s.newNameCodeGTPStatus,
+            nombreHabilitado: (s.newNameGTPStatus === 1 || s.newNameGTPStatus === 3) ? false : true,
+            nombreCodHabilitado: (s.newNameCodeGTPStatus === 1 || s.newNameCodeGTPStatus === 3) ? false : true,
 
           });
         });
@@ -297,18 +298,18 @@ export class AfiliacionService {
 
 
   public GrabarServicios(): Observable<any> {
-    let codigo ;
+    let codigo;
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
     this.services.forEach(s => {
       data.services.push({
         id: s.id,
-        name: (s.nombre === '?') ? '' : s.nombre ,
+        name: (s.nombre === '?') ? '' : s.nombre,
         newName: s.newName,
         entry: s.rubro,
-        debtorCode: (s.codDeudor === '?') ? '' : (( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor) ,
-     //   debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
-         newNameCode: s.newNameCode,
+        debtorCode: (s.codDeudor === '?') ? '' : ((s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor),
+        //   debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
+        newNameCode: s.newNameCode,
         dataType: s.tipoDato,
         paymentType: s.tipoPago,
         idAccount: s.idCuenta,
@@ -325,7 +326,7 @@ export class AfiliacionService {
         partialPayment: s.pagoPartes
       });
     });
-    return this.http.post<any>(`${environment.END_POINT}/company/service?_=`+ new Date().getTime(), data)
+    return this.http.post<any>(`${environment.END_POINT}/company/service?_=` + new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();
         this.Guardado = true;
@@ -342,7 +343,7 @@ export class AfiliacionService {
     console.log('descartar', isNew);
     this.Guardado = false;
     if (isNew && this.services.length > 1 && indice >= 0 && indice === (this.services.length - 1)) {
-      let svc = this.services[this.services.length-1];
+      let svc = this.services[this.services.length - 1];
       if (svc.id === null || svc.id === undefined || svc.id < 0) {
         this.services.pop();
       }
