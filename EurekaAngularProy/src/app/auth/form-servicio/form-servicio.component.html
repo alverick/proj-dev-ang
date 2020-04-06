@@ -23,12 +23,9 @@
 
     <div class="form-group">
         <mat-form-field class="w-100">
-            <!--  <label *ngIf="gtpMode && !_service.NewNameCod" class="messsage-error" style="float: right;">Corregir este campo</label> -->
-            <!-- <mat-label class="label">Código servicio</mat-label> -->
-            <!-- <input class="input-text" matInput type="text" maxlength="7" formControlName="res" name="res"> -->
-            <input class="input-text" matInput type="text" maxlength="7" formControlName="res" name="res" placeholder="Código servicio">
-
-
+            <div tooltip="Código que deberá indicar tu cliente en los agentes Interbank para pagar éste servicio" style="cursor: pointer;">
+                <input class="input-text" matInput type="text" maxlength="7" formControlName="res" name="res" placeholder="Código de servicio">
+            </div>
         </mat-form-field>
 
         <div *ngIf="CodiAlert()" class="messsage-error">El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta siendo procesado</div>

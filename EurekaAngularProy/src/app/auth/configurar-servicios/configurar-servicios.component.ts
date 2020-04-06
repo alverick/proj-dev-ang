@@ -13,7 +13,24 @@ import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
 @Component({
   selector: 'app-configurar-servicios',
   templateUrl: './configurar-servicios.component.html',
-  styleUrls: ['./configurar-servicios.component.scss']
+  styleUrls: ['./configurar-servicios.component.scss'],
+  styles: [
+    `
+      :host >>> .tooltip-inner {
+        background-color: #FFF;
+        color: #0d131d !important;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.20);
+        font-size: 11px !important;
+        padding: .5em .3em;
+        /* min-width:300px !important; */
+      }
+      :host >>> .tooltip.top .tooltip-arrow:before,
+      :host >>> .tooltip.top .tooltip-arrow {
+        border-top-color: #0d131d57;
+      }
+    `
+  ]
 })
 export class ConfigurarServiciosComponent implements OnInit {
 
