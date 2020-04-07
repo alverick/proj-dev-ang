@@ -261,7 +261,7 @@ export class AfiliacionService {
           servicios.push({
             id: s.id,
             nombre: s.name,
-            res:  s.res === null ? '1498455' : s.res,
+            res:  s.res === null ? '' : s.res,
             newName: s.newName,
             newNameCode: s.newNameCode,
             rubro: s.entry,
