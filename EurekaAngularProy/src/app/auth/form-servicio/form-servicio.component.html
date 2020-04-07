@@ -21,7 +21,7 @@
 
     </div>
 
-    <div class="form-group">
+    <div class="form-group" *ngIf="_service.res !='' && _service.res !=null">
         <mat-form-field class="w-100">
             <div tooltip="Código que deberá indicar tu cliente en los agentes Interbank para pagar éste servicio" style="cursor: pointer;">
                 <input class="input-text" matInput type="text" maxlength="7" formControlName="res" name="res" placeholder="Código de servicio">
