@@ -5,6 +5,7 @@ export interface GtpFilter {
     inputSearch  : String;
     BusinessHeading: String;
     status: String;
+    statussolcitud:String;
     dateFrom?: Date;
     dateTo?: Date;
 }

@@ -60,6 +60,7 @@ export class GtpGrillaComponent implements OnInit {
     inputSearch: '',
     BusinessHeading: '',
     status: '',
+    statussolcitud: '',
     dateFrom: null,
     dateTo: null
   };
@@ -70,6 +71,7 @@ export class GtpGrillaComponent implements OnInit {
     inputSearch: '',
     BusinessHeading: '',
     status: '',
+    statussolcitud: '',
     dateFrom: null,
     dateTo: null
   };
@@ -168,6 +170,7 @@ export class GtpGrillaComponent implements OnInit {
     this.currentFiltro.inputSearch = this.filtro.inputSearch;
     this.currentFiltro.BusinessHeading = this.filtro.BusinessHeading;
     this.currentFiltro.status = this.filtro.status;
+    this.currentFiltro.statussolcitud = this.filtro.statussolcitud;
     this.currentFiltro.dateFrom = this.filtro.dateFrom;
     this.currentFiltro.dateTo = this.filtro.dateTo;
 
@@ -175,7 +178,7 @@ export class GtpGrillaComponent implements OnInit {
 
     if ((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
       (this.filtro.BusinessHeading === '' || this.filtro.BusinessHeading === null || this.filtro.BusinessHeading === undefined) &&
-      (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined) &&
+      (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined) &&  (this.filtro.statussolcitud == '' || this.filtro.statussolcitud === null || this.filtro.statussolcitud === undefined) &&
       ( /*this.filtro.dateFrom == ''  ||*/ this.filtro.dateFrom === null || this.filtro.dateFrom === undefined)) {
       this.messageTable = 'No se encontraron empresas para esta búsqueda';
       this.showArrow = true;
@@ -189,7 +192,7 @@ export class GtpGrillaComponent implements OnInit {
   // consultaDeuda(cb: () => void = null) {
 
   consultaGtp() {
-    console.log("consultaGTP");
+    console.log( "consultaGTP buscar",this.currentFiltro);
     if (this.validaFiltro()) {
       this.spinner.show();
       this.gtpService.getEmpresas(this.currentFiltro).subscribe(d => {

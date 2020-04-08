@@ -37,6 +37,20 @@
                                   <i class="fa fa-close"></i>
                                 </button>
                             </mat-form-field>
+
+                            <mat-form-field class="f2">
+                                <mat-select class="input-text" [(ngModel)]="filtro.statussolcitud" placeholder="Tipo de solicitud" name="statussolcitud" disableOptionCentering>
+                                    <mat-option class="input-text"> Tipo de solicitud</mat-option>
+                                    <mat-option class="input-text" *ngFor="let r of states" [value]="r.idState">
+                                        {{r.descripcion}}
+                                    </mat-option>
+                                </mat-select>
+                                <button mat-button *ngIf="filtro.statussolcitud" matSuffix mat-icon-button (click)="filtro.statussolcitud=null; $event.stopPropagation();">
+                                <i class="fa fa-close"></i>
+                              </button>
+                            </mat-form-field>
+
+
                             <label class="mt-4 px-4 input-text">Fecha de <br> solicitud</label>
                             <mat-form-field class="f2">
                                 <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1 placeholder="Desde" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)" type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2"
@@ -72,8 +86,9 @@
                                 </button>
                                 <div class="msg-error" *ngIf="errores.dateTo">{{errores.dateTo}}</div>
                             </mat-form-field>
-
+                            <!-- <mat-form-field class="f2"> -->
                             <button type="button" class="f3 btn-eureca-green" (click)="sendFiltro()">BUSCAR</button>
+                            <!-- </mat-form-field> -->
                         </form>
                     </div>
                 </div>
