@@ -35,13 +35,25 @@ export class GtpService {
   public EdtEmpServ: DataGTPChange;
   public EmpresaServicios: DataEnterpriseGTP;
   private States: StatesGtp [] = [
-    {idState: 'Pendiente', descripcion:'pendiente'},
-    {idState: 'Resuelto ', descripcion:'resuelto '},
-    {idState: 'Devuelto', descripcion:'devuelto'},
+    {idState: 'Pendiente', descripcion:'Pendiente'},
+    {idState: 'Resuelto', descripcion:'Atendido'},
+    {idState: 'Devuelto', descripcion:'Devuelto a la empresa'},
+    {idState: 'Rechazado', descripcion:'Rechazado'}
+  ];
+
+  private tiposSolicitudes: StatesGtp [] = [
+    {idState: 'EmpNuevo', descripcion:'Empresa Nueva'},
+    {idState: 'EmpMod', descripcion:'Atualización de empresa'},
+    {idState: 'SvcMod', descripcion:'Actualización de servicios'},
+    {idState: 'SvcNuevo', descripcion:'Nuevos Servicios'}
   ];
 
   getStates(): Observable<StatesGtp[]>{
     return of(this.States);
+  }
+
+  getTipoSolicitudes(): Observable<StatesGtp[]> {
+    return of(this.tiposSolicitudes);
   }
 
   // opcional
@@ -334,6 +346,19 @@ export class GtpService {
         throw throwError(err);
       }));
 
+  }
+
+  public ReenviarPAG(clientId: number): Observable<any> {
+    this.spinner.show();
+    return this.http.post<any>(`${environment.END_POINT}/company/GTP/client/${clientId}/pag?_=` + new Date().getTime(), {})
+      .pipe(map(r => {
+        this.spinner.hide();
+        return r;
+      }))
+      .pipe(catchError(err => {
+        this.spinner.hide();
+        throw throwError(err);
+      }));
   }
 
 }

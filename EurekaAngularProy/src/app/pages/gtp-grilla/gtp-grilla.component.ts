@@ -101,6 +101,7 @@ export class GtpGrillaComponent implements OnInit {
   constructor(private spinner: NgxSpinnerService, private afiliacionService: AfiliacionService, public gtpService: GtpService, private router: Router) { }
   rubros: RubroModel[] = [];
   states: StatesGtp[] = [];
+  solicitudes: StatesGtp[] = [];
 
 
   ngOnInit() {
@@ -110,6 +111,9 @@ export class GtpGrillaComponent implements OnInit {
       console.log('stado', d)
       this.states = d;
 
+    });
+    this.gtpService.getTipoSolicitudes().subscribe(d => {
+      this.solicitudes = d;
     });
     this.consultaGtp();
   }
@@ -128,7 +132,10 @@ export class GtpGrillaComponent implements OnInit {
   }
   onUpdateEAG(ClientId: number) {
     console.log('ClientId', ClientId);
-    this.consultaGtp();
+    this.gtpService.ReenviarPAG(ClientId)
+      .subscribe(r => {
+        this.consultaGtp();
+      });
   }
   changePage(nro: number) {
     this.currentFiltro.pageNumber = nro;

@@ -41,7 +41,7 @@
                             <mat-form-field class="f2">
                                 <mat-select class="input-text" [(ngModel)]="filtro.statussolcitud" placeholder="Tipo de solicitud" name="statussolcitud" disableOptionCentering>
                                     <mat-option class="input-text"> Tipo de solicitud</mat-option>
-                                    <mat-option class="input-text" *ngFor="let r of states" [value]="r.idState">
+                                    <mat-option class="input-text" *ngFor="let r of solicitudes" [value]="r.idState">
                                         {{r.descripcion}}
                                     </mat-option>
                                 </mat-select>
@@ -199,7 +199,7 @@
                                                     class="fa fa-arrow-right" aria-hidden="true"></i>
                                                 </button>
 
-                                                <button *ngIf="items.status=='PendientePAG'" type="button" style="margin: 0em .5em;" class="f3 btn-eureca-yellow" (click)="onUpdateEAG(items.clientId)">
+                                                <button *ngIf="items.status==='PendientePAG'" type="button" style="margin: 0em .5em;" class="f3 btn-eureca-yellow" (click)="onUpdateEAG(items.clientId)">
                                                   <i class="fa fa-refresh" aria-hidden="true"></i>
                                               </button>
 
