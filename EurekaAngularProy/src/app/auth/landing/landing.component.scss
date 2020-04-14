@@ -25,7 +25,7 @@ label {
 .border {
     box-sizing: border-box;
     border-style: solid !important;
-    border-width: 2vw 4.8vw!important;
+    border-width: 2vw 4.8vw !important;
     border-color: white !important;
     margin-top: 5vw !important;
     width: 381px;
@@ -44,7 +44,7 @@ label {
 .bg-image-landing {
     background-image: url("/assets/images/fondo-landing.png");
     width: 98vw;
-    /* margin-top: 10vw !important;*/
+    /* margin-top   : 10vw !important;*/
 }
 
 .bg-blanco {
@@ -109,7 +109,7 @@ label {
     background-clip: padding-box
 }
 
- :host ::ng-deep .mat-form-field {
+:host ::ng-deep .mat-form-field {
     .mat-form-field-underline {
         background-color: slategray;
         height: 0.18vw !important;
@@ -140,6 +140,11 @@ div.mat-form-field-infix {
 }
 
 // boton Rgistrate
+.btn-landigs-comtainer {
+    margin-left: 80px;
+    padding: 4em 0em;
+}
+
 .btn-eureca-green-register {
     @include font-text(14px !important);
     background-color: $blanco;
@@ -204,7 +209,7 @@ div.mat-form-field-infix {
 
 .bg-image-landing {
     height: 400px;
-    /*background-image: url("../images/fondo-landing.png");*/
+    /*background-image : url("../images/fondo-landing.png");*/
     background-repeat: no-repeat;
     background-position: bottom center;
 }
@@ -275,14 +280,14 @@ small {
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
-    border-width: 2vw 2.7vw!important;
+    border-width: 2vw 2.7vw !important;
     border-color: white !important;
-    /*margin-top: 5vw !important;*/
+    /*margin-top    : 5vw !important;*/
 }
 
 small {
     @include font-text(14px,
-    $weight: 500!important);
+    $weight: 500 !important);
     color: $green;
     text-decoration: underline;
     cursor: pointer;
@@ -290,21 +295,21 @@ small {
 
 :host ::ng-deep .mat-form-field .mat-form-field-underline {
     background-color: #cfd0d2;
-    // height: 0.10vw !important;
+    // height       : 0.10vw !important;
     height: 1px !important;
 }
 
 .title-landing {
     @include font-text(30px,
     500);
-    color: #ffffff;
+    color: #0032a0;
     margin-left: 80px;
 }
 
 .subtitle-landing {
     @include font-text(16px,
     500);
-    color: #ffffff;
+    color: #0032a0;
     margin-left: 80px;
 }
 
@@ -312,5 +317,84 @@ small {
     @include font-text(15px,
     500);
     color: #ffffff;
+    margin-left: 80px;
+}
+
+.title-inicio {
+    font-family: Geometria;
+    font-size: 48px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.08;
+    letter-spacing: normal;
+    margin-left: 80px;
+    color: #0032a0;
+}
+
+// ---------------
+.title-cont {
+    font-family: Geometria;
+    font-size: 32px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #333333;
+    margin-left: 80px;
+}
+
+.title-benf {
+    font-family: Geometria;
+    font-size: 48px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #0032a0;
+    margin-left: 80px;
+}
+
+.title-cont-sub {
+    font-family: Geometria;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #333333;
+    margin-left: 80px;
+}
+
+.title-cont-sub-right {
+    font-family: Geometria;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #333333;
+}
+
+.landings-footer {
+    font-family: Geometria !important;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    background: #05be50;
+    height: 75px;
+    padding: 1.5em 0em;
+    color: #ffffff !important;
+}
+
+.logo-footer {
+    width: 120px;
+    height: 22px;
     margin-left: 80px;
 }

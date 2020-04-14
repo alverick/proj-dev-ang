@@ -38,6 +38,7 @@ export class HeaderComponent implements OnInit {
     if (this.router.url.includes('/cambiaContra')|| 
     this.router.url.includes('/recupera')  || 
     this.router.url.includes('/login') || 
+    this.router.url.includes('/landing') || 
     this.router.url.includes('/gtp') ||
     this.router.url.includes('/gtp')  ) {
       return false;

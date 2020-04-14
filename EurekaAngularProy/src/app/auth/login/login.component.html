@@ -3,14 +3,14 @@
     <div class="container-style">
         <div class="container pt-4">
             <a class="pl-4 navbar-brand" href="#">
-                <img width="220" src="assets/images/cobrosimple-blanco.svg" alt="" style="margin-left: 60px;">
+                <img class="img-login" width="220" src="assets/images/cobrosimple-blanco.svg" alt="">
             </a>
         </div>
         <div class="container">
             <div class="row ">
                 <!--/////// L E F T ////////-->
 
-                <div class="col-md-6">
+                <div class="col-sm-12 col-md-6">
                     <div class="pt-2 title-landing">Gestionar tus cobranzas ahora es mucho mas fácil y rápido</div>
                     <div class="pt-2 subtitle-landing">¡Regístrate en nuestra plataforma en menos de 3 minutos!</div>
 
@@ -26,8 +26,8 @@
                     </div>
                     <div class="media pt-2 content-landing">
                         <img src="assets/images/cel_01.png" width="35" height="35" alt="">
-                        <p class="pl-4">Tu clientes te podrán pagar en nuestros más de 4000 agentes, APP, BPI y tiendas
-                            Interbank</p>
+                        <p class="pl-4">Tu clientes te podrán pagar en nuestros más de 4000 agentes, APP, BPI y tiendas Interbank
+                        </p>
                     </div>
                     <div class="media pt-5 content-landing">
                         <img src="assets/images/mujer.svg" width="100%">
@@ -35,8 +35,8 @@
                 </div>
 
                 <!--/////// R I G H T ////////-->
-                <div class="col-md-6 pb-3">
-                    <div class="d-flex justify-content-end">
+                <div class="col-md-6 col-sm-12 pb-3">
+                    <div class="d-flex justify-content-end" id="justify-reponsive">
                         <div class="cuadro-form pb-2" style="text-align: center;">
                             <!--/////// F O R M ////////-->
                             <div class="texto-azul pt-4 pb-3 mb-4  ">Inicia Sesión</div>
@@ -50,10 +50,7 @@
                                     <div class="flex-fill mt-2">
                                         <label class="d-block texto-negro h6">RUC</label>
                                         <mat-form-field style="height: 1.9px !important; width: 206px;">
-                                            <input matInput class="input-text" type="text" name="ruc" appOnlynumbers
-                                                (focus)="focusFunctionRuc()" autocomplete="on" minlength="11"
-                                                maxlength="11" required formControlName="ruc"
-                                                [class.is-invalid]="submitted && f.ruc.errors">
+                                            <input matInput class="input-text" type="text" name="ruc" appOnlynumbers (focus)="focusFunctionRuc()" autocomplete="on" minlength="11" maxlength="11" required formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors">
                                             <mat-error *ngIf="inputUsuaValid" class="messsage-error">
                                                 Debe ingresar el RUC
                                             </mat-error>
@@ -62,8 +59,7 @@
                                             </mat-error>
                                         </mat-form-field>
                                         <div class="mt-4">
-                                            <mat-checkbox type="checkbox" [(ngModel)]="rememberMe" autocomplete="on"
-                                                formControlName="rememberme">
+                                            <mat-checkbox type="checkbox" [(ngModel)]="rememberMe" autocomplete="on" formControlName="rememberme">
                                                 <label class="text-check">Recordar</label>
                                             </mat-checkbox>
                                         </div>
@@ -79,11 +75,7 @@
                                     <div class="flex-fill mt-2">
                                         <label class="d-block texto-negro h6">Contraseña</label>
                                         <mat-form-field style="height: 1.9px !important; width: 206px;">
-                                            <input matInput class="input-text" type="password"
-                                                (Keydown.space)="$event.preventDefault()" (focus)="focusFunctionPass()"
-                                                minlength="6" maxlength="20" formControlName="psw"
-                                                [ngClass]="{ 'is-invalid': submitted && f.psw.errors }"
-                                                appBlockCopyPaste>
+                                            <input matInput class="input-text" type="password" (Keydown.space)="$event.preventDefault()" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste>
                                             <mat-error *ngIf="inputPassValid" class="messsage-error">
                                                 Debe ingresar el password
                                             </mat-error>
@@ -102,9 +94,7 @@
                                 </div>
 
                                 <div class="reCaptach" *ngIf="isTrue">
-                                    <re-captcha #recaptchaRef="reCaptcha" (resolved)="resolved($event)"
-                                        siteKey="6Lf_I8wUAAAAAKbBj6Ukb9mDD434RU8UBuhSaeLl"
-                                        secretKey="6Lf_I8wUAAAAAL420IJXIn5Wp3MXa5ItYWJ8C3qW"></re-captcha>
+                                    <re-captcha #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6Lf_I8wUAAAAAKbBj6Ukb9mDD434RU8UBuhSaeLl" secretKey="6Lf_I8wUAAAAAL420IJXIn5Wp3MXa5ItYWJ8C3qW"></re-captcha>
                                 </div>
 
                                 <div class="mb-3" style="text-align: left;">
@@ -118,8 +108,7 @@
 
                             </form>
                             <div class="mb-2">
-                                <button type="button" class="mano focus-elements btn-eureca-green-register"
-                                    [routerLink]="['/afiliacion']" (click)="clickRegistrarse()">
+                                <button type="button" class="mano focus-elements btn-eureca-green-register" [routerLink]="['/afiliacion']" (click)="clickRegistrarse()">
                                     REGÍSTRATE
                                 </button>
                             </div>

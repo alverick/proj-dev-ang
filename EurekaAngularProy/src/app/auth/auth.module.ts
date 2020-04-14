@@ -31,6 +31,7 @@ import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.componen
 import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
 import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.component';
 import { TooltipModule } from 'ngx-bootstrap';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   imports: [
@@ -75,6 +76,7 @@ import { TooltipModule } from 'ngx-bootstrap';
     SerFormGtpComponent,
     FormServicioGtpComponent,
     ConfigurarGtpComponent,
+    LandingComponent,
   ],
   exports: [
     OnlyNumbersFormDirective

@@ -1,0 +1,77 @@
+ /* ......table Fin ... */
+ 
+ @media screen and (max-width: 2000px) {
+     body {
+         font-size: 0.9em !important;
+     }
+ }
+ 
+ @media screen and (max-width: 1000px) {
+     body {
+         font-size: 0.8em !important;
+     }
+ }
+ 
+ @media screen and (max-width: 800px) {
+     body {
+         font-size: 0.8em !important;
+     }
+     #justify-reponsive {
+         justify-content: center !important;
+     }
+     .content-landing {
+         margin-left: 0px !important;
+     }
+     .title-landing {
+         margin-left: 0px !important;
+     }
+     .subtitle-landing {
+         margin-left: 0px !important;
+     }
+     .img-login {
+         margin-left: 0px !important;
+     }
+     .btn-landigs-comtainer {
+         margin-left: 0px !important;
+     }
+     .landings-footer {
+         height: auto !important;
+     }
+ }
+ 
+ @media screen and (max-width: 700px) {
+     body {
+         font-size: 0.8em !important;
+     }
+ }
+ 
+ @media screen and (max-width: 650px) {
+     .landings-footer {
+         height: auto !important;
+         text-align: center;
+     }
+     .logo-footer {
+         margin: 1em 0em;
+     }
+ }
+ 
+ @media screen and (max-width: 600px) {
+     body {
+         font-size: 0.8em !important;
+     }
+ }
+ 
+ @media screen and (max-width: 570px) {}
+ 
+ @media only screen and (max-width: 400px) {
+     body {
+         font-size: 0.75em !important;
+     }
+ }
+ 
+ @media screen and(width:320 × 480) {}
+ 
+ // @media only screen and (max-width: 800px) {
+ // } 
+ // @media screen and (max-width: 440px) {
+ // }

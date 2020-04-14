@@ -1,3 +1,4 @@
+import { LandingComponent } from './auth/landing/landing.component';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes} from '@angular/router';
@@ -27,6 +28,7 @@ import { ConfigurarGtpComponent } from './auth/configurar-gtp/configurar-gtp.com
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent ,   canActivate: [AuthGuard , GtpOutputGuard] },
+  { path: 'landing', component: LandingComponent , canActivate: [LogoutGuard]},
   { path: 'login', component: LoginComponent , canActivate: [LogoutGuard]},
   { path: 'cambiaContra/:llave', component: CambiaContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
@@ -48,8 +50,8 @@ const routes: Routes = [
   { path: 'analisis', component: AnalisisComponent},
   { path: 'notFound', component: PageNotFoundComponent},
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login'},
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
+  { path: '**', redirectTo: 'landing'},
 
 ];
 export const Routing: ModuleWithProviders = RouterModule.forRoot(routes);
