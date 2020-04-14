@@ -120,16 +120,13 @@
              body {
                  font-size: 0.8em !important;
              }
-             .img-pagos {
-                 position: relative !important;
-             }
              .img-login {
                  width: 134px;
                  height: 40px;
              }
              .img-pagos {
-                 width: 100% !important;
-                 height: auto !important;
+                 width: 150px !important;
+                 height: 250px !important;
              }
          }
          
@@ -164,6 +161,11 @@
              }
              .container {
                  padding: 0em 2em !important;
+             }
+             .img-pagos {
+                 width: 100% !important;
+                 height: auto !important;
+                 position: relative !important;
              }
          }
          
