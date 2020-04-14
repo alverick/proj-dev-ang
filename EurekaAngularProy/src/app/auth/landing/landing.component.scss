@@ -66,7 +66,8 @@ label {
 /*.box-login{right:15px;width:380px;padding:65px 65px 22px}}*/
 
 .img-login {
-    margin-left: 60px;
+    width: 158px;
+    height: 47px;
 }
 
 .box-login {
@@ -140,8 +141,8 @@ div.mat-form-field-infix {
 }
 
 // boton Rgistrate
-.btn-landigs-comtainer {
-    margin-left: 80px;
+.btn-landigs-container {
+    // margin-left: 80px;
     padding: 4em 0em;
 }
 
@@ -303,23 +304,84 @@ small {
     @include font-text(30px,
     500);
     color: #0032a0;
-    margin-left: 80px;
+    // margin-left: 80px;
 }
 
 .subtitle-landing {
     @include font-text(16px,
     500);
     color: #0032a0;
-    margin-left: 80px;
+    // margin-left: 80px;
 }
 
 .content-landing {
     @include font-text(15px,
     500);
     color: #ffffff;
+    // margin-left: 80px;
+}
+
+// -------- landing   ---
+.margin-left {
     margin-left: 80px;
 }
 
+.title-simple-pago {
+    font-family: Geometria;
+    font-size: 48px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.08;
+    letter-spacing: normal;
+    color: #0032a0;
+}
+
+.text-simple-pago {
+    font-family: Geometria;
+    font-size: 20px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #0032a0;
+}
+
+.reponsive-landig {
+    display: none;
+    // padding-top: 1.5rem !important;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.reponsive-landig1 {
+    display: block;
+}
+
+.img-pagos {
+    width: 314px;
+    height: 464px;
+    position: absolute;
+    bottom: 0;
+}
+
+.content-img-simple {
+    padding-top: 3rem;
+}
+
+.img-beneficios-repn {
+    text-align: center;
+    margin: auto;
+}
+
+// .img-simple {
+//     width : 644px;
+//     height: 355px;
+// }
 .title-inicio {
     font-family: Geometria;
     font-size: 48px;
@@ -328,12 +390,12 @@ small {
     font-style: normal;
     line-height: 1.08;
     letter-spacing: normal;
-    margin-left: 80px;
+    // margin-left: 80px;
     color: #0032a0;
 }
 
 // ---------------
-.title-cont {
+.title-contacto {
     font-family: Geometria;
     font-size: 32px;
     font-weight: 500;
@@ -342,10 +404,10 @@ small {
     line-height: normal;
     letter-spacing: normal;
     color: #333333;
-    margin-left: 80px;
+    // margin-left: 80px;
 }
 
-.title-benf {
+.title-beneficio {
     font-family: Geometria;
     font-size: 48px;
     font-weight: normal;
@@ -355,10 +417,105 @@ small {
     letter-spacing: normal;
     text-align: center;
     color: #0032a0;
-    margin-left: 80px;
+    // margin-left: 80px;
 }
 
-.title-cont-sub {
+.title-beneficio-sub {
+    -webkit-text-stroke: 0.5px #000000;
+    font-family: Geometria;
+    font-size: 21px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 0.95;
+    letter-spacing: normal;
+    text-align: center;
+    color: #333333;
+    padding: .5em 0em;
+}
+
+.text-beneficio {
+    font-family: Geometria;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.25;
+    letter-spacing: normal;
+    text-align: center;
+    color: #333333;
+    padding: .5em 0em;
+}
+
+.reponsive-tex1 {
+    display: none;
+}
+
+.reponsive-tex2 {
+    display: block;
+}
+
+.title-pago {
+    -webkit-text-stroke: 0.5px #ffffff;
+    font-family: Geometria;
+    font-size: 40px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.02;
+    letter-spacing: normal;
+    color: #ffffff;
+    padding: .8em 0em;
+}
+
+.title-pago-sub {
+    -webkit-text-stroke: .1px #ffffff;
+    font-family: Geometria;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+}
+
+.title-text-pago-sub {
+    font-family: Geometria;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #ffffff;
+}
+
+.reponsive-tex-pago {
+    display: none;
+}
+
+.reponsive-tex-pago1 {
+    display: block;
+}
+
+.reponsive-img-pago {
+    display: none;
+}
+
+.reponsive-img-pago1 {
+    display: block;
+}
+
+.btn-cir .active {
+    background-color: #FEEE !important;
+}
+
+.btn-cir {
+    background-color: #0032a0 !important;
+}
+
+.title-contacto {
     font-family: Geometria;
     font-size: 18px;
     font-weight: normal;
@@ -367,10 +524,21 @@ small {
     line-height: normal;
     letter-spacing: normal;
     color: #333333;
-    margin-left: 80px;
+    // margin-left: 80px;
 }
 
-.title-cont-sub-right {
+.title-contacto-sub {
+    font-family: Geometria;
+    font-size: 18px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #333333;
+}
+
+.title-contacto-sub-right {
     font-family: Geometria;
     font-size: 18px;
     font-weight: 500;
@@ -396,5 +564,21 @@ small {
 .logo-footer {
     width: 120px;
     height: 22px;
-    margin-left: 80px;
+    // margin-left: 80px;
+}
+
+.carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #05be50;
+}
+
+.carousel-indicators {
+    // margin-top: 1em;
+    position: initial !important;
+}
+
+.carousel-inner {
+    padding: 1.8em 0em;
 }
