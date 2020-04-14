@@ -1,211 +1,215 @@
- /* ......table Fin ... */
- 
- @media screen and (max-width: 2000px) {
-     body {
-         font-size: 0.9em !important;
-     }
- }
- 
- @media screen and (max-width: 1024px) {
-     //  .reponsive-img-pago {
-     //      display: block !important;
-     //  }
-     //  .reponsive-img-pago1 {
-     //      display: none !important;
-     //  }
-     .img-pagos {
-         width: 100% !important;
-         height: auto !important;
-     }
- }
- 
- @media screen and (max-width: 1000px) {
-     body {
-         font-size: 0.8em !important;
-     }
-     .title-simple-pago {
-         font-size: 35px !important;
-     }
-     .text-simple-pago {
-         font-size: 18px !important;
-     }
-     .img-login {
-         width: 150px;
-         height: 40px;
-     }
-     .title-beneficio {
-         font-size: 35px !important;
-     }
-     .title-pago {
-         font-size: 30px;
-     }
-     .title-pago-sub {
-         font-size: 14px;
-     }
-     .title-text-pago-sub {
-         font-size: 14px;
-     }
-     //  .img-simple {
-     //      width : 100% !important;
-     //      height: auto !important;
-     //  }
- }
- 
- @media screen and (max-width: 800px) {
-     body {
-         font-size: 0.8em !important;
-     }
-     #justify-reponsive {
-         justify-content: center !important;
-     }
-     .content-landing {
-         margin-left: 0px !important;
-     }
-     .title-landing {
-         margin-left: 0px !important;
-     }
-     .subtitle-landing {
-         margin-left: 0px !important;
-     }
-     .title-simple-pago {
-         font-size: 30px !important;
-     }
-     .text-simple-pago {
-         font-size: 18px !important;
-     }
-     .content-img-simple {
-         padding-top: 0rem !important;
-     }
-     .title-beneficio {
-         font-size: 30px !important;
-     }
-     .landings-footer {
-         height: auto !important;
-     }
-     .title-beneficio-sub {
-         font-size: 18px;
-     }
-     .text-beneficio {
-         font-size: 15px;
-     }
-     .reponsive-tex1 {
-         display: block !important;
-     }
-     .reponsive-tex2 {
-         display: none !important;
-     }
-     .reponsive-landig {
-         display: block !important;
-     }
-     .reponsive-landig1 {
-         display: none !important;
-     }
-     .reponsive-img-pago {
-         display: block !important;
-     }
-     .reponsive-img-pago1 {
-         display: none !important;
-     }
-     .img-beneficios-repn {
-         width: 80%;
-     }
-     .btn-landigs-container {
-         // margin-left: 80px;
-         padding: .5em 0em !important;
-         text-align: center;
-     }
- }
- 
- @media screen and (max-width: 700px) {
-     body {
-         font-size: 0.8em !important;
-     }
-     .img-pagos {
-         position: relative !important;
-     }
-     .img-login {
-         width: 134px;
-         height: 40px;
-     }
- }
- 
- @media screen and (max-width: 650px) {
-     .landings-footer {
-         height: auto !important;
-         text-align: center;
-     }
-     .logo-footer {
-         margin: 1em 0em;
-     }
- }
- 
- @media screen and (max-width: 600px) {
-     body {
-         font-size: 0.8em !important;
-     }
-     .reponsive-tex-pago {
-         display: block !important;
-     }
-     .reponsive-tex-pago1 {
-         display: none !important;
-     }
-     .title-pago {
-         font-size: 22px !important;
-     }
-     .title-pago-sub {
-         font-size: 14px;
-     }
-     .title-text-pago-sub {
-         font-size: 14px;
-     }
-     .container {
-         padding: 0em 2em !important;
-     }
- }
- 
- @media screen and (max-width: 570px) {
-     .title-simple-pago {
-         font-size: 22px !important;
-     }
-     .text-simple-pago {
-         font-size: 16px !important;
-     }
-     .title-beneficio {
-         font-size: 22px !important;
-         color: #0032a0;
-     }
-     .title-beneficio-sub {
-         font-size: 16px;
-     }
-     .text-beneficio {
-         font-size: 14px;
-     }
-     .img-beneficios-repn {
-         width: 100% !important;
-     }
-     .title-contacto {
-         font-size: 22px !important;
-     }
-     .title-contacto-sub {
-         font-size: 14px !important;
-     }
-     .title-contacto-sub-right {
-         font-size: 14px !important;
-         text-align-last: left !important;
-     }
- }
- 
- @media screen and (max-width:540px) {}
- 
- @media only screen and (max-width: 400px) {
-     body {
-         font-size: 0.75em !important;
-     }
- }
- 
- @media screen and(width:320 × 480) {}
- 
- // @media only screen and (max-width: 800px) {
- // } 
- // @media screen and (max-width: 440px) {
- // }
+         /* ......table Fin ... */
+         
+         @media screen and (max-width: 2000px) {
+             body {
+                 font-size: 0.9em !important;
+             }
+         }
+         
+         @media screen and (max-width: 1024px) {
+             //  .reponsive-img-pago {
+             //      display: block !important;
+             //  }
+             //  .reponsive-img-pago1 {
+             //      display: none !important;
+             //  }
+             .img-pagos {
+                 width: 170px !important;
+                 height: 300px !important;
+             }
+         }
+         
+         @media screen and (max-width: 1000px) {
+             body {
+                 font-size: 0.8em !important;
+             }
+             .title-simple-pago {
+                 font-size: 35px !important;
+             }
+             .text-simple-pago {
+                 font-size: 18px !important;
+             }
+             .img-login {
+                 width: 150px;
+                 height: 40px;
+             }
+             .title-beneficio {
+                 font-size: 35px !important;
+             }
+             .title-pago {
+                 font-size: 30px;
+             }
+             .title-pago-sub {
+                 font-size: 14px;
+             }
+             .title-text-pago-sub {
+                 font-size: 14px;
+             }
+             //  .img-simple {
+             //      width : 100% !important;
+             //      height: auto !important;
+             //  }
+         }
+         
+         @media screen and (max-width: 800px) {
+             body {
+                 font-size: 0.8em !important;
+             }
+             #justify-reponsive {
+                 justify-content: center !important;
+             }
+             .content-landing {
+                 margin-left: 0px !important;
+             }
+             .title-landing {
+                 margin-left: 0px !important;
+             }
+             .subtitle-landing {
+                 margin-left: 0px !important;
+             }
+             .title-simple-pago {
+                 font-size: 30px !important;
+             }
+             .text-simple-pago {
+                 font-size: 18px !important;
+             }
+             .content-img-simple {
+                 padding-top: 0rem !important;
+             }
+             .title-beneficio {
+                 font-size: 30px !important;
+             }
+             .landings-footer {
+                 height: auto !important;
+             }
+             .title-beneficio-sub {
+                 font-size: 18px;
+             }
+             .text-beneficio {
+                 font-size: 15px;
+             }
+             .reponsive-tex1 {
+                 display: block !important;
+             }
+             .reponsive-tex2 {
+                 display: none !important;
+             }
+             .reponsive-landig {
+                 display: block !important;
+             }
+             .reponsive-landig1 {
+                 display: none !important;
+             }
+             .reponsive-img-pago {
+                 display: block !important;
+             }
+             .reponsive-img-pago1 {
+                 display: none !important;
+             }
+             .img-beneficios-repn {
+                 width: 80%;
+             }
+             .btn-landigs-container {
+                 // margin-left: 80px;
+                 padding: .5em 0em !important;
+                 text-align: center;
+             }
+         }
+         
+         @media screen and (max-width: 700px) {
+             body {
+                 font-size: 0.8em !important;
+             }
+             .img-pagos {
+                 position: relative !important;
+             }
+             .img-login {
+                 width: 134px;
+                 height: 40px;
+             }
+             .img-pagos {
+                 width: 100% !important;
+                 height: auto !important;
+             }
+         }
+         
+         @media screen and (max-width: 650px) {
+             .landings-footer {
+                 height: auto !important;
+                 text-align: center;
+             }
+             .logo-footer {
+                 margin: 1em 0em;
+             }
+         }
+         
+         @media screen and (max-width: 600px) {
+             body {
+                 font-size: 0.8em !important;
+             }
+             .reponsive-tex-pago {
+                 display: block !important;
+             }
+             .reponsive-tex-pago1 {
+                 display: none !important;
+             }
+             .title-pago {
+                 font-size: 22px !important;
+             }
+             .title-pago-sub {
+                 font-size: 14px;
+             }
+             .title-text-pago-sub {
+                 font-size: 14px;
+             }
+             .container {
+                 padding: 0em 2em !important;
+             }
+         }
+         
+         @media screen and (max-width: 570px) {
+             .title-simple-pago {
+                 font-size: 22px !important;
+             }
+             .text-simple-pago {
+                 font-size: 16px !important;
+             }
+             .title-beneficio {
+                 font-size: 22px !important;
+                 color: #0032a0;
+             }
+             .title-beneficio-sub {
+                 font-size: 16px;
+             }
+             .text-beneficio {
+                 font-size: 14px;
+             }
+             .img-beneficios-repn {
+                 width: 100% !important;
+             }
+             .title-contacto {
+                 font-size: 22px !important;
+             }
+             .title-contacto-sub {
+                 font-size: 14px !important;
+             }
+             .title-contacto-sub-right {
+                 font-size: 14px !important;
+                 text-align-last: left !important;
+             }
+         }
+         
+         @media screen and (max-width:540px) {}
+         
+         @media only screen and (max-width: 400px) {
+             body {
+                 font-size: 0.75em !important;
+             }
+         }
+         
+         @media screen and(width:320 × 480) {}
+         
+         // @media only screen and (max-width: 800px) {
+         // } 
+         // @media screen and (max-width: 440px) {
+         // }
