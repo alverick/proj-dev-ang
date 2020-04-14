@@ -140,6 +140,14 @@ div.mat-form-field-infix {
     margin-bottom: 23px;
 }
 
+.btn-eureca-blue {
+    @include btn-eureca;
+    @include font-text(14px !important);
+    width: 232px;
+    height: 48px;
+    margin-bottom: 23px;
+}
+
 // boton Rgistrate
 .btn-landigs-container {
     // margin-left: 80px;
