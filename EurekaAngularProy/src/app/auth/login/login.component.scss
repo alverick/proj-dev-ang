@@ -25,7 +25,7 @@ label {
 .border {
     box-sizing: border-box;
     border-style: solid !important;
-    border-width: 2vw 4.8vw!important;
+    border-width: 2vw 4.8vw !important;
     border-color: white !important;
     margin-top: 5vw !important;
     width: 381px;
@@ -44,7 +44,7 @@ label {
 .bg-image-landing {
     background-image: url("/assets/images/fondo-landing.png");
     width: 98vw;
-    /* margin-top: 10vw !important;*/
+    /* margin-top   : 10vw !important;*/
 }
 
 .bg-blanco {
@@ -109,7 +109,7 @@ label {
     background-clip: padding-box
 }
 
- :host ::ng-deep .mat-form-field {
+:host ::ng-deep .mat-form-field {
     .mat-form-field-underline {
         background-color: slategray;
         height: 0.18vw !important;
@@ -187,7 +187,7 @@ div.mat-form-field-infix {
     height: 518px;
 }
 
-.title-landing-login {
+.title-login-login {
     font-size: 53px;
     font-weight: 500;
     &:after {
@@ -204,7 +204,7 @@ div.mat-form-field-infix {
 
 .bg-image-landing {
     height: 400px;
-    /*background-image: url("../images/fondo-landing.png");*/
+    /*background-image : url("../images/fondo-landing.png");*/
     background-repeat: no-repeat;
     background-position: bottom center;
 }
@@ -275,14 +275,15 @@ small {
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
-    border-width: 2vw 2.7vw!important;
+    border-width: 2vw 2.7vw !important;
     border-color: white !important;
-    /*margin-top: 5vw !important;*/
+    margin: auto;
+    /*margin-top    : 5vw !important;*/
 }
 
 small {
     @include font-text(14px,
-    $weight: 500!important);
+    $weight: 500 !important);
     color: $green;
     text-decoration: underline;
     cursor: pointer;
@@ -290,18 +291,19 @@ small {
 
 :host ::ng-deep .mat-form-field .mat-form-field-underline {
     background-color: #cfd0d2;
-    // height: 0.10vw !important;
+    // height       : 0.10vw !important;
     height: 1px !important;
 }
 
-.title-landing {
-    @include font-text(30px,
+.title-login {
+    @include font-text(48px,
     500);
     color: #ffffff;
+    font-family: Geometria;
     margin-left: 80px;
 }
 
-.subtitle-landing {
+.subtitle-login {
     @include font-text(16px,
     500);
     color: #ffffff;
@@ -313,4 +315,16 @@ small {
     500);
     color: #ffffff;
     margin-left: 80px;
+}
+
+.cont-logo {
+    padding-bottom: 4em;
+}
+
+.reponsive-img-login {
+    display: block;
+}
+
+.reponsive-img-login1 {
+    display: none;
 }

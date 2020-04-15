@@ -17,6 +17,18 @@
                  width: 170px !important;
                  height: 300px !important;
              }
+             .reponsive-img-login {
+                 display: none !important;
+             }
+             .reponsive-img-login1 {
+                 display: block !important;
+             }
+             .title-login {
+                 font-size: 38px !important;
+             }
+             .cuadro-form {
+                 padding: 0em 2em !important;
+             }
          }
          
          @media screen and (max-width: 1000px) {
@@ -44,6 +56,11 @@
              }
              .title-text-pago-sub {
                  font-size: 14px;
+             }
+             .title-login {
+                 font-size: 30px !important;
+                 padding-bottom: 1em;
+                 margin-left: 0px !important;
              }
              //  .img-simple {
              //      width : 100% !important;
@@ -166,6 +183,9 @@
                  width: 100% !important;
                  height: auto !important;
                  position: relative !important;
+             }
+             .title-login {
+                 font-size: 22px !important;
              }
          }
          
