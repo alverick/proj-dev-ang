@@ -328,3 +328,15 @@ small {
 .reponsive-img-login1 {
     display: none;
 }
+
+.text-rg {
+    @include font-text(15px);
+}
+
+.dpt {
+    display: block;
+}
+
+.dpt1 {
+    display: none;
+}
