@@ -35,6 +35,21 @@
              .dpt1 {
                  display: block !important;
              }
+             .cuadro-canales {
+                 width: 145px !important;
+                 padding: .5em;
+                 height: 200px !important;
+             }
+             .texto-azul {
+                 padding-bottom: 1em;
+                 text-align: center !important;
+             }
+             .cuadro-comisiones {
+                 width: 100% !important;
+             }
+             .cuadro-descripcion {
+                 width: 100% !important;
+             }
          }
          
          @media screen and (max-width: 1000px) {
@@ -74,6 +89,11 @@
              //  }
          }
          
+         //  @media screen and (max-width: 900px) {
+         //      .reponsive-afilacion {
+         //          margin-left: 5em !important;
+         //      }
+         //  }
          @media screen and (max-width: 800px) {
              body {
                  font-size: 0.8em !important;
@@ -137,6 +157,9 @@
                  padding: .5em 0em !important;
                  text-align: center;
              }
+             //  .reponsive-afilacion {
+             //      margin-left: 0em !important;
+             //  }
          }
          
          @media screen and (max-width: 700px) {
@@ -193,6 +216,20 @@
              .title-login {
                  font-size: 22px !important;
              }
+             .reponsive-afilacion {
+                 display: none !important;
+             }
+             .reponsive-afilacion1 {
+                 display: block !important;
+             }
+             .cuadro-canales {
+                 margin: auto;
+                 padding: 0em;
+                 padding-bottom: .8em !important;
+                 height: auto !important;
+                 margin-bottom: .8em;
+                 width: 179px !important;
+             }
          }
          
          @media screen and (max-width: 570px) {
@@ -224,6 +261,15 @@
              .title-contacto-sub-right {
                  font-size: 14px !important;
                  text-align-last: left !important;
+             }
+             .texto-azul {
+                 font-size: 22px !important;
+                 padding-bottom: 1em;
+                 text-align: center !important;
+             }
+             .descripcion {
+                 font-size: 16x !important;
+                 text-align: center !important;
              }
          }
          

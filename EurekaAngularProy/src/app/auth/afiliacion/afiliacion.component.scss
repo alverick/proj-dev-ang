@@ -47,6 +47,7 @@ body {
     @include cuadro(621px, 127px);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
+    height: auto !important;
 }
 
 .cuadro-comisiones {
@@ -54,6 +55,7 @@ body {
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     margin-bottom: 10px;
+    height: auto !important;
 }
 
 .cuadro-canales {
@@ -63,7 +65,7 @@ body {
 }
 
 .btn-eureca-green {
-   // @include btn-eureca;
+    // @include btn-eureca;
     width: 277px;
     height: 48px;
     display: block;
@@ -72,13 +74,13 @@ body {
 }
 
 .btn-outline-green {
-  border: solid 1px $green !important;
-  width: 277px;
-  height: 48px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
+    border: solid 1px $green !important;
+    width: 277px;
+    height: 48px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
 }
 
 .c3-agencias {
@@ -88,5 +90,13 @@ body {
 }
 
 .subpricing-card-title {
-  font-size: 12px;
+    font-size: 12px;
+}
+
+.reponsive-afilacion {
+    display: flex;
+}
+
+.reponsive-afilacion1 {
+    display: none;
 }
