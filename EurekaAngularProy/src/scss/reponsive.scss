@@ -50,6 +50,9 @@
              .cuadro-descripcion {
                  width: 100% !important;
              }
+             .cuadro-form {
+                 margin: auto !important;
+             }
          }
          
          @media screen and (max-width: 1000px) {
@@ -160,6 +163,9 @@
              //  .reponsive-afilacion {
              //      margin-left: 0em !important;
              //  }
+             .cuadro-form {
+                 width: 100% !important;
+             }
          }
          
          @media screen and (max-width: 700px) {
@@ -270,6 +276,9 @@
              .descripcion {
                  font-size: 16x !important;
                  text-align: center !important;
+             }
+             .btn-eureca-green {
+                 width: 220px !important;
              }
          }
          
