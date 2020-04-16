@@ -10,7 +10,7 @@
             <div class="row ">
                 <!--/////// L E F T ////////-->
 
-                <div class="col-sm-12 col-md-12 col-lg-6 ">
+                <div class="col-sm-12 col-md-12 col-lg-6">
                     <div class="pt-2 title-login">Gestiona tus cobranzas fácil y rápido</div>
                     <!-- <div class="pt-2 subtitle-login">¡Regístrate en nuestra plataforma en menos de 3 minutos!</div> -->
                     <!-- <div class="media pt-4 content-landing">
@@ -28,7 +28,7 @@
                         <p class="pl-4">Tu clientes te podrán pagar en nuestros más de 4000 agentes, APP, BPI y tiendas Interbank
                         </p>
                     </div> -->
-                    <div class="media pt-5 content-landing reponsive-img-login">
+                    <div class="media ppt-5 content-landing reponsive-img-login">
                         <img src="assets/images/mujer.svg" width="100%">
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                                         </div> -->
                                         <!-- ////////////// R U C /////////////////// -->
                                         <div class="flex-fill mt-2">
-                                            <label class="d-block texto-negro h6">  <img src="assets/images/user.svg" alt=""> RUC</label>
+                                            <label class="d-block texto-negro h6">  <img class="icon-gb"  src="assets/images/user.svg" alt=""> RUC</label>
                                             <mat-form-field style="height: 1.9px !important; width: 100%;">
                                                 <input matInput class="input-text" type="text" name="ruc" appOnlynumbers (focus)="focusFunctionRuc()" autocomplete="on" minlength="11" maxlength="11" required formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors">
                                                 <mat-error *ngIf="inputUsuaValid" class="messsage-error">
@@ -73,7 +73,7 @@
 
                                         <!-- ////////////// P A S S W O R D /////////////////// -->
                                         <div class="flex-fill mt-2">
-                                            <label class="d-block texto-negro h6">  <img src="assets/images/password.svg" alt=""> Contraseña</label>
+                                            <label class="d-block texto-negro h6">  <img class="icon-gb"  src="assets/images/password.svg" alt=""> Contraseña</label>
                                             <mat-form-field style="height: 1.9px !important; width: 100%;">
                                                 <input matInput class="input-text" type="password" (Keydown.space)="$event.preventDefault()" (focus)="focusFunctionPass()" minlength="6" maxlength="20" formControlName="psw" [ngClass]="{ 'is-invalid': submitted && f.psw.errors }" appBlockCopyPaste>
                                                 <mat-error *ngIf="inputPassValid" class="messsage-error">
@@ -127,7 +127,7 @@
 
 
 
-                    <div class="media pt-5 content-landing reponsive-img-login1">
+                    <div class="media ppt-5 content-landing reponsive-img-login1">
                         <img src="assets/images/mujer.svg" width="100%">
                     </div>
                 </div>

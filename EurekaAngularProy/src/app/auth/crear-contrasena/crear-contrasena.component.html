@@ -7,7 +7,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                 <div class="d-flex justify-content-end">
-                    <div class="cuadro-form pr-5 pl-5 pt-4 pb-3  bg-white">
+                    <div class="cuadro-form pr-5 ppl-5 pt-4 pb-3  bg-white">
                         <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
@@ -106,7 +106,7 @@
 
                                 <mat-error class="messsage-error" *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
                             </div>
-                            <button type="submit" class="btn-big btn-eureca-green w-100 text-white" (click)="enviarDatosEmpresa()">
+                            <button type="submit" class="btn-big btn-eureca-grey-3 w-100 text-white" (click)="enviarDatosEmpresa()">
                                   SIGUIENTE
                             </button>
                         </form>
@@ -122,7 +122,7 @@
 <div class="modal fade" id="terminos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="pt-5 pl-5">
+            <div class="ppt-5 ppl-5">
                 <div class="form-row">
                     <div class="form-group col-md-10">
                         <div class=" terminos-title" id="exampleModalLabel">Términos y condiciones </div>
@@ -136,7 +136,7 @@
                 </div>
             </div>
 
-            <div class="terminos-body p-5">
+            <div class="terminos-body pp-5">
                 <perfect-scrollbar class="content-container">
                     <p>
                         BANCO INTERNACIONAL DEL PERÚ con RUC 20100053455 y domicilio en Carlos Villarán N° 140 Urbanización Santa Catalina, distrito de la Victoria, provincia y departamento de Lima, te ofrece el servicio de recaudación Interbank Cobro Simple<br

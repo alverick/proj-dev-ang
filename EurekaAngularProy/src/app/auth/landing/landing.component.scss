@@ -36,7 +36,7 @@ label {
     font-size: 16px;
 }
 
-.p-5 {
+.pp-5 {
     padding: 0.2rem 2.5rem !important;
     max-width: 0.2rem 2.5rem !important;
 }
@@ -384,6 +384,7 @@ small {
 .img-beneficios-repn {
     text-align: center;
     margin: auto;
+    margin-bottom: 3em !important;
 }
 
 // .img-simple {
@@ -403,18 +404,6 @@ small {
 }
 
 // ---------------
-.title-contacto {
-    font-family: Geometria;
-    font-size: 32px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    color: #333333;
-    // margin-left: 80px;
-}
-
 .title-beneficio {
     font-family: Geometria;
     font-size: 48px;
@@ -515,11 +504,18 @@ small {
     display: block;
 }
 
-.btn-cir .active {
+// .btn-cir .active {
+//     background-color: #FEEE !important;
+// }
+// .btn-cir {
+//     background-color: #0032a0 !important;
+// }
+#sliderpago .carousel-indicators li {
     background-color: #FEEE !important;
+    opacity: 1;
 }
 
-.btn-cir {
+#sliderpago .carousel-indicators .active {
     background-color: #0032a0 !important;
 }
 
@@ -579,7 +575,21 @@ small {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #05be50;
+}
+
+.carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+#slider-beneficios .carousel-indicators li {
+    background-color: #d3d3d3 !important;
+    opacity: 1;
+}
+
+#slider-beneficios .carousel-indicators .active {
+    background-color: #05be50 !important;
 }
 
 .carousel-indicators {
@@ -589,4 +599,12 @@ small {
 
 .carousel-inner {
     padding: 1.8em 0em;
+}
+
+.none-footer {
+    display: flex;
+}
+
+.none-footer1 {
+    display: none;
 }

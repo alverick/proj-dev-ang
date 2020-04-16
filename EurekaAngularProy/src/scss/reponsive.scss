@@ -154,10 +154,11 @@
              }
              .img-beneficios-repn {
                  width: 80%;
+                 margin-bottom: 3em !important;
              }
              .btn-landigs-container {
                  // margin-left: 80px;
-                 padding: .5em 0em !important;
+                 padding: 3em 0em !important;
                  text-align: center;
              }
              //  .reponsive-afilacion {
@@ -165,6 +166,26 @@
              //  }
              .cuadro-form {
                  width: 100% !important;
+             }
+             .terminos-title {
+                 font-size: 16px !important;
+             }
+             .terminos-body {
+                 font-size: 14px !important;
+                 padding: 1.5rem !important;
+             }
+             .ppt-5 {
+                 padding-top: 1.5rem !important;
+             }
+             .pp-5 {
+                 padding: 1.5rem !important;
+             }
+             .ppl-5 .ppx-5 {
+                 padding-left: 1.5rem !important;
+                 padding-top: 1.5rem !important;
+             }
+             .ps-content {
+                 padding: 0em 1.5em !important;
              }
          }
          
@@ -179,6 +200,7 @@
              .img-pagos {
                  width: 150px !important;
                  height: 250px !important;
+                 left: 0px !important;
              }
          }
          
@@ -189,6 +211,11 @@
              }
              .logo-footer {
                  margin: 1em 0em;
+             }
+             .margen {
+                 padding: .5em !important;
+                 //  padding-left : 36px;
+                 //  padding-right: 56px;
              }
          }
          
@@ -215,9 +242,11 @@
                  padding: 0em 2em !important;
              }
              .img-pagos {
-                 width: 100% !important;
+                 margin: auto;
+                 width: 70% !important;
                  height: auto !important;
                  position: relative !important;
+                 left: auto !important;
              }
              .title-login {
                  font-size: 22px !important;
@@ -235,6 +264,9 @@
                  height: auto !important;
                  margin-bottom: .8em;
                  width: 179px !important;
+             }
+             .swal2-title {
+                 font-size: 16px !important;
              }
          }
          
@@ -260,13 +292,14 @@
              }
              .title-contacto {
                  font-size: 22px !important;
+                 margin: 0px !important;
              }
              .title-contacto-sub {
                  font-size: 14px !important;
              }
              .title-contacto-sub-right {
                  font-size: 14px !important;
-                 text-align-last: left !important;
+                 text-align: left !important;
              }
              .texto-azul {
                  font-size: 22px !important;
@@ -279,6 +312,12 @@
              }
              .btn-eureca-green {
                  width: 220px !important;
+             }
+             .none-footer {
+                 display: none !important;
+             }
+             .none-footer1 {
+                 display: block !important;
              }
          }
          

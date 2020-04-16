@@ -139,6 +139,26 @@ button:focus {
     }
 }
 
+.btn-eureca-grey-3 {
+    @include font-text(14px !important, 500 !important);
+    color: #ffffff !important;
+    background-color: $grey-3 !important;
+    @include border-radius(4px !important);
+    border: solid 1px $grey-3 !important;
+    &:hover {
+        //  background-color: $greenclaro !important;
+        background-color: $grey-3-oscuro !important;
+    }
+    &:active {
+        background-color: $grey-3 !important;
+        background-image: none !important;
+    }
+    &.btn-disabled {
+        background-color: #9b9b9b !important;
+        border: solid 1px #9b9b9b !important;
+    }
+}
+
 .btn-eureca-blue {
     @include font-text(14px !important, 500 !important);
     color: #ffffff !important;
