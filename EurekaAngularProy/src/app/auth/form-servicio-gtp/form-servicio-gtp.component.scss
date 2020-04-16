@@ -1,5 +1,7 @@
 @import "../../../scss/_variables.scss";
 @import "../../../scss/_mixin.scss";
+@import "../../../scss/reponsive.scss";
+@import "../../../scss/style.scss";
 body {
     background: #f4f5f7 !important;
 }
@@ -241,8 +243,8 @@ body {
 }
 
 :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-  font-size: 10px !important;
-  color: #0d131d !important;
+    font-size: 10px !important;
+    color: #0d131d !important;
 }
 
 .radio-group {
@@ -282,14 +284,13 @@ body {
 
 .btn-eureca-green {
     @include font-text(14px !important, 500 !important);
+}
 
-  }
-
-  :host ::ng-deep .mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+ :host ::ng-deep .mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
     color: $green;
 }
 
-.text-radio{
+.text-radio {
     @include font-text(16px !important, normal !important);
     color: #0d131d !important;
 }
@@ -299,27 +300,32 @@ body {
     color: #0d131d !important;
 }
 
-
-.input-text{
+.input-text {
     color: #0d131d !important;
 }
 
-.label{
+.label {
     color: #0d131d !important;
 }
 
-
-.w-80{
+.w-80 {
     width: 80%;
 }
 
 :host ::ng-deep .mat-radio-inner-circle {
     height: 16px !important;
     width: 16px !important;
-
- }
+}
 
  :host ::ng-deep .mat-radio-outer-circle {
     height: 16px !important;
     width: 16px !important;
+}
+
+.reponsive-servicio-pago {
+    display: flex;
+}
+
+.reponsive-servicio-pago1 {
+    display: none;
 }

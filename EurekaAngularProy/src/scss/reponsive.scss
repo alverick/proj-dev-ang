@@ -33,6 +33,7 @@
                  display: none !important;
              }
              .dpt1 {
+                 margin-top: 2em !important;
                  display: block !important;
              }
              .cuadro-canales {
@@ -52,6 +53,34 @@
              }
              .cuadro-form {
                  margin: auto !important;
+             }
+             .card-servicios {
+                 width: 100% !important;
+             }
+             .btn-outline-green {
+                 width: 100% !important;
+             }
+             .btn-col-1 {
+                 padding-left: 0px !important;
+                 width: 100%;
+                 text-align: center;
+             }
+             .btn-eureca-green {
+                 margin: auto !important;
+             }
+             .card-medio-pago {
+                 width: 145px !important;
+                 padding: .5em;
+                 height: 200px !important;
+             }
+             .input-text {
+                 margin-top: .3em !important;
+             }
+             .btn-rg {
+                 margin-bottom: 2em !important;
+             }
+             .formulario {
+                 width: 100% !important;
              }
          }
          
@@ -90,6 +119,12 @@
              //      width : 100% !important;
              //      height: auto !important;
              //  }
+             .btn-fn {
+                 display: none !important;
+             }
+             .btn-fn1 {
+                 display: block !important;
+             }
          }
          
          //  @media screen and (max-width: 900px) {
@@ -185,7 +220,17 @@
                  padding-top: 1.5rem !important;
              }
              .ps-content {
-                 padding: 0em 1.5em !important;
+                 padding: 0em !important;
+             }
+             .formulario {
+                 width: 100% !important;
+                 margin: auto;
+             }
+             .form {
+                 width: 100% !important;
+             }
+             .ppr-5 {
+                 padding-right: 1.5rem !important;
              }
          }
          
@@ -268,6 +313,23 @@
              .swal2-title {
                  font-size: 16px !important;
              }
+             .reponsive-servicio-pago {
+                 display: none !important;
+             }
+             .reponsive-servicio-pago1 {
+                 display: block !important;
+             }
+             .card-medio-pago {
+                 margin: auto;
+                 padding: 0em;
+                 padding-bottom: .8em !important;
+                 height: auto !important;
+                 margin-bottom: .8em;
+                 width: 179px !important;
+             }
+             .text-titulo {
+                 font-size: 22px !important;
+             }
          }
          
          @media screen and (max-width: 570px) {
@@ -319,6 +381,12 @@
              .none-footer1 {
                  display: block !important;
              }
+             .ps-content {
+                 padding: 0em .1em !important;
+             }
+             //  .ppr-5 {
+             //      padding-right: 1rem !important;
+             //  }
          }
          
          @media screen and (max-width:540px) {}
