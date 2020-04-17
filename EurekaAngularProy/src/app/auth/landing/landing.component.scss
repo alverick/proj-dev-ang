@@ -372,7 +372,7 @@ small {
 
 .img-pagos {
     width: 314px;
-    height: 464px;
+    height: 570px;
     position: absolute;
     bottom: 0;
 }
@@ -455,14 +455,14 @@ small {
 .title-pago {
     -webkit-text-stroke: 0.5px #ffffff;
     font-family: Geometria;
-    font-size: 40px;
+    font-size: 48px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.02;
     letter-spacing: normal;
     color: #ffffff;
-    padding: .8em 0em;
+    padding: .5em 0em;
 }
 
 .title-pago-sub {
@@ -521,7 +521,7 @@ small {
 
 .title-contacto {
     font-family: Geometria;
-    font-size: 18px;
+    font-size: 32px;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
@@ -542,10 +542,34 @@ small {
     color: #333333;
 }
 
-.title-contacto-sub-right {
+.title-contacto-sub-right-correo {
     font-family: Geometria;
     font-size: 18px;
     font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #333333;
+}
+
+.title-contacto-sub-right-numero {
+    font-family: Geometria;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: #333333;
+}
+
+.title-contacto-sub-right-contacto {
+    font-family: Geometria;
+    font-size: 18px;
+    font-weight: normal;
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
@@ -606,5 +630,9 @@ small {
 }
 
 .none-footer1 {
+    display: none;
+}
+
+.br-none {
     display: none;
 }

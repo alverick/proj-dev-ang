@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit {
     this.loginService.logout();
     this.excelser.statusUpload = false;
     this.spinner.hide();
-    this.isExpanded = !this.isExpanded;
+    this.isExpanded = false;
 
 
   }

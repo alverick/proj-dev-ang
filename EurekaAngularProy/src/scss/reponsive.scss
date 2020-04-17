@@ -82,8 +82,8 @@
              .formulario {
                  width: 100% !important;
              }
-             .btn-emp{
-                margin: .5em !important;
+             .btn-emp {
+                 margin: .5em !important;
              }
          }
          
@@ -235,8 +235,8 @@
              .ppr-5 {
                  padding-right: 1.5rem !important;
              }
-             .btn-emp{
-                margin: .5em !important;
+             .btn-emp {
+                 margin: .5em !important;
              }
          }
          
@@ -371,7 +371,15 @@
              .title-contacto-sub {
                  font-size: 14px !important;
              }
-             .title-contacto-sub-right {
+             .title-contacto-sub-right-correo {
+                 font-size: 14px !important;
+                 text-align: left !important;
+             }
+             .title-contacto-sub-right-numero {
+                 font-size: 14px !important;
+                 text-align: left !important;
+             }
+             .title-contacto-sub-right-contacto {
                  font-size: 14px !important;
                  text-align: left !important;
              }
@@ -399,6 +407,9 @@
              //  .ppr-5 {
              //      padding-right: 1rem !important;
              //  }
+             .br-none {
+                 display: block !important;
+             }
          }
          
          @media screen and (max-width:540px) {}

@@ -118,14 +118,19 @@
                 <div class="d-flex justify-content-end">
                     <div class="formulario pp-5 bg-white ">
                         <div class="form-row">
-                            <div class="form-group col-md-10">
-                                <div class="font-black">{{titulo}}</div>
+                            <div class="form-group col-md-12">
+                                <div class="font-black">{{titulo}}
+
+                                    <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
+                                        <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group col-md-2">
+                            <!-- <div class="form-group col-md-2">
                                 <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
                                     <img src="assets/images/cerrar.svg"> <br> Cerrar
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <app-form-servicio [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio>
                     </div>
@@ -137,14 +142,18 @@
                 <div class="d-flex justify-content-end">
                     <div class="formulario pp-5 bg-white ">
                         <div class="form-row">
-                            <div class="form-group col-md-10">
-                                <div class="font-black">Corregir Servicio</div>
+                            <div class="form-group col-md-12">
+                                <div class="font-black">Corregir Servicio
+                                    <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
+                                        <img src="assets/images/cerrar.svg"> <br> Cerrar
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group col-md-2">
+                            <!-- <div class="form-group col-md-2">
                                 <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
                                     <img src="assets/images/cerrar.svg"> <br> Cerrar
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <app-form-servicio-gtp [service]="serviceActual" (grabar)="onGrabar($event)"></app-form-servicio-gtp>
                     </div>
