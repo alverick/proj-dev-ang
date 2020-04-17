@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    // min-width: 650px;
+    // min-width   : 650px;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -206,7 +206,7 @@ img.bell {
 }
 
 :host ::ng-deep .dropdown-item:active {
-    color: #05be50!important;
+    color: #05be50 !important;
     text-decoration: none;
     background-color: #ffffff;
 }
@@ -217,4 +217,32 @@ img.bell {
     cursor: pointer;
     display: block;
     float: left;
+}
+
+.reponsive-emp {
+    display: flex;
+}
+
+.reponsive-emp1 {
+    display: none;
+}
+
+// -----------------nabar reponsive ----------
+.nabar-reponsive{
+    position: absolute;
+    background: #0d131d;
+    left: 0;
+    width: 200px;
+    top: 5.5em;
+    z-index: 99;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    padding: 0px;
+}
+
+.nabar-reponsive li a {
+margin:.5em !important;
+}
+.nabar-reponsive li {
+    height: auto !important;
 }

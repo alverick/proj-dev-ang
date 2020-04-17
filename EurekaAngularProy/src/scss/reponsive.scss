@@ -82,6 +82,9 @@
              .formulario {
                  width: 100% !important;
              }
+             .btn-emp{
+                margin: .5em !important;
+             }
          }
          
          @media screen and (max-width: 1000px) {
@@ -232,6 +235,9 @@
              .ppr-5 {
                  padding-right: 1.5rem !important;
              }
+             .btn-emp{
+                margin: .5em !important;
+             }
          }
          
          @media screen and (max-width: 700px) {
@@ -246,6 +252,12 @@
                  width: 150px !important;
                  height: 250px !important;
                  left: 0px !important;
+             }
+             .reponsive-emp {
+                 display: none !important;
+             }
+             .reponsive-emp1 {
+                 display: flex !important;
              }
          }
          

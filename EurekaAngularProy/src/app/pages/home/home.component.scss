@@ -4,9 +4,14 @@ body {
     background: #f4f5f7 !important;
 }
 
-.container {
-    width: 1375px;
-    max-width: 1325px;
+.containerr {
+    width: 100%;
+    padding-right: 2em;
+    padding-left: 2em;
+    margin-right: auto;
+    margin-left: auto;
+    // width: 1375px;
+    // max-width: 1325px;
 }
 
 .widget {
@@ -62,17 +67,17 @@ body {
                     color: $textgreen;
                 }
                 .btn-eliminar {
-                  cursor: pointer;
-                  margin-left: 25px;
+                    cursor: pointer;
+                    margin-left: 25px;
                     color: $textgreen;
                     display: block;
                     width: 40px;
                     text-align: center;
                     &.disable {
-                      color: #9b9b9b;
-                      .act-label {
                         color: #9b9b9b;
-                      }
+                        .act-label {
+                            color: #9b9b9b;
+                        }
                     }
                     img {
                         width: 20px;
@@ -88,24 +93,24 @@ body {
                     }
                 }
                 .btn-agregar {
-                  cursor: pointer;
-                  margin-left: 25px;
-                  color: #05be50;
-                  display: block;
-                  width: 40px;
-                  text-align: center;
-                  img {
-                    width: 20px;
-                    height: 20px;
-                    line-height: 0;
-                  }
-                  .icono {
-                    width: 20px;
-                    height: 20px;
-                  }
-                  .act-label {
-                    color: $textgreen;
-                  }
+                    cursor: pointer;
+                    margin-left: 25px;
+                    color: #05be50;
+                    display: block;
+                    width: 40px;
+                    text-align: center;
+                    img {
+                        width: 20px;
+                        height: 20px;
+                        line-height: 0;
+                    }
+                    .icono {
+                        width: 20px;
+                        height: 20px;
+                    }
+                    .act-label {
+                        color: $textgreen;
+                    }
                 }
             }
             .al-right {
@@ -116,10 +121,9 @@ body {
                     color: $textgreen;
                     margin-left: 20px;
                     cursor: pointer;
-
                     &.disabled {
-                      color: #9ea1a5;
-                      cursor: default;
+                        color: #9ea1a5;
+                        cursor: default;
                     }
                 }
                 .sobresale {
@@ -291,16 +295,14 @@ body {
                                 }
                             }
                         }
-
-                      &.new-row {
-                        td {
-                          padding: 8px 0px;
-
-                          .input-text-dash {
-                            font-size: 10px !important;
-                          }
+                        &.new-row {
+                            td {
+                                padding: 8px 0px;
+                                .input-text-dash {
+                                    font-size: 10px !important;
+                                }
+                            }
                         }
-                      }
                     }
                 }
                 .c0 {
@@ -413,10 +415,9 @@ body {
     text-align: center;
     padding: 40px 0px;
     color: #333333 !important;
-
     .link {
-      @include font-text(16px, 500);
-      color: #333333 !important;
+        @include font-text(16px, 500);
+        color: #333333 !important;
     }
 }
 
@@ -453,14 +454,13 @@ b {
 }
 
 .mat-form-field {
-
     .msg-error {
         @include font-text(10px, 500);
         position: absolute;
         color: #ea0044;
         margin-top: 10px;
         width: 200px;
-       // background-color: rgba(0, 169, 79, 0.05);
+        // background-color: rgba(0, 169, 79, 0.05);
     }
     .msg-error-filtro {
         @include font-text(10px, 500);
@@ -493,6 +493,7 @@ b {
     @include font-text(12px, 500);
     color: #ea0044 !important;
 }
+
 .text-partial {
     @include font-text(12px, 500);
     color: #ff8900 !important;
@@ -596,8 +597,8 @@ b {
 .ngx-pagination .pagination-next a::after,
 .ngx-pagination .pagination-next.disabled::after {
     content: '»';
-     display: inline-block;
-     margin-left: 0.5rem;
+    display: inline-block;
+    margin-left: 0.5rem;
 }
 
 .ngx-pagination .show-for-sr {
@@ -655,16 +656,14 @@ b {
     @include font-text(14px!important, normal!important);
     color: #0d131d !important;
     padding-bottom: 10px;
-   // padding: 6px 2px;
+    // padding: 6px 2px;
 }
 
 .btn-calendar {
-  background-image: url(/assets/images/calendar.svg);
+    background-image: url(/assets/images/calendar.svg);
 }
 
-
-
-.numpag{
+.numpag {
     color: #9ea1a5 !important;
 }
 
@@ -672,26 +671,33 @@ b {
     margin-left: -10px !important;
 }
 
-:host ::ng-deep .mat-checkbox-inner-container-no-side-margin{
+:host ::ng-deep .mat-checkbox-inner-container-no-side-margin {
     margin-left: 12px !important;
 }
+
 
 /*TOOLTIP*/
 
 .title {
     padding: 6px 12px;
     border-bottom: $separador;
-
     .text {
-      @include font-text(12px, 500);
-      color: $textblack;
+        @include font-text(12px, 500);
+        color: $textblack;
     }
-
     .mark-all {
-      @include font-text(12px);
-      color: $textgreen;
-      cursor: pointer;
+        @include font-text(12px);
+        color: $textgreen;
+        cursor: pointer;
     }
-  }
+}
 
-  /*[END] TOOLTIP BOOSTRAP*/
+.scroll-table {
+    // height: 219px;
+    height: 507px;
+    overflow: scroll;
+    width: 100%;
+}
+
+
+/*[END] TOOLTIP BOOSTRAP*/

@@ -17,11 +17,13 @@ import { drawPopup } from '../services/popups';
 export class HeaderComponent implements OnInit {
   showHead: boolean = null;
 
+  isExpanded = false;
+
   constructor(private router: Router,
-              private loginService: LoginService,
-              private spinner: NgxSpinnerService,
-              private excelser: ExcelService,
-              public notify: NotifyService ) {
+    private loginService: LoginService,
+    private spinner: NgxSpinnerService,
+    private excelser: ExcelService,
+    public notify: NotifyService) {
   }
 
   scrollConfig = {
@@ -31,16 +33,16 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.notify.clear();
     this.spinner.hide();
-    this.notify.iniciar(); 
+    this.notify.iniciar();
   }
 
   public menu(): boolean {
-    if (this.router.url.includes('/cambiaContra')|| 
-    this.router.url.includes('/recupera')  || 
-    this.router.url.includes('/login') || 
-    this.router.url.includes('/landing') || 
-    this.router.url.includes('/gtp') ||
-    this.router.url.includes('/gtp')  ) {
+    if (this.router.url.includes('/cambiaContra') ||
+      this.router.url.includes('/recupera') ||
+      this.router.url.includes('/login') ||
+      this.router.url.includes('/landing') ||
+      this.router.url.includes('/gtp') ||
+      this.router.url.includes('/gtp')) {
       return false;
 
     } else {
@@ -48,7 +50,7 @@ export class HeaderComponent implements OnInit {
     }
   }
   public menuGtp(): boolean {
-    if (  this.router.url.includes('/gtp') ) {
+    if (this.router.url.includes('/gtp')) {
       return true;
 
     } else {
@@ -57,12 +59,12 @@ export class HeaderComponent implements OnInit {
   }
   mesageeError(tipo: any, titulo: string, text: string) {
     Swal.fire({
-      title: titulo ,
+      title: titulo,
       text: text,
       showCloseButton: true,
       showCancelButton: true,
       showConfirmButton: false,
-      cancelButtonText:  'Cerrar',
+      cancelButtonText: 'Cerrar',
       allowOutsideClick: false,
       onOpen: drawPopup
 
@@ -74,19 +76,21 @@ export class HeaderComponent implements OnInit {
     this.loginService.logout();
     this.excelser.statusUpload = false;
     this.spinner.hide();
+    this.isExpanded = !this.isExpanded;
+
 
   }
 
   public show(): boolean {
     if (this.router.url.includes('/login') ||
-    this.router.url.includes('/cambiaContra') ||
+      this.router.url.includes('/cambiaContra') ||
       this.router.url.includes('/recupera') ||
       this.router.url.includes('/afiliacion') ||
       this.router.url.includes('/crearContrasena') ||
       this.router.url.includes('/editaCuenta') ||
       this.router.url.includes('/editarSvcGTP') ||
       this.router.url.includes('/configurarServicios') ||
-      
+
       this.router.url.includes('/procesando')) {
       return false;
     }
@@ -97,7 +101,7 @@ export class HeaderComponent implements OnInit {
     return this.router.url.includes('/home');
   }
   get IsGtp(): boolean {
-    
+
     return this.router.url.includes('/gtp');
   }
 
@@ -119,9 +123,19 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/home']);
     }
   }
-  goBackGtp(){
+  goBackGtp() {
     if (confirm('Es posible que los cambios no se guarden.')) {
       this.router.navigate(['/gtp']);
     }
+  }
+
+
+  // ---------------- reónsive -------
+  collapse() {
+    this.isExpanded = false;
+  }
+
+  toggle() {
+    this.isExpanded = !this.isExpanded;
   }
 }
