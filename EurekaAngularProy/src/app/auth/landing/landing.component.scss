@@ -154,6 +154,10 @@ div.mat-form-field-infix {
     padding: 4em 0em;
 }
 
+.btn-landigs-registro {
+    padding: 4em 0em;
+}
+
 .btn-eureca-green-register {
     @include font-text(14px !important);
     background-color: $blanco;
@@ -381,10 +385,23 @@ small {
     padding-top: 3rem;
 }
 
+.img-cobro-simple {
+    width: 644px;
+    height: 355px;
+    position: absolute;
+    right: 1em;
+    bottom: 0;
+}
+
 .img-beneficios-repn {
     text-align: center;
     margin: auto;
     margin-bottom: 3em !important;
+}
+
+.img-beneficios {
+    width: 546px;
+    height: 456px;
 }
 
 // .img-simple {
@@ -442,6 +459,10 @@ small {
     text-align: center;
     color: #333333;
     padding: .5em 0em;
+}
+
+.cont-txt-beneficio {
+    padding: 0em 1.5em;
 }
 
 .reponsive-tex1 {
@@ -520,6 +541,7 @@ small {
 }
 
 .title-contacto {
+    -webkit-text-stroke: .6px #333333;
     font-family: Geometria;
     font-size: 32px;
     font-weight: normal;
@@ -528,7 +550,7 @@ small {
     line-height: normal;
     letter-spacing: normal;
     color: #333333;
-    // margin-left: 80px;
+    // margin-left     : 80px;
 }
 
 .title-contacto-sub {
@@ -633,6 +655,22 @@ small {
     display: none;
 }
 
-.br-none {
+.br-none-mobil {
     display: none;
+}
+
+.br-none-tablet {
+    display: none;
+}
+
+.text-footer {
+    margin: 0px;
+    font-family: Geometria;
+    font-size: 18px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
 }

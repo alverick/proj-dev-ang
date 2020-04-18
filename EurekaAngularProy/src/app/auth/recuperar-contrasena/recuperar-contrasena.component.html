@@ -1,9 +1,11 @@
 <body>
     <!-- Navigation -->
     <div class="container-style">
-        <div class="container pt-4">
+        <div class="container pt-4 cont-logo">
             <a class="pl-4 navbar-brand" href="#">
-                <img width="220" src="assets/images/cobrosimple-blanco.svg" alt="" style="margin-left: 60px;">
+                <img class="img-login" src="assets/images/cobrosimple-blanco.svg" alt="">
+
+                <!-- <img  width="220" src="assets/images/cobrosimple-blanco.svg" alt="" style="margin-left: 60px;"> -->
             </a>
         </div>
         <div class="container">
@@ -11,10 +13,10 @@
                 <!--/////// L E F T ////////-->
 
                 <div class="col-sm-12 col-md-12 col-lg-6 ">
-                    <div class="pt-2 title-landing">Gestiona tus cobranzas fácil y rápido</div>
+                    <div class="pt-2 title-login">Gestiona tus cobranzas <br class="br-none-mobil"> <br class="br-none-tablet"> fácil y rápido</div>
 
-                    <!-- <div class="pt-2 title-landing">Gestionar tus cobranzas ahora es mucho mas fácil y rápido</div> -->
-                    <!-- <div class="pt-2 subtitle-landing">¡Regístrate en nuestra plataforma en menos de 3 minutos!</div>
+                    <!-- <div class="pt-2 title-landing">Gestionar tus cobranzas ahora es mucho mas fácil y rápido</div>
+                    <div class="pt-2 subtitle-landing">¡Regístrate en nuestra plataforma en menos de 3 minutos!</div>
 
                     <div class="media pt-4 content-landing">
                         <img src="assets/images/favorito_01.png" width="35" height="35" alt="">
@@ -39,7 +41,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-6">
 
                     <div class="pb-3">
-                        <div class="d-flex justify-content-end">
+                        <div class="d-flex justify-content-end" id="cont-password">
                             <!---LISTO-->
 
                             <div *ngIf="!formulario" class="cuadro-form-Listo">
@@ -53,7 +55,7 @@
                                 </div>
                             </div>
                             <!---FORMULARIO-->
-                            <div *ngIf="formulario" class=" cuadro-form pb-2">
+                            <div *ngIf="formulario" class=" cuadro-form pb-2 cont-login">
                                 <div class="texto-azul  mb-4 ">Recuperar contraseña</div>
                                 <div class="texto-azul-text pb-4">¡Está bien! Todos nos olvidamos de <br> algo alguna vez</div>
 

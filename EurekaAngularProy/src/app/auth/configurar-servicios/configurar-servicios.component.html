@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-11">
                         <br>
-                        <div class="texto-azul ">Configura tus servicios </div>
+                        <div class="texto-azul title-conf-ser">Configura tus servicios </div>
                         <div class="d-flex justify-content-start">
                             <perfect-scrollbar class="content-container mt-5 mb-3">
                                 <div class="card-servicios mb-2" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
@@ -116,7 +116,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 pb-3" *ngIf="Formulario">
                 <br>
                 <div class="d-flex justify-content-end">
-                    <div class="formulario pp-5 bg-white ">
+                    <div class="formulario pp-5 bg-white formulario-reponsive">
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <div class="font-black">{{titulo}}

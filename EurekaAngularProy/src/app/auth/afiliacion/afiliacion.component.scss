@@ -11,7 +11,7 @@ body {
 }
 
 .descripcion {
-    @include font-text(18px !important, $weight: normal !important);
+    @include font-text(18px, $weight: normal !important);
     color: $negro;
 }
 
@@ -98,5 +98,13 @@ body {
 }
 
 .reponsive-afilacion1 {
+    display: none;
+}
+
+.repnsive-nbt-af {
+    display: block;
+}
+
+.repnsive-nbt-af1 {
     display: none;
 }

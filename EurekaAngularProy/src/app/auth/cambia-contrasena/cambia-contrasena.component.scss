@@ -6,7 +6,6 @@
 @import '~src/scss/mixin';
 @import '~src/scss/landing';
 @import '~src/scss/main';
-
 body {
     background-image: url("/assets/images/fondo.svg");
     //background-image: linear-gradient(58deg, rgba(60, 98, 175, 0.83), rgba(0, 169, 79, 0.64));
@@ -17,13 +16,14 @@ body {
     500);
     color: #ffffff;
 }
+
 .cuadro-form {
     @include cuadro(381px,
     464px);
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
-  //  border-width: 3.5vw 0vw!important;
+    //  border-width: 3.5vw 0vw!important;
     border-color: white !important;
     margin-top: 5vw !important;
 }
@@ -36,7 +36,7 @@ body {
     padding-top: 43px;
 }
 
-.margen{
+.margen {
     margin-left: 47px;
     margin-right: 67px;
 }
@@ -47,10 +47,11 @@ body {
     color: #0d131d;
 }
 
-.texto-azul-text{
-    @include font-text(16px, normal !important);
+.texto-azul-text {
+    @include font-text(16px,
+    normal !important);
     color: $azul;
-    text-align: center; 
+    text-align: center;
 }
 
 .btn-eureca-green {
@@ -76,10 +77,7 @@ body {
     1px,
     4px,
     0,
-    rgba(252,
-    154,
-    0,
-    0.2));
+    rgba(252, 154, 0, 0.2));
     &:hover {
         background-color: $blanco;
         border-radius: 4px;
@@ -89,17 +87,15 @@ body {
 }
 
 .reCaptach {
-    
     transform: scale(0.70);
     margin: 0vw;
     padding: 0vw;
     width: 232px;
 }
 
-.margen-inputs{
-    width: 258px; 
+.margen-inputs {
+    width: 258px;
 }
-
 
 .cuadro-form-Listo {
     @include cuadro(381px,
@@ -107,7 +103,7 @@ body {
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
-  //  border-width: 3.5vw 0vw!important;
+    //  border-width: 3.5vw 0vw!important;
     border-color: white !important;
     margin-top: 5vw !important;
 }
@@ -115,10 +111,10 @@ body {
 .reenviar {
     @include font-text(16px !important);
     color: #6e7177;
-    text-align: center; 
-     small{
+    text-align: center;
+    small {
         font-weight: 500;
-     }
+    }
 }
 
 .mat-form-field .mat-form-field-ripple {
@@ -144,4 +140,16 @@ body {
     500);
     color: #ffffff;
     margin-left: 80px;
+}
+
+.reponsive-img-login {
+    display: block;
+}
+
+.reponsive-img-login1 {
+    display: none;
+}
+
+.img-login {
+    margin-left: 60px;
 }

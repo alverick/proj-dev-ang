@@ -3,11 +3,11 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                <div class="texto-azul">Ingresa los datos de tu empresa </div>
+                <div class="texto-azul title-rp-emp">Ingresa los datos <br class="br-none-mobil"> de tu empresa </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                 <div class="d-flex justify-content-end">
-                    <div class="cuadro-form ppr-5 ppl-5 pt-4 pb-3  bg-white">
+                    <div class="cuadro-form ppr-5 ppl-5 pt-4 pb-3  bg-white cont-empresa">
                         <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
@@ -102,13 +102,16 @@
                             <div class="form-group">
                                 <mat-checkbox formControlName="acceptterms" id="styled-checkbox-1">
                                 </mat-checkbox>
-                                &nbsp; <label class="acepto  pt-4" for="styled-checkbox-1"> Acepto los</label><small (click)="terminos()"> términos y condiciones </small>
+                                &nbsp; <label class="acepto  pt-4" for="styled-checkbox-1 "> Acepto los</label><small (click)="terminos()"> términos y condiciones </small>
 
-                                <mat-error class="messsage-error" *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
+                                <mat-error class="messsage-error " *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
                             </div>
-                            <button type="submit" class="btn-big btn-eureca-grey-3 w-100 text-white" (click)="enviarDatosEmpresa()">
-                                  SIGUIENTE
-                            </button>
+                            <div class="bnt-cont-reg">
+                                <button type="submit" class="btn-big btn-eureca-grey-3 w-100 text-white" (click)="enviarDatosEmpresa()">
+                                    SIGUIENTE
+                              </button>
+                            </div>
+
                         </form>
                     </div>
                 </div>
