@@ -231,13 +231,13 @@ img.bell {
 .nabar-reponsive {
     position: absolute;
     background: #f0f0f0;
-    left: 0;
+    right: 1em;
     width: 200px;
-    top: 5.5em;
-    z-index: 99;
+    top: 5em;
     border: solid 1px #ccc;
     border-radius: 5px;
     padding: 0px;
+    z-index: 999;
 }
 
 .nabar-reponsive li a {
@@ -251,8 +251,8 @@ img.bell {
 .btn-nabar {
     background: #f0f0f0;
     border: solid 1px #ccc;
-    height: 40px;
-    width: 55px;
-    margin: .8em 0;
+    height: 36px;
+    width: 40px;
+    margin: 1.5em 0;
     border-radius: 5px;
 }
