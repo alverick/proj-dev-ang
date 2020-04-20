@@ -228,9 +228,9 @@ img.bell {
 }
 
 // -----------------nabar reponsive ----------
-.nabar-reponsive{
+.nabar-reponsive {
     position: absolute;
-    background: #0d131d;
+    background: #f0f0f0;
     left: 0;
     width: 200px;
     top: 5.5em;
@@ -241,8 +241,18 @@ img.bell {
 }
 
 .nabar-reponsive li a {
-margin:.5em !important;
+    margin: .5em !important;
 }
+
 .nabar-reponsive li {
     height: auto !important;
+}
+
+.btn-nabar {
+    background: #f0f0f0;
+    border: solid 1px #ccc;
+    height: 40px;
+    width: 55px;
+    margin: .8em 0;
+    border-radius: 5px;
 }
