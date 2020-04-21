@@ -9,6 +9,22 @@
 body {
     background-image: url("/assets/images/fondo.svg");
     //background-image: linear-gradient(58deg, rgba(60, 98, 175, 0.83), rgba(0, 169, 79, 0.64));
+    // height: 100vh;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 760px;
+    height: 100vh;
+}
+
+@media screen and (max-width: 1024px) {
+    body {
+        min-height: auto !important;
+        height: auto !important;
+    }
 }
 
 .texto-login {
