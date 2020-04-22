@@ -23,7 +23,7 @@ import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.20);
         font-size: 11px !important;
         padding: .5em .3em;
-        /* min-width:300px !important; */
+        min-width:300px !important;
       }
       :host >>> .tooltip.top .tooltip-arrow:before,
       :host >>> .tooltip.top .tooltip-arrow {

@@ -3,7 +3,7 @@
     <div class="form-group">
         <mat-form-field class="w-100">
             <!--  <label *ngIf="gtpMode && !_service.NewName" class="messsage-error" style="float: right;">Corregir este campo</label> -->
-            <input class="input-text" matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
+            <input class="input-text" matInput type="text" (input)="nameSerInput($event)" tooltip="Servicio que deberá elegir tu cliente al pagar" (blur)="nameSerBlur($event)" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
             <mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required')">El nombre es obligatorio</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
@@ -42,7 +42,7 @@
                     {{c.name}}
                 </mat-option>
             </mat-select>
-            <input class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod" (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
+            <input class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod" tooltip="Código debe ser numérico" (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
             <div *ngIf="f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
             <mat-error>
                 <mat-error class="messsage-error" *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>

@@ -152,7 +152,7 @@ export class AprobacionesComponent implements OnInit {
   }
 
   EnviarAprobados() {
-    debugger
+    // debugger
     console.log(this.gtpService.services);
     // limpiar el array
     this.scv = [];
@@ -191,7 +191,7 @@ export class AprobacionesComponent implements OnInit {
     console.log('cantidad de no aprobados' + notAprov);
     console.log('EMPRESA'+ this.Enterprise.NombreApproved +' ' + Empcant ); */
     this.emp = { ClientId: this.llave, NombreAprobado: this.Enterprise.NombreApproved };
-    debugger
+    // debugger
     console.log('ListInAprobacion', ListInAprobacion)
 
     ListInAprobacion.forEach(s => {
@@ -223,7 +223,7 @@ export class AprobacionesComponent implements OnInit {
             cancelButtonText: 'No, Solicitar corrección de datos',
             onOpen: drawPopup
           }).then((result) => {
-            debugger
+            // debugger
 
             if (result.value) {
               this.gtpService.AprobarEmpresaServ({ Rechaza: true, EnterpriseObj: this.emp, ListServiceObj: this.scv })
@@ -368,7 +368,7 @@ export class AprobacionesComponent implements OnInit {
 
         }).then((result) => {
           if (result.value) {
-            debugger
+            // debugger
             console.log('TODOS LOS CAMPOS AN SIDO APROBADO.......');
             if ((this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) && this.scv.length === 0) {
               console.log('NO ENVIA NADA ' + this.scv.length);
