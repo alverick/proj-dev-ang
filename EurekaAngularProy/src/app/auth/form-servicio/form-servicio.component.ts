@@ -24,6 +24,7 @@ import { drawPopup } from 'src/app/shared/services/popups';
       :host >>> .tooltip.top .tooltip-arrow:before,
       :host >>> .tooltip.top .tooltip-arrow {
         border-top-color: #0d131d57;
+        
       }
     `
   ]

@@ -33,6 +33,7 @@ declare var $: any;
       :host >>> .tooltip.top .tooltip-arrow:before,
       :host >>> .tooltip.top .tooltip-arrow {
         border-top-color: #0d131d57;
+        filter: brightness(0.5);
       }
     `
   ]
