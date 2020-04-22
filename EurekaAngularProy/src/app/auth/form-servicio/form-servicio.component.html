@@ -42,7 +42,7 @@
                     {{c.name}}
                 </mat-option>
             </mat-select>
-            <input class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod" tooltip="Código debe ser numérico" (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
+            <input class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod" (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
             <div *ngIf="f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
             <mat-error>
                 <mat-error class="messsage-error" *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required')">Elija una opcion</mat-error>
