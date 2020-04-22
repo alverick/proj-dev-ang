@@ -297,9 +297,9 @@ export class FormServicioComponent implements OnInit {
               });
               return;
             }
-            if (monto < 1) {
+            if (monto < 0.50) {
               Swal.fire({
-                text: 'el minimo monto que se puede ingresa es 1',
+                text: 'el minimo monto que se puede ingresa es 0.50',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,

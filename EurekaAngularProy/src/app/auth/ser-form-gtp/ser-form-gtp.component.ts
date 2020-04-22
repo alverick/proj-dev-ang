@@ -77,7 +77,7 @@ export class SerFormGtpComponent implements OnInit {
     console.log(this._service.nombreCodHabilitado);
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null &&  this._service.NewNameCod !== null);
-    var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
+    var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '0.50');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
 
@@ -210,9 +210,9 @@ export class SerFormGtpComponent implements OnInit {
               });
               return;
             }
-            if (monto < 1 ) {
+            if (monto < 0.50 ) {
               Swal.fire({
-                text: 'el minimo monto que se puede ingresa es 1',
+                text: 'el minimo monto que se puede ingresa es 0.50',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
@@ -465,7 +465,7 @@ export class SerFormGtpComponent implements OnInit {
 
       this.f.periodoMora.setValidators([Validators.required]);
       this.f.monto.enable();
-      this.f.monto.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)])
+      this.f.monto.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.50), Maximo(1000)])
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.disable();
       if (changeData) {
@@ -497,7 +497,7 @@ export class SerFormGtpComponent implements OnInit {
      this.cobraPorcentaje = (this.f.tipoMora.value === "P");
     if (this.cobraMora && this.cobraMonto) {
       this.f.monto.enable();
-      this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)]);
+      this.f.monto.setValidators([Validators.required,Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.50), Maximo(1000)]);
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.disable();
       if(changeData) {
