@@ -138,3 +138,9 @@ body {
     background-size: 4px 100%;
     background-repeat: repeat-x;
 }
+
+.subtitle-servicio {
+    @include font-text(18px, 500);
+    color: #0032a0;
+    text-align: center;
+}

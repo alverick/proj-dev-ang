@@ -46,7 +46,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   public titulo: string;
   public SvcEdit: ServicesGTPChange[];
   public onFormAction: EventEmitter<string> = new EventEmitter();
-
+  servicio_length = 9;
   constructor(public afiliacionService: AfiliacionService,
     private route: ActivatedRoute,
     private router: Router,
@@ -102,6 +102,7 @@ export class ConfigurarServiciosComponent implements OnInit {
             newNameGtpStatus: s.newNameGTPStatus,
             newNameCodeGtpStatus: s.newNameCodeGTPStatus
           });
+
         });
         return;
       }
@@ -122,6 +123,14 @@ export class ConfigurarServiciosComponent implements OnInit {
       }
     });
     console.log('afiliacionService.services', this.afiliacionService.services)
+    // setTimeout(() => {
+    //   if (this.afiliacionService.services.length > 9) {
+    //     this.servicio_length = ('0' + this.afiliacionService.services.length);
+    //   } else {
+    //     this.servicio_length = (this.afiliacionService.services.length);
+    //   }
+      console.log('servicio_length', this.servicio_length)
+    // }, 1000);
 
   }
 
