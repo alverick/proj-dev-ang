@@ -140,6 +140,7 @@ declare var $: any;
             'event_category': 'CargaExcel',
             'event_label': 'cargar_excel'
           });
+          this.gaService.sendUrl('loteCargado', '/loteCargado');
           this.excelService.statusUpload = false;
           this.excelService.errores = [];
           var obsClose = new Observable(observer => {

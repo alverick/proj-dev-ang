@@ -14,7 +14,12 @@ export class LandingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.gaService.sendEvent('Landing', {
+      'event_category': 'Landing',
+      'event_label': 'ingreso_landing'
+    });
   }
+
   clickRegistrarse() {
     this.gaService.sendEvent('Registrarme', {
       'event_category': GoogleAnalytics.Afiliacion,

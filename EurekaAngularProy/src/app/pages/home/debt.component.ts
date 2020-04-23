@@ -5,6 +5,7 @@ import { HomeService } from "src/app/shared/services/home.service";
 import Swal from "sweetalert2";
 import { drawPopup } from "src/app/shared/services/popups";
 import { ExcelService } from "src/app/shared/services/excel.service";
+import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
 
 const MY_FORMATS = {
   parse: {
@@ -33,7 +34,8 @@ const MY_FORMATS = {
 export class DebtComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<DebtComponent>,
     private homeService: HomeService,
-    public excelService: ExcelService) { }
+    public excelService: ExcelService,
+    private gaService: GoogleAnalytics) { }
 
   public grabado = false;
   public services: any[];
@@ -215,6 +217,11 @@ export class DebtComponent implements OnInit {
       .subscribe(r => {
         if (r.success) {
           this.grabado = true;
+          this.gaService.sendEvent('AgregaDeuda', {
+            'event_category': 'Dashboard',
+            'event_label': 'agrega_deuda'
+          });
+          this.gaService.sendUrl('deudaCargada', '/deudaCargada');
           Swal.fire({
             title: 'Agregar Cobro' ,
             html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',

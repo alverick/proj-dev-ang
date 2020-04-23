@@ -151,7 +151,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
         enterpriseUpdate => {
           if ( enterpriseUpdate.success === true ) {
             this.gaService.sendEvent('ActualizaDatosEmpresa', {
-              'event_category': 'Configuración',
+              'event_category': GoogleAnalytics.Dashboard,
               'event_label': 'actualiza_datos_empresa'
             });
             this.butDisabled = false;

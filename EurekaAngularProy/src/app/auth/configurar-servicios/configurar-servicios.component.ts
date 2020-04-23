@@ -323,9 +323,10 @@ export class ConfigurarServiciosComponent implements OnInit {
         return;
       }
       this.gaService.sendEvent('EnviarServicios', {
-        'event_category': GoogleAnalytics.Afiliacion,
+        'event_category': (this.inEdit ? GoogleAnalytics.Dashboard : GoogleAnalytics.Afiliacion),
         'event_label': 'enviar_servicios'
       });
+      this.gaService.sendUrl('servicioNuevo', '/servicioNuevo');
       this.afiliacionService.GrabarServicios()
         .subscribe(r => {
           if (this.inEdit) {
@@ -465,7 +466,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     if (((svc.nombre !== svc.newName) && (svc.nombre === '?')) || ((svc.codDeudor  !== svc.newNameCode ) && (svc.codDeudor === '?') )) {
       return true;
     }
-  
+
     if ((svc.nombre !== svc.newName) || ((svc.nameCod  !== svc.newNameCode) ||
      (svc.codDeudor  !== svc.newNameCode)  )) {
       return true;
@@ -586,7 +587,7 @@ export class ConfigurarServiciosComponent implements OnInit {
             this.afiliacionService.SendDelService(index)
               .subscribe(r => {
                 this.gaService.sendEvent('ServicioEliminado', {
-                  'event_category': GoogleAnalytics.Afiliacion,
+                  'event_category': GoogleAnalytics.Dashboard,
                   'event_label': 'servicio_eliminado'
                 });
                 Swal.fire({
@@ -612,6 +613,10 @@ export class ConfigurarServiciosComponent implements OnInit {
       }).then(r => {
         if (r.value) {
           this.afiliacionService.DelService(index);
+          this.gaService.sendEvent('ServicioEliminado', {
+            'event_category': GoogleAnalytics.Afiliacion,
+            'event_label': 'servicio_eliminado'
+          });
         }
       });
     }
@@ -685,7 +690,17 @@ export class ConfigurarServiciosComponent implements OnInit {
 
 
         }
-
+        if (!svc.id) {
+          this.gaService.sendEvent('ServicioAgregado', {
+            'event_category': GoogleAnalytics.Dashboard,
+            'event_label': 'servicio_agregado'
+          });
+        } else {
+          this.gaService.sendEvent('ServicioModificado', {
+            'event_category': GoogleAnalytics.Dashboard,
+            'event_label': 'servicio_modificado'
+          });
+        }
       } else {
         if (svc.newNameGtpStatus === 3) {
           if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {
