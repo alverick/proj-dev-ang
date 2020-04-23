@@ -99,7 +99,7 @@ body {
 }
 
 .content-container {
-    // overflow-y: auto;
+    // overflow-y   : auto;
     max-height: 500px;
     background-color: #f4f5f7;
 }
@@ -143,4 +143,9 @@ body {
     @include font-text(18px, 500);
     color: #0032a0;
     text-align: center;
+}
+
+.btn-finalizar-s {
+    text-align: center;
+    max-width: 360px;
 }

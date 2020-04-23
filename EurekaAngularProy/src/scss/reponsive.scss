@@ -118,7 +118,7 @@
          right: 0px !important;
      }
      .cont-txt-beneficio {
-         padding: 0em 4em !important;
+         padding: 0em 3em !important;
      }
      .btn-landigs-registro {
          padding: 2em 0em 1em !important;
@@ -150,10 +150,10 @@
          font-size: 32px !important;
      }
      .title-beneficio-sub {
-         font-size: 20px;
+         font-size: 20px !important;
      }
      .text-beneficio {
-         font-size: 16px;
+         font-size: 16px !important;
      }
      .text-simple-pago {
          font-size: 18px !important;
@@ -188,13 +188,9 @@
      .text-afilacion4 {
          font-size: 16 !important;
      }
-     .text-afilacion3 {
-         font-size: 12px !important;
-         text-align: center !important;
-     }
      .bnt-cont-reg {
          text-align: center !important;
-         max-width: 280px !important;
+         //  max-width: 280px !important;
          margin: auto !important;
      }
      .title-rp-emp {
@@ -220,6 +216,17 @@
      .img-login-ing {
          width: 475px !important;
          height: 361px !important;
+     }
+     .btn-agreagr-s {
+         width: 100% !important;
+     }
+     .btn-finalizar-s {
+         text-align: center;
+         width: 100% !important;
+         max-width: initial !important;
+     }
+     .br-none-escritorio {
+         display: none !important;
      }
  }
  
@@ -346,7 +353,7 @@
          margin: .5em !important;
      }
      .cont-txt-beneficio {
-         padding: 0em 1.5em !important;
+         padding: 0em 1em !important;
      }
      .text-footer {
          text-align: center !important;
@@ -410,7 +417,7 @@
          //  padding-right: 56px;
      }
      .cont-txt-beneficio {
-         padding: 0em .8em !important;
+         padding: 0em .5em !important;
      }
  }
  
@@ -492,10 +499,10 @@
          color: #0032a0;
      }
      .title-beneficio-sub {
-         font-size: 16px;
+         font-size: 16px !important;
      }
      .text-beneficio {
-         font-size: 14px;
+         font-size: 14px !important;
      }
      .img-beneficios-repn {
          width: 100% !important;
@@ -607,8 +614,8 @@
      }
      .img-login {
          margin-left: 0px !important;
-         width: 181px !important;
-         height: 54px !important;
+         width: 134px !important;
+         height: 40px !important;
      }
      .repn-ini {
          display: none !important;
@@ -629,6 +636,12 @@
      }
      .subtitle-servicio {
          font-size: 16px !important;
+     }
+     .btn-agreagr-s {
+         width: 100% !important;
+     }
+     .sub-el {
+         text-align: center;
      }
  }
  
