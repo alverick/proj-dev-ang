@@ -73,7 +73,11 @@
             <mat-error class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('minlength')">Elija una opcion</mat-error>
         </mat-form-field>
     </div>
-    <span class="texto-medios ">  Elige los medios por los cuales tus clientes te pagarán  </span>
+    <!-- <span class="texto-medios ">  Elige los medios por los cuales tus <br class="br-none-mobil"> clientes te pagarán  </span> -->
+    <div class="sub-el">
+        <span class="texto-medios">  Elige los medios por los cuales tus <br class="br-none-mobil"> clientes te pagarán </span>
+    </div>
+
 
     <div class="card-deck mb-3 text-center reponsive-servicio-pago1">
         <br>
@@ -86,10 +90,14 @@
                             </mat-checkbox>
                         </div>
                         <div class="card-title texto-black"> Digital </div>
-                        <div class="pt-4">
-                            <div class="texto-d-medios"> Banca por internet, Interbank APP </div>
-                            <div class="pt-1 texto-green">GRATIS</div>
+                        <!-- <div class="pt-4"> -->
+                        <div class="texto-d-medios">
+                            <!-- Banca por internet, Interbank APP  -->
+                            Interbank APP <br> y Banca por <br> internet
+
                         </div>
+                        <div class="pt-1 texto-green">GRATIS</div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -101,11 +109,11 @@
                             </mat-checkbox>
                         </div>
                         <div class="card-title texto-black"> Agentes </div>
-                        <div class="pt-4">
-                            <div class="texto-d-medios">Lima y provincias </div>
-                            <div class="pt-3 texto-green">{{simboloMoneda}} {{comAgente}}</div>
-                            <div class="pt-1 texto-p-medios">por transacción </div>
-                        </div>
+                        <!-- <div class="pt-4"> -->
+                        <div class="texto-d-medios">Lima y <br> provincias </div>
+                        <div class="pt-3 texto-green">{{simboloMoneda}} {{comAgente}}</div>
+                        <div class="pt-1 texto-p-medios">por transacción </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -119,11 +127,11 @@
                         <div class="card-title texto-black"> Tiendas <br>
                             <div class="ventanilla">(Ventanilla)</div>
                         </div>
-                        <div class="pt-2">
-                            <div class="texto-d-medios">Lima y provincias </div>
-                            <div class="pt-3 texto-green">{{simboloMoneda}} {{comTienda}}</div>
-                            <div class="pt-1 texto-p-medios">por transacción </div>
-                        </div>
+                        <!-- <div class="pt-2"> -->
+                        <div class="texto-d-medios">Lima y <br> provincias </div>
+                        <div class="pt-2 texto-green">{{simboloMoneda}} {{comTienda}}</div>
+                        <div class="pt-1 texto-p-medios">por transacción </div>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -139,10 +147,14 @@
                     </mat-checkbox>
                 </div>
                 <div class="card-title texto-black"> Digital </div>
-                <div class="pt-4">
-                    <div class="texto-d-medios"> Banca por internet, Interbank APP </div>
-                    <div class="pt-1 texto-green">GRATIS</div>
+                <!-- <div class="pt-4"> -->
+                <div class="texto-d-medios">
+                    <!-- Banca por internet, Interbank APP  -->
+                    Interbank APP <br> y Banca por <br> internet
+
                 </div>
+                <div class="pt-1 texto-green">GRATIS</div>
+                <!-- </div> -->
             </div>
         </div>
         <div class="card-medio-pago ml-2">
@@ -152,11 +164,11 @@
                     </mat-checkbox>
                 </div>
                 <div class="card-title texto-black"> Agentes </div>
-                <div class="pt-4">
-                    <div class="texto-d-medios">Lima y provincias </div>
-                    <div class="pt-3 texto-green">{{simboloMoneda}} {{comAgente}}</div>
-                    <div class="pt-1 texto-p-medios">por transacción </div>
-                </div>
+                <!-- <div class="pt-4"> -->
+                <div class="texto-d-medios">Lima y <br> provincias </div>
+                <div class="pt-3 texto-green">{{simboloMoneda}} {{comAgente}}</div>
+                <div class="pt-1 texto-p-medios">por transacción </div>
+                <!-- </div> -->
             </div>
         </div>
         <div class="card-medio-pago ml-2">
@@ -168,11 +180,11 @@
                 <div class="card-title texto-black"> Tiendas <br>
                     <div class="ventanilla">(Ventanilla)</div>
                 </div>
-                <div class="pt-2">
-                    <div class="texto-d-medios">Lima y provincias </div>
-                    <div class="pt-3 texto-green">{{simboloMoneda}} {{comTienda}}</div>
-                    <div class="pt-1 texto-p-medios">por transacción </div>
-                </div>
+                <!-- <div class="pt-2"> -->
+                <div class="texto-d-medios">Lima y <br> provincias </div>
+                <div class="pt-2 texto-green">{{simboloMoneda}} {{comTienda}}</div>
+                <div class="pt-1 texto-p-medios">por transacción </div>
+                <!-- </div> -->
             </div>
         </div>
     </div>

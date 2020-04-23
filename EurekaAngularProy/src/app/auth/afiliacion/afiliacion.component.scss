@@ -16,7 +16,7 @@ body {
 }
 
 .texto-tipos {
-    @include font-text(20px, $weight: normal!important);
+    @include font-text(20px, $weight: normal !important);
     color: $negro;
 }
 
@@ -107,4 +107,12 @@ body {
 
 .repnsive-nbt-af1 {
     display: none;
+}
+
+.text-afilacion3 {
+    @include font-text(12px !important, );
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #0d131d;
 }
