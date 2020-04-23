@@ -22,7 +22,8 @@
 }
 
 :-ms-input-placeholder.mat-input-element {
-    color: rgba(0, 0, 0, 0.42) !important;
+    // color: rgba(0, 0, 0, 0.42) !important;
+    color: rgba(0, 0, 0, 0.42);
 }
 
 .swal2-styled {
@@ -68,12 +69,4 @@
 
 .btn-fn1 {
     display: none;
-}
-
-.mat-form-field-hide-placeholder .mat-select-placeholder {
-    color: transparent !important;
-}
-
-.mat-form-field-hide-placeholder :-ms-input-placeholder.mat-input-element {
-    color: transparent !important;
 }

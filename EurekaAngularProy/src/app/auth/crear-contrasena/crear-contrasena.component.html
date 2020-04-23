@@ -11,8 +11,8 @@
                         <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input class="input-text" tooltip="El RUC de tu empresa con el que ingresarás a la plataforma" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC de tu empresa" appOnlynumbers
-                                        minlength="11" maxlength="11">
+                                    <input class="input-text" aria-describedby="tooltip-0" tooltip="El RUC de tu empresa con el que ingresarás a la plataforma" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC de tu empresa"
+                                        appOnlynumbers minlength="11" maxlength="11">
                                     <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
                                     <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
                                     <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
