@@ -107,7 +107,7 @@
                                 <mat-error class="messsage-error " *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
                             </div>
                             <div class="bnt-cont-reg">
-                                <button type="submit" class="btn-big btn-eureca-grey-3 w-100 text-white" (click)="enviarDatosEmpresa()">
+                                <button type="submit" class="btn-big btn-eureca-green w-100 text-white" (click)="enviarDatosEmpresa()" [disabled]="registerForm.value.acceptterms==false" [class.btn-disabled]="registerForm.value.acceptterms==false">
                                     SIGUIENTE
                               </button>
                             </div>

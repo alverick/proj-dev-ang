@@ -507,6 +507,7 @@ b {
 
 :host ::ng-deep .mat-form-field .mat-form-field-label {
     @include font-text(14px, normal !important);
+    // color: #0d131d !important;
     color: #0d131d !important;
 }
 

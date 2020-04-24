@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit {
     if (this.router.url.includes('/login') ||
       this.router.url.includes('/cambiaContra') ||
       this.router.url.includes('/recupera') ||
-      this.router.url.includes('/afiliacion') ||
+      // this.router.url.includes('/afiliacion') ||
       this.router.url.includes('/crearContrasena') ||
       this.router.url.includes('/editaCuenta') ||
       this.router.url.includes('/editarSvcGTP') ||

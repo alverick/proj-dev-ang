@@ -6,6 +6,15 @@
      }
  }
  
+ @media screen and (max-width: 1200px) {
+     .img-beneficios {
+         width: 490px !important;
+         height: 370px !important;
+         position: absolute !important;
+         bottom: 0;
+     }
+ }
+ 
  @media screen and (max-width: 1024px) {
      //  .reponsive-img-pago {
      //      display: block !important;
@@ -111,6 +120,7 @@
      .img-beneficios {
          width: 431px !important;
          height: 360px !important;
+         position: initial !important;
      }
      .img-cobro-simple {
          width: 100% !important;
@@ -118,22 +128,14 @@
          right: 0px !important;
      }
      .cont-txt-beneficio {
-         padding: 0em 3em !important;
+         padding: 0em .5em !important;
      }
      .btn-landigs-registro {
          padding: 2em 0em 1em !important;
      }
-     //  .reponsive-afilacion{
+     //  .cuadro-canales {
+     //      //  margin: auto !important;
      //  }
-     .reponsive-afilacion {
-         display: none !important;
-     }
-     .reponsive-afilacion1 {
-         display: block !important;
-     }
-     .cuadro-canales {
-         margin: auto !important;
-     }
      .img-login {
          margin-left: 0px !important;
          width: 158px !important;
@@ -179,7 +181,6 @@
      }
      .text-afilacion1 {
          font-size: 18px !important;
-         text-align: center !important;
      }
      .text-afilacion2 {
          font-size: 18px !important;
@@ -254,11 +255,12 @@
      }
  }
  
- //  @media screen and (max-width: 900px) {
- //      .reponsive-afilacion {
- //          margin-left: 5em !important;
- //      }
- //  }
+ @media screen and (max-width: 991px) {
+     .reponsive-afilacion {
+         margin: 0em 2em !important;
+     }
+ }
+ 
  @media screen and (max-width: 800px) {
      body {
          font-size: 0.8em !important;
@@ -306,15 +308,13 @@
          padding: 2em 0em 1em !important;
          text-align: center !important;
      }
-     //  .reponsive-afilacion {
-     //      margin-left: 0em !important;
-     //  }
      .cuadro-form {
          width: 100% !important;
          //  padding: 0em 5em !important;
      }
      .cont-login {
          padding: 0em 2em !important;
+         width: 60% !important;
      }
      .cont-empresa {
          padding: 0em 5em !important;
@@ -353,22 +353,52 @@
          margin: .5em !important;
      }
      .cont-txt-beneficio {
-         padding: 0em 1em !important;
+         padding: 0em .5em !important;
      }
      .text-footer {
          text-align: center !important;
      }
-     .cuadro-canales {
-         width: 146px !important;
-         height: 193px !important;
-         padding: .5em !important;
-     }
-     .formulario-reponsive {
-         padding: 2em 2em !important;
-     }
+     //  .cuadro-canales {
+     //      width  : 146px !important;
+     //      height : 193px !important;
+     //      padding: .5em !important;
+     //  }
+     //   .formulario-reponsive {
+     //       padding: 2em 8em !important;
+     //   }
      #cont-empresa-editar {
          padding: 2em 2em !important;
          padding-left: 2rem !important;
+     }
+     .img-pagos {
+         width: 150px !important;
+         height: 250px !important;
+         left: 0px !important;
+         margin: auto !important;
+         position: initial !important;
+     }
+     //  .reponsive-afilacion {
+     //      margin: 0em 5em !important;
+     //  }
+ }
+ 
+ @media screen and (max-width: 780px) {
+     .formulario-reponsive {
+         padding: 2em 2em !important;
+     }
+     .cont-login {
+         width: 70% !important;
+     }
+ }
+ 
+ @media screen and (max-width: 767px) {
+     .reponsive-afilacion {
+         margin: 0em 0em !important;
+     }
+     .cuadro-canales {
+         width: 135px !important;
+         height: 180px !important;
+         padding: .5em !important;
      }
  }
  
@@ -395,8 +425,8 @@
          padding: 0em 2em !important;
      }
      .cont-login {
-         width: 100% !important;
-         padding: 0em 2em !important;
+         width: 80% !important;
+         padding: 1.5em 2em !important;
      }
      .formulario-reponsive {
          padding: 2em 2em !important;
@@ -418,6 +448,13 @@
      }
      .cont-txt-beneficio {
          padding: 0em .5em !important;
+     }
+     .cuadro-canales {
+         width: 138px !important;
+         padding: .5em !important;
+     }
+     .reponsive-afilacion {
+         padding: 0em !important;
      }
  }
  
@@ -451,20 +488,6 @@
      .title-login {
          font-size: 22px !important;
      }
-     .reponsive-afilacion {
-         display: none !important;
-     }
-     .reponsive-afilacion1 {
-         display: block !important;
-     }
-     .cuadro-canales {
-         margin: auto !important;
-         padding: .5em !important;
-         padding-bottom: .8em !important;
-         height: auto !important;
-         margin-bottom: .8em !important;
-         width: 179px !important;
-     }
      .swal2-title {
          font-size: 16px !important;
      }
@@ -484,6 +507,9 @@
      }
      .text-titulo {
          font-size: 22px !important;
+     }
+     .cuadro-canales {
+         width: 130px !important;
      }
  }
  
@@ -584,6 +610,7 @@
      }
      .text-afilacion1 {
          font-size: 14px !important;
+         text-align: center !important;
      }
      .text-afilacion2 {
          font-size: 14px !important;
@@ -642,6 +669,24 @@
      }
      .sub-el {
          text-align: center;
+     }
+     .cont-login {
+         width: 100% !important;
+     }
+     .reponsive-afilacion {
+         display: none !important;
+     }
+     .reponsive-afilacion1 {
+         display: block !important;
+     }
+     .cuadro-canales {
+         margin: auto !important;
+         padding: .5em !important;
+         padding-bottom: .8em !important;
+         height: auto !important;
+         margin-bottom: .8em !important;
+         width: 176px !important;
+         //  height: 130px !important;
      }
  }
  
