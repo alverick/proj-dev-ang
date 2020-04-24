@@ -13,6 +13,9 @@
          position: absolute !important;
          bottom: 0;
      }
+     .container-beneficios {
+         padding: 0em 0em 3em !important;
+     }
  }
  
  @media screen and (max-width: 1024px) {
@@ -123,9 +126,12 @@
          position: initial !important;
      }
      .img-cobro-simple {
-         width: 100% !important;
+         //  width: 100% !important;
+         //  height: 228px !important;
+         //  right: 0px !important;
          height: 228px !important;
-         right: 0px !important;
+         width: 592px !important;
+         right: -92px !important;
      }
      .cont-txt-beneficio {
          padding: 0em .5em !important;
@@ -229,6 +235,9 @@
      .br-none-escritorio {
          display: none !important;
      }
+     .container-beneficios {
+         padding: 0em 0em 0em !important;
+     }
  }
  
  @media screen and (max-width: 1000px) {
@@ -258,6 +267,14 @@
  @media screen and (max-width: 991px) {
      .reponsive-afilacion {
          margin: 0em 2em !important;
+     }
+ }
+ 
+ @media screen and (max-width: 860px) {
+     .img-pagos {
+         width: 170px !important;
+         height: 300px !important;
+         left: -15px;
      }
  }
  
@@ -371,11 +388,11 @@
          padding-left: 2rem !important;
      }
      .img-pagos {
-         width: 150px !important;
+         width: 142px !important;
          height: 250px !important;
-         left: 0px !important;
+         left: -18px !important;
          margin: auto !important;
-         position: initial !important;
+         //  position: initial !important;
      }
      //  .reponsive-afilacion {
      //      margin: 0em 5em !important;
@@ -400,17 +417,42 @@
          height: 180px !important;
          padding: .5em !important;
      }
+     .title-contacto-sub-right-correo {
+         text-align: left !important;
+     }
+     .title-contacto-sub-right-correo {
+         text-align: left !important;
+     }
+     .title-contacto-sub-right-numero {
+         text-align: left !important;
+     }
+     .title-contacto-sub-right-contacto {
+         text-align: left !important;
+     }
+     .img-pagos {
+         width: 170px !important;
+         height: 250px !important;
+         left: 0 !important;
+         margin: auto !important;
+         position: initial !important;
+     }
+     .img-cobro-simple {
+         width: 256px !important;
+         height: 141px !important;
+         right: 0em !important;
+         //  position: initial !important;
+     }
  }
  
  @media screen and (max-width: 700px) {
      body {
          font-size: 0.8em !important;
      }
-     .img-pagos {
-         width: 150px !important;
-         height: 250px !important;
-         left: 0px !important;
-     }
+     //  .img-pagos {
+     //      width: 150px !important;
+     //      height: 250px !important;
+     //      left: 0px !important;
+     //  }
      .reponsive-emp {
          display: none !important;
      }
@@ -455,6 +497,12 @@
      }
      .reponsive-afilacion {
          padding: 0em !important;
+     }
+     .none-footer {
+         display: none !important;
+     }
+     .none-footer1 {
+         display: block !important;
      }
  }
  
@@ -511,6 +559,12 @@
      .cuadro-canales {
          width: 130px !important;
      }
+     .br-none-mobil {
+         display: block !important;
+     }
+     .br-none-tablet {
+         display: none !important;
+     }
  }
  
  @media screen and (max-width: 570px) {
@@ -564,24 +618,12 @@
      .btn-eureca-green {
          width: 220px !important;
      }
-     .none-footer {
-         display: none !important;
-     }
-     .none-footer1 {
-         display: block !important;
-     }
      .ps-content {
          padding: 0em .1em !important;
      }
      //  .ppr-5 {
      //      padding-right: 1rem !important;
      //  }
-     .br-none-mobil {
-         display: block !important;
-     }
-     .br-none-tablet {
-         display: none !important;
-     }
      .img-beneficios {
          width: 256px !important;
          height: 214px !important;
@@ -687,6 +729,17 @@
          margin-bottom: .8em !important;
          width: 176px !important;
          //  height: 130px !important;
+     }
+     .mat-select-panel {
+         min-width: 220px !important;
+         max-width: 100% !important;
+         //  transform: rotateY(45deg) !important;
+     }
+     .mat-option-text {
+         font-size: 12px !important;
+     }
+     .btn-landigs-registro {
+         padding: 2em 0em 0em !important;
      }
  }
  

@@ -28,14 +28,19 @@
 
 
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" *ngIf="menu()">
-    <div class="custom-container">
+    <div [ngClass]="{ 'custom-container':  !onClass(),'container':  onClass()}">
         <a class="navbar-brand" href="#">
             <img style="max-width: 250px;" src="assets/images/cobrosimple-verde.svg" alt="" class="img-logo-menu">
         </a>
         <div *ngIf="show()" class="collapse custom-navbar-collapse">
-            <ul *ngIf="!IsHome" class="navbar-nav ml-auto">
+            <ul *ngIf="!IsHome && onAfilacion()" class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link lnk-regresar" (click)="goBack()"><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
+                </li>
+            </ul>
+            <ul *ngIf="!IsHome &&  !onAfilacion()" class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link lnk-regresar" (click)="goBackEmpresa()"><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
                 </li>
             </ul>
             <!-- <div class="reponsive-emp"> -->

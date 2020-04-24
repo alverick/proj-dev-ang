@@ -19,6 +19,7 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 .mat-select-panel {
     min-width: 220px !important;
+    max-width: 100% !important;
 }
 
 :-ms-input-placeholder.mat-input-element {
