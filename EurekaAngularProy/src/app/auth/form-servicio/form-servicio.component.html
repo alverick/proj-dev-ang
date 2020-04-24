@@ -38,7 +38,7 @@
             <mat-label class="label">Código cliente</mat-label>
             <mat-select class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering panelClass="pts30" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
                 <!--   <mat-option class="input-text">Código Deudor</mat-option>-->
-                <mat-option class="input-text" *ngFor="let c of codDeudor" [value]="c.code">
+                <mat-option class="input-text options-select" *ngFor="let c of codDeudor" [value]="c.code">
                     {{c.name}}
                 </mat-option>
             </mat-select>

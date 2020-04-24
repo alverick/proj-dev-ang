@@ -288,7 +288,7 @@ export class FormServicioComponent implements OnInit {
           if (monto !== null) {
             if (monto > 1000) {
               Swal.fire({
-                text: 'el maximo monto que se puede ingresa es 1000',
+                text: 'el maximo monto que se puede ingresar es 1000',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
@@ -300,7 +300,7 @@ export class FormServicioComponent implements OnInit {
             }
             if (monto < 0.50) {
               Swal.fire({
-                text: 'el minimo monto que se puede ingresa es 0.50',
+                text: 'el minimo monto que se puede ingresar es 0.50',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
@@ -390,7 +390,7 @@ export class FormServicioComponent implements OnInit {
           }
           if (porcentaje > 100) {
             Swal.fire({
-              text: 'el maximo porcentaje que se puede ingresa es 100',
+              text: 'el maximo porcentaje que se puede ingresar es 100',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,

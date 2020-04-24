@@ -330,3 +330,7 @@ body {
     height: 16px !important;
     width: 16px !important;
 }
+
+:host ::ng-deep .mat-select-panel {
+    max-width: 100% !important;
+}
