@@ -244,7 +244,8 @@ body {
 
 :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     font-size: 10px !important;
-    color: #0d131d !important;
+    // color: #0d131d !important;
+    color: #0d131d;
 }
 
 .radio-group {
