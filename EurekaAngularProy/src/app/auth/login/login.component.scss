@@ -27,7 +27,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 765px;
+    min-height: 762px;
     height: 100vh;
 }
 
@@ -203,8 +203,8 @@ div.mat-form-field-infix {
 }
 
 .img-login-ing {
-    width: 537px;
-    height: 447px;
+    width: 570px;
+    height: 428px;
 }
 
 .title-login-login {
@@ -298,6 +298,7 @@ small {
     border-width: 2vw 2.7vw !important;
     border-color: white !important;
     margin: auto;
+    margin-top: 1vw !important;
     /*margin-top    : 5vw !important;*/
 }
 
@@ -338,7 +339,7 @@ small {
 }
 
 .cont-logo {
-    padding-bottom: 2em;
+    padding-bottom: 4em;
 }
 
 .reponsive-img-login {

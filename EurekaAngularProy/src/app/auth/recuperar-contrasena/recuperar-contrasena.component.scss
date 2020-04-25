@@ -16,7 +16,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 720px;
+    min-height: 799px;
     height: 100vh;
 }
 
@@ -41,7 +41,7 @@ body {
     border-style: solid !important;
     //  border-width: 3.5vw 0vw!important;
     border-color: white !important;
-    margin-top: 5vw !important;
+    margin-top: 1vw !important;
 }
 
 .texto-azul {
@@ -185,6 +185,10 @@ body {
 }
 
 .img-login-ing {
-    width: 537px;
-    height: 447px;
+    width: 640px;
+    height: 483px;
+}
+
+.cont-logo {
+    padding-bottom: 4em;
 }

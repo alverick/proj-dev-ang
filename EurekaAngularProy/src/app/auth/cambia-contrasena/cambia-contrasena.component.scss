@@ -33,6 +33,10 @@ body {
     color: #ffffff;
 }
 
+.cont-contrasena {
+    padding-bottom: 2em;
+}
+
 .cuadro-form {
     @include cuadro(381px,
     464px);
