@@ -204,11 +204,6 @@ div.mat-form-field-infix {
     height: 48px;
 }
 
-.text-green {
-    color: $green;
-    font-weight: bold;
-}
-
 .texto-azul {
     @include font-text(28px,
     500);

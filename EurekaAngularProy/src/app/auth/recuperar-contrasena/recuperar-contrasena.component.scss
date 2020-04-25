@@ -16,7 +16,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 799px;
+    min-height: 849px;
     height: 100vh;
 }
 
@@ -158,6 +158,8 @@ body {
 
 .img-login {
     margin-left: 60px;
+    width: 158px;
+    height: 47px;
 }
 
 .br-none-tablet {
@@ -169,7 +171,7 @@ body {
 }
 
 .title-login {
-    @include font-text(48px,
+    @include font-text(55px,
     500);
     color: #ffffff;
     font-family: Geometria;
@@ -190,5 +192,5 @@ body {
 }
 
 .cont-logo {
-    padding-bottom: 4em;
+    padding-bottom: 6em;
 }

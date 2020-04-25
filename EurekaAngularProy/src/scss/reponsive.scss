@@ -91,9 +91,12 @@
         margin: auto !important;
     }
     .card-medio-pago {
-        width: 145px !important;
         padding: .5em;
-        height: 200px !important;
+        width: 116px !important;
+        height: 170px !important;
+    }
+    .formulario-reponsive {
+        padding: 2em 4.5em !important;
     }
     .input-text {
         margin-top: .3em !important;
@@ -131,26 +134,14 @@
         position: initial !important;
     }
     .img-cobro-simple {
-        //  width : 100% !important;
-        //  height: 228px !important;
-        //  right : 0px !important;
         height: 228px !important;
         width: 457px !important;
-        //  right : -92px !important;
     }
     .cont-txt-beneficio {
         padding: 0em .5em !important;
     }
     .btn-landigs-registro {
         padding: 2em 0em 1em !important;
-    }
-    //  .cuadro-canales {
-    //      //  margin: auto !important;
-    //  }
-    .img-login {
-        margin-left: 0px !important;
-        width: 158px !important;
-        height: 47px !important;
     }
     .cont-login {
         width: 450px !important;
@@ -214,9 +205,6 @@
         font-size: 28px !important;
         padding: 0em !important;
     }
-    .formulario-reponsive {
-        padding: 2em 9em !important;
-    }
     .seleccionado-card {
         border: 0px !important;
     }
@@ -279,6 +267,14 @@
     .img-cobro-simple {
         height: 200px !important;
         width: 368px !important;
+    }
+    .card-medio-pago {
+        padding: 0px !important;
+        width: 116px !important;
+        height: 161px !important;
+    }
+    .formulario-reponsive {
+        padding: 2.5em 11em !important;
     }
 }
 
@@ -413,6 +409,12 @@
         height: 181px !important;
         width: 324px !important;
     }
+    #btn-regresar {
+        display: none !important;
+    }
+    .formulario-reponsive {
+        padding: 2.5em 11em !important;
+    }
 }
 
 @media screen and (max-width: 780px) {
@@ -422,6 +424,9 @@
     .cont-login {
         width: 70% !important;
     }
+    .formulario-reponsive {
+        padding: 2.5em 10em !important;
+    }
 }
 
 @media screen and (max-width: 767px) {
@@ -430,8 +435,8 @@
     }
     .cuadro-canales {
         width: 135px !important;
-        height: 180px !important;
-        padding: .5em !important;
+        height: 165px !important;
+        padding: 1em !important;
     }
     .title-contacto-sub-right-correo {
         text-align: left !important;
@@ -457,6 +462,9 @@
         height: 141px !important;
         right: 0em !important;
         //  position: initial !important;
+    }
+    .formulario-reponsive {
+        padding: 2.5em 5em !important;
     }
 }
 
@@ -487,7 +495,7 @@
         padding: 1.5em 2em !important;
     }
     .formulario-reponsive {
-        padding: 2em 2em !important;
+        padding: 2em 4.5em !important;
     }
 }
 
@@ -495,9 +503,10 @@
     .landings-footer {
         height: auto !important;
         text-align: center;
+        padding: 1.4em 0em !important;
     }
     .logo-footer {
-        margin: 1em 0em;
+        margin: 0em 0em .8em;
     }
     .margen {
         padding: .5em !important;
@@ -509,7 +518,7 @@
     }
     .cuadro-canales {
         width: 138px !important;
-        padding: .5em !important;
+        padding: 1em !important;
     }
     .reponsive-afilacion {
         padding: 0em !important;
@@ -555,31 +564,15 @@
     .swal2-title {
         font-size: 16px !important;
     }
-    .reponsive-servicio-pago {
-        display: none !important;
-    }
-    .reponsive-servicio-pago1 {
-        display: block !important;
-    }
-    .card-medio-pago {
-        margin: auto;
-        padding: 0em;
-        padding-bottom: .8em !important;
-        height: auto !important;
-        margin-bottom: .8em;
-        width: 179px !important;
-    }
-    .text-titulo {
+    .text-titulo-pro {
         font-size: 22px !important;
     }
     .cuadro-canales {
         width: 130px !important;
+        height: 180px !important;
     }
-    .br-none-mobil {
-        display: block !important;
-    }
-    .br-none-tablet {
-        display: none !important;
+    .formulario-reponsive {
+        padding: 2em 4em !important;
     }
 }
 
@@ -592,7 +585,7 @@
     }
     .title-beneficio {
         font-size: 22px !important;
-        color: #0032a0;
+        margin: 0 !important;
     }
     .title-beneficio-sub {
         font-size: 16px !important;
@@ -631,9 +624,9 @@
         font-size: 12xp !important;
         text-align: center !important;
     }
-    .btn-eureca-green {
-        width: 220px !important;
-    }
+    // .btn-eureca-green {
+    //     width: 220px !important;
+    // }
     .ps-content {
         padding: 0em .1em !important;
     }
@@ -699,8 +692,8 @@
     }
     .img-login {
         margin-left: 0px !important;
-        width: 134px !important;
-        height: 40px !important;
+        width: 181px !important;
+        height: 54px !important;
     }
     .repn-ini {
         display: none !important;
@@ -739,7 +732,6 @@
     }
     .cuadro-canales {
         margin: auto !important;
-        padding: .5em !important;
         padding-bottom: .8em !important;
         height: auto !important;
         margin-bottom: .8em !important;
@@ -755,10 +747,52 @@
         font-size: 12px !important;
     }
     .btn-landigs-registro {
-        padding: 2em 0em 0em !important;
+        padding: 0em 0em 0em !important;
     }
     .text-afilacion3 {
         font-size: 12px !important;
+    }
+    .btn-rg {
+        margin-bottom: 1em !important;
+    }
+    .btn-widt {
+        width: 192px !important;
+    }
+    .btn-landigs-container {
+        padding: 3em 0em 1.5em !important;
+    }
+    .btn-reg {
+        margin-bottom: 12px !important;
+    }
+    .text-titulo {
+        font-size: 16px !important;
+    }
+    .text-green-d {
+        font-size: 16px !important;
+    }
+    .reponsive-servicio-pago {
+        display: none !important;
+    }
+    .reponsive-servicio-pago1 {
+        display: block !important;
+    }
+    .card-medio-pago {
+        margin: auto;
+        padding: 0em;
+        padding-bottom: .8em !important;
+        height: auto !important;
+        margin-bottom: .8em;
+        width: 176px !important;
+        // height: 170px !important;
+    }
+    .br-none-mobil {
+        display: block !important;
+    }
+    .br-none-tablet {
+        display: none !important;
+    }
+    .formulario-reponsive {
+        padding: 2em 2em !important;
     }
 }
 

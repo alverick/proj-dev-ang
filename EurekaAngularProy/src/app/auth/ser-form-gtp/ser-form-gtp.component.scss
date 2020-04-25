@@ -213,7 +213,8 @@ body {
 }
 
 .seleccionado-card {
-    border: $textgreen 1px solid;
+    // border: $textgreen 1px solid;
+    border: 0px !important;
     background-color: rgba(0, 169, 79, 0.05);
     border-radius: 4px;
 }
@@ -321,4 +322,14 @@ body {
  :host ::ng-deep .mat-radio-outer-circle {
     height: 16px !important;
     width: 16px !important;
+}
+
+.card-title {
+    margin-bottom: 0.6rem;
+}
+
+@media screen and (max-width: 570px) {
+    .texto-green {
+        font-size: 22px !important;
+    }
 }
