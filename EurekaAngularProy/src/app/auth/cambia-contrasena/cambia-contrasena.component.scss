@@ -16,7 +16,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 760px;
+    min-height: 849px;
     height: 100vh;
 }
 
@@ -121,7 +121,7 @@ body {
     border-style: solid !important;
     //  border-width: 3.5vw 0vw!important;
     border-color: white !important;
-    margin-top: 5vw !important;
+    margin-top: 1vw !important;
 }
 
 .reenviar {
@@ -168,4 +168,27 @@ body {
 
 .img-login {
     margin-left: 60px;
+    width: 158px;
+    height: 47px;
+}
+
+.title-login {
+    @include font-text(55px,
+    500);
+    color: #ffffff;
+    font-family: Geometria;
+    margin-left: 80px;
+}
+
+.cont-logo {
+    padding-bottom: 6em;
+}
+
+.img-login-ing {
+    width: 640px;
+    height: 483px;
+}
+
+#header-cambiar {
+    display: none !important;
 }

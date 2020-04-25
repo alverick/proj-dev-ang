@@ -16,7 +16,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 720px;
+    min-height: 849px;
     height: 100vh;
 }
 
@@ -41,7 +41,7 @@ body {
     border-style: solid !important;
     //  border-width: 3.5vw 0vw!important;
     border-color: white !important;
-    margin-top: 5vw !important;
+    margin-top: 1vw !important;
 }
 
 .texto-azul {
@@ -158,6 +158,8 @@ body {
 
 .img-login {
     margin-left: 60px;
+    width: 158px;
+    height: 47px;
 }
 
 .br-none-tablet {
@@ -169,7 +171,7 @@ body {
 }
 
 .title-login {
-    @include font-text(48px,
+    @include font-text(55px,
     500);
     color: #ffffff;
     font-family: Geometria;
@@ -185,6 +187,10 @@ body {
 }
 
 .img-login-ing {
-    width: 537px;
-    height: 447px;
+    width: 640px;
+    height: 483px;
+}
+
+.cont-logo {
+    padding-bottom: 6em;
 }

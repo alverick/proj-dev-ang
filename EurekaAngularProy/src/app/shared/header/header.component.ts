@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
@@ -18,12 +18,14 @@ export class HeaderComponent implements OnInit {
   showHead: boolean = null;
 
   isExpanded = false;
-
+  public cambiaContra: string;
   constructor(private router: Router,
     private loginService: LoginService,
     private spinner: NgxSpinnerService,
     private excelser: ExcelService,
-    public notify: NotifyService) {
+    public notify: NotifyService,
+    public rutaActiva: ActivatedRoute,
+  ) {
   }
 
   scrollConfig = {
@@ -34,6 +36,8 @@ export class HeaderComponent implements OnInit {
     this.notify.clear();
     this.spinner.hide();
     this.notify.iniciar();
+    // this.cambiaContra = "/cambiaContra/" + this.rutaActiva.snapshot.params.llave;
+
   }
 
   public menu(): boolean {

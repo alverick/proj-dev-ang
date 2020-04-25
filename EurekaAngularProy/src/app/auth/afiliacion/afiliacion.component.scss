@@ -26,6 +26,12 @@ body {
     text-align: center;
 }
 
+.text-green-d {
+    @include font-text(14px, $weight: 500);
+    color: $green;
+    text-align: center;
+}
+
 .text-titulo {
     @include font-text(18px, $weight: 500);
     color: $negro;
@@ -59,9 +65,10 @@ body {
 }
 
 .cuadro-canales {
-    @include cuadro(179px, 185px);
+    @include cuadro(179px, 172px);
     background-color: #ffffff;
     border: solid 1px #bebebe;
+    padding: 1em;
 }
 
 .btn-eureca-green {
@@ -103,14 +110,16 @@ body {
 
 .repnsive-nbt-af {
     display: block;
+    width: 224px;
 }
 
 .repnsive-nbt-af1 {
     display: none;
+    width: 224px;
 }
 
 .text-afilacion3 {
-    @include font-text(12px !important, );
+    @include font-text(14px);
     line-height: normal;
     letter-spacing: normal;
     text-align: center;

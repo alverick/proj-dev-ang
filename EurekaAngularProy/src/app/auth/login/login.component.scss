@@ -27,7 +27,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 765px;
+    min-height: 770px;
     height: 100vh;
 }
 
@@ -87,6 +87,8 @@ label {
 
 .img-login {
     margin-left: 60px;
+    width: 158px;
+    height: 47px;
 }
 
 .box-login {
@@ -190,11 +192,6 @@ div.mat-form-field-infix {
     height: 48px;
 }
 
-.text-green {
-    color: $green;
-    font-weight: bold;
-}
-
 .texto-azul {
     @include font-text(28px,
     500);
@@ -203,8 +200,8 @@ div.mat-form-field-infix {
 }
 
 .img-login-ing {
-    width: 537px;
-    height: 447px;
+    width: 570px;
+    height: 428px;
 }
 
 .title-login-login {
@@ -298,6 +295,7 @@ small {
     border-width: 2vw 2.7vw !important;
     border-color: white !important;
     margin: auto;
+    margin-top: 1vw !important;
     /*margin-top    : 5vw !important;*/
 }
 
@@ -316,7 +314,7 @@ small {
 }
 
 .title-login {
-    @include font-text(48px,
+    @include font-text(55px,
     500);
     color: #ffffff;
     font-family: Geometria;
@@ -338,7 +336,7 @@ small {
 }
 
 .cont-logo {
-    padding-bottom: 2em;
+    padding-bottom: 6em;
 }
 
 .reponsive-img-login {

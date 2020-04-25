@@ -204,11 +204,6 @@ div.mat-form-field-infix {
     height: 48px;
 }
 
-.text-green {
-    color: $green;
-    font-weight: bold;
-}
-
 .texto-azul {
     @include font-text(28px,
     500);
@@ -402,10 +397,12 @@ small {
 }
 
 .img-cobro-simple {
-    width: 644px;
-    height: 355px;
+    // width: 644px;
+    // height: 355px;
+    width: 560px;
+    height: 300px;
     position: absolute;
-    right: 1em;
+    // right: 1em;
     bottom: 0;
 }
 
