@@ -712,5 +712,14 @@ b {
     margin-bottom: 0rem !important;
 }
 
+.table thead th {
+    border-bottom: 0px solid #dee2e6 !important;
+}
+
+.table th,
+.table td {
+    border-top: 0px solid #dee2e6 !important;
+}
+
 
 /*[END] TOOLTIP BOOSTRAP*/
