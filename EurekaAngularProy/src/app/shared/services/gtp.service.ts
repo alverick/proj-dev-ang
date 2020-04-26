@@ -71,7 +71,7 @@ export class GtpService {
         filtro.BusinessHeading = '';
       if (filtro.status === null || filtro.status === undefined)
         filtro.status = '';
-        const url = `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
+        const url = `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&Solicitud=${filtro.statussolcitud}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
         const opts = {
           headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
         };

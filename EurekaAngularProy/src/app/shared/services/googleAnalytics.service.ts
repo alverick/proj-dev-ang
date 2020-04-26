@@ -23,4 +23,11 @@ export class GoogleAnalytics {
       gtag('event', 'exception', { description: error.message, fatal: fatal });
     }
   }
+
+  public sendUrl(title: string, url: string) {
+    gtag('config', 'UA-148142629-1', {
+      'page_title': title,
+      'page_path': url
+    });
+  }
 }
