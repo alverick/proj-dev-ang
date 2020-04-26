@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { RubroModel } from 'src/app/shared/models';
 import { GtpFilter } from 'src/app/shared/models/gtp-filter';
+import * as saveAs from 'file-saver';
 
 /// DATE PIECKER FORMAT
 import * as _moment from 'moment';  // dejalo si sale error
@@ -244,6 +245,13 @@ export class GtpGrillaComponent implements OnInit {
 
   }
 
+  clickClientesNoRegistrados() {
+    this.gtpService.clientsUnregistered(this.filtro)
+      .subscribe((r: Blob) => {
+        saveAs(r, "ClientesNoRegistrados.xlsx");
+      });
+  }
+
   private internalValidaDateFrom(e) {
     console.log(e);
     if (e === null) {
@@ -278,5 +286,9 @@ export class GtpGrillaComponent implements OnInit {
     }
   }
 
+  goCargaHistorico(id: number) {
+    console.log('goCargaHistorico', id);
+    this.router.navigate(['/cargaHistorico', id]);
+  }
 }
 

@@ -23,6 +23,7 @@ import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.compone
 import { GtpInputGuard } from './shared/guards/gtp-input.guard';
 import { GtpOutputGuard } from './shared/guards/gtp-output.guard';
 import { ConfigurarGtpComponent } from './auth/configurar-gtp/configurar-gtp.component';
+import { CargaHistoricoComponent } from './auth/carga-historico/carga-historico.component';
 
 // CambiaContrasenaComponent
 
@@ -45,6 +46,7 @@ const routes: Routes = [
   { path: 'configuracionEmpresa', component: ConfigurarEmpresaComponent , canActivate: [AuthGuard, GtpOutputGuard]},
   { path: 'ApGTP/:llave',  component: ConfigurarGtpComponent,  data: { isEdit: true }, canActivate: [AuthGuard, GtpInputGuard]},
   { path: 'ApGTP', component: ConfigurarGtpComponent},
+  { path: 'cargaHistorico/:llave', component: CargaHistoricoComponent, canActivate: [AuthGuard, GtpInputGuard] },
 
   { path: 'subirPlantilla', component: SubirPlantillaComponent},
   { path: 'analisis', component: AnalisisComponent},

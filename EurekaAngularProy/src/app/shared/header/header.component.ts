@@ -146,18 +146,23 @@ export class HeaderComponent implements OnInit {
     }
   }
   goBack() {
-    if (confirm('Es posible que los cambios no se guarden.')) {
-      this.router.navigate(['/home']);
-    } else if (this.router.url.includes('/crearContrasena')) {
-      this.router.navigate(['/afiliacion']);
-    } else if (this.router.url.includes('/afiliacion')) {
-      this.router.navigate(['/login']);
+    if (this.router.url.includes('/cargaHistorico')) {
+      this.router.navigate(['/gtp']);
+    }
+    else {
+      if (confirm('Es posible que los cambios no se guarden.')) {
+        this.router.navigate(['/home']);
+      } else if (this.router.url.includes('/crearContrasena')) {
+        this.router.navigate(['/afiliacion']);
+      } else if (this.router.url.includes('/afiliacion')) {
+        this.router.navigate(['/login']);
+      }
     }
   }
   goBackGtp() {
-    if (confirm('Es posible que los cambios no se guarden.')) {
-      this.router.navigate(['/gtp']);
-    }
+      if (confirm('Es posible que los cambios no se guarden.')) {
+        this.router.navigate(['/gtp']);
+      }
   }
 
 

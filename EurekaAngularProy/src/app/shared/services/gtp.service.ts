@@ -361,4 +361,12 @@ export class GtpService {
       }));
   }
 
+  public clientsUnregistered(filtro: GtpFilter): Observable<any> {
+    const url = `${environment.END_POINT}/company/GTP/client/unregistered?_=`+ new Date().getTime();
+    var strDateFrom = (filtro.dateFrom === null ? '' : moment(filtro.dateFrom).format('YYYY/MM/DD'));
+    var strDateTo = (filtro.dateTo === null ? '' : moment(filtro.dateTo).format('YYYY/MM/DD'));
+    return this.http.post(url, { inicio: strDateFrom, final: strDateTo }, {
+      responseType: 'blob'
+    }).pipe(catchError(err => throwError(err)));
+  }
 }
