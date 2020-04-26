@@ -38,7 +38,7 @@
                     <a class="nav-link lnk-regresar" (click)="goBack()"><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
                 </li>
             </ul>
-            <ul *ngIf="!IsHome &&  !onAfilacion()" class="navbar-nav ml-auto">
+            <ul *ngIf="!IsHome &&  !onAfilacion()" class="navbar-nav ml-auto" id="btn-regresar">
                 <li class="nav-item">
                     <a class="nav-link lnk-regresar" (click)="goBackEmpresa()"><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
                 </li>
@@ -220,7 +220,7 @@
                <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul *ngIf="!IsGtp" class="navbar-nav ml-auto">
+            <ul *ngIf="!IsGtp" class="navbar-nav ml-auto" id="btn-regresar">
                 <li class="nav-item">
                     <a class="nav-link lnk-regresar" (click)="goBackGtp()"><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a>
                 </li>
