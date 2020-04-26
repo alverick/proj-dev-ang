@@ -174,7 +174,7 @@ body {
             }
         }
         .lista {
-            padding-top: 8px;
+            // padding-top: 8px;
             .head-fixed {
                 position: fixed;
                 top: 0;
@@ -706,6 +706,19 @@ b {
     height: 507px;
     overflow: scroll;
     width: 100%;
+}
+
+.table {
+    margin-bottom: 0rem !important;
+}
+
+.table thead th {
+    border-bottom: 0px solid #dee2e6 !important;
+}
+
+.table th,
+.table td {
+    border-top: 0px solid #dee2e6 !important;
 }
 
 
