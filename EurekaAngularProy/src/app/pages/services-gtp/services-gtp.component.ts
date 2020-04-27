@@ -102,7 +102,9 @@ export class ServicesGTPComponent implements OnInit {
       cobraMora: new FormControl({ value: this._service.chargeInterest, disabled: true }),
       periodoMora: new FormControl({ value: this._service.chargeType, disabled: true }, [Validators.required]),
       tipoMora: ({ value: this._service.interestType, disabled: true }),
+      // montoRadioButton: new FormControl({ value: montod, disabled: true }),
       monto: new FormControl({ value: montod, disabled: true }),
+
       porcentaje: new FormControl({ value: porcentajed, disabled: true }),
       pagoPartes: new FormControl({ value: this._service.partialPayment, disabled: true }),
       // tslint:disable-next-line:max-line-length
@@ -467,14 +469,13 @@ export class ServicesGTPComponent implements OnInit {
   }
 
   changeMora(changeData: boolean = true) {
-
     this.cobraMora = (this.f.cobraMora.value === 'S');
-    console.log(this.f.cobraMora.value);
+    // console.log(this.f.cobraMora.value);
     if (this.cobraMora) {
 
       this.f.periodoMora.setValidators([Validators.required]);
-      this.f.monto.enable();
-      this.f.monto.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)])
+      this.f.monto.disable();
+      this.f.monto.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.50), Maximo(1000)])
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.disable();
       if (changeData) {
@@ -506,7 +507,7 @@ export class ServicesGTPComponent implements OnInit {
     this.cobraPorcentaje = (this.f.tipoMora.value === "P");
     if (this.cobraMora && this.cobraMonto) {
       this.f.monto.enable();
-      this.f.monto.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(1), Maximo(1000)]);
+      this.f.monto.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.50), Maximo(1000)]);
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.disable();
       if (changeData) {

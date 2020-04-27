@@ -287,14 +287,14 @@ small {
 */
 
 .cuadro-form {
-    @include cuadro(335px,
+    @include cuadro(381px,
     auto);
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
     border-width: 2vw 2.7vw !important;
     border-color: white !important;
-    margin: auto;
+    // margin: auto;
     margin-top: 1vw !important;
     /*margin-top    : 5vw !important;*/
 }
