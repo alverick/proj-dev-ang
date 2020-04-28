@@ -591,6 +591,9 @@ export class ConfigurarServiciosComponent implements OnInit {
                   onOpen: drawPopup
                 });
               });
+              setTimeout(() => {
+                this.servicio_length = this.afiliacionService.services.length
+              }, 2000)
           }
         });
       });
@@ -612,6 +615,11 @@ export class ConfigurarServiciosComponent implements OnInit {
             'event_category': GoogleAnalytics.Afiliacion,
             'event_label': 'servicio_eliminado'
           });
+
+          setTimeout(() => {
+            this.servicio_length = this.afiliacionService.services.length
+          }, 2000)
+  
         }
       });
     }
