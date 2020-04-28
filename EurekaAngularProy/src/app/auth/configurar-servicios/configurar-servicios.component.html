@@ -9,7 +9,7 @@
                         <!-- <div *ngIf="afiliacionService.services.length ==0" class=" texto-azul pt-2 subtitle-servicio"><br> Puedes agregar todos los servicios que deseas que tus clientes paguen a través de Interbank
                         </div> -->
                         <div class=" texto-azul pt-2 subtitle-servicio"><br> Puedes agregar todos los servicios que deseas que tus clientes paguen a través de Interbank</div>
-                        <div *ngIf="afiliacionService.services.length!=0" class=" texto-azul pt-2 subtitle-servicio"><br> Tienes <label *ngIf="afiliacionService.services.length <= 9">0</label>{{afiliacionService.services.length}} servicio configurado </div>
+                        <div *ngIf="servicio_length!=0" class=" texto-azul pt-2 subtitle-servicio"><br> Tienes <label *ngIf="servicio_length <= 9">0</label>{{servicio_length}} servicio configurado </div>
 
                         <div class="d-flex justify-content-start">
                             <perfect-scrollbar class="content-container mt-5 mb-3">

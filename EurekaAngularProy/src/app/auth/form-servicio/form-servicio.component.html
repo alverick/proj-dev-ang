@@ -33,9 +33,11 @@
     </div>
 
     <div class="form-group">
+        <div class="messsage-error">Código debe ser numérico</div>
         <mat-form-field class="w-100">
             <!--  <label *ngIf="gtpMode && !_service.NewNameCod" class="messsage-error" style="float: right;">Corregir este campo</label> -->
             <mat-label class="label">Código cliente</mat-label>
+
             <mat-select class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering panelClass="pts30" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
                 <!--   <mat-option class="input-text">Código Deudor</mat-option>-->
                 <mat-option class="input-text options-select" *ngFor="let c of codDeudor" [value]="c.code">
@@ -50,6 +52,7 @@
                 <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
             </mat-error>
         </mat-form-field>
+
 
         <div *ngIf="CodiAlert()" class="messsage-error">El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta siendo procesado</div>
 

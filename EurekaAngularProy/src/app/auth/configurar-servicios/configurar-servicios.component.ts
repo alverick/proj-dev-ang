@@ -46,7 +46,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   public titulo: string;
   public SvcEdit: ServicesGTPChange[];
   public onFormAction: EventEmitter<string> = new EventEmitter();
-  servicio_length = 9;
+  servicio_length = 0;
   constructor(public afiliacionService: AfiliacionService,
     private route: ActivatedRoute,
     private router: Router,
@@ -112,6 +112,10 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
         this.titulo = 'Edita el servicio';
+        setTimeout(() => {
+          this.servicio_length = this.afiliacionService.services.length
+        }, 3000)
+
 
       } else {
         window['_url_loop_'] = 'configurarServicios';
@@ -122,15 +126,6 @@ export class ConfigurarServiciosComponent implements OnInit {
         this.titulo = 'Agrega un nuevo servicio';
       }
     });
-    console.log('afiliacionService.services', this.afiliacionService.services)
-    // setTimeout(() => {
-    //   if (this.afiliacionService.services.length > 9) {
-    //     this.servicio_length = ('0' + this.afiliacionService.services.length);
-    //   } else {
-    //     this.servicio_length = (this.afiliacionService.services.length);
-    //   }
-      console.log('servicio_length', this.servicio_length)
-    // }, 1000);
 
   }
 
@@ -765,6 +760,6 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     this.addNewAfterSave = false;
     this.sendAfterSave = false;
+    this.servicio_length = this.afiliacionService.services.length
   }
-
 }

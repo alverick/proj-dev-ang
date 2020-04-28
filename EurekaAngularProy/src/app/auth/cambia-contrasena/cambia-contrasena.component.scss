@@ -6,6 +6,7 @@
 @import '~src/scss/mixin';
 @import '~src/scss/landing';
 @import '~src/scss/main';
+@import '~src/scss/style';
 body {
     background-image: url("/assets/images/fondo.svg");
     //background-image: linear-gradient(58deg, rgba(60, 98, 175, 0.83), rgba(0, 169, 79, 0.64));
@@ -16,7 +17,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 849px;
+    min-height: 864px;
     height: 100vh;
 }
 
@@ -133,8 +134,21 @@ body {
     }
 }
 
-.mat-form-field .mat-form-field-ripple {
-    background-color: #cfd0d2 !important;
+// .mat-form-field .mat-form-field-ripple {
+//     background-color: #cfd0d2 !important;
+// }
+:host ::ng-deep .mat-form-field .mat-form-field-ripple {
+    background-color: $textgreen !important;
+}
+
+:host ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: $textgreen !important;
+}
+
+:host ::ng-deep .mat-form-field .mat-form-field-underline {
+    background-color: #cfd0d2;
+    // height       : 0.10vw !important;
+    height: 1px !important;
 }
 
 .title-landing {
@@ -172,12 +186,17 @@ body {
     height: 47px;
 }
 
+:host ::ng-deep .mat-form-field-infix {
+    border-bottom: 1px solid #05be50 !important;
+}
+
 .title-login {
     @include font-text(55px,
     500);
     color: #ffffff;
     font-family: Geometria;
     margin-left: 80px;
+    line-height: 1 !important;
 }
 
 .cont-logo {
