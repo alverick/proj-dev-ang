@@ -135,7 +135,7 @@ body {
                     .card {
                         padding: 8px;
                         .selecciona-servicio {
-                            @include font-text(10px!important, 500!important);
+                            @include font-text(10px !important, 500 !important);
                             color: #0d131d !important;
                             padding: 6px 2px;
                         }
@@ -527,6 +527,10 @@ b {
     max-height: 250px;
 }
 
+.ps-body {
+    overflow-y: auto;
+}
+
 .ngx-pagination {
     margin-left: 0;
     margin-bottom: 1rem;
@@ -656,13 +660,13 @@ b {
 }
 
 .selecciona-servicio {
-    @include font-text(10px!important, 500!important);
+    @include font-text(10px !important, 500 !important);
     color: #0d131d !important;
     padding: 8px 2px;
 }
 
 .servicio-Opern {
-    @include font-text(14px!important, normal!important);
+    @include font-text(14px !important, normal !important);
     color: #0d131d !important;
     padding-bottom: 10px;
     // padding: 6px 2px;
@@ -719,6 +723,11 @@ b {
 .table th,
 .table td {
     border-top: 0px solid #dee2e6 !important;
+}
+
+:host ::ng-deep .ps--active-x>.ps__rail-x,
+.ps--active-y>.ps__rail-y {
+    display: none !important;
 }
 
 
