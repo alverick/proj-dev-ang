@@ -58,36 +58,36 @@ body {
                 display: flex;
                 padding-top: 12px;
                 .lnk-label {
-                  display: inline;
-                  @include font-text(14px, 500);
-                  color: $textgreen;
-                  margin-left: 20px;
-                  cursor: pointer;
+                    display: inline;
+                    @include font-text(14px, 500);
+                    color: $textgreen;
+                    margin-left: 20px;
+                    cursor: pointer;
                 }
                 .sobresale {
-                  position: absolute;
-                  right: 20px;
-                  background-color: white;
-                  z-index: 99;
-                  .card {
-                      padding: 8px;
-                      .selecciona-servicio {
-                          @include font-text(10px!important, 500!important);
-                          color: #0d131d !important;
-                          padding: 6px 2px;
-                      }
-                      .option-item {
-                          @include font-text(14px);
-                          color: #0d131d !important;
-                          width: 100%;
-                          padding: 6px;
-                          .mano {
-                              cursor: pointer;
-                          }
-                      }
-                  }
-              }
-          }
+                    position: absolute;
+                    right: 20px;
+                    background-color: white;
+                    z-index: 99;
+                    .card {
+                        padding: 8px;
+                        .selecciona-servicio {
+                            @include font-text(10px!important, 500!important);
+                            color: #0d131d !important;
+                            padding: 6px 2px;
+                        }
+                        .option-item {
+                            @include font-text(14px);
+                            color: #0d131d !important;
+                            width: 100%;
+                            padding: 6px;
+                            .mano {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+            }
             .al-right {
                 padding-top: 12px;
                 .lnk-label {
@@ -650,4 +650,9 @@ b {
 :host ::ng-deep .badge-primary {
     color: #fff;
     background-color: #8024b9;
+}
+
+:host ::ng-deep .ps--active-x>.ps__rail-x,
+.ps--active-y>.ps__rail-y {
+    display: none !important;
 }
