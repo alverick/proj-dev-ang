@@ -25,10 +25,9 @@ export class ProcessService {
 
   getFile(processId: number): Observable<any> {
     const url = `${environment.END_POINT}/Company/GTP/process/${processId}/file?_=`+ new Date().getTime();
-    const opts = {
-      headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
-    };
-    return this.http.get<any>(url, opts)
-        .pipe(catchError(error => throwError(error)));
+    return this.http.get(url, {
+      headers: { "Authorization": "bearer " + this.storage.getCurrentToken() },
+      responseType: 'blob'
+    }).pipe(catchError(error => throwError(error)));
   }
 }

@@ -39,6 +39,7 @@ export class CargaHistoricoComponent implements OnInit {
   }
 
   bajarExcel(itm) {
+    console.log(itm);
     this.processService.getFile(itm.id)
       .subscribe((r: Blob) => {
         saveAs(r, itm.filename);
