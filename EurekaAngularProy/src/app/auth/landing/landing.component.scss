@@ -167,7 +167,8 @@ div.mat-form-field-infix {
 // boton Rgistrate
 .btn-landigs-container {
     // margin-left: 80px;
-    padding: 4em 0em;
+    // padding: 4em 0em;
+    padding: 4em 0em 1.5em;
 }
 
 .btn-landigs-registro {
@@ -399,11 +400,18 @@ small {
 .img-cobro-simple {
     // width: 644px;
     // height: 355px;
-    width: 560px;
-    height: 300px;
+    width: 619px;
+    height: 310px;
     position: absolute;
-    // right: 1em;
     bottom: 0;
+    right: 1.5em;
+    // width: 644px;
+    // height: 355px;
+    // width: 560px;
+    // height: 300px;
+    // position: absolute;
+    // right: 1em;
+    // bottom: 0;
 }
 
 .img-beneficios-repn {

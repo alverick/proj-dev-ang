@@ -27,7 +27,7 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    min-height: 794px;
+    min-height: 809px;
     height: 100vh;
 }
 
@@ -319,6 +319,7 @@ small {
     color: #ffffff;
     font-family: Geometria;
     margin-left: 80px;
+    line-height: 1 !important;
 }
 
 .subtitle-login {

@@ -22,7 +22,7 @@
   }
   
   .cuadro-form {
-      @include cuadro(460px, $height: 840px);
+      @include cuadro(480px, $height: 840px);
       box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   }
   
@@ -84,4 +84,8 @@
   
   .bnt-cont-reg {
       text-align: center;
+  }
+  
+  .title-rp-emp {
+      font-size: 28px;
   }
