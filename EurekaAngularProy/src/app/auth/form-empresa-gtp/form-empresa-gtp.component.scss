@@ -1,6 +1,5 @@
 @import '~src/scss/variables';
 @import '~src/scss/mixin';
-
 body {
     background: #f4f5f7 !important;
 }
@@ -18,14 +17,12 @@ body {
 .cuadro-form {
     @include cuadro(510px, auto);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
-
     .form {
-      width: 415px;
+        width: 415px;
     }
 }
 
-
-.texto-editar-empresa{
+.texto-editar-empresa {
     @include font-text(32px, 500);
     color: #0032a0;
 }
@@ -34,9 +31,8 @@ body {
     color: #ffffff;
 }
 
-
 :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-disabled .mat-form-field-underline {
-    background-image: linear-gradient(to right,#ffffff 0,#ffffff 33%,#ffffff 0);
+    background-image: linear-gradient(to right, #ffffff 0, #ffffff 33%, #ffffff 0);
     background-size: 4px 100%;
     background-repeat: repeat-x;
 }
@@ -46,9 +42,18 @@ body {
     color: #0d131d;
 }
 
-.w-60{
+.w-60 {
     width: 60%;
 }
-.w-20{
+
+.w-20 {
     width: 20%;
+}
+
+:host ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+
+ :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    color: #0d131d !important;
 }

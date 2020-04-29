@@ -202,6 +202,8 @@ div.mat-form-field-infix {
 .img-login-ing {
     width: 570px;
     height: 428px;
+    // position: fixed;
+    // bottom: 0;
 }
 
 .title-login-login {
@@ -392,4 +394,12 @@ html {
     margin-top: calc(100% - 513px);
     margin-left: -40px;
   }
+}
+
+:host ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+
+ :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    color: #0d131d !important;
 }
