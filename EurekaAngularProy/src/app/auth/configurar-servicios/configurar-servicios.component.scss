@@ -149,3 +149,8 @@ body {
     text-align: center;
     max-width: 360px;
 }
+
+:host ::ng-deep .ps--active-x>.ps__rail-x,
+.ps--active-y>.ps__rail-y {
+    display: none !important;
+}
