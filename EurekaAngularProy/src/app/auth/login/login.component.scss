@@ -344,7 +344,7 @@ small {
 
 .reponsive-img-login {
     display: block;
-    margin-top: calc(100% - 422px);
+    // margin-top: calc(100% - 422px);
 }
 
 .reponsive-img-login1 {
@@ -383,23 +383,40 @@ html {
     background: #049840 !important;
 }
 
-@media (min-width: 1536px) {
-  .img-login-ing {
-    width: 700px;
-    height: 519px;
-  }
-
-  .reponsive-img-login {
-    display: block;
-    margin-top: calc(100% - 513px);
-    margin-left: -40px;
-  }
-}
-
+// @media (min-width: 1536px) {
+//     .img-login-ing {
+//         width: 700px;
+//         height: 519px;
+//         position: fixed;
+//         bottom: 0;
+//     }
+//     .reponsive-img-login {
+// display: block;
+// margin-top: calc(100% - 513px);
+// margin-left: -40px;
+//     }
+// }
+// @media (min-width: 1024px and min-height 889px) {
+//     .img-login-ing {
+//         // width: 700px;
+//         // height: 519px;
+//         position: fixed;
+//         bottom: 0;
+//     }
+// }
+// }
+// @media (min-width: 1736px) {
+//     .img-login-ing {
+//         width: 700px;
+//         height: 519px;
+//         position: fixed;
+//         bottom: 0;
+//     }
+// }
 :host ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
     color: rgba(0, 0, 0, 0.54) !important;
 }
 
- :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+:host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     color: #0d131d !important;
 }
