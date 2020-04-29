@@ -20,6 +20,9 @@
         width: 409px !important;
         height: 232px !important;
     }
+    .reponsive-img-login {
+        margin-left: 0px !important;
+    }
 }
 
 @media screen and (max-width: 1024px) {
@@ -33,12 +36,6 @@
         width: 170px !important;
         height: 300px !important;
         right: 2em;
-    }
-    .reponsive-img-login {
-        display: none !important;
-    }
-    .reponsive-img-login1 {
-        display: block !important;
     }
     .title-login {
         font-size: 38px !important;
@@ -217,6 +214,11 @@
     .img-login-ing {
         width: 475px !important;
         height: 361px !important;
+        position: absolute;
+        bottom: 0
+    }
+    .reponsive-img-login {
+        margin-left: 0px !important;
     }
     .btn-agreagr-s {
         width: 100% !important;
@@ -285,6 +287,16 @@
     }
     .formulario-reponsive {
         padding: 2.5em 11em !important;
+    }
+    .reponsive-img-login {
+        display: none !important;
+    }
+    .reponsive-img-login1 {
+        display: block !important;
+    }
+    .img-login-ing {
+        position: initial !important;
+        bottom: 0;
     }
 }
 
