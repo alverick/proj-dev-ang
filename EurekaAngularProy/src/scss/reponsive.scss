@@ -246,9 +246,6 @@
     .reponsive-landig1 {
         display: none !important;
     }
-    #btn-regresar {
-        display: none !important;
-    }
 }
 
 @media screen and (max-width: 1000px) {
@@ -300,6 +297,9 @@
     .img-login-ing {
         position: initial !important;
         bottom: 0;
+    }
+    #btn-regresar {
+        display: none !important;
     }
 }
 
