@@ -246,6 +246,9 @@
     .reponsive-landig1 {
         display: none !important;
     }
+    #btn-regresar {
+        display: none !important;
+    }
 }
 
 @media screen and (max-width: 1000px) {
@@ -424,9 +427,6 @@
     .img-cobro-simple {
         height: 181px !important;
         width: 324px !important;
-    }
-    #btn-regresar {
-        display: none !important;
     }
     .formulario-reponsive {
         padding: 2.5em 11em !important;
