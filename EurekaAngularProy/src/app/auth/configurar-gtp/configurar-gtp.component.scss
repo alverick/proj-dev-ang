@@ -154,3 +154,8 @@ body {
 .div-checkbox {
     text-align: center;
 }
+
+:host ::ng-deep .ps--active-x>.ps__rail-x,
+.ps--active-y>.ps__rail-y {
+    display: none !important;
+}
