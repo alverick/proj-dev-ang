@@ -47,7 +47,7 @@ export class ServicesGTPComponent implements OnInit {
    */
 
   @Output() grabar = new EventEmitter<any>();
-
+  submittedRequired = false;
   constructor(private fb: FormBuilder, private afiliacionService: AfiliacionService, public gtpService: GtpService) {
     afiliacionService.GetTipoCambio().subscribe(t => this._tc = t);
   }
@@ -301,6 +301,7 @@ export class ServicesGTPComponent implements OnInit {
      console.log('nombre serv apr ' + this.f.NewName.value);
      console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
     // NOMBRE DE SERVICIO
+    this.submittedRequired = true;
     if (this._service.newNameGTPStatus === 1) {
       console.log('se activo la limieza 1.1');
       this.f.NewName.clearValidators();

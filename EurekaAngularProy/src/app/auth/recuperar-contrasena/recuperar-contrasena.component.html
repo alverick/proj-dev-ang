@@ -73,7 +73,7 @@
                                                 <mat-form-field class="w-100 " style="height: 1.9px !important; width: 100%;">
                                                     <input matInput class="input-text" (Keydown.space)="$event.preventDefault()" type="text" name="ruc" appOnlynumbers autocomplete="on" minlength="11" maxlength="11" required formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors">
                                                     <mat-error class="messsage-error">
-                                                        <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')">El RUC es obligatorio</mat-error>
+                                                        <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required') && submittedRequired">El RUC es obligatorio</mat-error>
                                                         <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
                                                         <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
                                                     </mat-error>
@@ -82,7 +82,7 @@
                                         </div>
 
 
-                                        <div class="d-flex  ">
+                                        <div class="d-flex">
                                             <!-- <div class="mr-2">
                                                 <img src="assets/images/correo.svg" alt="">
                                             </div> -->
@@ -92,7 +92,7 @@
                                                 <mat-form-field class="w-100 margen-inputs" style="width: 100%;">
                                                     <input matInput class="input-text" (Keydown.space)="$event.preventDefault()" formControlName="email" [class.is-invalid]="f.email.invalid" type="text" minlength="10" maxlength="100">
                                                     <mat-error class="messsage-error">
-                                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required')">El E-mail es obligatorio</mat-error>
+                                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required') && submittedRequired">El E-mail es obligatorio</mat-error>
                                                         <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
                                                         <mat-error class="messsage-error" *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
                                                     </mat-error>

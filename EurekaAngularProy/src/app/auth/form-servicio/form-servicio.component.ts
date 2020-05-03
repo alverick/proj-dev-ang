@@ -36,7 +36,7 @@ export class FormServicioComponent implements OnInit {
   public Dataparcial: boolean = true;
   public comAgente = 1;
   public comTienda = 7;
-
+  submittedRequired = false;
   private tc: number = 3.37;
 
   constructor(private afiliacionService: AfiliacionService,
@@ -274,6 +274,8 @@ export class FormServicioComponent implements OnInit {
   }
 
   onSubmitServicio() {
+    this.submittedRequired = true;
+
     if (this.frm.valid) {
       const monto = parseFloat(this.frm.get('monto').value);
       const porcentaje = parseFloat(this.frm.get('porcentaje').value);

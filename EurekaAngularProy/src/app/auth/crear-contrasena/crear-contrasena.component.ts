@@ -41,6 +41,8 @@ declare var $: any;
 export class CrearContrasenaComponent implements OnInit {
   registerForm: FormGroup;
   submitted: boolean = false;
+  submittedRequired = false;
+
   public llave: string;
   public inEdit: boolean = false;
   public empresa: DataEnterpriseGTP;
@@ -213,6 +215,7 @@ export class CrearContrasenaComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.submittedRequired=true;
     // var ruc  = this.registerForm.value.ruc.toString();
 
     if (this.registerForm.invalid) {

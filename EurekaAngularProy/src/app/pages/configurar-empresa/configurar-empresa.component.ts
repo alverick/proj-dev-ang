@@ -26,6 +26,8 @@ export class ConfigurarEmpresaComponent implements OnInit {
   butDisabled: boolean = false;
   nombre: boolean = true;
   rubros: RubroModel[] = [];
+  submittedRequired = false;
+
   dataEmpresa: DataEnterpriseModel;
   constructor(private formBuilder: FormBuilder,
               private configEmpresaService: ConfiguracionService,
@@ -112,6 +114,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
 // actualizado
   onSubmit() {
     this.submitted = true;
+    this.submittedRequired = true;
 
     var correo =  parseInt(this.formGroup.value.email.toString().length);
 

@@ -17,6 +17,7 @@ export class RecuperarContrasenaComponent implements OnInit {
    recupera: FormGroup;
    public  submitted: Boolean = false;
    isCaptchaValidate: boolean = false;
+   submittedRequired = false;
 
 
    @HostListener('window:beforeunload', ['$event'])
@@ -52,7 +53,7 @@ export class RecuperarContrasenaComponent implements OnInit {
   }
 
   SubmitRecupera(){
-
+    this.submittedRequired = true;
     if (this.recupera.valid && this.isCaptchaValidate == true) {
       this.recuperaService.RecoverPassword({RUC: this.recupera.value.ruc,
         Email: this.recupera.value.email}).subscribe(d =>{

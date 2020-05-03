@@ -18,6 +18,8 @@ export class SerFormGtpComponent implements OnInit {
   public editMode: boolean = false;
   public gtpMode: boolean = false;
   public Dataparcial: boolean = true;
+  submittedRequired = false;
+
   constructor(private afiliacionService: AfiliacionService,
     private fb: FormBuilder,private stateEdit: ConfigurarServiciosComponent ) {
       stateEdit.onFormAction.subscribe(e => this.formAction(e));
@@ -186,6 +188,7 @@ export class SerFormGtpComponent implements OnInit {
     console.log(this.frm.get('codDeudor').value);
     console.log(this.frm.get('nameCod').value); */
     console.log('NOMBRE DE SRV Y CODI');
+    this.submittedRequired = true;
     if (this.frm.valid) {
       const monto  = parseFloat(this.frm.get('monto').value);
       const porcentaje  = parseFloat(this.frm.get('porcentaje').value);
