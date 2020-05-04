@@ -36,8 +36,8 @@ export class GtpService {
   public EmpresaServicios: DataEnterpriseGTP;
   private States: StatesGtp [] = [
     {idState: 'Pendiente', descripcion:'Pendiente'},
-    {idState: 'Resuelto', descripcion:'Atendido'},
-    {idState: 'Devuelto', descripcion:'Devuelto a la empresa'},
+    {idState: 'Atendido', descripcion:'Atendido'},
+    {idState: 'Devuelto a la empresa', descripcion:'Devuelto a la empresa'},
     {idState: 'Rechazado', descripcion:'Rechazado'}
   ];
 
