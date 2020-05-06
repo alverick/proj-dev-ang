@@ -20,13 +20,6 @@ body {
     height: 100vh;
 }
 
-@media screen and (max-width: 1024px) {
-    body {
-        min-height: auto !important;
-        height: auto !important;
-    }
-}
-
 .texto-login {
     @include font-text(48px,
     500);
@@ -202,4 +195,56 @@ body {
 
  :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     color: #0d131d !important;
+}
+
+//  -------- @media ----------
+@media screen and (max-width: 1000px) {
+    body {
+        min-height: auto !important;
+        height: auto !important;
+    }
+}
+
+@media only screen and (width: 768px) and (height: 1024px) {
+    .img-login-ing {
+        width: 475px !important;
+        height: 198px !important;
+        position: initial!important;
+        bottom: 0 !important;
+        margin: auto;
+    }
+    body {
+        height: 100vh !important;
+    }
+}
+
+@media only screen and (width: 1024px) and (height: 768px) {
+    .img-login-ing {
+        position: fixed !important;
+        bottom: 0;
+    }
+    body {
+        height: 100vh !important;
+    }
+}
+
+@media only screen and (min-width: 991px) and (max-width: 1023px) {
+    .img-login-ing {
+        position: absolute !important;
+        bottom: 0 !important;
+    }
+    body {
+        min-height: 707px !important;
+        height: 100vh !important;
+    }
+}
+
+@media (min-height: 864px) {
+    .img-login-ing {
+        position: fixed;
+        bottom: 0;
+    }
+    body {
+        height: 100vh !important;
+    }
 }

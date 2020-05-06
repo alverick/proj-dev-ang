@@ -31,13 +31,6 @@ body {
     height: 100vh;
 }
 
-@media screen and (max-width: 1024px) {
-    body {
-        min-height: auto !important;
-        height: auto !important;
-    }
-}
-
 label {
     margin-bottom: 0px;
 }
@@ -108,11 +101,11 @@ label {
     color: #2626bf
 }
 
-.d-block,
+.d-initial,
 .texto-after:after,
 .comisiones>[class*=col]:after,
 .division>li i {
-    display: block !important
+    display: initial !important
 }
 
 .custom-shadow {
@@ -391,7 +384,7 @@ html {
 //         bottom: 0;
 //     }
 //     .reponsive-img-login {
-// display: block;
+// display: initial;
 // margin-top: calc(100% - 513px);
 // margin-left: -40px;
 //     }
@@ -413,7 +406,7 @@ html {
 //         bottom: 0;
 //     }
 // }
-// @media only screen and (min-device-width: 1024px) and (min-device-height: 768px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2) {
+// @media only screen and (min-device-width: 1024px) and (min-device-height: 768px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1) {
 //     .img-login-ing {
 //         position: fixed !important;
 //         bottom: 0;
@@ -422,6 +415,57 @@ html {
 //         height: 100vh !important;
 //     }
 // }
+@media screen and (max-width: 1024px) {
+    body {
+        min-height: auto !important;
+        height: auto !important;
+    }
+}
+
+@media only screen and (width: 768px) and (height: 1024px) {
+    .img-login-ing {
+        width: 475px !important;
+        height: 263px !important;
+        position: initial!important;
+        bottom: 0 !important;
+        margin: auto;
+    }
+    body {
+        height: 100vh !important;
+    }
+}
+
+@media only screen and (width: 1024px) and (height: 768px) {
+    .img-login-ing {
+        position: fixed !important;
+        bottom: 0;
+    }
+    body {
+        height: 100vh !important;
+    }
+}
+
+@media only screen and (min-width: 991px) and (max-width: 1023px) {
+    .img-login-ing {
+        position: absolute!important;
+        bottom: 0;
+    }
+    body {
+        min-height: 657px !important;
+        height: 100vh !important;
+    }
+}
+
+@media (min-height: 809px) {
+    .img-login-ing {
+        position: fixed;
+        bottom: 0;
+    }
+    body {
+        height: 100vh !important;
+    }
+}
+
 :host ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
     color: rgba(0, 0, 0, 0.54) !important;
 }
