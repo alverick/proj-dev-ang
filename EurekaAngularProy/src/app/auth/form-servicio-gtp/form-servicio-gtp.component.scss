@@ -348,3 +348,7 @@ body {
  :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     color: #0d131d !important;
 }
+
+:host ::ng-deep #input-mora .mat-form-field-infix {
+    max-width: 118px !important;
+}

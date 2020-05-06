@@ -208,8 +208,8 @@
         </div>
         <div class="form-group col-5" *ngIf="cobraMora">
             <mat-form-field class="w-80 ml-3">
-                <mat-label>Tipo de Cobro</mat-label>
-                <mat-select class="texto-mora" formControlName="periodoMora" (ngModelChange)="TipoCobro()" disableOptionCentering panelClass="pts30">
+                <mat-label style="max-width: 128px;">Tipo de Cobro</mat-label>
+                <mat-select style="max-width: 128px;" class="texto-mora" formControlName="periodoMora" (ngModelChange)="TipoCobro()" disableOptionCentering panelClass="pts30">
                     <!-- <mat-option class="texto-mora">Tipo de Cobro</mat-option> -->
                     <mat-option class="input-text" class="input-text" *ngFor="let t of tiposMora" [value]="t.code">
                         {{t.name}}
@@ -222,7 +222,7 @@
 
             <mat-radio-group class="radio-group" formControlName="tipoMora" (change)="changeTipoMora(true)">
                 <mat-radio-button class="radio-button" name="tipoMora" id="monto" value="M" class="texto-radio-small">Monto</mat-radio-button>
-                <mat-form-field style="margin-top: -14px" class="ml-4 w-80 texto-mora">
+                <mat-form-field style="margin-top: -14px;" class="ml-4 w-80 texto-mora" id="input-mora">
                     <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
                     <span matSuffix class="simbolos">{{simboloMoneda}}&nbsp;&nbsp;</span>
                     <mat-error>
@@ -233,7 +233,7 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-radio-button class="radio-button " style="padding-top: 10px" name="tipoMora" id="porcentaje" value="P" class="texto-radio-small">Porcentaje</mat-radio-button>
-                <mat-form-field style="margin-top: -14px" class="ml-4  w-80 texto-mora">
+                <mat-form-field style="margin-top: -14px;" class="ml-4  w-80 texto-mora" id="input-mora">
                     <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
                     <span matSuffix class="simbolos">%</span>
                     <mat-error>
