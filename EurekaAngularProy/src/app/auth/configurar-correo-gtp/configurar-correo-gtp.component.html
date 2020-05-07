@@ -23,11 +23,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let cor of gtpService.correogtp; let i = index" ngStyle="{ border: solid 2px #05be50;}" [ngStyle]="{'border': indiceActual === i ? 'solid 2px #05be50' : 'solid 1px #f4f5f7;' }">
+                                            <tr *ngFor="let cor of correos; let i = index" class="border-item" [class.actual]="indiceActual === i">
                                                 <td>{{cor.correo}}</td>
                                                 <td style="display: flex; float: right;">
                                                     <button type="button" class="icons-correo" (click)="onEditar(cor,i)" [disabled]="Formulario"><img src="assets/images/pencil.svg" alt="editar"></button>
-                                                    <button type="button" class="icons-correo" (click)="onEliminar(cor,i)" [disabled]="Formulario"><img src="assets/images/eliminar.svg" alt="Eliminar"></button>
+                                                    <button type="button" class="icons-correo" (click)="onEliminar(i)" [disabled]="Formulario"><img src="assets/images/eliminar.svg" alt="Eliminar"></button>
                                                 </td>
                                             </tr>
 
@@ -44,14 +44,13 @@
                     </div>
                     <br><br>
                     <div style="text-align: center;">
-                        <button type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
-                       <span ><img *ngIf="!Formulario" src="assets/images/plus.svg"><img *ngIf="Formulario" src="assets/images/plus-gray.svg"></span>   Agregar otro servicio
-                        </button>
-                        <br><br>
-
-                        <button type="button" [disabled]="Formulario" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulario">
-                          FINALIZAR
-                         </button>
+                      <button type="button" [disabled]="Formulario" (click)="onAgregar()" class="btn-outline-green" [class.btn-disabled]="Formulario">
+                        <span ><img *ngIf="!Formulario" src="assets/images/plus.svg"><img *ngIf="Formulario" src="assets/images/plus-gray.svg"></span>   Agregar otro Mail
+                      </button>
+                      <br><br>
+                      <button type="button" [disabled]="Formulario" (click)="onGrabarCorreo()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulario">
+                        FINALIZAR
+                      </button>
                     </div>
                     <br><br>
 
@@ -67,26 +66,24 @@
                     <div class="d-flex justify-content-end">
                         <div class="cuadro-form ppr-5 ppl-5 pt-4 pb-3  bg-white">
                             <div class="texto-azul  mb-2 ">{{titleCorreo}}</div>
-                            <div style="float: right;" (click)="OcultarFormulario(true)" class="mano font-cerrar">
+                            <div style="float: right;" (click)="Formulario = false; indiceActual = -1;" class="mano font-cerrar">
                                 <img src="assets/images/cerrar.svg"> <br> Cerrar
                             </div>
                             <br>
-                            <form [formGroup]="frmCorreoGtp" novalidate (submit)="onGrabarCorreo()">
+                            <form [formGroup]="frmCorreoGtp" novalidate>
 
                                 <div class="form-group">
                                     <mat-form-field class="input-text super-full-width ">
-                                        <input formControlName="correo" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.correo.invalid" matInput type="text" minlength="10" maxlength="100" placeholder="E-mail">
-                                        <mat-error class="messsage-error">
-                                            <mat-error class="messsage-error" *ngIf="f.correo.invalid && f.correo.hasError('required') && submittedRequired">El E-mail es obligatorio</mat-error>
-                                            <mat-error class="messsage-error" *ngIf="f.correo.invalid && f.correo.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
-                                            <mat-error class="messsage-error" *ngIf="f.correo.invalid && !f.correo.hasError('pattern') && f.correo.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
+                                        <input formControlName="correo" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.correo.invalid" matInput type="text" minlength="10" maxlength="100" placeholder="E-mail" autocomplete="off">
+                                        <mat-error class="messsage-error" *ngIf="f.correo.invalid && summited">
+                                          {{getCorreoError()}}
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <br>
                                 <br>
                                 <div class="bnt-cont-reg">
-                                    <button type="submit" class="btn-big btn-eureca-green w-100 text-white">{{titlebtn}}</button>
+                                    <button type="button" class="btn-big btn-eureca-green w-100 text-white" (click)="onGrabar()">{{titlebtn}}</button>
                                 </div>
                             </form>
                         </div>

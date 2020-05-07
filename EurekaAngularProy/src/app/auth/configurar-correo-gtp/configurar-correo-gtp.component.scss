@@ -413,3 +413,14 @@ small {
     text-align: center;
     cursor: pointer;
 }
+
+.border-item {
+  border: solid 1px #f0f0f0;
+  &.actual {
+    background-color: rgba($color: #05be50, $alpha: 0.1);
+
+    .icons-correo {
+      background-color: rgba($color: #05be50, $alpha: 0.1);
+    }
+  }
+}

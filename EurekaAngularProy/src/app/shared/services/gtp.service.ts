@@ -30,8 +30,6 @@ export class GtpService {
   /// para los servicios que estan en eprobacin
   public services: DataServiceGTP[] = [];
   public Service: DataServiceGTP;
-  public correogtp: CorreoGtpModel[] = [];
-  public correogtps: CorreoGtpModel;
 
   public EnterprisesItems: EnterprisesPagedList = { totalCompanies: 0, listCompanyGTP: [] };
   //public emp: DataGTPChange;
@@ -375,76 +373,23 @@ export class GtpService {
     }).pipe(catchError(err => throwError(err)));
   }
 
-  //  ====  configurar Correo gtp ===
-  GetCorreoGtp() {
+  public GetCorreoGtp(): Observable<CorreoGtpModel[]> {
     const url = `${environment.END_POINT}/company/GTP/emailgtp`;
     const opts = {
       headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
     };
-    this.http.get<any>(url, opts).subscribe((r => {
-      console.log('correoGTP');
-
-      console.log(r.emails);
-      let correos = [];
-      r.emails.forEach(s => {
-        correos.push({
-          correo: s.correo
-        });
-      });
-      this.correogtp = correos;
-      console.log('end correoGTP', this.correogtp);
-      // this.correogtp;
-    }));
-
+    return this.http.get<any>(url, opts)
+      .pipe<CorreoGtpModel[]>(map(r => r.emails))
+      .pipe(catchError(err => throwError(err)));
   }
 
-  // GetCorreoGtpp() {
-  //   const url = `${environment.END_POINT}/company/GTP/emailgtp`;
-  //   const opts = {
-  //     headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
-  //   };
-  //   this.http.get<any[]>(url, opts).subscribe(d => {
-  //     let correos = [];
-  //     // let data = d[0].emails;
-  //     console.log('antess', d.Object.emails);
-
-  //     // data.forEach(s => {
-  //     //   correos.push({
-  //     //     correo: s.correo
-  //     //   });
-  //     // });
-  //     // this.correogtp = correos;
-  //     console.log('correoGTP');
-  //     console.log(this.correogtp);
-  //     console.log('end correoGTP');
-
-  //   });
-  // }
-
-
-  // public PostConfigurarCorreoGtp(emalis: string): Observable<any> {
-  //   const url = `${environment.END_POINT}//company/GTP/emailgtp`;
-  //   return this.http.post(url, { emalis: emalis }, {
-  //     responseType: 'blob'
-  //   }).pipe(catchError(err => throwError(err)));
-  // }
-
-  // public PostConfigurarCorreoGtp(data: any): Observable<any> {
-  //   this.spinner.show();
-  //   // this.email = data.email;
-  //   return this.http.post<any>(`${environment.END_POINT}/company/GTP/emailgtp`, data)
-  //     .pipe(map(r => {
-  //       this.spinner.hide();
-  //       if (r.success) {
-  //         // this.idCompany = r.id;
-  //       }
-  //       return r;
-  //     }))
-  //     .pipe(catchError(err => {
-  //       this.spinner.hide();
-  //       return throwError(err);
-  //     }));
-  // }
-
+  public PostConfigurarCorreoGtp(correos: CorreoGtpModel[]): Observable<any> {
+    const url = `${environment.END_POINT}/company/GTP/emailgtp`;
+    const opts = {
+      headers: { "Authorization": "bearer " + this.storage.getCurrentToken() }
+    };
+    return this.http.post(url, { emails: correos }, opts)
+      .pipe(catchError(err => throwError(err)));
+  }
 
 }
