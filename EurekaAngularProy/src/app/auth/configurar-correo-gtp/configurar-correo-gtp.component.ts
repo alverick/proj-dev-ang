@@ -53,16 +53,16 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
     }
     this.gtpService.PostConfigurarCorreoGtp(this.correos)
       .subscribe(r => {
-          Swal.fire({
-            title: 'Grabar',
-            text: 'Los emails han sido guardados',
-            showCloseButton: true,
-            showCancelButton: false,
-            showConfirmButton: true,
-            confirmButtonText: "CERRAR",
-            onOpen: drawPopup
-          });
+        Swal.fire({
+          title: 'Grabar',
+          text: 'Los emails han sido guardados',
+          showCloseButton: true,
+          showCancelButton: false,
+          showConfirmButton: true,
+          confirmButtonText: "CERRAR",
+          onOpen: drawPopup
         });
+      });
   }
 
   onEditar(data, index: number) {
@@ -92,8 +92,10 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
 
   onAgregar() {
     this.Formulario = true;
-    this.frmCorreoGtp.setValue({ correo: ''});
+    this.frmCorreoGtp.setValue({ correo: '' });
     this.summited = false;
+    this.titleCorreo = 'Agregar E-mail';
+    this.titlebtn = 'Agregar'
   }
 
   getCorreoError() {
@@ -112,7 +114,15 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
       if (this.indiceActual >= 0) {
         this.correos[this.indiceActual].correo = this.frmCorreoGtp.value.correo;
       } else {
-        this.correos.push({ correo: this.frmCorreoGtp.value.correo });
+        if (this.correos.find((s, i) => s.correo.toUpperCase() === this.frmCorreoGtp.value.correo.toUpperCase() && i !== this.indiceActual)) {
+          Swal.fire({
+            text: 'Ya existe un E-mail con este nombre',
+            onOpen: drawPopup
+          });
+          return;
+        } else {
+          this.correos.push({ correo: this.frmCorreoGtp.value.correo });
+        }
       }
       this.indiceActual = -1;
       this.Formulario = false;
