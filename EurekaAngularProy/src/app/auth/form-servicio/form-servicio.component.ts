@@ -544,7 +544,6 @@ export class FormServicioComponent implements OnInit {
     this.cobraPorcentaje = false;
     if (this.frm.get('periodoMora').value === '1' || this.frm.get('periodoMora').value === '2') {
       this.cmoraporce = true;
-
       this.f.monto.clearValidators();
       this.f.monto.enable();
       this.f.monto.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.50), Maximo(1000)]);

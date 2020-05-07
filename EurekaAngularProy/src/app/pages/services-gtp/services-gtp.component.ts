@@ -453,8 +453,20 @@ export class ServicesGTPComponent implements OnInit {
   }
 
   TipoCobro() {
+    this.frm.get('tipoMora').setValue('M');
+    this.cobraMonto = true;
+    this.cobraPorcentaje = false;
     if (this.frm.get('periodoMora').value === '1' || this.frm.get('periodoMora').value === '2') {
       this.cmoraporce = true;
+      this.f.monto.clearValidators();
+      this.f.monto.enable();
+      this.f.monto.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.50), Maximo(1000)]);
+      this.f.monto.reset("1.00");
+
+      this.f.porcentaje.clearValidators();
+      this.f.porcentaje.disable();
+      this.f.porcentaje.setValidators([Validators.required, Validators.pattern('^([0-9]{1,4})?(\.[0-9]{1,2})?$'), Minimo(0.01), Maximo(100)]);
+      this.f.porcentaje.reset("1.00");
     } else {
       this.cmoraporce = false;
     }
