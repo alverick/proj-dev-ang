@@ -1,3 +1,4 @@
+import { ConfigurarCorreoGtpComponent } from './auth/configurar-correo-gtp/configurar-correo-gtp.component';
 import { LandingComponent } from './auth/landing/landing.component';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'recupera', component: RecuperarContrasenaComponent , canActivate: [LogoutGuard]},
   { path: 'afiliacion', component: AfiliacionComponent, canActivate: [LogoutGuard]},
   { path: 'editarSvcGTP', component: ConfigurarServiciosComponent, data: {  isgtp: true }},
+  { path: 'configurarCorreoGTP', component: ConfigurarCorreoGtpComponent, canActivate: [AuthGuard, GtpInputGuard]},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
    { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard, GtpOutputGuard ] },
   { path: 'crearContrasena', component: CrearContrasenaComponent, data: { isEdit: false }},

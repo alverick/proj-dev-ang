@@ -104,6 +104,7 @@ export class HeaderComponent implements OnInit {
       // this.router.url.includes('/crearContrasena') ||
       this.router.url.includes('/editaCuenta') ||
       this.router.url.includes('/editarSvcGTP') ||
+      // this.router.url.includes('/configurarCorreoGTP') ||
       this.router.url.includes('/configurarServicios') ||
 
       this.router.url.includes('/procesando')) {
@@ -122,7 +123,6 @@ export class HeaderComponent implements OnInit {
     return this.router.url.includes('/home');
   }
   get IsGtp(): boolean {
-
     return this.router.url.includes('/gtp');
   }
 
