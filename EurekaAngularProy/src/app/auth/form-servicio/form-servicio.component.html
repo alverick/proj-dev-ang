@@ -85,7 +85,7 @@
             <mat-label class="label">Nº de cuenta Interbank</mat-label>
             <mat-select class="input-text" formControlName="idCuenta" name="idCuenta" disableOptionCentering panelClass="pts30" (ngModelChange)="changeCuenta($event)">
                 <!-- <mat-option class="input-text" >Nº de cuenta Interbank</mat-option> -->
-                <mat-option style="white-space: normal !important;" class="input-text" *ngFor="let cta of cuentas" [value]="cta.id">{{cta.number}}</mat-option>
+                <mat-option style="white-space: normal !important; display: block;padding: .9em .5em .5em; height: auto;" class="input-text" *ngFor="let cta of cuentas" [value]="cta.id">{{cta.number}}</mat-option>
             </mat-select>
             <mat-error class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('required') && submittedRequired">Elija una opción</mat-error>
         </mat-form-field>
