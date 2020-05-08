@@ -40,14 +40,14 @@ export class GtpService {
   private States: StatesGtp[] = [
     { idState: 'Pendiente', descripcion: 'Pendiente' },
     { idState: 'Atendido', descripcion: 'Atendido' },
-    { idState: 'Devuelto a la empresa', descripcion: 'Devuelto a la empresa' },
+    { idState: 'Devuelto a la empresa', descripcion: 'Devuelto a la Empresa' },
     { idState: 'Rechazado', descripcion: 'Rechazado' }
   ];
 
   private tiposSolicitudes: StatesGtp[] = [
     { idState: 'EmpNuevo', descripcion: 'Empresa Nueva' },
-    { idState: 'EmpMod', descripcion: 'Atualización de empresa' },
-    { idState: 'SvcMod', descripcion: 'Actualización de servicios' },
+    { idState: 'EmpMod', descripcion: 'Actualización de Empresa' },
+    { idState: 'SvcMod', descripcion: 'Actualización de Servicios' },
     { idState: 'SvcNuevo', descripcion: 'Nuevos Servicios' }
   ];
 
