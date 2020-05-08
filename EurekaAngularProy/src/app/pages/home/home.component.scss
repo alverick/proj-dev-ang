@@ -730,5 +730,13 @@ b {
     display: none !important;
 }
 
+:host ::ng-deep #date-desde>.mat-form-field-infix {
+    max-width: 120px;
+}
+
+:host ::ng-deep #date-hasta>.mat-form-field-infix {
+    max-width: 120px;
+}
+
 
 /*[END] TOOLTIP BOOSTRAP*/
