@@ -35,7 +35,7 @@
                                                         <li style="padding: 0 .5em;">
                                                             <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
                                                         </li>
-                                                        <li class="ml-2" *ngIf="!inGTP &&  afiliacionService.services.length > 1">
+                                                        <li class="ml-2" *ngIf="!inGTP ">
                                                             <a class="texto-azul borrar" [class.mano]="!Formulario" (click)="delService(i,svc)"><img src="assets/images/eliminar.svg"></a>
                                                         </li>
                                                     </ul>
@@ -228,7 +228,7 @@
                              FINALIZAR
                     </button>
                         <button *ngIf="inGTP && Formulariogtp==false" type="button" [disabled]="Formulariogtp" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulariogtp">
-                      FINALIZAR 
+                      FINALIZAR
                     </button>
 
                         <!-- -------------------- -->
