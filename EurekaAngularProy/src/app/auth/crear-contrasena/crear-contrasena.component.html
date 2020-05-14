@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="email" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid" matInput type="text" minlength="10" maxlength="100" placeholder="E-mail">
+                                    <input formControlName="email" autocomplete="new-text" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid" matInput type="text" minlength="10" maxlength="100" placeholder="E-mail">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required') && submittedRequired">El E-mail es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="contrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
+                                    <input formControlName="contrasena" autocomplete="new-password" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('required') && submittedRequired">Contraseña es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
@@ -89,7 +89,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="repcontrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repite la Contraseña">
+                                    <input formControlName="repcontrasena" autocomplete="new-password" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repite la Contraseña">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required') && submittedRequired">Debe repetir la contraseña</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
