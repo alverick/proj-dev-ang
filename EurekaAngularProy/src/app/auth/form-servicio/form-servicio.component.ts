@@ -110,12 +110,11 @@ export class FormServicioComponent implements OnInit {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
-    let codDeudor = (this._service.newNameCodeGtpStatus === null ||
-      this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? (this._service.codDeudor === 'RUC' ||
-        this._service.codDeudor === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro'
-      : (this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
-        this._service.newNameCode === 'Codigo Interno') ? this._service.newNameCode : 'Otro';
-    this.frm = this.fb.group({
+    let codDeudor = (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? 
+      (this._service.codDeudor === 'RUC' || this._service.codDeudor === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro' : 
+      (this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno') ? this._service.newNameCode : 'DNI';
+    
+      this.frm = this.fb.group({
       // tslint:disable-next-line:max-line-length
       nombre: new FormControl({
         value: (this._service.newNameGtpStatus === 0 || (this._service.newNameGtpStatus === 3 && this._service.nombre == null)) ?

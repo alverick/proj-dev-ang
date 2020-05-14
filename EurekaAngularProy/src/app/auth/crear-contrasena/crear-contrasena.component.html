@@ -8,11 +8,11 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                 <div class="d-flex justify-content-end">
                     <div class="cuadro-form ppr-5 ppl-5 pt-4 pb-3  bg-white cont-empresa">
-                        <form [formGroup]="registerForm" novalidate (submit)="onSubmit()">
+                        <form [formGroup]="registerForm" novalidate (submit)="onSubmit()" autocomplete="off">
                             <div class="form-group">
                                 <mat-form-field class="super-full-width ">
-                                    <input class="input-text" aria-describedby="tooltip-0" tooltip="El RUC de tu empresa con el que ingresarás a la plataforma" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" placeholder="RUC de tu empresa"
-                                        appOnlynumbers minlength="11" maxlength="11">
+                                    <input class="input-text" aria-describedby="tooltip-0" tooltip="El RUC de tu empresa con el que ingresarás a la plataforma" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" autocomplete="new-text"
+                                        placeholder="RUC de tu empresa" appOnlynumbers minlength="11" maxlength="11">
                                     <!-- <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')" [ngStyle]="{'display': f.ruc.hasError('required') ? 'block' : 'none' }">El RUC es obligatorio</mat-error> -->
                                     <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required') && submittedRequired">El RUC es obligatorio</mat-error>
                                     <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
@@ -23,7 +23,7 @@
                                 <mat-form-field class="super-full-width ">
 
                                     <input class="input-text" tooltip="Nombre con el que tus clientes te buscarán en los canales de Interbank al momento de pagarte" formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid"
-                                        matInput type="text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
+                                        matInput type="text" autocomplete="new-text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required') && submittedRequired">El nombre es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="email" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid" matInput type="text" minlength="10" maxlength="100" placeholder="E-mail">
+                                    <input formControlName="email" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid" matInput type="text" autocomplete="new-text" minlength="10" maxlength="100" placeholder="E-mail">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required') && submittedRequired">El E-mail es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
@@ -56,7 +56,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="telefono" (Keydown.space)="$event.preventDefault()" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" placeholder="Teléfono o celular" minlength="6" maxlength="9">
+                                    <input formControlName="telefono" (Keydown.space)="$event.preventDefault()" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" autocomplete="new-text" placeholder="Teléfono o celular" minlength="6" maxlength="9">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('required') && submittedRequired">Teléfono o celular es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('pattern')"> Ingrese un telefono o celular valido </mat-error>
@@ -79,7 +79,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="contrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" placeholder="Contraseña">
+                                    <input formControlName="contrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" autocomplete="new-password" placeholder="Contraseña">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('required') && submittedRequired">Contraseña es obligatorio</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
@@ -89,7 +89,7 @@
                             </div>
                             <div class="form-group">
                                 <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="repcontrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" placeholder="Repite la Contraseña">
+                                    <input formControlName="repcontrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" autocomplete="new-password" placeholder="Repite la Contraseña">
                                     <mat-error class="messsage-error">
                                         <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required') && submittedRequired">Debe repetir la contraseña</mat-error>
                                         <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
