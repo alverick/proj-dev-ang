@@ -146,16 +146,16 @@ export class HeaderComponent implements OnInit {
     }
   }
   goBack() {
+
     if (this.router.url.includes('/cargaHistorico')) {
       this.router.navigate(['/gtp']);
-    }
-    else {
+    } else if (this.router.url.includes('/crearContrasena')) {
+      this.router.navigate(['/afiliacion']);
+    } else if (this.router.url.includes('/afiliacion')) {
+      this.router.navigate(['/login']);
+    } else {
       if (confirm('Es posible que los cambios no se guarden.')) {
         this.router.navigate(['/home']);
-      } else if (this.router.url.includes('/crearContrasena')) {
-        this.router.navigate(['/afiliacion']);
-      } else if (this.router.url.includes('/afiliacion')) {
-        this.router.navigate(['/login']);
       }
     }
   }
