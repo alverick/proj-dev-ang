@@ -80,11 +80,11 @@
                         <section class="actions">
                             <div class="al-left" style="padding-left: -10px">
                                 <div class="chk-vertical">
-                                    <mat-checkbox id="chk-all" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos()" [disabled]="ceroRegistros()">
+                                    <mat-checkbox id="chk-all" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos()" [disabled]="ceroRegistrosEliminar()">
                                     </mat-checkbox>
                                     <label class="act-label" for="chk-all" aria-label="chk-all" [class.seleccionado]="selectedAll">Seleccionar</label>
                                 </div>
-                                <div *ngIf="!ceroRegistros()" class="btn-eliminar">
+                                <div *ngIf="!ceroRegistrosEliminar()" class="btn-eliminar">
                                     <div *ngIf="!selectedAtLeastOneDebt">
                                         <div (click)="EliminarSeleccionados()" title="Debe seleccionar al menos una fila para eliminar" data-toggle="modal" data-target="#ModalNotificacion">
                                             <mat-icon class="svg-custom" svgIcon="eurc_trash">
@@ -97,16 +97,13 @@
                                             </mat-icon>
                                         </div>
                                     </div>
-                                    <label class="act-label">
-                      Eliminar
-                    </label>
+                                    <label class="act-label">  Eliminar</label>
                                 </div>
-                                <div *ngIf="ceroRegistros()" class="btn-eliminar disable">
+                                <div *ngIf="ceroRegistrosEliminar()" class="btn-eliminar disable">
                                     <div data-toggle="modal" data-target="#ModalNotificacion">
                                         <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
                                     </div>
-                                    <label class="act-label">Eliminar
-                    </label>
+                                    <label class="act-label">Eliminar</label>
                                 </div>
                                 <!--
                 <div (click)="AgregarDeuda()" class="btn-agregar">
