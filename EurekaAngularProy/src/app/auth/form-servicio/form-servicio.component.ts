@@ -5,6 +5,7 @@ import { MonedaModel, ServiceModel } from "src/app/shared/models";
 import Swal from "sweetalert2";
 import { ConfigurarServiciosComponent } from "../configurar-servicios/configurar-servicios.component";
 import { drawPopup } from 'src/app/shared/services/popups';
+import { format } from "url";
 
 @Component({
   selector: 'app-form-servicio',
@@ -109,12 +110,11 @@ export class FormServicioComponent implements OnInit {
     this.gtpMode = (this._service.NewName !== null && this._service.NewNameCod !== null);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
-
-    let codDeudor = (this._service.newNameCodeGtpStatus === null ||
-      this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? (this._service.codDeudor === 'RUC' ||
-        this._service.codDeudor === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro'
-      : (this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' ||
-        this._service.newNameCode === 'Codigo Interno') ? this._service.newNameCode : 'Otro';
+    // debugger
+    let codDeudor = (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? 
+       (this._service.codDeudor === 'RUC' || this._service.codDeudor === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro' : 
+       (this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno') ? this._service.newNameCode : 'DNI';
+  
     this.frm = this.fb.group({
       // tslint:disable-next-line:max-line-length
       nombre: new FormControl({
@@ -146,7 +146,7 @@ export class FormServicioComponent implements OnInit {
       porcentaje: new FormControl({ value: porcentajed, disabled: true }),
       pagoPartes: [this._service.pagoPartes, Validators.required],
     });
-
+    // console.log('format', this.frm);
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
     this.afiliacionService.GetTipoPago().subscribe(d => {
