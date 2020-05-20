@@ -1,11 +1,11 @@
 import { Date } from './../../shared/models/date';
-import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { User } from 'src/app/shared/models/user.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HomeService } from 'src/app/shared/services/home.service';
 import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
 import { ExcelService } from 'src/app/shared/services/excel.service';
-import { MatDialog, MatSnackBar} from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { WayPay } from 'src/app/shared/models/way-pay';
 import { Type } from 'src/app/shared/models/type';
 import * as saveAs from 'file-saver';
@@ -16,7 +16,7 @@ import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 /// DATE PIECKER FORMAT
-import {   Output, EventEmitter } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
 import * as _moment from 'moment';  // dejalo si sale error
 import { default as _rollupMoment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
@@ -87,24 +87,24 @@ export class HomeComponent implements OnInit {
   ]
   orderBy = -1;
 
- // DialogDataExampleDialog
+  // DialogDataExampleDialog
   @ViewChild('cargaExcel', { static: true }) cargaExcel;
- // datepicker format
- @Output() date2: EventEmitter<any> = new EventEmitter<any>();
- // fechas limites
- minDate = new Date(2000, 0, 1);
- maxDate = new Date(2050, 0, 1);
- // inputDate1:string = '';  inputText
- @ViewChild('inputText', { static: true }) inputText: ElementRef;
- @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
- @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
+  // datepicker format
+  @Output() date2: EventEmitter<any> = new EventEmitter<any>();
+  // fechas limites
+  minDate = new Date(2000, 0, 1);
+  maxDate = new Date(2050, 0, 1);
+  // inputDate1:string = '';  inputText
+  @ViewChild('inputText', { static: true }) inputText: ElementRef;
+  @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
+  @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
   // tslint:disable-next-line:no-inferrable-types
   state: boolean = false;
   // tslint:disable-next-line:whitespace
   // tslint:disable-next-line:no-inferrable-types
   pageActual: number = 1;
   ListaValidacion: Boolean;
- // x en los input
+  // x en los input
   public user: User;
   DebtsArray = [];
   checkboxes: any;
@@ -113,8 +113,8 @@ export class HomeComponent implements OnInit {
   mostrar: Boolean;
   inputEdit: Boolean;
   InputList: Boolean;
-  messagetablecode1: Boolean =false;
-  messagetablecode2: Boolean =false;
+  messagetablecode1: Boolean = false;
+  messagetablecode2: Boolean = false;
   private debtsUpdate: DebtEdit = new DebtEdit();
 
   typeList: any[];
@@ -124,7 +124,7 @@ export class HomeComponent implements OnInit {
   typeSelected: String;
   type: String[];
 
-  wayPaySelected:  String;
+  wayPaySelected: String;
   wayPay: String[];
 
   dateSelected: String;
@@ -139,9 +139,9 @@ export class HomeComponent implements OnInit {
 
   selectedAtLeastOneDebt: boolean = false;
 
-  statusOptions : Array<Object> = [
-    {  option:'PENDIENTE', state: '1'},
-    {  option:'PAGADO', state : '2'}
+  statusOptions: Array<Object> = [
+    { option: 'PENDIENTE', state: '1' },
+    { option: 'PAGADO', state: '2' }
   ]
 
   colorStatus: string;
@@ -173,12 +173,12 @@ export class HomeComponent implements OnInit {
   errores: any = {};
   querySearch: boolean = false;
   control: any;
- // mensaje grila
+  // mensaje grila
 
-  messageTable: string ='';
+  messageTable: string = '';
   showArrow: boolean = false;
 
-  @ViewChild('fileLoad', { read: ViewContainerRef, static: true }) fileLoadContainer : ViewContainerRef;
+  @ViewChild('fileLoad', { read: ViewContainerRef, static: true }) fileLoadContainer: ViewContainerRef;
 
   constructor(
     private storageService: StorageService,
@@ -193,32 +193,32 @@ export class HomeComponent implements OnInit {
     private gaService: GoogleAnalytics,
     private fileLoad: LoadFileService,
     private barLoad: LoadBarService) {
-      transactionService.itemsForDelete = [];
-    }
-     /*
-     @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
-      e.preventDefault();
-    }
+    transactionService.itemsForDelete = [];
+  }
+  /*
+  @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
+   e.preventDefault();
+ }
 
-    @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
-      e.preventDefault();
-    }
+ @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
+   e.preventDefault();
+ }
 
-    @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
-      e.preventDefault();
+ @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
+   e.preventDefault();
+ }
+ */
+  innerHeight = 0;
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(e) {
+    let height = window.innerHeight;
+    if (!height)
+      height = document.documentElement.clientHeight;
+    if (height !== this.innerHeight) {
+      height -= 150;
+      $('.ps-body .ps-content').css('height', height + 'px');
     }
-    */
-   innerHeight = 0;
-    @HostListener('window:scroll', ['$event'])
-    onWindowScroll(e) {
-      let height = window.innerHeight;
-      if (!height)
-        height = document.documentElement.clientHeight;
-      if (height !== this.innerHeight) {
-        height -= 150;
-        $('.ps-body .ps-content').css('height', height + 'px');
-      }
-    }
+  }
 
   ngOnInit() {
     this.fileLoad.onClose.subscribe(m => {
@@ -228,7 +228,7 @@ export class HomeComponent implements OnInit {
       }
       else if (m.status === 'rejected') {
         this.excelService.statusUpload = false;
-        const dialogRef = this.dialog.open(DialogComponent,{
+        const dialogRef = this.dialog.open(DialogComponent, {
           width: '899px',
         });
         dialogRef.componentInstance.ready = true;
@@ -248,71 +248,81 @@ export class HomeComponent implements OnInit {
     this.homeService.getServicesActive().subscribe(
       value => {
         this.typeList = value;
-    });
+      });
     this.homeService.getWayPay().subscribe(
       value => {
         this.waypayList = value;
-    });
+      });
     this.homeService.getDate().subscribe(
       value => {
         this.DateList = value;
-    });
+      });
     this.spinner.show("mySpinner", {
       type: "line-scale-party",
       size: "large",
       bdColor: "rgba(100,149,237, .8)",
       color: "white"
     });
-   this.transactionService.debtItems = { data: [], countNoIbkPayments: 0, count : 0 };
-   this.consultaDeuda();
-   this.recortarNombres();
-   this.cargaExcel = false;
+    this.transactionService.debtItems = { data: [], countNoIbkPayments: 0, count: 0 };
+    this.consultaDeuda();
+    this.recortarNombres();
+    this.cargaExcel = false;
 
 
-   console.log(this.transactionService.debtItems.data);
-   // check
-   //this.SeleccionarTodos();
-   this.selectedAll = false;
-   this.selectedUniverse = false;
+    console.log(this.transactionService.debtItems.data);
+    // check
+    //this.SeleccionarTodos();
+    this.selectedAll = false;
+    this.selectedUniverse = false;
   }
 
   statusOpt() {
 
   }
-/*
-  validandoListado() {
-
-    if (sessionStorage.getItem('tk') === null  ) {
-      this.router.navigate(['/login']);
-    } else {
-      this.getDeuda();
-    }
-  }*/
+  /*
+    validandoListado() {
+  
+      if (sessionStorage.getItem('tk') === null  ) {
+        this.router.navigate(['/login']);
+      } else {
+        this.getDeuda();
+      }
+    }*/
 
 
 
   ceroRegistros(): boolean {
-      if (sessionStorage.getItem('tk') === null ||  sessionStorage.getItem('tk') ===  '') {
-        //this.router.navigate(['/login']);
+    if (sessionStorage.getItem('tk') === null || sessionStorage.getItem('tk') === '') {
+      //this.router.navigate(['/login']);
+      return false;
+    } else {
+      let id = 0;
+      this.transactionService.debtItems.data.forEach(itm => {
+        if ((!itm.hasIBKPayments && itm.status !== 'PAGADO' || itm.status === 'PARCIAL')) {
+          id++;
+        }
+      });
+      if (this.transactionService.debtItems.count === 0) {
+        return true;
+      } else if (id > 0) {
         return false;
       } else {
-        if (this.transactionService.debtItems.count === 0) {
-          return true;
-      } else {
-          return false;
+        return true;
+
       }
-      }
+
+    }
   }
 
-////ORDENAMIENTO OCULTAR LAS FLECHAS
-orderList(index: number, asc: boolean) {
-  this.orderBy = index;
-  this.orderDef[index].asc = asc;
+  ////ORDENAMIENTO OCULTAR LAS FLECHAS
+  orderList(index: number, asc: boolean) {
+    this.orderBy = index;
+    this.orderDef[index].asc = asc;
 
-  this.currentFiltro.asc = asc;
-  this.currentFiltro.columnName = this.orderDef[index].name;
-  this.consultaDeuda();
-}
+    this.currentFiltro.asc = asc;
+    this.currentFiltro.columnName = this.orderDef[index].name;
+    this.consultaDeuda();
+  }
 
   sendFiltro() {
     this.messagetablecode1 = false;
@@ -336,33 +346,33 @@ orderList(index: number, asc: boolean) {
       'event_category': 'Dashboard',
       'event_label': 'buscar'
     });
-    if((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
-       (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined)  &&
-       (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined)  &&
-       (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)){
-       this.messageTable = 'Para empezar, agrega la lista de los cobros';
-       this.showArrow = true;
-      } else{
-       this.messageTable ='No se encontró ningún registro para esta búsqueda';
-       this.showArrow = false;
+    if ((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
+      (this.filtro.service === '' || this.filtro.service === null || this.filtro.service === undefined) &&
+      (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined) &&
+      (this.filtro.dateForFilter == '' || this.filtro.dateForFilter === null || this.filtro.dateForFilter === undefined)) {
+      this.messageTable = 'Para empezar, agrega la lista de los cobros';
+      this.showArrow = true;
+    } else {
+      this.messageTable = 'No se encontró ningún registro para esta búsqueda';
+      this.showArrow = false;
 
-      }
-  }
-
-   mensaje(tipo: any, titulo: string, text: string){
-    if (sessionStorage.getItem('tk') !== null  ) {
-      this. mesageeError(tipo,titulo,text);
     }
   }
 
-  mesageeError(tipo: any, titulo: string, text: string){
+  mensaje(tipo: any, titulo: string, text: string) {
+    if (sessionStorage.getItem('tk') !== null) {
+      this.mesageeError(tipo, titulo, text);
+    }
+  }
+
+  mesageeError(tipo: any, titulo: string, text: string) {
     Swal.fire({
-      title: titulo ,
+      title: titulo,
       html: text,
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
-      confirmButtonText:  'CANCELAR',
+      confirmButtonText: 'CANCELAR',
       onOpen: drawPopup
     });
   }
@@ -372,13 +382,13 @@ orderList(index: number, asc: boolean) {
 
   validaFiltro(): boolean {
 
-    let usDatePattern =  /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+    let usDatePattern = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
     //lenght date from
     var lenghtdf = new Date(this.filtro.dateFrom).toDateString().length;
-    var fromdate = parseInt(new Date(this.filtro.dateFrom).toDateString().substr(lenghtdf-4, lenghtdf));
+    var fromdate = parseInt(new Date(this.filtro.dateFrom).toDateString().substr(lenghtdf - 4, lenghtdf));
     // lenght to
     var lenghtdt = new Date(this.filtro.dateTo).toDateString().length;
-    var todate = parseInt(new Date(this.filtro.dateTo).toDateString().substr(lenghtdt-4, lenghtdt));
+    var todate = parseInt(new Date(this.filtro.dateTo).toDateString().substr(lenghtdt - 4, lenghtdt));
 
     if (this.filtro.dateForFilter !== '' && this.filtro.dateForFilter !== null && this.filtro.dateForFilter !== undefined) {
       let faltaDesde: boolean = false;
@@ -395,103 +405,103 @@ orderList(index: number, asc: boolean) {
         // tslint:disable-next-line:no-unused-expression
         this.filtro.dateFrom == null;
         // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateTo  == null;
+        this.filtro.dateTo == null;
         // this.mensaje( 'error', 'Error en la fecha',msg);
         return true;
       }
     }
 
 
-    if (this.filtro.dateFrom === null &&  this.filtro.dateTo === null) {
+    if (this.filtro.dateFrom === null && this.filtro.dateTo === null) {
       ///       dateFrom es inputDate1              | dateTo  es inputDate2
-          if (this.inputDate1.nativeElement.value === '' &&  this.inputDate2.nativeElement.value === '') {
+      if (this.inputDate1.nativeElement.value === '' && this.inputDate2.nativeElement.value === '') {
 
 
-            if (this.filtro.dateFrom > this.filtro.dateTo   ) {
-              // tslint:disable-next-line:no-unused-expression
-              this.filtro.dateFrom == null;
-              // tslint:disable-next-line:no-unused-expression
-              this.filtro.dateTo  == null;
-              this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
-              return false;
-            } else {
-              return true;
-            }
-          } else {
-                  if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
-                   // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
-                      // tslint:disable-next-line:no-unused-expression
-                      this.filtro.dateFrom == null;
-                      // tslint:disable-next-line:no-unused-expression
-                      this.filtro.dateTo  == null;
-                   return false;
-                  }
-                  if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
-                   // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
-                    // tslint:disable-next-line:no-unused-expression
-                    this.filtro.dateFrom == null;
-                    // tslint:disable-next-line:no-unused-expression
-                    this.filtro.dateTo  == null;
-                   return false;
-                  } else {
-                    return true;
-                  }
-          }
-           /// change
+        if (this.filtro.dateFrom > this.filtro.dateTo) {
+          // tslint:disable-next-line:no-unused-expression
+          this.filtro.dateFrom == null;
+          // tslint:disable-next-line:no-unused-expression
+          this.filtro.dateTo == null;
+          this.mensaje('error', 'Error en la fecha', 'La fecha "desde" no puede ser mayor a la fecha "hasta"');
+          return false;
         } else {
-            if ( this.inputDate1.nativeElement.value === '') {
-               // this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
-               // tslint:disable-next-line:no-unused-expression
-               this.filtro.dateFrom == null;
-               // tslint:disable-next-line:no-unused-expression
-               this.filtro.dateTo  == null;
-               return false;
-            } else if ( this.inputDate2.nativeElement.value === '') {
-              // tslint:disable-next-line:no-unused-expression
-              this.filtro.dateFrom == null;
-              // tslint:disable-next-line:no-unused-expression
-              this.filtro.dateTo  == null;
-              //  this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
-                return false;
-            } else if ( !this.inputDate1.nativeElement.value.match(usDatePattern)) {
-              // tslint:disable-next-line:no-unused-expression
-              this.filtro.dateFrom == null;
-              // tslint:disable-next-line:no-unused-expression
-              this.filtro.dateTo  == null;
-               // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
-                return false;
-            } else if ( !this.inputDate2.nativeElement.value.match(usDatePattern)) {
-              // tslint:disable-next-line:no-unused-expression
-              this.filtro.dateFrom == null;
-              // tslint:disable-next-line:no-unused-expression
-              this.filtro.dateTo  == null;
-              // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
-              return false;
-            }
+          return true;
+        }
+      } else {
+        if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
+          // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
+          // tslint:disable-next-line:no-unused-expression
+          this.filtro.dateFrom == null;
+          // tslint:disable-next-line:no-unused-expression
+          this.filtro.dateTo == null;
+          return false;
+        }
+        if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
+          // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
+          // tslint:disable-next-line:no-unused-expression
+          this.filtro.dateFrom == null;
+          // tslint:disable-next-line:no-unused-expression
+          this.filtro.dateTo == null;
+          return false;
+        } else {
+          return true;
+        }
+      }
+      /// change
+    } else {
+      if (this.inputDate1.nativeElement.value === '') {
+        // this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateFrom == null;
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateTo == null;
+        return false;
+      } else if (this.inputDate2.nativeElement.value === '') {
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateFrom == null;
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateTo == null;
+        //  this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
+        return false;
+      } else if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateFrom == null;
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateTo == null;
+        // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
+        return false;
+      } else if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateFrom == null;
+        // tslint:disable-next-line:no-unused-expression
+        this.filtro.dateTo == null;
+        // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
+        return false;
+      }
 
-            else if (fromdate <  2000 || fromdate >  2050 ) {
-              this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido para la fecha de Emision');
-              return false;
-            }
+      else if (fromdate < 2000 || fromdate > 2050) {
+        this.mensaje('error', 'Error en la fecha', 'Ingrese un Año valido para la fecha de Emision');
+        return false;
+      }
 
-            else if (todate <  2000 || todate >  2050 ) {
-              this.mensaje( 'error', 'Error en la fecha','Ingrese un Año valido  para la fecha de Vencimiento');
-              return false;
-            }
-            else if (this.filtro.dateFrom > this.filtro.dateTo ) {
-              this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede ser mayor a la fecha "hasta"');
-              return false;
-            } else {
+      else if (todate < 2000 || todate > 2050) {
+        this.mensaje('error', 'Error en la fecha', 'Ingrese un Año valido  para la fecha de Vencimiento');
+        return false;
+      }
+      else if (this.filtro.dateFrom > this.filtro.dateTo) {
+        this.mensaje('error', 'Error en la fecha', 'La fecha "desde" no puede ser mayor a la fecha "hasta"');
+        return false;
+      } else {
 
-              return true;
-           }
+        return true;
+      }
     }
 
   }
 
   private validaFiltro2() {
     let res: boolean = true;
-    for(var s in this.errores) {
+    for (var s in this.errores) {
       if (this.errores[s])
         res = false;
     }
@@ -499,30 +509,29 @@ orderList(index: number, asc: boolean) {
   }
 
   consultaDeuda(cb: () => void = null) {
-  // tslint:disable-next-line:prefer-const
+    // tslint:disable-next-line:prefer-const
 
-    if (this.validaFiltro2()){
-                this.spinner.show();
-                this.transactionService.getDeuda(this.currentFiltro, this.selectedUniverse)
-                  .subscribe(debts => {
-                  if(this.transactionService.debtItems.data.length > 0){
-                    this.selectedAll = this.transactionService.isMarkedAll(this.selectedUniverse);
-                  }
-
-                  //this.selectedUniverse = false;
-                  this.spinner.hide();
-                  if (cb) {
-                    cb();
-                  }
-                }, err => { this.spinner.hide(); });
+    if (this.validaFiltro2()) {
+      this.spinner.show();
+      this.transactionService.getDeuda(this.currentFiltro, this.selectedUniverse)
+        .subscribe(debts => {
+          if (this.transactionService.debtItems.data.length > 0) {
+            this.selectedAll = this.transactionService.isMarkedAll(this.selectedUniverse);
           }
-     this.messageTable = 'Para empezar, agrega la lista de las deudas';
-     this.showArrow = true;
+
+          //this.selectedUniverse = false;
+          this.spinner.hide();
+          if (cb) {
+            cb();
+          }
+        }, err => { this.spinner.hide(); });
+    }
+    this.messageTable = 'Para empezar, agrega la lista de las deudas';
+    this.showArrow = true;
 
   }
 
-  recortarNombres()
-  {
+  recortarNombres() {
     this.transactionService.debtItems.data.forEach(element => {
       element.firstName
     });
@@ -534,61 +543,61 @@ orderList(index: number, asc: boolean) {
   ////////////////////////////////////////////////*/
 
 
-    mostrarx(): boolean {
-          // tslint:disable-next-line:max-line-length
-          if (this.inputText.nativeElement.value === '' ) {
-              return false;
-          } else {
-            return true;
-          }
+  mostrarx(): boolean {
+    // tslint:disable-next-line:max-line-length
+    if (this.inputText.nativeElement.value === '') {
+      return false;
+    } else {
+      return true;
     }
-    mostrarxdate1(): boolean {
-      // tslint:disable-next-line:max-line-length
-      if (this.inputDate1.nativeElement.value === '' ) {
-          return false;
-      } else {
-        return true;
-      }
+  }
+  mostrarxdate1(): boolean {
+    // tslint:disable-next-line:max-line-length
+    if (this.inputDate1.nativeElement.value === '') {
+      return false;
+    } else {
+      return true;
     }
-    mostrarxdate2(): boolean {
-      // tslint:disable-next-line:max-line-length
-      if (this.inputDate2.nativeElement.value === '' ) {
-          return false;
-      } else {
-        return true;
-      }
+  }
+  mostrarxdate2(): boolean {
+    // tslint:disable-next-line:max-line-length
+    if (this.inputDate2.nativeElement.value === '') {
+      return false;
+    } else {
+      return true;
     }
+  }
 
-    limpiarInput() {
-       this.inputText.nativeElement.value = '';
-       this.inputText.nativeElement.value = null;
-       this.filtro.inputSearch = "";
-    }
+  limpiarInput() {
+    this.inputText.nativeElement.value = '';
+    this.inputText.nativeElement.value = null;
+    this.filtro.inputSearch = "";
+  }
 
-    limpiardate1() {
-      this.inputDate1.nativeElement.value = '';
-      this.filtro.dateFrom = null;
-      if (this.filtro.dateForFilter)
-        this.errores.dateFrom = 'Ingrese una fecha';
-      else
-        delete this.errores.dateFrom;
-    }
+  limpiardate1() {
+    this.inputDate1.nativeElement.value = '';
+    this.filtro.dateFrom = null;
+    if (this.filtro.dateForFilter)
+      this.errores.dateFrom = 'Ingrese una fecha';
+    else
+      delete this.errores.dateFrom;
+  }
 
-    limpiardate2() {
-      this.inputDate2.nativeElement.value = '';
-      this.filtro.dateTo = null;
-      if (this.filtro.dateForFilter)
-        this.errores.dateTo = 'Ingrese una fecha';
-      else
-        delete this.errores.dateTo;
-    }
+  limpiardate2() {
+    this.inputDate2.nativeElement.value = '';
+    this.filtro.dateTo = null;
+    if (this.filtro.dateForFilter)
+      this.errores.dateTo = 'Ingrese una fecha';
+    else
+      delete this.errores.dateTo;
+  }
 
 
   BotonEditar(item: Debts) {
-    item.editInput =true;
+    item.editInput = true;
     item.editButton = true;
     item.editPending = (item.status === 'PENDIENTE' || (item.status === 'VENCIDO' && item.amountPayed === 0));
-    item.newStatus =  '1';
+    item.newStatus = '1';
     item.newDueDate = item.dueDate;
     item.newEmissionDate = item.emissionDate;
     item.newConcept = item.concept;
@@ -597,20 +606,20 @@ orderList(index: number, asc: boolean) {
     item.newLastName = item.lastName;
   }
 
-  selectEstPag(event, item: Debts){
-    if(event == '1'){
+  selectEstPag(event, item: Debts) {
+    if (event == '1') {
       item.editInput = true;
       item.editPending = true;
     }
-    if(event == '2'){
+    if (event == '2') {
       item.editInput = false;
       item.editPending = false;
     }
 
   }
 
-  clearDatePicker(event){
-    if(event){
+  clearDatePicker(event) {
+    if (event) {
       this.errores['dateFrom'] = 'Ingrese una fecha';
       this.errores['dateTo'] = 'Ingrese una fecha';
     }
@@ -633,7 +642,7 @@ orderList(index: number, asc: boolean) {
     }
     this.validaNombresApellidos(item);
 
-    for(var s in item.errores) {
+    for (var s in item.errores) {
       if (item.errores[s])
         return;
     }
@@ -649,7 +658,7 @@ orderList(index: number, asc: boolean) {
     }).then((result) => {
 
       if (result.value) {
-      //  item.edit = false;
+        //  item.edit = false;
         const debts = {
           emissionDate: item.newEmissionDate,
           dueDate: item.newDueDate,
@@ -659,42 +668,42 @@ orderList(index: number, asc: boolean) {
         };
 
 
-  if(item.newStatus==='1'){
+        if (item.newStatus === '1') {
 
-        this.transactionService.editDeuda(item.id, debts).subscribe(
-          debtsUpdate => {
-            if (debtsUpdate.success) {
-              this.gaService.sendEvent('EditarDeuda', {
-                'event_category': 'Dashboard',
-                'event_label': 'editar_deuda'
-              });
-              Swal.fire({
-                titleText: 'Editado',
-                text: 'Su registro ha sido editado',
-                showCloseButton: true,
-                showCancelButton: false,
-                onOpen: drawPopup,
-                onAfterClose: () => {
-                  this.consultaDeuda();
-                }
-              });
+          this.transactionService.editDeuda(item.id, debts).subscribe(
+            debtsUpdate => {
+              if (debtsUpdate.success) {
+                this.gaService.sendEvent('EditarDeuda', {
+                  'event_category': 'Dashboard',
+                  'event_label': 'editar_deuda'
+                });
+                Swal.fire({
+                  titleText: 'Editado',
+                  text: 'Su registro ha sido editado',
+                  showCloseButton: true,
+                  showCancelButton: false,
+                  onOpen: drawPopup,
+                  onAfterClose: () => {
+                    this.consultaDeuda();
+                  }
+                });
+              }
+              else {
+                Swal.fire({
+                  titleText: 'ERROR',
+                  text: debtsUpdate.message,
+                  showCloseButton: true,
+                  showCancelButton: false,
+                  onOpen: drawPopup
+                });
+              }
             }
-            else {
-              Swal.fire({
-                titleText: 'ERROR',
-                text: debtsUpdate.message,
-                showCloseButton: true,
-                showCancelButton: false,
-                onOpen: drawPopup
-              });
-            }
-          }
-        );
+          );
 
-      }else if(item.newStatus==='2'){
-          let boolean= false;
+        } else if (item.newStatus === '2') {
+          let boolean = false;
           this.transactionService.updateDeuda(item.id, true).subscribe(
-            statusUpdate=>{
+            statusUpdate => {
               Swal.fire({
                 titleText: 'Editado',
                 text: 'Su registro a sido editado',
@@ -702,39 +711,40 @@ orderList(index: number, asc: boolean) {
                 showCancelButton: false,
                 onOpen: drawPopup,
                 onAfterClose: () => {
-                  item.status= 'PAGADO';
+                  item.status = 'PAGADO';
                   item.amountPayed = statusUpdate.payed;
                   item.payDate = new Date();
                   item.channel = 'Efectivo';
                   this.showEdit = true;
                   // item.edit = false;
                   item.newStatus = null;
-                  item.editInput =false;
+                  item.editInput = false;
                   item.editButton = false;
                   item.editPending = false;
-                }});
-              }
+                }
+              });
+            }
           );
         }
-    }
-  });
+      }
+    });
 
-}
+  }
 
 
 
 
   BotonCancela(item: Debts) {
-   //  item.edit = false;
-   item.editInput = false;
-   item.editButton = false;
-   item.editPending = false;
-   console.log('limpia errores ');
-   delete item.errores.dueDate;
-   delete item.errores.emissionDate;
-   delete item.errores.lastName;
-   delete item.errores.amount;
-   delete item.errores.firstName;
+    //  item.edit = false;
+    item.editInput = false;
+    item.editButton = false;
+    item.editPending = false;
+    console.log('limpia errores ');
+    delete item.errores.dueDate;
+    delete item.errores.emissionDate;
+    delete item.errores.lastName;
+    delete item.errores.amount;
+    delete item.errores.firstName;
 
   }
 
@@ -749,16 +759,16 @@ orderList(index: number, asc: boolean) {
 
   EliminarSeleccionados() {
     let totalForDelete = this.selectedUniverse ? this.transactionService.debtItems.countNoIbkPayments : this.transactionService.countMarksForDelete();
-    if (totalForDelete === 0 ) {
-      this.mensaje( 'error', 'Eliminar cobros', 'Seleccione los cobros a eliminar por favor');
+    if (totalForDelete === 0) {
+      this.mensaje('error', 'Eliminar cobros', 'Seleccione los cobros a eliminar por favor');
       return;
     }
-    let mensaje='';
-    let mensaje_final ='';
-    if (totalForDelete === 1 ) {
+    let mensaje = '';
+    let mensaje_final = '';
+    if (totalForDelete === 1) {
       mensaje = `Esta acción va a eliminar ${totalForDelete} deuda`;
     }
-    if (totalForDelete > 1 ) {
+    if (totalForDelete > 1) {
       mensaje = `Esta acción va a eliminar ${totalForDelete} deudas`;
     }
 
@@ -775,43 +785,42 @@ orderList(index: number, asc: boolean) {
         this.spinner.show();
 
         let observable = this.selectedUniverse ?
-          this.transactionService.deleteFiltered(this.filtro):
+          this.transactionService.deleteFiltered(this.filtro) :
           this.transactionService.deleteAll();
         observable.subscribe(() => {
           this.gaService.sendEvent('EliminarDeudas', {
             'event_category': 'Dashboard',
             'event_label': 'eliminar_deudas'
           });
-            this.consultaDeuda(() =>
-              {
-                if (totalForDelete === 1 ) {
-                  mensaje_final = 'Se han eliminado ' + totalForDelete + ' registro';
-                }
-                if (totalForDelete > 1 ) {
-                  mensaje_final = 'Se han eliminado ' + totalForDelete + ' registros';
-                }
+          this.consultaDeuda(() => {
+            if (totalForDelete === 1) {
+              mensaje_final = 'Se han eliminado ' + totalForDelete + ' registro';
+            }
+            if (totalForDelete > 1) {
+              mensaje_final = 'Se han eliminado ' + totalForDelete + ' registros';
+            }
 
-                Swal.fire({
-                  title: 'Eliminado',
-                  text: mensaje_final,
-                  showCloseButton: true,
-                  showCancelButton: false,
-                  confirmButtonText: 'CERRAR',
-                  onOpen: drawPopup
-                })
+            Swal.fire({
+              title: 'Eliminado',
+              text: mensaje_final,
+              showCloseButton: true,
+              showCancelButton: false,
+              confirmButtonText: 'CERRAR',
+              onOpen: drawPopup
+            })
 
 
-              });
-              this.selectedAll = false;
-              this.selectedUniverse = false;
+          });
+          this.selectedAll = false;
+          this.selectedUniverse = false;
 
-              this.transactionService.debtItems.data = [];
-              this.transactionService.itemsForDelete = [];
+          this.transactionService.debtItems.data = [];
+          this.transactionService.itemsForDelete = [];
 
-              console.log('arra limpio');
+          console.log('arra limpio');
 
-              console.log(totalForDelete)
-          }, err => { this.spinner.hide(); });
+          console.log(totalForDelete)
+        }, err => { this.spinner.hide(); });
       }
     });
     console.log('arra limpio');
@@ -822,36 +831,36 @@ orderList(index: number, asc: boolean) {
 
   Eliminar(item: Debts) {
 
-  Swal.fire({
-    title: "¿Esta Seguro de Eliminar el Registro? ",
-    showCancelButton: true,
-    showCloseButton: true,
-    confirmButtonText: 'SI, BORRALO',
-    cancelButtonText: 'CERRAR',
-    onOpen: drawPopup
-  }).then((result) => {
-    if (result.value) {
-      this.spinner.show();
-      this.transactionService.deleteDeuda(item.id)
-      .subscribe(() => this.consultaDeuda(() =>
-      {
-        Swal.fire(
-          'Eliminado',
-          'Tu registro ha sido eliminado',
-          'success'
-        )
-      }), err => { this.spinner.hide(); });
-    }
-  });
-  this.DebtsAreSelected();
+    Swal.fire({
+      title: "¿Esta Seguro de Eliminar el Registro? ",
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonText: 'SI, BORRALO',
+      cancelButtonText: 'CERRAR',
+      onOpen: drawPopup
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.transactionService.deleteDeuda(item.id)
+          .subscribe(() => this.consultaDeuda(() => {
+            Swal.fire(
+              'Eliminado',
+              'Tu registro ha sido eliminado',
+              'success'
+            )
+          }), err => { this.spinner.hide(); });
+      }
+    });
+    this.DebtsAreSelected();
   }
 
   SeleccionarTodos() {
 
     console.log(this.transactionService.debtItems.data);
+    // debugger
     if (this.selectedAll) {
       this.transactionService.debtItems.data.forEach(itm => {
-        if ((!itm.hasIBKPayments && itm.status !== 'PAGADO')) {
+        if ((!itm.hasIBKPayments && itm.status !== 'PAGADO' || itm.status == 'PARCIAL')) {
           this.transactionService.deleteDebt(itm.id, itm.selected = true);
         }
       });
@@ -863,16 +872,16 @@ orderList(index: number, asc: boolean) {
     this.DebtsAreSelected();
   }
 
-/*//////// O P E N  - D I A L O G ///////////////////// */
-MostrarListaSelect() {
-  this.OcultaListaExcel = true;
-}
-Ocultar() {
-  if (this.OcultaListaExcel === true) {
-   //  this.OcultaListaExcel = false;
+  /*//////// O P E N  - D I A L O G ///////////////////// */
+  MostrarListaSelect() {
+    this.OcultaListaExcel = true;
   }
+  Ocultar() {
+    if (this.OcultaListaExcel === true) {
+      //  this.OcultaListaExcel = false;
+    }
 
-}
+  }
 
   openDialog(service: any) {
     this.OcultaListaExcel = false;
@@ -880,10 +889,10 @@ Ocultar() {
     this.fileLoad.close();
     this.excelService.service = service;
     if (this.fileLoad.isRunning()) {
-      const dialogRef = this.dialog.open(DialogComponent,{
+      const dialogRef = this.dialog.open(DialogComponent, {
         width: '899px',
-       // height: '377px',
-       // disableClose: true
+        // height: '377px',
+        // disableClose: true
       });
       dialogRef.afterClosed().subscribe((result: Observable<any>) => {
         dialogRef.componentInstance.ready = false;
@@ -909,7 +918,7 @@ Ocultar() {
               });
             }
             else {
-              const dialogRef = this.dialog.open(DialogComponent,{
+              const dialogRef = this.dialog.open(DialogComponent, {
                 width: '899px'
               });
               dialogRef.afterClosed().subscribe((result: Observable<any>) => {
@@ -931,32 +940,32 @@ Ocultar() {
 
   DescargarReporte() {
     if (this.enDescarga === false) {
-      if( this.transactionService.debtItems.data.length > 0){
+      if (this.transactionService.debtItems.data.length > 0) {
         if (this.validaFiltro()) {
           this.enDescarga = true;
           this.barLoad.show(this.fileLoadContainer);
           this.transactionService.report(this.currentFiltro)
-          .subscribe((r: Blob) => {
-            this.gaService.sendEvent('DescargaReporte', {
-              'event_category': 'Dashboard',
-              'event_label': 'descargar_reporte'
+            .subscribe((r: Blob) => {
+              this.gaService.sendEvent('DescargaReporte', {
+                'event_category': 'Dashboard',
+                'event_label': 'descargar_reporte'
+              });
+              this.barLoad.close();
+              this.enDescarga = false;
+              saveAs(r, "Reporte - Interbank_MisCobros.xlsx");
+            }, err => {
+              this.barLoad.close();
+              this.enDescarga = false;
+              this.mensaje('error', 'Descarga', 'No se pudo descargar el reporte');
             });
-            this.barLoad.close();
-            this.enDescarga = false;
-            saveAs(r, "Reporte - Interbank_MisCobros.xlsx");
-          }, err => {
-            this.barLoad.close();
-            this.enDescarga = false;
-            this.mensaje('error', 'Descarga','No se pudo descargar el reporte');
-          });
         }
-      }else{
-        this.mensaje('warning', 'Descarga','No tiene registros para descargar');
+      } else {
+        this.mensaje('warning', 'Descarga', 'No tiene registros para descargar');
       }
     }
   }
 
-  estaVencido(itm: Debts): boolean{
+  estaVencido(itm: Debts): boolean {
     let today = new Date();
     let resp = (itm.status === 'PENDIENTE' || itm.status === 'PARCIAL') && (itm.dueDate !== null) && (itm.dueDate < today);
     return resp;
@@ -964,7 +973,7 @@ Ocultar() {
 
   MontoBlur(e) {
     let initalValue = parseFloat(e.newAmount);
-    if(!isNaN(initalValue))
+    if (!isNaN(initalValue))
       e.newAmount = initalValue.toFixed(2);
   }
 
@@ -973,7 +982,7 @@ Ocultar() {
   }
 
   limpiarDateForFilter() {
-    this.filtro.dateForFilter=null;
+    this.filtro.dateForFilter = null;
     this.limpiardate1();
     this.limpiardate2();
     this.querySearch = false;
@@ -985,7 +994,7 @@ Ocultar() {
     }
     else {
       let yearFrom = new Date(e).getFullYear();
-      if (yearFrom <  2000 || yearFrom >  2050 ) {
+      if (yearFrom < 2000 || yearFrom > 2050) {
         this.errores['dateFrom'] = 'Fecha Inválida';
       }
       else {
@@ -1000,7 +1009,7 @@ Ocultar() {
     }
     else {
       let yearTo = new Date(e).getFullYear();
-      if (yearTo <  2000 || yearTo >  2050 ) {
+      if (yearTo < 2000 || yearTo > 2050) {
         this.errores['dateTo'] = 'Fecha Inválida';
       }
       else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
@@ -1032,7 +1041,7 @@ Ocultar() {
     }
     else {
       let emidate = new Date(items.newEmissionDate).getFullYear();
-      if (emidate <  2000 || emidate >  2050 ) {
+      if (emidate < 2000 || emidate > 2050) {
         items.errores.emissionDate = 'Fecha Inválida';
       }
       else {
@@ -1047,7 +1056,7 @@ Ocultar() {
     }
     else {
       let dueyear = new Date(items.newDueDate).getFullYear();
-      if (dueyear <  2000 || dueyear >  2050 ) {
+      if (dueyear < 2000 || dueyear > 2050) {
         items.errores.dueDate = 'Fecha Inválida';
       }
       else if (items.newEmissionDate && items.newDueDate < items.newEmissionDate) {
@@ -1059,7 +1068,7 @@ Ocultar() {
     }
   }
 
-  private internalValidaNombres(items: Debts){
+  private internalValidaNombres(items: Debts) {
     if (items.newFirstName) {
       const re = new RegExp("^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$");
       if (items.newFirstName.length < 3) {
@@ -1103,20 +1112,20 @@ Ocultar() {
     this.internalValidaApellidos(items);
   }
 
-  validaMonto(items:Debts) {
-      let amount = parseFloat(items.newAmount);
-      if (!amount) {
-        items.errores.amount = 'Debe ingresar un valor';
-      }
-      else if (amount < 1) {
-        items.errores.amount = 'Ingrese un monto válido';
-      }
-      else if (amount > 999999999.99) {
-        items.errores.amount = 'Ingrese un monto válido'
-      }
-      else {
-        delete items.errores.amount;
-      }
+  validaMonto(items: Debts) {
+    let amount = parseFloat(items.newAmount);
+    if (!amount) {
+      items.errores.amount = 'Debe ingresar un valor';
+    }
+    else if (amount < 1) {
+      items.errores.amount = 'Ingrese un monto válido';
+    }
+    else if (amount > 999999999.99) {
+      items.errores.amount = 'Ingrese un monto válido'
+    }
+    else {
+      delete items.errores.amount;
+    }
   }
 
   selectForDelete(itm: Debts) {
@@ -1140,16 +1149,16 @@ Ocultar() {
     });
   }
 
-  DebtsAreSelected(){
+  DebtsAreSelected() {
     this.selectedAtLeastOneDebt = (this.transactionService.itemsForDelete.length > 0);
-    console.log('ItemsForDelete',this.transactionService.itemsForDelete);
-    console.log('this.selectedAtLeastOneDebt ',this.selectedAtLeastOneDebt);
+    console.log('ItemsForDelete', this.transactionService.itemsForDelete);
+    console.log('this.selectedAtLeastOneDebt ', this.selectedAtLeastOneDebt);
   }
 
-  CleanAllFilters(){
-    this.filtro.inputSearch='';
-    this.filtro.service=null;
-    this.filtro.status=null;
+  CleanAllFilters() {
+    this.filtro.inputSearch = '';
+    this.filtro.service = null;
+    this.filtro.status = null;
     this.limpiarDateForFilter();
   }
 
@@ -1161,7 +1170,7 @@ Ocultar() {
 
   AgregarDeuda() {
     if (this.services == null || this.services.length == 0) {
-      this.mensaje( 'error', 'Agregar Deuda', 'No tiene servicios configurados');
+      this.mensaje('error', 'Agregar Deuda', 'No tiene servicios configurados');
       return;
     }
     let dlg = this.dialog.open(DebtComponent, {
@@ -1185,7 +1194,7 @@ Ocultar() {
     }
     else {
       let emidate = new Date(this.nuevaDeuda.emissionDate).getFullYear();
-      if (emidate <  2000 || emidate >  2050 ) {
+      if (emidate < 2000 || emidate > 2050) {
         this.nuevaDeuda.errores.emissionDate = 'Fecha Inválida';
       }
       else {
@@ -1199,7 +1208,7 @@ Ocultar() {
       }
       else {
         let dueyear = new Date(this.nuevaDeuda.dueDate).getFullYear();
-        if (dueyear <  2000 || dueyear >  2050 ) {
+        if (dueyear < 2000 || dueyear > 2050) {
           this.nuevaDeuda.errores.dueDate = 'Fecha Inválida';
         }
         else if (this.nuevaDeuda.emissionDate && this.nuevaDeuda.dueDate < this.nuevaDeuda.emissionDate) {
@@ -1282,7 +1291,7 @@ Ocultar() {
       delete this.nuevaDeuda.errores.firstName;
     }
 
-    for(var s in this.nuevaDeuda.errores) {
+    for (var s in this.nuevaDeuda.errores) {
       if (this.nuevaDeuda.errores[s])
         return;
     }
