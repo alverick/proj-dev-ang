@@ -79,13 +79,13 @@ export class GtpGrillaComponent implements OnInit {
   errores: any = {};
   orderBy = -1;
   orderDef = [
-    { name: 'requestDate', asc: false },
-    { name: 'ruc', asc: false },
-    { name: 'cu', asc: false },
-    { name: 'nameEnterprise', asc: false },
-    { name: 'status', asc: false },
-    { name: 'requestTypeList', asc: false },
-    { name: 'businessHeading', asc: false },
+    { name: 'RequestDate', asc: false },
+    { name: 'Ruc', asc: false },
+    { name: 'Cu', asc: false },
+    { name: 'NameEnterprise', asc: false },
+    { name: 'RequestType', asc: false },
+    { name: 'Status', asc: false },
+    { name: 'BusinessHeading', asc: false },
   ]
 
   herderTable: any[] = [
