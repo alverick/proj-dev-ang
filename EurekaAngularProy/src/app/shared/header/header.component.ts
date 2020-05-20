@@ -147,6 +147,7 @@ export class HeaderComponent implements OnInit {
   }
 
   goBack() {
+
     if (this.router.url.includes('/cargaHistorico')) {
       this.router.navigate(['/gtp']);
     } else if (this.router.url.includes('/crearContrasena')) {
