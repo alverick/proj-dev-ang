@@ -3,7 +3,9 @@
         <div class="row">
             <div class="col-sm-12 col-md-12">
                 <div class="widget filtros">
-                    <div class="title">Buscar</div>
+                    <div class="title">Buscar
+                        <a class="link-manual" href="https://www.youtube.com/watch?v=eD85E7bZBgE" target="_blank">Guía de uso Cobro Simple</a>
+                    </div>
                     <div class="content">
                         <form>
                             <mat-form-field class="f1">
@@ -69,7 +71,9 @@
                                 <div class="msg-error" *ngIf="errores.dateTo && querySearch">{{errores.dateTo}}</div>
                             </mat-form-field>
                             <button type="button" class="f3 btn-eureca-green btn-emp" (click)="sendFiltro()">BUSCAR </button>
-                            <button type="button" class="f3 btn-eureca-green btn-emp" (click)="CleanAllFilters()">Limpiar Filtros</button>
+                            <!-- <button type="button" class="f3 btn-eureca-green btn-emp" (click)="CleanAllFilters()">Limpiar Filtros</button> -->
+                            <button type="button" class="f3 btn-eureca-green btn-emp" (click)="CleanAllFilters()">LIMPIAR FILTROS</button>
+
                         </form>
                     </div>
                 </div>

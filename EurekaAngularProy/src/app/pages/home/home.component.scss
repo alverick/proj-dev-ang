@@ -730,5 +730,15 @@ b {
     display: none !important;
 }
 
+.link-manual {
+    @include font-text(16px, 500);
+    float: right;
+    color: #05be50 !important;
+}
+
+.link-manual:hover {
+    text-decoration: none !important;
+}
+
 
 /*[END] TOOLTIP BOOSTRAP*/
