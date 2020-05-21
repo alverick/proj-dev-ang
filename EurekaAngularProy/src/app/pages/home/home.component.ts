@@ -296,6 +296,19 @@ export class HomeComponent implements OnInit {
       //this.router.navigate(['/login']);
       return false;
     } else {
+      if (this.transactionService.debtItems.count === 0) {
+        return true;
+      } else {
+        return false;
+      }
+
+    }
+  }
+
+  ceroRegistrosEliminar(): boolean {
+    if (sessionStorage.getItem('tk') === null || sessionStorage.getItem('tk') === '') {
+      return false;
+    } else {
       let id = 0;
       this.transactionService.debtItems.data.forEach(itm => {
         if ((!itm.hasIBKPayments && itm.status !== 'PAGADO' || itm.status === 'PARCIAL')) {
@@ -308,7 +321,6 @@ export class HomeComponent implements OnInit {
         return false;
       } else {
         return true;
-
       }
 
     }
