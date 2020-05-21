@@ -62,6 +62,7 @@ import { LoadBarComponent } from './shared/load-bar/load-bar.component';
 import { DebtComponent } from './pages/home/debt.component';
 import { AgregaCobroComponent } from './pages/home/agrega-cobro.component';
 import { CargaHistoricoComponent } from './auth/carga-historico/carga-historico.component';
+import { TooltipModule } from 'ngx-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -130,7 +131,7 @@ import { CargaHistoricoComponent } from './auth/carga-historico/carga-historico.
     MaterialFileInputModule,
     MatRadioModule,
     OverlayModule,
-
+    TooltipModule.forRoot()
   ],
   providers: [
     ExcelService,

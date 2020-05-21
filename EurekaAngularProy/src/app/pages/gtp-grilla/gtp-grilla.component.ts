@@ -37,6 +37,24 @@ export const MY_FORMATS = {
   selector: 'app-gtp-grilla',
   templateUrl: './gtp-grilla.component.html',
   styleUrls: ['./gtp-grilla.component.scss'],
+  styles: [
+    `
+      :host >>> .tooltip-inner {
+        background-color: #FFF;
+        color: #0d131d !important;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.20);
+        font-size: 11px !important;
+        padding: .5em .3em;
+        min-width:300px !important;
+      }
+      :host >>> .tooltip.top .tooltip-arrow:before,
+      :host >>> .tooltip.top .tooltip-arrow {
+        border-top-color: #0d131d57;
+
+      }
+    `
+  ],
   providers: [
 
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

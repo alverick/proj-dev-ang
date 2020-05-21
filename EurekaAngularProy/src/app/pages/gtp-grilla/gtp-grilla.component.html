@@ -140,7 +140,7 @@
                                                     </div>
                                                     <div *ngIf="request.type == 2"> <span class="badge badge-success">{{request.texto}}</span>
                                                     </div>
-                                                    <div *ngIf="request.type == 3"> <span class="badge badge-warning">{{request.texto}}</span>
+                                                    <div *ngIf="request.type == 3" tooltip="{{request.detalles}}" > <span class="badge badge-warning">{{request.texto}}</span>
                                                     </div>
                                                 </div>
                                                 <!-- -->
