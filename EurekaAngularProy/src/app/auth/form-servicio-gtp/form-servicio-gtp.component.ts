@@ -102,8 +102,7 @@ export class FormServicioGtpComponent implements OnInit {
       nombre: new FormControl({
         value: (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 3) ?
           this._service.newName : this._service.nombre, disabled: this._service.nombreHabilitado
-      }, [Validators.required,
-      Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+      }, [Validators.required, Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
 
       codDeudor: new FormControl({
         value: (this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ?
