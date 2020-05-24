@@ -20,7 +20,9 @@ export class AuthInterceptorService implements HttpInterceptor {
     private storage: StorageService, private gaService: GoogleAnalytics) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
-    this.login.refresh();
+    if (!req.url.includes('notification')) {
+      this.login.refresh();
+    }
     const token: string = sessionStorage.getItem('tk');
 
     let request = req;
