@@ -3,6 +3,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 declare let gtag: Function;
 
@@ -18,10 +19,12 @@ export class AppComponent {
   constructor(private router: Router, matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
       this.router.events.subscribe(e => {
         if (e instanceof NavigationEnd) {
-          gtag('config', 'UA-148142629-1', {
-            'page_title': e.urlAfterRedirects.substr(1),
-            'page_path': e.urlAfterRedirects
-          });
+          if (environment.production) {
+            gtag('config', 'UA-148142629-1', {
+              'page_title': e.urlAfterRedirects.substr(1),
+              'page_path': e.urlAfterRedirects
+            });
+          }
           window.scrollTo(0, 0);
           //gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
         }
