@@ -120,7 +120,8 @@ export class FormServicioComponent implements OnInit {
       nombre: new FormControl({
         value: (this._service.newNameGtpStatus === 0 || (this._service.newNameGtpStatus === 3 && this._service.nombre == null)) ?
           this._service.newName : this._service.nombre, disabled: this._service.nombreHabilitado
-      }),
+      }, [Validators.required, Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+      
       res: new FormControl({ value: this._service.res, disabled: true }),
       codDeudor: new FormControl({
         value: codDeudor,

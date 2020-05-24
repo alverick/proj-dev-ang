@@ -9,7 +9,10 @@
                         <!-- <div *ngIf="afiliacionService.services.length ==0" class=" texto-azul pt-2 subtitle-servicio"><br> Puedes agregar todos los servicios que deseas que tus clientes paguen a través de Interbank
                         </div> -->
                         <div class=" texto-azul pt-2 subtitle-servicio"><br> Puedes agregar todos los servicios que deseas que tus clientes paguen a través de Interbank</div>
-                        <div *ngIf="servicio_length!=0" class=" texto-azul pt-2 subtitle-servicio"><br> Tienes <label *ngIf="servicio_length <= 9">0</label>{{servicio_length}} servicio configurado </div>
+                        <div *ngIf="servicio_length!=0" class=" texto-azul pt-2 subtitle-servicio"><br> Tienes <label *ngIf="servicio_length <= 9">0</label>{{servicio_length}}
+                            <label *ngIf="servicio_length ==1">servicio configurado</label>
+                            <label *ngIf="servicio_length !=1">servicios configurados</label>
+                        </div>
 
                         <div class="d-flex justify-content-start">
                             <perfect-scrollbar class="content-container mt-5 mb-3">
@@ -213,7 +216,6 @@
                 <div class="btn-fn1">
 
                     <div class="btn-col-1">
-
                         <button *ngIf="!inGTP && Formulario==false" type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
                               <span ><img *ngIf="!Formulario" src="assets/images/plus.svg"><img *ngIf="Formulario" src="assets/images/plus-gray.svg"></span>   Agregar otro servicio
                     </button>
