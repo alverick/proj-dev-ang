@@ -116,11 +116,11 @@
                                 </span>
 
 
-                                <button *ngIf="!inGTP && Formulario==false" type="button" [disabled]="Formulario" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulario">
+                                <button *ngIf="!inGTP && Formulario==false" type="button" [disabled]="afiliacionService.services.length==0" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="afiliacionService.services.length==0">
                                         FINALIZAR
                                     </button>
-                                <button *ngIf="inGTP && Formulariogtp==false" type="button" [disabled]="Formulariogtp" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulariogtp">
-                                        FINALIZAR
+                                <button *ngIf="inGTP && Formulariogtp==false" type="button" [disabled]="afiliacionService.services.length==0" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="afiliacionService.services.length==0">
+                                        FINALIZAR rr
                                     </button>
 
                                 <!-- --------------------------- -->
@@ -226,10 +226,10 @@
                         </button>
                         </span>
 
-                        <button *ngIf="!inGTP && Formulario==false" type="button" [disabled]="Formulario" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulario">
+                        <button *ngIf="!inGTP && Formulario==false" type="button" [disabled]="afiliacionService.services.length==0" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="afiliacionService.services.length==0">
                              FINALIZAR
                     </button>
-                        <button *ngIf="inGTP && Formulariogtp==false" type="button" [disabled]="Formulariogtp" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="Formulariogtp">
+                        <button *ngIf="inGTP && Formulariogtp==false" type="button" [disabled]="afiliacionService.services.length==0" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="afiliacionService.services.length==0">
                       FINALIZAR
                     </button>
 
