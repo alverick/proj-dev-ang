@@ -41,7 +41,8 @@ export class GtpService {
     { idState: 'Pendiente', descripcion: 'Pendiente' },
     { idState: 'Atendido', descripcion: 'Atendido' },
     { idState: 'Devuelto a la empresa', descripcion: 'Devuelto a la Empresa' },
-    { idState: 'Rechazado', descripcion: 'Rechazado' }
+    { idState: 'Rechazado', descripcion: 'Rechazado' },
+    { idState: 'Desafiliado', descripcion: 'Desafiliado' }
   ];
 
   private tiposSolicitudes: StatesGtp[] = [
