@@ -227,7 +227,13 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
   }
 
-
+  DisableAgregarServicio(): boolean {
+    if (this.Formulario)
+      return true;
+    if (this.inEdit && this.afiliacionService.services.length == 0)
+      return true;
+    return false;
+  }
 
   EnviarServicios() {
 
@@ -619,7 +625,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           setTimeout(() => {
             this.servicio_length = this.afiliacionService.services.length
           }, 2000)
-  
+
         }
       });
     }

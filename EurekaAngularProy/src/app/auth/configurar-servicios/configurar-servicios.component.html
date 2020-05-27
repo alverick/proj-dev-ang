@@ -105,12 +105,12 @@
                         <div class="btn-fn">
                             <div class="btn-col-1">
 
-                                <button *ngIf="!inGTP && Formulario==false" type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
+                                <button *ngIf="!inGTP && Formulario==false" type="button" [disabled]="DisableAgregarServicio()" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="DisableAgregarServicio()">
                                         <span ><img *ngIf="!Formulario" src="assets/images/plus.svg"><img *ngIf="Formulario" src="assets/images/plus-gray.svg"></span>   Agregar otro servicio
                                     </button>
 
                                 <span *ngIf="!inGTP && Formulario==true" class="d-inline-block btn-agreagr-s" tooltip="Para agregar un nuevo servicio, primero deberás guardar el servicio que estás editando actualmente">
-                                        <button *ngIf="!inGTP" type="button" [disabled]="Formulario" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="Formulario">
+                                        <button *ngIf="!inGTP" type="button" [disabled]="DisableAgregarServicio()" (click)="MostarFormulario()" class="btn-outline-green" [class.btn-disabled]="DisableAgregarServicio()">
                                             <span ><img *ngIf="!Formulario" src="assets/images/plus.svg"><img *ngIf="Formulario" src="assets/images/plus-gray.svg"> &nbsp; Agregar otro servicio</span>
                                 </button>
                                 </span>
@@ -120,7 +120,7 @@
                                         FINALIZAR
                                     </button>
                                 <button *ngIf="inGTP && Formulariogtp==false" type="button" [disabled]="afiliacionService.services.length==0" (click)="EnviarServicios()" class="mt-3  btn-eureca-green text-white" [class.btn-disabled]="afiliacionService.services.length==0">
-                                        FINALIZAR rr
+                                        FINALIZAR
                                     </button>
 
                                 <!-- --------------------------- -->

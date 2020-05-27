@@ -25,7 +25,7 @@ import { format } from "url";
       :host >>> .tooltip.top .tooltip-arrow:before,
       :host >>> .tooltip.top .tooltip-arrow {
         border-top-color: #0d131d57;
-        
+
       }
     `
   ]
@@ -111,17 +111,17 @@ export class FormServicioComponent implements OnInit {
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
 
-    let codDeudor = (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ? 
-      (this._service.codDeudor === 'RUC' || this._service.codDeudor === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro' : 
+    let codDeudor = (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ?
+      (this._service.codDeudor === 'RUC' || this._service.codDeudor === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro' :
       (this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno') ? this._service.newNameCode : 'DNI';
-    
+
       this.frm = this.fb.group({
       // tslint:disable-next-line:max-line-length
       nombre: new FormControl({
         value: (this._service.newNameGtpStatus === 0 || (this._service.newNameGtpStatus === 3 && this._service.nombre == null)) ?
           this._service.newName : this._service.nombre, disabled: this._service.nombreHabilitado
       }, [Validators.required, Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
-      
+
       res: new FormControl({ value: this._service.res, disabled: true }),
       codDeudor: new FormControl({
         value: codDeudor,
@@ -135,7 +135,7 @@ export class FormServicioComponent implements OnInit {
 
       tipoDato: new FormControl({ value: this._service.tipoDato, disabled: this.editMode }, Validators.required),
       tipoPago: new FormControl({ value: this._service.tipoPago, disabled: this.editMode }, Validators.required),
-      idCuenta: new FormControl({ value: this._service.idCuenta.toString(), disabled: false }, Validators.required),
+      idCuenta: new FormControl({ value: this._service.idCuenta.toString(), disabled: this.editMode }, Validators.required),
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({ value: this._service.usaAgente, disabled: this.editMode }),
       usaTienda: new FormControl({ value: this._service.usaTienda, disabled: this.editMode }),

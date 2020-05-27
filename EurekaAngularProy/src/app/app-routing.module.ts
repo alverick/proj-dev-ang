@@ -38,7 +38,7 @@ const routes: Routes = [
   { path: 'editarSvcGTP', component: ConfigurarServiciosComponent, data: {  isgtp: true }},
   { path: 'configurarCorreoGTP', component: ConfigurarCorreoGtpComponent, canActivate: [AuthGuard, GtpInputGuard]},
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
-   { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard, GtpOutputGuard ] },
+  { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard, GtpOutputGuard ] },
   { path: 'crearContrasena', component: CrearContrasenaComponent, data: { isEdit: false }},
   { path: 'editaCuenta/:llave', component: CrearContrasenaComponent , data: { isEdit: true }},
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
