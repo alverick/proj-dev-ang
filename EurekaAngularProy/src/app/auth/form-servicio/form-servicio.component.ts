@@ -110,7 +110,6 @@ export class FormServicioComponent implements OnInit {
     this.gtpMode = (this._service.NewName !== null && this._service.NewNameCod !== null);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
     var porcentajed = ((this._service.porcentaje !== null && this._service.porcentaje !== undefined) ? this._service.porcentaje : '1.00');
-
     let codDeudor = (this._service.newNameCodeGtpStatus === null || this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ?
       (this._service.codDeudor === 'RUC' || this._service.codDeudor === 'DNI' || this._service.codDeudor === 'Codigo Interno') ? this._service.codDeudor : 'Otro' :
       (this._service.newNameCode === 'RUC' || this._service.newNameCode === 'DNI' || this._service.newNameCode === 'Codigo Interno') ? this._service.newNameCode : 'DNI';
@@ -147,7 +146,6 @@ export class FormServicioComponent implements OnInit {
       porcentaje: new FormControl({ value: porcentajed, disabled: true }),
       pagoPartes: [this._service.pagoPartes, Validators.required],
     });
-    // console.log('format', this.frm);
     this.afiliacionService.GetCodDeudor().subscribe(d => this.codDeudor = d);
     this.afiliacionService.GetTipoDato().subscribe(d => this.tiposDato = d);
     this.afiliacionService.GetTipoPago().subscribe(d => {
@@ -284,7 +282,6 @@ export class FormServicioComponent implements OnInit {
       const porcentajefix = porcentaje.toFixed(2);
       this.frm.value.monto = montofix;
       this.frm.value.porcentaje = porcentajefix;
-
       if (this.frm.get('cobraMora').value === 'S') {
         if (this.frm.get('tipoMora').value === 'M') {
 
@@ -329,7 +326,10 @@ export class FormServicioComponent implements OnInit {
                 // value.usaWebApp = true;
                 if (this.editMode) {
                   value = this._service;
-                  value.idCuenta = this.frm.value.idCuenta;
+                  if (this.frm.value.idCuenta)
+                    value.idCuenta = this.frm.value.idCuenta;
+                  else
+                    value.idCuenta = this.f.idCuenta.value;
                   // value.nombre = this.frm.value.nombre;
                   //   value.newName = this.frm.value.nombre;
                   // value.nameCod = this.frm.value.nameCod;
@@ -429,12 +429,14 @@ export class FormServicioComponent implements OnInit {
               });
             } else {
               let value: ServiceModel;
-              console.log('ingresa 2');
               // value.usaWebApp = true;
               if (this.editMode) {
                 value = this._service;
-                value.idCuenta = this.frm.value.idCuenta;
-                // value.nroCuenta = this.frm.value.nroCuenta;
+                if (this.frm.value.idCuenta)
+                  value.idCuenta = this.frm.value.idCuenta;
+                else
+                  value.idCuenta = this.f.idCuenta.value;
+            // value.nroCuenta = this.frm.value.nroCuenta;
                 // value.nombre = this.frm.value.nombre;
                 // tslint:disable-next-line:max-line-length
                 value.newName = (value.nombreHabilitado) ? value.newName : ((this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre);
@@ -449,12 +451,10 @@ export class FormServicioComponent implements OnInit {
                 value.porcentaje = this.frm.value.porcentaje;
                 value.pagoPartes = this.frm.value.pagoPartes;
               } else {
-                console.log('crea un nuevo 2');
                 value = this.frm.value;
                 value.id = null;
                 value.newName = this.frm.value.nombre;
                 value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
-                console.log('crea un nuevo 3 en edicion' + value.newName);
               }
               let cta = this.cuentas.find(c => c.id === value.idCuenta);
               value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'Soles' : 'Dólares')})`;
@@ -481,8 +481,11 @@ export class FormServicioComponent implements OnInit {
           let value: ServiceModel;
           if (this.editMode) {
             value = this._service;
-            value.idCuenta = this.frm.value.idCuenta;
-            // value.nroCuenta = this.frm.value.nroCuenta;
+            if (this.frm.value.idCuenta)
+              value.idCuenta = this.frm.value.idCuenta;
+            else
+              value.idCuenta = this.f.idCuenta.value;
+    // value.nroCuenta = this.frm.value.nroCuenta;
             // tslint:disable-next-line:max-line-length
             value.newName = (value.nombreHabilitado) ? value.newName : ((this.frm.value.nombre === value.nombre) ? value.newName : this.frm.value.nombre);
             value.newNameCode = (value.nombreCodHabilitado) ? value.newNameCode : (this.frm.value.codDeudor === 'Otro') ?
@@ -570,7 +573,6 @@ export class FormServicioComponent implements OnInit {
 
   changeMora(changeData: boolean = true) {
     this.cobraMora = (this.f.cobraMora.value === 'S');
-    console.log(this.f.cobraMora.value);
     if (this.cobraMora) {
 
       this.f.periodoMora.setValidators([Validators.required]);
@@ -583,7 +585,6 @@ export class FormServicioComponent implements OnInit {
       }
 
     } else {
-      console.log('entra en no');
       this.cmoraporce = false;
       // this.f.periodoMora.setValue('1')
       this.f.periodoMora.reset();
