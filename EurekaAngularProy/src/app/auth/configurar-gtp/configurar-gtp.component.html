@@ -67,10 +67,10 @@
                                     </div>
                                 </div>
                                 <div class="card-servicios mb-2" *ngFor="let svc of gtpService.services; let i = index" [class.seleccionado]="indiceActual === i">
-                                    <div class=" pl-4">
+                                    <div style="padding: 0em 1.5rem !important;">
                                         <div class="pl-1 row pb-0">
                                             <div class="col-sm-9 pt-3">
-                                                <div class="font-text-services">{{getName(svc)}}</div>
+                                                <div class="font-text-services title-ser">{{getName(svc)}}</div>
                                                 <div class="font-subtext-services">RES - {{svc.res}}</div>
                                             </div>
                                             <div class="col-sm-1 mb-0">

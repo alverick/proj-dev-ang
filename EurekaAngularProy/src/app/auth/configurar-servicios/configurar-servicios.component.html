@@ -17,12 +17,12 @@
                         <div class="d-flex justify-content-start">
                             <perfect-scrollbar class="content-container mt-5 mb-3">
                                 <div class="card-servicios mb-2" *ngFor="let svc of afiliacionService.services; let i = index" [class.seleccionado]="indiceActual === i">
-                                    <div class=" pl-4">
+                                    <div style="padding: 0em 1.5rem !important;">
                                         <div class="pl-1 row pb-0">
                                             <div *ngIf="inGTP" class="col-md-12 pt-3">
-                                                <div class="font-text-services">{{getNameGTP(svc)}}
+                                                <div class="font-text-services title-ser">{{getNameGTP(svc)}}
 
-                                                    <ul *ngIf="inGTP" class="list-unstyled" style="display: flex;float: right; padding-right: 1.5em;">
+                                                    <ul *ngIf="inGTP" class="list-unstyled" style="display: flex;float: right;">
                                                         <li style="padding: 0 .5em;" *ngIf="svc.inReview && indiceActual!==i">
                                                             <a class="texto-azul" [class.mano]="!Formulariogtp" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
                                                         </li>
@@ -33,8 +33,8 @@
                                             </div>
 
                                             <div *ngIf="!inGTP" class="col-md-12 pt-3">
-                                                <div class="font-text-services">{{getName(svc)}}
-                                                    <ul *ngIf="!inGTP" class="list-unstyled" style="display: flex;float: right; padding-right: 1.5em;">
+                                                <div class="font-text-services title-ser">{{getName(svc)}}
+                                                    <ul *ngIf="!inGTP" class="list-unstyled" style="display: flex;float: right;">
                                                         <li style="padding: 0 .5em;">
                                                             <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>
                                                         </li>

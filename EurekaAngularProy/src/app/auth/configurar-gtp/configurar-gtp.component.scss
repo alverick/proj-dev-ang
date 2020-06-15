@@ -159,3 +159,10 @@ body {
 .ps--active-y>.ps__rail-y {
     display: none !important;
 }
+
+.title-ser {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 56px;
+}
