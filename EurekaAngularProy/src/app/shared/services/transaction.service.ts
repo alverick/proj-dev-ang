@@ -140,7 +140,7 @@ export class TransactionService {
       filtro.dateForFilter = '';
 
     const url = `${this.URI_API}/debt/deleteFiltered?InputSearch=${filtro.inputSearch}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=`+ new Date().getTime();
-    return this.http.delete<Debts>(url).pipe(catchError(error => throwError(error)));
+    return this.http.post<Debts>(url, {}).pipe(catchError(error => throwError(error)));
   }
 
   // ESITAR LA DEUDA
