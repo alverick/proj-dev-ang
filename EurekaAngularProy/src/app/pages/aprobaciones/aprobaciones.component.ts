@@ -153,7 +153,15 @@ export class AprobacionesComponent implements OnInit {
 
   EnviarAprobados() {
     // debugger
-    console.log(this.gtpService.services);
+    let entryDiff = false
+    this.gtpService.services.forEach(s => {
+      if (s.res.length > 0 && s.res.substring(0, 2) !== this.Enterprise.entry)
+        entryDiff = true;
+    });
+    if (entryDiff) {
+      this.mensaje("Error en Rubro", "La res es diferente del rubro, no se puede enviar a PAG");
+      return;
+    }
     // limpiar el array
     this.scv = [];
     // NO APROBADOS
@@ -168,7 +176,10 @@ export class AprobacionesComponent implements OnInit {
     let Empcant = 0;
     // duplica por que calcula por los 2 la cantidad que falta
 
-    if (this.Enterprise.name !== this.Enterprise.newName) {
+    if (this.Enterprise.name.toUpperCase() === this.Enterprise.newName.toUpperCase()) {
+      this.Enterprise.NombreApproved = true;
+    } 
+    else {
       if (this.Enterprise.NombreApproved === null || this.Enterprise.NombreApproved === undefined) {
         Empcant = 1;
       }
@@ -177,7 +188,6 @@ export class AprobacionesComponent implements OnInit {
     // const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
     // tslint:disable-next-line:max-line-length
     const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.newNameGTPStatus === 2) || (svc.newNameGTPStatus === 0) || (svc.newNameCodeGTPStatus === 2) || (svc.newNameCodeGTPStatus === 0) || (svc.res !== '') /*|| ( (svc.newNameGTPStatus === 3   && svc.name !== ''  && svc.newName !== ''  ))*/);
-
 
     const total = ListCantidadNombre + ListCantidadCodigoDeudor + Empcant;
 
