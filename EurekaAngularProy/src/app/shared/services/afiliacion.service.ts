@@ -302,9 +302,19 @@ export class AfiliacionService {
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
     this.services.forEach(s => {
+      let name = '';
+      if (s.nombre === null) {
+        name = s.newName;
+      }
+      else if (s.nombre === '?') {
+        name = '';
+      }
+      else {
+        name = s.nombre;
+      }
       data.services.push({
         id: s.id,
-        name: (s.nombre === '?') ? '' : s.nombre,
+        name: name,
         newName: s.newName,
         entry: s.rubro,
         debtorCode: (s.codDeudor === '?') ? '' : ((s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor),
@@ -326,6 +336,7 @@ export class AfiliacionService {
         partialPayment: s.pagoPartes
       });
     });
+    console.log(data);
     return this.http.post<any>(`${environment.END_POINT}/company/service?_=` + new Date().getTime(), data)
       .pipe(map(r => {
         this.spinner.hide();
