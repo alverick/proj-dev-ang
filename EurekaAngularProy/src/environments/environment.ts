@@ -12,7 +12,7 @@ export const environment = {
     OCP_KEY: ""
   */
 
-  /**///development
+  /**///feature/hu-ampliacion-campos
   // END_POINT: 'https://apis.dev.interbank.pe/eureca/api',
   // OCP_KEY: ""
 
