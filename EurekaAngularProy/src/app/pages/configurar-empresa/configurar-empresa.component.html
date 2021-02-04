@@ -20,9 +20,10 @@
                             <div class="form-group">
                                 <!--  <label *ngIf="( dataEmpresa.name  == dataEmpresa.newName)  && dataEmpresa.inReview" class="messsage-error" style="float: right;">El nombre no fue aprobado, debe corregisrse</label> -->
                                 <mat-form-field class="w-100">
-                                    <input class="input-text" matInput type="text" formControlName="name" placeholder="Nombre de la empresa">
+                                    <input class="input-text" matInput type="text" formControlName="name" maxlength="80" placeholder="Nombre de la empresa">
                                     <mat-error *ngIf="f.name.invalid && f.name.hasError('required') && submittedRequired">El Nombre es obligatorio</mat-error>
-
+                                    <mat-error class="messsage-error" *ngIf="f.name.invalid && f.name.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
+                                    <mat-error class="messsage-error" *ngIf="f.name.invalid && f.name.hasError('maxlength')">El nombre no puede tener mas de 80 caracteres</mat-error>
                                 </mat-form-field>
                                 <div *ngIf="( dataEmpresa.newNameGTPStatus === 0 || dataEmpresa.newNameGTPStatus === 2)" class="messsage-error">El nuevo nombre <strong> {{ dataEmpresa.newName }} </strong> esta siendo procesado</div>
                             </div>

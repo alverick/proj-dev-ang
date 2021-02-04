@@ -1,11 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener } from "@angular/core";
-import { FormBuilder, Validators, FormGroup, FormControl } from "@angular/forms";
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MonedaModel, ServiceModel } from "src/app/shared/models";
-import Swal from "sweetalert2";
+
+import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
 import { ConfigurarServiciosComponent } from "../configurar-servicios/configurar-servicios.component";
+import Swal from "sweetalert2";
 import { drawPopup } from 'src/app/shared/services/popups';
-import { format } from "url";
 
 @Component({
   selector: 'app-form-servicio',
@@ -119,7 +119,7 @@ export class FormServicioComponent implements OnInit {
       nombre: new FormControl({
         value: (this._service.newNameGtpStatus === 0 || (this._service.newNameGtpStatus === 3 && this._service.nombre == null)) ?
           this._service.newName : this._service.nombre, disabled: this._service.nombreHabilitado
-      }, [Validators.required, Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+      }, [Validators.required, Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
 
       res: new FormControl({ value: this._service.res, disabled: true }),
       codDeudor: new FormControl({

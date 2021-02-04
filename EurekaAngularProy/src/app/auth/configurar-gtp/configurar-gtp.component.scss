@@ -61,7 +61,7 @@ body {
 }
 
 .card-servicios {
-    @include cuadro(361px, 187px);
+    @include cuadro(361px, 200px);
     @include box-shadows();
     background-color: #ffffff;
     .table {

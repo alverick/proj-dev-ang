@@ -20,7 +20,16 @@
                                     <div style="padding: 0em 1.5rem !important;">
                                         <div class="pl-1 row pb-0">
                                             <div *ngIf="inGTP" class="col-md-12 pt-3">
-                                                <div class="font-text-services title-ser">{{getNameGTP(svc)}}
+                                                <div class="font-text-services">
+                                                  <!--title-ser"-->
+                                                  <div class=" pl-4">
+                                                    <div class="pl-1 row pb-0">
+                                                        <div class="col-sm-12 pt-3">
+                                                          {{getNameGTP(svc)}}
+                                                        </div>
+                                                    </div>
+                                                  </div>
+
 
                                                     <ul *ngIf="inGTP" class="list-unstyled" style="display: flex;float: right;">
                                                         <li style="padding: 0 .5em;" *ngIf="svc.inReview && indiceActual!==i">
@@ -33,7 +42,16 @@
                                             </div>
 
                                             <div *ngIf="!inGTP" class="col-md-12 pt-3">
-                                                <div class="font-text-services title-ser">{{getName(svc)}}
+                                                <div class="font-text-services">
+<!-- title-ser-->
+                                                    <div class=" pl-4">
+                                                      <div class="pl-1 row pb-0">
+                                                          <div class="col-sm-12 pt-3">
+                                                            {{getName(svc)}}
+                                                          </div>
+                                                      </div>
+                                                    </div>
+
                                                     <ul *ngIf="!inGTP" class="list-unstyled" style="display: flex;float: right;">
                                                         <li style="padding: 0 .5em;">
                                                             <a class="texto-azul" [class.mano]="!Formulario" (click)="editService(svc, i)"><img src="assets/images/editar.svg"></a>

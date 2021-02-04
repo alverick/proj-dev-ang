@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, ɵConsole } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MonedaModel, ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ConfigurarServiciosComponent } from '../configurar-servicios/configurar-servicios.component';
-import { ServiceModel, MonedaModel } from 'src/app/shared/models';
-import { drawPopup } from 'src/app/shared/services/popups';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-servicio-gtp',
@@ -49,7 +47,7 @@ export class FormServicioGtpComponent implements OnInit {
        this.simboloMoneda = 'S/';
      }
      else {
- 
+
      } */
     this._service = value;
     this.simboloMoneda = value.simboloMoneda;
@@ -102,7 +100,7 @@ export class FormServicioGtpComponent implements OnInit {
       nombre: new FormControl({
         value: (this._service.newNameGtpStatus === 0 || this._service.newNameGtpStatus === 3) ?
           this._service.newName : this._service.nombre, disabled: this._service.nombreHabilitado
-      }, [Validators.required, Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
+      }, [Validators.required, Validators.minLength(3), Alfanumerico, Validators.pattern('^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$')]),
 
       codDeudor: new FormControl({
         value: (this._service.newNameCodeGtpStatus === 1 || this._service.newNameCodeGtpStatus === 2) ?

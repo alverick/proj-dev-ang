@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS, MatDialogRef } from "@angular/material";
-import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import { HomeService } from "src/app/shared/services/home.service";
-import Swal from "sweetalert2";
-import { drawPopup } from "src/app/shared/services/popups";
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDialogRef } from "@angular/material";
+
 import { ExcelService } from "src/app/shared/services/excel.service";
 import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
+import { HomeService } from "src/app/shared/services/home.service";
+import { MomentDateAdapter } from "@angular/material-moment-adapter";
+import Swal from "sweetalert2";
+import { drawPopup } from "src/app/shared/services/popups";
 
 const MY_FORMATS = {
   parse: {
@@ -141,7 +142,7 @@ export class DebtComponent implements OnInit {
       if (!amount) {
         this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
       }
-      else if (amount < 1) {
+      else if (amount < 0) {
         this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
       }
       else if (amount > 999999999.99) {

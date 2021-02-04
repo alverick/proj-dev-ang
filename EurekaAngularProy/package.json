@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "gulp nodemon",
+    "start.web": "ng serve --port 4700",
     "build": "gulp build",
     "test": "ng test",
     "lint": "ng lint",

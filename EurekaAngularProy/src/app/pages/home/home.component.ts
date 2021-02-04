@@ -1,39 +1,35 @@
-import { Date } from './../../shared/models/date';
-import { Component, OnInit, Directive, HostListener, ElementRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { User } from 'src/app/shared/models/user.model';
-import { StorageService } from 'src/app/shared/services/storage.service';
-import { HomeService } from 'src/app/shared/services/home.service';
-import { Debts, DebtsPagedList } from 'src/app/shared/models/debts';
-import { ExcelService } from 'src/app/shared/services/excel.service';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { WayPay } from 'src/app/shared/models/way-pay';
-import { Type } from 'src/app/shared/models/type';
+import * as _moment from 'moment'; // dejalo si sale error
 import * as saveAs from 'file-saver';
 
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDialog, MatSnackBar } from '@angular/material';
+
+import { AgregaCobroComponent } from './agrega-cobro.component';
+import { Date } from './../../shared/models/date';
+import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
+import { DebtComponent } from './debt.component';
+import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
+import { Debts } from 'src/app/shared/models/debts';
+import { DialogComponent } from './dialog';
+import { ExcelService } from 'src/app/shared/services/excel.service';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { HomeService } from 'src/app/shared/services/home.service';
+import { LoadBarService } from 'src/app/shared/load-bar/load-bar.service';
+import { LoadFileService } from 'src/app/shared/load-file/load-file.service';
+import { LoginService } from 'src/app/shared/services/login.service';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Observable } from 'rxjs';
+import { PagosComponent } from './pagos/pagos.component';
+import { Popover } from './popover/popover.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
 import Swal from 'sweetalert2';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
-import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
-import { NgxSpinnerService } from 'ngx-spinner';
-
-/// DATE PIECKER FORMAT
-import { Output, EventEmitter } from '@angular/core';
-import * as _moment from 'moment';  // dejalo si sale error
+import { User } from 'src/app/shared/models/user.model';
+import { WayPay } from 'src/app/shared/models/way-pay';
 import { default as _rollupMoment } from 'moment';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
-import { DialogComponent } from './dialog';
-import { LoginService } from 'src/app/shared/services/login.service';
 import { drawPopup } from 'src/app/shared/services/popups';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { Observable, Subject } from 'rxjs';
-import { isNgTemplate } from '@angular/compiler';
-import { Popover } from './popover/popover.service';
-import { PagosComponent } from './pagos/pagos.component';
-import { LoadFileService } from 'src/app/shared/load-file/load-file.service';
-import { LoadBarService } from 'src/app/shared/load-bar/load-bar.service';
-import { DebtComponent } from './debt.component';
-import { AgregaCobroComponent } from './agrega-cobro.component';
+
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -281,7 +277,7 @@ export class HomeComponent implements OnInit {
   }
   /*
     validandoListado() {
-  
+
       if (sessionStorage.getItem('tk') === null  ) {
         this.router.navigate(['/login']);
       } else {
@@ -1129,7 +1125,7 @@ export class HomeComponent implements OnInit {
     if (!amount) {
       items.errores.amount = 'Debe ingresar un valor';
     }
-    else if (amount < 1) {
+    else if (amount < 0) {
       items.errores.amount = 'Ingrese un monto válido';
     }
     else if (amount > 999999999.99) {
@@ -1273,7 +1269,7 @@ export class HomeComponent implements OnInit {
       if (!amount) {
         this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
       }
-      else if (amount < 1) {
+      else if (amount < 0) {
         this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
       }
       else if (amount > 999999999.99) {

@@ -1,14 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, Renderer2 } from "@angular/core";
-import Swal from "sweetalert2";
-import { drawPopup } from "src/app/shared/services/popups";
-import { TransactionService } from "src/app/shared/services/transaction.service";
-import { PagoService } from "src/app/shared/services/pago.service";
+import * as _moment from 'moment'; // dejalo si sale error
+
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+
 import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
-import { PopoverRef } from "../popover/popover-ref";
-import * as _moment from 'moment';  // dejalo si sale error
-import { default as _rollupMoment } from 'moment';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
+import { PagoService } from "src/app/shared/services/pago.service";
+import { PopoverRef } from "../popover/popover-ref";
+import Swal from "sweetalert2";
+import { TransactionService } from "src/app/shared/services/transaction.service";
+import { default as _rollupMoment } from 'moment';
+import { drawPopup } from "src/app/shared/services/popups";
 
 const moment = _rollupMoment || _moment;
 
@@ -110,7 +112,7 @@ export class PagosComponent implements OnInit {
     if(itm.newAmount.toString().length < 1){
       itm.errores.amount = 'Ingrese un monto correcto';
     }
-    if(parseInt(itm.newAmount.toString()) < 1){
+    if(parseInt(itm.newAmount.toString()) < 0){
       itm.errores.amount = 'Ingrese un monto correcto';
     }
 

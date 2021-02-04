@@ -2,7 +2,13 @@
 
     <div class="form-group">
         <mat-form-field class="w-70">
-            <input class="input-text" matInput type="text" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
+            <textarea class="input-text" matInput formControlName="nombre" name="nombre"
+              cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+              placeholder="Nombre del servicio" style="overflow: hidden;">
+            </textarea>
+            <!--
+              <input class="input-text" matInput type="text" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
+            -->
             <mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required') && submittedRequired">El nombre es obligatorio</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>

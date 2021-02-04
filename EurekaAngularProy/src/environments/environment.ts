@@ -2,8 +2,8 @@ export const environment = {
   production: false,
   ////////// U A T //////////////*/
 
-  END_POINT: 'https://apis.uat.interbank.pe/eureca/api',
-  OCP_KEY: ""
+  //END_POINT: 'https://apis.uat.interbank.pe/eureca/api',
+  //OCP_KEY: ""
 
 
   ////////// D E V E L O P ///////////////////////*
@@ -16,7 +16,7 @@ export const environment = {
   // END_POINT: 'https://apis.dev.interbank.pe/eureca/api',
   // OCP_KEY: ""
 
-  // END_POINT: 'https://localhost:5001/api',
-  // OCP_KEY: ""
+   END_POINT: 'https://localhost:5001/api',
+   OCP_KEY: ""
 
 }
