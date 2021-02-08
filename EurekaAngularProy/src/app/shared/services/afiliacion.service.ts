@@ -1,14 +1,14 @@
-import { Injectable, ɵConsole } from "@angular/core";
-import { ServiceModel, RubroModel, MonedaModel } from '../models';
-import { Observable, throwError, of } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { environment } from 'src/environments/environment';
+import { MonedaModel, RubroModel, ServiceModel } from '../models';
+import { Observable, of, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
+
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
-import Swal from "sweetalert2";
 import { StorageService } from "./storage.service";
-import { Router } from "@angular/router";
+import Swal from "sweetalert2";
 import { drawPopup } from "./popups";
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AfiliacionService {
@@ -154,6 +154,22 @@ export class AfiliacionService {
       }));
   }
 
+  public ValidateClient(data: any): Observable<any> {
+    this.spinner.show();
+    this.email = data.email;
+    return this.http.post<any>(`${environment.END_POINT}/company/validate?_=` + new Date().getTime(), data)
+      .pipe(map(r => {
+        this.spinner.hide();
+        if (r.success) {
+          this.idCompany = r.id;
+        }
+        return r;
+      }))
+      .pipe(catchError(err => {
+        this.spinner.hide();
+        return throwError(err);
+      }));
+  }
 
   public GetRubros(): Observable<RubroModel[]> {
     if (this._rubros !== null)
