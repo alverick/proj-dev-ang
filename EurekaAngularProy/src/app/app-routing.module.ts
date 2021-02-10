@@ -1,32 +1,33 @@
+import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { AfiliacionComponent } from 'src/app/auth/afiliacion/afiliacion.component';
+import { ConfigurarServiciosComponent } from 'src/app/auth/configurar-servicios/configurar-servicios.component';
+import { CrearContrasenaComponent } from 'src/app/auth/crear-contrasena/crear-contrasena.component';
+import { IdentificarEmpresaComponent } from 'src/app/auth/identificar-empresa/identificar-empresa.component';
+import { LoginComponent } from 'src/app/auth/login/login.component';
+import { ProcesandoComponent } from 'src/app/auth/procesando/procesando.component';
 import { AnalisisComponent } from 'src/app/pages/analisis/analisis.component';
-import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
+import { HomeComponent } from 'src/app/pages/home/home.component';
+import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-found.component';
+import { SubirPlantillaComponent } from 'src/app/pages/subir-plantilla/subir-plantilla.component';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { CambiaContrasenaComponent } from './auth/cambia-contrasena/cambia-contrasena.component';
 import { CargaHistoricoComponent } from './auth/carga-historico/carga-historico.component';
-import { ClientGuard } from './shared/guards/client.guard';
-import { CommonModule } from '@angular/common';
+import { CompletadoPrimeraParteComponent } from './auth/completado-primera-parte/completado-primera-parte.component';
 import { CompletarDatosEmpresaComponent } from './auth/completar-datos-empresa/completar-datos-empresa.component';
 import { ConfigurarCorreoGtpComponent } from './auth/configurar-correo-gtp/configurar-correo-gtp.component';
-import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { ConfigurarGtpComponent } from './auth/configurar-gtp/configurar-gtp.component';
-import { ConfigurarServiciosComponent } from 'src/app/auth/configurar-servicios/configurar-servicios.component';
-import { CrearContrasenaComponent } from 'src/app/auth/crear-contrasena/crear-contrasena.component';
+import { LandingComponent } from './auth/landing/landing.component';
+import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recuperar-contrasena.component';
+import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
+import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
+import { ClientGuard } from './shared/guards/client.guard';
 import { GtpInputGuard } from './shared/guards/gtp-input.guard';
 import { GtpOutputGuard } from './shared/guards/gtp-output.guard';
-import { HomeComponent } from 'src/app/pages/home/home.component';
-import { IdentificarEmpresaComponent } from 'src/app/auth/identificar-empresa/identificar-empresa.component';
-import { LandingComponent } from './auth/landing/landing.component';
-import { LoginComponent } from 'src/app/auth/login/login.component';
 import { LogoutGuard } from './shared/guards/logout.guard';
-import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-found.component';
-import { ProcesandoComponent } from 'src/app/auth/procesando/procesando.component';
-import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recuperar-contrasena.component';
-import { SubirPlantillaComponent } from 'src/app/pages/subir-plantilla/subir-plantilla.component';
+
 
 // CambiaContrasenaComponent
 
@@ -44,6 +45,7 @@ const routes: Routes = [
   { path: 'crearContrasena', component: CrearContrasenaComponent, data: { isEdit: false }},
   { path: 'identifiquemosEmpresa', component: IdentificarEmpresaComponent, data: { isEdit: false }},
   { path: 'completaDatosEmpresa', component: CompletarDatosEmpresaComponent, data: { isEdit: false }},
+  { path: 'completadoPrimeraParte', component: CompletadoPrimeraParteComponent, data: { isEdit: false }},
   { path: 'editaCuenta/:llave', component: CrearContrasenaComponent , data: { isEdit: true }},
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
   { path: 'configuracion', component: ConfigurarServiciosComponent},

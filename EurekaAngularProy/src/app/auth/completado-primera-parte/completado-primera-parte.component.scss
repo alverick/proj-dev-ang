@@ -1,0 +1,71 @@
+@import '~src/scss/_normalize.scss';
+@import '~src/scss/variables';
+@import '~src/scss/mixin';
+@import '~src/scss/_main.scss';
+
+body {
+  background: #f4f5f7 !important;
+}
+
+.super-full-width {
+  width: 100%;
+}
+
+.cuadro {
+  @include cuadro(1034px, $height: 588px);
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 45px;
+}
+
+.img-completed-successful{
+  width: 266px;
+  height: 320px;
+}
+
+.block-right{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  margin-left: 40px ;
+}
+
+.label-title-parte{
+  text-align: center;
+  font-family: Geometria;
+  font-size: 20px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: center;
+  color: #0032a0;
+  padding-bottom: 10px;
+}
+
+.label-title-sub-parte{
+  text-align: center;
+  font-family: Geometria;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.94;
+  letter-spacing: normal;
+  text-align: center;
+  color: rgba(13, 19, 29, 0.63);
+  padding-bottom: 10px;
+}
+
+.btn-configure-charges{
+  width: 207px;
+}
+
+.btn-eureca-green{
+  padding-left: 0px;
+  padding-right: 0px;
+}

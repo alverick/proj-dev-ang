@@ -1,18 +1,18 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { MustMatch } from './must-match.validator';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { AfiliacionService } from '../../shared/services/afiliacion.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import Swal from 'sweetalert2';
-import { RubroModel } from 'src/app/shared/models';
-import { drawPopup } from 'src/app/shared/services/popups';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import { GtpEmpresa } from 'src/app/shared/models/gtp-post';
-import { GtpService } from 'src/app/shared/services/gtp.service';
-import { Observable } from 'rxjs';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { GtpService } from 'src/app/shared/services/gtp.service';
+import { MustMatch } from './must-match.validator';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Observable } from 'rxjs';
+import { RubroModel } from 'src/app/shared/models';
+import Swal from 'sweetalert2';
+import { drawPopup } from 'src/app/shared/services/popups';
 
 declare var $: any;
 @Component({
@@ -150,8 +150,6 @@ export class CrearContrasenaComponent implements OnInit {
       }
     });
 
-
-
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
   }
 
@@ -288,8 +286,6 @@ export class CrearContrasenaComponent implements OnInit {
       this.gtpService.llave = this.llave;
     }
   }
-
-
 
   MensajeName() {
     //console.log('el estatus del nombre es v' + this.gtpService.EmpresaServicios.newNameGTPStatus);

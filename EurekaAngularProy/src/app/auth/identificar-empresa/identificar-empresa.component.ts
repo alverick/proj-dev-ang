@@ -1,4 +1,3 @@
-import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -6,10 +5,11 @@ import {
   FormGroup,
   Validators
 } from "@angular/forms";
-
+import { ActivatedRoute, Router } from "@angular/router";
 import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import Swal from 'sweetalert2';
 import { drawPopup } from 'src/app/shared/services/popups';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: "app-identificar-empresa",
@@ -90,6 +90,16 @@ export class IdentificarEmpresaComponent implements OnInit {
         //////*acceptTerms: this.registerForm.value.acceptterms
       }).subscribe(d => {
         if (d.success) {
+          this.afiliacionService.dataEnterpriseModel = {
+            ruc: this.registerForm.value.ruc.toString(),
+            email: this.registerForm.value.email.toString(),
+            movilNumber: this.registerForm.value.telefono.toString(),
+            movilOperator: this.registerForm.value.movilOperator.toString(),
+            name: '',
+            entry:'',
+            newName: '',
+            status: ''
+          };
           this.router.navigate(["/completaDatosEmpresa"/*, this.registerForm.get('ruc')*/]);
         } else {
           switch(d.code) {
@@ -98,7 +108,7 @@ export class IdentificarEmpresaComponent implements OnInit {
               break;
             }
             case 2: {
-              this.showMessageNoExistsRUC();
+              this.showMessageNoExistsAccounts();
               break;
             }
             case 3: {

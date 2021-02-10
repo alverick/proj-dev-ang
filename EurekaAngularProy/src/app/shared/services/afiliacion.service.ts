@@ -1,14 +1,15 @@
-import { MonedaModel, RubroModel, ServiceModel } from '../models';
-import { Observable, of, throwError } from "rxjs";
-import { catchError, map } from "rxjs/operators";
-
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
-import { StorageService } from "./storage.service";
-import Swal from "sweetalert2";
-import { drawPopup } from "./popups";
+import { Observable, of, throwError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 import { environment } from 'src/environments/environment';
+import Swal from "sweetalert2";
+import { MonedaModel, RubroModel, ServiceModel } from '../models';
+import { DataEnterpriseModel } from '../models/data-enterprise.model';
+import { drawPopup } from "./popups";
+import { StorageService } from "./storage.service";
+
 
 @Injectable()
 export class AfiliacionService {
@@ -21,7 +22,7 @@ export class AfiliacionService {
 
   public services: ServiceModel[] = [];
   private _rubros: RubroModel[] = null;
-
+  public dataEnterpriseModel: DataEnterpriseModel;
 
   public Clear() {
     this.Guardado = false;

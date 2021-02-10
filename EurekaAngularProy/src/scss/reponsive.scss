@@ -23,6 +23,12 @@
       width: 100% !important;
     }
 
+    .cont-ruc {
+      margin: auto !important;
+      padding: 0em 5em 0em 5em !important;
+      width: 480px !important;
+    }
+
     .cuadro-form {
       width: 480px !important;
       //  padding: 0em 5em !important;
@@ -420,14 +426,20 @@
         text-align: center !important;
     }
     .cuadro-form {
-        width: 100% !important;
+      width: 100% !important;
         //  padding: 0em 5em !important;
+    }
+    .cuadro-ruc{
+      width: 100% !important;
     }
     .cont-login {
         padding: 0em 2em !important;
         width: 60% !important;
     }
     .cont-empresa {
+        padding: 0em 12.5em 0em 12.5em !important;
+    }
+    .cont-ruc {
         padding: 0em 12.5em 0em 12.5em !important;
     }
     .terminos-title {
@@ -511,6 +523,29 @@
     }
     .btn-rg {
       margin-bottom: 16px !important;
+    }
+    .cuadro {
+      width: 656px !important;
+      height: 505px !important;
+      padding-right: 52px !important;
+      padding-left: 52px !important;
+    }
+    .label-title-parte{
+      font-size: 18px !important;
+      line-height: 1.33 !important;
+      margin-bottom: 34px !important;
+    }
+    .block-right{
+      margin-left: 10px !important ;
+    }
+    .label-title-sub-parte{
+      font-size: 18px !important;
+      line-height: 0.94 !important;
+      margin-bottom: 16px !important;
+    }
+    .img-completed-successful{
+      width: 192px !important;
+      height: 231px !important;
     }
 }
 
@@ -599,6 +634,9 @@
         //  padding: 0em .5em !important;
     }
     .cont-empresa {
+        padding: 0em 2em !important;
+    }
+     .cont-ruc {
         padding: 0em 2em !important;
     }
     .cont-login {
@@ -822,6 +860,12 @@
         font-size: 20px !important;
         margin-top: 15px;
     }
+    .label-text-ruc{
+      font-size: 16px !important;
+    }
+    .title-completa-datos{
+      text-align: left !important;
+    }
     .title-conf-ser {
         text-align: center !important;
         font-size: 22px !important;
@@ -942,6 +986,45 @@
     .formulario-reponsive {
         padding: 2em 2em !important;
     }
+    .img-information{
+      margin: 10px 4px auto 2px !important;
+    }
+    .text-message-name{
+      font-size:12px !important;
+      line-height: 1.25 !important;
+      margin: 7px 1px auto 0px !important;
+    }
+    .cuadro-form{
+      height: 545px !important;
+    }
+    small {
+        font-size:12px !important;
+    }
+    .btn-eureca-green {
+        margin-top: 5px !important;
+    }
+    .cuadro {
+      width: 272px !important;
+      height: 440px !important;
+      padding-right: 0px !important;
+      padding-left: 0px !important;
+      margin-top: 18px !important;
+      flex-direction: column !important;
+    }
+    .img-completed-successful{
+       width: 104px !important;
+      height: 125px !important;
+    }
+    .label-title-parte{
+      font-size: 16px !important;
+      line-height: 1.19 !important;
+      margin-bottom: 25px !important;
+    }
+    .label-title-sub-parte{
+      font-size: 16px !important;
+      line-height: 1.06 !important;
+      margin-bottom: 5px !important;
+    }
 }
 
 @media screen and (max-width:540px) {}
@@ -952,7 +1035,9 @@
     }
 }
 
-@media screen and(width:320 × 480) {}
+@media screen and(max-width:320px) {
+
+}
 
 // @media only screen and (max-width: 800px) {
 // }

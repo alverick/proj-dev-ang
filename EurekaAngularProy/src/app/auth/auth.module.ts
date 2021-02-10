@@ -33,6 +33,7 @@ import { ProcesandoComponent } from './procesando/procesando.component';
 import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
 import { CompletarDatosEmpresaComponent } from './completar-datos-empresa/completar-datos-empresa.component';
+import { CompletadoPrimeraParteComponent } from './completado-primera-parte/completado-primera-parte.component';
 
 @NgModule({
   imports: [
@@ -82,6 +83,7 @@ import { CompletarDatosEmpresaComponent } from './completar-datos-empresa/comple
     IdentificarEmpresaComponent,
     IdentificarEmpresaComponent,
     CompletarDatosEmpresaComponent,
+    CompletadoPrimeraParteComponent,
   ],
   exports: [
     OnlyNumbersFormDirective
