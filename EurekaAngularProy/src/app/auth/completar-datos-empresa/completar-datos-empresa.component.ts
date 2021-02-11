@@ -1,11 +1,12 @@
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { RubroModel } from "src/app/shared/models";
+
 import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { drawPopup } from 'src/app/shared/services/popups';
-import Swal from 'sweetalert2';
 import { MustMatch } from "../crear-contrasena/must-match.validator";
+import { RubroModel } from "src/app/shared/models";
+import Swal from 'sweetalert2';
+import { drawPopup } from 'src/app/shared/services/popups';
 
 @Component({
   selector: "app-completar-datos-empresa",
@@ -210,7 +211,7 @@ export class CompletarDatosEmpresaComponent implements OnInit {
   }
 
   terminos() {
-    $('#terminos').modal('show');
+    //$('#terminos').modal('show');
     // alert('hola');
   }
 
