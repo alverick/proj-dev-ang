@@ -8,6 +8,8 @@ import { RubroModel } from "src/app/shared/models";
 import Swal from 'sweetalert2';
 import { drawPopup } from 'src/app/shared/services/popups';
 
+declare var $: any;
+
 @Component({
   selector: "app-completar-datos-empresa",
   templateUrl: "./completar-datos-empresa.component.html",
@@ -211,7 +213,7 @@ export class CompletarDatosEmpresaComponent implements OnInit {
   }
 
   terminos() {
-    //$('#terminos').modal('show');
+    $('#terminos').modal('show');
     // alert('hola');
   }
 

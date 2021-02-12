@@ -34,6 +34,7 @@ import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-c
 import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
 import { CompletarDatosEmpresaComponent } from './completar-datos-empresa/completar-datos-empresa.component';
 import { CompletadoPrimeraParteComponent } from './completado-primera-parte/completado-primera-parte.component';
+import { ConfiguraCobrosParteUnoComponent } from './configura-cobros-parte-uno/configura-cobros-parte-uno.component';
 
 @NgModule({
   imports: [
@@ -84,6 +85,7 @@ import { CompletadoPrimeraParteComponent } from './completado-primera-parte/comp
     IdentificarEmpresaComponent,
     CompletarDatosEmpresaComponent,
     CompletadoPrimeraParteComponent,
+    ConfiguraCobrosParteUnoComponent,
   ],
   exports: [
     OnlyNumbersFormDirective

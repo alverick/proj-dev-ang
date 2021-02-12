@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-completado-primera-parte',
   templateUrl: './completado-primera-parte.component.html',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompletadoPrimeraParteComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  onConfigurarCobros(){
+    //this.router.navigate(["/configuraCobrosParteUno"]);
   }
 
 }
