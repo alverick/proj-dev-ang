@@ -1,15 +1,15 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { MustMatch } from 'src/app/auth/crear-contrasena/must-match.validator';
-import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
-import Swal from 'sweetalert2';
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { RubroModel } from 'src/app/shared/models';
-import { Router } from '@angular/router';
-import { drawPopup } from 'src/app/shared/services/popups';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
+import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { MustMatch } from 'src/app/auth/crear-contrasena/must-match.validator';
+import { Router } from '@angular/router';
+import { RubroModel } from 'src/app/shared/models';
+import Swal from 'sweetalert2';
+import { drawPopup } from 'src/app/shared/services/popups';
 
 @Component({
   selector: 'app-configurar-empresa',
@@ -46,7 +46,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
     window['_url_loop_'] = 'configuracionEmpresa';
     this.createForm();
     this.getInfoEmpresa();
-    this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
+    this.afiliacionService.GetRubrosAll().subscribe(d => this.rubros = d);
   }
 
 

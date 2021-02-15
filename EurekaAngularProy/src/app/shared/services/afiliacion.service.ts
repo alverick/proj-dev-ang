@@ -1,14 +1,14 @@
-import { Injectable, ɵConsole } from "@angular/core";
-import { ServiceModel, RubroModel, MonedaModel } from '../models';
-import { Observable, throwError, of } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { environment } from 'src/environments/environment';
+import { MonedaModel, RubroModel, ServiceModel } from '../models';
+import { Observable, of, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
+
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
-import Swal from "sweetalert2";
 import { StorageService } from "./storage.service";
-import { Router } from "@angular/router";
+import Swal from "sweetalert2";
 import { drawPopup } from "./popups";
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class AfiliacionService {
@@ -164,6 +164,22 @@ export class AfiliacionService {
         return r;
       }))
       .pipe(catchError(err => throwError(err)));
+  }
+
+  public GetRubrosAll(): Observable<RubroModel[]> {
+    if (this._rubros !== null) return Observable.of(this._rubros);
+    return this.http
+      .get<RubroModel[]>(
+        `${environment.END_POINT}/enterpriseHeading/all?_=` +
+          new Date().getTime()
+      )
+      .pipe(
+        map((r) => {
+          this._rubros = r;
+          return r;
+        })
+      )
+      .pipe(catchError((err) => throwError(err)));
   }
 
   public GetCodDeudor(): Observable<any[]> {
