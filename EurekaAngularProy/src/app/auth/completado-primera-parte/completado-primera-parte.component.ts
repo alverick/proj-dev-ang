@@ -15,7 +15,7 @@ export class CompletadoPrimeraParteComponent implements OnInit {
   }
 
   onConfigurarCobros(){
-    //this.router.navigate(["/configuraCobrosParteUno"]);
+    this.router.navigate(["/configuraCobrosParteUno"]);
   }
 
 }

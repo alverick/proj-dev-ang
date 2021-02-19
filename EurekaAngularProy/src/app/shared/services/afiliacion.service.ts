@@ -13,6 +13,25 @@ import { environment } from "src/environments/environment";
 
 @Injectable()
 export class AfiliacionService {
+  private _currentIndex: number = -1;
+  private _editMode: boolean = false;
+
+  get currentIndex(): number {
+    return this._currentIndex;
+  }
+
+  set currentServiceModel(value: ServiceModel) {
+    this._currentServiceModel = value;
+  }
+
+  get currentServiceModel(): ServiceModel {
+    return this._currentServiceModel;
+  }
+
+  get editMode(): boolean {
+    return this._editMode;
+  }
+
   constructor(
     private http: HttpClient,
     private spinner: NgxSpinnerService,
@@ -26,6 +45,7 @@ export class AfiliacionService {
   public services: ServiceModel[] = [];
   private _rubros: RubroModel[] = null;
   public dataEnterpriseModel: DataEnterpriseModel;
+  private _currentServiceModel: ServiceModel;
 
   public Clear() {
     this.Guardado = false;
@@ -455,6 +475,22 @@ export class AfiliacionService {
   IniciarServicios() {
     if (this.storage.isAuthenticated()) {
       delete this.idCompany;
+    }
+  }
+
+  addCurrentServiceModel() {
+    this.Guardado = false;
+    var svc_old = this.services.find((v) => v.nombre === this._currentServiceModel.nombre);
+    if (svc_old) {
+      Swal.fire({
+        text: "Este servicio ya existe",
+        allowOutsideClick: false,
+        onOpen: drawPopup,
+      });
+    } else {
+      this.services.push(this._currentServiceModel);
+      this._currentServiceModel = null;
+      console.log('Listado de Servicios:',this.services);
     }
   }
 }

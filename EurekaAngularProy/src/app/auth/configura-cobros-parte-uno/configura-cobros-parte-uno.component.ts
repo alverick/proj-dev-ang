@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, Input, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -6,6 +7,7 @@ import {
   Validators
 } from "@angular/forms";
 
+import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
 import { ServiceModel } from "src/app/shared/models";
 
 declare var $: any;
@@ -14,6 +16,23 @@ declare var $: any;
   selector: "app-configura-cobros-parte-uno",
   templateUrl: "./configura-cobros-parte-uno.component.html",
   styleUrls: ["./configura-cobros-parte-uno.component.scss"],
+  styles: [
+    `
+      :host >>> .tooltip-inner {
+        background-color: #FFF;
+        color: #0d131d !important;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.20);
+        font-size: 11px !important;
+        padding: .5em .3em;
+        min-width:300px !important;
+      }
+      :host >>> .tooltip.top .tooltip-arrow:before,
+      :host >>> .tooltip.top .tooltip-arrow {
+        border-top-color: #0d131d57;
+      }
+    `
+  ]
 })
 export class ConfiguraCobrosParteUnoComponent implements OnInit {
   frm: FormGroup;
@@ -44,21 +63,39 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
         periodoMora: "1",
         tipoMora: "M",
       };
-
     } else {
       this._service = value;
     }
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private afiliacionService: AfiliacionService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
-    this.initService();
-    this.editMode =
-    this._service.id !== null &&
-    this._service.id !== undefined &&
-    this._service.id > 0;
+    this.route.data.subscribe(d => {
+      console.log(d.isEdit);
+      this.editMode = d.isEdit;
 
+      if(this.isNew() == true){
+        this.initializeService();
+      }else{
+        this.getService();
+      }
+
+      this.initializeForm();
+    });
+    /*this.editMode =
+      this._service.id !== null &&
+      this._service.id !== undefined &&
+      this._service.id > 0;*/
+
+  }
+
+  initializeForm(){
     this.frm = this.fb.group({
       nombre: new FormControl(
         {
@@ -82,13 +119,17 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
     });
   }
 
-  initService(){
+  initializeService() {
+    //tipoDato: "C",
+    //tipoPago: "C",
+    //codDeudor: "DNI",
+    //cobraMora: 'N'
     this._service = {
       res: "",
       nombre: "",
-      codDeudor: "DNI",
-      tipoDato: "C",
-      tipoPago: "C",
+      codDeudor: "",
+      tipoDato: "",
+      tipoPago: "",
       idCuenta: "",
       nroCuenta: "",
       moneda: "001",
@@ -96,14 +137,85 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
       usaWebApp: true,
       usaAgente: false,
       usaTienda: false,
-      cobraMora: "N",
+      cobraMora: "",
       periodoMora: "1",
       tipoMora: "M",
+      nombreCodHabilitado: false,
+      newNameCode: ''
     };
+  }
+
+  getService(){
+    this._service = Object.assign(
+      {},
+      this.afiliacionService.currentServiceModel
+    );
+  }
+
+  isNew(): boolean{
+    if(this.afiliacionService.currentServiceModel === null
+      || this.afiliacionService.currentServiceModel === undefined ){
+      return true;
+    }else{
+      return false
+    }
   }
 
   onSubmitServicio() {
     this.submittedRequired = true;
+
+    if (this.frm.valid) {
+      let value: ServiceModel;
+      if (this.editMode) {
+        value = this._service;
+        value.newName = value.nombreHabilitado
+        ? value.newName
+        : this.frm.value.nombre === value.nombre
+        ? value.newName
+        : this.frm.value.nombre;
+
+        this.setCurrentServiceModel(this.f.nombre.value);
+        this.goNext();
+      } else {
+        //value = this.frm.value;
+        this._service.id = null;
+        this._service.newName = this.frm.value.nombre;
+        this.setCurrentServiceModel(this.f.nombre.value);
+        this.goNext();
+
+        /*
+        if (this.afiliacionService.currentIndex >= 0) {
+        } else {
+          let nro = 1;
+
+          this.afiliacionService.services.forEach((s, i) => {
+            if (s.nombre.startsWith(this.frm.value.nombre)) {
+              if (
+                !isNaN(
+                  parseInt(s.nombre.substr(this.frm.value.nombre.length))
+                ) ||
+                s.nombre.substr(this.frm.value.nombre.length) === ""
+              ) {
+                nro += 1;
+              }
+            }
+          });
+
+          if (nro > 1) {
+            value.nombre += nro.toString();
+          }
+
+          this.setCurrentServiceModel(this.f.nombre.value);
+          this.goNext();
+        }*/
+      }
+    }
+  }
+
+  setCurrentServiceModel(nombre: string) {
+    this.afiliacionService.currentServiceModel = this._service;
+    this.afiliacionService.currentServiceModel.nombre = nombre;
+    console.log(this.afiliacionService.currentServiceModel);
   }
 
   nameSerInput(e) {
@@ -130,9 +242,14 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
     }
   }
 
-  onImgDoubt(){
-    $('#concept-charge').modal('show');
+  onImgDoubt() {
+    $("#concept-charge").modal("show");
   }
+
+  goNext(){
+    this.router.navigate(["/configuraCobrosParteDos"]);
+  }
+
 }
 
 function Alfanumerico(c: FormControl) {

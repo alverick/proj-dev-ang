@@ -11,6 +11,9 @@ import { ClientGuard } from './shared/guards/client.guard';
 import { CommonModule } from '@angular/common';
 import { CompletadoPrimeraParteComponent } from './auth/completado-primera-parte/completado-primera-parte.component';
 import { CompletarDatosEmpresaComponent } from './auth/completar-datos-empresa/completar-datos-empresa.component';
+import { ConfiguraCobrosParteCuatroComponent } from './auth/configura-cobros-parte-cuatro/configura-cobros-parte-cuatro.component';
+import { ConfiguraCobrosParteDosComponent } from './auth/configura-cobros-parte-dos/configura-cobros-parte-dos.component';
+import { ConfiguraCobrosParteTresComponent } from './auth/configura-cobros-parte-tres/configura-cobros-parte-tres.component';
 import { ConfiguraCobrosParteUnoComponent } from './auth/configura-cobros-parte-uno/configura-cobros-parte-uno.component';
 import { ConfigurarCorreoGtpComponent } from './auth/configurar-correo-gtp/configurar-correo-gtp.component';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
@@ -28,6 +31,7 @@ import { LogoutGuard } from './shared/guards/logout.guard';
 import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-found.component';
 import { ProcesandoComponent } from 'src/app/auth/procesando/procesando.component';
 import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recuperar-contrasena.component';
+import { ResumenCobrosComponent } from './auth/resumen-cobros/resumen-cobros.component';
 import { SubirPlantillaComponent } from 'src/app/pages/subir-plantilla/subir-plantilla.component';
 
 // CambiaContrasenaComponent
@@ -48,6 +52,11 @@ const routes: Routes = [
   { path: 'completaDatosEmpresa', component: CompletarDatosEmpresaComponent, data: { isEdit: false }},
   { path: 'completadoPrimeraParte', component: CompletadoPrimeraParteComponent, data: { isEdit: false }},
   { path: 'configuraCobrosParteUno', component: ConfiguraCobrosParteUnoComponent, data: { isEdit: false }},
+  { path: 'configuraCobrosParteDos', component: ConfiguraCobrosParteDosComponent, data: { isEdit: false }},
+  { path: 'configuraCobrosParteTres', component: ConfiguraCobrosParteTresComponent, data: { isEdit: false }},
+  { path: 'configuraCobrosParteCuatro', component: ConfiguraCobrosParteCuatroComponent, data: { isEdit: false }},
+  { path: 'resumenCobros', component: ResumenCobrosComponent, data: { isEdit: true }},
+
   { path: 'editaCuenta/:llave', component: CrearContrasenaComponent , data: { isEdit: true }},
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
   { path: 'configuracion', component: ConfigurarServiciosComponent},

@@ -16,6 +16,11 @@ import { SharedModule } from '../shared/shared.module';
 import { LogoutGuard } from './../shared/guards/logout.guard';
 import { AfiliacionComponent } from './afiliacion/afiliacion.component';
 import { CambiaContrasenaComponent } from './cambia-contrasena/cambia-contrasena.component';
+import { CompletadoPrimeraParteComponent } from './completado-primera-parte/completado-primera-parte.component';
+import { CompletarDatosEmpresaComponent } from './completar-datos-empresa/completar-datos-empresa.component';
+import { ConfiguraCobrosParteDosComponent } from './configura-cobros-parte-dos/configura-cobros-parte-dos.component';
+import { ConfiguraCobrosParteTresComponent } from './configura-cobros-parte-tres/configura-cobros-parte-tres.component';
+import { ConfiguraCobrosParteUnoComponent } from './configura-cobros-parte-uno/configura-cobros-parte-uno.component';
 import { ConfigurarCorreoGtpComponent } from './configurar-correo-gtp/configurar-correo-gtp.component';
 import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.component';
 import { ConfigurarServiciosComponent } from './configurar-servicios/configurar-servicios.component';
@@ -32,9 +37,8 @@ import { LoginComponent } from './login/login.component';
 import { ProcesandoComponent } from './procesando/procesando.component';
 import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
 import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
-import { CompletarDatosEmpresaComponent } from './completar-datos-empresa/completar-datos-empresa.component';
-import { CompletadoPrimeraParteComponent } from './completado-primera-parte/completado-primera-parte.component';
-import { ConfiguraCobrosParteUnoComponent } from './configura-cobros-parte-uno/configura-cobros-parte-uno.component';
+import { ConfiguraCobrosParteCuatroComponent } from './configura-cobros-parte-cuatro/configura-cobros-parte-cuatro.component';
+import { ResumenCobrosComponent } from './resumen-cobros/resumen-cobros.component';
 
 @NgModule({
   imports: [
@@ -86,6 +90,10 @@ import { ConfiguraCobrosParteUnoComponent } from './configura-cobros-parte-uno/c
     CompletarDatosEmpresaComponent,
     CompletadoPrimeraParteComponent,
     ConfiguraCobrosParteUnoComponent,
+    ConfiguraCobrosParteDosComponent,
+    ConfiguraCobrosParteTresComponent,
+    ConfiguraCobrosParteCuatroComponent,
+    ResumenCobrosComponent,
   ],
   exports: [
     OnlyNumbersFormDirective

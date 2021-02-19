@@ -363,6 +363,7 @@ export class FormServicioComponent implements OnInit {
               });
               return;
             }
+
             if (monto < 0.5) {
               Swal.fire({
                 text: "el minimo monto que se puede ingresar es 0.50",
@@ -441,6 +442,7 @@ export class FormServicioComponent implements OnInit {
                 })`;
                 value.simboloMoneda = this.simboloMoneda;
                 value.usaWebApp = true;
+                console.log(value);
                 this.grabar.emit(value);
               }
             }
@@ -554,6 +556,7 @@ export class FormServicioComponent implements OnInit {
               })`;
               value.simboloMoneda = this.simboloMoneda;
               value.usaWebApp = true;
+              console.log(value);
               this.grabar.emit(value);
             }
           }
@@ -620,7 +623,7 @@ export class FormServicioComponent implements OnInit {
           })`;
           value.simboloMoneda = this.simboloMoneda;
           value.usaWebApp = true;
-
+          console.log(value);
           this.grabar.emit(value);
         }
       }
