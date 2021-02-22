@@ -48,6 +48,7 @@ const routes: Routes = [
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
   { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard, GtpOutputGuard ] },
   { path: 'crearContrasena', component: CrearContrasenaComponent, data: { isEdit: false }},
+
   { path: 'identifiquemosEmpresa', component: IdentificarEmpresaComponent, data: { isEdit: false }},
   { path: 'completaDatosEmpresa', component: CompletarDatosEmpresaComponent, data: { isEdit: false }},
   { path: 'completadoPrimeraParte', component: CompletadoPrimeraParteComponent, data: { isEdit: false }},

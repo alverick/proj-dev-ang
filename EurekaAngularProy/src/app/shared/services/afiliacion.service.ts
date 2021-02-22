@@ -36,7 +36,9 @@ export class AfiliacionService {
     private http: HttpClient,
     private spinner: NgxSpinnerService,
     private storage: StorageService
-  ) {}
+  ) {
+    this.llenarMock();
+  }
 
   public idCompany: number = 0;
   public email: string;
@@ -492,5 +494,151 @@ export class AfiliacionService {
       this._currentServiceModel = null;
       console.log('Listado de Servicios:',this.services);
     }
+  }
+
+  public createNewService(): void {
+    this.Guardado = false;
+    this._currentServiceModel = null;
+    let nombre: string = "Mensualidad";
+    let newName: string = "Mensualidad";
+    let nro = 1;
+    this.services.forEach((s, i) => {
+      //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
+      if (s.nombre === null) {
+        if (s.newName.toUpperCase().startsWith(newName.toUpperCase())) {
+          if (
+            !isNaN(parseInt(s.newName.substr(newName.length))) ||
+            s.newName.substr(newName.length) === ""
+          ) {
+            let aux = parseInt(s.newName.substr(newName.length));
+            if (isNaN(aux)) nro = 2;
+            else if (aux >= nro) nro = aux + 1;
+          }
+        }
+      } else {
+        if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
+          if (
+            !isNaN(parseInt(s.nombre.substr(nombre.length))) ||
+            s.nombre.substr(nombre.length) === ""
+          ) {
+            let aux = parseInt(s.nombre.substr(nombre.length));
+            if (isNaN(aux)) nro = 2;
+            else if (aux >= nro) nro = aux + 1;
+          }
+        }
+      }
+    });
+    if (nro > 1) {
+      nombre += nro.toString();
+    }
+    //tipoDato: "C",
+    //tipoPago: "C",
+    //codDeudor: "DNI",
+    //cobraMora: 'N'
+    //nombre: nombre,
+    //newName: nombre,
+    //newNameCodeGtpStatus: null,
+    let svc: ServiceModel = {
+      res: "",
+      id: null,
+      nombre: '',
+      newName: '',
+      codDeudor: '',
+      newNameCode: '',
+      tipoDato: "",
+      tipoPago: "",
+      idCuenta: "",
+      nroCuenta: "",
+      //newNameCodeGtpStatus: null,
+      moneda: "001",
+      simboloMoneda: "S/",
+      usaWebApp: true,
+      usaAgente: false,
+      usaTienda: false,
+      cobraMora: "",
+      periodoMora: "1",
+      tipoMora: "M",
+      pagoPartes: "N",
+      nombreCodHabilitado: false,
+      newNameCode: ''
+    };
+
+    this._currentServiceModel = svc;
+    //this.services.push(svc);
+    console.log('Lista de Servicios:', this.services)
+  }
+
+  /*this._service = {
+    res: "",
+    nombre: "",
+    codDeudor: "",
+    tipoDato: "",
+    tipoPago: "",
+    idCuenta: "",
+    nroCuenta: "",
+    moneda: "001",
+    simboloMoneda: "S/",
+    usaWebApp: true,
+    usaAgente: false,
+    usaTienda: false,
+    cobraMora: "",
+    periodoMora: "1",
+    tipoMora: "M",
+    nombreCodHabilitado: false,
+    newNameCode: ''
+  };*/
+
+  llenarMock(){
+    let currentService: ServiceModel = {
+      cobraMora: "N",
+      codDeudor: "DNI",
+      id: null,
+      idCuenta: "4708",
+      moneda: "002",
+      monto: 1.00,
+      newName: "AGUA",
+      newNameCode: "DNI",
+      nombre: "AGUA",
+      nombreCodHabilitado: false,
+      nroCuenta: "*********4708 (Dólares)",
+      pagoPartes: "N",
+      periodoMora: "",
+      porcentaje: 1.00,
+      res: "",
+      simboloMoneda: "$",
+      tipoDato: "C",
+      tipoMora: "M",
+      tipoPago: "C",
+      usaAgente: true,
+      usaTienda: true,
+      usaWebApp: true,
+    };
+    this.services.push(currentService);
+
+    let currentService02: ServiceModel = {
+      cobraMora: "N",
+      codDeudor: "DNI",
+      id: null,
+      idCuenta: "4708",
+      moneda: "002",
+      monto: 1.00,
+      newName: "AGUA AGUA AGUA  AGUA AGUA AGUA AGUAAGUA  AGUA AGUA AGUA AGUA AGUA ",
+      newNameCode: "DNI",
+      nombre: "AGUA AGUA AGUA  AGUA AGUA AGUA AGUAAGUA  AGUA AGUA AGUA AGUA AGUA ",
+      nombreCodHabilitado: false,
+      nroCuenta: "*********4708 (Dólares)",
+      pagoPartes: "N",
+      periodoMora: "",
+      porcentaje: 1.00,
+      res: "",
+      simboloMoneda: "$",
+      tipoDato: "C",
+      tipoMora: "M",
+      tipoPago: "C",
+      usaAgente: true,
+      usaTienda: true,
+      usaWebApp: true,
+    };
+    this.services.push(currentService02);
   }
 }

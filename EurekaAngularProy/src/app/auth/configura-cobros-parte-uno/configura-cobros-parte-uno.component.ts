@@ -82,8 +82,10 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
 
       if(this.isNew() == true){
         this.initializeService();
+        console.log('Lista de Servicios:', this.services)
       }else{
         this.getService();
+        console.log('Lista de Servicios:', this.services)
       }
 
       this.initializeForm();
