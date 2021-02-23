@@ -25,7 +25,7 @@
             *ngFor="let svc of afiliacionService.services; let i = index"
             [class.seleccionado]="indiceActual === i"
           >
-            <div style="padding: 0em 1.5rem !important">
+            <div class="card-content">
               <div class="pl-1 row pb-0">
                 <div *ngIf="inGTP" class="col-md-12 pt-3">
                   <div class="font-text-services">
@@ -64,7 +64,7 @@
                 <div *ngIf="!inGTP" class="col-md-12 pt-2">
                   <div class="container-no-gtp">
                     <h1 class="title-name-service">{{ getName(svc) }}</h1>
-
+                    {{i}}
                     <ul
                       *ngIf="!inGTP"
                       class="list-unstyled container-no-gtp-actions"
@@ -221,7 +221,8 @@
       </div>
 
       <div class="" >
-        <div class="btn-col-1">
+        <!--btn-col-1-->
+        <div class="container-actions">
           <button
             *ngIf="!inGTP && Formulario == false"
             type="button"
@@ -271,7 +272,7 @@
           >
             FINALIZAR_
           </button>
-          
+
           <button
           style="background-color: yellow;"
             *ngIf="inGTP && Formulariogtp == false"

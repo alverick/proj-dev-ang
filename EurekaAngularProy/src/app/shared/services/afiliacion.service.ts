@@ -560,7 +560,6 @@ export class AfiliacionService {
       tipoMora: "M",
       pagoPartes: "N",
       nombreCodHabilitado: false,
-      newNameCode: ''
     };
 
     this._currentServiceModel = svc;

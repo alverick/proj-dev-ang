@@ -39,6 +39,7 @@ import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-c
 import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
 import { ConfiguraCobrosParteCuatroComponent } from './configura-cobros-parte-cuatro/configura-cobros-parte-cuatro.component';
 import { ResumenCobrosComponent } from './resumen-cobros/resumen-cobros.component';
+import { EditarCobrosComponent } from './editar-cobros/editar-cobros.component';
 
 @NgModule({
   imports: [
@@ -94,6 +95,7 @@ import { ResumenCobrosComponent } from './resumen-cobros/resumen-cobros.componen
     ConfiguraCobrosParteTresComponent,
     ConfiguraCobrosParteCuatroComponent,
     ResumenCobrosComponent,
+    EditarCobrosComponent,
   ],
   exports: [
     OnlyNumbersFormDirective

@@ -20,6 +20,7 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
 import { ConfigurarGtpComponent } from './auth/configurar-gtp/configurar-gtp.component';
 import { ConfigurarServiciosComponent } from 'src/app/auth/configurar-servicios/configurar-servicios.component';
 import { CrearContrasenaComponent } from 'src/app/auth/crear-contrasena/crear-contrasena.component';
+import { EditarCobrosComponent } from './auth/editar-cobros/editar-cobros.component';
 import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
 import { GtpInputGuard } from './shared/guards/gtp-input.guard';
 import { GtpOutputGuard } from './shared/guards/gtp-output.guard';
@@ -57,6 +58,7 @@ const routes: Routes = [
   { path: 'configuraCobrosParteTres', component: ConfiguraCobrosParteTresComponent, data: { isEdit: false }},
   { path: 'configuraCobrosParteCuatro', component: ConfiguraCobrosParteCuatroComponent, data: { isEdit: false }},
   { path: 'resumenCobros', component: ResumenCobrosComponent, data: { isEdit: true }},
+  { path: 'editarCobros', component: EditarCobrosComponent, data: { isEdit: true }},
 
   { path: 'editaCuenta/:llave', component: CrearContrasenaComponent , data: { isEdit: true }},
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
