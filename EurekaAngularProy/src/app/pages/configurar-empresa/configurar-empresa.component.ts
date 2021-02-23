@@ -49,9 +49,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
     this.afiliacionService.GetRubrosAll().subscribe(d => this.rubros = d);
   }
 
-
-
-
   createForm() {
 
     this.formGroup = this.formBuilder.group({
