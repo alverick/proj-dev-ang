@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import CUSTOM_ELEMENTS_SCHEMA from '@angular/core';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { RubroModel } from 'src/app/shared/models';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import { GtpService } from 'src/app/shared/services/gtp.service';
+import { RubroModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-frm-empresa-gtp',
@@ -25,6 +24,7 @@ export class FormEmpresaGTPComponent implements OnInit {
   constructor(public afiliacionService: AfiliacionService, private formBuilder: FormBuilder, public gtpService: GtpService) { }
 
   ngOnInit() {
+    console.log('GetRubrosAll()form-empresa-gtp');
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
 
     this.formGroup = this.formBuilder.group({
