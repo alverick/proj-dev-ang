@@ -1,14 +1,13 @@
-import { DataServiceGTP } from './../../shared/models/data-service-gtp';
-import { Component, OnInit, HostListener } from '@angular/core';
-import { GtpService } from 'src/app/shared/services/gtp.service';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EnterprisesGtp } from 'src/app/shared/models/enterprises-gtp';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import Swal from 'sweetalert2';
-import { drawPopup } from 'src/app/shared/services/popups';
-import { GtpEmpresa, GtpServcegtp, GtpPost } from 'src/app/shared/models/gtp-post';
 import { RubroModel } from 'src/app/shared/models';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { GtpEmpresa, GtpPost, GtpServcegtp } from 'src/app/shared/models/gtp-post';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { GtpService } from 'src/app/shared/services/gtp.service';
+import { drawPopup } from 'src/app/shared/services/popups';
+import Swal from 'sweetalert2';
+import { DataServiceGTP } from './../../shared/models/data-service-gtp';
 // import { ConsoleReporter } from 'jasmine';
 
 @Component({
@@ -63,7 +62,7 @@ export class AprobacionesComponent implements OnInit {
 
     /// TRAE LOS SERVICIOS
     this.gtpService.GetServicesGtp(this.llave);
-    this.afiliacionService.GetRubros().subscribe(d => {
+    this.afiliacionService.GetRubrosAll().subscribe(d => {
       this.rubros = d;
       this.getInfoEmpresa();
     });
@@ -178,7 +177,7 @@ export class AprobacionesComponent implements OnInit {
 
     if (this.Enterprise.name.toUpperCase() === this.Enterprise.newName.toUpperCase()) {
       this.Enterprise.NombreApproved = true;
-    } 
+    }
     else {
       if (this.Enterprise.NombreApproved === null || this.Enterprise.NombreApproved === undefined) {
         Empcant = 1;
