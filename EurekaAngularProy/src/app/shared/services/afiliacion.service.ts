@@ -210,6 +210,10 @@ export class AfiliacionService {
     {
       code: 'P',
       name: "Tengo sólo código y nombres"
+    },
+    {
+      code: 'S',
+      name: 'No ingresaré data'
     }
     ]);
   }
