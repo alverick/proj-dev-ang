@@ -15,9 +15,9 @@ import { drawPopup } from "src/app/shared/services/popups";
 declare var $: any;
 
 @Component({
-  selector: 'app-editar-cobros',
-  templateUrl: './editar-cobros.component.html',
-  styleUrls: ['./editar-cobros.component.scss']
+  selector: "app-editar-cobros",
+  templateUrl: "./editar-cobros.component.html",
+  styleUrls: ["./editar-cobros.component.scss"],
 })
 export class EditarCobrosComponent implements OnInit {
   frm: FormGroup;
@@ -27,6 +27,9 @@ export class EditarCobrosComponent implements OnInit {
   codDeudor: any[] = [];
   tiposPago: any[] = [];
   tiposMora: any[] = [];
+  tiposDato: any[] = [];
+  pagoPartes: any[] = [];
+  cuentas: any[] = [];
   _service: ServiceModel;
   tipoDato: string = "";
   cobraMora: boolean = false;
@@ -34,6 +37,15 @@ export class EditarCobrosComponent implements OnInit {
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
   simboloMoneda: string = "S/";
+  currencySymbolSoles: string = "S/";
+  currencySymbolDollars: string = "$";
+  private tc: number = 3.37;
+  commissionAgentSoles = 1.5;
+  commissionAgentDollars = Math.round((this.commissionAgentSoles / this.tc) * 100) / 100;;
+  //public comTienda = 8;
+  commissionStoreSoles = 8;
+  commissionStoreDollars =  Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;;
+
 
   constructor(
     private router: Router,
@@ -46,12 +58,38 @@ export class EditarCobrosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cuentas = [];
     this.editMode = this.afiliacionService.editMode;
+
+    if (this.isNew() == true) {
+      //////this.initializeService();
+      //console.log('Lista de Servicios:', this.services)
+    } else {
+      this.getService();
+      this.initializeForm();
+      //console.log('Lista de Servicios:', this.services)
+    }
+  }
+
+  isNew(): boolean {
+    if (
+      this.afiliacionService.currentServiceModel === null ||
+      this.afiliacionService.currentServiceModel === undefined
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getService() {
     this._service = Object.assign(
       {},
       this.afiliacionService.currentServiceModel
     );
+  }
 
+  initializeForm() {
     var montod =
       this._service.monto !== null && this._service.monto !== undefined
         ? this._service.monto
@@ -77,6 +115,25 @@ export class EditarCobrosComponent implements OnInit {
         : "DNI";
 
     this.frm = this.fb.group({
+      nombre: new FormControl(
+        {
+          value:
+            this._service.newNameGtpStatus === 0 ||
+            (this._service.newNameGtpStatus === 3 &&
+              this._service.nombre == null)
+              ? this._service.newName
+              : this._service.nombre,
+          disabled: this._service.nombreHabilitado,
+        },
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Alfanumerico,
+          Validators.pattern(
+            "^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$"
+          ),
+        ]
+      ),
       tipoDato: new FormControl(
         {
           value: this._service.tipoDato,
@@ -110,27 +167,46 @@ export class EditarCobrosComponent implements OnInit {
       tipoMora: [this._service.tipoMora],
       monto: new FormControl({ value: montod, disabled: true }),
       porcentaje: new FormControl({ value: porcentajed, disabled: true }),
+      idCuenta: new FormControl(
+        { value: this._service.idCuenta.toString(), disabled: this.editMode },
+        Validators.required
+      ),
+      moneda: [this._service.moneda, Validators.required],
+      usaAgente: new FormControl({
+        value: this._service.usaAgente,
+        disabled: this.editMode,
+      }),
+      usaTienda: new FormControl({
+        value: this._service.usaTienda,
+        disabled: this.editMode,
+      }),
+      usaWebApp: new FormControl({
+        value: this._service.usaWebApp,
+        disabled: true,
+      }),
     });
-
-    // nameCod: new FormControl({
-    //   value:
-    //     this.afiliacionService.currentServiceModel.codDeudor === null
-    //       ? this.afiliacionService.currentServiceModel.newNameCode
-    //       : this.afiliacionService.currentServiceModel.codDeudor === "Otro"
-    //       ? this.afiliacionService.currentServiceModel.nameCod
-    //       : this.afiliacionService.currentServiceModel.codDeudor,
-    //   disabled: this.afiliacionService.currentServiceModel.nombreCodHabilitado,
-    // }),
 
     this.afiliacionService
       .GetCodDeudor()
       .subscribe((d) => (this.codDeudor = d));
+    this.afiliacionService.GetTipoDato().subscribe((d) => (this.tiposDato = d));
+    this.afiliacionService
+      .GetPagoPartes()
+      .subscribe((d) => (this.pagoPartes = d));
     this.afiliacionService.GetTipoPago().subscribe((d) => {
       this.tiposPago = d;
     });
     this.afiliacionService
       .GetPeriodoMora()
       .subscribe((d) => (this.tiposMora = d));
+    this.afiliacionService.GetCards().subscribe((d) => {
+      this.cuentas = d;
+    });
+    this.afiliacionService.GetTipoCambio().subscribe((d) => {
+      this.tc = d;
+      console.log(this.tc);
+      this.calculateCommissions();
+    });
 
     this.changeMora(false);
     this.changeTipoMora(false);
@@ -157,12 +233,12 @@ export class EditarCobrosComponent implements OnInit {
       this.cmoraporce = false;
       this.cobraMora = false;
 
-      this.frm.get('tipoPago').setValue('C');
+      this.frm.get("tipoPago").setValue("C");
     }
   }
 
-  resetPeriodoMora(cobraMora: string){
-    if (cobraMora === "N" || cobraMora === '') {
+  resetPeriodoMora(cobraMora: string) {
+    if (cobraMora === "N" || cobraMora === "") {
       this.frm.get("periodoMora").setValue("");
       this.cmoraporce = false;
     }
@@ -211,30 +287,56 @@ export class EditarCobrosComponent implements OnInit {
                 onOpen: drawPopup,
               });
               return;
-            }else{
+            } else {
               let value: ServiceModel;
               value = this._service;
               if (this.editMode) {
+                if (this.frm.value.idCuenta)
+                  value.idCuenta = this.frm.value.idCuenta;
+                else value.idCuenta = this.f.idCuenta.value;
+                value.newName = value.nombreHabilitado
+                  ? value.newName
+                  : this.frm.value.nombre === value.nombre
+                  ? value.newName
+                  : this.frm.value.nombre;
                 value.newNameCode = value.nombreCodHabilitado
-                ? value.newNameCode
-                : this.frm.value.codDeudor === "Otro"
-                ? this.frm.value.nameCod === value.codDeudor
                   ? value.newNameCode
-                  : this.frm.value.nameCod
-                : this.frm.value.codDeudor === value.codDeudor
-                ? value.newNameCode
-                : this.frm.value.codDeudor;
-              }else{
-                value.newNameCode =
-                this.frm.value.codDeudor === "Otro"
-                  ? this.frm.value.nameCod
+                  : this.frm.value.codDeudor === "Otro"
+                  ? this.frm.value.nameCod === value.codDeudor
+                    ? value.newNameCode
+                    : this.frm.value.nameCod
+                  : this.frm.value.codDeudor === value.codDeudor
+                  ? value.newNameCode
                   : this.frm.value.codDeudor;
+              } else {
+                this._service.newName = this.frm.value.nombre;
+                value.newNameCode =
+                  this.frm.value.codDeudor === "Otro"
+                    ? this.frm.value.nameCod
+                    : this.frm.value.codDeudor;
               }
-              //Estable Servicio
-              this.setCurrentServiceModel(value.newNameCode);
-              this.nextPage();
+
+              let cta = this.cuentas.find((c) => c.id === value.idCuenta);
+              value.nroCuenta = `${cta.number.substr(0, 13)} (${
+                cta.currency === "001" ? "Soles" : "Dólares"
+              })`;
+              value.moneda = this.frm.value.moneda;
+              value.simboloMoneda = this.simboloMoneda;
+
+              //Establece Servicio
+              if (this.isAddedName(this.f.nombre.value) === false) {
+                this.setCurrentServiceModel(
+                  value.newNameCode,
+                  this.f.nombre.value,
+                  value.idCuenta,
+                  value.nroCuenta,
+                  value.simboloMoneda,
+                  value.moneda
+                );
+                this.nextPage();
+              }
             }
-          }else{
+          } else {
             Swal.fire({
               text: "Ingrese el monto",
               showCloseButton: true,
@@ -246,7 +348,7 @@ export class EditarCobrosComponent implements OnInit {
             });
             return;
           }
-        }else{
+        } else {
           if (porcentaje === null) {
             Swal.fire({
               text: "Ingrese el porcentaje",
@@ -286,54 +388,110 @@ export class EditarCobrosComponent implements OnInit {
             let value: ServiceModel;
             value = this._service;
             if (this.editMode) {
+              if (this.frm.value.idCuenta)
+                value.idCuenta = this.frm.value.idCuenta;
+              else value.idCuenta = this.f.idCuenta.value;
+              value.newName = value.nombreHabilitado
+                ? value.newName
+                : this.frm.value.nombre === value.nombre
+                ? value.newName
+                : this.frm.value.nombre;
               value.newNameCode = value.nombreCodHabilitado
+                ? value.newNameCode
+                : this.frm.value.codDeudor === "Otro"
+                ? this.frm.value.nameCod === value.codDeudor
                   ? value.newNameCode
-                  : this.frm.value.codDeudor === "Otro"
-                  ? this.frm.value.nameCod === value.codDeudor
-                    ? value.newNameCode
-                    : this.frm.value.nameCod
-                  : this.frm.value.codDeudor === value.codDeudor
-                  ? value.newNameCode
-                  : this.frm.value.codDeudor;
-            }else{
+                  : this.frm.value.nameCod
+                : this.frm.value.codDeudor === value.codDeudor
+                ? value.newNameCode
+                : this.frm.value.codDeudor;
+            } else {
+              this._service.newName = this.frm.value.nombre;
               value.newNameCode =
-                  this.frm.value.codDeudor === "Otro"
-                    ? this.frm.value.nameCod
-                    : this.frm.value.codDeudor;
+                this.frm.value.codDeudor === "Otro"
+                  ? this.frm.value.nameCod
+                  : this.frm.value.codDeudor;
             }
+            let cta = this.cuentas.find((c) => c.id === value.idCuenta);
+            value.nroCuenta = `${cta.number.substr(0, 13)} (${
+              cta.currency === "001" ? "Soles" : "Dólares"
+            })`;
+            value.moneda = this.frm.value.moneda;
+            value.simboloMoneda = this.simboloMoneda;
+
             ///Set Servicio
-            this.setCurrentServiceModel(value.newNameCode);
-            this.nextPage();
+            if (this.isAddedName(this.f.nombre.value) === false) {
+              this.setCurrentServiceModel(
+                value.newNameCode,
+                this.f.nombre.value,
+                value.idCuenta,
+                value.nroCuenta,
+                value.simboloMoneda,
+                value.moneda
+              );
+              this.nextPage();
+            }
           }
         }
-      }else{
+      } else {
         let value: ServiceModel;
         value = this._service;
         if (this.editMode) {
+          if (this.frm.value.idCuenta) value.idCuenta = this.frm.value.idCuenta;
+          else value.idCuenta = this.f.idCuenta.value;
+          value.newName = value.nombreHabilitado
+            ? value.newName
+            : this.frm.value.nombre === value.nombre
+            ? value.newName
+            : this.frm.value.nombre;
           value.newNameCode = value.nombreCodHabilitado
-          ? value.newNameCode
-          : this.frm.value.codDeudor === "Otro"
-          ? this.frm.value.nameCod === value.codDeudor
             ? value.newNameCode
-            : this.frm.value.nameCod
-          : this.frm.value.codDeudor === value.codDeudor
-          ? value.newNameCode
-          : this.frm.value.codDeudor;
-        } else {
-          value.newNameCode =
-          this.frm.value.codDeudor === "Otro"
-            ? this.frm.value.nameCod
+            : this.frm.value.codDeudor === "Otro"
+            ? this.frm.value.nameCod === value.codDeudor
+              ? value.newNameCode
+              : this.frm.value.nameCod
+            : this.frm.value.codDeudor === value.codDeudor
+            ? value.newNameCode
             : this.frm.value.codDeudor;
+        } else {
+          this._service.newName = this.frm.value.nombre;
+          value.newNameCode =
+            this.frm.value.codDeudor === "Otro"
+              ? this.frm.value.nameCod
+              : this.frm.value.codDeudor;
         }
+        let cta = this.cuentas.find((c) => c.id === value.idCuenta);
+        value.nroCuenta = `${cta.number.substr(0, 13)} (${
+          cta.currency === "001" ? "Soles" : "Dólares"
+        })`;
+        value.moneda = this.frm.value.moneda;
+        value.simboloMoneda = this.simboloMoneda;
         //Set Servicio
-        this.setCurrentServiceModel(value.newNameCode);
-        this.nextPage();
-
+        if (this.isAddedName(this.f.nombre.value) === false) {
+          this.setCurrentServiceModel(
+            value.newNameCode,
+            this.f.nombre.value,
+            value.idCuenta,
+            value.nroCuenta,
+            value.simboloMoneda,
+            value.moneda
+          );
+          this.nextPage();
+        }
       }
     }
   }
 
-  setCurrentServiceModel(newNameCode: string){
+  setCurrentServiceModel(
+    newNameCode: string,
+    nombre: string,
+    idCuenta: string,
+    nroCuenta: string,
+    simboloMoneda: string,
+    moneda: string
+  ) {
+    this.afiliacionService.currentServiceModel.nombre = nombre;
+
     this.afiliacionService.currentServiceModel.tipoDato = this.f.tipoDato.value;
     this.afiliacionService.currentServiceModel.codDeudor = this.f.codDeudor.value;
     this.afiliacionService.currentServiceModel.newNameCode = newNameCode;
@@ -344,11 +502,35 @@ export class EditarCobrosComponent implements OnInit {
     this.afiliacionService.currentServiceModel.tipoMora = this.f.tipoMora.value;
     this.afiliacionService.currentServiceModel.monto = this.f.monto.value;
     this.afiliacionService.currentServiceModel.porcentaje = this.f.porcentaje.value;
+
+    this.afiliacionService.currentServiceModel.idCuenta = idCuenta;
+    this.afiliacionService.currentServiceModel.nroCuenta = nroCuenta;
+    this.afiliacionService.currentServiceModel.simboloMoneda = simboloMoneda;
+    this.afiliacionService.currentServiceModel.moneda = moneda;
     console.log(this.afiliacionService.currentServiceModel);
   }
 
-  nextPage(){
+  nextPage() {
     this.router.navigate(["/resumenCobros"]);
+  }
+
+  isAddedName(nombre: string): boolean {
+    let addedName = false;
+    this.afiliacionService.services.forEach((service, index) => {
+      if (
+        service.nombre.toUpperCase() === nombre.toUpperCase() &&
+        index !== this.afiliacionService.currentIndex
+      ) {
+        Swal.fire({
+          text: "Este servicio ya existe",
+          allowOutsideClick: false,
+          onOpen: drawPopup,
+        });
+        addedName = true;
+      }
+    });
+
+    return addedName;
   }
 
   changeTipoDato(changeData: boolean = true) {
@@ -360,7 +542,7 @@ export class EditarCobrosComponent implements OnInit {
     this.resetPartialDataComponents(this.tipoDato);
   }
 
-  showModal(tipoDato: string){
+  showModal(tipoDato: string) {
     switch (tipoDato) {
       case "C": {
         $("#complete-data").modal("show");
@@ -522,6 +704,43 @@ export class EditarCobrosComponent implements OnInit {
     let initalValue = parseFloat(this.f.porcentaje.value);
     if (!isNaN(initalValue)) this.f.porcentaje.setValue(initalValue.toFixed(2));
   }
+
+  nameSerInput(e) {
+    let initalValue = this.f.nombre.value;
+    /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
+     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
+    initalValue = initalValue.replace(/\s{2,}/g, " ");
+    this.f.nombre.setValue(
+      initalValue.replace(/[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]*/g, "")
+    );
+  }
+
+  nameSerBlur(e) {
+    let initalValue = this.f.nombre.value;
+    this.f.nombre.setValue(initalValue.trim());
+  }
+
+  nombreAlert() {
+    if (this.editMode === true) {
+      if (this._service.newName !== "") {
+        return true;
+      }
+      return false;
+    }
+  }
+
+  changeCuenta(val) {
+    let cta = this.cuentas.find((c) => c.id == val);
+    this.simboloMoneda = cta.currency === "001" ? "S/" : "$";
+    this.f.moneda.setValue(cta.currency);
+  }
+
+  calculateCommissions() {
+    this.commissionAgentDollars =
+      Math.round((this.commissionAgentSoles / this.tc) * 100) / 100;
+    this.commissionStoreDollars =
+      Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;
+  }
 }
 
 function Maximo(max: number) {
@@ -546,4 +765,12 @@ function Minimo(min: number) {
     }
     return null;
   };
+}
+
+function Alfanumerico(c: FormControl) {
+  let regex = /[0-9a-zA-Z]-?/g;
+  if (c.value && !regex.test(c.value)) {
+    return { alfa: true };
+  }
+  return null;
 }

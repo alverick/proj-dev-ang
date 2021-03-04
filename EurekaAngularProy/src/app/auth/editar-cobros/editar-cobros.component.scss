@@ -74,13 +74,13 @@
 }
 
 .cuadro-form {
-  @include cuadro(480px, $height: 1058px);
+  @include cuadro(480px, $height: 1120px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
 }
 
 .cuadro-form-resize{
-  @include cuadro(480px, $height: 613px);
+  @include cuadro(480px, $height: 813px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
 }
@@ -249,7 +249,7 @@
   margin: 17px 7px auto 7px;
 }
 
-.text-message-name{
+/*.text-message-name{
   font-family: Geometria;
   font-size: 14px;
   font-weight: normal;
@@ -258,7 +258,7 @@
   line-height: 1.07;
   letter-spacing: normal;
   margin: 14px 7px auto 0px;
-}
+}*/
 
 .texto-medios {
   font-family: Geometria;
@@ -464,6 +464,107 @@
   align-items: flex-start;
 }
 
+.item-canal {
+  @include cuadro(100%, 96px);
+  border: solid 1px #cfd0d2;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.part-canal{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.container-part-1-2{
+  display: flex;
+  flex-direction: row;
+  flex-basis: 46.13%;
+}
+
+.container-part-1-2 .part-1{
+  flex-basis: 32.34%;
+}
+.container-part-1-2 .part-2{
+  flex-basis: 67.66%;
+}
+
+.title-canal{
+  font-family: Geometria;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #0d131d;
+  margin: 0px;
+}
+
+.title-sub-canal{
+  font-family: Geometria;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: center;
+  color: #0d131d;
+}
+
+.part-3{
+  flex-basis: 53.87%;
+}
+
+.label-canal{
+  font-family: Geometria;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #05be50;
+  margin:0px;
+}
+
+.label-number-canal{
+  font-family: Geometria;
+  font-size: 22px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #05be50;
+  margin:0px;
+}
+
+.responsive-mobil{
+  display: none;
+}
+
+.container-canal{
+  margin-top: 12px;
+}
+
+.seleccionado-card {
+  // border: $textgreen 1px solid;
+  border: 0px !important;
+  border: solid 1px #05be50 !important;
+}
+
 @media screen and (max-width: 768px) {
   .container-form {
     flex-direction: column !important;
@@ -623,5 +724,47 @@
     font-size: 14px !important;
     line-height: 1.14 !important;
     text-align: center !important;
+  }
+  .item-canal {
+    height: 70px !important;
+  }
+  .container-part-1-2{
+    margin-top: 10px !important;
+    margin-left: 10px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    flex-basis: 50% !important;
+  }
+  .container-part-1-2 .part-1{
+
+    align-self: flex-start !important;
+    flex-basis: 10% !important;
+  }
+  .container-part-1-2 .part-2{
+    flex-basis: 90% !important;
+  }
+  .responsive-desktop{
+    display: none;
+  }
+  .responsive-mobil{
+    display: block;
+  }
+  .title-canal{
+    font-size: 16px !important;
+    line-height: 1 !important;
+  }
+  .title-sub-canal{
+    font-size: 12px !important;
+    font-weight: normal !important;
+    line-height: 1 !important;
+  }
+  .part-3{
+    flex-basis: 50% !important;
+  }
+  .label-canal{
+    font-size: 12px !important;
+  }
+  .label-number-canal{
+    line-height: 1 !important;
   }
 }

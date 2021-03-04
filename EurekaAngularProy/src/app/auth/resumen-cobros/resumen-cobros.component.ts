@@ -97,6 +97,7 @@ export class ResumenCobrosComponent implements OnInit {
     this.indiceActual = index;
     //this.serviceActual = svc;
     this.afiliacionService.currentServiceModel = svc;
+    this.afiliacionService.currentIndex = index;
     this.goEditCharge();
     this.Formulario = true;
   }

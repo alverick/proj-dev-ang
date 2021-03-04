@@ -28,7 +28,6 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
   commissionStoreSoles = 8;
   commissionStoreDollars =  Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;;
 
-
   get f(): any {
     return this.frm.controls;
   }

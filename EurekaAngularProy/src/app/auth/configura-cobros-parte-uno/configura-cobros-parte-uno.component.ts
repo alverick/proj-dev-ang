@@ -9,6 +9,8 @@ import {
 
 import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
 import { ServiceModel } from "src/app/shared/models";
+import Swal from "sweetalert2";
+import { drawPopup } from "src/app/shared/services/popups";
 
 declare var $: any;
 
@@ -82,10 +84,10 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
 
       if(this.isNew() == true){
         this.initializeService();
-        console.log('Lista de Servicios:', this.services)
+        //console.log('Lista de Servicios:', this.services)
       }else{
         this.getService();
-        console.log('Lista de Servicios:', this.services)
+        //console.log('Lista de Servicios:', this.services)
       }
 
       this.initializeForm();
@@ -176,14 +178,19 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
         ? value.newName
         : this.frm.value.nombre;
 
-        this.setCurrentServiceModel(this.f.nombre.value);
-        this.goNext();
+        if(this.isAddedName(this.f.nombre.value)== false){
+          this.setCurrentServiceModel(this.f.nombre.value);
+          this.goNext();
+        }
       } else {
         //value = this.frm.value;
         this._service.id = null;
         this._service.newName = this.frm.value.nombre;
-        this.setCurrentServiceModel(this.f.nombre.value);
-        this.goNext();
+        if(this.isAddedName(this.f.nombre.value)== false){
+          this.setCurrentServiceModel(this.f.nombre.value);
+          this.goNext();
+        }
+
 
         /*
         if (this.afiliacionService.currentIndex >= 0) {
@@ -218,6 +225,25 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
     this.afiliacionService.currentServiceModel = this._service;
     this.afiliacionService.currentServiceModel.nombre = nombre;
     console.log(this.afiliacionService.currentServiceModel);
+  }
+
+  isAddedName(nombre: string): boolean {
+    let addedName = false;
+    this.afiliacionService.services.forEach((service, index) => {
+      if (
+        service.nombre.toUpperCase() === nombre.toUpperCase() &&
+        index !== this.afiliacionService.currentIndex
+      ) {
+        Swal.fire({
+          text: "Este servicio ya existe",
+          allowOutsideClick: false,
+          onOpen: drawPopup,
+        });
+        addedName = true;
+      }
+    });
+
+    return addedName;
   }
 
   nameSerInput(e) {

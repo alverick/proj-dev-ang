@@ -20,6 +20,10 @@ export class AfiliacionService {
     return this._currentIndex;
   }
 
+  set currentIndex(value: number) {
+    this._currentIndex = value;
+  }
+
   set currentServiceModel(value: ServiceModel) {
     this._currentServiceModel = value;
   }
@@ -275,6 +279,23 @@ export class AfiliacionService {
         code: "P",
         name: "Tengo sólo código y nombres",
       },
+      {
+        code: 'S',
+        name: 'No ingresaré datos'
+      }
+    ]);
+  }
+
+  public GetPagoPartes(): Observable<any[]> {
+    return of<any[]>([
+      {
+        code: 'N',
+        name: 'No. Solo podrán pagarmela deuda/monto total.',
+      },
+      {
+        code: 'S',
+        name: 'Sí. Podrán pagarme una parte de la deuda/monto.',
+      }
     ]);
   }
 
