@@ -74,7 +74,7 @@
 }
 
 .cuadro-form {
-  @include cuadro(480px, $height: 1120px);
+  @include cuadro(480px, $height: 1220px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
 }
@@ -621,7 +621,7 @@
   }
   .cuadro-form-resize{
     width: 100% !important;
-    height: 613px !important;
+    height: 743px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
     margin-left: 0px !important;
@@ -642,6 +642,7 @@
     text-align: left !important;
     margin-right: 0% !important;
     margin-left: 0% !important;
+    margin-top: 10px !important;
   }
   .text-message-name {
     font-size: 12px !important;
@@ -687,7 +688,7 @@
     height: 5px !important;
   }
   .block-right-part-one {
-    margin-top: 20px !important;
+    margin-top: 10px !important;
   }
   .label-text{
     font-size: 16px !important;
@@ -700,7 +701,7 @@
     line-height: 1.19 !important;
   }
   .texto-medios {
-    font-size: 16px !important;
+    font-size: 12px !important;
     line-height: 1.19 !important;
   }
   .title-complete-data{
