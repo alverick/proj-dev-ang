@@ -1072,9 +1072,10 @@
                             >{{ items.firstName }}</span
                           >
                           <div
-                            *ngIf="items.editInput && !items.hasIBKPayments"
+                            *ngIf="items.editInput && (!items.hasIBKPayments || items.serviceType === 'S')"
                             class="content-input-icon position-relative"
                           >
+
                             <mat-form-field
                               class="inline-input"
                               style="width: 80px"
@@ -1231,8 +1232,11 @@
                                 <img src="assets/images/ok.svg" alt="ok" />
                               </span>
                             </div>
+
                           </div>
+
                         </td>
+
                         <td class="c12">
                           <div
                             *ngIf="
@@ -1245,11 +1249,14 @@
                                 !items.editButton &&
                                 ((items.dueDate === null &&
                                   !items.hasIBKPayments) ||
-                                  items.dueDate !== null)
+                                  items.dueDate !== null ||
+                                  (items.dueDate === null &&
+                                  items.hasIBKPayments) )
                               "
                               class="btn-edit"
                               (click)="BotonEditar(items)"
                             >
+
                               <img
                                 src="assets/images/pencil.svg"
                                 alt="editar"

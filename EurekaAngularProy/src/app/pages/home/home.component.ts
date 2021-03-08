@@ -604,7 +604,9 @@ export class HomeComponent implements OnInit {
   BotonEditar(item: Debts) {
     item.editInput = true;
     item.editButton = true;
-    item.editPending = (item.status === 'PENDIENTE' || (item.status === 'VENCIDO' && item.amountPayed === 0));
+    console.log(item.status);
+    console.log(item);
+    item.editPending = (item.status === 'PENDIENTE' || (item.status === 'VENCIDO' && item.amountPayed === 0) || item.serviceType === 'S');
     item.newStatus = '1';
     item.newDueDate = item.dueDate;
     item.newEmissionDate = item.emissionDate;
