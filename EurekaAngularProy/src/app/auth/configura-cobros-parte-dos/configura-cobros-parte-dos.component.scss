@@ -568,6 +568,38 @@
   align-items: flex-start;
 }
 
+
+::ng-deep .mat-select-panel-wrap {
+  width: 1px;
+  /*height: unset;
+    line-height: 1.2em;
+    padding-top: 0.9em;
+    padding-bottom: 0.9em;*/
+  //background-color: orange !important;
+}
+
+//::ng-deep .mat-select-panel {
+  //width: 1px;
+  /*height: unset;
+    line-height: 1.2em;
+    padding-top: 0.9em;
+    padding-bottom: 0.9em;*/
+//  background-color: blue !important;
+//}
+
+::ng-deep .mat-select-panel mat-option.mat-option {
+  height: unset;
+    line-height: 1.2em;
+    padding-top: 0.9em;
+    padding-bottom: 0.9em;
+  //background-color: green !important;
+}
+
+::ng-deep .mat-option-text.mat-option-text {
+  white-space: normal;
+  //background-color: red !important;
+}
+
 @media screen and (max-width: 768px) {
   .container-form {
     flex-direction: column !important;

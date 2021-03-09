@@ -260,11 +260,11 @@ export class AfiliacionService {
       },
       {
         code: "Codigo Interno",
-        name: "Código",
+        name: "Celular",
       },
       {
         code: "Otro",
-        name: "Otro",
+        name: "Otro (Cód. Interno, Cod. Alumno, N° de departamentos, etc.)",
       },
     ]);
   }
