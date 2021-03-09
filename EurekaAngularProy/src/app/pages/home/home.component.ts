@@ -612,7 +612,12 @@ export class HomeComponent implements OnInit {
     item.newEmissionDate = item.emissionDate;
     item.newConcept = item.concept;
     item.newAmount = item.amount.toFixed(2);
-    item.newFirstName = item.firstName;
+    if(item.firstName.trim() === ''){
+      item.newFirstName = 'DEUDOR';
+    }else{
+      item.newFirstName = item.firstName;
+    }
+    //item.newFirstName = item.firstName;
     item.newLastName = item.lastName;
   }
 

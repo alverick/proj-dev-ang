@@ -1068,7 +1068,7 @@
                         <td class="c3">{{ items.code }}</td>
                         <td class="c4">
                           <span
-                            *ngIf="!items.editInput || items.hasIBKPayments"
+                            *ngIf="!items.editInput || (items.hasIBKPayments && items.serviceType !== 'S')"
                             >{{ items.firstName }}</span
                           >
                           <div
