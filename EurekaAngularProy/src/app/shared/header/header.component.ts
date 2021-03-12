@@ -1,12 +1,14 @@
+import * as moment from 'moment';
 
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+
+import { AfiliacionService } from '../services/afiliacion.service';
+import { ExcelService } from '../services/excel.service';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import Swal from 'sweetalert2';
-import { ExcelService } from '../services/excel.service';
 import { NotifyService } from '../services/notify.service';
-import * as moment from 'moment';
+import Swal from 'sweetalert2';
 import { drawPopup } from '../services/popups';
 
 @Component({
@@ -25,6 +27,7 @@ export class HeaderComponent implements OnInit {
     private excelser: ExcelService,
     public notify: NotifyService,
     public rutaActiva: ActivatedRoute,
+    public afiliacionService: AfiliacionService,
   ) {
   }
 
@@ -176,5 +179,14 @@ export class HeaderComponent implements OnInit {
 
   toggle() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  goResumenCobros(){
+    this.clearServices();
+    this.router.navigate(['/resumenCobros']);
+  }
+
+  clearServices(){
+    this.afiliacionService.services = [];
   }
 }

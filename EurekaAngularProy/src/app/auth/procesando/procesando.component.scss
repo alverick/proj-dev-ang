@@ -1,58 +1,82 @@
-@import '~src/scss/normalize';
+@import "~src/scss/normalize";
 
 /*Reset Styles*/
 
-@import '~src/scss/variables';
-@import '~src/scss/mixin';
-@import '~src/scss/landing';
+@import "~src/scss/variables";
+@import "~src/scss/mixin";
+@import "~src/scss/landing";
 body {
-    background: #f4f5f7 !important;
+  background: #f4f5f7 !important;
 }
 
 .card-mensaje {
-    @include cuadro(899px, 203px);
-    border-radius: 5px;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    color: #ffffff;
-    display: block;
-    margin-top: 80px;
-    margin-left: auto;
-    margin-right: auto;
+  @include cuadro(899px, 203px);
+  border-radius: 5px;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  color: #ffffff;
+  display: block;
+  margin-top: 80px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .text-titulo-pro {
-    @include font-text(24px, $weight: 500);
-    text-align: center;
-    color: #333333;
+  @include font-text(24px, $weight: 500);
+  text-align: center;
+  color: #333333;
+  padding-top: 48px;
 }
 
 .text-descripcion {
-    @include font-text(18px, $weight: normal);
-    text-align: center;
-    color: #333333;
+  @include font-text(18px, $weight: normal);
+  text-align: center;
+  color: #333333;
 }
 
 .text-final {
-    @include font-text(16px, $weight: normal);
-    text-align: center;
-    color: #333333;
+  @include font-text(16px, $weight: normal);
+  text-align: center;
+  color: #333333;
 }
 
 small {
-    @include font-text(16px, $weight: 500);
-    color: #333333;
+  @include font-text(16px, $weight: 500);
+  color: #333333;
 }
 
 .email {
-    @include font-text(18px, $weight: 500);
-    text-align: center;
+  @include font-text(18px, $weight: 500);
+  text-align: center;
 }
 
 .br-none-mobil {
-    display: none;
+  display: none;
 }
 
 .br-none-tablet {
-    display: none;
+  display: none;
+}
+
+@media screen and (max-width: 400px) {
+  .card-mensaje {
+    width: 85% !important;
+    height: 197px !important;
+    padding-top: 24px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+  .text-titulo-pro {
+    font-size: 16px !important;
+    padding-top: 0px !important;
+  }
+  .text-descripcion {
+    font-size: 14px !important;
+  }
+  .email {
+    font-size: 14px !important;
+  }
+  .text-final {
+    font-size: 12px !important;
+  }
 }

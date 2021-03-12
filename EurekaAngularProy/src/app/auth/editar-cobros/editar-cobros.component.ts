@@ -18,6 +18,23 @@ declare var $: any;
   selector: "app-editar-cobros",
   templateUrl: "./editar-cobros.component.html",
   styleUrls: ["./editar-cobros.component.scss"],
+  styles: [
+    `
+      :host >>> .tooltip-inner {
+        background-color: #fff;
+        color: #0d131d !important;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+        font-size: 11px !important;
+        padding: 0.5em 0.3em;
+        min-width: 300px !important;
+      }
+      :host >>> .tooltip.top .tooltip-arrow:before,
+      :host >>> .tooltip.top .tooltip-arrow {
+        border-top-color: #0d131d57;
+      }
+    `,
+  ],
 })
 export class EditarCobrosComponent implements OnInit {
   frm: FormGroup;
@@ -60,7 +77,9 @@ export class EditarCobrosComponent implements OnInit {
 
   ngOnInit() {
     this.cuentas = [];
-    this.editMode = this.afiliacionService.editMode;
+    //this.editMode = this.afiliacionService.editMode;
+
+
 
     if (this.isNew() == true) {
       //////this.initializeService();
@@ -91,6 +110,7 @@ export class EditarCobrosComponent implements OnInit {
   }
 
   initializeForm() {
+    this.editMode = this._service.id !== null && this._service.id !== undefined && this._service.id > 0;
     var montod =
       this._service.monto !== null && this._service.monto !== undefined
         ? this._service.monto
@@ -135,6 +155,7 @@ export class EditarCobrosComponent implements OnInit {
           ),
         ]
       ),
+      res: new FormControl({ value: this._service.res, disabled: true }),
       tipoDato: new FormControl(
         {
           value: this._service.tipoDato,
@@ -347,7 +368,8 @@ export class EditarCobrosComponent implements OnInit {
                     value.idCuenta,
                     value.nroCuenta,
                     value.simboloMoneda,
-                    value.moneda
+                    value.moneda,
+                    value.newName
                   );
                   this.nextPage();
                 }
@@ -443,7 +465,8 @@ export class EditarCobrosComponent implements OnInit {
                   value.idCuenta,
                   value.nroCuenta,
                   value.simboloMoneda,
-                  value.moneda
+                  value.moneda,
+                  value.newName
                 );
                 this.nextPage();
               }
@@ -491,7 +514,8 @@ export class EditarCobrosComponent implements OnInit {
               value.idCuenta,
               value.nroCuenta,
               value.simboloMoneda,
-              value.moneda
+              value.moneda,
+              value.newName
             );
             this.nextPage();
           }
@@ -506,9 +530,11 @@ export class EditarCobrosComponent implements OnInit {
     idCuenta: string,
     nroCuenta: string,
     simboloMoneda: string,
-    moneda: string
+    moneda: string,
+    newName: string,
   ) {
     this.afiliacionService.currentServiceModel.nombre = nombre;
+    this.afiliacionService.currentServiceModel.newName = newName;
 
     this.afiliacionService.currentServiceModel.tipoDato = this.f.tipoDato.value;
     this.afiliacionService.currentServiceModel.codDeudor = this.f.codDeudor.value;
@@ -540,7 +566,7 @@ export class EditarCobrosComponent implements OnInit {
     let addedName = false;
     this.afiliacionService.services.forEach((service, index) => {
       if (
-        service.nombre.toUpperCase() === nombre.toUpperCase() &&
+        service.nombre !== null &&   service.nombre.toUpperCase() === nombre.toUpperCase() &&
         index !== this.afiliacionService.currentIndex
       ) {
         Swal.fire({
@@ -609,7 +635,7 @@ export class EditarCobrosComponent implements OnInit {
   }
 
   CodiAlert() {
-    if (this.afiliacionService.editMode === true) {
+    if (this.editMode === true) {
       if (this._service.newNameCode !== "") {
         return true;
       }

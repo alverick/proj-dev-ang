@@ -51,11 +51,42 @@ export class ResumenCobrosComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((d) => {
+    console.log('resumen-cobros.component');
+    console.log('ngOnInit: services:');
+    console.log(this.afiliacionService.services);
+    this.afiliacionService.IniciarServicios();
+    //this.afiliacionService.services = [];
+    this.route.data.subscribe(d => {
+      this.inEdit = d.isEdit;
       this.inGTP = d.isgtp;
+
+
+      if (d.isEdit) {
+        window['_url_loop_'] = 'resumenCobros';
+        //window['_url_loop_'] = 'editarServicios';
+        if(this.afiliacionService.services.length === 0){
+          this.afiliacionService.GetServicios();
+          //this.buttonServicios = 'Actualizar';
+          // = 'Edita el servicio';
+          setTimeout(() => {
+            this.servicio_length = this.afiliacionService.services.length
+          }, 3000)
+        }
+
+      } else {
+        window['_url_loop_'] = 'resumenCobrosAfiliacion';
+        history.pushState(null, null, 'resumenCobrosAfiliacion');
+        //window['_url_loop_'] = 'configurarServicios';
+        //history.pushState(null, null, 'configurarServicios');
+        //this.afiliacionService.Clear();
+        this.servicio_length = this.afiliacionService.services.length;
+        //this.buttonServicios = 'Guardar';
+        //this.editService(this.afiliacionService.services[0], 0);
+        //this.titulo = 'Agrega un nuevo servicio';
+      }
     });
 
-    this.servicio_length = this.afiliacionService.services.length;
+    //////this.servicio_length = this.afiliacionService.services.length;
   }
 
   getNameGTP(svc: ServiceModel) {

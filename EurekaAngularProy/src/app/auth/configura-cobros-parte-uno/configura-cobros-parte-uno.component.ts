@@ -231,7 +231,7 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
     let addedName = false;
     this.afiliacionService.services.forEach((service, index) => {
       if (
-        service.nombre.toUpperCase() === nombre.toUpperCase() &&
+        service.nombre !== null && service.nombre.toUpperCase() === nombre.toUpperCase() &&
         index !== this.afiliacionService.currentIndex
       ) {
         Swal.fire({

@@ -63,10 +63,18 @@
       </ul>
       <!-- <div class="reponsive-emp"> -->
       <ul *ngIf="IsHome" class="navbar-nav ml-auto reponsive-emp">
+        Yerico
         <li class="nav-item">
-          <a class="mano nav-link mb-3" [routerLink]="['/editarServicios']"
-            >Servicios</a
-          >
+
+          <a class="mano nav-link mb-3" (click)="goResumenCobros()">
+            Servicios Resumen
+          </a>
+
+
+          <a class="mano nav-link mb-3" [routerLink]="['/editarServicios']">
+            Servicios
+          </a>
+
         </li>
         <li class="nav-item">
           <a class="mano nav-link mb-3" [routerLink]="['/configuracionEmpresa']"
@@ -336,6 +344,7 @@
       <div *ngIf="isExpanded == true">
         <ul *ngIf="IsHome" class="nabar-reponsive" (mouseleave)="toggle()">
           <li class="nav-item">
+
             <a
               class="mano nav-link mb-3"
               [routerLink]="['/editarServicios']"

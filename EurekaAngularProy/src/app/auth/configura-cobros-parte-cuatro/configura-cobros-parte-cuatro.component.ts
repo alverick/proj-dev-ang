@@ -35,11 +35,14 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
 
   ngOnInit() {
     this.cuentas = [];
-    this.editMode = this.afiliacionService.editMode;
+    //this.editMode = this.afiliacionService.editMode;
+
     this._service = Object.assign(
       {},
       this.afiliacionService.currentServiceModel
     );
+
+    this.editMode = this._service.id !== null && this._service.id !== undefined && this._service.id > 0;
 
     this.frm = this.fb.group({
       idCuenta: new FormControl(
@@ -97,12 +100,12 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   }
 
   onSave(nombre: string){
-    if (this.afiliacionService.currentIndex >= 0) {
-    } else {
+    //if (this.afiliacionService.currentIndex >= 0) {
+    //} else {
       let nro = 1;
 
       this.afiliacionService.services.forEach((s, i) => {
-        if (s.nombre.startsWith(this.frm.value.nombre)) {
+        if (s.nombre !== null && s.nombre.startsWith(this.frm.value.nombre)) {
           if (
             !isNaN(
               parseInt(s.nombre.substr(this.frm.value.nombre.length))
@@ -120,11 +123,11 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
 
       this.afiliacionService.addCurrentServiceModel();
       this.nextPage();
-    }
+    //}
   }
 
   nextPage() {
-    this.router.navigate(["/resumenCobros"]);
+    this.router.navigate(["/resumenCobrosAfiliacion"]);
   }
 
   goBack() {

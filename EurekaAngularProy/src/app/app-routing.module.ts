@@ -58,6 +58,7 @@ const routes: Routes = [
   { path: 'configuraCobrosParteTres', component: ConfiguraCobrosParteTresComponent, data: { isEdit: false }},
   { path: 'configuraCobrosParteCuatro', component: ConfiguraCobrosParteCuatroComponent, data: { isEdit: false }},
   { path: 'resumenCobros', component: ResumenCobrosComponent, data: { isEdit: true }},
+  { path: 'resumenCobrosAfiliacion', component: ResumenCobrosComponent, data: { isEdit: false }},
   { path: 'editarCobros', component: EditarCobrosComponent, data: { isEdit: true }},
 
   { path: 'editaCuenta/:llave', component: CrearContrasenaComponent , data: { isEdit: true }},

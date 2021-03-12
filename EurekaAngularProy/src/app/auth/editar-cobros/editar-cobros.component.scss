@@ -74,13 +74,13 @@
 }
 
 .cuadro-form {
-  @include cuadro(480px, $height: 1220px);
+  @include cuadro(480px, $height: 1300px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
 }
 
 .cuadro-form-resize{
-  @include cuadro(480px, $height: 813px);
+  @include cuadro(480px, $height: 960px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
 }

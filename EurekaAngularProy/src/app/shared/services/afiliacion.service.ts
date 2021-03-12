@@ -41,7 +41,7 @@ export class AfiliacionService {
     private spinner: NgxSpinnerService,
     private storage: StorageService
   ) {
-    this.llenarMock();
+    //this.llenarMock();
   }
 
   public idCompany: number = 0;
