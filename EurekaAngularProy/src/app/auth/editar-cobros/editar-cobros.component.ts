@@ -121,6 +121,7 @@ export class EditarCobrosComponent implements OnInit {
         ? this._service.porcentaje
         : "1.00";
     let codDeudor =
+      this._service.newNameCodeGtpStatus === undefined ||
       this._service.newNameCodeGtpStatus === null ||
       this._service.newNameCodeGtpStatus === 1 ||
       this._service.newNameCodeGtpStatus === 2
@@ -538,6 +539,7 @@ export class EditarCobrosComponent implements OnInit {
 
     this.afiliacionService.currentServiceModel.tipoDato = this.f.tipoDato.value;
     this.afiliacionService.currentServiceModel.codDeudor = this.f.codDeudor.value;
+    this.afiliacionService.currentServiceModel.nameCod = this.f.nameCod.value;
     this.afiliacionService.currentServiceModel.newNameCode = newNameCode;
     this.afiliacionService.currentServiceModel.tipoPago = this.f.tipoPago.value;
     this.afiliacionService.currentServiceModel.pagoPartes = this.f.pagoPartes.value;

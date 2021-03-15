@@ -565,6 +565,12 @@
   border: solid 1px #05be50 !important;
 }
 
+.hide-name-cod {
+  float: right !important;
+  position: absolute;
+  right: 5px;
+}
+
 @media screen and (max-width: 768px) {
   .container-form {
     flex-direction: column !important;

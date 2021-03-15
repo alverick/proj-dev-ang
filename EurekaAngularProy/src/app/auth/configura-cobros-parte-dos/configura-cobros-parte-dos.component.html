@@ -114,7 +114,7 @@
                 f.tipoDato.hasError('required') &&
                 submittedRequired
               "
-              >Elija una opcion</mat-error
+              >Elige una opción</mat-error
             >
           </div>
           <!-- ¿Qué código identificará a tus clientes? -->
@@ -167,7 +167,7 @@
                     f.codDeudor.hasError('required') &&
                     submittedRequired
                   "
-                  >Elija una opcion</mat-error
+                  >Elige una opción</mat-error
                 >
                 <mat-error
                   class="messsage-error"
@@ -232,7 +232,7 @@
                   f.tipoPago.hasError('required') &&
                   submittedRequired
                 "
-                >Elija una opcion</mat-error
+                >Elige una opción</mat-error
               >
             </mat-form-field>
           </div>
@@ -272,7 +272,7 @@
                 f.pagoPartes.hasError('required') &&
                 submittedRequired
               "
-              >Elija una opcion</mat-error
+              >Elige una opción</mat-error
             >
           </div>
           <!-- ¿Quieres que incluyamos el cobro de mora? -->
@@ -282,7 +282,7 @@
             />mora?
           </span>
           <div class="form-row pt-4" *ngIf="Dataparcial">
-            <div class="form-group col-2">
+            <div class="form-group col-2" [ngClass]="cobraMora ? 'col-2' : 'col-12'">
               <mat-radio-group
                 formControlName="cobraMora"
                 (change)="changeMora()"
@@ -294,6 +294,7 @@
                   class="texto-mora"
                   >No</mat-radio-button
                 >
+                <br>
                 <mat-radio-button
                   name="cobraMora"
                   id="mora-si"
@@ -309,7 +310,7 @@
                   f.cobraMora.hasError('required') &&
                   submittedRequired
                 "
-                >Elija una opcion</mat-error
+                >Elige una opción</mat-error
               >
             </div>
 
@@ -340,7 +341,7 @@
                     f.periodoMora.hasError('required') &&
                     submittedRequired
                   "
-                  >Elija una opcion</mat-error
+                  >Elige una opción</mat-error
                 >
               </mat-form-field>
             </div>

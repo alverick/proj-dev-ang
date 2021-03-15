@@ -112,10 +112,9 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  padding:0px;
+  padding: 0px;
   margin: 0px;
 }
-
 
 .image-step {
   width: 20px;
@@ -131,7 +130,7 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  padding:0px;
+  padding: 0px;
   margin: 0px;
 }
 
@@ -173,7 +172,7 @@
   margin-top: 10px;
 }
 
-.cuadro-form-resize{
+.cuadro-form-resize {
   @include cuadro(480px, $height: 613px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
@@ -297,7 +296,7 @@
   color: $azul;
 }
 
-.text-second-part{
+.text-second-part {
   font-family: Geometria;
   font-size: 16px;
   font-weight: 500;
@@ -307,7 +306,7 @@
   letter-spacing: normal;
 }
 
-.label-text{
+.label-text {
   font-family: Geometria;
   font-size: 18px;
   font-weight: 500;
@@ -318,7 +317,7 @@
   color: #0d131d;
 }
 
-.text-tipo-dato{
+.text-tipo-dato {
   margin-top: 10px;
   font-family: Geometria;
   font-size: 18px;
@@ -330,7 +329,7 @@
   color: #0d131d;
 }
 
-.rectangle-success{
+.rectangle-success {
   margin: 0;
   padding: 0;
   height: 57px;
@@ -338,7 +337,7 @@
   //padding: 6px 8px 6px 4px;
   border-radius: 2px;
   background-color: #e5f6ed;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -347,13 +346,13 @@
   width: 100%;
 }
 
-.img-information{
+.img-information {
   width: 18px;
   height: 18px;
   margin: 17px 7px auto 7px;
 }
 
-.text-message-name{
+.text-message-name {
   font-family: Geometria;
   font-size: 14px;
   font-weight: normal;
@@ -385,7 +384,6 @@
   font-style: normal;
   line-height: 1.17;
   letter-spacing: normal;
-
 }
 
 /* custom radio */
@@ -422,13 +420,12 @@
 }
 
 /* on mouse-over, add border color */
-.radio:hover input~.check {
+.radio:hover input ~ .check {
   border: 2px solid #2121c4;
 }
 
-
 /* add background color when the radio is checked */
-.radio input:checked~.check {
+.radio input:checked ~ .check {
   background-color: #2121c4;
   border: none;
 }
@@ -442,10 +439,9 @@
 }
 
 /* show the radio when checked */
-.radio input:checked~.check:after {
+.radio input:checked ~ .check:after {
   display: block;
 }
-
 
 /* radio style */
 .radio .check:after {
@@ -468,7 +464,10 @@
 }
 
 //radio button
-:host ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+:host
+  ::ng-deep
+  .mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
   border-color: $green;
 }
 
@@ -517,7 +516,7 @@
   width: 80%;
 }
 
-.description-complete-data{
+.description-complete-data {
   font-family: Geometria;
   font-size: 16px;
   font-weight: normal;
@@ -528,7 +527,7 @@
   color: #0d131d;
 }
 
-.description-no-data{
+.description-no-data {
   font-family: Geometria;
   font-size: 16px;
   font-weight: normal;
@@ -541,7 +540,7 @@
 
 .btn-eureca-green-understood {
   @include font-text(15px !important);
-  background-color:transparent ;
+  background-color: transparent;
   border: none;
   color: $green;
   width: 120px;
@@ -549,25 +548,24 @@
   //float: center;
   // @include box-shadows(0,1px,4px, 0,rgba(252, 154, 0, 0.2));
   &:hover {
-      background-color: $green;
-      border-radius: 4px;
-      border: solid 1px $greenclaro;
-      color: #f3f3f3;
+    background-color: $green;
+    border-radius: 4px;
+    border: solid 1px $greenclaro;
+    color: #f3f3f3;
   }
   &:active {
-      background-color: $blanco;
-      color: $green;
-      border: solid 1px $green;
+    background-color: $blanco;
+    color: $green;
+    border: solid 1px $green;
   }
 }
 
-.container-boton{
-  display:flex;
+.container-boton {
+  display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-start;
 }
-
 
 ::ng-deep .mat-select-panel-wrap {
   width: 1px;
@@ -579,8 +577,8 @@
 }
 
 //::ng-deep .mat-select-panel {
-  //width: 1px;
-  /*height: unset;
+//width: 1px;
+/*height: unset;
     line-height: 1.2em;
     padding-top: 0.9em;
     padding-bottom: 0.9em;*/
@@ -589,9 +587,9 @@
 
 ::ng-deep .mat-select-panel mat-option.mat-option {
   height: unset;
-    line-height: 1.2em;
-    padding-top: 0.9em;
-    padding-bottom: 0.9em;
+  line-height: 1.2em;
+  padding-top: 0.9em;
+  padding-bottom: 0.9em;
   //background-color: green !important;
 }
 
@@ -600,29 +598,93 @@
   //background-color: red !important;
 }
 
+.hide-name-cod {
+  float: right !important;
+  position: absolute;
+  right: 5px;
+}
+
+/*click effect color change
+:host
+  ::ng-deep
+  .mat-radio-button.mat-accent
+  .mat-radio-ripple
+  .mat-ripple-element {
+  opacity: 0 !important;
+  background-color: yellow !important;
+}*/
+
+/*inner circle color change
+:host ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: green !important;
+}
+*/
+/*outer ring color change without checked*/
+:host ::ng-deep .mat-radio-group.ng-pristine.ng-invalid .mat-radio-button.mat-accent .mat-radio-outer-circle {
+  border-color:#f23a24 !important;
+}
+
+/*outer ring color change*/
+/*
+:host
+  ::ng-deep
+  .mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
+  border-color:blue !important;
+}
+*/
+
+//radio button
+/*
+:host
+  ::ng-deep
+  .mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
+  border-color: $green;
+}*/
+
+/*
+:host ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: $green;
+}*/
+
 @media screen and (max-width: 768px) {
   .container-form {
     flex-direction: column !important;
     justify-content: center !important;
     margin-top: 60px !important;
-    padding-left: 7.29% !important;
-    padding-right: 7.29% !important;
+    //padding-left: 7.29% !important;
+    //padding-right: 7.29% !important;
     padding-bottom: 56px !important;
+
+    padding-left: 0% !important;
+    padding-right: 0% !important;
   }
   .cuadro-form {
     width: 100% !important;
-    height: 440px !important;
+    height: 1058px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
   }
-  .cuadro-form-resize{
+  .cuadro-form-resize {
     width: 100% !important;
-    height: 440px !important;
+    //height: 440px !important;
+    height: 613px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
   }
   .form-content {
     width: 100% !important;
     padding-top: 32px !important;
     padding-bottom: 32px !important;
-    padding-left: 20% !important;
-    padding-right: 20% !important;
+    //padding-left: 20% !important;
+    //padding-right: 20% !important;
+    padding-left: 6.7% !important;
+    padding-right: 6.7% !important;
   }
   .block-left {
     margin-left: 78px !important;
@@ -662,7 +724,7 @@
     margin-left: 0px !important;
     margin-right: 0px !important;
   }
-  .cuadro-form-resize{
+  .cuadro-form-resize {
     width: 100% !important;
     height: 613px !important;
     padding-left: 0px !important;
@@ -765,15 +827,15 @@
   .block-right-part-one {
     margin-top: 20px !important;
   }
-  .text-second-part{
+  .text-second-part {
     font-size: 15px !important;
     line-height: 1.2 !important;
   }
-  .label-text{
+  .label-text {
     font-size: 16px !important;
     line-height: 1.19 !important;
   }
-  .text-tipo-dato{
+  .text-tipo-dato {
     margin-top: 5px !important;
     font-size: 16px !important;
     font-weight: normal !important;
@@ -783,15 +845,15 @@
     font-size: 16px !important;
     line-height: 1.19 !important;
   }
-  .title-complete-data{
+  .title-complete-data {
     font-size: 16px !important;
     line-height: 1.19 !important;
     text-align: center !important;
   }
-  .text-complete-data{
+  .text-complete-data {
     line-height: 1.21 !important;
   }
-  .description-complete-data{
+  .description-complete-data {
     font-size: 14px !important;
     line-height: 1.14 !important;
   }
@@ -800,7 +862,7 @@
     padding-right: 7.55% !important;
     margin-bottom: 30px;
   }
-  .description-no-data{
+  .description-no-data {
     font-size: 14px !important;
     line-height: 1.14 !important;
     text-align: center !important;

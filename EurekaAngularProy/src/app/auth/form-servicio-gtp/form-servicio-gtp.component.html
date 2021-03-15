@@ -2,8 +2,9 @@
 
     <div class="form-group">
       Yerico GTP
+      <!-- placeholder="Nombre del servicio" -->
         <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="80" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
+            <input class="input-text" matInput type="text" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" maxlength="80" formControlName="nombre" name="nombre" placeholder="Concepto de cobro">
             <mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required') && submittedRequired">El nombre es obligatorio</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
@@ -17,8 +18,9 @@
         <div *ngIf="!nombreAlert()" class="messsage-error">Corregir este campo</div>
     </div>
     <div class="form-group">
+      <!-- <mat-label class="label">Código cliente</mat-label> -->
         <mat-form-field class="w-100">
-            <mat-label class="label">Código cliente</mat-label>
+            <mat-label class="label">¿Qué código identificará a tus clientes?</mat-label>
             <mat-select class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering panelClass="pts30" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
                 <mat-option class="input-text">Código Deudor</mat-option>
                 <mat-option class="input-text" *ngFor="let c of codDeudor" [value]="c.code">
@@ -39,8 +41,9 @@
         <div *ngIf="!CodiAlert()" class="messsage-error">Corregir este campo</div>
     </div>
     <div class="form-group">
+      <!--  <mat-label class="label">¿Qué datos tienes de tus clientes?</mat-label> -->
         <mat-form-field class="w-100">
-            <mat-label class="label">¿Qué datos tienes de tus clientes?</mat-label>
+            <mat-label class="label">¿Qué datos de tus clientes ingresarás en la plataforma?</mat-label>
             <mat-select class="input-text" formControlName="tipoDato" name="tipoDato" disableOptionCentering panelClass="pts30" (ngModelChange)="onChangeTipoDato()">
                 <mat-option class="input-text">¿Qué datos tienes de tus clientes?</mat-option>
                 <mat-option class="input-text" *ngFor="let t of tiposDato" [value]="t.code">
@@ -51,6 +54,7 @@
         </mat-form-field>
     </div>
     <div class="form-group" *ngIf="Dataparcial">
+      <!-- <mat-label class="label">¿Cómo quieres que te paguen tus clientes?</mat-label> -->
         <mat-form-field class="w-100">
             <mat-label class="label">¿Cómo quieres que te paguen tus clientes?</mat-label>
             <mat-select class="input-text" formControlName="tipoPago" name="tipoPago" disableOptionCentering panelClass="pts30">
@@ -74,9 +78,10 @@
             <mat-error class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('minlength')">Elija una opcion</mat-error>
         </mat-form-field>
     </div>
-    <!-- <span class="texto-medios ">  Elige los medios por los cuales tus <br class="br-none-mobil"> clientes te pagarán  </span> -->
+    <!-- <span class="texto-medios">  Elige los medios por los cuales tus <br class="br-none-mobil"> clientes te pagarán </span> -->
+    <!-- <span class="texto-medios">  Elige los medios por los cuales tus <br class="br-none-mobil"> clientes te pagarán </span> -->
     <div class="sub-el">
-        <span class="texto-medios">  Elige los medios por los cuales tus <br class="br-none-mobil"> clientes te pagarán </span>
+        <span class="texto-medios">Elige las opciones de canales de pago</span>
     </div>
 
 
@@ -200,7 +205,8 @@
             </mat-radio-group>
         </div>
     </div>
-    <span class="texto-medios " *ngIf="Dataparcial">Cobro de mora</span>
+    <!-- <span class="texto-medios " *ngIf="Dataparcial">Cobro de mora</span> -->
+    <span class="texto-medios " *ngIf="Dataparcial">¿Quieres que incluyamos el cobro de mora?</span>
     <div class="form-row pt-2" *ngIf="Dataparcial">
 
         <div class="form-group col-2">
