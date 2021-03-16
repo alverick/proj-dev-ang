@@ -56,7 +56,6 @@ export class CompletarDatosEmpresaComponent implements OnInit {
       this.inEdit = d.isEdit;
 
       if (d.isEdit == false) {
-        console.log("CREA EMPRESA");
         window["_url_loop_"] = "crearContrasena";
         this.registerForm = this.formBuilder.group(
           {
@@ -200,7 +199,7 @@ export class CompletarDatosEmpresaComponent implements OnInit {
   }
 
   MensajeName() {
-    //console.log('el estatus del nombre es v' + this.gtpService.EmpresaServicios.newNameGTPStatus);
+    //
 
     //////*if (this.inEdit) {
     //////*  if (this.gtpService.EmpresaServicios && this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {

@@ -127,7 +127,7 @@ export class CrearContrasenaComponent implements OnInit {
             validator: MustMatch("contrasena", "repcontrasena"),
           }
         );
-        console.log("registerForm", this.registerForm);
+
         this.ObtenerDatos().subscribe(() => {
           if (!this.gtpService.EmpresaServicios.inReview) {
             this.onSubmit();
@@ -168,7 +168,7 @@ export class CrearContrasenaComponent implements OnInit {
           });
         });
       } else {
-        console.log("CREA EMPRESA");
+
         window["_url_loop_"] = "crearContrasena";
         this.registerForm = this.formBuilder.group(
           {
@@ -280,8 +280,7 @@ export class CrearContrasenaComponent implements OnInit {
                  });
                });
                this.gtpService.EmpresaServicios.arrayServices = servicios;
-              console.log('Servicios rechazado');
-              console.log(this.gtpService.EmpresaServicios.arrayServices); */
+              */
             obs.next();
             obs.complete();
             // this.empresa = this.gtpService.EmpresaServicios;
@@ -378,7 +377,7 @@ export class CrearContrasenaComponent implements OnInit {
   }
 
   MensajeName() {
-    //console.log('el estatus del nombre es v' + this.gtpService.EmpresaServicios.newNameGTPStatus);
+    //
     if (this.inEdit) {
       if (
         this.gtpService.EmpresaServicios &&

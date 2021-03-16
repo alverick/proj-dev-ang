@@ -1,14 +1,15 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "src/environments/environment";
-import { StorageService } from "./storage.service";
-import { Debts, DebtsPagedList } from "../models/debts";
-import { Observable, throwError } from "rxjs";
-import { catchError,  map } from "rxjs/operators";
-import { DebtEdit } from "../models/debts-edit.model";
-import { DebstFilter } from "../models/debts-filter.model";
 import * as moment from "moment";
 
+import { Debts, DebtsPagedList } from "../models/debts";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+
+import { DebstFilter } from "../models/debts-filter.model";
+import { DebtEdit } from "../models/debts-edit.model";
+import { Injectable } from "@angular/core";
+import { StorageService } from "./storage.service";
+import { environment } from "src/environments/environment";
 
 @Injectable({
     providedIn: 'root'
@@ -241,7 +242,6 @@ export class TransactionService {
   }
 
   countMarksForDelete() {
-    console.log(this.itemsForDelete);
     return this.itemsForDelete.length;
   }
 

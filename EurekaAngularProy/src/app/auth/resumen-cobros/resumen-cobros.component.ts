@@ -51,9 +51,6 @@ export class ResumenCobrosComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('resumen-cobros.component');
-    console.log('ngOnInit: services:');
-    console.log(this.afiliacionService.services);
     this.afiliacionService.IniciarServicios();
     //this.afiliacionService.services = [];
     this.route.data.subscribe(d => {

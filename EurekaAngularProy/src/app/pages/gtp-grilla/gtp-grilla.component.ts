@@ -1,19 +1,20 @@
-import { GtpService } from './../../shared/services/gtp.service';
-import { StatesGtp } from './../../shared/models/states-gtp';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { RubroModel } from 'src/app/shared/models';
-import { GtpFilter } from 'src/app/shared/models/gtp-filter';
+/// DATE PIECKER FORMAT
+import * as _moment from 'moment'; // dejalo si sale error
 import * as saveAs from 'file-saver';
 
-/// DATE PIECKER FORMAT
-import * as _moment from 'moment';  // dejalo si sale error
-import { default as _rollupMoment } from 'moment';
-import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { GtpFilter } from 'src/app/shared/models/gtp-filter';
+import { GtpService } from './../../shared/services/gtp.service';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { EnterprisesGtp, EnterprisesPagedList } from 'src/app/shared/models/enterprises-gtp';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
+import { RubroModel } from 'src/app/shared/models';
+import { StatesGtp } from './../../shared/models/states-gtp';
+import { default as _rollupMoment } from 'moment';
+
 //// END DATE ////////////////////
 
 const moment = _rollupMoment || _moment;
@@ -127,7 +128,6 @@ export class GtpGrillaComponent implements OnInit {
 
     this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
     this.gtpService.getStates().subscribe(d => {
-      console.log('stado', d)
       this.states = d;
 
     });
@@ -145,12 +145,11 @@ export class GtpGrillaComponent implements OnInit {
     this.filtro.dateTo = null;
   }
   Aprobar(ClientId: number) {
-    console.log('ingresa a probacion');
+
     this.router.navigate(['/AprobacionGtp/' + ClientId]);
     // location.href = '/AprobacionGtp/'+ClientId;
   }
   onUpdateEAG(ClientId: number) {
-    console.log('ClientId', ClientId);
     this.gtpService.ReenviarPAG(ClientId)
       .subscribe(r => {
         this.consultaGtp();
@@ -175,7 +174,7 @@ export class GtpGrillaComponent implements OnInit {
 
   //   this.currentFiltro.asc = asc;
   //   this.currentFiltro.ColumnName = this.orderDef[index].name;
-  //   console.log('filter ', this.currentFiltro)
+  //
   //   this.consultaGtp();
   // }
   orderByColum() {
@@ -218,11 +217,9 @@ export class GtpGrillaComponent implements OnInit {
   // consultaDeuda(cb: () => void = null) {
 
   consultaGtp() {
-    console.log( "consultaGTP buscar",this.currentFiltro);
     if (this.validaFiltro()) {
       this.spinner.show();
       this.gtpService.getEmpresas(this.currentFiltro).subscribe(d => {
-        console.log('empresa', this.gtpService.EnterprisesItems)
         this.spinner.hide();
       }, err => { this.spinner.hide(); });
     }
@@ -271,7 +268,6 @@ export class GtpGrillaComponent implements OnInit {
   }
 
   private internalValidaDateFrom(e) {
-    console.log(e);
     if (e === null) {
       this.errores['dateFrom'] = 'No es una fecha válida';
     }
@@ -305,7 +301,6 @@ export class GtpGrillaComponent implements OnInit {
   }
 
   goCargaHistorico(id: number) {
-    console.log('goCargaHistorico', id);
     this.router.navigate(['/cargaHistorico', id]);
   }
 }

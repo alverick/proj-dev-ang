@@ -368,8 +368,6 @@ export class AfiliacionService {
         { headers: headers }
       )
       .subscribe((d) => {
-        console.log("SERVICIOS MARCELO");
-        console.log(d);
         let servicios = [];
         d.forEach((s) => {
           servicios.push({
@@ -454,7 +452,6 @@ export class AfiliacionService {
         partialPayment: s.pagoPartes,
       });
     });
-    console.log(data);
     return this.http
       .post<any>(
         `${environment.END_POINT}/company/service?_=` + new Date().getTime(),
@@ -476,7 +473,7 @@ export class AfiliacionService {
   }
 
   Descartar(indice: number, isNew: boolean) {
-    console.log("descartar", isNew);
+
     this.Guardado = false;
     if (
       isNew &&
@@ -513,7 +510,6 @@ export class AfiliacionService {
     } else {
       this.services.push(this._currentServiceModel);
       this._currentServiceModel = null;
-      console.log('Listado de Servicios:',this.services);
     }
   }
 
@@ -585,7 +581,6 @@ export class AfiliacionService {
 
     this._currentServiceModel = svc;
     //this.services.push(svc);
-    console.log('Lista de Servicios:', this.services)
   }
 
   /*this._service = {

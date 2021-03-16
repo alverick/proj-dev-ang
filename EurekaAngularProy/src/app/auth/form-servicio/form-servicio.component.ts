@@ -442,7 +442,6 @@ export class FormServicioComponent implements OnInit {
                 })`;
                 value.simboloMoneda = this.simboloMoneda;
                 value.usaWebApp = true;
-                console.log(value);
                 this.grabar.emit(value);
               }
             }
@@ -556,7 +555,6 @@ export class FormServicioComponent implements OnInit {
               })`;
               value.simboloMoneda = this.simboloMoneda;
               value.usaWebApp = true;
-              console.log(value);
               this.grabar.emit(value);
             }
           }
@@ -623,7 +621,6 @@ export class FormServicioComponent implements OnInit {
           })`;
           value.simboloMoneda = this.simboloMoneda;
           value.usaWebApp = true;
-          console.log(value);
           this.grabar.emit(value);
         }
       }

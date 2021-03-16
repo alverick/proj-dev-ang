@@ -218,7 +218,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.fileLoad.onClose.subscribe(m => {
-      console.log(m.status);
+
       if (m.status === 'completed') {
         this.consultaDeuda();
       }
@@ -263,9 +263,6 @@ export class HomeComponent implements OnInit {
     this.consultaDeuda();
     this.recortarNombres();
     this.cargaExcel = false;
-
-
-    console.log(this.transactionService.debtItems.data);
     // check
     //this.SeleccionarTodos();
     this.selectedAll = false;
@@ -747,7 +744,6 @@ export class HomeComponent implements OnInit {
     item.editInput = false;
     item.editButton = false;
     item.editPending = false;
-    console.log('limpia errores ');
     delete item.errores.dueDate;
     delete item.errores.emissionDate;
     delete item.errores.lastName;
@@ -824,14 +820,9 @@ export class HomeComponent implements OnInit {
 
           this.transactionService.debtItems.data = [];
           this.transactionService.itemsForDelete = [];
-
-          console.log('arra limpio');
-
-          console.log(totalForDelete)
         }, err => { this.spinner.hide(); });
       }
     });
-    console.log('arra limpio');
     this.DebtsAreSelected();
   }
 
@@ -864,7 +855,6 @@ export class HomeComponent implements OnInit {
 
   SeleccionarTodos() {
 
-    console.log(this.transactionService.debtItems.data);
     // debugger
     if (this.selectedAll) {
       this.transactionService.debtItems.data.forEach(itm => {
@@ -1159,8 +1149,6 @@ export class HomeComponent implements OnInit {
 
   DebtsAreSelected() {
     this.selectedAtLeastOneDebt = (this.transactionService.itemsForDelete.length > 0);
-    console.log('ItemsForDelete', this.transactionService.itemsForDelete);
-    console.log('this.selectedAtLeastOneDebt ', this.selectedAtLeastOneDebt);
   }
 
   CleanAllFilters() {

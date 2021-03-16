@@ -79,15 +79,12 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(d => {
-      console.log(d.isEdit);
       this.editMode = d.isEdit;
 
       if(this.isNew() == true){
         this.initializeService();
-        //console.log('Lista de Servicios:', this.services)
       }else{
         this.getService();
-        //console.log('Lista de Servicios:', this.services)
       }
 
       this.initializeForm();
@@ -224,7 +221,6 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
   setCurrentServiceModel(nombre: string) {
     this.afiliacionService.currentServiceModel = this._service;
     this.afiliacionService.currentServiceModel.nombre = nombre;
-    console.log(this.afiliacionService.currentServiceModel);
   }
 
   isAddedName(nombre: string): boolean {

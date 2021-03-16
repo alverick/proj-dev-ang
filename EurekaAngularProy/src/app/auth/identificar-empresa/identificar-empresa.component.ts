@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -5,11 +6,10 @@ import {
   FormGroup,
   Validators
 } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { drawPopup } from 'src/app/shared/services/popups';
-import Swal from 'sweetalert2';
 
+import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
+import Swal from 'sweetalert2';
+import { drawPopup } from 'src/app/shared/services/popups';
 
 @Component({
   selector: "app-identificar-empresa",
@@ -38,7 +38,6 @@ export class IdentificarEmpresaComponent implements OnInit {
     this.route.data.subscribe((d) => {
       this.inEdit = d.isEdit;
       if (d.isEdit == false) {
-        console.log("IDENTIFICAR EMPRESA");
         window["_url_loop_"] = "identificarEmpresa";
         this.registerForm = this.formBuilder.group(
           {

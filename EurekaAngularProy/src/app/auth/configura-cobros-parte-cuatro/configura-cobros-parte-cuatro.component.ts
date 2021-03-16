@@ -96,7 +96,6 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
     this.afiliacionService.currentServiceModel.nroCuenta = nroCuenta;
     this.afiliacionService.currentServiceModel.simboloMoneda = simboloMoneda;
     this.afiliacionService.currentServiceModel.moneda = moneda;
-    console.log(this.afiliacionService.currentServiceModel);
   }
 
   onSave(nombre: string){

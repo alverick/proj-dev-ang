@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 
 declare var gtag: Function;
@@ -18,7 +18,6 @@ export class GoogleAnalytics {
   }
 
   public sendException(error: Error, fatal: boolean = true) {
-    console.log(error);
     if (environment.production) {
       if (error instanceof HttpErrorResponse) {
         gtag('event', 'exception', { description: `${error.status} => ${error.message}`, fatal: fatal });

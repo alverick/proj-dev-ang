@@ -1,21 +1,20 @@
-import { CorreoGtpModel } from './../models/data-correoGtp';
 import { Observable, of, throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { StatesGtp } from '../models/states-gtp';
+import { catchError, map } from 'rxjs/operators';
+
+import { CorreoGtpModel } from './../models/data-correoGtp';
+import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
+import { DataGTPChange } from '../models/data-gtpchange';
+import { DataServiceGTP } from '../models/data-service-gtp';
 import { EnterprisesPagedList } from '../models/enterprises-gtp';
 import { GtpFilter } from '../models/gtp-filter';
-import moment from 'moment';
-import { environment } from 'src/environments/environment';
-import { StorageService } from './storage.service';
-import { map, catchError } from 'rxjs/operators';
-import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
-import { DataServiceGTP } from '../models/data-service-gtp';
-import { GtpEmpresa } from '../models/gtp-post';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DataGTPChange } from '../models/data-gtpchange';
 import { ServiceModel } from '../models';
-
+import { StatesGtp } from '../models/states-gtp';
+import { StorageService } from './storage.service';
+import { environment } from 'src/environments/environment';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -123,9 +122,6 @@ export class GtpService {
     };
     return this.http.get<any>(url, opts)
       .pipe(map(r => {
-        console.log('empresaR');
-        console.log(r);
-        console.log('end empresaR');
         return r;
 
       }))
@@ -190,7 +186,6 @@ export class GtpService {
         });
       });
       this.services = servicios;
-      console.log(this.services);
     });
   }
 

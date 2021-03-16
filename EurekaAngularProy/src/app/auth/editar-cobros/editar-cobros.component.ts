@@ -83,11 +83,11 @@ export class EditarCobrosComponent implements OnInit {
 
     if (this.isNew() == true) {
       //////this.initializeService();
-      //console.log('Lista de Servicios:', this.services)
+
     } else {
       this.getService();
       this.initializeForm();
-      //console.log('Lista de Servicios:', this.services)
+
     }
   }
 
@@ -227,7 +227,6 @@ export class EditarCobrosComponent implements OnInit {
     });
     this.afiliacionService.GetTipoCambio().subscribe((d) => {
       this.tc = d;
-      console.log(this.tc);
       this.calculateCommissions();
     });
 
@@ -557,7 +556,6 @@ export class EditarCobrosComponent implements OnInit {
     this.afiliacionService.currentServiceModel.usaWebApp = this.f.usaWebApp.value;
     this.afiliacionService.currentServiceModel.usaAgente = this.f.usaAgente.value;
     this.afiliacionService.currentServiceModel.usaTienda = this.f.usaTienda.value;
-    console.log(this.afiliacionService.currentServiceModel);
   }
 
   nextPage() {

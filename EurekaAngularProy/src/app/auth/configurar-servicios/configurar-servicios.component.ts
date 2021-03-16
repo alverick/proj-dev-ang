@@ -663,8 +663,6 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   onGrabar(svc: ServiceModel) {
-    console.log(svc);
-    console.log(this.afiliacionService.services);
     if (this.indiceActual >= 0) {
       if (this.inEdit) {
         if (svc.newNameGtpStatus === 3) {

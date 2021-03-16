@@ -337,15 +337,11 @@ export class FormServicioGtpComponent implements OnInit {
             ? this.frm.value.nameCod
             : this._service.newNameCode;
       }
-      console.log(
-        "valores" + value.nombre + "f" + value.codDeudor + "f" + value.nameCod
-      );
       this.grabar.emit(value);
     }
   }
 
   changeMoneda(event) {
-    console.log("hola " + event);
     this.simboloMoneda = this.f.moneda.value === "001" ? "S/" : "$";
   }
 
@@ -401,7 +397,6 @@ export class FormServicioGtpComponent implements OnInit {
 
   changeMora(changeData: boolean = true) {
     this.cobraMora = this.f.cobraMora.value === "S";
-    console.log(this.f.cobraMora.value);
     if (this.cobraMora) {
       this.f.periodoMora.setValidators([Validators.required]);
       this.f.monto.enable();
@@ -417,7 +412,6 @@ export class FormServicioGtpComponent implements OnInit {
         this.f.porcentaje.reset("1.00");
       }
     } else {
-      console.log("entra en no");
       this.cmoraporce = false;
       // this.f.periodoMora.setValue('1')
       this.f.periodoMora.reset();

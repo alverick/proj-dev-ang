@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ServiceModel, MonedaModel } from 'src/app/shared/models';
-import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
 import { GtpService } from 'src/app/shared/services/gtp.service';
+import { MonedaModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-services-gtp',
@@ -35,7 +36,6 @@ export class ServicesGTPComponent implements OnInit {
   @Input() public idCompany: number;
   @Input() set service(value: DataServiceGTP) {
     this._service = value;
-    console.log(value);
   }
 
   /*
@@ -54,8 +54,6 @@ export class ServicesGTPComponent implements OnInit {
 
   frm: FormGroup;
   ngOnInit() {
-
-    // console.log('_service', this._service)
     let ResValue = [];
     this._service.res = this._service.res == '' || this._service.res == null ? '' : this._service.res;
 
@@ -150,15 +148,10 @@ export class ServicesGTPComponent implements OnInit {
 
 
   RadioAprovveName2() {
-    //  console.log('llegas aca');
     if (this._service.name === this._service.newName) {
-      //console.log('se activo la limieza 1.1');
-      // this.f.NewName.clearValidators();
       return false;
     }
     if ((this._service.name === '?' && this._service.newName.substring(0, 3) === '???')) {
-      //  console.log('se activo la limieza 1.2');
-      // this.f.NewName.clearValidators();
       return false;
     }
     if ((this._service.name === '?')) {
@@ -255,31 +248,31 @@ export class ServicesGTPComponent implements OnInit {
   }
 
   /* onSubmitServicio2() {
- 
+
      if (this._service.newNameGtpStatus === 1   ) {
-       console.log('se activo la limieza 1.1');
+
        this.f.NewName.clearValidators();
        this.f.NewName.reset();
       }
      if ( (this._service.name === '?' && this._service.newName.substring(0, 3) === '???' )){
-       console.log('se activo la limieza 1.2');
+
        this.f.NewName.clearValidators();
        this.f.NewName.reset();
       }
      // CODIGO DEUDOR
        if (this._service.debtorCode  === this._service.newNameCode ) {
-       console.log('se activo la limieza 2.1');
+
        this.f.NewNameCod.clearValidators();
        this.f.NewNameCod.reset();
        }
        if ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') {
-         console.log('se activo la limieza 2.2');
+
          this.f.NewNameCod.clearValidators();
          this.f.NewNameCod.reset();
         }
- 
+
      if (this.frm.valid) {
-       console.log('el form es valido');
+
            let value: DataServiceGTP;
            value = this._service;
           // value.acceptednewName = (this.frm.value.NewName === 'S');
@@ -289,7 +282,7 @@ export class ServicesGTPComponent implements OnInit {
            // tslint:disable-next-line:max-line-length
            value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
            this.grabar.emit(value);
-           console.log('TERMINO DFE VALI');
+
        }
    } */
   onUpdateRes() {
@@ -297,38 +290,32 @@ export class ServicesGTPComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    /* console.log('ingresa a la aprobacion');
-     console.log('nombre serv apr ' + this.f.NewName.value);
-     console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
     // NOMBRE DE SERVICIO
     this.submittedRequired = true;
     if (this._service.newNameGTPStatus === 1) {
-      console.log('se activo la limieza 1.1');
       this.f.NewName.clearValidators();
       this.f.NewName.reset();
     }
     if ((this._service.newNameGTPStatus === 3 && this._service.name !== '' && this._service.newName !== '')) {
-      console.log('se activo la limieza 1.2');
+
       this.f.NewName.clearValidators();
       this.f.NewName.reset();
     }
     // CODIGO DEUDOR
     if (this._service.newNameCodeGTPStatus === 1) {
-      console.log('se activo la limieza 2.1');
+
       this.f.NewNameCod.clearValidators();
       this.f.NewNameCod.reset();
     }
     if (this._service.newNameCodeGTPStatus === 3 && this._service.debtorCode !== '' && this._service.newNameCode !== '') {
-      console.log('se activo la limieza 2.2');
+
       this.f.NewNameCod.clearValidators();
       this.f.NewNameCod.reset();
     }
     if (this.frm.valid) {
-      console.log('el form es valido');
+
       let value: DataServiceGTP;
       value = this._service;
-      // console.log('resvalue', this.update);
-      // console.log('frm', this.frm.value.res);
       value.res = (this.frm.value.res);
       // value.acceptednewName = (this.frm.value.NewName === 'S');
       // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
@@ -340,10 +327,10 @@ export class ServicesGTPComponent implements OnInit {
       //  value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
       // tslint:disable-next-line:max-line-length
       value.acceptednewNameCode = ((this._service.newNameCodeGTPStatus === 1) || (this._service.newNameCodeGTPStatus === 3 && this._service.debtorCode !== '' && this._service.newNameCode !== '')) ? true : ((this.frm.value.NewNameCod === 'S') ? true : false);
-      // console.log('value enviar', value)
+
       this.grabar.emit(value);
       this.update = false;
-      console.log('TERMINO DFE VALI' + value.acceptednewName + ' ' + value.acceptednewNameCode);
+
     }
   }
 
@@ -356,34 +343,31 @@ export class ServicesGTPComponent implements OnInit {
       ''               sm       APROBADO  1
   */
   onSubmitServicio2() {
-    /* console.log('ingresa a la aprobacion');
-     console.log('nombre serv apr ' + this.f.NewName.value);
-     console.log('nombre codigo apr ' + this.f.NewNameCod.value); */
     // NOMBRE DE SERVICIO
     if (this._service.newNameGTPStatus === 1) {
-      console.log('se activo la limieza 1.1');
+
       this.f.NewName.clearValidators();
       this.f.NewName.reset();
     }
     if (this._service.newNameGTPStatus === 3) {
-      console.log('se activo la limieza 1.2');
+
       this.f.NewName.clearValidators();
       this.f.NewName.reset();
     }
     // CODIGO DEUDOR
     if (this._service.newNameCodeGTPStatus === 1) {
-      console.log('se activo la limieza 2.1');
+
       this.f.NewNameCod.clearValidators();
       this.f.NewNameCod.reset();
     }
     if (this._service.newNameCodeGTPStatus === 3) {
-      console.log('se activo la limieza 2.2');
+
       this.f.NewNameCod.clearValidators();
       this.f.NewNameCod.reset();
     }
 
     if (this.frm.valid) {
-      console.log('el form es valido');
+
       let value: DataServiceGTP;
       value = this._service;
 
@@ -395,7 +379,7 @@ export class ServicesGTPComponent implements OnInit {
       value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode) ? ((this.frm.value.NewNameCod === 'S') ? true : false) : true;
       this.grabar.emit(value);
     }
-    console.log('el form no es valido');
+
   }
 
   onChangeTipoDato() {
@@ -426,7 +410,7 @@ export class ServicesGTPComponent implements OnInit {
   //////////------CHANGE--------
 
   changeMoneda(event) {
-    console.log('hola ' + event);
+
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
     if (this.f.moneda.value !== "001") {
       this.comAgente = Math.round(1 / this._tc * 100) / 100;
@@ -483,7 +467,6 @@ export class ServicesGTPComponent implements OnInit {
 
   changeMora(changeData: boolean = true) {
     this.cobraMora = (this.f.cobraMora.value === 'S');
-    // console.log(this.f.cobraMora.value);
     if (this.cobraMora) {
 
       this.f.periodoMora.setValidators([Validators.required]);
@@ -496,7 +479,6 @@ export class ServicesGTPComponent implements OnInit {
       }
 
     } else {
-      console.log('entra en no');
       this.cmoraporce = false;
       // this.f.periodoMora.setValue('1')
       this.f.periodoMora.reset();

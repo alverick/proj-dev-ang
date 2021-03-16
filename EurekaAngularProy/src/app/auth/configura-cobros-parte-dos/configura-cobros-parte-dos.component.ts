@@ -351,7 +351,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
     //this.afiliacionService.currentServiceModel.porcentaje = parseFloat(this.f.porcentaje.value);
     this.afiliacionService.currentServiceModel.monto = this.f.monto.value;
     this.afiliacionService.currentServiceModel.porcentaje = this.f.porcentaje.value;
-    console.log(this.afiliacionService.currentServiceModel);
+
   }
 
   nextPage(){

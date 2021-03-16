@@ -189,9 +189,7 @@ export class DebtComponent implements OnInit {
     }
 
     for(var s in this.nuevaDeuda.errores) {
-      console.log(this.nuevaDeuda);
       if (this.nuevaDeuda.errores[s]) {
-        console.log('Formulario con errores');
         return;
       }
     }

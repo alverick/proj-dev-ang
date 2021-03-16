@@ -120,9 +120,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
     var Pass =  parseInt(this.formGroup.value.password.toString().length);
     var newPass =  parseInt(this.formGroup.value.newPassword.toString().length);
-    console.log('aun no se valida');
+
     if (this.formGroup.valid) {
-      console.log('es valido');
+
        if (correo === 0 ) {
         return;
       }
