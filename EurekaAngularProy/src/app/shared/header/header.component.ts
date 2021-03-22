@@ -110,7 +110,7 @@ export class HeaderComponent implements OnInit {
       // this.router.url.includes('/configurarCorreoGTP') ||
       this.router.url.includes('/configurarServicios') ||
 
-      this.router.url.includes('/procesando')) {
+      this.router.url.includes('/procesando') ) {
       return false;
     }
     return true;

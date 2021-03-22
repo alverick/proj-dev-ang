@@ -58,7 +58,8 @@
           agregado
         </p>
       </div>
-      <div class="bg-white" [ngClass]="{'cuadro-form': Dataparcial,'cuadro-form-resize': !Dataparcial}">
+      <!-- <div class="bg-white" [ngClass]="{'cuadro-form': Dataparcial,'cuadro-form-resize': !Dataparcial}"></div> -->
+      <div class="bg-white cuadro-form">
         <form
           [formGroup]="frm"
           novalidate
@@ -83,6 +84,7 @@
               <mat-radio-group
                 formControlName="tipoDato"
                 (change)="changeTipoDato()"
+                [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''"
               >
                 <mat-radio-button
                   name="tipoDato"
@@ -243,14 +245,14 @@
           </span>
           <div class="form-group pt-3" *ngIf="Dataparcial">
             <div class="form-group col-2 pl-0">
-              <mat-radio-group formControlName="pagoPartes">
+              <mat-radio-group formControlName="pagoPartes"  [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''">
                 <mat-radio-button
                   name="pagoPartes"
                   id="pagoPartes-no"
                   value="N"
                   class="texto-mora"
                   >No. Solo podrán pagarme<br class="br-none-mobil" />la
-                  deuda/<br class="br-none-escritorio" />monto
+                  deuda/<br class="br-none-escritorio" /><br class="br-none-tablet" />monto
                   total.</mat-radio-button
                 >
                 <mat-radio-button
@@ -261,7 +263,7 @@
                   >Sí. Podrán pagarme una<br class="br-none-mobil" />parte de la
                   <br
                     class="br-none-escritorio"
-                  />deuda/monto.</mat-radio-button
+                  /><br class="br-none-tablet" />deuda/monto.</mat-radio-button
                 >
               </mat-radio-group>
             </div>
@@ -277,7 +279,7 @@
           </div>
           <!-- ¿Quieres que incluyamos el cobro de mora? -->
           <span class="texto-medios" *ngIf="Dataparcial">
-            ¿Quieres que incluyamos el cobro de<br
+            ¿Quieres que incluyamos el cobro de <br
               class="br-none-escritorio"
             />mora?
           </span>
@@ -286,6 +288,7 @@
               <mat-radio-group
                 formControlName="cobraMora"
                 (change)="changeMora()"
+                [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''"
               >
                 <mat-radio-button
                   name="cobraMora"
@@ -569,7 +572,7 @@
           </div>
         </div>
 
-        <div class="form-row mt-3">
+        <div class="form-row mt-2">
           <div class="form-group col-12">
             <div class="container-boton">
               <button
@@ -656,7 +659,7 @@
           </div>
         </div>
 
-        <div class="form-row mt-3">
+        <div class="form-row mt-2">
           <div class="form-group col-12">
             <div class="container-boton">
               <button
@@ -717,7 +720,7 @@
           </div>
         </div>
 
-        <div class="form-row mt-3">
+        <div class="form-row mt-2">
           <div class="form-group col-12">
             <div class="container-boton">
               <button

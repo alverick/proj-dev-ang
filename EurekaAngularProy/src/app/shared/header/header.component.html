@@ -38,18 +38,24 @@
         [ngClass]="{ 'img-logo-menu': !onClass() }"
       />
     </a>
+
     <div *ngIf="show()" class="collapse custom-navbar-collapse">
+      <!-- class="navbar-nav ml-auto"
+        id="btn-regresar" -->
       <ul
         *ngIf="!IsHome && onAfilacion()"
         class="navbar-nav ml-auto"
-        id="btn-regresar"
-      >
+        id="btn-regresar">
         <li class="nav-item">
           <a class="nav-link lnk-regresar" (click)="goBack()"
             ><img src="assets/images/left.svg" />&nbsp;&nbsp;&nbsp;Regresar</a
           >
         </li>
       </ul>
+      <!-- *ngIf="!IsHome && !onAfilacion" -->
+      <!-- class="navbar-nav ml-auto"
+       id="btn-regresar" -->
+
       <ul
         *ngIf="!IsHome && !onAfilacion()"
         class="navbar-nav ml-auto"
@@ -65,16 +71,13 @@
       <ul *ngIf="IsHome" class="navbar-nav ml-auto reponsive-emp">
         <!-- Yerico -->
         <li class="nav-item">
-
           <a class="mano nav-link mb-3" (click)="goResumenCobros()">
             Servicios
           </a>
 
-
           <!-- <a class="mano nav-link mb-3" [routerLink]="['/editarServicios']">
             Servicios
           </a> -->
-
         </li>
         <li class="nav-item">
           <a class="mano nav-link mb-3" [routerLink]="['/configuracionEmpresa']"
@@ -344,7 +347,6 @@
       <div *ngIf="isExpanded == true">
         <ul *ngIf="IsHome" class="nabar-reponsive" (mouseleave)="toggle()">
           <li class="nav-item">
-
             <a
               class="mano nav-link mb-3"
               [routerLink]="['/editarServicios']"

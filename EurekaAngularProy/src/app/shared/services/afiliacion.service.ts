@@ -1,15 +1,15 @@
-import { MonedaModel, RubroModel, ServiceModel } from "../models";
-import { Observable, of, throwError } from "rxjs";
-import { catchError, map } from "rxjs/operators";
-
-import { DataEnterpriseModel } from "../models/data-enterprise.model";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { NgxSpinnerService } from "ngx-spinner";
-import { StorageService } from "./storage.service";
-import Swal from "sweetalert2";
-import { drawPopup } from "./popups";
+import { Observable, of, throwError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
+import Swal from "sweetalert2";
+import { MonedaModel, RubroModel, ServiceModel } from "../models";
+import { DataEnterpriseModel } from "../models/data-enterprise.model";
+import { drawPopup } from "./popups";
+import { StorageService } from "./storage.service";
+
 
 @Injectable()
 export class AfiliacionService {
@@ -273,6 +273,18 @@ export class AfiliacionService {
     return of<any[]>([
       {
         code: "C",
+        name: "Códigos, nombres y deuda",
+      },
+      {
+        code: "P",
+        name: "Códigos y nombres",
+      }
+    ]);
+
+    /*
+       return of<any[]>([
+      {
+        code: "C",
         name: "Tengo su código, nombres y deuda",
       },
       {
@@ -284,6 +296,7 @@ export class AfiliacionService {
         name: 'No ingresaré datos'
       }
     ]);
+    */
   }
 
   public GetPagoPartes(): Observable<any[]> {
@@ -452,6 +465,7 @@ export class AfiliacionService {
         partialPayment: s.pagoPartes,
       });
     });
+
     return this.http
       .post<any>(
         `${environment.END_POINT}/company/service?_=` + new Date().getTime(),

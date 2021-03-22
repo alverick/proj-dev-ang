@@ -22,7 +22,7 @@
         <mat-form-field class="w-100">
             <mat-label class="label">¿Qué código identificará a tus clientes?</mat-label>
             <mat-select class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering panelClass="pts30" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)">
-                <mat-option class="input-text">Código Deudor</mat-option>
+                <!-- <mat-option class="input-text">Código Deudor</mat-option> -->
                 <mat-option class="input-text" *ngFor="let c of codDeudor" [value]="c.code">
                     {{c.name}}
                 </mat-option>
@@ -200,8 +200,8 @@
     <div class="form-group pt-2" *ngIf="Dataparcial">
         <div class="form-group col-2 pl-0">
             <mat-radio-group formControlName="pagoPartes">
-                <mat-radio-button name="pagoPartes" id="pagoPartes-no" value="N" class="texto-mora">No</mat-radio-button>
-                <mat-radio-button name="pagoPartes" id="pagoPartes-si" value="S" class="texto-mora">Si</mat-radio-button>
+                <mat-radio-button name="pagoPartes" id="pagoPartes-no" value="N" class="texto-mora">No, Sólo podrán pagarme la deuda/<br class="br-none-escritorio">monto total.</mat-radio-button>
+                <mat-radio-button name="pagoPartes" id="pagoPartes-si" value="S" class="texto-mora">Sí, Podrán pagarme una parte de la<br class="br-none-escritorio">deuda/monto.</mat-radio-button>
             </mat-radio-group>
         </div>
     </div>
@@ -212,7 +212,7 @@
         <div class="form-group col-2">
             <mat-radio-group formControlName="cobraMora" (change)="changeMora()">
                 <mat-radio-button name="cobraMora" id="mora-no" value="N" class="texto-mora">No</mat-radio-button>
-                <mat-radio-button name="cobraMora" id="mora-si" value="S" class="texto-mora">Si</mat-radio-button>
+                <mat-radio-button name="cobraMora" id="mora-si" value="S" class="texto-mora">Sí</mat-radio-button>
             </mat-radio-group>
         </div>
         <div class="form-group col-5" *ngIf="cobraMora">

@@ -571,6 +571,23 @@
   right: 5px;
 }
 
+::ng-deep .mat-select-panel-wrap {
+  width: 1px;
+}
+
+::ng-deep .mat-select-panel mat-option.mat-option {
+  height: unset;
+  line-height: 1.2em;
+  padding-top: 0.9em;
+  padding-bottom: 0.9em;
+  //background-color: green !important;
+}
+
+::ng-deep .mat-option-text.mat-option-text {
+  white-space: normal;
+  //background-color: red !important;
+}
+
 @media screen and (max-width: 768px) {
   .container-form {
     flex-direction: column !important;

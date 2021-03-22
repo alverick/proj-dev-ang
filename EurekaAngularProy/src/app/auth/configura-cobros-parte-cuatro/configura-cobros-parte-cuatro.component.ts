@@ -14,6 +14,24 @@ import { ServiceModel } from "src/app/shared/models";
   selector: "app-configura-cobros-parte-cuatro",
   templateUrl: "./configura-cobros-parte-cuatro.component.html",
   styleUrls: ["./configura-cobros-parte-cuatro.component.scss"],
+  styles: [
+    `
+      :host >>> .tooltip-inner {
+        background-color: #fff;
+        color: #0d131d !important;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+        font-size: 11px !important;
+        padding: 0.5em 0.3em;
+        min-width: 300px !important;
+      }
+      :host >>> .tooltip.top .tooltip-arrow:before,
+      :host >>> .tooltip.top .tooltip-arrow {
+        border-top-color: #0d131d57;
+        filter: brightness(0.5);
+      }
+    `,
+  ],
 })
 export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   frm: FormGroup;

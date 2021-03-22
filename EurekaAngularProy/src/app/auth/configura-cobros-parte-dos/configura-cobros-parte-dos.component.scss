@@ -167,9 +167,11 @@
 }
 
 .cuadro-form {
-  @include cuadro(480px, $height: 1058px);
+  //@include cuadro(480px, $height: 1058px);
+  width: 480px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
+  display: flex-inline;
 }
 
 .cuadro-form-resize {
@@ -237,12 +239,12 @@
   align-self: center;
 }
 
-.modal-container {
+/*.modal-container {
   padding-left: 9.34%;
   padding-right: 9.34%;
   padding-top: 2.58%;
   padding-bottom: 12.58%;
-}
+}*/
 
 .title-complete-data {
   @include font-text(18px, $weight: 500);
@@ -304,6 +306,8 @@
   font-style: normal;
   line-height: 1.19;
   letter-spacing: normal;
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 .label-text {
@@ -620,7 +624,7 @@
 }
 */
 /*outer ring color change without checked*/
-:host ::ng-deep .mat-radio-group.ng-pristine.ng-invalid .mat-radio-button.mat-accent .mat-radio-outer-circle {
+:host ::ng-deep .mat-radio-group.ng-pristine.ng-invalid.onSubmitServicioClicked .mat-radio-button.mat-accent .mat-radio-outer-circle {
   border-color:#f23a24 !important;
 }
 
@@ -647,6 +651,32 @@
 :host ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
   background-color: $green;
 }*/
+.modal-container {
+  padding-left: 6.34%;
+  padding-right: 6.34%;
+  padding-top: 17px;
+  padding-bottom: 17px;
+  //background-color: blueviolet;
+  display: flex-inline !important;
+}
+.modal-content{
+  //background-color: aquamarine;
+  display: flex-inline !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+  //height: 365px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 410px !important;
+}
+
+@media screen and (max-width: 1024px) {
+  .modal-content{
+    margin-left: auto !important;
+    margin-right: auto !important;
+    //height: 375px !important;
+  }
+}
 
 @media screen and (max-width: 768px) {
   .container-form {
@@ -662,7 +692,7 @@
   }
   .cuadro-form {
     width: 100% !important;
-    height: 1058px !important;
+    //height: 1058px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
     margin-left: 0px !important;
@@ -700,10 +730,37 @@
     text-align: center !important;
     justify-content: center !important;
   }
-
   .bnt-cont-reg {
     margin-top: auto !important;
     align-self: center !important;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .modal-content{
+    //height: 426px !important;
+    width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .cuadro-form {
+    width: 100% !important;
+    //height: 1058px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
+  .container-form {
+    flex-direction: column !important;
+    justify-content: center !important;
+    margin-top: 60px !important;
+    //padding-left: 7.29% !important;
+    //padding-right: 7.29% !important;
+    padding-bottom: 56px !important;
+
+    padding-left: 0% !important;
+    padding-right: 0% !important;
   }
 }
 
@@ -718,7 +775,7 @@
   }
   .cuadro-form {
     width: 100% !important;
-    height: 1058px !important;
+    //height: 1058px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
     margin-left: 0px !important;
@@ -726,7 +783,7 @@
   }
   .cuadro-form-resize {
     width: 100% !important;
-    height: 613px !important;
+    //height: 613px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
     margin-left: 0px !important;
@@ -803,8 +860,8 @@
   .modal-container {
     padding-left: 10% !important;
     padding-right: 10% !important;
-    padding-top: 2.58%;
-    padding-bottom: 12.58%;
+    //padding-top: 2.58%;
+    //padding-bottom: 2.58%;
   }
   .modal-dialog {
     margin-left: 12.5% !important;
@@ -866,5 +923,11 @@
     font-size: 14px !important;
     line-height: 1.14 !important;
     text-align: center !important;
+  }
+  .modal-content{
+    width: 320px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    //height: 356px !important;
   }
 }
