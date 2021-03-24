@@ -36,6 +36,10 @@
   flex-direction: row;
 }
 
+.container-form-margin-top{
+  margin-top: 80px;
+}
+
 .container-component {
   padding-left: 9.55%;
   padding-right: 9.55%;
@@ -403,6 +407,7 @@
   // overflow-y   : auto;
   max-height: 500px;
   background-color: #f4f5f7;
+  width: 361px;
 }
 
 .card-servicios {
@@ -526,6 +531,19 @@
   align-items: center;
 }
 
+.text-regresar {
+  margin: 0px;
+  font-family: Geometria;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $azul;
+}
+
 @media screen and (max-width: 768px) {
   .container-form {
     flex-direction: column !important;
@@ -556,6 +574,12 @@
   }
   .block-right-part-one {
     margin-top: 32px !important;
+  }
+  .content-container {
+    width: 100% !important;
+  }
+  .card-servicios {
+    width: 100% !important;
   }
 }
 
@@ -692,6 +716,15 @@
     line-height: 1 !important;
   }
   .card-content{
-  padding: 0em .5rem !important
+    padding: 0em .5rem !important
+  }
+  .content-container {
+    width: 100% !important;
+  }
+  .card-servicios {
+    width: 100% !important;
+  }
+  .container-actions{
+    //width: 272px !important;
   }
 }

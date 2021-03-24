@@ -1,4 +1,9 @@
 /* ......table Fin ... */
+@media screen and (min-width: 2000px) {
+  #btn-regresar{
+    display: none !important;
+  }
+}
 
 @media screen and (max-width: 2000px) {
     body {

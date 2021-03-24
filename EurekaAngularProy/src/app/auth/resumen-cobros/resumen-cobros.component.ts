@@ -380,7 +380,11 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   nextPage() {
-    this.router.navigate(["/configuraCobrosParteUno"]);
+    if( this.inEdit){
+      this.router.navigate(["/configuraCobrosParteUno"]);
+    }else{
+      this.router.navigate(["/configuraCobrosParteUnoAfiliacion"]);
+    }
   }
 
   EnviarServicios() {
@@ -486,5 +490,9 @@ export class ResumenCobrosComponent implements OnInit {
        this.addNewAfterSave = false;
        this.sendAfterSave = false;
      } */
+  }
+
+  goBack() {
+    this.router.navigate(["/home"]);
   }
 }

@@ -1,15 +1,15 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router';
+import { MustMatch } from 'src/app/auth/crear-contrasena/must-match.validator';
+import { RubroModel } from 'src/app/shared/models';
+import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
-import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { MustMatch } from 'src/app/auth/crear-contrasena/must-match.validator';
-import { Router } from '@angular/router';
-import { RubroModel } from 'src/app/shared/models';
-import Swal from 'sweetalert2';
 import { drawPopup } from 'src/app/shared/services/popups';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-configurar-empresa',
@@ -49,9 +49,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
     this.afiliacionService.GetRubrosAll().subscribe(d => this.rubros = d);
   }
 
-
-
-
   createForm() {
 
     this.formGroup = this.formBuilder.group({
@@ -75,7 +72,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
     });
   }
 
-
   getInfoEmpresa() {
     this.configEmpresaService.getDatosEmpresa()
       .subscribe( dataEnterprise => {
@@ -89,8 +85,8 @@ export class ConfigurarEmpresaComponent implements OnInit {
           }
         );
   }
-  get f(): any { return this.formGroup.controls; }
 
+  get f(): any { return this.formGroup.controls; }
 
   getErrorEmail() {
     return this.formGroup.get('email').hasError('required') ? 'Email es requerido' :
@@ -109,7 +105,12 @@ export class ConfigurarEmpresaComponent implements OnInit {
     return this.formGroup.get('newPassword').hasError('required') ? 'La Contraseña es requerida' :''  }
 
   getErrorConfirmNewPassword() {
-    return this.formGroup.get('confirmNewPassword').hasError('required') ? 'La Contraseña es requerida' :''  }
+    return this.formGroup.get('confirmNewPassword').hasError('required') ? 'La Contraseña es requerida' :''
+  }
+
+  goBack() {
+    this.router.navigate(["/home"]);
+  }
 
 // actualizado
   onSubmit() {
@@ -207,8 +208,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
 
 }
-
-
 
 function ValidateConfigEmpresa() {
   var validPwd = MustMatch('newPassword', 'confirmNewPassword');

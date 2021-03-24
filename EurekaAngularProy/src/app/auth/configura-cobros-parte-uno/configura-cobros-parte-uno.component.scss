@@ -32,11 +32,15 @@
 }
 
 .container-form {
-  padding-left: 152px;
-  padding-right: 152px;
-  margin-top: 80px;
+  //padding-left: 152px;
+  //padding-right: 152px;
+  //margin-top: 80px;
   display: flex;
   flex-direction: row;
+}
+
+.container-form-margin-top{
+  margin-top: 80px;
 }
 
 .block-right-part-one {
@@ -275,6 +279,28 @@
   width: 410px !important;
 }
 
+.container-component {
+  padding-left: 9.55%;
+  padding-right: 9.55%;
+  margin-bottom: 30px;
+}
+
+.mano {
+  cursor: pointer;
+}
+.text-regresar {
+  margin: 0px;
+  font-family: Geometria;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $azul;
+}
+
 @media screen and (max-width: 1024px) {
   .modal-content{
     //border-radius: 10px !important;
@@ -291,10 +317,13 @@
   .container-form {
     flex-direction: column !important;
     justify-content: center !important;
-    margin-top: 60px !important;
-    padding-left: 7.29% !important;
-    padding-right: 7.29% !important;
+    //margin-top: 60px !important;
+    //padding-left: 7.29% !important;
+    //padding-right: 7.29% !important;
     padding-bottom: 56px !important;
+  }
+  .container-form-margin-top{
+    margin-top: 60px !important;
   }
   .cuadro-form {
     width: 100% !important;
@@ -304,8 +333,10 @@
     width: 100% !important;
     padding-top: 32px !important;
     padding-bottom: 32px !important;
-    padding-left: 20% !important;
-    padding-right: 20% !important;
+    //padding-left: 20% !important;
+    //padding-right: 20% !important;
+    padding-left: 8.7% !important;
+    padding-right: 8.7% !important;
   }
   .block-left {
     margin-left: 78px !important;
@@ -343,8 +374,8 @@
   .container-form {
     flex-direction: column !important;
     justify-content: center !important;
-    padding-left: 7.5% !important;
-    padding-right: 7.5% !important;
+    //padding-left: 7.5% !important;
+    //padding-right: 7.5% !important;
     padding-bottom: 32px !important;
   }
   .cuadro-form {
@@ -450,5 +481,10 @@
     margin-right: auto !important;
     height: 356px !important;
     //display: flex-inline !important;
+  }
+  .container-component {
+    padding-left: 7.55% !important;
+    padding-right: 7.55% !important;
+    margin-bottom: 30px;
   }
 }

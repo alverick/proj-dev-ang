@@ -274,6 +274,9 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
     this.router.navigate(["/configuraCobrosParteDos"]);
   }
 
+  goBack() {
+    this.router.navigate(["/resumenCobros"]);
+  }
 }
 
 function Alfanumerico(c: FormControl) {

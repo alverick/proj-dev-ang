@@ -1,5 +1,22 @@
 <div class="container-component">
-  <div class="container-form">
+  <div class="row" *ngIf="this.inEdit">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <ul class="navbar-nav ml-auto" id="btn-regresar-identificar-empresa">
+        <li class="nav-item">
+          <a
+            class="nav-link lnk-regresar mano"
+            (click)="goBack()"
+            style="display: flex"
+          >
+            <img src="assets/images/left-blue.svg" />
+            <div class="text-regresar">&nbsp;&nbsp;&nbsp;Regresar</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-form" [ngClass]="this.inEdit ? '' : 'container-form-margin-top'">
     <div class="block-left">
       <h1 class="texto-azul title-first-part">Resumen de tus cobros</h1>
     </div>
@@ -18,7 +35,7 @@
       <div class="d-flex justify-content-center">
         <perfect-scrollbar
           class="content-container mt-3 mb-4"
-          style="width: 361px"
+          style=""
         >
           <div
             class="card-servicios mb-2"

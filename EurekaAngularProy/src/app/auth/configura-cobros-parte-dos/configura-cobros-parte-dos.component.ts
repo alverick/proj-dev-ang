@@ -5,12 +5,12 @@ import {
   FormGroup,
   Validators
 } from "@angular/forms";
-
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ServiceModel } from "src/app/shared/models";
-import Swal from "sweetalert2";
+import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
 import { drawPopup } from "src/app/shared/services/popups";
+import Swal from "sweetalert2";
+
 
 declare var $: any;
 
@@ -56,7 +56,8 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private afiliacionService: AfiliacionService
+    private afiliacionService: AfiliacionService,
+    private route: ActivatedRoute,
   ) {}
 
   get f(): any {
@@ -64,7 +65,10 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.editMode = this.afiliacionService.editMode;
+    this.route.data.subscribe(d => {
+      this.editMode = d.isEdit;
+    });
+
     this._service = Object.assign(
       {},
       this.afiliacionService.currentServiceModel
@@ -193,7 +197,12 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   onImgDoubt() {}
 
   goBack() {
-    this.router.navigate(["/configuraCobrosParteUno"]);
+    if (this.editMode) {
+      this.router.navigate(["/configuraCobrosParteUno"]);
+    } else {
+      this.router.navigate(["/configuraCobrosParteUnoAfiliacion"]);
+    }
+
   }
 
   onSubmitServicio() {

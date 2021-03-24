@@ -347,9 +347,11 @@
       <div *ngIf="isExpanded == true">
         <ul *ngIf="IsHome" class="nabar-reponsive" (mouseleave)="toggle()">
           <li class="nav-item">
+            <!-- [routerLink]="['/editarServicios']" -->
             <a
               class="mano nav-link mb-3"
-              [routerLink]="['/editarServicios']"
+
+              (click)="goResumenCobros()"
               (click)="toggle()"
               >Servicios</a
             >

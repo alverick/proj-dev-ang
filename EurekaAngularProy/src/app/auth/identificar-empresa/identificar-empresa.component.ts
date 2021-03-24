@@ -15,6 +15,24 @@ import { drawPopup } from 'src/app/shared/services/popups';
   selector: "app-identificar-empresa",
   templateUrl: "./identificar-empresa.component.html",
   styleUrls: ["./identificar-empresa.component.scss"],
+  styles: [
+    `
+      :host >>> .tooltip-inner {
+        background-color: #fff;
+        color: #0d131d !important;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+        font-size: 11px !important;
+        padding: 0.5em 0.3em;
+        min-width: 300px !important;
+      }
+      :host >>> .tooltip.top .tooltip-arrow:before,
+      :host >>> .tooltip.top .tooltip-arrow {
+        border-top-color: #0d131d57;
+        filter: brightness(0.5);
+      }
+    `,
+  ],
 })
 export class IdentificarEmpresaComponent implements OnInit {
   registerForm: FormGroup;
