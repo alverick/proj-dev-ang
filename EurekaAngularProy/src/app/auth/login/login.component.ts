@@ -1,17 +1,17 @@
-import { Component, OnInit, Directive, ViewChild} from '@angular/core';
-import { LoginService } from 'src/app/shared/services/login.service';
-import { Router } from '@angular/router';
+import { Component, Directive, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { NgxSpinnerService } from 'ngx-spinner';
-import Swal from 'sweetalert2';
-import { CookieService } from 'ngx-cookie-service';
-import { RecaptchaComponent } from 'ng-recaptcha';
-import { StorageService } from 'src/app/shared/services/storage.service';
-import { MatDialogRef, MatSnackBar } from '@angular/material';
-import { drawPopup } from 'src/app/shared/services/popups';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 
+import { CookieService } from 'ngx-cookie-service';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { LoginService } from 'src/app/shared/services/login.service';
+import { MatSnackBar } from '@angular/material';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { RecaptchaComponent } from 'ng-recaptcha';
+import { Router } from '@angular/router';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import Swal from 'sweetalert2';
+import { drawPopup } from 'src/app/shared/services/popups';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -306,7 +306,7 @@ export class LoginComponent implements OnInit {
         },
       error =>{
         this.spinner.hide();
-        if(error.status ===500){
+        if(error.status === 500){
           this.mensaje( 'error', 'Error', 'Error del Servidor comuniquese con el administrador');
 
         }

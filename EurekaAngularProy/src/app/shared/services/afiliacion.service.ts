@@ -21,6 +21,7 @@ export class AfiliacionService {
 
   public services: ServiceModel[] = [];
   private _rubros: RubroModel[] = null;
+  private _rubrosAll: RubroModel[] = null;
 
 
   public Clear() {
@@ -167,7 +168,7 @@ export class AfiliacionService {
   }
 
   public GetRubrosAll(): Observable<RubroModel[]> {
-    if (this._rubros !== null) return Observable.of(this._rubros);
+    if (this._rubrosAll !== null) return Observable.of(this._rubrosAll);
     return this.http
       .get<RubroModel[]>(
         `${environment.END_POINT}/enterpriseHeading/all?_=` +
@@ -175,7 +176,7 @@ export class AfiliacionService {
       )
       .pipe(
         map((r) => {
-          this._rubros = r;
+          this._rubrosAll = r;
           return r;
         })
       )
