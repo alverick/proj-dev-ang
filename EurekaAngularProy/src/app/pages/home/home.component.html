@@ -1,115 +1,304 @@
 <div>
-    <div class="containerr">
-        <div class="row">
-            <div class="col-sm-12 col-md-12">
-                <div class="widget filtros">
-                    <div class="title">Buscar
-                        <a class="link-manual" href="https://www.youtube.com/watch?v=eD85E7bZBgE" target="_blank">Guía de uso Cobro Simple</a>
-                    </div>
-                    <div class="content">
-                        <form>
-                            <mat-form-field class="f1">
-                                <input class="input-text" matInput [(ngModel)]="filtro.inputSearch" name="inputSearch" type="text" appShear maxlength="20" placeholder="Nombre o código del cliente">
-                                <span matPrefix class="pr-1"><img src="assets/images/buscar.svg"> </span>
-                                <button mat-button *ngIf="filtro.inputSearch" matSuffix mat-icon-button aria-label="Clear" (click)="filtro.inputSearch=''">
-                                <i class="fa fa-times-circle"></i>
-                                </button>
-                            </mat-form-field>
-                            <mat-form-field class="f2">
-                                <mat-select placeholder="Servicio" class="input-text selectpicker filter-slt" disableOptionCentering panelClass="pts26" [(ngModel)]="filtro.service" name="servicio">
-                                    <!--   <mat-option class="input-text">Servicio</mat-option> -->
-                                    <mat-option class="input-text" value="{{service.name}}" *ngFor="let service of services">
-                                        {{service.name}}</mat-option>
-                                </mat-select>
-                                <button mat-button *ngIf="filtro.service" matSuffix mat-icon-button aria-label="Clear" (click)="filtro.service=null; $event.stopPropagation();">
-                                <i class="fa fa-times-circle"></i>
-                                </button>
-                            </mat-form-field>
-                            <mat-form-field class="f2">
-                                <mat-select class="input-text" placeholder="Estado de pago" disableOptionCentering panelClass="pts26" [(ngModel)]="filtro.status" name="status">
-                                    <!-- <mat-option class="input-text">Estado de pago</mat-option> -->
-                                    <mat-option class="input-text" value="{{item.idWayPay}}" *ngFor="let item of waypayList">
-                                        {{item.descripcion}} </mat-option>
-                                </mat-select>
-                                <button mat-button *ngIf="filtro.status" matSuffix mat-icon-button aria-label="Clear" (click)="filtro.status=null; $event.stopPropagation();">
-                                <i class="fa fa-times-circle"></i>
-                                </button>
-                            </mat-form-field>
+  <div class="containerr">
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <div class="widget filtros">
+          <div class="title">
+            Buscar
+            <a
+              class="link-manual"
+              href="https://www.youtube.com/watch?v=eD85E7bZBgE"
+              target="_blank"
+              >Guía de uso Cobro Simple</a
+            >
+          </div>
+          <div class="content">
+            <form>
+              <mat-form-field class="f1">
+                <input
+                  class="input-text"
+                  matInput
+                  [(ngModel)]="filtro.inputSearch"
+                  name="inputSearch"
+                  type="text"
+                  appShear
+                  maxlength="20"
+                  placeholder="Nombre o código del cliente"
+                />
+                <span matPrefix class="pr-1"
+                  ><img src="assets/images/buscar.svg" />
+                </span>
+                <button
+                  mat-button
+                  *ngIf="filtro.inputSearch"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="filtro.inputSearch = ''"
+                >
+                  <i class="fa fa-times-circle"></i>
+                </button>
+              </mat-form-field>
+              <mat-form-field class="f2">
+                <mat-select
+                  placeholder="Servicio"
+                  class="input-text selectpicker filter-slt"
+                  disableOptionCentering
+                  panelClass="pts26"
+                  [(ngModel)]="filtro.service"
+                  name="servicio"
+                >
+                  <!--   <mat-option class="input-text">Servicio</mat-option> -->
+                  <mat-option
+                    class="input-text"
+                    value="{{ service.name }}"
+                    *ngFor="let service of services"
+                  >
+                    {{ service.name }}</mat-option
+                  >
+                </mat-select>
+                <button
+                  mat-button
+                  *ngIf="filtro.service"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="filtro.service = null; $event.stopPropagation()"
+                >
+                  <i class="fa fa-times-circle"></i>
+                </button>
+              </mat-form-field>
+              <mat-form-field class="f2">
+                <mat-select
+                  class="input-text"
+                  placeholder="Estado de pago"
+                  disableOptionCentering
+                  panelClass="pts26"
+                  [(ngModel)]="filtro.status"
+                  name="status"
+                >
+                  <!-- <mat-option class="input-text">Estado de pago</mat-option> -->
+                  <mat-option
+                    class="input-text"
+                    value="{{ item.idWayPay }}"
+                    *ngFor="let item of waypayList"
+                  >
+                    {{ item.descripcion }}
+                  </mat-option>
+                </mat-select>
+                <button
+                  mat-button
+                  *ngIf="filtro.status"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="filtro.status = null; $event.stopPropagation()"
+                >
+                  <i class="fa fa-times-circle"></i>
+                </button>
+              </mat-form-field>
 
-                            <mat-form-field class="f2">
-                                <mat-select class="input-text" placeholder="Fecha" disableOptionCentering panelClass="pts26" [(ngModel)]="filtro.dateForFilter" name="dateForFilter" (ngModelChange)="clearDatePicker($event)">
-                                    <!-- <mat-option class="input-text">Fecha</mat-option> -->
-                                    <mat-option class="input-text" value="{{item.idDate}}" *ngFor="let item of DateList">
-                                        {{item.descripcion}} </mat-option>
-                                </mat-select>
-                                <button mat-button *ngIf="filtro.dateForFilter" matSuffix mat-icon-button aria-label="Clear" (click)="limpiarDateForFilter(); $event.stopPropagation();">
-                                <i class="fa fa-times-circle"></i>
-                                </button>
-                            </mat-form-field>
-                            <mat-form-field class="f2">
-                                <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate1 placeholder="Desde" [(ngModel)]="filtro.dateFrom" (ngModelChange)="validaDateFrom($event)" type="text" name="dateFrom" matInput [matDatepicker]="myDatepicker2"
-                                    (click)="myDatepicker2.open()" maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
-                                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker2">
-                                    <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #myDatepicker2></mat-datepicker>
-                                <button mat-button *ngIf="filtro.dateFrom || inputDate1.value" matSuffix mat-icon-button aria-label="Clear" (click)="limpiardate1()">
-                                <i class="fa fa-times-circle"></i>
-                                </button>
-                                <div class="msg-error" *ngIf="errores.dateFrom && querySearch">{{errores.dateFrom}}</div>
-                            </mat-form-field>
-                            <mat-form-field class="f2">
-                                <input class="input-text" [min]="minDate" [max]="maxDate" appDate (dateChange)="change($event)" #inputDate2 placeholder="Hasta" (ngModelChange)="validaDateTo($event)" type="text" name="dateTo" matInput [matDatepicker]="myDatepicker" (click)="myDatepicker.open()"
-                                    [(ngModel)]="filtro.dateTo" maxlength="10" minlength="10" appBlockCopyPaste [disabled]="!filtro.dateForFilter">
-                                <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker">
-                                    <mat-icon class="svg-custom" matDatepickerToggleIcon svgIcon="eurc_calendar"></mat-icon>
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #myDatepicker></mat-datepicker>
-                                <button mat-button *ngIf="filtro.dateTo || inputDate2.value" matSuffix mat-icon-button aria-label="Clear" (click)="limpiardate2()">
-                                <i class="fa fa-times-circle"></i>
-                                </button>
-                                <div class="msg-error" *ngIf="errores.dateTo && querySearch">{{errores.dateTo}}</div>
-                            </mat-form-field>
-                            <button type="button" class="f3 btn-eureca-green btn-emp" (click)="sendFiltro()">BUSCAR </button>
-                            <!-- <button type="button" class="f3 btn-eureca-green btn-emp" (click)="CleanAllFilters()">Limpiar Filtros</button> -->
-                            <button type="button" class="f3 btn-eureca-green btn-emp" (click)="CleanAllFilters()">LIMPIAR FILTROS</button>
-
-                        </form>
-                    </div>
+              <mat-form-field class="f2">
+                <mat-select
+                  class="input-text"
+                  placeholder="Fecha"
+                  disableOptionCentering
+                  panelClass="pts26"
+                  [(ngModel)]="filtro.dateForFilter"
+                  name="dateForFilter"
+                  (ngModelChange)="clearDatePicker($event)"
+                >
+                  <!-- <mat-option class="input-text">Fecha</mat-option> -->
+                  <mat-option
+                    class="input-text"
+                    value="{{ item.idDate }}"
+                    *ngFor="let item of DateList"
+                  >
+                    {{ item.descripcion }}
+                  </mat-option>
+                </mat-select>
+                <button
+                  mat-button
+                  *ngIf="filtro.dateForFilter"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="limpiarDateForFilter(); $event.stopPropagation()"
+                >
+                  <i class="fa fa-times-circle"></i>
+                </button>
+              </mat-form-field>
+              <mat-form-field class="f2">
+                <input
+                  class="input-text"
+                  [min]="minDate"
+                  [max]="maxDate"
+                  appDate
+                  (dateChange)="change($event)"
+                  #inputDate1
+                  placeholder="Desde"
+                  [(ngModel)]="filtro.dateFrom"
+                  (ngModelChange)="validaDateFrom($event)"
+                  type="text"
+                  name="dateFrom"
+                  matInput
+                  [matDatepicker]="myDatepicker2"
+                  (click)="myDatepicker2.open()"
+                  maxlength="10"
+                  minlength="10"
+                  appBlockCopyPaste
+                  [disabled]="!filtro.dateForFilter"
+                />
+                <mat-datepicker-toggle
+                  class="date-color-eureca"
+                  matSuffix
+                  [for]="myDatepicker2"
+                >
+                  <mat-icon
+                    class="svg-custom"
+                    matDatepickerToggleIcon
+                    svgIcon="eurc_calendar"
+                  ></mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker2></mat-datepicker>
+                <button
+                  mat-button
+                  *ngIf="filtro.dateFrom || inputDate1.value"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="limpiardate1()"
+                >
+                  <i class="fa fa-times-circle"></i>
+                </button>
+                <div class="msg-error" *ngIf="errores.dateFrom && querySearch">
+                  {{ errores.dateFrom }}
                 </div>
+              </mat-form-field>
+              <mat-form-field class="f2">
+                <input
+                  class="input-text"
+                  [min]="minDate"
+                  [max]="maxDate"
+                  appDate
+                  (dateChange)="change($event)"
+                  #inputDate2
+                  placeholder="Hasta"
+                  (ngModelChange)="validaDateTo($event)"
+                  type="text"
+                  name="dateTo"
+                  matInput
+                  [matDatepicker]="myDatepicker"
+                  (click)="myDatepicker.open()"
+                  [(ngModel)]="filtro.dateTo"
+                  maxlength="10"
+                  minlength="10"
+                  appBlockCopyPaste
+                  [disabled]="!filtro.dateForFilter"
+                />
+                <mat-datepicker-toggle
+                  class="date-color-eureca"
+                  matSuffix
+                  [for]="myDatepicker"
+                >
+                  <mat-icon
+                    class="svg-custom"
+                    matDatepickerToggleIcon
+                    svgIcon="eurc_calendar"
+                  ></mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #myDatepicker></mat-datepicker>
+                <button
+                  mat-button
+                  *ngIf="filtro.dateTo || inputDate2.value"
+                  matSuffix
+                  mat-icon-button
+                  aria-label="Clear"
+                  (click)="limpiardate2()"
+                >
+                  <i class="fa fa-times-circle"></i>
+                </button>
+                <div class="msg-error" *ngIf="errores.dateTo && querySearch">
+                  {{ errores.dateTo }}
+                </div>
+              </mat-form-field>
+              <button
+                type="button"
+                class="f3 btn-eureca-green btn-emp"
+                (click)="sendFiltro()"
+              >
+                BUSCAR
+              </button>
+              <!-- <button type="button" class="f3 btn-eureca-green btn-emp" (click)="CleanAllFilters()">Limpiar Filtros</button> -->
+              <button
+                type="button"
+                class="f3 btn-eureca-green btn-emp"
+                (click)="CleanAllFilters()"
+              >
+                LIMPIAR FILTROS
+              </button>
+            </form>
+          </div>
+        </div>
 
-                <div class="widget lista">
-                    <div class="title">Movimientos</div>
-                    <div class="content">
-                        <section class="actions">
-                            <div class="al-left" style="padding-left: -10px">
-                                <div class="chk-vertical">
-                                    <mat-checkbox id="chk-all" [(ngModel)]="selectedAll" (ngModelChange)="SeleccionarTodos()" [disabled]="ceroRegistrosEliminar()">
-                                    </mat-checkbox>
-                                    <label class="act-label" for="chk-all" aria-label="chk-all" [class.seleccionado]="selectedAll">Seleccionar</label>
-                                </div>
-                                <div *ngIf="!ceroRegistrosEliminar()" class="btn-eliminar">
-                                    <div *ngIf="!selectedAtLeastOneDebt">
-                                        <div (click)="EliminarSeleccionados()" title="Debe seleccionar al menos una fila para eliminar" data-toggle="modal" data-target="#ModalNotificacion">
-                                            <mat-icon class="svg-custom" svgIcon="eurc_trash">
-                                            </mat-icon>
-                                        </div>
-                                    </div>
-                                    <div *ngIf="selectedAtLeastOneDebt">
-                                        <div (click)="EliminarSeleccionados()" data-toggle="modal" data-target="#ModalNotificacion">
-                                            <mat-icon class="svg-custom" svgIcon="eurc_trash">
-                                            </mat-icon>
-                                        </div>
-                                    </div>
-                                    <label class="act-label">  Eliminar</label>
-                                </div>
-                                <div *ngIf="ceroRegistrosEliminar()" class="btn-eliminar disable">
-                                    <div data-toggle="modal" data-target="#ModalNotificacion">
-                                        <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
-                                    </div>
-                                    <label class="act-label">Eliminar</label>
-                                </div>
-                                <!--
+        <div class="widget lista">
+          <div class="title">Movimientos</div>
+          <div class="content">
+            <section class="actions">
+              <div class="al-left" style="padding-left: -10px">
+                <div class="chk-vertical">
+                  <mat-checkbox
+                    id="chk-all"
+                    [(ngModel)]="selectedAll"
+                    (ngModelChange)="SeleccionarTodos()"
+                    [disabled]="ceroRegistrosEliminar()"
+                  >
+                  </mat-checkbox>
+                  <label
+                    class="act-label"
+                    for="chk-all"
+                    aria-label="chk-all"
+                    [class.seleccionado]="selectedAll"
+                    >Seleccionar</label
+                  >
+                </div>
+                <div *ngIf="!ceroRegistrosEliminar()" class="btn-eliminar">
+                  <div *ngIf="!selectedAtLeastOneDebt">
+                    <div
+                      (click)="EliminarSeleccionados()"
+                      title="Debe seleccionar al menos una fila para eliminar"
+                      data-toggle="modal"
+                      data-target="#ModalNotificacion"
+                    >
+                      <mat-icon class="svg-custom" svgIcon="eurc_trash">
+                      </mat-icon>
+                    </div>
+                  </div>
+                  <div *ngIf="selectedAtLeastOneDebt">
+                    <div
+                      (click)="EliminarSeleccionados()"
+                      data-toggle="modal"
+                      data-target="#ModalNotificacion"
+                    >
+                      <mat-icon class="svg-custom" svgIcon="eurc_trash">
+                      </mat-icon>
+                    </div>
+                  </div>
+                  <label class="act-label"> Eliminar</label>
+                </div>
+                <div
+                  *ngIf="ceroRegistrosEliminar()"
+                  class="btn-eliminar disable"
+                >
+                  <div data-toggle="modal" data-target="#ModalNotificacion">
+                    <mat-icon
+                      class="svg-custom"
+                      svgIcon="eurc_trash"
+                    ></mat-icon>
+                  </div>
+                  <label class="act-label">Eliminar</label>
+                </div>
+                <!--
                 <div (click)="AgregarDeuda()" class="btn-agregar">
                   <div data-toggle="modal" data-target="#ModalNotificacion">
                     <img src="assets/images/plus_circle.svg" alt="plus_circle">
@@ -118,204 +307,523 @@
                   </label>
                 </div>
                 -->
+              </div>
 
-                            </div>
-
-                            <div class="addDeuda">
-                                <div class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    <img src="assets/images/plus_circle.svg" alt="plus_circle"> Agregar cobros
-                                </div>
-                                <div class="dropdown-menu lnk-label" role="menu">
-                                    <div class="pl-4">
-                                        <div class="selecciona-servicio">Selecciona el servicio</div>
-                                        <perfect-scrollbar class="content-container">
-                                            <div *ngFor="let service of typeList" class="option-item" (click)="openDialog(service)">
-                                                <div class="servicio-Opern">
-                                                    {{service.name}}
-                                                </div>
-                                            </div>
-                                        </perfect-scrollbar>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="al-right">
-                                <div class="lnk-label" [class.disabled]="enDescarga" (click)="DescargarReporte()">
-                                    <img *ngIf="!enDescarga" src="assets/images/download.svg" alt="download"><img *ngIf="enDescarga" src="assets/images/download-d.svg" alt="download"> Descargar movimientos
-                                </div>
-                            </div>
-                            <div class="clear-float"></div>
-                        </section>
-                        <section *ngIf="selectedAll" class="counter">
-                            <div class="text">
-                                Se <span *ngIf="transactionService.debtItems.count > 1">han</span><span *ngIf="transactionService.debtItems.count == 1">ha</span> seleccionado los <span *ngIf="!selectedUniverse" style="font-weight: 500;">{{transactionService.itemsForDelete.length}}</span>
-                                <span *ngIf="selectedUniverse" style="font-weight: 500;">{{transactionService.debtItems.countNoIbkPayments}}</span> registros de esta página
-                                <button type="button" *ngIf="transactionService.debtItems.count > transactionService.debtItems.data.length" class="btn-select-all" (click)="selectedUniverse = !selectedUniverse">
-                  <span *ngIf="!selectedUniverse">Seleccionar los {{transactionService.debtItems.countNoIbkPayments}}
-                    registros</span>
+              <div class="addDeuda">
+                <div
+                  class="btn btn-default dropdown-toggle"
+                  data-toggle="dropdown"
+                >
+                  <img src="assets/images/plus_circle.svg" alt="plus_circle" />
+                  Agregar cobros
+                </div>
+                <div class="dropdown-menu lnk-label" role="menu">
+                  <div class="pl-4">
+                    <div class="selecciona-servicio">
+                      Selecciona el servicio
+                    </div>
+                    <perfect-scrollbar class="content-container">
+                      <div
+                        *ngFor="let service of typeList"
+                        class="option-item"
+                        (click)="openDialog(service)"
+                      >
+                        <div class="servicio-Opern">
+                          {{ service.name }}
+                        </div>
+                      </div>
+                    </perfect-scrollbar>
+                  </div>
+                </div>
+              </div>
+              <div class="al-right">
+                <div
+                  class="lnk-label"
+                  [class.disabled]="enDescarga"
+                  (click)="DescargarReporte()"
+                >
+                  <img
+                    *ngIf="!enDescarga"
+                    src="assets/images/download.svg"
+                    alt="download"
+                  /><img
+                    *ngIf="enDescarga"
+                    src="assets/images/download-d.svg"
+                    alt="download"
+                  />
+                  Descargar movimientos
+                </div>
+              </div>
+              <div class="clear-float"></div>
+            </section>
+            <section *ngIf="selectedAll" class="counter">
+              <div class="text">
+                Se
+                <span *ngIf="transactionService.debtItems.count > 1">han</span
+                ><span *ngIf="transactionService.debtItems.count == 1">ha</span>
+                seleccionado los
+                <span *ngIf="!selectedUniverse" style="font-weight: 500">{{
+                  transactionService.itemsForDelete.length
+                }}</span>
+                <span *ngIf="selectedUniverse" style="font-weight: 500">{{
+                  transactionService.debtItems.countNoIbkPayments
+                }}</span>
+                registros de esta página
+                <button
+                  type="button"
+                  *ngIf="
+                    transactionService.debtItems.count >
+                    transactionService.debtItems.data.length
+                  "
+                  class="btn-select-all"
+                  (click)="selectedUniverse = !selectedUniverse"
+                >
+                  <span *ngIf="!selectedUniverse"
+                    >Seleccionar los
+                    {{
+                      transactionService.debtItems.countNoIbkPayments
+                    }}
+                    registros</span
+                  >
                   <span *ngIf="selectedUniverse">Anular la selección</span>
                 </button>
-                            </div>
-                        </section>
-                        <section class="lista">
-
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr *ngIf="!ceroRegistros() || agregandoDeuda">
-                                            <th class="c0">&nbsp;</th>
-                                            <th class="c1">
-                                                <div class="text">Fecha emisión</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 0 && orderDef[0].asc === true" (click)="orderList(0, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 0 && orderDef[0].asc === false" (click)="orderList(0, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c2">
-                                                <div class="text">Fecha vcto.</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 1 && orderDef[1].asc === true" (click)="orderList(1, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 1 && orderDef[1].asc === false" (click)="orderList(1, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c3">
-                                                <div class="text">Código de cliente</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === true" (click)="orderList(2, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 2 && orderDef[2].asc === false" (click)="orderList(2, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c4">
-                                                <div class="text">Nombre del Cliente</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 3 && orderDef[3].asc === true" (click)="orderList(3, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 3 && orderDef[3].asc === false" (click)="orderList(3, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c5">
-                                                <div class="text">Servicio</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === true" (click)="orderList(5, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 5 && orderDef[5].asc === false" (click)="orderList(5, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c6">
-                                                <div class="text">Descripción</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 6 && orderDef[6].asc === true" (click)="orderList(6, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 6 && orderDef[6].asc === false" (click)="orderList(6, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c7">
-                                                <div class="text">Cuota</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 7 && orderDef[7].asc === true" (click)="orderList(7, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 7 && orderDef[7].asc === false" (click)="orderList(7, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c8">
-                                                <div class="text">Mora</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 8 && orderDef[8].asc === true" (click)="orderList(8, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 8 && orderDef[8].asc === false" (click)="orderList(8, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c9">
-                                                <div class="text">Total</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 9 && orderDef[9].asc === true" (click)="orderList(9, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 9 && orderDef[9].asc === false" (click)="orderList(9, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c10">
-                                                <div class="text">Monto Pagado</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 10 && orderDef[10].asc === true" (click)="orderList(10, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 10 && orderDef[10].asc === false" (click)="orderList(10, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c11">
-                                                <div class="text">Estado del pago</div>
-                                                <div class="ord">
-                                                    <div class="up" [class.seleccionado]="orderBy === 11 && orderDef[11].asc === true" (click)="orderList(11, true)"></div>
-                                                    <div class="down" [class.seleccionado]="orderBy === 11 && orderDef[11].asc === false" (click)="orderList(11, false)"></div>
-                                                </div>
-                                            </th>
-                                            <th class="c12">
-                                                <div class="text">Editar</div>
-                                            </th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="new-row" *ngIf="agregandoDeuda">
-                                            <td class="c0">
-                                            </td>
-                                            <td class="c1">
-                                                <mat-form-field class="inline-input" style="width: 75px">
-                                                    <input matInput [matDatepicker]="n_edp" (click)="n_edp.open()" class="input-text-dash" appDate [min]="minDate" [max]="maxDate" [(ngModel)]="nuevaDeuda.emissionDate" formC maxlength="10" autocomplete="off" minlength="10" type="text" (ngModelChange)="nuevaDeuda.errores.emissionDate = null;">
-                                                    <mat-datepicker-toggle matSuffix [for]="n_edp"></mat-datepicker-toggle>
-                                                    <mat-datepicker #n_edp></mat-datepicker>
-                                                    <div class="msg-error" *ngIf="nuevaDeuda.errores.emissionDate">{{nuevaDeuda.errores.emissionDate}}
-                                                    </div>
-                                                </mat-form-field>
-                                            </td>
-                                            <td class="c2">
-                                                <mat-form-field *ngIf="!newPartial" class="inline-input" style="width: 75px">
-                                                    <input class="input-text-dash" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="n_ddp" [(ngModel)]="nuevaDeuda.dueDate" maxlength="10" minlength="10" autocomplete="off" type="text" (ngModelChange)="nuevaDeuda.errores.dueDate = null">
-                                                    <mat-datepicker-toggle matSuffix [for]="n_ddp"></mat-datepicker-toggle>
-                                                    <mat-datepicker #n_ddp></mat-datepicker>
-                                                    <div class="msg-error" *ngIf="nuevaDeuda.errores.dueDate">{{nuevaDeuda.errores.dueDate}}</div>
-                                                </mat-form-field>
-                                            </td>
-                                            <td class="c3">
-                                                <mat-form-field class="inline-input" style="width: 110px">
-                                                    <input class="input-text-dash" matInput [(ngModel)]="nuevaDeuda.code" maxlength="14" autocomplete="off" (blur)="buscarNewCode()" minlength="1" type="text" (ngModelChange)="nuevaDeuda.errores.code = null">
-                                                    <div class="msg-error" *ngIf="nuevaDeuda.errores.code">{{nuevaDeuda.errores.code}}</div>
-                                                </mat-form-field>
-                                            </td>
-                                            <td class="c4">
-                                                <mat-form-field class="inline-input" style="width: 110px">
-                                                    <input class="input-text-dash" matInput [(ngModel)]="nuevaDeuda.firstName" maxlength="80" autocomplete="off" minlength="3" type="text" (ngModelChange)="nuevaDeuda.errores.firstName = null">
-                                                    <div class="msg-error" *ngIf="nuevaDeuda.errores.firstName">{{nuevaDeuda.errores.firstName}}</div>
-                                                </mat-form-field>
-                                            </td>
-                                            <td class="c6">
-                                                <mat-form-field class="inline-input" style="width: 110px">
-                                                    <mat-select class="input-text-dash" disableOptionCentering [(ngModel)]="nuevaDeuda.service" (ngModelChange)="cmbNewService()">
-                                                        <mat-option class="input-text-dash" value="{{service.name}}" *ngFor="let service of services">
-                                                            {{service.name}}</mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </td>
-                                            <td class="c7">
-                                                <mat-form-field *ngIf="!newPartial" class="inline-input" style="width: 90px">
-                                                    <input class="input-text-dash" matInput [(ngModel)]="nuevaDeuda.concept" maxlength="16" autocomplete="off" minlength="1" type="text" (ngModelChange)="nuevaDeuda.errores.concept = null">
-                                                    <div class="msg-error" *ngIf="nuevaDeuda.errores.concept">{{nuevaDeuda.errores.concept}}</div>
-                                                </mat-form-field>
-                                            </td>
-                                            <td class="c8">
-                                                <mat-form-field *ngIf="!newPartial" class="inline-input" style="width: 90px">
-                                                    <input class="input-text-dash" type="text" matInput appOnlyNumbersForm [(ngModel)]="nuevaDeuda.amount" maxlength="12" minlength="4" autocomplete="off" (blur)="MontoBlur(nuevaDeuda)" (ngModelChange)="nuevaDeuda.errores.amount = null" />
-                                                    <div class="msg-error" *ngIf="nuevaDeuda.errores.amount">{{nuevaDeuda.errores.amount}}</div>
-                                                </mat-form-field>
-                                            </td>
-                                            <td class="c9"></td>
-                                            <td class="c10"></td>
-                                            <td class="c11"></td>
-                                            <td class="c12"></td>
-                                            <td class="c13">
-                                                <div class="d-flex">
-                                                    <div class="btn-ok" (click)="grabarNuevo()">
-                                                        <img src="assets/images/circle_ok.svg" alt="Aceptar">
-                                                    </div>
-                                                    <div class="btn-cancel" (click)="cancelaNuevo()">
-                                                        <img src="assets/images/circle_cancel.svg" alt="Cancelar">
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <!-- <tbody>
+              </div>
+            </section>
+            <section class="lista">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr *ngIf="!ceroRegistros() || agregandoDeuda">
+                      <th class="c0">&nbsp;</th>
+                      <th class="c1">
+                        <div class="text">Fecha emisión</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 0 && orderDef[0].asc === true
+                            "
+                            (click)="orderList(0, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 0 && orderDef[0].asc === false
+                            "
+                            (click)="orderList(0, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c2">
+                        <div class="text">Fecha vcto.</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 1 && orderDef[1].asc === true
+                            "
+                            (click)="orderList(1, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 1 && orderDef[1].asc === false
+                            "
+                            (click)="orderList(1, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c3">
+                        <div class="text">Código de cliente</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 2 && orderDef[2].asc === true
+                            "
+                            (click)="orderList(2, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 2 && orderDef[2].asc === false
+                            "
+                            (click)="orderList(2, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c4">
+                        <div class="text">Nombre del Cliente</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 3 && orderDef[3].asc === true
+                            "
+                            (click)="orderList(3, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 3 && orderDef[3].asc === false
+                            "
+                            (click)="orderList(3, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c5">
+                        <div class="text">Servicio</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 5 && orderDef[5].asc === true
+                            "
+                            (click)="orderList(5, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 5 && orderDef[5].asc === false
+                            "
+                            (click)="orderList(5, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c6">
+                        <div class="text">Descripción</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 6 && orderDef[6].asc === true
+                            "
+                            (click)="orderList(6, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 6 && orderDef[6].asc === false
+                            "
+                            (click)="orderList(6, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c7">
+                        <div class="text">Cuota</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 7 && orderDef[7].asc === true
+                            "
+                            (click)="orderList(7, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 7 && orderDef[7].asc === false
+                            "
+                            (click)="orderList(7, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c8">
+                        <div class="text">Mora</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 8 && orderDef[8].asc === true
+                            "
+                            (click)="orderList(8, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 8 && orderDef[8].asc === false
+                            "
+                            (click)="orderList(8, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c9">
+                        <div class="text">Total</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 9 && orderDef[9].asc === true
+                            "
+                            (click)="orderList(9, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 9 && orderDef[9].asc === false
+                            "
+                            (click)="orderList(9, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c10">
+                        <div class="text">Monto Pagado</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 10 && orderDef[10].asc === true
+                            "
+                            (click)="orderList(10, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 10 && orderDef[10].asc === false
+                            "
+                            (click)="orderList(10, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c11">
+                        <div class="text">Estado del pago</div>
+                        <div class="ord">
+                          <div
+                            class="up"
+                            [class.seleccionado]="
+                              orderBy === 11 && orderDef[11].asc === true
+                            "
+                            (click)="orderList(11, true)"
+                          ></div>
+                          <div
+                            class="down"
+                            [class.seleccionado]="
+                              orderBy === 11 && orderDef[11].asc === false
+                            "
+                            (click)="orderList(11, false)"
+                          ></div>
+                        </div>
+                      </th>
+                      <th class="c12">
+                        <div class="text">Editar</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="new-row" *ngIf="agregandoDeuda">
+                      <td class="c0"></td>
+                      <td class="c1">
+                        <mat-form-field
+                          class="inline-input"
+                          style="width: 75px"
+                        >
+                          <input
+                            matInput
+                            [matDatepicker]="n_edp"
+                            (click)="n_edp.open()"
+                            class="input-text-dash"
+                            appDate
+                            [min]="minDate"
+                            [max]="maxDate"
+                            [(ngModel)]="nuevaDeuda.emissionDate"
+                            formC
+                            maxlength="10"
+                            autocomplete="off"
+                            minlength="10"
+                            type="text"
+                            (ngModelChange)="
+                              nuevaDeuda.errores.emissionDate = null
+                            "
+                          />
+                          <mat-datepicker-toggle
+                            matSuffix
+                            [for]="n_edp"
+                          ></mat-datepicker-toggle>
+                          <mat-datepicker #n_edp></mat-datepicker>
+                          <div
+                            class="msg-error"
+                            *ngIf="nuevaDeuda.errores.emissionDate"
+                          >
+                            {{ nuevaDeuda.errores.emissionDate }}
+                          </div>
+                        </mat-form-field>
+                      </td>
+                      <td class="c2">
+                        <mat-form-field
+                          *ngIf="!newPartial"
+                          class="inline-input"
+                          style="width: 75px"
+                        >
+                          <input
+                            class="input-text-dash"
+                            appDate
+                            [min]="minDate"
+                            [max]="maxDate"
+                            matInput
+                            [matDatepicker]="n_ddp"
+                            [(ngModel)]="nuevaDeuda.dueDate"
+                            maxlength="10"
+                            minlength="10"
+                            autocomplete="off"
+                            type="text"
+                            (ngModelChange)="nuevaDeuda.errores.dueDate = null"
+                          />
+                          <mat-datepicker-toggle
+                            matSuffix
+                            [for]="n_ddp"
+                          ></mat-datepicker-toggle>
+                          <mat-datepicker #n_ddp></mat-datepicker>
+                          <div
+                            class="msg-error"
+                            *ngIf="nuevaDeuda.errores.dueDate"
+                          >
+                            {{ nuevaDeuda.errores.dueDate }}
+                          </div>
+                        </mat-form-field>
+                      </td>
+                      <td class="c3">
+                        <mat-form-field
+                          class="inline-input"
+                          style="width: 110px"
+                        >
+                          <input
+                            class="input-text-dash"
+                            matInput
+                            [(ngModel)]="nuevaDeuda.code"
+                            maxlength="14"
+                            autocomplete="off"
+                            (blur)="buscarNewCode()"
+                            minlength="1"
+                            type="text"
+                            (ngModelChange)="nuevaDeuda.errores.code = null"
+                          />
+                          <div
+                            class="msg-error"
+                            *ngIf="nuevaDeuda.errores.code"
+                          >
+                            {{ nuevaDeuda.errores.code }}
+                          </div>
+                        </mat-form-field>
+                      </td>
+                      <td class="c4">
+                        <mat-form-field
+                          class="inline-input"
+                          style="width: 110px"
+                        >
+                          <input
+                            class="input-text-dash"
+                            matInput
+                            [(ngModel)]="nuevaDeuda.firstName"
+                            maxlength="80"
+                            autocomplete="off"
+                            minlength="3"
+                            type="text"
+                            (ngModelChange)="
+                              nuevaDeuda.errores.firstName = null
+                            "
+                          />
+                          <div
+                            class="msg-error"
+                            *ngIf="nuevaDeuda.errores.firstName"
+                          >
+                            {{ nuevaDeuda.errores.firstName }}
+                          </div>
+                        </mat-form-field>
+                      </td>
+                      <td class="c6">
+                        <mat-form-field
+                          class="inline-input"
+                          style="width: 110px"
+                        >
+                          <mat-select
+                            class="input-text-dash"
+                            disableOptionCentering
+                            [(ngModel)]="nuevaDeuda.service"
+                            (ngModelChange)="cmbNewService()"
+                          >
+                            <mat-option
+                              class="input-text-dash"
+                              value="{{ service.name }}"
+                              *ngFor="let service of services"
+                            >
+                              {{ service.name }}</mat-option
+                            >
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                      <td class="c7">
+                        <mat-form-field
+                          *ngIf="!newPartial"
+                          class="inline-input"
+                          style="width: 90px"
+                        >
+                          <input
+                            class="input-text-dash"
+                            matInput
+                            [(ngModel)]="nuevaDeuda.concept"
+                            maxlength="16"
+                            autocomplete="off"
+                            minlength="1"
+                            type="text"
+                            (ngModelChange)="nuevaDeuda.errores.concept = null"
+                          />
+                          <div
+                            class="msg-error"
+                            *ngIf="nuevaDeuda.errores.concept"
+                          >
+                            {{ nuevaDeuda.errores.concept }}
+                          </div>
+                        </mat-form-field>
+                      </td>
+                      <td class="c8">
+                        <mat-form-field
+                          *ngIf="!newPartial"
+                          class="inline-input"
+                          style="width: 90px"
+                        >
+                          <input
+                            class="input-text-dash"
+                            type="text"
+                            matInput
+                            appOnlyNumbersForm
+                            [(ngModel)]="nuevaDeuda.amount"
+                            maxlength="12"
+                            minlength="4"
+                            autocomplete="off"
+                            (blur)="MontoBlur(nuevaDeuda)"
+                            (ngModelChange)="nuevaDeuda.errores.amount = null"
+                          />
+                          <div
+                            class="msg-error"
+                            *ngIf="nuevaDeuda.errores.amount"
+                          >
+                            {{ nuevaDeuda.errores.amount }}
+                          </div>
+                        </mat-form-field>
+                      </td>
+                      <td class="c9"></td>
+                      <td class="c10"></td>
+                      <td class="c11"></td>
+                      <td class="c12"></td>
+                      <td class="c13">
+                        <div class="d-flex">
+                          <div class="btn-ok" (click)="grabarNuevo()">
+                            <img
+                              src="assets/images/circle_ok.svg"
+                              alt="Aceptar"
+                            />
+                          </div>
+                          <div class="btn-cancel" (click)="cancelaNuevo()">
+                            <img
+                              src="assets/images/circle_cancel.svg"
+                              alt="Cancelar"
+                            />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <!-- <tbody>
                                         <perfect-scrollbar class="ps-body">
 
                                             <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFiltro.pageNumber, totalItems: transactionService.debtItems.count }" [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
@@ -442,194 +950,449 @@
                                         </perfect-scrollbar>
 
                                     </tbody> -->
+                </table>
 
-                                </table>
+                <perfect-scrollbar class="ps-body" id="scrollbar-table">
+                  <!-- <div class="scroll-table"> -->
+                  <table class="table">
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let items of transactionService.debtItems.data
+                            | paginate
+                              : {
+                                  itemsPerPage: 50,
+                                  currentPage: currentFiltro.pageNumber,
+                                  totalItems: transactionService.debtItems.count
+                                }
+                        "
+                        [class.seleccionado]="items.selected || items.editInput"
+                        [class.edit-pago]="items.verPagos"
+                      >
+                        <td class="c0 pl-3">
+                          <div class="chk-vertical">
+                            <mat-checkbox
+                              *ngIf="
+                                items.status != 'PAGADO' &&
+                                (items.totalAmount == '0' ||
+                                  !items.hasIBKPayments)
+                              "
+                              [(ngModel)]="items.selected"
+                              (ngModelChange)="selectForDelete(items)"
+                            >
+                            </mat-checkbox>
+                          </div>
+                        </td>
+                        <td class="c1">
+                          <span *ngIf="!items.editPending">{{
+                            items.emissionDate | date: "dd/MM/yy"
+                          }}</span>
+                          <div
+                            *ngIf="items.editPending"
+                            class="content-input-icon position-relative"
+                          >
+                            <mat-form-field
+                              class="inline-input"
+                              style="width: 80px"
+                            >
+                              <input
+                                matInput
+                                [matDatepicker]="edp"
+                                (click)="edp.open()"
+                                class="input-text-dash"
+                                appDate
+                                [min]="minDate"
+                                [max]="maxDate"
+                                [(ngModel)]="items.newEmissionDate"
+                                formC
+                                maxlength="10"
+                                minlength="10"
+                                type="text"
+                                (ngModelChange)="
+                                  items.errores.emissionDate = null
+                                "
+                              />
+                              <mat-datepicker-toggle
+                                matSuffix
+                                [for]="edp"
+                              ></mat-datepicker-toggle>
+                              <mat-datepicker #edp></mat-datepicker>
+                              <div
+                                class="msg-error"
+                                *ngIf="items.errores.emissionDate"
+                              >
+                                {{ items.errores.emissionDate }}
+                              </div>
+                            </mat-form-field>
+                          </div>
+                        </td>
+                        <td class="c2">
+                          <span *ngIf="!items.editInput">{{
+                            items.dueDate | date: "dd/MM/yy"
+                          }}</span>
+                          <div
+                            *ngIf="items.editInput && items.dueDate !== null"
+                            class="content-input-icon position-relative"
+                          >
+                            <mat-form-field
+                              class="inline-input"
+                              style="width: 80px"
+                            >
+                              <input
+                                class="input-text-dash"
+                                appDate
+                                [min]="minDate"
+                                [max]="maxDate"
+                                matInput
+                                [matDatepicker]="ddp"
+                                [(ngModel)]="items.newDueDate"
+                                maxlength="10"
+                                minlength="10"
+                                type="text"
+                                (ngModelChange)="items.errores.dueDate = null"
+                              />
+                              <mat-datepicker-toggle
+                                matSuffix
+                                [for]="ddp"
+                              ></mat-datepicker-toggle>
+                              <mat-datepicker #ddp></mat-datepicker>
+                              <div
+                                class="msg-error"
+                                *ngIf="items.errores.dueDate"
+                              >
+                                {{ items.errores.dueDate }}
+                              </div>
+                            </mat-form-field>
+                          </div>
+                        </td>
+                        <td class="c3">{{ items.code }}</td>
+                        <td class="c4">
+                          <span
+                            *ngIf="!items.editInput || (items.hasIBKPayments && items.serviceType !== 'S')"
+                            >{{ items.firstName }}</span
+                          >
+                          <div
+                            *ngIf="items.editInput && (!items.hasIBKPayments || items.serviceType === 'S')"
+                            class="content-input-icon position-relative"
+                          >
 
-
-
-                                <perfect-scrollbar class="ps-body" id="scrollbar-table">
-                                    <!-- <div class="scroll-table"> -->
-                                    <table class="table">
-                                        <tbody>
-                                            <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFiltro.pageNumber, totalItems: transactionService.debtItems.count }" [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
-                                                <td class="c0 pl-3 ">
-                                                    <div class="chk-vertical">
-                                                        <mat-checkbox *ngIf="items.status != 'PAGADO' && (items.totalAmount == '0' || !items.hasIBKPayments)" [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)">
-                                                        </mat-checkbox>
-                                                    </div>
-                                                </td>
-                                                <td class="c1">
-                                                    <span *ngIf="!items.editPending">{{items.emissionDate | date:'dd/MM/yy' }}</span>
-                                                    <div *ngIf="items.editPending" class="content-input-icon position-relative">
-                                                        <mat-form-field class="inline-input" style="width: 80px">
-                                                            <input matInput [matDatepicker]="edp" (click)="edp.open()" class="input-text-dash" appDate [min]="minDate" [max]="maxDate" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (ngModelChange)="items.errores.emissionDate = null;">
-                                                            <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
-                                                            <mat-datepicker #edp></mat-datepicker>
-                                                            <div class="msg-error" *ngIf="items.errores.emissionDate">{{items.errores.emissionDate}}
-                                                            </div>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </td>
-                                                <td class="c2">
-                                                    <span *ngIf="!items.editInput">{{items.dueDate | date:'dd/MM/yy' }}</span>
-                                                    <div *ngIf="items.editInput && items.dueDate !== null" class="content-input-icon position-relative">
-                                                        <mat-form-field class="inline-input" style="width: 80px">
-                                                            <input class="input-text-dash" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (ngModelChange)="items.errores.dueDate = null">
-                                                            <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
-                                                            <mat-datepicker #ddp></mat-datepicker>
-                                                            <div class="msg-error" *ngIf="items.errores.dueDate">{{items.errores.dueDate}}</div>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </td>
-                                                <td class="c3">{{items.code}}</td>
-                                                <td class="c4">
-                                                    <span *ngIf="!items.editInput || items.hasIBKPayments">{{items.firstName}}</span>
-                                                    <div *ngIf="items.editInput && !items.hasIBKPayments" class="content-input-icon position-relative">
-                                                        <mat-form-field class="inline-input" style="width: 80px">
-                                                            <input class="input-text-dash" matInput [(ngModel)]="items.newFirstName" maxlength="80" minlength="3" type="text" (ngModelChange)="items.errores.firstName = null">
-                                                            <div class="msg-error" *ngIf="items.errores.firstName">{{items.errores.firstName}}</div>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </td>
-                                                <td class="c5">{{items.service}}</td>
-                                                <td class="c6">{{items.concept}}</td>
-                                                <td class="c7">
-                                                    <span *ngIf="!items.editInput && items.amount > 0">{{items.currency}}
-                          {{items.amount| number : '1.2-2'}}</span>
-                                                    <div *ngIf="items.editInput && items.dueDate !== null">
-                                                        <mat-form-field class="inline-input" style="width: 100px">
-                                                            <input class="input-text-dash" type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" (blur)="MontoBlur(items)" (ngModelChange)="items.errores.amount = null" />
-                                                            <span matPrefix>{{items.currency}}&nbsp;</span>
-                                                            <div class="msg-error" *ngIf="items.errores.amount">{{items.errores.amount}}</div>
-                                                        </mat-form-field>
-                                                    </div>
-                                                </td>
-                                                <td class="c8">
-                                                    <span *ngIf="items.interestAmount > 0">{{items.currency}}
-                          {{items.interestAmount| number : '1.2-2'}}</span>
-                                                </td>
-                                                <td class="c9">
-                                                    <span *ngIf="items.totalAmount > 0">{{items.currency}}
-                          {{items.totalAmount| number : '1.2-2'}}</span>
-                                                </td>
-                                                <td class="c10">
-                                                    <span *ngIf="items.totalAmountPayed > 0">{{items.currency}}
-                          {{items.totalAmountPayed| number : '1.2-2'}}
-                        </span>
-                                                    <div class="cnt-status">
-                                                        <div class="text-success lnk-status" (click)="showPopover(items, origin)" #origin>
-                                                            Ver Detalle
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="c11">
-                                                    <div class="cnt-status">
-                                                        <div class="lnk-status" (click)="showPopover(items, origin)" #origin>
-                                                            <span *ngIf="items.status === 'PAGADO' && items.dueDate !== null" class="text-success">
-                              Pagado <img src="assets/images/ok.svg" alt="ok">
-                            </span>
-                                                            <span *ngIf="items.status === 'VENCIDO'" class="text-danger">
-                              Vencido <img src="assets/images/cancel.svg" alt="cancel">
-                            </span>
-                                                            <span *ngIf="items.status === 'PARCIAL' && items.dueDate !== null " class="text-partial">
-                              Parcial
-                            </span>
-                                                            <span *ngIf="items.status === 'PENDIENTE'  && items.dueDate !== null">
-                              Pendiente
-                            </span>
-                                                            <span *ngIf="items.status === 'PENDIENTE' && items.dueDate === null">
-                              Habilitado
-                            </span>
-                                                            <span *ngIf="items.status === 'PARCIAL' && items.dueDate === null">
+                            <mat-form-field
+                              class="inline-input"
+                              style="width: 80px"
+                            >
+                              <input
+                                class="input-text-dash"
+                                matInput
+                                [(ngModel)]="items.newFirstName"
+                                maxlength="80"
+                                minlength="3"
+                                type="text"
+                                (ngModelChange)="items.errores.firstName = null"
+                              />
+                              <div
+                                class="msg-error"
+                                *ngIf="items.errores.firstName"
+                              >
+                                {{ items.errores.firstName }}
+                              </div>
+                            </mat-form-field>
+                          </div>
+                        </td>
+                        <td class="c5">{{ items.service }}</td>
+                        <td class="c6">{{ items.concept }}</td>
+                        <td class="c7">
+                          <span *ngIf="!items.editInput && items.amount > 0"
+                            >{{ items.currency }}
+                            {{ items.amount | number: "1.2-2" }}</span
+                          >
+                          <div
+                            *ngIf="items.editInput && items.dueDate !== null"
+                          >
+                            <mat-form-field
+                              class="inline-input"
+                              style="width: 100px"
+                            >
+                              <input
+                                class="input-text-dash"
+                                type="text"
+                                matInput
+                                appOnlyNumbersForm
+                                [(ngModel)]="items.newAmount"
+                                style="width: 100px"
+                                maxlength="12"
+                                minlength="4"
+                                (blur)="MontoBlur(items)"
+                                (ngModelChange)="items.errores.amount = null"
+                              />
+                              <span matPrefix>{{ items.currency }}&nbsp;</span>
+                              <div
+                                class="msg-error"
+                                *ngIf="items.errores.amount"
+                              >
+                                {{ items.errores.amount }}
+                              </div>
+                            </mat-form-field>
+                          </div>
+                        </td>
+                        <td class="c8">
+                          <span *ngIf="items.interestAmount > 0"
+                            >{{ items.currency }}
+                            {{ items.interestAmount | number: "1.2-2" }}</span
+                          >
+                        </td>
+                        <td class="c9">
+                          <span *ngIf="items.totalAmount > 0"
+                            >{{ items.currency }}
+                            {{ items.totalAmount | number: "1.2-2" }}</span
+                          >
+                        </td>
+                        <td class="c10">
+                          <span *ngIf="items.totalAmountPayed > 0"
+                            >{{ items.currency }}
+                            {{ items.totalAmountPayed | number: "1.2-2" }}
+                          </span>
+                          <div class="cnt-status">
+                            <div
+                              class="text-success lnk-status"
+                              (click)="showPopover(items, origin)"
+                              #origin
+                            >
+                              Ver Detalle
+                            </div>
+                          </div>
+                        </td>
+                        <td class="c11">
+                          <div class="cnt-status">
+                            <div
+                              class="lnk-status"
+                              (click)="showPopover(items, origin)"
+                              #origin
+                            >
+                              <span
+                                *ngIf="
+                                  items.status === 'PAGADO' &&
+                                  items.dueDate !== null
+                                "
+                                class="text-success"
+                              >
+                                Pagado
+                                <img src="assets/images/ok.svg" alt="ok" />
+                              </span>
+                              <span
+                                *ngIf="items.status === 'VENCIDO'"
+                                class="text-danger"
+                              >
+                                Vencido
+                                <img
+                                  src="assets/images/cancel.svg"
+                                  alt="cancel"
+                                />
+                              </span>
+                              <span
+                                *ngIf="
+                                  items.status === 'PARCIAL' &&
+                                  items.dueDate !== null
+                                "
+                                class="text-partial"
+                              >
+                                Parcial
+                              </span>
+                              <span
+                                *ngIf="
+                                  items.status === 'PENDIENTE' &&
+                                  items.dueDate !== null
+                                "
+                              >
+                                Pendiente
+                              </span>
+                              <span
+                                *ngIf="
+                                  items.status === 'PENDIENTE' &&
+                                  items.dueDate === null
+                                "
+                              >
                                 Habilitado
                               </span>
-                                                            <span *ngIf="items.status === 'PAGADO' && items.dueDate === null" class="text-success">
-                              Deshabilitado <img src="assets/images/ok.svg" alt="ok">
-                            </span>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="c12">
-                                                    <div *ngIf="items.svcStatus !== 1 && items.status !== 'PAGADO'" class="d-flex">
-                                                        <div *ngIf="!items.editButton && ((items.dueDate === null && !items.hasIBKPayments) || items.dueDate !== null)" class="btn-edit" (click)="BotonEditar(items)">
-                                                            <img src="assets/images/pencil.svg" alt="editar">
-                                                        </div>
-                                                        <div *ngIf="items.editButton" class="btn-ok" (click)="BotonActualizar(items)">
-                                                            <img src="assets/images/circle_ok.svg" alt="Aceptar">
-                                                        </div>
-                                                        <div *ngIf="items.editButton" class="btn-cancel" (click)="BotonCancela(items)">
-                                                            <img src="assets/images/circle_cancel.svg" alt="Cancelar">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr style="border-bottom: #13131300" *ngIf="ceroRegistros()">
-                                                <td colspan="13" class="texto-after">
-                                                    <span>{{messageTable}}</span>
-                                                    <div *ngIf="showArrow" class="">
-                                                        <img src="assets/images/path.svg" alt="arrow">
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                        </tbody>
-                                    </table>
-                                    <!-- </div> -->
-
-                                </perfect-scrollbar>
+                              <span
+                                *ngIf="
+                                  items.status === 'PARCIAL' &&
+                                  items.dueDate === null
+                                "
+                              >
+                                Habilitado
+                              </span>
+                              <span
+                                *ngIf="
+                                  items.status === 'PAGADO' &&
+                                  items.dueDate === null
+                                "
+                                class="text-success"
+                              >
+                                Deshabilitado
+                                <img src="assets/images/ok.svg" alt="ok" />
+                              </span>
                             </div>
 
-                        </section>
-                        <section class="pagination">
-                            <div class="ctrl">
-                                <pagination-template #p="paginationApi" [maxSize]="5" (pageChange)="changePage($event)">
-                                    <ul class="ngx-pagination" role="navigation">
-                                        <li class="pagination-previous" [class.disabled]="p.isFirstPage()">
-                                            <a tabindex="0" *ngIf="1 < p.getCurrent()" (keyup.enter)="p.previous()" (click)="p.previous()">
-                                                <img src="assets/images/before.svg">
-                                            </a>
-                                            <span *ngIf="p.isFirstPage()">
-                                        <img src="assets/images/before.svg">
-                                    </span>
-                                        </li>
-                                        <li *ngIf="p.pages.length === 0" class="current">
-                                            <span>1</span>
-                                        </li>
-                                        <li *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value" [class.ellipsis]="page.label === '...'">
-                                            <a class="numpag" tabindex="0" (keyup.enter)="p.setCurrent(page.value)" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
-                                                <span>{{ (page.label === '...') ? page.label : (page.label | number:'') }}</span>
-                                            </a>
-                                            <ng-container *ngIf="p.getCurrent() === page.value">
-                                                <span>{{ (page.label === '...') ? page.label : (page.label | number:'') }}</span>
-                                            </ng-container>
-                                        </li>
-                                        <li class="pagination-next" [class.disabled]="p.isLastPage()">
-                                            <a class="pr-0" tabindex="0" *ngIf="!p.isLastPage()" (keyup.enter)="p.next()" (click)="p.next()">
-                                                <img src="assets/images/after.svg">
-                                            </a>
-                                            <span class="pr-0" *ngIf="p.isLastPage()">
-                                        <img  src="assets/images/after.svg">
-                                    </span>
-                                        </li>
-                                    </ul>
-                                </pagination-template>
+                          </div>
+
+                        </td>
+
+                        <td class="c12">
+                          <div
+                            *ngIf="
+                              items.svcStatus !== 1 && items.status !== 'PAGADO'
+                            "
+                            class="d-flex"
+                          >
+                            <div
+                              *ngIf="
+                                !items.editButton &&
+                                ((items.dueDate === null &&
+                                  !items.hasIBKPayments) ||
+                                  items.dueDate !== null ||
+                                  (items.dueDate === null &&
+                                  items.hasIBKPayments) )
+                              "
+                              class="btn-edit"
+                              (click)="BotonEditar(items)"
+                            >
+
+                              <img
+                                src="assets/images/pencil.svg"
+                                alt="editar"
+                              />
                             </div>
-                            <div class="text pt-1">
-                                {{transactionService.pageMessage}}
+                            <div
+                              *ngIf="items.editButton"
+                              class="btn-ok"
+                              (click)="BotonActualizar(items)"
+                            >
+                              <img
+                                src="assets/images/circle_ok.svg"
+                                alt="Aceptar"
+                              />
                             </div>
-                            <div class="clear-float"></div>
-                        </section>
-                    </div>
-                </div>
-            </div>
+                            <div
+                              *ngIf="items.editButton"
+                              class="btn-cancel"
+                              (click)="BotonCancela(items)"
+                            >
+                              <img
+                                src="assets/images/circle_cancel.svg"
+                                alt="Cancelar"
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        style="border-bottom: #13131300"
+                        *ngIf="ceroRegistros()"
+                      >
+                        <td colspan="13" class="texto-after">
+                          <span>{{ messageTable }}</span>
+                          <div *ngIf="showArrow" class="">
+                            <img src="assets/images/path.svg" alt="arrow" />
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- </div> -->
+                </perfect-scrollbar>
+              </div>
+            </section>
+            <section class="pagination">
+              <div class="ctrl">
+                <pagination-template
+                  #p="paginationApi"
+                  [maxSize]="5"
+                  (pageChange)="changePage($event)"
+                >
+                  <ul class="ngx-pagination" role="navigation">
+                    <li
+                      class="pagination-previous"
+                      [class.disabled]="p.isFirstPage()"
+                    >
+                      <a
+                        tabindex="0"
+                        *ngIf="1 < p.getCurrent()"
+                        (keyup.enter)="p.previous()"
+                        (click)="p.previous()"
+                      >
+                        <img src="assets/images/before.svg" />
+                      </a>
+                      <span *ngIf="p.isFirstPage()">
+                        <img src="assets/images/before.svg" />
+                      </span>
+                    </li>
+                    <li *ngIf="p.pages.length === 0" class="current">
+                      <span>1</span>
+                    </li>
+                    <li
+                      *ngFor="let page of p.pages"
+                      [class.current]="p.getCurrent() === page.value"
+                      [class.ellipsis]="page.label === '...'"
+                    >
+                      <a
+                        class="numpag"
+                        tabindex="0"
+                        (keyup.enter)="p.setCurrent(page.value)"
+                        (click)="p.setCurrent(page.value)"
+                        *ngIf="p.getCurrent() !== page.value"
+                      >
+                        <span>{{
+                          page.label === "..."
+                            ? page.label
+                            : (page.label | number: "")
+                        }}</span>
+                      </a>
+                      <ng-container *ngIf="p.getCurrent() === page.value">
+                        <span>{{
+                          page.label === "..."
+                            ? page.label
+                            : (page.label | number: "")
+                        }}</span>
+                      </ng-container>
+                    </li>
+                    <li
+                      class="pagination-next"
+                      [class.disabled]="p.isLastPage()"
+                    >
+                      <a
+                        class="pr-0"
+                        tabindex="0"
+                        *ngIf="!p.isLastPage()"
+                        (keyup.enter)="p.next()"
+                        (click)="p.next()"
+                      >
+                        <img src="assets/images/after.svg" />
+                      </a>
+                      <span class="pr-0" *ngIf="p.isLastPage()">
+                        <img src="assets/images/after.svg" />
+                      </span>
+                    </li>
+                  </ul>
+                </pagination-template>
+              </div>
+              <div class="text pt-1">
+                {{ transactionService.pageMessage }}
+              </div>
+              <div class="clear-float"></div>
+            </section>
+          </div>
         </div>
-        <div class="row" style="display: block;">
-            <div class="text-foot">
-                Para comunicarte con nosotros puedes llamar o escribir al <b>993119001</b>, o también a
-                <a class="link" href="mailto:solucionempresa@intercorp.com.pe">solucionempresa@intercorp.com.pe</a>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="row" style="display: block">
+      <div class="text-foot">
+        Para comunicarte con nosotros puedes llamar o escribir al
+        <b>993119001</b>, o también a
+        <a class="link" href="mailto:solucionempresa@intercorp.com.pe"
+          >solucionempresa@intercorp.com.pe</a
+        >
+      </div>
+    </div>
+  </div>
 </div>
 <template #fileLoad class="file-load"></template>

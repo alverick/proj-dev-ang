@@ -25,6 +25,7 @@ export interface Debts {
     newFirstName?: string;
     newLastName?: string;
     selected?: boolean;
+    serviceType?: string;
 
     editPending: boolean;
     editInput: boolean;

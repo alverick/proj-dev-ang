@@ -271,33 +271,21 @@ export class AfiliacionService {
   }
 
   public GetTipoDato(): Observable<any[]> {
+
     return of<any[]>([
       {
-        code: "C",
-        name: "Códigos, nombres y deuda",
+        code: 'C',
+        name: "Tengo su código, nombres y deuda"
       },
       {
-        code: "P",
-        name: "Códigos y nombres",
-      }
-    ]);
-
-    /*
-       return of<any[]>([
-      {
-        code: "C",
-        name: "Tengo su código, nombres y deuda",
-      },
-      {
-        code: "P",
-        name: "Tengo sólo código y nombres",
+        code: 'P',
+        name: "Tengo sólo código y nombres"
       },
       {
         code: 'S',
-        name: 'No ingresaré datos'
+        name: 'No ingresaré data'
       }
     ]);
-    */
   }
 
   public GetPagoPartes(): Observable<any[]> {
