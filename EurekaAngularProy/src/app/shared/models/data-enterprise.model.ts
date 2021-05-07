@@ -1,5 +1,4 @@
 export interface DataEnterpriseModel {
-
     ruc: number|string;
     name: string;
     entry: string;

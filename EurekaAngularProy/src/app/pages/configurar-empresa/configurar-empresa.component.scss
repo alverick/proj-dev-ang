@@ -46,6 +46,23 @@ body {
     color: rgba(0, 0, 0, 0.54) !important;
 }
 
- :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+:host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     color: #0d131d !important;
+}
+
+.mano {
+  cursor: pointer;
+}
+
+.text-regresar {
+  margin: 0px;
+  font-family: Geometria;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: $azul;
 }

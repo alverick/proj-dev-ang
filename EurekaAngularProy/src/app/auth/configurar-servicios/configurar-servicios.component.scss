@@ -90,7 +90,7 @@ body {
     @include cuadro(460px, auto);
     object-fit: contain;
     border-radius: 5px;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px 0 #0000001a;
     background-color: #ffffff;
 }
 
@@ -141,7 +141,8 @@ body {
 
 .subtitle-servicio {
     @include font-text(18px, 500);
-    color: #0032a0;
+    color: #0d131d;
+    line-height: 1;
     text-align: center;
 }
 

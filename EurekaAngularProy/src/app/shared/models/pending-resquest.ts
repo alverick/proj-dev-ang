@@ -1,5 +1,3 @@
- 
- 
 export interface PendingResquest {
 /* type: string;
  accion: string;

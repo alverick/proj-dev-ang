@@ -1,11 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener } from "@angular/core";
-import { FormBuilder, Validators, FormGroup, FormControl } from "@angular/forms";
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MonedaModel, ServiceModel } from "src/app/shared/models";
-import Swal from "sweetalert2";
-import { ConfigurarServiciosComponent } from "../configurar-servicios/configurar-servicios.component";
-import { drawPopup } from 'src/app/shared/services/popups';
 
+import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
+import { ConfigurarServiciosComponent } from "../configurar-servicios/configurar-servicios.component";
+import Swal from "sweetalert2";
+import { drawPopup } from 'src/app/shared/services/popups';
 
 @Component({
   selector: 'app-ser-form-gtp',
@@ -75,8 +75,6 @@ export class SerFormGtpComponent implements OnInit {
   public services: ServiceModel[] = [];
 
   ngOnInit(): void {
-    console.log('nombreCodHabilitado');
-    console.log(this._service.nombreCodHabilitado);
     this.editMode = (this._service.id !== null && this._service.id !== undefined && this._service.id > 0);
     this.gtpMode = (this._service.NewName !== null && this._service.NewNameCod !== null);
     var montod = ((this._service.monto !== null && this._service.monto !== undefined) ? this._service.monto : '1.00');
@@ -190,10 +188,6 @@ export class SerFormGtpComponent implements OnInit {
   }
 
   onSubmitServicio() {
-    /* console.log('LOS CODIGOS DE DEUDOR');
-     console.log(this.frm.get('codDeudor').value);
-     console.log(this.frm.get('nameCod').value); */
-    console.log('NOMBRE DE SRV Y CODI');
     this.submittedRequired = true;
     if (this.frm.valid) {
       const monto = parseFloat(this.frm.get('monto').value);
@@ -266,13 +260,11 @@ export class SerFormGtpComponent implements OnInit {
                   value.pagoPartes = this.frm.value.pagoPartes;
                   value.usaWebApp = true;
                 } else {
-                  console.log('crea un nuevo');
                   value = this.frm.value;
                   value.id = null;
                   value.usaWebApp = true;
                   value.newName = this.frm.value.nombre;
                   value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
-                  console.log('crea un nuevo 3 en edicion' + value.newName);
                 }
                 let cta = this.cuentas.find(c => c.id === value.idCuenta);
                 value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
@@ -348,7 +340,6 @@ export class SerFormGtpComponent implements OnInit {
               });
             } else {
               let value: ServiceModel;
-              console.log('ingresa 2');
               // value.usaWebApp = true;
               if (this.editMode) {
                 value = this._service;
@@ -367,12 +358,11 @@ export class SerFormGtpComponent implements OnInit {
                 value.porcentaje = this.frm.value.porcentaje;
                 value.pagoPartes = this.frm.value.pagoPartes;
               } else {
-                console.log('crea un nuevo 2');
                 value = this.frm.value;
                 value.id = null;
                 value.newName = this.frm.value.nombre;
                 value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
-                console.log('crea un nuevo 3 en edicion' + value.newName);
+
               }
               let cta = this.cuentas.find(c => c.id === value.idCuenta);
               value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
@@ -397,7 +387,6 @@ export class SerFormGtpComponent implements OnInit {
           });
         } else {
           let value: ServiceModel;
-          console.log('ingresa 3');
 
           if (this.editMode) {
             value = this._service;
@@ -414,24 +403,19 @@ export class SerFormGtpComponent implements OnInit {
             value.monto = this.frm.value.monto;
             value.porcentaje = this.frm.value.porcentaje;
             value.pagoPartes = this.frm.value.pagoPartes;
-            console.log('ingresa 3.1');
             value.usaWebApp = true;
           } else {
-            console.log('crea un nuevo 3');
             value = this.frm.value;
             value.id = null;
             value.newName = this.frm.value.nombre;
             value.newNameCode = (this.frm.value.codDeudor === 'Otro') ? this.frm.value.nameCod : this.frm.value.codDeudor;
-            console.log('crea un nuevo 3 en edicion' + value.newName);
+
           }
           let cta = this.cuentas.find(c => c.id === value.idCuenta);
           value.nroCuenta = `${cta.number.substr(0, 13)} (${(cta.currency === '001' ? 'sole' : 'dolares')})`;
           value.simboloMoneda = this.simboloMoneda;
-          console.log('ingresa 3.2');
-          value.usaWebApp = true;
 
-          console.log('SERVICIO --MARCE');
-          console.log(value);
+          value.usaWebApp = true;
 
           this.grabar.emit(value);
         }
@@ -440,7 +424,6 @@ export class SerFormGtpComponent implements OnInit {
   }
 
   changeMoneda(event) {
-    console.log('hola ' + event);
     this.simboloMoneda = (this.f.moneda.value === "001" ? "S/" : "$");
   }
 
@@ -481,7 +464,6 @@ export class SerFormGtpComponent implements OnInit {
   changeMora(changeData: boolean = true) {
 
     this.cobraMora = (this.f.cobraMora.value === 'S');
-    console.log(this.f.cobraMora.value);
     if (this.cobraMora) {
 
       this.f.periodoMora.setValidators([Validators.required]);
@@ -494,7 +476,6 @@ export class SerFormGtpComponent implements OnInit {
       }
 
     } else {
-      console.log('entra en no');
       this.cmoraporce = false;
       // this.f.periodoMora.setValue('1')
       this.f.periodoMora.reset();

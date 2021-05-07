@@ -72,7 +72,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
     });
   }
 
-
   getInfoEmpresa() {
     this.configEmpresaService.getDatosEmpresa()
       .subscribe( dataEnterprise => {
@@ -86,8 +85,8 @@ export class ConfigurarEmpresaComponent implements OnInit {
           }
         );
   }
-  get f(): any { return this.formGroup.controls; }
 
+  get f(): any { return this.formGroup.controls; }
 
   getErrorEmail() {
     return this.formGroup.get('email').hasError('required') ? 'Email es requerido' :
@@ -106,7 +105,12 @@ export class ConfigurarEmpresaComponent implements OnInit {
     return this.formGroup.get('newPassword').hasError('required') ? 'La Contraseña es requerida' :''  }
 
   getErrorConfirmNewPassword() {
-    return this.formGroup.get('confirmNewPassword').hasError('required') ? 'La Contraseña es requerida' :''  }
+    return this.formGroup.get('confirmNewPassword').hasError('required') ? 'La Contraseña es requerida' :''
+  }
+
+  goBack() {
+    this.router.navigate(["/home"]);
+  }
 
 // actualizado
   onSubmit() {
@@ -117,9 +121,9 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
     var Pass =  parseInt(this.formGroup.value.password.toString().length);
     var newPass =  parseInt(this.formGroup.value.newPassword.toString().length);
-    console.log('aun no se valida');
+
     if (this.formGroup.valid) {
-      console.log('es valido');
+
        if (correo === 0 ) {
         return;
       }
@@ -204,8 +208,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
 
 
 }
-
-
 
 function ValidateConfigEmpresa() {
   var validPwd = MustMatch('newPassword', 'confirmNewPassword');

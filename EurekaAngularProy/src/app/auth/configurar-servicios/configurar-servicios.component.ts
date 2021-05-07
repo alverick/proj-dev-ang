@@ -1,14 +1,14 @@
-import { Component, OnInit, EventEmitter, HostListener, ɵConsole } from '@angular/core';
-import { ServiceModel } from 'src/app/shared/models';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
+
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import Swal from 'sweetalert2';
-import { Router, ActivatedRoute } from '@angular/router';
 import { FormServicioComponent } from '../form-servicio/form-servicio.component';
-import { drawPopup } from 'src/app/shared/services/popups';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
+import { ServiceModel } from 'src/app/shared/models';
 import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
-import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
+import Swal from 'sweetalert2';
+import { drawPopup } from 'src/app/shared/services/popups';
 
 @Component({
   selector: 'app-configurar-servicios',
@@ -347,7 +347,6 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
   }
 
-
   mensaje(titulo: string, text: string) {
     Swal.fire({
       // type: tipo ,
@@ -664,11 +663,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   }
 
   onGrabar(svc: ServiceModel) {
-    console.log(svc);
-    console.log(this.afiliacionService.services);
     if (this.indiceActual >= 0) {
-
-
       if (this.inEdit) {
         if (svc.newNameGtpStatus === 3) {
           if (this.afiliacionService.services.find((s, i) => s.newName.toUpperCase() === svc.newName.toUpperCase() && i !== this.indiceActual)) {

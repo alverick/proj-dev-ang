@@ -151,9 +151,10 @@ div.mat-form-field-infix {
 .btn-eureca-green {
     @include btn-eureca;
     @include font-text(14px !important);
-    width: 232px;
+    width: 207px;
     height: 48px;
-    margin-bottom: 23px;
+    //margin: 0px 0px 0px 0px;
+    //margin-bottom: 23px;
 }
 
 .btn-eureca-blue {
@@ -168,7 +169,14 @@ div.mat-form-field-infix {
 .btn-landigs-container {
     // margin-left: 80px;
     // padding: 4em 0em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     padding: 4em 0em 1.5em;
+}
+
+.btn-rg {
+  margin-bottom: 16px;
 }
 
 .btn-landigs-registro {
@@ -177,19 +185,19 @@ div.mat-form-field-infix {
 
 .btn-eureca-green-register {
     @include font-text(14px !important);
-    background-color: $blanco;
+    background-color:#f3f3f3 ;
     border-radius: 4px;
     color: $green;
     border: solid 1px $green;
-    width: 232px;
+    width: 207px;
     height: 48px;
-    float: center;
+    //float: center;
     // @include box-shadows(0,1px,4px, 0,rgba(252, 154, 0, 0.2));
     &:hover {
         background-color: $green;
         border-radius: 4px;
         border: solid 1px $greenclaro;
-        color: $blanco;
+        color: #f3f3f3;
     }
     &:active {
         background-color: $blanco;
@@ -361,6 +369,17 @@ small {
     color: #0032a0;
 }
 
+.title-sub-simple-pago {
+  font-family: Geometria;
+  font-size: 22px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.86;
+  letter-spacing: normal;
+  color: #0032a0;
+}
+
 .text-simple-pago {
     font-family: Geometria;
     font-size: 20px;
@@ -393,18 +412,27 @@ small {
     bottom: 0;
 }
 
+.img-como-funciona {
+  width: 314px;
+  height: 570px;
+  margin: auto;
+  position: relative;
+  margin-bottom: -122px;
+}
+
 .content-img-simple {
-    padding-top: 3rem;
+    padding-top: 4rem;
 }
 
 .img-cobro-simple {
     // width: 644px;
     // height: 355px;
-    width: 619px;
-    height: 310px;
+    width: 644px;
+    height: 355px;
     position: absolute;
     bottom: 0;
-    right: 1.5em;
+    right: 0em;
+    padding-top: 25px;
     // width: 644px;
     // height: 355px;
     // width: 560px;
@@ -443,8 +471,9 @@ small {
 
 // ---------------
 .container-beneficios {
-    background: #ffffff;
-    padding: 0em 0em 1em;
+    /*background: #ffffff;*/
+    background: #f3f3f3;
+    padding: 0em 0em 0em;
 }
 
 .title-beneficio {
@@ -457,6 +486,8 @@ small {
     letter-spacing: normal;
     text-align: center;
     color: #0032a0;
+    margin-top: 20px;
+    margin-bottom: 50px;
     // margin-left: 80px;
 }
 
@@ -513,7 +544,8 @@ small {
 }
 
 .title-pago-sub {
-    -webkit-text-stroke: .1px #ffffff;
+    //text-stroke: 1.5px #ffffff;
+
     font-family: Geometria;
     font-size: 16px;
     font-weight: 500;
@@ -533,6 +565,29 @@ small {
     line-height: 1.5;
     letter-spacing: normal;
     color: #ffffff;
+}
+
+.title-text-sub-que-necesito{
+  font-family: Geometria;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.95;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}
+
+.container-title-pago {
+  padding-top: 36px;
+  padding-bottom: 36px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .reponsive-tex-pago {
@@ -567,10 +622,9 @@ small {
 }
 
 .title-contacto {
-    -webkit-text-stroke: .6px #333333;
     font-family: Geometria;
     font-size: 32px;
-    font-weight: normal;
+    font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
@@ -582,7 +636,7 @@ small {
 .title-contacto-sub {
     font-family: Geometria;
     font-size: 18px;
-    font-weight: normal;
+    font-weight: 500;
     font-stretch: normal;
     font-style: normal;
     line-height: normal;
@@ -664,6 +718,15 @@ small {
     background-color: #05be50 !important;
 }
 
+#slider-como-funciona .carousel-indicators li {
+  background-color: #d3d3d3 !important;
+  opacity: 1;
+}
+
+#slider-como-funciona .carousel-indicators .active {
+  background-color: #05be50 !important;
+}
+
 .carousel-indicators {
     // margin-top: 1em;
     position: initial !important;
@@ -701,8 +764,23 @@ small {
     text-align: right;
 }
 
-@media (min-width: 1200px) {
+.container-navbar{
+  background: #ffffff;
+  padding: 0.5em 0 0.5em;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.05);
+  height: 64px;
+}
+
+@media (min-width: 1300px) {
     .container {
-        max-width: 1156px !important;
+        max-width: 1280px !important;
+        /*max-width: 1156px !important;*/
     }
+}
+
+@media screen and (max-width: 400px) {
+  .container-title-pago {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
 }

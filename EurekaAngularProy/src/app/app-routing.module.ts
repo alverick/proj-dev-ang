@@ -1,30 +1,39 @@
-import { ConfigurarCorreoGtpComponent } from './auth/configurar-correo-gtp/configurar-correo-gtp.component';
-import { LandingComponent } from './auth/landing/landing.component';
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, Routes} from '@angular/router';
-import { HomeComponent } from 'src/app/pages/home/home.component';
-import { LoginComponent } from 'src/app/auth/login/login.component';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
 import { AfiliacionComponent } from 'src/app/auth/afiliacion/afiliacion.component';
-import { SubirPlantillaComponent } from 'src/app/pages/subir-plantilla/subir-plantilla.component';
+import { AnalisisComponent } from 'src/app/pages/analisis/analisis.component';
+import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
+import { AuthGuard } from 'src/app/shared/guards/auth.guard';
+import { CambiaContrasenaComponent } from './auth/cambia-contrasena/cambia-contrasena.component';
+import { CargaHistoricoComponent } from './auth/carga-historico/carga-historico.component';
+import { ClientGuard } from './shared/guards/client.guard';
+import { CommonModule } from '@angular/common';
+import { CompletadoPrimeraParteComponent } from './auth/completado-primera-parte/completado-primera-parte.component';
+import { CompletarDatosEmpresaComponent } from './auth/completar-datos-empresa/completar-datos-empresa.component';
+import { ConfiguraCobrosParteCuatroComponent } from './auth/configura-cobros-parte-cuatro/configura-cobros-parte-cuatro.component';
+import { ConfiguraCobrosParteDosComponent } from './auth/configura-cobros-parte-dos/configura-cobros-parte-dos.component';
+import { ConfiguraCobrosParteTresComponent } from './auth/configura-cobros-parte-tres/configura-cobros-parte-tres.component';
+import { ConfiguraCobrosParteUnoComponent } from './auth/configura-cobros-parte-uno/configura-cobros-parte-uno.component';
+import { ConfigurarCorreoGtpComponent } from './auth/configurar-correo-gtp/configurar-correo-gtp.component';
+import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
+import { ConfigurarGtpComponent } from './auth/configurar-gtp/configurar-gtp.component';
 import { ConfigurarServiciosComponent } from 'src/app/auth/configurar-servicios/configurar-servicios.component';
 import { CrearContrasenaComponent } from 'src/app/auth/crear-contrasena/crear-contrasena.component';
-import { ProcesandoComponent } from 'src/app/auth/procesando/procesando.component';
-import { AnalisisComponent } from 'src/app/pages/analisis/analisis.component';
-import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-found.component';
-import { AuthGuard } from 'src/app/shared/guards/auth.guard';
-import { LogoutGuard } from './shared/guards/logout.guard';
-import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
-import { CloseViewGuard } from './shared/guards/close-view.guard';
-import { ClientGuard } from './shared/guards/client.guard';
-import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recuperar-contrasena.component';
-import { CambiaContrasenaComponent } from './auth/cambia-contrasena/cambia-contrasena.component';
+import { EditarCobrosComponent } from './auth/editar-cobros/editar-cobros.component';
 import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
-import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
 import { GtpInputGuard } from './shared/guards/gtp-input.guard';
 import { GtpOutputGuard } from './shared/guards/gtp-output.guard';
-import { ConfigurarGtpComponent } from './auth/configurar-gtp/configurar-gtp.component';
-import { CargaHistoricoComponent } from './auth/carga-historico/carga-historico.component';
+import { HomeComponent } from 'src/app/pages/home/home.component';
+import { IdentificarEmpresaComponent } from 'src/app/auth/identificar-empresa/identificar-empresa.component';
+import { LandingComponent } from './auth/landing/landing.component';
+import { LoginComponent } from 'src/app/auth/login/login.component';
+import { LogoutGuard } from './shared/guards/logout.guard';
+import { PageNotFoundComponent } from 'src/app/pages/page-not-found/page-not-found.component';
+import { ProcesandoComponent } from 'src/app/auth/procesando/procesando.component';
+import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recuperar-contrasena.component';
+import { ResumenCobrosComponent } from './auth/resumen-cobros/resumen-cobros.component';
+import { SubirPlantillaComponent } from 'src/app/pages/subir-plantilla/subir-plantilla.component';
 
 // CambiaContrasenaComponent
 
@@ -40,6 +49,19 @@ const routes: Routes = [
   { path: 'configurarServicios', component: ConfigurarServiciosComponent, data: { isEdit: false }, canActivate: [ClientGuard] },
   { path: 'editarServicios', component: ConfigurarServiciosComponent, data: { isEdit: true }, canActivate: [ AuthGuard, GtpOutputGuard ] },
   { path: 'crearContrasena', component: CrearContrasenaComponent, data: { isEdit: false }},
+
+  { path: 'identifiquemosEmpresa', component: IdentificarEmpresaComponent, data: { isEdit: false }},
+  { path: 'completaDatosEmpresa', component: CompletarDatosEmpresaComponent, data: { isEdit: false }},
+  { path: 'completadoPrimeraParte', component: CompletadoPrimeraParteComponent, data: { isEdit: false }},
+  { path: 'configuraCobrosParteUnoAfiliacion', component: ConfiguraCobrosParteUnoComponent, data: { isEdit: false }},
+  { path: 'configuraCobrosParteUno', component: ConfiguraCobrosParteUnoComponent, data: { isEdit: true }},
+  { path: 'configuraCobrosParteDos', component: ConfiguraCobrosParteDosComponent, data: { isEdit: false }},
+  { path: 'configuraCobrosParteTres', component: ConfiguraCobrosParteTresComponent, data: { isEdit: false }},
+  { path: 'configuraCobrosParteCuatro', component: ConfiguraCobrosParteCuatroComponent, data: { isEdit: false }},
+  { path: 'resumenCobros', component: ResumenCobrosComponent, data: { isEdit: true }},
+  { path: 'resumenCobrosAfiliacion', component: ResumenCobrosComponent, data: { isEdit: false }},
+  { path: 'editarCobros', component: EditarCobrosComponent, data: { isEdit: true }},
+
   { path: 'editaCuenta/:llave', component: CrearContrasenaComponent , data: { isEdit: true }},
   { path: 'procesando', component: ProcesandoComponent, canActivate: [LogoutGuard]},
   { path: 'configuracion', component: ConfigurarServiciosComponent},

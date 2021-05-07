@@ -1,38 +1,45 @@
-import { LogoutGuard } from './../shared/guards/logout.guard';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { AfiliacionComponent } from './afiliacion/afiliacion.component';
-import { ConfigurarServiciosComponent } from './configurar-servicios/configurar-servicios.component';
-import { ProcesandoComponent } from './procesando/procesando.component';
-import { CrearContrasenaComponent } from './crear-contrasena/crear-contrasena.component';
-import { AppRoutingModule } from 'src/app/app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule, MatRadioModule, MatSelectModule } from '@angular/material';
+import { DigitOnlyModule } from '@uiowa/digit-only';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { TooltipModule } from 'ngx-bootstrap';
+import { CookieService } from 'ngx-cookie-service';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { StorageService } from 'src/app/shared/services/storage.service';
-import { Optional } from '@angular/core';
-import { SkipSelf } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RecaptchaModule } from 'ng-recaptcha';
-import { CookieService } from 'ngx-cookie-service';
-import { DigitOnlyModule } from '@uiowa/digit-only';
-import { MatInputModule, MatFormFieldModule, MatSelectModule, MatCheckboxModule, MatRadioModule, MatIconModule } from '@angular/material';
-import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
-import { FormServicioComponent } from './form-servicio/form-servicio.component';
-import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
 import { CloseViewGuard } from '../shared/guards/close-view.guard';
 import { SharedModule } from '../shared/shared.module';
-import { NumberAccountDirective } from './form-servicio/number-account.directive';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
+import { LogoutGuard } from './../shared/guards/logout.guard';
+import { AfiliacionComponent } from './afiliacion/afiliacion.component';
 import { CambiaContrasenaComponent } from './cambia-contrasena/cambia-contrasena.component';
-import { FormServicioGtpComponent } from './form-servicio-gtp/form-servicio-gtp.component';
-import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.component';
-import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
-import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.component';
-import { TooltipModule } from 'ngx-bootstrap';
-import { LandingComponent } from './landing/landing.component';
+import { CompletadoPrimeraParteComponent } from './completado-primera-parte/completado-primera-parte.component';
+import { CompletarDatosEmpresaComponent } from './completar-datos-empresa/completar-datos-empresa.component';
+import { ConfiguraCobrosParteDosComponent } from './configura-cobros-parte-dos/configura-cobros-parte-dos.component';
+import { ConfiguraCobrosParteTresComponent } from './configura-cobros-parte-tres/configura-cobros-parte-tres.component';
+import { ConfiguraCobrosParteUnoComponent } from './configura-cobros-parte-uno/configura-cobros-parte-uno.component';
 import { ConfigurarCorreoGtpComponent } from './configurar-correo-gtp/configurar-correo-gtp.component';
+import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.component';
+import { ConfigurarServiciosComponent } from './configurar-servicios/configurar-servicios.component';
+import { CrearContrasenaComponent } from './crear-contrasena/crear-contrasena.component';
+import { FormEmpresaGTPComponent } from './form-empresa-gtp/form-empresa-gtp.component';
+import { FormServicioGtpComponent } from './form-servicio-gtp/form-servicio-gtp.component';
+import { FormServicioComponent } from './form-servicio/form-servicio.component';
+import { NumberAccountDirective } from './form-servicio/number-account.directive';
+import { OnlyNumbersFormDirective } from './form-servicio/only-numbers-form.directive';
+import { IdentificarEmpresaComponent } from './identificar-empresa/identificar-empresa.component';
+import { LandingComponent } from './landing/landing.component';
+import { BlockCopyPasteDirective } from './login/block-copy-paste.directive';
+import { LoginComponent } from './login/login.component';
+import { ProcesandoComponent } from './procesando/procesando.component';
+import { RecuperarContrasenaComponent } from './recuperar-contrasena/recuperar-contrasena.component';
+import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
+import { ConfiguraCobrosParteCuatroComponent } from './configura-cobros-parte-cuatro/configura-cobros-parte-cuatro.component';
+import { ResumenCobrosComponent } from './resumen-cobros/resumen-cobros.component';
+import { EditarCobrosComponent } from './editar-cobros/editar-cobros.component';
 
 @NgModule({
   imports: [
@@ -79,6 +86,16 @@ import { ConfigurarCorreoGtpComponent } from './configurar-correo-gtp/configurar
     ConfigurarGtpComponent,
     LandingComponent,
     ConfigurarCorreoGtpComponent,
+    IdentificarEmpresaComponent,
+    IdentificarEmpresaComponent,
+    CompletarDatosEmpresaComponent,
+    CompletadoPrimeraParteComponent,
+    ConfiguraCobrosParteUnoComponent,
+    ConfiguraCobrosParteDosComponent,
+    ConfiguraCobrosParteTresComponent,
+    ConfiguraCobrosParteCuatroComponent,
+    ResumenCobrosComponent,
+    EditarCobrosComponent,
   ],
   exports: [
     OnlyNumbersFormDirective

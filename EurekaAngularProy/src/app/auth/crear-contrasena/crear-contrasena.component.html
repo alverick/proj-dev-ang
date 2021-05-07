@@ -1,248 +1,658 @@
 <div>
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                <div class="texto-azul title-rp-emp">Ingresa los datos <br class="br-none-escritorio"> <br class="br-none-mobil"> de tu empresa </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
-                <div class="d-flex justify-content-end">
-                    <div class="cuadro-form ppr-5 ppl-5 pt-4 pb-3  bg-white cont-empresa">
-                        <form [formGroup]="registerForm" novalidate (submit)="onSubmit()" autocomplete="off">
-                            <div class="form-group">
-                                <mat-form-field class="super-full-width ">
-                                    <input class="input-text" aria-describedby="tooltip-0" tooltip="El RUC de tu empresa con el que ingresarás a la plataforma" formControlName="ruc" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.ruc.invalid" matInput type="text" autocomplete="new-text"
-                                        placeholder="RUC de tu empresa" appOnlynumbers minlength="11" maxlength="11">
-                                    <!-- <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')" [ngStyle]="{'display': f.ruc.hasError('required') ? 'block' : 'none' }">El RUC es obligatorio</mat-error> -->
-                                    <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required') && submittedRequired">El RUC es obligatorio</mat-error>
-                                    <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
-                                    <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group">
-                                <mat-form-field class="super-full-width ">
-
-                                    <input class="input-text" tooltip="Nombre con el que tus clientes te buscarán en los canales de Interbank al momento de pagarte" formControlName="nombre" (input)="nameSerInput($event)" (blur)="nameSerBlur($event)" appNameEnterpise [class.is-invalid]="f.nombre.invalid"
-                                        matInput type="text" autocomplete="new-text" placeholder="Nombre de tu empresa" minlength="3" maxlength="80">
-                                    <mat-error class="messsage-error">
-                                        <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required') && submittedRequired">El nombre es obligatorio</mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"> Ingrese un nombre valido </mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('pattern') && f.nombre.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                                <div *ngIf="MensajeName()" class="messsage-error">Escribe un nuevo nombre de la empresa</div>
-                            </div>
-                            <div class="form-group">
-                                <mat-form-field class="super-full-width">
-                                    <mat-label>Rubro de tu empresa</mat-label>
-                                    <mat-select class="input-text" formControlName="rubro" disableOptionCentering panelClass="pts30">
-                                        <mat-option class="input-text">Rubro de tu empresa</mat-option>
-                                        <mat-option class="input-text" *ngFor="let r of rubros" [value]="r.code">
-                                            {{r.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error class="messsage-error" *ngIf="f.rubro.invalid && f.rubro.hasError('required') && submittedRequired">Elija una opción</mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group">
-                                <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="email" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid" matInput type="text" autocomplete="new-text" minlength="10" maxlength="100" placeholder="E-mail">
-                                    <mat-error class="messsage-error">
-                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required') && submittedRequired">El E-mail es obligatorio</mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group">
-                                <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="telefono" (Keydown.space)="$event.preventDefault()" appOnlynumbers [class.is-invalid]="f.telefono.invalid" matInput type="text" autocomplete="new-text" placeholder="Teléfono o celular" minlength="6" maxlength="9">
-                                    <mat-error class="messsage-error">
-                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('required') && submittedRequired">Teléfono o celular es obligatorio</mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid && f.telefono.hasError('pattern')"> Ingrese un telefono o celular valido </mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.telefono.invalid  && !f.telefono.hasError('pattern') && f.telefono.hasError('minlength')"> El teléfono o celular debe tener mínimo 6 dígitos</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group">
-                                <mat-form-field class="w-100">
-                                    <mat-label>Operador</mat-label>
-                                    <mat-select class="input-text" formControlName="movilOperator" disableOptionCentering panelClass="pts30">
-                                        <mat-option class="input-text">Operador</mat-option>
-                                        <mat-option class="input-text" value="M">Movistar</mat-option>
-                                        <mat-option class="input-text" value="C">Claro</mat-option>
-                                        <mat-option class="input-text" value="E">Entel</mat-option>
-                                        <mat-option class="input-text" value="B">Bitel</mat-option>
-                                    </mat-select>
-                                    <mat-error class="messsage-error" *ngIf="f.movilOperator.invalid && f.movilOperator.hasError('required') && submittedRequired">Elija una opción</mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group">
-                                <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="contrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.contrasena.invalid" matInput type="password" autocomplete="new-password" placeholder="Contraseña">
-                                    <mat-error class="messsage-error">
-                                        <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('required') && submittedRequired">Contraseña es obligatorio</mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && f.contrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.contrasena.invalid && !f.contrasena.hasError('minlength') && f.contrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="form-group">
-                                <mat-form-field class="input-text super-full-width ">
-                                    <input formControlName="repcontrasena" (Keydown.space)="$event.preventDefault()" appBlockCopyPaste minlength="6" maxlength="20" [class.is-invalid]="f.repcontrasena.invalid" matInput type="password" autocomplete="new-password" placeholder="Repite la Contraseña">
-                                    <mat-error class="messsage-error">
-                                        <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('required') && submittedRequired">Debe repetir la contraseña</mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('mustMatch')">Debe ser igual a la contraseña </mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && f.repcontrasena.hasError('minlength')"> La contraseña debe tener mínimo 6 dígitos</mat-error>
-                                        <mat-error class="messsage-error" *ngIf="f.repcontrasena.invalid && !f.repcontrasena.hasError('minlength') && f.repcontrasena.hasError('unaletra')"> La contraseña debe tener por lo menos una letra</mat-error>
-                                    </mat-error>
-
-                                </mat-form-field>
-                            </div>
-
-                            <div class="form-group">
-                                <mat-checkbox formControlName="acceptterms" id="styled-checkbox-1">
-                                </mat-checkbox>
-                                &nbsp; <label class="acepto  pt-4" for="styled-checkbox-1 "> Acepto los</label><small (click)="terminos()"> términos y condiciones </small>
-
-                                <mat-error class="messsage-error " *ngIf="submitted && f.acceptterms.errors">Acepte los términos y condiciones</mat-error>
-                            </div>
-                            <div class="bnt-cont-reg">
-                                <button type="submit" class="btn-big btn-eureca-green w-100 text-white" (click)="enviarDatosEmpresa()" [disabled]="registerForm.value.acceptterms==false" [class.btn-disabled]="registerForm.value.acceptterms==false">
-                                    SIGUIENTE
-                              </button>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-                <br>
-            </div>
+  <br />
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+        <div class="texto-azul title-rp-emp">
+          Ingresa los datos <br class="br-none-escritorio" />
+          <br class="br-none-mobil" />
+          de tu empresa
         </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+        <div class="d-flex justify-content-end">
+          <div class="cuadro-form ppr-5 ppl-5 pt-4 pb-3 bg-white cont-empresa">
+            <form
+              [formGroup]="registerForm"
+              novalidate
+              (submit)="onSubmit()"
+              autocomplete="off"
+            >
+              <div class="form-group">
+                <mat-form-field class="super-full-width">
+                  <input
+                    class="input-text"
+                    aria-describedby="tooltip-0"
+                    tooltip="El RUC de tu empresa con el que ingresarás a la plataforma"
+                    formControlName="ruc"
+                    (Keydown.space)="$event.preventDefault()"
+                    [class.is-invalid]="f.ruc.invalid"
+                    matInput
+                    type="text"
+                    autocomplete="new-text"
+                    placeholder="RUC de tu empresa"
+                    appOnlynumbers
+                    minlength="11"
+                    maxlength="11"
+                  />
+                  <!-- <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')" [ngStyle]="{'display': f.ruc.hasError('required') ? 'block' : 'none' }">El RUC es obligatorio</mat-error> -->
+                  <mat-error
+                    class="messsage-error"
+                    *ngIf="
+                      f.ruc.invalid &&
+                      f.ruc.hasError('required') &&
+                      submittedRequired
+                    "
+                    >El RUC es obligatorio</mat-error
+                  >
+                  <mat-error
+                    class="messsage-error"
+                    *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"
+                  >
+                    Ingrese un ruc valido
+                  </mat-error>
+                  <mat-error
+                    class="messsage-error"
+                    *ngIf="
+                      f.ruc.invalid &&
+                      !f.ruc.hasError('pattern') &&
+                      f.ruc.hasError('minlength')
+                    "
+                  >
+                    El ruc debe tener 11 dígitos</mat-error
+                  >
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="super-full-width">
+                  <!-- placeholder="Nombre de tu empresa" -->
+                  <input
+                    class="input-text"
+                    tooltip="Nombre con el que tus clientes te buscarán en los canales de Interbank al momento de pagarte"
+                    formControlName="nombre"
+                    (input)="nameSerInput($event)"
+                    (blur)="nameSerBlur($event)"
+                    appNameEnterpise
+                    [class.is-invalid]="f.nombre.invalid"
+                    matInput
+                    type="text"
+                    autocomplete="new-text"
+                    placeholder="Nombre comercial de tu empresa"
+                    minlength="3"
+                    maxlength="80"
+                  />
+                  <mat-error class="messsage-error">
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.nombre.invalid &&
+                        f.nombre.hasError('required') &&
+                        submittedRequired
+                      "
+                      >El nombre es obligatorio</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"
+                    >
+                      Ingrese un nombre valido
+                    </mat-error>
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.nombre.invalid &&
+                        !f.nombre.hasError('pattern') &&
+                        f.nombre.hasError('minlength')
+                      "
+                    >
+                      El nombre debe tener mínimo 3 dígitos</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+                <div *ngIf="MensajeName()" class="messsage-error">
+                  Escribe un nuevo nombre de la empresa
+                </div>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="super-full-width">
+                  <mat-label>Rubro de tu empresa</mat-label>
+                  <mat-select
+                    class="input-text"
+                    formControlName="rubro"
+                    disableOptionCentering
+                    panelClass="pts30"
+                  >
+                    <mat-option class="input-text"
+                      >Rubro de tu empresa</mat-option
+                    >
+                    <mat-option
+                      class="input-text"
+                      *ngFor="let r of rubros"
+                      [value]="r.code"
+                    >
+                      {{ r.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error
+                    class="messsage-error"
+                    *ngIf="
+                      f.rubro.invalid &&
+                      f.rubro.hasError('required') &&
+                      submittedRequired
+                    "
+                    >Elija una opción</mat-error
+                  >
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="input-text super-full-width">
+                  <input
+                    formControlName="email"
+                    (Keydown.space)="$event.preventDefault()"
+                    [class.is-invalid]="f.email.invalid"
+                    matInput
+                    type="text"
+                    autocomplete="new-text"
+                    minlength="10"
+                    maxlength="100"
+                    placeholder="E-mail"
+                  />
+                  <mat-error class="messsage-error">
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.email.invalid &&
+                        f.email.hasError('required') &&
+                        submittedRequired
+                      "
+                      >El E-mail es obligatorio</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="f.email.invalid && f.email.hasError('pattern')"
+                    >
+                      Ingrese un E-mail valido
+                    </mat-error>
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.email.invalid &&
+                        !f.email.hasError('pattern') &&
+                        f.email.hasError('minlength')
+                      "
+                    >
+                      El E-mail debe tener mínimo 10 dígitos</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="input-text super-full-width">
+                  <input
+                    formControlName="telefono"
+                    (Keydown.space)="$event.preventDefault()"
+                    appOnlynumbers
+                    [class.is-invalid]="f.telefono.invalid"
+                    matInput
+                    type="text"
+                    autocomplete="new-text"
+                    placeholder="Teléfono o celular"
+                    minlength="6"
+                    maxlength="9"
+                  />
+                  <mat-error class="messsage-error">
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.telefono.invalid &&
+                        f.telefono.hasError('required') &&
+                        submittedRequired
+                      "
+                      >Teléfono o celular es obligatorio</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.telefono.invalid && f.telefono.hasError('pattern')
+                      "
+                    >
+                      Ingrese un telefono o celular valido
+                    </mat-error>
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.telefono.invalid &&
+                        !f.telefono.hasError('pattern') &&
+                        f.telefono.hasError('minlength')
+                      "
+                    >
+                      El teléfono o celular debe tener mínimo 6
+                      dígitos</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="w-100">
+                  <mat-label>Operador</mat-label>
+                  <mat-select
+                    class="input-text"
+                    formControlName="movilOperator"
+                    disableOptionCentering
+                    panelClass="pts30"
+                  >
+                    <mat-option class="input-text">Operador</mat-option>
+                    <mat-option class="input-text" value="M"
+                      >Movistar</mat-option
+                    >
+                    <mat-option class="input-text" value="C">Claro</mat-option>
+                    <mat-option class="input-text" value="E">Entel</mat-option>
+                    <mat-option class="input-text" value="B">Bitel</mat-option>
+                  </mat-select>
+                  <mat-error
+                    class="messsage-error"
+                    *ngIf="
+                      f.movilOperator.invalid &&
+                      f.movilOperator.hasError('required') &&
+                      submittedRequired
+                    "
+                    >Elija una opción</mat-error
+                  >
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="input-text super-full-width">
+                  <input
+                    formControlName="contrasena"
+                    (Keydown.space)="$event.preventDefault()"
+                    appBlockCopyPaste
+                    minlength="6"
+                    maxlength="20"
+                    [class.is-invalid]="f.contrasena.invalid"
+                    matInput
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Contraseña"
+                  />
+                  <mat-error class="messsage-error">
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.contrasena.invalid &&
+                        f.contrasena.hasError('required') &&
+                        submittedRequired
+                      "
+                      >Contraseña es obligatorio</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.contrasena.invalid &&
+                        f.contrasena.hasError('minlength')
+                      "
+                    >
+                      La contraseña debe tener mínimo 6 dígitos</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.contrasena.invalid &&
+                        !f.contrasena.hasError('minlength') &&
+                        f.contrasena.hasError('unaletra')
+                      "
+                    >
+                      La contraseña debe tener por lo menos una letra</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="input-text super-full-width">
+                  <input
+                    formControlName="repcontrasena"
+                    (Keydown.space)="$event.preventDefault()"
+                    appBlockCopyPaste
+                    minlength="6"
+                    maxlength="20"
+                    [class.is-invalid]="f.repcontrasena.invalid"
+                    matInput
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Repite la Contraseña"
+                  />
+                  <mat-error class="messsage-error">
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.repcontrasena.invalid &&
+                        f.repcontrasena.hasError('required') &&
+                        submittedRequired
+                      "
+                      >Debe repetir la contraseña</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.repcontrasena.invalid &&
+                        f.repcontrasena.hasError('mustMatch')
+                      "
+                      >Debe ser igual a la contraseña
+                    </mat-error>
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.repcontrasena.invalid &&
+                        f.repcontrasena.hasError('minlength')
+                      "
+                    >
+                      La contraseña debe tener mínimo 6 dígitos</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.repcontrasena.invalid &&
+                        !f.repcontrasena.hasError('minlength') &&
+                        f.repcontrasena.hasError('unaletra')
+                      "
+                    >
+                      La contraseña debe tener por lo menos una letra</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-checkbox
+                  formControlName="acceptterms"
+                  id="styled-checkbox-1"
+                >
+                </mat-checkbox>
+                &nbsp;
+                <label class="acepto pt-4" for="styled-checkbox-1 ">
+                  Acepto los</label
+                ><small (click)="terminos()"> términos y condiciones </small>
+
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="submitted && f.acceptterms.errors"
+                  >Acepte los términos y condiciones</mat-error
+                >
+              </div>
+              <div class="bnt-cont-reg">
+                <button
+                  type="submit"
+                  class="btn-big btn-eureca-green w-100 text-white"
+                  (click)="enviarDatosEmpresa()"
+                  [disabled]="registerForm.value.acceptterms == false"
+                  [class.btn-disabled]="registerForm.value.acceptterms == false"
+                >
+                  SIGUIENTE
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <br />
+      </div>
     </div>
+  </div>
 </div>
 
-
-<div class="modal fade" id="terminos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="ppt-5 ppl-5">
-                <div class="form-row">
-                    <div class="form-group col-md-10">
-                        <div class=" terminos-title" id="exampleModalLabel">Términos y condiciones </div>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <div style="float: right;  cursor: pointer;" data-dismiss="modal" aria-label="Close" class="ppr-5 close mano font-cerrar">
-                            <img src="assets/images/cerrar.svg">
-                        </div>
-                    </div>
-
-                </div>
+<div
+  class="modal fade"
+  id="terminos"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="ppt-5 ppl-5">
+        <div class="form-row">
+          <div class="form-group col-md-10">
+            <div class="terminos-title" id="exampleModalLabel">
+              Términos y condiciones
             </div>
-
-            <div class="terminos-body pp-5">
-                <perfect-scrollbar class="content-container">
-                    <p>
-                        BANCO INTERNACIONAL DEL PERÚ con RUC 20100053455 y domicilio en Carlos Villarán N° 140 Urbanización Santa Catalina, distrito de la Victoria, provincia y departamento de Lima, te ofrece el servicio de recaudación Interbank Cobro Simple<br
-                        /><br /> Interbank Cobro Simple es una web de Interbank que funciona como una plataforma de recaudación de pagos para empresas, mediante la cual las empresas una vez que hayan afiliado su cuenta corriente de Interbank, podrán realizar
-                        la gestión de sus cobranzas de recibos, facturas, boletas, obligaciones y cualquier otro documento representativo de crédito o deuda, susceptible de ser cobrado.
-                    </p>
-                    <p>
-                        1. Condiciones del servicio y uso
-                    </p>
-                    <p>
-                        EL CLIENTE declara conocer que para acceder a la plataforma web deberá contar con una cuenta corriente activa de Interbank y una computadora, laptop y/o smartphone con acceso a internet o alguna red inalámbrica.<br /><br /> EL
-                        CLIENTE deberá crear un usuario y clave para poder acceder a Interbank Cobro Simple, para ello se deberá ingresar su RUC, nombre de empresa, rubro/sector, e-mail, teléfono o celular y contraseña, para luego proceder a afiliar su
-                        servicio de recaudación.<br /><br /> EL CLIENTE deberá configurar los servicios de recaudación que desea implementar en la misma plataforma web, en el apartado “Configura tus Servicios”, completando toda la información requerida
-                        por cada servicio según indica el formulario, para lo cual deberá ingresar el nombre del servicio, código cliente, ¿qué datos tiene de su cliente?, ¿cómo quiere que pague su cliente?, N° de cuenta corriente de Interbank, medios
-                        de pago de sus clientes, modalidad de cobro e información de mora; para mayor detalle consultar con el manual de uso que se encuentra a su disposición en la plataforma web de Interbank Cobro Simple.<br /><br /> EL CLIENTE, autoriza
-                        a Interbank a acceder a su información para analizarla, guardarla y procesarla para poder ofrecerle diferentes tipos de productos.<br /><br /> EL CLIENTE, luego de haber accedido a la plataforma con su usuario y clave, y creado
-                        los servicios que desea recaudar, podrá registrar los cobros que quiere realizar a sus CLIENTES PAGADORES.<br /><br /> INTERBANK prestará el servicio de recaudación a favor del CLIENTE a través de su red de Tiendas dentro del horario
-                        de atención al público establecido para este tipo de servicios, así como mediante su Banca por Internet e Interbank Agente, de acuerdo con los lineamientos y condiciones establecidas por el cliente en el apartado “Configura tus
-                        servicios”.
-                        <br /><br /> EL CLIENTE entiende que el proceso y/o los mecanismos establecidos por INTERBANK en la presente plataforma de cobro, han sido claros, y que mediante la aceptación de los términos y condiciones del servicio, manifiesta
-                        su voluntad y aceptación para afiliarse al Servicio de Recaudación puesto a disposición por INTERBANK, cuyas características y funcionalidades se encuentran descritas la plataforma web de Interbank Cobro Simple y han sido configuradas
-                        por EL CLIENTE en el apartado “Configura tus servicios”.
-                    </p>
-                    <p>
-                        2. Obligaciones de Interbank
-                    </p>
-                    <p>
-                        Sobre la base de la información proporcionada por EL CLIENTE, INTERBANK cobrará, procesará, registrará e informará de los pagos efectuados por los CLIENTES PAGADORES en la misma plataforma web de Interbank Cobro Simple. Siendo EL CLIENTE responsable por
-                        la exactitud de la información que proporcione a INTERBANK para efectos del Servicio de Recaudación, incluida la información contenida en las liquidaciones, recibos, facturas u otros documentos de crédito, así como por el sustento
-                        formal o legal de las sumas consignadas en los mismos, entre otros. <br /><br /> INTERBANK se compromete a otorgar una cobertura a través de su red de tiendas, banca por Internet e Interbank Agente, dentro
-                        del horario de atención de cada una de éstas, siempre que las condiciones de orden público, meteorológicas y de comunicación así lo permitan. Los canales habilitados se indicarán por EL CLIENTE en la plataforma web de Interbank
-                        Cobro Simple en el apartado “configura tus servicios”<br /><br /> A recibir de los CLIENTES PAGADORES las sumas correspondientes a los pagos a efectuarse a favor de EL CLIENTE, salvo que la aceptación de dichos pagos por INTERBANK
-                        contravenga alguna norma de orden público o norma imperativa. INTERBANK entregará a los CLIENTES PAGADORES un comprobante de pago por operación de acuerdo al canal que haya utilizado para realizar el pago.<br /><br /> A efectuar
-                        los abonos recibidos en cobranza a favor de EL CLIENTE en la cuenta bancaria indicada por EL CLIENTE en la plataforma web de Interbank Cobro Simple al momento de configurar su servicio de recaudación.<br /><br /> La CUENTA DE ABONO
-                        deberá ser de la misma moneda del abono cobrado a los CLIENTES PAGADORES. En caso, el Servicio de Recaudación pueda ser efectuado en soles y dólares americanos, EL CLIENTE deberá señalar una cuenta para cada tipo de abono (Soles
-                        o Dólares).<br /><br /> A efectuar el cobro de la comisión establecida por la contraprestación del servicio, la cual será cobrada al CLIENTE PAGADOR en el momento de realizar la transacción, la tarifa a aplicar se encuentra establecida
-                        en el numeral 5 del presente documento.
-                    </p>
-                    <p>
-                        3. Obligaciones del Cliente
-                    </p>
-                    <p>
-                        EL CLIENTE confirma su voluntad de recibir notificaciones de los cobros realizados a través de la plataforma web.<br /><br /> EL CLIENTE conoce su obligación de mantener actualizados los datos de la empresa y personales.<br /><br
-                        /> EL CLIENTE se obliga a operar personalmente su sesión. Toda operación realizada por EL CLIENTE a través de Interbank Cobro Simple se presumirá hecha por EL CLIENTE bajo su total responsabilidad. Interbank no asumirá responsabilidad
-                        alguna por las operaciones realizadas por el Cliente.<br /><br /> EL CLIENTE es el único responsable por el suministro de los datos, por lo que, se somete a las responsabilidades administrativas y/o penales que la legislación peruana
-                        tenga prevista para el efecto.<br /><br /> EL CLIENTE podrá desafiliar su cuenta del servicio en cualquier momento enviando un correo al buzón solucionempresa@intercorp.com.pe<br /><br /> EL CLIENTE declara que ante el mal uso
-                        de Interbank Cobro Simple, INTERBANK podrá bloquearlo de su lista de Clientes permitidos para utilizar la plataforma sin aviso alguno, por lo tanto, un mal uso de la plataforma, aprovechamiento indebido del servicio o actos que
-                        desnaturalicen o generen una situación de aprovechamiento y/o ventaja indebida por parte del Cliente que perjudique a Interbank, se encuentra expresamente prohibido y será considerado como un acto de piratería de software que infringe
-                        las leyes de la propiedad intelectual e industrial, de tal forma que Interbank podrá exigir responsabilidad por el incumplimiento de esta condición, según la normativa vigente.<br /><br /> INTERBANK no asumirá ninguna responsabilidad
-                        por cualquier problema o inconveniente técnico o físico por caso fortuito o fuerza mayor que imposibilite, retrase, demore la ejecución o no permita la realización exitosa del servicio que se presta a través de la plataforma de
-                        cobros Interbank Cobro Simple. <br /><br /> INTERBANK no asumirá responsabilidad alguna por culpa leve o por cualquier problema o inconveniente imputable a terceros, sea este de índole técnico, físico o producto de un caso fortuito
-                        o fuerza mayor que imposible, retrase, demore la ejecución o no permita la realización exitosa del Servicio.
-                    </p>
-                    <p>
-                        4. Del procedimiento del servicio de recaudación
-                    </p>
-                    <p>
-                        Los pagos que se efectúen a favor del CLIENTE, podrán ser recibidos por INTERBANK en efectivo, cargo en cuenta, cheque girado por el propio INTERBANK a la orden del CLIENTE y/o cheque de otro Banco, de acuerdo con la configuración del servicio ingresada
-                        en la plataforma web de Interbank Cobro Simple por EL CLIENTE. Siempre que tales medios de pagos cuenten con las constancias y se encuentren sujetos a los procedimientos estándares que INTERBANK tenga establecidos para este tipo
-                        de operaciones, los cuales EL CLIENTE declara conocer y aceptar.<br /><br /> INTERBANK recibirá el pago total o parcial de los montos adeudados por los CLIENTES PAGADORES, de acuerdo con los datos e información
-                        proporcionada por EL CLIENTE a INTERBANK. EL CLIENTE será el único y exclusivo responsable por la oportunidad, errores, fallas en el envío de la información a INTERBANK, así como por el contenido de la misma, tales como, datos
-                        de los CLIENTES PAGADORES, montos a ser cobrados, entre otros. Además, es responsabilidad del CLIENTE PAGADOR confirmar al final de la transacción, a través del voucher, que se haya abonado el monto indicado y que el pago corresponda
-                        a su código deudor.<br /><br /> Las obligaciones de INTERBANK por la prestación del Servicio de Recaudación se limitan al cumplimiento de las instrucciones ordenadas por EL CLIENTE al momento de configurar el servicio de recaudación
-                        en la plataforma web de Interbank Cobro Simple, así como a mantener la reserva tributaría y confidencialidad sobre la información recibida. En este sentido, EL CLIENTE se responsabiliza expresamente por las instrucciones, documentación
-                        e información proporcionada a INTERBANK, la oportunidad y contenido de éstas, así como por la información contenida en los documentos de crédito materia de cobranza. Los reclamos que pudieran interponer los CLIENTES PAGADORES con
-                        relación al contenido de la documentación e información proporcionada por EL CLIENTE deberán ser atendidos directamente por EL CLIENTE. INTERBANK no atenderá las reclamaciones de quienes efectúen los pagos en la cuenta del CLIENTE.<br
-                        /><br /> Asimismo, las partes acuerdan que INTERBANK no será responsable por los daños o perjuicios que pudieran originarse por los pagos que no puedan efectuar los CLIENTES PAGADORES por causas no imputables a INTERBANK, tales
-                        como errores en los sistemas de comunicación, defectos o problemas de la información proporcionada por EL CLIENTE, errores operativos originados por caso fortuito o fuerza mayor, entre otros. De presentarse una de estas situaciones
-                        INTERBANK notificará a EL CLIENTE en un plazo no mayor de cinco (5) días hábiles el inconveniente que se haya presentado.
-                    </p>
-                    <p>
-                        5. Tarifas del Servicio
-                    </p>
-                    <p>
-                        INTERBANK, por la prestación del Servicio de Recaudación, cobrará una comisión a cargo del CLIENTE PAGADOR por cada recibo cobrado, ascendente al monto establecido por EL CLIENTE en la plataforma al momento de ingresar sus cobranzas. <br
-                        /><br /> La comisión que se cobrará al CLIENTE PAGADOR el mismo día de producida la transacción de pago se regirán en base a los canales de pago que haya seleccionado EL CLIENTE al momento de configurar su servicio de recaudación
-                        en la plataforma de Interbank Cobro Simple. Dichas tarifas son:</p>
-                    <table>
-                        <tr>
-                            <td style="padding-right: 25px">Comisión Tiendas Interbank o Money Market:</td>
-                            <td>S/. 7.00</td>
-                        </tr>
-                        <tr>
-                            <td>Comisión Agentes Interbank:</td>
-                            <td>S/. 1.00</td>
-                        </tr>
-                        <tr>
-                            <td>Comisión BPI / App:</td>
-                            <td>Gratuito</td>
-                        </tr>
-                    </table><br />
-                    <p>
-                        INTERBANK se reserva el derecho de modificar la comisión antes señalada, cuando las condiciones de mercado y/o crediticias de EL CLIENTE así lo ameriten. La modificación de tal comisión entrará en vigencia a los cuarenta y cinco (45) días calendarios
-                        de comunicadas a EL CLIENTE. Los CLIENTES PAGADORES deberán ser informados por EL CLIENTE de dichas modificaciones.<br /><br /> Cualquier modificación sobre las condiciones del servicio de pago, las operaciones
-                        realizables o cualquier otro aspecto del servicio se le informará a través del correo electrónico registrado en esta plataforma.<br /><br /> Los Términos y Condiciones del servicio se encuentran a disposición del CLIENTE en la
-                        misma plataforma web de Interbank Cobro Simple para su conservación y posterior consulta. EL CLIENTE declara conocer que estos Términos y Condiciones del Servicio podrán ser eventualmente modificados, por lo que la versión que
-                        se encontrará disponible será la vigente al momento de su consulta.
-                    </p>
-                </perfect-scrollbar>
-
+          </div>
+          <div class="form-group col-md-2">
+            <div
+              style="float: right; cursor: pointer"
+              data-dismiss="modal"
+              aria-label="Close"
+              class="ppr-5 close mano font-cerrar"
+            >
+              <img src="assets/images/cerrar.svg" />
             </div>
-
+          </div>
         </div>
+      </div>
+
+      <div class="terminos-body pp-5">
+        <perfect-scrollbar class="content-container">
+          <p>
+            BANCO INTERNACIONAL DEL PERÚ con RUC 20100053455 y domicilio en
+            Carlos Villarán N° 140 Urbanización Santa Catalina, distrito de la
+            Victoria, provincia y departamento de Lima, te ofrece el servicio de
+            recaudación Interbank Cobro Simple<br /><br />
+            Interbank Cobro Simple es una web de Interbank que funciona como una
+            plataforma de recaudación de pagos para empresas, mediante la cual
+            las empresas una vez que hayan afiliado su cuenta corriente de
+            Interbank, podrán realizar la gestión de sus cobranzas de recibos,
+            facturas, boletas, obligaciones y cualquier otro documento
+            representativo de crédito o deuda, susceptible de ser cobrado.
+          </p>
+          <p>1. Condiciones del servicio y uso</p>
+          <p>
+            EL CLIENTE declara conocer que para acceder a la plataforma web
+            deberá contar con una cuenta corriente activa de Interbank y una
+            computadora, laptop y/o smartphone con acceso a internet o alguna
+            red inalámbrica.<br /><br />
+            EL CLIENTE deberá crear un usuario y clave para poder acceder a
+            Interbank Cobro Simple, para ello se deberá ingresar su RUC, nombre
+            de empresa, rubro/sector, e-mail, teléfono o celular y contraseña,
+            para luego proceder a afiliar su servicio de recaudación.<br /><br />
+            EL CLIENTE deberá configurar los servicios de recaudación que desea
+            implementar en la misma plataforma web, en el apartado “Configura
+            tus Servicios”, completando toda la información requerida por cada
+            servicio según indica el formulario, para lo cual deberá ingresar el
+            nombre del servicio, código cliente, ¿qué datos tiene de su
+            cliente?, ¿cómo quiere que pague su cliente?, N° de cuenta corriente
+            de Interbank, medios de pago de sus clientes, modalidad de cobro e
+            información de mora; para mayor detalle consultar con el manual de
+            uso que se encuentra a su disposición en la plataforma web de
+            Interbank Cobro Simple.<br /><br />
+            EL CLIENTE, autoriza a Interbank a acceder a su información para
+            analizarla, guardarla y procesarla para poder ofrecerle diferentes
+            tipos de productos.<br /><br />
+            EL CLIENTE, luego de haber accedido a la plataforma con su usuario y
+            clave, y creado los servicios que desea recaudar, podrá registrar
+            los cobros que quiere realizar a sus CLIENTES PAGADORES.<br /><br />
+            INTERBANK prestará el servicio de recaudación a favor del CLIENTE a
+            través de su red de Tiendas dentro del horario de atención al
+            público establecido para este tipo de servicios, así como mediante
+            su Banca por Internet e Interbank Agente, de acuerdo con los
+            lineamientos y condiciones establecidas por el cliente en el
+            apartado “Configura tus servicios”. <br /><br />
+            EL CLIENTE entiende que el proceso y/o los mecanismos establecidos
+            por INTERBANK en la presente plataforma de cobro, han sido claros, y
+            que mediante la aceptación de los términos y condiciones del
+            servicio, manifiesta su voluntad y aceptación para afiliarse al
+            Servicio de Recaudación puesto a disposición por INTERBANK, cuyas
+            características y funcionalidades se encuentran descritas la
+            plataforma web de Interbank Cobro Simple y han sido configuradas por
+            EL CLIENTE en el apartado “Configura tus servicios”.
+          </p>
+          <p>2. Obligaciones de Interbank</p>
+          <p>
+            Sobre la base de la información proporcionada por EL CLIENTE,
+            INTERBANK cobrará, procesará, registrará e informará de los pagos
+            efectuados por los CLIENTES PAGADORES en la misma plataforma web de
+            Interbank Cobro Simple. Siendo EL CLIENTE responsable por la
+            exactitud de la información que proporcione a INTERBANK para efectos
+            del Servicio de Recaudación, incluida la información contenida en
+            las liquidaciones, recibos, facturas u otros documentos de crédito,
+            así como por el sustento formal o legal de las sumas consignadas en
+            los mismos, entre otros. <br /><br />
+            INTERBANK se compromete a otorgar una cobertura a través de su red
+            de tiendas, banca por Internet e Interbank Agente, dentro del
+            horario de atención de cada una de éstas, siempre que las
+            condiciones de orden público, meteorológicas y de comunicación así
+            lo permitan. Los canales habilitados se indicarán por EL CLIENTE en
+            la plataforma web de Interbank Cobro Simple en el apartado
+            “configura tus servicios”<br /><br />
+            A recibir de los CLIENTES PAGADORES las sumas correspondientes a los
+            pagos a efectuarse a favor de EL CLIENTE, salvo que la aceptación de
+            dichos pagos por INTERBANK contravenga alguna norma de orden público
+            o norma imperativa. INTERBANK entregará a los CLIENTES PAGADORES un
+            comprobante de pago por operación de acuerdo al canal que haya
+            utilizado para realizar el pago.<br /><br />
+            A efectuar los abonos recibidos en cobranza a favor de EL CLIENTE en
+            la cuenta bancaria indicada por EL CLIENTE en la plataforma web de
+            Interbank Cobro Simple al momento de configurar su servicio de
+            recaudación.<br /><br />
+            La CUENTA DE ABONO deberá ser de la misma moneda del abono cobrado a
+            los CLIENTES PAGADORES. En caso, el Servicio de Recaudación pueda
+            ser efectuado en soles y dólares americanos, EL CLIENTE deberá
+            señalar una cuenta para cada tipo de abono (Soles o Dólares).<br /><br />
+            A efectuar el cobro de la comisión establecida por la
+            contraprestación del servicio, la cual será cobrada al CLIENTE
+            PAGADOR en el momento de realizar la transacción, la tarifa a
+            aplicar se encuentra establecida en el numeral 5 del presente
+            documento.
+          </p>
+          <p>3. Obligaciones del Cliente</p>
+          <p>
+            EL CLIENTE confirma su voluntad de recibir notificaciones de los
+            cobros realizados a través de la plataforma web.<br /><br />
+            EL CLIENTE conoce su obligación de mantener actualizados los datos
+            de la empresa y personales.<br /><br />
+            EL CLIENTE se obliga a operar personalmente su sesión. Toda
+            operación realizada por EL CLIENTE a través de Interbank Cobro
+            Simple se presumirá hecha por EL CLIENTE bajo su total
+            responsabilidad. Interbank no asumirá responsabilidad alguna por las
+            operaciones realizadas por el Cliente.<br /><br />
+            EL CLIENTE es el único responsable por el suministro de los datos,
+            por lo que, se somete a las responsabilidades administrativas y/o
+            penales que la legislación peruana tenga prevista para el efecto.<br /><br />
+            EL CLIENTE podrá desafiliar su cuenta del servicio en cualquier
+            momento enviando un correo al buzón
+            solucionempresa@intercorp.com.pe<br /><br />
+            EL CLIENTE declara que ante el mal uso de Interbank Cobro Simple,
+            INTERBANK podrá bloquearlo de su lista de Clientes permitidos para
+            utilizar la plataforma sin aviso alguno, por lo tanto, un mal uso de
+            la plataforma, aprovechamiento indebido del servicio o actos que
+            desnaturalicen o generen una situación de aprovechamiento y/o
+            ventaja indebida por parte del Cliente que perjudique a Interbank,
+            se encuentra expresamente prohibido y será considerado como un acto
+            de piratería de software que infringe las leyes de la propiedad
+            intelectual e industrial, de tal forma que Interbank podrá exigir
+            responsabilidad por el incumplimiento de esta condición, según la
+            normativa vigente.<br /><br />
+            INTERBANK no asumirá ninguna responsabilidad por cualquier problema
+            o inconveniente técnico o físico por caso fortuito o fuerza mayor
+            que imposibilite, retrase, demore la ejecución o no permita la
+            realización exitosa del servicio que se presta a través de la
+            plataforma de cobros Interbank Cobro Simple. <br /><br />
+            INTERBANK no asumirá responsabilidad alguna por culpa leve o por
+            cualquier problema o inconveniente imputable a terceros, sea este de
+            índole técnico, físico o producto de un caso fortuito o fuerza mayor
+            que imposible, retrase, demore la ejecución o no permita la
+            realización exitosa del Servicio.
+          </p>
+          <p>4. Del procedimiento del servicio de recaudación</p>
+          <p>
+            Los pagos que se efectúen a favor del CLIENTE, podrán ser recibidos
+            por INTERBANK en efectivo, cargo en cuenta, cheque girado por el
+            propio INTERBANK a la orden del CLIENTE y/o cheque de otro Banco, de
+            acuerdo con la configuración del servicio ingresada en la plataforma
+            web de Interbank Cobro Simple por EL CLIENTE. Siempre que tales
+            medios de pagos cuenten con las constancias y se encuentren sujetos
+            a los procedimientos estándares que INTERBANK tenga establecidos
+            para este tipo de operaciones, los cuales EL CLIENTE declara conocer
+            y aceptar.<br /><br />
+            INTERBANK recibirá el pago total o parcial de los montos adeudados
+            por los CLIENTES PAGADORES, de acuerdo con los datos e información
+            proporcionada por EL CLIENTE a INTERBANK. EL CLIENTE será el único y
+            exclusivo responsable por la oportunidad, errores, fallas en el
+            envío de la información a INTERBANK, así como por el contenido de la
+            misma, tales como, datos de los CLIENTES PAGADORES, montos a ser
+            cobrados, entre otros. Además, es responsabilidad del CLIENTE
+            PAGADOR confirmar al final de la transacción, a través del voucher,
+            que se haya abonado el monto indicado y que el pago corresponda a su
+            código deudor.<br /><br />
+            Las obligaciones de INTERBANK por la prestación del Servicio de
+            Recaudación se limitan al cumplimiento de las instrucciones
+            ordenadas por EL CLIENTE al momento de configurar el servicio de
+            recaudación en la plataforma web de Interbank Cobro Simple, así como
+            a mantener la reserva tributaría y confidencialidad sobre la
+            información recibida. En este sentido, EL CLIENTE se responsabiliza
+            expresamente por las instrucciones, documentación e información
+            proporcionada a INTERBANK, la oportunidad y contenido de éstas, así
+            como por la información contenida en los documentos de crédito
+            materia de cobranza. Los reclamos que pudieran interponer los
+            CLIENTES PAGADORES con relación al contenido de la documentación e
+            información proporcionada por EL CLIENTE deberán ser atendidos
+            directamente por EL CLIENTE. INTERBANK no atenderá las reclamaciones
+            de quienes efectúen los pagos en la cuenta del CLIENTE.<br /><br />
+            Asimismo, las partes acuerdan que INTERBANK no será responsable por
+            los daños o perjuicios que pudieran originarse por los pagos que no
+            puedan efectuar los CLIENTES PAGADORES por causas no imputables a
+            INTERBANK, tales como errores en los sistemas de comunicación,
+            defectos o problemas de la información proporcionada por EL CLIENTE,
+            errores operativos originados por caso fortuito o fuerza mayor,
+            entre otros. De presentarse una de estas situaciones INTERBANK
+            notificará a EL CLIENTE en un plazo no mayor de cinco (5) días
+            hábiles el inconveniente que se haya presentado.
+          </p>
+          <p>5. Tarifas del Servicio</p>
+          <p>
+            INTERBANK, por la prestación del Servicio de Recaudación, cobrará
+            una comisión a cargo del CLIENTE PAGADOR por cada recibo cobrado,
+            ascendente al monto establecido por EL CLIENTE en la plataforma al
+            momento de ingresar sus cobranzas. <br /><br />
+            La comisión que se cobrará al CLIENTE PAGADOR el mismo día de
+            producida la transacción de pago se regirán en base a los canales de
+            pago que haya seleccionado EL CLIENTE al momento de configurar su
+            servicio de recaudación en la plataforma de Interbank Cobro Simple.
+            Dichas tarifas son:
+          </p>
+          <table>
+            <tr>
+              <td style="padding-right: 25px">
+                Comisión Tiendas Interbank o Money Market:
+              </td>
+              <td>S/. 7.00</td>
+            </tr>
+            <tr>
+              <td>Comisión Agentes Interbank:</td>
+              <td>S/. 1.00</td>
+            </tr>
+            <tr>
+              <td>Comisión BPI / App:</td>
+              <td>Gratuito</td>
+            </tr>
+          </table>
+          <br />
+          <p>
+            INTERBANK se reserva el derecho de modificar la comisión antes
+            señalada, cuando las condiciones de mercado y/o crediticias de EL
+            CLIENTE así lo ameriten. La modificación de tal comisión entrará en
+            vigencia a los cuarenta y cinco (45) días calendarios de comunicadas
+            a EL CLIENTE. Los CLIENTES PAGADORES deberán ser informados por EL
+            CLIENTE de dichas modificaciones.<br /><br />
+            Cualquier modificación sobre las condiciones del servicio de pago,
+            las operaciones realizables o cualquier otro aspecto del servicio se
+            le informará a través del correo electrónico registrado en esta
+            plataforma.<br /><br />
+            Los Términos y Condiciones del servicio se encuentran a disposición
+            del CLIENTE en la misma plataforma web de Interbank Cobro Simple
+            para su conservación y posterior consulta. EL CLIENTE declara
+            conocer que estos Términos y Condiciones del Servicio podrán ser
+            eventualmente modificados, por lo que la versión que se encontrará
+            disponible será la vigente al momento de su consulta.
+          </p>
+        </perfect-scrollbar>
+      </div>
     </div>
+  </div>
 </div>

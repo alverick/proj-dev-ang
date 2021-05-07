@@ -1,13 +1,15 @@
-import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RubroModel } from 'src/app/shared/models';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { GtpEmpresa, GtpPost, GtpServcegtp } from 'src/app/shared/models/gtp-post';
+
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { GtpService } from 'src/app/shared/services/gtp.service';
-import { drawPopup } from 'src/app/shared/services/popups';
-import Swal from 'sweetalert2';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import { DataServiceGTP } from './../../shared/models/data-service-gtp';
+import { GtpService } from 'src/app/shared/services/gtp.service';
+import { RubroModel } from 'src/app/shared/models';
+import Swal from 'sweetalert2';
+import { drawPopup } from 'src/app/shared/services/popups';
+
 // import { ConsoleReporter } from 'jasmine';
 
 @Component({
@@ -77,9 +79,7 @@ export class AprobacionesComponent implements OnInit {
     /*  this.gtpService.GetEnterpriseGtp2(this.llave)
       .subscribe( data => {
         this.empresa = data;
-        console.log('EMPRESA 2');
-        console.log(this.empresa);
-        console.log('END EMPRESA 2');
+
          }); */
   }
 
@@ -141,8 +141,6 @@ export class AprobacionesComponent implements OnInit {
   }
 
   MostrarEmpresa2() {
-    /* console.log('estado de empresa');
-     console.log(this.Enterprise.newNameGTPStatus); */
     if (this.Enterprise.newNameGTPStatus === 1) {
       return false;
     } else {
@@ -166,7 +164,7 @@ export class AprobacionesComponent implements OnInit {
     // NO APROBADOS
     const nombreApp = this.gtpService.services.filter((svc) => svc.acceptednewName === false && (svc.name !== svc.newName)).length;
     const CodDeuApp = this.gtpService.services.filter((svc) => svc.acceptednewNameCode === false && (svc.debtorCode !== svc.newNameCode)).length;
-    console.log(' this.scv', this.scv)
+
     // tslint:disable-next-line: max-line-length cunatos son los que faltan revisar
     const ListCantidadNombre = this.gtpService.services.filter((svc) => ((svc.newNameGTPStatus === 0 || svc.newNameGTPStatus === 2) && (svc.acceptednewName === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */).length;
     // tslint:disable-next-line:max-line-length
@@ -195,14 +193,8 @@ export class AprobacionesComponent implements OnInit {
       desap = 1;
     }
     const notAprov = CodDeuApp + nombreApp + desap;
-    /* console.log('Cantidad que falta aprobar de nombres ' + ListCantidadNombre);
-    console.log('Cantidad que falta aprobar de codigo ' + ListCantidadCodigoDeudor);
-    console.log('cantidad de no aprobados' + notAprov);
-    console.log('EMPRESA'+ this.Enterprise.NombreApproved +' ' + Empcant ); */
     this.emp = { ClientId: this.llave, NombreAprobado: this.Enterprise.NombreApproved };
     // debugger
-    console.log('ListInAprobacion', ListInAprobacion)
-
     ListInAprobacion.forEach(s => {
       this.scv.push({
         ServiceId: s.id,
@@ -211,14 +203,6 @@ export class AprobacionesComponent implements OnInit {
         Res: s.res
       });
     });
-
-    console.log(' this.scv', this.scv)
-    console.log(' this.emp', this.emp)
-    console.log('notAprov', notAprov)
-    console.log('total', total)
-
-
-
 
     if (total === 0) {
       if (notAprov > 0) {
@@ -378,16 +362,14 @@ export class AprobacionesComponent implements OnInit {
         }).then((result) => {
           if (result.value) {
             // debugger
-            console.log('TODOS LOS CAMPOS AN SIDO APROBADO.......');
+
             if ((this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) && this.scv.length === 0) {
-              console.log('NO ENVIA NADA ' + this.scv.length);
-              console.log('emp', this.emp)
-              console.log('scv', this.scv)
+
               // this.router.navigate(['/gtp']);
               return;
             }
             if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview && this.scv.length > 0) {
-              console.log('ENVIA AMBOS');
+
               this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
                 .subscribe(d => {
                   if (d) {
@@ -400,13 +382,9 @@ export class AprobacionesComponent implements OnInit {
             }
             if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) {
 
-              console.log('SOLO ENVIA SERVICIOS');
-
-              console.log('IMPRESION FINAL MACHILO');
-              console.log(this.scv);
               this.gtpService.AprobarEmpresaServ({ EnterpriseObj: null, ListServiceObj: this.scv })
                 .subscribe(d => {
-                  console.log(d);
+
                   if (d) {
                     this.router.navigate(['/gtp']);
                   } else {
@@ -416,7 +394,7 @@ export class AprobacionesComponent implements OnInit {
               return;
             }
             if (this.scv.length === 0) {
-              console.log('SOLO ENVIA EMPRESA');
+
               this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: null })
                 .subscribe(d => {
                   if (d) {
@@ -427,7 +405,7 @@ export class AprobacionesComponent implements OnInit {
                 });
               return;
             } else {
-              console.log('ENVIA AMBOS');
+
               this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
                 .subscribe(d => {
                   if (d) {
@@ -443,8 +421,6 @@ export class AprobacionesComponent implements OnInit {
             EnterpriseObj: this.emp,
             ListServiceObj: this.scv
           };
-          console.log('IMPRESION FINAL');
-          console.log(this.gtppost);
         });
 
       }
@@ -494,7 +470,7 @@ export class AprobacionesComponent implements OnInit {
   }
 
   getStateEnterprise(Enterprise: DataEnterpriseGTP) {
-    //  console.log('estado de la empresa' + data.newNameGTPStatus);
+    //
     if (Enterprise.newNameGTPStatus === 0) {
       return 'Nueva Empresa';
     }

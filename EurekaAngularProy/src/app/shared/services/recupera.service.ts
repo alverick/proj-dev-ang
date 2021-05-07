@@ -1,10 +1,11 @@
-import { Observable } from 'rxjs/Observable';
+import { catchError, map } from 'rxjs/operators';
+
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Observable } from 'rxjs/Observable';
 import { environment } from 'src/environments/environment';
-import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,6 @@ export class RecuperaService {
      .pipe(map(r => {
           this.ruc = data.RUC;
           this.email = data.Email;
-
-          console.log('datos:' + this.ruc + this.email );
           this.spinner.hide();
           return r;
      }))

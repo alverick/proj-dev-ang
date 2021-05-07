@@ -1,7 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { ProcessService } from "src/app/shared/services/process.service";
-import { ActivatedRoute } from "@angular/router";
 import * as saveAs from 'file-saver';
+
+import { Component, OnInit } from "@angular/core";
+
+import { ActivatedRoute } from "@angular/router";
+import { ProcessService } from "src/app/shared/services/process.service";
 
 @Component({
   selector: 'app-carga-historico',
@@ -27,7 +29,6 @@ export class CargaHistoricoComponent implements OnInit {
     this.totalItems = 0;
     this.processService.getList(this.route.snapshot.paramMap.get('llave'), this.pageNumber)
       .subscribe(d => {
-        console.log(d);
         this.items = d.items;
         this.totalItems = d.total;
       });
@@ -39,7 +40,6 @@ export class CargaHistoricoComponent implements OnInit {
   }
 
   bajarExcel(itm) {
-    console.log(itm);
     this.processService.getFile(itm.id)
       .subscribe((r: Blob) => {
         saveAs(r, itm.filename);

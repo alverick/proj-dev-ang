@@ -1,0 +1,273 @@
+<div class="container-component">
+  <!-- *ngIf="this.editMode" -->
+  <div class="row" *ngIf="this.editMode">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <ul class="navbar-nav ml-auto" id="btn-regresar-identificar-empresa">
+        <li class="nav-item">
+          <a
+            class="nav-link lnk-regresar mano"
+            (click)="goBack()"
+            style="display: flex"
+          >
+            <img src="assets/images/left-blue.svg" />
+            <div class="text-regresar">&nbsp;&nbsp;&nbsp;Regresar</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-form" [ngClass]="this.editMode ? '' : 'container-form-margin-top'">
+    <div class="block-left">
+      <h1 class="texto-azul title-first-part">
+        Configura los cobros de tu
+        <br class="br-none-mobil" />
+        empresa
+      </h1>
+
+      <div class="stepper">
+        <div class="stepper-step">
+          <label class="text-step">1</label>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-step-no-selected">
+          <label class="text-step-no-selected">2</label>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-step-no-selected">
+          <label class="text-step-no-selected">3</label>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-step-no-selected">
+          <label class="text-step-no-selected">4</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="block-right-part-one">
+      <div class="first-part">
+        <div class="stepper-step">
+          <label class="text-step">1</label>
+        </div>
+        <p class="text-first-part">
+          Agrega el primer concepto por el que te pagarán
+          <br class="br-none-escritorio" />
+          tus clientes
+          <img
+            class="img-information-green"
+            src="assets/images/question.svg"
+            (click)="onImgDoubt()"
+          />
+        </p>
+      </div>
+      <div class="cuadro-form bg-white">
+        <form
+          [formGroup]="frm"
+          novalidate
+          (submit)="onSubmitServicio()"
+          class="form-content"
+        >
+          <div class="form-group">
+            <mat-form-field class="w-100">
+              <!--  <label *ngIf="gtpMode && !_service.NewName" class="messsage-error" style="float: right;">Corregir este campo</label> -->
+              <input
+                class="input-text"
+                matInput
+                type="text"
+                (input)="nameSerInput($event)"
+                tooltip="Servicio que deberá elegir tu cliente al pagar"
+                (blur)="nameSerBlur($event)"
+                maxlength="80"
+                formControlName="nombre"
+                name="nombre"
+                placeholder="Concepto de cobro"
+              />
+              <mat-error>
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="
+                    f.nombre.invalid &&
+                    f.nombre.hasError('required') &&
+                    submittedRequired
+                  "
+                  >Ingresa el concepto de cobro</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"
+                  >Ingrese un nombre correcto</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')"
+                  >El nombre no puede tener menos de 3 caracteres</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')"
+                  >El nombre no puede tener mas de 80 caracteres</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="
+                    f.nombre.invalid &&
+                    !f.nombre.hasError('minlength') &&
+                    f.nombre.hasError('alfa')
+                  "
+                  >El nombre debe tener por lo menos una letra o un
+                  numero</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="
+                    f.nombre.invalid &&
+                    !f.nombre.hasError('minlength') &&
+                    !f.nombre.hasError('alfa') &&
+                    f.nombre.hasError('alfabetico')
+                  "
+                  >El nombre debe tener por lo menos una letra
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
+
+            <!-- <div *ngIf="editMode === true && ( _service.nombre  !== _service.newName)" class="messsage-error">El nuevo nombre {{ _service.newName }} esta siendo procesado</div> -->
+
+            <div *ngIf="nombreAlert()" class="messsage-error">
+              El nuevo nombre <strong> {{ _service.newName }} </strong> esta
+              siendo procesado
+            </div>
+          </div>
+
+          <div class="rectangle-success super-full-width">
+            <img
+              class="img-information-inline"
+              src="assets/images/information.svg"
+            />
+            <p class="text-message-name">
+              Este será el concepto que verá y
+              <br class="br-none-mobil" />
+              eligirá tu
+              <br class="br-none-escritorio" />
+              cliente en nuestros
+              <br class="br-none-mobil" />
+              canales, al momento de
+              <br class="br-none-escritorio" />
+              pagarte.
+            </p>
+          </div>
+
+          <div class="bnt-cont-reg">
+            <button type="submit" class="btn-eureca-green text-white">
+              SIGUIENTE
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="concept-charge"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-container">
+        <div class="form-row">
+          <div class="form-group col-10"></div>
+          <div class="form-group col-2">
+            <div
+              style="float: right; cursor: pointer"
+              data-dismiss="modal"
+              aria-label="Close"
+              class="close mano font-cerrar"
+            >
+              <img src="assets/images/cerrar.svg" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-12">
+            <div class="title-concept-charge">
+              El <strong>“concepto de cobro”</strong>
+              <br class="br-none-mobil" />
+              es una breve
+              <br class="br-none-escritorio" />
+              <br class="br-none-tablet" />
+              descripción
+              <br class="br-none-mobil" />
+              por el pago que van a
+              <br class="br-none-mobil" />
+              hacer
+              <br class="br-none-escritorio" />
+              <br class="br-none-tablet" />
+              tus clientes.
+              <br class="br-none-escritorio" />
+              <br class="br-none-tablet" />
+              <br class="br-none-mobil" />
+              <br class="br-none-escritorio" />
+              <br class="br-none-tablet" />
+              <br class="br-none-mobil" />
+              Por ejemplo:
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-1">
+            <div class="container-text-circle">
+              <div class="text-circle"></div>
+            </div>
+          </div>
+          <div class="form-group col-11">
+            <div class="text-concept-charge">
+              <p>
+                Si eres una Institución
+                <br class="br-none-mobil" />
+                educativa, el
+                <br class="br-none-escritorio" />
+                concepto
+                <br class="br-none-mobil" />
+                podría ser “Mensualidad”
+                <br class="br-none-mobil" />
+                y/o
+                <br class="br-none-escritorio" />
+                “Matrícula”.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-1">
+            <div class="container-text-circle">
+              <div class="text-circle"></div>
+            </div>
+          </div>
+          <div class="form-group col-11">
+            <div class="text-concept-charge">
+              <p>
+                Si eres una empresa que
+                <br class="br-none-mobil" />
+                vende
+                <br class="br-none-escritorio" />
+                productos, el
+                <br class="br-none-mobil" />
+                concepto podría ser
+                <br class="br-none-escritorio" />
+                <br class="br-none-mobil" />
+                “Venta de calzados”.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

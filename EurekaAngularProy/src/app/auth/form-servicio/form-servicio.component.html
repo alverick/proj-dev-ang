@@ -1,265 +1,609 @@
 <form [formGroup]="frm" novalidate (submit)="onSubmitServicio()">
+  <!-- Yerico -->
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <!--  <label *ngIf="gtpMode && !_service.NewName" class="messsage-error" style="float: right;">Corregir este campo</label> -->
+      <input
+        class="input-text"
+        matInput
+        type="text"
+        (input)="nameSerInput($event)"
+        tooltip="Servicio que deberá elegir tu cliente al pagar"
+        (blur)="nameSerBlur($event)"
+        maxlength="80"
+        formControlName="nombre"
+        name="nombre"
+        placeholder="Nombre del servicio"
+      />
+      <mat-error>
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.nombre.invalid &&
+            f.nombre.hasError('required') &&
+            submittedRequired
+          "
+          >El nombre es obligatorio</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"
+          >Ingrese un nombre correcto</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')"
+          >El nombre no puede tener menos de 3 caracteres</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')"
+          >El nombre no puede tener mas de 80 caracteres</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.nombre.invalid &&
+            !f.nombre.hasError('minlength') &&
+            f.nombre.hasError('alfa')
+          "
+          >El nombre debe tener por lo menos una letra o un numero</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.nombre.invalid &&
+            !f.nombre.hasError('minlength') &&
+            !f.nombre.hasError('alfa') &&
+            f.nombre.hasError('alfabetico')
+          "
+          >El nombre debe tener por lo menos una letra
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
 
-    <div class="form-group">
-        <mat-form-field class="w-100">
-            <!--  <label *ngIf="gtpMode && !_service.NewName" class="messsage-error" style="float: right;">Corregir este campo</label> -->
-            <input class="input-text" matInput type="text" (input)="nameSerInput($event)" tooltip="Servicio que deberá elegir tu cliente al pagar" (blur)="nameSerBlur($event)" maxlength="80" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
-            <mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('required') && submittedRequired">El nombre es obligatorio</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')">Ingrese un nombre correcto</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')">El nombre no puede tener menos de 3 caracteres</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')">El nombre no puede tener mas de 80 caracteres</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && f.nombre.hasError('alfa')">El nombre debe tener por lo menos una letra o un numero</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && !f.nombre.hasError('alfa') && f.nombre.hasError('alfabetico')">El nombre debe tener por lo menos una letra </mat-error>
+    <!-- <div *ngIf="editMode === true && ( _service.nombre  !== _service.newName)" class="messsage-error">El nuevo nombre {{ _service.newName }} esta siendo procesado</div> -->
 
-            </mat-error>
+    <div *ngIf="nombreAlert()" class="messsage-error">
+      El nuevo nombre <strong> {{ _service.newName }} </strong> esta siendo
+      procesado
+    </div>
+  </div>
+
+  <div class="form-group" *ngIf="_service.res != '' && _service.res != null">
+    <mat-form-field class="w-100">
+      <div
+        tooltip="Código que deberá indicar tu cliente en los agentes Interbank para pagar éste servicio"
+        style="cursor: pointer"
+      >
+        <input
+          class="input-text"
+          matInput
+          type="text"
+          maxlength="7"
+          formControlName="res"
+          name="res"
+          placeholder="Código de servicio"
+        />
+      </div>
+    </mat-form-field>
+
+    <div *ngIf="CodiAlert()" class="messsage-error">
+      El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta siendo
+      procesado
+    </div>
+  </div>
+
+  <!-- Código cliente -->
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <!--  <label *ngIf="gtpMode && !_service.NewNameCod" class="messsage-error" style="float: right;">Corregir este campo</label> -->
+      <mat-label class="label">Código cliente</mat-label>
+      <mat-select
+        class="input-text"
+        *ngIf="f.codDeudor.value !== 'Otro'"
+        disableOptionCentering
+        panelClass="pts30"
+        formControlName="codDeudor"
+        name="codDeudor"
+        (ngModelChange)="selectCodigo($event)"
+        tooltip="Código debe ser numérico">
+        <!--   <mat-option class="input-text">Código Deudor</mat-option>-->
+        <mat-option
+          class="input-text options-select"
+          *ngFor="let c of codDeudor"
+          [value]="c.code">
+          {{ c.name }}
+        </mat-option>
+      </mat-select>
+      <input
+        class="input-text"
+        *ngIf="f.codDeudor.value === 'Otro'"
+        matInput
+        type="text"
+        maxlength="20"
+        formControlName="nameCod"
+        name="nameCod"
+        tooltip="Código debe ser numérico"
+        (input)="nameCodInput($event)"
+        (blur)="nameCodBlur($event)"/>
+      <div
+        *ngIf="f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado"
+        (click)="f.codDeudor.reset()"
+        class="hide-name-cod fa fa-times"></div>
+      <mat-error>
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.codDeudor.invalid &&
+            f.codDeudor.hasError('required') &&
+            submittedRequired">
+            Elija una opcion
+        </mat-error>
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.nameCod.invalid &&
+            f.nameCod.hasError('required') &&
+            submittedRequired">Escriba una opcion
+        </mat-error>
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <div *ngIf="CodiAlert()" class="messsage-error">
+      El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta siendo
+      procesado
+    </div>
+  </div>
+
+  <!-- ¿Qué datos tienes de tus clientes? -->
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <mat-label class="label">¿Qué datos tienes de tus clientes?</mat-label>
+      <mat-select
+        class="input-text"
+        formControlName="tipoDato"
+        name="tipoDato"
+        disableOptionCentering
+        panelClass="pts30"
+        (ngModelChange)="onChangeTipoDato()"
+      >
+        <!-- <mat-option class="input-text">¿Qué datos tienes de tus clientes?</mat-option> -->
+        <mat-option
+          class="input-text"
+          *ngFor="let t of tiposDato"
+          [value]="t.code"
+        >
+          {{ t.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        class="messsage-error"
+        *ngIf="
+          f.tipoDato.invalid &&
+          f.tipoDato.hasError('required') &&
+          submittedRequired
+        "
+        >Elija una opcion</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <!-- ¿Cómo quieres que te paguen tus clientes? -->
+  <div class="form-group" *ngIf="Dataparcial">
+    <mat-form-field class="w-100">
+      <mat-label class="label">
+        ¿Cómo quieres que te paguen tus clientes?
+      </mat-label>
+      <mat-select
+        class="input-text"
+        formControlName="tipoPago"
+        name="tipoPago"
+        disableOptionCentering
+        panelClass="pts30">
+        <!--  <mat-option class="input-text">¿Cómo quieres que te paguen tus clientes?</mat-option> -->
+        <mat-option
+          class="input-text"
+          *ngFor="let t of tiposPago"
+          [value]="t.code"
+        >
+          {{ t.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        class="messsage-error"
+        *ngIf="
+          f.tipoPago.invalid &&
+          f.tipoPago.hasError('required') &&
+          submittedRequired
+        "
+        >Elija una opcion</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <!-- Nº de cuenta Interbank -->
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <mat-label class="label">Nº de cuenta Interbank</mat-label>
+      <mat-select
+        class="input-text"
+        formControlName="idCuenta"
+        name="idCuenta"
+        disableOptionCentering
+        panelClass="pts30"
+        (ngModelChange)="changeCuenta($event)"
+      >
+        <!-- <mat-option class="input-text" >Nº de cuenta Interbank</mat-option> -->
+        <mat-option
+          style="
+            white-space: normal !important;
+            display: block;
+            padding: 0.9em 0.5em 0.5em;
+            height: auto;
+          "
+          class="input-text"
+          *ngFor="let cta of cuentas"
+          [value]="cta.id"
+          >{{ cta.number }}</mat-option
+        >
+      </mat-select>
+      <mat-error
+        class="messsage-error"
+        *ngIf="
+          f.idCuenta.invalid &&
+          f.idCuenta.hasError('required') &&
+          submittedRequired
+        "
+        >Elija una opción</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <!-- Elige los medios por los cuales tus clientes te pagarán -->
+  <div class="sub-el">
+    <span class="texto-medios">
+      Elige los medios por los cuales tus <br class="br-none-mobil" />
+      clientes te pagarán
+    </span>
+  </div>
+
+  <div class="card-deck mb-3 text-center reponsive-servicio-pago1">
+    <br />
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <div
+          class="card-medio-pago"
+          [class.seleccionado-card]="f.usaWebApp.value"
+        >
+        <div class="pt-3">
+            <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-4">
+            </mat-checkbox>
+          </div>
+          <div class="card-title texto-black">Web / App</div>
+          <!-- <div class="pt-4"> -->
+          <div class="texto-d-medios">
+            <!-- Banca por internet, Interbank APP  -->
+            Interbank APP y <br />Banca por internet
+          </div>
+          <div class="pt-2 texto-green">GRATIS</div>
+          <!-- </div> -->
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <div
+          class="card-medio-pago"
+          [class.seleccionado-card]="f.usaAgente.value"
+        >
+          <div class="pt-3">
+            <mat-checkbox formControlName="usaAgente" id="styled-checkbox-5">
+            </mat-checkbox>
+          </div>
+          <div class="card-title texto-black">Agentes</div>
+          <!-- <div class="pt-4"> -->
+          <div class="texto-d-medios pt-1">Lima y provincias</div>
+          <div class="pt-3 texto-green">
+            {{ simboloMoneda }} {{ comAgente }}
+          </div>
+          <!-- <div class="pt-1 texto-p-medios">por transacción </div> -->
+          <!-- </div> -->
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4 col-md-4">
+        <div
+          class="card-medio-pago"
+          [class.seleccionado-card]="f.usaTienda.value"
+        >
+          <div>
+            <div class="pt-3">
+              <mat-checkbox formControlName="usaTienda" id="styled-checkbox-6">
+              </mat-checkbox>
+            </div>
+            <div class="card-title texto-black">
+              Tiendas <br />
+              <div class="ventanilla">(Ventanilla)</div>
+            </div>
+            <!-- <div class="pt-2"> -->
+            <div class="texto-d-medios">Lima y provincias</div>
+            <div class="pt-2 texto-green">
+              {{ simboloMoneda }} {{ comTienda }}
+            </div>
+            <!-- <div class="pt-1 texto-p-medios">por transacción </div> -->
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row card-deck mt-2 mb-3 text-center reponsive-servicio-pago">
+    <div
+      class="card-medio-pago ml-3"
+      [class.seleccionado-card]="f.usaWebApp.value"
+    >
+      <div style="height: 161px">
+        <div class="pt-2">
+          <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-1">
+          </mat-checkbox>
+        </div>
+        <div class="card-title texto-black">Web / App</div>
+        <!-- <div class="pt-4"> -->
+        <div class="texto-d-medios pt-1">
+          <!-- Banca por internet, Interbank APP  -->
+          Interbank APP <br />
+          y Banca por <br />
+          internet
+        </div>
+        <div class="pt-1 texto-green">GRATIS</div>
+        <!-- </div> -->
+      </div>
+    </div>
+    <div
+      class="card-medio-pago ml-2"
+      [class.seleccionado-card]="f.usaAgente.value"
+    >
+      <div style="height: 161px">
+        <div class="pt-2">
+          <mat-checkbox formControlName="usaAgente" id="styled-checkbox-2">
+          </mat-checkbox>
+        </div>
+        <div class="card-title texto-black">Agentes</div>
+        <!-- <div class="pt-4"> -->
+        <div class="texto-d-medios" style="padding-top: 1em !important">
+          Lima y <br />
+          provincias
+        </div>
+        <div class="pt-2 texto-green">{{ simboloMoneda }} {{ comAgente }}</div>
+        <div class="pt-1 texto-p-medios">por transacción</div>
+        <!-- </div> -->
+      </div>
+    </div>
+    <div
+      class="card-medio-pago ml-2"
+      [class.seleccionado-card]="f.usaTienda.value"
+    >
+      <div>
+        <div class="pt-2">
+          <mat-checkbox formControlName="usaTienda" id="styled-checkbox-3">
+          </mat-checkbox>
+        </div>
+        <div class="card-title texto-black">
+          Tiendas <br />
+          <div class="ventanilla">(Ventanilla)</div>
+        </div>
+        <!-- <div class="pt-2"> -->
+        <div class="texto-d-medios">
+          Lima y <br />
+          provincias
+        </div>
+        <div class="pt-2 texto-green">{{ simboloMoneda }} {{ comTienda }}</div>
+        <div class="pt-1 texto-p-medios">por transacción</div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ¿Quieres que tus clientes te puedan pagar en partes? -->
+  <span class="texto-medios" *ngIf="Dataparcial">
+    ¿Quieres que tus clientes te puedan <br class="br-none-mobil" />
+    pagar en partes?
+  </span>
+  <div class="form-group pt-2" *ngIf="Dataparcial">
+    <div class="form-group col-2 pl-0">
+      <mat-radio-group formControlName="pagoPartes">
+        <mat-radio-button
+          name="pagoPartes"
+          id="pagoPartes-no"
+          value="N"
+          class="texto-mora"
+          >No</mat-radio-button
+        >
+        <mat-radio-button
+          name="pagoPartes"
+          id="pagoPartes-si"
+          value="S"
+          class="texto-mora"
+          >Si</mat-radio-button
+        >
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <!-- Cobro de mora -->
+  <span class="texto-medios" *ngIf="Dataparcial">Cobro de mora</span>
+  <div class="form-row pt-2" *ngIf="Dataparcial">
+    <div class="form-group col-2">
+      <mat-radio-group formControlName="cobraMora" (change)="changeMora()">
+        <mat-radio-button
+          name="cobraMora"
+          id="mora-no"
+          value="N"
+          class="texto-mora"
+          >No</mat-radio-button
+        >
+        <mat-radio-button
+          name="cobraMora"
+          id="mora-si"
+          value="S"
+          class="texto-mora"
+          >Si</mat-radio-button
+        >
+      </mat-radio-group>
+    </div>
+    <div class="form-group col-5" *ngIf="cobraMora">
+      <mat-form-field class="w-80 ml-3">
+        <mat-label style="max-width: 128px">Tipo de Cobro</mat-label>
+        <mat-select
+          style="max-width: 128px"
+          class="texto-mora"
+          formControlName="periodoMora"
+          (ngModelChange)="TipoCobro()"
+          disableOptionCentering
+          panelClass="pts30">
+          <!-- <mat-option class="texto-mora">Tipo de Cobro</mat-option> -->
+          <mat-option
+            class="input-text"
+            class="input-text"
+            *ngFor="let t of tiposMora"
+            [value]="t.code"
+          >
+            {{ t.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.periodoMora.invalid &&
+            f.periodoMora.hasError('required') &&
+            submittedRequired
+          "
+          >Elija una opcion</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="form-group col-5" *ngIf="cmoraporce">
+      <mat-radio-group
+        class="radio-group"
+        formControlName="tipoMora"
+        (change)="changeTipoMora(true)"
+      >
+        <mat-radio-button
+          class="radio-button"
+          name="tipoMora"
+          id="monto"
+          value="M"
+          class="texto-radio-small"
+          >Monto</mat-radio-button
+        >
+        <mat-form-field
+          style="margin-top: -14px"
+          class="ml-4 w-80 texto-mora"
+          id="input-mora"
+        >
+          <input
+            formControlName="monto"
+            type="text"
+            name="monto"
+            matInput
+            appOnlyNumbersForm
+            maxlength="7"
+            (blur)="MoraMontoBlur($event)"
+          />
+          <span matSuffix class="simbolos"
+            >{{ simboloMoneda }}&nbsp;&nbsp;</span
+          >
+          <mat-error>
+            <mat-error
+              class="messsage-error"
+              *ngIf="
+                f.monto.invalid &&
+                f.monto.hasError('required') &&
+                submittedRequired
+              "
+              >Debe ingresar un monto</mat-error
+            >
+            <mat-error
+              class="messsage-error"
+              *ngIf="f.monto.invalid && f.monto.hasError('maximo')"
+              >No puede ser mayor a 1000.00 <br
+            /></mat-error>
+            <mat-error
+              class="messsage-error"
+              *ngIf="f.monto.invalid && f.monto.hasError('minimo')"
+              >No puede ser menor a 0.50</mat-error
+            >
+            <mat-error
+              class="messsage-error"
+              *ngIf="
+                f.monto.invalid &&
+                !f.monto.hasError('maximo') &&
+                !f.monto.hasError('minimo') &&
+                f.monto.hasError('pattern')
+              "
+              >No tiene el formato correcto</mat-error
+            >
+          </mat-error>
         </mat-form-field>
-
-        <!-- <div *ngIf="editMode === true && ( _service.nombre  !== _service.newName)" class="messsage-error">El nuevo nombre {{ _service.newName }} esta siendo procesado</div> -->
-
-        <div *ngIf="nombreAlert()" class="messsage-error">El nuevo nombre <strong> {{ _service.newName }} </strong> esta siendo procesado</div>
-
-    </div>
-
-    <div class="form-group" *ngIf="_service.res !='' && _service.res !=null">
-        <mat-form-field class="w-100">
-            <div tooltip="Código que deberá indicar tu cliente en los agentes Interbank para pagar éste servicio" style="cursor: pointer;">
-                <input class="input-text" matInput type="text" maxlength="7" formControlName="res" name="res" placeholder="Código de servicio">
-            </div>
+        <mat-radio-button
+          class="radio-button"
+          style="padding-top: 10px"
+          name="tipoMora"
+          id="porcentaje"
+          value="P"
+          class="texto-radio-small"
+          >Porcentaje</mat-radio-button
+        >
+        <mat-form-field
+          style="margin-top: -14px"
+          class="ml-4 w-80 texto-mora"
+          id="input-mora"
+        >
+          <input
+            formControlName="porcentaje"
+            name="porcentaje"
+            matInput
+            appOnlyNumbersForm
+            type="text"
+            maxlength="5"
+            (blur)="MoraPorcenBlur($event)"
+          />
+          <span matSuffix class="simbolos">%</span>
+          <mat-error>
+            <mat-error
+              class="messsage-error"
+              *ngIf="
+                f.porcentaje.invalid &&
+                f.porcentaje.hasError('required') &&
+                submittedRequired
+              "
+              >Debe ingresar un porcentaje</mat-error
+            >
+            <mat-error
+              class="messsage-error"
+              *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')"
+              >No puede ser mayor a 100.00</mat-error
+            >
+            <mat-error
+              class="messsage-error"
+              *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')"
+              >No puede ser menor a 0.01</mat-error
+            >
+            <mat-error
+              class="messsage-error"
+              *ngIf="
+                f.porcentaje.invalid &&
+                !f.porcentaje.hasError('maximo') &&
+                !f.porcentaje.hasError('minimo') &&
+                f.porcentaje.hasError('pattern')
+              "
+              >No tiene el formato correcto</mat-error
+            >
+          </mat-error>
         </mat-form-field>
-
-        <div *ngIf="CodiAlert()" class="messsage-error">El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta siendo procesado</div>
-
+      </mat-radio-group>
     </div>
+  </div>
 
-    <div class="form-group">
-        <mat-form-field class="w-100">
-            <!--  <label *ngIf="gtpMode && !_service.NewNameCod" class="messsage-error" style="float: right;">Corregir este campo</label> -->
-            <mat-label class="label">Código cliente</mat-label>
-
-            <mat-select class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering panelClass="pts30" formControlName="codDeudor" name="codDeudor" (ngModelChange)="selectCodigo($event)" tooltip="Código debe ser numérico">
-                <!--   <mat-option class="input-text">Código Deudor</mat-option>-->
-                <mat-option class="input-text options-select" *ngFor="let c of codDeudor" [value]="c.code">
-                    {{c.name}}
-                </mat-option>
-            </mat-select>
-            <input class="input-text" *ngIf="f.codDeudor.value === 'Otro'" matInput type="text" maxlength="20" formControlName="nameCod" name="nameCod" tooltip="Código debe ser numérico" (input)="nameCodInput($event)" (blur)="nameCodBlur($event)">
-            <div *ngIf="f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado" (click)="f.codDeudor.reset()" class="hide-name-cod fa fa-times"></div>
-            <mat-error>
-                <mat-error class="messsage-error" *ngIf="f.codDeudor.invalid && f.codDeudor.hasError('required') && submittedRequired">Elija una opcion</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('required') && submittedRequired">Escriba una opcion</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto</mat-error>
-            </mat-error>
-        </mat-form-field>
-
-
-        <div *ngIf="CodiAlert()" class="messsage-error">El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta siendo procesado</div>
-
-    </div>
-    <div class="form-group">
-        <mat-form-field class="w-100">
-            <mat-label class="label">¿Qué datos tienes de tus clientes?</mat-label>
-            <mat-select class="input-text" formControlName="tipoDato" name="tipoDato" disableOptionCentering panelClass="pts30" (ngModelChange)="onChangeTipoDato()">
-                <!-- <mat-option class="input-text">¿Qué datos tienes de tus clientes?</mat-option> -->
-                <mat-option class="input-text" *ngFor="let t of tiposDato" [value]="t.code">
-                    {{t.name}}
-                </mat-option>
-            </mat-select>
-            <mat-error class="messsage-error" *ngIf="f.tipoDato.invalid && f.tipoDato.hasError('required') && submittedRequired">Elija una opcion</mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group" *ngIf="Dataparcial">
-        <mat-form-field class="w-100">
-            <mat-label class="label">¿Cómo quieres que te paguen tus clientes?</mat-label>
-            <mat-select class="input-text" formControlName="tipoPago" name="tipoPago" disableOptionCentering panelClass="pts30">
-                <!--  <mat-option class="input-text">¿Cómo quieres que te paguen tus clientes?</mat-option> -->
-                <mat-option class="input-text" *ngFor="let t of tiposPago" [value]="t.code">
-                    {{t.name}}
-                </mat-option>
-            </mat-select>
-            <mat-error class="messsage-error" *ngIf="f.tipoPago.invalid && f.tipoPago.hasError('required') && submittedRequired">Elija una opcion</mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group">
-        <mat-form-field class="w-100">
-            <mat-label class="label">Nº de cuenta Interbank</mat-label>
-            <mat-select class="input-text" formControlName="idCuenta" name="idCuenta" disableOptionCentering panelClass="pts30" (ngModelChange)="changeCuenta($event)">
-                <!-- <mat-option class="input-text" >Nº de cuenta Interbank</mat-option> -->
-                <mat-option style="white-space: normal !important; display: block;padding: .9em .5em .5em; height: auto;" class="input-text" *ngFor="let cta of cuentas" [value]="cta.id">{{cta.number}}</mat-option>
-            </mat-select>
-            <mat-error class="messsage-error" *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('required') && submittedRequired">Elija una opción</mat-error>
-        </mat-form-field>
-    </div>
-    <div class="sub-el">
-        <span class="texto-medios">  Elige los medios por los cuales tus <br class="br-none-mobil"> clientes te pagarán </span>
-    </div>
-
-    <div class="card-deck mb-3 text-center reponsive-servicio-pago1">
-        <br>
-        <div class="row">
-            <div class="col-xs-12 col-sm-4 col-md-4">
-                <div class="card-medio-pago" [class.seleccionado-card]="f.usaWebApp.value">
-                    <div class="pt-3">
-                        <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-4">
-                        </mat-checkbox>
-                    </div>
-                    <div class="card-title texto-black"> Web / App </div>
-                    <!-- <div class="pt-4"> -->
-                    <div class="texto-d-medios">
-                        <!-- Banca por internet, Interbank APP  -->
-                        Interbank APP y <br>Banca por internet
-                    </div>
-                    <div class="pt-2 texto-green">GRATIS</div>
-                    <!-- </div> -->
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-4">
-                <div class="card-medio-pago" [class.seleccionado-card]="f.usaAgente.value">
-                    <div class="pt-3">
-                        <mat-checkbox formControlName="usaAgente" id="styled-checkbox-5">
-                        </mat-checkbox>
-                    </div>
-                    <div class="card-title texto-black"> Agentes </div>
-                    <!-- <div class="pt-4"> -->
-                    <div class="texto-d-medios pt-1">Lima y provincias </div>
-                    <div class="pt-3 texto-green">{{simboloMoneda}} {{comAgente}}</div>
-                    <!-- <div class="pt-1 texto-p-medios">por transacción </div> -->
-                    <!-- </div> -->
-                </div>
-            </div>
-            <div class="col-xs-12 col-sm-4 col-md-4">
-                <div class="card-medio-pago" [class.seleccionado-card]="f.usaTienda.value">
-                    <div>
-                        <div class="pt-3">
-                            <mat-checkbox formControlName="usaTienda" id="styled-checkbox-6">
-                            </mat-checkbox>
-                        </div>
-                        <div class="card-title texto-black"> Tiendas <br>
-                            <div class="ventanilla">(Ventanilla)</div>
-                        </div>
-                        <!-- <div class="pt-2"> -->
-                        <div class="texto-d-medios">Lima y provincias </div>
-                        <div class="pt-2 texto-green">{{simboloMoneda}} {{comTienda}}</div>
-                        <!-- <div class="pt-1 texto-p-medios">por transacción </div> -->
-                        <!-- </div> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row card-deck mt-2 mb-3 text-center reponsive-servicio-pago">
-        <div class="card-medio-pago ml-3" [class.seleccionado-card]="f.usaWebApp.value">
-            <div style="height: 161px;">
-                <div class="pt-2">
-                    <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-1">
-                    </mat-checkbox>
-                </div>
-                <div class="card-title texto-black"> Web / App </div>
-                <!-- <div class="pt-4"> -->
-                <div class="texto-d-medios pt-1">
-                    <!-- Banca por internet, Interbank APP  -->
-                    Interbank APP <br> y Banca por <br> internet
-                </div>
-                <div class="pt-1 texto-green">GRATIS</div>
-                <!-- </div> -->
-            </div>
-        </div>
-        <div class="card-medio-pago ml-2" [class.seleccionado-card]="f.usaAgente.value">
-            <div style="height: 161px;">
-                <div class="pt-2">
-                    <mat-checkbox formControlName="usaAgente" id="styled-checkbox-2">
-                    </mat-checkbox>
-                </div>
-                <div class="card-title texto-black"> Agentes </div>
-                <!-- <div class="pt-4"> -->
-                <div class="texto-d-medios" style="padding-top: 1em !important;">Lima y <br> provincias </div>
-                <div class="pt-2 texto-green">{{simboloMoneda}} {{comAgente}}</div>
-                <div class="pt-1 texto-p-medios">por transacción </div>
-                <!-- </div> -->
-            </div>
-        </div>
-        <div class="card-medio-pago ml-2" [class.seleccionado-card]="f.usaTienda.value">
-            <div>
-                <div class="pt-2">
-                    <mat-checkbox formControlName="usaTienda" id="styled-checkbox-3">
-                    </mat-checkbox>
-                </div>
-                <div class="card-title texto-black"> Tiendas <br>
-                    <div class="ventanilla">(Ventanilla)</div>
-                </div>
-                <!-- <div class="pt-2"> -->
-                <div class="texto-d-medios">Lima y <br> provincias </div>
-                <div class="pt-2 texto-green">{{simboloMoneda}} {{comTienda}}</div>
-                <div class="pt-1 texto-p-medios">por transacción </div>
-                <!-- </div> -->
-            </div>
-        </div>
-
-    </div>
-
-
-    <span class="texto-medios" *ngIf="Dataparcial">¿Quieres que tus clientes te puedan <br class="br-none-mobil"> pagar en partes?</span>
-    <div class="form-group pt-2" *ngIf="Dataparcial">
-        <div class="form-group col-2 pl-0">
-            <mat-radio-group formControlName="pagoPartes">
-                <mat-radio-button name="pagoPartes" id="pagoPartes-no" value="N" class="texto-mora">No</mat-radio-button>
-                <mat-radio-button name="pagoPartes" id="pagoPartes-si" value="S" class="texto-mora">Si</mat-radio-button>
-            </mat-radio-group>
-        </div>
-    </div>
-    <span class="texto-medios " *ngIf="Dataparcial">Cobro de mora</span>
-    <div class="form-row pt-2" *ngIf="Dataparcial">
-
-        <div class="form-group col-2">
-            <mat-radio-group formControlName="cobraMora" (change)="changeMora()">
-                <mat-radio-button name="cobraMora" id="mora-no" value="N" class="texto-mora">No</mat-radio-button>
-                <mat-radio-button name="cobraMora" id="mora-si" value="S" class="texto-mora">Si</mat-radio-button>
-            </mat-radio-group>
-        </div>
-        <div class="form-group col-5" *ngIf="cobraMora">
-            <mat-form-field class="w-80 ml-3">
-                <mat-label style="max-width: 128px;">Tipo de Cobro</mat-label>
-                <mat-select style="max-width: 128px;" class="texto-mora" formControlName="periodoMora" (ngModelChange)="TipoCobro()" disableOptionCentering panelClass="pts30">
-                    <!-- <mat-option class="texto-mora">Tipo de Cobro</mat-option> -->
-                    <mat-option class="input-text" class="input-text" *ngFor="let t of tiposMora" [value]="t.code">
-                        {{t.name}}
-                    </mat-option>
-                </mat-select>
-                <mat-error class="messsage-error" *ngIf="f.periodoMora.invalid && f.periodoMora.hasError('required') && submittedRequired">Elija una opcion</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="form-group col-5" *ngIf="cmoraporce">
-
-            <mat-radio-group class="radio-group" formControlName="tipoMora" (change)="changeTipoMora(true)">
-                <mat-radio-button class="radio-button" name="tipoMora" id="monto" value="M" class="texto-radio-small">Monto</mat-radio-button>
-                <mat-form-field style="margin-top: -14px;" class="ml-4 w-80 texto-mora" id="input-mora">
-                    <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
-                    <span matSuffix class="simbolos">{{simboloMoneda}}&nbsp;&nbsp;</span>
-                    <mat-error>
-                        <mat-error class="messsage-error" *ngIf="f.monto.invalid && f.monto.hasError('required') && submittedRequired">Debe ingresar un monto</mat-error>
-                        <mat-error class="messsage-error" *ngIf="f.monto.invalid && f.monto.hasError('maximo')">No puede ser mayor a 1000.00 <br></mat-error>
-                        <mat-error class="messsage-error" *ngIf="f.monto.invalid && f.monto.hasError('minimo')">No puede ser menor a 0.50</mat-error>
-                        <mat-error class="messsage-error" *ngIf="f.monto.invalid && !f.monto.hasError('maximo') && !f.monto.hasError('minimo') && f.monto.hasError('pattern')">No tiene el formato correcto</mat-error>
-                    </mat-error>
-                </mat-form-field>
-                <mat-radio-button class="radio-button " style="padding-top: 10px" name="tipoMora" id="porcentaje" value="P" class="texto-radio-small">Porcentaje</mat-radio-button>
-                <mat-form-field style="margin-top: -14px;" class="ml-4  w-80 texto-mora" id="input-mora">
-                    <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
-                    <span matSuffix class="simbolos">%</span>
-                    <mat-error>
-                        <mat-error class="messsage-error" *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('required') && submittedRequired">Debe ingresar un porcentaje</mat-error>
-                        <mat-error class="messsage-error" *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')">No puede ser mayor a 100.00</mat-error>
-                        <mat-error class="messsage-error" *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')">No puede ser menor a 0.01</mat-error>
-                        <mat-error class="messsage-error" *ngIf="f.porcentaje.invalid && !f.porcentaje.hasError('maximo')  && !f.porcentaje.hasError('minimo') && f.porcentaje.hasError('pattern')">No tiene el formato correcto</mat-error>
-                    </mat-error>
-                </mat-form-field>
-            </mat-radio-group>
-
-
-        </div>
-
-    </div>
-    <button type="submit" class="btn-eureca-green"> GUARDAR</button>
+  <button type="submit" class="btn-eureca-green">GUARDAR</button>
 </form>

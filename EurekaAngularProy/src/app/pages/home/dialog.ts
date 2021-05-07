@@ -1,14 +1,14 @@
-import { OnInit, Component, AfterContentInit } from "@angular/core";
-import { UploadProgressComponent } from "./upload-progress";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { MatSnackBar, MatDialogRef } from "@angular/material";
-import { ExcelService } from "src/app/shared/services/excel.service";
-import Swal from "sweetalert2";
 import * as saveAs from 'file-saver';
-import { drawPopup } from "src/app/shared/services/popups";
+
+import { AfterContentInit, Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialogRef, MatSnackBar } from "@angular/material";
+
+import { ExcelService } from "src/app/shared/services/excel.service";
 import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
 import { Observable } from "rxjs";
-
+import Swal from "sweetalert2";
+import { drawPopup } from "src/app/shared/services/popups";
 
 /*////////////////////////////////////////////////////////
 ///////////////// D I A L O G //////////////////////////
@@ -76,7 +76,6 @@ declare var $: any;
       this.files = el.files;
       this.excelService.errores = [];
       this.ready = true;
-     // console.log('file name' + fileName);
     }
 
     SalirsnackBar() {
@@ -127,7 +126,7 @@ declare var $: any;
     private verifyStatus() {
       this.ready = true;
       let recursiveFunc = (value) => {
-        console.log('verify status dialog');
+
         if (!this.ready) return;
         if (value.status === "REJECTED") {
           this.excelService.statusUpload = false;
@@ -188,14 +187,14 @@ declare var $: any;
     }
 
     right() {
-      console.log('cuadro');
+
       this.ready = true;
       if (this.excelService.errores.length > 0) {
         this.cuadro_errores = true;
       }
     }
     left() {
-      console.log('cuadro');
+
       this.cuadro_errores = false;
       this.ready = false;
     }
