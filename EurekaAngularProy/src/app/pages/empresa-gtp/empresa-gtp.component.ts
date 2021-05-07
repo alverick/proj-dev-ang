@@ -25,7 +25,7 @@ export class EmpresaGTPComponent implements OnInit {
   constructor(public afiliacionService: AfiliacionService, private formBuilder: FormBuilder, public gtpService: GtpService) { }
 
   ngOnInit() {
-    this.afiliacionService.GetRubros().subscribe(d => {
+    this.afiliacionService.GetRubrosAll().subscribe(d => {
       console.log('d');
       this.rubros = d;
     });

@@ -155,7 +155,6 @@ export class AfiliacionService {
       }));
   }
 
-
   public GetRubros(): Observable<RubroModel[]> {
     if (this._rubros !== null)
       return Observable.of(this._rubros);
@@ -168,7 +167,7 @@ export class AfiliacionService {
   }
 
   public GetRubrosAll(): Observable<RubroModel[]> {
-    if (this._rubrosAll !== null) return Observable.of(this._rubrosAll);
+    //if (this._rubrosAll !== null) return Observable.of(this._rubrosAll);
     return this.http
       .get<RubroModel[]>(
         `${environment.END_POINT}/enterpriseHeading/all?_=` +
