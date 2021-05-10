@@ -1,12 +1,14 @@
-import { Error } from './../models/error.model';
-import { Injectable, ɵɵtextInterpolateV } from '@angular/core';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { environment } from "src/environments/environment";
-import { StorageService } from "./storage.service";
-import { Observable, throwError } from "rxjs";
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
+
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
+
+import { Error } from './../models/error.model';
+import { Injectable } from '@angular/core';
+import { StorageService } from "./storage.service";
+import { environment } from "src/environments/environment";
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
@@ -80,7 +82,8 @@ export class ExcelService {
   }
 
   GetTemplate(): Observable<Blob> {
-    const url = `${this.URI_API}/debt/template?service=${this.service.name}&_=${new Date().getTime()}`;
+    var serviceName = encodeURIComponent(this.service.name);
+    const url = `${this.URI_API}/debt/template?service=${serviceName}&_=${new Date().getTime()}`;
     const headers = new HttpHeaders({
       "Authorization": "bearer " + this.storage.getCurrentToken(),
       "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
