@@ -131,7 +131,7 @@ export class ServicesGTPComponent implements OnInit {
     }
 
     // combo para ocultar si es data parcial
-    if (this.frm.get('tipoDato').value === 'P') {
+    if (this.frm.get('tipoDato').value === 'P' || this.frm.get('tipoDato').value === 'S') {
       /* this.frm.get('tipoPago').setValue('C');
       this.tiposPago.pop();*/
       this.Dataparcial = false;
