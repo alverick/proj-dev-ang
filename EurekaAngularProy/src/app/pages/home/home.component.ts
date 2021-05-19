@@ -241,7 +241,7 @@ export class HomeComponent implements OnInit {
         this.serviceSelected = value[0];
       }
     );
-    this.homeService.getServicesActive().subscribe(
+    this.homeService.getServicesActive(false).subscribe(
       value => {
         this.typeList = value;
       });

@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
-import { Observable, throwError, of } from "rxjs";
+import { Observable, of, throwError } from "rxjs";
+import { catchError, map } from "rxjs/operators";
+
+import { Date } from 'src/app/shared/models/date';
 import { Debts } from '../models/debts';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Type } from '../models/type';
 import { WayPay } from '../models/way-pay';
-import { Date } from 'src/app/shared/models/date';
 import { environment } from 'src/environments/environment';
-import { catchError, map } from "rxjs/operators";
-import { HttpClient } from '@angular/common/http';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -73,8 +75,8 @@ getServices(incDeactivates: boolean = false): Observable<any[]> {
 
 }
 
-getServicesActive(): Observable<any[]> {
-  const url =`${environment.END_POINT}/company/service/active?_=`+ new Date().getTime();;
+getServicesActive(serviceWithoutData: boolean = true): Observable<any[]> {
+  const url =`${environment.END_POINT}/company/service/active/${serviceWithoutData}?_=`+ new Date().getTime();;
   return this.http.get<any[]> (url)
     .pipe(map(r => {
       let data: any[] = [];
