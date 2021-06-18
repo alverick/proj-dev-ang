@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -7,7 +8,6 @@ import {
 } from "@angular/forms";
 
 import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { Router } from "@angular/router";
 import { ServiceModel } from "src/app/shared/models";
 
 @Component({
@@ -36,6 +36,7 @@ import { ServiceModel } from "src/app/shared/models";
 export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   frm: FormGroup;
   editMode: boolean = false;
+  affiliationFlow: boolean = false;
   _service: ServiceModel;
   cuentas: any[] = [];
   simboloMoneda: string = "S/";
@@ -48,10 +49,16 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   constructor(
     private router: Router,
     private afiliacionService: AfiliacionService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
+    this.route.data.subscribe(d => {
+      //this.editMode = d.isEdit;
+      this.affiliationFlow = d.affiliationFlow;
+    });
+
     this.cuentas = [];
     //this.editMode = this.afiliacionService.editMode;
 
@@ -144,11 +151,21 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   }
 
   nextPage() {
-    this.router.navigate(["/resumenCobrosAfiliacion"]);
+    if (this.affiliationFlow === true) {
+      this.router.navigate(["/resumenCobrosAfiliacion"]);
+    }else{
+      this.router.navigate(["/resumenCobros"]);
+    }
+
   }
 
   goBack() {
-    this.router.navigate(["/configuraCobrosParteTres"]);
+    if (this.affiliationFlow === true) {
+      this.router.navigate(["/configuraCobrosParteTresAfiliacion"]);
+    }else{
+      this.router.navigate(["/configuraCobrosParteTres"]);
+    }
+
   }
 
   changeCuenta(val) {

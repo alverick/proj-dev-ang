@@ -39,6 +39,7 @@ export class ResumenCobrosComponent implements OnInit {
   public stateEdit: boolean = false;
   serviceActual: ServiceModel = null;
   public inEdit: boolean = false;
+  public affiliationFlow: boolean = false;
   sendAfterSave: boolean = false;
   public onFormAction: EventEmitter<string> = new EventEmitter();
   addNewAfterSave: boolean = false;
@@ -56,7 +57,7 @@ export class ResumenCobrosComponent implements OnInit {
     this.route.data.subscribe(d => {
       this.inEdit = d.isEdit;
       this.inGTP = d.isgtp;
-
+      this.affiliationFlow = d.affiliationFlow;
 
       if (d.isEdit) {
         window['_url_loop_'] = 'resumenCobros';
@@ -68,6 +69,8 @@ export class ResumenCobrosComponent implements OnInit {
           setTimeout(() => {
             this.servicio_length = this.afiliacionService.services.length
           }, 3000)
+        }else{
+          this.servicio_length = this.afiliacionService.services.length
         }
 
       } else {
@@ -131,7 +134,11 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   goEditCharge() {
-    this.router.navigate(["/editarCobros"]);
+    if (this.affiliationFlow == true) {
+      this.router.navigate(["/editarCobrosAfiliacion"]);
+    } else {
+      this.router.navigate(["/editarCobros"]);
+    }
   }
 
   getName(svc: ServiceModel) {
@@ -380,10 +387,10 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   nextPage() {
-    if( this.inEdit){
-      this.router.navigate(["/configuraCobrosParteUno"]);
-    }else{
+    if (this.affiliationFlow === true) {
       this.router.navigate(["/configuraCobrosParteUnoAfiliacion"]);
+    }else{
+      this.router.navigate(["/configuraCobrosParteUno"]);
     }
   }
 

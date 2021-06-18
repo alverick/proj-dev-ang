@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -5,12 +6,11 @@ import {
   FormGroup,
   Validators
 } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ServiceModel } from "src/app/shared/models";
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { drawPopup } from "src/app/shared/services/popups";
-import Swal from "sweetalert2";
 
+import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
+import { ServiceModel } from "src/app/shared/models";
+import Swal from "sweetalert2";
+import { drawPopup } from "src/app/shared/services/popups";
 
 declare var $: any;
 
@@ -40,6 +40,7 @@ declare var $: any;
 export class ConfiguraCobrosParteDosComponent implements OnInit {
   frm: FormGroup;
   public editMode: boolean = false;
+  public affiliationFlow: boolean = false;
   public Dataparcial: boolean = true;
   submittedRequired = false;
   codDeudor: any[] = [];
@@ -67,6 +68,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(d => {
       this.editMode = d.isEdit;
+      this.affiliationFlow = d.affiliationFlow;
     });
 
     this._service = Object.assign(
@@ -197,12 +199,11 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   onImgDoubt() {}
 
   goBack() {
-    if (this.editMode) {
-      this.router.navigate(["/configuraCobrosParteUno"]);
-    } else {
+    if (this.affiliationFlow == true) {
       this.router.navigate(["/configuraCobrosParteUnoAfiliacion"]);
+    } else {
+      this.router.navigate(["/configuraCobrosParteUno"]);
     }
-
   }
 
   onSubmitServicio() {
@@ -382,7 +383,11 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   }
 
   nextPage(){
-    this.router.navigate(["/configuraCobrosParteTres"]);
+    if (this.affiliationFlow === true) {
+      this.router.navigate(["/configuraCobrosParteTresAfiliacion"]);
+    }else{
+      this.router.navigate(["/configuraCobrosParteTres"]);
+    }
   }
 
   changeTipoDato(changeData: boolean = true) {

@@ -1,8 +1,8 @@
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 
 import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { Router } from "@angular/router";
 import { ServiceModel } from "src/app/shared/models";
 import Swal from "sweetalert2";
 import { drawPopup } from "src/app/shared/services/popups";
@@ -35,6 +35,7 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
   submittedRequired = false;
   _service: ServiceModel;
   editMode: boolean = false;
+  affiliationFlow: boolean = false;
   simboloMoneda: string = "S/";
   currencySymbolSoles: string = "S/";
   currencySymbolDollars: string = "$";
@@ -53,10 +54,17 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
   constructor(
     private router: Router,
     private afiliacionService: AfiliacionService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
+
+    this.route.data.subscribe(d => {
+      //this.editMode = d.isEdit;
+      this.affiliationFlow = d.affiliationFlow;
+    });
+
     this.editMode = this.afiliacionService.editMode;
     this._service = Object.assign(
       {},
@@ -85,7 +93,11 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(["/configuraCobrosParteDos"]);
+    if (this.affiliationFlow == true) {
+      this.router.navigate(["/configuraCobrosParteDosAfiliacion"]);
+    } else {
+      this.router.navigate(["/configuraCobrosParteDos"]);
+    }
   }
 
   onSubmitServicio() {
@@ -119,7 +131,11 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
   }
 
   nextPage() {
-    this.router.navigate(["/configuraCobrosParteCuatro"]);
+    if (this.affiliationFlow === true) {
+      this.router.navigate(["/configuraCobrosParteCuatroAfiliacion"]);
+    }else{
+      this.router.navigate(["/configuraCobrosParteCuatro"]);
+    }
   }
 
   calculateCommissions() {

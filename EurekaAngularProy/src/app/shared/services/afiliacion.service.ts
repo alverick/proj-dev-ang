@@ -292,7 +292,7 @@ export class AfiliacionService {
     return of<any[]>([
       {
         code: 'N',
-        name: 'No. Solo podrán pagarmela deuda/monto total.',
+        name: 'No. Solo podrán pagarme la deuda/monto total.',
       },
       {
         code: 'S',

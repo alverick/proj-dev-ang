@@ -41,6 +41,7 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
   public _service: ServiceModel;
   submittedRequired = false;
   public editMode: boolean = false;
+  public labelDescription: string = "";
 
   get f(): any {
     return this.frm.controls;
@@ -88,6 +89,7 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
       }
 
       this.initializeForm();
+      this.setLabel();
     });
     /*this.editMode =
       this._service.id !== null &&
@@ -118,6 +120,14 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
         ]
       ),
     });
+  }
+
+  setLabel(){
+    if (this.editMode === false) {
+      this.labelDescription = "Agrega el primer concepto por el que te pagarán";
+    }else{
+      this.labelDescription = "Agrega un nuevo concepto por el que te pagarán";
+    }
   }
 
   initializeService() {
@@ -271,7 +281,11 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
   }
 
   goNext(){
-    this.router.navigate(["/configuraCobrosParteDos"]);
+    if (this.editMode === false) {
+      this.router.navigate(["/configuraCobrosParteDosAfiliacion"]);
+    }else{
+      this.router.navigate(["/configuraCobrosParteDos"]);
+    }
   }
 
   goBack() {

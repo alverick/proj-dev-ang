@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -7,7 +8,6 @@ import {
 } from "@angular/forms";
 
 import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { Router } from "@angular/router";
 import { ServiceModel } from "src/app/shared/models";
 import Swal from "sweetalert2";
 import { drawPopup } from "src/app/shared/services/popups";
@@ -40,6 +40,7 @@ export class EditarCobrosComponent implements OnInit {
   frm: FormGroup;
   public editMode: boolean = false;
   public Dataparcial: boolean = true;
+  public affiliationFlow: boolean = false;
   submittedRequired = false;
   codDeudor: any[] = [];
   tiposPago: any[] = [];
@@ -68,7 +69,8 @@ export class EditarCobrosComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private afiliacionService: AfiliacionService
+    private afiliacionService: AfiliacionService,
+    private route: ActivatedRoute,
   ) {}
 
   get f(): any {
@@ -76,10 +78,12 @@ export class EditarCobrosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.data.subscribe(d => {
+      //this.editMode = d.isEdit;
+      this.affiliationFlow = d.affiliationFlow;
+    });
     this.cuentas = [];
     //this.editMode = this.afiliacionService.editMode;
-
-
 
     if (this.isNew() == true) {
       //////this.initializeService();
@@ -559,7 +563,11 @@ export class EditarCobrosComponent implements OnInit {
   }
 
   nextPage() {
-    this.router.navigate(["/resumenCobros"]);
+    if (this.affiliationFlow == true) {
+      this.router.navigate(["/resumenCobrosAfiliacion"]);
+    } else {
+      this.router.navigate(["/resumenCobros"]);
+    }
   }
 
   isAddedName(nombre: string): boolean {
@@ -806,7 +814,11 @@ export class EditarCobrosComponent implements OnInit {
           //this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
           this.afiliacionService.currentServiceModel = null;
           this.afiliacionService.currentIndex = -1;
-          this.router.navigate(["/resumenCobros"]);
+          if (this.affiliationFlow == true) {
+            this.router.navigate(["/resumenCobrosAfiliacion"]);
+          } else {
+            this.router.navigate(["/resumenCobros"]);
+          }
         }
       });
     }
