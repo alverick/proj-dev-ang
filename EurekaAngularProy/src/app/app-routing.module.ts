@@ -35,6 +35,7 @@ import { RecuperarContrasenaComponent } from './auth/recuperar-contrasena/recupe
 import { ResumenCobrosComponent } from './auth/resumen-cobros/resumen-cobros.component';
 import { SubirPlantillaComponent } from 'src/app/pages/subir-plantilla/subir-plantilla.component';
 
+//first commit
 // CambiaContrasenaComponent
 
 const routes: Routes = [
