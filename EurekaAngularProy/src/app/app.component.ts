@@ -1,12 +1,13 @@
+import { NavigationEnd, Router } from '@angular/router';
+
 import { Component } from '@angular/core';
-import { LoginService } from 'src/app/shared/services/login.service';
-import { Router, NavigationEnd } from '@angular/router';
-import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { LoginService } from 'src/app/shared/services/login.service';
+import { MatIconRegistry } from '@angular/material';
 import { environment } from 'src/environments/environment';
 
 declare let gtag: Function;
-
+declare let fbq:Function;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,18 +18,21 @@ export class AppComponent {
   title = 'Cobro Simple – Interbank';
 
   constructor(private router: Router, matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
-      this.router.events.subscribe(e => {
-        if (e instanceof NavigationEnd) {
-          if (environment.production) {
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationEnd) {
+        if (environment.production) {
             gtag('config', 'UA-148142629-1', {
               'page_title': e.urlAfterRedirects.substr(1),
               'page_path': e.urlAfterRedirects
             });
+            //Pixel Facebook
+            this.sendTrackPageViewPixel(e.urlAfterRedirects);
+
           }
           window.scrollTo(0, 0);
           //gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
-        }
-      });
+      }
+    });
 
       matIconRegistry.addSvgIcon(
         'eurc_calendar',
@@ -50,12 +54,39 @@ export class AppComponent {
         'eurc_new_tab',
         domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
         { viewBox: '0 0 24 24' });
-    }
+  }
 
   public show(): boolean{
     if(this.router.url.includes('/login')){
       return true;
     }
     return false;
+  }
+
+  private sendTrackPageViewPixel(pathComponent: string): void{
+    var path: string = pathComponent;
+
+    switch ( path ) {
+      case '/configuraCobrosParteUnoAfiliacion':
+        fbq('track', 'PageView');
+        break;
+      case '/configuraCobrosParteDosAfiliacion':
+        fbq('track', 'PageView');
+        break;
+      case '/configuraCobrosParteTresAfiliacion':
+        fbq('track', 'PageView');
+        break;
+      case '/configuraCobrosParteCuatroAfiliacion':
+        fbq('track', 'PageView');
+        break;
+      case '/procesando':
+        fbq('track', 'Contact', {
+          content_name: 'cobro-simple-5'
+        });
+        break;
+      /*default:
+        fbq('track', 'PageView');
+        break;*/
+   }
   }
 }

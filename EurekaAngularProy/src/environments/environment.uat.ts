@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   END_POINT: 'https://apis.uat.interbank.pe/eureca/api',
   OCP_KEY: ""
 };
