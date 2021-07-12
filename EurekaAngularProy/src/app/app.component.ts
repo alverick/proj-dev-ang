@@ -67,6 +67,18 @@ export class AppComponent {
     var path: string = pathComponent;
 
     switch ( path ) {
+      case '/landing':
+        fbq('track', 'PageView');
+        break;
+      case '/identifiquemosEmpresa':
+        fbq('track', 'PageView');
+        break;
+      case '/completaDatosEmpresa':
+        fbq('track', 'PageView');
+        break;
+      case '/completadoPrimeraParte':
+        fbq('track', 'PageView');
+        break;
       case '/configuraCobrosParteUnoAfiliacion':
         fbq('track', 'PageView');
         break;
@@ -77,6 +89,9 @@ export class AppComponent {
         fbq('track', 'PageView');
         break;
       case '/configuraCobrosParteCuatroAfiliacion':
+        fbq('track', 'PageView');
+        break;
+      case '/resumenCobrosAfiliacion':
         fbq('track', 'PageView');
         break;
       case '/procesando':
