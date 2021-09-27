@@ -2,6 +2,7 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { MatIconRegistry } from '@angular/material';
 import { environment } from 'src/environments/environment';
@@ -17,20 +18,26 @@ declare let fbq:Function;
 export class AppComponent {
   title = 'Cobro Simple – Interbank';
 
-  constructor(private router: Router, matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer) {
+  constructor(private router: Router, matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer,private gaService: GoogleAnalytics) {
     this.router.events.subscribe(e => {
       if (e instanceof NavigationEnd) {
         if (environment.production) {
-            gtag('config', 'UA-148142629-1', {
-              'page_title': e.urlAfterRedirects.substr(1),
-              'page_path': e.urlAfterRedirects
-            });
-            //Pixel Facebook
-            this.sendTrackPageViewPixel(e.urlAfterRedirects);
 
-          }
-          window.scrollTo(0, 0);
-          //gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
+          this.gaService.sendUrl(e.urlAfterRedirects.substr(1),e.urlAfterRedirects);
+
+          /*
+          gtag('config', 'UA-148142629-1', {
+            'page_title': e.urlAfterRedirects.substr(1),
+            'page_path': e.urlAfterRedirects
+          });
+          */
+          //Pixel Facebook
+          this.sendTrackPageViewPixel(e.urlAfterRedirects);
+
+        }
+
+        window.scrollTo(0, 0);
+        //gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
       }
     });
 
