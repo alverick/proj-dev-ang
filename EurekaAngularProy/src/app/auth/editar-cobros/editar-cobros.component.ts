@@ -65,6 +65,7 @@ export class EditarCobrosComponent implements OnInit {
   commissionStoreSoles = 8;
   commissionStoreDollars =
     Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;
+  useAgencyChannel: boolean = false;
 
   constructor(
     private router: Router,
@@ -93,6 +94,8 @@ export class EditarCobrosComponent implements OnInit {
       this.initializeForm();
 
     }
+
+    this.showAgencyChannel(!this.affiliationFlow == true);
   }
 
   isNew(): boolean {
@@ -837,6 +840,10 @@ export class EditarCobrosComponent implements OnInit {
        this.addNewAfterSave = false;
        this.sendAfterSave = false;
      } */
+  }
+
+  showAgencyChannel(show :boolean){
+    this.useAgencyChannel = show;
   }
 }
 

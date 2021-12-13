@@ -167,9 +167,10 @@
 }
 
 .cuadro-form {
-  @include cuadro(480px, $height: 472px);
+  //@include cuadro(480px, $height: 472px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
+  display: flex-inline;
 }
 
 .cuadro-form-resize{
@@ -674,7 +675,7 @@
   }
   .cuadro-form {
     width: 100% !important;
-    height: 440px !important;
+    //height: 440px !important;
   }
   .cuadro-form-resize{
     width: 100% !important;
@@ -719,7 +720,7 @@
   }
   .cuadro-form {
     width: 100% !important;
-    height: 344px !important;
+    //height: 344px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
     margin-left: 0px !important;

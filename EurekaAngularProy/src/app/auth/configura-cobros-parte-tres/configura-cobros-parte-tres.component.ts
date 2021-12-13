@@ -45,7 +45,8 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
   commissionAgentDollars = Math.round((this.commissionAgentSoles / this.tc) * 100) / 100;;
   //public comTienda = 8;
   commissionStoreSoles = 8;
-  commissionStoreDollars =  Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;;
+  commissionStoreDollars =  Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;
+  useAgencyChannel: boolean = false;
 
   get f(): any {
     return this.frm.controls;
@@ -90,6 +91,8 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
         disabled: true,
       }),
     });
+
+    this.showAgencyChannel(!this.affiliationFlow == true);
   }
 
   goBack() {
@@ -143,5 +146,9 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
       Math.round((this.commissionAgentSoles / this.tc) * 100) / 100;
     this.commissionStoreDollars =
       Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;
+  }
+
+  showAgencyChannel(show :boolean){
+    this.useAgencyChannel = show;
   }
 }
