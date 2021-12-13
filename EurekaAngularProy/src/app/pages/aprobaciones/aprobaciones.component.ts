@@ -26,7 +26,7 @@ export class AprobacionesComponent implements OnInit {
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {
     ruc: 0, name: '', entry: '', entryName: '', email: '',
-    movilNumber: 0, movilOperator: '', newName: '', newNameGTPStatus: -1, status: '', uniqueCodeIBK: ''
+    movilNumber: 0, movilOperator: '', newName: '', newNameGTPStatus: -1, status: '', uniqueCodeIBK: '', useAgencyChannel: false
   };
   public emp: GtpEmpresa;
   public scv: GtpServcegtp[] = [];
@@ -125,6 +125,7 @@ export class AprobacionesComponent implements OnInit {
     }
     this.ServiciosFormulario = true;
     this.Servgtp = etp;
+    this.Servgtp.useAgencyChannel = this.Enterprise.useAgencyChannel
     this.indiceActual = index;
   }
 

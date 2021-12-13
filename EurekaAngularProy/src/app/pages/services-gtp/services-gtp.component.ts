@@ -32,6 +32,7 @@ export class ServicesGTPComponent implements OnInit {
   update = false;
   public comAgente: number = 1;
   public comTienda: number = 7;
+  useAgencyChannel: boolean = false;
 
   @Input() public idCompany: number;
   @Input() set service(value: DataServiceGTP) {
@@ -140,6 +141,7 @@ export class ServicesGTPComponent implements OnInit {
       this.Dataparcial = true;
     }
 
+    this.showAgencyChannel(this._service.useAgencyChannel);
   }
 
   get f(): any {
@@ -576,6 +578,9 @@ export class ServicesGTPComponent implements OnInit {
     this.f.nombre.setValue(initalValue.trim());
   }
 
+  showAgencyChannel(show :boolean){
+    this.useAgencyChannel = show;
+  }
 
 }
 

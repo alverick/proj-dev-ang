@@ -26,6 +26,7 @@ export class FormServicioGtpComponent implements OnInit {
   public comAgente = 1;
   public comTienda = 7;
   submittedRequired = false;
+  useAgencyChannel: boolean = false;
 
   constructor(
     private afiliacionService: AfiliacionService,
@@ -234,6 +235,8 @@ export class FormServicioGtpComponent implements OnInit {
     } else {
       this.Dataparcial = true;
     }
+
+    this.showAgencyChannel(this._service.useAgencyChannel);
   }
 
   /* nombreAlert2() {
@@ -518,6 +521,10 @@ export class FormServicioGtpComponent implements OnInit {
   nameSerBlur(e) {
     let initalValue = this.f.nombre.value;
     this.f.nombre.setValue(initalValue.trim());
+  }
+
+  showAgencyChannel(show :boolean){
+    this.useAgencyChannel = show;
   }
 }
 

@@ -251,6 +251,10 @@ export class CrearContrasenaComponent implements OnInit {
           } else {
             this.afiliacionService.idCompany = d.id;
             this.gtpService.EmpresaServicios = d;
+
+            this.gtpService.EmpresaServicios.arrayServices.forEach( service =>
+              service.useAgencyChannel = this.gtpService.EmpresaServicios.useAgencyChannel
+            );
             /*   let servicios = [];
                this.gtpService.EmpresaServicios.arrayServices = [];
                d.ArrayServices.array.forEach(s => {

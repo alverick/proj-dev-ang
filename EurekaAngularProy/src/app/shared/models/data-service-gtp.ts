@@ -49,4 +49,5 @@ export interface DataServiceGTP {
     usaTienda?: boolean;
     periodoMora?: string;
     pagoPartes?: string;
+    useAgencyChannel: boolean;
 }

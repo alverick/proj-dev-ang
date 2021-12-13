@@ -1,6 +1,6 @@
 import { DataServiceGTP } from "./data-service-gtp";
 
- export interface DataEnterpriseGTP {
+export interface DataEnterpriseGTP {
     cu?: string;
     ruc: string|number;
     name: string;
@@ -19,4 +19,5 @@ import { DataServiceGTP } from "./data-service-gtp";
     NombreApproved?: boolean;
     enabled?: boolean;
     isNewEnterprise?: boolean;
+    useAgencyChannel?: boolean;
 }

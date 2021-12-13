@@ -33,4 +33,5 @@ export interface ServiceModel {
     acceptednewNameCode?: boolean;
     newNameGtpStatus?: number;
     newNameCodeGtpStatus?: number;
+    useAgencyChannel?: boolean;
 }

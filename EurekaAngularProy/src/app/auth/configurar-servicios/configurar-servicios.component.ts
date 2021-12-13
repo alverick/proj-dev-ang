@@ -100,7 +100,8 @@ export class ConfigurarServiciosComponent implements OnInit {
             nombreHabilitado: (s.newNameGTPStatus === 3) ? false : true,
             nombreCodHabilitado: (s.newNameCodeGTPStatus === 3) ? false : true,
             newNameGtpStatus: s.newNameGTPStatus,
-            newNameCodeGtpStatus: s.newNameCodeGTPStatus
+            newNameCodeGtpStatus: s.newNameCodeGTPStatus,
+            useAgencyChannel: s.useAgencyChannel
           });
 
         });
