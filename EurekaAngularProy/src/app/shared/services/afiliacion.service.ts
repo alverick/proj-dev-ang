@@ -406,6 +406,7 @@ export class AfiliacionService {
               s.newNameCodeGTPStatus === 1 || s.newNameCodeGTPStatus === 3
                 ? false
                 : true,
+            useAgencyChannel: s.useAgencyChannel
           });
         });
         this.services = servicios;
@@ -516,7 +517,7 @@ export class AfiliacionService {
     }
   }
 
-  public createNewService(): void {
+  public createNewService(useAgencyChannel: boolean = false): void {
     this.Guardado = false;
     this._currentServiceModel = null;
     let nombre: string = "Mensualidad";
@@ -580,6 +581,7 @@ export class AfiliacionService {
       tipoMora: "M",
       pagoPartes: "N",
       nombreCodHabilitado: false,
+      useAgencyChannel: useAgencyChannel
     };
 
     this._currentServiceModel = svc;

@@ -378,7 +378,7 @@ export class ResumenCobrosComponent implements OnInit {
     else {*/
     this.indiceActual = this.afiliacionService.services.length;
     //this.serviceActual = this.afiliacionService.CrearSevice();
-    this.afiliacionService.createNewService();
+    this.afiliacionService.createNewService(this.getUseAgencyChannel());
     this.nextPage();
     this.stateEdit = true;
     this.stateCreate = true;
@@ -392,6 +392,14 @@ export class ResumenCobrosComponent implements OnInit {
     }else{
       this.router.navigate(["/configuraCobrosParteUno"]);
     }
+  }
+
+  getUseAgencyChannel(): boolean{
+    var useAgencyChannel:boolean = false;
+    if(this.afiliacionService.services.length > 0){
+      useAgencyChannel = this.afiliacionService.services[0].useAgencyChannel;
+    }
+    return useAgencyChannel;
   }
 
   EnviarServicios() {

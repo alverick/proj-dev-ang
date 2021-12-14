@@ -95,8 +95,12 @@ export class EditarCobrosComponent implements OnInit {
 
     }
 
-    this.showAgencyChannel(!this.affiliationFlow == true);
-  }
+    if(this.affiliationFlow == true){
+      this.showAgencyChannel(true);
+    }else{
+      this.showAgencyChannel(this._service.useAgencyChannel);
+    }
+}
 
   isNew(): boolean {
     if (
