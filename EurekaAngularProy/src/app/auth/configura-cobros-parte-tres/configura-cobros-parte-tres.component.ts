@@ -93,7 +93,7 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
     });
 
     if(this.affiliationFlow == true){
-      this.showAgencyChannel(true);
+      this.showAgencyChannel(false);
     }else{
       this.showAgencyChannel(this._service.useAgencyChannel);
     }
