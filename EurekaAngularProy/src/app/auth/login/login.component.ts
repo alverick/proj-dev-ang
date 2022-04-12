@@ -299,7 +299,7 @@ export class LoginComponent implements OnInit {
           else if(this.intentos >= 6 || value.paramStr==='Vuelva a intentarlo mas tarde' || value.paramStr==='El usuario esta bloqueado'){
             this.codigo2= false;
 
-            this.mensaje( 'error', 'Contraseña Incorrecta','Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a solucionBPE@intercorp.com.pe '  );
+            this.mensaje( 'error', 'Contraseña Incorrecta','Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a solucionesBPE@intercorp.com.pe '  );
             this.intento6= true;
             this.isTrue = false;
           }
