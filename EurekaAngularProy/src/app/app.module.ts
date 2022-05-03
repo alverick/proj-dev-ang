@@ -12,7 +12,6 @@ import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from 'src/app/auth/auth.module';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatInputModule } from '@angular/material/input';
@@ -101,7 +100,6 @@ import { TooltipModule } from 'ngx-bootstrap';
     ReactiveFormsModule,
     AppRoutingModule,
     AuthModule,
-    AngularFontAwesomeModule,
     BrowserAnimationsModule,
     HttpClientModule,
     NgxSpinnerModule,
