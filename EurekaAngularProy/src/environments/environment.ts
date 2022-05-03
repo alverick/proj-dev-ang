@@ -1,10 +1,9 @@
 export const environment = {
-  production: true,
+  production: false,
   ////////// U A T //////////////*/
 
-  //END_POINT: 'https://apis.uat.interbank.pe/eureca/api',
-  //OCP_KEY: ""
-
+  // END_POINT: 'https://apis.uat.interbank.pe/eureca/api',
+  // OCP_KEY: ""
 
   ////////// D E V E L O P ///////////////////////*
   /*
@@ -12,11 +11,10 @@ export const environment = {
     OCP_KEY: ""
   */
 
-  /**///feature/hu-ampliacion-campos
+  /**/ // feature/hu-ampliacion-campos
   // END_POINT: 'https://apis.dev.interbank.pe/eureca/api',
   // OCP_KEY: ""
 
-   END_POINT: 'https://localhost:5001/api',
-   OCP_KEY: ""
-
-}
+  END_POINT: 'https://localhost:5001/api',
+  OCP_KEY: '',
+};
