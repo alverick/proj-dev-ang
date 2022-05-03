@@ -8,7 +8,8 @@
     "build": "gulp build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "storybook": "start-storybook -p 6006"
   },
   "private": true,
   "dependencies": {
@@ -71,10 +72,16 @@
     "@angular/cli": "^8.3.23",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "^8.2.14",
+    "@babel/core": "^7.17.10",
+    "@storybook/addon-actions": "^5.1.9",
+    "@storybook/addon-console": "^1.2.1",
+    "@storybook/angular": "^5.1.9",
+    "@storybook/preset-scss": "^1.0.2",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "^2.0.8",
     "@types/jquery": "^3.3.31",
     "@types/node": "~8.9.4",
+    "babel-loader": "^8.2.5",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
