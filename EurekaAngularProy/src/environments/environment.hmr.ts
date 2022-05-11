@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  hmr: false,
+  hmr: true,
   ////////// U A T //////////////*/
 
   // END_POINT: 'https://apis.uat.interbank.pe/eureca/api',
