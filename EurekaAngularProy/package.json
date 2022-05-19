@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "gulp nodemon",
+    "start": "ng serve",
     "start.web": "ng serve --port 4700",
-    "build": "gulp build",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
