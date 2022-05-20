@@ -35,7 +35,10 @@
               "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/core-js/client/shim.min.js",
               "node_modules/web-animations-js/web-animations.min.js"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/scss", "node_modules"]
+            }
           },
           "configurations": {
             "production": {

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" id="html-color">
+<html lang="es-PE" id="html-color">
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="X-UA-Compatible" content="IE=100" />
@@ -10,28 +9,12 @@
     <title>Cobro Simple – Interbank</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <base href="/" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
     <link rel="icon" type="image/x-icon" href="faviconIbk.ico" />
-    <!-- <link rel="stylesheet" href="scss/style.scss">
-    <link rel="stylesheet" href="scss/reponsive.scss"> -->
-
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
-
-    <!-- // "node_modules/jquery/dist/jquery.js",
-  // "node_modules/popper.js/dist/umd/popper.js",
-  // "node_modules/bootstrap/dist/js/bootstrap.js", -->
-
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=UA-148142629-1"
@@ -54,10 +37,10 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        top: 0px;
-        left: 0px;
-        bottom: 0px;
-        right: 0px;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
       }
 
       .app-loading .spinner {
@@ -170,7 +153,7 @@
       // window['_url_loop_'] = 'login';
       window["_url_loop_"] = "landing";
 
-      window.addEventListener("popstate", function (event) {
+      window.addEventListener("popstate", function () {
         let _url_ = window["_url_loop_"];
         history.pushState(null, null, _url_);
       });

@@ -1,5 +1,6 @@
 module.exports = ({ configuration }, indexHtml) => {
-  if (configuration.includes('production')) {
+  const environmentAllowed = ['production', 'uat'];
+  if (environmentAllowed.includes(configuration)) {
     const enHeadPosition = indexHtml.indexOf('</head>');
     const scriptHotjar = '<script src="assets/scripts/hotjar.js"></script>';
     return `${indexHtml.slice(0, enHeadPosition)}
