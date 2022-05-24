@@ -1,6 +1,8 @@
-export const environment = {
-    production: true,
-    END_POINT: 'https://localhost:5001/api',
-    OCP_KEY: ""
-  };
+import { serverUrl } from './constants';
 
+export const environment = {
+  production: false,
+  hmr: false,
+  END_POINT: serverUrl.local,
+  OCP_KEY: '',
+};
