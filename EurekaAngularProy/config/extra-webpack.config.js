@@ -9,7 +9,15 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        use: ['postcss-loader'],
+        use: [
+          'postcss-loader',
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: ['./src/scss/_configuration.scss'],
+            },
+          },
+        ],
       },
     ],
   },
