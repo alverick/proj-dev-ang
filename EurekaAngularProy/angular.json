@@ -113,7 +113,8 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "EurekaAngularProy:build"
+            "browserTarget": "EurekaAngularProy:build",
+            "hmrWarning": false
           },
           "configurations": {
             "production": {
