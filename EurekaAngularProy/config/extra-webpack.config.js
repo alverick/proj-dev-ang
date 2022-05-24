@@ -3,6 +3,7 @@ module.exports = {
   plugins: [
     new WebpackBuildNotifierPlugin({
       title: 'Eureka Project',
+      activateTerminalOnError: true,
     }),
   ],
   module: {
