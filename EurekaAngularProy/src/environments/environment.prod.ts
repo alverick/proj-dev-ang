@@ -1,6 +1,8 @@
+import { serverUrl } from './constants';
+
 export const environment = {
   production: true,
-  END_POINT: 'https://apis.interbank.pe/eureca/api',
-  OCP_KEY: ""
+  hmr: false,
+  END_POINT: serverUrl.prod,
+  OCP_KEY: '',
 };
-
