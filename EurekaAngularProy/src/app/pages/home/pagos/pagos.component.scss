@@ -1,6 +1,3 @@
-@import "../../../../scss/_variables.scss";
-@import "../../../../scss/_mixin.scss";
-
 .contenedor {
   margin-top: 3px;
   position: absolute;
@@ -204,7 +201,7 @@ small{
   color: #05be50;
 }
 
-.noPagos{  
+.noPagos{
   @include font-text(18px, 500);
   color: #0d2416;
   text-align: center;

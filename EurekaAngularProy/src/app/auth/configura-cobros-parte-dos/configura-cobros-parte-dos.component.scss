@@ -1,7 +1,4 @@
-@import "../../../scss/_variables.scss";
-@import "../../../scss/_mixin.scss";
 @import "../../../scss/reponsive.scss";
-@import "../../../scss/style.scss";
 
 :host
   ::ng-deep
@@ -58,7 +55,7 @@
 .title-first-part {
   margin: 0px;
   padding: 0px;
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 28px;
   font-weight: 500;
   font-stretch: normal;
@@ -149,7 +146,7 @@
 }
 
 .text-first-part {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
   font-stretch: normal;
@@ -210,7 +207,7 @@
 }
 
 .text-message-name {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -223,7 +220,7 @@
 .btn-eureca-green {
   width: 207px;
   height: 48px;
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 14px;
   font-weight: 500;
   font-stretch: normal;
@@ -287,7 +284,7 @@
 
 .text-regresar {
   margin: 0px;
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
   font-stretch: normal;
@@ -299,7 +296,7 @@
 }
 
 .text-second-part {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 16px;
   font-weight: 500;
   font-stretch: normal;
@@ -311,7 +308,7 @@
 }
 
 .label-text {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
   font-stretch: normal;
@@ -323,7 +320,7 @@
 
 .text-tipo-dato {
   margin-top: 10px;
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
   font-stretch: normal;
@@ -357,7 +354,7 @@
 }
 
 .text-message-name {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;
@@ -368,7 +365,7 @@
 }
 
 .texto-medios {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
   font-stretch: normal;
@@ -381,7 +378,7 @@
 
 .texto-mora {
   color: $negro;
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
@@ -521,7 +518,7 @@
 }
 
 .description-complete-data {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
@@ -532,7 +529,7 @@
 }
 
 .description-no-data {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;

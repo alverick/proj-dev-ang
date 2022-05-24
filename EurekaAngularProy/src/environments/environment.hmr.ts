@@ -2,7 +2,7 @@ import { serverUrl } from './constants';
 
 export const environment = {
   production: false,
-  hmr: false,
-  END_POINT: serverUrl.dev,
+  hmr: true,
+  END_POINT: serverUrl.local,
   OCP_KEY: '',
 };

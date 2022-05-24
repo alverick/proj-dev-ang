@@ -1,7 +1,3 @@
-@import '~src/scss/_normalize.scss';
-@import '~src/scss/variables';
-@import '~src/scss/mixin';
-@import '~src/scss/_main.scss';
 body {
     background: #f4f5f7 !important;
 }
@@ -103,7 +99,7 @@ small {
 
 .text-regresar {
   margin: 0px;
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
   font-stretch: normal;
