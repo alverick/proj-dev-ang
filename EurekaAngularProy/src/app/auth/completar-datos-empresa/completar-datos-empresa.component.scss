@@ -104,7 +104,7 @@ small {
 
 .text-regresar {
   margin: 0px;
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
   font-stretch: normal;
@@ -120,7 +120,7 @@ small {
 }
 
 .label-ruc {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
   font-stretch: normal;
@@ -132,7 +132,7 @@ small {
 }
 
 .label-text-ruc {
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
@@ -157,7 +157,7 @@ small {
 }
 
 .text-message-name{
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 14px;
   font-weight: normal;
   font-stretch: normal;

@@ -24,7 +24,7 @@ body {
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
-    //  border-width: 3.5vw 0vw!important;
+    //  border-width: 3.5vw 0!important;
     border-color: white !important;
     margin-top: 1vw !important;
 }
@@ -67,8 +67,8 @@ body {
 // boton Rgistrate
 .reCaptach {
     transform: scale(0.70);
-    margin: 0vw;
-    padding: 0vw;
+    margin: 0;
+    padding: 0;
     width: 232px;
 }
 
@@ -82,7 +82,7 @@ body {
     background-color: #ffffff;
     box-sizing: border-box;
     border-style: solid !important;
-    //  border-width: 3.5vw 0vw!important;
+    //  border-width: 3.5vw 0!important;
     border-color: white !important;
     margin-top: 5vw !important;
 }
@@ -159,7 +159,7 @@ body {
     @include font-text(55px,
     500);
     color: #ffffff;
-    font-family: Geometria;
+    font-family: $primary-font-family;
     margin-left: 80px;
     line-height: 1 !important;
 }

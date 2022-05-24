@@ -303,7 +303,7 @@ small {
     @include font-text(55px,
     500);
     color: #ffffff;
-    font-family: Geometria;
+    font-family: $primary-font-family;
     margin-left: 80px;
     line-height: 1 !important;
 }

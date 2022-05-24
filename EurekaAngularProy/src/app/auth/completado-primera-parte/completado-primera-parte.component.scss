@@ -30,7 +30,7 @@ body {
 
 .label-title-parte {
   text-align: center;
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 20px;
   font-weight: 500;
   font-stretch: normal;
@@ -44,7 +44,7 @@ body {
 
 .label-title-sub-parte {
   text-align: center;
-  font-family: Geometria;
+  font-family: $primary-font-family;
   font-size: 18px;
   font-weight: normal;
   font-stretch: normal;
