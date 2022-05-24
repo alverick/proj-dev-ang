@@ -1,8 +1,3 @@
-@import '~src/scss/_normalize.scss';
-@import '~src/scss/variables';
-@import '~src/scss/mixin';
-@import '~src/scss/_main.scss';
-
 body {
   background: #f4f5f7 !important;
 }
@@ -20,20 +15,20 @@ body {
   margin-top: 45px;
 }
 
-.img-completed-successful{
+.img-completed-successful {
   width: 266px;
   height: 320px;
 }
 
-.block-right{
+.block-right {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items:center;
-  margin-left: 40px ;
+  align-items: center;
+  margin-left: 40px;
 }
 
-.label-title-parte{
+.label-title-parte {
   text-align: center;
   font-family: Geometria;
   font-size: 20px;
@@ -47,7 +42,7 @@ body {
   padding-bottom: 10px;
 }
 
-.label-title-sub-parte{
+.label-title-sub-parte {
   text-align: center;
   font-family: Geometria;
   font-size: 18px;
@@ -61,11 +56,11 @@ body {
   padding-bottom: 10px;
 }
 
-.btn-configure-charges{
+.btn-configure-charges {
   width: 207px;
 }
 
-.btn-eureca-green{
+.btn-eureca-green {
   padding-left: 0px;
   padding-right: 0px;
 }
@@ -80,4 +75,3 @@ body {
     flex-direction: column !important;
   }
 }
-
