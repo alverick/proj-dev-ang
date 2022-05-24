@@ -5,4 +5,12 @@ module.exports = {
       title: 'Eureka Project',
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: ['postcss-loader'],
+      },
+    ],
+  },
 };
