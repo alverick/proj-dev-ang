@@ -1,70 +1,76 @@
-import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { HomeComponent} from './pages/home/home.component';
-import { PagosComponent } from './pages/home/pagos/pagos.component';
-import { AnalisisComponent } from './pages/analisis/analisis.component';
-import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from 'src/app/auth/auth.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { MatInputModule } from '@angular/material/input';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher, MatNativeDateModule } from '@angular/material/core';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { RecaptchaModule } from 'ng-recaptcha';
-import { DigitOnlyModule } from '@uiowa/digit-only';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatButtonModule } from '@angular/material/button';
-import { ExcelService } from './shared/services/excel.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatRadioModule } from '@angular/material';
-import { AfiliacionService } from './shared/services/afiliacion.service';
-import { NumberDirectiveHome } from './pages/home/number.directive';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { ValidationComponent } from './pages/home/validation';
-import { UploadProgressComponent } from './pages/home/upload-progress';
-import { DialogComponent } from './pages/home/dialog';
-import { DateDirective } from './pages/home/date.directive';
-import { PuntoDirective } from './pages/home/punto.directive';
-import { ConfiguracionService } from './shared/services/configuracion.service';
-import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
-import { ShearDirective } from './pages/home/shear.directive';
-import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
-import { DecimalesDirective } from './pages/home/decimales.directive';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {
+  ErrorStateMatcher,
+  MatNativeDateModule,
+  ShowOnDirtyErrorStateMatcher,
+} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { DigitOnlyModule } from '@uiowa/digit-only';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { TooltipModule } from 'ngx-bootstrap';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { AuthModule } from 'src/app/auth/auth.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CargaHistoricoComponent } from './auth/carga-historico/carga-historico.component';
+import { AnalisisComponent } from './pages/analisis/analisis.component';
+import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
+import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { EmailDirective } from './pages/configurar-empresa/email.directive';
 import { OnlyNumbersDirective } from './pages/configurar-empresa/only-numbers.directive';
-import { NotifyService } from './shared/services/notify.service';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { MaterialFileInputModule } from 'ngx-material-file-input';
-import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
 import { EmpresaGTPComponent } from './pages/empresa-gtp/empresa-gtp.component';
-import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.component';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { PopoverComponent } from './pages/home/popover/popover.component';
-import { LoadFileComponent } from './shared/load-file/load-file.component';
-import { LoadBarComponent } from './shared/load-bar/load-bar.component';
-import { DebtComponent } from './pages/home/debt.component';
+import { GtpGrillaComponent } from './pages/gtp-grilla/gtp-grilla.component';
 import { AgregaCobroComponent } from './pages/home/agrega-cobro.component';
-import { CargaHistoricoComponent } from './auth/carga-historico/carga-historico.component';
-import { TooltipModule } from 'ngx-bootstrap';
+import { DateDirective } from './pages/home/date.directive';
+import { DebtComponent } from './pages/home/debt.component';
+import { DecimalesDirective } from './pages/home/decimales.directive';
+import { DialogComponent } from './pages/home/dialog';
+import { HomeComponent } from './pages/home/home.component';
+import { NumberDirectiveHome } from './pages/home/number.directive';
+import { PagosComponent } from './pages/home/pagos/pagos.component';
+import { PopoverComponent } from './pages/home/popover/popover.component';
+import { PuntoDirective } from './pages/home/punto.directive';
+import { ShearDirective } from './pages/home/shear.directive';
+import { UploadProgressComponent } from './pages/home/upload-progress';
+import { ValidationComponent } from './pages/home/validation';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ServicesGTPComponent } from './pages/services-gtp/services-gtp.component';
+import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
+import { HeaderComponent } from './shared/header/header.component';
+import { LoadBarComponent } from './shared/load-bar/load-bar.component';
+import { LoadFileComponent } from './shared/load-file/load-file.component';
+import { AfiliacionService } from './shared/services/afiliacion.service';
+import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
+import { ConfiguracionService } from './shared/services/configuracion.service';
+import { ExcelService } from './shared/services/excel.service';
+import { NotifyService } from './shared/services/notify.service';
 @NgModule({
   declarations: [
     AppComponent,
+    FooterComponent,
     HeaderComponent,
     HomeComponent,
     GtpGrillaComponent,
@@ -92,7 +98,7 @@ import { TooltipModule } from 'ngx-bootstrap';
     LoadBarComponent,
     DebtComponent,
     AgregaCobroComponent,
-    CargaHistoricoComponent
+    CargaHistoricoComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,8 +112,8 @@ import { TooltipModule } from 'ngx-bootstrap';
     MatInputModule,
     SweetAlert2Module.forRoot({
       customClass: {
-        actions: 'actions-popup'
-      }
+        actions: 'actions-popup',
+      },
     }),
     RecaptchaModule.forRoot(),
     DigitOnlyModule,
@@ -129,27 +135,21 @@ import { TooltipModule } from 'ngx-bootstrap';
     MaterialFileInputModule,
     MatRadioModule,
     OverlayModule,
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
   ],
   providers: [
     ExcelService,
-     {provide: ErrorStateMatcher,
-      useClass: ShowOnDirtyErrorStateMatcher
-      },
-      {provide: HTTP_INTERCEPTORS,
-        useClass: AuthInterceptorService,
-        multi: true
-      },
-      AfiliacionService,
-      ConfiguracionService,
-      NotifyService
-
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+    AfiliacionService,
+    ConfiguracionService,
+    NotifyService,
   ],
-  exports: [
-    MatInputModule,
-    MatSnackBarModule,
-    ValidationComponent
-  ],
+  exports: [MatInputModule, MatSnackBarModule, ValidationComponent],
   bootstrap: [AppComponent],
   entryComponents: [
     DialogComponent,
@@ -160,7 +160,7 @@ import { TooltipModule } from 'ngx-bootstrap';
     LoadFileComponent,
     LoadBarComponent,
     DebtComponent,
-    AgregaCobroComponent
-  ]
+    AgregaCobroComponent,
+  ],
 })
-export class AppModule { }
+export class AppModule {}
