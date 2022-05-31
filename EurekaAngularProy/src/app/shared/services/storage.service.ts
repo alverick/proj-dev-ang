@@ -57,6 +57,10 @@ export class StorageService {
     return this.currentSession;
   }
 
+  isValidSession(): boolean {
+    return this.isAuthenticated() && this.getPerfil().toString() === '0';
+  }
+
   removeCurrentSession(): void {
     this.localStorageService.removeItem('tk');
     this.localStorageService.removeItem('exp');
