@@ -1,91 +1,56 @@
-import * as moment from 'moment';
-
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { LoginService } from 'src/app/shared/services/login.service';
 import { AfiliacionService } from '../services/afiliacion.service';
 import { ExcelService } from '../services/excel.service';
-import { LoginService } from 'src/app/shared/services/login.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { NotifyService } from '../services/notify.service';
-import Swal from 'sweetalert2';
-import { drawPopup } from '../services/popups';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  showHead: boolean = null;
-
   isExpanded = false;
-  public cambiaContra: string;
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private loginService: LoginService,
     private spinner: NgxSpinnerService,
     private excelser: ExcelService,
     public notify: NotifyService,
-    public rutaActiva: ActivatedRoute,
-    public afiliacionService: AfiliacionService,
-  ) {
-  }
+    public afiliacionService: AfiliacionService
+  ) {}
 
   scrollConfig = {
-    suppressScrollX: true
+    suppressScrollX: true,
   };
 
   ngOnInit() {
     this.notify.clear();
     this.spinner.hide();
     this.notify.iniciar();
-    // this.cambiaContra = "/cambiaContra/" + this.rutaActiva.snapshot.params.llave;
-
   }
 
   public menu(): boolean {
-    if (this.router.url.includes('/cambiaContra') ||
+    return !(
+      this.router.url.includes('/cambiaContra') ||
       this.router.url.includes('/recupera') ||
       this.router.url.includes('/login') ||
       this.router.url.includes('/landing') ||
       this.router.url.includes('/gtp') ||
-      this.router.url.includes('/gtp')) {
-      return false;
-
-    } else {
-      return true;
-    }
+      this.router.url.includes('/gtp')
+    );
   }
 
   onClass(): boolean {
-    if (this.router.url.includes('/home') ||
-      this.router.url.includes('/gtp')) {
-      return false;
-
-    } else {
-      return true;
-    }
+    return !(
+      this.router.url.includes('/home') || this.router.url.includes('/gtp')
+    );
   }
   public menuGtp(): boolean {
-    if (this.router.url.includes('/gtp')) {
-      return true;
-
-    } else {
-      return false;
-    }
-  }
-  mesageeError(tipo: any, titulo: string, text: string) {
-    Swal.fire({
-      title: titulo,
-      text: text,
-      showCloseButton: true,
-      showCancelButton: true,
-      showConfirmButton: false,
-      cancelButtonText: 'Cerrar',
-      allowOutsideClick: false,
-      onOpen: drawPopup
-
-    });
+    return this.router.url.includes('/gtp');
   }
 
   public logout(): void {
@@ -94,13 +59,11 @@ export class HeaderComponent implements OnInit {
     this.excelser.statusUpload = false;
     this.spinner.hide();
     this.isExpanded = false;
-
-
   }
-  onRegresar
 
   public show(): boolean {
-    if (this.router.url.includes('/login') ||
+    return !(
+      this.router.url.includes('/login') ||
       this.router.url.includes('/cambiaContra') ||
       this.router.url.includes('/recupera') ||
       // this.router.url.includes('/afiliacion') ||
@@ -109,17 +72,11 @@ export class HeaderComponent implements OnInit {
       this.router.url.includes('/editarSvcGTP') ||
       // this.router.url.includes('/configurarCorreoGTP') ||
       this.router.url.includes('/configurarServicios') ||
-
-      this.router.url.includes('/procesando') ) {
-      return false;
-    }
-    return true;
+      this.router.url.includes('/procesando')
+    );
   }
   onAfilacion(): boolean {
-    if (this.router.url.includes('/crearContrasena')) {
-      return false;
-    }
-    return true;
+    return !this.router.url.includes('/crearContrasena');
   }
 
   get IsHome(): boolean {
@@ -139,10 +96,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  onShowMessages() {
-  }
-
-
   goBackEmpresa() {
     if (confirm('Es posible que los cambios no se guarden.')) {
       this.router.navigate(['/afiliacion']);
@@ -150,7 +103,6 @@ export class HeaderComponent implements OnInit {
   }
 
   goBack() {
-
     if (this.router.url.includes('/cargaHistorico')) {
       this.router.navigate(['/gtp']);
     } else if (this.router.url.includes('/crearContrasena')) {
@@ -164,15 +116,12 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-
   goBackGtp() {
     if (confirm('Es posible que los cambios no se guarden.')) {
       this.router.navigate(['/gtp']);
     }
   }
 
-
-  // ---------------- reónsive -------
   collapse() {
     this.isExpanded = false;
   }
@@ -181,12 +130,12 @@ export class HeaderComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
-  goResumenCobros(){
+  goResumenCobros() {
     this.clearServices();
     this.router.navigate(['/resumenCobros']);
   }
 
-  clearServices(){
+  clearServices() {
     this.afiliacionService.services = [];
   }
 }
