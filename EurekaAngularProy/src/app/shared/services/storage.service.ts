@@ -1,16 +1,12 @@
-import { Injectable } from "@angular/core";
-import { Session } from "../models/session.model";
-import { User } from "../models/user.model";
+import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-
+import { Session } from '../models/session.model';
+import { User } from '../models/user.model';
 
 @Injectable({
-    providedIn: 'root'
-  }
-)
+  providedIn: 'root',
+})
 export class StorageService {
-  redirectUrl: string;
-
   private localStorageService;
   private currentSession: Session = null;
 
@@ -21,9 +17,12 @@ export class StorageService {
 
   setCurrentSession(session: Session): void {
     this.currentSession = session;
-    if (session.token === 'RUC no esta registrado'  ||  session.token ===  'Un session ya se encuentra activa'  ||  session.token ===  'Credenciales invalidas') {
-       return ;
-
+    if (
+      session.token === 'RUC no esta registrado' ||
+      session.token === 'Un session ya se encuentra activa' ||
+      session.token === 'Credenciales invalidas'
+    ) {
+      return;
     } else {
       this.localStorageService.setItem('tk', session.token);
       this.localStorageService.setItem('exp', session.expire);
@@ -37,7 +36,7 @@ export class StorageService {
       return {
         user: { ruc: this.cookieStorage.get('ruc') },
         isAuthenticate: false,
-        token: null
+        token: null,
       };
     }
     return null;
@@ -45,16 +44,20 @@ export class StorageService {
 
   getCurrentSession(): Session {
     if (this.currentSession === null || this.currentSession === undefined) {
-      var tk = this.localStorageService.getItem('tk');
+      const tk = this.localStorageService.getItem('tk');
       this.currentSession = {
         user: { ruc: '' },
-        isAuthenticate: (tk !== null && tk !== undefined && tk !== ''),
+        isAuthenticate: tk !== null && tk !== undefined && tk !== '',
         token: tk,
         expire: this.localStorageService.getItem('exp'),
-        refresh: this.localStorageService.getItem('rfs')
-      }
+        refresh: this.localStorageService.getItem('rfs'),
+      };
     }
     return this.currentSession;
+  }
+
+  isValidSession(): boolean {
+    return this.isAuthenticated() && this.getPerfil().toString() === '0';
   }
 
   removeCurrentSession(): void {
@@ -65,22 +68,21 @@ export class StorageService {
   }
 
   getCurrentUser(): User {
-    var session: Session = this.getCurrentSession();
-    return (session && session.user) ? session.user : null;
-  };
+    const session: Session = this.getCurrentSession();
+    return session && session.user ? session.user : null;
+  }
 
   isAuthenticated(): boolean {
-    const token = this.localStorageService.getItem('tk');
-    return (this.currentSession && this.currentSession.isAuthenticate);
-  };
+    return this.currentSession && this.currentSession.isAuthenticate;
+  }
 
   getCurrentToken(): string {
-    var session = this.getCurrentSession();
-    return (session && session.token) ? session.token : null;
-  };
+    const session = this.getCurrentSession();
+    return session && session.token ? session.token : null;
+  }
 
   setIntentos(intentos: number): void {
-    this.localStorageService.setItem('intento', intentos );
+    this.localStorageService.setItem('intento', intentos);
   }
 
   getIntentos(): number {
@@ -90,5 +92,4 @@ export class StorageService {
   getPerfil(): number {
     return this.localStorageService.getItem('prfl');
   }
-
 }
