@@ -47,8 +47,8 @@ body {
 
 .widget.lista {
     .content {
-        padding-left: 0px;
-        padding-right: 0px;
+        padding-left: 0;
+        padding-right: 0;
         .actions {
             height: 51px;
             padding-left: 15px;
@@ -241,7 +241,7 @@ body {
                                 }
                             }
                             .msg-error {
-                                margin-top: 0px;
+                                margin-top: 0;
                             }
                             .btn-edit {
                                 cursor: pointer;
@@ -362,7 +362,7 @@ body {
             display: block;
             text-align: right;
             width: 100%;
-            padding: 8px 15px 0px 8px;
+            padding: 8px 15px 0 8px;
             .text {
                 float: right;
                 color: #9ea1a5;
@@ -373,23 +373,6 @@ body {
             }
         }
     }
-}
-
-.text-foot {
-    @include font-text(16px, normal);
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding: 40px 0px;
-    color: #333333 !important;
-    .link {
-        @include font-text(16px, 500);
-        color: #333333 !important;
-    }
-}
-
-b {
-    @include font-text(16px, 500);
 }
 
 :host ::ng-deep .ngx-pagination {
