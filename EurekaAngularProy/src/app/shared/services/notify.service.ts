@@ -1,52 +1,62 @@
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import { map, delay } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { faBell as fasBell, faCircle as fasCircle } from '@fortawesome/free-solid-svg-icons';
-import { faBell as farBell, faCircle as farCircle } from '@fortawesome/free-regular-svg-icons';
+import { Injectable } from '@angular/core';
+import {
+  faBell as farBell,
+  faCircle as farCircle,
+} from '@fortawesome/free-regular-svg-icons';
+import { faCircle as fasCircle } from '@fortawesome/free-solid-svg-icons';
+import 'rxjs/add/observable/of';
+import { Subject } from 'rxjs/internal/Subject';
+import { delay, repeat, takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
 
-const time_call_notify = 2000;
+const time_call_notify = 60000;
+
+const markAsRead = 'Marcar como leído';
+const markAsNotRead = 'Marcar como no leído';
 
 @Injectable()
 export class NotifyService {
-  constructor(private http: HttpClient, private storage: StorageService) { }
+  constructor(private http: HttpClient, private storage: StorageService) {}
 
-  inExecution: boolean = false;
+  inExecution = false;
   icono: any = farBell;
-  loadingMsg: boolean = false;
+  loadingMsg = false;
 
-  existMore: boolean = true;
+  existMore = true;
   messages: any[] = [];
-  total: number = -1;
+  total = -1;
 
   public iniciar() {
-    if (!this.inExecution) {
-      this.inExecution = true;
-      const callNotify = () => {
-        if (this.storage.isAuthenticated() && (this.storage.getPerfil().toString() === '0') ) {
-          this.http.get(`${environment.END_POINT}/notification/total?_=${new Date().getTime()}`)
-            .subscribe((d: any) => {
-              this.inExecution = false;
-              if (d.total !== this.total) {
-                this.total = d.total;
-                this.messages = [];
-                this.existMore = true;
-                this.loadMsgs();
-              }
-              Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
-            }, err => {
-              Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
-            });
-        }
-        else {
-          Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
-        }
-      };
-      Observable.of({}).pipe(delay(time_call_notify)).subscribe(() => callNotify());
+    this.storage.getCurrentSession();
+
+    if (!this.storage.isValidSession()) {
+      return;
     }
+    const stop = new Subject();
+
+    this.http
+      .get(
+        `${environment.END_POINT}/notification/total?_=${new Date().getTime()}`
+      )
+      .pipe(delay(time_call_notify), repeat(), takeUntil(stop))
+      .subscribe(
+        ({ total }: any) => {
+          this.inExecution = false;
+          if (total !== this.total) {
+            this.total = total;
+            this.messages = [];
+            this.existMore = true;
+            this.loadMsgs();
+          }
+        },
+        (error) => {
+          if (error.status === 401) {
+            stop.next(true);
+          }
+        }
+      );
   }
 
   public clear() {
@@ -57,36 +67,54 @@ export class NotifyService {
   public loadMsgs() {
     if (this.existMore && !this.loadingMsg) {
       this.loadingMsg = true;
-      this.http.get<any>(`${environment.END_POINT}/notification?skip=${this.messages.length}&_=${new Date().getTime()}`)
-        .subscribe(d => {
-          this.loadingMsg = false;
-          if (d.length < 15) {
-            this.existMore = false;
+      this.http
+        .get<any>(
+          `${environment.END_POINT}/notification?skip=${
+            this.messages.length
+          }&_=${new Date().getTime()}`
+        )
+        .subscribe(
+          (d) => {
+            this.loadingMsg = false;
+            if (d.length < 15) {
+              this.existMore = false;
+            }
+            d.forEach((s) => {
+              s.icono = s.isNew ? farCircle : fasCircle;
+              s.title = s.isNew ? markAsRead : markAsNotRead;
+              this.messages.push(s);
+            });
+          },
+          () => {
+            this.loadingMsg = false;
           }
-          d.forEach(s => {
-            s.icono = s.isNew ? farCircle : fasCircle;
-            s.title = s.isNew ? 'Marcar como leido' : 'Marcar como no leido';
-            this.messages.push(s);
-          });
-        }, err => { this.loadingMsg = false; });
+        );
     }
   }
 
   public changeRead(msg: any) {
-    this.http.post(`${environment.END_POINT}/notification/mark/${msg.id}?_=${new Date().getTime()}`, {})
-      .subscribe(() => { });
+    this.http.post(
+      `${environment.END_POINT}/notification/mark/${
+        msg.id
+      }?_=${new Date().getTime()}`,
+      {}
+    );
     msg.isNew = !msg.isNew;
     if (msg.isNew) {
       msg.icono = farCircle;
-      msg.title = 'Marcar como leido';
+      msg.title = markAsRead;
     } else {
       msg.icono = fasCircle;
-      msg.title = 'Marcar como no leido';
+      msg.title = markAsNotRead;
     }
   }
 
   public markAll() {
-    this.http.post(`${environment.END_POINT}/notification/mark?_=${new Date().getTime()}`, {})
+    this.http
+      .post(
+        `${environment.END_POINT}/notification/mark?_=${new Date().getTime()}`,
+        {}
+      )
       .subscribe(() => {
         this.total = -1;
       });
