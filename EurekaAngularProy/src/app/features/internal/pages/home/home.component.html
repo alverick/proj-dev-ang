@@ -1,5 +1,5 @@
 <div>
-  <div class="containerr">
+  <div class="custom-container">
     <div class="row">
       <div class="col-sm-12 col-md-12">
         <div class="widget filtros">
@@ -26,7 +26,7 @@
                   placeholder="Nombre o código del cliente"
                 />
                 <span matPrefix class="pr-1"
-                  ><img src="assets/images/buscar.svg" />
+                  ><img src="../../../../../assets/images/buscar.svg" />
                 </span>
                 <button
                   mat-button
@@ -314,7 +314,10 @@
                   class="btn btn-default dropdown-toggle"
                   data-toggle="dropdown"
                 >
-                  <img src="assets/images/plus_circle.svg" alt="plus_circle" />
+                  <img
+                    src="../../../../../assets/images/plus_circle.svg"
+                    alt="plus_circle"
+                  />
                   Agregar cobros
                 </div>
                 <div class="dropdown-menu lnk-label" role="menu">
@@ -344,11 +347,11 @@
                 >
                   <img
                     *ngIf="!enDescarga"
-                    src="assets/images/download.svg"
+                    src="../../../../../assets/images/download.svg"
                     alt="download"
                   /><img
                     *ngIf="enDescarga"
-                    src="assets/images/download-d.svg"
+                    src="../../../../../assets/images/download-d.svg"
                     alt="download"
                   />
                   Descargar movimientos
@@ -380,9 +383,7 @@
                 >
                   <span *ngIf="!selectedUniverse"
                     >Seleccionar los
-                    {{
-                      transactionService.debtItems.countNoIbkPayments
-                    }}
+                    {{ transactionService.debtItems.countNoIbkPayments }}
                     registros</span
                   >
                   <span *ngIf="selectedUniverse">Anular la selección</span>
@@ -809,13 +810,13 @@
                         <div class="d-flex">
                           <div class="btn-ok" (click)="grabarNuevo()">
                             <img
-                              src="assets/images/circle_ok.svg"
+                              src="../../../../../assets/images/circle_ok.svg"
                               alt="Aceptar"
                             />
                           </div>
                           <div class="btn-cancel" (click)="cancelaNuevo()">
                             <img
-                              src="assets/images/circle_cancel.svg"
+                              src="../../../../../assets/images/circle_cancel.svg"
                               alt="Cancelar"
                             />
                           </div>
@@ -985,7 +986,7 @@
                         </td>
                         <td class="c1">
                           <span *ngIf="!items.editPending">{{
-                            items.emissionDate | date: "dd/MM/yy"
+                            items.emissionDate | date: 'dd/MM/yy'
                           }}</span>
                           <div
                             *ngIf="items.editPending"
@@ -1028,7 +1029,7 @@
                         </td>
                         <td class="c2">
                           <span *ngIf="!items.editInput">{{
-                            items.dueDate | date: "dd/MM/yy"
+                            items.dueDate | date: 'dd/MM/yy'
                           }}</span>
                           <div
                             *ngIf="items.editInput && items.dueDate !== null"
@@ -1068,14 +1069,21 @@
                         <td class="c3">{{ items.code }}</td>
                         <td class="c4">
                           <span
-                            *ngIf="!items.editInput || (items.hasIBKPayments && items.serviceType !== 'S')"
+                            *ngIf="
+                              !items.editInput ||
+                              (items.hasIBKPayments &&
+                                items.serviceType !== 'S')
+                            "
                             >{{ items.firstName }}</span
                           >
                           <div
-                            *ngIf="items.editInput && (!items.hasIBKPayments || items.serviceType === 'S')"
+                            *ngIf="
+                              items.editInput &&
+                              (!items.hasIBKPayments ||
+                                items.serviceType === 'S')
+                            "
                             class="content-input-icon position-relative"
                           >
-
                             <mat-form-field
                               class="inline-input"
                               style="width: 80px"
@@ -1103,7 +1111,7 @@
                         <td class="c7">
                           <span *ngIf="!items.editInput && items.amount > 0"
                             >{{ items.currency }}
-                            {{ items.amount | number: "1.2-2" }}</span
+                            {{ items.amount | number: '1.2-2' }}</span
                           >
                           <div
                             *ngIf="items.editInput && items.dueDate !== null"
@@ -1137,19 +1145,19 @@
                         <td class="c8">
                           <span *ngIf="items.interestAmount > 0"
                             >{{ items.currency }}
-                            {{ items.interestAmount | number: "1.2-2" }}</span
+                            {{ items.interestAmount | number: '1.2-2' }}</span
                           >
                         </td>
                         <td class="c9">
                           <span *ngIf="items.totalAmount > 0"
                             >{{ items.currency }}
-                            {{ items.totalAmount | number: "1.2-2" }}</span
+                            {{ items.totalAmount | number: '1.2-2' }}</span
                           >
                         </td>
                         <td class="c10">
                           <span *ngIf="items.totalAmountPayed > 0"
                             >{{ items.currency }}
-                            {{ items.totalAmountPayed | number: "1.2-2" }}
+                            {{ items.totalAmountPayed | number: '1.2-2' }}
                           </span>
                           <div class="cnt-status">
                             <div
@@ -1176,7 +1184,10 @@
                                 class="text-success"
                               >
                                 Pagado
-                                <img src="assets/images/ok.svg" alt="ok" />
+                                <img
+                                  src="../../../../../assets/images/ok.svg"
+                                  alt="ok"
+                                />
                               </span>
                               <span
                                 *ngIf="items.status === 'VENCIDO'"
@@ -1184,7 +1195,7 @@
                               >
                                 Vencido
                                 <img
-                                  src="assets/images/cancel.svg"
+                                  src="../../../../../assets/images/cancel.svg"
                                   alt="cancel"
                                 />
                               </span>
@@ -1229,12 +1240,13 @@
                                 class="text-success"
                               >
                                 Deshabilitado
-                                <img src="assets/images/ok.svg" alt="ok" />
+                                <img
+                                  src="../../../../../assets/images/ok.svg"
+                                  alt="ok"
+                                />
                               </span>
                             </div>
-
                           </div>
-
                         </td>
 
                         <td class="c12">
@@ -1251,14 +1263,13 @@
                                   !items.hasIBKPayments) ||
                                   items.dueDate !== null ||
                                   (items.dueDate === null &&
-                                  items.hasIBKPayments) )
+                                    items.hasIBKPayments))
                               "
                               class="btn-edit"
                               (click)="BotonEditar(items)"
                             >
-
                               <img
-                                src="assets/images/pencil.svg"
+                                src="../../../../../assets/images/pencil.svg"
                                 alt="editar"
                               />
                             </div>
@@ -1268,7 +1279,7 @@
                               (click)="BotonActualizar(items)"
                             >
                               <img
-                                src="assets/images/circle_ok.svg"
+                                src="../../../../../assets/images/circle_ok.svg"
                                 alt="Aceptar"
                               />
                             </div>
@@ -1278,7 +1289,7 @@
                               (click)="BotonCancela(items)"
                             >
                               <img
-                                src="assets/images/circle_cancel.svg"
+                                src="../../../../../assets/images/circle_cancel.svg"
                                 alt="Cancelar"
                               />
                             </div>
@@ -1292,7 +1303,10 @@
                         <td colspan="13" class="texto-after">
                           <span>{{ messageTable }}</span>
                           <div *ngIf="showArrow" class="">
-                            <img src="assets/images/path.svg" alt="arrow" />
+                            <img
+                              src="../../../../../assets/images/path.svg"
+                              alt="arrow"
+                            />
                           </div>
                         </td>
                       </tr>
@@ -1320,10 +1334,10 @@
                         (keyup.enter)="p.previous()"
                         (click)="p.previous()"
                       >
-                        <img src="assets/images/before.svg" />
+                        <img src="../../../../../assets/images/before.svg" />
                       </a>
                       <span *ngIf="p.isFirstPage()">
-                        <img src="assets/images/before.svg" />
+                        <img src="../../../../../assets/images/before.svg" />
                       </span>
                     </li>
                     <li *ngIf="p.pages.length === 0" class="current">
@@ -1342,16 +1356,16 @@
                         *ngIf="p.getCurrent() !== page.value"
                       >
                         <span>{{
-                          page.label === "..."
+                          page.label === '...'
                             ? page.label
-                            : (page.label | number: "")
+                            : (page.label | number: '')
                         }}</span>
                       </a>
                       <ng-container *ngIf="p.getCurrent() === page.value">
                         <span>{{
-                          page.label === "..."
+                          page.label === '...'
                             ? page.label
-                            : (page.label | number: "")
+                            : (page.label | number: '')
                         }}</span>
                       </ng-container>
                     </li>
@@ -1366,10 +1380,10 @@
                         (keyup.enter)="p.next()"
                         (click)="p.next()"
                       >
-                        <img src="assets/images/after.svg" />
+                        <img src="../../../../../assets/images/after.svg" />
                       </a>
                       <span class="pr-0" *ngIf="p.isLastPage()">
-                        <img src="assets/images/after.svg" />
+                        <img src="../../../../../assets/images/after.svg" />
                       </span>
                     </li>
                   </ul>
@@ -1384,7 +1398,6 @@
         </div>
       </div>
     </div>
-    <app-footer></app-footer>
   </div>
 </div>
 <template #fileLoad class="file-load"></template>

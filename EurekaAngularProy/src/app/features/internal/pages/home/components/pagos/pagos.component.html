@@ -27,7 +27,7 @@
             <tr>
                 <td class="action">
                     <button type="button" class=" btn-outline-green " (click)="addItm()">
-            <img src="assets/images/plus_circle.svg" alt="agregar">
+            <img src="../../../../../../../assets/images/plus_circle.svg" alt="agregar">
              <small> Agregar un pago </small>
           </button>
                 </td>
@@ -99,16 +99,16 @@
                     <td class="c5">
                         <div *ngIf="itm.canEdit" class="d-flex">
                             <div *ngIf="!itm.editing" class="btn-edit" (click)="editItm(itm); $event.stopPropagation();">
-                                <img src="assets/images/pencil.svg" alt="editar">
+                                <img src="../../../../../../../assets/images/pencil.svg" alt="editar">
                             </div>
                             <div *ngIf="!itm.editing" class="btn-delete" (click)="delItm(itm); $event.stopPropagation();">
                                 <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
                             </div>
                             <div *ngIf="itm.editing" class="btn-ok" (click)="saveItm(itm); $event.stopPropagation();">
-                                <img src="assets/images/circle_ok.svg" alt="Aceptar">
+                                <img src="../../../../../../../assets/images/circle_ok.svg" alt="Aceptar">
                             </div>
                             <div *ngIf="itm.editing" class="btn-cancel" (click)="cancelItm(itm); $event.stopPropagation();">
-                                <img src="assets/images/circle_cancel.svg" alt="Cancelar">
+                                <img src="../../../../../../../assets/images/circle_cancel.svg" alt="Cancelar">
                             </div>
                         </div>
                     </td>
@@ -121,7 +121,7 @@
     <tr *ngIf="status !== 'PAGADO'">
         <td class="action" style="padding-left: 70px;" colspan="5">
             <button type="button" class=" btn-outline-green " (click)="addItm()">
-      <img src="assets/images/plus_circle.svg" alt="agregar">
+      <img src="../../../../../../../assets/images/plus_circle.svg" alt="agregar">
        <small> Agregar un pago </small>
     </button>
         </td>

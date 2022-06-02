@@ -4,8 +4,8 @@ import { MatDialogRef } from "@angular/material";
 
 @Component({
   selector: 'app-agrega-cobro',
-  templateUrl: './agrega-cobro.component.html',
-  styleUrls: ['./agrega-cobro.component.scss'],
+  templateUrl: '../agrega-cobro.component.html',
+  styleUrls: ['../agrega-cobro.component.scss'],
 })
 export class AgregaCobroComponent implements OnInit {
   constructor(public excelService: ExcelService,
