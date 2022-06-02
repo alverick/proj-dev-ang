@@ -1,32 +1,46 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { GtpEmpresa, GtpPost, GtpServcegtp } from 'src/app/shared/models/gtp-post';
-
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import { DataServiceGTP } from './../../shared/models/data-service-gtp';
-import { GtpService } from 'src/app/shared/services/gtp.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { appFullRoutingNames } from 'src/app/app-routing.names';
 import { RubroModel } from 'src/app/shared/models';
-import Swal from 'sweetalert2';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import {
+  GtpEmpresa,
+  GtpPost,
+  GtpServcegtp,
+} from 'src/app/shared/models/gtp-post';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/services/popups';
+import Swal from 'sweetalert2';
+import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
+import { adminFullRoutingNames } from '../../admin-routing.names';
 
 // import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'app-aprobaciones',
   templateUrl: './aprobaciones.component.html',
-  styleUrls: ['./aprobaciones.component.scss']
+  styleUrls: ['./aprobaciones.component.scss'],
 })
 export class AprobacionesComponent implements OnInit {
-
   public Formulario: boolean = false;
   public ServiciosFormulario: boolean = false;
   public llave: number;
   // public Empresa: EnterprisesGtp ;
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {
-    ruc: 0, name: '', entry: '', entryName: '', email: '',
-    movilNumber: 0, movilOperator: '', newName: '', newNameGTPStatus: -1, status: '', uniqueCodeIBK: '', useAgencyChannel: false
+    ruc: 0,
+    name: '',
+    entry: '',
+    entryName: '',
+    email: '',
+    movilNumber: 0,
+    movilOperator: '',
+    newName: '',
+    newNameGTPStatus: -1,
+    status: '',
+    uniqueCodeIBK: '',
+    useAgencyChannel: false,
   };
   public emp: GtpEmpresa;
   public scv: GtpServcegtp[] = [];
@@ -43,8 +57,12 @@ export class AprobacionesComponent implements OnInit {
 
   rubros: RubroModel[] = [];
 
-  constructor(public gtpService: GtpService, private rutaActiva: ActivatedRoute,
-    public afiliacionService: AfiliacionService, public router: Router) { }
+  constructor(
+    public gtpService: GtpService,
+    private rutaActiva: ActivatedRoute,
+    public afiliacionService: AfiliacionService,
+    public router: Router
+  ) {}
   public OcultarDatosActualEmpresa: boolean = true;
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
@@ -53,29 +71,29 @@ export class AprobacionesComponent implements OnInit {
     }
   }
 
-
   ngOnInit() {
     this.llave = this.rutaActiva.snapshot.params.llave;
     // borra el back del navegador
-    window['_url_loop_'] = 'AprobacionGtp/' + this.llave;
-    history.pushState(null, null, 'AprobacionGtp/' + this.llave);
+    window['_url_loop_'] = adminFullRoutingNames.APPROVE + this.llave;
+    history.pushState(null, null, adminFullRoutingNames.APPROVE + this.llave);
     // mantiene la pagina con el scroll en la parte superior
     window.scrollTo(0, 0);
 
     /// TRAE LOS SERVICIOS
     this.gtpService.GetServicesGtp(this.llave);
-    this.afiliacionService.GetRubrosAll().subscribe(d => {
+    this.afiliacionService.GetRubrosAll().subscribe((d) => {
       this.rubros = d;
       this.getInfoEmpresa();
     });
   }
 
   getInfoEmpresa() {
-    this.gtpService.GetEnterpriseGtp(this.llave)
-      .subscribe(dataEnterprise => {
-        this.Enterprise = dataEnterprise;
-        this.rubro = this.rubros.find((v) => v.code === this.Enterprise.entry).name;
-      });
+    this.gtpService.GetEnterpriseGtp(this.llave).subscribe((dataEnterprise) => {
+      this.Enterprise = dataEnterprise;
+      this.rubro = this.rubros.find(
+        (v) => v.code === this.Enterprise.entry
+      ).name;
+    });
     /*  this.gtpService.GetEnterpriseGtp2(this.llave)
       .subscribe( data => {
         this.empresa = data;
@@ -108,24 +126,27 @@ export class AprobacionesComponent implements OnInit {
     } */
   VerCamposEnterprise(etp: DataEnterpriseGTP) {
     if (this.ServiciosFormulario === true) {
-      this.mensaje('Aprobando Servicio ',
-        'Actualmente se esta aprobando un Servicio');
+      this.mensaje(
+        'Aprobando Servicio ',
+        'Actualmente se esta aprobando un Servicio'
+      );
       return;
     }
     this.Formulario = true;
     this.Empgtp = etp;
   }
 
-
   VerCamposSer(etp: DataServiceGTP, index: number) {
     if (this.Formulario === true) {
-      this.mensaje('Aprobando Empresa',
-        'Actualmente se esta aprobando una Empresa');
+      this.mensaje(
+        'Aprobando Empresa',
+        'Actualmente se esta aprobando una Empresa'
+      );
       return;
     }
     this.ServiciosFormulario = true;
     this.Servgtp = etp;
-    this.Servgtp.useAgencyChannel = this.Enterprise.useAgencyChannel
+    this.Servgtp.useAgencyChannel = this.Enterprise.useAgencyChannel;
     this.indiceActual = index;
   }
 
@@ -136,7 +157,10 @@ export class AprobacionesComponent implements OnInit {
     if (this.Enterprise.name !== this.Enterprise.newName) {
       return true;
     }
-    if (this.Enterprise.name === this.Enterprise.newName || this.Enterprise.inReview === true) {
+    if (
+      this.Enterprise.name === this.Enterprise.newName ||
+      this.Enterprise.inReview === true
+    ) {
       return true;
     }
   }
@@ -151,41 +175,72 @@ export class AprobacionesComponent implements OnInit {
 
   EnviarAprobados() {
     // debugger
-    let entryDiff = false
-    this.gtpService.services.forEach(s => {
+    let entryDiff = false;
+    this.gtpService.services.forEach((s) => {
       if (s.res.length > 0 && s.res.substring(0, 2) !== this.Enterprise.entry)
         entryDiff = true;
     });
     if (entryDiff) {
-      this.mensaje("Error en Rubro", "La res es diferente del rubro, no se puede enviar a PAG");
+      this.mensaje(
+        'Error en Rubro',
+        'La res es diferente del rubro, no se puede enviar a PAG'
+      );
       return;
     }
     // limpiar el array
     this.scv = [];
     // NO APROBADOS
-    const nombreApp = this.gtpService.services.filter((svc) => svc.acceptednewName === false && (svc.name !== svc.newName)).length;
-    const CodDeuApp = this.gtpService.services.filter((svc) => svc.acceptednewNameCode === false && (svc.debtorCode !== svc.newNameCode)).length;
+    const nombreApp = this.gtpService.services.filter(
+      (svc) => svc.acceptednewName === false && svc.name !== svc.newName
+    ).length;
+    const CodDeuApp = this.gtpService.services.filter(
+      (svc) =>
+        svc.acceptednewNameCode === false && svc.debtorCode !== svc.newNameCode
+    ).length;
 
     // tslint:disable-next-line: max-line-length cunatos son los que faltan revisar
-    const ListCantidadNombre = this.gtpService.services.filter((svc) => ((svc.newNameGTPStatus === 0 || svc.newNameGTPStatus === 2) && (svc.acceptednewName === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */).length;
+    const ListCantidadNombre = this.gtpService.services.filter(
+      (svc) =>
+        (svc.newNameGTPStatus === 0 || svc.newNameGTPStatus === 2) &&
+        svc.acceptednewName ===
+          null /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */
+    ).length;
     // tslint:disable-next-line:max-line-length
-    const ListCantidadCodigoDeudor = this.gtpService.services.filter((svc) => ((svc.newNameCodeGTPStatus === 0 || svc.newNameCodeGTPStatus === 2) && (svc.acceptednewNameCode === null)) /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */).length;
+    const ListCantidadCodigoDeudor = this.gtpService.services.filter(
+      (svc) =>
+        (svc.newNameCodeGTPStatus === 0 || svc.newNameCodeGTPStatus === 2) &&
+        svc.acceptednewNameCode ===
+          null /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */
+    ).length;
 
     let Empcant = 0;
     // duplica por que calcula por los 2 la cantidad que falta
 
-    if (this.Enterprise.name.toUpperCase() === this.Enterprise.newName.toUpperCase()) {
+    if (
+      this.Enterprise.name.toUpperCase() ===
+      this.Enterprise.newName.toUpperCase()
+    ) {
       this.Enterprise.NombreApproved = true;
-    }
-    else {
-      if (this.Enterprise.NombreApproved === null || this.Enterprise.NombreApproved === undefined) {
+    } else {
+      if (
+        this.Enterprise.NombreApproved === null ||
+        this.Enterprise.NombreApproved === undefined
+      ) {
         Empcant = 1;
       }
     }
     // tslint:disable-next-line: max-line-length
     // const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
     // tslint:disable-next-line:max-line-length
-    const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.newNameGTPStatus === 2) || (svc.newNameGTPStatus === 0) || (svc.newNameCodeGTPStatus === 2) || (svc.newNameCodeGTPStatus === 0) || (svc.res !== '') /*|| ( (svc.newNameGTPStatus === 3   && svc.name !== ''  && svc.newName !== ''  ))*/);
+    const ListInAprobacion = this.gtpService.services.filter(
+      (svc) =>
+        svc.newNameGTPStatus === 2 ||
+        svc.newNameGTPStatus === 0 ||
+        svc.newNameCodeGTPStatus === 2 ||
+        svc.newNameCodeGTPStatus === 0 ||
+        svc.res !==
+          '' /*|| ( (svc.newNameGTPStatus === 3   && svc.name !== ''  && svc.newName !== ''  ))*/
+    );
 
     const total = ListCantidadNombre + ListCantidadCodigoDeudor + Empcant;
 
@@ -194,14 +249,18 @@ export class AprobacionesComponent implements OnInit {
       desap = 1;
     }
     const notAprov = CodDeuApp + nombreApp + desap;
-    this.emp = { ClientId: this.llave, NombreAprobado: this.Enterprise.NombreApproved };
+    this.emp = {
+      ClientId: this.llave,
+      NombreAprobado: this.Enterprise.NombreApproved,
+    };
     // debugger
-    ListInAprobacion.forEach(s => {
+    ListInAprobacion.forEach((s) => {
       this.scv.push({
         ServiceId: s.id,
-        NombreAprobado: (s.name === s.newName) ? true : s.acceptednewName,
-        NombreCodAprobado: (s.debtorCode === s.newNameCode) ? true : s.acceptednewNameCode,
-        Res: s.res
+        NombreAprobado: s.name === s.newName ? true : s.acceptednewName,
+        NombreCodAprobado:
+          s.debtorCode === s.newNameCode ? true : s.acceptednewNameCode,
+        Res: s.res,
       });
     });
 
@@ -210,72 +269,113 @@ export class AprobacionesComponent implements OnInit {
         if (this.Enterprise.isNewEnterprise) {
           Swal.fire({
             title: 'Aprobacion',
-            html: 'Existen ' + notAprov + ' campos que no fueron aprobados. <br> ¿Desea rechazar la Afiliación?',
+            html:
+              'Existen ' +
+              notAprov +
+              ' campos que no fueron aprobados. <br> ¿Desea rechazar la Afiliación?',
             showCloseButton: true,
             showCancelButton: true,
             confirmButtonText: 'Si, Rechazar afiliación',
             cancelButtonText: 'No, Solicitar corrección de datos',
-            onOpen: drawPopup
+            onOpen: drawPopup,
           }).then((result) => {
             // debugger
 
             if (result.value) {
-              this.gtpService.AprobarEmpresaServ({ Rechaza: true, EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                .subscribe(d => {
+              this.gtpService
+                .AprobarEmpresaServ({
+                  Rechaza: true,
+                  EnterpriseObj: this.emp,
+                  ListServiceObj: this.scv,
+                })
+                .subscribe((d) => {
                   if (d) {
-                    this.router.navigate(['/gtp']);
+                    this.router.navigate([appFullRoutingNames.ADMIN]);
                   }
                 });
               return;
-            }
-            else if (result.dismiss === Swal.DismissReason.cancel) {
-              if ((this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) && this.scv.length === 0) {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                  .subscribe(d => {
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              if (
+                this.Enterprise.name === this.Enterprise.newName &&
+                this.Enterprise.inReview === false &&
+                this.scv.length === 0
+              ) {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: this.emp,
+                    ListServiceObj: this.scv,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
-
                     }
                   });
                 return;
               }
-              if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview && this.scv.length > 0) {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                  .subscribe(d => {
+              if (
+                this.Enterprise.name === this.Enterprise.newName &&
+                this.Enterprise.inReview &&
+                this.scv.length > 0
+              ) {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: this.emp,
+                    ListServiceObj: this.scv,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
-
                     }
                   });
                 return;
               }
 
-              if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: null, ListServiceObj: this.scv })
-                  .subscribe(d => {
+              if (
+                this.Enterprise.name === this.Enterprise.newName &&
+                this.Enterprise.inReview === false
+              ) {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: null,
+                    ListServiceObj: this.scv,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
                     }
                   });
                 return;
               }
               if (this.scv.length === 0) {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: null })
-                  .subscribe(d => {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: this.emp,
+                    ListServiceObj: null,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
                     }
                   });
                 return;
               } else {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                  .subscribe(d => {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: this.emp,
+                    ListServiceObj: this.scv,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
                     }
                   });
@@ -283,65 +383,101 @@ export class AprobacionesComponent implements OnInit {
               }
             }
           });
-        }
-        else {
+        } else {
           Swal.fire({
             title: 'Aprobacion',
-            html: 'Existen ' + notAprov + ' campos que no fueron aprobados. <br> ¿Desea solicitar corrección de datos?',
+            html:
+              'Existen ' +
+              notAprov +
+              ' campos que no fueron aprobados. <br> ¿Desea solicitar corrección de datos?',
             showCloseButton: true,
             showCancelButton: true,
             confirmButtonText: 'Si, Solicitar corrección de datos',
             cancelButtonText: 'No, Cancelar',
-            onOpen: drawPopup
+            onOpen: drawPopup,
           }).then((result) => {
             if (result.value) {
-              if ((this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) && this.scv.length === 0) {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                  .subscribe(d => {
+              if (
+                this.Enterprise.name === this.Enterprise.newName &&
+                this.Enterprise.inReview === false &&
+                this.scv.length === 0
+              ) {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: this.emp,
+                    ListServiceObj: this.scv,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
-
                     }
                   });
                 return;
               }
-              if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview && this.scv.length > 0) {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                  .subscribe(d => {
+              if (
+                this.Enterprise.name === this.Enterprise.newName &&
+                this.Enterprise.inReview &&
+                this.scv.length > 0
+              ) {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: this.emp,
+                    ListServiceObj: this.scv,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
-
                     }
                   });
                 return;
               }
 
-              if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: null, ListServiceObj: this.scv })
-                  .subscribe(d => {
+              if (
+                this.Enterprise.name === this.Enterprise.newName &&
+                this.Enterprise.inReview === false
+              ) {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: null,
+                    ListServiceObj: this.scv,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
                     }
                   });
                 return;
               }
               if (this.scv.length === 0) {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: null })
-                  .subscribe(d => {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: this.emp,
+                    ListServiceObj: null,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
                     }
                   });
                 return;
               } else {
-                this.gtpService.AprobarEmpresaServ({ Rechaza: false, EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                  .subscribe(d => {
+                this.gtpService
+                  .AprobarEmpresaServ({
+                    Rechaza: false,
+                    EnterpriseObj: this.emp,
+                    ListServiceObj: this.scv,
+                  })
+                  .subscribe((d) => {
                     if (d) {
-                      this.router.navigate(['/gtp']);
+                      this.router.navigate([appFullRoutingNames.ADMIN]);
                     } else {
                     }
                   });
@@ -358,61 +494,77 @@ export class AprobacionesComponent implements OnInit {
           showCancelButton: true,
           confirmButtonText: 'Si, Terminar',
           cancelButtonText: 'No, Cancelar',
-          onOpen: drawPopup
-
+          onOpen: drawPopup,
         }).then((result) => {
           if (result.value) {
             // debugger
 
-            if ((this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) && this.scv.length === 0) {
-
-              // this.router.navigate(['/gtp']);
+            if (
+              this.Enterprise.name === this.Enterprise.newName &&
+              this.Enterprise.inReview === false &&
+              this.scv.length === 0
+            ) {
+              // this.router.navigate([appFullRoutingNames.ADMIN]);
               return;
             }
-            if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview && this.scv.length > 0) {
-
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                .subscribe(d => {
+            if (
+              this.Enterprise.name === this.Enterprise.newName &&
+              this.Enterprise.inReview &&
+              this.scv.length > 0
+            ) {
+              this.gtpService
+                .AprobarEmpresaServ({
+                  EnterpriseObj: this.emp,
+                  ListServiceObj: this.scv,
+                })
+                .subscribe((d) => {
                   if (d) {
-                    this.router.navigate(['/gtp']);
+                    this.router.navigate([appFullRoutingNames.ADMIN]);
                   } else {
-
                   }
                 });
               return;
             }
-            if (this.Enterprise.name === this.Enterprise.newName && this.Enterprise.inReview === false) {
-
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: null, ListServiceObj: this.scv })
-                .subscribe(d => {
-
+            if (
+              this.Enterprise.name === this.Enterprise.newName &&
+              this.Enterprise.inReview === false
+            ) {
+              this.gtpService
+                .AprobarEmpresaServ({
+                  EnterpriseObj: null,
+                  ListServiceObj: this.scv,
+                })
+                .subscribe((d) => {
                   if (d) {
-                    this.router.navigate(['/gtp']);
+                    this.router.navigate([appFullRoutingNames.ADMIN]);
                   } else {
-
                   }
                 });
               return;
             }
             if (this.scv.length === 0) {
-
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: null })
-                .subscribe(d => {
+              this.gtpService
+                .AprobarEmpresaServ({
+                  EnterpriseObj: this.emp,
+                  ListServiceObj: null,
+                })
+                .subscribe((d) => {
                   if (d) {
-                    this.router.navigate(['/gtp']);
+                    this.router.navigate([appFullRoutingNames.ADMIN]);
                   } else {
-
                   }
                 });
               return;
             } else {
-
-              this.gtpService.AprobarEmpresaServ({ EnterpriseObj: this.emp, ListServiceObj: this.scv })
-                .subscribe(d => {
+              this.gtpService
+                .AprobarEmpresaServ({
+                  EnterpriseObj: this.emp,
+                  ListServiceObj: this.scv,
+                })
+                .subscribe((d) => {
                   if (d) {
-                    this.router.navigate(['/gtp']);
+                    this.router.navigate([appFullRoutingNames.ADMIN]);
                   } else {
-
                   }
                 });
               return;
@@ -420,14 +572,15 @@ export class AprobacionesComponent implements OnInit {
           }
           this.gtppost = {
             EnterpriseObj: this.emp,
-            ListServiceObj: this.scv
+            ListServiceObj: this.scv,
           };
         });
-
       }
     } else {
-      this.mensaje('Aprobacion', 'Aun faltan aprobar ' +
-        total + ' observaciones');
+      this.mensaje(
+        'Aprobacion',
+        'Aun faltan aprobar ' + total + ' observaciones'
+      );
     }
   }
 
@@ -439,7 +592,6 @@ export class AprobacionesComponent implements OnInit {
       sm            minimarket  RECHAZADO 3
       ''               sm       APROBADO  1
   */
-
 
   getNames(svc: DataServiceGTP) {
     if (svc.name === '?' && svc.newName !== '?') {
@@ -464,9 +616,8 @@ export class AprobacionesComponent implements OnInit {
   getName(svc: DataServiceGTP) {
     if (svc.newNameGTPStatus === 0 && svc.newNameCodeGTPStatus === 0) {
       return svc.newName;
-    }
-    else {
-      return (svc.name === null ? svc.newName : svc.name);
+    } else {
+      return svc.name === null ? svc.newName : svc.name;
     }
   }
 
@@ -520,7 +671,10 @@ export class AprobacionesComponent implements OnInit {
     }
   }
   OcultarFormulario() {
-    if (this.Empgtp.newNameGTPStatus === 0 || this.Empgtp.newNameGTPStatus === 2) {
+    if (
+      this.Empgtp.newNameGTPStatus === 0 ||
+      this.Empgtp.newNameGTPStatus === 2
+    ) {
       Swal.fire({
         title: 'Descartar Cambios',
         text: 'Se van a descartar los cambios.',
@@ -529,20 +683,24 @@ export class AprobacionesComponent implements OnInit {
         showCloseButton: true,
         confirmButtonText: 'DESCARTAR',
         cancelButtonText: 'REGRESAR',
-        onOpen: drawPopup
-      }).then(r => {
+        onOpen: drawPopup,
+      }).then((r) => {
         if (r.value) {
           this.Formulario = false;
         }
       });
-    }
-    else {
+    } else {
       this.Formulario = false;
     }
   }
 
   OcultarFormularioSer() {
-    if (this.Servgtp.newNameGTPStatus === 0 || this.Servgtp.newNameGTPStatus === 2 || this.Servgtp.newNameCodeGTPStatus === 0 || this.Servgtp.newNameCodeGTPStatus === 2) {
+    if (
+      this.Servgtp.newNameGTPStatus === 0 ||
+      this.Servgtp.newNameGTPStatus === 2 ||
+      this.Servgtp.newNameCodeGTPStatus === 0 ||
+      this.Servgtp.newNameCodeGTPStatus === 2
+    ) {
       Swal.fire({
         title: 'Descartar Cambios',
         text: 'Se van a descartar los cambios.',
@@ -551,16 +709,14 @@ export class AprobacionesComponent implements OnInit {
         showCloseButton: true,
         confirmButtonText: 'DESCARTAR',
         cancelButtonText: 'REGRESAR',
-        onOpen: drawPopup
-      }).then(r => {
+        onOpen: drawPopup,
+      }).then((r) => {
         if (r.value) {
           this.indiceActual = -1;
           this.ServiciosFormulario = false;
-
         }
       });
-    }
-    else {
+    } else {
       this.indiceActual = -1;
       this.ServiciosFormulario = false;
     }
@@ -581,7 +737,4 @@ export class AprobacionesComponent implements OnInit {
       onOpen: drawPopup,
     });
   }
-
-
-
 }
