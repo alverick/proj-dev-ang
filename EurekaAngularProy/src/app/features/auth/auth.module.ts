@@ -11,23 +11,23 @@ import { LogoutGuard } from '../../shared/guards/logout.guard';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
-import { CompletadoPrimeraParteComponent } from './completado-primera-parte/completado-primera-parte.component';
-import { CompletarDatosEmpresaComponent } from './completar-datos-empresa/completar-datos-empresa.component';
 import { FormEmpresaGTPComponent } from './components/form-empresa-gtp/form-empresa-gtp.component';
 import { FormServicioGtpComponent } from './components/form-servicio-gtp/form-servicio-gtp.component';
 import { FormServicioComponent } from './components/form-servicio/form-servicio.component';
-import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.component';
+import { SerFormGtpComponent } from './components/ser-form-gtp/ser-form-gtp.component';
 import { BlockCopyPasteDirective } from './directives/block-copy-paste.directive';
 import { NumberAccountDirective } from './directives/number-account.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
-import { IdentificarEmpresaComponent } from './identificar-empresa/identificar-empresa.component';
 import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
+import { CompletadoPrimeraParteComponent } from './pages/completado-primera-parte/completado-primera-parte.component';
+import { CompletarDatosEmpresaComponent } from './pages/completar-datos-empresa/completar-datos-empresa.component';
+import { ConfigurarGtpComponent } from './pages/configurar-gtp/configurar-gtp.component';
 import { ConfigurarServiciosComponent } from './pages/configurar-servicios/configurar-servicios.component';
 import { CrearContrasenaComponent } from './pages/crear-contrasena/crear-contrasena.component';
+import { IdentificarEmpresaComponent } from './pages/identificar-empresa/identificar-empresa.component';
 import { LoginPage } from './pages/login/login.page';
+import { ProcesandoComponent } from './pages/procesando/procesando.component';
 import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recuperar-contrasena.component';
-import { ProcesandoComponent } from './procesando/procesando.component';
-import { SerFormGtpComponent } from './ser-form-gtp/ser-form-gtp.component';
 
 @NgModule({
   imports: [

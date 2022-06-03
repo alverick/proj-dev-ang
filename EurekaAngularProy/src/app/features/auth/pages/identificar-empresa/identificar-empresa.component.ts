@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { authFullRoutingNames } from '../auth-routing.names';
+import { authFullRoutingNames } from '../../auth-routing.names';
 
 @Component({
   selector: 'app-identificar-empresa',

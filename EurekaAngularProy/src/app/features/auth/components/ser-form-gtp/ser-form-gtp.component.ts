@@ -10,7 +10,7 @@ import { MonedaModel, ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { ConfigurarServiciosComponent } from '../pages/configurar-servicios/configurar-servicios.component';
+import { ConfigurarServiciosComponent } from '../../pages/configurar-servicios/configurar-servicios.component';
 
 @Component({
   selector: 'app-ser-form-gtp',

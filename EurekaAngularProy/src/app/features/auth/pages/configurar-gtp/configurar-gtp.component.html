@@ -162,7 +162,7 @@
                               class="texto-azul"
                               [class.mano]="!EmpresaFormulario && !Formulario"
                               (click)="editService(svc, i)"
-                              ><img src="../../../../assets/images/editar.svg"
+                              ><img src="../../../../../assets/images/editar.svg"
                             /></a>
                           </li>
                           <li
@@ -174,7 +174,7 @@
                               [class.mano]="!EmpresaFormulario && !Formulario"
                               (click)="delService(i, svc)"
                               ><img
-                                src="../../../../assets/images/eliminar.svg"
+                                src="../../../../../assets/images/eliminar.svg"
                             /></a>
                           </li>
                         </ul>
@@ -288,10 +288,10 @@
                 <span
                   ><img
                     *ngIf="!(EmpresaFormulario || Formulario)"
-                    src="../../../../assets/images/plus.svg" />
+                    src="../../../../../assets/images/plus.svg" />
                   <img
                     *ngIf="EmpresaFormulario || Formulario"
-                    src="../../../../assets/images/plus-gray.svg"
+                    src="../../../../../assets/images/plus-gray.svg"
                 /></span>
                 Agregar otro servicio
               </button>
@@ -326,7 +326,7 @@
                   (click)="OcultarFormulario(true)"
                   class="mano font-cerrar"
                 >
-                  <img src="../../../../assets/images/cerrar.svg" /> <br />
+                  <img src="../../../../../assets/images/cerrar.svg" /> <br />
                   Cerrar
                 </div>
               </div>

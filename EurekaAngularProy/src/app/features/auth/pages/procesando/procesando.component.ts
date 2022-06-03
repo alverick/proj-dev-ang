@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { authFullRoutingNames } from '../auth-routing.names';
+import { authFullRoutingNames } from '../../auth-routing.names';
 
 @Component({
   selector: 'app-procesando',

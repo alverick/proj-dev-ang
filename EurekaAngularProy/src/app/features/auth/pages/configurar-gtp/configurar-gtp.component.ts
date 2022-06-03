@@ -10,7 +10,7 @@ import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { FormServicioComponent } from '../components/form-servicio/form-servicio.component';
+import { FormServicioComponent } from '../../components/form-servicio/form-servicio.component';
 
 @Component({
   selector: 'app-configurar-gtp',

@@ -11,16 +11,16 @@ import {
   authRoutingNames,
 } from './auth-routing.names';
 import { AuthComponent } from './auth.component';
-import { CompletadoPrimeraParteComponent } from './completado-primera-parte/completado-primera-parte.component';
-import { CompletarDatosEmpresaComponent } from './completar-datos-empresa/completar-datos-empresa.component';
-import { ConfigurarGtpComponent } from './configurar-gtp/configurar-gtp.component';
-import { IdentificarEmpresaComponent } from './identificar-empresa/identificar-empresa.component';
 import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
+import { CompletadoPrimeraParteComponent } from './pages/completado-primera-parte/completado-primera-parte.component';
+import { CompletarDatosEmpresaComponent } from './pages/completar-datos-empresa/completar-datos-empresa.component';
+import { ConfigurarGtpComponent } from './pages/configurar-gtp/configurar-gtp.component';
 import { ConfigurarServiciosComponent } from './pages/configurar-servicios/configurar-servicios.component';
 import { CrearContrasenaComponent } from './pages/crear-contrasena/crear-contrasena.component';
+import { IdentificarEmpresaComponent } from './pages/identificar-empresa/identificar-empresa.component';
 import { LoginPage } from './pages/login/login.page';
+import { ProcesandoComponent } from './pages/procesando/procesando.component';
 import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recuperar-contrasena.component';
-import { ProcesandoComponent } from './procesando/procesando.component';
 
 const routes: Routes = [
   {
