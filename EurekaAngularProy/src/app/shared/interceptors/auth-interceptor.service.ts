@@ -13,10 +13,10 @@ import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { environment } from '../../../environments/environment';
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
-import { GoogleAnalytics } from './googleAnalytics.service';
-import { LoginService } from './login.service';
-import { drawPopup } from './popups';
-import { StorageService } from './storage.service';
+import { GoogleAnalytics } from '../services/googleAnalytics.service';
+import { LoginService } from '../services/login.service';
+import { drawPopup } from '../utils/helpers/popups';
+import { StorageService } from '../services/storage.service';
 
 @Injectable({
   providedIn: 'root',
