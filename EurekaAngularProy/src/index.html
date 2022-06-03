@@ -27,7 +27,7 @@
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag("js", new Date());
+      gtag('js', new Date());
       //gtag('config', 'UA-148142629-1', { 'app_name': 'Eureca' });
     </script>
     <style type="text/css">
@@ -101,7 +101,7 @@
 
         n.push = n;
         n.loaded = !0;
-        n.version = "2.0";
+        n.version = '2.0';
         n.queue = [];
         t = b.createElement(e);
         t.async = !0;
@@ -111,11 +111,11 @@
       })(
         window,
         document,
-        "script",
-        "https://connect.facebook.net/en_US/fbevents.js"
+        'script',
+        'https://connect.facebook.net/en_US/fbevents.js'
       );
 
-      fbq("init", "768296169980827");
+      fbq('init', '768296169980827');
       //fbq('track', 'PageView');
     </script>
 
@@ -149,12 +149,10 @@
       </div>
     </app-root>
     <script type="text/javascript">
-      //history.pushState(null, null, 'login');
-      // window['_url_loop_'] = 'login';
-      window["_url_loop_"] = "landing";
+      window['_url_loop_'] = 'landing';
 
-      window.addEventListener("popstate", function () {
-        let _url_ = window["_url_loop_"];
+      window.addEventListener('popstate', function () {
+        let _url_ = window['_url_loop_'];
         history.pushState(null, null, _url_);
       });
     </script>
