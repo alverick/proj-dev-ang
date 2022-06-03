@@ -3,14 +3,14 @@
 //@tailwind utilities;
 @import '_normalize.scss';
 
-/*Reset Styles*/
+/* Reset Styles */
 
 @import '_configuration.scss';
 @import '_fonts.scss';
 @import '_main.scss';
 
-/*@import "~bootstrap/dist/css/bootstrap.css";
-@import "~font-awesome/css/font-awesome.css";*/
+/* @import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css"; */
 
 /*@import '_landing.scss';*/
 
@@ -18,6 +18,7 @@
 
 @import '~@angular/cdk/overlay-prebuilt.css';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 .mat-select-panel {
   min-width: 220px !important;
   max-width: 100% !important;
@@ -83,4 +84,12 @@
 
 .br-none-tablet {
   display: none;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  transition: all 0.5s;
+}
+
+.backdrop-background-opaque {
+  background-color: #f3f3f3;
 }
