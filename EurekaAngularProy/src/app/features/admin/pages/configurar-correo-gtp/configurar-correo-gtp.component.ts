@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { drawPopup } from 'src/app/shared/services/popups';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 import { CorreoGtpModel } from '../../../../shared/models/data-correoGtp';
 import { GtpService } from '../../../../shared/services/gtp.service';

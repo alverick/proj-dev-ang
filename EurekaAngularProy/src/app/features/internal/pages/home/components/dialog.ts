@@ -5,7 +5,7 @@ import * as saveAs from 'file-saver';
 import { Observable } from 'rxjs';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { drawPopup } from 'src/app/shared/services/popups';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 
 @Component({

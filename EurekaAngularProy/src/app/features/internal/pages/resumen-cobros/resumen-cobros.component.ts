@@ -4,7 +4,7 @@ import { authFullRoutingNames } from 'src/app/app-routing.collection';
 import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { drawPopup } from 'src/app/shared/services/popups';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 import {
   internalAuthFullRoutingNames,

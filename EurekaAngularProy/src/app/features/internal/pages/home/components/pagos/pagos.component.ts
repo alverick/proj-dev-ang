@@ -1,16 +1,19 @@
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment'; // dejalo si sale error
-
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
-
-import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
-import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import { PagoService } from "src/app/shared/services/pago.service";
-import { PopoverRef } from "../popover/popover-ref";
-import Swal from "sweetalert2";
-import { TransactionService } from "src/app/shared/services/transaction.service";
 import { default as _rollupMoment } from 'moment';
-import { drawPopup } from "src/app/shared/services/popups";
+
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { PagoService } from 'src/app/shared/services/pago.service';
+import { TransactionService } from 'src/app/shared/services/transaction.service';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
+import Swal from 'sweetalert2';
+import { PopoverRef } from '../popover/popover-ref';
 
 const moment = _rollupMoment || _moment;
 
@@ -32,15 +35,18 @@ declare var $: any;
   templateUrl: './pagos.component.html',
   styleUrls: ['./pagos.component.scss'],
   providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ]
+  ],
 })
 export class PagosComponent implements OnInit {
   showed = false;
 
-  items: any[] = [
-  ];
+  items: any[] = [];
   cargando = false;
 
   debtId: number;
@@ -48,11 +54,15 @@ export class PagosComponent implements OnInit {
   currency: string;
   @Output() statusChange = new EventEmitter<string>();
 
-  constructor(private transaction: TransactionService, private pagoService: PagoService,
-    private popoverRef: PopoverRef, private gaService: GoogleAnalytics) {
-      this.debtId = popoverRef.data.debtId;
-      this.status = popoverRef.data.status;
-      this.currency = popoverRef.data.currency;
+  constructor(
+    private transaction: TransactionService,
+    private pagoService: PagoService,
+    private popoverRef: PopoverRef,
+    private gaService: GoogleAnalytics
+  ) {
+    this.debtId = popoverRef.data.debtId;
+    this.status = popoverRef.data.status;
+    this.currency = popoverRef.data.currency;
   }
 
   ngOnInit(): void {
@@ -62,11 +72,10 @@ export class PagosComponent implements OnInit {
   private loadData() {
     this.items = [];
     this.cargando = true;
-    this.transaction.getPayments(this.debtId)
-      .subscribe(p => {
-        this.cargando = false;
-        this.items = p;
-      });
+    this.transaction.getPayments(this.debtId).subscribe((p) => {
+      this.cargando = false;
+      this.items = p;
+    });
   }
 
   public show() {
@@ -74,27 +83,26 @@ export class PagosComponent implements OnInit {
       this.pagoService.closeAll.emit();
       this.showed = true;
       this.loadData();
-    }
-    else {
+    } else {
       this.showed = false;
     }
   }
 
-  mensaje(tipo: any, titulo: string, text: string){
-    if (sessionStorage.getItem('tk') !== null  ) {
-      this.mesageeError(tipo,titulo,text);
+  mensaje(tipo: any, titulo: string, text: string) {
+    if (sessionStorage.getItem('tk') !== null) {
+      this.mesageeError(tipo, titulo, text);
     }
   }
 
-  mesageeError(tipo: any, titulo: string, text: string){
+  mesageeError(tipo: any, titulo: string, text: string) {
     Swal.fire({
-      title: titulo ,
+      title: titulo,
       html: text,
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
-      confirmButtonText:  'CERRAR',
-      onOpen: drawPopup
+      confirmButtonText: 'CERRAR',
+      onOpen: drawPopup,
     });
   }
 
@@ -106,24 +114,26 @@ export class PagosComponent implements OnInit {
   }
 
   saveItm(itm) {
-    if(itm.newAmount.toString() ==='' ||itm.newAmount.toString() === null){
-      itm.errores.amount = 'Ingrese un monto'
+    if (itm.newAmount.toString() === '' || itm.newAmount.toString() === null) {
+      itm.errores.amount = 'Ingrese un monto';
     }
-    if(itm.newAmount.toString().length < 1){
+    if (itm.newAmount.toString().length < 1) {
       itm.errores.amount = 'Ingrese un monto correcto';
     }
-    if(parseInt(itm.newAmount.toString()) < 0){
+    if (parseInt(itm.newAmount.toString()) < 0) {
       itm.errores.amount = 'Ingrese un monto correcto';
     }
 
-    if(!itm.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)){
+    if (!itm.newAmount.toString().match(/^[0-9]{1,9}([.][0-9]{0,2})?$/)) {
       itm.errores.amount = 'Ingrese un monto válido';
     }
 
     var lenghted = new Date(itm.newDate).toDateString().length;
-    var newdate = parseInt(new Date(itm.newDate).toDateString().substr(lenghted-4, lenghted));
+    var newdate = parseInt(
+      new Date(itm.newDate).toDateString().substr(lenghted - 4, lenghted)
+    );
 
-    if (newdate <  2000 || newdate >  2050 ) {
+    if (newdate < 2000 || newdate > 2050) {
       itm.errores.date = 'Ingrese una fecha válida';
     }
 
@@ -132,8 +142,7 @@ export class PagosComponent implements OnInit {
     }
 
     for (var s in itm.errores) {
-      if (itm.errores[s])
-        return;
+      if (itm.errores[s]) return;
     }
 
     Swal.fire({
@@ -143,29 +152,28 @@ export class PagosComponent implements OnInit {
       showCloseButton: true,
       confirmButtonText: 'SI, ACTUALIZAR!',
       cancelButtonText: 'CERRAR',
-      onOpen: drawPopup
+      onOpen: drawPopup,
     }).then((result) => {
       if (result.value) {
         const payment = {
           date: itm.newDate,
           channel: itm.newChannel,
-          amount: parseFloat(itm.newAmount.toString())
+          amount: parseFloat(itm.newAmount.toString()),
         };
-        let response = itm.id ?
-          this.transaction.editPayment(this.debtId, itm.id, payment) :
-          this.transaction.addPayment(this.debtId, payment);
-        response.subscribe(r => {
+        let response = itm.id
+          ? this.transaction.editPayment(this.debtId, itm.id, payment)
+          : this.transaction.addPayment(this.debtId, payment);
+        response.subscribe((r) => {
           if (r.success) {
             if (itm.id) {
               this.gaService.sendEvent('EditaPago', {
-                'event_category': 'Dashboard',
-                'event_label': 'edita_pago'
+                event_category: 'Dashboard',
+                event_label: 'edita_pago',
               });
-            }
-            else {
+            } else {
               this.gaService.sendEvent('AgregaPago', {
-                'event_category': 'Dashboard',
-                'event_label': 'agrega_pago'
+                event_category: 'Dashboard',
+                event_label: 'agrega_pago',
               });
             }
             this.status = r.status;
@@ -183,16 +191,15 @@ export class PagosComponent implements OnInit {
                 itm.amount = itm.newAmount;
                 itm.date = itm.newDate;
                 itm.channel = itm.newChannel;
-              }
+              },
             });
-          }
-          else {
+          } else {
             Swal.fire({
               titleText: 'ERROR',
               text: r.message,
               showCloseButton: true,
               showCancelButton: false,
-              onOpen: drawPopup
+              onOpen: drawPopup,
             });
           }
         });
@@ -203,57 +210,61 @@ export class PagosComponent implements OnInit {
   cancelItm(itm) {
     if (itm.id === undefined) {
       this.items.pop();
-    }
-    else {
+    } else {
       itm.editing = false;
     }
   }
 
   addItm() {
     //if (this.items[this.items.length-1] && this.items[this.items.length-1].id) {
-      this.items.push({ currency: this.currency, newAmount: '' , newDate: new Date(), newChannel: 'Efectivo', canEdit: true, editing: true, errores: {} });
+    this.items.push({
+      currency: this.currency,
+      newAmount: '',
+      newDate: new Date(),
+      newChannel: 'Efectivo',
+      canEdit: true,
+      editing: true,
+      errores: {},
+    });
     //}
   }
 
   delItm(itm) {
     Swal.fire({
-      title: "¿Esta Seguro de Eliminar el Pago? ",
+      title: '¿Esta Seguro de Eliminar el Pago? ',
       showCancelButton: true,
       showCloseButton: true,
       confirmButtonText: 'SI, BORRALO',
       cancelButtonText: 'CERRAR',
-      onOpen: drawPopup
+      onOpen: drawPopup,
     }).then((result) => {
       if (result.value) {
-        this.transaction.deletePayment(this.debtId, itm.id)
-          .subscribe(r => {
-            if (r.success) {
-              this.gaService.sendEvent('EliminarPagos', {
-                'event_category': 'Dashboard',
-                'event_label': 'eliminar_pagos'
-              });
-              this.status = r.status;
-              //this.statusChange.emit(r.status);
-              this.popoverRef.changeStatus(r.status);
-              this.loadData();
-            }
-            else {
-              Swal.fire({
-                titleText: 'ERROR',
-                text: r.message,
-                showCloseButton: true,
-                showCancelButton: false,
-                onOpen: drawPopup
-              });
-            }
-          });
+        this.transaction.deletePayment(this.debtId, itm.id).subscribe((r) => {
+          if (r.success) {
+            this.gaService.sendEvent('EliminarPagos', {
+              event_category: 'Dashboard',
+              event_label: 'eliminar_pagos',
+            });
+            this.status = r.status;
+            //this.statusChange.emit(r.status);
+            this.popoverRef.changeStatus(r.status);
+            this.loadData();
+          } else {
+            Swal.fire({
+              titleText: 'ERROR',
+              text: r.message,
+              showCloseButton: true,
+              showCancelButton: false,
+              onOpen: drawPopup,
+            });
+          }
+        });
       }
     });
   }
 
   AmountBlur(itm) {
     let initalValue = parseFloat(itm.newAmount);
-    if(!isNaN(initalValue))
-      itm.newAmount = initalValue.toFixed(2);
+    if (!isNaN(initalValue)) itm.newAmount = initalValue.toFixed(2);
   }
 }
