@@ -5,13 +5,14 @@ import {
   faCircle as farCircle,
 } from '@fortawesome/free-regular-svg-icons';
 import { faCircle as fasCircle } from '@fortawesome/free-solid-svg-icons';
+import { timer } from 'rxjs';
 import 'rxjs/add/observable/of';
 import { Subject } from 'rxjs/internal/Subject';
-import { delay, repeat, takeUntil } from 'rxjs/operators';
+import { delayWhen, repeat, takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
 
-const time_call_notify = 60000;
+const timeCallNotify = 60000;
 
 const markAsRead = 'Marcar como leído';
 const markAsNotRead = 'Marcar como no leído';
@@ -36,14 +37,17 @@ export class NotifyService {
     }
     const stop = new Subject();
 
+    const setDelay = () =>
+      this.inExecution ? timer(timeCallNotify) : timer(2000);
+
     this.http
       .get(
         `${environment.END_POINT}/notification/total?_=${new Date().getTime()}`
       )
-      .pipe(delay(time_call_notify), repeat(), takeUntil(stop))
+      .pipe(delayWhen(setDelay), repeat(), takeUntil(stop))
       .subscribe(
         ({ total }: any) => {
-          this.inExecution = false;
+          this.inExecution = true;
           if (total !== this.total) {
             this.total = total;
             this.messages = [];
@@ -52,6 +56,7 @@ export class NotifyService {
           }
         },
         (error) => {
+          this.inExecution = true;
           if (error.status === 401) {
             stop.next(true);
           }
