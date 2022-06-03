@@ -17,7 +17,7 @@
                   placeholder="Nombre de empresa, RUC o CU"
                 />
                 <span matPrefix class="pr-1"
-                  ><img src="assets/images/buscar.svg" />
+                  ><img src="../../../../../assets/images/buscar.svg" />
                 </span>
                 <button
                   mat-button
@@ -244,7 +244,7 @@
               <div class="al-left">
                 <div class="lnk-label" (click)="clickClientesNoRegistrados()">
                   <img
-                    src="assets/images/download.svg"
+                    src="../../../../../assets/images/download.svg"
                     alt="download"
                   />&nbsp;Descargar Clientes No Registrados
                 </div>
@@ -367,7 +367,7 @@
                           style="margin: 0em 0.5em"
                           class="f3 btn-outline-green"
                           title="Ver Cargas de Datos"
-                          [routerLink]="['/cargaHistorico', items.clientId]"
+                          [routerLink]="[linkHistory, items.clientId]"
                         >
                           <i class="fa fa-external-link" aria-hidden="true"></i>
                         </button>
@@ -406,10 +406,10 @@
                         (keyup.enter)="p.previous()"
                         (click)="p.previous()"
                       >
-                        <img src="assets/images/before.svg" />
+                        <img src="../../../../../assets/images/before.svg" />
                       </a>
                       <span *ngIf="p.isFirstPage()">
-                        <img src="assets/images/before.svg" />
+                        <img src="../../../../../assets/images/before.svg" />
                       </span>
                     </li>
                     <li *ngIf="p.pages.length === 0" class="current">
@@ -452,10 +452,10 @@
                         (keyup.enter)="p.next()"
                         (click)="p.next()"
                       >
-                        <img src="assets/images/after.svg" />
+                        <img src="../../../../../assets/images/after.svg" />
                       </a>
                       <span class="pr-0" *ngIf="p.isLastPage()">
-                        <img src="assets/images/after.svg" />
+                        <img src="../../../../../assets/images/after.svg" />
                       </span>
                     </li>
                   </ul>

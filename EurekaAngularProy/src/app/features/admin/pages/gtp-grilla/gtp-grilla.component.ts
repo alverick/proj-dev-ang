@@ -1,19 +1,21 @@
-/// DATE PIECKER FORMAT
-import * as _moment from 'moment'; // dejalo si sale error
-import * as saveAs from 'file-saver';
-
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
-
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { GtpFilter } from 'src/app/shared/models/gtp-filter';
-import { GtpService } from './../../shared/services/gtp.service';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
-import { RubroModel } from 'src/app/shared/models';
-import { StatesGtp } from './../../shared/models/states-gtp';
+import * as saveAs from 'file-saver';
+import * as _moment from 'moment'; // dejalo si sale error
 import { default as _rollupMoment } from 'moment';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { RubroModel } from 'src/app/shared/models';
+import { GtpFilter } from 'src/app/shared/models/gtp-filter';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { StatesGtp } from '../../../../shared/models/states-gtp';
+import { GtpService } from '../../../../shared/services/gtp.service';
+import { adminFullRoutingNames } from '../../admin-routing.names';
 
 //// END DATE ////////////////////
 
@@ -33,7 +35,6 @@ export const MY_FORMATS = {
 };
 ////////////////////////////
 
-
 @Component({
   selector: 'app-gtp-grilla',
   templateUrl: './gtp-grilla.component.html',
@@ -41,36 +42,40 @@ export const MY_FORMATS = {
   styles: [
     `
       :host >>> .tooltip-inner {
-        background-color: #FFF;
+        background-color: #fff;
         color: #0d131d !important;
         border-radius: 4px;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.20);
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
         font-size: 11px !important;
-        padding: .5em .3em;
-        min-width:300px !important;
+        padding: 0.5em 0.3em;
+        min-width: 300px !important;
       }
       :host >>> .tooltip.top .tooltip-arrow:before,
       :host >>> .tooltip.top .tooltip-arrow {
         border-top-color: #0d131d57;
-
       }
-    `
+    `,
   ],
   providers: [
-
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
 
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
 export class GtpGrillaComponent implements OnInit {
-  usDatePattern = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
+  usDatePattern =
+    /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(2050, 0, 1);
   @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
   @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
-  messageTable: string = '';
-  showArrow: boolean = false;
+  messageTable = '';
+  linkHistory = adminFullRoutingNames.HISTORY;
+  showArrow = false;
   asc = true;
   orderBys = 0;
   currentFiltro: GtpFilter = {
@@ -82,7 +87,7 @@ export class GtpGrillaComponent implements OnInit {
     status: '',
     statussolcitud: '',
     dateFrom: null,
-    dateTo: null
+    dateTo: null,
   };
   filtro: GtpFilter = {
     pageNumber: 1,
@@ -93,7 +98,7 @@ export class GtpGrillaComponent implements OnInit {
     status: '',
     statussolcitud: '',
     dateFrom: null,
-    dateTo: null
+    dateTo: null,
   };
   errores: any = {};
   orderBy = -1;
@@ -105,7 +110,7 @@ export class GtpGrillaComponent implements OnInit {
     { name: 'RequestType', asc: false },
     { name: 'Status', asc: false },
     { name: 'BusinessHeading', asc: false },
-  ]
+  ];
 
   herderTable: any[] = [
     { name: 'Fecha de solicitud', asc: false, orderBy: 0, class: 'c1' },
@@ -114,24 +119,24 @@ export class GtpGrillaComponent implements OnInit {
     { name: 'Nombre de la empresa', asc: false, orderBy: 3, class: 'c4' },
     { name: 'Tipo de solicitud', asc: false, orderBy: 4, class: 'c5' },
     { name: 'Estado', asc: false, orderBy: 5, class: 'c6' },
+  ];
 
-
-  ]
-
-  constructor(private spinner: NgxSpinnerService, private afiliacionService: AfiliacionService, public gtpService: GtpService, private router: Router) { }
+  constructor(
+    private spinner: NgxSpinnerService,
+    private afiliacionService: AfiliacionService,
+    public gtpService: GtpService,
+    private router: Router
+  ) {}
   rubros: RubroModel[] = [];
   states: StatesGtp[] = [];
   solicitudes: StatesGtp[] = [];
 
-
   ngOnInit() {
-
-    this.afiliacionService.GetRubros().subscribe(d => this.rubros = d);
-    this.gtpService.getStates().subscribe(d => {
+    this.afiliacionService.GetRubros().subscribe((d) => (this.rubros = d));
+    this.gtpService.getStates().subscribe((d) => {
       this.states = d;
-
     });
-    this.gtpService.getTipoSolicitudes().subscribe(d => {
+    this.gtpService.getTipoSolicitudes().subscribe((d) => {
       this.solicitudes = d;
     });
     this.consultaGtp();
@@ -145,21 +150,19 @@ export class GtpGrillaComponent implements OnInit {
     this.filtro.dateTo = null;
   }
   Aprobar(ClientId: number) {
-
-    this.router.navigate(['/AprobacionGtp/' + ClientId]);
+    this.router.navigate([adminFullRoutingNames.APPROVE + ClientId]);
     // location.href = '/AprobacionGtp/'+ClientId;
   }
   onUpdateEAG(ClientId: number) {
-    this.gtpService.ReenviarPAG(ClientId)
-      .subscribe(r => {
-        this.consultaGtp();
-      });
+    this.gtpService.ReenviarPAG(ClientId).subscribe((r) => {
+      this.consultaGtp();
+    });
   }
   changePage(nro: number) {
     this.currentFiltro.pageNumber = nro;
     this.consultaGtp();
   }
-  ////ORDENAMIENTO OCULTAR LAS FLECHAS
+  //// ORDENAMIENTO OCULTAR LAS FLECHAS
   orderList(items: any) {
     items.asc = !items.asc;
     this.orderBy = items.orderBy;
@@ -177,16 +180,14 @@ export class GtpGrillaComponent implements OnInit {
   //
   //   this.consultaGtp();
   // }
-  orderByColum() {
-
-  }
-
+  orderByColum() {}
 
   private validaFiltro() {
-    let res: boolean = true;
-    for (var s in this.errores) {
-      if (this.errores[s])
+    let res = true;
+    for (const s in this.errores) {
+      if (this.errores[s]) {
         res = false;
+      }
     }
     return res;
   }
@@ -201,10 +202,22 @@ export class GtpGrillaComponent implements OnInit {
 
     this.consultaGtp();
 
-    if ((this.filtro.inputSearch === '' || this.filtro.inputSearch === null || this.filtro.inputSearch === undefined) &&
-      (this.filtro.BusinessHeading === '' || this.filtro.BusinessHeading === null || this.filtro.BusinessHeading === undefined) &&
-      (this.filtro.status == '' || this.filtro.status === null || this.filtro.status === undefined) &&  (this.filtro.statussolcitud == '' || this.filtro.statussolcitud === null || this.filtro.statussolcitud === undefined) &&
-      ( /*this.filtro.dateFrom == ''  ||*/ this.filtro.dateFrom === null || this.filtro.dateFrom === undefined)) {
+    if (
+      (this.filtro.inputSearch === '' ||
+        this.filtro.inputSearch === null ||
+        this.filtro.inputSearch === undefined) &&
+      (this.filtro.BusinessHeading === '' ||
+        this.filtro.BusinessHeading === null ||
+        this.filtro.BusinessHeading === undefined) &&
+      (this.filtro.status == '' ||
+        this.filtro.status === null ||
+        this.filtro.status === undefined) &&
+      (this.filtro.statussolcitud == '' ||
+        this.filtro.statussolcitud === null ||
+        this.filtro.statussolcitud === undefined) &&
+      /*this.filtro.dateFrom == ''  ||*/ (this.filtro.dateFrom === null ||
+        this.filtro.dateFrom === undefined)
+    ) {
       this.messageTable = 'No se encontraron empresas para esta búsqueda';
       this.showArrow = true;
     } else {
@@ -219,17 +232,22 @@ export class GtpGrillaComponent implements OnInit {
   consultaGtp() {
     if (this.validaFiltro()) {
       this.spinner.show();
-      this.gtpService.getEmpresas(this.currentFiltro).subscribe(d => {
-        this.spinner.hide();
-      }, err => { this.spinner.hide(); });
+      this.gtpService.getEmpresas(this.currentFiltro).subscribe(
+        (d) => {
+          this.spinner.hide();
+        },
+        (err) => {
+          this.spinner.hide();
+        }
+      );
     }
-
-
   }
 
   ceroRegistros(): boolean {
-    if (sessionStorage.getItem('tk') === null || sessionStorage.getItem('tk') === '') {
-      //this.router.navigate(['/login']);
+    if (
+      sessionStorage.getItem('tk') === null ||
+      sessionStorage.getItem('tk') === ''
+    ) {
       return false;
     } else {
       if (this.gtpService.EnterprisesItems.totalCompanies === 0) {
@@ -240,7 +258,7 @@ export class GtpGrillaComponent implements OnInit {
     }
   }
 
-  /////////////FECHAS /////////////////////////////////////////////////////
+  ///////////// FECHAS /////////////////////////////////////////////////////
 
   validaDateFrom(e) {
     this.internalValidaDateFrom(e);
@@ -256,27 +274,22 @@ export class GtpGrillaComponent implements OnInit {
     }
   }
 
-  change(e) {
-
-  }
+  change(e) {}
 
   clickClientesNoRegistrados() {
-    this.gtpService.clientsUnregistered(this.filtro)
-      .subscribe((r: Blob) => {
-        saveAs(r, "ClientesNoRegistrados.xlsx");
-      });
+    this.gtpService.clientsUnregistered(this.filtro).subscribe((r: Blob) => {
+      saveAs(r, 'ClientesNoRegistrados.xlsx');
+    });
   }
 
   private internalValidaDateFrom(e) {
     if (e === null) {
       this.errores['dateFrom'] = 'No es una fecha válida';
-    }
-    else {
-      let yearFrom = new Date(e).getFullYear();
+    } else {
+      const yearFrom = new Date(e).getFullYear();
       if (yearFrom < 2000 || yearFrom > 2050) {
         this.errores['dateFrom'] = 'Fecha Inválida';
-      }
-      else {
+      } else {
         delete this.errores.dateFrom;
       }
     }
@@ -285,23 +298,19 @@ export class GtpGrillaComponent implements OnInit {
   private internalValidaDateTo(e) {
     if (e === null) {
       this.errores['dateTo'] = 'No es una fecha válida';
-    }
-    else {
-      let yearTo = new Date(e).getFullYear();
+    } else {
+      const yearTo = new Date(e).getFullYear();
       if (yearTo < 2000 || yearTo > 2050) {
         this.errores['dateTo'] = 'Fecha Inválida';
-      }
-      else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
-        this.errores['dateTo'] = "No puede ser menor a la emisión"
-      }
-      else {
+      } else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
+        this.errores['dateTo'] = 'No puede ser menor a la emisión';
+      } else {
         delete this.errores.dateTo;
       }
     }
   }
 
   goCargaHistorico(id: number) {
-    this.router.navigate(['/cargaHistorico', id]);
+    this.router.navigate([adminFullRoutingNames.HISTORY, id]);
   }
 }
-
