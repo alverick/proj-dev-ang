@@ -7,6 +7,8 @@
     "start.web": "ng serve --port 4700",
     "start.hmr": "ng serve --configuration hmr --hmr",
     "build": "ng build",
+    "build:stats": "ng build --stats-json",
+    "analyze": "webpack-bundle-analyzer dist/EurekaAngularProy/stats.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -119,6 +121,6 @@
     "tslint-plugin-prettier": "^2.3.0",
     "typescript": "~3.5.3",
     "webpack": "^4.46.0",
-    "webpack-build-notifier": "^2.3.0"
+    "webpack-bundle-analyzer": "^4.5.0"
   }
 }
