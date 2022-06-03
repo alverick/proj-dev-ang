@@ -1,4 +1,4 @@
-<div class="container-component">
+<div class="custom-container">
   <div class="row">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <ul class="navbar-nav ml-auto" id="btn-regresar-identificar-empresa">
@@ -8,7 +8,7 @@
             (click)="goBack()"
             style="display: flex"
           >
-            <img src="assets/images/left-blue.svg" />
+            <img src="../../../../../assets/images/left-blue.svg" />
             <div class="text-regresar">&nbsp;&nbsp;&nbsp;Regresar</div>
           </a>
         </li>
@@ -18,107 +18,138 @@
 
   <div class="container-form">
     <div class="block-left">
-      <h1 class="texto-azul title-first-part">
-        Configura los cobros de tu
-        <br class="br-none-mobil" />
-        empresa
-      </h1>
-
-      <div class="stepper">
-        <div class="stepper-step">
-          <img
-            class="image-step"
-            src="assets/images/check.svg"
-            (click)="onImgDoubt()"
-          />
-        </div>
-        <div class="stepper-line"></div>
-        <div class="stepper-step">
-          <label class="text-step">2</label>
-        </div>
-        <div class="stepper-line"></div>
-        <div class="stepper-step-no-selected">
-          <label class="text-step-no-selected">3</label>
-        </div>
-        <div class="stepper-line"></div>
-        <div class="stepper-step-no-selected">
-          <label class="text-step-no-selected">4</label>
-        </div>
-      </div>
+      <h1 class="texto-azul title-first-part">Edita tu cobro</h1>
     </div>
 
     <div class="block-right-part-one">
-      <div class="first-part">
-        <div class="stepper-step">
-          <label class="text-step">2</label>
-        </div>
-        <p class="text-first-part">
-          Completa los datos del concepto de cobro
-          <br class="br-none-escritorio" />
-          agregado
-        </p>
-      </div>
-      <!-- <div class="bg-white" [ngClass]="{'cuadro-form': Dataparcial,'cuadro-form-resize': !Dataparcial}"></div> -->
-      <div class="bg-white cuadro-form">
+      <div
+        class="bg-white"
+        [ngClass]="{
+          'cuadro-form': Dataparcial,
+          'cuadro-form-resize': !Dataparcial
+        }"
+      >
         <form
           [formGroup]="frm"
           novalidate
           (submit)="onSubmitServicio()"
           class="form-content"
         >
-          <p class="text-second-part texto-azul">
-            Podrás empezar a cobrar ingresando datos de
-            <br class="br-none-escritorio" />
-            tus clientes (lista de cobranzas) o puedes
-            <br class="br-none-escritorio" />
-            elegir no hacerlo e igual empezar a cobrar.
-          </p>
+          <!-- Concepto de Cobro -->
+          <div class="form-group">
+            <mat-form-field class="w-100">
+              <!--  <label *ngIf="gtpMode && !_service.NewName" class="messsage-error" style="float: right;">Corregir este campo</label> -->
+              <input
+                class="input-text"
+                matInput
+                type="text"
+                (input)="nameSerInput($event)"
+                tooltip="Servicio que deberá elegir tu cliente al pagar"
+                (blur)="nameSerBlur($event)"
+                maxlength="80"
+                formControlName="nombre"
+                name="nombre"
+                placeholder="Concepto de cobro"
+              />
+              <mat-error>
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="
+                    f.nombre.invalid &&
+                    f.nombre.hasError('required') &&
+                    submittedRequired
+                  "
+                  >El nombre es obligatorio</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"
+                  >Ingrese un nombre correcto</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')"
+                  >El nombre no puede tener menos de 3 caracteres</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')"
+                  >El nombre no puede tener mas de 80 caracteres</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="
+                    f.nombre.invalid &&
+                    !f.nombre.hasError('minlength') &&
+                    f.nombre.hasError('alfa')
+                  "
+                  >El nombre debe tener por lo menos una letra o un
+                  numero</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="
+                    f.nombre.invalid &&
+                    !f.nombre.hasError('minlength') &&
+                    !f.nombre.hasError('alfa') &&
+                    f.nombre.hasError('alfabetico')
+                  "
+                  >El nombre debe tener por lo menos una letra
+                </mat-error>
+              </mat-error>
+            </mat-form-field>
 
-          <!-- ¿Qué datos de tus clientes ingresarás en la plataforma? -->
-          <span class="label-text">
-            ¿Qué datos de tus clientes ingresarás en
-            <br class="br-none-escritorio" />la plataforma?
-          </span>
-          <div class="form-group pt-4">
-            <div class="form-group col-2 pl-0">
-              <mat-radio-group
-                formControlName="tipoDato"
-                (change)="changeTipoDato()"
-                [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''"
-              >
-                <mat-radio-button
-                  name="tipoDato"
-                  id="tipoDato-1"
-                  value="C"
-                  class="text-tipo-dato"
-                  >Código, nombres y deuda</mat-radio-button
-                >
-                <mat-radio-button
-                  name="tipoDato"
-                  id="tipoDato-2"
-                  value="P"
-                  class="text-tipo-dato"
-                  >Código y nombres</mat-radio-button
-                >
-                <mat-radio-button
-                  name="tipoDato"
-                  id="tipoDato-3"
-                  value="S"
-                  class="text-tipo-dato"
-                  >No ingresaré datos</mat-radio-button
-                >
-              </mat-radio-group>
+            <!-- <div *ngIf="editMode === true && ( _service.nombre  !== _service.newName)" class="messsage-error">El nuevo nombre {{ _service.newName }} esta siendo procesado</div> -->
+
+            <div *ngIf="nombreAlert()" class="messsage-error">
+              El nuevo nombre <strong> {{ _service.newName }} </strong> esta
+              siendo procesado
             </div>
-            <mat-error
-              class="messsage-error"
-              *ngIf="
-                f.tipoDato.invalid &&
-                f.tipoDato.hasError('required') &&
-                submittedRequired
-              "
-              >Elige una opción</mat-error
-            >
           </div>
+
+          <div class="rectangle-success super-full-width">
+            <img
+              class="img-information-inline"
+              src="../../../../../assets/images/information.svg"
+            />
+            <p class="text-message-name">
+              Este será el concepto que verá y
+              <br class="br-none-mobil" />
+              eligirá tu
+              <br class="br-none-escritorio" />
+              cliente en nuestros
+              <br class="br-none-mobil" />
+              canales, al momento de
+              <br class="br-none-escritorio" />
+              pagarte.
+            </p>
+          </div>
+
+          <!-- Código de servicio -->
+          <div class="form-group" *ngIf="_service.res != '' && _service.res != null">
+            <mat-form-field class="w-100">
+              <div
+                tooltip="Código que deberá indicar tu cliente en los agentes Interbank para pagar éste servicio"
+                style="cursor: pointer"
+              >
+                <input
+                  class="input-text"
+                  matInput
+                  type="text"
+                  maxlength="7"
+                  formControlName="res"
+                  name="res"
+                  placeholder="Código de servicio"
+                />
+              </div>
+            </mat-form-field>
+
+            <div *ngIf="CodiAlert()" class="messsage-error">
+              El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta siendo
+              procesado
+            </div>
+          </div>
+
           <!-- ¿Qué código identificará a tus clientes? -->
           <div class="form-group">
             <mat-form-field class="w-100">
@@ -135,13 +166,14 @@
                 formControlName="codDeudor"
                 name="codDeudor"
                 (ngModelChange)="selectCodigo($event)"
-                tooltip="Código debe ser numérico">
+                tooltip="Código debe ser numérico"
+              >
                 <!--   <mat-option class="input-text">Código Deudor</mat-option>-->
                 <mat-option
-
                   class="input-text options-select"
                   *ngFor="let c of codDeudor"
-                  [value]="c.code">
+                  [value]="c.code"
+                >
                   {{ c.name }}
                 </mat-option>
               </mat-select>
@@ -155,12 +187,15 @@
                 name="nameCod"
                 tooltip="Código debe ser numérico"
                 (input)="nameCodInput($event)"
-                (blur)="nameCodBlur($event)"/>
+                (blur)="nameCodBlur($event)"
+              />
               <div
-                *ngIf="f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado"
+                *ngIf="
+                  f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado
+                "
                 (click)="f.codDeudor.reset()"
-                class="hide-name-cod fa fa-times">
-              </div>
+                class="hide-name-cod fa fa-times"
+              ></div>
               <mat-error>
                 <mat-error
                   class="messsage-error"
@@ -192,19 +227,102 @@
               El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta
               siendo procesado
             </div>
-
-            <div class="rectangle-success super-full-width">
-              <img
-                class="img-information"
-                src="assets/images/information.svg"
-              />
-              <p class="text-message-name">
-                Este será el código que le pediremos ingresar a
-                <br class="br-none-tablet" />
-                tu cliente, cuando quiera realizar un pago
-              </p>
-            </div>
+            <!--
+                <div class="rectangle-success super-full-width">
+                  <img
+                    class="img-information"
+                    src="assets/images/information.svg"
+                  />
+                  <p class="text-message-name">
+                    Este será el código que le pediremos ingresar a
+                    <br class="br-none-tablet" />
+                    tu cliente, cuando quiera realizar un pago
+                  </p>
+                </div>
+              -->
           </div>
+
+          <!-- ¿Qué datos de tus clientes ingresarás en la plataforma? -->
+          <div class="form-group">
+            <mat-form-field class="w-100">
+              <mat-label class="label"
+                >¿Qué datos de tus clientes ingresarás en la
+                plataforma?</mat-label
+              >
+              <mat-select
+                class="input-text"
+                formControlName="tipoDato"
+                name="tipoDato"
+                disableOptionCentering
+                panelClass="pts30"
+                (ngModelChange)="changeTipoDato()"
+              >
+                <!-- <mat-option class="input-text">¿Qué datos tienes de tus clientes?</mat-option> -->
+                <mat-option
+                  class="input-text"
+                  *ngFor="let t of tiposDato"
+                  [value]="t.code"
+                >
+                  {{ t.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                class="messsage-error"
+                *ngIf="
+                  f.tipoDato.invalid &&
+                  f.tipoDato.hasError('required') &&
+                  submittedRequired
+                "
+                >Elige una opción</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <!--
+            <span class="label-text">
+              ¿Qué datos de tus clientes ingresarás en
+              <br class="br-none-escritorio" />la plataforma?
+            </span>
+            <div class="form-group pt-4">
+              <div class="form-group col-2 pl-0">
+                <mat-radio-group
+                  formControlName="tipoDato"
+                  (change)="changeTipoDato()"
+                >
+                  <mat-radio-button
+                    name="tipoDato"
+                    id="tipoDato-1"
+                    value="C"
+                    class="text-tipo-dato"
+                    >Código, nombres y deuda</mat-radio-button
+                  >
+                  <mat-radio-button
+                    name="tipoDato"
+                    id="tipoDato-2"
+                    value="P"
+                    class="text-tipo-dato"
+                    >Código y nombres</mat-radio-button
+                  >
+                  <mat-radio-button
+                    name="tipoDato"
+                    id="tipoDato-3"
+                    value="S"
+                    class="text-tipo-dato"
+                    >No ingresaré datos</mat-radio-button
+                  >
+                </mat-radio-group>
+              </div>
+              <mat-error
+                class="messsage-error"
+                *ngIf="
+                  f.tipoDato.invalid &&
+                  f.tipoDato.hasError('required') &&
+                  submittedRequired
+                "
+                >Elija una opcion</mat-error
+              >
+            </div>
+          -->
+
           <!-- ¿Cómo quieres que te paguen tus clientes? -->
           <div class="form-group" *ngIf="Dataparcial">
             <mat-form-field class="w-100">
@@ -238,21 +356,54 @@
               >
             </mat-form-field>
           </div>
-          <!-- ¿Quieres que tus clientes te puedan pagar en partes? -->
+          <!-- ¿ Quieres que tus clientes te puedan pagar en partes? -->
+          <div class="form-group" *ngIf="Dataparcial">
+            <mat-form-field class="w-100">
+              <mat-label class="label"
+                >¿Quieres que tus clientes te puedan pagar en partes?</mat-label
+              >
+              <mat-select
+                class="input-text"
+                formControlName="pagoPartes"
+                name="pagoPartes"
+                disableOptionCentering
+                panelClass="pts30"
+              >
+                <!-- <mat-option class="input-text">¿Qué datos tienes de tus clientes?</mat-option> -->
+                <mat-option
+                  class="input-text"
+                  *ngFor="let t of pagoPartes"
+                  [value]="t.code"
+                >
+                  {{ t.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                class="messsage-error"
+                *ngIf="
+                  f.tipoDato.invalid &&
+                  f.tipoDato.hasError('required') &&
+                  submittedRequired
+                "
+                >Elige una opción</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <!--
           <span class="texto-medios" *ngIf="Dataparcial">
             ¿Quieres que tus clientes te puedan <br class="br-none-mobil" />
             pagar en partes?
           </span>
           <div class="form-group pt-3" *ngIf="Dataparcial">
             <div class="form-group col-2 pl-0">
-              <mat-radio-group formControlName="pagoPartes"  [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''">
+              <mat-radio-group formControlName="pagoPartes">
                 <mat-radio-button
                   name="pagoPartes"
                   id="pagoPartes-no"
                   value="N"
                   class="texto-mora"
-                  >No. Solo podrán pagarme <br class="br-none-mobil" />la
-                  deuda/<br class="br-none-escritorio" /><br class="br-none-tablet" />monto
+                  >No. Solo podrán pagarme<br class="br-none-mobil" />la
+                  deuda/<br class="br-none-escritorio" />monto
                   total.</mat-radio-button
                 >
                 <mat-radio-button
@@ -260,10 +411,10 @@
                   id="pagoPartes-si"
                   value="S"
                   class="texto-mora"
-                  >Sí. Podrán pagarme una <br class="br-none-mobil" />parte de la
+                  >Sí. Podrán pagarme una<br class="br-none-mobil" />parte de la
                   <br
                     class="br-none-escritorio"
-                  /><br class="br-none-tablet" />deuda/monto.</mat-radio-button
+                  />deuda/monto.</mat-radio-button
                 >
               </mat-radio-group>
             </div>
@@ -274,21 +425,21 @@
                 f.pagoPartes.hasError('required') &&
                 submittedRequired
               "
-              >Elige una opción</mat-error
+              >Elija una opcion</mat-error
             >
           </div>
+          -->
           <!-- ¿Quieres que incluyamos el cobro de mora? -->
           <span class="texto-medios" *ngIf="Dataparcial">
-            ¿Quieres que incluyamos el cobro de <br
+            ¿Quieres que incluyamos el cobro de<br
               class="br-none-escritorio"
             />mora?
           </span>
           <div class="form-row pt-4" *ngIf="Dataparcial">
-            <div class="form-group col-2" [ngClass]="cobraMora ? 'col-2' : 'col-12'">
+            <div class="form-group col-2">
               <mat-radio-group
                 formControlName="cobraMora"
                 (change)="changeMora()"
-                [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''"
               >
                 <mat-radio-button
                   name="cobraMora"
@@ -297,7 +448,6 @@
                   class="texto-mora"
                   >No</mat-radio-button
                 >
-                <br>
                 <mat-radio-button
                   name="cobraMora"
                   id="mora-si"
@@ -474,10 +624,160 @@
               </mat-radio-group>
             </div>
           </div>
+
+          <!-- Nº de cuenta Interbank -->
+          <!-- <mat-option class="input-text" >Nº de cuenta Interbank</mat-option> -->
+          <div class="form-group">
+            <mat-form-field class="w-100">
+              <mat-label class="label">Nº de cuenta Interbank</mat-label>
+              <mat-select
+                class="input-text"
+                formControlName="idCuenta"
+                name="idCuenta"
+                disableOptionCentering
+                panelClass="pts30"
+                (ngModelChange)="changeCuenta($event)"
+              >
+                <mat-option
+                  style="
+                    white-space: normal !important;
+                    display: block;
+                    padding: 0.9em 0.5em 0.5em;
+                    height: auto;
+                  "
+                  class="input-text"
+                  *ngFor="let cta of cuentas"
+                  [value]="cta.id"
+                  >{{ cta.number }}</mat-option
+                >
+              </mat-select>
+              <mat-error
+                class="messsage-error"
+                *ngIf="
+                  f.idCuenta.invalid &&
+                  f.idCuenta.hasError('required') &&
+                  submittedRequired
+                "
+                >Elige una opción</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <!-- Elige las opciones de canales de pago que tendrán tus clientes -->
+          <span class="texto-medios">
+            Elige las opciones de canales de pago
+          </span>
+          <div class="container-canal">
+            <!-- Canal Web/App-->
+            <div
+              class="item-canal"
+              [class.seleccionado-card]="f.usaWebApp.value"
+            >
+              <div class="container-part-1-2">
+                <div class="part-canal part-1">
+                  <mat-checkbox
+                    formControlName="usaWebApp"
+                    id="styled-checkbox-1"
+                  >
+                  </mat-checkbox>
+                </div>
+
+                <div class="part-canal part-2 responsive-desktop">
+                  <h1 class="title-canal">Web/APP</h1>
+                  <h2 class="title-sub-canal">
+                    Interbank APP<br />
+                    y Banca por <br />internet
+                  </h2>
+                </div>
+
+                <div class="part-canal part-2 responsive-mobil">
+                  <h1 class="title-canal">Web / APP</h1>
+                  <h2 class="title-sub-canal">
+                    Lima y <br class="br-none-escritorio" />
+                    provincias
+                  </h2>
+                </div>
+              </div>
+
+              <div class="part-canal part-3">
+                <label class="label-canal">Tu cliente pagará:</label>
+                <label class="label-number-canal">S/ 0</label>
+                <label class="label-canal">GRATIS</label>
+              </div>
+            </div>
+            <!-- Canal Agente -->
+            <div
+              class="item-canal"
+              [class.seleccionado-card]="f.usaAgente.value"
+            >
+              <div class="container-part-1-2">
+                <div class="part-canal part-1" style="margin: 0px !important">
+                  <mat-checkbox
+                    formControlName="usaAgente"
+                    id="styled-checkbox-2"
+                    style="margin: 0px !important"
+                  >
+                  </mat-checkbox>
+                </div>
+
+                <div class="part-canal part-2">
+                  <h1 class="title-canal">Agentes</h1>
+                  <h2 class="title-sub-canal">
+                    Lima y <br class="br-none-escritorio" />
+                    provincias
+                  </h2>
+                </div>
+              </div>
+
+              <div class="part-canal part-3">
+                <label class="label-canal">Tu cliente pagará:</label>
+                <label class="label-number-canal">
+                  {{ currencySymbolSoles }} {{ commissionAgentSoles }}
+                </label>
+                <label class="label-canal">
+                  {{ currencySymbolDollars }} {{ commissionAgentDollars }}
+                </label>
+              </div>
+            </div>
+            <!-- Canal Agencias -->
+            <div
+              class="item-canal"
+              [class.seleccionado-card]="f.usaTienda.value"
+              *ngIf="useAgencyChannel"
+            >
+              <div class="container-part-1-2">
+                <div class="part-canal part-1">
+                  <mat-checkbox
+                    formControlName="usaTienda"
+                    id="styled-checkbox-3"
+                  >
+                  </mat-checkbox>
+                </div>
+
+                <div class="part-canal part-2">
+                  <h1 class="title-canal">Agencias</h1>
+                  <h2 class="title-sub-canal">
+                    Lima y <br class="br-none-escritorio" />
+                    provincias
+                  </h2>
+                </div>
+              </div>
+
+              <div class="part-canal part-3">
+                <label class="label-canal">Tu cliente pagará:</label>
+                <label class="label-number-canal">
+                  {{ currencySymbolSoles }} {{ commissionStoreSoles }}
+                </label>
+                <label class="label-canal">
+                  {{ currencySymbolDollars }} {{ commissionStoreDollars }}
+                </label>
+              </div>
+            </div>
+          </div>
           <!-- Siguiente -->
           <div class="bnt-cont-reg">
             <button type="submit" class="btn-eureca-green text-white">
-              SIGUIENTE
+              GUARDAR
             </button>
           </div>
         </form>
@@ -507,7 +807,7 @@
               aria-label="Close"
               class="close mano font-cerrar"
             >
-              <img src="assets/images/cerrar.svg" />
+              <img src="../../../../../assets/images/cerrar.svg" />
             </div>
           </div>
         </div>
@@ -572,7 +872,7 @@
           </div>
         </div>
 
-        <div class="form-row mt-2">
+        <div class="form-row mt-3">
           <div class="form-group col-12">
             <div class="container-boton">
               <button
@@ -610,7 +910,7 @@
               aria-label="Close"
               class="close mano font-cerrar"
             >
-              <img src="assets/images/cerrar.svg" />
+              <img src="../../../../../assets/images/cerrar.svg" />
             </div>
           </div>
         </div>
@@ -659,7 +959,7 @@
           </div>
         </div>
 
-        <div class="form-row mt-2">
+        <div class="form-row mt-3">
           <div class="form-group col-12">
             <div class="container-boton">
               <button
@@ -697,7 +997,7 @@
               aria-label="Close"
               class="close mano font-cerrar"
             >
-              <img src="assets/images/cerrar.svg" />
+              <img src="../../../../../assets/images/cerrar.svg" />
             </div>
           </div>
         </div>
@@ -714,13 +1014,15 @@
         <div class="form-row mt-3">
           <div class="form-group col-12">
             <div class="description-no-data">
-              <strong>Identificaremos a tus clientes con un código cuando realicen un pago.
+              <strong
+                >Identificaremos a tus clientes con un código cuando realicen un
+                pago.
               </strong>
             </div>
           </div>
         </div>
 
-        <div class="form-row mt-2">
+        <div class="form-row mt-3">
           <div class="form-group col-12">
             <div class="container-boton">
               <button

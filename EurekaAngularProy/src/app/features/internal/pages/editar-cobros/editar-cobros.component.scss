@@ -1,4 +1,4 @@
-@import "../../../scss/reponsive.scss";
+@import "src/scss/reponsive";
 
 :host
   ::ng-deep
@@ -64,100 +64,6 @@
   letter-spacing: normal;
 }
 
-.stepper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 25px;
-}
-
-.stepper-step {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: #0032a0;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 32px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.stepper-step-no-selected {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: transparent;
-  border: solid 1px #0032a0;
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 32px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.text-step {
-  color: #fff;
-  font-family: Omnes;
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  padding:0px;
-  margin: 0px;
-}
-
-
-.image-step {
-  width: 20px;
-  height: 20px;
-}
-
-.text-step-no-selected {
-  color: #0032a0;
-  font-family: Omnes;
-  font-size: 16px;
-  font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  padding:0px;
-  margin: 0px;
-}
-
-.stepper-line {
-  width: 10px;
-  height: 1px;
-  border-bottom: 1px solid #0032a0;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 10px;
-}
-
-.first-part {
-  display: flex;
-  flex-direction: row;
-}
-
-.text-first-part {
-  font-family: $primary-font-family;
-  font-size: 18px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.17;
-  letter-spacing: normal;
-  color: #0d131d;
-  margin-left: 12px;
-}
-
 .img-information-green {
   width: 20px;
   height: 20px;
@@ -165,20 +71,20 @@
 }
 
 .cuadro-form {
-  @include cuadro(480px, $height: 472px);
+  @include cuadro(480px, $height: 1300px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
 }
 
 .cuadro-form-resize{
-  @include cuadro(480px, $height: 613px);
+  @include cuadro(480px, $height: 960px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
 }
 
 .form-content {
   height: 100%;
-  padding-top: 32px;
+  padding-top: 20px;
   padding-left: 56px;
   padding-right: 56px;
   padding-bottom: 32px;
@@ -294,16 +200,6 @@
   color: $azul;
 }
 
-.text-second-part{
-  font-family: $primary-font-family;
-  font-size: 16px;
-  font-weight: 500;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.19;
-  letter-spacing: normal;
-}
-
 .label-text{
   font-family: $primary-font-family;
   font-size: 18px;
@@ -350,7 +246,7 @@
   margin: 17px 7px auto 7px;
 }
 
-.text-message-name{
+/*.text-message-name{
   font-family: $primary-font-family;
   font-size: 14px;
   font-weight: normal;
@@ -359,7 +255,7 @@
   line-height: 1.07;
   letter-spacing: normal;
   margin: 14px 7px auto 0px;
-}
+}*/
 
 .texto-medios {
   font-family: $primary-font-family;
@@ -565,6 +461,66 @@
   align-items: flex-start;
 }
 
+.item-canal {
+  @include cuadro(100%, 96px);
+  border: solid 1px #cfd0d2;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.part-canal{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.container-part-1-2{
+  display: flex;
+  flex-direction: row;
+  flex-basis: 46.13%;
+}
+
+.container-part-1-2 .part-1{
+  flex-basis: 32.34%;
+}
+.container-part-1-2 .part-2{
+  flex-basis: 67.66%;
+}
+
+.title-canal{
+  font-family: $primary-font-family;
+  font-size: 18px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #0d131d;
+  margin: 0px;
+}
+
+.title-sub-canal{
+  font-family: $primary-font-family;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: center;
+  color: #0d131d;
+}
+
+.part-3{
+  flex-basis: 53.87%;
+}
 
 .label-canal{
   font-family: $primary-font-family;
@@ -579,7 +535,6 @@
   margin:0px;
 }
 
-
 .label-number-canal{
   font-family: $primary-font-family;
   font-size: 22px;
@@ -593,14 +548,41 @@
   margin:0px;
 }
 
+.responsive-mobil{
+  display: none;
+}
+
+.container-canal{
+  margin-top: 12px;
+}
+
 .seleccionado-card {
   // border: $textgreen 1px solid;
   border: 0px !important;
   border: solid 1px #05be50 !important;
 }
 
-.label {
-  color: #0d131d !important;
+.hide-name-cod {
+  float: right !important;
+  position: absolute;
+  right: 5px;
+}
+
+::ng-deep .mat-select-panel-wrap {
+  width: 1px;
+}
+
+::ng-deep .mat-select-panel mat-option.mat-option {
+  height: unset;
+  line-height: 1.2em;
+  padding-top: 0.9em;
+  padding-bottom: 0.9em;
+  //background-color: green !important;
+}
+
+::ng-deep .mat-option-text.mat-option-text {
+  white-space: normal;
+  //background-color: red !important;
 }
 
 @media screen and (max-width: 768px) {
@@ -634,14 +616,6 @@
   .block-right-part-one {
     margin-top: 32px !important;
   }
-  .block-right-part-one .first-part .stepper-step {
-    display: none !important;
-  }
-  .block-right-part-one .first-part {
-    text-align: center !important;
-    justify-content: center !important;
-  }
-
   .bnt-cont-reg {
     margin-top: auto !important;
     align-self: center !important;
@@ -659,7 +633,7 @@
   }
   .cuadro-form {
     width: 100% !important;
-    height: 344px !important;
+    height: 1058px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
     margin-left: 0px !important;
@@ -667,7 +641,7 @@
   }
   .cuadro-form-resize{
     width: 100% !important;
-    height: 613px !important;
+    height: 743px !important;
     padding-left: 0px !important;
     padding-right: 0px !important;
     margin-left: 0px !important;
@@ -688,35 +662,7 @@
     text-align: left !important;
     margin-right: 0% !important;
     margin-left: 0% !important;
-  }
-  .text-step {
-    //width: 25px !important;
-    //height: 25px !important;
-  }
-  .stepper-step {
-    width: 25px !important;
-    height: 25px !important;
-    flex-basis: 25px !important;
-  }
-  .text-step-no-selected {
-    //width: 25px !important;
-    //height: 25px !important;
-  }
-  .stepper-step-no-selected {
-    width: 25px !important;
-    height: 25px !important;
-    flex-basis: 25px !important;
-  }
-  .stepper {
-    margin-top: 15px !important;
-    margin-right: 16px !important;
-    margin-left: 16px !important;
-  }
-  .text-first-part {
-    font-size: 16px !important;
-    margin: 0px !important;
-    margin-bottom: 8px !important;
-    text-align: left !important;
+    margin-top: 10px !important;
   }
   .text-message-name {
     font-size: 12px !important;
@@ -761,16 +707,8 @@
     width: 5px !important;
     height: 5px !important;
   }
-  .image-step {
-    width: 15px !important;
-    height: 11px !important;
-  }
   .block-right-part-one {
-    margin-top: 20px !important;
-  }
-  .text-second-part{
-    font-size: 15px !important;
-    line-height: 1.2 !important;
+    margin-top: 10px !important;
   }
   .label-text{
     font-size: 16px !important;
@@ -783,7 +721,7 @@
     line-height: 1.19 !important;
   }
   .texto-medios {
-    font-size: 16px !important;
+    font-size: 12px !important;
     line-height: 1.19 !important;
   }
   .title-complete-data{
@@ -808,5 +746,46 @@
     line-height: 1.14 !important;
     text-align: center !important;
   }
+  .item-canal {
+    height: 70px !important;
+  }
+  .container-part-1-2{
+    margin-top: 10px !important;
+    margin-left: 10px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    flex-basis: 50% !important;
+  }
+  .container-part-1-2 .part-1{
 
+    align-self: flex-start !important;
+    flex-basis: 10% !important;
+  }
+  .container-part-1-2 .part-2{
+    flex-basis: 90% !important;
+  }
+  .responsive-desktop{
+    display: none;
+  }
+  .responsive-mobil{
+    display: block;
+  }
+  .title-canal{
+    font-size: 16px !important;
+    line-height: 1 !important;
+  }
+  .title-sub-canal{
+    font-size: 12px !important;
+    font-weight: normal !important;
+    line-height: 1 !important;
+  }
+  .part-3{
+    flex-basis: 50% !important;
+  }
+  .label-canal{
+    font-size: 12px !important;
+  }
+  .label-number-canal{
+    line-height: 1 !important;
+  }
 }

@@ -1,23 +1,26 @@
-import { ActivatedRoute, Router } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
-} from "@angular/forms";
-
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { ServiceModel } from "src/app/shared/models";
-import Swal from "sweetalert2";
-import { drawPopup } from "src/app/shared/services/popups";
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ServiceModel } from 'src/app/shared/models';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { drawPopup } from 'src/app/shared/services/popups';
+import Swal from 'sweetalert2';
+import {
+  internalAuthFullRoutingNames,
+  internalFullRoutingNames,
+} from '../../internal-routing.names';
 
 declare var $: any;
 
 @Component({
-  selector: "app-configura-cobros-parte-dos",
-  templateUrl: "./configura-cobros-parte-dos.component.html",
-  styleUrls: ["./configura-cobros-parte-dos.component.scss"],
+  selector: 'app-configura-cobros-parte-dos',
+  templateUrl: './configura-cobros-parte-dos.component.html',
+  styleUrls: ['./configura-cobros-parte-dos.component.scss'],
   styles: [
     `
       :host >>> .tooltip-inner {
@@ -39,26 +42,26 @@ declare var $: any;
 })
 export class ConfiguraCobrosParteDosComponent implements OnInit {
   frm: FormGroup;
-  public editMode: boolean = false;
-  public affiliationFlow: boolean = false;
-  public Dataparcial: boolean = true;
+  public editMode = false;
+  public affiliationFlow = false;
+  public Dataparcial = true;
   submittedRequired = false;
   codDeudor: any[] = [];
   tiposPago: any[] = [];
   tiposMora: any[] = [];
   _service: ServiceModel;
-  tipoDato: string = "";
-  cobraMora: boolean = false;
-  cmoraporce: boolean = false;
-  cobraMonto: boolean = true;
-  cobraPorcentaje: boolean = false;
-  simboloMoneda: string = "S/";
+  tipoDato = '';
+  cobraMora = false;
+  cmoraporce = false;
+  cobraMonto = true;
+  cobraPorcentaje = false;
+  simboloMoneda = 'S/';
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private afiliacionService: AfiliacionService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   get f(): any {
@@ -66,7 +69,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(d => {
+    this.route.data.subscribe((d) => {
       this.editMode = d.isEdit;
       this.affiliationFlow = d.affiliationFlow;
     });
@@ -76,30 +79,30 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
       this.afiliacionService.currentServiceModel
     );
 
-    var montod =
+    const montod =
       this._service.monto !== null && this._service.monto !== undefined
         ? this._service.monto
-        : "1.00";
-    var porcentajed =
+        : '1.00';
+    const porcentajed =
       this._service.porcentaje !== null &&
       this._service.porcentaje !== undefined
         ? this._service.porcentaje
-        : "1.00";
-    let codDeudor =
-      //this._service.newNameCodeGtpStatus === undefined ||
+        : '1.00';
+    const codDeudor =
+      // this._service.newNameCodeGtpStatus === undefined ||
       this._service.newNameCodeGtpStatus === null ||
       this._service.newNameCodeGtpStatus === 1 ||
       this._service.newNameCodeGtpStatus === 2
-        ? this._service.codDeudor === "RUC" ||
-          this._service.codDeudor === "DNI" ||
-          this._service.codDeudor === "Codigo Interno"
+        ? this._service.codDeudor === 'RUC' ||
+          this._service.codDeudor === 'DNI' ||
+          this._service.codDeudor === 'Codigo Interno'
           ? this._service.codDeudor
-          : "Otro"
-        : this._service.newNameCode === "RUC" ||
-          this._service.newNameCode === "DNI" ||
-          this._service.newNameCode === "Codigo Interno"
+          : 'Otro'
+        : this._service.newNameCode === 'RUC' ||
+          this._service.newNameCode === 'DNI' ||
+          this._service.newNameCode === 'Codigo Interno'
         ? this._service.newNameCode
-        : "DNI";
+        : 'DNI';
 
     this.frm = this.fb.group({
       tipoDato: new FormControl(
@@ -120,7 +123,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
         value:
           this._service.codDeudor === null
             ? this._service.newNameCode
-            : this._service.codDeudor === "Otro"
+            : this._service.codDeudor === 'Otro'
             ? this._service.nameCod
             : this._service.codDeudor,
         disabled: this._service.nombreCodHabilitado,
@@ -160,12 +163,12 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
     this.changeMora(false);
     this.changeTipoMora(false);
 
-    this.showPartialDataComponents(this.frm.get("tipoDato").value);
-    this.resetPeriodoMora(this.frm.get("cobraMora").value);
+    this.showPartialDataComponents(this.frm.get('tipoDato').value);
+    this.resetPeriodoMora(this.frm.get('cobraMora').value);
   }
 
   showPartialDataComponents(tipoDato: string): void {
-    if (tipoDato === "P" || tipoDato === "S") {
+    if (tipoDato === 'P' || tipoDato === 'S') {
       this.Dataparcial = false;
     } else {
       this.Dataparcial = true;
@@ -173,12 +176,12 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   }
 
   resetPartialDataComponents(tipoDato: string): void {
-    if (tipoDato === "P" || tipoDato === "S") {
-      this.frm.get("cobraMora").setValue("N");
-      this.frm.get("pagoPartes").setValue("N");
+    if (tipoDato === 'P' || tipoDato === 'S') {
+      this.frm.get('cobraMora').setValue('N');
+      this.frm.get('pagoPartes').setValue('N');
 
-      this.frm.get("monto").setValue("1.00");
-      this.frm.get("porcentaje").setValue("1.00");
+      this.frm.get('monto').setValue('1.00');
+      this.frm.get('porcentaje').setValue('1.00');
       this.cmoraporce = false;
       this.cobraMora = false;
 
@@ -186,12 +189,12 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
     }
   }
 
-  resetPeriodoMora(cobraMora: string){
-    if (cobraMora === "N" || cobraMora === '') {
-      this.frm.get("periodoMora").setValue("");
+  resetPeriodoMora(cobraMora: string) {
+    if (cobraMora === 'N' || cobraMora === '') {
+      this.frm.get('periodoMora').setValue('');
       this.cmoraporce = false;
     }
-    if (cobraMora === "S") {
+    if (cobraMora === 'S') {
       this.cmoraporce = true;
     }
   }
@@ -200,33 +203,34 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
 
   goBack() {
     if (this.affiliationFlow == true) {
-      this.router.navigate(["/configuraCobrosParteUnoAfiliacion"]);
+      this.router.navigate([
+        internalAuthFullRoutingNames.CHARGES_AFFILIATION_ADD_STEP_1,
+      ]);
     } else {
-      this.router.navigate(["/configuraCobrosParteUno"]);
+      this.router.navigate([internalFullRoutingNames.CHARGES_ADD_STEP_1]);
     }
   }
 
   onSubmitServicio() {
     this.submittedRequired = true;
     if (this.frm.valid) {
-
-      const monto = parseFloat(this.frm.get("monto").value);
-      const porcentaje = parseFloat(this.frm.get("porcentaje").value);
+      const monto = parseFloat(this.frm.get('monto').value);
+      const porcentaje = parseFloat(this.frm.get('porcentaje').value);
       const montofix = monto.toFixed(2);
       const porcentajefix = porcentaje.toFixed(2);
       this.frm.value.monto = montofix;
       this.frm.value.porcentaje = porcentajefix;
 
-      if (this.frm.get("cobraMora").value === "S") {
-        if (this.frm.get("tipoMora").value === "M") {
+      if (this.frm.get('cobraMora').value === 'S') {
+        if (this.frm.get('tipoMora').value === 'M') {
           if (monto !== null) {
             if (monto > 1000) {
               Swal.fire({
-                text: "el maximo monto que se puede ingresar es 1000",
+                text: 'el maximo monto que se puede ingresar es 1000',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonText: "CERRAR",
+                cancelButtonText: 'CERRAR',
                 allowOutsideClick: false,
                 onOpen: drawPopup,
               });
@@ -234,58 +238,58 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
             }
             if (monto < 0.5) {
               Swal.fire({
-                text: "el minimo monto que se puede ingresar es 0.50",
+                text: 'el minimo monto que se puede ingresar es 0.50',
                 showCloseButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
-                cancelButtonText: "CERRAR",
+                cancelButtonText: 'CERRAR',
                 allowOutsideClick: false,
                 onOpen: drawPopup,
               });
               return;
-            }else{
+            } else {
               let value: ServiceModel;
               value = this._service;
               if (this.editMode) {
                 value.newNameCode = value.nombreCodHabilitado
-                ? value.newNameCode
-                : this.frm.value.codDeudor === "Otro"
-                ? this.frm.value.nameCod === value.codDeudor
                   ? value.newNameCode
-                  : this.frm.value.nameCod
-                : this.frm.value.codDeudor === value.codDeudor
-                ? value.newNameCode
-                : this.frm.value.codDeudor;
-              }else{
-                value.newNameCode =
-                this.frm.value.codDeudor === "Otro"
-                  ? this.frm.value.nameCod
+                  : this.frm.value.codDeudor === 'Otro'
+                  ? this.frm.value.nameCod === value.codDeudor
+                    ? value.newNameCode
+                    : this.frm.value.nameCod
+                  : this.frm.value.codDeudor === value.codDeudor
+                  ? value.newNameCode
                   : this.frm.value.codDeudor;
+              } else {
+                value.newNameCode =
+                  this.frm.value.codDeudor === 'Otro'
+                    ? this.frm.value.nameCod
+                    : this.frm.value.codDeudor;
               }
-              //Estable Servicio
+              // Estable Servicio
               this.setCurrentServiceModel(value.newNameCode);
               this.nextPage();
             }
-          }else{
+          } else {
             Swal.fire({
-              text: "Ingrese el monto",
+              text: 'Ingrese el monto',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText: "CERRAR",
+              cancelButtonText: 'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup,
             });
             return;
           }
-        }else{
+        } else {
           if (porcentaje === null) {
             Swal.fire({
-              text: "Ingrese el porcentaje",
+              text: 'Ingrese el porcentaje',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText: "CERRAR",
+              cancelButtonText: 'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup,
             });
@@ -293,11 +297,11 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
           }
           if (porcentaje > 100) {
             Swal.fire({
-              text: "el maximo porcentaje que se puede ingresar es 100",
+              text: 'el maximo porcentaje que se puede ingresar es 100',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText: "CERRAR",
+              cancelButtonText: 'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup,
             });
@@ -305,11 +309,11 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
           }
           if (porcentaje < 0.01) {
             Swal.fire({
-              text: "el minimo porcentaje 0.01%",
+              text: 'el minimo porcentaje 0.01%',
               showCloseButton: true,
               showCancelButton: true,
               showConfirmButton: false,
-              cancelButtonText: "CERRAR",
+              cancelButtonText: 'CERRAR',
               allowOutsideClick: false,
               onOpen: drawPopup,
             });
@@ -319,74 +323,79 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
             value = this._service;
             if (this.editMode) {
               value.newNameCode = value.nombreCodHabilitado
+                ? value.newNameCode
+                : this.frm.value.codDeudor === 'Otro'
+                ? this.frm.value.nameCod === value.codDeudor
                   ? value.newNameCode
-                  : this.frm.value.codDeudor === "Otro"
-                  ? this.frm.value.nameCod === value.codDeudor
-                    ? value.newNameCode
-                    : this.frm.value.nameCod
-                  : this.frm.value.codDeudor === value.codDeudor
-                  ? value.newNameCode
-                  : this.frm.value.codDeudor;
-            }else{
+                  : this.frm.value.nameCod
+                : this.frm.value.codDeudor === value.codDeudor
+                ? value.newNameCode
+                : this.frm.value.codDeudor;
+            } else {
               value.newNameCode =
-                  this.frm.value.codDeudor === "Otro"
-                    ? this.frm.value.nameCod
-                    : this.frm.value.codDeudor;
+                this.frm.value.codDeudor === 'Otro'
+                  ? this.frm.value.nameCod
+                  : this.frm.value.codDeudor;
             }
-            ///Set Servicio
+            /// Set Servicio
             this.setCurrentServiceModel(value.newNameCode);
             this.nextPage();
           }
         }
-      }else{
+      } else {
         let value: ServiceModel;
         value = this._service;
         if (this.editMode) {
           value.newNameCode = value.nombreCodHabilitado
-          ? value.newNameCode
-          : this.frm.value.codDeudor === "Otro"
-          ? this.frm.value.nameCod === value.codDeudor
             ? value.newNameCode
-            : this.frm.value.nameCod
-          : this.frm.value.codDeudor === value.codDeudor
-          ? value.newNameCode
-          : this.frm.value.codDeudor;
+            : this.frm.value.codDeudor === 'Otro'
+            ? this.frm.value.nameCod === value.codDeudor
+              ? value.newNameCode
+              : this.frm.value.nameCod
+            : this.frm.value.codDeudor === value.codDeudor
+            ? value.newNameCode
+            : this.frm.value.codDeudor;
         } else {
           value.newNameCode =
-          this.frm.value.codDeudor === "Otro"
-            ? this.frm.value.nameCod
-            : this.frm.value.codDeudor;
+            this.frm.value.codDeudor === 'Otro'
+              ? this.frm.value.nameCod
+              : this.frm.value.codDeudor;
         }
-        //Set Servicio
+        // Set Servicio
         this.setCurrentServiceModel(value.newNameCode);
         this.nextPage();
-
       }
     }
   }
 
-  setCurrentServiceModel(newNameCode: string){
+  setCurrentServiceModel(newNameCode: string) {
     this.afiliacionService.currentServiceModel.tipoDato = this.f.tipoDato.value;
-    this.afiliacionService.currentServiceModel.codDeudor = this.f.codDeudor.value;
+    this.afiliacionService.currentServiceModel.codDeudor =
+      this.f.codDeudor.value;
     this.afiliacionService.currentServiceModel.nameCod = this.f.nameCod.value;
     this.afiliacionService.currentServiceModel.newNameCode = newNameCode;
     this.afiliacionService.currentServiceModel.tipoPago = this.f.tipoPago.value;
-    this.afiliacionService.currentServiceModel.pagoPartes = this.f.pagoPartes.value;
-    this.afiliacionService.currentServiceModel.cobraMora = this.f.cobraMora.value;
-    this.afiliacionService.currentServiceModel.periodoMora = this.f.periodoMora.value;
+    this.afiliacionService.currentServiceModel.pagoPartes =
+      this.f.pagoPartes.value;
+    this.afiliacionService.currentServiceModel.cobraMora =
+      this.f.cobraMora.value;
+    this.afiliacionService.currentServiceModel.periodoMora =
+      this.f.periodoMora.value;
     this.afiliacionService.currentServiceModel.tipoMora = this.f.tipoMora.value;
-    //this.afiliacionService.currentServiceModel.monto = parseFloat(this.f.monto.value);
-    //this.afiliacionService.currentServiceModel.porcentaje = parseFloat(this.f.porcentaje.value);
+    // this.afiliacionService.currentServiceModel.monto = parseFloat(this.f.monto.value);
+    // this.afiliacionService.currentServiceModel.porcentaje = parseFloat(this.f.porcentaje.value);
     this.afiliacionService.currentServiceModel.monto = this.f.monto.value;
-    this.afiliacionService.currentServiceModel.porcentaje = this.f.porcentaje.value;
-
+    this.afiliacionService.currentServiceModel.porcentaje =
+      this.f.porcentaje.value;
   }
 
-  nextPage(){
+  nextPage() {
     if (this.affiliationFlow === true) {
-      this.router.navigate(["/configuraCobrosParteTresAfiliacion"]);
-    }else{
-      this.router.navigate(["/configuraCobrosParteTres"]);
+      this.router.navigate([
+        internalAuthFullRoutingNames.CHARGES_AFFILIATION_ADD_STEP_3,
+      ]);
+    } else {
+      this.router.navigate([internalFullRoutingNames.CHARGES_ADD_STEP_3]);
     }
   }
 
@@ -399,25 +408,25 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
     this.resetPartialDataComponents(this.tipoDato);
   }
 
-  showModal(tipoDato: string){
+  showModal(tipoDato: string) {
     switch (tipoDato) {
-      case "C": {
-        $("#complete-data").modal("show");
+      case 'C': {
+        $('#complete-data').modal('show');
         break;
       }
-      case "P": {
-        $("#partial-data").modal("show");
+      case 'P': {
+        $('#partial-data').modal('show');
         break;
       }
-      case "S": {
-        $("#no-data").modal("show");
+      case 'S': {
+        $('#no-data').modal('show');
         break;
       }
     }
   }
 
   selectCodigo(event) {
-    if (event === "Otro") {
+    if (event === 'Otro') {
       //  this.f.codDeudor.reset();
       this.f.nameCod.setValidators([
         Validators.required,
@@ -434,18 +443,18 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
     let initalValue = this.f.nameCod.value;
     /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
      initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
-    initalValue = initalValue.replace(/\s{2,}/g, " ");
-    this.f.nameCod.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ""));
+    initalValue = initalValue.replace(/\s{2,}/g, ' ');
+    this.f.nameCod.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
   }
 
   nameCodBlur(e) {
-    let initalValue = this.f.nameCod.value;
+    const initalValue = this.f.nameCod.value;
     this.f.nameCod.setValue(initalValue.trim());
   }
 
   CodiAlert() {
     if (this.afiliacionService.editMode === true) {
-      if (this._service.newNameCode !== "") {
+      if (this._service.newNameCode !== '') {
         return true;
       }
       return false;
@@ -453,20 +462,20 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   }
 
   changeMora(changeData: boolean = true) {
-    this.cobraMora = this.f.cobraMora.value === "S";
+    this.cobraMora = this.f.cobraMora.value === 'S';
     if (this.cobraMora) {
       this.f.periodoMora.setValidators([Validators.required]);
       this.f.monto.enable();
       this.f.monto.setValidators([
         Validators.required,
-        Validators.pattern("^([0-9]{1,4})?(.[0-9]{1,2})?$"),
+        Validators.pattern('^([0-9]{1,4})?(.[0-9]{1,2})?$'),
         Minimo(0.5),
         Maximo(1000),
       ]);
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.disable();
       if (changeData) {
-        this.f.porcentaje.reset("1.00");
+        this.f.porcentaje.reset('1.00');
       }
     } else {
       this.cmoraporce = false;
@@ -477,95 +486,99 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
       this.f.monto.clearValidators();
       this.f.monto.disable();
       if (changeData) {
-        this.f.monto.reset("1.00");
+        this.f.monto.reset('1.00');
       }
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.disable();
       if (changeData) {
-        this.f.porcentaje.reset("1.00");
+        this.f.porcentaje.reset('1.00');
       }
     }
   }
 
   TipoCobro() {
-    this.frm.get("tipoMora").setValue("M");
+    this.frm.get('tipoMora').setValue('M');
     this.cobraMonto = true;
     this.cobraPorcentaje = false;
     if (
-      this.frm.get("periodoMora").value === "1" ||
-      this.frm.get("periodoMora").value === "2"
+      this.frm.get('periodoMora').value === '1' ||
+      this.frm.get('periodoMora').value === '2'
     ) {
       this.cmoraporce = true;
       this.f.monto.clearValidators();
       this.f.monto.enable();
       this.f.monto.setValidators([
         Validators.required,
-        Validators.pattern("^([0-9]{1,4})?(.[0-9]{1,2})?$"),
+        Validators.pattern('^([0-9]{1,4})?(.[0-9]{1,2})?$'),
         Minimo(0.5),
         Maximo(1000),
       ]);
-      this.f.monto.reset("1.00");
+      this.f.monto.reset('1.00');
 
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.disable();
       this.f.porcentaje.setValidators([
         Validators.required,
-        Validators.pattern("^([0-9]{1,4})?(.[0-9]{1,2})?$"),
+        Validators.pattern('^([0-9]{1,4})?(.[0-9]{1,2})?$'),
         Minimo(0.01),
         Maximo(100),
       ]);
-      this.f.porcentaje.reset("1.00");
+      this.f.porcentaje.reset('1.00');
     } else {
       this.cmoraporce = false;
     }
   }
 
   changeTipoMora(changeData: boolean = true) {
-    this.cobraMonto = this.f.tipoMora.value === "M";
-    this.cobraPorcentaje = this.f.tipoMora.value === "P";
+    this.cobraMonto = this.f.tipoMora.value === 'M';
+    this.cobraPorcentaje = this.f.tipoMora.value === 'P';
     if (this.cobraMora && this.cobraMonto) {
       this.f.monto.enable();
       this.f.monto.setValidators([
         Validators.required,
-        Validators.pattern("^([0-9]{1,4})?(.[0-9]{1,2})?$"),
+        Validators.pattern('^([0-9]{1,4})?(.[0-9]{1,2})?$'),
         Minimo(0.5),
         Maximo(1000),
       ]);
       this.f.porcentaje.clearValidators();
       this.f.porcentaje.disable();
       if (changeData) {
-        this.f.porcentaje.reset("1.00");
+        this.f.porcentaje.reset('1.00');
       }
     } else if (this.cobraMora && this.cobraPorcentaje) {
       this.f.porcentaje.enable();
       this.f.porcentaje.setValidators([
         Validators.required,
-        Validators.pattern("^([0-9]{1,4})?(.[0-9]{1,2})?$"),
+        Validators.pattern('^([0-9]{1,4})?(.[0-9]{1,2})?$'),
         Minimo(0.01),
         Maximo(100),
       ]);
       this.f.monto.clearValidators();
       this.f.monto.disable();
       if (changeData) {
-        this.f.monto.reset("1.00");
+        this.f.monto.reset('1.00');
       }
     }
   }
 
   MoraMontoBlur(e) {
-    let initalValue = parseFloat(this.f.monto.value);
-    if (!isNaN(initalValue)) this.f.monto.setValue(initalValue.toFixed(2));
+    const initalValue = parseFloat(this.f.monto.value);
+    if (!isNaN(initalValue)) {
+      this.f.monto.setValue(initalValue.toFixed(2));
+    }
   }
 
   MoraPorcenBlur(e) {
-    let initalValue = parseFloat(this.f.porcentaje.value);
-    if (!isNaN(initalValue)) this.f.porcentaje.setValue(initalValue.toFixed(2));
+    const initalValue = parseFloat(this.f.porcentaje.value);
+    if (!isNaN(initalValue)) {
+      this.f.porcentaje.setValue(initalValue.toFixed(2));
+    }
   }
 }
 
 function Maximo(max: number) {
   return (c: FormControl) => {
-    let nro = parseFloat(c.value);
+    const nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro > max) {
         return { maximo: true };
@@ -577,7 +590,7 @@ function Maximo(max: number) {
 
 function Minimo(min: number) {
   return (c: FormControl) => {
-    let nro = parseFloat(c.value);
+    const nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro < min) {
         return { minimo: true };

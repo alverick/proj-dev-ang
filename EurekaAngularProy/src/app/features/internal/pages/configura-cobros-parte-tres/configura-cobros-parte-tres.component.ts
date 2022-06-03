@@ -1,16 +1,19 @@
-import { ActivatedRoute, Router } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { ServiceModel } from "src/app/shared/models";
-import Swal from "sweetalert2";
-import { drawPopup } from "src/app/shared/services/popups";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ServiceModel } from 'src/app/shared/models';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { drawPopup } from 'src/app/shared/services/popups';
+import Swal from 'sweetalert2';
+import {
+  internalAuthFullRoutingNames,
+  internalFullRoutingNames,
+} from '../../internal-routing.names';
 
 @Component({
-  selector: "app-configura-cobros-parte-tres",
-  templateUrl: "./configura-cobros-parte-tres.component.html",
-  styleUrls: ["./configura-cobros-parte-tres.component.scss"],
+  selector: 'app-configura-cobros-parte-tres',
+  templateUrl: './configura-cobros-parte-tres.component.html',
+  styleUrls: ['./configura-cobros-parte-tres.component.scss'],
   styles: [
     `
       :host >>> .tooltip-inner {
@@ -36,16 +39,18 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
   _service: ServiceModel;
   editMode: boolean = false;
   affiliationFlow: boolean = false;
-  simboloMoneda: string = "S/";
-  currencySymbolSoles: string = "S/";
-  currencySymbolDollars: string = "$";
+  simboloMoneda: string = 'S/';
+  currencySymbolSoles: string = 'S/';
+  currencySymbolDollars: string = '$';
   //public comAgente = 1.5;
   private tc: number = 3.37;
   commissionAgentSoles = 1.5;
-  commissionAgentDollars = Math.round((this.commissionAgentSoles / this.tc) * 100) / 100;;
+  commissionAgentDollars =
+    Math.round((this.commissionAgentSoles / this.tc) * 100) / 100;
   //public comTienda = 8;
   commissionStoreSoles = 8;
-  commissionStoreDollars =  Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;
+  commissionStoreDollars =
+    Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;
   useAgencyChannel: boolean = false;
 
   get f(): any {
@@ -56,12 +61,11 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
     private router: Router,
     private afiliacionService: AfiliacionService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-
-    this.route.data.subscribe(d => {
+    this.route.data.subscribe((d) => {
       //this.editMode = d.isEdit;
       this.affiliationFlow = d.affiliationFlow;
     });
@@ -92,18 +96,20 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
       }),
     });
 
-    if(this.affiliationFlow == true){
+    if (this.affiliationFlow == true) {
       this.showAgencyChannel(false);
-    }else{
+    } else {
       this.showAgencyChannel(this._service.useAgencyChannel);
     }
   }
 
   goBack() {
     if (this.affiliationFlow == true) {
-      this.router.navigate(["/configuraCobrosParteDosAfiliacion"]);
+      this.router.navigate([
+        internalAuthFullRoutingNames.CHARGES_AFFILIATION_ADD_STEP_2,
+      ]);
     } else {
-      this.router.navigate(["/configuraCobrosParteDos"]);
+      this.router.navigate([internalFullRoutingNames.CHARGES_ADD_STEP_2]);
     }
   }
 
@@ -116,11 +122,11 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
         this.f.usaWebApp.value === false
       ) {
         Swal.fire({
-          text: "Debe escoger un medio de pago",
+          text: 'Debe escoger un medio de pago',
           showCloseButton: true,
           showCancelButton: true,
           showConfirmButton: false,
-          cancelButtonText: "CERRAR",
+          cancelButtonText: 'CERRAR',
           allowOutsideClick: false,
           onOpen: drawPopup,
         });
@@ -132,16 +138,21 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
   }
 
   setCurrentServiceModel() {
-    this.afiliacionService.currentServiceModel.usaWebApp = this.f.usaWebApp.value;
-    this.afiliacionService.currentServiceModel.usaAgente = this.f.usaAgente.value;
-    this.afiliacionService.currentServiceModel.usaTienda = this.f.usaTienda.value;
+    this.afiliacionService.currentServiceModel.usaWebApp =
+      this.f.usaWebApp.value;
+    this.afiliacionService.currentServiceModel.usaAgente =
+      this.f.usaAgente.value;
+    this.afiliacionService.currentServiceModel.usaTienda =
+      this.f.usaTienda.value;
   }
 
   nextPage() {
     if (this.affiliationFlow === true) {
-      this.router.navigate(["/configuraCobrosParteCuatroAfiliacion"]);
-    }else{
-      this.router.navigate(["/configuraCobrosParteCuatro"]);
+      this.router.navigate([
+        internalAuthFullRoutingNames.CHARGES_AFFILIATION_ADD_STEP_4,
+      ]);
+    } else {
+      this.router.navigate([internalFullRoutingNames.CHARGES_ADD_STEP_4]);
     }
   }
 
@@ -152,7 +163,7 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
       Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;
   }
 
-  showAgencyChannel(show :boolean){
+  showAgencyChannel(show: boolean) {
     this.useAgencyChannel = show;
   }
 }

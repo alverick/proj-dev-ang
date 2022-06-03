@@ -1,4 +1,4 @@
-@import "../../../scss/reponsive.scss";
+@import "src/scss/reponsive";
 
 :host
   ::ng-deep
@@ -98,7 +98,7 @@
   height: 32px;
   color: #fff;
   text-align: center;
-  font-family: Omnes;
+  font-family: Geometria;
   font-size: 16px;
   font-weight: 600;
   font-stretch: normal;
@@ -115,7 +115,7 @@
   height: 32px;
   color: #0032a0;
   text-align: center;
-  font-family: Omnes;
+  font-family: Geometria;
   font-size: 16px;
   font-weight: 600;
   font-stretch: normal;

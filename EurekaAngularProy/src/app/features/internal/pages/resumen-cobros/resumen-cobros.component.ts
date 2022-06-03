@@ -1,16 +1,21 @@
-import { ActivatedRoute, Router } from "@angular/router";
-import { Component, EventEmitter, OnInit } from "@angular/core";
-
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { GoogleAnalytics } from "src/app/shared/services/googleAnalytics.service";
-import { ServiceModel } from "src/app/shared/models";
-import Swal from "sweetalert2";
-import { drawPopup } from "src/app/shared/services/popups";
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { authFullRoutingNames } from 'src/app/app-routing.collection';
+import { ServiceModel } from 'src/app/shared/models';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { drawPopup } from 'src/app/shared/services/popups';
+import Swal from 'sweetalert2';
+import {
+  internalAuthFullRoutingNames,
+  internalFullRoutingNames,
+  internalRoutingNames,
+} from '../../internal-routing.names';
 
 @Component({
-  selector: "app-resumen-cobros",
-  templateUrl: "./resumen-cobros.component.html",
-  styleUrls: ["./resumen-cobros.component.scss"],
+  selector: 'app-resumen-cobros',
+  templateUrl: './resumen-cobros.component.html',
+  styleUrls: ['./resumen-cobros.component.scss'],
   styles: [
     `
       :host >>> .tooltip-inner {
@@ -31,18 +36,18 @@ import { drawPopup } from "src/app/shared/services/popups";
 })
 export class ResumenCobrosComponent implements OnInit {
   servicio_length = 0;
-  public indiceActual: number = -1;
-  public inGTP: boolean = false;
-  Formulariogtp: boolean = false;
-  Formulario: boolean = false;
-  public stateCreate: boolean = false;
-  public stateEdit: boolean = false;
+  public indiceActual = -1;
+  public inGTP = false;
+  Formulariogtp = false;
+  Formulario = false;
+  public stateCreate = false;
+  public stateEdit = false;
   serviceActual: ServiceModel = null;
-  public inEdit: boolean = false;
-  public affiliationFlow: boolean = false;
-  sendAfterSave: boolean = false;
+  public inEdit = false;
+  public affiliationFlow = false;
+  sendAfterSave = false;
   public onFormAction: EventEmitter<string> = new EventEmitter();
-  addNewAfterSave: boolean = false;
+  addNewAfterSave = false;
 
   constructor(
     public afiliacionService: AfiliacionService,
@@ -53,40 +58,27 @@ export class ResumenCobrosComponent implements OnInit {
 
   ngOnInit() {
     this.afiliacionService.IniciarServicios();
-    //this.afiliacionService.services = [];
-    this.route.data.subscribe(d => {
+    this.route.data.subscribe((d) => {
       this.inEdit = d.isEdit;
       this.inGTP = d.isgtp;
       this.affiliationFlow = d.affiliationFlow;
 
       if (d.isEdit) {
-        window['_url_loop_'] = 'resumenCobros';
-        //window['_url_loop_'] = 'editarServicios';
-        if(this.afiliacionService.services.length === 0){
+        window['_url_loop_'] = internalRoutingNames.CHARGES;
+        if (this.afiliacionService.services.length === 0) {
           this.afiliacionService.GetServicios();
-          //this.buttonServicios = 'Actualizar';
-          // = 'Edita el servicio';
           setTimeout(() => {
-            this.servicio_length = this.afiliacionService.services.length
-          }, 3000)
-        }else{
-          this.servicio_length = this.afiliacionService.services.length
+            this.servicio_length = this.afiliacionService.services.length;
+          }, 3000);
+        } else {
+          this.servicio_length = this.afiliacionService.services.length;
         }
-
       } else {
-        window['_url_loop_'] = 'resumenCobrosAfiliacion';
-        history.pushState(null, null, 'resumenCobrosAfiliacion');
-        //window['_url_loop_'] = 'configurarServicios';
-        //history.pushState(null, null, 'configurarServicios');
-        //this.afiliacionService.Clear();
+        window['_url_loop_'] = internalRoutingNames.CHARGES_AFFILIATION;
+        history.pushState(null, null, internalRoutingNames.CHARGES_AFFILIATION);
         this.servicio_length = this.afiliacionService.services.length;
-        //this.buttonServicios = 'Guardar';
-        //this.editService(this.afiliacionService.services[0], 0);
-        //this.titulo = 'Agrega un nuevo servicio';
       }
     });
-
-    //////this.servicio_length = this.afiliacionService.services.length;
   }
 
   getNameGTP(svc: ServiceModel) {
@@ -135,9 +127,9 @@ export class ResumenCobrosComponent implements OnInit {
 
   goEditCharge() {
     if (this.affiliationFlow == true) {
-      this.router.navigate(["/editarCobrosAfiliacion"]);
+      this.router.navigate([internalFullRoutingNames.CHARGES_AFFILIATION_EDIT]);
     } else {
-      this.router.navigate(["/editarCobros"]);
+      this.router.navigate([internalFullRoutingNames.CHARGES_EDIT]);
     }
   }
 
@@ -166,32 +158,32 @@ export class ResumenCobrosComponent implements OnInit {
     }
     if (this.inEdit && this.afiliacionService.services[index].id) {
       this.afiliacionService.CanDeleteService(index).subscribe((r) => {
-        let title = "Eliminación total del servicio";
+        let title = 'Eliminación total del servicio';
         let msg =
-          "Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio";
+          'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
         if (r.hasPayed) {
-          title = "Eliminación Parcial del Servicio";
+          title = 'Eliminación Parcial del Servicio';
           msg =
-            "Ya existe un historial de pagos realizados con este servicio, sólo se eliminarán las deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank";
+            'Ya existe un historial de pagos realizados con este servicio, sólo se eliminarán las deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
         }
         Swal.fire({
           text: msg,
-          title: title,
+          title,
           showCancelButton: true,
           showConfirmButton: true,
-          confirmButtonText: "CONFIRMAR",
-          cancelButtonText: "CANCELAR",
+          confirmButtonText: 'CONFIRMAR',
+          cancelButtonText: 'CANCELAR',
           onOpen: drawPopup,
         }).then((r) => {
           if (r.value) {
             this.afiliacionService.SendDelService(index).subscribe((r) => {
-              this.gaService.sendEvent("ServicioEliminado", {
+              this.gaService.sendEvent('ServicioEliminado', {
                 event_category: GoogleAnalytics.Dashboard,
-                event_label: "servicio_eliminado",
+                event_label: 'servicio_eliminado',
               });
               Swal.fire({
-                text: "Se ha eliminado el Servicio",
-                title: title,
+                text: 'Se ha eliminado el Servicio',
+                title,
                 onOpen: drawPopup,
               });
             });
@@ -203,20 +195,20 @@ export class ResumenCobrosComponent implements OnInit {
       });
     } else {
       Swal.fire({
-        text: "Se eliminará el servicio de los canales de interbank",
-        title: "Eliminación total el servicio",
+        text: 'Se eliminará el servicio de los canales de interbank',
+        title: 'Eliminación total el servicio',
         showCancelButton: true,
         showConfirmButton: true,
-        confirmButtonText: "CONFIRMAR",
-        cancelButtonText: "CANCELAR",
+        confirmButtonText: 'CONFIRMAR',
+        cancelButtonText: 'CANCELAR',
         allowOutsideClick: false,
         onOpen: drawPopup,
       }).then((r) => {
         if (r.value) {
           this.afiliacionService.DelService(index);
-          this.gaService.sendEvent("ServicioEliminado", {
+          this.gaService.sendEvent('ServicioEliminado', {
             event_category: GoogleAnalytics.Afiliacion,
-            event_label: "servicio_eliminado",
+            event_label: 'servicio_eliminado',
           });
 
           setTimeout(() => {
@@ -232,13 +224,13 @@ export class ResumenCobrosComponent implements OnInit {
       if (svc.id === null) {
         return true;
       }
-      if (svc.newName !== "" || svc.newNameCode !== "") {
+      if (svc.newName !== '' || svc.newNameCode !== '') {
         return true;
       }
       if (
         svc.newNameGtpStatus === 1 &&
         svc.newNameCodeGtpStatus === 1 &&
-        svc.newName === ""
+        svc.newName === ''
       ) {
         return false;
       }
@@ -255,15 +247,15 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   getCanales(svc: ServiceModel) {
-    let str = "";
+    let str = '';
     if (svc.usaWebApp) {
-      str += "Digital";
+      str += 'Digital';
     }
     if (svc.usaAgente) {
-      str += (str !== "" ? ", " : "") + "Agentes";
+      str += (str !== '' ? ', ' : '') + 'Agentes';
     }
     if (svc.usaTienda) {
-      str += (str !== "" ? ", " : "") + "Tiendas";
+      str += (str !== '' ? ', ' : '') + 'Tiendas';
     }
 
     return str;
@@ -271,20 +263,20 @@ export class ResumenCobrosComponent implements OnInit {
 
   getCodDebtorCreate(svc: ServiceModel) {
     if (
-      svc.codDeudor === "RUC" ||
-      svc.codDeudor === "DNI" ||
-      svc.codDeudor === "Codigo Interno"
+      svc.codDeudor === 'RUC' ||
+      svc.codDeudor === 'DNI' ||
+      svc.codDeudor === 'Codigo Interno'
     ) {
       return svc.codDeudor;
     }
-    if (svc.codDeudor === "Otro") {
+    if (svc.codDeudor === 'Otro') {
       return svc.nameCod;
     }
   }
 
   getCodigoNameGTP(svc: ServiceModel) {
     if (svc.newNameCodeGtpStatus === 1) {
-      if (svc.codDeudor === "Otro") {
+      if (svc.codDeudor === 'Otro') {
         return svc.nameCod;
       }
       return svc.codDeudor;
@@ -302,24 +294,24 @@ export class ResumenCobrosComponent implements OnInit {
       return svc.codDeudor;
     }
     if (svc.newNameCodeGtpStatus === 3) {
-      if (svc.codDeudor == null || svc.nameCod !== "") {
+      if (svc.codDeudor == null || svc.nameCod !== '') {
         return svc.newNameCode;
       } else {
         return svc.codDeudor;
       }
     } else {
       if (
-        svc.codDeudor === "RUC" ||
-        svc.codDeudor === "DNI" ||
-        svc.codDeudor === "Codigo Interno"
+        svc.codDeudor === 'RUC' ||
+        svc.codDeudor === 'DNI' ||
+        svc.codDeudor === 'Codigo Interno'
       ) {
         return svc.codDeudor;
       }
     }
-    if (svc.codDeudor === "Otro" && svc.nameCod !== svc.newNameCode) {
+    if (svc.codDeudor === 'Otro' && svc.nameCod !== svc.newNameCode) {
       return svc.nameCod;
     }
-    if (svc.codDeudor === "Otro" || svc.nameCod !== svc.newNameCode) {
+    if (svc.codDeudor === 'Otro' || svc.nameCod !== svc.newNameCode) {
       // return svc.nameCod;
       return svc.nameCod;
     }
@@ -334,14 +326,14 @@ export class ResumenCobrosComponent implements OnInit {
   MostarFormulario() {
     if (this.afiliacionService.services.length >= 99) {
       Swal.fire({
-        text: "Usted solo puede tener 99 servicios como máximo",
+        text: 'Usted solo puede tener 99 servicios como máximo',
         onOpen: drawPopup,
       });
       return;
     }
 
-    let svcSinCta = this.afiliacionService.services.find(
-      (v) => v.nroCuenta === ""
+    const svcSinCta = this.afiliacionService.services.find(
+      (v) => v.nroCuenta === ''
     );
     if (svcSinCta) {
       Swal.fire({
@@ -351,33 +343,7 @@ export class ResumenCobrosComponent implements OnInit {
       return;
     }
 
-    /*
-    if (this.Formulario) {
-      Swal.fire({
-        title: 'Servicio no guardado',
-        text: `Guarde los cambios del servicio ${this.serviceActual === null ? '' : this.serviceActual.nombre} para poder continuar al siguiente paso`,
-        showConfirmButton: true,
-        showCancelButton: true,
-        showCloseButton: true,
-        confirmButtonText: 'GUARDAR',
-        cancelButtonText: 'DESHACER CAMBIOS',
-        onOpen: drawPopup
-      }).then(r => {
-        this.addNewAfterSave = true;
-        if (r.value) {
-          this.onFormAction.emit('save');
-        }
-        else if (r.dismiss === Swal.DismissReason.cancel) {
-          this.OcultarFormulario(false);
-        }
-        else {
-          this.addNewAfterSave = false;
-        }
-      });
-    }
-    else {*/
     this.indiceActual = this.afiliacionService.services.length;
-    //this.serviceActual = this.afiliacionService.CrearSevice();
     this.afiliacionService.createNewService(this.getUseAgencyChannel());
     this.nextPage();
     this.stateEdit = true;
@@ -388,15 +354,17 @@ export class ResumenCobrosComponent implements OnInit {
 
   nextPage() {
     if (this.affiliationFlow === true) {
-      this.router.navigate(["/configuraCobrosParteUnoAfiliacion"]);
-    }else{
-      this.router.navigate(["/configuraCobrosParteUno"]);
+      this.router.navigate([
+        internalAuthFullRoutingNames.CHARGES_AFFILIATION_ADD_STEP_1,
+      ]);
+    } else {
+      this.router.navigate([internalFullRoutingNames.CHARGES_ADD_STEP_1]);
     }
   }
 
-  getUseAgencyChannel(): boolean{
-    var useAgencyChannel:boolean = false;
-    if(this.afiliacionService.services.length > 0){
+  getUseAgencyChannel(): boolean {
+    var useAgencyChannel: boolean = false;
+    if (this.afiliacionService.services.length > 0) {
       useAgencyChannel = this.afiliacionService.services[0].useAgencyChannel;
     }
     return useAgencyChannel;
@@ -408,21 +376,21 @@ export class ResumenCobrosComponent implements OnInit {
     } else {
       if (this.Formulario === true) {
         Swal.fire({
-          title: "Servicio no guardado",
+          title: 'Servicio no guardado',
           text: `Guarde los cambios del servicio ${
-            this.serviceActual === null ? "" : this.serviceActual.nombre
+            this.serviceActual === null ? '' : this.serviceActual.nombre
           } para poder continuar al siguiente paso`,
           showCloseButton: true,
           showCancelButton: true,
           showConfirmButton: true,
-          cancelButtonColor: "#d33",
-          cancelButtonText: "DESHACER CAMBIOS",
-          confirmButtonText: "GUARDAR",
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'DESHACER CAMBIOS',
+          confirmButtonText: 'GUARDAR',
           onOpen: drawPopup,
         }).then((r) => {
           this.sendAfterSave = true;
           if (r.value) {
-            this.onFormAction.emit("save");
+            this.onFormAction.emit('save');
           } else if (r.dismiss === Swal.DismissReason.cancel) {
             this.OcultarFormulario(false);
           } else {
@@ -434,7 +402,7 @@ export class ResumenCobrosComponent implements OnInit {
       // this.frm.get('monto').value
 
       let svcSinCta = this.afiliacionService.services.find(
-        (v) => v.nroCuenta === ""
+        (v) => v.nroCuenta === ''
       );
       if (svcSinCta) {
         Swal.fire({
@@ -443,24 +411,24 @@ export class ResumenCobrosComponent implements OnInit {
         });
         return;
       }
-      this.gaService.sendEvent("EnviarServicios", {
+      this.gaService.sendEvent('EnviarServicios', {
         event_category: this.inEdit
           ? GoogleAnalytics.Dashboard
           : GoogleAnalytics.Afiliacion,
-        event_label: "enviar_servicios",
+        event_label: 'enviar_servicios',
       });
-      this.gaService.sendUrl("servicioNuevo", "/servicioNuevo");
+      this.gaService.sendUrl('servicioNuevo', '/servicioNuevo');
       this.afiliacionService.GrabarServicios().subscribe((r) => {
         if (this.inEdit) {
-          this.router.navigate(["/home"]);
+          this.router.navigate([internalFullRoutingNames.HOME]);
           /*for(let i=0; i<this.afiliacionService.services.length; i++) {
               if (this.afiliacionService.services[i].inReview == false) {
                 return;
               }
             }
-            this.router.navigate(['/procesando']);*/
+            this.router.navigate([authFullRoutingNames.PROCESSING]);*/
         } else {
-          this.router.navigate(["/procesando"]);
+          this.router.navigate([authFullRoutingNames.PROCESSING]);
         }
       });
     }
@@ -469,13 +437,13 @@ export class ResumenCobrosComponent implements OnInit {
   OcultarFormulario(requireConfirm: boolean) {
     if (requireConfirm) {
       Swal.fire({
-        title: "Descartar cambios",
-        text: "Se van a descartar los cambios.",
+        title: 'Descartar cambios',
+        text: 'Se van a descartar los cambios.',
         showConfirmButton: true,
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: "DESCARTAR",
-        cancelButtonText: "REGRESAR",
+        confirmButtonText: 'DESCARTAR',
+        cancelButtonText: 'REGRESAR',
         onOpen: drawPopup,
       }).then((r) => {
         if (r.value) {
@@ -508,6 +476,6 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(["/home"]);
+    this.router.navigate([internalFullRoutingNames.HOME]);
   }
 }

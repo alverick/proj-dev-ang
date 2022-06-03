@@ -1,19 +1,22 @@
-import { ActivatedRoute, Router } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
-} from "@angular/forms";
-
-import { AfiliacionService } from "src/app/shared/services/afiliacion.service";
-import { ServiceModel } from "src/app/shared/models";
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ServiceModel } from 'src/app/shared/models';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import {
+  internalAuthFullRoutingNames,
+  internalFullRoutingNames,
+} from '../../internal-routing.names';
 
 @Component({
-  selector: "app-configura-cobros-parte-cuatro",
-  templateUrl: "./configura-cobros-parte-cuatro.component.html",
-  styleUrls: ["./configura-cobros-parte-cuatro.component.scss"],
+  selector: 'app-configura-cobros-parte-cuatro',
+  templateUrl: './configura-cobros-parte-cuatro.component.html',
+  styleUrls: ['./configura-cobros-parte-cuatro.component.scss'],
   styles: [
     `
       :host >>> .tooltip-inner {
@@ -39,7 +42,7 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   affiliationFlow: boolean = false;
   _service: ServiceModel;
   cuentas: any[] = [];
-  simboloMoneda: string = "S/";
+  simboloMoneda: string = 'S/';
   submittedRequired = false;
 
   get f(): any {
@@ -50,11 +53,11 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
     private router: Router,
     private afiliacionService: AfiliacionService,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe(d => {
+    this.route.data.subscribe((d) => {
       //this.editMode = d.isEdit;
       this.affiliationFlow = d.affiliationFlow;
     });
@@ -67,7 +70,10 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
       this.afiliacionService.currentServiceModel
     );
 
-    this.editMode = this._service.id !== null && this._service.id !== undefined && this._service.id > 0;
+    this.editMode =
+      this._service.id !== null &&
+      this._service.id !== undefined &&
+      this._service.id > 0;
 
     this.frm = this.fb.group({
       idCuenta: new FormControl(
@@ -95,7 +101,7 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
 
       let cta = this.cuentas.find((c) => c.id === value.idCuenta);
       value.nroCuenta = `${cta.number.substr(0, 13)} (${
-        cta.currency === "001" ? "Soles" : "Dólares"
+        cta.currency === '001' ? 'Soles' : 'Dólares'
       })`;
       value.moneda = this.frm.value.moneda;
       value.simboloMoneda = this.simboloMoneda;
@@ -123,54 +129,52 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
     this.afiliacionService.currentServiceModel.moneda = moneda;
   }
 
-  onSave(nombre: string){
+  onSave(nombre: string) {
     //if (this.afiliacionService.currentIndex >= 0) {
     //} else {
-      let nro = 1;
+    let nro = 1;
 
-      this.afiliacionService.services.forEach((s, i) => {
-        if (s.nombre !== null && s.nombre.startsWith(this.frm.value.nombre)) {
-          if (
-            !isNaN(
-              parseInt(s.nombre.substr(this.frm.value.nombre.length))
-            ) ||
-            s.nombre.substr(this.frm.value.nombre.length) === ""
-          ) {
-            nro += 1;
-          }
+    this.afiliacionService.services.forEach((s, i) => {
+      if (s.nombre !== null && s.nombre.startsWith(this.frm.value.nombre)) {
+        if (
+          !isNaN(parseInt(s.nombre.substr(this.frm.value.nombre.length))) ||
+          s.nombre.substr(this.frm.value.nombre.length) === ''
+        ) {
+          nro += 1;
         }
-      });
-
-      if (nro > 1) {
-        nombre += nro.toString();
       }
+    });
 
-      this.afiliacionService.addCurrentServiceModel();
-      this.nextPage();
+    if (nro > 1) {
+      nombre += nro.toString();
+    }
+
+    this.afiliacionService.addCurrentServiceModel();
+    this.nextPage();
     //}
   }
 
   nextPage() {
     if (this.affiliationFlow === true) {
-      this.router.navigate(["/resumenCobrosAfiliacion"]);
-    }else{
-      this.router.navigate(["/resumenCobros"]);
+      this.router.navigate([internalFullRoutingNames.CHARGES_AFFILIATION]);
+    } else {
+      this.router.navigate([internalFullRoutingNames.CHARGES]);
     }
-
   }
 
   goBack() {
     if (this.affiliationFlow === true) {
-      this.router.navigate(["/configuraCobrosParteTresAfiliacion"]);
-    }else{
-      this.router.navigate(["/configuraCobrosParteTres"]);
+      this.router.navigate([
+        internalAuthFullRoutingNames.CHARGES_AFFILIATION_ADD_STEP_3,
+      ]);
+    } else {
+      this.router.navigate([internalFullRoutingNames.CHARGES_ADD_STEP_3]);
     }
-
   }
 
   changeCuenta(val) {
-    let cta = this.cuentas.find((c) => c.id == val);
-    this.simboloMoneda = cta.currency === "001" ? "S/" : "$";
+    const cta = this.cuentas.find((c) => c.id == val);
+    this.simboloMoneda = cta.currency === '001' ? 'S/' : '$';
     this.f.moneda.setValue(cta.currency);
   }
 }
