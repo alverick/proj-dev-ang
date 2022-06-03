@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
 import { RespuestaLogin } from '../models/respuestaLogin.model';
 import { GoogleAnalytics } from './googleAnalytics.service';
 import { NotifyService } from './notify.service';
@@ -75,7 +76,7 @@ export class LoginService {
     const url = `${this.URI_API}/login/out?_=` + new Date().getTime();
     this.http.post(url, {}).subscribe(() => {
       this.storage.removeCurrentSession();
-      this.router.navigate(['/login']);
+      this.router.navigate([authFullRoutingNames.LOGIN]);
     });
   }
 
