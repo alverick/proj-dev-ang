@@ -8,7 +8,7 @@ import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
-import { drawPopup } from 'src/app/shared/services/popups';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 import { FormServicioComponent } from '../components/form-servicio/form-servicio.component';
 

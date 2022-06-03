@@ -10,7 +10,7 @@ import { first } from 'rxjs/operators';
 import { internalFullRoutingNames } from 'src/app/app-routing.collection';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { LoginService } from 'src/app/shared/services/login.service';
-import { drawPopup } from 'src/app/shared/services/popups';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import Swal from 'sweetalert2';
 import { authFullRoutingNames } from '../../auth-routing.names';

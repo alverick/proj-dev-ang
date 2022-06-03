@@ -5,12 +5,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MonedaModel, ServiceModel } from 'src/app/shared/models';
 
+import { MonedaModel, ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { ConfigurarServiciosComponent } from '../../pages/configurar-servicios/configurar-servicios.component';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { drawPopup } from 'src/app/shared/services/popups';
+import { ConfigurarServiciosComponent } from '../../pages/configurar-servicios/configurar-servicios.component';
 
 @Component({
   selector: 'app-form-servicio',

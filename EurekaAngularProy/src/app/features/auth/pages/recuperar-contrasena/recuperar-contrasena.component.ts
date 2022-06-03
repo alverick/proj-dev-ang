@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { drawPopup } from 'src/app/shared/services/popups';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import { RecuperaService } from 'src/app/shared/services/recupera.service';
 import Swal from 'sweetalert2';
 import { authFullRoutingNames } from 'src/app/app-routing.collection';
