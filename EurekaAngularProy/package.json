@@ -8,7 +8,7 @@
     "start.hmr": "ng serve --configuration hmr --hmr",
     "build": "ng build",
     "build:stats": "ng build --stats-json",
-    "analyze": "webpack-bundle-analyzer dist/EurekaAngularProy/stats.json",
+    "analyze": "webpack-bundle-analyzer dist/EurekaAngularProy/stats-latest.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
