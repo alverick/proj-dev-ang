@@ -1,51 +1,31 @@
 <app-header>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarResponsive"
-    aria-controls="navbarResponsive"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul *ngIf="!IsGtp" class="navbar-nav ml-auto" id="btn-regresar">
-      <li class="nav-item">
-        <a class="nav-link lnk-regresar" (click)="goBackGtp()"
-          ><img
-            src="../../../../assets/images/left.svg"
-          />&nbsp;&nbsp;&nbsp;Regresar</a
-        >
-      </li>
-    </ul>
-    <ul *ngIf="IsGtp" class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item dropdown">
+      <a
+        href="javascript:void(0);"
+        class="nav-link dropdown-toggle arrow no-caret"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <img
+          class="perfil"
+          src="../../../../assets/images/person.svg"
+          alt="Perfil"
+        />
+      </a>
+      <div
+        class="dropdown-menu dropdown-menu-right"
+        aria-labelledby="lnkPerfil"
+      >
         <a
-          href="javascript:void(0);"
-          class="nav-link dropdown-toggle"
-          id="lnkPerfil"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
+          class="dropdown-item nav-link"
+          routerLinkActive="active"
+          [routerLink]="[linkSetupEmail]"
+          >Configurar correo</a
         >
-          <img
-            class="perfil"
-            src="../../../../assets/images/person.svg"
-            alt="Perfil"
-          />
-        </a>
-        <div
-          class="dropdown-menu dropdown-menu-right"
-          aria-labelledby="lnkPerfil"
-        >
-          <a class="dropdown-item" [routerLink]="[linkSetupEmail]"
-            >Configurar correo</a
-          >
-          <a class="dropdown-item" (click)="logout()">Cerrar Sesión</a>
-        </div>
-      </li>
-    </ul>
-  </div>
+        <a class="dropdown-item nav-link" (click)="logout()">Cerrar Sesión</a>
+      </div>
+    </li>
+  </ul>
 </app-header>
