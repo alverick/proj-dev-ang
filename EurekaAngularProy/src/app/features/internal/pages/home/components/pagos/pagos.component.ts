@@ -31,7 +31,7 @@ const MY_FORMATS = {
 
 declare var $: any;
 @Component({
-  selector: 'app-pagos',
+  selector: 'cs-pagos',
   templateUrl: './pagos.component.html',
   styleUrls: ['./pagos.component.scss'],
   providers: [

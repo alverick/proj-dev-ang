@@ -15,7 +15,7 @@ import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
 declare let gtag: Function;
 declare let fbq: Function;
 @Component({
-  selector: 'app-root',
+  selector: 'cs-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   providers: [LoginService],

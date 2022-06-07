@@ -36,7 +36,7 @@ export const MY_FORMATS = {
 ////////////////////////////
 
 @Component({
-  selector: 'app-gtp-grilla',
+  selector: 'cs-gtp-grilla',
   templateUrl: './gtp-grilla.component.html',
   styleUrls: ['./gtp-grilla.component.scss'],
   styles: [

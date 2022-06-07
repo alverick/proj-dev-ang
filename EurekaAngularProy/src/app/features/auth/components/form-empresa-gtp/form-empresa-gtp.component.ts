@@ -11,7 +11,7 @@ import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 
 @Component({
-  selector: 'app-frm-empresa-gtp',
+  selector: 'cs-frm-empresa-gtp',
   templateUrl: './form-empresa-gtp.component.html',
   styleUrls: ['./form-empresa-gtp.component.scss'],
 })

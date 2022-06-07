@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { ValidationComponent } from './validation';
 
 @Component({
-  selector: 'upload-progress',
+  selector: 'cs-upload-progress',
   templateUrl: 'upload-progress.html',
 })
 export class UploadProgressComponent implements OnInit {

@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 import { authFullRoutingNames } from 'src/app/app-routing.collection';
 
 @Component({
-  selector: 'app-recuperar-contrasena',
+  selector: 'cs-recuperar-contrasena',
   templateUrl: './recuperar-contrasena.component.html',
   styleUrls: ['./recuperar-contrasena.component.scss'],
 })

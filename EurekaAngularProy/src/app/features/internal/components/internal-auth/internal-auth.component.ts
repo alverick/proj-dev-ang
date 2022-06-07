@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-internal-auth',
+  selector: 'cs-internal-auth',
   templateUrl: './internal-auth.component.html',
   styleUrls: ['./internal-auth.component.scss'],
 })

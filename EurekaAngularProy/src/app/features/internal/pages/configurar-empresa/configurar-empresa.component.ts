@@ -20,7 +20,7 @@ import {
 } from '../../internal-routing.names';
 
 @Component({
-  selector: 'app-configurar-empresa',
+  selector: 'cs-configurar-empresa',
   templateUrl: './configurar-empresa.component.html',
   styleUrls: ['./configurar-empresa.component.scss'],
 })

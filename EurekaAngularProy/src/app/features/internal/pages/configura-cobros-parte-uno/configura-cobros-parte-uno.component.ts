@@ -15,7 +15,7 @@ import { internalAuthFullRoutingNames, internalFullRoutingNames } from "../../in
 declare var $: any;
 
 @Component({
-  selector: 'app-configura-cobros-parte-uno',
+  selector: 'cs-configura-cobros-parte-uno',
   templateUrl: './configura-cobros-parte-uno.component.html',
   styleUrls: ['./configura-cobros-parte-uno.component.scss'],
   styles: [

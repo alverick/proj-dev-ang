@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { ConfigurarServiciosComponent } from '../../pages/configurar-servicios/configurar-servicios.component';
 
 @Component({
-  selector: 'app-ser-form-gtp',
+  selector: 'cs-ser-form-gtp',
   templateUrl: './ser-form-gtp.component.html',
   styleUrls: ['./ser-form-gtp.component.scss'],
 })

@@ -12,7 +12,7 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
 import { MonedaModel } from 'src/app/shared/models';
 
 @Component({
-  selector: 'app-services-gtp',
+  selector: 'cs-services-gtp',
   templateUrl: './services-gtp.component.html',
   styleUrls: ['./services-gtp.component.scss'],
 })

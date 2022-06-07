@@ -4,7 +4,7 @@ import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
 @Component({
-  selector: 'app-procesando',
+  selector: 'cs-procesando',
   templateUrl: './procesando.component.html',
   styleUrls: ['./procesando.component.scss'],
 })

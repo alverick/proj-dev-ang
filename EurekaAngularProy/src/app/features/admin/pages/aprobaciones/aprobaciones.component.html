@@ -325,8 +325,8 @@
                 <div style="float: right">¿Aprobado?</div>
               </div>
             </div>
-            <app-empresa-gtp [enterprise]="Empgtp" (grabar)="onGrabar($event)">
-            </app-empresa-gtp>
+            <cs-empresa-gtp [enterprise]="Empgtp" (grabar)="onGrabar($event)">
+            </cs-empresa-gtp>
           </div>
         </div>
       </div>
@@ -360,12 +360,12 @@
                 <div style="float: right">¿Aprobado?</div>
               </div>
             </div>
-            <app-services-gtp
+            <cs-services-gtp
               [service]="Servgtp"
               [idCompany]="llave"
               (grabar)="onGrabarSer($event)"
             >
-            </app-services-gtp>
+            </cs-services-gtp>
           </div>
         </div>
       </div>

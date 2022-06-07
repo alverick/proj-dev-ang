@@ -3,7 +3,7 @@ import { MatDialogRef } from '@angular/material';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 
 @Component({
-  selector: 'validation',
+  selector: 'cs-validation',
   templateUrl: 'validation.html',
 })
 export class ValidationComponent {

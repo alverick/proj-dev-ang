@@ -3,7 +3,7 @@ import { ExcelService } from "src/app/shared/services/excel.service";
 import { MatDialogRef } from "@angular/material";
 
 @Component({
-  selector: 'app-agrega-cobro',
+  selector: 'cs-agrega-cobro',
   templateUrl: '../agrega-cobro.component.html',
   styleUrls: ['../agrega-cobro.component.scss'],
 })

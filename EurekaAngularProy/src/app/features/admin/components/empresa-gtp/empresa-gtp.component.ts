@@ -12,7 +12,7 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
 import { RubroModel } from 'src/app/shared/models';
 
 @Component({
-  selector: 'app-empresa-gtp',
+  selector: 'cs-empresa-gtp',
   templateUrl: './empresa-gtp.component.html',
   styleUrls: ['./empresa-gtp.component.scss'],
 })

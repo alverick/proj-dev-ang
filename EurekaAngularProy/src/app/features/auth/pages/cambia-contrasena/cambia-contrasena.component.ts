@@ -10,7 +10,7 @@ import { authFullRoutingNames } from '../../auth-routing.names';
 import { MustMatch } from '../crear-contrasena/must-match.validator';
 
 @Component({
-  selector: 'app-cambia-contrasena',
+  selector: 'cs-cambia-contrasena',
   templateUrl: './cambia-contrasena.component.html',
   styleUrls: ['./cambia-contrasena.component.scss'],
 })

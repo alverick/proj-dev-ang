@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-load-bar',
+  selector: 'cs-load-bar',
   templateUrl: './load-bar.component.html',
   styleUrls: ['./load-bar.component.scss'],
 })

@@ -12,7 +12,7 @@ import { authFullRoutingNames } from '../../auth-routing.names';
 import { FormServicioComponent } from '../../components/form-servicio/form-servicio.component';
 
 @Component({
-  selector: 'app-configurar-servicios',
+  selector: 'cs-configurar-servicios',
   templateUrl: './configurar-servicios.component.html',
   styleUrls: ['./configurar-servicios.component.scss'],
   styles: [

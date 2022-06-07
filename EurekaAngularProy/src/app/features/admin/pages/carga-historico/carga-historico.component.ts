@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProcessService } from 'src/app/shared/services/process.service';
 
 @Component({
-  selector: 'app-carga-historico',
+  selector: 'cs-carga-historico',
   templateUrl: './carga-historico.component.html',
   styleUrls: ['./carga-historico.component.scss'],
 })

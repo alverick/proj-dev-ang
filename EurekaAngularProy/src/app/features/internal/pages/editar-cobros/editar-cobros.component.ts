@@ -15,7 +15,7 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
 declare var $: any;
 
 @Component({
-  selector: 'app-editar-cobros',
+  selector: 'cs-editar-cobros',
   templateUrl: './editar-cobros.component.html',
   styleUrls: ['./editar-cobros.component.scss'],
   styles: [

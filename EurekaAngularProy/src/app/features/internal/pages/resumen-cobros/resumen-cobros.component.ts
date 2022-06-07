@@ -13,7 +13,7 @@ import {
 } from '../../internal-routing.names';
 
 @Component({
-  selector: 'app-resumen-cobros',
+  selector: 'cs-resumen-cobros',
   templateUrl: './resumen-cobros.component.html',
   styleUrls: ['./resumen-cobros.component.scss'],
   styles: [

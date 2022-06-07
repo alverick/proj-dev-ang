@@ -65,7 +65,7 @@ const MY_FORMATS = {
 declare var $: any;
 
 @Component({
-  selector: 'app-home',
+  selector: 'cs-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   providers: [

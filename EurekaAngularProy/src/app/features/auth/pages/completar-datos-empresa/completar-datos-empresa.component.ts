@@ -16,7 +16,7 @@ import { MustMatch } from '../crear-contrasena/must-match.validator';
 declare var $: any;
 
 @Component({
-  selector: 'app-completar-datos-empresa',
+  selector: 'cs-completar-datos-empresa',
   templateUrl: './completar-datos-empresa.component.html',
   styleUrls: ['./completar-datos-empresa.component.scss'],
   styles: [

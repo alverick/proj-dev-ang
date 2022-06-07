@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ExcelService } from '../../services/excel.service';
 
 @Component({
-  selector: 'app-load-file',
+  selector: 'cs-load-file',
   templateUrl: './load-file.component.html',
   styleUrls: ['./load-file.component.scss'],
 })

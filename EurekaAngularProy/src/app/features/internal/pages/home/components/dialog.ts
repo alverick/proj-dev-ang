@@ -9,7 +9,7 @@ import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'cs-dialog',
   templateUrl: 'dialog.html',
   styleUrls: ['dialog.scss'],
 })

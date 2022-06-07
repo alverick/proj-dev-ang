@@ -18,7 +18,7 @@ import {
 declare var $: any;
 
 @Component({
-  selector: 'app-configura-cobros-parte-dos',
+  selector: 'cs-configura-cobros-parte-dos',
   templateUrl: './configura-cobros-parte-dos.component.html',
   styleUrls: ['./configura-cobros-parte-dos.component.scss'],
   styles: [

@@ -14,7 +14,7 @@ import {
 } from '../../internal-routing.names';
 
 @Component({
-  selector: 'app-configura-cobros-parte-cuatro',
+  selector: 'cs-configura-cobros-parte-cuatro',
   templateUrl: './configura-cobros-parte-cuatro.component.html',
   styleUrls: ['./configura-cobros-parte-cuatro.component.scss'],
   styles: [

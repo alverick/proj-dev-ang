@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
 @Component({
-  selector: 'app-identificar-empresa',
+  selector: 'cs-identificar-empresa',
   templateUrl: './identificar-empresa.component.html',
   styleUrls: ['./identificar-empresa.component.scss'],
   styles: [

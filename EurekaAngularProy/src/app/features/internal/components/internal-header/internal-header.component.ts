@@ -9,7 +9,7 @@ import { NotifyService } from '../../../../shared/services/notify.service';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
 @Component({
-  selector: 'app-internal-header',
+  selector: 'cs-internal-header',
   templateUrl: './internal-header.component.html',
   styleUrls: ['./internal-header.component.scss'],
 })

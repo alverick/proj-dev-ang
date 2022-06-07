@@ -7,7 +7,7 @@ import { LoginService } from '../../../../shared/services/login.service';
 import { adminFullRoutingNames } from '../../admin-routing.names';
 
 @Component({
-  selector: 'app-admin-header',
+  selector: 'cs-admin-header',
   templateUrl: './admin-header.component.html',
   styleUrls: ['./admin-header.component.scss'],
 })

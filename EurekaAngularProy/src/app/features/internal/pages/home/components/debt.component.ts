@@ -26,7 +26,7 @@ const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-debt-form',
+  selector: 'cs-debt-form',
   templateUrl: '../debt.component.html',
   styleUrls: ['../debt.component.scss'],
   providers: [

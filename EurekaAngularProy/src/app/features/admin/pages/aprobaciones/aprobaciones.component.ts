@@ -18,7 +18,7 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
 // import { ConsoleReporter } from 'jasmine';
 
 @Component({
-  selector: 'app-aprobaciones',
+  selector: 'cs-aprobaciones',
   templateUrl: './aprobaciones.component.html',
   styleUrls: ['./aprobaciones.component.scss'],
 })

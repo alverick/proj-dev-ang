@@ -21,7 +21,7 @@ import { MustMatch } from './must-match.validator';
 
 declare var $: any;
 @Component({
-  selector: 'app-crear-contrasena',
+  selector: 'cs-crear-contrasena',
   templateUrl: './crear-contrasena.component.html',
   styleUrls: ['./crear-contrasena.component.scss'],
   styles: [

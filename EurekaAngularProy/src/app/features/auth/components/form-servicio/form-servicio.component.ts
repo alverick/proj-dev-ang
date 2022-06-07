@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { ConfigurarServiciosComponent } from '../../pages/configurar-servicios/configurar-servicios.component';
 
 @Component({
-  selector: 'app-form-servicio',
+  selector: 'cs-form-servicio',
   templateUrl: './form-servicio.component.html',
   styleUrls: ['./form-servicio.component.scss'],
   styles: [

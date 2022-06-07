@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { internalAuthFullRoutingNames } from 'src/app/app-routing.collection';
 
 @Component({
-  selector: 'app-completado-primera-parte',
+  selector: 'cs-completado-primera-parte',
   templateUrl: './completado-primera-parte.component.html',
   styleUrls: ['./completado-primera-parte.component.scss'],
 })

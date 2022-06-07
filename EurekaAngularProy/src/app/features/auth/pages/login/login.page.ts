@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
 @Component({
-  selector: 'app-login',
+  selector: 'cs-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })

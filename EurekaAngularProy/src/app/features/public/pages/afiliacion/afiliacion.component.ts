@@ -4,7 +4,7 @@ import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 
 @Component({
-  selector: 'app-afiliacion',
+  selector: 'cs-afiliacion',
   templateUrl: './afiliacion.component.html',
   styleUrls: ['./afiliacion.component.scss'],
 })

@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { FormServicioComponent } from '../../components/form-servicio/form-servicio.component';
 
 @Component({
-  selector: 'app-configurar-gtp',
+  selector: 'cs-configurar-gtp',
   templateUrl: './configurar-gtp.component.html',
   styleUrls: ['./configurar-gtp.component.scss'],
 })

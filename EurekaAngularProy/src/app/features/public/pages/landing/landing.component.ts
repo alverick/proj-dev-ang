@@ -3,7 +3,7 @@ import { authFullRoutingNames } from 'src/app/app-routing.collection';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 
 @Component({
-  selector: 'app-landing',
+  selector: 'cs-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
 })

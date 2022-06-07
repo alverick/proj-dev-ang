@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-internal',
+  selector: 'cs-internal',
   templateUrl: './internal.component.html',
   styleUrls: ['./internal.component.scss'],
 })

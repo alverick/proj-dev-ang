@@ -12,7 +12,7 @@ import { CorreoGtpModel } from '../../../../shared/models/data-correoGtp';
 import { GtpService } from '../../../../shared/services/gtp.service';
 
 @Component({
-  selector: 'app-configurar-correo-gtp',
+  selector: 'cs-configurar-correo-gtp',
   templateUrl: './configurar-correo-gtp.component.html',
   styleUrls: ['./configurar-correo-gtp.component.scss'],
 })
