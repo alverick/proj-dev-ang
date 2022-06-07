@@ -19,6 +19,8 @@
 @import '~@angular/cdk/overlay-prebuilt.css';
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+@import 'reponsive';
+
 .mat-select-panel {
   min-width: 220px !important;
   max-width: 100% !important;
