@@ -18,6 +18,9 @@ export class InternalHeaderComponent implements OnInit {
   companyLink = internalFullRoutingNames.COMPANY;
   homeLink = internalFullRoutingNames.HOME;
   chargesLink = internalFullRoutingNames.CHARGES;
+  homeText = 'Mis Movimientos';
+  companyText = 'Mi Empresa';
+  chargesText = 'Mis Servicios';
   scrollConfig = {
     suppressScrollX: true,
   };
@@ -30,10 +33,6 @@ export class InternalHeaderComponent implements OnInit {
     private excelser: ExcelService,
     public afiliacionService: AfiliacionService
   ) {}
-
-  get IsHome(): boolean {
-    return this.router.url.includes(internalFullRoutingNames.HOME);
-  }
 
   toggle() {
     this.isExpanded = !this.isExpanded;
