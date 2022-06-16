@@ -1,0 +1,88 @@
+.form {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px 0;
+  @include media('>sm') {
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  @include media('>xl') {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  @include media('>lg') {
+    gap: 10px;
+  }
+
+  button {
+    height: 40px;
+    padding: 0 20px;
+    @include media('>lg') {
+      padding: 0 30px;
+    }
+  }
+}
+
+.mat-form-field.name {
+  @include media('>lg') {
+    width: 230px;
+  }
+  @include media('>xl') {
+    min-width: 230px;
+    width: auto;
+  }
+}
+
+.mat-form-field {
+  width: 100%;
+  @include media('>sm') {
+    width: calc(50% - 5px);
+  }
+  @include media('>lg') {
+    width: 120px;
+  }
+  @include media('>xl') {
+    min-width: 120px;
+    width: auto;
+  }
+
+  &:nth-child(even) {
+    @include media('>md') {
+      margin-left: 10px;
+    }
+    @include media('>lg') {
+      margin-left: 0;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  @include media('>sm') {
+    flex-direction: row;
+    gap: 10px;
+  }
+}
+
+.btn-reset {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s;
+  order: 1;
+  @include media('>xl') {
+    order: 0;
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  span {
+    position: relative;
+    top: -2px;
+  }
+}

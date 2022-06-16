@@ -1,0 +1,142 @@
+<form class="form" [formGroup]="form" (ngSubmit)="sendFiltro()">
+  <mat-form-field class="name" floatLabel="never">
+    <input
+      class="input-text11"
+      matInput
+      formControlName="inputSearch"
+      type="text"
+      appShear
+      maxlength="20"
+      placeholder="Nombre o código del cliente"
+    />
+    <span matPrefix class="pr-1"
+      ><img src="../../../../../assets/images/buscar.svg" />
+    </span>
+  </mat-form-field>
+  <mat-form-field class="f2" floatLabel="never">
+    <mat-select
+      placeholder="Servicio"
+      formControlName="service"
+      class="selectpicker filter-slt"
+      disableOptionCentering
+      panelClass="pts26"
+      name="servicio"
+    >
+      <mat-option value="{{ service.name }}" *ngFor="let service of services">
+        {{ service.name }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="f2" floatLabel="never">
+    <mat-select
+      formControlName="status"
+      placeholder="Estado"
+      disableOptionCentering
+      panelClass="pts26"
+      name="status"
+    >
+      <mat-option value="{{ item.idWayPay }}" *ngFor="let item of waypayList">
+        {{ item.descripcion }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="f2" floatLabel="never">
+    <mat-select
+      formControlName="dateForFilter"
+      placeholder="Fecha"
+      disableOptionCentering
+      panelClass="pts26"
+      name="dateForFilter"
+    >
+      <mat-option value="{{ item.idDate }}" *ngFor="let item of DateList">
+        {{ item.descripcion }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="f2" floatLabel="never">
+    <input
+      formControlName="dateFrom"
+      csDate
+      csBlockCopyPaste
+      placeholder="Desde"
+      type="text"
+      matInput
+      maxlength="10"
+      minlength="10"
+      [max]="maxDateFrom"
+      [matDatepicker]="dateFromPicker"
+      (click)="dateFromPicker.open()"
+    />
+    <mat-datepicker-toggle
+      class="date-color-eureca"
+      matSuffix
+      [for]="dateFromPicker"
+    >
+      <mat-icon
+        class="svg-custom"
+        matDatepickerToggleIcon
+        svgIcon="eurc_calendar"
+      ></mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #dateFromPicker></mat-datepicker>
+    <div class="msg-error" *ngIf="errorDateFrom !== '' && this.formSubmitted">
+      {{ errorDateFrom }}
+    </div>
+  </mat-form-field>
+  <mat-form-field class="f2" floatLabel="never">
+    <input
+      formControlName="dateTo"
+      csDate
+      csBlockCopyPaste
+      placeholder="Hasta"
+      type="text"
+      name="dateTo"
+      matInput
+      maxlength="10"
+      minlength="10"
+      [min]="minDateTo"
+      [max]="maxDate"
+      [matDatepicker]="dateToPicker"
+      (click)="dateToPicker.open()"
+    />
+    <mat-datepicker-toggle
+      class="date-color-eureca"
+      matSuffix
+      [for]="dateToPicker"
+    >
+      <mat-icon
+        class="svg-custom"
+        matDatepickerToggleIcon
+        svgIcon="eurc_calendar"
+      ></mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #dateToPicker></mat-datepicker>
+    <div class="msg-error" *ngIf="errorDateTo !== '' && this.formSubmitted">
+      {{ errorDateTo }}
+    </div>
+  </mat-form-field>
+  <div class="actions">
+    <button
+      type="button"
+      class="btn-reset"
+      [ngClass]="{ active: formFilled }"
+      mat-button
+      (click)="cleanAllFilters()"
+    >
+      <span matPrefix
+        ><img src="../../../../../assets/images/iconos-ui-xs-trash-lines.svg" />
+      </span>
+      Limpiar filtros
+    </button>
+    <button
+      type="submit"
+      mat-button
+      mat-raised-button
+      color="primary"
+      [disabled]="!formFilled"
+    >
+      Buscar
+    </button>
+  </div>
+</form>
