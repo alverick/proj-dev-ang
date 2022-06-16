@@ -1,0 +1,79 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$md-mcgpalette0: (
+  50: #e1f7ea,
+  100: #b4eccb,
+  200: #82dfa8,
+  300: #50d285,
+  400: #2bc86a,
+  500: #05be50,
+  600: #04b849,
+  700: #04af40,
+  800: #03a737,
+  900: #019927,
+  A100: #c4ffcf,
+  A200: #91ffa5,
+  A400: #5eff7b,
+  A700: #45ff66,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$md-mcgpalette1: (
+  50: #e0e7f4,
+  100: #b3c4e4,
+  200: #809cd3,
+  300: #4d74c1,
+  400: #2657b3,
+  500: #0039a6,
+  600: #00339e,
+  700: #002c95,
+  800: #00248b,
+  900: #00177b,
+  A100: #a8b2ff,
+  A200: #7585ff,
+  A400: #4257ff,
+  A700: #2941ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+$cs-app-primary: mat-palette($md-mcgpalette0);
+$cs-app-accent: mat-palette($md-mcgpalette1, A200, A100, A400);
+
+$cs-app-theme: mat-light-theme($cs-app-primary, $cs-app-accent);
+
+@include angular-material-theme($cs-app-theme);
+
+@import '~@angular/cdk/overlay-prebuilt.css';
+//@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
