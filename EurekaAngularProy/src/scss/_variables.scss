@@ -85,3 +85,11 @@ $primary-font-family: 'Geometria', Arial, sans-serif;
   --extended-palette-darkblue-5: #ccd2df;
   --extended-palette-darkblue-4: #99a5bf;
 }
+
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  2xl: 1536px,
+) !default;
