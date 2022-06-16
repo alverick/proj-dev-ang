@@ -101,7 +101,6 @@ export class DialogComponent implements OnInit {
       if (!this.ready) {
         return;
       }
-      value.status = 'VALIDATING';
       if (value.status === 'REJECTED') {
         this.excelService.statusUpload = false;
         this.rowsAccepted = value.rowsUploaded;
