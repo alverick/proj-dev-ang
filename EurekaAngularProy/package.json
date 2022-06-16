@@ -121,6 +121,7 @@
     "tslint-plugin-prettier": "^2.3.0",
     "typescript": "~3.5.3",
     "webpack": "^4.46.0",
+    "webpack-build-notifier": "^2.3.0",
     "webpack-bundle-analyzer": "^4.5.0"
   }
 }
