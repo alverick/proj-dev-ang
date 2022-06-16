@@ -623,7 +623,7 @@
                             [matDatepicker]="n_edp"
                             (click)="n_edp.open()"
                             class="input-text-dash"
-                            appDate
+                            csDate
                             [min]="minDate"
                             [max]="maxDate"
                             [(ngModel)]="nuevaDeuda.emissionDate"
@@ -657,7 +657,7 @@
                         >
                           <input
                             class="input-text-dash"
-                            appDate
+                            csDate
                             [min]="minDate"
                             [max]="maxDate"
                             matInput
@@ -838,7 +838,7 @@
                                                     <span *ngIf="!items.editPending">{{items.emissionDate | date:'dd/MM/yy' }}</span>
                                                     <div *ngIf="items.editPending" class="content-input-icon position-relative">
                                                         <mat-form-field class="inline-input" style="width: 80px">
-                                                            <input matInput [matDatepicker]="edp" (click)="edp.open()" class="input-text-dash" appDate [min]="minDate" [max]="maxDate" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (ngModelChange)="items.errores.emissionDate = null;">
+                                                            <input matInput [matDatepicker]="edp" (click)="edp.open()" class="input-text-dash" csDate [min]="minDate" [max]="maxDate" [(ngModel)]="items.newEmissionDate" formC maxlength="10" minlength="10" type="text" (ngModelChange)="items.errores.emissionDate = null;">
                                                             <mat-datepicker-toggle matSuffix [for]="edp"></mat-datepicker-toggle>
                                                             <mat-datepicker #edp></mat-datepicker>
                                                             <div class="msg-error" *ngIf="items.errores.emissionDate">{{items.errores.emissionDate}}
@@ -850,7 +850,7 @@
                                                     <span *ngIf="!items.editInput">{{items.dueDate | date:'dd/MM/yy' }}</span>
                                                     <div *ngIf="items.editInput && items.dueDate !== null" class="content-input-icon position-relative">
                                                         <mat-form-field class="inline-input" style="width: 80px">
-                                                            <input class="input-text-dash" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (ngModelChange)="items.errores.dueDate = null">
+                                                            <input class="input-text-dash" csDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="ddp" [(ngModel)]="items.newDueDate" maxlength="10" minlength="10" type="text" (ngModelChange)="items.errores.dueDate = null">
                                                             <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
                                                             <mat-datepicker #ddp></mat-datepicker>
                                                             <div class="msg-error" *ngIf="items.errores.dueDate">{{items.errores.dueDate}}</div>
@@ -1001,7 +1001,7 @@
                                 [matDatepicker]="edp"
                                 (click)="edp.open()"
                                 class="input-text-dash"
-                                appDate
+                                csDate
                                 [min]="minDate"
                                 [max]="maxDate"
                                 [(ngModel)]="items.newEmissionDate"
@@ -1041,7 +1041,7 @@
                             >
                               <input
                                 class="input-text-dash"
-                                appDate
+                                csDate
                                 [min]="minDate"
                                 [max]="maxDate"
                                 matInput

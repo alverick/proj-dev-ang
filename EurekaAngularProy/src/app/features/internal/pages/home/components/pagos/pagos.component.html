@@ -74,7 +74,7 @@
                         <span *ngIf="!itm.editing">{{itm.date | date:'dd/MM/yy'}}</span>
                         <div *ngIf="itm.editing">
                             <mat-form-field class="full-width inline-input" style="max-width: 80px;">
-                                <input appDate matInput [matDatepicker]="ddp" [(ngModel)]="itm.newDate" maxlength="10" minlength="10" type="text" (ngModelChange)="itm.errores.date = null">
+                                <input csDate matInput [matDatepicker]="ddp" [(ngModel)]="itm.newDate" maxlength="10" minlength="10" type="text" (ngModelChange)="itm.errores.date = null">
                                 <mat-datepicker-toggle matSuffix [for]="ddp"></mat-datepicker-toggle>
                                 <mat-datepicker #ddp></mat-datepicker>
                                 <div class="msg-error" *ngIf="itm.errores.date">{{itm.errores.date}}</div>
