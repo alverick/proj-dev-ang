@@ -20,12 +20,13 @@ import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.compo
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
 import { DebtComponent } from './pages/home/components/debt.component';
 import { PaymentsFilterComponent } from './pages/home/components/payments-filter/payments-filter.component';
+import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
 
 @NgModule({
   declarations: [
     InternalComponent,
-    HomeComponent,
+    HomePage,
     ConfigurarEmpresaComponent,
     ResumenCobrosComponent,
     AgregaCobroComponent,

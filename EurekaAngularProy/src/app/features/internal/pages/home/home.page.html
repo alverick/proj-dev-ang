@@ -13,234 +13,15 @@
             >
           </div>
           <div class="content">
-            <form>
-              <mat-form-field class="f1">
-                <input
-                  class="input-text"
-                  matInput
-                  [(ngModel)]="filtro.inputSearch"
-                  name="inputSearch"
-                  type="text"
-                  appShear
-                  maxlength="20"
-                  placeholder="Nombre o código del cliente"
-                />
-                <span matPrefix class="pr-1"
-                  ><img src="../../../../../assets/images/buscar.svg" />
-                </span>
-                <button
-                  mat-button
-                  *ngIf="filtro.inputSearch"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="filtro.inputSearch = ''"
-                >
-                  <i class="fa fa-times-circle"></i>
-                </button>
-              </mat-form-field>
-              <mat-form-field class="f2">
-                <mat-select
-                  placeholder="Servicio"
-                  class="input-text selectpicker filter-slt"
-                  disableOptionCentering
-                  panelClass="pts26"
-                  [(ngModel)]="filtro.service"
-                  name="servicio"
-                >
-                  <!--   <mat-option class="input-text">Servicio</mat-option> -->
-                  <mat-option
-                    class="input-text"
-                    value="{{ service.name }}"
-                    *ngFor="let service of services"
-                  >
-                    {{ service.name }}</mat-option
-                  >
-                </mat-select>
-                <button
-                  mat-button
-                  *ngIf="filtro.service"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="filtro.service = null; $event.stopPropagation()"
-                >
-                  <i class="fa fa-times-circle"></i>
-                </button>
-              </mat-form-field>
-              <mat-form-field class="f2">
-                <mat-select
-                  class="input-text"
-                  placeholder="Estado de pago"
-                  disableOptionCentering
-                  panelClass="pts26"
-                  [(ngModel)]="filtro.status"
-                  name="status"
-                >
-                  <!-- <mat-option class="input-text">Estado de pago</mat-option> -->
-                  <mat-option
-                    class="input-text"
-                    value="{{ item.idWayPay }}"
-                    *ngFor="let item of waypayList"
-                  >
-                    {{ item.descripcion }}
-                  </mat-option>
-                </mat-select>
-                <button
-                  mat-button
-                  *ngIf="filtro.status"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="filtro.status = null; $event.stopPropagation()"
-                >
-                  <i class="fa fa-times-circle"></i>
-                </button>
-              </mat-form-field>
-
-              <mat-form-field class="f2">
-                <mat-select
-                  class="input-text"
-                  placeholder="Fecha"
-                  disableOptionCentering
-                  panelClass="pts26"
-                  [(ngModel)]="filtro.dateForFilter"
-                  name="dateForFilter"
-                  (ngModelChange)="clearDatePicker($event)"
-                >
-                  <!-- <mat-option class="input-text">Fecha</mat-option> -->
-                  <mat-option
-                    class="input-text"
-                    value="{{ item.idDate }}"
-                    *ngFor="let item of DateList"
-                  >
-                    {{ item.descripcion }}
-                  </mat-option>
-                </mat-select>
-                <button
-                  mat-button
-                  *ngIf="filtro.dateForFilter"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="limpiarDateForFilter(); $event.stopPropagation()"
-                >
-                  <i class="fa fa-times-circle"></i>
-                </button>
-              </mat-form-field>
-              <mat-form-field class="f2">
-                <input
-                  class="input-text"
-                  [min]="minDate"
-                  [max]="maxDate"
-                  appDate
-                  (dateChange)="change($event)"
-                  #inputDate1
-                  placeholder="Desde"
-                  [(ngModel)]="filtro.dateFrom"
-                  (ngModelChange)="validaDateFrom($event)"
-                  type="text"
-                  name="dateFrom"
-                  matInput
-                  [matDatepicker]="myDatepicker2"
-                  (click)="myDatepicker2.open()"
-                  maxlength="10"
-                  minlength="10"
-                  appBlockCopyPaste
-                  [disabled]="!filtro.dateForFilter"
-                />
-                <mat-datepicker-toggle
-                  class="date-color-eureca"
-                  matSuffix
-                  [for]="myDatepicker2"
-                >
-                  <mat-icon
-                    class="svg-custom"
-                    matDatepickerToggleIcon
-                    svgIcon="eurc_calendar"
-                  ></mat-icon>
-                </mat-datepicker-toggle>
-                <mat-datepicker #myDatepicker2></mat-datepicker>
-                <button
-                  mat-button
-                  *ngIf="filtro.dateFrom || inputDate1.value"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="limpiardate1()"
-                >
-                  <i class="fa fa-times-circle"></i>
-                </button>
-                <div class="msg-error" *ngIf="errores.dateFrom && querySearch">
-                  {{ errores.dateFrom }}
-                </div>
-              </mat-form-field>
-              <mat-form-field class="f2">
-                <input
-                  class="input-text"
-                  [min]="minDate"
-                  [max]="maxDate"
-                  appDate
-                  (dateChange)="change($event)"
-                  #inputDate2
-                  placeholder="Hasta"
-                  (ngModelChange)="validaDateTo($event)"
-                  type="text"
-                  name="dateTo"
-                  matInput
-                  [matDatepicker]="myDatepicker"
-                  (click)="myDatepicker.open()"
-                  [(ngModel)]="filtro.dateTo"
-                  maxlength="10"
-                  minlength="10"
-                  appBlockCopyPaste
-                  [disabled]="!filtro.dateForFilter"
-                />
-                <mat-datepicker-toggle
-                  class="date-color-eureca"
-                  matSuffix
-                  [for]="myDatepicker"
-                >
-                  <mat-icon
-                    class="svg-custom"
-                    matDatepickerToggleIcon
-                    svgIcon="eurc_calendar"
-                  ></mat-icon>
-                </mat-datepicker-toggle>
-                <mat-datepicker #myDatepicker></mat-datepicker>
-                <button
-                  mat-button
-                  *ngIf="filtro.dateTo || inputDate2.value"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="limpiardate2()"
-                >
-                  <i class="fa fa-times-circle"></i>
-                </button>
-                <div class="msg-error" *ngIf="errores.dateTo && querySearch">
-                  {{ errores.dateTo }}
-                </div>
-              </mat-form-field>
-              <button
-                type="button"
-                class="f3 btn-eureca-green btn-emp"
-                (click)="sendFiltro()"
-              >
-                BUSCAR
-              </button>
-              <!-- <button type="button" class="f3 btn-eureca-green btn-emp" (click)="CleanAllFilters()">Limpiar Filtros</button> -->
-              <button
-                type="button"
-                class="f3 btn-eureca-green btn-emp"
-                (click)="CleanAllFilters()"
-              >
-                LIMPIAR FILTROS
-              </button>
-            </form>
+            <cs-payments-filter
+              [services]="services"
+              [waypayList]="waypayList"
+              [DateList]="DateList"
+              (sendForm)="searchDebts($event)"
+              (resetForm)="resetDebts()"
+            ></cs-payments-filter>
           </div>
         </div>
-
         <div class="widget lista">
           <div class="title">Movimientos</div>
           <div class="content">
@@ -298,15 +79,6 @@
                   </div>
                   <label class="act-label">Eliminar</label>
                 </div>
-                <!--
-                <div (click)="AgregarDeuda()" class="btn-agregar">
-                  <div data-toggle="modal" data-target="#ModalNotificacion">
-                    <img src="assets/images/plus_circle.svg" alt="plus_circle">
-                  </div>
-                  <label class="act-label">Agregar un cobro
-                  </label>
-                </div>
-                -->
               </div>
 
               <div class="addDeuda">
@@ -331,9 +103,7 @@
                         class="option-item"
                         (click)="openDialog(service)"
                       >
-                        <div class="servicio-Opern">
-                          {{ service.name }}
-                        </div>
+                        <div class="servicio-Opern">{{ service.name }}</div>
                       </div>
                     </perfect-scrollbar>
                   </div>
@@ -365,12 +135,12 @@
                 <span *ngIf="transactionService.debtItems.count > 1">han</span
                 ><span *ngIf="transactionService.debtItems.count == 1">ha</span>
                 seleccionado los
-                <span *ngIf="!selectedUniverse" style="font-weight: 500">{{
-                  transactionService.itemsForDelete.length
-                }}</span>
-                <span *ngIf="selectedUniverse" style="font-weight: 500">{{
-                  transactionService.debtItems.countNoIbkPayments
-                }}</span>
+                <span *ngIf="!selectedUniverse" style="font-weight: 500"
+                  >{{ transactionService.itemsForDelete.length }}</span
+                >
+                <span *ngIf="selectedUniverse" style="font-weight: 500"
+                  >{{ transactionService.debtItems.countNoIbkPayments }}</span
+                >
                 registros de esta página
                 <button
                   type="button"
@@ -382,8 +152,8 @@
                   (click)="selectedUniverse = !selectedUniverse"
                 >
                   <span *ngIf="!selectedUniverse"
-                    >Seleccionar los
-                    {{ transactionService.debtItems.countNoIbkPayments }}
+                    >Seleccionar los {{
+                    transactionService.debtItems.countNoIbkPayments }}
                     registros</span
                   >
                   <span *ngIf="selectedUniverse">Anular la selección</span>
@@ -827,7 +597,7 @@
                   <!-- <tbody>
                                         <perfect-scrollbar class="ps-body">
 
-                                            <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFiltro.pageNumber, totalItems: transactionService.debtItems.count }" [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
+                                            <tr *ngFor="let items of transactionService.debtItems.data | paginate:{ itemsPerPage: 50, currentPage: currentFilter.pageNumber, totalItems: transactionService.debtItems.count }" [class.seleccionado]="items.selected || items.editInput" [class.edit-pago]="items.verPagos">
                                                 <td class="c0 pl-3 ">
                                                     <div class="chk-vertical">
                                                         <mat-checkbox *ngIf="items.status != 'PAGADO' && (items.totalAmount == '0' || !items.hasIBKPayments)" [(ngModel)]="items.selected" (ngModelChange)="selectForDelete(items)">
@@ -954,7 +724,6 @@
                 </table>
 
                 <perfect-scrollbar class="ps-body" id="scrollbar-table">
-                  <!-- <div class="scroll-table"> -->
                   <table class="table">
                     <tbody>
                       <tr
@@ -963,7 +732,7 @@
                             | paginate
                               : {
                                   itemsPerPage: 50,
-                                  currentPage: currentFiltro.pageNumber,
+                                  currentPage: currentFilter.pageNumber,
                                   totalItems: transactionService.debtItems.count
                                 }
                         "
@@ -985,9 +754,9 @@
                           </div>
                         </td>
                         <td class="c1">
-                          <span *ngIf="!items.editPending">{{
-                            items.emissionDate | date: 'dd/MM/yy'
-                          }}</span>
+                          <span *ngIf="!items.editPending"
+                            >{{ items.emissionDate | date: 'dd/MM/yy' }}</span
+                          >
                           <div
                             *ngIf="items.editPending"
                             class="content-input-icon position-relative"
@@ -1028,9 +797,9 @@
                           </div>
                         </td>
                         <td class="c2">
-                          <span *ngIf="!items.editInput">{{
-                            items.dueDate | date: 'dd/MM/yy'
-                          }}</span>
+                          <span *ngIf="!items.editInput"
+                            >{{ items.dueDate | date: 'dd/MM/yy' }}</span
+                          >
                           <div
                             *ngIf="items.editInput && items.dueDate !== null"
                             class="content-input-icon position-relative"
@@ -1110,8 +879,8 @@
                         <td class="c6">{{ items.concept }}</td>
                         <td class="c7">
                           <span *ngIf="!items.editInput && items.amount > 0"
-                            >{{ items.currency }}
-                            {{ items.amount | number: '1.2-2' }}</span
+                            >{{ items.currency }} {{ items.amount | number:
+                            '1.2-2' }}</span
                           >
                           <div
                             *ngIf="items.editInput && items.dueDate !== null"
@@ -1144,20 +913,20 @@
                         </td>
                         <td class="c8">
                           <span *ngIf="items.interestAmount > 0"
-                            >{{ items.currency }}
-                            {{ items.interestAmount | number: '1.2-2' }}</span
+                            >{{ items.currency }} {{ items.interestAmount |
+                            number: '1.2-2' }}</span
                           >
                         </td>
                         <td class="c9">
                           <span *ngIf="items.totalAmount > 0"
-                            >{{ items.currency }}
-                            {{ items.totalAmount | number: '1.2-2' }}</span
+                            >{{ items.currency }} {{ items.totalAmount | number:
+                            '1.2-2' }}</span
                           >
                         </td>
                         <td class="c10">
                           <span *ngIf="items.totalAmountPayed > 0"
-                            >{{ items.currency }}
-                            {{ items.totalAmountPayed | number: '1.2-2' }}
+                            >{{ items.currency }} {{ items.totalAmountPayed |
+                            number: '1.2-2' }}
                           </span>
                           <div class="cnt-status">
                             <div
@@ -1312,7 +1081,6 @@
                       </tr>
                     </tbody>
                   </table>
-                  <!-- </div> -->
                 </perfect-scrollbar>
               </div>
             </section>
@@ -1355,18 +1123,16 @@
                         (click)="p.setCurrent(page.value)"
                         *ngIf="p.getCurrent() !== page.value"
                       >
-                        <span>{{
-                          page.label === '...'
-                            ? page.label
-                            : (page.label | number: '')
-                        }}</span>
+                        <span
+                          >{{ page.label === '...' ? page.label : (page.label |
+                          number: '') }}</span
+                        >
                       </a>
                       <ng-container *ngIf="p.getCurrent() === page.value">
-                        <span>{{
-                          page.label === '...'
-                            ? page.label
-                            : (page.label | number: '')
-                        }}</span>
+                        <span
+                          >{{ page.label === '...' ? page.label : (page.label |
+                          number: '') }}</span
+                        >
                       </ng-container>
                     </li>
                     <li
@@ -1389,9 +1155,7 @@
                   </ul>
                 </pagination-template>
               </div>
-              <div class="text pt-1">
-                {{ transactionService.pageMessage }}
-              </div>
+              <div class="text pt-1">{{ transactionService.pageMessage }}</div>
               <div class="clear-float"></div>
             </section>
           </div>

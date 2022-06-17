@@ -1,30 +1,26 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
   HostListener,
   OnInit,
-  Output,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import {
   DateAdapter,
   MatDialog,
-  MatSnackBar,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
 } from '@angular/material';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import {
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_FORMATS,
+} from '@angular/material-moment-adapter';
 import * as saveAs from 'file-saver';
-import * as _moment from 'moment'; // dejalo si sale error
-import { default as _rollupMoment } from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { mergeRight } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { Debts } from 'src/app/shared/models/debts';
-import { DebtEdit } from 'src/app/shared/models/debts-edit.model';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
 import { User } from 'src/app/shared/models/user.model';
 import { WayPay } from 'src/app/shared/models/way-pay';
@@ -44,50 +40,32 @@ import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
 import { PagosComponent } from './components/pagos/pagos.component';
 import { Popover } from './components/popover/popover.service';
-
-//// END DATE ////////////////////
-
-const moment = _rollupMoment || _moment;
-
-const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
-////////////////////////////
+import { values, equals } from 'ramda';
 
 declare var $: any;
 
 @Component({
   selector: 'cs-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
   providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
       deps: [MAT_DATE_LOCALE],
     },
 
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
 })
-
-// tslint:disable-next-line:directive-class-suffix
-export class HomeComponent implements OnInit {
+export class HomePage implements OnInit {
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
     public transactionService: TransactionService,
     private excelService: ExcelService,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar,
     private spinner: NgxSpinnerService,
     private loginService: LoginService,
     private popover: Popover,
@@ -118,65 +96,38 @@ export class HomeComponent implements OnInit {
 
   // DialogDataExampleDialog
   @ViewChild('cargaExcel', { static: true }) cargaExcel;
-  // datepicker format
-  @Output() date2: EventEmitter<any> = new EventEmitter<any>();
-  // fechas limites
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(2050, 0, 1);
   @ViewChild('inputText', { static: true }) inputText: ElementRef;
   @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
   @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
-  // tslint:disable-next-line:no-inferrable-types
-  state: boolean = false;
-  // tslint:disable-next-line:whitespace
-  // tslint:disable-next-line:no-inferrable-types
-  pageActual: number = 1;
-  ListaValidacion: boolean;
-  // x en los input
+  state = false;
   public user: User;
-  DebtsArray = [];
-  checkboxes: any;
-
   OcultaListaExcel = true;
-  mostrar: boolean;
-  inputEdit: boolean;
-  InputList: boolean;
-  messagetablecode1 = false;
-  messagetablecode2 = false;
-  private debtsUpdate: DebtEdit = new DebtEdit();
-
   typeList: any[];
   waypayList: WayPay[];
   DateList: Date[];
-
-  typeSelected: string;
   type: string[];
-
-  wayPaySelected: string;
-  wayPay: string[];
-
-  dateSelected: string;
   date: string[];
-
   serviceSelected: string;
   services: any[];
-
-  // tslint:disable-next-line:no-inferrable-types
-  selectedAll: boolean = true;
+  selectedAll = true;
   selectedUniverse = false;
-
   selectedAtLeastOneDebt = false;
-
-  statusOptions: object[] = [
-    { option: 'PENDIENTE', state: '1' },
-    { option: 'PAGADO', state: '2' },
-  ];
-
-  colorStatus: string;
-
   showEdit = false;
 
-  currentFiltro: DebstFilter = {
+  currentFilter: DebstFilter = {
+    pageNumber: 1,
+    columnName: '',
+    asc: true,
+    inputSearch: '',
+    service: '',
+    status: '',
+    dateForFilter: '',
+    dateFrom: null,
+    dateTo: null,
+  };
+  initialFilter: DebstFilter = {
     pageNumber: 1,
     columnName: '',
     asc: true,
@@ -201,26 +152,12 @@ export class HomeComponent implements OnInit {
   errores: any = {};
   querySearch = false;
   control: any;
-  // mensaje grila
-
   messageTable = '';
   showArrow = false;
 
   @ViewChild('fileLoad', { read: ViewContainerRef, static: true })
   fileLoadContainer: ViewContainerRef;
-  /*
-  @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
-   e.preventDefault();
- }
 
- @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
-   e.preventDefault();
- }
-
- @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
-   e.preventDefault();
- }
- */
   innerHeight = 0;
 
   public enDescarga = false;
@@ -230,6 +167,7 @@ export class HomeComponent implements OnInit {
   public nuevaDeuda: any = {
     errores: {},
   };
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
     let height = window.innerHeight;
@@ -324,51 +262,71 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  //// ORDENAMIENTO OCULTAR LAS FLECHAS
   orderList(index: number, asc: boolean) {
     this.orderBy = index;
     this.orderDef[index].asc = asc;
 
-    this.currentFiltro.asc = asc;
-    this.currentFiltro.columnName = this.orderDef[index].name;
+    this.currentFilter.asc = asc;
+    this.currentFilter.columnName = this.orderDef[index].name;
     this.consultaDeuda();
   }
 
-  sendFiltro() {
-    this.messagetablecode1 = false;
-    this.messagetablecode2 = false;
-    this.querySearch = true;
-    // filtro
-    const { status, dateForFilter, inputSearch, dateTo, dateFrom, service } =
-      this.filtro;
-    this.currentFiltro = mergeRight(this.currentFiltro, {
-      inputSearch,
-      service,
-      status,
-      dateForFilter,
-      dateFrom,
-      dateTo,
-      pageNumber: 1,
-    });
-    // limpia anter
+  resetControlsGrid() {
     this.selectedAll = false;
     this.selectedUniverse = false;
     this.transactionService.clearMarksForDeletes();
+  }
+
+  resetDebts() {
+    if (!equals(this.initialFilter, this.currentFilter)) {
+      this.currentFilter = this.initialFilter;
+      const { dateForFilter, status, inputSearch, service } =
+        this.initialFilter;
+      this.submitSearch(inputSearch, service, status, dateForFilter);
+    }
+  }
+
+  searchDebts(filterData) {
+    const {
+      status,
+      dateForFilter,
+      inputSearch,
+      dateTo = null,
+      dateFrom = null,
+      service,
+    } = filterData;
+    const filter: DebstFilter = {
+      ...this.initialFilter,
+      status,
+      dateForFilter,
+      inputSearch,
+      dateTo,
+      dateFrom,
+      service,
+    };
+    if (!equals(filter, this.currentFilter)) {
+      this.currentFilter = {
+        ...this.currentFilter,
+        ...filter,
+      };
+      this.submitSearch(inputSearch, service, status, dateForFilter);
+    }
+  }
+
+  private submitSearch(inputSearch, service, status, dateForFilter) {
+    this.querySearch = true;
+    this.resetControlsGrid();
     this.consultaDeuda();
-    // google analytics
+
     this.gaService.sendEvent('Buscar', {
       event_category: 'Dashboard',
       event_label: 'buscar',
     });
     if (
-      (inputSearch === '' ||
-        inputSearch === null ||
-        inputSearch === undefined) &&
-      (service === '' || service === null || service === undefined) &&
-      (status == '' || status === null || status === undefined) &&
-      (dateForFilter == '' ||
-        dateForFilter === null ||
-        dateForFilter === undefined)
+      isNilOrEmpty(inputSearch) &&
+      isNilOrEmpty(service) &&
+      isNilOrEmpty(status) &&
+      isNilOrEmpty(dateForFilter)
     ) {
       this.messageTable = 'Para empezar, agrega la lista de los cobros';
       this.showArrow = true;
@@ -396,189 +354,30 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  validaFiltro(): boolean {
-    const usDatePattern =
-      /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-    // lenght date from
-    const lenghtdf = new Date(this.filtro.dateFrom).toDateString().length;
-    const fromdate = parseInt(
-      new Date(this.filtro.dateFrom)
-        .toDateString()
-        .substr(lenghtdf - 4, lenghtdf)
-    );
-    // lenght to
-    const lenghtdt = new Date(this.filtro.dateTo).toDateString().length;
-    const todate = parseInt(
-      new Date(this.filtro.dateTo).toDateString().substr(lenghtdt - 4, lenghtdt)
-    );
-
-    if (
-      this.filtro.dateForFilter !== '' &&
-      this.filtro.dateForFilter !== null &&
-      this.filtro.dateForFilter !== undefined
-    ) {
-      let faltaDesde = false;
-      let faltaHasta = false;
-      if (
-        this.filtro.dateFrom === null &&
-        this.inputDate1.nativeElement.value === ''
-      ) {
-        faltaDesde = true;
-      }
-      if (
-        this.filtro.dateTo === null &&
-        this.inputDate2.nativeElement.value === ''
-      ) {
-        faltaHasta = true;
-      }
-      let msg = faltaDesde ? 'La fecha "desde" no puede estar en blanco' : '';
-      msg += faltaHasta
-        ? (faltaDesde ? '<br />' : '') +
-          'La fecha "hasta" no puede estar en blanco'
-        : '';
-      if (faltaDesde || faltaHasta) {
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateFrom == null;
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateTo == null;
-        // this.mensaje( 'error', 'Error en la fecha',msg);
-        return true;
-      }
-    }
-
-    if (this.filtro.dateFrom === null && this.filtro.dateTo === null) {
-      ///       dateFrom es inputDate1              | dateTo  es inputDate2
-      if (
-        this.inputDate1.nativeElement.value === '' &&
-        this.inputDate2.nativeElement.value === ''
-      ) {
-        if (this.filtro.dateFrom > this.filtro.dateTo) {
-          // tslint:disable-next-line:no-unused-expression
-          this.filtro.dateFrom == null;
-          // tslint:disable-next-line:no-unused-expression
-          this.filtro.dateTo == null;
-          this.mensaje(
-            'error',
-            'Error en la fecha',
-            'La fecha "desde" no puede ser mayor a la fecha "hasta"'
-          );
-          return false;
-        } else {
-          return true;
-        }
-      } else {
-        if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
-          // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente fecha desde' );
-          // tslint:disable-next-line:no-unused-expression
-          this.filtro.dateFrom == null;
-          // tslint:disable-next-line:no-unused-expression
-          this.filtro.dateTo == null;
-          return false;
-        }
-        if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
-          // this.mensaje( 'error', 'Error en la fecha','Ingrese correctamente la fecha hasta');
-          // tslint:disable-next-line:no-unused-expression
-          this.filtro.dateFrom == null;
-          // tslint:disable-next-line:no-unused-expression
-          this.filtro.dateTo == null;
-          return false;
-        } else {
-          return true;
-        }
-      }
-      /// change
-    } else {
-      if (this.inputDate1.nativeElement.value === '') {
-        // this.mensaje( 'error', 'Error en la fecha','La fecha "desde" no puede estar en blanco');
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateFrom == null;
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateTo == null;
-        return false;
-      } else if (this.inputDate2.nativeElement.value === '') {
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateFrom == null;
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateTo == null;
-        //  this.mensaje( 'error', 'Error en la fecha','La fecha "hasta" no puede estar en blanco');
-        return false;
-      } else if (!this.inputDate1.nativeElement.value.match(usDatePattern)) {
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateFrom == null;
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateTo == null;
-        // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha desde');
-        return false;
-      } else if (!this.inputDate2.nativeElement.value.match(usDatePattern)) {
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateFrom == null;
-        // tslint:disable-next-line:no-unused-expression
-        this.filtro.dateTo == null;
-        // this.mensaje( 'error', 'Error en la fecha','ingrese correctamente la fecha hasta');
-        return false;
-      } else if (fromdate < 2000 || fromdate > 2050) {
-        this.mensaje(
-          'error',
-          'Error en la fecha',
-          'Ingrese un Año valido para la fecha de Emision'
-        );
-        return false;
-      } else if (todate < 2000 || todate > 2050) {
-        this.mensaje(
-          'error',
-          'Error en la fecha',
-          'Ingrese un Año valido  para la fecha de Vencimiento'
-        );
-        return false;
-      } else if (this.filtro.dateFrom > this.filtro.dateTo) {
-        this.mensaje(
-          'error',
-          'Error en la fecha',
-          'La fecha "desde" no puede ser mayor a la fecha "hasta"'
-        );
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
-
-  private validaFiltro2() {
-    let res = true;
-    for (const s in this.errores) {
-      if (this.errores[s]) {
-        res = false;
-      }
-    }
-    return res;
-  }
-
   consultaDeuda(cb: () => void = null) {
     // tslint:disable-next-line:prefer-const
 
-    if (this.validaFiltro2()) {
-      this.spinner.show();
-      this.transactionService
-        .getDeuda(this.currentFiltro, this.selectedUniverse)
-        .subscribe(
-          (debts) => {
-            if (this.transactionService.debtItems.data.length > 0) {
-              this.selectedAll = this.transactionService.isMarkedAll(
-                this.selectedUniverse
-              );
-            }
-
-            // this.selectedUniverse = false;
-            this.spinner.hide();
-            if (cb) {
-              cb();
-            }
-          },
-          (err) => {
-            this.spinner.hide();
+    this.spinner.show();
+    this.transactionService
+      .getDeuda(this.currentFilter, this.selectedUniverse)
+      .subscribe(
+        (debts) => {
+          if (this.transactionService.debtItems.data.length > 0) {
+            this.selectedAll = this.transactionService.isMarkedAll(
+              this.selectedUniverse
+            );
           }
-        );
-    }
+
+          // this.selectedUniverse = false;
+          this.spinner.hide();
+          if (cb) {
+            cb();
+          }
+        },
+        (err) => {
+          this.spinner.hide();
+        }
+      );
     this.messageTable = 'Para empezar, agrega la lista de las deudas';
     this.showArrow = true;
   }
@@ -587,61 +386,6 @@ export class HomeComponent implements OnInit {
     this.transactionService.debtItems.data.forEach((element) => {
       element.firstName;
     });
-  }
-
-  /*//////////////////////////////
-  //////////  C R U D ///////////////////////
-  ////////////////////////////////////////////////*/
-
-  mostrarx(): boolean {
-    // tslint:disable-next-line:max-line-length
-    if (this.inputText.nativeElement.value === '') {
-      return false;
-    } else {
-      return true;
-    }
-  }
-  mostrarxdate1(): boolean {
-    // tslint:disable-next-line:max-line-length
-    if (this.inputDate1.nativeElement.value === '') {
-      return false;
-    } else {
-      return true;
-    }
-  }
-  mostrarxdate2(): boolean {
-    // tslint:disable-next-line:max-line-length
-    if (this.inputDate2.nativeElement.value === '') {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  limpiarInput() {
-    this.inputText.nativeElement.value = '';
-    this.inputText.nativeElement.value = null;
-    this.filtro.inputSearch = '';
-  }
-
-  limpiardate1() {
-    this.inputDate1.nativeElement.value = '';
-    this.filtro.dateFrom = null;
-    if (this.filtro.dateForFilter) {
-      this.errores.dateFrom = 'Ingrese una fecha';
-    } else {
-      delete this.errores.dateFrom;
-    }
-  }
-
-  limpiardate2() {
-    this.inputDate2.nativeElement.value = '';
-    this.filtro.dateTo = null;
-    if (this.filtro.dateForFilter) {
-      this.errores.dateTo = 'Ingrese una fecha';
-    } else {
-      delete this.errores.dateTo;
-    }
   }
 
   BotonEditar(item: Debts) {
@@ -663,30 +407,6 @@ export class HomeComponent implements OnInit {
     }
     // item.newFirstName = item.firstName;
     item.newLastName = item.lastName;
-  }
-
-  selectEstPag(event, item: Debts) {
-    if (event == '1') {
-      item.editInput = true;
-      item.editPending = true;
-    }
-    if (event == '2') {
-      item.editInput = false;
-      item.editPending = false;
-    }
-  }
-
-  clearDatePicker(event) {
-    if (event) {
-      this.errores['dateFrom'] = 'Ingrese una fecha';
-      this.errores['dateTo'] = 'Ingrese una fecha';
-    } else {
-      this.limpiardate1();
-      this.limpiardate2();
-      this.querySearch = false;
-      delete this.errores.dateFrom;
-      delete this.errores.dateTo;
-    }
   }
 
   BotonActualizar(item: Debts) {
@@ -794,7 +514,7 @@ export class HomeComponent implements OnInit {
   }
 
   changePage(nro: number) {
-    this.currentFiltro.pageNumber = nro;
+    this.currentFilter.pageNumber = nro;
     this.numeroPagina = nro;
     this.consultaDeuda();
     this.selectedAll = this.transactionService.isMarkedAll(
@@ -927,16 +647,6 @@ export class HomeComponent implements OnInit {
     this.DebtsAreSelected();
   }
 
-  /*//////// O P E N  - D I A L O G ///////////////////// */
-  MostrarListaSelect() {
-    this.OcultaListaExcel = true;
-  }
-  Ocultar() {
-    if (this.OcultaListaExcel === true) {
-      //  this.OcultaListaExcel = false;
-    }
-  }
-
   openDialog(service: any) {
     this.OcultaListaExcel = false;
     this.cargaExcel = false;
@@ -996,30 +706,28 @@ export class HomeComponent implements OnInit {
   DescargarReporte() {
     if (this.enDescarga === false) {
       if (this.transactionService.debtItems.data.length > 0) {
-        if (this.validaFiltro()) {
-          this.enDescarga = true;
-          this.barLoad.show(this.fileLoadContainer);
-          this.transactionService.report(this.currentFiltro).subscribe(
-            (r: Blob) => {
-              this.gaService.sendEvent('DescargaReporte', {
-                event_category: 'Dashboard',
-                event_label: 'descargar_reporte',
-              });
-              this.barLoad.close();
-              this.enDescarga = false;
-              saveAs(r, 'Reporte - Interbank_MisCobros.xlsx');
-            },
-            () => {
-              this.barLoad.close();
-              this.enDescarga = false;
-              this.mensaje(
-                'error',
-                'Descarga',
-                'No se pudo descargar el reporte'
-              );
-            }
-          );
-        }
+        this.enDescarga = true;
+        this.barLoad.show(this.fileLoadContainer);
+        this.transactionService.report(this.currentFilter).subscribe(
+          (r: Blob) => {
+            this.gaService.sendEvent('DescargaReporte', {
+              event_category: 'Dashboard',
+              event_label: 'descargar_reporte',
+            });
+            this.barLoad.close();
+            this.enDescarga = false;
+            saveAs(r, 'Reporte - Interbank_MisCobros.xlsx');
+          },
+          () => {
+            this.barLoad.close();
+            this.enDescarga = false;
+            this.mensaje(
+              'error',
+              'Descarga',
+              'No se pudo descargar el reporte'
+            );
+          }
+        );
       } else {
         this.mensaje(
           'warning',
@@ -1043,59 +751,6 @@ export class HomeComponent implements OnInit {
     const initialValue = parseFloat(e.newAmount);
     if (!isNaN(initialValue)) {
       e.newAmount = initialValue.toFixed(2);
-    }
-  }
-
-  change(dateEvent) {
-    this.date2.emit(dateEvent.value);
-  }
-
-  limpiarDateForFilter() {
-    this.filtro.dateForFilter = null;
-    this.limpiardate1();
-    this.limpiardate2();
-    this.querySearch = false;
-  }
-
-  private internalValidaDateFrom(e) {
-    if (e === null) {
-      this.errores['dateFrom'] = 'No es una fecha válida';
-    } else {
-      const yearFrom = new Date(e).getFullYear();
-      if (yearFrom < 2000 || yearFrom > 2050) {
-        this.errores['dateFrom'] = 'Fecha Inválida';
-      } else {
-        delete this.errores.dateFrom;
-      }
-    }
-  }
-
-  private internalValidaDateTo(e) {
-    if (e === null) {
-      this.errores['dateTo'] = 'No es una fecha válida';
-    } else {
-      const yearTo = new Date(e).getFullYear();
-      if (yearTo < 2000 || yearTo > 2050) {
-        this.errores['dateTo'] = 'Fecha Inválida';
-      } else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
-        this.errores['dateTo'] = 'No puede ser menor a la emisión';
-      } else {
-        delete this.errores.dateTo;
-      }
-    }
-  }
-
-  validaDateFrom(e) {
-    this.internalValidaDateFrom(e);
-    if (!this.errores.dateFrom && this.filtro.dateTo) {
-      this.internalValidaDateTo(this.filtro.dateTo);
-    }
-  }
-
-  validaDateTo(e) {
-    this.internalValidaDateTo(e);
-    if (!this.errores.dateTo && this.filtro.dateFrom) {
-      this.internalValidaDateFrom(this.filtro.dateFrom);
     }
   }
 
@@ -1204,28 +859,6 @@ export class HomeComponent implements OnInit {
   DebtsAreSelected() {
     this.selectedAtLeastOneDebt =
       this.transactionService.itemsForDelete.length > 0;
-  }
-
-  CleanAllFilters() {
-    this.filtro.inputSearch = '';
-    this.filtro.service = null;
-    this.filtro.status = null;
-    this.limpiarDateForFilter();
-  }
-
-  AgregarDeuda() {
-    if (this.services == null || this.services.length == 0) {
-      this.mensaje('error', 'Agregar Deuda', 'No tiene servicios configurados');
-      return;
-    }
-    const dlg = this.dialog.open(DebtComponent, {
-      width: '300px',
-    });
-    dlg.afterClosed().subscribe((r) => {
-      if (r && r.grabado) {
-        this.consultaDeuda();
-      }
-    });
   }
 
   cancelaNuevo() {
