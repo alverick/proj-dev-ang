@@ -39,7 +39,7 @@
     "@sweetalert2/ngx-sweetalert2": "^5.1.0",
     "@uiowa/digit-only": "^1.2.3",
     "ajv": "^6.10.2",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.6.1",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.11",
     "file-saver": "^2.0.2",
@@ -72,6 +72,7 @@
     "symbol-observable": "^1.2.0",
     "vendors": "^1.0.3",
     "web-animations-js": "^2.3.2",
+    "webpack-build-notifier": "^2.3.0",
     "xlsx": "^0.14.5",
     "zone.js": "^0.9.1"
   },
