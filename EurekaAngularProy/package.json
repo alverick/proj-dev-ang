@@ -73,7 +73,6 @@
     "symbol-observable": "^1.2.0",
     "vendors": "^1.0.3",
     "web-animations-js": "^2.3.2",
-    "webpack-build-notifier": "^2.3.0",
     "xlsx": "^0.14.5",
     "zone.js": "^0.9.1"
   },
