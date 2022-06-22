@@ -1,239 +1,18 @@
 <div>
-  <div class="container">
+  <div class="custom-container col-12">
     <div class="row">
       <div class="col">
         <div class="widget filtros">
           <div class="title">Buscar</div>
           <div class="content">
-            <form>
-              <mat-form-field class="f1">
-                <input
-                  class="input-text"
-                  matInput
-                  [(ngModel)]="filtro.inputSearch"
-                  name="inputSearch"
-                  type="text"
-                  maxlength="20"
-                  placeholder="Nombre de empresa, RUC o CU"
-                />
-                <span matPrefix class="pr-1"
-                  ><img src="../../../../../assets/images/buscar.svg" />
-                </span>
-                <button
-                  mat-button
-                  *ngIf="filtro.inputSearch"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="filtro.inputSearch = ''"
-                >
-                  <i class="fa fa-close"></i>
-                </button>
-              </mat-form-field>
-              <mat-form-field class="f2">
-                <mat-select
-                  class="input-text"
-                  [(ngModel)]="filtro.BusinessHeading"
-                  placeholder="Rubro"
-                  name="rubro"
-                  disableOptionCentering
-                >
-                  <mat-option class="input-text">Rubro</mat-option>
-                  <mat-option
-                    class="input-text"
-                    *ngFor="let r of rubros"
-                    [value]="r.code"
-                  >
-                    {{ r.code }} {{ r.name }}
-                  </mat-option>
-                </mat-select>
-                <button
-                  mat-button
-                  *ngIf="filtro.BusinessHeading"
-                  matSuffix
-                  mat-icon-button
-                  (click)="
-                    filtro.BusinessHeading = ''; $event.stopPropagation()
-                  "
-                >
-                  <i class="fa fa-close"></i>
-                </button>
-              </mat-form-field>
-
-              <mat-form-field class="f2">
-                <mat-select
-                  class="input-text"
-                  [(ngModel)]="filtro.status"
-                  placeholder="Estado"
-                  name="estado"
-                  disableOptionCentering
-                >
-                  <mat-option class="input-text">Estado</mat-option>
-                  <mat-option
-                    class="input-text"
-                    *ngFor="let r of states"
-                    [value]="r.idState"
-                  >
-                    {{ r.descripcion }}
-                  </mat-option>
-                </mat-select>
-                <button
-                  mat-button
-                  *ngIf="filtro.status"
-                  matSuffix
-                  mat-icon-button
-                  (click)="filtro.status = null; $event.stopPropagation()"
-                >
-                  <i class="fa fa-close"></i>
-                </button>
-              </mat-form-field>
-
-              <mat-form-field class="f2">
-                <mat-select
-                  class="input-text"
-                  [(ngModel)]="filtro.statussolcitud"
-                  placeholder="Tipo de solicitud"
-                  name="statussolcitud"
-                  disableOptionCentering
-                >
-                  <mat-option class="input-text"> Tipo de solicitud</mat-option>
-                  <mat-option
-                    class="input-text"
-                    *ngFor="let r of solicitudes"
-                    [value]="r.idState"
-                  >
-                    {{ r.descripcion }}
-                  </mat-option>
-                </mat-select>
-                <button
-                  mat-button
-                  *ngIf="filtro.statussolcitud"
-                  matSuffix
-                  mat-icon-button
-                  (click)="
-                    filtro.statussolcitud = null; $event.stopPropagation()
-                  "
-                >
-                  <i class="fa fa-close"></i>
-                </button>
-              </mat-form-field>
-
-              <label class="mt-4 px-4 input-text"
-                >Fecha de <br />
-                solicitud</label
-              >
-              <mat-form-field class="f2">
-                <input
-                  class="input-text"
-                  [min]="minDate"
-                  [max]="maxDate"
-                  csDate
-                  (dateChange)="change($event)"
-                  #inputDate1
-                  placeholder="Desde"
-                  [(ngModel)]="filtro.dateFrom"
-                  (ngModelChange)="validaDateFrom($event)"
-                  type="text"
-                  name="dateFrom"
-                  matInput
-                  [matDatepicker]="myDatepicker2"
-                  (click)="myDatepicker2.open()"
-                  maxlength="10"
-                  minlength="10"
-                  csBlockCopyPaste
-                />
-                <mat-datepicker-toggle
-                  class="date-color-eureca"
-                  matSuffix
-                  [for]="myDatepicker2"
-                >
-                  <mat-icon
-                    class="svg-custom"
-                    matDatepickerToggleIcon
-                    svgIcon="eurc_calendar"
-                  ></mat-icon>
-                </mat-datepicker-toggle>
-                <mat-datepicker #myDatepicker2></mat-datepicker>
-
-                <button
-                  mat-button
-                  *ngIf="filtro.dateFrom || inputDate1.value"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="limpiardate1()"
-                >
-                  <i class="fa fa-close"></i>
-                </button>
-                <div class="msg-error" *ngIf="errores.dateFrom">
-                  {{ errores.dateFrom }}
-                </div>
-              </mat-form-field>
-
-              <mat-form-field class="f2">
-                <!-- <input class="input-text" [(ngModel)]="filtro.dateTo" [min]="minDate" [max]="maxDate" csDate #inputDate2 placeholder="Hasta"
-                                  type="text" name="dateTo"  (ngModelChange)="validaDateTo($event)" matInput [matDatepicker]="myDatepicker"   maxlength="10" minlength="10"
-                                    csBlockCopyPaste>
-                                  <mat-datepicker-toggle class="date-color-eureca" matSuffix [for]="myDatepicker">
-                                    <mat-icon class="svg-custom" ></mat-icon>
-                                  </mat-datepicker-toggle>
-                                  <mat-datepicker #myDatepicker></mat-datepicker>-->
-                <input
-                  class="input-text"
-                  [min]="minDate"
-                  [max]="maxDate"
-                  csDate
-                  (dateChange)="change($event)"
-                  #inputDate2
-                  placeholder="Hasta"
-                  (ngModelChange)="validaDateTo($event)"
-                  type="text"
-                  name="dateTo"
-                  matInput
-                  [matDatepicker]="myDatepicker"
-                  (click)="myDatepicker.open()"
-                  [(ngModel)]="filtro.dateTo"
-                  maxlength="10"
-                  minlength="10"
-                  csBlockCopyPaste
-                />
-                <mat-datepicker-toggle
-                  class="date-color-eureca"
-                  matSuffix
-                  [for]="myDatepicker"
-                >
-                  <mat-icon
-                    class="svg-custom"
-                    matDatepickerToggleIcon
-                    svgIcon="eurc_calendar"
-                  ></mat-icon>
-                </mat-datepicker-toggle>
-                <mat-datepicker #myDatepicker></mat-datepicker>
-
-                <button
-                  mat-button
-                  *ngIf="filtro.dateTo || inputDate2.value"
-                  matSuffix
-                  mat-icon-button
-                  aria-label="Clear"
-                  (click)="limpiardate2()"
-                >
-                  <i class="fa fa-close"></i>
-                </button>
-                <div class="msg-error" *ngIf="errores.dateTo">
-                  {{ errores.dateTo }}
-                </div>
-              </mat-form-field>
-              <!-- <mat-form-field class="f2"> -->
-              <button
-                type="button"
-                class="f3 btn-eureca-green"
-                (click)="sendFiltro()"
-              >
-                BUSCAR
-              </button>
-              <!-- </mat-form-field> -->
-            </form>
+            <cs-payments-filter
+              [services]="rubros"
+              [stateList]="states"
+              [stateTypeList]="solicitudes"
+              [gtpMode]="true"
+              (sendForm)="searchDebts($event)"
+              (resetForm)="resetDebts()"
+            ></cs-payments-filter>
           </div>
         </div>
 
@@ -291,7 +70,7 @@
                           | paginate
                             : {
                                 itemsPerPage: 50,
-                                currentPage: currentFiltro.pageNumber,
+                                currentPage: currentFilter.pageNumber,
                                 totalItems:
                                   gtpService.EnterprisesItems.totalCompanies
                               }
