@@ -85,7 +85,7 @@ export class GtpGrillaComponent implements OnInit {
     inputSearch: '',
     BusinessHeading: '',
     status: '',
-    statussolcitud: '',
+    statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
   };
@@ -96,7 +96,7 @@ export class GtpGrillaComponent implements OnInit {
     inputSearch: '',
     BusinessHeading: '',
     status: '',
-    statussolcitud: '',
+    statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
   };
