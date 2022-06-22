@@ -18,6 +18,7 @@ import {
 } from '@angular/material-moment-adapter';
 import * as saveAs from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { Debts } from 'src/app/shared/models/debts';
@@ -40,7 +41,6 @@ import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
 import { PagosComponent } from './components/pagos/pagos.component';
 import { Popover } from './components/popover/popover.service';
-import { values, equals } from 'ramda';
 
 declare var $: any;
 
@@ -322,12 +322,7 @@ export class HomePage implements OnInit {
       event_category: 'Dashboard',
       event_label: 'buscar',
     });
-    if (
-      isNilOrEmpty(inputSearch) &&
-      isNilOrEmpty(service) &&
-      isNilOrEmpty(status) &&
-      isNilOrEmpty(dateForFilter)
-    ) {
+    if (all(isNilOrEmpty, [inputSearch, service, status, dateForFilter])) {
       this.messageTable = 'Para empezar, agrega la lista de los cobros';
       this.showArrow = true;
     } else {
