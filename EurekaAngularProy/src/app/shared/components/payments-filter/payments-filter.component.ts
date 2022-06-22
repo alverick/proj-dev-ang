@@ -15,12 +15,13 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import * as moment from 'moment';
-import { forEachObjIndexed, isNil, keys } from 'ramda';
+import { forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/operators';
-import { Date } from '../../../../../../shared/models/date';
-import { WayPay } from '../../../../../../shared/models/way-pay';
+import { Date } from '../../models/date';
+import { StatesGtp } from '../../models/states-gtp';
+import { WayPay } from '../../models/way-pay';
 
 const errorMessageDates = {
   required: 'Ingrese una fecha',
@@ -29,15 +30,27 @@ const errorMessageDates = {
   matDatepickerParse: 'Fecha Inválida',
 };
 
+const labelNames = {
+  fieldNameSearch: 'Nombre o código del cliente',
+  fieldState: 'Servicio',
+};
+
+const labelNamesGtp = {
+  fieldNameSearch: 'Nombre de empresa, RUC o CU',
+  fieldState: 'Rubro',
+};
+
 @Component({
   selector: 'cs-payments-filter',
   templateUrl: './payments-filter.component.html',
   styleUrls: ['./payments-filter.component.scss'],
 })
 export class PaymentsFilterComponent implements OnInit, OnDestroy {
-  @Input() DateList: Date[];
+  @Input() gtpMode = false;
+  @Input() dateList: Date[];
+  @Input() stateTypeList: StatesGtp[];
   @Input() services: any[];
-  @Input() waypayList: WayPay[];
+  @Input() stateList: WayPay[] | StatesGtp[];
   @Output() sendForm = new EventEmitter<object>();
   @Output() resetForm = new EventEmitter();
 
@@ -49,6 +62,8 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   formFilled = false;
   errorDateFrom = '';
   errorDateTo = '';
+  fieldNameSearch = '';
+  fieldState = '';
 
   private readonly dateValidators = [
     this.validDateValidator(),
@@ -59,6 +74,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     inputSearch: new FormControl(''),
     service: new FormControl(''),
     status: new FormControl(''),
+    statusSolicitud: new FormControl(''),
     dateForFilter: new FormControl(''),
     dateFrom: new FormControl({ value: '', disabled: true }),
     dateTo: new FormControl({ value: '', disabled: true }),
@@ -70,6 +86,17 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     this.updateValidatorsDates();
     this.parseDates();
     this.listenChangesForm();
+    this.setMode();
+  }
+
+  private setMode() {
+    if (this.gtpMode) {
+      this.fieldNameSearch = labelNamesGtp.fieldNameSearch;
+      this.fieldState = labelNamesGtp.fieldState;
+    } else {
+      this.fieldNameSearch = labelNames.fieldNameSearch;
+      this.fieldState = labelNames.fieldState;
+    }
   }
 
   private listenChangesForm() {
@@ -123,30 +150,50 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   }
 
   private updateValidatorsDates() {
-    this.form
-      .get('dateForFilter')
-      .valueChanges.pipe(takeUntil(this.$destroy))
-      .subscribe((value) => {
-        const { dateTo, dateFrom } = this.form.controls;
-        if (isNil(value)) {
-          dateFrom.disable();
-          dateTo.disable();
-          dateFrom.setValidators(this.dateValidators);
-          dateTo.setValidators(this.dateValidators);
-        } else {
-          dateFrom.enable();
-          dateTo.enable();
-          dateFrom.setValidators([Validators.required, ...this.dateValidators]);
-          dateTo.setValidators([Validators.required, ...this.dateValidators]);
-        }
+    if (this.gtpMode) {
+      this.setDateFields(false, false);
+    } else {
+      this.form
+        .get('dateForFilter')
+        .valueChanges.pipe(takeUntil(this.$destroy))
+        .subscribe((value) => {
+          this.setDateFields(isNil(value));
+        });
+    }
+  }
 
-        dateFrom.updateValueAndValidity();
-        dateTo.updateValueAndValidity();
-      });
+  private setDateFields(disable: boolean, required: null | boolean = null) {
+    const { dateTo, dateFrom } = this.form.controls;
+    if (disable) {
+      dateFrom.disable();
+      dateTo.disable();
+    } else {
+      dateFrom.enable();
+      dateTo.enable();
+    }
+    const requiredDate = isNil(required) ? !disable : required;
+
+    if (requiredDate) {
+      dateFrom.setValidators([Validators.required, ...this.dateValidators]);
+      dateTo.setValidators([Validators.required, ...this.dateValidators]);
+    } else {
+      dateFrom.setValidators(this.dateValidators);
+      dateTo.setValidators(this.dateValidators);
+    }
+
+    dateFrom.reset();
+    dateFrom.setErrors(null);
+    dateTo.reset();
+    dateTo.setErrors(null);
+    dateFrom.updateValueAndValidity();
+    dateTo.updateValueAndValidity();
   }
 
   cleanAllFilters() {
     this.form.reset();
+    if (this.gtpMode) {
+      this.setDateFields(false, false);
+    }
     this.resetForm.emit();
   }
 
@@ -181,10 +228,42 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     };
   }
 
-  sendFiltro() {
+  sendFilters() {
     this.formSubmitted = true;
     if (this.form.valid) {
-      this.sendForm.emit(this.form.value);
+      const formValuesNull = mapObjIndexed(
+        (value) => (isNil(value) ? '' : value),
+        this.form.value
+      );
+      const {
+        inputSearch,
+        service,
+        status,
+        statusSolicitud,
+        dateForFilter,
+        dateFrom = '',
+        dateTo = '',
+      } = formValuesNull;
+      let filterData: any = {
+        inputSearch,
+        status,
+        dateFrom,
+        dateTo,
+      };
+      if (this.gtpMode) {
+        filterData = {
+          ...filterData,
+          statusSolicitud,
+          BusinessHeading: service,
+        };
+      } else {
+        filterData = {
+          ...filterData,
+          service,
+          dateForFilter,
+        };
+      }
+      this.sendForm.emit(filterData);
     }
   }
 

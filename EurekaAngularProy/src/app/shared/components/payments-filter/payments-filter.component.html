@@ -1,4 +1,9 @@
-<form class="form" [formGroup]="form" (ngSubmit)="sendFiltro()">
+<form
+  class="form"
+  [ngClass]="{ 'gtp-mode': gtpMode }"
+  [formGroup]="form"
+  (ngSubmit)="sendFilters()"
+>
   <mat-form-field class="name" floatLabel="never">
     <input
       class="input-text11"
@@ -7,7 +12,7 @@
       type="text"
       appShear
       maxlength="20"
-      placeholder="Nombre o código del cliente"
+      [placeholder]="fieldNameSearch"
     />
     <span matPrefix class="pr-1"
       ><img src="../../../../../assets/images/buscar.svg" />
@@ -15,15 +20,20 @@
   </mat-form-field>
   <mat-form-field class="f2" floatLabel="never">
     <mat-select
-      placeholder="Servicio"
+      [placeholder]="fieldState"
       formControlName="service"
       class="selectpicker filter-slt"
       disableOptionCentering
       panelClass="pts26"
       name="servicio"
     >
-      <mat-option value="{{ service.name }}" *ngFor="let service of services">
-        {{ service.name }}</mat-option
+      <mat-option
+        value="{{ service.code || service.name }}"
+        *ngFor="let service of services"
+      >
+        {{
+          (service.code ? service.code + '-' : '') + service.name
+        }}</mat-option
       >
     </mat-select>
   </mat-form-field>
@@ -35,13 +45,28 @@
       panelClass="pts26"
       name="status"
     >
-      <mat-option value="{{ item.idWayPay }}" *ngFor="let item of waypayList">
+      <mat-option
+        value="{{ item.idWayPay || item.idState }}"
+        *ngFor="let item of stateList"
+      >
         {{ item.descripcion }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-
-  <mat-form-field class="f2" floatLabel="never">
+  <mat-form-field *ngIf="stateTypeList" class="f2" floatLabel="never">
+    <mat-select
+      formControlName="statusSolicitud"
+      placeholder="Tipo de solicitud"
+      disableOptionCentering
+      panelClass="pts26"
+      name="statusSolicitud"
+    >
+      <mat-option value="{{ item.idState }}" *ngFor="let item of stateTypeList">
+        {{ item.descripcion }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="dateList" class="f2" floatLabel="never">
     <mat-select
       formControlName="dateForFilter"
       placeholder="Fecha"
@@ -49,11 +74,13 @@
       panelClass="pts26"
       name="dateForFilter"
     >
-      <mat-option value="{{ item.idDate }}" *ngFor="let item of DateList">
+      <mat-option value="{{ item.idDate }}" *ngFor="let item of dateList">
         {{ item.descripcion }}
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <div class="break-elm" *ngIf="!dateList"></div>
+  <div class="label-date" *ngIf="!dateList">Fecha de solicitud:</div>
   <mat-form-field class="f2" floatLabel="never">
     <input
       formControlName="dateFrom"

@@ -2,7 +2,7 @@
   display: inline-flex;
   align-items: center;
   flex-direction: column;
-  gap: 10px 0;
+  gap: 5px 20px;
   @include media('>sm') {
     flex-wrap: wrap;
     flex-direction: row;
