@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -57,23 +58,21 @@ export class TransactionService {
       // el nuevo filtro
       this.lastFilter = filtro;
     }
-    const strDateFrom =
-      filtro.dateFrom === null
-        ? ''
-        : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD'));
-    const strDateTo =
-      filtro.dateTo === null
-        ? ''
-        : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD'));
+    const strDateFrom = isNilOrEmpty(filtro.dateFrom)
+      ? ''
+      : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD'));
+    const strDateTo = isNilOrEmpty(filtro.dateTo)
+      ? ''
+      : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD'));
     //fechas
 
-    if (filtro.service === null || filtro.service === undefined) {
+    if (isNilOrEmpty(filtro.service)) {
       filtro.service = '';
     }
-    if (filtro.status === null || filtro.status === undefined) {
+    if (isNilOrEmpty(filtro.status)) {
       filtro.status = '';
     }
-    if (filtro.dateForFilter === null || filtro.dateForFilter === undefined) {
+    if (isNilOrEmpty(filtro.dateForFilter)) {
       filtro.dateForFilter = '';
     }
 
@@ -145,22 +144,22 @@ export class TransactionService {
     if (filtro === null) {
       filtro = this.lastFilter;
     }
-    var strDateFrom =
-      filtro.dateFrom === null
-        ? ''
-        : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD'));
-    var strDateTo =
-      filtro.dateTo === null
-        ? ''
-        : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD'));
-    //fechas
+    const strDateFrom = isNilOrEmpty(filtro.dateFrom)
+      ? ''
+      : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD'));
+    const strDateTo = isNilOrEmpty(filtro.dateTo)
+      ? ''
+      : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD'));
 
-    if (filtro.service === null || filtro.service === undefined)
+    if (isNilOrEmpty(filtro.service)) {
       filtro.service = '';
-    if (filtro.status === null || filtro.status === undefined)
+    }
+    if (isNilOrEmpty(filtro.status)) {
       filtro.status = '';
-    if (filtro.dateForFilter === null || filtro.dateForFilter === undefined)
+    }
+    if (isNilOrEmpty(filtro.dateForFilter)) {
       filtro.dateForFilter = '';
+    }
 
     const url =
       `${this.URI_API}/debt/deleteFiltered?InputSearch=${filtro.inputSearch}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=` +
