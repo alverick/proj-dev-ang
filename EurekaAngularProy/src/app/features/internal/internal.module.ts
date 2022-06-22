@@ -19,7 +19,6 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
 import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.component';
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
 import { DebtComponent } from './pages/home/components/debt.component';
-import { PaymentsFilterComponent } from './pages/home/components/payments-filter/payments-filter.component';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
 
@@ -43,7 +42,6 @@ import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.co
     ShearDirective,
     InternalHeaderComponent,
     InternalAuthComponent,
-    PaymentsFilterComponent,
   ],
   imports: [
     CommonModule,
