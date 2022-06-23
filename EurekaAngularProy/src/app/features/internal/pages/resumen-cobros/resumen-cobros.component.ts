@@ -27,6 +27,7 @@ import {
         padding: 0.5em 0.3em;
         min-width: 300px !important;
       }
+
       :host >>> .tooltip.top .tooltip-arrow:before,
       :host >>> .tooltip.top .tooltip-arrow {
         border-top-color: #0d131d57;
@@ -74,8 +75,12 @@ export class ResumenCobrosComponent implements OnInit {
           this.servicio_length = this.afiliacionService.services.length;
         }
       } else {
-        window['_url_loop_'] = internalRoutingNames.CHARGES_AFFILIATION;
-        history.pushState(null, null, internalRoutingNames.CHARGES_AFFILIATION);
+        window['_url_loop_'] = internalAuthFullRoutingNames.CHARGES_AFFILIATION;
+        history.pushState(
+          null,
+          null,
+          internalAuthFullRoutingNames.CHARGES_AFFILIATION
+        );
         this.servicio_length = this.afiliacionService.services.length;
       }
     });
@@ -126,8 +131,10 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   goEditCharge() {
-    if (this.affiliationFlow == true) {
-      this.router.navigate([internalFullRoutingNames.CHARGES_AFFILIATION_EDIT]);
+    if (this.affiliationFlow) {
+      this.router.navigate([
+        internalAuthFullRoutingNames.CHARGES_AFFILIATION_EDIT,
+      ]);
     } else {
       this.router.navigate([internalFullRoutingNames.CHARGES_EDIT]);
     }

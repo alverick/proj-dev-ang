@@ -43,16 +43,6 @@ const routes: Routes = [
         data: { isEdit: true, affiliationFlow: false },
       },
       {
-        path: internalRoutingNames.CHARGES_AFFILIATION,
-        component: ResumenCobrosComponent,
-        data: { isEdit: false, affiliationFlow: true },
-      },
-      {
-        path: internalRoutingNames.CHARGES_AFFILIATION_EDIT,
-        component: EditarCobrosComponent,
-        data: { isEdit: true, affiliationFlow: true },
-      },
-      {
         path: internalRoutingNames.CHARGES_EDIT,
         component: EditarCobrosComponent,
         data: { isEdit: true, affiliationFlow: false },
@@ -88,6 +78,16 @@ const routes: Routes = [
     path: internalRoutingNames.AUTH,
     component: InternalAuthComponent,
     children: [
+      {
+        path: internalAuthRoutingNames.CHARGES_AFFILIATION,
+        component: ResumenCobrosComponent,
+        data: { isEdit: false, affiliationFlow: true },
+      },
+      {
+        path: internalAuthRoutingNames.CHARGES_AFFILIATION_EDIT,
+        component: EditarCobrosComponent,
+        data: { isEdit: true, affiliationFlow: true },
+      },
       {
         path: internalAuthRoutingNames.CHARGES_AFFILIATION_ADD_STEP_1,
         component: ConfiguraCobrosParteUnoComponent,

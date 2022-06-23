@@ -10,7 +10,10 @@ import { ServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { internalFullRoutingNames } from '../../internal-routing.names';
+import {
+  internalAuthFullRoutingNames,
+  internalFullRoutingNames,
+} from '../../internal-routing.names';
 
 declare var $: any;
 
@@ -579,8 +582,8 @@ export class EditarCobrosComponent implements OnInit {
   }
 
   nextPage() {
-    if (this.affiliationFlow == true) {
-      this.router.navigate([internalFullRoutingNames.CHARGES_AFFILIATION]);
+    if (this.affiliationFlow) {
+      this.router.navigate([internalAuthFullRoutingNames.CHARGES_AFFILIATION]);
     } else {
       this.router.navigate([internalFullRoutingNames.CHARGES]);
     }
@@ -831,9 +834,9 @@ export class EditarCobrosComponent implements OnInit {
           //this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
           this.afiliacionService.currentServiceModel = null;
           this.afiliacionService.currentIndex = -1;
-          if (this.affiliationFlow == true) {
+          if (this.affiliationFlow) {
             this.router.navigate([
-              internalFullRoutingNames.CHARGES_AFFILIATION,
+              internalAuthFullRoutingNames.CHARGES_AFFILIATION,
             ]);
           } else {
             this.router.navigate([internalFullRoutingNames.CHARGES]);
