@@ -15,8 +15,8 @@
           <div class="content">
             <cs-payments-filter
               [services]="services"
-              [waypayList]="waypayList"
-              [DateList]="DateList"
+              [stateList]="waypayList"
+              [dateList]="DateList"
               (sendForm)="searchDebts($event)"
               (resetForm)="resetDebts()"
             ></cs-payments-filter>
