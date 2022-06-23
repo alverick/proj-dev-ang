@@ -1,5 +1,5 @@
 <cs-header>
-  <div class="collapse custom-navbar-collapse">
+  <div *ngIf="showMenu" class="collapse custom-navbar-collapse">
     <ul class="navbar-nav ml-auto reponsive-emp">
       <li class="nav-item" routerLinkActive="active">
         <a class="mano nav-link" [routerLink]="[homeLink]">{{ homeText }}</a>
@@ -92,7 +92,6 @@
                     title="{{ msg.title }}"
                     (click)="notify.changeRead(msg); $event.stopPropagation()"
                   >
-                    <!-- <img class="item-icono "  src="assets/images/badge-bg-green.svg" > -->
                     <img
                       class="item-icono"
                       src="../../../../assets/images/ok.svg"
@@ -220,7 +219,6 @@
                     title="{{ msg.title }}"
                     (click)="notify.changeRead(msg); $event.stopPropagation()"
                   >
-                    <!-- <img class="item-icono "  src="assets/images/badge-bg-green.svg" > -->
                     <img
                       class="item-icono"
                       src="../../../../assets/images/ok.svg"
@@ -255,7 +253,6 @@
         <button class="btn-nabar" type="button" (click)="toggle()">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <!-- </a> -->
       </li>
     </ul>
     <div *ngIf="isExpanded == true">
@@ -290,7 +287,5 @@
         </li>
       </ul>
     </div>
-
-    <!-- </div> -->
   </div>
 </cs-header>

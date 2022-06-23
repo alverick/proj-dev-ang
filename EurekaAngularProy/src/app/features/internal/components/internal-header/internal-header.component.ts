@@ -6,6 +6,7 @@ import { AfiliacionService } from '../../../../shared/services/afiliacion.servic
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
 @Component({
@@ -15,6 +16,7 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
 })
 export class InternalHeaderComponent implements OnInit {
   isExpanded = false;
+  showMenu = false;
   companyLink = internalFullRoutingNames.COMPANY;
   homeLink = internalFullRoutingNames.HOME;
   chargesLink = internalFullRoutingNames.CHARGES;
@@ -31,7 +33,8 @@ export class InternalHeaderComponent implements OnInit {
     private loginService: LoginService,
     private spinner: NgxSpinnerService,
     private excelser: ExcelService,
-    public afiliacionService: AfiliacionService
+    public afiliacionService: AfiliacionService,
+    private storage: StorageService
   ) {}
 
   toggle() {
@@ -42,6 +45,8 @@ export class InternalHeaderComponent implements OnInit {
     this.notify.clear();
     this.spinner.hide();
     this.notify.iniciar();
+    this.storage.getCurrentSession();
+    this.showMenu = this.storage.isValidSession();
   }
 
   goResumenCobros() {
