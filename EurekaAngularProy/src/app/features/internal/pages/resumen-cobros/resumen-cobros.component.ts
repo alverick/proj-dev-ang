@@ -325,9 +325,7 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   DisableAgregarServicio(): boolean {
-    if (this.Formulario) return true;
-    if (this.inEdit && this.afiliacionService.services.length == 0) return true;
-    return false;
+    return this.Formulario;
   }
 
   MostarFormulario() {
