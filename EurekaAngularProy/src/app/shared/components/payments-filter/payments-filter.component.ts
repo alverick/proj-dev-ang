@@ -15,11 +15,11 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import * as moment from 'moment';
-import { forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
+import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
 import { Subject } from 'rxjs/internal/Subject';
-import { takeUntil } from 'rxjs/operators';
-import { Date } from '../../models/date';
+import { filter, takeUntil } from 'rxjs/operators';
+import { DateList } from '../../models/dateList';
 import { StatesGtp } from '../../models/states-gtp';
 import { WayPay } from '../../models/way-pay';
 
@@ -114,27 +114,38 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
 
   private parseDates() {
     const compareDates =
-      (control, isLower = false) =>
+      (control, controlOrig, isLower = false) =>
       (value: moment.Moment) => {
-        if (isNotNil(value) && isObj(value)) {
+        if (all(isNotNil, [value, control.value]) && isObj(value)) {
           if (
             (!isLower && control.value < value) ||
             (isLower && control.value > value)
           ) {
             control.reset();
+            controlOrig.updateValueAndValidity();
           }
         }
         this.setMessagesErrorDate();
       };
     this.form
       .get('dateFrom')
-      .valueChanges.pipe(takeUntil(this.$destroy))
-      .subscribe(compareDates(this.form.get('dateTo')));
+      .valueChanges.pipe(
+        takeUntil(this.$destroy),
+        filter((v) => isNotNilOrEmpty(v))
+      )
+      .subscribe(
+        compareDates(this.form.get('dateTo'), this.form.get('dateFrom'))
+      );
 
     this.form
       .get('dateTo')
-      .valueChanges.pipe(takeUntil(this.$destroy))
-      .subscribe(compareDates(this.form.get('dateFrom'), true));
+      .valueChanges.pipe(
+        takeUntil(this.$destroy),
+        filter((v) => isNotNilOrEmpty(v))
+      )
+      .subscribe(
+        compareDates(this.form.get('dateFrom'), this.form.get('dateTo'), true)
+      );
   }
 
   setMessagesErrorDate() {
@@ -182,11 +193,10 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     }
 
     dateFrom.reset();
-    dateFrom.setErrors(null);
     dateTo.reset();
-    dateTo.setErrors(null);
     dateFrom.updateValueAndValidity();
     dateTo.updateValueAndValidity();
+    this.setMessagesErrorDate();
   }
 
   cleanAllFilters() {
