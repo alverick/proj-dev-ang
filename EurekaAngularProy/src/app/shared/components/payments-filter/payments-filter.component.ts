@@ -47,7 +47,7 @@ const labelNamesGtp = {
 })
 export class PaymentsFilterComponent implements OnInit, OnDestroy {
   @Input() gtpMode = false;
-  @Input() dateList: Date[];
+  @Input() dateList: DateList[];
   @Input() stateTypeList: StatesGtp[];
   @Input() services: any[];
   @Input() stateList: WayPay[] | StatesGtp[];

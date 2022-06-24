@@ -35,7 +35,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { Date } from '../../../../shared/models/date';
+import { DateList } from '../../../../shared/models/dateList';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
@@ -106,7 +106,7 @@ export class HomePage implements OnInit {
   OcultaListaExcel = true;
   typeList: any[];
   waypayList: WayPay[];
-  DateList: Date[];
+  DateList: DateList[];
   type: string[];
   date: string[];
   serviceSelected: string;
