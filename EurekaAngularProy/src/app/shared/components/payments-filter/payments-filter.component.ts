@@ -17,6 +17,7 @@ import {
 import * as moment from 'moment';
 import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
+import { combineLatest } from 'rxjs';
 import { Subject } from 'rxjs/internal/Subject';
 import { filter, takeUntil } from 'rxjs/operators';
 import { DateList } from '../../models/dateList';
@@ -125,27 +126,34 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
             controlOrig.updateValueAndValidity();
           }
         }
-        this.setMessagesErrorDate();
       };
+
+    const filterNotValidValues = (value) => {
+      return isNotNilOrEmpty(value);
+    };
+
     this.form
       .get('dateFrom')
-      .valueChanges.pipe(
-        takeUntil(this.$destroy),
-        filter((v) => isNotNilOrEmpty(v))
-      )
+      .valueChanges.pipe(takeUntil(this.$destroy), filter(filterNotValidValues))
       .subscribe(
         compareDates(this.form.get('dateTo'), this.form.get('dateFrom'))
       );
 
     this.form
       .get('dateTo')
-      .valueChanges.pipe(
-        takeUntil(this.$destroy),
-        filter((v) => isNotNilOrEmpty(v))
-      )
+      .valueChanges.pipe(takeUntil(this.$destroy), filter(filterNotValidValues))
       .subscribe(
         compareDates(this.form.get('dateFrom'), this.form.get('dateTo'), true)
       );
+
+    combineLatest([
+      this.form.get('dateFrom').statusChanges,
+      this.form.get('dateTo').statusChanges,
+    ])
+      .pipe(takeUntil(this.$destroy))
+      .subscribe(() => {
+        this.setMessagesErrorDate();
+      });
   }
 
   setMessagesErrorDate() {
@@ -196,7 +204,6 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     dateTo.reset();
     dateFrom.updateValueAndValidity();
     dateTo.updateValueAndValidity();
-    this.setMessagesErrorDate();
   }
 
   cleanAllFilters() {
