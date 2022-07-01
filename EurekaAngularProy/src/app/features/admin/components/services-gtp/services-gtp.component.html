@@ -306,72 +306,8 @@
     </span>
   </div>
 
-  <div class="card-deck mb-3 text-center reponsive-servicio-pago1">
-    <br />
-    <div class="row">
-      <div class="col-xs-12 col-sm-4 col-md-4">
-        <div class="card-medio-pago ml-3">
-          <div [class.seleccionado-card]="f.usaWebApp.value">
-            <div class="pt-3">
-              <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-4">
-              </mat-checkbox>
-            </div>
-            <div class="card-title texto-black">Web / App</div>
-            <!-- <div class="pt-4"> -->
-            <div class="texto-d-medios">
-              <!-- Banca por internet, Interbank APP  -->
-              Interbank APP y<br />
-              Banca por internet
-            </div>
-            <div class="pt-2 texto-green">GRATIS</div>
-            <!-- </div> -->
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-4 col-md-4">
-        <div class="card-medio-pago ml-2">
-          <div [class.seleccionado-card]="f.usaAgente.value">
-            <div class="pt-3">
-              <mat-checkbox formControlName="usaAgente" id="styled-checkbox-5">
-              </mat-checkbox>
-            </div>
-            <div class="card-title texto-black">Agentes</div>
-            <!-- <div class="pt-4"> -->
-            <div class="texto-d-medios">Lima y provincias</div>
-            <div class="pt-3 texto-green">
-              {{ simboloMoneda }} {{ comAgente }}
-            </div>
-            <!-- <div class="pt-1 texto-p-medios">por transacción </div> -->
-            <!-- </div> -->
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-4 col-md-4" *ngIf="useAgencyChannel">
-        <div class="card-medio-pago ml-2">
-          <div [class.seleccionado-card]="f.usaTienda.value">
-            <div class="pt-3">
-              <mat-checkbox formControlName="usaTienda" id="styled-checkbox-6">
-              </mat-checkbox>
-            </div>
-            <div class="card-title texto-black">
-              Tiendas <br />
-              <div class="ventanilla">(Ventanilla)</div>
-            </div>
-            <!-- <div class="pt-2"> -->
-            <div class="texto-d-medios">Lima y provincias</div>
-            <div class="pt-2 texto-green">
-              {{ simboloMoneda }} {{ comTienda }}
-            </div>
-            <!-- <div class="pt-1 texto-p-medios">por transacción </div> -->
-            <!-- </div> -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row card-deck mt-2 mb-3 text-center reponsive-servicio-pago">
-    <div class="card-medio-pago ml-3">
+  <div class="row card-columns mt-2 mb-3 text-center justify-content-center">
+    <div class="card-medio-pago">
       <div [class.seleccionado-card]="f.usaWebApp.value" style="height: 161px">
         <div class="pt-2">
           <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-1">
@@ -389,7 +325,7 @@
         <!-- </div> -->
       </div>
     </div>
-    <div class="card-medio-pago ml-2">
+    <div class="card-medio-pago">
       <div [class.seleccionado-card]="f.usaAgente.value" style="height: 161px">
         <div class="pt-2">
           <mat-checkbox formControlName="usaAgente" id="styled-checkbox-2">
@@ -406,7 +342,7 @@
         <!-- </div> -->
       </div>
     </div>
-    <div class="card-medio-pago ml-2" *ngIf="useAgencyChannel">
+    <div class="card-medio-pago" *ngIf="useAgencyChannel">
       <div [class.seleccionado-card]="f.usaTienda.value" style="height: 161px">
         <div class="pt-2">
           <mat-checkbox formControlName="usaTienda" id="styled-checkbox-3">
