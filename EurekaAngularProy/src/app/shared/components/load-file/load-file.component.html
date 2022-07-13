@@ -1,0 +1,8 @@
+<div *ngIf="excelService.statusUpload" class="container">
+  <div class="progress-text">{{ progress.status }}</div>
+  <mat-progress-bar
+    [mode]="progress.mode"
+    [value]="progress.value"
+    [bufferValue]="100"
+  ></mat-progress-bar>
+</div>

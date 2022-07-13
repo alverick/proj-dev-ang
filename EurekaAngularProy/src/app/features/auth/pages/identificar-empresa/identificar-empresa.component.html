@@ -1,0 +1,216 @@
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <ul
+        class="navbar-nav ml-auto"
+        id="btn-regresar-identificar-empresa"
+        >
+        <li class="nav-item ">
+          <a class="nav-link lnk-regresar mano" (click)="goBack()" style="display: flex;">
+            <img src="../../../../../assets/images/left-blue.svg" />
+            <div class="text-regresar">
+              &nbsp;&nbsp;&nbsp;Regresar
+            </div>
+          </a>
+        </li>
+      </ul>
+      </div>
+      <!-- *ngIf="!IsHome && onAfilacion()" -->
+
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
+        <div class="texto-azul title-rp-emp">Identifiquemos tu empresa</div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7">
+        <div class="d-flex justify-content-end">
+          <!--ppr-0 ppl-0-->
+          <div class="cuadro-form pt-4 pb-3 bg-white cont-empresa">
+            <form
+              [formGroup]="registerForm"
+              novalidate
+              (submit)="onSubmit()"
+              autocomplete="off"
+            >
+              <div class="form-group">
+                <mat-form-field class="super-full-width">
+                  <input
+                    class="input-text"
+                    aria-describedby="tooltip-0"
+                    tooltip="El RUC de tu empresa con el que ingresarás a la plataforma"
+                    formControlName="ruc"
+                    (Keydown.space)="$event.preventDefault()"
+                    [class.is-invalid]="f.ruc.invalid"
+                    matInput
+                    type="text"
+                    autocomplete="new-text"
+                    placeholder="RUC de tu empresa"
+                    appOnlynumbers
+                    minlength="11"
+                    maxlength="11"
+                  />
+                  <!-- <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required')" [ngStyle]="{'display': f.ruc.hasError('required') ? 'block' : 'none' }">El RUC es obligatorio</mat-error> -->
+                  <mat-error
+                    class="messsage-error"
+                    *ngIf="
+                      f.ruc.invalid &&
+                      f.ruc.hasError('required') &&
+                      submittedRequired
+                    "
+                    >El RUC es obligatorio</mat-error
+                  >
+                  <mat-error
+                    class="messsage-error"
+                    *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"
+                  >
+                    Ingrese un ruc valido
+                  </mat-error>
+                  <mat-error
+                    class="messsage-error"
+                    *ngIf="
+                      f.ruc.invalid &&
+                      !f.ruc.hasError('pattern') &&
+                      f.ruc.hasError('minlength')
+                    "
+                  >
+                    El ruc debe tener 11 dígitos</mat-error
+                  >
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="input-text super-full-width">
+                  <input
+                    formControlName="email"
+                    (Keydown.space)="$event.preventDefault()"
+                    [class.is-invalid]="f.email.invalid"
+                    matInput
+                    type="text"
+                    autocomplete="new-text"
+                    minlength="10"
+                    maxlength="100"
+                    placeholder="E-mail"
+                  />
+                  <mat-error class="messsage-error">
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.email.invalid &&
+                        f.email.hasError('required') &&
+                        submittedRequired
+                      "
+                      >El E-mail es obligatorio</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="f.email.invalid && f.email.hasError('pattern')"
+                    >
+                      Ingrese un E-mail valido
+                    </mat-error>
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.email.invalid &&
+                        !f.email.hasError('pattern') &&
+                        f.email.hasError('minlength')
+                      "
+                    >
+                      El E-mail debe tener mínimo 10 dígitos</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="input-text super-full-width">
+                  <input
+                    formControlName="telefono"
+                    (Keydown.space)="$event.preventDefault()"
+                    appOnlynumbers
+                    [class.is-invalid]="f.telefono.invalid"
+                    matInput
+                    type="text"
+                    autocomplete="new-text"
+                    placeholder="Teléfono o celular"
+                    minlength="6"
+                    maxlength="9"
+                  />
+                  <mat-error class="messsage-error">
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.telefono.invalid &&
+                        f.telefono.hasError('required') &&
+                        submittedRequired
+                      "
+                      >Teléfono o celular es obligatorio</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.telefono.invalid && f.telefono.hasError('pattern')
+                      "
+                    >
+                      Ingrese un telefono o celular valido
+                    </mat-error>
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.telefono.invalid &&
+                        !f.telefono.hasError('pattern') &&
+                        f.telefono.hasError('minlength')
+                      "
+                    >
+                      El teléfono o celular debe tener mínimo 6
+                      dígitos</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <mat-form-field class="w-100">
+                  <mat-label>Operador</mat-label>
+                  <mat-select
+                    class="input-text"
+                    formControlName="movilOperator"
+                    disableOptionCentering
+                    panelClass="pts30"
+                  >
+                    <mat-option class="input-text">Operador</mat-option>
+                    <mat-option class="input-text" value="M"
+                      >Movistar</mat-option
+                    >
+                    <mat-option class="input-text" value="C">Claro</mat-option>
+                    <mat-option class="input-text" value="E">Entel</mat-option>
+                    <mat-option class="input-text" value="B">Bitel</mat-option>
+                  </mat-select>
+                  <mat-error
+                    class="messsage-error"
+                    *ngIf="
+                      f.movilOperator.invalid &&
+                      f.movilOperator.hasError('required') &&
+                      submittedRequired
+                    "
+                    >Elija una opción</mat-error
+                  >
+                </mat-form-field>
+              </div>
+              <div class="bnt-cont-reg">
+                <button
+                  type="submit"
+                  class="btn-big btn-eureca-green w-100 text-white"
+                  (click)="enviarDatosEmpresa()"
+                  [disabled]="registerForm.value.acceptterms == false"
+                  [class.btn-disabled]="registerForm.value.acceptterms == false"
+                >
+                  SIGUIENTE
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+  </div>
+</div>

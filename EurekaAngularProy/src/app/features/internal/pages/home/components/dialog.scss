@@ -1,0 +1,211 @@
+.content {
+  padding: 15px;
+
+  .landing {
+    text-align: center;
+    @include font-text(16px);
+
+    color: $textblack;
+
+    .text {
+      .link {
+        font-weight: 500;
+        color: #00a94f;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .progress-text {
+    @include font-text(14px);
+  }
+
+  .errores {
+    .header {
+      @include font-text(14px, 500);
+
+      margin-right: 165px;
+
+      .texto {
+        float: left;
+        color: #0d131d !important;
+      }
+
+      .resumen {
+        float: right;
+
+        span {
+          margin-right: 10px;
+        }
+
+        .bien {
+          color: #05be50;
+        }
+
+        .mal {
+          color: #ea0044;
+        }
+      }
+    }
+
+    .list {
+      display: block;
+      border: solid 1px #ea0044;
+      height: 144px;
+      width: 517px;
+      overflow-y: auto;
+      padding: 5px;
+      @include border-radius(4px);
+
+      .err-item {
+        @include font-text(14px);
+
+        color: $textblack;
+      }
+    }
+
+    .footer {
+      @include font-text(14px, 500);
+
+      color: #0d131d !important;
+    }
+  }
+}
+
+.title {
+  @include font-text(24px, normal);
+
+  color: $textblack;
+  text-align: center;
+
+  .resaltado {
+    font-weight: 500;
+  }
+}
+
+.paso {
+  @include font-text(24px, 500);
+  color: #64b1e7;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+
+  .input-file {
+    width: 517px;
+    height: 40px;
+    @include border-radius(23.5px);
+
+    border: solid 1px #9ea1a5;
+    text-align: left;
+    margin-bottom: 15px;
+    text-overflow: ellipsis;
+
+    .text {
+      //  padding-top: 10px;
+      @include font-text(14px, 500);
+
+      color: $textblack !important;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.btn-eureca-green {
+  width: 216px;
+  height: 48px;
+  @include font-text(14px !important, 500 !important);
+}
+
+.btn-outline-green {
+  width: 216px;
+  height: 48px;
+  @include font-text(14px !important, 500 !important);
+}
+
+.mat-dialog-actions {
+  padding: 0;
+  display: block;
+  margin-top: -25px;
+  margin-bottom: 1px;
+}
+
+.img-excel {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+b {
+  @include font-text(14px, 500);
+
+  float: left;
+  color: #0d131d;
+}
+
+small {
+  @include font-text(14px, 500);
+
+  color: #0d131d;
+  text-align: center !important;
+  margin-left: 160px;
+}
+
+.cancelar {
+  width: 77px !important;
+  height: 23px !important;
+  @include font-text(18px !important, 500 !important);
+
+  color: #9ea1a5;
+}
+
+.text-input-file {
+  @include font-text(16px, normal);
+
+  color: #0d131d;
+  text-align: left;
+}
+
+.name-file {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.mat-dialog-actions {
+  position: absolute;
+  right: calc(50% - 430px);
+  top: 30px;
+}
+
+:host ::ng-deep .mat-dialog-container {
+  object-fit: contain;
+  border-radius: 4px !important;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1) !important;
+    background-color: #ffffff  !important;
+    padding: 0px !important;
+  // color: rgba(255, 255, 255, 0.87);
+}
+
+.resaltado {
+  font-weight: 500;
+}
+
+.svg_custom {
+  color: #9ea1a5;
+}
+
+.btn-eureka-block {
+  width: 216px;
+  height: 48px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #fff !important;
+  background-color: #9ea1a5 !important;
+  border-radius: 4px !important;
+  background-clip: padding-box;
+  border: solid 1px #9ea1a5 !important;
+  display: block;
+}

@@ -1,0 +1,343 @@
+body {
+    background: #f4f5f7 !important;
+}
+
+.w-49 {
+    width: 49%;
+}
+
+.styled-checkbox {
+    position: absolute;
+    opacity: 0
+}
+
+.styled-checkbox+label {
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+    margin: 0
+}
+
+.styled-checkbox+label:before {
+    content: '';
+    display: inline-block;
+    vertical-align: text-top;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #2121c4;
+    background: white
+}
+
+.styled-checkbox:hover+label:before {
+    background: #2121c4
+}
+
+.styled-checkbox:focus+label:before {
+    border: 2px solid #2121c4
+}
+
+.styled-checkbox:checked+label:before {
+    background: #2121c4
+}
+
+.styled-checkbox:disabled+label {
+    color: #fff;
+    cursor: auto
+}
+
+.styled-checkbox:disabled+label:before {
+    box-shadow: none;
+    background: #fff
+}
+
+.styled-checkbox:checked+label:after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 9px;
+    background: #fff;
+    width: 2px;
+    height: 2px;
+    box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+    transform: rotate(45deg)
+}
+
+
+/* custom radio */
+
+.radio {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/* hide the browser's default radio button */
+
+.radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+/* create custom radio */
+
+.radio .check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+}
+
+
+/* on mouse-over, add border color */
+
+.radio:hover input~.check {
+    border: 2px solid #2121c4;
+}
+
+
+/* add background color when the radio is checked */
+
+.radio input:checked~.check {
+    background-color: #2121c4;
+    border: none;
+}
+
+
+/* create the radio and hide when not checked */
+
+.radio .check:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+
+/* show the radio when checked */
+
+.radio input:checked~.check:after {
+    display: block;
+}
+
+
+/* radio style */
+
+.radio .check:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.seleccionado {
+    border: $textgreen 1px solid;
+    border-radius: 4px;
+}
+
+.seleccionado .styled-checkbox:disabled+label {
+    color: #fff;
+}
+
+.seleccionado .styled-checkbox:disabled+label:before {
+    background: #2121c4
+}
+
+.hide-name-cod {
+    float: right !important;
+    position: absolute;
+    right: 5px;
+}
+
+////////////look and feel
+.btn-eureca-green {
+    @include font-text(16px, 500);
+    @include btn-eureca;
+    width: 207px;
+    height: 48px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.texto-green {
+    @include font-text(16px, $weight: 600);
+    color: $green;
+    text-align: center;
+}
+
+.texto-black {
+    @include font-text(16px, $weight: 500);
+    color: $negro;
+    text-align: center;
+}
+
+.texto-medios {
+    @include font-text(12px, $weight: 500);
+    color: $negro;
+}
+
+.texto-d-medios {
+    @include font-text(12px, $weight: normal);
+    color: $negro;
+    text-align: center;
+}
+
+.texto-p-medios {
+    @include font-text(10px, $weight: normal);
+    color: $negro;
+    text-align: center;
+}
+
+.card-medio-pago {
+    @include cuadro( 116px, 161px);
+    border: solid 1px #bebebe;
+}
+
+.seleccionado-card {
+    // border: $textgreen 1px solid;
+    border: 0px !important;
+    background-color: rgba(0, 169, 79, 0.05);
+    border-radius: 4px;
+}
+
+.texto-radio {
+    @include font-text(16px, $weight: normal);
+    color: $negro;
+}
+
+.texto-radio-small {
+    @include font-text(10px, $weight: 500);
+    color: $negro;
+}
+
+.texto-mora {
+    @include font-text(16px !important, normal !important);
+    color: $negro;
+}
+
+//radio button
+ :host ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $green;
+}
+
+ :host ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: $green;
+}
+
+:host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    font-size: 10px !important;
+    // color: #0d131d !important;
+    color: #0d131d;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 0;
+}
+
+.radio-button {
+    margin: 5px;
+}
+
+ :host ::ng-deep .texto-mora .mat-form-field-infix {
+    border-top: 0;
+}
+
+.simbolos {
+    @include font-text(16px, $weight: 500);
+    color: $negro;
+}
+
+.ventanilla {
+    @include font-text(10px, $weight: normal);
+    color: $negro;
+}
+
+
+/*
+.mat-form-field .mat-form-field-label {
+    font-size: 10px;
+}
+
+:host ::ng-deep .mat-radio-label  {
+   // font-size: 10px;
+}
+*/
+
+.btn-eureca-green {
+    @include font-text(14px !important, 500 !important);
+}
+
+ :host ::ng-deep .mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+    color: $green;
+}
+
+.text-radio {
+    @include font-text(16px !important, normal !important);
+    color: #0d131d !important;
+}
+
+:host ::ng-deep .mat-select-disabled .mat-select-value {
+    @include font-text(16px !important, normal !important);
+    color: #0d131d !important;
+}
+
+.input-text {
+    color: #0d131d !important;
+}
+
+.label {
+    color: #0d131d !important;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+:host ::ng-deep .mat-radio-inner-circle {
+    height: 16px !important;
+    width: 16px !important;
+}
+
+ :host ::ng-deep .mat-radio-outer-circle {
+    height: 16px !important;
+    width: 16px !important;
+}
+
+.card-title {
+    margin-bottom: 0.6rem;
+}
+
+@media screen and (max-width: 570px) {
+    .texto-green {
+        font-size: 22px !important;
+    }
+}
+
+:host ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+
+ :host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    color: #0d131d !important;
+}
+
+:host ::ng-deep #input-mora .mat-form-field-infix {
+    max-width: 118px !important;
+}

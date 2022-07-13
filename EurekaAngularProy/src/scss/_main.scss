@@ -1,320 +1,317 @@
-@import "_variables.scss";
 body {
-    background-color: #f4f5f7 !important;
+  background-color: #f4f5f7 !important;
 }
 
 .body {
-    background-color: #f4f5f7 !important;
+  background-color: #f4f5f7 !important;
 }
 
 .al-left {
-    float: left;
+  float: left;
 }
 
 .al-right {
-    float: right;
+  float: right;
 }
 
 .clear-float {
-    clear: both;
+  clear: both;
 }
 
 .scroll-div::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .scroll-div::-webkit-scrollbar-thumb {
-    background-color: #333333;
-    border-radius: 4px;
+  background-color: #333333;
+  border-radius: 4px;
 }
 
 .scroll-div::-webkit-scrollbar-track {
-    background-color: #f3f3f3;
-    border-radius: 4px;
+  background-color: #f3f3f3;
+  border-radius: 4px;
 }
 
 .mat-progress-spinner circle,
 .mat-spinner circle {
-    stroke: $textblack;
+  stroke: $textblack;
 }
 
 .mat-form-field {
-    .mat-form-field-prefix {
-        margin-right: 2px;
+  .mat-form-field-prefix {
+    margin-right: 2px;
+  }
+  .mat-form-field-label {
+    @include font-text(16px);
+    font-weight: normal;
+    // color: #0d131d !important;
+    top: 21px;
+  }
+  .mat-form-field-ripple {
+    background-color: $textblack !important;
+  }
+  .mat-select-arrow {
+    color: $textgreen;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid;
+  }
+  .mat-datepicker-toggle {
+    .mat-icon-button {
+      color: $textgreen;
     }
-    .mat-form-field-label {
-        @include font-text(16px);
-        font-weight: normal;
-        // color: #0d131d !important;
-        top: 21px;
-    }
-    .mat-form-field-ripple {
-        background-color: $textblack !important;
-    }
-    .mat-select-arrow {
-        color: $textgreen;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-top: 8px solid;
-    }
-    .mat-datepicker-toggle {
-        .mat-icon-button {
-            color: $textgreen;
-        }
-    }
+  }
 }
 
 .mat-form-field.mat-focused {
-    .mat-form-field-label {
-        color: $textblack !important;
-    }
-    .mat-form-field-ripple {
-        background-color: $green !important;
-    }
-    .mat-select-arrow {
-        color: $textgreen !important;
-    }
+  .mat-form-field-label {
+    color: $textblack !important;
+  }
+  .mat-form-field-ripple {
+    background-color: $green !important;
+  }
+  .mat-select-arrow {
+    color: $textgreen !important;
+  }
 }
 
 .mat-form-field.mat-form-field-disabled {
-    .mat-datepicker-toggle {
-        .mat-icon-button {
-            color: rgba(0, 0, 0, .42);
-        }
+  .mat-datepicker-toggle {
+    .mat-icon-button {
+      color: rgba(0, 0, 0, 0.42);
     }
+  }
 }
 
 .chk-vertical {
-    display: block;
-    width: 40px;
-    text-align: center;
-    .mat-checkbox-ripple {
-        left: calc(50% - 12px);
-        top: calc(50% - 12px);
-        height: 24px;
-        width: 24px;
-    }
-    .mat-checkbox-layout {
-        margin-bottom: 0;
-    }
+  display: block;
+  width: 40px;
+  text-align: center;
+  .mat-checkbox-ripple {
+    left: calc(50% - 12px);
+    top: calc(50% - 12px);
+    height: 24px;
+    width: 24px;
+  }
+  .mat-checkbox-layout {
+    margin-bottom: 0;
+  }
 }
 
 .mat-checkbox-checked.mat-accent {
-    .mat-checkbox-background {
-        background-color: $textgreen;
-    }
+  .mat-checkbox-background {
+    background-color: $textgreen;
+  }
 }
 
 .mat-progress-bar-buffer {
-    background-color: #a1dbc2;
-    ;
+  background-color: #a1dbc2;
 }
 
 .mat-progress-bar-fill::after {
-    background-color: $green;
+  background-color: $green;
 }
 
 button:focus {
-    outline: none !important;
-    box-shadow: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .btn-eureca-green {
-    @include font-text(14px !important, 500 !important);
-    color: #ffffff !important;
+  @include font-text(14px !important, 500 !important);
+  color: #ffffff !important;
+  background-color: $green !important;
+  @include border-radius(4px !important);
+  border: solid 1px $green !important;
+  &:hover {
+    //  background-color: $greenclaro !important;
+    background-color: $green-oscuro !important;
+  }
+  &:active {
     background-color: $green !important;
-    @include border-radius(4px !important);
-    border: solid 1px $green !important;
-    &:hover {
-        //  background-color: $greenclaro !important;
-        background-color: $green-oscuro !important;
-    }
-    &:active {
-        background-color: $green !important;
-        background-image: none !important;
-    }
-    &.btn-disabled {
-        background-color: #9b9b9b !important;
-        border: solid 1px #9b9b9b !important;
-    }
+    background-image: none !important;
+  }
+  &.btn-disabled {
+    background-color: #9b9b9b !important;
+    border: solid 1px #9b9b9b !important;
+  }
 }
 
 .btn-eureca-grey-3 {
-    @include font-text(14px !important, 500 !important);
-    color: #ffffff !important;
+  @include font-text(14px !important, 500 !important);
+  color: #ffffff !important;
+  background-color: $grey-3 !important;
+  @include border-radius(4px !important);
+  border: solid 1px $grey-3 !important;
+  &:hover {
+    //  background-color: $greenclaro !important;
+    background-color: $grey-3-oscuro !important;
+  }
+  &:active {
     background-color: $grey-3 !important;
-    @include border-radius(4px !important);
-    border: solid 1px $grey-3 !important;
-    &:hover {
-        //  background-color: $greenclaro !important;
-        background-color: $grey-3-oscuro !important;
-    }
-    &:active {
-        background-color: $grey-3 !important;
-        background-image: none !important;
-    }
-    &.btn-disabled {
-        background-color: #9b9b9b !important;
-        border: solid 1px #9b9b9b !important;
-    }
+    background-image: none !important;
+  }
+  &.btn-disabled {
+    background-color: #9b9b9b !important;
+    border: solid 1px #9b9b9b !important;
+  }
 }
 
 .btn-eureca-blue {
-    @include font-text(14px !important, 500 !important);
-    color: #ffffff !important;
+  @include font-text(14px !important, 500 !important);
+  color: #ffffff !important;
+  background-color: $textblue !important;
+  @include border-radius(4px !important);
+  border: solid 1px $textblue !important;
+  &:hover {
+    //  background-color: $greenclaro !important;
+    background-color: $textblue-oscuro !important;
+  }
+  &:active {
     background-color: $textblue !important;
-    @include border-radius(4px !important);
-    border: solid 1px $textblue !important;
-    &:hover {
-        //  background-color: $greenclaro !important;
-        background-color: $textblue-oscuro !important;
-    }
-    &:active {
-        background-color: $textblue !important;
-        background-image: none !important;
-    }
-    &.btn-disabled {
-        background-color: #9b9b9b !important;
-        border: solid 1px #9b9b9b !important;
-    }
+    background-image: none !important;
+  }
+  &.btn-disabled {
+    background-color: #9b9b9b !important;
+    border: solid 1px #9b9b9b !important;
+  }
 }
 
 .btn-eureca-yellow {
-    @include font-text(14px !important, 500 !important);
-    // color: #ffffff !important;
-    color: #212529 !important;
+  @include font-text(14px !important, 500 !important);
+  // color: #ffffff !important;
+  color: #212529 !important;
+  background-color: yellow !important;
+  @include border-radius(4px !important);
+  border: solid 1px yellow !important;
+  &:hover {
+    //  background-color: $greenclaro !important;
+    background-color: #e4e415ed !important;
+  }
+  &:active {
     background-color: yellow !important;
-    @include border-radius(4px !important);
-    border: solid 1px yellow !important;
-    &:hover {
-        //  background-color: $greenclaro !important;
-        background-color: #e4e415ed !important;
-    }
-    &:active {
-        background-color: yellow !important;
-        background-image: none !important;
-    }
-    &.btn-disabled {
-        background-color: #9b9b9b !important;
-        border: solid 1px #9b9b9b !important;
-    }
+    background-image: none !important;
+  }
+  &.btn-disabled {
+    background-color: #9b9b9b !important;
+    border: solid 1px #9b9b9b !important;
+  }
 }
 
 .btn-outline-green {
-    @include font-text(16px !important, 500 !important);
-    @include border-radius(4px !important);
+  @include font-text(16px !important, 500 !important);
+  @include border-radius(4px !important);
+  background-color: $blanco !important;
+  border: solid 1px $blanco !important;
+  color: $green !important;
+  &:hover {
+    //  background-color: $greenclaro !important;
+    background-color: #e5e5e5 !important;
+  }
+  &:active {
     background-color: $blanco !important;
-    border: solid 1px $blanco !important;
-    color: $green !important;
-    &:hover {
-        //  background-color: $greenclaro !important;
-        background-color: #E5E5E5 !important;
-    }
-    &:active {
-        background-color: $blanco !important;
-        background-image: none !important;
-    }
-    &.btn-disabled {
-        color: #9b9b9b !important;
-        background-color: $blanco !important;
-    }
+    background-image: none !important;
+  }
+  &.btn-disabled {
+    color: #9b9b9b !important;
+    background-color: $blanco !important;
+  }
 }
 
 .btn-eureca-green-alert {
-    height: 48px;
-    width: 207px;
-    @include font-text(14px !important, normal !important);
-    color: #ffffff !important;
+  height: 48px;
+  width: 207px;
+  @include font-text(14px !important, normal !important);
+  color: #ffffff !important;
+  background-color: $green !important;
+  @include border-radius(4px !important);
+  border: solid 1px $green !important;
+  &:hover {
+    //  background-color: $greenclaro !important;
+    background-color: $green-oscuro !important;
+  }
+  &:active {
     background-color: $green !important;
-    @include border-radius(4px !important);
-    border: solid 1px $green !important;
-    &:hover {
-        //  background-color: $greenclaro !important;
-        background-color: $green-oscuro !important;
-    }
-    &:active {
-        background-color: $green !important;
-        background-image: none !important;
-    }
-    &.btn-disabled {
-        background-color: #9b9b9b !important;
-        border: solid 1px #9b9b9b !important;
-    }
+    background-image: none !important;
+  }
+  &.btn-disabled {
+    background-color: #9b9b9b !important;
+    border: solid 1px #9b9b9b !important;
+  }
 }
 
 .btn-outline-green-alert {
-    height: 48px;
-    width: 207px;
-    @include font-text(14px !important, normal !important);
-    @include border-radius(4px !important);
+  height: 48px;
+  width: 207px;
+  @include font-text(14px !important, normal !important);
+  @include border-radius(4px !important);
+  background-color: $blanco !important;
+  border: solid 1px $blanco !important;
+  color: $green !important;
+  &:hover {
+    background-color: #ffffff !important;
+    color: $green;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  &:active {
     background-color: $blanco !important;
-    border: solid 1px $blanco !important;
-    color: $green !important;
-    &:hover {
-        background-color: #ffffff !important;
-        color: $green;
-        text-decoration: underline;
-        cursor: pointer;
-    }
-    &:active {
-        background-color: $blanco !important;
-        background-image: none !important;
-    }
-    &.btn-disabled {
-        // color       : #9b9b9b !important;
-        color: $green;
-        text-decoration: underline;
-        cursor: pointer;
-    }
+    background-image: none !important;
+  }
+  &.btn-disabled {
+    // color       : #9b9b9b !important;
+    color: $green;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 .messsage-error {
-    @include font-text(12px, 500);
-    color: #f23a24 !important;
-    //color: #ea0044 !important;
+  @include font-text(12px, 500);
+  color: #f23a24 !important;
+  //color: #ea0044 !important;
 }
 
 .w-35 {
-    width: 35%;
+  width: 35%;
 }
 
 .w-100 {
-    width: 100%;
+  width: 100%;
 }
 
 .btn-big {
-    font-size: 16px;
-    padding-left: 45px;
-    padding-right: 45px;
-    height: 48px;
+  font-size: 16px;
+  padding-left: 45px;
+  padding-right: 45px;
+  height: 48px;
 }
 
 .texto-azul {
-    @include font-text(32px, $weight: 500);
-    color: #0032a0;
+  @include font-text(32px, $weight: 500);
+  color: #0032a0;
 }
 
 .font-black {
-    @include font-text(18px, $weight: 600);
-    color: #0d131d;
+  @include font-text(18px, $weight: 600);
+  color: #0d131d;
 }
 
 .swal2-content {
-    @include font-text(16px, $weight: 500);
-    color: #0d131d !important;
-    text-align: center;
+  @include font-text(16px, $weight: 500);
+  color: #0d131d !important;
+  text-align: center;
 }
 
 .input-text {
-    @include font-text(16px !important, normal !important);
-    color: #0d131d !important;
+  @include font-text(16px !important, normal !important);
+  color: #0d131d !important;
 }
 
 .mat-calendar-body-selected {
-    background-color: $green;
-    color: #fff;
+  background-color: $green;
+  color: #fff;
 }
-
 
 /*
 .mat-form-field-appearance-legacy .mat-form-field-underline {
@@ -323,78 +320,88 @@ button:focus {
 */
 
 .swal2-styled {
-    border-style: none;
+  border-style: none;
 }
 
-.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
-    font-size: 12px;
-    font-weight: 500;
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.28125em) scale(1) perspective(100px)
+    translateZ(0.001px);
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .pts16 {
-    margin-top: 16px !important;
+  margin-top: 16px !important;
 }
 
 .pts26 {
-    margin-top: 26px !important;
+  margin-top: 26px !important;
 }
 
 .pts30 {
-    margin-top: 30px !important;
+  margin-top: 30px !important;
 }
 
 mat-icon.svg-custom {
-    svg {
-        width: 24px;
-        height: 24px;
-        path {
-            fill: inherit;
-        }
+  svg {
+    width: 24px;
+    height: 24px;
+    path {
+      fill: inherit;
     }
+  }
 }
 
 .mat-checkbox-frame {
-    border-color: #9EA1A5;
+  border-color: #9ea1a5;
 }
 
 .mat-radio-outer-circle {
-    border-color: #9EA1A5;
+  border-color: #9ea1a5;
 }
 
 .mat-select-value {
-    color: #0d131d;
-    // color: #0d131d !important;
+  color: #0d131d;
+  // color: #0d131d !important;
 }
 
 .mat-select-placeholder {
-    // color: #0d131d !important;
-    color: #0d131d;
+  // color: #0d131d !important;
+  color: #0d131d;
 }
 
 .mat-input-element {
-    // caret-color: #0d131d !important;
-    caret-color: #0d131d;
+  // caret-color: #0d131d !important;
+  caret-color: #0d131d;
 }
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-    border-color: $green;
+  border-color: $green;
 }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
-    background-color: $green;
+  background-color: $green;
 }
 
-.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    font-size: 10px !important;
-    // color: #0d131d !important;
-    color: #0d131d;
+.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  font-size: 10px !important;
+  // color: #0d131d !important;
+  color: #0d131d;
 }
 
 .w-70 {
-    width: 70%;
+  width: 70%;
 }
 
 .w-15 {
-    width: 15%;
+  width: 15%;
+}
+
+.custom-container {
+  width: 100%;
+  max-width: 1320px;
+  // min-width   : 650px;
+  margin: 0 auto;
 }

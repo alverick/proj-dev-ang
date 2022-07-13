@@ -1,20 +1,19 @@
-import { MonedaModel, RubroModel, ServiceModel } from "../models";
-import { Observable, of, throwError } from "rxjs";
-import { catchError, map } from "rxjs/operators";
-
-import { DataEnterpriseModel } from "../models/data-enterprise.model";
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { NgxSpinnerService } from "ngx-spinner";
-import { StorageService } from "./storage.service";
-import Swal from "sweetalert2";
-import { drawPopup } from "./popups";
-import { environment } from "src/environments/environment";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { of, throwError, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
+import { MonedaModel, RubroModel, ServiceModel } from '../models';
+import { DataEnterpriseModel } from '../models/data-enterprise.model';
+import { drawPopup } from '../utils/helpers/popups';
+import { StorageService } from './storage.service';
 
 @Injectable()
 export class AfiliacionService {
-  private _currentIndex: number = -1;
-  private _editMode: boolean = false;
+  private _currentIndex = -1;
+  private _editMode = false;
 
   get currentIndex(): number {
     return this._currentIndex;
@@ -41,12 +40,12 @@ export class AfiliacionService {
     private spinner: NgxSpinnerService,
     private storage: StorageService
   ) {
-    //this.llenarMock();
+    // this.llenarMock();
   }
 
-  public idCompany: number = 0;
+  public idCompany = 0;
   public email: string;
-  public Guardado: boolean = false;
+  public Guardado = false;
 
   public services: ServiceModel[] = [];
   private _rubros: RubroModel[] = null;
@@ -57,51 +56,51 @@ export class AfiliacionService {
   public Clear() {
     this.Guardado = false;
     this.services.push({
-      nombre: "Mensualidad",
-      codDeudor: "DNI",
-      tipoDato: "C",
-      tipoPago: "C",
-      idCuenta: "",
-      nroCuenta: "",
-      moneda: "001",
-      simboloMoneda: "S/",
+      nombre: 'Mensualidad',
+      codDeudor: 'DNI',
+      tipoDato: 'C',
+      tipoPago: 'C',
+      idCuenta: '',
+      nroCuenta: '',
+      moneda: '001',
+      simboloMoneda: 'S/',
       usaWebApp: true,
       usaAgente: false,
       usaTienda: false,
-      cobraMora: "N",
-      periodoMora: "1",
-      tipoMora: "M",
-      pagoPartes: "N",
+      cobraMora: 'N',
+      periodoMora: '1',
+      tipoMora: 'M',
+      pagoPartes: 'N',
     });
   }
 
   public CrearSevice(): ServiceModel {
     this.Guardado = false;
-    let nombre: string = "Mensualidad";
-    let newName: string = "Mensualidad";
+    let nombre = 'Mensualidad';
+    const newName = 'Mensualidad';
     let nro = 1;
     this.services.forEach((s, i) => {
-      //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
+      // El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
       if (s.nombre === null) {
         if (s.newName.toUpperCase().startsWith(newName.toUpperCase())) {
           if (
             !isNaN(parseInt(s.newName.substr(newName.length))) ||
-            s.newName.substr(newName.length) === ""
+            s.newName.substr(newName.length) === ''
           ) {
-            let aux = parseInt(s.newName.substr(newName.length));
-            if (isNaN(aux)) nro = 2;
-            else if (aux >= nro) nro = aux + 1;
+            const aux = parseInt(s.newName.substr(newName.length));
+            if (isNaN(aux)) { nro = 2; }
+            else if (aux >= nro) { nro = aux + 1; }
           }
         }
       } else {
         if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
           if (
             !isNaN(parseInt(s.nombre.substr(nombre.length))) ||
-            s.nombre.substr(nombre.length) === ""
+            s.nombre.substr(nombre.length) === ''
           ) {
-            let aux = parseInt(s.nombre.substr(nombre.length));
-            if (isNaN(aux)) nro = 2;
-            else if (aux >= nro) nro = aux + 1;
+            const aux = parseInt(s.nombre.substr(nombre.length));
+            if (isNaN(aux)) { nro = 2; }
+            else if (aux >= nro) { nro = aux + 1; }
           }
         }
       }
@@ -109,26 +108,26 @@ export class AfiliacionService {
     if (nro > 1) {
       nombre += nro.toString();
     }
-    let svc: ServiceModel = {
+    const svc: ServiceModel = {
       id: null,
-      nombre: nombre,
+      nombre,
       newName: nombre,
-      codDeudor: "DNI",
+      codDeudor: 'DNI',
       // newNameCode: '',
-      tipoDato: "C",
-      tipoPago: "C",
-      idCuenta: "",
-      nroCuenta: "",
+      tipoDato: 'C',
+      tipoPago: 'C',
+      idCuenta: '',
+      nroCuenta: '',
       newNameCodeGtpStatus: null,
-      moneda: "001",
-      simboloMoneda: "S/",
+      moneda: '001',
+      simboloMoneda: 'S/',
       usaWebApp: true,
       usaAgente: false,
       usaTienda: false,
-      cobraMora: "N",
-      periodoMora: "",
-      tipoMora: "M",
-      pagoPartes: "N",
+      cobraMora: 'N',
+      periodoMora: '',
+      tipoMora: 'M',
+      pagoPartes: 'N',
     };
     this.services.push(svc);
     return svc;
@@ -136,10 +135,10 @@ export class AfiliacionService {
 
   public AddService(svc: ServiceModel) {
     this.Guardado = false;
-    var svc_old = this.services.find((v) => v.nombre === svc.nombre);
+    const svc_old = this.services.find((v) => v.nombre === svc.nombre);
     if (svc_old) {
       Swal.fire({
-        text: "Este servicio ya existe",
+        text: 'Este servicio ya existe',
         allowOutsideClick: false,
         onOpen: drawPopup,
       });
@@ -154,7 +153,7 @@ export class AfiliacionService {
   }
 
   public SendDelService(index: number) {
-    let url = `${environment.END_POINT}/service/${this.services[index].id}`;
+    const url = `${environment.END_POINT}/service/${this.services[index].id}`;
     return this.http.post(url, null).pipe(
       map((r) => {
         this.services.splice(index, 1);
@@ -164,7 +163,7 @@ export class AfiliacionService {
   }
 
   public CanDeleteService(index: number) {
-    let url = `${environment.END_POINT}/service/${this.services[index].id}/canDelete`;
+    const url = `${environment.END_POINT}/service/${this.services[index].id}/canDelete`;
     return this.http.get<any>(url);
   }
 
@@ -219,7 +218,7 @@ export class AfiliacionService {
   }
 
   public GetRubros(): Observable<RubroModel[]> {
-    if (this._rubros !== null) return Observable.of(this._rubros);
+    if (this._rubros !== null) { return Observable.of(this._rubros); }
     return this.http
       .get<RubroModel[]>(
         `${environment.END_POINT}/enterpriseHeading?_=` + new Date().getTime()
@@ -234,7 +233,7 @@ export class AfiliacionService {
   }
 
   public GetRubrosAll(): Observable<RubroModel[]> {
-    //if (this._rubrosAll !== null) return Observable.of(this._rubrosAll);
+    // if (this._rubrosAll !== null) return Observable.of(this._rubrosAll);
     return this.http
       .get<RubroModel[]>(
         `${environment.END_POINT}/enterpriseHeading/all?_=` +
@@ -252,39 +251,38 @@ export class AfiliacionService {
   public GetCodDeudor(): Observable<any[]> {
     return of<any[]>([
       {
-        code: "DNI",
-        name: "DNI",
+        code: 'DNI',
+        name: 'DNI',
       },
       {
-        code: "RUC",
-        name: "RUC",
+        code: 'RUC',
+        name: 'RUC',
       },
       {
-        code: "Codigo Interno",
-        name: "Celular",
+        code: 'Codigo Interno',
+        name: 'Celular',
       },
       {
-        code: "Otro",
-        name: "Otro (Cód. Interno, Cod. Alumno, N° de departamentos, etc.)",
+        code: 'Otro',
+        name: 'Otro (Cód. Interno, Cod. Alumno, N° de departamentos, etc.)',
       },
     ]);
   }
 
   public GetTipoDato(): Observable<any[]> {
-
     return of<any[]>([
       {
         code: 'C',
-        name: "Tengo su código, nombres y deuda"
+        name: 'Tengo su código, nombres y deuda',
       },
       {
         code: 'P',
-        name: "Tengo sólo código y nombres"
+        name: 'Tengo sólo código y nombres',
       },
       {
         code: 'S',
-        name: 'No ingresaré data'
-      }
+        name: 'No ingresaré data',
+      },
     ]);
   }
 
@@ -297,19 +295,19 @@ export class AfiliacionService {
       {
         code: 'S',
         name: 'Sí. Podrán pagarme una parte de la deuda/monto.',
-      }
+      },
     ]);
   }
 
   public GetTipoPago(): Observable<any[]> {
     return of<any[]>([
       {
-        code: "C",
-        name: "Pueden elegir qué deuda quieren pagar",
+        code: 'C',
+        name: 'Pueden elegir qué deuda quieren pagar',
       },
       {
-        code: "P",
-        name: "Siempre la deuda que vence primero",
+        code: 'P',
+        name: 'Siempre la deuda que vence primero',
       },
     ]);
   }
@@ -317,14 +315,14 @@ export class AfiliacionService {
   public GetMoneda(): Observable<MonedaModel[]> {
     return of<MonedaModel[]>([
       {
-        code: "001",
-        name: "Soles",
-        symbol: "S/",
+        code: '001',
+        name: 'Soles',
+        symbol: 'S/',
       },
       {
-        code: "002",
-        name: "Dólares",
-        symbol: "$",
+        code: '002',
+        name: 'Dólares',
+        symbol: '$',
       },
     ]);
   }
@@ -332,12 +330,12 @@ export class AfiliacionService {
   public GetPeriodoMora(): Observable<any[]> {
     return of<any[]>([
       {
-        code: "1",
-        name: "Diario",
+        code: '1',
+        name: 'Diario',
       },
       {
-        code: "2",
-        name: "Fijo",
+        code: '2',
+        name: 'Fijo',
       },
     ]);
   }
@@ -357,25 +355,25 @@ export class AfiliacionService {
 
   public GetServicios(incDeactivates: boolean = false) {
     const headers: any = {
-      "Ocp-Apim-Subscription-Key": environment.OCP_KEY,
-      "Ocp-Apim-Trace": "true",
+      'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
+      'Ocp-Apim-Trace': 'true',
     };
     if (this.storage.isAuthenticated) {
-      headers["Authorization"] = "bearer " + this.storage.getCurrentToken();
+      headers['Authorization'] = 'bearer ' + this.storage.getCurrentToken();
     }
     this.http
       .get<any[]>(
         `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=` +
           new Date().getTime(),
-        { headers: headers }
+        { headers }
       )
       .subscribe((d) => {
-        let servicios = [];
+        const servicios = [];
         d.forEach((s) => {
           servicios.push({
             id: s.id,
             nombre: s.name,
-            res: s.res === null ? "" : s.res,
+            res: s.res === null ? '' : s.res,
             newName: s.newName,
             newNameCode: s.newNameCode,
             rubro: s.entry,
@@ -383,7 +381,7 @@ export class AfiliacionService {
             tipoDato: s.dataType,
             tipoPago: s.paymentType,
             idCuenta: s.idAccount,
-            nroCuenta: s.accountNumber, //`${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
+            nroCuenta: s.accountNumber, // `${s.accountNumber} (${(s.currency === '001' ? 'soles' : 'dolares' )})`,
             moneda: s.currency,
             simboloMoneda: s.currencySymbol,
             usaWebApp: s.useAppWeb,
@@ -406,7 +404,7 @@ export class AfiliacionService {
               s.newNameCodeGTPStatus === 1 || s.newNameCodeGTPStatus === 3
                 ? false
                 : true,
-            useAgencyChannel: s.useAgencyChannel
+            useAgencyChannel: s.useAgencyChannel,
           });
         });
         this.services = servicios;
@@ -418,23 +416,23 @@ export class AfiliacionService {
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
     this.services.forEach((s) => {
-      let name = "";
+      let name = '';
       if (s.nombre === null) {
         name = s.newName;
-      } else if (s.nombre === "?") {
-        name = "";
+      } else if (s.nombre === '?') {
+        name = '';
       } else {
         name = s.nombre;
       }
       data.services.push({
         id: s.id,
-        name: name,
+        name,
         newName: s.newName,
         entry: s.rubro,
         debtorCode:
-          s.codDeudor === "?"
-            ? ""
-            : s.codDeudor === "Otro"
+          s.codDeudor === '?'
+            ? ''
+            : s.codDeudor === 'Otro'
             ? s.nameCod
             : s.codDeudor,
         //   debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
@@ -477,7 +475,6 @@ export class AfiliacionService {
   }
 
   Descartar(indice: number, isNew: boolean) {
-
     this.Guardado = false;
     if (
       isNew &&
@@ -485,7 +482,7 @@ export class AfiliacionService {
       indice >= 0 &&
       indice === this.services.length - 1
     ) {
-      let svc = this.services[this.services.length - 1];
+      const svc = this.services[this.services.length - 1];
       if (svc.id === null || svc.id === undefined || svc.id < 0) {
         this.services.pop();
       }
@@ -504,10 +501,12 @@ export class AfiliacionService {
 
   addCurrentServiceModel() {
     this.Guardado = false;
-    var svc_old = this.services.find((v) => v.nombre === this._currentServiceModel.nombre);
+    const svc_old = this.services.find(
+      (v) => v.nombre === this._currentServiceModel.nombre
+    );
     if (svc_old) {
       Swal.fire({
-        text: "Este servicio ya existe",
+        text: 'Este servicio ya existe',
         allowOutsideClick: false,
         onOpen: drawPopup,
       });
@@ -520,31 +519,31 @@ export class AfiliacionService {
   public createNewService(useAgencyChannel: boolean = false): void {
     this.Guardado = false;
     this._currentServiceModel = null;
-    let nombre: string = "Mensualidad";
-    let newName: string = "Mensualidad";
+    let nombre = 'Mensualidad';
+    const newName = 'Mensualidad';
     let nro = 1;
     this.services.forEach((s, i) => {
-      //El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
+      // El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
       if (s.nombre === null) {
         if (s.newName.toUpperCase().startsWith(newName.toUpperCase())) {
           if (
             !isNaN(parseInt(s.newName.substr(newName.length))) ||
-            s.newName.substr(newName.length) === ""
+            s.newName.substr(newName.length) === ''
           ) {
-            let aux = parseInt(s.newName.substr(newName.length));
-            if (isNaN(aux)) nro = 2;
-            else if (aux >= nro) nro = aux + 1;
+            const aux = parseInt(s.newName.substr(newName.length));
+            if (isNaN(aux)) { nro = 2; }
+            else if (aux >= nro) { nro = aux + 1; }
           }
         }
       } else {
         if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
           if (
             !isNaN(parseInt(s.nombre.substr(nombre.length))) ||
-            s.nombre.substr(nombre.length) === ""
+            s.nombre.substr(nombre.length) === ''
           ) {
-            let aux = parseInt(s.nombre.substr(nombre.length));
-            if (isNaN(aux)) nro = 2;
-            else if (aux >= nro) nro = aux + 1;
+            const aux = parseInt(s.nombre.substr(nombre.length));
+            if (isNaN(aux)) { nro = 2; }
+            else if (aux >= nro) { nro = aux + 1; }
           }
         }
       }
@@ -552,40 +551,40 @@ export class AfiliacionService {
     if (nro > 1) {
       nombre += nro.toString();
     }
-    //tipoDato: "C",
-    //tipoPago: "C",
-    //codDeudor: "DNI",
-    //cobraMora: 'N'
-    //nombre: nombre,
-    //newName: nombre,
-    //newNameCodeGtpStatus: null,
-    let svc: ServiceModel = {
-      res: "",
+    // tipoDato: "C",
+    // tipoPago: "C",
+    // codDeudor: "DNI",
+    // cobraMora: 'N'
+    // nombre: nombre,
+    // newName: nombre,
+    // newNameCodeGtpStatus: null,
+    const svc: ServiceModel = {
+      res: '',
       id: null,
       nombre: '',
       newName: '',
       codDeudor: '',
       newNameCode: '',
-      tipoDato: "",
-      tipoPago: "",
-      idCuenta: "",
-      nroCuenta: "",
-      //newNameCodeGtpStatus: null,
-      moneda: "001",
-      simboloMoneda: "S/",
+      tipoDato: '',
+      tipoPago: '',
+      idCuenta: '',
+      nroCuenta: '',
+      // newNameCodeGtpStatus: null,
+      moneda: '001',
+      simboloMoneda: 'S/',
       usaWebApp: true,
       usaAgente: false,
       usaTienda: false,
-      cobraMora: "",
-      periodoMora: "1",
-      tipoMora: "M",
-      pagoPartes: "N",
+      cobraMora: '',
+      periodoMora: '1',
+      tipoMora: 'M',
+      pagoPartes: 'N',
       nombreCodHabilitado: false,
-      useAgencyChannel: useAgencyChannel
+      useAgencyChannel,
     };
 
     this._currentServiceModel = svc;
-    //this.services.push(svc);
+    // this.services.push(svc);
   }
 
   /*this._service = {
@@ -608,53 +607,55 @@ export class AfiliacionService {
     newNameCode: ''
   };*/
 
-  llenarMock(){
-    let currentService: ServiceModel = {
-      cobraMora: "N",
-      codDeudor: "DNI",
+  llenarMock() {
+    const currentService: ServiceModel = {
+      cobraMora: 'N',
+      codDeudor: 'DNI',
       id: null,
-      idCuenta: "4708",
-      moneda: "002",
-      monto: 1.00,
-      newName: "AGUA",
-      newNameCode: "DNI",
-      nombre: "AGUA",
+      idCuenta: '4708',
+      moneda: '002',
+      monto: 1.0,
+      newName: 'AGUA',
+      newNameCode: 'DNI',
+      nombre: 'AGUA',
       nombreCodHabilitado: false,
-      nroCuenta: "*********4708 (Dólares)",
-      pagoPartes: "N",
-      periodoMora: "",
-      porcentaje: 1.00,
-      res: "",
-      simboloMoneda: "$",
-      tipoDato: "C",
-      tipoMora: "M",
-      tipoPago: "C",
+      nroCuenta: '*********4708 (Dólares)',
+      pagoPartes: 'N',
+      periodoMora: '',
+      porcentaje: 1.0,
+      res: '',
+      simboloMoneda: '$',
+      tipoDato: 'C',
+      tipoMora: 'M',
+      tipoPago: 'C',
       usaAgente: true,
       usaTienda: true,
       usaWebApp: true,
     };
     this.services.push(currentService);
 
-    let currentService02: ServiceModel = {
-      cobraMora: "N",
-      codDeudor: "DNI",
+    const currentService02: ServiceModel = {
+      cobraMora: 'N',
+      codDeudor: 'DNI',
       id: null,
-      idCuenta: "4708",
-      moneda: "002",
-      monto: 1.00,
-      newName: "AGUA AGUA AGUA  AGUA AGUA AGUA AGUAAGUA  AGUA AGUA AGUA AGUA AGUA ",
-      newNameCode: "DNI",
-      nombre: "AGUA AGUA AGUA  AGUA AGUA AGUA AGUAAGUA  AGUA AGUA AGUA AGUA AGUA ",
+      idCuenta: '4708',
+      moneda: '002',
+      monto: 1.0,
+      newName:
+        'AGUA AGUA AGUA  AGUA AGUA AGUA AGUAAGUA  AGUA AGUA AGUA AGUA AGUA ',
+      newNameCode: 'DNI',
+      nombre:
+        'AGUA AGUA AGUA  AGUA AGUA AGUA AGUAAGUA  AGUA AGUA AGUA AGUA AGUA ',
       nombreCodHabilitado: false,
-      nroCuenta: "*********4708 (Dólares)",
-      pagoPartes: "N",
-      periodoMora: "",
-      porcentaje: 1.00,
-      res: "",
-      simboloMoneda: "$",
-      tipoDato: "C",
-      tipoMora: "M",
-      tipoPago: "C",
+      nroCuenta: '*********4708 (Dólares)',
+      pagoPartes: 'N',
+      periodoMora: '',
+      porcentaje: 1.0,
+      res: '',
+      simboloMoneda: '$',
+      tipoDato: 'C',
+      tipoMora: 'M',
+      tipoPago: 'C',
       usaAgente: true,
       usaTienda: true,
       usaWebApp: true,

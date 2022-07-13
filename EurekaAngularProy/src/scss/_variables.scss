@@ -1,323 +1,28 @@
-/*--- Fuentes ---*/
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-ExtraLightItalic.eot');
-    src: url('/assets/fonts/Omnes-ExtraLightItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-ExtraLightItalic.woff2') format('woff2'), url('/assets/fonts/Omnes-ExtraLightItalic.woff') format('woff'), url('/assets/fonts/Omnes-ExtraLightItalic.ttf') format('truetype'), url('/assets/fonts/Omnes-ExtraLightItalic.svg#Omnes-ExtraLightItalic') format('svg');
-    font-weight: 200;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Omnes Hairline';
-    src: url('/assets/fonts/Omnes-HairlineItalic.eot');
-    src: url('/assets/fonts/Omnes-HairlineItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-HairlineItalic.woff2') format('woff2'), url('/assets/fonts/Omnes-HairlineItalic.woff') format('woff'), url('/assets/fonts/Omnes-HairlineItalic.ttf') format('truetype'), url('/assets/fonts/Omnes-HairlineItalic.svg#Omnes-HairlineItalic') format('svg');
-    font-weight: normal;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-Thin.eot');
-    src: url('/assets/fonts/Omnes-Thin.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-Thin.woff2') format('woff2'), url('/assets/fonts/Omnes-Thin.woff') format('woff'), url('/assets/fonts/Omnes-Thin.ttf') format('truetype'), url('/assets/fonts/Omnes-Thin.svg#Omnes-Thin') format('svg');
-    font-weight: 100;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-BlackItalic.eot');
-    src: url('/assets/fonts/Omnes-BlackItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-BlackItalic.woff2') format('woff2'), url('/assets/fonts/Omnes-BlackItalic.woff') format('woff'), url('/assets/fonts/Omnes-BlackItalic.ttf') format('truetype'), url('/assets/fonts/Omnes-BlackItalic.svg#Omnes-BlackItalic') format('svg');
-    font-weight: 900;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-ExtraLight.eot');
-    src: url('/assets/fonts/Omnes-ExtraLight.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-ExtraLight.woff2') format('woff2'), url('/assets/fonts/Omnes-ExtraLight.woff') format('woff'), url('/assets/fonts/Omnes-ExtraLight.ttf') format('truetype'), url('/assets/fonts/Omnes-ExtraLight.svg#Omnes-ExtraLight') format('svg');
-    font-weight: 200;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-SemiboldItalic.eot');
-    src: url('/assets/fonts/Omnes-SemiboldItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-SemiboldItalic.woff2') format('woff2'), url('/assets/fonts/Omnes-SemiboldItalic.woff') format('woff'), url('/assets/fonts/Omnes-SemiboldItalic.ttf') format('truetype'), url('/assets/fonts/Omnes-SemiboldItalic.svg#Omnes-SemiboldItalic') format('svg');
-    font-weight: 600;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-Black.eot');
-    src: url('/assets/fonts/Omnes-Black.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-Black.woff2') format('woff2'), url('/assets/fonts/Omnes-Black.woff') format('woff'), url('/assets/fonts/Omnes-Black.ttf') format('truetype'), url('/assets/fonts/Omnes-Black.svg#Omnes-Black') format('svg');
-    font-weight: 900;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-Bold.eot');
-    src: url('/assets/fonts/Omnes-Bold.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-Bold.woff2') format('woff2'), url('/assets/fonts/Omnes-Bold.woff') format('woff'), url('/assets/fonts/Omnes-Bold.ttf') format('truetype'), url('/assets/fonts/Omnes-Bold.svg#Omnes-Bold') format('svg');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-BoldItalic.eot');
-    src: url('/assets/fonts/Omnes-BoldItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-BoldItalic.woff2') format('woff2'), url('/assets/fonts/Omnes-BoldItalic.woff') format('woff'), url('/assets/fonts/Omnes-BoldItalic.ttf') format('truetype'), url('/assets/fonts/Omnes-BoldItalic.svg#Omnes-BoldItalic') format('svg');
-    font-weight: bold;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-Light.eot');
-    src: url('/assets/fonts/Omnes-Light.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-Light.woff2') format('woff2'), url('/assets/fonts/Omnes-Light.woff') format('woff'), url('/assets/fonts/Omnes-Light.ttf') format('truetype'), url('/assets/fonts/Omnes-Light.svg#Omnes-Light') format('svg');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-Regular.eot');
-    src: url('/assets/fonts/Omnes-Regular.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-Regular.woff2') format('woff2'), url('/assets/fonts/Omnes-Regular.woff') format('woff'), url('/assets/fonts/Omnes-Regular.ttf') format('truetype'), url('/assets/fonts/Omnes-Regular.svg#Omnes-Regular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-Medium.eot');
-    src: url('/assets/fonts/Omnes-Medium.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-Medium.woff2') format('woff2'), url('/assets/fonts/Omnes-Medium.woff') format('woff'), url('/assets/fonts/Omnes-Medium.ttf') format('truetype'), url('/assets/fonts/Omnes-Medium.svg#Omnes-Medium') format('svg');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-LightItalic.eot');
-    src: url('/assets/fonts/Omnes-LightItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-LightItalic.woff2') format('woff2'), url('/assets/fonts/Omnes-LightItalic.woff') format('woff'), url('/assets/fonts/Omnes-LightItalic.ttf') format('truetype'), url('/assets/fonts/Omnes-LightItalic.svg#Omnes-LightItalic') format('svg');
-    font-weight: 300;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-Semibold.eot');
-    src: url('/assets/fonts/Omnes-Semibold.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-Semibold.woff2') format('woff2'), url('/assets/fonts/Omnes-Semibold.woff') format('woff'), url('/assets/fonts/Omnes-Semibold.ttf') format('truetype'), url('/assets/fonts/Omnes-Semibold.svg#Omnes-Semibold') format('svg');
-    font-weight: 600;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-MediumItalic.eot');
-    src: url('/assets/fonts/Omnes-MediumItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-MediumItalic.woff2') format('woff2'), url('/assets/fonts/Omnes-MediumItalic.woff') format('woff'), url('/assets/fonts/Omnes-MediumItalic.ttf') format('truetype'), url('/assets/fonts/Omnes-MediumItalic.svg#Omnes-MediumItalic') format('svg');
-    font-weight: 500;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-ThinItalic.eot');
-    src: url('/assets/fonts/Omnes-ThinItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-ThinItalic.woff2') format('woff2'), url('/assets/fonts/Omnes-ThinItalic.woff') format('woff'), url('/assets/fonts/Omnes-ThinItalic.ttf') format('truetype'), url('/assets/fonts/Omnes-ThinItalic.svg#Omnes-ThinItalic') format('svg');
-    font-weight: 100;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Omnes Hairline';
-    src: url('/assets/fonts/Omnes-Hairline.eot');
-    src: url('/assets/fonts/Omnes-Hairline.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-Hairline.woff2') format('woff2'), url('/assets/fonts/Omnes-Hairline.woff') format('woff'), url('/assets/fonts/Omnes-Hairline.ttf') format('truetype'), url('/assets/fonts/Omnes-Hairline.svg#Omnes-Hairline') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Omnes';
-    src: url('/assets/fonts/Omnes-RegularItalic.eot');
-    src: url('/assets/fonts/Omnes-RegularItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Omnes-RegularItalic.woff2') format('woff2'), url('/assets/fonts/Omnes-RegularItalic.woff') format('woff'), url('/assets/fonts/Omnes-RegularItalic.ttf') format('truetype'), url('/assets/fonts/Omnes-RegularItalic.svg#Omnes-RegularItalic') format('svg');
-    font-weight: normal;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-Regular.eot');
-    src: local('Geometria Regular'), local('Geometria-Regular'), url('/assets/fonts/Geometria-Regular.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-Regular.woff2') format('woff2'), url('/assets/fonts/Geometria-Regular.woff') format('woff'), url('/assets/fonts/Geometria-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-Italic.eot');
-    src: local('Geometria Italic'), local('Geometria-Italic'), url('/assets/fonts/Geometria-Italic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-Italic.woff2') format('woff2'), url('/assets/fonts/Geometria-Italic.woff') format('woff'), url('/assets/fonts/Geometria-Italic.ttf') format('truetype');
-    font-weight: normal;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-ExtraBoldItalic.eot');
-    src: local('Geometria ExtraBold Italic'), local('Geometria-ExtraBoldItalic'), url('/assets/fonts/Geometria-ExtraBoldItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-ExtraBoldItalic.woff2') format('woff2'), url('/assets/fonts/Geometria-ExtraBoldItalic.woff') format('woff'), url('/assets/fonts/Geometria-ExtraBoldItalic.ttf') format('truetype');
-    font-weight: 800;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-ExtraLightItalic.eot');
-    src: local('Geometria ExtraLight Italic'), local('Geometria-ExtraLightItalic'), url('/assets/fonts/Geometria-ExtraLightItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-ExtraLightItalic.woff2') format('woff2'), url('/assets/fonts/Geometria-ExtraLightItalic.woff') format('woff'), url('/assets/fonts/Geometria-ExtraLightItalic.ttf') format('truetype');
-    font-weight: 200;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-Medium.eot');
-    src: local('Geometria Medium'), local('Geometria-Medium'), url('/assets/fonts/Geometria-Medium.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-Medium.woff2') format('woff2'), url('/assets/fonts/Geometria-Medium.woff') format('woff'), url('/assets/fonts/Geometria-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-Light.eot');
-    src: local('Geometria Light'), local('Geometria-Light'), url('/assets/fonts/Geometria-Light.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-Light.woff2') format('woff2'), url('/assets/fonts/Geometria-Light.woff') format('woff'), url('/assets/fonts/Geometria-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-HeavyItalic.eot');
-    src: local('Geometria Heavy Italic'), local('Geometria-HeavyItalic'), url('/assets/fonts/Geometria-HeavyItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-HeavyItalic.woff2') format('woff2'), url('/assets/fonts/Geometria-HeavyItalic.woff') format('woff'), url('/assets/fonts/Geometria-HeavyItalic.ttf') format('truetype');
-    font-weight: 900;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-BoldItalic.eot');
-    src: local('Geometria Bold Italic'), local('Geometria-BoldItalic'), url('/assets/fonts/Geometria-BoldItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-BoldItalic.woff2') format('woff2'), url('/assets/fonts/Geometria-BoldItalic.woff') format('woff'), url('/assets/fonts/Geometria-BoldItalic.ttf') format('truetype');
-    font-weight: bold;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-Bold.eot');
-    src: local('Geometria Bold'), local('Geometria-Bold'), url('/assets/fonts/Geometria-Bold.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-Bold.woff2') format('woff2'), url('/assets/fonts/Geometria-Bold.woff') format('woff'), url('/assets/fonts/Geometria-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-LightItalic.eot');
-    src: local('Geometria Light Italic'), local('Geometria-LightItalic'), url('/assets/fonts/Geometria-LightItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-LightItalic.woff2') format('woff2'), url('/assets/fonts/Geometria-LightItalic.woff') format('woff'), url('/assets/fonts/Geometria-LightItalic.ttf') format('truetype');
-    font-weight: 300;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-ExtraBold.eot');
-    src: local('Geometria ExtraBold'), local('Geometria-ExtraBold'), url('/assets/fonts/Geometria-ExtraBold.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-ExtraBold.woff2') format('woff2'), url('/assets/fonts/Geometria-ExtraBold.woff') format('woff'), url('/assets/fonts/Geometria-ExtraBold.ttf') format('truetype');
-    font-weight: 800;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-MediumItalic.eot');
-    src: local('Geometria Medium Italic'), local('Geometria-MediumItalic'), url('/assets/fonts/Geometria-MediumItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-MediumItalic.woff2') format('woff2'), url('/assets/fonts/Geometria-MediumItalic.woff') format('woff'), url('/assets/fonts/Geometria-MediumItalic.ttf') format('truetype');
-    font-weight: 500;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-ExtraLight.eot');
-    src: local('Geometria ExtraLight'), local('Geometria-ExtraLight'), url('/assets/fonts/Geometria-ExtraLight.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-ExtraLight.woff2') format('woff2'), url('/assets/fonts/Geometria-ExtraLight.woff') format('woff'), url('/assets/fonts/Geometria-ExtraLight.ttf') format('truetype');
-    font-weight: 200;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-Heavy.eot');
-    src: local('Geometria Heavy'), local('Geometria-Heavy'), url('/assets/fonts/Geometria-Heavy.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-Heavy.woff2') format('woff2'), url('/assets/fonts/Geometria-Heavy.woff') format('woff'), url('/assets/fonts/Geometria-Heavy.ttf') format('truetype');
-    font-weight: 900;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-ThinItalic.eot');
-    src: local('Geometria Thin Italic'), local('Geometria-ThinItalic'), url('/assets/fonts/Geometria-ThinItalic.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-ThinItalic.woff2') format('woff2'), url('/assets/fonts/Geometria-ThinItalic.woff') format('woff'), url('/assets/fonts/Geometria-ThinItalic.ttf') format('truetype');
-    font-weight: 100;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Geometria';
-    src: url('/assets/fonts/Geometria-Thin.eot');
-    src: local('Geometria Thin'), local('Geometria-Thin'), url('/assets/fonts/Geometria-Thin.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/Geometria-Thin.woff2') format('woff2'), url('/assets/fonts/Geometria-Thin.woff') format('woff'), url('/assets/fonts/Geometria-Thin.ttf') format('truetype');
-    font-weight: 100;
-    font-style: normal;
-}
-
-
 /*--- Colores ---*/
 
-$colores: #0b0044 #0036aa #0d131d #ffffff #f4f5f7 #bebebe #9b9b9b #fc9a00 #FFAD2D #ea0044 #30abc2 #ffad2d #e68c00 #1b2afa #0e119a transparent;
-$nombrecolores: 'azulbase' 'azul' 'negro' 'blanco' 'grisbajo' 'gris' 'grismedio' 'amarillo' 'amarillo-claro' 'rojo' 'turquesa' 'amarillolight' 'amarillobold' 'azullight' 'azulbold' 'transparent';
-$azulbase: nth($colores,
-1);
-$azul: nth($colores,
-2);
-$negro: nth($colores,
-3);
-$blanco: nth($colores,
-4);
-$grisbajo: nth($colores,
-5);
-$gris: nth($colores,
-6);
-$grismedio: nth($colores,
-7);
-$amarillo: nth($colores,
-8);
-$amarillclaro: nth($colores,
-9);
-$rojo: nth($colores,
-10);
-$turquesa: nth($colores,
-11);
-$amarillolight: nth($colores,
-12);
-$amarillobold: nth($colores,
-13);
-$azullight: nth($colores,
-14);
-$azulbold: nth($colores,
-15);
-$transparent: nth($colores,
-16);
-@font-face {
-    font-family: 'icomoon';
-    src: url('/assets/fonts/iconos.eot?ijqtk6');
-    src: url('/assets/fonts/iconos.eot?ijqtk6#iefix') format('embedded-opentype'), url('/assets/fonts/iconos.ttf?ijqtk6') format('truetype'), url('/assets/fonts/iconos.woff?ijqtk6') format('woff'), url('/assets/fonts/iconos.svg?ijqtk6#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+$colores: #0b0044 #0036aa #0d131d #ffffff #f4f5f7 #bebebe #9b9b9b #fc9a00
+  #ffad2d #ea0044 #30abc2 #ffad2d #e68c00 #1b2afa #0e119a transparent;
+$nombrecolores: 'azulbase' 'azul' 'negro' 'blanco' 'grisbajo' 'gris' 'grismedio'
+  'amarillo' 'amarillo-claro' 'rojo' 'turquesa' 'amarillolight' 'amarillobold'
+  'azullight' 'azulbold' 'transparent';
+$azulbase: nth($colores, 1);
+$azul: nth($colores, 2);
+$negro: nth($colores, 3);
+$blanco: nth($colores, 4);
+$grisbajo: nth($colores, 5);
+$gris: nth($colores, 6);
+$grismedio: nth($colores, 7);
+$amarillo: nth($colores, 8);
+$amarillclaro: nth($colores, 9);
+$rojo: nth($colores, 10);
+$turquesa: nth($colores, 11);
+$amarillolight: nth($colores, 12);
+$amarillobold: nth($colores, 13);
+$azullight: nth($colores, 14);
+$azulbold: nth($colores, 15);
+$transparent: nth($colores, 16);
 
-$green-oscuro:#049840;
+$green-oscuro: #049840;
 $textgreen: #05be50;
 $textblack: #0d131d;
 $textgray: #f0f0f0;
@@ -325,7 +30,58 @@ $textblue: #0032a0;
 $textblue-oscuro: #03256d;
 $separador: solid 1px #f0f0f0;
 $green: #05be50;
-$greenclaro: #33C95A;
+$greenclaro: #33c95a;
 $black: #0d131d;
 $grey-3: #9ea1a5;
 $grey-3-oscuro: #9b9b9b;
+
+$primary-font-family: 'Geometria', Arial, sans-serif;
+
+:root {
+  --primary-green-1: #05be50;
+  --secondary-blue-1: #0039a6;
+  --primary-green-6: #ebfaf1;
+  --primary-green-3: #69d890;
+  --secondary-blue-2: #3361b8;
+  --primary-green-2: #37cb73;
+  --primary-green-4: #9be5b9;
+  --primary-green-5: #cdf2dc;
+  --secondary-blue-4: #99b0db;
+  --secondary-blue-3: #6688ca;
+  --secondary-blue-5: #ccd7ed;
+  --grises-grey-1: #878c8f;
+  --grises-ibk-black: #0f191e;
+  --grises-grey-5: #fbfbfb;
+  --grises-grey-3: #d9dadb;
+  --grises-grey-4: #eceded;
+  --grises-grey-2: #b7babc;
+  --grises-ibk-white: #fff;
+  --extended-palette-beige-2: #f3f3e3;
+  --extended-palette-beige-1: #f0f0dc;
+  --extended-palette-beige-3: #f6f6ea;
+  --extended-palette-beige-4: #f9f9f1;
+  --extended-palette-beige-5: #fcfcf8;
+  --extended-palette-yellow-2: #ffd733;
+  --extended-palette-yellow-1: #ffcd00;
+  --extended-palette-yellow-3: #ffe166;
+  --extended-palette-yellow-4: #ffeb99;
+  --extended-palette-yellow-5: #fff5cc;
+  --extended-palette-yellow-6: #fffbeb;
+  --extended-palette-watermelon-1: #eb0046;
+  --extended-palette-watermelon-2: #ef336b;
+  --extended-palette-watermelon-3: #f36690;
+  --extended-palette-watermelon-4: #f799b5;
+  --extended-palette-watermelon-5: #fbccda;
+  --extended-palette-watermelon-6: #fdebf0;
+  --extended-palette-lightblue-1: #64b4e6;
+  --extended-palette-lightblue-2: #83c3eb;
+  --extended-palette-lightblue-3: #a2d2f0;
+  --extended-palette-lightblue-4: #c1e1f5;
+  --extended-palette-lightblue-5: #e0f0fa;
+  --extended-palette-lightblue-6: #f3f9fd;
+  --extended-palette-darkblue-2: #334b7f;
+  --extended-palette-darkblue-1: #001e5f;
+  --extended-palette-darkblue-3: #66789f;
+  --extended-palette-darkblue-5: #ccd2df;
+  --extended-palette-darkblue-4: #99a5bf;
+}

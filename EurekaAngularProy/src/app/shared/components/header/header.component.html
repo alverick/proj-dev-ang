@@ -1,0 +1,23 @@
+<nav
+  class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 d-flex justify-content-center"
+>
+  <div class="custom-container">
+    <a class="navbar-brand" [routerLink]="'/'">
+      <ng-template [ngIf]="isBlank" [ngIfElse]="isNotBlank">
+        <img
+          style="max-width: 250px"
+          src="../../../../assets/images/ibkempresas-logo-negativo.svg"
+          alt=""
+        />
+      </ng-template>
+      <ng-template #isNotBlank>
+        <img
+          style="max-width: 250px"
+          src="../../../../assets/images/ibkempresas-logo-positivo.svg"
+          alt=""
+        />
+      </ng-template>
+    </a>
+    <ng-content></ng-content>
+  </div>
+</nav>

@@ -1,0 +1,739 @@
+<div class="custom-container">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <ul class="navbar-nav ml-auto" id="btn-regresar-identificar-empresa">
+        <li class="nav-item">
+          <a
+            class="nav-link lnk-regresar mano"
+            (click)="goBack()"
+            style="display: flex"
+          >
+            <img src="../../../../../assets/images/left-blue.svg" />
+            <div class="text-regresar">&nbsp;&nbsp;&nbsp;Regresar</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-form">
+    <div class="block-left">
+      <h1 class="texto-azul title-first-part">
+        Configura los cobros de tu
+        <br class="br-none-mobil" />
+        empresa
+      </h1>
+
+      <div class="stepper">
+        <div class="stepper-step">
+          <img
+            class="image-step"
+            src="../../../../../assets/images/check.svg"
+            (click)="onImgDoubt()"
+          />
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-step">
+          <label class="text-step">2</label>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-step-no-selected">
+          <label class="text-step-no-selected">3</label>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-step-no-selected">
+          <label class="text-step-no-selected">4</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="block-right-part-one">
+      <div class="first-part">
+        <div class="stepper-step">
+          <label class="text-step">2</label>
+        </div>
+        <p class="text-first-part">
+          Completa los datos del concepto de cobro
+          <br class="br-none-escritorio" />
+          agregado
+        </p>
+      </div>
+      <!-- <div class="bg-white" [ngClass]="{'cuadro-form': Dataparcial,'cuadro-form-resize': !Dataparcial}"></div> -->
+      <div class="bg-white cuadro-form">
+        <form
+          [formGroup]="frm"
+          novalidate
+          (submit)="onSubmitServicio()"
+          class="form-content"
+        >
+          <p class="text-second-part texto-azul">
+            Podrás empezar a cobrar ingresando datos de
+            <br class="br-none-escritorio" />
+            tus clientes (lista de cobranzas) o puedes
+            <br class="br-none-escritorio" />
+            elegir no hacerlo e igual empezar a cobrar.
+          </p>
+
+          <!-- ¿Qué datos de tus clientes ingresarás en la plataforma? -->
+          <span class="label-text">
+            ¿Qué datos de tus clientes ingresarás en
+            <br class="br-none-escritorio" />la plataforma?
+          </span>
+          <div class="form-group pt-4">
+            <div class="form-group col-2 pl-0">
+              <mat-radio-group
+                formControlName="tipoDato"
+                (change)="changeTipoDato()"
+                [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''"
+              >
+                <mat-radio-button
+                  name="tipoDato"
+                  id="tipoDato-1"
+                  value="C"
+                  class="text-tipo-dato"
+                  >Código, nombres y deuda</mat-radio-button
+                >
+                <mat-radio-button
+                  name="tipoDato"
+                  id="tipoDato-2"
+                  value="P"
+                  class="text-tipo-dato"
+                  >Código y nombres</mat-radio-button
+                >
+                <mat-radio-button
+                  name="tipoDato"
+                  id="tipoDato-3"
+                  value="S"
+                  class="text-tipo-dato"
+                  >No ingresaré datos</mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
+            <mat-error
+              class="messsage-error"
+              *ngIf="
+                f.tipoDato.invalid &&
+                f.tipoDato.hasError('required') &&
+                submittedRequired
+              "
+              >Elige una opción</mat-error
+            >
+          </div>
+          <!-- ¿Qué código identificará a tus clientes? -->
+          <div class="form-group">
+            <mat-form-field class="w-100">
+              <!--  <label *ngIf="gtpMode && !_service.NewNameCod" class="messsage-error" style="float: right;">Corregir este campo</label> -->
+              <mat-label class="label">
+                ¿Qué código identificará a tus clientes?
+              </mat-label>
+
+              <mat-select
+                class="input-text"
+                *ngIf="f.codDeudor.value !== 'Otro'"
+                disableOptionCentering
+                panelClass="pts30"
+                formControlName="codDeudor"
+                name="codDeudor"
+                (ngModelChange)="selectCodigo($event)"
+                tooltip="Código debe ser numérico">
+                <!--   <mat-option class="input-text">Código Deudor</mat-option>-->
+                <mat-option
+
+                  class="input-text options-select"
+                  *ngFor="let c of codDeudor"
+                  [value]="c.code">
+                  {{ c.name }}
+                </mat-option>
+              </mat-select>
+              <input
+                class="input-text"
+                *ngIf="f.codDeudor.value === 'Otro'"
+                matInput
+                type="text"
+                maxlength="20"
+                formControlName="nameCod"
+                name="nameCod"
+                tooltip="Código debe ser numérico"
+                (input)="nameCodInput($event)"
+                (blur)="nameCodBlur($event)"/>
+              <div
+                *ngIf="f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado"
+                (click)="f.codDeudor.reset()"
+                class="hide-name-cod fa fa-times">
+              </div>
+              <mat-error>
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="
+                    f.codDeudor.invalid &&
+                    f.codDeudor.hasError('required') &&
+                    submittedRequired
+                  "
+                  >Elige una opción</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="
+                    f.nameCod.invalid &&
+                    f.nameCod.hasError('required') &&
+                    submittedRequired
+                  "
+                  >Escriba una opcion</mat-error
+                >
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')"
+                  >Ingrese un codigo correcto</mat-error
+                >
+              </mat-error>
+            </mat-form-field>
+
+            <div *ngIf="CodiAlert()" class="messsage-error">
+              El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta
+              siendo procesado
+            </div>
+
+            <div class="rectangle-success super-full-width">
+              <img
+                class="img-information"
+                src="../../../../../assets/images/information.svg"
+              />
+              <p class="text-message-name">
+                Este será el código que le pediremos ingresar a
+                <br class="br-none-tablet" />
+                tu cliente, cuando quiera realizar un pago
+              </p>
+            </div>
+          </div>
+          <!-- ¿Cómo quieres que te paguen tus clientes? -->
+          <div class="form-group" *ngIf="Dataparcial">
+            <mat-form-field class="w-100">
+              <mat-label class="label"
+                >¿Cómo quieres que te paguen tus clientes?</mat-label
+              >
+              <mat-select
+                class="input-text"
+                formControlName="tipoPago"
+                name="tipoPago"
+                disableOptionCentering
+                panelClass="pts30"
+              >
+                <!--  <mat-option class="input-text">¿Cómo quieres que te paguen tus clientes?</mat-option> -->
+                <mat-option
+                  class="input-text"
+                  *ngFor="let t of tiposPago"
+                  [value]="t.code"
+                >
+                  {{ t.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                class="messsage-error"
+                *ngIf="
+                  f.tipoPago.invalid &&
+                  f.tipoPago.hasError('required') &&
+                  submittedRequired
+                "
+                >Elige una opción</mat-error
+              >
+            </mat-form-field>
+          </div>
+          <!-- ¿Quieres que tus clientes te puedan pagar en partes? -->
+          <span class="texto-medios" *ngIf="Dataparcial">
+            ¿Quieres que tus clientes te puedan <br class="br-none-mobil" />
+            pagar en partes?
+          </span>
+          <div class="form-group pt-3" *ngIf="Dataparcial">
+            <div class="form-group col-2 pl-0">
+              <mat-radio-group formControlName="pagoPartes"  [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''">
+                <mat-radio-button
+                  name="pagoPartes"
+                  id="pagoPartes-no"
+                  value="N"
+                  class="texto-mora"
+                  >No. Solo podrán pagarme <br class="br-none-mobil" />la
+                  deuda/<br class="br-none-escritorio" /><br class="br-none-tablet" />monto
+                  total.</mat-radio-button
+                >
+                <mat-radio-button
+                  name="pagoPartes"
+                  id="pagoPartes-si"
+                  value="S"
+                  class="texto-mora"
+                  >Sí. Podrán pagarme una <br class="br-none-mobil" />parte de la
+                  <br
+                    class="br-none-escritorio"
+                  /><br class="br-none-tablet" />deuda/monto.</mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
+            <mat-error
+              class="messsage-error"
+              *ngIf="
+                f.pagoPartes.invalid &&
+                f.pagoPartes.hasError('required') &&
+                submittedRequired
+              "
+              >Elige una opción</mat-error
+            >
+          </div>
+          <!-- ¿Quieres que incluyamos el cobro de mora? -->
+          <span class="texto-medios" *ngIf="Dataparcial">
+            ¿Quieres que incluyamos el cobro de <br
+              class="br-none-escritorio"
+            />mora?
+          </span>
+          <div class="form-row pt-4" *ngIf="Dataparcial">
+            <div class="form-group col-2" [ngClass]="cobraMora ? 'col-2' : 'col-12'">
+              <mat-radio-group
+                formControlName="cobraMora"
+                (change)="changeMora()"
+                [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''"
+              >
+                <mat-radio-button
+                  name="cobraMora"
+                  id="mora-no"
+                  value="N"
+                  class="texto-mora"
+                  >No</mat-radio-button
+                >
+                <br>
+                <mat-radio-button
+                  name="cobraMora"
+                  id="mora-si"
+                  value="S"
+                  class="texto-mora"
+                  >Si</mat-radio-button
+                >
+              </mat-radio-group>
+              <mat-error
+                class="messsage-error"
+                *ngIf="
+                  f.cobraMora.invalid &&
+                  f.cobraMora.hasError('required') &&
+                  submittedRequired
+                "
+                >Elige una opción</mat-error
+              >
+            </div>
+
+            <div class="form-group col-5" *ngIf="cobraMora">
+              <mat-form-field class="w-80 ml-3">
+                <mat-label style="max-width: 128px">Tipo de Cobro</mat-label>
+                <mat-select
+                  style="max-width: 128px"
+                  class="texto-mora"
+                  formControlName="periodoMora"
+                  (ngModelChange)="TipoCobro()"
+                  disableOptionCentering
+                  panelClass="pts30"
+                >
+                  <!-- <mat-option class="texto-mora">Tipo de Cobro</mat-option> -->
+                  <mat-option
+                    class="input-text"
+                    *ngFor="let t of tiposMora"
+                    [value]="t.code"
+                  >
+                    {{ t.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  class="messsage-error"
+                  *ngIf="
+                    f.periodoMora.invalid &&
+                    f.periodoMora.hasError('required') &&
+                    submittedRequired
+                  "
+                  >Elige una opción</mat-error
+                >
+              </mat-form-field>
+            </div>
+            <div class="form-group col-5" *ngIf="cmoraporce">
+              <mat-radio-group
+                class="radio-group"
+                formControlName="tipoMora"
+                (change)="changeTipoMora(true)"
+              >
+                <mat-radio-button
+                  class="radio-button"
+                  name="tipoMora"
+                  id="monto"
+                  value="M"
+                  class="texto-radio-small"
+                  >Monto</mat-radio-button
+                >
+                <mat-form-field
+                  style="margin-top: -14px"
+                  class="ml-4 w-80 texto-mora"
+                  id="input-mora"
+                >
+                  <input
+                    formControlName="monto"
+                    type="text"
+                    name="monto"
+                    matInput
+                    appOnlyNumbersForm
+                    maxlength="7"
+                    (blur)="MoraMontoBlur($event)"
+                  />
+                  <span matSuffix class="simbolos"
+                    >{{ simboloMoneda }}&nbsp;&nbsp;</span
+                  >
+                  <mat-error>
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.monto.invalid &&
+                        f.monto.hasError('required') &&
+                        submittedRequired
+                      "
+                      >Debe ingresar un monto</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="f.monto.invalid && f.monto.hasError('maximo')"
+                      >No puede ser mayor a 1000.00 <br
+                    /></mat-error>
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="f.monto.invalid && f.monto.hasError('minimo')"
+                      >No puede ser menor a 0.50</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.monto.invalid &&
+                        !f.monto.hasError('maximo') &&
+                        !f.monto.hasError('minimo') &&
+                        f.monto.hasError('pattern')
+                      "
+                      >No tiene el formato correcto</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+                <mat-radio-button
+                  class="radio-button"
+                  style="padding-top: 10px"
+                  name="tipoMora"
+                  id="porcentaje"
+                  value="P"
+                  class="texto-radio-small"
+                  >Porcentaje</mat-radio-button
+                >
+                <mat-form-field
+                  style="margin-top: -14px"
+                  class="ml-4 w-80 texto-mora"
+                  id="input-mora"
+                >
+                  <input
+                    formControlName="porcentaje"
+                    name="porcentaje"
+                    matInput
+                    appOnlyNumbersForm
+                    type="text"
+                    maxlength="5"
+                    (blur)="MoraPorcenBlur($event)"
+                  />
+                  <span matSuffix class="simbolos">%</span>
+                  <mat-error>
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.porcentaje.invalid &&
+                        f.porcentaje.hasError('required') &&
+                        submittedRequired
+                      "
+                      >Debe ingresar un porcentaje</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.porcentaje.invalid && f.porcentaje.hasError('maximo')
+                      "
+                      >No puede ser mayor a 100.00</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.porcentaje.invalid && f.porcentaje.hasError('minimo')
+                      "
+                      >No puede ser menor a 0.01</mat-error
+                    >
+                    <mat-error
+                      class="messsage-error"
+                      *ngIf="
+                        f.porcentaje.invalid &&
+                        !f.porcentaje.hasError('maximo') &&
+                        !f.porcentaje.hasError('minimo') &&
+                        f.porcentaje.hasError('pattern')
+                      "
+                      >No tiene el formato correcto</mat-error
+                    >
+                  </mat-error>
+                </mat-form-field>
+              </mat-radio-group>
+            </div>
+          </div>
+          <!-- Siguiente -->
+          <div class="bnt-cont-reg">
+            <button type="submit" class="btn-eureca-green text-white">
+              SIGUIENTE
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Data Complete -->
+<div
+  class="modal fade"
+  id="complete-data"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-container">
+        <div class="form-row">
+          <div class="form-group col-10"></div>
+          <div class="form-group col-2">
+            <div
+              style="float: right; cursor: pointer"
+              data-dismiss="modal"
+              aria-label="Close"
+              class="close mano font-cerrar"
+            >
+              <img src="../../../../../assets/images/cerrar.svg" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-12">
+            <div class="title-complete-data">
+              Deberás ingresar en la plataforma:
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row p-0 m-0">
+          <div class="form-group col-1 p-0 m-0 mb-1">
+            <div class="container-text-circle">
+              <div class="text-circle"></div>
+            </div>
+          </div>
+          <div class="form-group col-11 p-0 m-0 mb-1">
+            <div>
+              <p class="text-complete-data">Código (DNI, RUC, otros)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row p-0 m-0">
+          <div class="form-group col-1 p-0 m-0 mb-1">
+            <div class="container-text-circle">
+              <div class="text-circle"></div>
+            </div>
+          </div>
+          <div class="form-group col-11 p-0 m-0 mb-1">
+            <div>
+              <p class="text-complete-data">Nombres</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row p-0 m-0">
+          <div class="form-group col-1 p-0 m-0 mb-1">
+            <div class="container-text-circle">
+              <div class="text-circle"></div>
+            </div>
+          </div>
+          <div class="form-group col-11 p-0 m-0 mb-1">
+            <div>
+              <p class="text-complete-data">Deuda o monto a pagar</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mt-3">
+          <div class="form-group col-12">
+            <div class="description-complete-data">
+              Con estos datos podremos reconocer a tus clientes en nuestro
+              sistema
+              <strong
+                >y podrán hacerte pagos según la deuda o monto que nos
+                indiques.</strong
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mt-2">
+          <div class="form-group col-12">
+            <div class="container-boton">
+              <button
+                type="button"
+                data-dismiss="modal"
+                class="mano focus-elements btn-eureca-green-understood"
+              >
+                ENTENDIDO
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Data Partial -->
+<div
+  class="modal fade"
+  id="partial-data"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-container">
+        <div class="form-row">
+          <div class="form-group col-10"></div>
+          <div class="form-group col-2">
+            <div
+              style="float: right; cursor: pointer"
+              data-dismiss="modal"
+              aria-label="Close"
+              class="close mano font-cerrar"
+            >
+              <img src="../../../../../assets/images/cerrar.svg" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-12">
+            <div class="title-complete-data">
+              Deberás ingresar en la plataforma:
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row p-0 m-0">
+          <div class="form-group col-1 p-0 m-0 mb-1">
+            <div class="container-text-circle">
+              <div class="text-circle"></div>
+            </div>
+          </div>
+          <div class="form-group col-11 p-0 m-0 mb-1">
+            <div>
+              <p class="text-complete-data">Código (DNI, RUC, Otros)</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row p-0 m-0">
+          <div class="form-group col-1 p-0 m-0 mb-1">
+            <div class="container-text-circle">
+              <div class="text-circle"></div>
+            </div>
+          </div>
+          <div class="form-group col-11 p-0 m-0 mb-1">
+            <div>
+              <p class="text-complete-data">Nombres</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mt-3">
+          <div class="form-group col-12">
+            <div class="description-complete-data">
+              Con estos datos podremos reconocer a tus clientes en nuestro
+              sistema.
+              <strong>El monto que podrán pagar será libre.</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mt-2">
+          <div class="form-group col-12">
+            <div class="container-boton">
+              <button
+                type="button"
+                data-dismiss="modal"
+                class="mano focus-elements btn-eureca-green-understood"
+              >
+                ENTENDIDO
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Sin Data -->
+<div
+  class="modal fade"
+  id="no-data"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-container">
+        <div class="form-row">
+          <div class="form-group col-10"></div>
+          <div class="form-group col-2">
+            <div
+              style="float: right; cursor: pointer"
+              data-dismiss="modal"
+              aria-label="Close"
+              class="close mano font-cerrar"
+            >
+              <img src="../../../../../assets/images/cerrar.svg" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mt-3">
+          <div class="form-group col-12">
+            <div class="description-no-data">
+              No tendrás que ingresar datos de tus clientes, ya sea porque no
+              los tienes o porque no puedes hacerlo de forma periódica.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mt-3">
+          <div class="form-group col-12">
+            <div class="description-no-data">
+              <strong>Identificaremos a tus clientes con un código cuando realicen un pago.
+              </strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row mt-2">
+          <div class="form-group col-12">
+            <div class="container-boton">
+              <button
+                type="button"
+                data-dismiss="modal"
+                class="mano focus-elements btn-eureca-green-understood"
+              >
+                ENTENDIDO
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

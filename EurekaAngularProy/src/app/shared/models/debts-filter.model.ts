@@ -1,11 +1,11 @@
 export interface DebstFilter {
-    pageNumber : number;
-    columnName : string;
-    asc : boolean;
-    inputSearch  : String;
-    service: String  ;
-    status: String;
-    dateForFilter: String;
-    dateFrom?: Date;
-    dateTo?: Date;
+  pageNumber: number;
+  columnName: string;
+  asc: boolean;
+  inputSearch: string;
+  service: string;
+  status: string;
+  dateForFilter: string;
+  dateFrom?: Date;
+  dateTo?: Date;
 }

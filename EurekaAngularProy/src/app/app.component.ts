@@ -1,29 +1,41 @@
-import { NavigationEnd, Router } from '@angular/router';
-
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
-import { LoginService } from 'src/app/shared/services/login.service';
 import { MatIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
+import { NavigationEnd, Router } from '@angular/router';
+import { LoginService } from 'src/app/shared/services/login.service';
 import { environment } from 'src/environments/environment';
+import { appFullRoutingNames } from './app-routing.names';
+import { authFullRoutingNames } from './features/auth/auth-routing.names';
+import {
+  internalAuthFullRoutingNames,
+  internalFullRoutingNames,
+} from './features/internal/internal-routing.names';
+import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
 
 declare let gtag: Function;
-declare let fbq:Function;
+declare let fbq: Function;
 @Component({
-  selector: 'app-root',
+  selector: 'cs-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [ LoginService]
+  providers: [LoginService],
 })
 export class AppComponent {
   title = 'Cobro Simple – Interbank';
 
-  constructor(private router: Router, matIconRegistry: MatIconRegistry, domSanitizer: DomSanitizer,private gaService: GoogleAnalytics) {
-    this.router.events.subscribe(e => {
+  constructor(
+    private router: Router,
+    matIconRegistry: MatIconRegistry,
+    domSanitizer: DomSanitizer,
+    private gaService: GoogleAnalytics
+  ) {
+    this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         if (environment.production) {
-
-          this.gaService.sendUrl(e.urlAfterRedirects.substr(1),e.urlAfterRedirects);
+          this.gaService.sendUrl(
+            e.urlAfterRedirects.substr(1),
+            e.urlAfterRedirects
+          );
 
           /*
           gtag('config', 'UA-148142629-1', {
@@ -33,7 +45,6 @@ export class AppComponent {
           */
           //Pixel Facebook
           this.sendTrackPageViewPixel(e.urlAfterRedirects);
-
         }
 
         window.scrollTo(0, 0);
@@ -41,74 +52,86 @@ export class AppComponent {
       }
     });
 
-      matIconRegistry.addSvgIcon(
-        'eurc_calendar',
-        domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/calendar.svg'),
-        { viewBox: '0 0 24 24' });
-      matIconRegistry.addSvgIcon(
-        'eurc_trash',
-        domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/trash.svg'),
-        { viewBox: '0 0 20 20' });
-      matIconRegistry.addSvgIcon(
-        'eurc_download',
-        domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/download.svg'),
-        { viewBox: '0 0 20 20' });
-      matIconRegistry.addSvgIcon(
-        'eurc_minimize',
-        domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/minimize.svg'),
-        { viewBox: '0 0 24 24' });
-      matIconRegistry.addSvgIcon(
-        'eurc_new_tab',
-        domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
-        { viewBox: '0 0 24 24' });
+    matIconRegistry.addSvgIcon(
+      'eurc_calendar',
+      domSanitizer.bypassSecurityTrustResourceUrl(
+        '/assets/images/calendar.svg'
+      ),
+      { viewBox: '0 0 24 24' }
+    );
+    matIconRegistry.addSvgIcon(
+      'eurc_trash',
+      domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/trash.svg'),
+      { viewBox: '0 0 20 20' }
+    );
+    matIconRegistry.addSvgIcon(
+      'eurc_download',
+      domSanitizer.bypassSecurityTrustResourceUrl(
+        '/assets/images/download.svg'
+      ),
+      { viewBox: '0 0 20 20' }
+    );
+    matIconRegistry.addSvgIcon(
+      'eurc_minimize',
+      domSanitizer.bypassSecurityTrustResourceUrl(
+        '/assets/images/minimize.svg'
+      ),
+      { viewBox: '0 0 24 24' }
+    );
+    matIconRegistry.addSvgIcon(
+      'eurc_new_tab',
+      domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
+      { viewBox: '0 0 24 24' }
+    );
   }
 
-  public show(): boolean{
-    if(this.router.url.includes('/login')){
-      return true;
-    }
-    return false;
-  }
+  private sendTrackPageViewPixel(pathComponent: string): void {
+    const path: string = pathComponent;
 
-  private sendTrackPageViewPixel(pathComponent: string): void{
-    var path: string = pathComponent;
+    const { CHARGES_AFFILIATION } = internalFullRoutingNames;
 
-    switch ( path ) {
-      case '/landing':
+    const {
+      CHARGES_AFFILIATION_ADD_STEP_4,
+      CHARGES_AFFILIATION_ADD_STEP_3,
+      CHARGES_AFFILIATION_ADD_STEP_2,
+      CHARGES_AFFILIATION_ADD_STEP_1,
+    } = internalAuthFullRoutingNames;
+    switch (path) {
+      case appFullRoutingNames.LANDING:
         fbq('track', 'PageView');
         break;
-      case '/identifiquemosEmpresa':
+      case authFullRoutingNames.COMPANY_REGISTER:
         fbq('track', 'PageView');
         break;
-      case '/completaDatosEmpresa':
+      case authFullRoutingNames.COMPANY_FILL_DATA:
         fbq('track', 'PageView');
         break;
-      case '/completadoPrimeraParte':
+      case authFullRoutingNames.COMPANY_FINISHED:
         fbq('track', 'PageView');
         break;
-      case '/configuraCobrosParteUnoAfiliacion':
+      case CHARGES_AFFILIATION_ADD_STEP_1:
         fbq('track', 'PageView');
         break;
-      case '/configuraCobrosParteDosAfiliacion':
+      case CHARGES_AFFILIATION_ADD_STEP_2:
         fbq('track', 'PageView');
         break;
-      case '/configuraCobrosParteTresAfiliacion':
+      case CHARGES_AFFILIATION_ADD_STEP_3:
         fbq('track', 'PageView');
         break;
-      case '/configuraCobrosParteCuatroAfiliacion':
+      case CHARGES_AFFILIATION_ADD_STEP_4:
         fbq('track', 'PageView');
         break;
-      case '/resumenCobrosAfiliacion':
+      case CHARGES_AFFILIATION:
         fbq('track', 'PageView');
         break;
-      case '/procesando':
+      case authFullRoutingNames.PROCESSING:
         fbq('track', 'Contact', {
-          content_name: 'cobro-simple-5'
+          content_name: 'cobro-simple-5',
         });
         break;
       /*default:
         fbq('track', 'PageView');
         break;*/
-   }
+    }
   }
 }
