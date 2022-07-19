@@ -1,4 +1,4 @@
 export interface StatesGtp {
-    idState:string;
-    descripcion:string
+  idState: string;
+  descripcion: string;
 }

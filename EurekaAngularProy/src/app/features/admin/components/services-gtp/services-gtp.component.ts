@@ -5,11 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
-import { GtpService } from 'src/app/shared/services/gtp.service';
 import { MonedaModel } from 'src/app/shared/models';
+import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { GtpService } from 'src/app/shared/services/gtp.service';
 
 @Component({
   selector: 'cs-services-gtp',
@@ -23,21 +22,21 @@ export class ServicesGTPComponent implements OnInit {
   monedas: MonedaModel[] = [];
   tiposMora: any[] = [];
   cuentas: any[] = [];
-  simboloMoneda: string = 'S/';
-  cobraMora: boolean = false;
-  cobraMonto: boolean = true;
-  cobraPorcentaje: boolean = false;
-  cmoraporce: boolean = false;
-  public Dataparcial: boolean = true;
+  simboloMoneda = 'S/';
+  cobraMora = false;
+  cobraMonto = true;
+  cobraPorcentaje = false;
+  cmoraporce = false;
+  Dataparcial = true;
   inReview: boolean;
   private _service: DataServiceGTP;
   configEmpresaService: any;
   private _tc = 3.37;
 
   update = false;
-  public comAgente: number = 1;
-  public comTienda: number = 7;
-  useAgencyChannel: boolean = false;
+  public comAgente = 1.5;
+  public comTienda = 7;
+  useAgencyChannel = false;
 
   @Input() public idCompany: number;
   @Input() set service(value: DataServiceGTP) {
@@ -395,44 +394,6 @@ export class ServicesGTPComponent implements OnInit {
     }
   }
 
-  /* onSubmitServicio2() {
-
-     if (this._service.newNameGtpStatus === 1   ) {
-
-       this.f.NewName.clearValidators();
-       this.f.NewName.reset();
-      }
-     if ( (this._service.name === '?' && this._service.newName.substring(0, 3) === '???' )){
-
-       this.f.NewName.clearValidators();
-       this.f.NewName.reset();
-      }
-     // CODIGO DEUDOR
-       if (this._service.debtorCode  === this._service.newNameCode ) {
-
-       this.f.NewNameCod.clearValidators();
-       this.f.NewNameCod.reset();
-       }
-       if ( this._service.debtorCode === '?'  && this._service.newNameCode.substring(0, 3) === '???') {
-
-         this.f.NewNameCod.clearValidators();
-         this.f.NewNameCod.reset();
-        }
-
-     if (this.frm.valid) {
-
-           let value: DataServiceGTP;
-           value = this._service;
-          // value.acceptednewName = (this.frm.value.NewName === 'S');
-          // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
-           // tslint:disable-next-line:max-line-length
-           value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
-           // tslint:disable-next-line:max-line-length
-           value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
-           this.grabar.emit(value);
-
-       }
-   } */
   onUpdateRes() {
     this.update = true;
   }
@@ -577,28 +538,15 @@ export class ServicesGTPComponent implements OnInit {
      }  */
   }
 
-  //////////------CHANGE--------
-
-  changeMoneda(event) {
-    this.simboloMoneda = this.f.moneda.value === '001' ? 'S/' : '$';
-    if (this.f.moneda.value !== '001') {
-      this.comAgente = Math.round((1 / this._tc) * 100) / 100;
-      this.comTienda = Math.round((7 / this._tc) * 100) / 100;
-    } else {
-      this.comAgente = 1;
-      this.comTienda = 7;
-    }
-  }
-
   changeCuenta(val) {
-    let cta = this.cuentas.find((c) => c.id == val);
+    const cta = this.cuentas.find((c) => c.id === val);
     this.simboloMoneda = cta.currency === '001' ? 'S/' : '$';
     this.f.moneda.setValue(cta.currency);
     if (this.f.moneda.value !== '001') {
-      this.comAgente = Math.round((1 / this._tc) * 100) / 100;
+      this.comAgente = Math.round((1.5 / this._tc) * 100) / 100;
       this.comTienda = Math.round((7 / this._tc) * 100) / 100;
     } else {
-      this.comAgente = 1;
+      this.comAgente = 1.5;
       this.comTienda = 7;
     }
   }

@@ -139,7 +139,7 @@
                   <input
                     formControlName="contrasena"
                     (Keydown.space)="$event.preventDefault()"
-                    appBlockCopyPaste
+                    csBlockCopyPaste
                     minlength="6"
                     maxlength="20"
                     [class.is-invalid]="f.contrasena.invalid"
@@ -185,7 +185,7 @@
                   <input
                     formControlName="repcontrasena"
                     (Keydown.space)="$event.preventDefault()"
-                    appBlockCopyPaste
+                    csBlockCopyPaste
                     minlength="6"
                     maxlength="20"
                     [class.is-invalid]="f.repcontrasena.invalid"

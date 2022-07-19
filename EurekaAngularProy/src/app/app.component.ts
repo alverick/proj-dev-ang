@@ -6,10 +6,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { environment } from 'src/environments/environment';
 import { appFullRoutingNames } from './app-routing.names';
 import { authFullRoutingNames } from './features/auth/auth-routing.names';
-import {
-  internalAuthFullRoutingNames,
-  internalFullRoutingNames,
-} from './features/internal/internal-routing.names';
+import { internalAuthFullRoutingNames } from './features/internal/internal-routing.names';
 import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
 
 declare let gtag: Function;
@@ -88,7 +85,7 @@ export class AppComponent {
   private sendTrackPageViewPixel(pathComponent: string): void {
     const path: string = pathComponent;
 
-    const { CHARGES_AFFILIATION } = internalFullRoutingNames;
+    const { CHARGES_AFFILIATION } = internalAuthFullRoutingNames;
 
     const {
       CHARGES_AFFILIATION_ADD_STEP_4,

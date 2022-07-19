@@ -19,7 +19,7 @@ import { ConfiguraCobrosParteTresComponent } from './pages/configura-cobros-part
 import { ConfiguraCobrosParteUnoComponent } from './pages/configura-cobros-parte-uno/configura-cobros-parte-uno.component';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.component';
-import { HomeComponent } from './pages/home/home.component';
+import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
 
 const routes: Routes = [
@@ -29,7 +29,7 @@ const routes: Routes = [
     children: [
       {
         path: internalRoutingNames.HOME,
-        component: HomeComponent,
+        component: HomePage,
         canActivate: [AuthGuard, GtpOutputGuard],
       },
       {
@@ -41,16 +41,6 @@ const routes: Routes = [
         path: internalRoutingNames.CHARGES,
         component: ResumenCobrosComponent,
         data: { isEdit: true, affiliationFlow: false },
-      },
-      {
-        path: internalRoutingNames.CHARGES_AFFILIATION,
-        component: ResumenCobrosComponent,
-        data: { isEdit: false, affiliationFlow: true },
-      },
-      {
-        path: internalRoutingNames.CHARGES_AFFILIATION_EDIT,
-        component: EditarCobrosComponent,
-        data: { isEdit: true, affiliationFlow: true },
       },
       {
         path: internalRoutingNames.CHARGES_EDIT,
@@ -88,6 +78,16 @@ const routes: Routes = [
     path: internalRoutingNames.AUTH,
     component: InternalAuthComponent,
     children: [
+      {
+        path: internalAuthRoutingNames.CHARGES_AFFILIATION,
+        component: ResumenCobrosComponent,
+        data: { isEdit: false, affiliationFlow: true },
+      },
+      {
+        path: internalAuthRoutingNames.CHARGES_AFFILIATION_EDIT,
+        component: EditarCobrosComponent,
+        data: { isEdit: true, affiliationFlow: true },
+      },
       {
         path: internalAuthRoutingNames.CHARGES_AFFILIATION_ADD_STEP_1,
         component: ConfiguraCobrosParteUnoComponent,

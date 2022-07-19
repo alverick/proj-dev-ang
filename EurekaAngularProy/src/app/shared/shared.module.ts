@@ -25,6 +25,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { PaymentsFilterComponent } from './components/payments-filter/payments-filter.component';
 import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
@@ -77,6 +78,7 @@ const UI_MODULES = [
     CorreoDirective,
     NameEnterpiseDirective,
     HeaderComponent,
+    PaymentsFilterComponent,
     FooterComponent,
   ],
   exports: [
@@ -87,6 +89,7 @@ const UI_MODULES = [
     FooterComponent,
     ...FORM_MODULES,
     HeaderComponent,
+    PaymentsFilterComponent,
     TooltipModule,
   ],
 })
