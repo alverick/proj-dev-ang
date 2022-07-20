@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
@@ -10,6 +10,8 @@ import * as saveAs from 'file-saver';
 import * as _moment from 'moment'; // dejalo si sale error
 import { default as _rollupMoment } from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { all, equals } from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { RubroModel } from 'src/app/shared/models';
 import { GtpFilter } from 'src/app/shared/models/gtp-filter';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
@@ -33,6 +35,7 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 ////////////////////////////
 
 @Component({
@@ -50,6 +53,7 @@ export const MY_FORMATS = {
         padding: 0.5em 0.3em;
         min-width: 300px !important;
       }
+
       :host >>> .tooltip.top .tooltip-arrow:before,
       :host >>> .tooltip.top .tooltip-arrow {
         border-top-color: #0d131d57;
@@ -67,25 +71,30 @@ export const MY_FORMATS = {
   ],
 })
 export class GtpGrillaComponent implements OnInit {
-  usDatePattern =
-    /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
-  minDate = new Date(2000, 0, 1);
-  maxDate = new Date(2050, 0, 1);
-  @ViewChild('inputDate1', { static: true }) inputDate1: ElementRef;
-  @ViewChild('inputDate2', { static: true }) inputDate2: ElementRef;
   messageTable = '';
   linkHistory = adminFullRoutingNames.HISTORY;
   showArrow = false;
   asc = true;
   orderBys = 0;
-  currentFiltro: GtpFilter = {
+  initialFilter: GtpFilter = {
     pageNumber: 1,
     ColumnName: 'requestDate',
     asc: false,
     inputSearch: '',
     BusinessHeading: '',
     status: '',
-    statussolcitud: '',
+    statusSolicitud: '',
+    dateFrom: null,
+    dateTo: null,
+  };
+  currentFilter: GtpFilter = {
+    pageNumber: 1,
+    ColumnName: 'requestDate',
+    asc: false,
+    inputSearch: '',
+    BusinessHeading: '',
+    status: '',
+    statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
   };
@@ -96,7 +105,7 @@ export class GtpGrillaComponent implements OnInit {
     inputSearch: '',
     BusinessHeading: '',
     status: '',
-    statussolcitud: '',
+    statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
   };
@@ -127,6 +136,7 @@ export class GtpGrillaComponent implements OnInit {
     public gtpService: GtpService,
     private router: Router
   ) {}
+
   rubros: RubroModel[] = [];
   states: StatesGtp[] = [];
   solicitudes: StatesGtp[] = [];
@@ -141,176 +151,93 @@ export class GtpGrillaComponent implements OnInit {
     });
     this.consultaGtp();
   }
-  limpiardate1() {
-    this.inputDate1.nativeElement.value = '';
-    this.filtro.dateFrom = null;
-  }
-  limpiardate2() {
-    this.inputDate2.nativeElement.value = '';
-    this.filtro.dateTo = null;
-  }
+
   Aprobar(ClientId: number) {
     this.router.navigate([adminFullRoutingNames.APPROVE + ClientId]);
-    // location.href = '/AprobacionGtp/'+ClientId;
   }
+
   onUpdateEAG(ClientId: number) {
-    this.gtpService.ReenviarPAG(ClientId).subscribe((r) => {
+    this.gtpService.ReenviarPAG(ClientId).subscribe(() => {
       this.consultaGtp();
     });
   }
+
   changePage(nro: number) {
-    this.currentFiltro.pageNumber = nro;
+    this.currentFilter.pageNumber = nro;
     this.consultaGtp();
   }
+
   //// ORDENAMIENTO OCULTAR LAS FLECHAS
   orderList(items: any) {
     items.asc = !items.asc;
     this.orderBy = items.orderBy;
     this.orderDef[items.orderBy].asc = items.asc;
-    this.currentFiltro.asc = items.asc;
-    this.currentFiltro.ColumnName = this.orderDef[items.orderBy].name;
+    this.currentFilter.asc = items.asc;
+    this.currentFilter.ColumnName = this.orderDef[items.orderBy].name;
     this.consultaGtp();
   }
-  // orderList(index: number, asc: boolean) {
-  //   this.orderBy = index;
-  //   this.orderDef[index].asc = asc;
 
-  //   this.currentFiltro.asc = asc;
-  //   this.currentFiltro.ColumnName = this.orderDef[index].name;
-  //
-  //   this.consultaGtp();
-  // }
-  orderByColum() {}
-
-  private validaFiltro() {
-    let res = true;
-    for (const s in this.errores) {
-      if (this.errores[s]) {
-        res = false;
-      }
-    }
-    return res;
-  }
-
-  sendFiltro() {
-    this.currentFiltro.inputSearch = this.filtro.inputSearch;
-    this.currentFiltro.BusinessHeading = this.filtro.BusinessHeading;
-    this.currentFiltro.status = this.filtro.status;
-    this.currentFiltro.statussolcitud = this.filtro.statussolcitud;
-    this.currentFiltro.dateFrom = this.filtro.dateFrom;
-    this.currentFiltro.dateTo = this.filtro.dateTo;
-
-    this.consultaGtp();
-
-    if (
-      (this.filtro.inputSearch === '' ||
-        this.filtro.inputSearch === null ||
-        this.filtro.inputSearch === undefined) &&
-      (this.filtro.BusinessHeading === '' ||
-        this.filtro.BusinessHeading === null ||
-        this.filtro.BusinessHeading === undefined) &&
-      (this.filtro.status == '' ||
-        this.filtro.status === null ||
-        this.filtro.status === undefined) &&
-      (this.filtro.statussolcitud == '' ||
-        this.filtro.statussolcitud === null ||
-        this.filtro.statussolcitud === undefined) &&
-      /*this.filtro.dateFrom == ''  ||*/ (this.filtro.dateFrom === null ||
-        this.filtro.dateFrom === undefined)
-    ) {
-      this.messageTable = 'No se encontraron empresas para esta búsqueda';
-      this.showArrow = true;
-    } else {
-      this.messageTable = 'No se encontraron empresas para esta búsqueda';
-      this.showArrow = false;
+  resetDebts() {
+    if (!equals(this.initialFilter, this.currentFilter)) {
+      this.currentFilter = this.initialFilter;
+      const { statusSolicitud, status, inputSearch, BusinessHeading } =
+        this.initialFilter;
+      this.submitSearch(inputSearch, BusinessHeading, status, statusSolicitud);
     }
   }
 
-  // callback:  cuando se termine de ejecutar la consulta se ejecuta el callback
-  // consultaDeuda(cb: () => void = null) {
-
-  consultaGtp() {
-    if (this.validaFiltro()) {
-      this.spinner.show();
-      this.gtpService.getEmpresas(this.currentFiltro).subscribe(
-        (d) => {
-          this.spinner.hide();
-        },
-        (err) => {
-          this.spinner.hide();
-        }
+  searchDebts(filterData: any) {
+    const filter: GtpFilter = {
+      ...this.initialFilter,
+      ...filterData,
+    };
+    if (!equals(filter, this.currentFilter)) {
+      this.currentFilter = {
+        ...this.currentFilter,
+        ...filter,
+      };
+      this.submitSearch(
+        filterData.inputSearch,
+        filterData.BusinessHeading,
+        filterData.status,
+        filterData.statusSolicitud
       );
     }
   }
 
-  ceroRegistros(): boolean {
-    if (
-      sessionStorage.getItem('tk') === null ||
-      sessionStorage.getItem('tk') === ''
-    ) {
-      return false;
-    } else {
-      if (this.gtpService.EnterprisesItems.totalCompanies === 0) {
-        return true;
-      } else {
-        return false;
+  private submitSearch(inputSearch, BusinessHeading, status, statusSolicitud) {
+    this.consultaGtp();
+    this.messageTable = 'No se encontraron empresas para esta búsqueda';
+    this.showArrow = all(isNilOrEmpty, [
+      inputSearch,
+      BusinessHeading,
+      status,
+      statusSolicitud,
+    ]);
+  }
+
+  consultaGtp() {
+    this.spinner.show();
+    this.gtpService.getEmpresas(this.currentFilter).subscribe(
+      () => {
+        this.spinner.hide();
+      },
+      () => {
+        this.spinner.hide();
       }
-    }
+    );
   }
 
-  ///////////// FECHAS /////////////////////////////////////////////////////
-
-  validaDateFrom(e) {
-    this.internalValidaDateFrom(e);
-    if (!this.errores.dateFrom && this.filtro.dateTo) {
-      this.internalValidaDateTo(this.filtro.dateTo);
-    }
+  ceroRegistros(): boolean {
+    return sessionStorage.getItem('tk') === null ||
+      sessionStorage.getItem('tk') === ''
+      ? false
+      : this.gtpService.EnterprisesItems.totalCompanies === 0;
   }
-
-  validaDateTo(e) {
-    this.internalValidaDateTo(e);
-    if (!this.errores.dateTo && this.filtro.dateFrom) {
-      this.internalValidaDateFrom(this.filtro.dateFrom);
-    }
-  }
-
-  change(e) {}
 
   clickClientesNoRegistrados() {
     this.gtpService.clientsUnregistered(this.filtro).subscribe((r: Blob) => {
       saveAs(r, 'ClientesNoRegistrados.xlsx');
     });
-  }
-
-  private internalValidaDateFrom(e) {
-    if (e === null) {
-      this.errores['dateFrom'] = 'No es una fecha válida';
-    } else {
-      const yearFrom = new Date(e).getFullYear();
-      if (yearFrom < 2000 || yearFrom > 2050) {
-        this.errores['dateFrom'] = 'Fecha Inválida';
-      } else {
-        delete this.errores.dateFrom;
-      }
-    }
-  }
-
-  private internalValidaDateTo(e) {
-    if (e === null) {
-      this.errores['dateTo'] = 'No es una fecha válida';
-    } else {
-      const yearTo = new Date(e).getFullYear();
-      if (yearTo < 2000 || yearTo > 2050) {
-        this.errores['dateTo'] = 'Fecha Inválida';
-      } else if (this.filtro.dateFrom && e < this.filtro.dateFrom) {
-        this.errores['dateTo'] = 'No puede ser menor a la emisión';
-      } else {
-        delete this.errores.dateTo;
-      }
-    }
-  }
-
-  goCargaHistorico(id: number) {
-    this.router.navigate([adminFullRoutingNames.HISTORY, id]);
   }
 }

@@ -19,13 +19,13 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
 import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.component';
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
 import { DebtComponent } from './pages/home/components/debt.component';
-import { HomeComponent } from './pages/home/home.component';
+import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
 
 @NgModule({
   declarations: [
     InternalComponent,
-    HomeComponent,
+    HomePage,
     ConfigurarEmpresaComponent,
     ResumenCobrosComponent,
     AgregaCobroComponent,
@@ -49,6 +49,6 @@ import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.co
     PerfectScrollbarModule,
     SharedModule,
   ],
-  entryComponents: [],
+  entryComponents: [AgregaCobroComponent, DebtComponent],
 })
 export class InternalModule {}

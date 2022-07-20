@@ -32,238 +32,9 @@ body {
   border-radius: 4px;
 }
 
-.mat-progress-spinner circle,
-.mat-spinner circle {
-  stroke: $textblack;
-}
-
-.mat-form-field {
-  .mat-form-field-prefix {
-    margin-right: 2px;
-  }
-  .mat-form-field-label {
-    @include font-text(16px);
-    font-weight: normal;
-    // color: #0d131d !important;
-    top: 21px;
-  }
-  .mat-form-field-ripple {
-    background-color: $textblack !important;
-  }
-  .mat-select-arrow {
-    color: $textgreen;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid;
-  }
-  .mat-datepicker-toggle {
-    .mat-icon-button {
-      color: $textgreen;
-    }
-  }
-}
-
-.mat-form-field.mat-focused {
-  .mat-form-field-label {
-    color: $textblack !important;
-  }
-  .mat-form-field-ripple {
-    background-color: $green !important;
-  }
-  .mat-select-arrow {
-    color: $textgreen !important;
-  }
-}
-
-.mat-form-field.mat-form-field-disabled {
-  .mat-datepicker-toggle {
-    .mat-icon-button {
-      color: rgba(0, 0, 0, 0.42);
-    }
-  }
-}
-
-.chk-vertical {
-  display: block;
-  width: 40px;
-  text-align: center;
-  .mat-checkbox-ripple {
-    left: calc(50% - 12px);
-    top: calc(50% - 12px);
-    height: 24px;
-    width: 24px;
-  }
-  .mat-checkbox-layout {
-    margin-bottom: 0;
-  }
-}
-
-.mat-checkbox-checked.mat-accent {
-  .mat-checkbox-background {
-    background-color: $textgreen;
-  }
-}
-
-.mat-progress-bar-buffer {
-  background-color: #a1dbc2;
-}
-
-.mat-progress-bar-fill::after {
-  background-color: $green;
-}
-
 button:focus {
   outline: none !important;
   box-shadow: none !important;
-}
-
-.btn-eureca-green {
-  @include font-text(14px !important, 500 !important);
-  color: #ffffff !important;
-  background-color: $green !important;
-  @include border-radius(4px !important);
-  border: solid 1px $green !important;
-  &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: $green-oscuro !important;
-  }
-  &:active {
-    background-color: $green !important;
-    background-image: none !important;
-  }
-  &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
-  }
-}
-
-.btn-eureca-grey-3 {
-  @include font-text(14px !important, 500 !important);
-  color: #ffffff !important;
-  background-color: $grey-3 !important;
-  @include border-radius(4px !important);
-  border: solid 1px $grey-3 !important;
-  &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: $grey-3-oscuro !important;
-  }
-  &:active {
-    background-color: $grey-3 !important;
-    background-image: none !important;
-  }
-  &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
-  }
-}
-
-.btn-eureca-blue {
-  @include font-text(14px !important, 500 !important);
-  color: #ffffff !important;
-  background-color: $textblue !important;
-  @include border-radius(4px !important);
-  border: solid 1px $textblue !important;
-  &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: $textblue-oscuro !important;
-  }
-  &:active {
-    background-color: $textblue !important;
-    background-image: none !important;
-  }
-  &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
-  }
-}
-
-.btn-eureca-yellow {
-  @include font-text(14px !important, 500 !important);
-  // color: #ffffff !important;
-  color: #212529 !important;
-  background-color: yellow !important;
-  @include border-radius(4px !important);
-  border: solid 1px yellow !important;
-  &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: #e4e415ed !important;
-  }
-  &:active {
-    background-color: yellow !important;
-    background-image: none !important;
-  }
-  &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
-  }
-}
-
-.btn-outline-green {
-  @include font-text(16px !important, 500 !important);
-  @include border-radius(4px !important);
-  background-color: $blanco !important;
-  border: solid 1px $blanco !important;
-  color: $green !important;
-  &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: #e5e5e5 !important;
-  }
-  &:active {
-    background-color: $blanco !important;
-    background-image: none !important;
-  }
-  &.btn-disabled {
-    color: #9b9b9b !important;
-    background-color: $blanco !important;
-  }
-}
-
-.btn-eureca-green-alert {
-  height: 48px;
-  width: 207px;
-  @include font-text(14px !important, normal !important);
-  color: #ffffff !important;
-  background-color: $green !important;
-  @include border-radius(4px !important);
-  border: solid 1px $green !important;
-  &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: $green-oscuro !important;
-  }
-  &:active {
-    background-color: $green !important;
-    background-image: none !important;
-  }
-  &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
-  }
-}
-
-.btn-outline-green-alert {
-  height: 48px;
-  width: 207px;
-  @include font-text(14px !important, normal !important);
-  @include border-radius(4px !important);
-  background-color: $blanco !important;
-  border: solid 1px $blanco !important;
-  color: $green !important;
-  &:hover {
-    background-color: #ffffff !important;
-    color: $green;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  &:active {
-    background-color: $blanco !important;
-    background-image: none !important;
-  }
-  &.btn-disabled {
-    // color       : #9b9b9b !important;
-    color: $green;
-    text-decoration: underline;
-    cursor: pointer;
-  }
 }
 
 .messsage-error {
@@ -308,87 +79,16 @@ button:focus {
   color: #0d131d !important;
 }
 
-.mat-calendar-body-selected {
-  background-color: $green;
-  color: #fff;
-}
-
-/*
-.mat-form-field-appearance-legacy .mat-form-field-underline {
-    height: 1px;
-}
-*/
-
 .swal2-styled {
   border-style: none;
-}
-
-.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
-  .mat-form-field-label {
-  transform: translateY(-1.28125em) scale(1) perspective(100px)
-    translateZ(0.001px);
-  font-size: 12px;
-  font-weight: 500;
 }
 
 .pts16 {
   margin-top: 16px !important;
 }
 
-.pts26 {
-  margin-top: 26px !important;
-}
-
 .pts30 {
   margin-top: 30px !important;
-}
-
-mat-icon.svg-custom {
-  svg {
-    width: 24px;
-    height: 24px;
-    path {
-      fill: inherit;
-    }
-  }
-}
-
-.mat-checkbox-frame {
-  border-color: #9ea1a5;
-}
-
-.mat-radio-outer-circle {
-  border-color: #9ea1a5;
-}
-
-.mat-select-value {
-  color: #0d131d;
-  // color: #0d131d !important;
-}
-
-.mat-select-placeholder {
-  // color: #0d131d !important;
-  color: #0d131d;
-}
-
-.mat-input-element {
-  // caret-color: #0d131d !important;
-  caret-color: #0d131d;
-}
-
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: $green;
-}
-
-.mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: $green;
-}
-
-.mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
-  .mat-form-field-label {
-  font-size: 10px !important;
-  // color: #0d131d !important;
-  color: #0d131d;
 }
 
 .w-70 {
@@ -401,7 +101,73 @@ mat-icon.svg-custom {
 
 .custom-container {
   width: 100%;
-  max-width: 1320px;
+  max-width: 1320px !important;
   // min-width   : 650px;
   margin: 0 auto;
+}
+
+
+.swal2-styled {
+  margin: 0.5em 10vh !important;
+}
+
+// --------- paginas para arreglar ---------
+.pp-5 {
+  padding: 3rem !important;
+}
+
+.pt-5 {
+  padding-top: 3rem !important;
+}
+
+.ppl-5,
+.ppx-5 {
+  padding-left: 3rem !important;
+  padding-top: 3rem !important;
+}
+
+.icon-gb {
+  margin-right: 5px;
+  top: -2px;
+  position: relative;
+}
+
+.reponsive-servicio-pago {
+  display: flex;
+}
+
+.reponsive-servicio-pago1 {
+  display: none;
+}
+
+.ppr-5 {
+  padding-right: 3rem !important;
+}
+
+.btn-fn {
+  display: block;
+}
+
+.btn-fn1 {
+  display: none;
+}
+
+.br-none-escritorio {
+  display: initial;
+}
+
+.br-none-mobil {
+  display: none;
+}
+
+.br-none-tablet {
+  display: none;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  transition: all 0.5s;
+}
+
+.backdrop-background-opaque {
+  background-color: #f3f3f3;
 }

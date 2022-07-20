@@ -1,15 +1,11 @@
-export interface GtpFilter { 
-    pageNumber : number;
-    ColumnName : string;
-    asc : boolean;
-    inputSearch  : String;
-    BusinessHeading: String;
-    status: String;
-    statussolcitud:String;
-    dateFrom?: Date;
-    dateTo?: Date;
+export interface GtpFilter {
+  pageNumber: number;
+  ColumnName: string;
+  asc: boolean;
+  inputSearch: string;
+  BusinessHeading: string;
+  status: string;
+  statusSolicitud: string;
+  dateFrom?: Date;
+  dateTo?: Date;
 }
-
-
-
-

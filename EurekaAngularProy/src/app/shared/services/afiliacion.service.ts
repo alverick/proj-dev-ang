@@ -88,8 +88,11 @@ export class AfiliacionService {
             s.newName.substr(newName.length) === ''
           ) {
             const aux = parseInt(s.newName.substr(newName.length));
-            if (isNaN(aux)) { nro = 2; }
-            else if (aux >= nro) { nro = aux + 1; }
+            if (isNaN(aux)) {
+              nro = 2;
+            } else if (aux >= nro) {
+              nro = aux + 1;
+            }
           }
         }
       } else {
@@ -99,8 +102,11 @@ export class AfiliacionService {
             s.nombre.substr(nombre.length) === ''
           ) {
             const aux = parseInt(s.nombre.substr(nombre.length));
-            if (isNaN(aux)) { nro = 2; }
-            else if (aux >= nro) { nro = aux + 1; }
+            if (isNaN(aux)) {
+              nro = 2;
+            } else if (aux >= nro) {
+              nro = aux + 1;
+            }
           }
         }
       }
@@ -218,7 +224,9 @@ export class AfiliacionService {
   }
 
   public GetRubros(): Observable<RubroModel[]> {
-    if (this._rubros !== null) { return Observable.of(this._rubros); }
+    if (this._rubros !== null) {
+      return Observable.of(this._rubros);
+    }
     return this.http
       .get<RubroModel[]>(
         `${environment.END_POINT}/enterpriseHeading?_=` + new Date().getTime()
@@ -396,14 +404,12 @@ export class AfiliacionService {
             pagoPartes: s.partialPayment,
             newNameGtpStatus: s.newNameGTPStatus,
             newNameCodeGtpStatus: s.newNameCodeGTPStatus,
-            nombreHabilitado:
+            nombreHabilitado: !(
               s.newNameGTPStatus === 1 || s.newNameGTPStatus === 3
-                ? false
-                : true,
-            nombreCodHabilitado:
+            ),
+            nombreCodHabilitado: !(
               s.newNameCodeGTPStatus === 1 || s.newNameCodeGTPStatus === 3
-                ? false
-                : true,
+            ),
             useAgencyChannel: s.useAgencyChannel,
           });
         });
@@ -531,8 +537,11 @@ export class AfiliacionService {
             s.newName.substr(newName.length) === ''
           ) {
             const aux = parseInt(s.newName.substr(newName.length));
-            if (isNaN(aux)) { nro = 2; }
-            else if (aux >= nro) { nro = aux + 1; }
+            if (isNaN(aux)) {
+              nro = 2;
+            } else if (aux >= nro) {
+              nro = aux + 1;
+            }
           }
         }
       } else {
@@ -542,8 +551,11 @@ export class AfiliacionService {
             s.nombre.substr(nombre.length) === ''
           ) {
             const aux = parseInt(s.nombre.substr(nombre.length));
-            if (isNaN(aux)) { nro = 2; }
-            else if (aux >= nro) { nro = aux + 1; }
+            if (isNaN(aux)) {
+              nro = 2;
+            } else if (aux >= nro) {
+              nro = aux + 1;
+            }
           }
         }
       }

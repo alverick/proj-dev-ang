@@ -1,18 +1,19 @@
-import { OnInit, Component } from "@angular/core";
-import { ExcelService } from "src/app/shared/services/excel.service";
-import { MatDialogRef } from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+import { ExcelService } from 'src/app/shared/services/excel.service';
 
 @Component({
   selector: 'cs-agrega-cobro',
-  templateUrl: '../agrega-cobro.component.html',
-  styleUrls: ['../agrega-cobro.component.scss'],
+  templateUrl: './agrega-cobro.component.html',
+  styleUrls: ['./agrega-cobro.component.scss'],
 })
 export class AgregaCobroComponent implements OnInit {
-  constructor(public excelService: ExcelService,
-    public  dialogRef: MatDialogRef<AgregaCobroComponent>) {}
+  constructor(
+    public excelService: ExcelService,
+    public dialogRef: MatDialogRef<AgregaCobroComponent>
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   close() {
     this.dialogRef.close();

@@ -156,7 +156,7 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
 
   nextPage() {
     if (this.affiliationFlow === true) {
-      this.router.navigate([internalFullRoutingNames.CHARGES_AFFILIATION]);
+      this.router.navigate([internalAuthFullRoutingNames.CHARGES_AFFILIATION]);
     } else {
       this.router.navigate([internalFullRoutingNames.CHARGES]);
     }

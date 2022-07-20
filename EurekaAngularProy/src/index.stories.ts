@@ -1,16 +1,17 @@
-import { storiesOf } from '@storybook/angular';
-import { Button } from '@storybook/angular/demo';
+import Button from '@storybook/angular/dist/demo/button.component';
 
-storiesOf('My Button', module)
-  .add('with text', () => ({
-    component: Button,
-    props: {
-      text: 'Hello Button',
-    },
-  }))
-  .add('with emoji', () => ({
-    component: Button,
-    props: {
-      text: '😀 😎 👍 💯',
-    },
-  }));
+export default { title: 'My Button' };
+
+export const withText = () => ({
+  component: Button,
+  props: {
+    text: 'Hello Button',
+  },
+});
+
+export const withEmoji = () => ({
+  component: Button,
+  props: {
+    text: '😀 😎 👍 💯',
+  },
+});

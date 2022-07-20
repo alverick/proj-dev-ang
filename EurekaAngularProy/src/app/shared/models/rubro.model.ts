@@ -1,4 +1,4 @@
 export interface RubroModel {
-    code: string;
-    name: string;
+  code: string;
+  name: string;
 }

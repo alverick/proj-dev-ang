@@ -4,7 +4,7 @@
     <div class="row">
         <mat-form-field class="inline-ctrl">
             <mat-label>Fecha de Emisión</mat-label>
-            <input matInput [matDatepicker]="n_edp" (click)="n_edp.open()" class="input-text-dash" appDate [min]="minDate" [max]="maxDate" [(ngModel)]="nuevaDeuda.emissionDate" formC maxlength="10" autocomplete="off" minlength="10" type="text" (ngModelChange)="nuevaDeuda.errores.emissionDate = null;">
+            <input matInput [matDatepicker]="n_edp" (click)="n_edp.open()" class="input-text-dash" csDate [min]="minDate" [max]="maxDate" [(ngModel)]="nuevaDeuda.emissionDate" formC maxlength="10" autocomplete="off" minlength="10" type="text" (ngModelChange)="nuevaDeuda.errores.emissionDate = null;">
             <mat-datepicker-toggle matSuffix [for]="n_edp"></mat-datepicker-toggle>
             <mat-datepicker #n_edp></mat-datepicker>
             <div class="msg-error inline" *ngIf="nuevaDeuda.errores.emissionDate">{{nuevaDeuda.errores.emissionDate}}
@@ -12,7 +12,7 @@
         </mat-form-field>
         <mat-form-field class="inline-ctrl" *ngIf="!isPartial">
             <mat-label>Fecha de Vencimiento</mat-label>
-            <input class="input-text-dash" appDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="n_ddp" [(ngModel)]="nuevaDeuda.dueDate" maxlength="10" minlength="10" autocomplete="off" (click)="n_ddp.open()" type="text" (ngModelChange)="nuevaDeuda.errores.dueDate = null">
+            <input class="input-text-dash" csDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="n_ddp" [(ngModel)]="nuevaDeuda.dueDate" maxlength="10" minlength="10" autocomplete="off" (click)="n_ddp.open()" type="text" (ngModelChange)="nuevaDeuda.errores.dueDate = null">
             <mat-datepicker-toggle matSuffix [for]="n_ddp"></mat-datepicker-toggle>
             <mat-datepicker #n_ddp></mat-datepicker>
             <div class="msg-error inline" *ngIf="nuevaDeuda.errores.dueDate">{{nuevaDeuda.errores.dueDate}}</div>

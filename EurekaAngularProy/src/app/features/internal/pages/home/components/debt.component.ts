@@ -27,8 +27,8 @@ const MY_FORMATS = {
 
 @Component({
   selector: 'cs-debt-form',
-  templateUrl: '../debt.component.html',
-  styleUrls: ['../debt.component.scss'],
+  templateUrl: './debt.component.html',
+  styleUrls: ['./debt.component.scss'],
   providers: [
     {
       provide: DateAdapter,

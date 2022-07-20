@@ -1,13 +1,15 @@
 //@tailwind base;
 //@tailwind components;
 //@tailwind utilities;
-@import '_normalize.scss';
+@import 'normalize';
 
 /* Reset Styles */
 
-@import '_configuration.scss';
-@import '_fonts.scss';
-@import '_main.scss';
+@import 'configuration';
+@import 'fonts';
+@import 'material-config-theme';
+@import 'material-custom';
+@import 'main';
 
 /* @import "~bootstrap/dist/css/bootstrap.css";
 @import "~font-awesome/css/font-awesome.css"; */
@@ -16,82 +18,4 @@
 
 /*@import "~@angular/material/prebuilt-themes/indigo-pink.css";*/
 
-@import '~@angular/cdk/overlay-prebuilt.css';
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
 @import 'reponsive';
-
-.mat-select-panel {
-  min-width: 220px !important;
-  max-width: 100% !important;
-}
-
-:-ms-input-placeholder.mat-input-element {
-  // color: rgba(0, 0, 0, 0.42) !important;
-  color: rgba(0, 0, 0, 0.42);
-}
-
-.swal2-styled {
-  margin: 0.5em 10vh !important;
-}
-
-// --------- paginas para arreglar ---------
-.pp-5 {
-  padding: 3rem !important;
-}
-
-.pt-5 {
-  padding-top: 3rem !important;
-}
-
-.ppl-5,
-.ppx-5 {
-  padding-left: 3rem !important;
-  padding-top: 3rem !important;
-}
-
-.icon-gb {
-  margin-right: 5px;
-  top: -2px;
-  position: relative;
-}
-
-.reponsive-servicio-pago {
-  display: flex;
-}
-
-.reponsive-servicio-pago1 {
-  display: none;
-}
-
-.ppr-5 {
-  padding-right: 3rem !important;
-}
-
-.btn-fn {
-  display: block;
-}
-
-.btn-fn1 {
-  display: none;
-}
-
-.br-none-escritorio {
-  display: initial;
-}
-
-.br-none-mobil {
-  display: none;
-}
-
-.br-none-tablet {
-  display: none;
-}
-
-.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
-  transition: all 0.5s;
-}
-
-.backdrop-background-opaque {
-  background-color: #f3f3f3;
-}
