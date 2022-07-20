@@ -36,9 +36,9 @@ import { authFullRoutingNames } from '../../auth-routing.names';
 })
 export class IdentificarEmpresaComponent implements OnInit {
   registerForm: FormGroup;
-  public inEdit: boolean = false;
+  public inEdit = false;
   submittedRequired = false;
-  submitted: boolean = false;
+  submitted = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -95,13 +95,13 @@ export class IdentificarEmpresaComponent implements OnInit {
       this.afiliacionService
         .ValidateClient({
           ruc: this.registerForm.value.ruc,
-          //////*name: this.registerForm.value.nombre,
-          //////*entry: this.registerForm.value.rubro,
+          ////// *name: this.registerForm.value.nombre,
+          ////// *entry: this.registerForm.value.rubro,
           email: this.registerForm.value.email,
           movilNumber: this.registerForm.value.telefono,
           movilOperator: this.registerForm.value.movilOperator,
-          //////*password: this.registerForm.value.contrasena,
-          //////*acceptTerms: this.registerForm.value.acceptterms
+          ////// *password: this.registerForm.value.contrasena,
+          ////// *acceptTerms: this.registerForm.value.acceptterms
         })
         .subscribe(
           (d) => {
@@ -149,16 +149,16 @@ export class IdentificarEmpresaComponent implements OnInit {
         );
     } else {
       /*Esto faltaría implementar para la edición*/
-      //////*if (this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
-      //////*  this.gtpService.EdtEmpServ = { token: this.llave, NewName: null };
-      //////*  this.gtpService.nombre = null;
-      //////*} else {
-      //////*  this.gtpService.EdtEmpServ = { token: this.llave, NewName: this.registerForm.value.nombre.toString() };
-      //////*  this.gtpService.nombre = this.registerForm.value.nombre.toString();
-      //////*}
-      //////*this.afiliacionService.email = this.gtpService.EmpresaServicios.email;
-      //////*this.router.navigate([authRoutingNames.SERVICES_EDIT_GTP]);
-      //////*this.gtpService.llave = this.llave;
+      ////// *if (this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
+      ////// *  this.gtpService.EdtEmpServ = { token: this.llave, NewName: null };
+      ////// *  this.gtpService.nombre = null;
+      ////// *} else {
+      ////// *  this.gtpService.EdtEmpServ = { token: this.llave, NewName: this.registerForm.value.nombre.toString() };
+      ////// *  this.gtpService.nombre = this.registerForm.value.nombre.toString();
+      ////// *}
+      ////// *this.afiliacionService.email = this.gtpService.EmpresaServicios.email;
+      ////// *this.router.navigate([authRoutingNames.SERVICES_EDIT_GTP]);
+      ////// *this.gtpService.llave = this.llave;
     }
   }
 
@@ -201,10 +201,10 @@ export class IdentificarEmpresaComponent implements OnInit {
     }).then((res) => {
       if (res.value) {
         /*Esto se debería cambiar porque las pantallas ahora son más*/
-        //////*this.gaService.sendEvent('CrearCuentaNegocio', {
-        //////*  'event_category': GoogleAnalytics.Afiliacion,
-        //////*  'event_label': 'ir_a_crear_cuenta'
-        //////*});
+        ////// *this.gaService.sendEvent('CrearCuentaNegocio', {
+        ////// *  'event_category': GoogleAnalytics.Afiliacion,
+        ////// *  'event_label': 'ir_a_crear_cuenta'
+        ////// *});
         window.open('https://interbank.pe/cuenta-negocios');
         this.router.navigate([authFullRoutingNames.LOGIN]);
       }
@@ -220,10 +220,10 @@ export class IdentificarEmpresaComponent implements OnInit {
 
   enviarDatosEmpresa() {
     /*Esto se debería cambiar porque las pantallas ahora son más*/
-    //////*this.gaService.sendEvent('EnviarDatosEmpresa', {
-    //////*  'event_category': 'Afiliación',
-    //////*  'event-label': 'enviar_datos_empresa'
-    //////*});
+    ////// *this.gaService.sendEvent('EnviarDatosEmpresa', {
+    ////// *  'event_category': 'Afiliación',
+    ////// *  'event-label': 'enviar_datos_empresa'
+    ////// *});
   }
 
   goBack() {

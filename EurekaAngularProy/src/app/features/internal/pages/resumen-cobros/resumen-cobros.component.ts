@@ -115,7 +115,7 @@ export class ResumenCobrosComponent implements OnInit {
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
-    //this.serviceActual = svc;
+    // this.serviceActual = svc;
     this.afiliacionService.currentServiceModel = svc;
     this.afiliacionService.currentIndex = index;
     this.goEditCharge();
@@ -360,7 +360,7 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   getUseAgencyChannel(): boolean {
-    var useAgencyChannel: boolean = false;
+    let useAgencyChannel = false;
     if (this.afiliacionService.services.length > 0) {
       useAgencyChannel = this.afiliacionService.services[0].useAgencyChannel;
     }
@@ -398,7 +398,7 @@ export class ResumenCobrosComponent implements OnInit {
       }
       // this.frm.get('monto').value
 
-      let svcSinCta = this.afiliacionService.services.find(
+      const svcSinCta = this.afiliacionService.services.find(
         (v) => v.nroCuenta === ''
       );
       if (svcSinCta) {
