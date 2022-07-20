@@ -56,7 +56,6 @@ export class IdentificarEmpresaComponent implements OnInit {
     this.route.data.subscribe((d) => {
       this.inEdit = d.isEdit;
       if (d.isEdit == false) {
-        window['_url_loop_'] = 'identificarEmpresa';
         this.registerForm = this.formBuilder.group({
           ruc: new FormControl({ value: '', disabled: this.inEdit }, [
             Validators.required,

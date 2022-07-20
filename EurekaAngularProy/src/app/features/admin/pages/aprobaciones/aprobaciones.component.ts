@@ -13,9 +13,6 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
-import { adminFullRoutingNames } from '../../admin-routing.names';
-
-// import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'cs-aprobaciones',
@@ -73,12 +70,6 @@ export class AprobacionesComponent implements OnInit {
 
   ngOnInit() {
     this.llave = this.rutaActiva.snapshot.params.llave;
-    // borra el back del navegador
-    window['_url_loop_'] = adminFullRoutingNames.APPROVE + this.llave;
-    history.pushState(null, null, adminFullRoutingNames.APPROVE + this.llave);
-    // mantiene la pagina con el scroll en la parte superior
-    window.scrollTo(0, 0);
-
     /// TRAE LOS SERVICIOS
     this.gtpService.GetServicesGtp(this.llave);
     this.afiliacionService.GetRubrosAll().subscribe((d) => {

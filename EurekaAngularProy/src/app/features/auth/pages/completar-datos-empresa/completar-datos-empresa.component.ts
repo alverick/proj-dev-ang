@@ -61,7 +61,6 @@ export class CompletarDatosEmpresaComponent implements OnInit {
       this.inEdit = d.isEdit;
 
       if (d.isEdit == false) {
-        window['_url_loop_'] = authFullRoutingNames.GENERATE_PASSWORD;
         this.registerForm = this.formBuilder.group(
           {
             nombre: new FormControl('', [

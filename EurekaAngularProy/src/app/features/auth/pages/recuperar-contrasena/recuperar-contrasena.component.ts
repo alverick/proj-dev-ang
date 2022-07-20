@@ -52,12 +52,6 @@ export class RecuperarContrasenaComponent implements OnInit {
       ]),
       //captcha: new FormControl( '',  [Validators.required])
     });
-
-    // borra el back del navegador
-    window['_url_loop_'] = authFullRoutingNames.RECOVER_PASSWORD;
-    history.pushState(null, null, authFullRoutingNames.CHANGE_PASSWORD);
-    // mantiene la pagina con el scroll en la parte superior
-    window.scrollTo(0, 0);
   }
 
   get f(): any {
@@ -89,7 +83,6 @@ export class RecuperarContrasenaComponent implements OnInit {
             this.f.email.reset();
             this.f.email.clearValidators();
             // al ocultar la pantalla se mostrara en la parte de arriba la pagina
-            //window.scrollTo(0, 0);
             this.router.navigate([authFullRoutingNames.LOGIN]);
           } else {
             this.mensaje('Hemos recibido tus datos', 'Ingrese datos validos');

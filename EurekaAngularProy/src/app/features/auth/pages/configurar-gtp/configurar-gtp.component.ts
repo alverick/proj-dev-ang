@@ -67,12 +67,6 @@ export class ConfigurarGtpComponent implements OnInit {
   ngOnInit() {
     this.afiliacionService.GetRubros().subscribe((d) => (this.rubros = d));
     this.inEdit = true;
-    window['_url_loop_'] = `ApGTP/${this.route.snapshot.paramMap.get('llave')}`;
-    history.pushState(
-      null,
-      null,
-      `ApGTP/${this.route.snapshot.paramMap.get('llave')}`
-    );
     this.gtpService.GetServicesGtp(this.route.snapshot.paramMap.get('llave'));
     this.getInfoEmpresa();
     this.buttonServicios = 'Actualizar';

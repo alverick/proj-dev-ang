@@ -78,9 +78,6 @@ export class CrearContrasenaComponent implements OnInit {
 
       if (d.isEdit) {
         this.llave = this.rutaActiva.snapshot.params.llave.toString();
-        window[
-          '_url_loop_'
-        ] = `${authFullRoutingNames.GENERATE_PASSWORD}/${this.llave}`;
         this.llave = this.rutaActiva.snapshot.params.llave.toString();
         this.registerForm = this.formBuilder.group(
           {
@@ -170,7 +167,6 @@ export class CrearContrasenaComponent implements OnInit {
           });
         });
       } else {
-        window['_url_loop_'] = authFullRoutingNames.GENERATE_PASSWORD;
         this.registerForm = this.formBuilder.group(
           {
             ruc: new FormControl({ value: '', disabled: this.inEdit }, [
