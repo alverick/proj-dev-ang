@@ -1,0 +1,31 @@
+<cs-header>
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item dropdown">
+      <a
+        href="javascript:void(0);"
+        class="nav-link dropdown-toggle arrow no-caret"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <img
+          class="perfil"
+          src="../../../../assets/images/person.svg"
+          alt="Perfil"
+        />
+      </a>
+      <div
+        class="dropdown-menu dropdown-menu-right"
+        aria-labelledby="lnkPerfil"
+      >
+        <a
+          class="dropdown-item nav-link"
+          routerLinkActive="active"
+          [routerLink]="[linkSetupEmail]"
+          >Configurar correo</a
+        >
+        <a class="dropdown-item nav-link" (click)="logout()">Cerrar Sesión</a>
+      </div>
+    </li>
+  </ul>
+</cs-header>

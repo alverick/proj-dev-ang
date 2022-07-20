@@ -1,0 +1,8 @@
+.text-foot {
+  @include font-text(12px, normal);
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 16px 20px;
+  color: #0f191e;
+}

@@ -1,0 +1,134 @@
+.navbar-nav {
+  .lnk-regresar {
+    @include font-text(18px, 500);
+    color: #9ea1a5 !important;
+    margin-bottom: auto;
+    cursor: pointer;
+  }
+
+  .dropdown-menu {
+    @include border-radius(4px !important);
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    @include box-shadows(4px, 10px, 0, rgba(0, 0, 0, 0.1), 0);
+    background-color: #ffffff;
+    position: absolute;
+
+    .dropdown-item {
+      @include font-text(12px);
+      padding: 20px 19px;
+      color: var(--grises-ibk-black);
+      text-transform: uppercase;
+      width: 100%;
+      transition: all 0.5s;
+      cursor: pointer;
+      border-bottom: $separador;
+
+      &.active {
+        background-color: transparent;
+      }
+    }
+
+    .dropdown-item:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+  }
+
+  .dropdown-menu.scroll-menu {
+    width: 453px;
+
+    .title {
+      padding: 6px 12px;
+      border-bottom: $separador;
+
+      .text {
+        @include font-text(12px, 500);
+        color: $textblack;
+      }
+
+      .mark-all {
+        @include font-text(12px);
+        color: $textgreen;
+        cursor: pointer;
+      }
+    }
+
+    .notifies {
+      max-height: 388px;
+      overflow-y: auto;
+
+      .dropdown-item {
+        padding: 0px;
+        white-space: normal;
+        cursor: default;
+
+        .espacio {
+          padding: 8px;
+
+          .item-icono {
+            float: left;
+            width: 8px;
+            height: 8px;
+            margin: 4px;
+            cursor: pointer;
+          }
+
+          .texto {
+            @include font-text(14px);
+            color: $textblack;
+            margin-left: 15px;
+          }
+
+          .tiempo {
+            @include font-text(14px, 300);
+            color: $textblack;
+            margin-left: 15px;
+          }
+        }
+      }
+
+      .dropdown-item:active {
+        background-color: $textgray;
+      }
+
+      .loading {
+        text-align: center;
+      }
+    }
+
+    .more {
+      @include font-text(14px, normal);
+      padding: 6px 12px;
+      color: $textblack;
+      text-align: center;
+
+      .text {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .no-caret::after {
+    border: none !important;
+  }
+
+  .dropdown-toggle.arrow::after {
+    width: 16px;
+    height: 16px;
+    background-image: url(/assets/images/iconos-ui-xs-expand-more.svg);
+    background-repeat: no-repeat;
+    transition: all 0.5s;
+  }
+
+  .show {
+    .dropdown-toggle.arrow::after {
+      transform: rotate(180deg);
+    }
+  }
+}

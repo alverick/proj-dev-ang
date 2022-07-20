@@ -1,0 +1,563 @@
+body {
+    background: #f4f5f7 !important;
+}
+
+.container {
+    width: 1230px;
+    max-width: 1230px;
+}
+
+.widget {
+    width: 97%;
+    margin-left: auto;
+    margin-right: auto;
+    .title {
+        @include font-text(18px, 500);
+        padding: 20px 15px 10px 15px;
+        color: $negro;
+    }
+    .content {
+        width: 100%;
+        min-height: 15px;
+        @include border-radius(5px);
+        background-color: #fff;
+        padding: 5px 15px;
+        @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, .1), 0);
+    }
+}
+
+.widget.filtros {
+    .content {
+        .mat-form-field.f1 {
+            width: 236px;
+        }
+        .mat-form-field.f2 {
+            margin-left: 10px;
+            width: 116px;
+        }
+        .f3 {
+            width: 140px;
+            margin-left: 8px;
+            height: 32px;
+        }
+    }
+}
+
+.widget.lista {
+    .content {
+        padding-left: 0;
+        padding-right: 0;
+        .actions {
+            height: 51px;
+            padding-left: 15px;
+            padding-right: 15px;
+            border-bottom: solid 1px #f0f0f0;
+            .al-left {
+                display: flex;
+                padding-top: 12px;
+                .lnk-label {
+                  display: inline;
+                  @include font-text(14px, 500);
+                  color: $textgreen;
+                  margin-left: 20px;
+                  cursor: pointer;
+                }
+                .sobresale {
+                  position: absolute;
+                  right: 20px;
+                  background-color: white;
+                  z-index: 99;
+                  .card {
+                      padding: 8px;
+                      .selecciona-servicio {
+                          @include font-text(10px!important, 500!important);
+                          color: #0d131d !important;
+                          padding: 6px 2px;
+                      }
+                      .option-item {
+                          @include font-text(14px);
+                          color: #0d131d !important;
+                          width: 100%;
+                          padding: 6px;
+                          .mano {
+                              cursor: pointer;
+                          }
+                      }
+                  }
+              }
+          }
+            .al-right {
+                padding-top: 12px;
+                .lnk-label {
+                    display: inline;
+                    @include font-text(14px, 500);
+                    color: $textgreen;
+                    margin-left: 20px;
+                    cursor: pointer;
+                }
+                .sobresale {
+                    position: absolute;
+                    right: 20px;
+                    background-color: white;
+                    z-index: 99;
+                    .card {
+                        padding: 8px;
+                        .selecciona-servicio {
+                            @include font-text(10px!important, 500!important);
+                            color: #0d131d !important;
+                            padding: 6px 2px;
+                        }
+                        .option-item {
+                            @include font-text(14px);
+                            color: #0d131d !important;
+                            width: 100%;
+                            padding: 6px;
+                            .mano {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .counter {
+            height: 51px;
+            padding: 15px;
+            border-bottom: solid 1px #f0f0f0;
+            text-align: center;
+            .text {
+                @include font-text(14px);
+                color: #0d131d;
+                .btn-select-all {
+                    padding: 5px 10px;
+                    font-weight: 500;
+                    color: #05be50 !important;
+                    background-color: #fff;
+                    @include border-radius(4px);
+                    border: 0;
+                    &:hover {
+                        background-color: rgba(5, 190, 80, 0.2);
+                    }
+                }
+            }
+        }
+        .lista {
+            padding-top: 8px;
+            .head-fixed {
+                position: fixed;
+                top: 0;
+                background-color: white;
+                width: 1200px;
+                z-index: 1;
+                padding-top: 10px;
+            }
+            table {
+                width: 100%;
+                thead {
+                    tr {
+                        border-bottom: solid 1px #f0f0f0;
+                        th {
+                            @include font-text(12px, 500);
+                            color: $textblue;
+                            padding: 2px;
+                            .text {
+                                display: inline-block;
+                                height: 30px;
+                                vertical-align: middle;
+                                text-align: center;
+                            }
+                            .ord {
+                                margin-left: 5px;
+                                display: inline-block;
+                                .up {
+                                    display: block;
+                                    margin-bottom: 5px;
+                                    cursor: pointer;
+                                    width: 0;
+                                    height: 0;
+                                    border-left: 5px solid transparent;
+                                    border-right: 5px solid transparent;
+                                    border-bottom: 5px solid $textblue;
+                                    &.seleccionado {
+                                        border-bottom: 5px solid #9b9b9b;
+                                    }
+                                }
+                                .down {
+                                    display: block;
+                                    margin-bottom: 5px;
+                                    cursor: pointer;
+                                    width: 0;
+                                    height: 0;
+                                    border-left: 5px solid transparent;
+                                    border-right: 5px solid transparent;
+                                    border-top: 5px solid $textblue;
+                                    &.seleccionado {
+                                        border-top: 5px solid #9b9b9b;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                tbody {
+                    tr {
+                        border-bottom: solid 1px #f0f0f0;
+                        &.seleccionado {
+                            background-color: rgba(0, 169, 79, 0.05);
+                            td {
+                                color: #333333 !important;
+                            }
+                        }
+                        &.edit-pago {
+                            background-color: rgba(0, 169, 79, 0.05)
+                        }
+                        td {
+                            @include font-text(12px);
+                            color: $textblack;
+                            padding: 8px 3px;
+                            text-overflow: ellipsis;
+                            &.texto-after {
+                                @include font-text(28px, 500);
+                                text-align: center;
+                                height: 300px;
+                                color: #0d131d !important;
+                                img {
+                                    position: absolute;
+                                    top: 15px;
+                                    right: 10%;
+                                }
+                            }
+                            .cnt-status {
+                                position: relative;
+                                .lnk-status {
+                                    cursor: pointer;
+                                }
+                            }
+                            .msg-error {
+                                margin-top: 0;
+                            }
+                            .btn-edit {
+                                cursor: pointer;
+                                img {
+                                    width: 15px;
+                                    height: 15px;
+                                }
+                            }
+                            .btn-ok {
+                                cursor: pointer;
+                                img {
+                                    width: 20px;
+                                    height: 20px;
+                                }
+                            }
+                            .btn-cancel {
+                                cursor: pointer;
+                                img {
+                                    width: 20px;
+                                    height: 20px;
+                                }
+                            }
+                        }
+                    }
+                }
+                .c0 {
+                  width: 100px;
+                  text-align: left;
+                }
+                .c1 {
+                  width: 100px;
+                    text-align: left;
+                }
+                .c2 {
+                    text-align: left;
+                }
+                .c3 {
+                  width: 100px;
+                    text-align: left;
+                }
+                .c4 {
+                  width: 100px;
+                    text-align: left;
+                }
+                .c5 {
+                  width: 100px;
+                    text-align: left;
+                }
+            }
+        }
+        .pagination {
+            display: block;
+            text-align: right;
+            width: 100%;
+            padding: 8px 15px 0 8px;
+            .text {
+                float: right;
+                color: #9ea1a5;
+                @include font-text(14px, 500);
+            }
+            .ctrl {
+                float: right;
+            }
+        }
+    }
+}
+
+:host ::ng-deep .ngx-pagination {
+    @include font-text(14px, 500);
+    color: #9b9b9b;
+    &::before,
+    &::after {
+        content: none !important;
+    }
+    .pagination-previous {
+        a::before,
+        &.disabled::before {
+            content: none !important;
+        }
+    }
+    .pagination-next {
+        a::after,
+        &.disabled::after {
+            content: none !important;
+        }
+    }
+    .current {
+        background: transparent !important;
+        color: $textgreen !important;
+        text-decoration: underline !important;
+        font-weight: 500;
+        font-size: 14px;
+    }
+}
+
+.mat-form-field {
+    .msg-error {
+        @include font-text(10px, 500);
+        position: absolute;
+        color: #ea0044;
+        margin-top: 10px;
+        width: 200px;
+        // background-color: rgba(0, 169, 79, 0.05);
+    }
+    .msg-error-filtro {
+        @include font-text(10px, 500);
+        position: absolute;
+        color: #ea0044;
+        margin-top: 10px;
+        width: 200px;
+        background-color: #ffffff;
+    }
+}
+
+:host ::ng-deep .inline-input {
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+        .mat-form-field-infix {
+            padding: 0;
+            border-top: none;
+        }
+        .mat-form-field-underline {
+            bottom: 0;
+        }
+    }
+}
+
+.btn-eureca-green {
+    @include font-text(12px !important, 500 !important);
+}
+
+.btn-eureca-yellow {
+    @include font-text(12px !important, 500 !important);
+}
+
+.text-danger {
+    @include font-text(12px, 500);
+    color: #ea0044 !important;
+}
+
+.text-partial {
+    @include font-text(12px, 500);
+    color: #ff8900 !important;
+}
+
+.input-text {
+    @include font-text(14px !important, normal);
+    color: #0d131d !important;
+}
+
+:host ::ng-deep .mat-form-field .mat-form-field-label {
+    @include font-text(14px, normal !important);
+    // color: #0d131d !important;
+    color: #0d131d;
+}
+
+:host ::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
+    font-size: 10px;
+    font-weight: 500 !important;
+}
+
+.input-text-dash {
+    @include font-text(12px !important, normal);
+    color: #0d131d !important;
+}
+
+.content-container {
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+.ngx-pagination {
+    margin-left: 0;
+    margin-bottom: 1rem;
+}
+
+.ngx-pagination::before,
+.ngx-pagination::after {
+    content: ' ';
+    display: table;
+}
+
+.ngx-pagination::after {
+    clear: both;
+}
+
+.ngx-pagination li {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    margin-right: 0.0625rem;
+    border-radius: 0;
+}
+
+.ngx-pagination li {
+    display: inline-block;
+}
+
+.ngx-pagination a,
+.ngx-pagination button {
+    color: #0a0a0a;
+    display: block;
+    padding: 0.1875rem 0.625rem;
+    border-radius: 0;
+}
+
+.ngx-pagination a:hover,
+.ngx-pagination button:hover {
+    background: #e6e6e6;
+}
+
+.ngx-pagination .current {
+    padding: 0.1875rem 0.625rem;
+    background: #2199e8;
+    color: #fefefe;
+    cursor: default;
+}
+
+.ngx-pagination .disabled {
+    padding: 0.1875rem 0.625rem;
+    color: #cacaca;
+    cursor: default;
+}
+
+.ngx-pagination .disabled:hover {
+    background: transparent;
+}
+
+.ngx-pagination a,
+.ngx-pagination button {
+    cursor: pointer;
+}
+
+.ngx-pagination .pagination-previous a::before,
+.ngx-pagination .pagination-previous.disabled::before {
+    content: '«';
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.ngx-pagination .pagination-next a::after,
+.ngx-pagination .pagination-next.disabled::after {
+    content: '»';
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+.ngx-pagination .show-for-sr {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+
+.ngx-pagination .small-screen {
+    display: none;
+}
+
+@media screen and (max-width: 601px) {
+    .ngx-pagination.responsive .small-screen {
+        display: inline-block;
+    }
+    .ngx-pagination.responsive li:not(.small-screen):not(.pagination-previous):not(.pagination-next) {
+        display: none;
+    }
+}
+
+// :host ::ng-deep .mat-form-field-hide-placeholder .mat-select-placeholder {
+//     color: #0d131d !important;
+// }
+:host ::ng-deep .mat-select-value {
+    color: #0d131d !important;
+}
+
+.btn {
+    @include font-text(14px, 500 !important);
+    font-weight: 400;
+    color: #05be50;
+}
+
+.dropdown-toggle::after {
+    color: #ffffff;
+}
+
+.addDeuda {
+    float: right;
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+.selecciona-servicio {
+    @include font-text(10px!important, 500!important);
+    color: #0d131d !important;
+    padding: 8px 2px;
+}
+
+.servicio-Opern {
+    @include font-text(14px!important, normal!important);
+    color: #0d131d !important;
+    padding-bottom: 10px;
+    // padding: 6px 2px;
+}
+
+.btn-calendar {
+    background-image: url(/assets/images/calendar.svg);
+}
+
+.numpag {
+    color: #9ea1a5 !important;
+}
+
+.chk-vertical {
+    margin-left: -10px !important;
+}
+
+:host ::ng-deep .mat-checkbox-inner-container-no-side-margin {
+    margin-left: 12px !important;
+}
+
+///TAGS
+:host ::ng-deep .badge-primary {
+    color: #fff;
+    background-color: #8024b9;
+}

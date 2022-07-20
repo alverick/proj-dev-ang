@@ -1,0 +1,254 @@
+<div>
+  <div class="custom-container col-12">
+    <div class="row">
+      <div class="col">
+        <div class="widget filtros">
+          <div class="title">Buscar</div>
+          <div class="content">
+            <cs-payments-filter
+              [services]="rubros"
+              [stateList]="states"
+              [stateTypeList]="solicitudes"
+              [gtpMode]="true"
+              (sendForm)="searchDebts($event)"
+              (resetForm)="resetDebts()"
+            ></cs-payments-filter>
+          </div>
+        </div>
+
+        <div class="widget lista">
+          <div class="title">Empresas</div>
+          <div class="content">
+            <section class="actions">
+              <div class="al-left">
+                <div class="lnk-label" (click)="clickClientesNoRegistrados()">
+                  <img
+                    src="../../../../../assets/images/download.svg"
+                    alt="download"
+                  />&nbsp;Descargar Clientes No Registrados
+                </div>
+              </div>
+              <div class="clear-float"></div>
+            </section>
+            <section class="lista">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="c0"></th>
+                    <th
+                      class="{{ items.class }}"
+                      *ngFor="let items of herderTable; let i = index"
+                    >
+                      <div
+                        class="text"
+                        style="cursor: pointer"
+                        (click)="orderList(items)"
+                      >
+                        {{ items.name }}
+                      </div>
+                      <div class="ord" style="margin-bottom: 0.1em">
+                        <div
+                          *ngIf="items.asc == true && items.orderBy == i"
+                          class="up"
+                        ></div>
+                        <div
+                          *ngIf="items.asc == false && items.orderBy == i"
+                          class="down"
+                        ></div>
+                      </div>
+                    </th>
+                    <th class="c7"></th>
+                  </tr>
+                </thead>
+              </table>
+              <perfect-scrollbar class="content-container">
+                <table>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let items of gtpService.EnterprisesItems.listCompanyGTP
+                          | paginate
+                            : {
+                                itemsPerPage: 50,
+                                currentPage: currentFilter.pageNumber,
+                                totalItems:
+                                  gtpService.EnterprisesItems.totalCompanies
+                              }
+                      "
+                    >
+                      <td class="c0"></td>
+                      <td class="c1">
+                        {{ items.requestDate | date: 'dd/MM/yy' }}
+                      </td>
+                      <td class="c2">{{ items.ruc }}</td>
+                      <td class="c3">{{ items.cu }}</td>
+                      <td class="c4">{{ items.nameEnterprise }}</td>
+                      <td class="c5">
+                        <div
+                          style="width: 100px"
+                          *ngFor="let request of items?.requestTypeList"
+                        >
+                          <div *ngIf="request.type == 0">
+                            <span class="badge badge-primary">{{
+                              request.texto
+                            }}</span>
+                          </div>
+                        </div>
+                        <div
+                          style="width: 80px"
+                          *ngFor="let request of items?.requestTypeList"
+                        >
+                          <div *ngIf="request.type == 1">
+                            <span class="badge badge-warning">{{
+                              request.texto
+                            }}</span>
+                          </div>
+                          <div *ngIf="request.type == 2">
+                            <span class="badge badge-success">{{
+                              request.texto
+                            }}</span>
+                          </div>
+                          <div
+                            *ngIf="request.type == 3"
+                            tooltip="{{ request.detalles }}"
+                          >
+                            <span class="badge badge-warning">{{
+                              request.texto
+                            }}</span>
+                          </div>
+                        </div>
+                        <!-- -->
+                      </td>
+
+                      <td class="c6">{{ items.status }}</td>
+                      <td class="c7">
+                        <button
+                          type="button"
+                          class="f3 btn-eureca-green"
+                          title="Ver datos"
+                          (click)="Aprobar(items.clientId)"
+                        >
+                          <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </button>
+
+                        <button
+                          *ngIf="items.status === 'PendientePAG'"
+                          type="button"
+                          style="margin: 0em 0.5em"
+                          class="f3 btn-eureca-yellow"
+                          (click)="onUpdateEAG(items.clientId)"
+                        >
+                          <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+
+                        <button
+                          type="button"
+                          style="margin: 0em 0.5em"
+                          class="f3 btn-outline-green"
+                          title="Ver Cargas de Datos"
+                          [routerLink]="[linkHistory, items.clientId]"
+                        >
+                          <i class="fa fa-external-link" aria-hidden="true"></i>
+                        </button>
+                        <!-- <button *ngIf="items.status=='Pendiente'" type="button" style="margin: 0em .5em;" class="f3 btn-eureca-yellow" (click)="onUpdateEAG(items.clientId)">
+                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                            </button> -->
+                      </td>
+                    </tr>
+                    <tr
+                      style="border-bottom: #13131300"
+                      *ngIf="ceroRegistros()"
+                    >
+                      <td colspan="13" class="texto-after">
+                        <span>{{ messageTable }}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </perfect-scrollbar>
+            </section>
+            <section class="pagination">
+              <div class="ctrl">
+                <pagination-template
+                  #p="paginationApi"
+                  [maxSize]="5"
+                  (pageChange)="changePage($event)"
+                >
+                  <ul class="ngx-pagination" role="navigation">
+                    <li
+                      class="pagination-previous"
+                      [class.disabled]="p.isFirstPage()"
+                    >
+                      <a
+                        tabindex="0"
+                        *ngIf="1 < p.getCurrent()"
+                        (keyup.enter)="p.previous()"
+                        (click)="p.previous()"
+                      >
+                        <img src="../../../../../assets/images/before.svg" />
+                      </a>
+                      <span *ngIf="p.isFirstPage()">
+                        <img src="../../../../../assets/images/before.svg" />
+                      </span>
+                    </li>
+                    <li *ngIf="p.pages.length === 0" class="current">
+                      <span>1</span>
+                    </li>
+                    <li
+                      *ngFor="let page of p.pages"
+                      [class.current]="p.getCurrent() === page.value"
+                      [class.ellipsis]="page.label === '...'"
+                    >
+                      <a
+                        class="numpag"
+                        tabindex="0"
+                        (keyup.enter)="p.setCurrent(page.value)"
+                        (click)="p.setCurrent(page.value)"
+                        *ngIf="p.getCurrent() !== page.value"
+                      >
+                        <span>{{
+                          page.label === '...'
+                            ? page.label
+                            : (page.label | number: '')
+                        }}</span>
+                      </a>
+                      <ng-container *ngIf="p.getCurrent() === page.value">
+                        <span>{{
+                          page.label === '...'
+                            ? page.label
+                            : (page.label | number: '')
+                        }}</span>
+                      </ng-container>
+                    </li>
+                    <li
+                      class="pagination-next"
+                      [class.disabled]="p.isLastPage()"
+                    >
+                      <a
+                        class="pr-0"
+                        tabindex="0"
+                        *ngIf="!p.isLastPage()"
+                        (keyup.enter)="p.next()"
+                        (click)="p.next()"
+                      >
+                        <img src="../../../../../assets/images/after.svg" />
+                      </a>
+                      <span class="pr-0" *ngIf="p.isLastPage()">
+                        <img src="../../../../../assets/images/after.svg" />
+                      </span>
+                    </li>
+                  </ul>
+                </pagination-template>
+              </div>
+              <div class="text pt-1">
+                {{ gtpService.pageMessage }}
+              </div>
+              <div class="clear-float"></div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <cs-footer></cs-footer>
+  </div>
+</div>

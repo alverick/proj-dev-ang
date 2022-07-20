@@ -1,37 +1,117 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { of, throwError, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { DateList } from 'src/app/shared/models/dateList';
+import { environment } from 'src/environments/environment';
+import { Debts } from '../models/debts';
+import { Type } from '../models/type';
+import { WayPay } from '../models/way-pay';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HomeService {
+  constructor(private http: HttpClient) {}
 
-  private type: string[]=[
-    'Pensión', 'Matricula'
-  ]
-  
-  private wayPay: string []=[
-    'Estado de Pago', 'Pendiente de Pago', 'Pagado'
-  ]
+  private ListDebts: Debts[] = [];
 
-  private date: string []=[
-    'Por fecha', 'Fecha de emisión',  'Fecha de emisión', 'Fecha de pago'
-  ]
+  private type: Type[] = [
+    { idType: '', descripcion: 'Servicio' },
+    /* {idType: 'Pension', descripcion: 'Pensión'},
+    {idType: 'Matricula', descripcion: 'Matricula'}*/
+  ];
 
+  private wayPay: WayPay[] = [
+    { idWayPay: 'PENDIENTE', descripcion: 'Pendiente' },
+    { idWayPay: 'PAGADO', descripcion: 'Pagado' },
+    { idWayPay: 'PARCIAL', descripcion: 'Parcial' },
+    { idWayPay: 'VENCIDO', descripcion: 'Vencido' },
+    { idWayPay: 'HABILITADO', descripcion: 'Habilitado' },
+    { idWayPay: 'DESHABILITADO', descripcion: 'Deshabilitado' },
+  ];
 
+  private date: DateList[] = [
+    { idDate: 'EmissionDate', descripcion: 'Emisión' },
+    { idDate: 'DueDate', descripcion: 'Vencimiento' },
+    { idDate: 'PaymentDate', descripcion: 'Pago' },
+  ];
 
-  getType(): Observable<String[]>{
+  public SERVICES: string[] = ['Matricula', 'Pension'];
+
+  getDebts(): Observable<Debts[]> {
+    return of(this.ListDebts);
+  }
+
+  getType(): Observable<Type[]> {
     return of(this.type);
-  }  
+  }
 
-  getWayPay(): Observable<String[]>{
+  getWayPay(): Observable<WayPay[]> {
     return of(this.wayPay);
   }
-  
-  getDate(): Observable<String[]>{
+
+  getDate(): Observable<DateList[]> {
     return of(this.date);
   }
 
+  getServices(incDeactivates: boolean = false): Observable<any[]> {
+    const url =
+      `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=` +
+      new Date().getTime();
+    return this.http
+      .get<any[]>(url)
+      .pipe(
+        map((r) => {
+          let data: any[] = [];
+          r.forEach((s) =>
+            data.push({
+              id: s.id,
+              name: s.name,
+              dataType: s.dataType,
+            })
+          );
+          return data;
+        })
+      )
+      .pipe(catchError((err) => throwError(err)));
+  }
 
-  constructor() { }
+  getServicesActive(serviceWithoutData: boolean = true): Observable<any[]> {
+    const url =
+      `${environment.END_POINT}/company/service/active/${serviceWithoutData}?_=` +
+      new Date().getTime();
+    return this.http
+      .get<any[]>(url)
+      .pipe(
+        map((r) => {
+          let data: any[] = [];
+          r.forEach((s) =>
+            data.push({
+              id: s.id,
+              name: s.name,
+              dataType: s.dataType,
+            })
+          );
+          return data;
+        })
+      )
+      .pipe(catchError((err) => throwError(err)));
+  }
+
+  getDebtorCode(service: string, code: string): Observable<any> {
+    const url =
+      `${environment.END_POINT}/debt/service/${service}/debtor/${code}?_=` +
+      new Date().getTime();
+    return this.http.get<any>(url).pipe(catchError((err) => throwError(err)));
+  }
+
+  postNewDebt(service: string, data: any): Observable<any> {
+    const url =
+      `${environment.END_POINT}/debt/service/${service}/debtor?_=` +
+      new Date().getTime();
+    return this.http
+      .post<any>(url, data)
+      .pipe(catchError((err) => throwError(err)));
+  }
 }

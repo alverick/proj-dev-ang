@@ -1,0 +1,37 @@
+export interface ServiceModel {
+    res?: string;
+    id?: number;
+    nombre: string;
+    newName?: string;
+    newNameCode?: string;
+    rubro?: number;
+    codDeudor?: string;
+    nameCod?: string;
+    debtorCode?: string;
+    tipoDato: string;
+    tipoPago?: string;
+    nroCuenta: string;
+    idCuenta: string;
+    moneda: string;
+    simboloMoneda?: string;
+    usaWebApp: boolean;
+    usaAgente: boolean;
+    usaTienda: boolean;
+    cobraMora: string;
+    periodoMora: string;
+    tipoMora: string;
+    monto?: number;
+    porcentaje?: number;
+    inReview?: boolean;
+    pagoPartes?: string;
+    NewNameCod?: boolean;
+    NewName?: boolean;
+    status?: string;
+    nombreHabilitado?: boolean;
+    nombreCodHabilitado?: boolean;
+    acceptednewName?: boolean;
+    acceptednewNameCode?: boolean;
+    newNameGtpStatus?: number;
+    newNameCodeGtpStatus?: number;
+    useAgencyChannel?: boolean;
+}

@@ -1,162 +1,173 @@
-
-/* Change all elements to use border-box */
-html {
-    box-sizing: border-box;
-}
-*, *:before, *:after {
-    box-sizing: inherit;
+body {
+  background-color: #f4f5f7 !important;
 }
 
-
-body{
-    font-size: 14px;
-    font-family: 'Omnes' !important;
-   /* background: #0b0044 !important;*/
-    color: $negro;
+.body {
+  background-color: #f4f5f7 !important;
 }
 
-header{
-    height: 80px;
-  }
-  
-  a{
-    &:hover{
-      text-decoration: none;
-    }
-  }
+.al-left {
+  float: left;
+}
 
-  .logo{
-    max-width: 250px;
-  }
+.al-right {
+  float: right;
+}
 
-    
-  .container{
-    width: 1000px;
-    max-width: 1000px;
-  }
-  
-  .link-page{
-    text-decoration: underline;
-    &:hover{
-      text-decoration: none;
-    }
-  }
-  
-  .text-small{
-    font-size: 10px;
-  }
+.clear-float {
+  clear: both;
+}
 
-  .texto-amarillo{
-    color:#fc9a00;
-  }
+.scroll-div::-webkit-scrollbar {
+  width: 8px;
+}
 
-  .texto-azul{
-    color: #2121c4;
-  }
-  
-  .font-16{
-    font-size: 16px;
-  }
-  
-  small, .small {
-    font-size: 12px;
-  }
-  
-  h1, .h1{
-    font-size: 36px;
-  }
-  
-  h2, .h2{
-    font-size: 28px;
-  }
-  
-  h5, .h5{
-    font-size: 18px;
-  }
-  
-  h6, .h6{
-    font-size: 16px;
-  }
+.scroll-div::-webkit-scrollbar-thumb {
+  background-color: #333333;
+  border-radius: 4px;
+}
 
-/*Boton */
+.scroll-div::-webkit-scrollbar-track {
+  background-color: #f3f3f3;
+  border-radius: 4px;
+}
 
-  .btn-eureca{
-    /*@extend .texto-blanco;*/
-    /*@extend .font-medium;*/
-    @include border-radius(25px);
-    border: 0;
-  }
-  
-  .btn-eureca-amarillo{
-    background-color: $amarillo;
-    @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
-    &:hover{
-      background-color: $amarillolight;
-    }
-    &:focus{
-      background-color: $amarillobold;
-    }
-  }
-  
-  .btn-eureca-azul{
-    @include box-shadows(0, 1px, 4px, 0, rgba(38, 38, 191, 0.2));
-    background-color: $azul;
-    &:hover{
-      background-color: $azullight;
-    }
-    &:focus{
-      background-color: $azulbold;
-    }
-  }
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
-  .btn.btn-lg {
-    border-radius: 24px;
-    font-size: 16px;
-    padding-left: 45px;
-    padding-right: 45px;
-    height: 48px;
-    line-height: 45px;
-  }
+.messsage-error {
+  @include font-text(12px, 500);
+  color: #f23a24 !important;
+  //color: #ea0044 !important;
+}
 
-  .btn-outline-amarillo {
-    color: #fc9a00 !important;
-    background-color:white;
-    border-color: #fc9a00;
-    border-width: 2px;
-    border-style: solid;    
-  }
-  
-  .btn-big{
-    font-size: 16px;
-    padding-left: 45px;
-    padding-right: 45px;
-    height: 48px;
-  }
-  
-  .btn-medium{
-    font-size: 16px;
-    padding-left: 45px;
-    padding-right: 45px;
-    height: 40px;
-  }
-  
-  .btn-small{
-    font-size: 14px;
-    line-height: normal;
-    padding: 8px 35px;
-  }
-  
-  .input-filter{
-    padding:5px;
-    padding-left:45px;
-    width:375px;
-    border:1px solid #bebebe;
-    -webkit-border-radius:20px;
-    -khtml-border-radius:20px;
-    -moz-border-radius:20px;
-    -ms-border-radius:20px;
-    -o-border-radius:20px;
-    border-radius:20px;
-    background-clip:padding-box;
-    font-size:14px;
-    font-weight:500}
+.w-35 {
+  width: 35%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.btn-big {
+  font-size: 16px;
+  padding-left: 45px;
+  padding-right: 45px;
+  height: 48px;
+}
+
+.texto-azul {
+  @include font-text(32px, $weight: 500);
+  color: #0032a0;
+}
+
+.font-black {
+  @include font-text(18px, $weight: 600);
+  color: #0d131d;
+}
+
+.swal2-content {
+  @include font-text(16px, $weight: 500);
+  color: #0d131d !important;
+  text-align: center;
+}
+
+.input-text {
+  @include font-text(16px !important, normal !important);
+  color: #0d131d !important;
+}
+
+.swal2-styled {
+  border-style: none;
+}
+
+.pts16 {
+  margin-top: 16px !important;
+}
+
+.pts30 {
+  margin-top: 30px !important;
+}
+
+.w-70 {
+  width: 70%;
+}
+
+.w-15 {
+  width: 15%;
+}
+
+.custom-container {
+  width: 100%;
+  max-width: 1320px !important;
+  // min-width   : 650px;
+  margin: 0 auto;
+}
+
+
+.swal2-styled {
+  margin: 0.5em 10vh !important;
+}
+
+// --------- paginas para arreglar ---------
+.pp-5 {
+  padding: 3rem !important;
+}
+
+.pt-5 {
+  padding-top: 3rem !important;
+}
+
+.ppl-5,
+.ppx-5 {
+  padding-left: 3rem !important;
+  padding-top: 3rem !important;
+}
+
+.icon-gb {
+  margin-right: 5px;
+  top: -2px;
+  position: relative;
+}
+
+.reponsive-servicio-pago {
+  display: flex;
+}
+
+.reponsive-servicio-pago1 {
+  display: none;
+}
+
+.ppr-5 {
+  padding-right: 3rem !important;
+}
+
+.btn-fn {
+  display: block;
+}
+
+.btn-fn1 {
+  display: none;
+}
+
+.br-none-escritorio {
+  display: initial;
+}
+
+.br-none-mobil {
+  display: none;
+}
+
+.br-none-tablet {
+  display: none;
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  transition: all 0.5s;
+}
+
+.backdrop-background-opaque {
+  background-color: #f3f3f3;
+}

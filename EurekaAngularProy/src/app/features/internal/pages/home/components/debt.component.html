@@ -1,0 +1,53 @@
+<div mat-dialog-content class="content">
+    <div class="subtitulo">Agregar cobro del servicio</div>
+    <div class="titulo">{{excelService.service.name}}</div>
+    <div class="row">
+        <mat-form-field class="inline-ctrl">
+            <mat-label>Fecha de Emisión</mat-label>
+            <input matInput [matDatepicker]="n_edp" (click)="n_edp.open()" class="input-text-dash" csDate [min]="minDate" [max]="maxDate" [(ngModel)]="nuevaDeuda.emissionDate" formC maxlength="10" autocomplete="off" minlength="10" type="text" (ngModelChange)="nuevaDeuda.errores.emissionDate = null;">
+            <mat-datepicker-toggle matSuffix [for]="n_edp"></mat-datepicker-toggle>
+            <mat-datepicker #n_edp></mat-datepicker>
+            <div class="msg-error inline" *ngIf="nuevaDeuda.errores.emissionDate">{{nuevaDeuda.errores.emissionDate}}
+            </div>
+        </mat-form-field>
+        <mat-form-field class="inline-ctrl" *ngIf="!isPartial">
+            <mat-label>Fecha de Vencimiento</mat-label>
+            <input class="input-text-dash" csDate [min]="minDate" [max]="maxDate" matInput [matDatepicker]="n_ddp" [(ngModel)]="nuevaDeuda.dueDate" maxlength="10" minlength="10" autocomplete="off" (click)="n_ddp.open()" type="text" (ngModelChange)="nuevaDeuda.errores.dueDate = null">
+            <mat-datepicker-toggle matSuffix [for]="n_ddp"></mat-datepicker-toggle>
+            <mat-datepicker #n_ddp></mat-datepicker>
+            <div class="msg-error inline" *ngIf="nuevaDeuda.errores.dueDate">{{nuevaDeuda.errores.dueDate}}</div>
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field>
+            <mat-label>Código</mat-label>
+            <input class="input-text-dash" matInput [(ngModel)]="nuevaDeuda.code" maxlength="14" autocomplete="off" (blur)="buscarNewCode()" minlength="1" type="text" (ngModelChange)="nuevaDeuda.errores.code = null">
+            <div class="msg-error" *ngIf="nuevaDeuda.errores.code">{{nuevaDeuda.errores.code}}</div>
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input class="input-text-dash" matInput [(ngModel)]="nuevaDeuda.firstName" maxlength="80" autocomplete="off" minlength="3" type="text" (ngModelChange)="nuevaDeuda.errores.firstName = null">
+            <div class="msg-error" *ngIf="nuevaDeuda.errores.firstName">{{nuevaDeuda.errores.firstName}}</div>
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field *ngIf="!isPartial">
+            <mat-label>Concepto</mat-label>
+            <input class="input-text-dash" matInput [(ngModel)]="nuevaDeuda.concept" maxlength="16" autocomplete="off" minlength="1" type="text" (ngModelChange)="nuevaDeuda.errores.concept = null">
+            <div class="msg-error" *ngIf="nuevaDeuda.errores.concept">{{nuevaDeuda.errores.concept}}</div>
+        </mat-form-field>
+    </div>
+    <div class="row">
+        <mat-form-field *ngIf="!isPartial">
+            <mat-label>Monto</mat-label>
+            <input class="input-text-dash" type="text" matInput appOnlyNumbersForm [(ngModel)]="nuevaDeuda.amount" maxlength="12" minlength="4" autocomplete="off" (blur)="MontoBlur(nuevaDeuda)" (ngModelChange)="nuevaDeuda.errores.amount = null" />
+            <div class="msg-error" *ngIf="nuevaDeuda.errores.amount">{{nuevaDeuda.errores.amount}}</div>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button class="btn btn-eureca-green" (click)="grabarNuevo()">Grabar</button>
+    <button mat-button class="btn btn-outline-green" (click)="cerrarDialog()">Cerrar</button>
+</div>

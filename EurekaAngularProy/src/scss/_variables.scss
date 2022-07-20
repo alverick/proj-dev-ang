@@ -1,425 +1,95 @@
-/*--- Fuentes ---*/
-@font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-ExtraLightItalic.eot');
-    src: url('/fonts/Omnes-ExtraLightItalic.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-ExtraLightItalic.woff2') format('woff2'),
-    url('/fonts/Omnes-ExtraLightItalic.woff') format('woff'),
-    url('/fonts/Omnes-ExtraLightItalic.ttf') format('truetype'),
-    url('/fonts/Omnes-ExtraLightItalic.svg#Omnes-ExtraLightItalic') format('svg');
-    font-weight: 200;
-    font-style: italic;
-  }
+/*--- Colores ---*/
 
-  @font-face {
-    font-family: 'Omnes Hairline';
-    src: url('/fonts/Omnes-HairlineItalic.eot');
-    src: url('/fonts/Omnes-HairlineItalic.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-HairlineItalic.woff2') format('woff2'),
-    url('/fonts/Omnes-HairlineItalic.woff') format('woff'),
-    url('/fonts/Omnes-HairlineItalic.ttf') format('truetype'),
-    url('/fonts/Omnes-HairlineItalic.svg#Omnes-HairlineItalic') format('svg');
-    font-weight: normal;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-Thin.eot');
-    src: url('/fonts/Omnes-Thin.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-Thin.woff2') format('woff2'),
-    url('/fonts/Omnes-Thin.woff') format('woff'),
-    url('/fonts/Omnes-Thin.ttf') format('truetype'),
-    url('/fonts/Omnes-Thin.svg#Omnes-Thin') format('svg');
-    font-weight: 100;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-BlackItalic.eot');
-    src: url('/fonts/Omnes-BlackItalic.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-BlackItalic.woff2') format('woff2'),
-    url('/fonts/Omnes-BlackItalic.woff') format('woff'),
-    url('/fonts/Omnes-BlackItalic.ttf') format('truetype'),
-    url('/fonts/Omnes-BlackItalic.svg#Omnes-BlackItalic') format('svg');
-    font-weight: 900;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-ExtraLight.eot');
-    src: url('/fonts/Omnes-ExtraLight.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-ExtraLight.woff2') format('woff2'),
-    url('/fonts/Omnes-ExtraLight.woff') format('woff'),
-    url('/fonts/Omnes-ExtraLight.ttf') format('truetype'),
-    url('/fonts/Omnes-ExtraLight.svg#Omnes-ExtraLight') format('svg');
-    font-weight: 200;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-SemiboldItalic.eot');
-    src: url('/fonts/Omnes-SemiboldItalic.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-SemiboldItalic.woff2') format('woff2'),
-    url('/fonts/Omnes-SemiboldItalic.woff') format('woff'),
-    url('/fonts/Omnes-SemiboldItalic.ttf') format('truetype'),
-    url('/fonts/Omnes-SemiboldItalic.svg#Omnes-SemiboldItalic') format('svg');
-    font-weight: 600;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-Black.eot');
-    src: url('/fonts/Omnes-Black.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-Black.woff2') format('woff2'),
-    url('/fonts/Omnes-Black.woff') format('woff'),
-    url('/fonts/Omnes-Black.ttf') format('truetype'),
-    url('/fonts/Omnes-Black.svg#Omnes-Black') format('svg');
-    font-weight: 900;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-Bold.eot');
-    src: url('/fonts/Omnes-Bold.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-Bold.woff2') format('woff2'),
-    url('/fonts/Omnes-Bold.woff') format('woff'),
-    url('/fonts/Omnes-Bold.ttf') format('truetype'),
-    url('/fonts/Omnes-Bold.svg#Omnes-Bold') format('svg');
-    font-weight: bold;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-BoldItalic.eot');
-    src: url('/fonts/Omnes-BoldItalic.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-BoldItalic.woff2') format('woff2'),
-    url('/fonts/Omnes-BoldItalic.woff') format('woff'),
-    url('/fonts/Omnes-BoldItalic.ttf') format('truetype'),
-    url('/fonts/Omnes-BoldItalic.svg#Omnes-BoldItalic') format('svg');
-    font-weight: bold;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-Light.eot');
-    src: url('/fonts/Omnes-Light.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-Light.woff2') format('woff2'),
-    url('/fonts/Omnes-Light.woff') format('woff'),
-    url('/fonts/Omnes-Light.ttf') format('truetype'),
-    url('/fonts/Omnes-Light.svg#Omnes-Light') format('svg');
-    font-weight: 300;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-Regular.eot');
-    src: url('/fonts/Omnes-Regular.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-Regular.woff2') format('woff2'),
-    url('/fonts/Omnes-Regular.woff') format('woff'),
-    url('/fonts/Omnes-Regular.ttf') format('truetype'),
-    url('/fonts/Omnes-Regular.svg#Omnes-Regular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-Medium.eot');
-    src: url('/fonts/Omnes-Medium.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-Medium.woff2') format('woff2'),
-    url('/fonts/Omnes-Medium.woff') format('woff'),
-    url('/fonts/Omnes-Medium.ttf') format('truetype'),
-    url('/fonts/Omnes-Medium.svg#Omnes-Medium') format('svg');
-    font-weight: 500;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-LightItalic.eot');
-    src: url('/fonts/Omnes-LightItalic.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-LightItalic.woff2') format('woff2'),
-    url('/fonts/Omnes-LightItalic.woff') format('woff'),
-    url('/fonts/Omnes-LightItalic.ttf') format('truetype'),
-    url('/fonts/Omnes-LightItalic.svg#Omnes-LightItalic') format('svg');
-    font-weight: 300;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-Semibold.eot');
-    src: url('/fonts/Omnes-Semibold.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-Semibold.woff2') format('woff2'),
-    url('/fonts/Omnes-Semibold.woff') format('woff'),
-    url('/fonts/Omnes-Semibold.ttf') format('truetype'),
-    url('/fonts/Omnes-Semibold.svg#Omnes-Semibold') format('svg');
-    font-weight: 600;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-MediumItalic.eot');
-    src: url('/fonts/Omnes-MediumItalic.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-MediumItalic.woff2') format('woff2'),
-    url('/fonts/Omnes-MediumItalic.woff') format('woff'),
-    url('/fonts/Omnes-MediumItalic.ttf') format('truetype'),
-    url('/fonts/Omnes-MediumItalic.svg#Omnes-MediumItalic') format('svg');
-    font-weight: 500;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-ThinItalic.eot');
-    src: url('/fonts/Omnes-ThinItalic.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-ThinItalic.woff2') format('woff2'),
-    url('/fonts/Omnes-ThinItalic.woff') format('woff'),
-    url('/fonts/Omnes-ThinItalic.ttf') format('truetype'),
-    url('/fonts/Omnes-ThinItalic.svg#Omnes-ThinItalic') format('svg');
-    font-weight: 100;
-    font-style: italic;
-  }
-  
-  @font-face {
-    font-family: 'Omnes Hairline';
-    src: url('/fonts/Omnes-Hairline.eot');
-    src: url('/fonts/Omnes-Hairline.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-Hairline.woff2') format('woff2'),
-    url('/fonts/Omnes-Hairline.woff') format('woff'),
-    url('/fonts/Omnes-Hairline.ttf') format('truetype'),
-    url('/fonts/Omnes-Hairline.svg#Omnes-Hairline') format('svg');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Omnes';
-    src: url('/fonts/Omnes-RegularItalic.eot');
-    src: url('/fonts/Omnes-RegularItalic.eot?#iefix') format('embedded-opentype'),
-    url('/fonts/Omnes-RegularItalic.woff2') format('woff2'),
-    url('/fonts/Omnes-RegularItalic.woff') format('woff'),
-    url('/fonts/Omnes-RegularItalic.ttf') format('truetype'),
-    url('/fonts/Omnes-RegularItalic.svg#Omnes-RegularItalic') format('svg');
-    font-weight: normal;
-    font-style: italic;
-  }
-  
-  
-  /*--- Colores ---*/
-  $colores : #0b0044 #2121c4 #333333 #ffffff #f4f5f7 #bebebe #9b9b9b #fc9a00 #FFAD2D #cc170e #30abc2 #ffad2d #e68c00 #1b2afa #0e119a transparent;
-  $nombrecolores : 'azulbase' 'azul' 'negro' 'blanco' 'grisbajo' 'gris' 'grismedio' 'amarillo' 'amarillo-claro' 'rojo' 'turquesa' 'amarillolight' 'amarillobold' 'azullight' 'azulbold' 'transparent';
-  
-  $azulbase: nth($colores, 1);
-  $azul: nth($colores, 2);
-  $negro: nth($colores, 3);
-  $blanco: nth($colores, 4);
-  $grisbajo: nth($colores, 5);
-  $gris: nth($colores, 6);
-  $grismedio: nth($colores, 7);
-  $amarillo: nth($colores, 8);
-  $amarillclaro: nth($colores, 9);
-  $rojo: nth($colores, 10);
-  $turquesa: nth($colores, 11);
-  $amarillolight: nth($colores, 12);
-  $amarillobold: nth($colores, 13);
-  $azullight: nth($colores, 14);
-  $azulbold: nth($colores, 15);
-  $transparent: nth($colores, 16);
-  
-  @font-face {
-    font-family: 'icomoon';
-    src:  url('/fonts/iconos.eot?ijqtk6');
-    src:  url('/fonts/iconos.eot?ijqtk6#iefix') format('embedded-opentype'),
-    url('/fonts/iconos.ttf?ijqtk6') format('truetype'),
-    url('/fonts/iconos.woff?ijqtk6') format('woff'),
-    url('/fonts/iconos.svg?ijqtk6#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  [class^="icon-"], [class*=" icon-"] {
-    /* use !important to prevent issues with browser extensions that change /fonts */
-    font-family: 'icomoon' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-  
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  .icon-add .path1:before {
-    content: "\e900";
-    color: rgb(0, 0, 0);
-  }
-  .icon-add .path2:before {
-    content: "\e901";
-    margin-left: -1em;
-    color: rgb(155, 155, 155);
-  }
-  .icon-correo-lineal .path1:before {
-    content: "\e902";
-    color: rgb(229, 153, 31);
-  }
-  .icon-correo-lineal .path2:before {
-    content: "\e903";
-    margin-left: -1em;
-    color: rgb(10, 0, 68);
-  }
-  .icon-papel-2:before {
-    content: "\e904";
-    color: #0b0044;
-  }
-  .icon-papel:before {
-    content: "\e905";
-    color: #0b0044;
-  }
-  .icon-arrow-bottom:before {
-    content: "\e906";
-    color: #2121c4;
-  }
-  .icon-icono-x:before {
-    content: "\e907";
-  }
-  .icon-usuario:before {
-    content: "\e908";
-    color: #2626bf;
-  }
-  .icon-acceso:before {
-    content: "\e909";
-    color: #2626bf;
-  }
-  .icon-calendario:before {
-    content: "\e90a";
-    color: #2121c4;
-  }
-  .icon-editar:before {
-    content: "\e90b";
-    color: #2121c4;
-  }
-  .icon-arrowtopbottom:before {
-    content: "\e90c";
-    color: #2626bf;
-  }
-  .icon-check .path1:before {
-    content: "\e90d";
-    color: rgb(0, 0, 0);
-  }
-  .icon-check .path2:before {
-    content: "\e90e";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
-  .icon-check .path3:before {
-    content: "\e90f";
-    margin-left: -1em;
-    color: rgb(48, 171, 194);
-  }
-  .icon-eliminar-x .path1:before {
-    content: "\e910";
-    color: rgb(0, 0, 0);
-  }
-  .icon-eliminar-x .path2:before {
-    content: "\e911";
-    margin-left: -1em;
-    color: rgb(255, 255, 255);
-  }
-  .icon-eliminar-x .path3:before {
-    content: "\e912";
-    margin-left: -1em;
-    color: rgb(242, 58, 36);
-  }
-  .icon-eliminar:before {
-    content: "\e913";
-    color: #2626bf;
-  }
-  .icon-correo-azul:before {
-    content: "\e914";
-    color: #2626bf;
-  }
-  .icon-flechaabajo:before {
-    content: "\e915";
-    color: #fff;
-  }
-  .icon-left:before {
-    content: "\e916";
-    color: #fff;
-  }
-  .icon-search:before {
-    content: "\e986";
-    color: #0a0044;
-  }
-  .icon-filter:before {
-    content: "\ea5b";
-    color: #0a0044;
-  }
-  .icon-mail:before {
-    content: "\ea83";
-    color: #2626bf;
-  }
-  
-  .icon-check-hover:before {
-    content: '\e81a';
-  }
-  
-  .icon-check-active:before {
-    content: '\e81b';
-  }
-  
-  .icon-check-default:before {
-    content: '\e81c';
-  }
-  
-  .icon-radio-default:before {
-    content: '\e81d';
-  }
-  
-  .icon-radio-active:before {
-    content: '\e81e';
-  }
-  
-  .icon-right-open-mini:before {
-    content: '\e800';
-  }
-  
-  .icon-left-open-mini:before {
-    content: '\e801';
-  }
-  
-  .icon-up-open-mini:before {
-    content: '\e802';
-  }
-  
-  .icon-down-open-mini:before {
-    content: '\e803';
-  }
-  
-  .icon-lapiz:before {
-    content: '\e81f';
-  }
-  
-  .icon-basura:before {
-    content: '\e820';
-  }
-  
-  .icon-cerrar:before {
-    content: '\e821';
-  }
+$colores: #0b0044 #0036aa #0d131d #ffffff #f4f5f7 #bebebe #9b9b9b #fc9a00
+  #ffad2d #ea0044 #30abc2 #ffad2d #e68c00 #1b2afa #0e119a transparent;
+$nombrecolores: 'azulbase' 'azul' 'negro' 'blanco' 'grisbajo' 'gris' 'grismedio'
+  'amarillo' 'amarillo-claro' 'rojo' 'turquesa' 'amarillolight' 'amarillobold'
+  'azullight' 'azulbold' 'transparent';
+$azulbase: nth($colores, 1);
+$azul: nth($colores, 2);
+$negro: nth($colores, 3);
+$blanco: nth($colores, 4);
+$grisbajo: nth($colores, 5);
+$gris: nth($colores, 6);
+$grismedio: nth($colores, 7);
+$amarillo: nth($colores, 8);
+$amarillclaro: nth($colores, 9);
+$rojo: nth($colores, 10);
+$turquesa: nth($colores, 11);
+$amarillolight: nth($colores, 12);
+$amarillobold: nth($colores, 13);
+$azullight: nth($colores, 14);
+$azulbold: nth($colores, 15);
+$transparent: nth($colores, 16);
 
- 
-  
+$green-oscuro: #049840;
+$textgreen: #05be50;
+$textblack: #0d131d;
+$textgray: #f0f0f0;
+$textblue: #0032a0;
+$textblue-oscuro: #03256d;
+$separador: solid 1px #f0f0f0;
+$green: #05be50;
+$greenclaro: #33c95a;
+$black: #0d131d;
+$grey-3: #9ea1a5;
+$grey-3-oscuro: #9b9b9b;
+
+$primary-font-family: 'Geometria', Arial, sans-serif;
+
+:root {
+  --primary-green-1: #05be50;
+  --secondary-blue-1: #0039a6;
+  --primary-green-6: #ebfaf1;
+  --primary-green-3: #69d890;
+  --secondary-blue-2: #3361b8;
+  --primary-green-2: #37cb73;
+  --primary-green-4: #9be5b9;
+  --primary-green-5: #cdf2dc;
+  --secondary-blue-4: #99b0db;
+  --secondary-blue-3: #6688ca;
+  --secondary-blue-5: #ccd7ed;
+  --grises-grey-1: #878c8f;
+  --grises-ibk-black: #0f191e;
+  --grises-grey-5: #fbfbfb;
+  --grises-grey-3: #d9dadb;
+  --grises-grey-4: #eceded;
+  --grises-grey-2: #b7babc;
+  --grises-ibk-white: #fff;
+  --extended-palette-beige-2: #f3f3e3;
+  --extended-palette-beige-1: #f0f0dc;
+  --extended-palette-beige-3: #f6f6ea;
+  --extended-palette-beige-4: #f9f9f1;
+  --extended-palette-beige-5: #fcfcf8;
+  --extended-palette-yellow-2: #ffd733;
+  --extended-palette-yellow-1: #ffcd00;
+  --extended-palette-yellow-3: #ffe166;
+  --extended-palette-yellow-4: #ffeb99;
+  --extended-palette-yellow-5: #fff5cc;
+  --extended-palette-yellow-6: #fffbeb;
+  --extended-palette-watermelon-1: #eb0046;
+  --extended-palette-watermelon-2: #ef336b;
+  --extended-palette-watermelon-3: #f36690;
+  --extended-palette-watermelon-4: #f799b5;
+  --extended-palette-watermelon-5: #fbccda;
+  --extended-palette-watermelon-6: #fdebf0;
+  --extended-palette-lightblue-1: #64b4e6;
+  --extended-palette-lightblue-2: #83c3eb;
+  --extended-palette-lightblue-3: #a2d2f0;
+  --extended-palette-lightblue-4: #c1e1f5;
+  --extended-palette-lightblue-5: #e0f0fa;
+  --extended-palette-lightblue-6: #f3f9fd;
+  --extended-palette-darkblue-2: #334b7f;
+  --extended-palette-darkblue-1: #001e5f;
+  --extended-palette-darkblue-3: #66789f;
+  --extended-palette-darkblue-5: #ccd2df;
+  --extended-palette-darkblue-4: #99a5bf;
+}
+
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  2xl: 1536px,
+) !default;

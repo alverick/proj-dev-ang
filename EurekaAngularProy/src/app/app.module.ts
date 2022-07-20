@@ -1,62 +1,93 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { HomeComponent } from './pages/home/home.component';
-import { AnalisisComponent } from './pages/analisis/analisis.component';
-import { SubirPlantillaComponent } from './pages/subir-plantilla/subir-plantilla.component';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { AppRoutingModule } from './app-routing.module';
-import { AuthModule } from 'src/app/auth/auth.module';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { fakeBackendProvider } from 'src/app/shared/helpers/fake-backend';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import {
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher,
+} from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RecaptchaModule } from 'ng-recaptcha';
-import { DigitOnlyModule } from '@uiowa/digit-only';
+import { CookieService } from 'ngx-cookie-service';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
-
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { EmailDirective } from './features/internal/directives/email.directive';
+import { OnlyNumbersDirective } from './features/internal/directives/only-numbers.directive';
+import { DialogComponent } from './features/internal/pages/home/components/dialog';
+import { PagosComponent } from './features/internal/pages/home/components/pagos/pagos.component';
+import { PopoverComponent } from './features/internal/pages/home/components/popover/popover.component';
+import { UploadProgressComponent } from './features/internal/pages/home/components/upload-progress';
+import { ValidationComponent } from './features/internal/pages/home/components/validation';
+import { LoadBarComponent } from './shared/components/load-bar/load-bar.component';
+import { LoadFileComponent } from './shared/components/load-file/load-file.component';
+import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
+import { AuthGuard } from './shared/guards/auth.guard';
+import { CloseViewGuard } from './shared/guards/close-view.guard';
+import { LogoutGuard } from './shared/guards/logout.guard';
+import { AuthInterceptorService } from './shared/interceptors/auth-interceptor.service';
+import { AfiliacionService } from './shared/services/afiliacion.service';
+import { ConfiguracionService } from './shared/services/configuracion.service';
+import { ExcelService } from './shared/services/excel.service';
+import { NotifyService } from './shared/services/notify.service';
+import { StorageService } from './shared/services/storage.service';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    HomeComponent,
-    AnalisisComponent,
-    SubirPlantillaComponent,
-    PageNotFoundComponent
+    BlockCopyPasteDirective,
+    EmailDirective,
+    OnlyNumbersDirective,
+    DialogComponent,
+    UploadProgressComponent,
+    ValidationComponent,
+    PagosComponent,
+    PopoverComponent,
+    LoadFileComponent,
+    LoadBarComponent,
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
     AppRoutingModule,
-    AuthModule,
-    AngularFontAwesomeModule,
     BrowserAnimationsModule,
-    HttpClientModule,
-    HttpModule,
     NgxSpinnerModule,
-    MatInputModule,
-    SweetAlert2Module.forRoot(),  
+    MatProgressSpinnerModule,
+    PerfectScrollbarModule,
+    HttpClientModule,
     RecaptchaModule.forRoot(),
-    DigitOnlyModule
-
+    SharedModule,
   ],
   providers: [
-     fakeBackendProvider,
-     {provide: ErrorStateMatcher,
-      useClass: ShowOnDirtyErrorStateMatcher
-      }
+    ExcelService,
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+    AfiliacionService,
+    ConfiguracionService,
+    NotifyService,
+    StorageService,
+    AuthGuard,
+    CookieService,
+    LogoutGuard,
+    CloseViewGuard,
   ],
-  exports:[
-    MatInputModule
+  exports: [MatInputModule, MatSnackBarModule],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DialogComponent,
+    UploadProgressComponent,
+    ValidationComponent,
+    PagosComponent,
+    PopoverComponent,
+    LoadFileComponent,
+    LoadBarComponent,
   ],
-  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
