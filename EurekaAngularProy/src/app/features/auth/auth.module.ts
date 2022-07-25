@@ -25,7 +25,7 @@ import { CompletarDatosEmpresaComponent } from './pages/completar-datos-empresa/
 import { ConfigurarGtpComponent } from './pages/configurar-gtp/configurar-gtp.component';
 import { ConfigurarServiciosComponent } from './pages/configurar-servicios/configurar-servicios.component';
 import { CrearContrasenaComponent } from './pages/crear-contrasena/crear-contrasena.component';
-import { IdentificarEmpresaComponent } from './pages/identificar-empresa/identificar-empresa.component';
+import { IdentificarEmpresaPage } from './pages/identificar-empresa/identificar-empresa.page';
 import { LoginPage } from './pages/login/login.page';
 import { ProcesandoComponent } from './pages/procesando/procesando.component';
 import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recuperar-contrasena.component';
@@ -57,7 +57,7 @@ import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recup
     FormEmpresaGTPComponent,
     FormServicioComponent,
     FormServicioGtpComponent,
-    IdentificarEmpresaComponent,
+    IdentificarEmpresaPage,
     LoginPage,
     NumberAccountDirective,
     OnlyNumbersFormDirective,
