@@ -11,6 +11,7 @@ import { LogoutGuard } from '../../shared/guards/logout.guard';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
+import { CompanyFormRegistrationComponent } from './components/company-form-registration/company-form-registration.component';
 import { FormEmpresaGTPComponent } from './components/form-empresa-gtp/form-empresa-gtp.component';
 import { FormServicioGtpComponent } from './components/form-servicio-gtp/form-servicio-gtp.component';
 import { FormServicioComponent } from './components/form-servicio/form-servicio.component';
@@ -64,6 +65,7 @@ import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recup
     RecuperarContrasenaComponent,
     SerFormGtpComponent,
     AuthComponent,
+    CompanyFormRegistrationComponent,
   ],
   exports: [OnlyNumbersFormDirective],
 })
