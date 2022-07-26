@@ -9,7 +9,6 @@ import Swal from 'sweetalert2';
 import {
   internalAuthFullRoutingNames,
   internalFullRoutingNames,
-  internalRoutingNames,
 } from '../../internal-routing.names';
 
 @Component({
@@ -65,7 +64,6 @@ export class ResumenCobrosComponent implements OnInit {
       this.affiliationFlow = d.affiliationFlow;
 
       if (d.isEdit) {
-        window['_url_loop_'] = internalRoutingNames.CHARGES;
         if (this.afiliacionService.services.length === 0) {
           this.afiliacionService.GetServicios();
           setTimeout(() => {
@@ -75,12 +73,6 @@ export class ResumenCobrosComponent implements OnInit {
           this.servicio_length = this.afiliacionService.services.length;
         }
       } else {
-        window['_url_loop_'] = internalAuthFullRoutingNames.CHARGES_AFFILIATION;
-        history.pushState(
-          null,
-          null,
-          internalAuthFullRoutingNames.CHARGES_AFFILIATION
-        );
         this.servicio_length = this.afiliacionService.services.length;
       }
     });
@@ -123,7 +115,7 @@ export class ResumenCobrosComponent implements OnInit {
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
-    //this.serviceActual = svc;
+    // this.serviceActual = svc;
     this.afiliacionService.currentServiceModel = svc;
     this.afiliacionService.currentIndex = index;
     this.goEditCharge();
@@ -368,7 +360,7 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   getUseAgencyChannel(): boolean {
-    var useAgencyChannel: boolean = false;
+    let useAgencyChannel = false;
     if (this.afiliacionService.services.length > 0) {
       useAgencyChannel = this.afiliacionService.services[0].useAgencyChannel;
     }
@@ -406,7 +398,7 @@ export class ResumenCobrosComponent implements OnInit {
       }
       // this.frm.get('monto').value
 
-      let svcSinCta = this.afiliacionService.services.find(
+      const svcSinCta = this.afiliacionService.services.find(
         (v) => v.nroCuenta === ''
       );
       if (svcSinCta) {

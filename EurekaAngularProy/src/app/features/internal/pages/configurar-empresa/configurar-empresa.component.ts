@@ -14,10 +14,7 @@ import { ConfiguracionService } from 'src/app/shared/services/configuracion.serv
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import {
-  internalFullRoutingNames,
-  internalRoutingNames,
-} from '../../internal-routing.names';
+import { internalFullRoutingNames } from '../../internal-routing.names';
 
 @Component({
   selector: 'cs-configurar-empresa',
@@ -52,7 +49,6 @@ export class ConfigurarEmpresaComponent implements OnInit {
   }
 
   ngOnInit() {
-    window['_url_loop_'] = internalRoutingNames.COMPANY;
     this.createForm();
     this.getInfoEmpresa();
     this.afiliacionService.GetRubrosAll().subscribe((d) => (this.rubros = d));
