@@ -25,18 +25,17 @@ export class CompanyFormRegistrationComponent implements OnInit {
   errorMessages = {
     ruc: {
       required: 'El RUC es obligatorio',
-      pattern: 'Ingrese un ruc valido',
+      pattern: 'Ingrese un ruc válido',
       minlength: 'El ruc debe tener 11 dígitos',
     },
     email: {
-      required: 'El E-mail es obligatorio',
-      pattern: 'Ingrese un E-mail valido',
-      minlength: 'El E-mail debe tener mínimo 10 dígitos',
+      required: 'El correo electrónico  es obligatorio',
+      pattern: 'Ingrese un correo electrónico  válido',
+      minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
     },
     emailConfirm: {
-      required: 'Confirmar E-mail es obligatorio',
-      notSame: 'Los E-mails no coinciden',
-      minlength: 'El E-mail debe tener mínimo 10 dígitos 1',
+      required: 'Confirmar correo electrónico  es obligatorio',
+      notSame: 'El correo ingresado no coincide con el anterior',
     },
     telefono: {
       required: 'Teléfono o celular es obligatorio',
@@ -115,9 +114,6 @@ export class CompanyFormRegistrationComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     const { emailConfirm, ...formValue } = this.registerForm.value;
-    console.log(this.registerForm.controls, this.registerForm.value, {
-      ...formValue,
-    });
     if (this.registerForm.valid) {
       this.sendForm.emit({ ...formValue });
     }
