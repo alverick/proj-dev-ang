@@ -8,7 +8,7 @@ import {
   Validators,
   ValidatorFn,
 } from '@angular/forms';
-import { forEachObjIndexed, path } from 'ramda';
+import { forEachObjIndexed, pathOr } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 
 @Component({
@@ -88,10 +88,15 @@ export class CompanyFormRegistrationComponent implements OnInit {
 
   checkEmail(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const emailConfirm = control.value;
-      const email = path(['parent', 'controls', 'email', 'value'], control);
-
-      return email === emailConfirm ? null : { notSame: true };
+      const emailConfirm = control.value as string;
+      const email = pathOr(
+        '',
+        ['parent', 'controls', 'email', 'value'],
+        control
+      ) as string;
+      return email.toLowerCase() === emailConfirm.toLowerCase()
+        ? null
+        : { notSame: true };
     };
   }
 
