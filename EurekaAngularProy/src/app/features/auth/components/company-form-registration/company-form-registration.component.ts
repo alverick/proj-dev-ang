@@ -81,6 +81,10 @@ export class CompanyFormRegistrationComponent implements OnInit {
       ]),
       movilOperator: new FormControl('', [Validators.required]),
     });
+
+    this.registerForm.controls.email.statusChanges.subscribe(() => {
+      this.registerForm.controls.emailConfirm.updateValueAndValidity();
+    });
   }
 
   checkEmail(): ValidatorFn {
