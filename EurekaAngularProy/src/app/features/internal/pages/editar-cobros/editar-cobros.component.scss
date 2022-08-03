@@ -51,8 +51,8 @@
 }
 
 .title-first-part {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   font-family: $primary-font-family;
   font-size: 28px;
   font-weight: 500;
@@ -74,7 +74,7 @@
   margin-top: 10px;
 }
 
-.cuadro-form-resize{
+.cuadro-form-resize {
   @include cuadro(480px, $height: 960px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
@@ -93,8 +93,8 @@
 }
 
 .rectangle-success {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   height: 57px;
   border-radius: 2px;
   background-color: #e5f6ed;
@@ -117,7 +117,7 @@
   font-style: normal;
   line-height: 1.07;
   letter-spacing: normal;
-  margin: 7px 7px auto 0px;
+  margin: 7px 7px auto 0;
 }
 
 .btn-eureca-green {
@@ -157,8 +157,8 @@
   @include font-text(16px, $weight: normal);
   color: #0d131d;
   text-align: left;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 .text-circle {
@@ -186,7 +186,7 @@
 }
 
 .text-regresar {
-  margin: 0px;
+  margin: 0;
   font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
@@ -198,7 +198,7 @@
   color: $azul;
 }
 
-.label-text{
+.label-text {
   font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
@@ -209,7 +209,7 @@
   color: #0d131d;
 }
 
-.text-tipo-dato{
+.text-tipo-dato {
   margin-top: 10px;
   font-family: $primary-font-family;
   font-size: 18px;
@@ -221,7 +221,7 @@
   color: #0d131d;
 }
 
-.rectangle-success{
+.rectangle-success {
   margin: 0;
   padding: 0;
   height: 57px;
@@ -229,7 +229,7 @@
   //padding: 6px 8px 6px 4px;
   border-radius: 2px;
   background-color: #e5f6ed;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -238,7 +238,7 @@
   width: 100%;
 }
 
-.img-information{
+.img-information {
   width: 18px;
   height: 18px;
   margin: 17px 7px auto 7px;
@@ -252,7 +252,7 @@
   font-style: normal;
   line-height: 1.07;
   letter-spacing: normal;
-  margin: 14px 7px auto 0px;
+  margin: 14px 7px auto 0;
 }*/
 
 .texto-medios {
@@ -276,7 +276,6 @@
   font-style: normal;
   line-height: 1.17;
   letter-spacing: normal;
-
 }
 
 /* custom radio */
@@ -313,13 +312,12 @@
 }
 
 /* on mouse-over, add border color */
-.radio:hover input~.check {
+.radio:hover input ~ .check {
   border: 2px solid #2121c4;
 }
 
-
 /* add background color when the radio is checked */
-.radio input:checked~.check {
+.radio input:checked ~ .check {
   background-color: #2121c4;
   border: none;
 }
@@ -327,16 +325,15 @@
 /* create the radio and hide when not checked */
 
 .radio .check:after {
-  content: "";
+  content: '';
   position: absolute;
   display: none;
 }
 
 /* show the radio when checked */
-.radio input:checked~.check:after {
+.radio input:checked ~ .check:after {
   display: block;
 }
-
 
 /* radio style */
 .radio .check:after {
@@ -359,7 +356,10 @@
 }
 
 //radio button
-:host ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+:host
+  ::ng-deep
+  .mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
   border-color: $green;
 }
 
@@ -370,7 +370,7 @@
 .radio-group {
   display: flex;
   flex-direction: column;
-  margin: 0px 0;
+  margin: 0 0;
 }
 
 .radio-button {
@@ -408,7 +408,7 @@
   width: 80%;
 }
 
-.description-complete-data{
+.description-complete-data {
   font-family: $primary-font-family;
   font-size: 16px;
   font-weight: normal;
@@ -419,7 +419,7 @@
   color: #0d131d;
 }
 
-.description-no-data{
+.description-no-data {
   font-family: $primary-font-family;
   font-size: 16px;
   font-weight: normal;
@@ -432,7 +432,7 @@
 
 .btn-eureca-green-understood {
   @include font-text(15px !important);
-  background-color:transparent ;
+  background-color: transparent;
   border: none;
   color: $green;
   width: 120px;
@@ -440,20 +440,21 @@
   //float: center;
   // @include box-shadows(0,1px,4px, 0,rgba(252, 154, 0, 0.2));
   &:hover {
-      background-color: $green;
-      border-radius: 4px;
-      border: solid 1px $greenclaro;
-      color: #f3f3f3;
+    background-color: $green;
+    border-radius: 4px;
+    border: solid 1px $greenclaro;
+    color: #f3f3f3;
   }
+
   &:active {
-      background-color: $blanco;
-      color: $green;
-      border: solid 1px $green;
+    background-color: $blanco;
+    color: $green;
+    border: solid 1px $green;
   }
 }
 
-.container-boton{
-  display:flex;
+.container-boton {
+  display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-start;
@@ -467,6 +468,20 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  &.seleccionado-card {
+    border: solid 1px var(--primary-green-1);
+  }
+
+  &.card-disabled {
+    border: solid 1px var(--grises-grey-2);
+
+    .part-2,
+    .part-3 {
+      filter: brightness(0) saturate(100%) invert(56%) sepia(9%) saturate(156%)
+        hue-rotate(159deg) brightness(96%) contrast(91%);
+    }
+  }
 }
 
 .part-canal{
@@ -552,12 +567,6 @@
 
 .container-canal{
   margin-top: 12px;
-}
-
-.seleccionado-card {
-  // border: $textgreen 1px solid;
-  border: 0px !important;
-  border: solid 1px #05be50 !important;
 }
 
 .hide-name-cod {
@@ -750,7 +759,6 @@
   .container-part-1-2{
     margin-top: 10px !important;
     margin-left: 10px !important;
-    flex-direction: column !important;
     justify-content: center !important;
     flex-basis: 50% !important;
   }
