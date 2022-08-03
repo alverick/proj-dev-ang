@@ -126,7 +126,10 @@
           </div>
 
           <!-- Código de servicio -->
-          <div class="form-group" *ngIf="_service.res != '' && _service.res != null">
+          <div
+            class="form-group"
+            *ngIf="_service.res != '' && _service.res != null"
+          >
             <mat-form-field class="w-100">
               <div
                 tooltip="Código que deberá indicar tu cliente en los agentes Interbank para pagar éste servicio"
@@ -145,8 +148,8 @@
             </mat-form-field>
 
             <div *ngIf="CodiAlert()" class="messsage-error">
-              El nuevo codigo <strong>{{ _service.newNameCode }} </strong> esta siendo
-              procesado
+              El nuevo código <strong>{{ _service.newNameCode }} </strong> esta
+              siendo procesado
             </div>
           </div>
 
