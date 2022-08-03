@@ -212,11 +212,9 @@ export class EditarCobrosComponent implements OnInit {
       moneda: [this._service.moneda, Validators.required],
       usaAgente: new FormControl({
         value: this._service.usaAgente,
-        disabled: this.editMode,
       }),
       usaTienda: new FormControl({
         value: this._service.usaTienda,
-        disabled: this.editMode,
       }),
       usaWebApp: new FormControl({
         value: this._service.usaWebApp,
