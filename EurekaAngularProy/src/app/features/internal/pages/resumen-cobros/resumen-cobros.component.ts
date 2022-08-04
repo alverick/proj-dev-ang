@@ -49,6 +49,7 @@ export class ResumenCobrosComponent implements OnInit {
   sendAfterSave = false;
   public onFormAction: EventEmitter<string> = new EventEmitter();
   addNewAfterSave = false;
+  formSaving = false;
 
   constructor(
     public afiliacionService: AfiliacionService,
@@ -416,6 +417,10 @@ export class ResumenCobrosComponent implements OnInit {
         });
         return;
       }
+
+      if (this.formSaving) {
+        return;
+      }
       this.gaService.sendEvent('EnviarServicios', {
         event_category: this.inEdit
           ? GoogleAnalytics.Dashboard
@@ -423,19 +428,23 @@ export class ResumenCobrosComponent implements OnInit {
         event_label: 'enviar_servicios',
       });
       this.gaService.sendUrl('servicioNuevo', '/servicioNuevo');
-      this.afiliacionService.GrabarServicios().subscribe((r) => {
-        if (this.inEdit) {
-          this.router.navigate([internalFullRoutingNames.HOME]);
-          /*for(let i=0; i<this.afiliacionService.services.length; i++) {
-              if (this.afiliacionService.services[i].inReview == false) {
-                return;
-              }
-            }
-            this.router.navigate([authFullRoutingNames.PROCESSING]);*/
-        } else {
-          this.router.navigate([authFullRoutingNames.PROCESSING]);
+
+      this.formSaving = true;
+      this.afiliacionService.GrabarServicios().subscribe(
+        () => {
+          if (this.inEdit) {
+            this.router.navigate([internalFullRoutingNames.HOME]);
+          } else {
+            this.router.navigate([authFullRoutingNames.PROCESSING]);
+          }
+        },
+        () => {
+          this.formSaving = false;
+        },
+        () => {
+          this.formSaving = false;
         }
-      });
+      );
     }
   }
 
