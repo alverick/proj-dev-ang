@@ -13,9 +13,6 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
-import { adminFullRoutingNames } from '../../admin-routing.names';
-
-// import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'cs-aprobaciones',
@@ -23,8 +20,8 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
   styleUrls: ['./aprobaciones.component.scss'],
 })
 export class AprobacionesComponent implements OnInit {
-  public Formulario: boolean = false;
-  public ServiciosFormulario: boolean = false;
+  public Formulario = false;
+  public ServiciosFormulario = false;
   public llave: number;
   // public Empresa: EnterprisesGtp ;
   public Empgtp: DataEnterpriseGTP = null;
@@ -48,7 +45,7 @@ export class AprobacionesComponent implements OnInit {
   public Service: DataServiceGTP;
   public Servgtp: DataServiceGTP;
   public deshabilitar: boolean;
-  public indiceActual: number = -1;
+  public indiceActual = -1;
   public isOnlyEmpresa: boolean;
   public isOnlyService: boolean;
   public rubro: string;
@@ -63,7 +60,7 @@ export class AprobacionesComponent implements OnInit {
     public afiliacionService: AfiliacionService,
     public router: Router
   ) {}
-  public OcultarDatosActualEmpresa: boolean = true;
+  public OcultarDatosActualEmpresa = true;
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
     if (this.Formulario && this.ServiciosFormulario) {
@@ -73,12 +70,6 @@ export class AprobacionesComponent implements OnInit {
 
   ngOnInit() {
     this.llave = this.rutaActiva.snapshot.params.llave;
-    // borra el back del navegador
-    window['_url_loop_'] = adminFullRoutingNames.APPROVE + this.llave;
-    history.pushState(null, null, adminFullRoutingNames.APPROVE + this.llave);
-    // mantiene la pagina con el scroll en la parte superior
-    window.scrollTo(0, 0);
-
     /// TRAE LOS SERVICIOS
     this.gtpService.GetServicesGtp(this.llave);
     this.afiliacionService.GetRubrosAll().subscribe((d) => {
@@ -177,8 +168,9 @@ export class AprobacionesComponent implements OnInit {
     // debugger
     let entryDiff = false;
     this.gtpService.services.forEach((s) => {
-      if (s.res.length > 0 && s.res.substring(0, 2) !== this.Enterprise.entry)
+      if (s.res.length > 0 && s.res.substring(0, 2) !== this.Enterprise.entry) {
         entryDiff = true;
+      }
     });
     if (entryDiff) {
       this.mensaje(
@@ -253,7 +245,6 @@ export class AprobacionesComponent implements OnInit {
       ClientId: this.llave,
       NombreAprobado: this.Enterprise.NombreApproved,
     };
-    // debugger
     ListInAprobacion.forEach((s) => {
       this.scv.push({
         ServiceId: s.id,
@@ -637,25 +628,6 @@ export class AprobacionesComponent implements OnInit {
     }
   }
 
-  /* getStatess(svc: DataServiceGTP) {
-     if (((svc.name === '?' || svc.debtorCode === '?') &&  svc.inReview) && ((svc.newName.substring(0, 3).toString() !== '???' && svc.newNameCode.substring(0, 3).toString() !== '???') )) {
-      this.serFormAprob = true;
-      return 'Nuevo servicio';
-    }
-    if ((svc.newName.substring(0, 3).toString() !== '???' || svc.newNameCode.substring(0, 3).toString() !== '???') && ( (svc.name === svc.newName) && (svc.debtorCode === svc.newNameCode)) ) {
-      this.serFormAprob = false;
-      return 'Servicio habilitado';
-    }
-    if (svc.newName.substring(0, 3).toString() === '???' || svc.newNameCode.substring(0, 3).toString() === '???') {
-      this.serFormAprob = false;
-      return 'Servicio rechazado';
-    }
-    if (((svc.name !==  '?' )&&(svc.name !== svc.newName)) || ( (svc.debtorCode !==  '?' ) && (svc.debtorCode !== svc.newNameCode))  ) {
-      this.serFormAprob = false;
-      return 'Servicio editado';
-    }
-  }*/
-
   getState(svc: DataServiceGTP) {
     if (svc.newNameGTPStatus === 0 || svc.newNameCodeGTPStatus === 0) {
       return 'Nuevo servicio';
@@ -726,7 +698,7 @@ export class AprobacionesComponent implements OnInit {
     Swal.fire({
       // type: tipo ,
       title: titulo,
-      text: text,
+      text,
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,

@@ -15,7 +15,7 @@ import {
   internalFullRoutingNames,
 } from '../../internal-routing.names';
 
-declare var $: any;
+declare const $: any;
 
 @Component({
   selector: 'cs-editar-cobros',
@@ -41,9 +41,9 @@ declare var $: any;
 })
 export class EditarCobrosComponent implements OnInit {
   frm: FormGroup;
-  public editMode: boolean = false;
-  public Dataparcial: boolean = true;
-  public affiliationFlow: boolean = false;
+  public editMode = false;
+  public Dataparcial = true;
+  public affiliationFlow = false;
   submittedRequired = false;
   codDeudor: any[] = [];
   tiposPago: any[] = [];
@@ -52,23 +52,23 @@ export class EditarCobrosComponent implements OnInit {
   pagoPartes: any[] = [];
   cuentas: any[] = [];
   _service: ServiceModel;
-  tipoDato: string = '';
-  cobraMora: boolean = false;
-  cmoraporce: boolean = false;
-  cobraMonto: boolean = true;
-  cobraPorcentaje: boolean = false;
-  simboloMoneda: string = 'S/';
-  currencySymbolSoles: string = 'S/';
-  currencySymbolDollars: string = '$';
-  private tc: number = 3.37;
+  tipoDato = '';
+  cobraMora = false;
+  cmoraporce = false;
+  cobraMonto = true;
+  cobraPorcentaje = false;
+  simboloMoneda = 'S/';
+  currencySymbolSoles = 'S/';
+  currencySymbolDollars = '$';
+  private tc = 3.37;
   commissionAgentSoles = 1.5;
   commissionAgentDollars =
     Math.round((this.commissionAgentSoles / this.tc) * 100) / 100;
-  //public comTienda = 8;
+  // public comTienda = 8;
   commissionStoreSoles = 8;
   commissionStoreDollars =
     Math.round((this.commissionStoreSoles / this.tc) * 100) / 100;
-  useAgencyChannel: boolean = false;
+  useAgencyChannel = false;
 
   constructor(
     private router: Router,
@@ -83,20 +83,16 @@ export class EditarCobrosComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((d) => {
-      //this.editMode = d.isEdit;
       this.affiliationFlow = d.affiliationFlow;
     });
     this.cuentas = [];
-    //this.editMode = this.afiliacionService.editMode;
 
-    if (this.isNew() == true) {
-      //////this.initializeService();
-    } else {
+    if (!this.isNew()) {
       this.getService();
       this.initializeForm();
     }
 
-    if (this.affiliationFlow == true) {
+    if (this.affiliationFlow) {
       this.showAgencyChannel(false);
     } else {
       this.showAgencyChannel(this._service.useAgencyChannel);
@@ -104,14 +100,10 @@ export class EditarCobrosComponent implements OnInit {
   }
 
   isNew(): boolean {
-    if (
+    return (
       this.afiliacionService.currentServiceModel === null ||
       this.afiliacionService.currentServiceModel === undefined
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    );
   }
 
   getService() {
@@ -126,16 +118,16 @@ export class EditarCobrosComponent implements OnInit {
       this._service.id !== null &&
       this._service.id !== undefined &&
       this._service.id > 0;
-    var montod =
+    const montod =
       this._service.monto !== null && this._service.monto !== undefined
         ? this._service.monto
         : '1.00';
-    var porcentajed =
+    const porcentajed =
       this._service.porcentaje !== null &&
       this._service.porcentaje !== undefined
         ? this._service.porcentaje
         : '1.00';
-    let codDeudor =
+    const codDeudor =
       this._service.newNameCodeGtpStatus === undefined ||
       this._service.newNameCodeGtpStatus === null ||
       this._service.newNameCodeGtpStatus === 1 ||
@@ -210,18 +202,14 @@ export class EditarCobrosComponent implements OnInit {
         Validators.required
       ),
       moneda: [this._service.moneda, Validators.required],
-      usaAgente: new FormControl({
-        value: this._service.usaAgente,
-        disabled: this.editMode,
-      }),
-      usaTienda: new FormControl({
-        value: this._service.usaTienda,
-        disabled: this.editMode,
-      }),
-      usaWebApp: new FormControl({
-        value: this._service.usaWebApp,
-        disabled: true,
-      }),
+      usaAgente: [this._service.usaAgente],
+      usaTienda: [this._service.usaTienda],
+      usaWebApp: [
+        {
+          value: this._service.usaWebApp,
+          disabled: true,
+        },
+      ],
     });
 
     this.afiliacionService
@@ -253,11 +241,7 @@ export class EditarCobrosComponent implements OnInit {
   }
 
   showPartialDataComponents(tipoDato: string): void {
-    if (tipoDato === 'P' || tipoDato === 'S') {
-      this.Dataparcial = false;
-    } else {
-      this.Dataparcial = true;
-    }
+    this.Dataparcial = !(tipoDato === 'P' || tipoDato === 'S');
   }
 
   resetPartialDataComponents(tipoDato: string): void {
@@ -343,9 +327,11 @@ export class EditarCobrosComponent implements OnInit {
                 let value: ServiceModel;
                 value = this._service;
                 if (this.editMode) {
-                  if (this.frm.value.idCuenta)
+                  if (this.frm.value.idCuenta) {
                     value.idCuenta = this.frm.value.idCuenta;
-                  else value.idCuenta = this.f.idCuenta.value;
+                  } else {
+                    value.idCuenta = this.f.idCuenta.value;
+                  }
                   value.newName = value.nombreHabilitado
                     ? value.newName
                     : this.frm.value.nombre === value.nombre
@@ -368,14 +354,14 @@ export class EditarCobrosComponent implements OnInit {
                       : this.frm.value.codDeudor;
                 }
 
-                let cta = this.cuentas.find((c) => c.id === value.idCuenta);
+                const cta = this.cuentas.find((c) => c.id === value.idCuenta);
                 value.nroCuenta = `${cta.number.substr(0, 13)} (${
                   cta.currency === '001' ? 'Soles' : 'Dólares'
                 })`;
                 value.moneda = this.frm.value.moneda;
                 value.simboloMoneda = this.simboloMoneda;
 
-                //Establece Servicio
+                // Establece Servicio
                 if (this.isAddedName(this.f.nombre.value) === false) {
                   this.setCurrentServiceModel(
                     value.newNameCode,
@@ -441,9 +427,11 @@ export class EditarCobrosComponent implements OnInit {
               let value: ServiceModel;
               value = this._service;
               if (this.editMode) {
-                if (this.frm.value.idCuenta)
+                if (this.frm.value.idCuenta) {
                   value.idCuenta = this.frm.value.idCuenta;
-                else value.idCuenta = this.f.idCuenta.value;
+                } else {
+                  value.idCuenta = this.f.idCuenta.value;
+                }
                 value.newName = value.nombreHabilitado
                   ? value.newName
                   : this.frm.value.nombre === value.nombre
@@ -465,14 +453,14 @@ export class EditarCobrosComponent implements OnInit {
                     ? this.frm.value.nameCod
                     : this.frm.value.codDeudor;
               }
-              let cta = this.cuentas.find((c) => c.id === value.idCuenta);
+              const cta = this.cuentas.find((c) => c.id === value.idCuenta);
               value.nroCuenta = `${cta.number.substr(0, 13)} (${
                 cta.currency === '001' ? 'Soles' : 'Dólares'
               })`;
               value.moneda = this.frm.value.moneda;
               value.simboloMoneda = this.simboloMoneda;
 
-              ///Set Servicio
+              /// Set Servicio
               if (this.isAddedName(this.f.nombre.value) === false) {
                 this.setCurrentServiceModel(
                   value.newNameCode,
@@ -491,9 +479,11 @@ export class EditarCobrosComponent implements OnInit {
           let value: ServiceModel;
           value = this._service;
           if (this.editMode) {
-            if (this.frm.value.idCuenta)
+            if (this.frm.value.idCuenta) {
               value.idCuenta = this.frm.value.idCuenta;
-            else value.idCuenta = this.f.idCuenta.value;
+            } else {
+              value.idCuenta = this.f.idCuenta.value;
+            }
             value.newName = value.nombreHabilitado
               ? value.newName
               : this.frm.value.nombre === value.nombre
@@ -515,13 +505,13 @@ export class EditarCobrosComponent implements OnInit {
                 ? this.frm.value.nameCod
                 : this.frm.value.codDeudor;
           }
-          let cta = this.cuentas.find((c) => c.id === value.idCuenta);
+          const cta = this.cuentas.find((c) => c.id === value.idCuenta);
           value.nroCuenta = `${cta.number.substr(0, 13)} (${
             cta.currency === '001' ? 'Soles' : 'Dólares'
           })`;
           value.moneda = this.frm.value.moneda;
           value.simboloMoneda = this.simboloMoneda;
-          //Set Servicio
+          // Set Servicio
           if (this.isAddedName(this.f.nombre.value) === false) {
             this.setCurrentServiceModel(
               value.newNameCode,
@@ -609,7 +599,7 @@ export class EditarCobrosComponent implements OnInit {
     return addedName;
   }
 
-  changeTipoDato(changeData: boolean = true) {
+  changeTipoDato() {
     this.tipoDato = this.f.tipoDato.value;
 
     this.showModal(this.tipoDato);
@@ -637,7 +627,6 @@ export class EditarCobrosComponent implements OnInit {
 
   selectCodigo(event) {
     if (event === 'Otro') {
-      //  this.f.codDeudor.reset();
       this.f.nameCod.setValidators([
         Validators.required,
         Validators.minLength(3),
@@ -649,25 +638,20 @@ export class EditarCobrosComponent implements OnInit {
     }
   }
 
-  nameCodInput(e) {
-    let initalValue = this.f.nameCod.value;
-    /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
-     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
-    initalValue = initalValue.replace(/\s{2,}/g, ' ');
-    this.f.nameCod.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
+  nameCodInput() {
+    let initialValue = this.f.nameCod.value;
+    initialValue = initialValue.replace(/\s{2,}/g, ' ');
+    this.f.nameCod.setValue(initialValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
   }
 
-  nameCodBlur(e) {
-    let initalValue = this.f.nameCod.value;
-    this.f.nameCod.setValue(initalValue.trim());
+  nameCodBlur() {
+    const initialValue = this.f.nameCod.value;
+    this.f.nameCod.setValue(initialValue.trim());
   }
 
   CodiAlert() {
     if (this.editMode === true) {
-      if (this._service.newNameCode !== '') {
-        return true;
-      }
-      return false;
+      return this._service.newNameCode !== '';
     }
   }
 
@@ -771,42 +755,41 @@ export class EditarCobrosComponent implements OnInit {
     }
   }
 
-  MoraMontoBlur(e) {
-    let initalValue = parseFloat(this.f.monto.value);
-    if (!isNaN(initalValue)) this.f.monto.setValue(initalValue.toFixed(2));
+  MoraMontoBlur() {
+    const initalValue = parseFloat(this.f.monto.value);
+    if (!isNaN(initalValue)) {
+      this.f.monto.setValue(initalValue.toFixed(2));
+    }
   }
 
-  MoraPorcenBlur(e) {
-    let initalValue = parseFloat(this.f.porcentaje.value);
-    if (!isNaN(initalValue)) this.f.porcentaje.setValue(initalValue.toFixed(2));
+  MoraPorcenBlur() {
+    const initalValue = parseFloat(this.f.porcentaje.value);
+    if (!isNaN(initalValue)) {
+      this.f.porcentaje.setValue(initalValue.toFixed(2));
+    }
   }
 
-  nameSerInput(e) {
+  nameSerInput() {
     let initalValue = this.f.nombre.value;
-    /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
-     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
     initalValue = initalValue.replace(/\s{2,}/g, ' ');
     this.f.nombre.setValue(
       initalValue.replace(/[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]*/g, '')
     );
   }
 
-  nameSerBlur(e) {
-    let initalValue = this.f.nombre.value;
+  nameSerBlur() {
+    const initalValue = this.f.nombre.value;
     this.f.nombre.setValue(initalValue.trim());
   }
 
   nombreAlert() {
     if (this.editMode === true) {
-      if (this._service.newName !== '') {
-        return true;
-      }
-      return false;
+      return this._service.newName !== '';
     }
   }
 
   changeCuenta(val) {
-    let cta = this.cuentas.find((c) => c.id == val);
+    const cta = this.cuentas.find((c) => c.id === val);
     this.simboloMoneda = cta.currency === '001' ? 'S/' : '$';
     this.f.moneda.setValue(cta.currency);
   }
@@ -831,7 +814,6 @@ export class EditarCobrosComponent implements OnInit {
         onOpen: drawPopup,
       }).then((r) => {
         if (r.value) {
-          //this.afiliacionService.Descartar(this.indiceActual, this.stateCreate);
           this.afiliacionService.currentServiceModel = null;
           this.afiliacionService.currentIndex = -1;
           if (this.affiliationFlow) {
@@ -868,7 +850,7 @@ export class EditarCobrosComponent implements OnInit {
 
 function Maximo(max: number) {
   return (c: FormControl) => {
-    let nro = parseFloat(c.value);
+    const nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro > max) {
         return { maximo: true };
@@ -880,7 +862,7 @@ function Maximo(max: number) {
 
 function Minimo(min: number) {
   return (c: FormControl) => {
-    let nro = parseFloat(c.value);
+    const nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro < min) {
         return { minimo: true };
@@ -891,7 +873,7 @@ function Minimo(min: number) {
 }
 
 function Alfanumerico(c: FormControl) {
-  let regex = /[0-9a-zA-Z]-?/g;
+  const regex = /[0-9a-zA-Z]-?/g;
   if (c.value && !regex.test(c.value)) {
     return { alfa: true };
   }

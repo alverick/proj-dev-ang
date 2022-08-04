@@ -1,0 +1,111 @@
+<form
+  [formGroup]="registerForm"
+  novalidate
+  (submit)="onSubmit()"
+  autocomplete="off"
+>
+  <div class="form-group">
+    <mat-form-field class="super-full-width">
+      <input
+        class="input-text"
+        aria-describedby="tooltip-0"
+        tooltip="El RUC de tu empresa con el que ingresarás a la plataforma"
+        formControlName="ruc"
+        (Keydown.space)="$event.preventDefault()"
+        matInput
+        type="text"
+        autocomplete="new-text"
+        placeholder="RUC de tu empresa"
+        appOnlynumbers
+        minlength="11"
+        maxlength="11"
+      />
+      <mat-error *ngIf="submitted">{{
+        getErrorMessage(registerForm.get('ruc'), errorMessages.ruc)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="input-text super-full-width">
+      <input
+        formControlName="email"
+        (Keydown.space)="$event.preventDefault()"
+        matInput
+        type="text"
+        autocomplete="new-text"
+        minlength="10"
+        maxlength="100"
+        placeholder="Correo electrónico "
+      />
+      <mat-error *ngIf="submitted">{{
+        getErrorMessage(registerForm.get('email'), errorMessages.email)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="input-text super-full-width">
+      <input
+        formControlName="emailConfirm"
+        (Keydown.space)="$event.preventDefault()"
+        matInput
+        type="text"
+        autocomplete="new-text"
+        minlength="10"
+        maxlength="100"
+        placeholder="Confirmar correo electrónico "
+      />
+      <mat-error *ngIf="submitted">{{
+        getErrorMessage(
+          registerForm.get('emailConfirm'),
+          errorMessages.emailConfirm
+        )
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="input-text super-full-width">
+      <input
+        formControlName="telefono"
+        (Keydown.space)="$event.preventDefault()"
+        appOnlynumbers
+        matInput
+        type="text"
+        autocomplete="new-text"
+        placeholder="Teléfono o celular"
+        minlength="6"
+        maxlength="9"
+      />
+      <mat-error *ngIf="submitted">{{
+        getErrorMessage(registerForm.get('telefono'), errorMessages.telefono)
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <mat-label>Operador</mat-label>
+      <mat-select
+        class="input-text"
+        formControlName="movilOperator"
+        disableOptionCentering
+        panelClass="pts30"
+      >
+        <mat-option class="input-text">Operador</mat-option>
+        <mat-option class="input-text" value="M">Movistar</mat-option>
+        <mat-option class="input-text" value="C">Claro</mat-option>
+        <mat-option class="input-text" value="E">Entel</mat-option>
+        <mat-option class="input-text" value="B">Bitel</mat-option>
+      </mat-select>
+      <mat-error *ngIf="submitted">{{
+        getErrorMessage(
+          registerForm.get('movilOperator'),
+          errorMessages.movilOperator
+        )
+      }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="bnt-cont-reg">
+    <button type="submit" class="btn-big btn-eureca-green w-100 text-white">
+      SIGUIENTE
+    </button>
+  </div>
+</form>
