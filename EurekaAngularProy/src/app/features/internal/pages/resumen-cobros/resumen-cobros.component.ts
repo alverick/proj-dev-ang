@@ -98,15 +98,6 @@ export class ResumenCobrosComponent implements OnInit {
 
   editService(svc: ServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Edición del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
       return;
     }
     if (this.Formulariogtp && this.indiceActual !== index) {
@@ -124,7 +115,6 @@ export class ResumenCobrosComponent implements OnInit {
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
-    //this.serviceActual = svc;
     this.afiliacionService.currentServiceModel = svc;
     this.afiliacionService.currentIndex = index;
     this.goEditCharge();
@@ -153,15 +143,6 @@ export class ResumenCobrosComponent implements OnInit {
 
   delService(index: number) {
     if (this.Formulario) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Eliminación del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
       return;
     }
     if (this.inEdit && this.afiliacionService.services[index].id) {
@@ -320,7 +301,6 @@ export class ResumenCobrosComponent implements OnInit {
       return svc.nameCod;
     }
     if (svc.codDeudor === 'Otro' || svc.nameCod !== svc.newNameCode) {
-      // return svc.nameCod;
       return svc.nameCod;
     }
   }
@@ -369,7 +349,7 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   getUseAgencyChannel(): boolean {
-    var useAgencyChannel: boolean = false;
+    let useAgencyChannel = false;
     if (this.afiliacionService.services.length > 0) {
       useAgencyChannel = this.afiliacionService.services[0].useAgencyChannel;
     }
@@ -378,8 +358,7 @@ export class ResumenCobrosComponent implements OnInit {
 
   EnviarServicios() {
     // GTP
-    if (this.inGTP) {
-    } else {
+    if (!this.inGTP) {
       if (this.Formulario === true) {
         Swal.fire({
           title: 'Servicio no guardado',
@@ -407,7 +386,7 @@ export class ResumenCobrosComponent implements OnInit {
       }
       // this.frm.get('monto').value
 
-      let svcSinCta = this.afiliacionService.services.find(
+      const svcSinCta = this.afiliacionService.services.find(
         (v) => v.nroCuenta === ''
       );
       if (svcSinCta) {
