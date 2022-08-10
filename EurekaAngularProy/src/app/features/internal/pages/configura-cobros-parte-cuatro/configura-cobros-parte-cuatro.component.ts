@@ -38,11 +38,11 @@ import {
 })
 export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   frm: FormGroup;
-  editMode: boolean = false;
-  affiliationFlow: boolean = false;
+  editMode = false;
+  affiliationFlow = false;
   _service: ServiceModel;
   cuentas: any[] = [];
-  simboloMoneda: string = 'S/';
+  simboloMoneda = 'S/';
   submittedRequired = false;
 
   get f(): any {
@@ -58,12 +58,10 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe((d) => {
-      //this.editMode = d.isEdit;
       this.affiliationFlow = d.affiliationFlow;
     });
 
     this.cuentas = [];
-    //this.editMode = this.afiliacionService.editMode;
 
     this._service = Object.assign(
       {},
@@ -94,12 +92,11 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
       let value: ServiceModel;
       value = this._service;
 
-      //if (this.editMode) {
-      if (this.frm.value.idCuenta) value.idCuenta = this.frm.value.idCuenta;
-      else value.idCuenta = this.f.idCuenta.value;
-      //}
+      value.idCuenta = this.frm.value.idCuenta
+        ? this.frm.value.idCuenta
+        : this.f.idCuenta.value;
 
-      let cta = this.cuentas.find((c) => c.id === value.idCuenta);
+      const cta = this.cuentas.find((c) => c.id === value.idCuenta);
       value.nroCuenta = `${cta.number.substr(0, 13)} (${
         cta.currency === '001' ? 'Soles' : 'Dólares'
       })`;
@@ -130,8 +127,6 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   }
 
   onSave(nombre: string) {
-    //if (this.afiliacionService.currentIndex >= 0) {
-    //} else {
     let nro = 1;
 
     this.afiliacionService.services.forEach((s, i) => {
@@ -151,7 +146,7 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
 
     this.afiliacionService.addCurrentServiceModel();
     this.nextPage();
-    //}
+    // }
   }
 
   nextPage() {
