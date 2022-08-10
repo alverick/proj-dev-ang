@@ -14,12 +14,10 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { withActions } from '@storybook/addon-actions';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
-import { DateList } from '../../models/dateList';
-import { WayPay } from '../../models/way-pay';
-import { SharedModule } from '../../shared.module';
-import { PaymentsFilterComponent } from './payments-filter.component';
+import { SharedModule } from '../../../../shared/shared.module';
+import { CompanyFormRegistrationComponent } from './company-form-registration.component';
 
 function initAppComponentFactory(
   matIconRegistry: MatIconRegistry,
@@ -37,8 +35,8 @@ function initAppComponentFactory(
 }
 
 export default {
-  title: 'Payments Filter',
-  component: PaymentsFilterComponent,
+  title: 'Company Form Registration',
+  component: CompanyFormRegistrationComponent,
   decorators: [
     withKnobs,
     moduleMetadata({
@@ -70,30 +68,7 @@ export default {
   ],
 };
 
-const listStates: WayPay[] = [
-  { idWayPay: 'da', descripcion: 'Domiciliaciones' },
-];
-
-const listDates: DateList[] = [
-  { idDate: '1', descripcion: 'Hoy' },
-  { idDate: '2', descripcion: 'Ayer' },
-];
-
 export const normal = () => ({
-  component: PaymentsFilterComponent,
-  props: {
-    stateList: listStates,
-    dateList: listDates,
-    gtpMode: boolean('GTP Mode', false),
-  },
-  argTypes: { sendForm: { action: 'clicked' } },
-});
-
-export const gtp = () => ({
-  component: PaymentsFilterComponent,
-  props: {
-    stateList: listStates,
-    gtpMode: boolean('GTP Mode', true),
-  },
+  component: CompanyFormRegistrationComponent,
   argTypes: { sendForm: { action: 'clicked' } },
 });
