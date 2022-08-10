@@ -48,6 +48,7 @@ export class ResumenCobrosComponent implements OnInit {
   sendAfterSave = false;
   public onFormAction: EventEmitter<string> = new EventEmitter();
   addNewAfterSave = false;
+  formSaving = false;
 
   constructor(
     public afiliacionService: AfiliacionService,
@@ -89,15 +90,6 @@ export class ResumenCobrosComponent implements OnInit {
 
   editService(svc: ServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Edición del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
       return;
     }
     if (this.Formulariogtp && this.indiceActual !== index) {
@@ -115,7 +107,6 @@ export class ResumenCobrosComponent implements OnInit {
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
-    // this.serviceActual = svc;
     this.afiliacionService.currentServiceModel = svc;
     this.afiliacionService.currentIndex = index;
     this.goEditCharge();
@@ -144,15 +135,6 @@ export class ResumenCobrosComponent implements OnInit {
 
   delService(index: number) {
     if (this.Formulario) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Eliminación del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
       return;
     }
     if (this.inEdit && this.afiliacionService.services[index].id) {
@@ -311,7 +293,6 @@ export class ResumenCobrosComponent implements OnInit {
       return svc.nameCod;
     }
     if (svc.codDeudor === 'Otro' || svc.nameCod !== svc.newNameCode) {
-      // return svc.nameCod;
       return svc.nameCod;
     }
   }
@@ -369,8 +350,7 @@ export class ResumenCobrosComponent implements OnInit {
 
   EnviarServicios() {
     // GTP
-    if (this.inGTP) {
-    } else {
+    if (!this.inGTP) {
       if (this.Formulario === true) {
         Swal.fire({
           title: 'Servicio no guardado',
@@ -408,6 +388,10 @@ export class ResumenCobrosComponent implements OnInit {
         });
         return;
       }
+
+      if (this.formSaving) {
+        return;
+      }
       this.gaService.sendEvent('EnviarServicios', {
         event_category: this.inEdit
           ? GoogleAnalytics.Dashboard
@@ -415,19 +399,23 @@ export class ResumenCobrosComponent implements OnInit {
         event_label: 'enviar_servicios',
       });
       this.gaService.sendUrl('servicioNuevo', '/servicioNuevo');
-      this.afiliacionService.GrabarServicios().subscribe((r) => {
-        if (this.inEdit) {
-          this.router.navigate([internalFullRoutingNames.HOME]);
-          /*for(let i=0; i<this.afiliacionService.services.length; i++) {
-              if (this.afiliacionService.services[i].inReview == false) {
-                return;
-              }
-            }
-            this.router.navigate([authFullRoutingNames.PROCESSING]);*/
-        } else {
-          this.router.navigate([authFullRoutingNames.PROCESSING]);
+
+      this.formSaving = true;
+      this.afiliacionService.GrabarServicios().subscribe(
+        () => {
+          if (this.inEdit) {
+            this.router.navigate([internalFullRoutingNames.HOME]);
+          } else {
+            this.router.navigate([authFullRoutingNames.PROCESSING]);
+          }
+        },
+        () => {
+          this.formSaving = false;
+        },
+        () => {
+          this.formSaving = false;
         }
-      });
+      );
     }
   }
 
