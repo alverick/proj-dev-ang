@@ -18,16 +18,23 @@ import { FormServicioComponent } from '../../components/form-servicio/form-servi
   styleUrls: ['./configurar-gtp.component.scss'],
 })
 export class ConfigurarGtpComponent implements OnInit {
+  constructor(
+    public afiliacionService: AfiliacionService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private gaService: GoogleAnalytics,
+    public gtpService: GtpService
+  ) {}
   protected ruc: number;
-  public stateCreate: boolean = false;
-  public stateEdit: boolean = false;
+  public stateCreate = false;
+  public stateEdit = false;
   public input: FormServicioComponent;
-  EmpresaFormulario: boolean = false;
-  Formulario: boolean = false;
-  Formulariogtp: boolean = false;
+  EmpresaFormulario = false;
+  Formulario = false;
+  Formulariogtp = false;
   buttonServicios = '';
-  public inEdit: boolean = false;
-  public inGTP: boolean = false;
+  public inEdit = false;
+  public inGTP = false;
   public titulo: string;
   public SvcEdit: ServicesGTPChange[];
   public Empgtp: DataEnterpriseGTP = null;
@@ -49,13 +56,11 @@ export class ConfigurarGtpComponent implements OnInit {
   rubros: RubroModel[] = [];
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
-  constructor(
-    public afiliacionService: AfiliacionService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private gaService: GoogleAnalytics,
-    public gtpService: GtpService
-  ) {}
+  public indiceActual = -1;
+  serviceActual: ServiceModel = null;
+
+  addNewAfterSave = false;
+  sendAfterSave = false;
 
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
@@ -67,20 +72,11 @@ export class ConfigurarGtpComponent implements OnInit {
   ngOnInit() {
     this.afiliacionService.GetRubros().subscribe((d) => (this.rubros = d));
     this.inEdit = true;
-    window['_url_loop_'] = `ApGTP/${this.route.snapshot.paramMap.get('llave')}`;
-    history.pushState(
-      null,
-      null,
-      `ApGTP/${this.route.snapshot.paramMap.get('llave')}`
-    );
     this.gtpService.GetServicesGtp(this.route.snapshot.paramMap.get('llave'));
     this.getInfoEmpresa();
     this.buttonServicios = 'Actualizar';
     this.titulo = 'Edita el servicio';
   }
-
-  public indiceActual: number = -1;
-  serviceActual: ServiceModel = null;
 
   OcultarFormulario(requireConfirm: boolean) {
     if (requireConfirm) {
@@ -119,9 +115,6 @@ export class ConfigurarGtpComponent implements OnInit {
         ).name;
       });
   }
-
-  addNewAfterSave: boolean = false;
-  sendAfterSave: boolean = false;
 
   MostarFormulario() {
     if (this.gtpService.services.length >= 99) {
@@ -200,7 +193,7 @@ export class ConfigurarGtpComponent implements OnInit {
     }
     // this.frm.get('monto').value
 
-    let svcSinCta = this.gtpService.services.find((v) => v.nroCuenta === '');
+    const svcSinCta = this.gtpService.services.find((v) => v.nroCuenta === '');
     if (svcSinCta) {
       Swal.fire({
         text: `Falta Ingresar datos en su servicio ${svcSinCta.nombre}`,
@@ -226,7 +219,7 @@ export class ConfigurarGtpComponent implements OnInit {
     Swal.fire({
       // type: tipo ,
       title: titulo,
-      text: text,
+      text,
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
@@ -372,7 +365,7 @@ export class ConfigurarGtpComponent implements OnInit {
         }
         Swal.fire({
           text: msg,
-          title: title,
+          title,
           showCancelButton: true,
           showConfirmButton: true,
           confirmButtonText: 'CONFIRMAR',
@@ -387,7 +380,7 @@ export class ConfigurarGtpComponent implements OnInit {
               });
               Swal.fire({
                 text: 'Se ha eliminado el Servicio',
-                title: title,
+                title,
                 onOpen: drawPopup,
               });
             });

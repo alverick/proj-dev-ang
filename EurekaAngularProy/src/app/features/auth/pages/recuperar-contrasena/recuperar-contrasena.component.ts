@@ -6,10 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
-import { RecuperaService } from 'src/app/shared/services/recupera.service';
-import Swal from 'sweetalert2';
 import { authFullRoutingNames } from 'src/app/app-routing.collection';
+import { RecuperaService } from 'src/app/shared/services/recupera.service';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'cs-recuperar-contrasena',
@@ -22,10 +22,10 @@ export class RecuperarContrasenaComponent implements OnInit {
     private recuperaService: RecuperaService,
     private router: Router
   ) {}
-  public formulario: boolean = true;
+  public formulario = true;
   recupera: FormGroup;
-  public submitted: Boolean = false;
-  isCaptchaValidate: boolean = false;
+  public submitted = false;
+  isCaptchaValidate = false;
   submittedRequired = false;
 
   @HostListener('window:beforeunload', ['$event'])
@@ -50,14 +50,8 @@ export class RecuperarContrasenaComponent implements OnInit {
         Validators.minLength(10),
         Validators.maxLength(100),
       ]),
-      //captcha: new FormControl( '',  [Validators.required])
+      // captcha: new FormControl( '',  [Validators.required])
     });
-
-    // borra el back del navegador
-    window['_url_loop_'] = authFullRoutingNames.RECOVER_PASSWORD;
-    history.pushState(null, null, authFullRoutingNames.CHANGE_PASSWORD);
-    // mantiene la pagina con el scroll en la parte superior
-    window.scrollTo(0, 0);
   }
 
   get f(): any {
@@ -89,7 +83,6 @@ export class RecuperarContrasenaComponent implements OnInit {
             this.f.email.reset();
             this.f.email.clearValidators();
             // al ocultar la pantalla se mostrara en la parte de arriba la pagina
-            //window.scrollTo(0, 0);
             this.router.navigate([authFullRoutingNames.LOGIN]);
           } else {
             this.mensaje('Hemos recibido tus datos', 'Ingrese datos validos');

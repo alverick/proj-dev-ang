@@ -41,10 +41,10 @@ declare var $: any;
 export class CompletarDatosEmpresaComponent implements OnInit {
   registerForm: FormGroup;
   submittedRequired = false;
-  public inEdit: boolean = false;
+  public inEdit = false;
   rubros: RubroModel[] = [];
-  submitted: boolean = false;
-  ruc: string = '';
+  submitted = false;
+  ruc = '';
 
   get f(): any {
     return this.registerForm.controls;
@@ -61,7 +61,6 @@ export class CompletarDatosEmpresaComponent implements OnInit {
       this.inEdit = d.isEdit;
 
       if (d.isEdit == false) {
-        window['_url_loop_'] = authFullRoutingNames.GENERATE_PASSWORD;
         this.registerForm = this.formBuilder.group(
           {
             nombre: new FormControl('', [
@@ -175,25 +174,25 @@ export class CompletarDatosEmpresaComponent implements OnInit {
         );
     } else {
       /*Esto faltaría implementar para la edición*/
-      //////*if (this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
-      //////*  this.gtpService.EdtEmpServ = { token: this.llave, NewName: null };
-      //////*  this.gtpService.nombre = null;
-      //////*} else {
-      //////*  this.gtpService.EdtEmpServ = { token: this.llave, NewName: this.registerForm.value.nombre.toString() };
-      //////*  this.gtpService.nombre = this.registerForm.value.nombre.toString();
-      //////*}
-      //////*this.afiliacionService.email = this.gtpService.EmpresaServicios.email;
-      //////*this.router.navigate([authRoutingNames.SERVICES_EDIT_GTP]);
-      //////*this.gtpService.llave = this.llave;
+      ////// *if (this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
+      ////// *  this.gtpService.EdtEmpServ = { token: this.llave, NewName: null };
+      ////// *  this.gtpService.nombre = null;
+      ////// *} else {
+      ////// *  this.gtpService.EdtEmpServ = { token: this.llave, NewName: this.registerForm.value.nombre.toString() };
+      ////// *  this.gtpService.nombre = this.registerForm.value.nombre.toString();
+      ////// *}
+      ////// *this.afiliacionService.email = this.gtpService.EmpresaServicios.email;
+      ////// *this.router.navigate([authRoutingNames.SERVICES_EDIT_GTP]);
+      ////// *this.gtpService.llave = this.llave;
     }
   }
 
   enviarDatosEmpresa() {
     /*Esto se debería cambiar porque las pantallas ahora son más*/
-    //////*this.gaService.sendEvent('EnviarDatosEmpresa', {
-    //////*  'event_category': 'Afiliación',
-    //////*  'event-label': 'enviar_datos_empresa'
-    //////*});
+    ////// *this.gaService.sendEvent('EnviarDatosEmpresa', {
+    ////// *  'event_category': 'Afiliación',
+    ////// *  'event-label': 'enviar_datos_empresa'
+    ////// *});
   }
 
   nameSerInput(e) {
@@ -205,20 +204,20 @@ export class CompletarDatosEmpresaComponent implements OnInit {
   }
 
   nameSerBlur(e) {
-    let initalValue = this.f.nombre.value;
+    const initalValue = this.f.nombre.value;
     this.f.nombre.setValue(initalValue.trim());
   }
 
   MensajeName() {
     //
 
-    //////*if (this.inEdit) {
-    //////*  if (this.gtpService.EmpresaServicios && this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
-    //////*    return false;
-    //////*  } else {
-    //////*    return true;
-    //////*  }
-    //////*}
+    ////// *if (this.inEdit) {
+    ////// *  if (this.gtpService.EmpresaServicios && this.gtpService.EmpresaServicios.newNameGTPStatus === 1) {
+    ////// *    return false;
+    ////// *  } else {
+    ////// *    return true;
+    ////// *  }
+    ////// *}
     return false;
   }
 
@@ -266,10 +265,10 @@ export class CompletarDatosEmpresaComponent implements OnInit {
     }).then((res) => {
       if (res.value) {
         /*Esto se debería cambiar porque las pantallas ahora son más*/
-        //////*this.gaService.sendEvent('CrearCuentaNegocio', {
-        //////*  'event_category': GoogleAnalytics.Afiliacion,
-        //////*  'event_label': 'ir_a_crear_cuenta'
-        //////*});
+        ////// *this.gaService.sendEvent('CrearCuentaNegocio', {
+        ////// *  'event_category': GoogleAnalytics.Afiliacion,
+        ////// *  'event_label': 'ir_a_crear_cuenta'
+        ////// *});
         window.open('https://interbank.pe/cuenta-negocios');
         this.router.navigate([authFullRoutingNames.LOGIN]);
       }
@@ -299,7 +298,7 @@ export class CompletarDatosEmpresaComponent implements OnInit {
 }
 
 function UnaLetra(c: FormControl) {
-  let regex = /[a-zA-Z]/g;
+  const regex = /[a-zA-Z]/g;
   if (c.value && !regex.test(c.value)) {
     return { unaletra: true };
   }
