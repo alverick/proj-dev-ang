@@ -6,6 +6,6 @@ export interface DebstFilter {
   service: string;
   status: string;
   dateForFilter: string;
-  dateFrom?: Date;
-  dateTo?: Date;
+  dateFrom?: Date | string;
+  dateTo?: Date | string;
 }

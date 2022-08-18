@@ -181,33 +181,40 @@ export class TransactionService {
       .pipe(catchError((error) => throwError(error)));
   }
 
-  report(filtro: DebstFilter): Observable<any> {
+  report({
+    asc,
+    columnName,
+    dateForFilter,
+    dateFrom,
+    dateTo,
+    inputSearch,
+    pageNumber,
+    service,
+    status,
+  }: DebstFilter): Observable<any> {
     const url = `${this.URI_API}/debt/report?_=` + new Date().getTime();
     const headers = new HttpHeaders({
       Authorization: 'bearer ' + this.storage.getCurrentToken(),
       'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
       'Ocp-Apim-Trace': 'true',
     });
-    var strDateFrom =
-      filtro.dateFrom === null
-        ? ''
-        : moment(filtro.dateFrom).format('YYYY/MM/DD');
-    var strDateTo =
-      filtro.dateTo === null ? '' : moment(filtro.dateTo).format('YYYY/MM/DD');
-    let fltr = {
-      pageNumber: filtro.pageNumber,
-      columnName: filtro.columnName,
-      asc: filtro.asc,
-      inputSearch: filtro.inputSearch,
-      service: filtro.service,
-      status: filtro.status,
-      dateForFilter: filtro.dateForFilter,
-      dateFrom: strDateFrom,
-      dateTo: strDateTo,
+    const parseDate: (date: Date | string) => Date | string = (date) =>
+      isNilOrEmpty(date) ? '' : moment(date).format('YYYY/MM/DD');
+
+    const filterRequest: DebstFilter = {
+      pageNumber,
+      columnName,
+      asc,
+      inputSearch,
+      service,
+      status,
+      dateForFilter,
+      dateFrom: parseDate(dateFrom),
+      dateTo: parseDate(dateTo),
     };
     return this.http
-      .post(url, fltr, {
-        headers: headers,
+      .post(url, filterRequest, {
+        headers,
         responseType: 'blob',
       })
       .pipe(catchError((err) => throwError(err)));
