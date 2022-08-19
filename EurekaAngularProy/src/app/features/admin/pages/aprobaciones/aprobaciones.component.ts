@@ -242,7 +242,7 @@ export class AprobacionesComponent implements OnInit {
     }
     const notAprov = CodDeuApp + nombreApp + desap;
     this.emp = {
-      ClientId: this.llave,
+      ClientId: parseInt(this.llave, 10),
       NombreAprobado: this.Enterprise.NombreApproved,
     };
     ListInAprobacion.forEach((s) => {
@@ -520,17 +520,32 @@ export class AprobacionesComponent implements OnInit {
               this.Enterprise.name === this.Enterprise.newName &&
               this.Enterprise.inReview === false
             ) {
-              this.gtpService
-                .AprobarEmpresaServ({
-                  EnterpriseObj: null,
-                  ListServiceObj: this.scv,
-                })
-                .subscribe((d) => {
-                  if (d) {
+              const companyData = {
+                newName: this.Enterprise.newName,
+                email: this.Enterprise.email,
+                movilNumber: this.Enterprise.movilNumber,
+                movilOperator: this.Enterprise.movilOperator,
+                password: '',
+                newPassword: '',
+                confirmNewPassword: '',
+                clientID: parseInt(this.llave, 10),
+              };
+
+              const saveCompany$ =
+                this.configEmpresaService.saveDatosEmpresa(companyData);
+              const saveServices$ = this.gtpService.AprobarEmpresaServ({
+                EnterpriseObj: null,
+                ListServiceObj: this.scv,
+              });
+
+              saveServices$.subscribe((d) => {
+                if (d) {
+                  saveCompany$.subscribe((d1) => {
                     this.router.navigate([appFullRoutingNames.ADMIN]);
-                  } else {
-                  }
-                });
+                  });
+                } else {
+                }
+              });
               return;
             }
             if (this.scv.length === 0) {
