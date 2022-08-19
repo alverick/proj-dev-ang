@@ -36,30 +36,47 @@ export class EmpresaGTPComponent implements OnInit {
       this.rubros = d;
     });
 
+    const {
+      NombreApproved,
+      ruc,
+      entry,
+      movilOperator,
+      email,
+      newName,
+      movilNumber,
+      newNameGTPStatus,
+    } = this._enterprise;
+
+    const isNotEditable = newNameGTPStatus !== 1;
+
+    const newNombreApprovedValue =
+      NombreApproved === undefined ? '' : NombreApproved === true ? 'S' : 'N';
+
     this.formGroup = this.formBuilder.group({
-      ruc: new FormControl({ value: this._enterprise.ruc, disabled: true }),
+      ruc: new FormControl({ value: ruc, disabled: true }),
       newName: new FormControl({
-        value: this._enterprise.newName,
+        value: newName,
         disabled: true,
       }),
-      // tslint:disable-next-line:max-line-length
       NewNameApproved: [
-        this._enterprise.NombreApproved === undefined
-          ? ''
-          : this._enterprise.NombreApproved === true
-          ? 'S'
-          : 'N',
+        { value: newNombreApprovedValue, disabled: !isNotEditable },
         Validators.required,
       ],
-      entry: new FormControl({ value: this._enterprise.entry, disabled: true }),
-      email: new FormControl({ value: this._enterprise.email, disabled: true }),
+      entry: new FormControl({
+        value: entry,
+        disabled: isNotEditable,
+      }),
+      email: new FormControl({
+        value: email,
+        disabled: isNotEditable,
+      }),
       movilNumber: new FormControl({
-        value: this._enterprise.movilNumber,
-        disabled: true,
+        value: movilNumber,
+        disabled: isNotEditable,
       }),
       movilOperator: new FormControl({
-        value: this._enterprise.movilOperator,
-        disabled: true,
+        value: movilOperator,
+        disabled: isNotEditable,
       }),
     });
   }
@@ -69,11 +86,19 @@ export class EmpresaGTPComponent implements OnInit {
   }
 
   onSubmitEmpresa() {
-    if (this.formGroup.valid) {
-      let value: DataEnterpriseGTP;
-      value = this._enterprise;
-      value.NombreApproved = this.formGroup.value.NewNameApproved === 'S';
-      this.grabar.emit(value);
+    const { valid, value } = this.formGroup;
+    if (valid) {
+      const isNotEditable = this._enterprise.newNameGTPStatus !== 1;
+      let dataEnterprise: DataEnterpriseGTP;
+      if (isNotEditable) {
+        dataEnterprise = {
+          ...this._enterprise,
+          NombreApproved: value.NewNameApproved === 'S',
+        };
+      } else {
+        dataEnterprise = { ...this._enterprise, ...value };
+      }
+      this.grabar.emit(dataEnterprise);
     }
   }
 }
