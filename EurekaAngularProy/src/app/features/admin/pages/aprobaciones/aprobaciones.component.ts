@@ -13,6 +13,7 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
+import { ConfiguracionService } from '../../../../shared/services/configuracion.service';
 
 @Component({
   selector: 'cs-aprobaciones',
@@ -22,7 +23,7 @@ import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 export class AprobacionesComponent implements OnInit {
   public Formulario = false;
   public ServiciosFormulario = false;
-  public llave: number;
+  public llave: string;
   // public Empresa: EnterprisesGtp ;
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {
@@ -58,6 +59,7 @@ export class AprobacionesComponent implements OnInit {
     public gtpService: GtpService,
     private rutaActiva: ActivatedRoute,
     public afiliacionService: AfiliacionService,
+    private configEmpresaService: ConfiguracionService,
     public router: Router
   ) {}
   public OcultarDatosActualEmpresa = true;

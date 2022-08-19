@@ -5,11 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import { GtpService } from 'src/app/shared/services/gtp.service';
 import { RubroModel } from 'src/app/shared/models';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { GtpService } from 'src/app/shared/services/gtp.service';
 
 @Component({
   selector: 'cs-empresa-gtp',
