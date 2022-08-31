@@ -48,8 +48,18 @@ export class EmpresaGTPComponent implements OnInit {
 
     const isNotEditable = newNameGTPStatus !== 1;
 
-    const newNombreApprovedValue =
-      NombreApproved === undefined ? '' : NombreApproved === true ? 'S' : 'N';
+    let newNombreApprovedValue: string;
+    switch (NombreApproved) {
+      case undefined:
+        newNombreApprovedValue = '';
+        break;
+      case true:
+        newNombreApprovedValue = 'S';
+        break;
+      default:
+        newNombreApprovedValue = 'N';
+        break;
+    }
 
     this.formGroup = this.formBuilder.group({
       ruc: new FormControl({ value: ruc, disabled: true }),
@@ -57,13 +67,10 @@ export class EmpresaGTPComponent implements OnInit {
         value: newName,
         disabled: true,
       }),
-      NewNameApproved: [
-        { value: newNombreApprovedValue, disabled: !isNotEditable },
-        Validators.required,
-      ],
+      NewNameApproved: [newNombreApprovedValue, Validators.required],
       entry: new FormControl({
         value: entry,
-        disabled: isNotEditable,
+        disabled: true,
       }),
       email: new FormControl({
         value: email,
@@ -75,7 +82,7 @@ export class EmpresaGTPComponent implements OnInit {
       }),
       movilOperator: new FormControl({
         value: movilOperator,
-        disabled: isNotEditable,
+        disabled: true,
       }),
     });
   }
