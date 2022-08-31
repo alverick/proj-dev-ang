@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { zip } from 'rxjs';
 import { appFullRoutingNames } from 'src/app/app-routing.names';
 import { RubroModel } from 'src/app/shared/models';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
@@ -523,31 +524,19 @@ export class AprobacionesComponent implements OnInit {
               this.Enterprise.inReview === false
             ) {
               const companyData = {
-                newName: this.Enterprise.newName,
                 email: this.Enterprise.email,
                 movilNumber: this.Enterprise.movilNumber,
-                movilOperator: this.Enterprise.movilOperator,
-                password: '',
-                newPassword: '',
-                confirmNewPassword: '',
                 clientID: parseInt(this.llave, 10),
               };
 
               const saveCompany$ =
-                this.configEmpresaService.saveDatosEmpresa(companyData);
+                this.gtpService.saveDatosEmpresa(companyData);
               const saveServices$ = this.gtpService.AprobarEmpresaServ({
                 EnterpriseObj: null,
                 ListServiceObj: this.scv,
               });
 
-              saveServices$.subscribe((d) => {
-                if (d) {
-                  saveCompany$.subscribe((d1) => {
-                    this.router.navigate([appFullRoutingNames.ADMIN]);
-                  });
-                } else {
-                }
-              });
+              zip(saveCompany$, saveServices$).subscribe(this.setNavigate());
               return;
             }
             if (this.scv.length === 0) {
@@ -590,6 +579,14 @@ export class AprobacionesComponent implements OnInit {
         'Aun faltan aprobar ' + total + ' observaciones'
       );
     }
+  }
+
+  private setNavigate() {
+    return (response) => {
+      if (response) {
+        this.router.navigate([appFullRoutingNames.ADMIN]);
+      }
+    };
   }
 
   /*
