@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { zip } from 'rxjs';
 import { appFullRoutingNames } from 'src/app/app-routing.names';
 import { RubroModel } from 'src/app/shared/models';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
@@ -22,7 +23,7 @@ import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 export class AprobacionesComponent implements OnInit {
   public Formulario = false;
   public ServiciosFormulario = false;
-  public llave: number;
+  public llave: string;
   // public Empresa: EnterprisesGtp ;
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {
@@ -85,11 +86,6 @@ export class AprobacionesComponent implements OnInit {
         (v) => v.code === this.Enterprise.entry
       ).name;
     });
-    /*  this.gtpService.GetEnterpriseGtp2(this.llave)
-      .subscribe( data => {
-        this.empresa = data;
-
-         }); */
   }
 
   onGrabar(emp: DataEnterpriseGTP) {
@@ -156,16 +152,7 @@ export class AprobacionesComponent implements OnInit {
     }
   }
 
-  MostrarEmpresa2() {
-    if (this.Enterprise.newNameGTPStatus === 1) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   EnviarAprobados() {
-    // debugger
     let entryDiff = false;
     this.gtpService.services.forEach((s) => {
       if (s.res.length > 0 && s.res.substring(0, 2) !== this.Enterprise.entry) {
@@ -242,7 +229,7 @@ export class AprobacionesComponent implements OnInit {
     }
     const notAprov = CodDeuApp + nombreApp + desap;
     this.emp = {
-      ClientId: this.llave,
+      ClientId: parseInt(this.llave, 10),
       NombreAprobado: this.Enterprise.NombreApproved,
     };
     ListInAprobacion.forEach((s) => {
@@ -270,8 +257,6 @@ export class AprobacionesComponent implements OnInit {
             cancelButtonText: 'No, Solicitar corrección de datos',
             onOpen: drawPopup,
           }).then((result) => {
-            // debugger
-
             if (result.value) {
               this.gtpService
                 .AprobarEmpresaServ({
@@ -279,12 +264,7 @@ export class AprobacionesComponent implements OnInit {
                   EnterpriseObj: this.emp,
                   ListServiceObj: this.scv,
                 })
-                .subscribe((d) => {
-                  if (d) {
-                    this.router.navigate([appFullRoutingNames.ADMIN]);
-                  }
-                });
-              return;
+                .subscribe(this.setNavigate());
             } else if (result.dismiss === Swal.DismissReason.cancel) {
               if (
                 this.Enterprise.name === this.Enterprise.newName &&
@@ -297,12 +277,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: this.emp,
                     ListServiceObj: this.scv,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               }
               if (
@@ -316,12 +291,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: this.emp,
                     ListServiceObj: this.scv,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               }
 
@@ -335,12 +305,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: null,
                     ListServiceObj: this.scv,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               }
               if (this.scv.length === 0) {
@@ -350,12 +315,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: this.emp,
                     ListServiceObj: null,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               } else {
                 this.gtpService
@@ -364,12 +324,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: this.emp,
                     ListServiceObj: this.scv,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               }
             }
@@ -399,12 +354,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: this.emp,
                     ListServiceObj: this.scv,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               }
               if (
@@ -418,12 +368,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: this.emp,
                     ListServiceObj: this.scv,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               }
 
@@ -437,12 +382,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: null,
                     ListServiceObj: this.scv,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               }
               if (this.scv.length === 0) {
@@ -452,12 +392,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: this.emp,
                     ListServiceObj: null,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               } else {
                 this.gtpService
@@ -466,12 +401,7 @@ export class AprobacionesComponent implements OnInit {
                     EnterpriseObj: this.emp,
                     ListServiceObj: this.scv,
                   })
-                  .subscribe((d) => {
-                    if (d) {
-                      this.router.navigate([appFullRoutingNames.ADMIN]);
-                    } else {
-                    }
-                  });
+                  .subscribe(this.setNavigate());
                 return;
               }
             }
@@ -488,8 +418,6 @@ export class AprobacionesComponent implements OnInit {
           onOpen: drawPopup,
         }).then((result) => {
           if (result.value) {
-            // debugger
-
             if (
               this.Enterprise.name === this.Enterprise.newName &&
               this.Enterprise.inReview === false &&
@@ -508,29 +436,27 @@ export class AprobacionesComponent implements OnInit {
                   EnterpriseObj: this.emp,
                   ListServiceObj: this.scv,
                 })
-                .subscribe((d) => {
-                  if (d) {
-                    this.router.navigate([appFullRoutingNames.ADMIN]);
-                  } else {
-                  }
-                });
+                .subscribe(this.setNavigate());
               return;
             }
             if (
               this.Enterprise.name === this.Enterprise.newName &&
               this.Enterprise.inReview === false
             ) {
-              this.gtpService
-                .AprobarEmpresaServ({
-                  EnterpriseObj: null,
-                  ListServiceObj: this.scv,
-                })
-                .subscribe((d) => {
-                  if (d) {
-                    this.router.navigate([appFullRoutingNames.ADMIN]);
-                  } else {
-                  }
-                });
+              const companyData = {
+                email: this.Enterprise.email,
+                movilNumber: this.Enterprise.movilNumber,
+                clientID: parseInt(this.llave, 10),
+              };
+
+              const saveCompany$ =
+                this.gtpService.saveDatosEmpresa(companyData);
+              const saveServices$ = this.gtpService.AprobarEmpresaServ({
+                EnterpriseObj: null,
+                ListServiceObj: this.scv,
+              });
+
+              zip(saveCompany$, saveServices$).subscribe(this.setNavigate());
               return;
             }
             if (this.scv.length === 0) {
@@ -539,12 +465,7 @@ export class AprobacionesComponent implements OnInit {
                   EnterpriseObj: this.emp,
                   ListServiceObj: null,
                 })
-                .subscribe((d) => {
-                  if (d) {
-                    this.router.navigate([appFullRoutingNames.ADMIN]);
-                  } else {
-                  }
-                });
+                .subscribe(this.setNavigate());
               return;
             } else {
               this.gtpService
@@ -552,12 +473,7 @@ export class AprobacionesComponent implements OnInit {
                   EnterpriseObj: this.emp,
                   ListServiceObj: this.scv,
                 })
-                .subscribe((d) => {
-                  if (d) {
-                    this.router.navigate([appFullRoutingNames.ADMIN]);
-                  } else {
-                  }
-                });
+                .subscribe(this.setNavigate());
               return;
             }
           }
@@ -575,14 +491,22 @@ export class AprobacionesComponent implements OnInit {
     }
   }
 
+  private setNavigate() {
+    return (response) => {
+      if (response) {
+        this.router.navigate([appFullRoutingNames.ADMIN]);
+      }
+    };
+  }
+
   /*
-      newName         name
-    minimarket         ''       NUEVO     0  -
-      ''            minimarket  APROBADO  1
-      sm            minimarket  EDITADO   2  -
-      sm            minimarket  RECHAZADO 3
-      ''               sm       APROBADO  1
-  */
+        newName         name
+      minimarket         ''       NUEVO     0  -
+        ''            minimarket  APROBADO  1
+        sm            minimarket  EDITADO   2  -
+        sm            minimarket  RECHAZADO 3
+        ''               sm       APROBADO  1
+    */
 
   getNames(svc: DataServiceGTP) {
     if (svc.name === '?' && svc.newName !== '?') {
