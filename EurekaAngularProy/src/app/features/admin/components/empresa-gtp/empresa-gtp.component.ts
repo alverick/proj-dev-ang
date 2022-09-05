@@ -67,7 +67,10 @@ export class EmpresaGTPComponent implements OnInit {
         value: newName,
         disabled: true,
       }),
-      NewNameApproved: [newNombreApprovedValue, Validators.required],
+      NewNameApproved: [
+        { value: newNombreApprovedValue, disabled: !isNotEditable },
+        Validators.required,
+      ],
       entry: new FormControl({
         value: entry,
         disabled: true,
