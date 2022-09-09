@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { zip } from 'rxjs';
+import { clone, equals, isNil } from 'ramda';
+import { isNotNil } from 'ramda-adjunct';
 import { appFullRoutingNames } from 'src/app/app-routing.names';
 import { RubroModel } from 'src/app/shared/models';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
@@ -24,7 +25,6 @@ export class AprobacionesPage implements OnInit {
   public Formulario = false;
   public ServiciosFormulario = false;
   public llave: string;
-  // public Empresa: EnterprisesGtp ;
   public Empgtp: DataEnterpriseGTP = null;
   public Enterprise: DataEnterpriseGTP = {
     ruc: 0,
@@ -42,16 +42,13 @@ export class AprobacionesPage implements OnInit {
   };
   public emp: GtpEmpresa;
   public scv: GtpServcegtp[] = [];
-  public gtppost: GtpPost;
   public Service: DataServiceGTP;
   public Servgtp: DataServiceGTP;
-  public deshabilitar: boolean;
   public indiceActual = -1;
-  public isOnlyEmpresa: boolean;
-  public isOnlyService: boolean;
   public rubro: string;
-  public serFormAprob: boolean;
   public empresa: any;
+  enterpriseChanged = false;
+  servicesChanged = false;
 
   rubros: RubroModel[] = [];
 
@@ -61,7 +58,7 @@ export class AprobacionesPage implements OnInit {
     public afiliacionService: AfiliacionService,
     public router: Router
   ) {}
-  public OcultarDatosActualEmpresa = true;
+
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
     if (this.Formulario && this.ServiciosFormulario) {
@@ -72,11 +69,17 @@ export class AprobacionesPage implements OnInit {
   ngOnInit() {
     this.llave = this.rutaActiva.snapshot.params.llave;
     /// TRAE LOS SERVICIOS
-    this.gtpService.GetServicesGtp(this.llave);
     this.afiliacionService.GetRubrosAll().subscribe((d) => {
       this.rubros = d;
-      this.getInfoEmpresa();
+      this.loadEnterpriseData();
     });
+  }
+
+  loadEnterpriseData() {
+    this.enterpriseChanged = false;
+    this.servicesChanged = false;
+    this.gtpService.GetServicesGtp(this.llave);
+    this.getInfoEmpresa();
   }
 
   getInfoEmpresa() {
@@ -88,29 +91,27 @@ export class AprobacionesPage implements OnInit {
     });
   }
 
-  onGrabar(emp: DataEnterpriseGTP) {
-    this.Enterprise = emp;
+  onGrabar(enterpriseData: DataEnterpriseGTP) {
     this.Formulario = false;
+    if (!equals(this.Enterprise, enterpriseData)) {
+      this.Enterprise = enterpriseData;
+      this.enterpriseChanged = true;
+    }
   }
 
   onGrabarSer(etp: DataServiceGTP) {
-    if (this.indiceActual >= 0) {
+    if (
+      this.indiceActual >= 0 &&
+      !equals(etp, this.gtpService.services[this.indiceActual])
+    ) {
       this.Service = etp;
       this.ServiciosFormulario = false;
       this.gtpService.services[this.indiceActual] = etp;
       this.indiceActual = -1;
+      this.servicesChanged = true;
     }
   }
 
-  /*
-    getNameSvc(svc: DataServiceGTP) {
-      if (svc.name  !== '?') {
-        return svc.name;
-     }
-      if (svc.name  === '?') {
-        return svc.newName.substring(3, svc.newName.length).toString();
-     }
-    } */
   VerCamposEnterprise(etp: DataEnterpriseGTP) {
     if (this.ServiciosFormulario === true) {
       this.mensaje(
@@ -132,7 +133,7 @@ export class AprobacionesPage implements OnInit {
       return;
     }
     this.ServiciosFormulario = true;
-    this.Servgtp = etp;
+    this.Servgtp = clone(etp);
     this.Servgtp.useAgencyChannel = this.Enterprise.useAgencyChannel;
     this.indiceActual = index;
   }
@@ -154,8 +155,8 @@ export class AprobacionesPage implements OnInit {
 
   EnviarAprobados() {
     let entryDiff = false;
-    this.gtpService.services.forEach((s) => {
-      if (s.res.length > 0 && s.res.substring(0, 2) !== this.Enterprise.entry) {
+    this.gtpService.services.forEach(({ res }) => {
+      if (res.length > 0 && res.substring(0, 2) !== this.Enterprise.entry) {
         entryDiff = true;
       }
     });
@@ -170,26 +171,25 @@ export class AprobacionesPage implements OnInit {
     this.scv = [];
     // NO APROBADOS
     const nombreApp = this.gtpService.services.filter(
-      (svc) => svc.acceptednewName === false && svc.name !== svc.newName
+      ({ acceptednewName, name, newName }) =>
+        acceptednewName === false && name !== newName
     ).length;
     const CodDeuApp = this.gtpService.services.filter(
-      (svc) =>
-        svc.acceptednewNameCode === false && svc.debtorCode !== svc.newNameCode
+      ({ acceptednewNameCode, debtorCode, newNameCode }) =>
+        acceptednewNameCode === false && debtorCode !== newNameCode
     ).length;
 
     // tslint:disable-next-line: max-line-length cunatos son los que faltan revisar
     const ListCantidadNombre = this.gtpService.services.filter(
-      (svc) =>
-        (svc.newNameGTPStatus === 0 || svc.newNameGTPStatus === 2) &&
-        svc.acceptednewName ===
-          null /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */
+      ({ acceptednewName, newNameGTPStatus }) =>
+        (newNameGTPStatus === 0 || newNameGTPStatus === 2) &&
+        acceptednewName === null
     ).length;
     // tslint:disable-next-line:max-line-length
     const ListCantidadCodigoDeudor = this.gtpService.services.filter(
-      (svc) =>
-        (svc.newNameCodeGTPStatus === 0 || svc.newNameCodeGTPStatus === 2) &&
-        svc.acceptednewNameCode ===
-          null /*&& (svc.acceptednewName === null || svc.acceptednewNameCode === null ) */
+      ({ acceptednewNameCode, newNameCodeGTPStatus }) =>
+        (newNameCodeGTPStatus === 0 || newNameCodeGTPStatus === 2) &&
+        acceptednewNameCode === null
     ).length;
 
     let Empcant = 0;
@@ -201,10 +201,7 @@ export class AprobacionesPage implements OnInit {
     ) {
       this.Enterprise.NombreApproved = true;
     } else {
-      if (
-        this.Enterprise.NombreApproved === null ||
-        this.Enterprise.NombreApproved === undefined
-      ) {
+      if (isNil(this.Enterprise.NombreApproved)) {
         Empcant = 1;
       }
     }
@@ -212,287 +209,271 @@ export class AprobacionesPage implements OnInit {
     // const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
     // tslint:disable-next-line:max-line-length
     const ListInAprobacion = this.gtpService.services.filter(
-      (svc) =>
-        svc.newNameGTPStatus === 2 ||
-        svc.newNameGTPStatus === 0 ||
-        svc.newNameCodeGTPStatus === 2 ||
-        svc.newNameCodeGTPStatus === 0 ||
-        svc.res !==
+      ({ newNameCodeGTPStatus, newNameGTPStatus, res }) =>
+        newNameGTPStatus === 2 ||
+        newNameGTPStatus === 0 ||
+        newNameCodeGTPStatus === 2 ||
+        newNameCodeGTPStatus === 0 ||
+        res !==
           '' /*|| ( (svc.newNameGTPStatus === 3   && svc.name !== ''  && svc.newName !== ''  ))*/
     );
 
-    const total = ListCantidadNombre + ListCantidadCodigoDeudor + Empcant;
+    const totalObservations =
+      ListCantidadNombre + ListCantidadCodigoDeudor + Empcant;
 
     let desap = 0;
     if (this.Enterprise.NombreApproved === false) {
       desap = 1;
     }
-    const notAprov = CodDeuApp + nombreApp + desap;
+    const notApproved = CodDeuApp + nombreApp + desap;
+    const { NombreApproved } = this.Enterprise;
     this.emp = {
       ClientId: parseInt(this.llave, 10),
-      NombreAprobado: this.Enterprise.NombreApproved,
+      NombreAprobado: NombreApproved,
     };
-    ListInAprobacion.forEach((s) => {
-      this.scv.push({
-        ServiceId: s.id,
-        NombreAprobado: s.name === s.newName ? true : s.acceptednewName,
-        NombreCodAprobado:
-          s.debtorCode === s.newNameCode ? true : s.acceptednewNameCode,
-        Res: s.res,
-      });
-    });
+    ListInAprobacion.forEach(
+      ({
+        acceptednewName,
+        acceptednewNameCode,
+        debtorCode,
+        id,
+        name,
+        newName,
+        newNameCode,
+        res,
+      }) => {
+        this.scv.push({
+          ServiceId: id,
+          NombreAprobado: name === newName ? true : acceptednewName,
+          NombreCodAprobado:
+            debtorCode === newNameCode ? true : acceptednewNameCode,
+          Res: res,
+        });
+      }
+    );
 
-    if (total === 0) {
-      if (notAprov > 0) {
-        if (this.Enterprise.isNewEnterprise) {
+    this.processDataEnterprise(totalObservations, notApproved);
+  }
+
+  private processDataEnterprise(observations: number, notApproved: number) {
+    const { isNewEnterprise, inReview, name, newName } = this.Enterprise;
+
+    const servicesInReview = this.gtpService.services.some(
+      (service) => service.inReview
+    );
+
+    if (observations === 0) {
+      if (notApproved > 0) {
+        if (isNewEnterprise) {
           Swal.fire({
-            title: 'Aprobacion',
-            html:
-              'Existen ' +
-              notAprov +
-              ' campos que no fueron aprobados. <br> ¿Desea rechazar la Afiliación?',
+            title: 'Aprobación',
+            html: `Existen ${notApproved} campos que no fueron aprobados. <br> ¿Desea rechazar la Afiliación?`,
             showCloseButton: true,
             showCancelButton: true,
             confirmButtonText: 'Si, Rechazar afiliación',
             cancelButtonText: 'No, Solicitar corrección de datos',
             onOpen: drawPopup,
-          }).then((result) => {
+          }).then(async (result) => {
             if (result.value) {
-              this.gtpService
-                .AprobarEmpresaServ({
-                  Rechaza: true,
-                  EnterpriseObj: this.emp,
-                  ListServiceObj: this.scv,
-                })
-                .subscribe(this.setNavigate());
+              this.saveApprovedData({
+                Rechaza: true,
+                EnterpriseObj: this.emp,
+                ListServiceObj: this.scv,
+              });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-              if (
-                this.Enterprise.name === this.Enterprise.newName &&
-                this.Enterprise.inReview === false &&
-                this.scv.length === 0
-              ) {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: this.emp,
-                    ListServiceObj: this.scv,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              }
-              if (
-                this.Enterprise.name === this.Enterprise.newName &&
-                this.Enterprise.inReview &&
-                this.scv.length > 0
-              ) {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: this.emp,
-                    ListServiceObj: this.scv,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              }
-
-              if (
-                this.Enterprise.name === this.Enterprise.newName &&
-                this.Enterprise.inReview === false
-              ) {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: null,
-                    ListServiceObj: this.scv,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              }
-              if (this.scv.length === 0) {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: this.emp,
-                    ListServiceObj: null,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              } else {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: this.emp,
-                    ListServiceObj: this.scv,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              }
+              await this.saveQueryFixData();
             }
           });
         } else {
           Swal.fire({
-            title: 'Aprobacion',
-            html:
-              'Existen ' +
-              notAprov +
-              ' campos que no fueron aprobados. <br> ¿Desea solicitar corrección de datos?',
+            title: 'Aprobación',
+            html: `Existen ${notApproved} campos que no fueron aprobados. <br> ¿Desea solicitar corrección de datos?`,
             showCloseButton: true,
             showCancelButton: true,
             confirmButtonText: 'Si, Solicitar corrección de datos',
             cancelButtonText: 'No, Cancelar',
             onOpen: drawPopup,
-          }).then((result) => {
+          }).then(async (result) => {
             if (result.value) {
-              if (
-                this.Enterprise.name === this.Enterprise.newName &&
-                this.Enterprise.inReview === false &&
-                this.scv.length === 0
-              ) {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: this.emp,
-                    ListServiceObj: this.scv,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              }
-              if (
-                this.Enterprise.name === this.Enterprise.newName &&
-                this.Enterprise.inReview &&
-                this.scv.length > 0
-              ) {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: this.emp,
-                    ListServiceObj: this.scv,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              }
-
-              if (
-                this.Enterprise.name === this.Enterprise.newName &&
-                this.Enterprise.inReview === false
-              ) {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: null,
-                    ListServiceObj: this.scv,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              }
-              if (this.scv.length === 0) {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: this.emp,
-                    ListServiceObj: null,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              } else {
-                this.gtpService
-                  .AprobarEmpresaServ({
-                    Rechaza: false,
-                    EnterpriseObj: this.emp,
-                    ListServiceObj: this.scv,
-                  })
-                  .subscribe(this.setNavigate());
-                return;
-              }
+              await this.saveQueryFixData();
             }
           });
         }
-      } else {
+      } else if (
+        name === newName &&
+        inReview === false &&
+        !servicesInReview &&
+        (this.enterpriseChanged || this.servicesChanged)
+      ) {
         Swal.fire({
-          title: 'Aprobacion',
-          html: 'Todos los campos han sido revisados <br> ¿Desea terminar? <br> (Se enviara un correo a la empresa)',
+          title: 'Confirmar cambios',
+          html: '¿Estás seguro de que quieres guardar estos cambios?',
           showCloseButton: true,
           showCancelButton: true,
           confirmButtonText: 'Si, Terminar',
           cancelButtonText: 'No, Cancelar',
           onOpen: drawPopup,
-        }).then((result) => {
+        }).then(async (result) => {
           if (result.value) {
-            if (
-              this.Enterprise.name === this.Enterprise.newName &&
-              this.Enterprise.inReview === false &&
-              this.scv.length === 0
-            ) {
-              // this.router.navigate([appFullRoutingNames.ADMIN]);
-              return;
-            }
-            if (
-              this.Enterprise.name === this.Enterprise.newName &&
-              this.Enterprise.inReview &&
-              this.scv.length > 0
-            ) {
-              this.gtpService
-                .AprobarEmpresaServ({
-                  EnterpriseObj: this.emp,
-                  ListServiceObj: this.scv,
-                })
-                .subscribe(this.setNavigate());
-              return;
-            }
-            if (
-              this.Enterprise.name === this.Enterprise.newName &&
-              this.Enterprise.inReview === false
-            ) {
-              const companyData = {
-                email: this.Enterprise.email,
-                movilNumber: this.Enterprise.movilNumber,
-                clientID: parseInt(this.llave, 10),
-              };
-
-              const saveCompany$ =
-                this.gtpService.saveDatosEmpresa(companyData);
-              const saveServices$ = this.gtpService.AprobarEmpresaServ({
+            if (this.enterpriseChanged) {
+              await this.saveCompanyData({
                 EnterpriseObj: null,
                 ListServiceObj: this.scv,
               });
-
-              zip(saveCompany$, saveServices$).subscribe(this.setNavigate());
-              return;
-            }
-            if (this.scv.length === 0) {
-              this.gtpService
-                .AprobarEmpresaServ({
-                  EnterpriseObj: this.emp,
-                  ListServiceObj: null,
-                })
-                .subscribe(this.setNavigate());
-              return;
             } else {
-              this.gtpService
-                .AprobarEmpresaServ({
+              this.saveApprovedData({
+                EnterpriseObj: null,
+                ListServiceObj: this.scv,
+              });
+            }
+          } else {
+            this.router.navigate([appFullRoutingNames.ADMIN]);
+          }
+        });
+      } else if (!this.enterpriseChanged && !this.servicesChanged) {
+        this.router.navigate([appFullRoutingNames.ADMIN]);
+      } else {
+        Swal.fire({
+          title: 'Aprobación',
+          html: 'Todos los campos han sido revisados <br> ¿Desea terminar? <br> (Se enviará un correo a la empresa)',
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Si, Terminar',
+          cancelButtonText: 'No, Cancelar',
+          onOpen: drawPopup,
+        }).then(async (result) => {
+          if (result.value) {
+            if (name === newName) {
+              if (inReview === false && this.scv.length === 0) {
+                // this.router.navigate([appFullRoutingNames.ADMIN]);
+                return;
+              }
+              if (inReview && this.scv.length > 0) {
+                this.saveApprovedData({
                   EnterpriseObj: this.emp,
                   ListServiceObj: this.scv,
-                })
-                .subscribe(this.setNavigate());
+                });
+                return;
+              }
+              if (inReview === false) {
+                if (this.enterpriseChanged) {
+                  await this.saveCompanyData({
+                    EnterpriseObj: null,
+                    ListServiceObj: this.scv,
+                  });
+                } else {
+                  this.saveApprovedData({
+                    EnterpriseObj: null,
+                    ListServiceObj: this.scv,
+                  });
+                }
+                return;
+              }
+            }
+            if (this.scv.length === 0) {
+              this.saveApprovedData({
+                EnterpriseObj: this.emp,
+                ListServiceObj: null,
+              });
+              return;
+            } else {
+              this.saveApprovedData({
+                EnterpriseObj: this.emp,
+                ListServiceObj: this.scv,
+              });
               return;
             }
           }
-          this.gtppost = {
-            EnterpriseObj: this.emp,
-            ListServiceObj: this.scv,
-          };
         });
       }
     } else {
       this.mensaje(
-        'Aprobacion',
-        'Aun faltan aprobar ' + total + ' observaciones'
+        'Aprobación',
+        `Aun faltan aprobar ${observations} observaciones`
       );
+    }
+  }
+
+  private async saveQueryFixData() {
+    const { inReview, name, newName } = this.Enterprise;
+
+    if (this.enterpriseChanged) {
+      await this.saveCompanyData();
+    }
+
+    if (name === newName) {
+      if (
+        (inReview === false && this.scv.length === 0) ||
+        (inReview && this.scv.length > 0)
+      ) {
+        this.saveApprovedData({
+          Rechaza: false,
+          EnterpriseObj: this.emp,
+          ListServiceObj: this.scv,
+        });
+        return;
+      }
+      if (inReview === false) {
+        this.saveApprovedData({
+          Rechaza: false,
+          EnterpriseObj: null,
+          ListServiceObj: this.scv,
+        });
+        return;
+      }
+    }
+    if (this.scv.length === 0) {
+      this.saveApprovedData({
+        Rechaza: false,
+        EnterpriseObj: this.emp,
+        ListServiceObj: null,
+      });
+    } else {
+      this.saveApprovedData({
+        Rechaza: false,
+        EnterpriseObj: this.emp,
+        ListServiceObj: this.scv,
+      });
+    }
+  }
+
+  private saveCompanyData(serviceData = null, redirect = false) {
+    return new Promise<void>((resolve) => {
+      const { email, movilNumber } = this.Enterprise;
+      const companyData = {
+        email,
+        movilNumber,
+        clientID: parseInt(this.llave, 10),
+      };
+
+      this.gtpService.saveDatosEmpresa(companyData).subscribe({
+        next: () => {
+          this.enterpriseChanged = false;
+        },
+        complete: () => {
+          if (this.servicesChanged && isNotNil(serviceData)) {
+            this.saveApprovedData(serviceData);
+          }
+          if (redirect || (!this.servicesChanged && isNotNil(serviceData))) {
+            this.router.navigate([appFullRoutingNames.ADMIN]);
+          }
+          resolve();
+        },
+      });
+    });
+  }
+
+  saveApprovedData(approveData) {
+    if (isNotNil(approveData) && this.servicesChanged) {
+      this.gtpService
+        .AprobarEmpresaServ(approveData)
+        .subscribe(this.setNavigate());
     }
   }
 
   private setNavigate() {
     return (response) => {
+      this.servicesChanged = false;
       if (response) {
         this.router.navigate([appFullRoutingNames.ADMIN]);
       }
@@ -519,6 +500,7 @@ export class AprobacionesPage implements OnInit {
       return svc.name;
     }
   }
+
   /*
     getName2(svc: DataServiceGTP) {
       if (svc.newNameGtpStatus === 0 && svc.newNameCodeGtpStatus === 0) {
@@ -566,6 +548,7 @@ export class AprobacionesPage implements OnInit {
       return 'Servicio rechazado';
     }
   }
+
   OcultarFormulario() {
     if (
       this.Empgtp.newNameGTPStatus === 0 ||
