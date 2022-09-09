@@ -17,10 +17,10 @@ import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 
 @Component({
   selector: 'cs-aprobaciones',
-  templateUrl: './aprobaciones.component.html',
-  styleUrls: ['./aprobaciones.component.scss'],
+  templateUrl: './aprobaciones.page.html',
+  styleUrls: ['./aprobaciones.page.scss'],
 })
-export class AprobacionesComponent implements OnInit {
+export class AprobacionesPage implements OnInit {
   public Formulario = false;
   public ServiciosFormulario = false;
   public llave: string;

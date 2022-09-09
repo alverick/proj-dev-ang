@@ -9,7 +9,7 @@ import {
   adminRoutingNames,
 } from './admin-routing.names';
 import { AdminComponent } from './admin.component';
-import { AprobacionesComponent } from './pages/aprobaciones/aprobaciones.component';
+import { AprobacionesPage } from './pages/aprobaciones/aprobaciones.page';
 import { CargaHistoricoComponent } from './pages/carga-historico/carga-historico.component';
 import { ConfigurarCorreoGtpComponent } from './pages/configurar-correo-gtp/configurar-correo-gtp.component';
 import { GtpGrillaPage } from './pages/gtp-grilla/gtp-grilla.page';
@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: adminDynamicRoutingNames.APPROVE,
-        component: AprobacionesComponent,
+        component: AprobacionesPage,
         canActivate: [AuthGuard, GtpInputGuard],
       },
       {
