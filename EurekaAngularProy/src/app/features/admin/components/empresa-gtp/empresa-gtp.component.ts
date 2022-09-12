@@ -112,7 +112,7 @@ export class EmpresaGTPComponent implements OnInit {
         },
         [
           Validators.required,
-          Validators.pattern('^([9]d{8})?([1-8]d{5,6})?$'),
+          Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'),
           Validators.minLength(6),
           Validators.maxLength(9),
         ]
