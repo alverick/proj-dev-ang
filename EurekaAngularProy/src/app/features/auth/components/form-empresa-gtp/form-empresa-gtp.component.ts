@@ -60,8 +60,8 @@ export class FormEmpresaGTPComponent implements OnInit {
       ]),
       movilNumber: new FormControl(this._enterprise.movilNumber, [
         Validators.required,
-        Validators.pattern(/^([9][0-9]{8})?([1-8][0-9]{5,6})?$/),
-        Validators.minLength(6),
+        Validators.pattern(/^9\d{8}$/),
+        Validators.minLength(9),
         Validators.maxLength(9),
       ]),
     });

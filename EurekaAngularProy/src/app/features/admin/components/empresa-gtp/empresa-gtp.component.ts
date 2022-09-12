@@ -32,7 +32,7 @@ export class EmpresaGTPComponent implements OnInit {
     telefono: {
       required: 'Teléfono o celular es obligatorio',
       pattern: 'Teléfono o celular es obligatorio',
-      minlength: 'El teléfono o celular debe tener mínimo 6 dígitos',
+      minlength: 'El teléfono o celular debe tener mínimo 9 dígitos',
     },
   };
   @Input() set enterprise(value: DataEnterpriseGTP) {
@@ -112,8 +112,8 @@ export class EmpresaGTPComponent implements OnInit {
         },
         [
           Validators.required,
-          Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'),
-          Validators.minLength(6),
+          Validators.pattern(/^9\d{8}$/),
+          Validators.minLength(9),
           Validators.maxLength(9),
         ]
       ),

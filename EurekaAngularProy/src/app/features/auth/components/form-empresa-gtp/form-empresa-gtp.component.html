@@ -55,7 +55,7 @@
             <mat-error class="messsage-error">
                 <mat-error class="messsage-error" *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required') && submittedRequired">Teléfono o celular es obligatorio</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('pattern')"> Ingrese un telefono o celular valido </mat-error>
-                <mat-error class="messsage-error" *ngIf="f.movilNumber.invalid  && !f.movilNumber.hasError('pattern') && f.movilNumber.hasError('minlength')"> El teléfono o celular debe tener mínimo 6 dígitos</mat-error>
+                <mat-error class="messsage-error" *ngIf="f.movilNumber.invalid  && !f.movilNumber.hasError('pattern') && f.movilNumber.hasError('minlength')"> El teléfono o celular debe tener mínimo 9 dígitos</mat-error>
             </mat-error>
         </mat-form-field>
     </div>
