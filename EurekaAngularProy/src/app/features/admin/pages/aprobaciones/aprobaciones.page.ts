@@ -397,7 +397,7 @@ export class AprobacionesPage implements OnInit {
   private async saveQueryFixData() {
     const { inReview, name, newName } = this.Enterprise;
 
-    if (this.enterpriseChanged) {
+    if (this.enterpriseChanged && !inReview) {
       await this.saveCompanyData();
     }
 
