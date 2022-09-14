@@ -464,7 +464,10 @@ export class AprobacionesPage implements OnInit {
   }
 
   saveApprovedData(approveData) {
-    if (isNotNil(approveData) && this.servicesChanged) {
+    if (
+      isNotNil(approveData) &&
+      (this.servicesChanged || isNotNil(this.Enterprise.NombreApproved))
+    ) {
       this.gtpService
         .AprobarEmpresaServ(approveData)
         .subscribe(this.setNavigate());
