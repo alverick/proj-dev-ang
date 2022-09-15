@@ -417,48 +417,78 @@ export class AfiliacionService {
       });
   }
 
+  public isServiceInReview({
+    id,
+    newName,
+    newNameCode,
+    newNameCodeGtpStatus,
+    newNameGtpStatus,
+  }: ServiceModel): boolean {
+    if (id === null) {
+      return true;
+    }
+    if (newName !== '' || newNameCode !== '') {
+      return true;
+    }
+    if (
+      newNameGtpStatus === 1 &&
+      newNameCodeGtpStatus === 1 &&
+      newName === ''
+    ) {
+      return false;
+    }
+    if (
+      (newNameGtpStatus === 0 || newNameGtpStatus === 2) &&
+      (newNameCodeGtpStatus === 0 || newNameCodeGtpStatus === 2)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   public GrabarServicios(): Observable<any> {
-    let codigo;
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
-    this.services.forEach((s) => {
-      let name = '';
-      if (s.nombre === null) {
-        name = s.newName;
-      } else if (s.nombre === '?') {
-        name = '';
-      } else {
-        name = s.nombre;
-      }
-      data.services.push({
-        id: s.id,
-        name,
-        newName: s.newName,
-        entry: s.rubro,
-        debtorCode:
-          s.codDeudor === '?'
-            ? ''
-            : s.codDeudor === 'Otro'
-            ? s.nameCod
-            : s.codDeudor,
-        //   debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
-        newNameCode: s.newNameCode,
-        dataType: s.tipoDato,
-        paymentType: s.tipoPago,
-        idAccount: s.idCuenta,
-        accountNumber: s.nroCuenta,
-        currency: s.moneda,
-        useAppWeb: s.usaWebApp,
-        useAgent: s.usaAgente,
-        useStore: s.usaTienda,
-        chargeInterest: s.cobraMora,
-        chargeType: s.periodoMora,
-        interestType: s.tipoMora,
-        amount: s.monto,
-        percentage: s.porcentaje,
-        partialPayment: s.pagoPartes,
+    this.services
+      .filter((service) => !this.isServiceInReview(service))
+      .forEach((s) => {
+        let name = '';
+        if (s.nombre === null) {
+          name = s.newName;
+        } else if (s.nombre === '?') {
+          name = '';
+        } else {
+          name = s.nombre;
+        }
+        data.services.push({
+          id: s.id,
+          name,
+          newName: s.newName,
+          entry: s.rubro,
+          debtorCode:
+            s.codDeudor === '?'
+              ? ''
+              : s.codDeudor === 'Otro'
+              ? s.nameCod
+              : s.codDeudor,
+          //   debtorCode: ( s.codDeudor === 'Otro') ? s.nameCod : s.codDeudor ,
+          newNameCode: s.newNameCode,
+          dataType: s.tipoDato,
+          paymentType: s.tipoPago,
+          idAccount: s.idCuenta,
+          accountNumber: s.nroCuenta,
+          currency: s.moneda,
+          useAppWeb: s.usaWebApp,
+          useAgent: s.usaAgente,
+          useStore: s.usaTienda,
+          chargeInterest: s.cobraMora,
+          chargeType: s.periodoMora,
+          interestType: s.tipoMora,
+          amount: s.monto,
+          percentage: s.porcentaje,
+          partialPayment: s.pagoPartes,
+        });
       });
-    });
 
     return this.http
       .post<any>(
