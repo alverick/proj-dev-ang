@@ -5,11 +5,7 @@ import { isNotNil } from 'ramda-adjunct';
 import { appFullRoutingNames } from 'src/app/app-routing.names';
 import { RubroModel } from 'src/app/shared/models';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import {
-  GtpEmpresa,
-  GtpPost,
-  GtpServcegtp,
-} from 'src/app/shared/models/gtp-post';
+import { GtpEmpresa, GtpServcegtp } from 'src/app/shared/models/gtp-post';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
@@ -205,18 +201,6 @@ export class AprobacionesPage implements OnInit {
         Empcant = 1;
       }
     }
-    // tslint:disable-next-line: max-line-length
-    // const ListInAprobacion = this.gtpService.services.filter((svc) => (svc.name !== svc.newName) || (svc.debtorCode !== svc.newNameCode));
-    // tslint:disable-next-line:max-line-length
-    const ListInAprobacion = this.gtpService.services.filter(
-      ({ newNameCodeGTPStatus, newNameGTPStatus, res }) =>
-        newNameGTPStatus === 2 ||
-        newNameGTPStatus === 0 ||
-        newNameCodeGTPStatus === 2 ||
-        newNameCodeGTPStatus === 0 ||
-        res !==
-          '' /*|| ( (svc.newNameGTPStatus === 3   && svc.name !== ''  && svc.newName !== ''  ))*/
-    );
 
     const totalObservations =
       ListCantidadNombre + ListCantidadCodigoDeudor + Empcant;
@@ -231,26 +215,33 @@ export class AprobacionesPage implements OnInit {
       ClientId: parseInt(this.llave, 10),
       NombreAprobado: NombreApproved,
     };
-    ListInAprobacion.forEach(
-      ({
-        acceptednewName,
-        acceptednewNameCode,
-        debtorCode,
-        id,
-        name,
-        newName,
-        newNameCode,
-        res,
-      }) => {
-        this.scv.push({
+    this.scv = this.gtpService.services
+      .filter(
+        ({ newNameCodeGTPStatus, newNameGTPStatus, res }) =>
+          newNameGTPStatus === 2 ||
+          newNameGTPStatus === 0 ||
+          newNameCodeGTPStatus === 2 ||
+          newNameCodeGTPStatus === 0 ||
+          res !== ''
+      )
+      .map(
+        ({
+          acceptednewName,
+          acceptednewNameCode,
+          debtorCode,
+          id,
+          name,
+          newName,
+          newNameCode,
+          res,
+        }) => ({
           ServiceId: id,
           NombreAprobado: name === newName ? true : acceptednewName,
           NombreCodAprobado:
             debtorCode === newNameCode ? true : acceptednewNameCode,
           Res: res,
-        });
-      }
-    );
+        })
+      );
 
     this.processDataEnterprise(totalObservations, notApproved);
   }
@@ -262,135 +253,135 @@ export class AprobacionesPage implements OnInit {
       (service) => service.inReview
     );
 
-    if (observations === 0) {
-      if (notApproved > 0) {
-        if (isNewEnterprise) {
-          Swal.fire({
-            title: 'Aprobación',
-            html: `Existen ${notApproved} campos que no fueron aprobados. <br> ¿Desea rechazar la Afiliación?`,
-            showCloseButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Si, Rechazar afiliación',
-            cancelButtonText: 'No, Solicitar corrección de datos',
-            onOpen: drawPopup,
-          }).then(async (result) => {
-            if (result.value) {
-              this.saveApprovedData({
-                Rechaza: true,
-                EnterpriseObj: this.emp,
-                ListServiceObj: this.scv,
-              });
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-              await this.saveQueryFixData();
-            }
-          });
-        } else {
-          Swal.fire({
-            title: 'Aprobación',
-            html: `Existen ${notApproved} campos que no fueron aprobados. <br> ¿Desea solicitar corrección de datos?`,
-            showCloseButton: true,
-            showCancelButton: true,
-            confirmButtonText: 'Si, Solicitar corrección de datos',
-            cancelButtonText: 'No, Cancelar',
-            onOpen: drawPopup,
-          }).then(async (result) => {
-            if (result.value) {
-              await this.saveQueryFixData();
-            }
-          });
-        }
-      } else if (
-        name === newName &&
-        inReview === false &&
-        !servicesInReview &&
-        (this.enterpriseChanged || this.servicesChanged)
-      ) {
-        Swal.fire({
-          title: 'Confirmar cambios',
-          html: '¿Estás seguro de que quieres guardar estos cambios?',
-          showCloseButton: true,
-          showCancelButton: true,
-          confirmButtonText: 'Si, Terminar',
-          cancelButtonText: 'No, Cancelar',
-          onOpen: drawPopup,
-        }).then(async (result) => {
-          if (result.value) {
-            if (this.enterpriseChanged) {
-              await this.saveCompanyData({
-                EnterpriseObj: null,
-                ListServiceObj: this.scv,
-              });
-            } else {
-              this.saveApprovedData({
-                EnterpriseObj: null,
-                ListServiceObj: this.scv,
-              });
-            }
-          } else {
-            this.router.navigate([appFullRoutingNames.ADMIN]);
-          }
-        });
-      } else if (!this.enterpriseChanged && !this.servicesChanged) {
-        this.router.navigate([appFullRoutingNames.ADMIN]);
-      } else {
-        Swal.fire({
-          title: 'Aprobación',
-          html: 'Todos los campos han sido revisados <br> ¿Desea terminar? <br> (Se enviará un correo a la empresa)',
-          showCloseButton: true,
-          showCancelButton: true,
-          confirmButtonText: 'Si, Terminar',
-          cancelButtonText: 'No, Cancelar',
-          onOpen: drawPopup,
-        }).then(async (result) => {
-          if (result.value) {
-            if (name === newName) {
-              if (inReview === false && this.scv.length === 0) {
-                // this.router.navigate([appFullRoutingNames.ADMIN]);
-                return;
-              }
-              if (inReview && this.scv.length > 0) {
-                this.saveApprovedData({
-                  EnterpriseObj: this.emp,
-                  ListServiceObj: this.scv,
-                });
-                return;
-              }
-              if (inReview === false) {
-                if (this.enterpriseChanged) {
-                  await this.saveCompanyData({
-                    EnterpriseObj: null,
-                    ListServiceObj: this.scv,
-                  });
-                } else {
-                  this.saveApprovedData({
-                    EnterpriseObj: null,
-                    ListServiceObj: this.scv,
-                  });
-                }
-                return;
-              }
-            }
-            if (this.scv.length === 0) {
-              this.saveApprovedData({
-                EnterpriseObj: this.emp,
-                ListServiceObj: null,
-              });
-              return;
-            } else {
-              this.saveApprovedData({
-                EnterpriseObj: this.emp,
-                ListServiceObj: this.scv,
-              });
-              return;
-            }
-          }
-        });
-      }
-    } else {
+    if (observations !== 0) {
       this.mensaje(
         'Aprobación',
         `Aun faltan aprobar ${observations} observaciones`
       );
+      return;
+    }
+    if (notApproved > 0) {
+      if (isNewEnterprise) {
+        Swal.fire({
+          title: 'Aprobación',
+          html: `Existen ${notApproved} campos que no fueron aprobados. <br> ¿Desea rechazar la Afiliación?`,
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Si, Rechazar afiliación',
+          cancelButtonText: 'No, Solicitar corrección de datos',
+          onOpen: drawPopup,
+        }).then(async (result) => {
+          if (result.value) {
+            this.saveApprovedData({
+              Rechaza: true,
+              EnterpriseObj: this.emp,
+              ListServiceObj: this.scv,
+            });
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            await this.saveQueryFixData();
+          }
+        });
+      } else {
+        Swal.fire({
+          title: 'Aprobación',
+          html: `Existen ${notApproved} campos que no fueron aprobados. <br> ¿Desea solicitar corrección de datos?`,
+          showCloseButton: true,
+          showCancelButton: true,
+          confirmButtonText: 'Si, Solicitar corrección de datos',
+          cancelButtonText: 'No, Cancelar',
+          onOpen: drawPopup,
+        }).then(async (result) => {
+          if (result.value) {
+            await this.saveQueryFixData();
+          }
+        });
+      }
+    } else if (
+      name === newName &&
+      inReview === false &&
+      !servicesInReview &&
+      (this.enterpriseChanged || this.servicesChanged)
+    ) {
+      Swal.fire({
+        title: 'Confirmar cambios',
+        html: '¿Estás seguro de que quieres guardar estos cambios?',
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Si, Terminar',
+        cancelButtonText: 'No, Cancelar',
+        onOpen: drawPopup,
+      }).then(async (result) => {
+        if (result.value) {
+          if (this.enterpriseChanged) {
+            await this.saveCompanyData({
+              EnterpriseObj: null,
+              ListServiceObj: this.scv,
+            });
+          } else {
+            this.saveApprovedData({
+              EnterpriseObj: null,
+              ListServiceObj: this.scv,
+            });
+          }
+        } else {
+          this.router.navigate([appFullRoutingNames.ADMIN]);
+        }
+      });
+    } else if (!this.enterpriseChanged && !this.servicesChanged) {
+      this.router.navigate([appFullRoutingNames.ADMIN]);
+    } else {
+      Swal.fire({
+        title: 'Aprobación',
+        html: 'Todos los campos han sido revisados <br> ¿Desea terminar? <br> (Se enviará un correo a la empresa)',
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Si, Terminar',
+        cancelButtonText: 'No, Cancelar',
+        onOpen: drawPopup,
+      }).then(async (result) => {
+        if (result.value) {
+          if (name === newName) {
+            if (inReview === false && this.scv.length === 0) {
+              this.router.navigate([appFullRoutingNames.ADMIN]);
+              return;
+            }
+            if (inReview && this.scv.length > 0) {
+              this.saveApprovedData({
+                EnterpriseObj: this.emp,
+                ListServiceObj: this.scv,
+              });
+              return;
+            }
+            if (inReview === false) {
+              if (this.enterpriseChanged) {
+                await this.saveCompanyData({
+                  EnterpriseObj: null,
+                  ListServiceObj: this.scv,
+                });
+              } else {
+                this.saveApprovedData({
+                  EnterpriseObj: null,
+                  ListServiceObj: this.scv,
+                });
+              }
+              return;
+            }
+          }
+          if (this.scv.length === 0) {
+            this.saveApprovedData({
+              EnterpriseObj: this.emp,
+              ListServiceObj: null,
+            });
+            return;
+          } else {
+            this.saveApprovedData({
+              EnterpriseObj: this.emp,
+              ListServiceObj: this.scv,
+            });
+            return;
+          }
+        }
+      });
     }
   }
 
