@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { isEmpty, isNil } from 'ramda';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -446,11 +447,18 @@ export class AfiliacionService {
     return false;
   }
 
+  public isNewService({ id, res }: ServiceModel) {
+    return isNil(id) && isEmpty(res);
+  }
+
   public GrabarServicios(): Observable<any> {
     this.spinner.show();
     const data = { clientId: this.idCompany, services: [], deleted: [] };
     this.services
-      .filter((service) => !this.isServiceInReview(service))
+      .filter(
+        (service) =>
+          !this.isServiceInReview(service) || this.isNewService(service)
+      )
       .forEach((s) => {
         let name = '';
         if (s.nombre === null) {
