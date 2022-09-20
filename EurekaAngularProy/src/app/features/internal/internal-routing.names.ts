@@ -11,6 +11,7 @@ interface IInternalRoutingNames {
   CHARGES_EDIT: string;
   COMPANY: string;
   HOME: string;
+  HELP: string;
 }
 
 interface IInternalAuthRoutingNames {
@@ -24,6 +25,7 @@ interface IInternalAuthRoutingNames {
 
 export const internalRoutingNames: IInternalRoutingNames = {
   AUTH: 'auth',
+  HELP: 'ayuda',
   HOME: 'home',
   COMPANY: 'configuracion-empresa',
   CHARGES: 'cobros-resumen',
