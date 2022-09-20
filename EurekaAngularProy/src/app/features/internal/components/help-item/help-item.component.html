@@ -1,0 +1,21 @@
+<div class="item bg-white py-2 px-4 mb-3" [class.opened]="opened">
+  <div
+    class="title d-flex justify-content-between align-items-center"
+    [class.mb-3]="opened"
+    (click)="openItem()"
+  >
+    {{ title }}
+    <span class="action d-flex align-items-center"
+      ><img
+        src="../../../../../assets/images/circle-plus.svg"
+        [class.d-none]="opened"
+        alt="Abrir" /><img
+        src="../../../../../assets/images/circle-minus.svg"
+        [class.d-none]="!opened"
+        alt="Abrir"
+    /></span>
+  </div>
+  <div class="content" [class.d-none]="!opened">
+    <ng-content></ng-content>
+  </div>
+</div>
