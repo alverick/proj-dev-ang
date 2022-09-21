@@ -18,8 +18,8 @@ import {
 } from '@angular/material-moment-adapter';
 import * as saveAs from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { all, equals } from 'ramda';
-import { isNilOrEmpty } from 'ramda-adjunct';
+import { all, equals, prop } from 'ramda';
+import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { Debts } from 'src/app/shared/models/debts';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
@@ -39,7 +39,7 @@ import { DateList } from '../../../../shared/models/dateList';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
-import { PagosComponent } from './components/pagos/pagos.component';
+import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { Popover } from './components/popover/popover.service';
 
 declare var $: any;
@@ -836,18 +836,23 @@ export class HomePage implements OnInit {
     this.DebtsAreSelected();
   }
 
-  showPopover(itm: any, origin) {
-    const ref = this.popover.open({
-      origin,
-      content: PagosComponent,
+  showDetails(itm: any) {
+    const dialogRef = this.dialog.open(PaymentDetailComponent, {
+      width: '810px',
       data: {
         debtId: itm.id,
         status: itm.status,
         currency: itm.currency,
+        customer: {
+          name: itm.firstName,
+          code: itm.code,
+        },
       },
     });
-    ref.statusChange$.subscribe((d) => {
-      itm.status = d.data;
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (isNotNil(prop('status', result))) {
+        itm.status = result.status;
+      }
     });
   }
 
