@@ -1,21 +1,26 @@
-<div class="item bg-white py-2 px-4 mb-3" [class.opened]="opened">
-  <div
-    class="title d-flex justify-content-between align-items-center"
-    [class.mb-3]="opened"
-    (click)="openItem()"
-  >
-    {{ title }}
-    <span class="action d-flex align-items-center"
-      ><img
+<mat-expansion-panel
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false"
+  hideToggle="true"
+  class="mb-3 shadow-sm item py-2"
+  [class.opened]="panelOpenState"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title class="title"> {{ title }} </mat-panel-title>
+    <mat-panel-description class="justify-content-end mr-0 action">
+      <img
+        *ngIf="!panelOpenState"
         src="../../../../../assets/images/circle-plus.svg"
-        [class.d-none]="opened"
-        alt="Abrir" /><img
-        src="../../../../../assets/images/circle-minus.svg"
-        [class.d-none]="!opened"
         alt="Abrir"
-    /></span>
-  </div>
-  <div class="content" [class.d-none]="!opened">
+      /><img
+        *ngIf="panelOpenState"
+        src="../../../../../assets/images/circle-minus.svg"
+        alt="Cerrar"
+      />
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div class="content">
     <ng-content></ng-content>
   </div>
-</div>
+</mat-expansion-panel>

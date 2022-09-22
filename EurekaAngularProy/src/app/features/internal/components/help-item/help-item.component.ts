@@ -6,13 +6,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./help-item.component.scss'],
 })
 export class HelpItemComponent implements OnInit {
-  opened = false;
+  panelOpenState = false;
   @Input() title = '';
   constructor() {}
 
   ngOnInit() {}
-
-  openItem() {
-    this.opened = !this.opened;
-  }
 }
