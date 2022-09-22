@@ -1,5 +1,6 @@
 body {
   background-color: #f4f5f7 !important;
+  font-family: $primary-font-family;
 }
 
 .body {
@@ -105,7 +106,6 @@ button:focus {
   // min-width   : 650px;
   margin: 0 auto;
 }
-
 
 .swal2-styled {
   margin: 0.5em 10vh !important;
