@@ -105,8 +105,8 @@ export class PaymentDetailComponent implements OnInit {
       text: '¡No podrás revertir esto!',
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'SI, ACTUALIZAR!',
-      cancelButtonText: 'CERRAR',
+      confirmButtonText: 'Sí, actualizar!',
+      cancelButtonText: 'Cancelar',
       onOpen: drawPopup,
     }).then((result) => {
       if (result.value) {
@@ -185,11 +185,11 @@ export class PaymentDetailComponent implements OnInit {
 
   delItm(itm) {
     Swal.fire({
-      title: '¿Esta Seguro de Eliminar el Pago? ',
+      title: '¿Estás seguro que deseas eliminar el pago?',
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonText: 'SI, BORRALO',
-      cancelButtonText: 'CERRAR',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
       onOpen: drawPopup,
     }).then((result) => {
       if (result.value) {
