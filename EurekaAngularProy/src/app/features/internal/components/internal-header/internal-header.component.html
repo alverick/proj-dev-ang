@@ -19,9 +19,7 @@
         }}</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="mano nav-link" [routerLink]="[helpLink]">{{
-          helpText
-        }}</a>
+        <a class="mano nav-link" [routerLink]="[helpLink]">{{ helpText }}</a>
       </li>
       <li class="nav-item dropdown ml-4">
         <a
@@ -285,6 +283,14 @@
             [routerLink]="[companyLink]"
             (click)="toggle()"
             >{{ companyText }}</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a
+            class="mano nav-link mb-3"
+            [routerLink]="[helpLink]"
+            (click)="toggle()"
+            >{{ helpText }}</a
           >
         </li>
         <li class="nav-item">
