@@ -6,16 +6,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import {
-  DateAdapter,
-  MatDialog,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material';
-import {
-  MomentDateAdapter,
-  MAT_MOMENT_DATE_FORMATS,
-} from '@angular/material-moment-adapter';
+import { MatDialog } from '@angular/material';
 import * as saveAs from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { all, equals, prop } from 'ramda';
@@ -48,16 +39,6 @@ declare var $: any;
   selector: 'cs-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-
-    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-  ],
 })
 export class HomePage implements OnInit {
   constructor(
@@ -254,10 +235,8 @@ export class HomePage implements OnInit {
       });
       if (this.transactionService.debtItems.count === 0) {
         return true;
-      } else if (id > 0) {
-        return false;
       } else {
-        return true;
+        return id <= 0;
       }
     }
   }
