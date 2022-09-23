@@ -1,15 +1,6 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material';
-import {
-  MomentDateAdapter,
-  MAT_MOMENT_DATE_FORMATS,
-} from '@angular/material-moment-adapter';
-import {
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher,
 } from '@angular/material/core';
@@ -83,14 +74,6 @@ import { SharedModule } from './shared/shared.module';
     CookieService,
     LogoutGuard,
     CloseViewGuard,
-    { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-
-    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
   exports: [MatInputModule, MatSnackBarModule],
   bootstrap: [AppComponent],
