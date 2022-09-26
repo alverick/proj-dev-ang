@@ -186,8 +186,8 @@ export class GtpService {
           status: s.status,
           acceptednewNameCode: null,
           acceptednewName: null,
-          nombreHabilitado: s.name === s.newName ? false : true,
-          nombreCodHabilitado: s.debtorCode === s.newNameCode ? false : true,
+          nombreHabilitado: s.name !== s.newName,
+          nombreCodHabilitado: s.debtorCode !== s.newNameCode,
           newNameGTPStatus: s.newNameGTPStatus,
           newNameCodeGTPStatus: s.newNameCodeGTPStatus,
           nombre: s.name,
@@ -220,8 +220,6 @@ export class GtpService {
       .pipe(
         map((r) => {
           this.spinner.hide();
-          if (r.success) {
-          }
           return r;
         })
       )
@@ -277,14 +275,14 @@ export class GtpService {
   public CrearSevice(): ServiceModel {
     let nombre = 'Mensualidad';
     let nro = 1;
-    this.services.forEach((s, i) => {
+    this.services.forEach((s) => {
       // El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
       if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
         if (
-          !isNaN(parseInt(s.nombre.substr(nombre.length))) ||
+          !isNaN(parseInt(s.nombre.substr(nombre.length), 10)) ||
           s.nombre.substr(nombre.length) === ''
         ) {
-          const aux = parseInt(s.nombre.substr(nombre.length));
+          const aux = parseInt(s.nombre.substr(nombre.length), 10);
           if (isNaN(aux)) {
             nro = 2;
           } else if (aux >= nro) {
@@ -467,5 +465,10 @@ export class GtpService {
     return this.http
       .post(url, { emails: correos }, opts)
       .pipe(catchError((err) => throwError(err)));
+  }
+
+  saveDatosEmpresa(data: any): Observable<any> {
+    const url = `${environment.END_POINT}/company/GTP/company/data`;
+    return this.http.post(url, data).pipe(catchError((err) => throwError(err)));
   }
 }

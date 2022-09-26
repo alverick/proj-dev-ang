@@ -5,11 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import { GtpService } from 'src/app/shared/services/gtp.service';
 import { RubroModel } from 'src/app/shared/models';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { GtpService } from 'src/app/shared/services/gtp.service';
 
 @Component({
   selector: 'cs-empresa-gtp',
@@ -36,29 +35,53 @@ export class EmpresaGTPComponent implements OnInit {
       this.rubros = d;
     });
 
+    const {
+      NombreApproved,
+      ruc,
+      entry,
+      movilOperator,
+      email,
+      newName,
+      movilNumber,
+      newNameGTPStatus,
+    } = this._enterprise;
+
+    const isNotEditable = newNameGTPStatus !== 1;
+
+    let newNombreApprovedValue: string;
+    switch (NombreApproved) {
+      case undefined:
+        newNombreApprovedValue = '';
+        break;
+      case true:
+        newNombreApprovedValue = 'S';
+        break;
+      default:
+        newNombreApprovedValue = 'N';
+        break;
+    }
+
     this.formGroup = this.formBuilder.group({
-      ruc: new FormControl({ value: this._enterprise.ruc, disabled: true }),
+      ruc: new FormControl({ value: ruc, disabled: true }),
       newName: new FormControl({
-        value: this._enterprise.newName,
+        value: newName,
         disabled: true,
       }),
-      // tslint:disable-next-line:max-line-length
-      NewNameApproved: [
-        this._enterprise.NombreApproved === undefined
-          ? ''
-          : this._enterprise.NombreApproved === true
-          ? 'S'
-          : 'N',
-        Validators.required,
-      ],
-      entry: new FormControl({ value: this._enterprise.entry, disabled: true }),
-      email: new FormControl({ value: this._enterprise.email, disabled: true }),
-      movilNumber: new FormControl({
-        value: this._enterprise.movilNumber,
+      NewNameApproved: [newNombreApprovedValue, Validators.required],
+      entry: new FormControl({
+        value: entry,
         disabled: true,
+      }),
+      email: new FormControl({
+        value: email,
+        disabled: isNotEditable,
+      }),
+      movilNumber: new FormControl({
+        value: movilNumber,
+        disabled: isNotEditable,
       }),
       movilOperator: new FormControl({
-        value: this._enterprise.movilOperator,
+        value: movilOperator,
         disabled: true,
       }),
     });
@@ -69,11 +92,19 @@ export class EmpresaGTPComponent implements OnInit {
   }
 
   onSubmitEmpresa() {
-    if (this.formGroup.valid) {
-      let value: DataEnterpriseGTP;
-      value = this._enterprise;
-      value.NombreApproved = this.formGroup.value.NewNameApproved === 'S';
-      this.grabar.emit(value);
+    const { valid, value } = this.formGroup;
+    if (valid) {
+      const isNotEditable = this._enterprise.newNameGTPStatus !== 1;
+      let dataEnterprise: DataEnterpriseGTP;
+      if (isNotEditable) {
+        dataEnterprise = {
+          ...this._enterprise,
+          NombreApproved: value.NewNameApproved === 'S',
+        };
+      } else {
+        dataEnterprise = { ...this._enterprise, ...value };
+      }
+      this.grabar.emit(dataEnterprise);
     }
   }
 }

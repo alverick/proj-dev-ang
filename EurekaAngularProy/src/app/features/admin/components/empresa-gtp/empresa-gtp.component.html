@@ -105,7 +105,9 @@
   </div>
   <div
     *ngIf="
-      _enterprise.newNameGTPStatus === 0 || _enterprise.newNameGTPStatus === 2
+      _enterprise.newNameGTPStatus === 0 ||
+      _enterprise.newNameGTPStatus === 1 ||
+      _enterprise.newNameGTPStatus === 2
     "
     class="mt-4 pb-4"
   >
