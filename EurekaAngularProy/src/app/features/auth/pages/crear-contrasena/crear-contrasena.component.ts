@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
+import { authFullRoutingNames } from 'src/app/app-routing.collection';
 import { RubroModel } from 'src/app/shared/models';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
@@ -15,7 +16,6 @@ import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { authFullRoutingNames } from 'src/app/app-routing.collection';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { MustMatch } from './must-match.validator';
 
@@ -78,9 +78,6 @@ export class CrearContrasenaComponent implements OnInit {
 
       if (d.isEdit) {
         this.llave = this.rutaActiva.snapshot.params.llave.toString();
-        window[
-          '_url_loop_'
-        ] = `${authFullRoutingNames.GENERATE_PASSWORD}/${this.llave}`;
         this.llave = this.rutaActiva.snapshot.params.llave.toString();
         this.registerForm = this.formBuilder.group(
           {
@@ -107,8 +104,8 @@ export class CrearContrasenaComponent implements OnInit {
             ]),
             telefono: new FormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
-              Validators.pattern(/^([9][0-9]{8})?([1-8][0-9]{5,6})?$/),
-              Validators.minLength(6),
+              Validators.pattern(/^9\d{8}$/),
+              Validators.minLength(9),
               Validators.maxLength(9),
             ]),
             movilOperator: new FormControl(
@@ -170,7 +167,6 @@ export class CrearContrasenaComponent implements OnInit {
           });
         });
       } else {
-        window['_url_loop_'] = authFullRoutingNames.GENERATE_PASSWORD;
         this.registerForm = this.formBuilder.group(
           {
             ruc: new FormControl({ value: '', disabled: this.inEdit }, [
@@ -196,8 +192,8 @@ export class CrearContrasenaComponent implements OnInit {
             ]),
             telefono: new FormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
-              Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'),
-              Validators.minLength(6),
+              Validators.pattern(/^9\d{8}$/),
+              Validators.minLength(9),
               Validators.maxLength(9),
             ]),
             movilOperator: new FormControl('', [Validators.required]),

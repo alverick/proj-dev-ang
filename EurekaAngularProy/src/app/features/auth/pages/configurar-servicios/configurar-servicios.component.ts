@@ -75,10 +75,6 @@ export class ConfigurarServiciosComponent implements OnInit {
       this.inEdit = d.isEdit;
       this.inGTP = d.isgtp;
       if (d.isgtp === true) {
-        ///////////////////////// PORTAL GTP //////////////////////////////////////
-
-        window['_url_loop_'] = authFullRoutingNames.SERVICES_EDIT_GTP;
-        history.pushState(null, null, authFullRoutingNames.SERVICES_EDIT_GTP);
         this.afiliacionService.services = [];
         this.gtpService.EmpresaServicios.arrayServices.forEach((s) => {
           this.afiliacionService.services.push({
@@ -116,7 +112,6 @@ export class ConfigurarServiciosComponent implements OnInit {
       }
 
       if (d.isEdit) {
-        window['_url_loop_'] = authFullRoutingNames.SERVICES_EDIT;
         this.afiliacionService.GetServicios();
         this.buttonServicios = 'Actualizar';
         this.titulo = 'Edita el servicio';
@@ -124,8 +119,6 @@ export class ConfigurarServiciosComponent implements OnInit {
           this.servicio_length = this.afiliacionService.services.length;
         }, 3000);
       } else {
-        window['_url_loop_'] = authFullRoutingNames.SERVICES_CONFIGURE;
-        history.pushState(null, null, authFullRoutingNames.SERVICES_CONFIGURE);
         this.afiliacionService.Clear();
         this.buttonServicios = 'Guardar';
         this.editService(this.afiliacionService.services[0], 0);

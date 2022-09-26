@@ -15,8 +15,8 @@ import { environment } from '../../../environments/environment';
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
 import { GoogleAnalytics } from '../services/googleAnalytics.service';
 import { LoginService } from '../services/login.service';
-import { drawPopup } from '../utils/helpers/popups';
 import { StorageService } from '../services/storage.service';
+import { drawPopup } from '../utils/helpers/popups';
 
 @Injectable({
   providedIn: 'root',
@@ -41,7 +41,7 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     let request = req;
 
-    let headers = {
+    const headers = {
       'Cache-Control': 'no-cache',
       Pragma: 'no-cache',
       Expires: 'Sat, 01 Jan 2000 00:00:00 GMT',

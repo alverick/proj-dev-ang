@@ -1,15 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import { GtpService } from 'src/app/shared/services/gtp.service';
+import { forEachObjIndexed } from 'ramda';
+import { isNotNil } from 'ramda-adjunct';
 import { RubroModel } from 'src/app/shared/models';
+import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { GtpService } from 'src/app/shared/services/gtp.service';
 
 @Component({
   selector: 'cs-empresa-gtp',
@@ -19,7 +21,20 @@ import { RubroModel } from 'src/app/shared/models';
 export class EmpresaGTPComponent implements OnInit {
   public _enterprise: DataEnterpriseGTP;
   formGroup: FormGroup;
+  submitted = false;
   rubros: RubroModel[] = [];
+  errorMessages = {
+    email: {
+      required: 'El correo electrónico  es obligatorio',
+      pattern: 'Ingrese un correo electrónico  válido',
+      minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
+    },
+    telefono: {
+      required: 'Teléfono o celular es obligatorio',
+      pattern: 'Teléfono o celular es obligatorio',
+      minlength: 'El teléfono o celular debe tener mínimo 9 dígitos',
+    },
+  };
   @Input() set enterprise(value: DataEnterpriseGTP) {
     this._enterprise = value;
   }
@@ -36,29 +51,74 @@ export class EmpresaGTPComponent implements OnInit {
       this.rubros = d;
     });
 
+    const {
+      NombreApproved,
+      ruc,
+      entry,
+      movilOperator,
+      email,
+      newName,
+      movilNumber,
+      newNameGTPStatus,
+    } = this._enterprise;
+
+    const isNotEditable = newNameGTPStatus !== 1;
+
+    let newNombreApprovedValue: string;
+    switch (NombreApproved) {
+      case undefined:
+        newNombreApprovedValue = '';
+        break;
+      case true:
+        newNombreApprovedValue = 'S';
+        break;
+      default:
+        newNombreApprovedValue = 'N';
+        break;
+    }
+
     this.formGroup = this.formBuilder.group({
-      ruc: new FormControl({ value: this._enterprise.ruc, disabled: true }),
+      ruc: new FormControl({ value: ruc, disabled: true }),
       newName: new FormControl({
-        value: this._enterprise.newName,
+        value: newName,
         disabled: true,
       }),
-      // tslint:disable-next-line:max-line-length
       NewNameApproved: [
-        this._enterprise.NombreApproved === undefined
-          ? ''
-          : this._enterprise.NombreApproved === true
-          ? 'S'
-          : 'N',
+        { value: newNombreApprovedValue, disabled: !isNotEditable },
         Validators.required,
       ],
-      entry: new FormControl({ value: this._enterprise.entry, disabled: true }),
-      email: new FormControl({ value: this._enterprise.email, disabled: true }),
-      movilNumber: new FormControl({
-        value: this._enterprise.movilNumber,
+      entry: new FormControl({
+        value: entry,
         disabled: true,
       }),
+      email: new FormControl(
+        {
+          value: email,
+          disabled: isNotEditable,
+        },
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          ),
+          Validators.minLength(10),
+          Validators.maxLength(100),
+        ]
+      ),
+      movilNumber: new FormControl(
+        {
+          value: movilNumber,
+          disabled: isNotEditable,
+        },
+        [
+          Validators.required,
+          Validators.pattern(/^9\d{8}$/),
+          Validators.minLength(9),
+          Validators.maxLength(9),
+        ]
+      ),
       movilOperator: new FormControl({
-        value: this._enterprise.movilOperator,
+        value: movilOperator,
         disabled: true,
       }),
     });
@@ -68,12 +128,37 @@ export class EmpresaGTPComponent implements OnInit {
     return this.formGroup.controls;
   }
 
+  getErrorMessage(
+    controlName: FormControl | AbstractControl,
+    errors: {
+      [key: string]: string;
+    }
+  ): string {
+    let result = '';
+    forEachObjIndexed((value, key) => {
+      if (isNotNil(errors[key])) {
+        result = errors[key];
+        return;
+      }
+    }, controlName.errors);
+    return result;
+  }
+
   onSubmitEmpresa() {
-    if (this.formGroup.valid) {
-      let value: DataEnterpriseGTP;
-      value = this._enterprise;
-      value.NombreApproved = this.formGroup.value.NewNameApproved === 'S';
-      this.grabar.emit(value);
+    this.submitted = true;
+    const { valid, value } = this.formGroup;
+    if (valid) {
+      const isNotEditable = this._enterprise.newNameGTPStatus !== 1;
+      let dataEnterprise: DataEnterpriseGTP;
+      if (isNotEditable) {
+        dataEnterprise = {
+          ...this._enterprise,
+          NombreApproved: value.NewNameApproved === 'S',
+        };
+      } else {
+        dataEnterprise = { ...this._enterprise, ...value };
+      }
+      this.grabar.emit(dataEnterprise);
     }
   }
 }
