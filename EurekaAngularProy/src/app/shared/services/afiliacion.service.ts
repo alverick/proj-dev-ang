@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { isNil } from 'ramda';
+import { isEmpty, isNil } from 'ramda';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -408,6 +408,39 @@ export class AfiliacionService {
       });
   }
 
+  public isServiceInReview({
+    id,
+    newName,
+    newNameCode,
+    newNameCodeGtpStatus,
+    newNameGtpStatus,
+  }: ServiceModel): boolean {
+    if (id === null) {
+      return true;
+    }
+    if (newName !== '' || newNameCode !== '') {
+      return true;
+    }
+    if (
+      newNameGtpStatus === 1 &&
+      newNameCodeGtpStatus === 1 &&
+      newName === ''
+    ) {
+      return false;
+    }
+    if (
+      (newNameGtpStatus === 0 || newNameGtpStatus === 2) &&
+      (newNameCodeGtpStatus === 0 || newNameCodeGtpStatus === 2)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  public isNewService({ id, res }: ServiceModel) {
+    return isNil(id) && isEmpty(res);
+  }
+
   public GrabarServicios(): Observable<any> {
     this.spinner.show();
     const data: {
@@ -418,10 +451,12 @@ export class AfiliacionService {
       clientId: this.idCompany,
       services: [],
       deleted: [],
-    };
-
-    this.services.forEach(
-      ({
+    };this.services
+      .filter(
+        (service) =>
+          !this.isServiceInReview(service) || this.isNewService(service)
+      )
+      .forEach(({
         cobraMora,
         codDeudor,
         id,
@@ -450,28 +485,27 @@ export class AfiliacionService {
         } else if (nombre !== '?') {
           name = nombre;
         }
-        let debtorCode;
+          let debtorCode;
         switch (codDeudor) {
-          case '?':
+        case '?':
             debtorCode = '';
             break;
           case 'Otro':
-            debtorCode = nameCod;
-            break;
+          debtorCode = nameCod;
+          break;
           case null:
-            debtorCode = 'DNI';
+          debtorCode= 'DNI';
             break;
           default:
             debtorCode = codDeudor;
-            break;
-        }
-
-        data.services.push({
-          id,
+              break;
+              }
+              data.services.push({
+              id,
           name,
           newName,
           entry: rubro,
-          debtorCode,
+            debtorCode ,
           newNameCode,
           dataType: tipoDato,
           paymentType: tipoPago,
@@ -488,8 +522,7 @@ export class AfiliacionService {
           percentage: porcentaje,
           partialPayment: pagoPartes,
         });
-      }
-    );
+      });
 
     return this.http
       .post<any>(

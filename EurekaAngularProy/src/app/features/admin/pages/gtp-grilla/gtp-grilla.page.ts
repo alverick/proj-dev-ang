@@ -40,8 +40,8 @@ export const MY_FORMATS = {
 
 @Component({
   selector: 'cs-gtp-grilla',
-  templateUrl: './gtp-grilla.component.html',
-  styleUrls: ['./gtp-grilla.component.scss'],
+  templateUrl: './gtp-grilla.page.html',
+  styleUrls: ['./gtp-grilla.page.scss'],
   styles: [
     `
       :host >>> .tooltip-inner {
@@ -70,7 +70,7 @@ export const MY_FORMATS = {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class GtpGrillaComponent implements OnInit {
+export class GtpGrillaPage implements OnInit {
   messageTable = '';
   linkHistory = adminFullRoutingNames.HISTORY;
   showArrow = false;
