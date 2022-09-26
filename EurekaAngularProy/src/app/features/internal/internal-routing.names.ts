@@ -26,12 +26,12 @@ export const internalRoutingNames: IInternalRoutingNames = {
   AUTH: 'auth',
   HOME: 'home',
   COMPANY: 'configuracion-empresa',
-  CHARGES: 'cobros-resumen',
-  CHARGES_EDIT: 'cobros-editar',
-  CHARGES_ADD_STEP_1: 'cobros-agregar-paso-1',
-  CHARGES_ADD_STEP_2: 'cobros-agregar-paso-2',
-  CHARGES_ADD_STEP_3: 'cobros-agregar-paso-3',
-  CHARGES_ADD_STEP_4: 'cobros-agregar-paso-4',
+  CHARGES: 'servicios',
+  CHARGES_EDIT: 'servicios/editar',
+  CHARGES_ADD_STEP_1: 'servicios/agregar-paso-1',
+  CHARGES_ADD_STEP_2: 'servicios/agregar-paso-2',
+  CHARGES_ADD_STEP_3: 'servicios/agregar-paso-3',
+  CHARGES_ADD_STEP_4: 'servicios/agregar-paso-4',
 };
 
 export const internalAuthModuleRoutingNames = `/${internalRoutingNames.AUTH}/`;
