@@ -19,6 +19,7 @@ import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configura
 import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.component';
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
 import { DebtComponent } from './pages/home/components/debt.component';
+import { PaymentDetailComponent } from './pages/home/components/payment-detail/payment-detail.component';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
 
@@ -42,6 +43,7 @@ import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.co
     ShearDirective,
     InternalHeaderComponent,
     InternalAuthComponent,
+    PaymentDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +51,10 @@ import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.co
     PerfectScrollbarModule,
     SharedModule,
   ],
-  entryComponents: [AgregaCobroComponent, DebtComponent],
+  entryComponents: [
+    AgregaCobroComponent,
+    DebtComponent,
+    PaymentDetailComponent,
+  ],
 })
 export class InternalModule {}
