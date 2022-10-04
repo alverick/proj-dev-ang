@@ -13,6 +13,7 @@ import { finalize } from 'rxjs/operators';
 export class LoaderInterceptor implements HttpInterceptor {
   totalRequests = 0;
   requestsCompleted = 0;
+  forbiddenUrls = ['notification?skip', 'notification/total'];
 
   constructor(private spinner: NgxSpinnerService) {}
 
@@ -20,12 +21,25 @@ export class LoaderInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    this.spinner.show();
-    this.totalRequests++;
+    const validUrl = () => {
+      let isValid = true;
+      this.forbiddenUrls.forEach((url) => {
+        if (request.url.includes(url)) {
+          isValid = false;
+        }
+      });
+      return isValid;
+    };
+    if (validUrl()) {
+      this.spinner.show();
+      this.totalRequests++;
+    }
 
     return next.handle(request).pipe(
       finalize(() => {
-        this.requestsCompleted++;
+        if (validUrl()) {
+          this.requestsCompleted++;
+        }
 
         if (this.requestsCompleted === this.totalRequests) {
           this.spinner.hide();
