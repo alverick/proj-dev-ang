@@ -1,6 +1,11 @@
 @import '~@angular/material/theming';
 
-@include mat-core();
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Geometria',
+);
+
+@include mat-core($custom-typography);
 
 $md-mcgpalette0: (
   50: #e1f7ea,

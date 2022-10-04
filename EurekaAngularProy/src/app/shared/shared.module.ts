@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   DateAdapter,
+  MatExpansionModule,
   MatFormFieldModule,
   MatRadioModule,
   MAT_DATE_FORMATS,
@@ -47,6 +48,7 @@ const FORM_MODULES = [
   MatCheckboxModule,
   MatDatepickerModule,
   MatDialogModule,
+  MatExpansionModule,
   MaterialFileInputModule,
   MatFormFieldModule,
   MatIconModule,

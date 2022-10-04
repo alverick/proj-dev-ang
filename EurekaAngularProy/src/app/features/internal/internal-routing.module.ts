@@ -19,6 +19,7 @@ import { ConfiguraCobrosParteTresComponent } from './pages/configura-cobros-part
 import { ConfiguraCobrosParteUnoComponent } from './pages/configura-cobros-parte-uno/configura-cobros-parte-uno.component';
 import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.component';
+import { HelpPage } from './pages/help/help.page';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
 
@@ -66,6 +67,11 @@ const routes: Routes = [
         path: internalRoutingNames.CHARGES_ADD_STEP_4,
         component: ConfiguraCobrosParteCuatroComponent,
         data: { isEdit: false, affiliationFlow: false },
+      },
+      {
+        path: internalRoutingNames.HELP,
+        component: HelpPage,
+        canActivate: [AuthGuard],
       },
       {
         path: appRoutingNames.EMPTY,
