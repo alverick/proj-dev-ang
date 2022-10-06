@@ -2,43 +2,44 @@
   <div class="container">
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <ul
-        class="navbar-nav ml-auto"
-        id="btn-regresar-identificar-empresa"
-        >
-        <li class="nav-item ">
-          <a class="nav-link lnk-regresar mano" (click)="goBack()" style="display: flex;">
-            <img src="../../../../../assets/images/left-blue.svg" />
-            <div class="text-regresar">
-              &nbsp;&nbsp;&nbsp;Regresar
-            </div>
-          </a>
-        </li>
-      </ul>
+        <ul class="navbar-nav ml-auto" id="btn-regresar-identificar-empresa">
+          <li class="nav-item">
+            <a
+              class="nav-link lnk-regresar mano"
+              (click)="goBack()"
+              style="display: flex"
+            >
+              <img src="../../../../../assets/images/left-blue.svg" />
+              <div class="text-regresar">&nbsp;&nbsp;&nbsp;Regresar</div>
+            </a>
+          </li>
+        </ul>
       </div>
       <!-- *ngIf="!IsHome && onAfilacion()" -->
-
     </div>
 
     <div class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
-        <div class="texto-azul title-rp-emp title-completa-datos">Completa los datos de tu empresa</div>
+        <div class="texto-azul title-rp-emp title-completa-datos">
+          Completa los datos de tu empresa
+        </div>
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
         <div class="d-flex flex-column">
           <!--ppr-0 ppl-0-->
-          <div class="cuadro-ruc pt-4 pb-3 bg-white cont-ruc d-flex"style=" align-items:center" >
-            <div class="label-ruc">
-              RUC:
-            </div>
-            &nbsp;
-            &nbsp;
+          <div
+            class="cuadro-ruc pt-4 pb-3 bg-white px-4 px-lg-5 cont-ruc cont-ruc d-flex align-items-center"
+          >
+            <div class="label-ruc">RUC:</div>
+            &nbsp; &nbsp;
             <div class="label-text-ruc">
-              {{ruc}}
+              {{ ruc }}
             </div>
           </div>
 
-          <div class="cuadro-form mt-2 pt-4 pb-3 bg-white cont-empresa">
+          <div
+            class="cuadro-form mt-2 pt-4 pb-3 px-4 px-lg-5 bg-white cont-empresa"
+          >
             <form
               [formGroup]="registerForm"
               novalidate
@@ -94,10 +95,13 @@
                   Escribe un nuevo nombre de la empresa
                 </div>
                 <div class="rectangle-success super-full-width">
-                  <img class="img-information" src="../../../../../assets/images/information.svg" />
+                  <img
+                    class="img-information"
+                    src="../../../../../assets/images/information.svg"
+                  />
                   <p class="text-message-name">
-                    Nombre con el que tus clientes te buscarán en
-                    los canales de Interbank al momento de
+                    Nombre con el que tus clientes te buscarán en los canales de
+                    Interbank al momento de
                     <br class="br-none-tablet" />
                     pagarte.
                   </p>
@@ -237,15 +241,17 @@
               <div class="form-group d-flex">
                 <mat-checkbox
                   formControlName="acceptterms"
-                  id="styled-checkbox-1">
+                  id="styled-checkbox-1"
+                >
                 </mat-checkbox>
 
                 <label class="acepto" for="styled-checkbox-1 ">
-                   Acepto los
-                   <small (click)="terminos()" > términos y
+                  Acepto los
+                  <small (click)="terminos()">
+                    términos y
                     <br class="br-none-mobil" />
-                      condiciones
-                    </small>
+                    condiciones
+                  </small>
                 </label>
 
                 <mat-error
