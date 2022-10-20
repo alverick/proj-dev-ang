@@ -2,6 +2,13 @@ body {
   background-color: #f4f5f7 !important;
 }
 
+a {
+  color: $green;
+  &:hover{
+    color: $green;
+  }
+}
+
 .body {
   background-color: #f4f5f7 !important;
 }
