@@ -19,7 +19,7 @@ export class TransactionService {
 
   constructor(public http: HttpClient, private storage: StorageService) {}
 
-  public pageMessage: string = 'Mostrando 0 de 0 elementos';
+  public pageMessage = 'Mostrando 0 de 0 elementos';
   public debtItems: DebtsPagedList = {
     count: 0,
     countNoIbkPayments: 0,
@@ -29,10 +29,10 @@ export class TransactionService {
 
   getDateFormat(date: Date): string {
     if (date) {
-      var day = date.getDate();
-      var month = date.getMonth() + 1;
-      var year = date.getFullYear();
-      var str = day > 9 ? day.toString() : '0' + day.toString();
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      let str = day > 9 ? day.toString() : '0' + day.toString();
       str += '%2F' + (month > 9 ? month.toString() : '0' + month.toString());
       str += '%2F' + year.toString();
       return str;
@@ -40,10 +40,12 @@ export class TransactionService {
     return '';
   }
 
-  //opcional
+  // opcional
 
   private mustBeSelected(d: Debts, selectedUniverse: boolean = false): boolean {
-    if (d.hasIBKPayments || d.status === 'PAGADO') return false;
+    if (d.hasIBKPayments || d.status === 'PAGADO') {
+      return false;
+    }
     return selectedUniverse || this.itemsForDelete.indexOf(d.id) >= 0;
   }
 
@@ -64,7 +66,7 @@ export class TransactionService {
     const strDateTo = isNilOrEmpty(filtro.dateTo)
       ? ''
       : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD'));
-    //fechas
+    // fechas
 
     if (isNilOrEmpty(filtro.service)) {
       filtro.service = '';
@@ -86,18 +88,23 @@ export class TransactionService {
       .get<DebtsPagedList>(url, opts)
       .pipe<DebtsPagedList>(
         map((r) => {
-          if (selectedUniverse) this.itemsForDelete = [];
+          if (selectedUniverse) {
+            this.itemsForDelete = [];
+          }
           r.data.forEach((d) => {
             d.emissionDate = new Date(d.emissionDate);
-            if (d.dueDate !== null && d.dueDate !== undefined)
+            if (d.dueDate !== null && d.dueDate !== undefined) {
               d.dueDate = new Date(d.dueDate);
+            }
             d.editInput = false;
             d.editButton = false;
             d.newStatus = '1';
             d.errores = {};
             d.selected = this.mustBeSelected(d, selectedUniverse);
 
-            if (selectedUniverse && d.selected) this.itemsForDelete.push(d.id);
+            if (selectedUniverse && d.selected) {
+              this.itemsForDelete.push(d.id);
+            }
           });
           this.debtItems = r;
           return r;
@@ -108,9 +115,11 @@ export class TransactionService {
           if (r.count == 0) {
             this.pageMessage = 'Mostrando 0 de 0 elementos';
           } else {
-            let beg = (filtro.pageNumber - 1) * 50 + 1;
+            const beg = (filtro.pageNumber - 1) * 50 + 1;
             let end = filtro.pageNumber * 50;
-            if (end > r.count) end = r.count;
+            if (end > r.count) {
+              end = r.count;
+            }
             this.pageMessage = `Mostrando ${beg} - ${end} de ${r.count} elementos`;
           }
           return r;
@@ -181,33 +190,40 @@ export class TransactionService {
       .pipe(catchError((error) => throwError(error)));
   }
 
-  report(filtro: DebstFilter): Observable<any> {
+  report({
+    asc,
+    columnName,
+    dateForFilter,
+    dateFrom,
+    dateTo,
+    inputSearch,
+    pageNumber,
+    service,
+    status,
+  }: DebstFilter): Observable<any> {
     const url = `${this.URI_API}/debt/report?_=` + new Date().getTime();
     const headers = new HttpHeaders({
       Authorization: 'bearer ' + this.storage.getCurrentToken(),
       'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
       'Ocp-Apim-Trace': 'true',
     });
-    var strDateFrom =
-      filtro.dateFrom === null
-        ? ''
-        : moment(filtro.dateFrom).format('YYYY/MM/DD');
-    var strDateTo =
-      filtro.dateTo === null ? '' : moment(filtro.dateTo).format('YYYY/MM/DD');
-    let fltr = {
-      pageNumber: filtro.pageNumber,
-      columnName: filtro.columnName,
-      asc: filtro.asc,
-      inputSearch: filtro.inputSearch,
-      service: filtro.service,
-      status: filtro.status,
-      dateForFilter: filtro.dateForFilter,
-      dateFrom: strDateFrom,
-      dateTo: strDateTo,
+    const parseDate: (date: Date | string) => Date | string = (date) =>
+      isNilOrEmpty(date) ? '' : moment(date).format('YYYY/MM/DD');
+
+    const filterRequest: DebstFilter = {
+      pageNumber,
+      columnName,
+      asc,
+      inputSearch,
+      service,
+      status,
+      dateForFilter,
+      dateFrom: parseDate(dateFrom),
+      dateTo: parseDate(dateTo),
     };
     return this.http
-      .post(url, fltr, {
-        headers: headers,
+      .post(url, filterRequest, {
+        headers,
         responseType: 'blob',
       })
       .pipe(catchError((err) => throwError(err)));
@@ -228,7 +244,7 @@ export class TransactionService {
   }
 
   getPayments(debtId: number): Observable<any[]> {
-    let url = `${
+    const url = `${
       this.URI_API
     }/payment/ofDebt/${debtId}?_=${new Date().getTime()}`;
     return this.http
@@ -246,7 +262,7 @@ export class TransactionService {
   }
 
   addPayment(debtId: number, payment: any): Observable<any> {
-    let url = `${this.URI_API}/payment?_=${new Date().getTime()}`;
+    const url = `${this.URI_API}/payment?_=${new Date().getTime()}`;
     payment.debtId = debtId;
     return this.http
       .post<any>(url, payment)
@@ -258,7 +274,9 @@ export class TransactionService {
     paymentId: number,
     payment: any
   ): Observable<any> {
-    let url = `${this.URI_API}/payment/${paymentId}?_=${new Date().getTime()}`;
+    const url = `${
+      this.URI_API
+    }/payment/${paymentId}?_=${new Date().getTime()}`;
     payment.debtId = debtId;
     return this.http
       .post(url, payment)
@@ -266,18 +284,22 @@ export class TransactionService {
   }
 
   deletePayment(debtId: number, paymentId: number): Observable<any> {
-    let url = `${
+    const url = `${
       this.URI_API
     }/payment/${paymentId}/ofDebt/${debtId}?_=${new Date().getTime()}`;
     return this.http.post(url, null).pipe(catchError((err) => throwError(err)));
   }
 
   deleteDebt(id: number, forDelete: boolean) {
-    let index = this.itemsForDelete.indexOf(id);
+    const index = this.itemsForDelete.indexOf(id);
     if (forDelete) {
-      if (index < 0) this.itemsForDelete.push(id);
+      if (index < 0) {
+        this.itemsForDelete.push(id);
+      }
     } else {
-      if (index >= 0) this.itemsForDelete.splice(index, 1);
+      if (index >= 0) {
+        this.itemsForDelete.splice(index, 1);
+      }
     }
   }
 
@@ -300,7 +322,7 @@ export class TransactionService {
         }
       } else {
         if (!v.hasIBKPayments && v.status !== 'PAGADO') {
-          let idx = this.itemsForDelete.indexOf(v.id);
+          const idx = this.itemsForDelete.indexOf(v.id);
           markAll = markAll && idx >= 0;
           mustBeChecked = true;
         }

@@ -76,8 +76,8 @@ export class ConfigurarEmpresaComponent implements OnInit {
         // email: new FormControl('', [Validators.required, Validators.pattern('^[A-Za-z0-9]{1,}([-._]{1}[A-Za-z0-9]{1,})?@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'), Validators.minLength(10), Validators.maxLength(100)]),
         movilNumber: new FormControl('', [
           Validators.required,
-          Validators.pattern('^([9][0-9]{8})?([1-8][0-9]{5,6})?$'),
-          Validators.minLength(6),
+          Validators.pattern(/^9\d{8}$/),
+          Validators.minLength(9),
           Validators.maxLength(9),
         ]),
         movilOperator: new FormControl('', [Validators.required]),

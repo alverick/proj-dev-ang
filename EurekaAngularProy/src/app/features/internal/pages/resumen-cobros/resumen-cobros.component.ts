@@ -200,28 +200,9 @@ export class ResumenCobrosComponent implements OnInit {
     }
   }
 
-  pendienteRevision(svc: ServiceModel) {
+  pendienteRevision(service: ServiceModel) {
     if (this.inEdit) {
-      if (svc.id === null) {
-        return true;
-      }
-      if (svc.newName !== '' || svc.newNameCode !== '') {
-        return true;
-      }
-      if (
-        svc.newNameGtpStatus === 1 &&
-        svc.newNameCodeGtpStatus === 1 &&
-        svc.newName === ''
-      ) {
-        return false;
-      }
-      // tslint:disable-next-line:max-line-length
-      if (
-        (svc.newNameGtpStatus === 0 || svc.newNameGtpStatus === 2) &&
-        (svc.newNameCodeGtpStatus === 0 || svc.newNameCodeGtpStatus === 2)
-      ) {
-        return true;
-      }
+      return this.afiliacionService.isServiceInReview(service);
     } else {
       return false;
     }
