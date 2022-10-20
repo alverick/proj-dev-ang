@@ -20,7 +20,9 @@ export class InternalHeaderComponent implements OnInit {
   companyLink = internalFullRoutingNames.COMPANY;
   homeLink = internalFullRoutingNames.HOME;
   chargesLink = internalFullRoutingNames.CHARGES;
+  helpLink = internalFullRoutingNames.HELP;
   homeText = 'Mis Movimientos';
+  helpText = 'Ayuda';
   companyText = 'Mi Empresa';
   chargesText = 'Mis Servicios';
   scrollConfig = {
