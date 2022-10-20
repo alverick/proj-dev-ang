@@ -2,7 +2,11 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatRadioModule } from '@angular/material';
+import {
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatRadioModule,
+} from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -37,6 +41,7 @@ const FORM_MODULES = [
   MatCheckboxModule,
   MatDatepickerModule,
   MatDialogModule,
+  MatExpansionModule,
   MaterialFileInputModule,
   MatFormFieldModule,
   MatIconModule,
