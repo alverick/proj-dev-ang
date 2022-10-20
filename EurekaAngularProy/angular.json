@@ -24,10 +24,10 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/faviconIbk.ico", "src/assets"],
             "styles": [
-              "src/scss/style.scss",
-              "src/scss/reponsive.scss",
               "node_modules/bootstrap/dist/css/bootstrap.css",
-              "node_modules/font-awesome/css/font-awesome.css"
+              "node_modules/font-awesome/css/font-awesome.css",
+              "src/scss/style.scss",
+              "src/scss/reponsive.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",

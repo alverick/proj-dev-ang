@@ -6,20 +6,11 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import {
-  DateAdapter,
-  MatDialog,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material';
-import {
-  MomentDateAdapter,
-  MAT_MOMENT_DATE_FORMATS,
-} from '@angular/material-moment-adapter';
+import { MatDialog } from '@angular/material';
 import * as saveAs from 'file-saver';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { all, equals } from 'ramda';
-import { isNilOrEmpty } from 'ramda-adjunct';
+import { all, equals, prop } from 'ramda';
+import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { Debts } from 'src/app/shared/models/debts';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
@@ -39,7 +30,7 @@ import { DateList } from '../../../../shared/models/dateList';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
-import { PagosComponent } from './components/pagos/pagos.component';
+import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { Popover } from './components/popover/popover.service';
 
 declare var $: any;
@@ -48,16 +39,6 @@ declare var $: any;
   selector: 'cs-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-
-    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-  ],
 })
 export class HomePage implements OnInit {
   constructor(
@@ -254,10 +235,8 @@ export class HomePage implements OnInit {
       });
       if (this.transactionService.debtItems.count === 0) {
         return true;
-      } else if (id > 0) {
-        return false;
       } else {
-        return true;
+        return id <= 0;
       }
     }
   }
@@ -836,18 +815,23 @@ export class HomePage implements OnInit {
     this.DebtsAreSelected();
   }
 
-  showPopover(itm: any, origin) {
-    const ref = this.popover.open({
-      origin,
-      content: PagosComponent,
+  showDetails(itm: any) {
+    const dialogRef = this.dialog.open(PaymentDetailComponent, {
+      width: '810px',
       data: {
         debtId: itm.id,
         status: itm.status,
         currency: itm.currency,
+        customer: {
+          name: itm.firstName,
+          code: itm.code,
+        },
       },
     });
-    ref.statusChange$.subscribe((d) => {
-      itm.status = d.data;
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (isNotNil(prop('status', result))) {
+        itm.status = result.status;
+      }
     });
   }
 

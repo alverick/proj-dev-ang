@@ -322,7 +322,7 @@ export class LoginPage implements OnInit {
               this.mensaje(
                 'error',
                 'Contraseña Incorrecta',
-                'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos a solucionesBPE@intercorp.com.pe '
+                'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos por whatsapp al 993 119 001'
               );
               this.intento6 = true;
               this.isTrue = false;
@@ -334,7 +334,7 @@ export class LoginPage implements OnInit {
               this.mensaje(
                 'error',
                 'Error',
-                'Error del Servidor comuniquese con el administrador'
+                'Error del Servidor comuníquese con el administrador'
               );
             }
           },
