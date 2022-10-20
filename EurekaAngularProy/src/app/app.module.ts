@@ -13,7 +13,6 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmailDirective } from './features/internal/directives/email.directive';
@@ -30,12 +29,14 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { CloseViewGuard } from './shared/guards/close-view.guard';
 import { LogoutGuard } from './shared/guards/logout.guard';
 import { AuthInterceptorService } from './shared/interceptors/auth-interceptor.service';
+import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
 import { AfiliacionService } from './shared/services/afiliacion.service';
 import { ConfiguracionService } from './shared/services/configuracion.service';
 import { ExcelService } from './shared/services/excel.service';
 import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
 import { SharedModule } from './shared/shared.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,11 @@ import { SharedModule } from './shared/shared.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true,
     },
     AfiliacionService,
