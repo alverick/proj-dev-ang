@@ -21,6 +21,7 @@ import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.compo
 import { HelpPage } from './pages/help/help.page';
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
 import { DebtComponent } from './pages/home/components/debt.component';
+import { PaymentDetailComponent } from './pages/home/components/payment-detail/payment-detail.component';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
 
@@ -45,6 +46,7 @@ import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.co
     ShearDirective,
     InternalHeaderComponent,
     InternalAuthComponent,
+    PaymentDetailComponent,
     HelpItemComponent,
   ],
   imports: [
@@ -53,6 +55,10 @@ import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.co
     PerfectScrollbarModule,
     SharedModule,
   ],
-  entryComponents: [AgregaCobroComponent, DebtComponent],
+  entryComponents: [
+    AgregaCobroComponent,
+    DebtComponent,
+    PaymentDetailComponent,
+  ],
 })
 export class InternalModule {}

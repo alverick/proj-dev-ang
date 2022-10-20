@@ -1,0 +1,314 @@
+.container-header {
+  .title {
+    @include font-text(24px, 500);
+  }
+
+  .details {
+    @include font-text(16px, 400);
+
+    .value {
+      color: #969a9d;
+    }
+  }
+}
+
+.table {
+  .header {
+    th {
+      //text-align: center;
+      color: $textblue;
+      border-top-style: none;
+      border-bottom-color: $green;
+      width: 23%;
+      max-width: 155px;
+    }
+  }
+
+  td {
+    max-width: 155px;
+
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+}
+
+.close {
+  position: absolute;
+  top: -18px;
+  right: -13px;
+
+  img {
+    filter: brightness(0) saturate(100%);
+  }
+}
+
+//
+//.contenedor {
+//  margin-top: 3px;
+//  //position: absolute;
+//  @include box-shadows();
+//  @include border-radius(4px);
+//  background-color: #ffffff;
+//  //right: 0px;
+//  //width: 400px;
+//  z-index: 1;
+//  border: solid 1px #f0f0f0;
+//
+//  &.block {
+//    display: block;
+//  }
+//
+//  &.none {
+//    display: none;
+//  }
+//
+//  table {
+//    width: 100%;
+//
+//    thead {
+//      tr {
+//        border-bottom: solid 1px #f0f0f0;
+//
+//        th {
+//          @include font-text(12px, 500);
+//          text-align: center;
+//          color: $textblue;
+//          padding: 8px 3px;
+//
+//          &.c0 {
+//            width: 10px;
+//          }
+//
+//          &.c1 {
+//            width: 90px;
+//          }
+//
+//          &.c2 {
+//            width: 90px;
+//          }
+//
+//          &.c3 {
+//            width: 70px;
+//          }
+//
+//          &.c4 {
+//            width: 70px;
+//          }
+//        }
+//      }
+//    }
+//
+//    tbody {
+//      tr {
+//        border-bottom: solid 1px #f0f0f0;
+//
+//        &:last-child {
+//          border-bottom: none;
+//        }
+//
+//        td {
+//          @include font-text(12px);
+//          color: #0d131d;
+//          padding: 8px 3px;
+//          text-align: center;
+//
+//          &.c0 {
+//            width: 10px;
+//          }
+//
+//          &.c1 {
+//            width: 90px;
+//            text-align: right;
+//
+//            .msg-error {
+//              margin-left: -15px;
+//            }
+//          }
+//
+//          &.c2 {
+//            width: 90px;
+//          }
+//
+//          &.c3 {
+//            width: 70px;
+//          }
+//
+//          &.c4 {
+//            width: 70px;
+//          }
+//
+//          &.c5 {
+//            width: 10px;
+//
+//            img {
+//              width: 20px;
+//              height: 20px;
+//              cursor: pointer;
+//            }
+//
+//            .btn-edit {
+//              img {
+//                width: 15px;
+//                height: 15px;
+//              }
+//            }
+//
+//            .btn-delete {
+//              cursor: pointer;
+//              color: $textgreen;
+//            }
+//          }
+//
+//          &.c6 {
+//            width: 10px;
+//          }
+//
+//          &.action {
+//            button {
+//              color: $textgreen;
+//
+//              img {
+//                width: 20px;
+//                height: 20px;
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
+//
+////:host ::ng-deep .full-width {
+////  .mat-form-field-wrapper {
+////    .mat-form-field-flex {
+////      .mat-form-field-infix {
+////        width: 100%;
+////
+////        input {
+////          @include font-text(12px);
+////        }
+////      }
+////    }
+////  }
+////
+////  mat-select {
+////    width: 80px;
+////
+////    .mat-select-trigger {
+////      .mat-select-value {
+////        .mat-select-value-text {
+////          span {
+////            @include font-text(12px);
+////            color: $textblack;
+////          }
+////        }
+////      }
+////    }
+////  }
+////}
+////
+////:host ::ng-deep .inline-input {
+////  .mat-form-field-wrapper {
+////    padding-bottom: 0;
+////
+////    .mat-form-field-infix {
+////      padding: 0;
+////      border-top: none;
+////    }
+////
+////    .mat-form-field-underline {
+////      bottom: 0;
+////    }
+////  }
+////}
+////
+////:host ::ng-deep mat-icon.svg-custom {
+////  svg {
+////    width: 20px;
+////    height: 20px;
+////  }
+////}
+//
+//.mat-form-field {
+//  .msg-error {
+//    @include font-text(10px, 500);
+//    position: absolute;
+//    color: #f44336;
+//    margin-top: 0px;
+//    width: 200px;
+//    background-color: white;
+//  }
+//}
+//
+//.select-color {
+//  @include font-text(12px, normal);
+//  color: #0d131d !important;
+//}
+//
+///*:host ::ng-deep .mat-option.mat-selected:not(.mat-option-disabled) {
+//    color: #0d131d;
+//} */
+//
+//small {
+//  @include font-text(14px, 500);
+//  color: #05be50;
+//}
+//
+//.noPagos {
+//  @include font-text(18px, 500);
+//  color: #0d2416;
+//  text-align: center;
+//  margin-top: 18px;
+//  margin-bottom: 18px;
+//}
+//
+//.moneda {
+//  @include font-text(12px, normal);
+//  color: #0d131d;
+//}
+//
+.action {
+  gap: 1rem;
+
+  button {
+    height: 40px;
+    min-width: 220px;
+  }
+}
+
+.btn-outline-green {
+  //width: 251px;
+  //margin-left: auto;
+  //margin-right: auto;
+  //display: block;
+}
+
+//
+//.content-container {
+//  overflow-y: auto;
+//  height: 100px;
+//  // min-height: 60px;
+//  // max-height: 160px;
+//  //width: 800px;
+//}
+
+//
+//.contenedor-cargando {
+//  margin-top: 3px;
+//  position: absolute;
+//  @include box-shadows();
+//  @include border-radius(4px);
+//  background-color: #ffffff;
+//  right: 0px;
+//  width: 400px;
+//  z-index: 1;
+//  border: solid 1px #f0f0f0;
+//  text-align: center;
+//
+//  &.block {
+//    text-align: center;
+//    display: block;
+//  }
+//}

@@ -18,7 +18,6 @@ import { AppComponent } from './app.component';
 import { EmailDirective } from './features/internal/directives/email.directive';
 import { OnlyNumbersDirective } from './features/internal/directives/only-numbers.directive';
 import { DialogComponent } from './features/internal/pages/home/components/dialog';
-import { PagosComponent } from './features/internal/pages/home/components/pagos/pagos.component';
 import { PopoverComponent } from './features/internal/pages/home/components/popover/popover.component';
 import { UploadProgressComponent } from './features/internal/pages/home/components/upload-progress';
 import { ValidationComponent } from './features/internal/pages/home/components/validation';
@@ -46,7 +45,6 @@ import { SharedModule } from './shared/shared.module';
     DialogComponent,
     UploadProgressComponent,
     ValidationComponent,
-    PagosComponent,
     PopoverComponent,
     LoadFileComponent,
     LoadBarComponent,
@@ -90,7 +88,6 @@ import { SharedModule } from './shared/shared.module';
     DialogComponent,
     UploadProgressComponent,
     ValidationComponent,
-    PagosComponent,
     PopoverComponent,
     LoadFileComponent,
     LoadBarComponent,
