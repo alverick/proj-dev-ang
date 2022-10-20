@@ -11,7 +11,7 @@
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
         <div class="d-flex justify-content-end">
-          <div class="cuadro-form ppr-5 ppl-5 pt-4 pb-3 bg-white cont-empresa">
+          <div class="cuadro-form ppr-5 ppl-5 pt-4 pb-3 px-4 px-lg-5 bg-white cont-empresa">
             <form
               [formGroup]="registerForm"
               novalidate
@@ -216,7 +216,7 @@
                         f.telefono.invalid && f.telefono.hasError('pattern')
                       "
                     >
-                      Ingrese un telefono o celular valido
+                      Ingrese un teléfono o celular valido
                     </mat-error>
                     <mat-error
                       class="messsage-error"
@@ -226,7 +226,7 @@
                         f.telefono.hasError('minlength')
                       "
                     >
-                      El teléfono o celular debe tener mínimo 6
+                      El teléfono o celular debe tener mínimo 9
                       dígitos</mat-error
                     >
                   </mat-error>
