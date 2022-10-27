@@ -12,12 +12,9 @@ export class ConfiguracionService {
 
   public debtItems: DataEnterpriseModel;
   getDatosEmpresa(): Observable<DataEnterpriseModel> {
-    const url = `${environment.END_POINT}/company?_=` + new Date().getTime();
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
+    const url = `${environment.END_POINT}/company/getafiliate`;
     return this.http
-      .get<DataEnterpriseModel>(url, opts)
+      .get<DataEnterpriseModel>(url)
       .pipe(
         map((r) => {
           r.newPassword = '';
