@@ -338,17 +338,9 @@ export class AfiliacionService {
   }
 
   public GetServicios(incDeactivates: boolean = false) {
-    const headers: any = {
-      'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
-      'Ocp-Apim-Trace': 'true',
-    };
-    if (this.storage.isAuthenticated) {
-      headers['Authorization'] = 'bearer ' + this.storage.getCurrentToken();
-    }
     this.http
       .get<any[]>(
-        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`,
-        { headers }
+        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`
       )
       .subscribe((d: IServiceRemoteModel[]) => {
         const servicios: ServiceModel[] = [];

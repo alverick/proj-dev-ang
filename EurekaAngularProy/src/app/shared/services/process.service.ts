@@ -3,23 +3,19 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProcessService {
-  constructor(private http: HttpClient, private storage: StorageService) {}
+  constructor(private http: HttpClient) {}
 
   getList(clientId, page: number): Observable<any> {
     const limit = 50;
     const start = (page - 1) * limit;
     const url = `${environment.END_POINT}/Company/GTP/client/${clientId}/process?start=${start}&limit=${limit}`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
     return this.http
-      .get<any>(url, opts)
+      .get<any>(url)
       .pipe(catchError((error) => throwError(error)));
   }
 
@@ -27,7 +23,6 @@ export class ProcessService {
     const url = `${environment.END_POINT}/Company/GTP/process/${processId}/file`;
     return this.http
       .get(url, {
-        headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
         responseType: 'blob',
       })
       .pipe(catchError((error) => throwError(error)));

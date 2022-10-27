@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { isNilOrEmpty } from 'ramda-adjunct';
@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import { Debts, DebtsPagedList } from '../models/debts';
 import { DebtEdit } from '../models/debts-edit.model';
 import { DebstFilter } from '../models/debts-filter.model';
-import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +16,7 @@ export class TransactionService {
   private URI_API: string = environment.END_POINT;
   private lastFilter: DebstFilter = null;
 
-  constructor(public http: HttpClient, private storage: StorageService) {}
+  constructor(public http: HttpClient) {}
 
   public pageMessage = 'Mostrando 0 de 0 elementos';
   public debtItems: DebtsPagedList = {
@@ -79,11 +78,8 @@ export class TransactionService {
     }
 
     const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
     return this.http
-      .get<DebtsPagedList>(url, opts)
+      .get<DebtsPagedList>(url)
       .pipe<DebtsPagedList>(
         map((r) => {
           if (selectedUniverse) {
@@ -128,22 +124,16 @@ export class TransactionService {
 
   deleteDeuda(idDebt: number): Observable<Debts> {
     // cambia link
-    const url = `${this.URI_API}/debt//${idDebt}`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
+    const url = `${this.URI_API}/debt/${idDebt}`;
     return this.http
-      .post<Debts>(url, opts)
+      .post<Debts>(url, null)
       .pipe(catchError((error) => throwError(error)));
   }
 
   deleteAll(): Observable<any> {
     const url = `${this.URI_API}/debt/deleteAll`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
     return this.http
-      .post<Debts>(url, { ids: this.itemsForDelete }, opts)
+      .post<Debts>(url, { ids: this.itemsForDelete })
       .pipe(catchError((error) => throwError(error)));
   }
 
@@ -178,11 +168,8 @@ export class TransactionService {
   editDeuda(id: number, debts: DebtEdit): Observable<any> {
     // cambia link
     const url = `${this.URI_API}/debt/put/${id}`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
     return this.http
-      .post(url, debts, opts)
+      .post(url, debts)
       .pipe(catchError((error) => throwError(error)));
   }
 
@@ -198,11 +185,6 @@ export class TransactionService {
     status,
   }: DebstFilter): Observable<any> {
     const url = `${this.URI_API}/debt/report`;
-    const headers = new HttpHeaders({
-      Authorization: 'bearer ' + this.storage.getCurrentToken(),
-      'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
-      'Ocp-Apim-Trace': 'true',
-    });
     const parseDate: (date: Date | string) => Date | string = (date) =>
       isNilOrEmpty(date) ? '' : moment(date).format('YYYY/MM/DD');
 
@@ -219,7 +201,6 @@ export class TransactionService {
     };
     return this.http
       .post(url, filterRequest, {
-        headers,
         responseType: 'blob',
       })
       .pipe(catchError((err) => throwError(err)));
@@ -227,9 +208,6 @@ export class TransactionService {
 
   updateDeuda(id: number, paid: boolean): Observable<any> {
     const url = `${this.URI_API}/debt/pay`;
-    const opts = {
-      headers: { Authorization: 'bearer' + this.storage.getCurrentToken() },
-    };
     const data = {
       idDebt: id,
       Payed: paid,
