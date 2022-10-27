@@ -27,7 +27,7 @@ export class ConfiguracionService {
   }
 
   saveDatosEmpresa(data: any): Observable<any> {
-    const url = `${environment.END_POINT}/company?_=` + new Date().getTime();
+    const url = `${environment.END_POINT}/company`;
     const opts = {
       headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
     };

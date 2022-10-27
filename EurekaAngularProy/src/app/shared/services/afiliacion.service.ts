@@ -185,10 +185,7 @@ export class AfiliacionService {
     this.spinner.show();
     this.email = data.email;
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company`, data)
       .pipe(map((r) => this.setIdCompany(r)))
       .pipe(
         catchError((err) => {
@@ -202,10 +199,7 @@ export class AfiliacionService {
     this.spinner.show();
     this.email = data.email;
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company/validate?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company/validate`, data)
       .pipe(map((r) => this.setIdCompany(r)))
       .pipe(
         catchError((err) => {
@@ -220,9 +214,7 @@ export class AfiliacionService {
       return Observable.of(this._rubros);
     }
     return this.http
-      .get<RubroModel[]>(
-        `${environment.END_POINT}/enterpriseHeading?_=` + new Date().getTime()
-      )
+      .get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading`)
       .pipe(
         map((r) => {
           this._rubros = r;
@@ -234,10 +226,7 @@ export class AfiliacionService {
 
   public GetRubrosAll(): Observable<RubroModel[]> {
     return this.http
-      .get<RubroModel[]>(
-        `${environment.END_POINT}/enterpriseHeading/all?_=` +
-          new Date().getTime()
-      )
+      .get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading/all`)
       .pipe(
         map((r) => {
           this._rubrosAll = r;
@@ -342,14 +331,10 @@ export class AfiliacionService {
   public GetCards(): Observable<any[]> {
     if (this.idCompany) {
       return this.http.get<any[]>(
-        `${environment.END_POINT}/company/${
-          this.idCompany
-        }/cards?_=${new Date().getTime()}`
+        `${environment.END_POINT}/company/${this.idCompany}/cards`
       );
     }
-    return this.http.get<any[]>(
-      `${environment.END_POINT}/company/cards?_=${new Date().getTime()}`
-    );
+    return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
   }
 
   public GetServicios(incDeactivates: boolean = false) {
@@ -362,8 +347,7 @@ export class AfiliacionService {
     }
     this.http
       .get<any[]>(
-        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=` +
-          new Date().getTime(),
+        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`,
         { headers }
       )
       .subscribe((d: IServiceRemoteModel[]) => {
@@ -451,84 +435,84 @@ export class AfiliacionService {
       clientId: this.idCompany,
       services: [],
       deleted: [],
-    };this.services
+    };
+    this.services
       .filter(
         (service) =>
           !this.isServiceInReview(service) || this.isNewService(service)
       )
-      .forEach(({
-        cobraMora,
-        codDeudor,
-        id,
-        idCuenta,
-        moneda,
-        monto,
-        nameCod,
-        newName,
-        newNameCode,
-        nombre,
-        nroCuenta,
-        pagoPartes,
-        periodoMora,
-        porcentaje,
-        rubro,
-        tipoDato,
-        tipoMora,
-        tipoPago,
-        usaAgente,
-        usaTienda,
-        usaWebApp,
-      }) => {
-        let name = '';
-        if (nombre === null) {
-          name = newName;
-        } else if (nombre !== '?') {
-          name = nombre;
-        }
-          let debtorCode;
-        switch (codDeudor) {
-        case '?':
-            debtorCode = '';
-            break;
-          case 'Otro':
-          debtorCode = nameCod;
-          break;
-          case null:
-          debtorCode= 'DNI';
-            break;
-          default:
-            debtorCode = codDeudor;
-              break;
-              }
-              data.services.push({
-              id,
-          name,
+      .forEach(
+        ({
+          cobraMora,
+          codDeudor,
+          id,
+          idCuenta,
+          moneda,
+          monto,
+          nameCod,
           newName,
-          entry: rubro,
-            debtorCode ,
           newNameCode,
-          dataType: tipoDato,
-          paymentType: tipoPago,
-          idAccount: idCuenta,
-          accountNumber: nroCuenta,
-          currency: moneda,
-          useAppWeb: usaWebApp,
-          useAgent: usaAgente,
-          useStore: usaTienda,
-          chargeInterest: cobraMora,
-          chargeType: parseInt(periodoMora, 10),
-          interestType: tipoMora,
-          amount: monto,
-          percentage: porcentaje,
-          partialPayment: pagoPartes,
-        });
-      });
+          nombre,
+          nroCuenta,
+          pagoPartes,
+          periodoMora,
+          porcentaje,
+          rubro,
+          tipoDato,
+          tipoMora,
+          tipoPago,
+          usaAgente,
+          usaTienda,
+          usaWebApp,
+        }) => {
+          let name = '';
+          if (nombre === null) {
+            name = newName;
+          } else if (nombre !== '?') {
+            name = nombre;
+          }
+          let debtorCode;
+          switch (codDeudor) {
+            case '?':
+              debtorCode = '';
+              break;
+            case 'Otro':
+              debtorCode = nameCod;
+              break;
+            case null:
+              debtorCode = 'DNI';
+              break;
+            default:
+              debtorCode = codDeudor;
+              break;
+          }
+          data.services.push({
+            id,
+            name,
+            newName,
+            entry: rubro,
+            debtorCode,
+            newNameCode,
+            dataType: tipoDato,
+            paymentType: tipoPago,
+            idAccount: idCuenta,
+            accountNumber: nroCuenta,
+            currency: moneda,
+            useAppWeb: usaWebApp,
+            useAgent: usaAgente,
+            useStore: usaTienda,
+            chargeInterest: cobraMora,
+            chargeType: parseInt(periodoMora, 10),
+            interestType: tipoMora,
+            amount: monto,
+            percentage: porcentaje,
+            partialPayment: pagoPartes,
+          });
+        }
+      );
 
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company/service?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company/service`, data)
       .pipe(
         map((r) => {
           this.spinner.hide();

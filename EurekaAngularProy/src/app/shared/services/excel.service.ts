@@ -24,8 +24,7 @@ export class ExcelService {
   ): Observable<any> {
     this.statusUpload = changestatus;
     this.errores = [];
-    const url =
-      `${this.URI_API}/debt/load/${service}?_=` + new Date().getTime();
+    const url = `${this.URI_API}/debt/load/${service}`;
     const opts = {
       headers: {
         Authorization: 'bearer ' + this.storage.getCurrentToken(),
@@ -41,8 +40,7 @@ export class ExcelService {
   }
 
   StatusExcel(id: number): Observable<any> {
-    const url =
-      `${this.URI_API}/debt/process/${id}/status?_=` + new Date().getTime();
+    const url = `${this.URI_API}/debt/process/${id}/status`;
     const opts = {
       headers: {
         Authorization: 'bearer ' + this.storage.getCurrentToken(),
@@ -57,9 +55,7 @@ export class ExcelService {
 
   GetTemplate(): Observable<Blob> {
     const serviceName = encodeURIComponent(this.service.name);
-    const url = `${
-      this.URI_API
-    }/debt/template?service=${serviceName}&_=${new Date().getTime()}`;
+    const url = `${this.URI_API}/debt/template?service=${serviceName}`;
     const headers = new HttpHeaders({
       Authorization: 'bearer ' + this.storage.getCurrentToken(),
       'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
@@ -72,7 +68,7 @@ export class ExcelService {
   }
 
   GetLastProcess(): Observable<any> {
-    const url = `${this.URI_API}/debt/process/last?_=${new Date().getTime()}`;
+    const url = `${this.URI_API}/debt/process/last`;
     return this.http.get<any>(url).pipe(
       map((v) => {
         if (v.status !== 'COMPLETED' && v.status !== 'REJECTED') {

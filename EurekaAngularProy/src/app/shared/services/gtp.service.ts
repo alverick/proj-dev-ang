@@ -86,9 +86,7 @@ export class GtpService {
     if (isNilOrEmpty(filtro.status)) {
       filtro.status = '';
     }
-    const url =
-      `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&Solicitud=${filtro.statusSolicitud}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=` +
-      new Date().getTime();
+    const url = `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&Solicitud=${filtro.statusSolicitud}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
     const opts = {
       headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
     };
@@ -268,10 +266,7 @@ export class GtpService {
   public GetEnterpriseServices(data: any): Observable<any> {
     this.spinner.show();
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
       .pipe(
         map((r) => {
           this.spinner.hide();
@@ -416,11 +411,7 @@ export class GtpService {
       });
     });
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company/GTP/company/update?_=` +
-          new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company/GTP/company/update`, data)
       .pipe(
         map((r) => {
           this.spinner.hide();
@@ -439,8 +430,7 @@ export class GtpService {
     this.spinner.show();
     return this.http
       .post<any>(
-        `${environment.END_POINT}/company/GTP/client/${clientId}/pag?_=` +
-          new Date().getTime(),
+        `${environment.END_POINT}/company/GTP/client/${clientId}/pag`,
         {}
       )
       .pipe(
@@ -458,9 +448,7 @@ export class GtpService {
   }
 
   public clientsUnregistered(filtro: GtpFilter): Observable<any> {
-    const url =
-      `${environment.END_POINT}/company/GTP/client/unregistered?_=` +
-      new Date().getTime();
+    const url = `${environment.END_POINT}/company/GTP/client/unregistered`;
     const strDateFrom =
       filtro.dateFrom === null
         ? ''
