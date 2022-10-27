@@ -91,9 +91,9 @@ export class LoginService {
           this.callingRefresh = true;
           const url = `${this.URI_API}/login`;
           this.http.get(url, {}).subscribe((r: RespuestaLogin) => {
-            let storage = this.storage.getCurrentSession();
+            const sessionStorage = this.storage.getCurrentSession();
             this.storage.setCurrentSession({
-              user: storage.user,
+              user: sessionStorage.user,
               isAuthenticate: true,
               token: r.paramStr,
               expire: r.exp,

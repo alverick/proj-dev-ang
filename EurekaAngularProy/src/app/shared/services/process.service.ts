@@ -1,16 +1,15 @@
-import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { throwError, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from "@angular/common/http";
-import { StorageService } from "./storage.service";
-import { NgxSpinnerService } from "ngx-spinner";
-import { catchError } from "rxjs/operators";
-import { throwError, Observable } from "rxjs";
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProcessService {
-  constructor(private http: HttpClient, private storage: StorageService, private spinner: NgxSpinnerService) { }
+  constructor(private http: HttpClient, private storage: StorageService) {}
 
   getList(clientId, page: number): Observable<any> {
     const limit = 50;
