@@ -1,40 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   DateAdapter,
-  MatFormFieldModule,
   MatIconRegistry,
-  MatInputModule,
-  MatRadioModule,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
 } from '@angular/material';
 import {
-  MatMomentDateModule,
   MomentDateAdapter,
   MAT_MOMENT_DATE_FORMATS,
 } from '@angular/material-moment-adapter';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { withActions } from '@storybook/addon-actions';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
-import { MaterialFileInputModule } from 'ngx-material-file-input';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { DateList } from '../../models/dateList';
 import { WayPay } from '../../models/way-pay';
+import { SharedModule } from '../../shared.module';
 import { PaymentsFilterComponent } from './payments-filter.component';
 
 function initAppComponentFactory(
@@ -63,24 +47,7 @@ export default {
         BrowserAnimationsModule,
         HttpClientModule,
         CommonModule,
-        FormsModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatDatepickerModule,
-        MatDialogModule,
-        MaterialFileInputModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatMomentDateModule,
-        MatNativeDateModule,
-        MatProgressBarModule,
-        MatProgressSpinnerModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatSnackBarModule,
-        NgxPaginationModule,
-        ReactiveFormsModule,
+        SharedModule,
       ],
       providers: [
         {

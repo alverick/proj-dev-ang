@@ -9,8 +9,7 @@ import { authFullRoutingNames } from './features/auth/auth-routing.names';
 import { internalAuthFullRoutingNames } from './features/internal/internal-routing.names';
 import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
 
-declare let gtag: Function;
-declare let fbq: Function;
+declare let fbq: (...args: any[]) => void;
 @Component({
   selector: 'cs-root',
   templateUrl: './app.component.html',
@@ -40,12 +39,10 @@ export class AppComponent {
             'page_path': e.urlAfterRedirects
           });
           */
-          //Pixel Facebook
+          // Pixel Facebook
           this.sendTrackPageViewPixel(e.urlAfterRedirects);
         }
-
-        window.scrollTo(0, 0);
-        //gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
+        // gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
       }
     });
 

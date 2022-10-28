@@ -13,7 +13,6 @@ export class ProcesandoComponent implements OnInit {
   constructor(public afiliacion: AfiliacionService, private router: Router) {}
 
   ngOnInit() {
-    window['_url_loop_'] = 'procesando';
     this.email = this.afiliacion.email;
   }
   onCerrar() {

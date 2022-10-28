@@ -152,63 +152,95 @@ export class GtpService {
       .pipe(catchError((err) => throwError(err)));
   }
 
-  GetServicesGtp(id: any) {
-    const url = `${environment.END_POINT}/company/GTP/services/${id}/${false}`;
+  GetServicesGtp(enterpriseId: any) {
+    this.services = [];
+    const url = `${
+      environment.END_POINT
+    }/company/GTP/services/${enterpriseId}/${false}`;
     const opts = {
       headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
     };
-    this.http.get<any[]>(url, opts).subscribe((d) => {
+    this.http.get<any[]>(url, opts).subscribe((service) => {
       const servicios = [];
-      d.forEach((s) => {
-        servicios.push({
-          id: s.id,
-          res: s.res,
-          name: s.name,
-          newName: s.newName,
-          newNameCode: s.newNameCode,
-          debtorCode: s.debtorCode,
-          dataType: s.dataType,
-          paymentType: s.paymentType,
-          idAccount: s.idAccount,
-          accountNumber: s.accountNumber,
-          currency: s.currency,
-          useAppWeb: s.useAppWeb,
-          useAgent: s.useAgent,
-          useStore: s.useStore,
-          partialPayment: s.partialPayment,
-          chargeInterest: s.chargeInterest,
-          chargeType: s.chargeType.toString(),
-          interestType: s.interestType,
-          amount: s.amount,
-          porcentage: s.percentage,
-          currencySymbol: s.currencySymbol,
-          inReview: s.inReview,
-          status: s.status,
-          acceptednewNameCode: null,
-          acceptednewName: null,
-          nombreHabilitado: s.name === s.newName ? false : true,
-          nombreCodHabilitado: s.debtorCode === s.newNameCode ? false : true,
-          newNameGTPStatus: s.newNameGTPStatus,
-          newNameCodeGTPStatus: s.newNameCodeGTPStatus,
-          nombre: s.name,
-          rubro: s.entry,
-          codDeudor: s.debtorCode,
-          tipoDato: s.dataType,
-          tipoPago: s.paymentType,
-          nroCuenta: s.accountNumber,
-          moneda: s.currency,
-          simboloMoneda: s.currencySymbol,
-          usaWebApp: s.useAppWeb,
-          usaAgente: s.useAgent,
-          usaTienda: s.useStore,
-          cobraMora: s.chargeInterest,
-          periodoMora: s.chargeType.toString(),
-          tipoMora: s.interestType,
-          monto: s.amount,
-          porcentaje: s.percentage,
-          pagoPartes: s.partialPayment,
-        });
-      });
+      service.forEach(
+        ({
+          accountNumber,
+          amount,
+          chargeInterest,
+          chargeType,
+          currency,
+          currencySymbol,
+          dataType,
+          debtorCode,
+          entry,
+          id,
+          idAccount,
+          inReview,
+          interestType,
+          name,
+          newName,
+          newNameCode,
+          newNameCodeGTPStatus,
+          newNameGTPStatus,
+          partialPayment,
+          paymentType,
+          percentage,
+          res,
+          status,
+          useAgent,
+          useAppWeb,
+          useStore,
+        }) => {
+          servicios.push({
+            id,
+            res,
+            name,
+            newName,
+            newNameCode,
+            debtorCode,
+            dataType,
+            paymentType,
+            idAccount,
+            accountNumber,
+            currency,
+            useAppWeb,
+            useAgent,
+            useStore,
+            partialPayment,
+            chargeInterest,
+            chargeType: chargeType.toString(),
+            interestType,
+            amount,
+            porcentage: percentage,
+            currencySymbol,
+            inReview,
+            status,
+            acceptednewNameCode: null,
+            acceptednewName: null,
+            nombreHabilitado: name !== newName,
+            nombreCodHabilitado: debtorCode !== newNameCode,
+            newNameGTPStatus,
+            newNameCodeGTPStatus,
+            nombre: name,
+            rubro: entry,
+            codDeudor: debtorCode,
+            tipoDato: dataType,
+            tipoPago: paymentType,
+            nroCuenta: accountNumber,
+            moneda: currency,
+            simboloMoneda: currencySymbol,
+            usaWebApp: useAppWeb,
+            usaAgente: useAgent,
+            usaTienda: useStore,
+            cobraMora: chargeInterest,
+            periodoMora: chargeType.toString(),
+            tipoMora: interestType,
+            monto: amount,
+            porcentaje: percentage,
+            pagoPartes: partialPayment,
+          });
+        }
+      );
       this.services = servicios;
     });
   }
@@ -220,8 +252,6 @@ export class GtpService {
       .pipe(
         map((r) => {
           this.spinner.hide();
-          if (r.success) {
-          }
           return r;
         })
       )
@@ -277,14 +307,14 @@ export class GtpService {
   public CrearSevice(): ServiceModel {
     let nombre = 'Mensualidad';
     let nro = 1;
-    this.services.forEach((s, i) => {
+    this.services.forEach((s) => {
       // El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
       if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
         if (
-          !isNaN(parseInt(s.nombre.substr(nombre.length))) ||
+          !isNaN(parseInt(s.nombre.substr(nombre.length), 10)) ||
           s.nombre.substr(nombre.length) === ''
         ) {
-          const aux = parseInt(s.nombre.substr(nombre.length));
+          const aux = parseInt(s.nombre.substr(nombre.length), 10);
           if (isNaN(aux)) {
             nro = 2;
           } else if (aux >= nro) {
@@ -467,5 +497,10 @@ export class GtpService {
     return this.http
       .post(url, { emails: correos }, opts)
       .pipe(catchError((err) => throwError(err)));
+  }
+
+  saveDatosEmpresa(data: any): Observable<any> {
+    const url = `${environment.END_POINT}/company/GTP/company/data`;
+    return this.http.post(url, data).pipe(catchError((err) => throwError(err)));
   }
 }

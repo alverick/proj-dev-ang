@@ -1,0 +1,194 @@
+<div class="position-relative">
+  <div *ngIf="loading" class="d-flex justify-content-center">
+    <mat-spinner
+      mode="indeterminate"
+      [diameter]="30"
+      class="my-4"
+    ></mat-spinner>
+  </div>
+  <div *ngIf="!loading" class="bg-white">
+    <div class="container-header mb-5">
+      <div class="title text-center mb-5">Detalle de pago</div>
+      <div class="details d-flex justify-content-center">
+        <div class="label font-weight-bold mr-3">Nombre Cliente:</div>
+        <div class="value mr-5">{{ customer?.name }}</div>
+        <div class="label font-weight-bold mr-3">Código Cliente:</div>
+        <div class="value">{{ customer?.code }}</div>
+      </div>
+    </div>
+
+    <div class="shadow p-4">
+      <table class="table">
+        <thead>
+          <tr class="header">
+            <th class="text-center" scope="col">Monto pagado</th>
+            <th class="text-center" scope="col">Fecha de pago</th>
+            <th class="text-center" scope="col">Canal</th>
+            <th class="text-center" scope="col">Nº de operación</th>
+            <th class="text-center" scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="items.length === 0">
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center"></td>
+          </tr>
+          <tr *ngFor="let itm of items">
+            <td class="text-center">
+              <span *ngIf="!itm.editing"
+                >{{ itm.currency }} {{ itm.amount | number: '1.2-2' }}</span
+              >
+              <div *ngIf="itm.editing">
+                <mat-form-field class="full-width inline-input">
+                  <input
+                    type="text"
+                    matInput
+                    appOnlyNumbersForm
+                    [(ngModel)]="itm.newAmount"
+                    maxlength="12"
+                    minlength="4"
+                    (blur)="amountBlur(itm)"
+                    (ngModelChange)="itm.errores.amount = null"
+                  />
+                  <span class="moneda" matPrefix>{{ itm.currency }}&nbsp;</span>
+                  <div class="msg-error" *ngIf="itm.errores.amount">
+                    {{ itm.errores.amount }}
+                  </div>
+                </mat-form-field>
+              </div>
+            </td>
+            <td class="text-center">
+              <span *ngIf="!itm.editing">{{
+                itm.date | date: 'dd/MM/yy'
+              }}</span>
+              <div *ngIf="itm.editing">
+                <mat-form-field class="full-width inline-input">
+                  <input
+                    csDate
+                    matInput
+                    [matDatepicker]="ddp"
+                    [(ngModel)]="itm.newDate"
+                    maxlength="10"
+                    minlength="10"
+                    type="text"
+                    (ngModelChange)="itm.errores.date = null"
+                    (click)="ddp.open()"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="ddp"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #ddp></mat-datepicker>
+                  <div class="msg-error" *ngIf="itm.errores.date">
+                    {{ itm.errores.date }}
+                  </div>
+                </mat-form-field>
+              </div>
+            </td>
+            <td class="text-center">
+              <span class="select-color" *ngIf="!itm.editing">{{
+                itm.channel
+              }}</span>
+              <div *ngIf="itm.editing">
+                <mat-form-field class="select-color full-width inline-input">
+                  <mat-select
+                    class="select-color"
+                    [(ngModel)]="itm.newChannel"
+                    disableOptionCentering
+                    panelClass="pts16"
+                  >
+                    <mat-option class="select-color" value="Efectivo"
+                      >Efectivo
+                    </mat-option>
+                    <mat-option class="select-color" value="POS"
+                      >POS</mat-option
+                    >
+                    <mat-option class="select-color" value="BCP"
+                      >BCP</mat-option
+                    >
+                    <mat-option class="select-color" value="BBVA"
+                      >BBVA
+                    </mat-option>
+                    <mat-option class="select-color" value="Otro banco"
+                      >Otro banco
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </td>
+            <td class="text-center">{{ itm.number }}</td>
+            <td>
+              <div *ngIf="itm.canEdit" class="d-flex">
+                <div
+                  *ngIf="!itm.editing"
+                  class="btn-edit"
+                  (click)="editItm(itm); $event.stopPropagation()"
+                >
+                  <img
+                    src="../../../../../../../assets/images/pencil.svg"
+                    alt="editar"
+                    width="20"
+                  />
+                </div>
+                <div
+                  *ngIf="!itm.editing"
+                  class="btn-delete ml-1"
+                  (click)="delItm(itm); $event.stopPropagation()"
+                >
+                  <img
+                    src="../../../../../../../assets/images/trash.svg"
+                    alt="eliminar"
+                    width="20"
+                  />
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="items.length == 0 || status !== 'PAGADO'">
+        <div class="action d-flex flex-column">
+          <ng-container *ngIf="!isEditingRow">
+            <button
+              type="button"
+              mat-button
+              class="btn-outline-green mx-auto"
+              (click)="addItem()"
+            >
+              <img
+                src="../../../../../../../assets/images/plus_circle.svg"
+                alt="agregar"
+              />
+              Agregar un pago
+            </button>
+          </ng-container>
+          <ng-container *ngIf="isEditingRow">
+            <button
+              type="button"
+              mat-button
+              mat-raised-button
+              color="primary"
+              class="mx-auto"
+              (click)="saveItem()"
+            >
+              Guardar
+            </button>
+            <button
+              type="button"
+              class="btn-outline-green mx-auto"
+              (click)="cancelItem()"
+            >
+              Cancelar
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="close" (click)="close()">
+    <img src="../../../../../assets/images/cerrar.svg" />
+  </div>
+</div>

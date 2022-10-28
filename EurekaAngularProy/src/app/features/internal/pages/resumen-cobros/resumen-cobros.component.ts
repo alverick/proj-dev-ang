@@ -9,7 +9,6 @@ import Swal from 'sweetalert2';
 import {
   internalAuthFullRoutingNames,
   internalFullRoutingNames,
-  internalRoutingNames,
 } from '../../internal-routing.names';
 
 @Component({
@@ -49,6 +48,7 @@ export class ResumenCobrosComponent implements OnInit {
   sendAfterSave = false;
   public onFormAction: EventEmitter<string> = new EventEmitter();
   addNewAfterSave = false;
+  formSaving = false;
 
   constructor(
     public afiliacionService: AfiliacionService,
@@ -65,7 +65,6 @@ export class ResumenCobrosComponent implements OnInit {
       this.affiliationFlow = d.affiliationFlow;
 
       if (d.isEdit) {
-        window['_url_loop_'] = internalRoutingNames.CHARGES;
         if (this.afiliacionService.services.length === 0) {
           this.afiliacionService.GetServicios();
           setTimeout(() => {
@@ -75,12 +74,6 @@ export class ResumenCobrosComponent implements OnInit {
           this.servicio_length = this.afiliacionService.services.length;
         }
       } else {
-        window['_url_loop_'] = internalAuthFullRoutingNames.CHARGES_AFFILIATION;
-        history.pushState(
-          null,
-          null,
-          internalAuthFullRoutingNames.CHARGES_AFFILIATION
-        );
         this.servicio_length = this.afiliacionService.services.length;
       }
     });
@@ -97,15 +90,6 @@ export class ResumenCobrosComponent implements OnInit {
 
   editService(svc: ServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Edición del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
       return;
     }
     if (this.Formulariogtp && this.indiceActual !== index) {
@@ -123,7 +107,6 @@ export class ResumenCobrosComponent implements OnInit {
     this.stateEdit = true;
     this.stateCreate = false;
     this.indiceActual = index;
-    //this.serviceActual = svc;
     this.afiliacionService.currentServiceModel = svc;
     this.afiliacionService.currentIndex = index;
     this.goEditCharge();
@@ -152,15 +135,6 @@ export class ResumenCobrosComponent implements OnInit {
 
   delService(index: number) {
     if (this.Formulario) {
-      /*Swal.fire({
-        type: 'warning',
-        title: 'Eliminación del Servicio',
-        text: 'Actualmente esta editando un servicio. Debe guardar o descartar los cambios',
-        showCloseButton: true,
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonText: 'CERRAR'
-      });*/
       return;
     }
     if (this.inEdit && this.afiliacionService.services[index].id) {
@@ -226,28 +200,9 @@ export class ResumenCobrosComponent implements OnInit {
     }
   }
 
-  pendienteRevision(svc: ServiceModel) {
+  pendienteRevision(service: ServiceModel) {
     if (this.inEdit) {
-      if (svc.id === null) {
-        return true;
-      }
-      if (svc.newName !== '' || svc.newNameCode !== '') {
-        return true;
-      }
-      if (
-        svc.newNameGtpStatus === 1 &&
-        svc.newNameCodeGtpStatus === 1 &&
-        svc.newName === ''
-      ) {
-        return false;
-      }
-      // tslint:disable-next-line:max-line-length
-      if (
-        (svc.newNameGtpStatus === 0 || svc.newNameGtpStatus === 2) &&
-        (svc.newNameCodeGtpStatus === 0 || svc.newNameCodeGtpStatus === 2)
-      ) {
-        return true;
-      }
+      return this.afiliacionService.isServiceInReview(service);
     } else {
       return false;
     }
@@ -319,7 +274,6 @@ export class ResumenCobrosComponent implements OnInit {
       return svc.nameCod;
     }
     if (svc.codDeudor === 'Otro' || svc.nameCod !== svc.newNameCode) {
-      // return svc.nameCod;
       return svc.nameCod;
     }
   }
@@ -368,7 +322,7 @@ export class ResumenCobrosComponent implements OnInit {
   }
 
   getUseAgencyChannel(): boolean {
-    var useAgencyChannel: boolean = false;
+    let useAgencyChannel = false;
     if (this.afiliacionService.services.length > 0) {
       useAgencyChannel = this.afiliacionService.services[0].useAgencyChannel;
     }
@@ -377,8 +331,7 @@ export class ResumenCobrosComponent implements OnInit {
 
   EnviarServicios() {
     // GTP
-    if (this.inGTP) {
-    } else {
+    if (!this.inGTP) {
       if (this.Formulario === true) {
         Swal.fire({
           title: 'Servicio no guardado',
@@ -406,7 +359,7 @@ export class ResumenCobrosComponent implements OnInit {
       }
       // this.frm.get('monto').value
 
-      let svcSinCta = this.afiliacionService.services.find(
+      const svcSinCta = this.afiliacionService.services.find(
         (v) => v.nroCuenta === ''
       );
       if (svcSinCta) {
@@ -416,6 +369,10 @@ export class ResumenCobrosComponent implements OnInit {
         });
         return;
       }
+
+      if (this.formSaving) {
+        return;
+      }
       this.gaService.sendEvent('EnviarServicios', {
         event_category: this.inEdit
           ? GoogleAnalytics.Dashboard
@@ -423,19 +380,23 @@ export class ResumenCobrosComponent implements OnInit {
         event_label: 'enviar_servicios',
       });
       this.gaService.sendUrl('servicioNuevo', '/servicioNuevo');
-      this.afiliacionService.GrabarServicios().subscribe((r) => {
-        if (this.inEdit) {
-          this.router.navigate([internalFullRoutingNames.HOME]);
-          /*for(let i=0; i<this.afiliacionService.services.length; i++) {
-              if (this.afiliacionService.services[i].inReview == false) {
-                return;
-              }
-            }
-            this.router.navigate([authFullRoutingNames.PROCESSING]);*/
-        } else {
-          this.router.navigate([authFullRoutingNames.PROCESSING]);
+
+      this.formSaving = true;
+      this.afiliacionService.GrabarServicios().subscribe(
+        () => {
+          if (this.inEdit) {
+            this.router.navigate([internalFullRoutingNames.HOME]);
+          } else {
+            this.router.navigate([authFullRoutingNames.PROCESSING]);
+          }
+        },
+        () => {
+          this.formSaving = false;
+        },
+        () => {
+          this.formSaving = false;
         }
-      });
+      );
     }
   }
 

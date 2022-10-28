@@ -1,0 +1,26 @@
+<mat-expansion-panel
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false"
+  hideToggle="true"
+  class="mb-3 shadow-sm item py-2"
+  [class.opened]="panelOpenState"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title class="title"> {{ title }} </mat-panel-title>
+    <mat-panel-description class="justify-content-end mr-0 action">
+      <img
+        *ngIf="!panelOpenState"
+        src="../../../../../assets/images/circle-plus.svg"
+        alt="Abrir"
+      /><img
+        *ngIf="panelOpenState"
+        src="../../../../../assets/images/circle-minus.svg"
+        alt="Cerrar"
+      />
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <div class="content">
+    <ng-content></ng-content>
+  </div>
+</mat-expansion-panel>
