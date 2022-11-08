@@ -63,6 +63,8 @@
     "normalize.css": "^8.0.1",
     "npm": "^6.14.4",
     "popper.js": "^1.16.1",
+    "primeicons": "^6.0.1",
+    "primeng-lts": "^8.2.9",
     "ramda": "^0.26.0",
     "ramda-adjunct": "^2.22.1",
     "regenerator-runtime": "^0.13.9",
