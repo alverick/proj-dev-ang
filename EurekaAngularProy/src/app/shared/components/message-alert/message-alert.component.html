@@ -1,0 +1,14 @@
+<div
+  class="message tw-rounded tw-flex tw-items-start tw-py-3 tw-px-6"
+  [ngClass]="['tw-bg-' + mode, mode]"
+>
+  <div class="icon flex-shrink-0 tw-w-10 tw-flex tw-justify-center">
+    <img
+      class="img-information tw-w-5"
+      src="../../../../../assets/images/information.svg"
+    />
+  </div>
+  <div class="tw-text-xs">
+    <ng-content></ng-content>
+  </div>
+</div>
