@@ -1,0 +1,13 @@
+<div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
+  <cs-sidebar-company class="info tw-relative"></cs-sidebar-company>
+  <div class="form-cmp tw-pl-20 tw-py-10">
+    <cs-company-form-registration
+      class="tw-max-w-2xl tw-pl-20"
+      [registerForm]="affiliation.registerForm"
+      [errorMessages]="affiliation.errorMessages"
+      [operators]="affiliation.operators"
+      [documentTypes]="affiliation.documentTypes"
+      (sendForm)="onSubmit()"
+    ></cs-company-form-registration>
+  </div>
+</div>
