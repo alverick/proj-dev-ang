@@ -1,0 +1,24 @@
+<div
+  class="tw-bg-primary-green-1 tw-text-center tw-py-4 tw-flex tw-flex-col tw-items-center"
+>
+  <div class="tw-text-white tw-text-3xl tw-font-medium">
+    Configura los servicios de tu empresa
+  </div>
+  <div class="tw-w-40 tw-py-4">
+    <p-steps [model]="steps" [activeIndex]="position"></p-steps>
+  </div>
+</div>
+<div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
+  <ng-template [ngIf]="position!==2">
+    <cs-sidebar-service
+      class="info tw-relative"
+      [position]="position"
+    ></cs-sidebar-service>
+    <div class="form-cmp tw-pl-20 tw-py-10">
+      <router-outlet></router-outlet>
+    </div>
+  </ng-template>
+  <ng-template [ngIf]="position===2">
+    <router-outlet></router-outlet>
+  </ng-template>
+</div>
