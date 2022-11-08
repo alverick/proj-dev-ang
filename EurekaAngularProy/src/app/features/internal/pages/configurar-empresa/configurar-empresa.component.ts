@@ -6,8 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MustMatch } from 'src/app/features/auth/pages/crear-contrasena/must-match.validator';
-import { RubroModel } from 'src/app/shared/models';
+import { IEntryModel } from 'src/app/shared/models';
 import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
@@ -29,7 +28,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   submitted = false;
   butDisabled = false;
   nombre = true;
-  rubros: RubroModel[] = [];
+  rubros: IEntryModel[] = [];
   submittedRequired = false;
 
   dataEmpresa: DataEnterpriseModel;

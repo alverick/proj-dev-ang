@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { appFullRoutingNames } from 'src/app/app-routing.collection';
-import { RubroModel, ServiceModel } from 'src/app/shared/models';
+import { IEntryModel, ServiceModel } from 'src/app/shared/models';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
 import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
@@ -53,7 +53,7 @@ export class ConfigurarGtpComponent implements OnInit {
     enabled: false,
   };
   public rubro: string;
-  rubros: RubroModel[] = [];
+  rubros: IEntryModel[] = [];
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
   public indiceActual = -1;

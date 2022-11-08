@@ -1,4 +1,4 @@
-export interface RubroModel {
+export interface IEntryModel {
   code: string;
   name: string;
 }

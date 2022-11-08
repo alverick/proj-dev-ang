@@ -7,9 +7,9 @@ import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import {
+  IEntryModel,
   IServiceRemoteModel,
   MonedaModel,
-  RubroModel,
   ServiceModel,
 } from '../models';
 import { DataEnterpriseModel } from '../models/data-enterprise.model';
@@ -52,8 +52,8 @@ export class AfiliacionService {
   public Guardado = false;
 
   public services: ServiceModel[] = [];
-  private _rubros: RubroModel[] = null;
-  private _rubrosAll: RubroModel[] = null;
+  private _rubros: IEntryModel[] = null;
+  private _rubrosAll: IEntryModel[] = null;
   public dataEnterpriseModel: DataEnterpriseModel;
   private _currentServiceModel: ServiceModel;
 
@@ -215,12 +215,12 @@ export class AfiliacionService {
       );
   }
 
-  public GetRubros(): Observable<RubroModel[]> {
+  public GetRubros(): Observable<IEntryModel[]> {
     if (this._rubros !== null) {
       return Observable.of(this._rubros);
     }
     return this.http
-      .get<RubroModel[]>(
+      .get<IEntryModel[]>(
         `${environment.END_POINT}/enterpriseHeading?_=` + new Date().getTime()
       )
       .pipe(
@@ -232,9 +232,9 @@ export class AfiliacionService {
       .pipe(catchError((err) => throwError(err)));
   }
 
-  public GetRubrosAll(): Observable<RubroModel[]> {
+  public GetRubrosAll(): Observable<IEntryModel[]> {
     return this.http
-      .get<RubroModel[]>(
+      .get<IEntryModel[]>(
         `${environment.END_POINT}/enterpriseHeading/all?_=` +
           new Date().getTime()
       )
