@@ -1,0 +1,124 @@
+<div [formGroup]="form">
+  <div class="form-elm">
+    <cs-label-control
+      class="tw-w-full"
+      formControlName="paymentType"
+      [errorMessages]="errorMessages.paymentType"
+      >¿En qué orden te podrán pagar tus clientes?
+      <p-dropdown
+        [options]="paymentTypeOptions"
+        class="tw-w-full"
+        styleClass="tw-w-full"
+        formControlName="paymentType"
+        placeholder="Selecciona"
+      ></p-dropdown>
+    </cs-label-control>
+  </div>
+  <div class="form-elm tw-mb-5">
+    <div class="tw-font-medium">
+      ¿Tus clientes podrán pagar la deuda en partes?
+    </div>
+    <cs-label-control [onlyControl]="true" class="tw-w-full">
+      <p-radioButton
+        name="partialPayment"
+        value="S"
+        formControlName="partialPayment"
+      ></p-radioButton>
+      <ng-container label-inline>
+        <div class="tw-font-light">
+          <div class="tw-text-base">Sí, podrán pagar la deuda en partes</div>
+        </div>
+      </ng-container>
+    </cs-label-control>
+    <cs-label-control [onlyControl]="true" class="tw-w-full">
+      <p-radioButton
+        name="partialPayment"
+        value="N"
+        formControlName="partialPayment"
+      ></p-radioButton>
+      <ng-container label-inline>
+        <div class="tw-font-light">
+          <div class="tw-text-base">
+            No, deberán pagar el monto total de la deuda
+          </div>
+        </div>
+      </ng-container>
+    </cs-label-control>
+  </div>
+  <div class="form-elm tw-mb-5">
+    <div class="tw-font-medium">¿Quieres incluir el cobro de mora?</div>
+    <cs-label-control [onlyControl]="true" class="tw-w-full">
+      <p-radioButton
+        name="chargeInterest"
+        value="N"
+        formControlName="chargeInterest"
+      ></p-radioButton>
+      <ng-container label-inline>
+        <div class="tw-font-light">
+          <div class="tw-text-base">No</div>
+        </div>
+      </ng-container>
+    </cs-label-control>
+    <cs-label-control [onlyControl]="true" class="tw-w-full">
+      <p-radioButton
+        name="chargeInterest"
+        value="S"
+        formControlName="chargeInterest"
+      ></p-radioButton>
+      <ng-container label-inline>
+        <div class="tw-font-light">
+          <div class="tw-text-base">Sí</div>
+        </div>
+      </ng-container>
+    </cs-label-control>
+  </div>
+  <ng-template [ngIf]="showArrearsFields">
+    <div class="form-elm tw-flex tw-gap-10">
+      <cs-label-control
+        class="tw-w-full"
+        formControlName="chargeType"
+        [errorMessages]="errorMessages.chargeType"
+        >Tipo de cobro
+        <p-dropdown
+          [options]="chargeTypeOptions"
+          class="tw-w-full"
+          styleClass="tw-w-full"
+          formControlName="chargeType"
+          placeholder="Selecciona"
+        ></p-dropdown>
+      </cs-label-control>
+      <div class="tw-w-full"></div>
+    </div>
+    <div class="form-elm tw-flex tw-gap-10">
+      <cs-label-control
+        class="tw-w-full"
+        formControlName="interestType"
+        [errorMessages]="errorMessages.interestType"
+        >Tipo de cálculo
+        <p-dropdown
+          [options]="interestTypeOptions"
+          class="tw-w-full"
+          styleClass="tw-w-full"
+          formControlName="interestType"
+          placeholder="Selecciona"
+        ></p-dropdown>
+      </cs-label-control>
+      <cs-label-control
+        class="tw-w-full"
+        formControlName="amount"
+        [errorMessages]="errorMessages.amount"
+        >Monto
+        <div class="control ui-inputgroup">
+          <span class="ui-inputgroup-addon">{{ unitAmount }}</span>
+          <input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            placeholder="1.00"
+            formControlName="amount"
+          />
+        </div>
+      </cs-label-control>
+    </div>
+  </ng-template>
+</div>
