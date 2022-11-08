@@ -28,7 +28,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { TooltipModule } from 'ngx-bootstrap';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
