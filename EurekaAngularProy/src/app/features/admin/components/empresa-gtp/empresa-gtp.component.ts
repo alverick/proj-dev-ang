@@ -29,7 +29,7 @@ export class EmpresaGTPComponent implements OnInit {
       pattern: 'Ingrese un correo electrónico  válido',
       minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
     },
-    telefono: {
+    movilNumber: {
       required: 'Teléfono o celular es obligatorio',
       pattern: 'Teléfono o celular es obligatorio',
       minlength: 'El teléfono o celular debe tener mínimo 9 dígitos',
