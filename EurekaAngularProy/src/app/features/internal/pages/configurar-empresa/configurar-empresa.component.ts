@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IEntryModel } from 'src/app/shared/models';
-import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
+import { IDataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
@@ -32,7 +32,7 @@ export class ConfigurarEmpresaComponent implements OnInit {
   rubros: IEntryModel[] = [];
   submittedRequired = false;
 
-  dataEmpresa: DataEnterpriseModel;
+  dataEmpresa: IDataEnterpriseModel;
   constructor(
     private formBuilder: FormBuilder,
     private configEmpresaService: ConfiguracionService,

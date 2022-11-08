@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { authFullRoutingNames } from 'src/app/app-routing.collection';
 import { IEntryModel } from 'src/app/shared/models';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
+import { IDataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
@@ -51,7 +51,7 @@ export class CrearContrasenaComponent implements OnInit {
   public llave: string;
   public inEdit: boolean = false;
   public empresa: DataEnterpriseGTP;
-  public empresasEdit: DataEnterpriseModel;
+  public empresasEdit: IDataEnterpriseModel;
   constructor(
     private formBuilder: FormBuilder,
     private afiliacionService: AfiliacionService,

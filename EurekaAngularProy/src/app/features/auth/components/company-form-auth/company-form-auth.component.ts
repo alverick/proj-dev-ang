@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ModalTermsComponent } from 'src/app/shared/components/modal-terms/modal-terms.component';
 import { IEntryModel } from '../../../../shared/models';
-import { DataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
+import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';
 
 @Component({
@@ -12,7 +12,7 @@ import { IErrorMessages } from '../../../../shared/models/forms';
   styleUrls: ['./company-form-auth.component.scss'],
 })
 export class CompanyFormAuthComponent implements OnInit {
-  @Output() sendForm = new EventEmitter<DataEnterpriseModel>();
+  @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
   @Input() categories: IEntryModel[] = [];
   @Input() companyForm: FormGroup;
   @Input() errorMessages: IErrorMessages;

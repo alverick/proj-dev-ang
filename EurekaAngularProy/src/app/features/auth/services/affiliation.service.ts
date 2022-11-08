@@ -11,7 +11,7 @@ import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
-import { DataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
+import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../shared/models/forms';
 import {
   CompanyService,
@@ -434,7 +434,7 @@ export class AffiliationService {
       ruc,
     } = this.registerForm.value;
     const { acceptTerms, entry, password, name } = this.authForm.value;
-    const companyData: DataEnterpriseModel = {
+    const companyData: IDataEnterpriseModel = {
       documentType,
       documentNumber,
       ruc,

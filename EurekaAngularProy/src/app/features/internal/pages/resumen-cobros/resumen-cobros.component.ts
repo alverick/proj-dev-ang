@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { authFullRoutingNames } from 'src/app/app-routing.collection';
-import { ServiceModel } from 'src/app/shared/models';
+import { IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
@@ -42,7 +42,7 @@ export class ResumenCobrosComponent implements OnInit {
   Formulario = false;
   public stateCreate = false;
   public stateEdit = false;
-  serviceActual: ServiceModel = null;
+  serviceActual: IServiceModel = null;
   public inEdit = false;
   public affiliationFlow = false;
   sendAfterSave = false;
@@ -79,7 +79,7 @@ export class ResumenCobrosComponent implements OnInit {
     });
   }
 
-  getNameGTP(svc: ServiceModel) {
+  getNameGTP(svc: IServiceModel) {
     if (svc.newNameGtpStatus === 1) {
       return svc.nombre;
     }
@@ -88,7 +88,7 @@ export class ResumenCobrosComponent implements OnInit {
     }
   }
 
-  editService(svc: ServiceModel, index: number) {
+  editService(svc: IServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
       return;
     }
@@ -123,7 +123,7 @@ export class ResumenCobrosComponent implements OnInit {
     }
   }
 
-  getName(svc: ServiceModel) {
+  getName(svc: IServiceModel) {
     if (svc.newNameGtpStatus === 3 && svc.nombre === null) {
       return svc.newName;
     }
@@ -200,7 +200,7 @@ export class ResumenCobrosComponent implements OnInit {
     }
   }
 
-  pendienteRevision(service: ServiceModel) {
+  pendienteRevision(service: IServiceModel) {
     if (this.inEdit) {
       return this.afiliacionService.isServiceInReview(service);
     } else {
@@ -208,7 +208,7 @@ export class ResumenCobrosComponent implements OnInit {
     }
   }
 
-  getCanales(svc: ServiceModel) {
+  getCanales(svc: IServiceModel) {
     let str = '';
     if (svc.usaWebApp) {
       str += 'Digital';
@@ -223,7 +223,7 @@ export class ResumenCobrosComponent implements OnInit {
     return str;
   }
 
-  getCodDebtorCreate(svc: ServiceModel) {
+  getCodDebtorCreate(svc: IServiceModel) {
     if (
       svc.codDeudor === 'RUC' ||
       svc.codDeudor === 'DNI' ||
@@ -236,7 +236,7 @@ export class ResumenCobrosComponent implements OnInit {
     }
   }
 
-  getCodigoNameGTP(svc: ServiceModel) {
+  getCodigoNameGTP(svc: IServiceModel) {
     if (svc.newNameCodeGtpStatus === 1) {
       if (svc.codDeudor === 'Otro') {
         return svc.nameCod;
@@ -248,7 +248,7 @@ export class ResumenCobrosComponent implements OnInit {
     }
   }
 
-  getCodDebtor(svc: ServiceModel) {
+  getCodDebtor(svc: IServiceModel) {
     if (svc.newNameCodeGtpStatus === 0) {
       return svc.newNameCode;
     }

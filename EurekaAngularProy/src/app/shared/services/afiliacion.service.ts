@@ -10,9 +10,9 @@ import {
   IEntryModel,
   IServiceRemoteModel,
   MonedaModel,
-  ServiceModel,
+  IServiceModel,
 } from '../models';
-import { DataEnterpriseModel } from '../models/data-enterprise.model';
+import { IDataEnterpriseModel } from '../models/data-enterprise.model';
 import { drawPopup } from '../utils/helpers/popups';
 import { StorageService } from './storage.service';
 
@@ -29,11 +29,11 @@ export class AfiliacionService {
     this._currentIndex = value;
   }
 
-  set currentServiceModel(value: ServiceModel) {
+  set currentServiceModel(value: IServiceModel) {
     this._currentServiceModel = value;
   }
 
-  get currentServiceModel(): ServiceModel {
+  get currentServiceModel(): IServiceModel {
     return this._currentServiceModel;
   }
 
@@ -51,11 +51,11 @@ export class AfiliacionService {
   public email: string;
   public Guardado = false;
 
-  public services: ServiceModel[] = [];
+  public services: IServiceModel[] = [];
   private _rubros: IEntryModel[] = null;
   private _rubrosAll: IEntryModel[] = null;
-  public dataEnterpriseModel: DataEnterpriseModel;
-  private _currentServiceModel: ServiceModel;
+  public dataEnterpriseModel: IDataEnterpriseModel;
+  private _currentServiceModel: IServiceModel;
 
   public Clear() {
     this.Guardado = false;
@@ -78,7 +78,7 @@ export class AfiliacionService {
     });
   }
 
-  public CrearSevice(): ServiceModel {
+  public CrearSevice(): IServiceModel {
     this.Guardado = false;
     let nombre = 'Mensualidad';
     const newName = 'Mensualidad';
@@ -114,7 +114,7 @@ export class AfiliacionService {
     if (nro > 1) {
       nombre += nro.toString();
     }
-    const svc: ServiceModel = {
+    const svc: IServiceModel = {
       id: null,
       nombre,
       newName: nombre,
@@ -139,7 +139,7 @@ export class AfiliacionService {
     return svc;
   }
 
-  public AddService(svc: ServiceModel) {
+  public AddService(svc: IServiceModel) {
     this.Guardado = false;
     const svc_old = this.services.find((v) => v.nombre === svc.nombre);
     if (svc_old) {
@@ -367,7 +367,7 @@ export class AfiliacionService {
         { headers }
       )
       .subscribe((d: IServiceRemoteModel[]) => {
-        const servicios: ServiceModel[] = [];
+        const servicios: IServiceModel[] = [];
         d.forEach((s) => {
           servicios.push({
             id: s.id,
@@ -414,7 +414,7 @@ export class AfiliacionService {
     newNameCode,
     newNameCodeGtpStatus,
     newNameGtpStatus,
-  }: ServiceModel): boolean {
+  }: IServiceModel): boolean {
     if (id === null) {
       return true;
     }
@@ -437,7 +437,7 @@ export class AfiliacionService {
     return false;
   }
 
-  public isNewService({ id, res }: ServiceModel) {
+  public isNewService({ id, res }: IServiceModel) {
     return isNil(id) && isEmpty(res);
   }
 
@@ -451,78 +451,81 @@ export class AfiliacionService {
       clientId: this.idCompany,
       services: [],
       deleted: [],
-    };this.services
+    };
+    this.services
       .filter(
         (service) =>
           !this.isServiceInReview(service) || this.isNewService(service)
       )
-      .forEach(({
-        cobraMora,
-        codDeudor,
-        id,
-        idCuenta,
-        moneda,
-        monto,
-        nameCod,
-        newName,
-        newNameCode,
-        nombre,
-        nroCuenta,
-        pagoPartes,
-        periodoMora,
-        porcentaje,
-        rubro,
-        tipoDato,
-        tipoMora,
-        tipoPago,
-        usaAgente,
-        usaTienda,
-        usaWebApp,
-      }) => {
-        let name = '';
-        if (nombre === null) {
-          name = newName;
-        } else if (nombre !== '?') {
-          name = nombre;
-        }
-          let debtorCode;
-        switch (codDeudor) {
-        case '?':
-            debtorCode = '';
-            break;
-          case 'Otro':
-          debtorCode = nameCod;
-          break;
-          case null:
-          debtorCode= 'DNI';
-            break;
-          default:
-            debtorCode = codDeudor;
-              break;
-              }
-              data.services.push({
-              id,
-          name,
+      .forEach(
+        ({
+          cobraMora,
+          codDeudor,
+          id,
+          idCuenta,
+          moneda,
+          monto,
+          nameCod,
           newName,
-          entry: rubro,
-            debtorCode ,
           newNameCode,
-          dataType: tipoDato,
-          paymentType: tipoPago,
-          idAccount: idCuenta,
-          accountNumber: nroCuenta,
-          currency: moneda,
-          useAppWeb: usaWebApp,
-          useAgent: usaAgente,
-          useStore: usaTienda,
-          chargeInterest: cobraMora,
-          chargeType: parseInt(periodoMora, 10),
-          interestType: tipoMora,
-          amount: monto,
-          percentage: porcentaje,
-          partialPayment: pagoPartes,
-        });
-      });
+          nombre,
+          nroCuenta,
+          pagoPartes,
+          periodoMora,
+          porcentaje,
+          rubro,
+          tipoDato,
+          tipoMora,
+          tipoPago,
+          usaAgente,
+          usaTienda,
+          usaWebApp,
+        }) => {
+          let name = '';
+          if (nombre === null) {
+            name = newName;
+          } else if (nombre !== '?') {
+            name = nombre;
+          }
+          let debtorCode;
+          switch (codDeudor) {
+            case '?':
+              debtorCode = '';
+              break;
+            case 'Otro':
+              debtorCode = nameCod;
+              break;
+            case null:
+              debtorCode = 'DNI';
+              break;
+            default:
+              debtorCode = codDeudor;
+              break;
+          }
+          data.services.push({
+            id,
+            name,
+            newName,
+            entry: rubro,
+            debtorCode,
+            newNameCode,
+            dataType: tipoDato,
+            paymentType: tipoPago,
+            idAccount: idCuenta,
+            accountNumber: nroCuenta,
+            currency: moneda,
+            useAppWeb: usaWebApp,
+            useAgent: usaAgente,
+            useStore: usaTienda,
+            chargeInterest: cobraMora,
+            chargeType: parseInt(periodoMora, 10),
+            interestType: tipoMora,
+            amount: monto,
+            percentage: porcentaje,
+            partialPayment: pagoPartes,
+          });
+        }
+      );
 
     return this.http
       .post<any>(

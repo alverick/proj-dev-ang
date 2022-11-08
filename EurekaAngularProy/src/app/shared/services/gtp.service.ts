@@ -6,7 +6,7 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { ServiceModel } from '../models';
+import { IServiceModel } from '../models';
 import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
 import { DataGTPChange } from '../models/data-gtpchange';
 import { DataServiceGTP } from '../models/data-service-gtp';
@@ -304,7 +304,7 @@ export class GtpService {
       );
   }
 
-  public CrearSevice(): ServiceModel {
+  public CrearSevice(): IServiceModel {
     let nombre = 'Mensualidad';
     let nro = 1;
     this.services.forEach((s) => {
