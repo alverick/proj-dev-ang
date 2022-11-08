@@ -1,15 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  Validators,
-  ValidatorFn,
-} from '@angular/forms';
-import { forEachObjIndexed, pathOr } from 'ramda';
-import { isNotNil } from 'ramda-adjunct';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
+import { DataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
+import { IErrorMessages } from '../../../../shared/models/forms';
 
 @Component({
   selector: 'cs-company-form-registration',
@@ -17,108 +9,43 @@ import { isNotNil } from 'ramda-adjunct';
   styleUrls: ['./company-form-registration.component.scss'],
 })
 export class CompanyFormRegistrationComponent implements OnInit {
-  @Output() sendForm = new EventEmitter<object>();
+  @Output() sendForm = new EventEmitter<DataEnterpriseModel>();
 
-  registerForm: FormGroup;
-  inEdit = false;
-  submitted = false;
-  errorMessages = {
-    ruc: {
-      required: 'El RUC es obligatorio',
-      pattern: 'Ingrese un ruc válido',
-      minlength: 'El ruc debe tener 11 dígitos',
-    },
-    email: {
-      required: 'El correo electrónico  es obligatorio',
-      pattern: 'Ingrese un correo electrónico  válido',
-      minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
-    },
-    emailConfirm: {
-      required: 'Confirmar correo electrónico  es obligatorio',
-      notSame: 'El correo ingresado no coincide con el anterior',
-    },
-    telefono: {
-      required: 'Teléfono o celular es obligatorio',
-      pattern: 'Teléfono o celular es obligatorio',
-      minlength: 'El teléfono o celular debe tener mínimo 9 dígitos',
-    },
-    movilOperator: {
-      required: 'Elija una opción',
-    },
-  };
-
-  constructor(private formBuilder: FormBuilder) {}
+  text = '';
+  documentNumberMax = '8';
+  documentNumberFilter: string | RegExp = 'int';
+  blockSpecial: RegExp = /^[a-z0-9]+$/i;
+  @Input() registerForm: FormGroup;
+  @Input() operators = [];
+  @Input() documentTypes = [];
+  @Input() errorMessages: IErrorMessages;
+  constructor() {}
 
   ngOnInit() {
-    const emailValidators = [
+    this.registerForm.get('documentType').valueChanges.subscribe((value) => {
+      console.log('-> value', value);
+      this.registerForm.get('documentNumber').setValue('');
+      this.setDocumentNumberProps();
+    });
+  }
+
+  setDocumentNumberProps() {
+    const isDNI = this.registerForm.value.documentType === 'DNI';
+    this.documentNumberMax = isDNI ? '8' : '12';
+    this.documentNumberFilter = isDNI ? 'int' : this.blockSpecial;
+    const validators = [
       Validators.required,
-      Validators.pattern(
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      ),
-      Validators.minLength(10),
-      Validators.maxLength(100),
+      Validators.maxLength(parseInt(this.documentNumberMax, 10)),
     ];
-    this.registerForm = this.formBuilder.group({
-      ruc: new FormControl({ value: '', disabled: this.inEdit }, [
-        Validators.required,
-        Validators.pattern('[1-2]0[0-9]+?'),
-        Validators.minLength(11),
-      ]),
-      email: new FormControl(
-        { value: '', disabled: this.inEdit },
-        emailValidators
-      ),
-      emailConfirm: new FormControl({ value: '', disabled: this.inEdit }, [
-        Validators.required,
-        this.checkEmail(),
-      ]),
-      telefono: new FormControl({ value: '', disabled: this.inEdit }, [
-        Validators.required,
-        Validators.pattern(/^9\d{8}$/),
-        Validators.minLength(9),
-        Validators.maxLength(9),
-      ]),
-      movilOperator: new FormControl('', [Validators.required]),
-    });
-
-    this.registerForm.controls.email.statusChanges.subscribe(() => {
-      this.registerForm.controls.emailConfirm.updateValueAndValidity();
-    });
-  }
-
-  checkEmail(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const emailConfirm = control.value as string;
-      const email = pathOr(
-        '',
-        ['parent', 'controls', 'email', 'value'],
-        control
-      ) as string;
-      return email.toLowerCase() === emailConfirm.toLowerCase()
-        ? null
-        : { notSame: true };
-    };
-  }
-
-  getErrorMessage(
-    controlName: FormControl | AbstractControl,
-    errors: {
-      [key: string]: string;
+    if (isDNI) {
+      validators.push(Validators.minLength(8));
     }
-  ): string {
-    let result = '';
-    forEachObjIndexed((value, key) => {
-      if (isNotNil(errors[key])) {
-        result = errors[key];
-        return;
-      }
-    }, controlName.errors);
-    return result;
+    this.registerForm.get('documentNumber').setValidators(validators);
   }
 
   onSubmit() {
-    this.submitted = true;
     const { emailConfirm, ...formValue } = this.registerForm.value;
+    console.log('-> formValue', formValue);
     if (this.registerForm.valid) {
       this.sendForm.emit({ ...formValue });
     }

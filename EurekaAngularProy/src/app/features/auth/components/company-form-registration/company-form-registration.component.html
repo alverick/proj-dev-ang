@@ -3,108 +3,130 @@
   novalidate
   (submit)="onSubmit()"
   autocomplete="off"
+  class="tw-max-w-2xl"
 >
-  <div class="form-group">
-    <mat-form-field class="super-full-width">
-      <input
-        class="input-text"
-        aria-describedby="tooltip-0"
-        tooltip="El RUC de tu empresa con el que ingresarás a la plataforma"
-        formControlName="ruc"
-        (Keydown.space)="$event.preventDefault()"
-        matInput
-        type="text"
-        autocomplete="new-text"
-        placeholder="RUC de tu empresa"
-        appOnlynumbers
-        minlength="11"
-        maxlength="11"
-      />
-      <mat-error *ngIf="submitted">{{
-        getErrorMessage(registerForm.get('ruc'), errorMessages.ruc)
-      }}</mat-error>
-    </mat-form-field>
+  <div
+    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-20 tw-py-14"
+  >
+    <h2 class="tw-font-medium tw-text-2xl tw-mb-7">Ingresa tus datos</h2>
+    <div class="form-controls tw-max-w-xl">
+      <div class="form-elm tw-flex tw-gap-4">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="documentType"
+          [errorMessages]="errorMessages.documentType"
+          >Tipo de documento<p-dropdown
+            [options]="documentTypes"
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            formControlName="documentType"
+            placeholder="Selecciona"
+          ></p-dropdown>
+        </cs-label-control>
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="documentNumber"
+          [errorMessages]="errorMessages.documentNumber"
+          >Número de documento<input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            [pKeyFilter]="documentNumberFilter"
+            [maxlength]="documentNumberMax"
+            formControlName="documentNumber"
+          />
+          <val-errors validation-messages controlName="documentNumber">
+            <ng-template
+              [valError]="error.key"
+              *ngFor="let error of errorMessages.documentNumber | keyvalue"
+              >{{ error.value }}</ng-template
+            >
+            <ng-template valError="minlength" let-error="error"
+              >El Número de documento debe tener
+              {{ error.requiredLength }} dígitos</ng-template
+            >
+          </val-errors>
+        </cs-label-control>
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="ruc"
+          [errorMessages]="errorMessages.ruc"
+          >RUC de la empresa<input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            pKeyFilter="int"
+            maxlength="11"
+            formControlName="ruc"
+          />
+        </cs-label-control>
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="email"
+          [errorMessages]="errorMessages.email"
+          >Correo electrónico<input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            minlength="10"
+            maxlength="100"
+            formControlName="email"
+          />
+        </cs-label-control>
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="emailConfirm"
+          [errorMessages]="errorMessages.emailConfirm"
+          >Confirmar correo electrónico<input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            minlength="10"
+            maxlength="100"
+            formControlName="emailConfirm"
+          />
+        </cs-label-control>
+      </div>
+      <div class="form-elm tw-flex tw-gap-4">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="movilOperator"
+          [errorMessages]="errorMessages.movilOperator"
+          >Operador<p-dropdown
+            [options]="operators"
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            formControlName="movilOperator"
+            placeholder="Selecciona"
+          ></p-dropdown>
+        </cs-label-control>
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="movilNumber"
+          [errorMessages]="errorMessages.movilNumber"
+          >Celular<input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            pKeyFilter="int"
+            maxlength="9"
+            formControlName="movilNumber"
+          />
+        </cs-label-control>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <mat-form-field class="input-text super-full-width">
-      <input
-        formControlName="email"
-        (Keydown.space)="$event.preventDefault()"
-        matInput
-        type="text"
-        autocomplete="new-text"
-        minlength="10"
-        maxlength="100"
-        placeholder="Correo electrónico "
-      />
-      <mat-error *ngIf="submitted">{{
-        getErrorMessage(registerForm.get('email'), errorMessages.email)
-      }}</mat-error>
-    </mat-form-field>
-  </div>
-  <div class="form-group">
-    <mat-form-field class="input-text super-full-width">
-      <input
-        formControlName="emailConfirm"
-        (Keydown.space)="$event.preventDefault()"
-        matInput
-        type="text"
-        autocomplete="new-text"
-        minlength="10"
-        maxlength="100"
-        placeholder="Confirmar correo electrónico "
-      />
-      <mat-error *ngIf="submitted">{{
-        getErrorMessage(
-          registerForm.get('emailConfirm'),
-          errorMessages.emailConfirm
-        )
-      }}</mat-error>
-    </mat-form-field>
-  </div>
-  <div class="form-group">
-    <mat-form-field class="input-text super-full-width">
-      <input
-        formControlName="telefono"
-        (Keydown.space)="$event.preventDefault()"
-        appOnlynumbers
-        matInput
-        type="text"
-        autocomplete="new-text"
-        placeholder="Teléfono o celular"
-        minlength="6"
-        maxlength="9"
-      />
-      <mat-error *ngIf="submitted">{{
-        getErrorMessage(registerForm.get('telefono'), errorMessages.telefono)
-      }}</mat-error>
-    </mat-form-field>
-  </div>
-  <div class="form-group">
-    <mat-form-field class="w-100">
-      <mat-label>Operador</mat-label>
-      <mat-select
-        class="input-text"
-        formControlName="movilOperator"
-        disableOptionCentering
-        panelClass="pts30"
-      >
-        <mat-option class="input-text">Operador</mat-option>
-        <mat-option class="input-text" value="M">Movistar</mat-option>
-        <mat-option class="input-text" value="C">Claro</mat-option>
-        <mat-option class="input-text" value="E">Entel</mat-option>
-        <mat-option class="input-text" value="B">Bitel</mat-option>
-      </mat-select>
-      <mat-error *ngIf="submitted">{{
-        getErrorMessage(
-          registerForm.get('movilOperator'),
-          errorMessages.movilOperator
-        )
-      }}</mat-error>
-    </mat-form-field>
-  </div>
-  <div class="bnt-cont-reg">
-    <button type="submit" class="btn-big btn-eureca-green w-100 text-white">
+  <div class="tw-text-right tw-mt-10">
+    <button
+      type="submit"
+      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+    >
       SIGUIENTE
     </button>
   </div>
