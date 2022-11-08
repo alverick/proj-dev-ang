@@ -84,11 +84,6 @@ const UI_MODULES = [
   FontAwesomeModule,
   OverlayModule,
   PerfectScrollbarModule,
-  SweetAlert2Module.forRoot({
-    customClass: {
-      actions: 'actions-popup',
-    },
-  }),
   TooltipModule.forRoot(),
 ];
 
