@@ -1,7 +1,7 @@
-//@tailwind base;
-//@tailwind components;
-//@tailwind utilities;
 @import 'normalize';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Reset Styles */
 
@@ -9,6 +9,7 @@
 @import 'fonts';
 @import 'material-config-theme';
 @import 'material-custom';
+@import 'forms';
 @import 'main';
 
 /* @import "~bootstrap/dist/css/bootstrap.css";

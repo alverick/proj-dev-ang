@@ -35,12 +35,11 @@ function initAppComponentFactory(
 }
 
 export default {
-  title: 'Company Form Registration',
-  component: CompanyFormRegistrationComponent,
+  title: 'Auth/Module/Company Form Registration',
   decorators: [
     withKnobs,
     moduleMetadata({
-      declarations: [],
+      declarations: [CompanyFormRegistrationComponent],
       imports: [
         BrowserAnimationsModule,
         HttpClientModule,
@@ -70,5 +69,6 @@ export default {
 
 export const normal = () => ({
   component: CompanyFormRegistrationComponent,
+  template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults><cs-company-form-registration (sendForm)="onSubmit($event)"></cs-company-form-registration>`,
   argTypes: { sendForm: { action: 'clicked' } },
 });

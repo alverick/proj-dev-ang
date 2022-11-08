@@ -1,0 +1,126 @@
+<form
+  [formGroup]="companyForm"
+  novalidate
+  (submit)="onSubmit()"
+  autocomplete="off"
+  class="tw-max-w-2xl"
+>
+  <div
+    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-20 tw-py-14"
+  >
+    <h2 class="tw-font-medium tw-text-2xl tw-mb-7">Ingresa tus datos</h2>
+    <div class="form-controls tw-max-w-xl">
+      <div class="form-elm">
+        <cs-label-control class="tw-w-full" formControlName="ruc"
+          >RUC de la empresa<input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            pKeyFilter="int"
+            maxlength="11"
+            formControlName="ruc"
+          />
+        </cs-label-control>
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="name"
+          [errorMessages]="errorMessages.name"
+          >Nombre comercial de tu empresa<input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            (input)="nameInput()"
+            (blur)="nameBlur()"
+            minlength="3"
+            maxlength="80"
+            formControlName="name"
+          />
+        </cs-label-control>
+      </div>
+      <div class="form-elm tw-mb-6">
+        <cs-message-alert class="" mode="info"
+          ><div class="tw-text-xs">
+            Nombre con el que tus clientes te buscarán en los canales Interbank
+            al momento de pagarte.
+          </div></cs-message-alert
+        >
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="entry"
+          [errorMessages]="errorMessages.entry"
+          >Rubro de tu empresa
+          <p-dropdown
+            [options]="categories"
+            optionLabel="name"
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            formControlName="entry"
+            placeholder="Selecciona"
+          ></p-dropdown>
+        </cs-label-control>
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="password"
+          [errorMessages]="errorMessages.password"
+          >Crea tu contraseña<input
+            type="password"
+            class="tw-w-full"
+            pInputText
+            minlength="6"
+            maxlength="20"
+            formControlName="password"
+          />
+        </cs-label-control>
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="passwordConfirm"
+          [errorMessages]="errorMessages.passwordConfirm"
+          >Confirma tu contraseña<input
+            type="password"
+            class="tw-w-full"
+            pInputText
+            minlength="6"
+            maxlength="20"
+            formControlName="passwordConfirm"
+          />
+        </cs-label-control>
+      </div>
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="acceptTerms"
+          [errorMessages]="errorMessages.acceptTerms"
+        >
+          <p-checkbox
+            class="tw-mr-1"
+            [binary]="true"
+            formControlName="acceptTerms"
+          >
+          </p-checkbox>
+          <ng-container label-inline
+            >Acepto los
+            <a href="javascript:void(0)" (click)="showModalTerms()"
+              >Términos y Condiciones</a
+            ></ng-container
+          >
+        </cs-label-control>
+      </div>
+    </div>
+  </div>
+  <div class="tw-text-right tw-mt-10">
+    <button
+      type="submit"
+      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+    >
+      SIGUIENTE
+    </button>
+  </div>
+</form>

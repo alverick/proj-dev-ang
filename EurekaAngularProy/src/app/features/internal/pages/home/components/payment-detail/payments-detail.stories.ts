@@ -37,7 +37,7 @@ function initAppComponentFactory(
 }
 
 export default {
-  title: 'Payment Detail',
+  title: 'Internal/Home/Payment Detail',
   component: PaymentDetailComponent,
   decorators: [
     withKnobs,

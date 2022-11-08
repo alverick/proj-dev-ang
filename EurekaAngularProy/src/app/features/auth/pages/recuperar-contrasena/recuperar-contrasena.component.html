@@ -1,21 +1,31 @@
 <body>
-    <!-- Navigation -->
-    <div class="container-style">
-        <div class="container pt-4 cont-logo">
-            <a class="pl-4 navbar-brand" href="#">
-                <img class="img-login" src="../../../../../assets/images/ibkempresas-logo-negativo.svg" alt="">
+  <!-- Navigation -->
+  <div class="container-style">
+    <div class="container pt-4 cont-logo">
+      <a class="pl-4 navbar-brand" href="#">
+        <img
+          class="img-login"
+          src="../../../../../assets/images/ibkempresas-logo-negativo.svg"
+          alt=""
+        />
 
-                <!-- <img  width="220" src="assets/images/ibkempresas-logo-negativo.svg" alt="" style="margin-left: 60px;"> -->
-            </a>
-        </div>
-        <div class="container">
-            <div class="row ">
-                <!--/////// L E F T ////////-->
+        <!-- <img  width="220" src="assets/images/ibkempresas-logo-negativo.svg" alt="" style="margin-left: 60px;"> -->
+      </a>
+    </div>
+    <div class="container">
+      <div class="row">
+        <!--/////// L E F T ////////-->
 
-                <div class="col-sm-12 col-md-12 col-lg-6 ">
-                    <div class="title-login">Gestiona tus <br class="br-none-escritorio"> cobranzas <br class="br-none-escritorio"> <br class="br-none-mobil"> <br class="br-none-tablet"> fácil y rápido</div>
+        <div class="col-sm-12 col-md-12 col-lg-6">
+          <div class="title-login">
+            Gestiona tus <br class="br-none-escritorio" />
+            cobranzas <br class="br-none-escritorio" />
+            <br class="br-none-mobil" />
+            <br class="br-none-tablet" />
+            fácil y rápido
+          </div>
 
-                    <!-- <div class="pt-2 title-landing">Gestionar tus cobranzas ahora es mucho mas fácil y rápido</div>
+          <!-- <div class="pt-2 title-landing">Gestionar tus cobranzas ahora es mucho mas fácil y rápido</div>
                     <div class="pt-2 subtitle-landing">¡Regístrate en nuestra plataforma en menos de 3 minutos!</div>
 
                     <div class="media pt-4 content-landing">
@@ -32,92 +42,210 @@
                         <img src="assets/images/cel_01.png" width="35" height="35" alt="">
                         <p class="pl-4">Tu clientes te podrán pagar en nuestros más de 4000 agentes, APP, BPI y tiendas Interbank</p>
                     </div> -->
-                    <br class="br-none-escritorio"> <br class="br-none-escritorio"> <br class="br-none-escritorio">
-                    <div class="media ppt-5 content-landing reponsive-img-login">
-                        <img class="img-login-ing" src="../../../../../assets/images/login.svg">
-                    </div>
+          <br class="br-none-escritorio" />
+          <br class="br-none-escritorio" />
+          <br class="br-none-escritorio" />
+          <div class="media ppt-5 content-landing reponsive-img-login">
+            <img
+              class="img-login-ing"
+              src="../../../../../assets/images/login.svg"
+            />
+          </div>
+        </div>
+
+        <!--/////// R I G H T ////////-->
+        <div class="col-sm-12 col-md-12 col-lg-6">
+          <div class="pb-3">
+            <div class="d-flex justify-content-end" id="cont-password">
+              <!---LISTO-->
+
+              <div *ngIf="!formulario" class="cuadro-form-Listo">
+                <div class="texto-azul mb-4">¡Listo!</div>
+                <div class="texto-azul-text pb-4">
+                  Hemos enviado las instrucciones a tu <br />correo electrónico
+                </div>
+                <div class="reenviar mb-4">
+                  Reenviar correo en <small>3:00 minutos</small>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button
+                    type="button"
+                    (click)="Reenviar()"
+                    class="mano focus-elements btn-eureca-green"
+                  >
+                    REENVIAR CORREO
+                  </button>
+                </div>
+              </div>
+              <!---FORMULARIO-->
+              <div *ngIf="formulario" class="cuadro-form pb-2 cont-login">
+                <div class="texto-azul mb-4">Recuperar contraseña</div>
+                <div class="texto-azul-text pb-4">
+                  ¡Está bien! Todos nos olvidamos de <br />
+                  algo alguna vez
                 </div>
 
-                <!--/////// R I G H T ////////-->
-                <div class="col-sm-12 col-md-12 col-lg-6">
-
-                    <div class="pb-3">
-                        <div class="d-flex justify-content-end" id="cont-password">
-                            <!---LISTO-->
-
-                            <div *ngIf="!formulario" class="cuadro-form-Listo">
-                                <div class="texto-azul  mb-4 ">¡Listo!</div>
-                                <div class="texto-azul-text pb-4">Hemos enviado las instrucciones a tu <br>correo electrónico</div>
-                                <div class="reenviar mb-4">Reenviar correo en <small>3:00 minutos</small> </div>
-                                <div class="d-flex justify-content-center">
-                                    <button type="button" (click)="Reenviar()" class="mano focus-elements btn-eureca-green">
-                                            REENVIAR CORREO
-                                        </button>
-                                </div>
-                            </div>
-                            <!---FORMULARIO-->
-                            <div *ngIf="formulario" class=" cuadro-form pb-2 cont-login">
-                                <div class="texto-azul  mb-4 ">Recuperar contraseña</div>
-                                <div class="texto-azul-text pb-4">¡Está bien! Todos nos olvidamos de <br> algo alguna vez</div>
-
-                                <form id="login-form" [formGroup]="recupera" (ngSubmit)="SubmitRecupera()">
-
-                                    <div class="margen">
-                                        <div class="d-flex    pb-3">
-                                            <!-- <div class="mr-2">
+                <form
+                  id="login-form"
+                  [formGroup]="recupera"
+                  (ngSubmit)="SubmitRecupera()"
+                >
+                  <div class="margen">
+                    <div class="d-flex pb-3">
+                      <!-- <div class="mr-2">
                                                 <img src="assets/images/user.svg" alt="">
                                             </div> -->
-                                            <!-- ////////////// R U C /////////////////// -->
-                                            <div class="flex-fill mt-2">
-                                                <label class="d-block texto-negro h6"> <img class="icon-gb" src="../../../../../assets/images/user.svg" alt="">RUC</label>
-                                                <mat-form-field class="w-100 " style="height: 1.9px !important; width: 100%;">
-                                                    <input matInput class="input-text" (Keydown.space)="$event.preventDefault()" type="text" name="ruc" appOnlynumbers autocomplete="on" minlength="11" maxlength="11" required formControlName="ruc" [class.is-invalid]="submitted && f.ruc.errors">
-                                                    <mat-error class="messsage-error">
-                                                        <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required') && submittedRequired">El RUC es obligatorio</mat-error>
-                                                        <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
-                                                        <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
-                                                    </mat-error>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
+                      <!-- ////////////// R U C /////////////////// -->
+                      <div class="flex-fill mt-2">
+                        <label class="d-block texto-negro h6">
+                          <img
+                            class="icon-gb tw-inline"
+                            src="../../../../../assets/images/user.svg"
+                            alt=""
+                          />RUC</label
+                        >
+                        <mat-form-field
+                          class="w-100"
+                          style="height: 1.9px !important; width: 100%"
+                        >
+                          <input
+                            matInput
+                            class="input-text"
+                            (Keydown.space)="$event.preventDefault()"
+                            type="text"
+                            name="ruc"
+                            appOnlynumbers
+                            autocomplete="on"
+                            minlength="11"
+                            maxlength="11"
+                            required
+                            formControlName="ruc"
+                            [class.is-invalid]="submitted && f.ruc.errors"
+                          />
+                          <mat-error class="messsage-error">
+                            <mat-error
+                              class="messsage-error"
+                              *ngIf="
+                                f.ruc.invalid &&
+                                f.ruc.hasError('required') &&
+                                submittedRequired
+                              "
+                              >El RUC es obligatorio</mat-error
+                            >
+                            <mat-error
+                              class="messsage-error"
+                              *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"
+                            >
+                              Ingrese un ruc valido
+                            </mat-error>
+                            <mat-error
+                              class="messsage-error"
+                              *ngIf="
+                                f.ruc.invalid &&
+                                !f.ruc.hasError('pattern') &&
+                                f.ruc.hasError('minlength')
+                              "
+                            >
+                              El ruc debe tener 11 dígitos</mat-error
+                            >
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
 
-
-                                        <div class="d-flex">
-                                            <!-- <div class="mr-2">
+                    <div class="d-flex">
+                      <!-- <div class="mr-2">
                                                 <img src="assets/images/correo.svg" alt="">
                                             </div> -->
-                                            <!-- ////////////// R U C /////////////////// -->
-                                            <div class="flex-fill mt-2 ">
-                                                <label class="d-block texto-negro">  <img class="icon-gb" src="../../../../../assets/images/correo.svg" alt="">Ingresa tu correo</label>
-                                                <mat-form-field class="w-100 margen-inputs" style="width: 100%;">
-                                                    <input matInput class="input-text" (Keydown.space)="$event.preventDefault()" formControlName="email" [class.is-invalid]="f.email.invalid" type="text" minlength="10" maxlength="100">
-                                                    <mat-error class="messsage-error">
-                                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required') && submittedRequired">El E-mail es obligatorio</mat-error>
-                                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
-                                                        <mat-error class="messsage-error" *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
-                                                    </mat-error>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="reCaptach pt-0 pb-4">
-                                            <re-captcha #recaptchaRef="reCaptcha" (resolved)="resolved($event)" siteKey="6Lf_I8wUAAAAAKbBj6Ukb9mDD434RU8UBuhSaeLl" secretKey="6Lf_I8wUAAAAAL420IJXIn5Wp3MXa5ItYWJ8C3qW"></re-captcha>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-center">
-                                        <button type="submit" class="focus-elements btn-eureca-green btn-rp-password" form="login-form">ENVIAR</button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-
+                      <!-- ////////////// R U C /////////////////// -->
+                      <div class="flex-fill mt-2">
+                        <label class="d-block texto-negro">
+                          <img
+                            class="icon-gb tw-inline"
+                            src="../../../../../assets/images/correo.svg"
+                            alt=""
+                          />Ingresa tu correo</label
+                        >
+                        <mat-form-field
+                          class="w-100 margen-inputs"
+                          style="width: 100%"
+                        >
+                          <input
+                            matInput
+                            class="input-text"
+                            (Keydown.space)="$event.preventDefault()"
+                            formControlName="email"
+                            [class.is-invalid]="f.email.invalid"
+                            type="text"
+                            minlength="10"
+                            maxlength="100"
+                          />
+                          <mat-error class="messsage-error">
+                            <mat-error
+                              class="messsage-error"
+                              *ngIf="
+                                f.email.invalid &&
+                                f.email.hasError('required') &&
+                                submittedRequired
+                              "
+                              >El E-mail es obligatorio</mat-error
+                            >
+                            <mat-error
+                              class="messsage-error"
+                              *ngIf="
+                                f.email.invalid && f.email.hasError('pattern')
+                              "
+                            >
+                              Ingrese un E-mail valido
+                            </mat-error>
+                            <mat-error
+                              class="messsage-error"
+                              *ngIf="
+                                f.email.invalid &&
+                                !f.email.hasError('pattern') &&
+                                f.email.hasError('minlength')
+                              "
+                            >
+                              El E-mail debe tener mínimo 10 dígitos</mat-error
+                            >
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
                     </div>
-                    <div class="media ppt-5 content-landing reponsive-img-login1" style="text-align: center;">
-                        <img class="img-login-ing" src="../../../../../assets/images/login.svg">
+                    <div class="reCaptach pt-0 pb-4">
+                      <re-captcha
+                        #recaptchaRef="reCaptcha"
+                        (resolved)="resolved($event)"
+                        siteKey="6Lf_I8wUAAAAAKbBj6Ukb9mDD434RU8UBuhSaeLl"
+                        secretKey="6Lf_I8wUAAAAAL420IJXIn5Wp3MXa5ItYWJ8C3qW"
+                      ></re-captcha>
                     </div>
-                </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center">
+                    <button
+                      type="submit"
+                      class="focus-elements btn-eureca-green btn-rp-password"
+                      form="login-form"
+                    >
+                      ENVIAR
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
+          <div
+            class="media ppt-5 content-landing reponsive-img-login1"
+            style="text-align: center"
+          >
+            <img
+              class="img-login-ing"
+              src="../../../../../assets/images/login.svg"
+            />
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </body>

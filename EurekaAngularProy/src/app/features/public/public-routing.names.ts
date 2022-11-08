@@ -5,7 +5,7 @@ interface IPublicRoutingNames {
   AFFILIATION?: string;
 }
 
-const publicModuleRoutingNames = `/${appRoutingNames.LANDING}`;
+const publicModuleRoutingPath = `/${appRoutingNames.LANDING}`;
 
 export const publicRoutingNames: IPublicRoutingNames = {
   AFFILIATION: 'afiliacion',
@@ -13,5 +13,5 @@ export const publicRoutingNames: IPublicRoutingNames = {
 
 export const publicFullRoutingNames: IPublicRoutingNames = generateFullRoutes(
   publicRoutingNames,
-  publicModuleRoutingNames
+  publicModuleRoutingPath
 );

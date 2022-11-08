@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ServiceModel } from 'src/app/shared/models';
+import { IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
@@ -36,7 +36,7 @@ import {
 export class ConfiguraCobrosParteTresComponent implements OnInit {
   frm: FormGroup;
   submittedRequired = false;
-  _service: ServiceModel;
+  _service: IServiceModel;
   editMode: boolean = false;
   affiliationFlow: boolean = false;
   simboloMoneda: string = 'S/';

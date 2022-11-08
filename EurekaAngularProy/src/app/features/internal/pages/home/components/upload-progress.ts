@@ -58,13 +58,13 @@ export class UploadProgressComponent implements OnInit {
         if (value.rowsUploaded == 0) {
           Swal.fire({
             title: 'Ingrese Datos',
-            type: 'error',
+            icon: 'error',
             text: `Su archivo está vació`,
             showCloseButton: true,
           });
         } else {
           Swal.fire({
-            type: 'success',
+            icon: 'success',
             text: `Se cargaron ${value.rowsUploaded} registros`,
             showCloseButton: true,
           });

@@ -1,4 +1,4 @@
-export interface ServiceModel {
+export interface IServiceModel {
   res?: string;
   id?: number;
   nombre: string;
@@ -65,4 +65,11 @@ export interface IServiceRemoteModel {
   useAgent?: boolean;
   useAppWeb?: boolean;
   useStore?: boolean;
+  debt?: IServiceRemoteModel;
+}
+
+export interface IServicePostData {
+  clientId: number;
+  deleted: any[];
+  services: IServiceRemoteModel[];
 }

@@ -6,13 +6,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MustMatch } from 'src/app/features/auth/pages/crear-contrasena/must-match.validator';
-import { RubroModel } from 'src/app/shared/models';
-import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
+import { IEntryModel } from 'src/app/shared/models';
+import { IDataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { ConfiguracionService } from 'src/app/shared/services/configuracion.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
+import { MustMatch } from 'src/app/shared/validators/must-match.validator';
 import Swal from 'sweetalert2';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
@@ -29,10 +29,10 @@ export class ConfigurarEmpresaComponent implements OnInit {
   submitted = false;
   butDisabled = false;
   nombre = true;
-  rubros: RubroModel[] = [];
+  rubros: IEntryModel[] = [];
   submittedRequired = false;
 
-  dataEmpresa: DataEnterpriseModel;
+  dataEmpresa: IDataEnterpriseModel;
   constructor(
     private formBuilder: FormBuilder,
     private configEmpresaService: ConfiguracionService,

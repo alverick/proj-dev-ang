@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { clone, equals, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { appFullRoutingNames } from 'src/app/app-routing.names';
-import { RubroModel } from 'src/app/shared/models';
+import { IEntryModel } from 'src/app/shared/models';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import { GtpEmpresa, GtpServcegtp } from 'src/app/shared/models/gtp-post';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
@@ -46,7 +46,7 @@ export class AprobacionesPage implements OnInit {
   enterpriseChanged = false;
   servicesChanged = false;
 
-  rubros: RubroModel[] = [];
+  rubros: IEntryModel[] = [];
 
   constructor(
     public gtpService: GtpService,

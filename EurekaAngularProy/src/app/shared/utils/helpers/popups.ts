@@ -1,4 +1,6 @@
-declare var $: any;
+import Swal from 'sweetalert2';
+
+declare let $: any;
 
 export function drawPopup(el) {
   $(el)
@@ -44,3 +46,9 @@ export function drawPopup(el) {
     .css('background-color', '')
     .addClass('btn-outline-green-alert');
 }
+
+export const swalAlert = Swal.mixin({
+  customClass: {
+    container: 'cs-alert',
+  },
+});

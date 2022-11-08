@@ -1,0 +1,34 @@
+<div class="tw-relative tw-mb-3" [ngClass]="{ 'tw-pb-5': !onlyControl }">
+  <label [for]="labelInputID" class="tw-block tw-mb-2 tw-text-extended-grey-1"
+    ><ng-content></ng-content
+  ></label>
+  <div
+    class="wrapper tw-flex tw-items-center"
+    [ngClass]="{ 'tw-gap-2': useGap }"
+    #wrapper
+  >
+    <ng-content
+      select=".control,input,textarea,p-dropdown,p-checkbox,p-radioButton"
+    ></ng-content>
+    <label
+      [for]="labelInputID"
+      class="label-right tw-block tw-text-sm tw-mt-1 tw-mb-0 tw-text-gray-700"
+      ><ng-content select="[label-inline]"></ng-content
+    ></label>
+  </div>
+  <div
+    *ngIf="!onlyControl"
+    class="tw-absolute tw-w-full tw-text-xxs tw-inline-block tw-align-middle tw-text-error tw-mt-1"
+  >
+    <ng-content select="[validation-messages]"></ng-content>
+    <ng-template [ngIf]="useDefaultContent">
+      <val-errors [controlName]="formControlName" [label]="formControlLabel">
+        <ng-template
+          [valError]="error.key"
+          *ngFor="let error of errorMessages | keyvalue"
+          >{{ error.value }}</ng-template
+        >
+      </val-errors>
+    </ng-template>
+  </div>
+</div>
