@@ -433,23 +433,28 @@ export class AffiliationService {
       movilOperator,
       ruc,
     } = this.registerForm.value;
-    const { acceptTerms, entry, password, name } = this.authForm.value;
+    const {
+      acceptTerms,
+      entry: { code: codeEntry },
+      password,
+      name,
+    } = this.authForm.value;
     const companyData: IDataEnterpriseModel = {
       documentType,
       documentNumber,
       ruc,
       name,
-      entry,
+      entry: codeEntry,
       email,
       movilNumber,
       movilOperator,
       password,
       acceptTerms,
     };
+    console.log('-> companyData', companyData);
     return this.companyService.saveCompany(companyData).pipe(
       tap(({ code, success, id }) => {
         if (success) {
-          console.log('id', id);
           this.companyId = id;
         } else {
           this.processResultCode(code);

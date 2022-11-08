@@ -41,10 +41,13 @@ export class CompanyFormAuthComponent implements OnInit {
   }
 
   onSubmit() {
-    const { passwordConfirm, ...formValue } = this.companyForm.value;
-    console.log('-> formValue', formValue);
+    const {
+      passwordConfirm,
+      entry: { code },
+      ...formValue
+    } = this.companyForm.value;
     if (this.companyForm.valid) {
-      this.sendForm.emit({ ...formValue });
+      this.sendForm.emit({ entry: code, ...formValue });
     }
   }
 }
