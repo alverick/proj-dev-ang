@@ -5,7 +5,9 @@
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-11">
             <br />
-            <div class="texto-azul title-conf-ser">Configura los cobros de tu empresa</div>
+            <div class="texto-azul title-conf-ser">
+              Configura los cobros de tu empresa
+            </div>
             <!-- <div class="texto-azul title-conf-ser">Configura tus servicios</div> -->
             <!-- <div *ngIf="afiliacionService.services.length ==0" class=" texto-azul pt-2 subtitle-servicio"><br> Puedes agregar todos los servicios que deseas que tus clientes paguen a través de Interbank
                         </div> -->
@@ -58,7 +60,8 @@
                                 class="texto-azul"
                                 [class.mano]="!Formulariogtp"
                                 (click)="editService(svc, i)"
-                                ><img src="../../../../../assets/images/editar.svg"
+                                ><img
+                                  src="../../../../../assets/images/editar.svg"
                               /></a>
                             </li>
                           </ul>
@@ -89,7 +92,8 @@
                                 class="texto-azul"
                                 [class.mano]="!Formulario"
                                 (click)="editService(svc, i)"
-                                ><img src="../../../../../assets/images/editar.svg"
+                                ><img
+                                  src="../../../../../assets/images/editar.svg"
                               /></a>
                             </li>
                             <li class="ml-2" *ngIf="!inGTP">
@@ -97,7 +101,8 @@
                                 class="texto-azul borrar"
                                 [class.mano]="!Formulario"
                                 (click)="delService(i, svc)"
-                                ><img src="../../../../../assets/images/eliminar.svg"
+                                ><img
+                                  src="../../../../../assets/images/eliminar.svg"
                               /></a>
                             </li>
                           </ul>
@@ -359,7 +364,6 @@
                             </button> -->
               </div>
             </div>
-
           </div>
         </div>
         <br />
@@ -449,7 +453,10 @@
               [class.btn-disabled]="Formulario"
             >
               <span
-                ><img *ngIf="!Formulario" class="tw-inline" src="../../../../../assets/images/plus.svg" /><img
+                ><img
+                  *ngIf="!Formulario"
+                  class="tw-inline"
+                  src="../../../../../assets/images/plus.svg" /><img
                   *ngIf="Formulario"
                   class="tw-inline"
                   src="../../../../../assets/images/plus-gray.svg"
@@ -471,7 +478,11 @@
                 [class.btn-disabled]="Formulario"
               >
                 <span
-                  ><img *ngIf="!Formulario" class="tw-inline" src="../../../../../assets/images/plus.svg" /><img
+                  ><img
+                    *ngIf="!Formulario"
+                    class="tw-inline"
+                    src="../../../../../assets/images/plus.svg"
+                  /><img
                     *ngIf="Formulario"
                     class="tw-inline"
                     src="../../../../../assets/images/plus-gray.svg"
