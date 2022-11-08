@@ -43,11 +43,18 @@ import { SidebarModule } from 'primeng-lts/sidebar';
 import { StepsModule } from 'primeng-lts/steps';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LabelControlComponent } from './components/label-control/label-control.component';
+import { MessageAlertComponent } from './components/message-alert/message-alert.component';
+import { ModalTermsComponent } from './components/modal-terms/modal-terms.component';
 import { PaymentsFilterComponent } from './components/payments-filter/payments-filter.component';
+import { ServiceCardComponent } from './components/service-card/service-card.component';
+import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
 import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
+import { CompanyService } from './services/company.service';
+import { EnterpriseHeadingService } from './services/enterprise-heading.service';
 
 const FORM_MODULES = [
   FormsModule,
@@ -105,6 +112,8 @@ const UI_MODULES = [
     },
 
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    CompanyService,
+    EnterpriseHeadingService,
   ],
   declarations: [
     OnlynumbersDirective,
@@ -114,6 +123,11 @@ const UI_MODULES = [
     HeaderComponent,
     PaymentsFilterComponent,
     FooterComponent,
+    LabelControlComponent,
+    ValidationDefaultsComponent,
+    MessageAlertComponent,
+    ModalTermsComponent,
+    ServiceCardComponent,
   ],
   exports: [
     OnlynumbersDirective,
@@ -127,6 +141,11 @@ const UI_MODULES = [
     PaymentsFilterComponent,
     TooltipModule,
     ValdemortModule,
+    LabelControlComponent,
+    MessageAlertComponent,
+    ValidationDefaultsComponent,
+    ServiceCardComponent,
   ],
+  entryComponents: [ModalTermsComponent],
 })
 export class SharedModule {}
