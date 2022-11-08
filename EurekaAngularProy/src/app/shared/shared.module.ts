@@ -34,6 +34,7 @@ import { TooltipModule } from 'ngx-bootstrap';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ValdemortModule } from 'ngx-valdemort';
 import { CheckboxModule } from 'primeng-lts/checkbox';
 import { DropdownModule } from 'primeng-lts/dropdown';
 import { InputTextModule } from 'primeng-lts/inputtext';
@@ -99,6 +100,7 @@ const UI_MODULES = [
     ...UI_MODULES,
     ...FORM_MODULES,
     ...PRIMENG_MODULES,
+    ValdemortModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
@@ -130,6 +132,7 @@ const UI_MODULES = [
     HeaderComponent,
     PaymentsFilterComponent,
     TooltipModule,
+    ValdemortModule,
   ],
 })
 export class SharedModule {}
