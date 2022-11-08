@@ -288,9 +288,11 @@
                 <span
                   ><img
                     *ngIf="!(EmpresaFormulario || Formulario)"
+                    class="tw-inline"
                     src="../../../../../assets/images/plus.svg" />
                   <img
                     *ngIf="EmpresaFormulario || Formulario"
+                    class="tw-inline"
                     src="../../../../../assets/images/plus-gray.svg"
                 /></span>
                 Agregar otro servicio
@@ -326,7 +328,7 @@
                   (click)="OcultarFormulario(true)"
                   class="mano font-cerrar"
                 >
-                  <img src="../../../../../assets/images/cerrar.svg" /> <br />
+                  <img class="tw-inline" src="../../../../../assets/images/cerrar.svg" /> <br />
                   Cerrar
                 </div>
               </div>

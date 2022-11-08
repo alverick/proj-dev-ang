@@ -8,7 +8,7 @@
             (click)="goBack()"
             style="display: flex"
           >
-            <img src="../../../../../assets/images/left-blue.svg" />
+            <img class="tw-inline" src="../../../../../assets/images/left-blue.svg" />
             <div class="text-regresar">&nbsp;&nbsp;&nbsp;Regresar</div>
           </a>
         </li>
@@ -64,7 +64,7 @@
                           class="texto-azul"
                           [class.mano]="!Formulariogtp"
                           (click)="editService(svc, i)"
-                          ><img src="../../../../../assets/images/editar.svg"
+                          ><img class="tw-inline" src="../../../../../assets/images/editar.svg"
                         /></a>
                       </li>
                     </ul>
@@ -83,7 +83,7 @@
                     >
                       <li style="padding: 0 0.5em">
                         <a
-                          class="texto-azul"
+                          class="texto-azul tw-inline"
                           [class.mano]="!Formulario"
                           (click)="editService(svc, i)"
                           ><img src="../../../../../assets/images/editar.svg"
@@ -91,7 +91,7 @@
                       </li>
                       <li class="ml-2" *ngIf="!inGTP">
                         <a
-                          class="texto-azul borrar"
+                          class="texto-azul borrar tw-inline"
                           [class.mano]="!Formulario"
                           (click)="delService(i, svc)"
                           ><img src="../../../../../assets/images/eliminar.svg"
@@ -246,8 +246,10 @@
             <span
               ><img
                 *ngIf="!Formulario"
+                class="tw-inline"
                 src="../../../../../assets/images/plus.svg" /><img
                 *ngIf="Formulario"
+                class="tw-inline"
                 src="../../../../../assets/images/plus-gray.svg"
             /></span>
             Agregar otro cobro
@@ -270,9 +272,11 @@
               <span
                 ><img
                   *ngIf="!Formulario"
+                  class="tw-inline"
                   src="../../../../../assets/images/plus.svg"
                 /><img
                   *ngIf="Formulario"
+                  class="tw-inline"
                   src="../../../../../assets/images/plus-gray.svg"
                 />
                 &nbsp; Agregar otro cobro</span
