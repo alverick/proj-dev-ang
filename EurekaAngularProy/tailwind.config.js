@@ -1,5 +1,9 @@
 module.exports = {
-  content: ['./src/**/*.{html,ts}'],
+  content: ['./src/app/**/*.{html,ts}'],
+  purge: {
+    enabled: true,
+    content: ['./src/app/**/*.html', './src/app/**/*.ts'],
+  },
   prefix: 'tw-',
   theme: {
     colors: {
