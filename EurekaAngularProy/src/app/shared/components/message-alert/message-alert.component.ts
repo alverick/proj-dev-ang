@@ -7,7 +7,17 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MessageAlertComponent implements OnInit {
   @Input() mode: string;
+  bgClass = '';
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.setBgClass();
+  }
+  setBgClass() {
+    switch (this.mode) {
+      case 'info':
+        this.bgClass = 'tw-bg-info';
+        break;
+    }
+  }
 }
