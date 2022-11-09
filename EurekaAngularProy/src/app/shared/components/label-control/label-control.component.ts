@@ -42,12 +42,7 @@ export class LabelControlComponent
     LabelControlComponent.labelCounter++;
   }
 
-  ngOnInit() {
-    const control = this.ngControl && this.ngControl.control;
-    if (control) {
-      console.log('ngOnInit', control);
-    }
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     if (this.wrapper) {
@@ -67,14 +62,7 @@ export class LabelControlComponent
   }
 
   ngAfterContentInit() {
-    // const nav = this.elRef.nativeElement.querySelector('[validation-messages]');
-    // this.useDefaultContent = nav === null;
     const labelInline = this.elRef.nativeElement.querySelector('.label-right');
-    console.log(
-      '-> labelInline',
-      labelInline.hasChildNodes(),
-      document.querySelector('[validation-messages]')
-    );
     this.useGap = labelInline.hasChildNodes();
   }
 
