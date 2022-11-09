@@ -12,7 +12,7 @@ export function MustMatch(controlName: string, matchingControlName: string) {
     }
 
     // set error on matchingControl if validation fails
-    if (control.value !== matchingControl.value) {
+    if (control.value.toLowerCase() !== matchingControl.value.toLowerCase()) {
       matchingControl.setErrors({ mustMatch: true });
     } else {
       matchingControl.setErrors(null);
