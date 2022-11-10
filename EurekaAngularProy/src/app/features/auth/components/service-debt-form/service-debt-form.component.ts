@@ -20,6 +20,9 @@ export class ServiceDebtFormComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    const { chargeInterest, interestType } = this.form.value;
+    this.showArrearsFields = chargeInterest === 'S';
+    this.unitAmount = interestType === 'M' ? 'S/' : '%';
     this.listenForms();
   }
 
