@@ -305,7 +305,7 @@ export class AffiliationService {
       {
         paymentType: new FormControl('', [Validators.required]),
         partialPayment: new FormControl('S', [Validators.required]),
-        chargeInterest: new FormControl('no', [Validators.required]),
+        chargeInterest: new FormControl('N', [Validators.required]),
         chargeType: new FormControl('', [Validators.required]),
         interestType: new FormControl('', [Validators.required]),
         amount: new FormControl('', [Validators.required]),

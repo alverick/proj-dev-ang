@@ -28,18 +28,13 @@ export class ServiceStepConfigurationComponent implements OnInit {
   ngOnInit() {
     this.listenForms();
     this.debtForm = this.form.get('debt') as FormGroup;
+    this.setDebtForm(this.form.value.dataType);
   }
 
   listenForms() {
     this.form.get('dataType').valueChanges.subscribe((val) => {
-      console.log('-> val', val);
       setTimeout(() => {
-        this.showDebtFields = val === 'C';
-        if ('C' === val) {
-          this.form.get('debt').enable();
-        } else {
-          this.form.get('debt').disable();
-        }
+        this.setDebtForm(val);
       }, 100);
     });
     this.form
@@ -52,6 +47,19 @@ export class ServiceStepConfigurationComponent implements OnInit {
           this.form.get('debtorCode').setValue('');
         }
       });
+  }
+
+  private setDebtForm(val) {
+    this.showDebtFields = val === 'C';
+    if ('C' === val) {
+      this.debtForm.enable();
+    } else {
+      this.debtForm.disable();
+      this.debtForm.reset({
+        partialPayment: 'S',
+        chargeInterest: 'N',
+      });
+    }
   }
 
   onSubmit() {
