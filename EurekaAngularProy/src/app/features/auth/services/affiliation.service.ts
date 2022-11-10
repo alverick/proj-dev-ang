@@ -389,8 +389,9 @@ export class AffiliationService {
         documentNumber,
       })
       .pipe(
-        tap(({ code, success }) => {
+        tap(({ code, success, id }) => {
           if (success) {
+            this.companyId = id;
             this.authForm.get('ruc').setValue(ruc);
           } else {
             this.processResultCode(code);
@@ -454,10 +455,11 @@ export class AffiliationService {
     console.log('-> companyData', companyData);
     return this.companyService.saveCompany(companyData).pipe(
       tap(({ code, success, id }) => {
-        if (success) {
-          this.companyId = id;
-        } else {
+        if (!success) {
           this.processResultCode(code);
+        } else if (this.companyId !== id) {
+          // TODO: check if this error is possible
+          this.showErrorServer();
         }
       }),
       catchError((err) => {
@@ -515,10 +517,22 @@ export class AffiliationService {
   }
 
   saveAllServices() {
-    return this.companyService.saveServices({
-      clientId: this.companyId,
-      deleted: [],
-      services: this.servicesList,
+    return new Promise<void>((resolve, reject) => {
+      this.saveCompany().subscribe((result) => {
+        if (result.id !== this.companyId) {
+          reject();
+        } else if (result.success) {
+          this.companyService
+            .saveServices({
+              clientId: this.companyId,
+              deleted: [],
+              services: this.servicesList,
+            })
+            .subscribe(() => {
+              resolve();
+            });
+        }
+      });
     });
   }
 

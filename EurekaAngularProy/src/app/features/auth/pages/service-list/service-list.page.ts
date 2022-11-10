@@ -49,7 +49,7 @@ export class ServiceListPage implements OnInit {
   }
 
   finalize() {
-    this.affiliation.saveAllServices().subscribe(() => {
+    this.affiliation.saveAllServices().then(() => {
       this.router.navigate([authFullRoutingNames.REGISTRATION_FINISHED]);
     });
   }
