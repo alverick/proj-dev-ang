@@ -56,7 +56,6 @@ export class LabelControlComponent
           '[validation-messages]'
         );
         this.useDefaultContent = nav === null;
-        console.log('ngAfterViewInit', this, nav);
       });
     }
   }
