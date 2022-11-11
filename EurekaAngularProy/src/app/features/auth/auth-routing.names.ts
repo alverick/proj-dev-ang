@@ -90,7 +90,6 @@ export const authFullRoutingChildNames: IAuthRoutingChildNames =
     authRoutingChildNamesTree,
     authModuleRoutingPath
   );
-console.table(authFullRoutingNames);
 
 export const authFullDynamicRoutingNames: IAuthRoutingNames =
   generateFullRoutes(authDynamicRoutingNames, authModuleRoutingPath);

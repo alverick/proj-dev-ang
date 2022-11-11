@@ -45,7 +45,6 @@ export class CompanyFormRegistrationComponent implements OnInit {
 
   onSubmit() {
     const { emailConfirm, ...formValue } = this.registerForm.value;
-    console.log('-> formValue', formValue);
     if (this.registerForm.valid) {
       this.sendForm.emit({ ...formValue });
     }
