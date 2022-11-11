@@ -7,6 +7,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
+import { centered } from '@storybook/addon-centered/angular';
 import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
@@ -57,6 +58,7 @@ const initAppComponentFactory =
 export default {
   title: 'Auth/Module/Service Debt Form',
   decorators: [
+    centered,
     withKnobs,
     moduleMetadata({
       imports: [BrowserAnimationsModule, SharedModule],
