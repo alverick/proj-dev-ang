@@ -3,6 +3,15 @@ import { Router } from '@angular/router';
 import { IErrorMessages } from '../../../../shared/models/forms';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
+import {
+  chargeTypeOptions,
+  currencyOptions,
+  debtorCodeOptions,
+  errorMessagesService,
+  errorMessagesServiceConfig,
+  interestTypeOptions,
+  paymentTypeOptions,
+} from '../../constants';
 import { AffiliationService } from '../../services/affiliation.service';
 
 @Component({
@@ -13,16 +22,19 @@ import { AffiliationService } from '../../services/affiliation.service';
 export class ServiceListPage implements OnInit {
   showSidebar = false;
   position: number;
-  errorMessages: IErrorMessages;
+  errorMessages = {
+    ...errorMessagesServiceConfig,
+    ...errorMessagesService,
+  };
+  debtorCodeOptions = debtorCodeOptions;
+  paymentTypeOptions = paymentTypeOptions;
+  currencyOptions = currencyOptions;
+  chargeTypeOptions = chargeTypeOptions;
+  interestTypeOptions = interestTypeOptions;
 
   constructor(private router: Router, public affiliation: AffiliationService) {}
 
-  ngOnInit() {
-    this.errorMessages = {
-      ...this.affiliation.errorMessagesServiceConfig,
-      ...this.affiliation.errorMessagesService,
-    };
-  }
+  ngOnInit() {}
 
   actionDelete(position: number) {
     swalAlert

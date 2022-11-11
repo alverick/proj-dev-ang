@@ -5,6 +5,7 @@ import {
   authFullRoutingChildNames,
   authFullRoutingNames,
 } from '../../auth-routing.names';
+import { errorMessagesAuth } from '../../constants';
 import { AffiliationService } from '../../services/affiliation.service';
 
 @Component({
@@ -14,6 +15,7 @@ import { AffiliationService } from '../../services/affiliation.service';
 })
 export class CompanyRegistrationAuthPage implements OnInit {
   entryOptions: IEntryModel[] = [];
+  errors = errorMessagesAuth;
 
   constructor(public affiliation: AffiliationService, private router: Router) {}
 

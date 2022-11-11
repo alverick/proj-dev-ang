@@ -41,11 +41,11 @@
   <cs-service-edit-form
     [form]="affiliation.editServiceForm"
     [errorMessages]="errorMessages"
-    [debtorCodeOptions]="affiliation.debtorCodeOptions"
-    [paymentTypeOptions]="affiliation.paymentTypeOptions"
-    [currencyOptions]="affiliation.currencyOptions"
-    [chargeTypeOptions]="affiliation.chargeTypeOptions"
-    [interestTypeOptions]="affiliation.interestTypeOptions"
+    [debtorCodeOptions]="debtorCodeOptions"
+    [paymentTypeOptions]="paymentTypeOptions"
+    [currencyOptions]="currencyOptions"
+    [chargeTypeOptions]="chargeTypeOptions"
+    [interestTypeOptions]="interestTypeOptions"
     (sendForm)="updateService($event)"
   ></cs-service-edit-form>
 </p-sidebar>

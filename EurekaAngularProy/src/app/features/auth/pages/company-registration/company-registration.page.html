@@ -4,9 +4,9 @@
     <cs-company-form-registration
       class="tw-max-w-2xl tw-pl-20"
       [registerForm]="affiliation.registerForm"
-      [errorMessages]="affiliation.errorMessages"
-      [operators]="affiliation.operators"
-      [documentTypes]="affiliation.documentTypes"
+      [errorMessages]="errors"
+      [operators]="operators"
+      [documentTypes]="documentTypes"
       (sendForm)="onSubmit()"
     ></cs-company-form-registration>
   </div>

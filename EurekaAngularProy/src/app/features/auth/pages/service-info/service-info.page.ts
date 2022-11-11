@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
+import { errorMessagesService } from '../../constants';
 import { AffiliationService } from '../../services/affiliation.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { AffiliationService } from '../../services/affiliation.service';
 })
 export class ServiceInfoPage implements OnInit {
   accounts;
+  errors = errorMessagesService;
   constructor(private router: Router, public affiliation: AffiliationService) {}
 
   ngOnInit() {

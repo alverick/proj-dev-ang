@@ -1,6 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
+import {
+  chargeTypeOptions,
+  currencyOptions,
+  debtorCodeOptions,
+  errorMessagesServiceConfig,
+  interestTypeOptions,
+  paymentTypeOptions,
+} from '../../constants';
 import { AffiliationService } from '../../services/affiliation.service';
 
 @Component({
@@ -9,6 +17,12 @@ import { AffiliationService } from '../../services/affiliation.service';
   styleUrls: ['./service-configuration.page.scss'],
 })
 export class ServiceConfigurationPage {
+  errorMessagesServiceConfig = errorMessagesServiceConfig;
+  debtorCodeOptions = debtorCodeOptions;
+  paymentTypeOptions = paymentTypeOptions;
+  currencyOptions = currencyOptions;
+  chargeTypeOptions = chargeTypeOptions;
+  interestTypeOptions = interestTypeOptions;
   constructor(private router: Router, public affiliation: AffiliationService) {}
 
   onSubmit() {

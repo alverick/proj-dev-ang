@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { authFullRoutingNames } from '../../auth-routing.names';
+import {
+  documentTypes,
+  errorsRegisterForm,
+  mobileOperators,
+} from '../../constants';
 import { AffiliationService } from '../../services/affiliation.service';
 
 @Component({
@@ -11,8 +16,9 @@ import { AffiliationService } from '../../services/affiliation.service';
 })
 export class CompanyRegistrationPage implements OnInit {
   registerForm: FormGroup;
-  submittedRequired = false;
-  submitted = false;
+  errors = errorsRegisterForm;
+  operators = mobileOperators;
+  documentTypes = documentTypes;
 
   constructor(private router: Router, public affiliation: AffiliationService) {}
 
