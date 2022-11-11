@@ -28,6 +28,10 @@ export class CompanyRegistrationAuthPage implements OnInit {
   }
 
   onSubmit() {
-    this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_INFO]);
+    this.affiliation.saveCompany().subscribe(({ success }) => {
+      if (success) {
+        this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_INFO]);
+      }
+    });
   }
 }
