@@ -45,7 +45,7 @@ import { ServiceAddPage } from './pages/service-add/service-add.page';
 import { ServiceConfigurationPage } from './pages/service-configuration/service-configuration.page';
 import { ServiceInfoPage } from './pages/service-info/service-info.page';
 import { ServiceListPage } from './pages/service-list/service-list.page';
-import { AffiliationService } from './services/affiliation.service';
+import { SERVICES } from './services';
 
 @NgModule({
   imports: [
@@ -61,7 +61,7 @@ import { AffiliationService } from './services/affiliation.service';
     ValdemortModule,
   ],
   providers: [
-    AffiliationService,
+    ...SERVICES,
     StorageService,
     AuthGuard,
     CookieService,
