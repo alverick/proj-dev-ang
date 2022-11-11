@@ -1,7 +1,11 @@
 import { FormGroup } from '@angular/forms';
 
 // custom validator to check that two fields match
-export function MustMatch(controlName: string, matchingControlName: string) {
+export function MustMatch(
+  controlName: string,
+  matchingControlName: string,
+  useCase = false
+) {
   return (formGroup: FormGroup) => {
     const control = formGroup.controls[controlName];
     const matchingControl = formGroup.controls[matchingControlName];
@@ -11,8 +15,11 @@ export function MustMatch(controlName: string, matchingControlName: string) {
       return;
     }
 
+    const checkCase = (fieldValue: string) =>
+      useCase ? fieldValue.toLowerCase() : fieldValue;
+
     // set error on matchingControl if validation fails
-    if (control.value.toLowerCase() !== matchingControl.value.toLowerCase()) {
+    if (checkCase(control.value) !== checkCase(matchingControl.value)) {
       matchingControl.setErrors({ mustMatch: true });
     } else {
       matchingControl.setErrors(null);

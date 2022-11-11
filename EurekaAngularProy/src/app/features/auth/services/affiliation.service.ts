@@ -245,7 +245,7 @@ export class AffiliationService {
         movilOperator: new FormControl('', [Validators.required]),
       },
       {
-        validator: MustMatch('email', 'emailConfirm'),
+        validator: MustMatch('email', 'emailConfirm', true),
       }
     );
 
