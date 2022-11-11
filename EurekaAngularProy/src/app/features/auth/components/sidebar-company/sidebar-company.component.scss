@@ -1,5 +1,7 @@
 :host {
-  width: 536px;
+  @include media('>lg') {
+    width: 536px;
+  }
   &::before {
     content: '';
     height: 100%;
