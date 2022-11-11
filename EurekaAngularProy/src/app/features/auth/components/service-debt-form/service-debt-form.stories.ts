@@ -1,46 +1,90 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  APP_INITIALIZER,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { withActions } from '@storybook/addon-actions';
+import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
+import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { SharedModule } from '../../../../shared/shared.module';
+import {
+  chargeTypeOptions,
+  currencyOptions,
+  debtorCodeOptions,
+  errorMessagesServiceConfig,
+  interestTypeOptions,
+  paymentTypeOptions,
+} from '../../constants';
+import { AffiliationFormsService } from '../../services';
 import { ServiceDebtFormComponent } from './service-debt-form.component';
+
+@Component({
+  selector: 'cs-form-demo',
+  template: ` <cs-service-debt-form
+    [form]="form"
+    [errorMessages]="errors"
+    [paymentTypeOptions]="paymentTypeOptions"
+    [currencyOptions]="currencyOptions"
+    [chargeTypeOptions]="chargeTypeOptions"
+    [interestTypeOptions]="interestTypeOptions"
+  ></cs-service-debt-form>`,
+})
+class FormDemoComponent {
+  @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
+  form: FormGroup;
+  errors = errorMessagesServiceConfig;
+  debtorCodeOptions = debtorCodeOptions;
+  paymentTypeOptions = paymentTypeOptions;
+  currencyOptions = currencyOptions;
+  chargeTypeOptions = chargeTypeOptions;
+  interestTypeOptions = interestTypeOptions;
+  constructor(affiliationForms: AffiliationFormsService) {
+    this.form = affiliationForms.serviceConfigForm.controls.debt as FormGroup;
+  }
+  onSubmit($event) {
+    this.sendForm.emit($event);
+  }
+}
+
+const initAppComponentFactory =
+  (affiliationForms: AffiliationFormsService) => async () =>
+    affiliationForms;
 
 export default {
   title: 'Auth/Module/Service Debt Form',
   decorators: [
     withKnobs,
     moduleMetadata({
-      declarations: [ServiceDebtFormComponent],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
+      imports: [BrowserAnimationsModule, SharedModule],
+      providers: [
+        AffiliationFormsService,
+        {
+          provide: APP_INITIALIZER,
+          useFactory: initAppComponentFactory,
+          multi: true,
+          deps: [AffiliationFormsService],
+        },
       ],
     }),
-    withActions('sendForm', 'click .btn'),
   ],
 };
 
 export const normal = () => ({
+  component: ServiceDebtFormComponent,
+  moduleMetadata: {
+    declarations: [FormDemoComponent, ServiceDebtFormComponent],
+    providers: [],
+  },
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
-<cs-service-debt-form [form]="serviceForm"></cs-service-debt-form>`,
+<cs-form-demo (sendForm)="onSubmit($event)"></cs-form-demo>`,
   props: {
-    serviceForm: new FormGroup({
-      nombre: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.pattern(
-          '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
-        ),
-      ]),
-      tipoPago: new FormControl('ps1', [Validators.required]),
-      cobraMora: new FormControl('no', [Validators.required]),
-      orderPayment: new FormControl('', [Validators.required]),
-      customerCode: new FormControl('', [Validators.required]),
-    }),
+    onSubmit: (e) => {
+      console.log(e);
+      action('form data')(e);
+    },
   },
 });
