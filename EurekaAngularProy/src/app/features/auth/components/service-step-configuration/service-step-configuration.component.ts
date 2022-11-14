@@ -21,6 +21,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
   debtForm: FormGroup;
   showDebtFields = false;
   debtorCodeEditable = false;
+  submittedForm = false;
   $destroy = new Subject();
 
   constructor() {}
@@ -65,6 +66,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
   onSubmit() {
     const { emailConfirm, ...formValue } = this.form.value;
     console.log('-> formValue', formValue, this.form);
+    this.submittedForm = true;
     if (this.form.valid) {
       this.sendForm.emit({ ...formValue });
     }

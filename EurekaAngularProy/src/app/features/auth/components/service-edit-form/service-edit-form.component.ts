@@ -18,12 +18,15 @@ export class ServiceEditFormComponent implements OnInit {
   @Input() interestTypeOptions: any[];
   debtForm: FormGroup;
   debtorCodeEditable = false;
+  submittedForm = false;
+  showDebtFields = false;
 
   constructor() {}
 
   ngOnInit() {
     this.debtForm = this.form.get('debt') as FormGroup;
     this.listenForChanges();
+    this.setDebtForm(this.form.value.dataType);
   }
 
   listenForChanges() {
@@ -36,9 +39,19 @@ export class ServiceEditFormComponent implements OnInit {
     });
   }
 
+  private setDebtForm(val) {
+    this.showDebtFields = val === 'C';
+    if ('C' === val) {
+      this.debtForm.enable();
+    } else {
+      this.debtForm.disable();
+    }
+  }
+
   onSubmit() {
     const { emailConfirm, ...formValue } = this.form.value;
     console.log('-> formValue', formValue, this.form);
+    this.submittedForm = true;
     if (this.form.valid) {
       this.sendForm.emit({ ...formValue });
     }

@@ -27,9 +27,7 @@
             ><div class="description tw-flex tw-justify-between">
               <div class="tw-text-base">Sin data</div>
             </div>
-            <div class="sub">
-              No ingresaré ninguna información.
-            </div>
+            <div class="sub">No ingresaré ninguna información.</div>
           </ng-container>
         </cs-label-control>
         <cs-label-control [onlyControl]="true" class="tw-w-full">
@@ -81,16 +79,16 @@
           número de suministro, etc.
         </cs-message-alert>
       </div>
-      <ng-template [ngIf]="showDebtFields">
-        <cs-service-debt-form
-          [form]="debtForm"
-          [errorMessages]="errorMessages"
-          [paymentTypeOptions]="paymentTypeOptions"
-          [currencyOptions]="currencyOptions"
-          [chargeTypeOptions]="chargeTypeOptions"
-          [interestTypeOptions]="interestTypeOptions"
-        ></cs-service-debt-form>
-      </ng-template>
+      <cs-service-debt-form
+        *ngIf="showDebtFields"
+        [form]="debtForm"
+        [errorMessages]="errorMessages"
+        [paymentTypeOptions]="paymentTypeOptions"
+        [currencyOptions]="currencyOptions"
+        [chargeTypeOptions]="chargeTypeOptions"
+        [interestTypeOptions]="interestTypeOptions"
+        [submitted]="submittedForm"
+      ></cs-service-debt-form>
     </div>
   </div>
   <div class="tw-text-right tw-mt-10">

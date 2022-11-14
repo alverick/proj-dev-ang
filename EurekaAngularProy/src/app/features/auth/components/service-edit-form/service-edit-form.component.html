@@ -39,12 +39,14 @@
       </cs-label-control>
     </div>
     <cs-service-debt-form
+      *ngIf="showDebtFields"
       [form]="debtForm"
       [errorMessages]="errorMessages"
       [paymentTypeOptions]="paymentTypeOptions"
       [currencyOptions]="currencyOptions"
       [chargeTypeOptions]="chargeTypeOptions"
       [interestTypeOptions]="interestTypeOptions"
+      [submitted]="submittedForm"
     ></cs-service-debt-form>
     <div class="form-controls">
       <div class="tw-font-medium tw-text-extended-grey-1">
