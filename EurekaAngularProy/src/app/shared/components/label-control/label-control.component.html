@@ -21,7 +21,7 @@
     class="tw-absolute tw-w-full tw-text-xxs tw-inline-block tw-align-middle tw-text-error tw-mt-1"
   >
     <ng-content select="[validation-messages]"></ng-content>
-    <ng-template [ngIf]="useDefaultContent">
+    <ng-container *ngIf="useDefaultContent">
       <val-errors [controlName]="formControlName" [label]="formControlLabel">
         <ng-template
           [valError]="error.key"
@@ -29,6 +29,6 @@
           >{{ error.value }}</ng-template
         >
       </val-errors>
-    </ng-template>
+    </ng-container>
   </div>
 </div>

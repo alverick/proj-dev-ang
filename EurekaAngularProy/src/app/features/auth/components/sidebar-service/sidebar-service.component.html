@@ -3,7 +3,7 @@
     <h2 class="tw-font-medium tw-text-3xl tw-mb-12">
       Configura tu primer servicio y gestiona tus cobranzas 100% digital
     </h2>
-    <ng-template [ngIf]="position === 0">
+    <ng-container *ngIf="position === 0">
       <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20">
         Un servicio es el concepto por el cual te pagarán tus clientes
       </div>
@@ -22,8 +22,8 @@
           </li>
         </ul>
       </div>
-    </ng-template>
-    <ng-template [ngIf]="position === 1">
+    </ng-container>
+    <ng-container *ngIf="position === 1">
       <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20">
         ¿Qué modalidad elegir?
       </div>
@@ -74,6 +74,6 @@
           </li>
         </ul>
       </div>
-    </ng-template>
+    </ng-container>
   </div>
 </div>

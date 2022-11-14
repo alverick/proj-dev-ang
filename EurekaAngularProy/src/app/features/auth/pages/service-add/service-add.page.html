@@ -9,7 +9,7 @@
   </div>
 </div>
 <div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
-  <ng-template [ngIf]="position!==2">
+  <ng-container *ngIf="position!==2">
     <cs-sidebar-service
       class="info tw-relative"
       [position]="position"
@@ -17,8 +17,8 @@
     <div class="form-cmp tw-pl-20 tw-py-10">
       <router-outlet></router-outlet>
     </div>
-  </ng-template>
-  <ng-template [ngIf]="position===2">
+  </ng-container>
+  <ng-container *ngIf="position===2">
     <router-outlet></router-outlet>
-  </ng-template>
+  </ng-container>
 </div>
