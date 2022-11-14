@@ -1,4 +1,4 @@
-<div [formGroup]="form">
+<form [formGroup]="form" novalidate #formElm="ngForm">
   <div class="form-elm">
     <cs-label-control
       class="tw-w-full"
@@ -72,7 +72,7 @@
       </ng-container>
     </cs-label-control>
   </div>
-  <ng-template [ngIf]="showArrearsFields">
+  <ng-container *ngIf="showArrearsFields">
     <div class="form-elm tw-flex tw-gap-10">
       <cs-label-control
         class="tw-w-full"
@@ -120,5 +120,5 @@
         </div>
       </cs-label-control>
     </div>
-  </ng-template>
-</div>
+  </ng-container>
+</form>
