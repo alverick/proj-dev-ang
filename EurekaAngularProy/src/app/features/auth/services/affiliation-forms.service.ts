@@ -109,6 +109,7 @@ export class AffiliationFormsService {
     this.serviceConfigForm = this.formBuilder.group({
       dataType: new FormControl('S', [Validators.required]),
       debtorCode: new FormControl('', [Validators.required]),
+      debtorCodeCustom: new FormControl('', [Validators.required]),
       debt: serviceDebtForm,
     });
 

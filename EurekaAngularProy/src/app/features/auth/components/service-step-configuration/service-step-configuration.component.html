@@ -57,7 +57,7 @@
           </ng-container>
         </cs-label-control>
       </div>
-      <div class="form-elm">
+      <div *ngIf="!debtorCodeEditable" class="form-elm">
         <cs-label-control
           class="tw-w-full"
           formControlName="debtorCode"
@@ -68,8 +68,31 @@
             styleClass="tw-w-full"
             formControlName="debtorCode"
             placeholder="Selecciona"
-            [editable]="debtorCodeEditable"
           ></p-dropdown>
+        </cs-label-control>
+      </div>
+      <div class="form-elm" *ngIf="debtorCodeEditable">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="debtorCodeCustom"
+          [errorMessages]="errorMessages.debtorCode"
+          >¿Con qué código identificarás a tus clientes?
+          <div class="control ui-inputgroup tw-w-full">
+            <input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              placeholder=""
+              formControlName="debtorCodeCustom"
+            />
+            <button
+              pButton
+              type="button"
+              icon="pi pi-times"
+              class="ui-button-secondary"
+              (click)="showDropdown()"
+            ></button>
+          </div>
         </cs-label-control>
       </div>
       <div class="form-elm tw-mb-6">
