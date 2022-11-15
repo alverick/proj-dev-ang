@@ -50,7 +50,7 @@ export const authRoutingNames: IAuthRoutingNames = {
 
 export const authRoutingChildNames: IAuthRoutingChildNames = {
   SERVICES_ADD_INFO: 'informacion',
-  SERVICES_ADD_CONFIGURATION: 'configuration',
+  SERVICES_ADD_CONFIGURATION: 'configuracion',
   SERVICES_ADD_LIST: 'resumen',
 };
 
