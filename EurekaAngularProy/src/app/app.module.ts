@@ -16,7 +16,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EmailDirective } from './features/internal/directives/email.directive';
-import { OnlyNumbersDirective } from './features/internal/directives/only-numbers.directive';
 import { DialogComponent } from './features/internal/pages/home/components/dialog';
 import { PopoverComponent } from './features/internal/pages/home/components/popover/popover.component';
 import { UploadProgressComponent } from './features/internal/pages/home/components/upload-progress';
@@ -41,7 +40,6 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     BlockCopyPasteDirective,
     EmailDirective,
-    OnlyNumbersDirective,
     DialogComponent,
     UploadProgressComponent,
     ValidationComponent,
