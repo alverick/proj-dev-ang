@@ -30,6 +30,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
     this.listenForms();
     this.debtForm = this.form.get('debt') as FormGroup;
     this.setDebtForm(this.form.value.dataType);
+    this.form.get('debtorCodeCustom').setValue('empty__');
   }
 
   listenForms() {
@@ -42,12 +43,18 @@ export class ServiceStepConfigurationComponent implements OnInit {
       .get('debtorCode')
       .valueChanges.pipe(takeUntil(this.$destroy))
       .subscribe((val) => {
-        console.log('-> val', val);
         this.debtorCodeEditable = val === 'Otro';
         if (val === 'Otro') {
-          this.form.get('debtorCode').setValue('');
+          this.form.get('debtorCodeCustom').setValue('');
+        } else {
+          this.form.get('debtorCodeCustom').setValue('empty__');
         }
       });
+  }
+
+  showDropdown() {
+    this.form.get('debtorCode').setValue('');
+    this.debtorCodeEditable = false;
   }
 
   private setDebtForm(val) {
@@ -70,11 +77,17 @@ export class ServiceStepConfigurationComponent implements OnInit {
   }
 
   onSubmit() {
-    const { emailConfirm, ...formValue } = this.form.value;
+    const { debtorCodeCustom, ...formValue } = this.form.value;
     console.log('-> formValue', formValue, this.form);
     this.submittedForm = true;
     if (this.form.valid) {
-      this.sendForm.emit({ ...formValue });
+      this.sendForm.emit({
+        ...formValue,
+        debtorCode:
+          debtorCodeCustom === 'empty__'
+            ? formValue.debtorCode
+            : debtorCodeCustom,
+      });
     }
   }
 }
