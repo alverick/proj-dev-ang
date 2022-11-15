@@ -1,5 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { has } from 'ramda';
 import { IErrorMessages } from '../../../../shared/models/forms';
 
 @Component({
@@ -7,7 +16,7 @@ import { IErrorMessages } from '../../../../shared/models/forms';
   templateUrl: './service-edit-form.component.html',
   styleUrls: ['./service-edit-form.component.scss'],
 })
-export class ServiceEditFormComponent implements OnInit {
+export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Output() sendForm = new EventEmitter<object>();
   @Input() form: FormGroup;
   @Input() errorMessages: IErrorMessages;
@@ -26,7 +35,12 @@ export class ServiceEditFormComponent implements OnInit {
   ngOnInit() {
     this.debtForm = this.form.get('debt') as FormGroup;
     this.listenForChanges();
-    this.setDebtForm(this.form.value.dataType);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (has('form', changes)) {
+      this.setDebtForm(this.form.value.dataType);
+    }
   }
 
   listenForChanges() {
