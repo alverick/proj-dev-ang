@@ -1,4 +1,5 @@
 import {
+  forwardRef,
   AfterViewInit,
   Component,
   Input,
@@ -7,17 +8,29 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormGroup, NgForm } from '@angular/forms';
-import { pathEq } from 'ramda';
+import {
+  ControlValueAccessor,
+  FormGroup,
+  NgForm,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
+import { has, pathEq, propEq } from 'ramda';
 import { IErrorMessages } from '../../../../shared/models/forms';
 
 @Component({
   selector: 'cs-service-debt-form',
   templateUrl: './service-debt-form.component.html',
   styleUrls: ['./service-debt-form.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: ServiceDebtFormComponent,
+      multi: true,
+    },
+  ],
 })
 export class ServiceDebtFormComponent
-  implements OnInit, OnChanges, AfterViewInit
+  implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor
 {
   @Input() form: FormGroup;
   @Input() errorMessages: IErrorMessages;
@@ -30,6 +43,7 @@ export class ServiceDebtFormComponent
   htmlForm: NgForm;
   showArrearsFields = false;
   unitAmount = 'S/';
+  onTouched: any;
 
   constructor() {}
 
@@ -64,6 +78,25 @@ export class ServiceDebtFormComponent
     this.form.get('interestType').valueChanges.subscribe((val) => {
       this.unitAmount = val === 'M' ? 'S/' : '%';
     });
+  }
+
+  registerOnChange(fn: any): void {
+    this.form.valueChanges.subscribe((value) => {
+      fn(value);
+    });
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  writeValue(obj: any): void {
+    this.form.patchValue(obj, { emitEvent: false });
+  }
+
+  setDisabledState(disabled: boolean) {
+    console.log('-> disabled', disabled);
+    disabled ? this.form.disable() : this.form.enable();
   }
 
   ngAfterViewInit(): void {
