@@ -34,8 +34,10 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
+import { ButtonModule } from 'primeng-lts/button';
 import { CheckboxModule } from 'primeng-lts/checkbox';
 import { DropdownModule } from 'primeng-lts/dropdown';
+import { InputMaskModule } from 'primeng-lts/inputmask';
 import { InputTextModule } from 'primeng-lts/inputtext';
 import { KeyFilterModule } from 'primeng-lts/keyfilter';
 import { RadioButtonModule } from 'primeng-lts/radiobutton';
@@ -79,12 +81,14 @@ const FORM_MODULES = [
 ];
 const PRIMENG_MODULES = [
   KeyFilterModule,
+  InputMaskModule,
   InputTextModule,
   DropdownModule,
   CheckboxModule,
   RadioButtonModule,
   StepsModule,
   SidebarModule,
+  ButtonModule,
 ];
 const UI_MODULES = [
   FontAwesomeModule,
