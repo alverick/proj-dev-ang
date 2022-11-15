@@ -559,7 +559,7 @@
                             class="input-text-dash"
                             type="text"
                             matInput
-                            appOnlyNumbersForm
+                            csOnlyNumbersForm
                             [(ngModel)]="nuevaDeuda.amount"
                             maxlength="12"
                             minlength="4"
@@ -647,7 +647,7 @@
                     {{items.amount| number : '1.2-2'}}</span>
                                                     <div *ngIf="items.editInput && items.dueDate !== null">
                                                         <mat-form-field class="inline-input" style="width: 100px">
-                                                            <input class="input-text-dash" type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" (blur)="MontoBlur(items)" (ngModelChange)="items.errores.amount = null" />
+                                                            <input class="input-text-dash" type="text" matInput csOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" (blur)="MontoBlur(items)" (ngModelChange)="items.errores.amount = null" />
                                                             <span matPrefix>{{items.currency}}&nbsp;</span>
                                                             <div class="msg-error" *ngIf="items.errores.amount">{{items.errores.amount}}</div>
                                                         </mat-form-field>
@@ -896,7 +896,7 @@
                                 class="input-text-dash"
                                 type="text"
                                 matInput
-                                appOnlyNumbersForm
+                                csOnlyNumbersForm
                                 [(ngModel)]="items.newAmount"
                                 style="width: 100px"
                                 maxlength="12"
