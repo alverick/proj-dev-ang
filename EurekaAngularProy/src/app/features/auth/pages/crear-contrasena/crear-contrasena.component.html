@@ -33,7 +33,7 @@
                     type="text"
                     autocomplete="new-text"
                     placeholder="RUC de tu empresa"
-                    appOnlynumbers
+                    csOnlynumbers
                     minlength="11"
                     maxlength="11"
                   />
@@ -193,7 +193,7 @@
                   <input
                     formControlName="telefono"
                     (Keydown.space)="$event.preventDefault()"
-                    appOnlynumbers
+                    csOnlynumbers
                     [class.is-invalid]="f.telefono.invalid"
                     matInput
                     type="text"
