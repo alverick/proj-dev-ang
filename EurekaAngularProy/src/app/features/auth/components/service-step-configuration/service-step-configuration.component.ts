@@ -54,6 +54,11 @@ export class ServiceStepConfigurationComponent implements OnInit {
     this.showDebtFields = val === 'C';
     if ('C' === val) {
       this.debtForm.enable();
+      this.debtForm.valueChanges.subscribe(() => {
+        setTimeout(() => {
+          this.form.updateValueAndValidity();
+        }, 100);
+      });
     } else {
       this.debtForm.disable();
       this.debtForm.reset({
@@ -61,6 +66,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
         chargeInterest: 'N',
       });
     }
+    this.form.updateValueAndValidity();
   }
 
   onSubmit() {
