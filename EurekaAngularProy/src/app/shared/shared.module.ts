@@ -53,6 +53,7 @@ import { ServiceCardComponent } from './components/service-card/service-card.com
 import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
 import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
+import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
 import { CompanyService } from './services/company.service';
@@ -120,6 +121,7 @@ const UI_MODULES = [
     EnterpriseHeadingService,
   ],
   declarations: [
+    OnlyNumbersFormDirective,
     OnlynumbersDirective,
     SearchDirective,
     CorreoDirective,
@@ -134,6 +136,7 @@ const UI_MODULES = [
     ServiceCardComponent,
   ],
   exports: [
+    OnlyNumbersFormDirective,
     OnlynumbersDirective,
     SearchDirective,
     CorreoDirective,
