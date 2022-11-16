@@ -226,6 +226,7 @@ export class AffiliationService {
       percentage: interestType === 'P' ? amount * 1 : 0,
       partialPayment,
     });
+    this.affiliationForms.resetServicesForms();
     console.log('-> this.servicesList', this.servicesList);
   }
 

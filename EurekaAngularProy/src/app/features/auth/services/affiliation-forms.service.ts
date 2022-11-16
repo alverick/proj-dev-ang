@@ -129,6 +129,32 @@ export class AffiliationFormsService {
       debt: serviceDebtForm,
     });
   }
+
+  resetServicesForms() {
+    this.serviceForm.reset();
+    this.serviceForm.setValue({
+      name: '',
+      idAccount: '',
+      currency: '',
+      accountNumber: '',
+      useAppWeb: true,
+      useAgent: false,
+    });
+    this.serviceConfigForm.reset();
+    this.serviceConfigForm.setValue({
+      dataType: 'S',
+      debtorCode: '',
+      debtorCodeCustom: '',
+      debt: {
+        paymentType: '',
+        partialPayment: 'S',
+        chargeInterest: 'N',
+        chargeType: '',
+        interestType: '',
+        amount: '',
+      },
+    });
+  }
 }
 
 function UnaLetra(c: FormControl) {
