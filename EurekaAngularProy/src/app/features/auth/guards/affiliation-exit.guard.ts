@@ -6,8 +6,9 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { authFullRoutingNames } from '../auth-routing.names';
+import { swalMesssageExit } from '../constants';
 import { ServiceAddPage } from '../pages/service-add/service-add.page';
-import { AffiliationService } from '../services';
 
 @Injectable()
 export class AffiliationExitGuard implements CanDeactivate<ServiceAddPage> {
@@ -21,7 +22,10 @@ export class AffiliationExitGuard implements CanDeactivate<ServiceAddPage> {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log('no salir');
-    return true;
+    if (nextState.url === authFullRoutingNames.REGISTRATION_FINISHED) {
+      return true;
+    }
+    swalMesssageExit.fire();
+    return false;
   }
 }

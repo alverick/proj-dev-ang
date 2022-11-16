@@ -1,4 +1,5 @@
 import { IErrorMessages } from '../../../shared/models/forms';
+import { swalAlert } from '../../../shared/utils/helpers/popups';
 
 interface ISelectOptions {
   symbol?: string;
@@ -178,3 +179,10 @@ export const errorMessagesServiceConfig: IErrorMessages = {
     required: 'Elige una opción',
   },
 };
+
+export const swalMesssageExit = swalAlert.mixin({
+  title: 'Registro no completado',
+  text: `El registro de tu empresa no ha concluido, si sales ahora los cambios se perderán.`,
+  showConfirmButton: true,
+  confirmButtonText: 'Aceptar',
+});

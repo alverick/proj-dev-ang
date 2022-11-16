@@ -11,6 +11,7 @@ import {
   authFullRoutingChildNames,
   authFullRoutingNames,
 } from '../auth-routing.names';
+import { swalMesssageExit } from '../constants';
 import { ServiceListPage } from '../pages/service-list/service-list.page';
 
 @Injectable()
@@ -31,6 +32,7 @@ export class AffiliationResumeExitGuard
     if (nextState.url === authFullRoutingNames.REGISTRATION_FINISHED) {
       return true;
     }
+    swalMesssageExit.fire();
     return this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST], {
       skipLocationChange: false,
     });
