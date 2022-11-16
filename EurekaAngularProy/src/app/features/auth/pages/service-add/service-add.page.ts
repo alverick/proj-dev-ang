@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 
@@ -27,5 +27,13 @@ export class ServiceAddPage {
         }
       }
     });
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  async unloadHandler(event: Event) {
+    confirm(
+      'El registro de tu empresa no ha concluido, si sales ahora los cambios se perderán.'
+    );
+    event.returnValue = false; // stay on same page
   }
 }
