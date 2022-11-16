@@ -39,7 +39,9 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (has('form', changes)) {
-      this.setDebtForm(this.form.value.dataType);
+      this.debtForm = this.form.get('debt') as FormGroup;
+      const { dataType = '' } = this.form.value;
+      this.setDebtForm(dataType);
     }
   }
 
