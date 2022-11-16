@@ -13,6 +13,13 @@ import {
   authRoutingNames,
 } from './auth-routing.names';
 import { AuthComponent } from './auth.component';
+import {
+  AffiliationCompanyIdGuard,
+  AffiliationExitGuard,
+  AffiliationResumeExitGuard,
+  AffiliationRucGuard,
+  AffiliationServiceValidGuard,
+} from './guards';
 import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
 import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
 import { CompanyRegistrationPage } from './pages/company-registration/company-registration.page';
@@ -34,6 +41,10 @@ const routes: Routes = [
     path: appRoutingNames.EMPTY,
     component: AuthComponent,
     children: [
+      {
+        path: appRoutingNames.EMPTY,
+        component: RecuperarContrasenaComponent,
+      },
       {
         path: authDynamicRoutingNames.CHANGE_PASSWORD,
         component: CambiaContrasenaComponent,
@@ -76,16 +87,6 @@ const routes: Routes = [
         data: { isEdit: true },
       },
       {
-        path: authRoutingNames.COMPANY_REGISTER,
-        component: CompanyRegistrationPage,
-        data: { isEdit: false },
-      },
-      {
-        path: authRoutingNames.COMPANY_FILL_DATA,
-        component: CompanyRegistrationAuthPage,
-        data: { isEdit: false },
-      },
-      {
         path: authRoutingNames.COMPANY_FINISHED,
         component: CompletadoPrimeraParteComponent,
         data: { isEdit: false },
@@ -106,8 +107,19 @@ const routes: Routes = [
         component: ConfigurarGtpComponent,
       },
       {
+        path: authRoutingNames.COMPANY_REGISTER,
+        component: CompanyRegistrationPage,
+      },
+      {
+        path: authRoutingNames.COMPANY_FILL_DATA,
+        component: CompanyRegistrationAuthPage,
+        canActivate: [AffiliationRucGuard],
+      },
+      {
         path: authRoutingNames.SERVICES_ADD,
         component: ServiceAddPage,
+        canDeactivate: [AffiliationExitGuard],
+        canActivateChild: [AffiliationCompanyIdGuard],
         children: [
           {
             path: appRoutingNames.EMPTY,
@@ -121,10 +133,12 @@ const routes: Routes = [
           {
             path: authRoutingChildNames.SERVICES_ADD_CONFIGURATION,
             component: ServiceConfigurationPage,
+            canActivate: [AffiliationServiceValidGuard],
           },
           {
             path: authRoutingChildNames.SERVICES_ADD_LIST,
             component: ServiceListPage,
+            canDeactivate: [AffiliationResumeExitGuard],
           },
         ],
       },
