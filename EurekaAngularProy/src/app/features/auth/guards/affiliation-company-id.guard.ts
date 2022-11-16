@@ -11,9 +11,7 @@ import { Observable } from 'rxjs';
 import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AffiliationCompanyIdGuard implements CanActivateChild {
   constructor(
     private affiliation: AffiliationService,

@@ -12,18 +12,12 @@ import {
   authFullRoutingNames,
 } from '../auth-routing.names';
 import { ServiceListPage } from '../pages/service-list/service-list.page';
-import { AffiliationService } from '../services';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AffiliationResumeExitGuard
   implements CanDeactivate<ServiceListPage>
 {
-  constructor(
-    private affiliation: AffiliationService,
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
   canDeactivate(
     component: ServiceListPage,
     currentRoute: ActivatedRouteSnapshot,

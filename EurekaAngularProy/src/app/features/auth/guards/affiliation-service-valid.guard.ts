@@ -7,7 +7,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { isEmpty } from 'ramda';
-import { isNilOrEmpty, isNotEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNotEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import {
   authFullRoutingChildNames,
@@ -15,9 +15,7 @@ import {
 } from '../auth-routing.names';
 import { AffiliationService } from '../services';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AffiliationServiceValidGuard implements CanActivate {
   constructor(
     private affiliation: AffiliationService,
