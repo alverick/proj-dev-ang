@@ -117,6 +117,7 @@ export const errorsRegisterForm: IErrorMessages = {
 export const errorMessagesAuth: IErrorMessages = {
   name: {
     required: 'El nombre comercial es obligatorio',
+    blankSpaces: 'El nombre comercial es obligatorio',
     pattern: 'Ingrese un nombre valido',
     minlength: 'El nombre debe tener mínimo 3 dígitos',
   },
@@ -142,6 +143,7 @@ export const errorMessagesAuth: IErrorMessages = {
 export const errorMessagesService: IErrorMessages = {
   name: {
     required: 'Ingresa el concepto de cobro',
+    blankSpaces: 'Ingresa el concepto de cobro',
     pattern: 'Ingrese un nombre correcto',
     minlength: 'El nombre no puede tener menos de 3 caracteres',
     maxlength: 'El nombre no puede tener mas de 80 caracteres',
@@ -162,6 +164,10 @@ export const errorMessagesServiceConfig: IErrorMessages = {
   },
   debtorCode: {
     required: 'Ingresa un código',
+  },
+  debtorCodeCustom: {
+    required: 'Ingresa un código',
+    blankSpaces: 'Ingresa un código',
   },
   paymentType: {
     required: 'Elige una opción',

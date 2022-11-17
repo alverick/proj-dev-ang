@@ -60,19 +60,20 @@ export class AffiliationFormsService {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(80),
+          notBlankSpaces,
         ]),
         entry: new FormControl('', [Validators.required]),
         password: new FormControl('', [
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(20),
-          UnaLetra,
+          onlyOneLetter,
         ]),
         passwordConfirm: new FormControl('', [
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(20),
-          UnaLetra,
+          onlyOneLetter,
         ]),
         acceptTerms: new FormControl('', Validators.requiredTrue),
       },
@@ -85,7 +86,8 @@ export class AffiliationFormsService {
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
-        Alfanumerico,
+        onlyAlphaNuber,
+        notBlankSpaces,
         Validators.pattern(
           '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
         ),
@@ -109,7 +111,10 @@ export class AffiliationFormsService {
     this.serviceConfigForm = this.formBuilder.group({
       dataType: new FormControl('S', [Validators.required]),
       debtorCode: new FormControl('', [Validators.required]),
-      debtorCodeCustom: new FormControl('', [Validators.required]),
+      debtorCodeCustom: new FormControl('', [
+        Validators.required,
+        notBlankSpaces,
+      ]),
       debt: serviceDebtForm,
     });
 
@@ -117,7 +122,7 @@ export class AffiliationFormsService {
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
-        Alfanumerico,
+        onlyAlphaNuber,
         Validators.pattern(
           '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
         ),
@@ -157,17 +162,24 @@ export class AffiliationFormsService {
   }
 }
 
-function UnaLetra(c: FormControl) {
+function notBlankSpaces(control: FormControl) {
+  if (control.value.trim() === '') {
+    return { blankSpaces: true };
+  }
+  return null;
+}
+
+function onlyOneLetter(control: FormControl) {
   const regex = /[a-zA-Z]/g;
-  if (c.value && !regex.test(c.value)) {
+  if (control.value && !regex.test(control.value)) {
     return { unaletra: true };
   }
   return null;
 }
 
-function Alfanumerico(c: FormControl) {
+function onlyAlphaNuber(control: FormControl) {
   const regex = /[0-9a-zA-Z]-?/g;
-  if (c.value && !regex.test(c.value)) {
+  if (control.value && !regex.test(control.value)) {
     return { alfa: true };
   }
   return null;
