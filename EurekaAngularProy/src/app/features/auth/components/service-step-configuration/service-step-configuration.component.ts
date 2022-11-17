@@ -12,6 +12,7 @@ import { debtorCodeCustomEmpty } from '../../constants';
 })
 export class ServiceStepConfigurationComponent implements OnInit {
   @Output() sendForm = new EventEmitter<object>();
+  @Output() cancel = new EventEmitter();
   @Input() form: FormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() debtorCodeOptions: any[];
@@ -19,6 +20,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
   @Input() currencyOptions: any[];
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
+  @Input() showCancel = false;
   debtForm: FormGroup;
   showDebtFields = false;
   debtorCodeEditable = false;
@@ -90,5 +92,10 @@ export class ServiceStepConfigurationComponent implements OnInit {
             : debtorCodeCustom,
       });
     }
+  }
+
+  onCancel() {
+    console.log('-> onCancel');
+    this.cancel.emit();
   }
 }

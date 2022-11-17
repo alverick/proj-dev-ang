@@ -9,9 +9,11 @@ import { IErrorMessages } from '../../../../shared/models/forms';
 })
 export class ServiceStepInfoComponent implements OnInit {
   @Output() sendForm = new EventEmitter<object>();
+  @Output() cancel = new EventEmitter();
   @Input() form: FormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() accounts: any[];
+  @Input() showCancel = false;
 
   constructor() {}
 
@@ -29,5 +31,9 @@ export class ServiceStepInfoComponent implements OnInit {
       const { emailConfirm, ...formValue } = this.form.value;
       this.sendForm.emit({ ...formValue });
     }
+  }
+
+  onCancel() {
+    this.cancel.emit();
   }
 }

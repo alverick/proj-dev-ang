@@ -247,3 +247,16 @@ body {
     }
   }
 }
+
+.button-outline-green {
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: solid 1px var(--primary-green-1);
+  color: var(--primary-green-1);
+}
