@@ -187,8 +187,8 @@ export const errorMessagesServiceConfig: IErrorMessages = {
 };
 
 export const swalMesssageExit = swalAlert.mixin({
-  title: 'Registro no completado',
-  text: `El registro de tu empresa no ha concluido, si sales ahora los cambios se perderán.`,
+  title: 'Registro en proceso',
+  text: `El registro de tu empresa no ha concluido, si sales ahora perderás los datos ingresados.`,
   showConfirmButton: true,
   confirmButtonText: 'Aceptar',
 });
