@@ -184,6 +184,9 @@ export class AffiliationFormsService {
 }
 
 function notBlankSpaces(control: FormControl) {
+  if (isNil(control.value)) {
+    return null;
+  }
   if (control.value.trim() === '') {
     return { blankSpaces: true };
   }
@@ -192,6 +195,9 @@ function notBlankSpaces(control: FormControl) {
 
 function onlyOneLetter(control: FormControl) {
   const regex = /[a-zA-Z]/g;
+  if (isNil(control.value)) {
+    return null;
+  }
   if (control.value && !regex.test(control.value)) {
     return { unaletra: true };
   }
@@ -200,6 +206,9 @@ function onlyOneLetter(control: FormControl) {
 
 function onlyAlphaNuber(control: FormControl) {
   const regex = /[0-9a-zA-Z]-?/g;
+  if (isNil(control.value)) {
+    return null;
+  }
   if (control.value && !regex.test(control.value)) {
     return { alfa: true };
   }
