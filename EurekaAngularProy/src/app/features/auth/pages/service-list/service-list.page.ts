@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IErrorMessages } from '../../../../shared/models/forms';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
-import { authFullRoutingNames } from '../../auth-routing.names';
+import {
+  authFullRoutingChildNames,
+  authFullRoutingNames,
+} from '../../auth-routing.names';
 import {
   chargeTypeOptions,
   currencyOptions,
@@ -12,7 +14,8 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
-import { AffiliationService } from '../../services/affiliation.service';
+import { AffiliationFormsService } from '../../services';
+import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-service-list',
@@ -32,7 +35,11 @@ export class ServiceListPage implements OnInit {
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
 
-  constructor(private router: Router, public affiliation: AffiliationService) {}
+  constructor(
+    private router: Router,
+    private affiliationForms: AffiliationFormsService,
+    public affiliation: AffiliationService
+  ) {}
 
   ngOnInit() {}
 
@@ -58,6 +65,13 @@ export class ServiceListPage implements OnInit {
     this.affiliation.setEditForm(position);
     this.position = position;
     this.showSidebar = true;
+  }
+
+  createService() {
+    this.affiliationForms.resetServicesForms();
+    this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_INFO], {
+      state: { navigateValid: true },
+    });
   }
 
   finalize() {

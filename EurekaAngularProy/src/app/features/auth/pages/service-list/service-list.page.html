@@ -1,11 +1,18 @@
 <div class="tw-py-8 tw-w-full tw-px-10 tw-w-full tw-max-w-8xl">
   <div class="sm:tw-flex tw-text-center tw-justify-between">
     <div class="tw-text-lg tw-font-medium">Resumen de tus servicios</div>
-    <div class="actions">
+    <div class="actions tw-flex tw-gap-2">
       <button
+        (click)="createService()"
         class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
       >
         Agregar otro servicio
+      </button>
+      <button
+        (click)="finalize()"
+        class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+      >
+        FINALIZAR
       </button>
     </div>
   </div>
@@ -20,7 +27,15 @@
       (edit)="actionEdit(position)"
     ></cs-service-card>
   </div>
-  <div class="tw-text-center sm:tw-text-right tw-mt-10">
+  <div
+    class="tw-text-center sm:tw-text-right tw-justify-end tw-mt-10 tw-flex tw-gap-2"
+  >
+    <button
+      (click)="createService()"
+      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+    >
+      Agregar otro servicio
+    </button>
     <button
       (click)="finalize()"
       class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
