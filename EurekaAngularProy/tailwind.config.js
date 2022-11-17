@@ -1,7 +1,7 @@
 module.exports = {
   content: ['./src/app/**/*.{html,ts}'],
   purge: {
-    enabled: true,
+    enabled: process?.argv?.indexOf('build') !== -1,
     content: ['./src/app/**/*.html', './src/app/**/*.ts'],
   },
   prefix: 'tw-',
