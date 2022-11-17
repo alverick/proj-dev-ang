@@ -6,6 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
+import { pathEq } from 'ramda';
 import { Observable } from 'rxjs';
 import {
   authFullRoutingChildNames,
@@ -29,6 +30,10 @@ export class AffiliationResumeExitGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    const currentNavigation = this.router.getCurrentNavigation();
+    if (pathEq(['extras', 'state', 'navigateValid'], true, currentNavigation)) {
+      return true;
+    }
     if (nextState.url === authFullRoutingNames.REGISTRATION_FINISHED) {
       return true;
     }
