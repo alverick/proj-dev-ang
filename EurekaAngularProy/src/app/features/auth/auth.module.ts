@@ -23,6 +23,7 @@ import { ServiceStepConfigurationComponent } from './components/service-step-con
 import { ServiceStepInfoComponent } from './components/service-step-info/service-step-info.component';
 import { SidebarCompanyComponent } from './components/sidebar-company/sidebar-company.component';
 import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
+import { DIRECTIVES } from './directives';
 import { GUARDS } from './guards';
 import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
 import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
@@ -88,6 +89,7 @@ import { SERVICES } from './services';
     ServiceConfigurationPage,
     ServiceListPage,
     RegistrationFinishedPage,
+    ...DIRECTIVES,
   ],
   exports: [
     ServiceDebtFormComponent,
