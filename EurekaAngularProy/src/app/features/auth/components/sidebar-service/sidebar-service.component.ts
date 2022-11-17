@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SidebarServiceComponent implements OnInit {
   @Input() position: number;
-  constructor() {}
+  @Input() existServices = false;
 
   ngOnInit() {}
 }
