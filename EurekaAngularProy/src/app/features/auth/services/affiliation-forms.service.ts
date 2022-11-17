@@ -108,6 +108,27 @@ export class AffiliationFormsService {
       amount: new FormControl('', [Validators.required]),
     });
 
+    serviceDebtForm.get('interestType').valueChanges.subscribe((val) => {
+      serviceDebtForm.get('amount').setValue('');
+      if (val === 'P') {
+        serviceDebtForm
+          .get('amount')
+          .setValidators([
+            Validators.required,
+            Validators.min(0.01),
+            Validators.max(100),
+          ]);
+      } else {
+        serviceDebtForm
+          .get('amount')
+          .setValidators([
+            Validators.required,
+            Validators.min(0.5),
+            Validators.max(1000),
+          ]);
+      }
+    });
+
     this.serviceConfigForm = this.formBuilder.group({
       dataType: new FormControl('S', [Validators.required]),
       debtorCode: new FormControl('', [Validators.required]),
