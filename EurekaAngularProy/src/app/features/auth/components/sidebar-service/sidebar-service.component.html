@@ -1,7 +1,9 @@
 <div class="tw-relative tw-text-extended-ibk-black tw-py-12">
   <div class="tw-w-80 tw-mx-auto">
     <h2 class="tw-font-medium tw-text-3xl tw-mb-12">
-      Configura tu primer servicio y gestiona tus cobranzas 100% digital
+      Configura
+      {{ this.existServices ? 'tus servicios' : 'tu primer servicio' }} y
+      gestiona tus cobranzas 100% digital
     </h2>
     <ng-container *ngIf="position === 0">
       <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20">
