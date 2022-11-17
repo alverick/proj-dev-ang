@@ -165,6 +165,10 @@ body {
 }
 
 .cs-alert {
+  .swal2-popup {
+    width: 410px;
+  }
+
   .swal2-close {
     background-image: url('/assets/images/cerrar.svg');
     background-repeat: no-repeat;

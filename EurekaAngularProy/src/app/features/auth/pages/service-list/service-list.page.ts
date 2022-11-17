@@ -46,12 +46,11 @@ export class ServiceListPage implements OnInit {
   actionDelete(position: number) {
     swalAlert
       .fire({
-        text: 'Se eliminará el servicio de los canales de interbank',
-        title: 'Eliminación total el servicio',
+        text: '¿Estás seguro que deseas eliminar este servicio?',
         showCancelButton: true,
         showConfirmButton: true,
-        confirmButtonText: 'CONFIRMAR',
-        cancelButtonText: 'CANCELAR',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
         allowOutsideClick: false,
       })
       .then(({ value }) => {
