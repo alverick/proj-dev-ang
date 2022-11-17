@@ -20,6 +20,7 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
+import { InputMoneyDirective } from '../../directives';
 import { AffiliationFormsService } from '../../services';
 import { ServiceDebtFormComponent } from './service-debt-form.component';
 
@@ -78,7 +79,11 @@ export default {
 export const normal = () => ({
   component: ServiceDebtFormComponent,
   moduleMetadata: {
-    declarations: [FormDemoComponent, ServiceDebtFormComponent],
+    declarations: [
+      FormDemoComponent,
+      ServiceDebtFormComponent,
+      InputMoneyDirective,
+    ],
     providers: [],
   },
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
