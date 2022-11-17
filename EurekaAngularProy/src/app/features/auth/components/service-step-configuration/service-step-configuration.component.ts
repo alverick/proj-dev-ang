@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/operators';
 import { IErrorMessages } from '../../../../shared/models/forms';
+import { debtorCodeCustomEmpty } from '../../constants';
 
 @Component({
   selector: 'cs-service-step-configuration',
@@ -30,7 +31,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
     this.listenForms();
     this.debtForm = this.form.get('debt') as FormGroup;
     this.setDebtForm(this.form.value.dataType);
-    this.form.get('debtorCodeCustom').setValue('empty__');
+    this.form.get('debtorCodeCustom').setValue(debtorCodeCustomEmpty);
   }
 
   listenForms() {
@@ -47,7 +48,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
         if (val === 'Otro') {
           this.form.get('debtorCodeCustom').setValue('');
         } else {
-          this.form.get('debtorCodeCustom').setValue('empty__');
+          this.form.get('debtorCodeCustom').setValue(debtorCodeCustomEmpty);
         }
       });
   }
@@ -84,7 +85,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
       this.sendForm.emit({
         ...formValue,
         debtorCode:
-          debtorCodeCustom === 'empty__'
+          debtorCodeCustom === debtorCodeCustomEmpty
             ? formValue.debtorCode
             : debtorCodeCustom,
       });

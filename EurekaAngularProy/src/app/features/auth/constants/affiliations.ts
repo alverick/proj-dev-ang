@@ -192,3 +192,5 @@ export const swalMesssageExit = swalAlert.mixin({
   showConfirmButton: true,
   confirmButtonText: 'Aceptar',
 });
+
+export const debtorCodeCustomEmpty = 'empty__';
