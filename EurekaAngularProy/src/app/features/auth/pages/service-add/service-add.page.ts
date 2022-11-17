@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
+import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-service-add',
@@ -10,7 +11,7 @@ import { authFullRoutingChildNames } from '../../auth-routing.names';
 export class ServiceAddPage {
   position = 0;
   steps = [{ title: 'Step 1' }, { title: 'Step 2' }, { title: 'Step 3' }];
-  constructor(private router: Router) {
+  constructor(private router: Router, public affiliation: AffiliationService) {
     router.events.subscribe((val: any) => {
       if (val instanceof NavigationEnd) {
         switch (val.url) {
@@ -30,7 +31,7 @@ export class ServiceAddPage {
   }
 
   @HostListener('window:beforeunload', ['$event'])
-  async unloadHandler(event: Event) {
+  unloadHandler(event: Event) {
     confirm(
       'El registro de tu empresa no ha concluido, si sales ahora los cambios se perderán.'
     );

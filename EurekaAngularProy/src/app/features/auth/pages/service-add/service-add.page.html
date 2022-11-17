@@ -9,16 +9,11 @@
   </div>
 </div>
 <div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
-  <ng-container *ngIf="position!==2">
-    <cs-sidebar-service
-      class="info tw-relative"
-      [position]="position"
-    ></cs-sidebar-service>
-    <div class="form-cmp tw-pl-20 tw-py-10">
-      <router-outlet></router-outlet>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="position===2">
-    <router-outlet></router-outlet>
-  </ng-container>
+  <cs-sidebar-service
+    *ngIf="position!==2"
+    class="info tw-relative"
+    [position]="position"
+    [existServices]="affiliation.servicesList.length > 0"
+  ></cs-sidebar-service>
+  <router-outlet></router-outlet>
 </div>
