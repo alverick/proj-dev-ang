@@ -23,7 +23,7 @@
         </cs-label-control>
       </div>
     </div>
-    <div class="form-controls">
+    <div *ngIf="!debtorCodeEditable" class="form-controls">
       <cs-label-control
         class="tw-w-full"
         formControlName="debtorCode"
@@ -34,8 +34,32 @@
           styleClass="tw-w-full"
           formControlName="debtorCode"
           placeholder="Selecciona"
-          [editable]="debtorCodeEditable"
         ></p-dropdown>
+      </cs-label-control>
+    </div>
+    <div class="form-controls" *ngIf="debtorCodeEditable">
+      <cs-label-control
+        class="tw-w-full"
+        formControlName="debtorCodeCustom"
+        [errorMessages]="errorMessages.debtorCodeCustom"
+        >¿Con qué código identificarás a tus clientes?
+        <div class="control ui-inputgroup tw-w-full">
+          <input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            csInputWithoutSpaces
+            placeholder=""
+            formControlName="debtorCodeCustom"
+          />
+          <button
+            pButton
+            type="button"
+            icon="pi pi-times"
+            class="ui-button-secondary"
+            (click)="showDropdown()"
+          ></button>
+        </div>
       </cs-label-control>
     </div>
     <cs-service-debt-form
