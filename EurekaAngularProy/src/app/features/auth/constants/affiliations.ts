@@ -82,6 +82,22 @@ export const chargeTypeOptions: ISelectOptions[] = [
     label: 'Fijo',
   },
 ];
+
+export const dataTypeOptions: ISelectOptions[] = [
+  {
+    value: 'S',
+    label: 'Sin data',
+  },
+  {
+    value: 'P',
+    label: 'Data parcial',
+  },
+  {
+    value: 'C',
+    label: 'Data completa',
+  },
+];
+
 export const errorsRegisterForm: IErrorMessages = {
   documentType: {
     required: 'Selecciona un tipo de documento',
