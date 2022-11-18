@@ -153,6 +153,10 @@ export class AffiliationFormsService {
       useAppWeb: [true],
       useAgent: [false],
       debtorCode: new FormControl('', [Validators.required]),
+      debtorCodeCustom: new FormControl('', [
+        Validators.required,
+        notBlankSpaces,
+      ]),
       debt: serviceDebtForm,
     });
   }
