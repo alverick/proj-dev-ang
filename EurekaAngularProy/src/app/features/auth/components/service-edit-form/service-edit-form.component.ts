@@ -9,7 +9,10 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { has } from 'ramda';
+import { isNotNil } from 'ramda-adjunct';
+import { throttleTime } from 'rxjs/operators';
 import { IErrorMessages } from '../../../../shared/models/forms';
+import { debtorCodeCustomEmpty, debtorCodeOptions } from '../../constants';
 
 @Component({
   selector: 'cs-service-edit-form',
@@ -25,12 +28,11 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Input() currencyOptions: any[];
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
+  @Input() formData: any;
   debtForm: FormGroup;
   debtorCodeEditable = false;
   submittedForm = false;
   showDebtFields = false;
-
-  constructor() {}
 
   ngOnInit() {
     this.debtForm = this.form.get('debt') as FormGroup;
@@ -38,28 +40,62 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (has('form', changes)) {
-      this.debtForm = this.form.get('debt') as FormGroup;
-      const { dataType = '' } = this.form.value;
-      this.setDebtForm(dataType);
+    if (has('formData', changes) && isNotNil(this.formData)) {
+      const { dataType, ...debt } = this.formData.debt;
+      this.setDebtForm(dataType, debt.chargeInterest);
     }
   }
 
+  showDropdown() {
+    this.form.get('debtorCode').setValue('');
+    this.debtorCodeEditable = false;
+  }
+
+  setFormData() {
+    const { debtorCode } = this.formData;
+    const debtorCodeVal = debtorCodeOptions.some(
+      ({ value }) => value === debtorCode
+    );
+    this.debtorCodeEditable = !debtorCodeVal;
+    const debtorCodeObj = debtorCodeVal
+      ? { debtorCode, debtorCodeCustom: debtorCodeCustomEmpty }
+      : { debtorCode: 'Otro', debtorCodeCustom: debtorCode };
+
+    const { dataType, chargeType, ...debt } = this.formData.debt;
+
+    setTimeout(() => {
+      this.form.setValue({
+        ...this.formData,
+        ...debtorCodeObj,
+        debt: { ...debt, chargeType: String(chargeType) },
+      });
+    }, 400);
+  }
+
   listenForChanges() {
+    this.debtForm
+      .get('chargeType')
+      .statusChanges.pipe(throttleTime(1000))
+      .subscribe(() => {
+        this.setFormData();
+      });
     this.form.get('debtorCode').valueChanges.subscribe((val) => {
-      console.log('-> val', val);
       this.debtorCodeEditable = val === 'Otro';
       if (val === 'Otro') {
-        this.form.get('debtorCode').setValue('');
+        this.form.get('debtorCodeCustom').setValue('');
+      } else {
+        this.form.get('debtorCodeCustom').setValue(debtorCodeCustomEmpty);
       }
     });
   }
 
-  private setDebtForm(val) {
-    this.showDebtFields = val === 'C';
-    if ('C' === val) {
+  private setDebtForm(dataType, chargeInterest) {
+    this.showDebtFields = dataType === 'C';
+    if ('C' === dataType) {
       this.debtForm.enable();
+      this.debtForm.get('chargeInterest').setValue(chargeInterest);
     } else {
+      this.setFormData();
       this.debtForm.disable();
     }
   }
