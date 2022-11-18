@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { dataTypeOptions } from '../../../features/auth/constants';
 import { IServiceRemoteModel } from '../../models';
 
 @Component({
@@ -13,12 +14,17 @@ export class ServiceCardComponent implements OnInit {
   @Output() edit = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
   paymentChannels = '';
-
-  constructor() {}
+  dataType = '';
 
   ngOnInit() {
-    console.log('-> serviceData', this.serviceData);
     this.setPaymentChannels();
+    this.setDataType();
+  }
+
+  setDataType() {
+    this.dataType =
+      dataTypeOptions.find(({ value }) => value === this.serviceData.dataType)
+        .label || '';
   }
 
   setPaymentChannels() {
