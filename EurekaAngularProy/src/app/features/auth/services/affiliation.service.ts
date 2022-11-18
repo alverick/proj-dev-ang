@@ -240,7 +240,7 @@ export class AffiliationService {
     });
   }
 
-  updateService(position: number, data) {
+  updateEditService(position: number, data) {
     const {
       name,
       debtorCode,

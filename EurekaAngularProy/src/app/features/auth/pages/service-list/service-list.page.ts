@@ -68,7 +68,7 @@ export class ServiceListPage implements OnInit {
   }
 
   updateService(data) {
-    this.affiliation.updateService(this.position, data);
+    this.affiliation.updateEditService(this.position, data);
     this.showSidebar = false;
   }
 
