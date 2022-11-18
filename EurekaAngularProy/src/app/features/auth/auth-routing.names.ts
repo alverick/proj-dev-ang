@@ -1,4 +1,5 @@
 import { appRoutingNames } from 'src/app/app-routing.names';
+import { IRouteItem, IRouteNames } from '../../shared/models/router';
 import {
   generateFullRoutes,
   generateFullRoutesTree,
@@ -6,28 +7,31 @@ import {
 
 const authModuleRoutingPath = `/${appRoutingNames.AUTH}/`;
 
-interface IAuthRoutingNames {
-  CHANGE_PASSWORD?: string;
-  COMPANY_CONFIGURATION?: string;
-  COMPANY_FILL_DATA?: string;
-  COMPANY_FINISHED?: string;
-  REGISTRATION_FINISHED?: string;
-  COMPANY_REGISTER?: string;
-  CONFIGURATION?: string;
-  GENERATE_PASSWORD?: string;
-  LOGIN?: string;
-  PROCESSING?: string;
-  RECOVER_PASSWORD?: string;
-  SERVICES_CONFIGURE?: string;
-  SERVICES_EDIT?: string;
-  SERVICES_EDIT_GTP?: string;
-  SERVICES_ADD?: string;
+interface IAuthRoutingNames extends IRouteNames {
+  CHANGE_PASSWORD: string;
+  COMPANY_CONFIGURATION: string;
+  COMPANY_FILL_DATA: string;
+  COMPANY_FINISHED: string;
+  REGISTRATION_FINISHED: string;
+  COMPANY_REGISTER: string;
+  CONFIGURATION: string;
+  GENERATE_PASSWORD: string;
+  LOGIN: string;
+  PROCESSING: string;
+  RECOVER_PASSWORD: string;
+  SERVICES_CONFIGURE: string;
+  SERVICES_EDIT: string;
+  SERVICES_EDIT_GTP: string;
+  SERVICES_ADD: string;
+  REGISTER_UPDATING: string;
 }
 
-interface IAuthRoutingChildNames {
-  SERVICES_ADD_INFO?: string;
-  SERVICES_ADD_CONFIGURATION?: string;
-  SERVICES_ADD_LIST?: string;
+interface IAuthRoutingChildNames extends IRouteNames {
+  SERVICES_ADD_INFO: string;
+  SERVICES_ADD_CONFIGURATION: string;
+  SERVICES_ADD_LIST: string;
+  UPDATE_COMPANY: string;
+  UPDATE_SERVICES: string;
 }
 
 export const authRoutingNames: IAuthRoutingNames = {
@@ -46,34 +50,43 @@ export const authRoutingNames: IAuthRoutingNames = {
   SERVICES_EDIT: 'editar-servicios',
   SERVICES_EDIT_GTP: 'gtp-editar-servicios',
   SERVICES_ADD: 'agregar-servicio',
+  REGISTER_UPDATING: 'actualizacion',
 };
 
 export const authRoutingChildNames: IAuthRoutingChildNames = {
   SERVICES_ADD_INFO: 'informacion',
   SERVICES_ADD_CONFIGURATION: 'configuracion',
   SERVICES_ADD_LIST: 'resumen',
+  UPDATE_COMPANY: 'empresa',
+  UPDATE_SERVICES: 'servicios',
 };
 
-interface IAuthItem {
-  link: string;
-  key?: string;
-  children?: IAuthItem[];
-}
-
-export const authRoutingChildNamesTree: IAuthItem = {
-  link: authRoutingNames.SERVICES_ADD,
+export const authRoutingChildNamesTree: IRouteItem = {
+  link: appRoutingNames.AUTH,
   children: [
-    { link: authRoutingChildNames.SERVICES_ADD_INFO },
     {
-      link: authRoutingChildNames.SERVICES_ADD_CONFIGURATION,
+      link: authRoutingNames.SERVICES_ADD,
+      children: [
+        { link: authRoutingChildNames.SERVICES_ADD_INFO },
+        {
+          link: authRoutingChildNames.SERVICES_ADD_CONFIGURATION,
+        },
+        {
+          link: authRoutingChildNames.SERVICES_ADD_LIST,
+        },
+      ],
     },
     {
-      link: authRoutingChildNames.SERVICES_ADD_LIST,
+      link: authRoutingNames.REGISTER_UPDATING,
+      children: [
+        { link: authRoutingChildNames.UPDATE_COMPANY },
+        { link: authRoutingChildNames.UPDATE_SERVICES },
+      ],
     },
   ],
 };
 
-export const authDynamicRoutingNames: IAuthRoutingNames = {
+export const authDynamicRoutingNames: Partial<IAuthRoutingNames> = {
   CHANGE_PASSWORD: `${authRoutingNames.CHANGE_PASSWORD}/:llave`,
   COMPANY_CONFIGURATION: `${authRoutingNames.COMPANY_CONFIGURATION}/:llave`,
   GENERATE_PASSWORD: `${authRoutingNames.GENERATE_PASSWORD}/:llave`,
@@ -85,11 +98,7 @@ export const authFullRoutingNames: IAuthRoutingNames = generateFullRoutes(
 );
 
 export const authFullRoutingChildNames: IAuthRoutingChildNames =
-  generateFullRoutesTree(
-    authRoutingChildNames,
-    authRoutingChildNamesTree,
-    authModuleRoutingPath
-  );
+  generateFullRoutesTree(authRoutingChildNames, authRoutingChildNamesTree);
 
 export const authFullDynamicRoutingNames: IAuthRoutingNames =
   generateFullRoutes(authDynamicRoutingNames, authModuleRoutingPath);
