@@ -337,4 +337,8 @@ export class AffiliationService {
   deleteService(position: number) {
     this.servicesList.splice(position, 1);
   }
+
+  removeEditService() {
+    this.editServiceForm.reset();
+  }
 }
