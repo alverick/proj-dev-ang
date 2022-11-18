@@ -18,11 +18,11 @@ import { AffiliationFormsService } from '../../services';
 import { AffiliationService } from '../../services';
 
 @Component({
-  selector: 'cs-service-list',
-  templateUrl: './service-list.page.html',
-  styleUrls: ['./service-list.page.scss'],
+  selector: 'cs-service-resume',
+  templateUrl: './service-resume.page.html',
+  styleUrls: ['./service-resume.page.scss'],
 })
-export class ServiceListPage implements OnInit {
+export class ServiceResumePage implements OnInit {
   showSidebar = false;
   position: number;
   errorMessages = {

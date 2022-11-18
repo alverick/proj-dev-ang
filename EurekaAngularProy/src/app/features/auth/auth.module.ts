@@ -39,7 +39,7 @@ import { RegistrationFinishedPage } from './pages/registration-finished/registra
 import { ServiceAddPage } from './pages/service-add/service-add.page';
 import { ServiceConfigurationPage } from './pages/service-configuration/service-configuration.page';
 import { ServiceInfoPage } from './pages/service-info/service-info.page';
-import { ServiceListPage } from './pages/service-list/service-list.page';
+import { ServiceResumePage } from './pages/service-resume/service-resume.page';
 import { SERVICES } from './services';
 
 @NgModule({
@@ -87,7 +87,7 @@ import { SERVICES } from './services';
     ServiceAddPage,
     SidebarServiceComponent,
     ServiceConfigurationPage,
-    ServiceListPage,
+    ServiceResumePage,
     RegistrationFinishedPage,
     ...DIRECTIVES,
   ],

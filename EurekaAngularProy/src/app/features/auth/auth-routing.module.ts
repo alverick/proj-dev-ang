@@ -37,7 +37,7 @@ import { RegistrationFinishedPage } from './pages/registration-finished/registra
 import { ServiceAddPage } from './pages/service-add/service-add.page';
 import { ServiceConfigurationPage } from './pages/service-configuration/service-configuration.page';
 import { ServiceInfoPage } from './pages/service-info/service-info.page';
-import { ServiceListPage } from './pages/service-list/service-list.page';
+import { ServiceResumePage } from './pages/service-resume/service-resume.page';
 
 const routes: Routes = [
   {
@@ -131,7 +131,7 @@ const routes: Routes = [
           },
           {
             path: authRoutingChildNames.SERVICES_ADD_LIST,
-            component: ServiceListPage,
+            component: ServiceResumePage,
             canDeactivate: [AffiliationResumeExitGuard],
           },
         ],

@@ -13,15 +13,15 @@ import {
   authFullRoutingNames,
 } from '../auth-routing.names';
 import { swalMesssageExit } from '../constants';
-import { ServiceListPage } from '../pages/service-list/service-list.page';
+import { ServiceResumePage } from '../pages/service-resume/service-resume.page';
 
 @Injectable()
 export class AffiliationResumeExitGuard
-  implements CanDeactivate<ServiceListPage>
+  implements CanDeactivate<ServiceResumePage>
 {
   constructor(private router: Router) {}
   canDeactivate(
-    component: ServiceListPage,
+    component: ServiceResumePage,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot
