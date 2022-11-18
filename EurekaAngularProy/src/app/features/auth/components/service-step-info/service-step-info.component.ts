@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { IErrorMessages } from '../../../../shared/models/forms';
 
 @Component({
@@ -18,16 +19,17 @@ export class ServiceStepInfoComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    if (this.form.valid) {
-      const { idAccount } = this.form.value;
-      const accountNumber = `${idAccount.number.substr(0, 13)} (${
-        idAccount.currency === '001' ? 'Soles' : 'Dólares'
+    const {
+      idAccount: { currency, id, number },
+    } = this.form.value;
+    if (this.form.valid && isNotNilOrEmpty(number)) {
+      const accountNumber = `${number.substr(0, 13)} (${
+        currency === '001' ? 'Soles' : 'Dólares'
       })`;
       this.form.get('accountNumber').setValue(accountNumber);
-      this.form.get('currency').setValue(idAccount.currency);
-      this.form.get('idAccount').setValue(idAccount.id);
-      const { emailConfirm, ...formValue } = this.form.value;
-      this.sendForm.emit({ ...formValue });
+      this.form.get('currency').setValue(currency);
+      this.form.get('idAccount').setValue(id);
+      this.sendForm.emit(this.form.value);
     }
   }
 }
