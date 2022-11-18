@@ -21,6 +21,7 @@ import { ServiceDebtFormComponent } from './components/service-debt-form/service
 import { ServiceEditFormComponent } from './components/service-edit-form/service-edit-form.component';
 import { ServiceStepConfigurationComponent } from './components/service-step-configuration/service-step-configuration.component';
 import { ServiceStepInfoComponent } from './components/service-step-info/service-step-info.component';
+import { ServicesListComponent } from './components/services-list/services-list.component';
 import { SidebarCompanyComponent } from './components/sidebar-company/sidebar-company.component';
 import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
 import { DIRECTIVES } from './directives';
@@ -90,6 +91,7 @@ import { SERVICES } from './services';
     ServiceResumePage,
     RegistrationFinishedPage,
     ...DIRECTIVES,
+    ServicesListComponent,
   ],
   exports: [
     ServiceDebtFormComponent,
