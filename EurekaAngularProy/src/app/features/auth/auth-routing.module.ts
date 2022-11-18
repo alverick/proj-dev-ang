@@ -34,10 +34,13 @@ import { LoginPage } from './pages/login/login.page';
 import { ProcesandoComponent } from './pages/procesando/procesando.component';
 import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recuperar-contrasena.component';
 import { RegistrationFinishedPage } from './pages/registration-finished/registration-finished.page';
+import { RegistrationUpdatePage } from './pages/registration-update/registration-update.page';
 import { ServiceAddPage } from './pages/service-add/service-add.page';
 import { ServiceConfigurationPage } from './pages/service-configuration/service-configuration.page';
 import { ServiceInfoPage } from './pages/service-info/service-info.page';
 import { ServiceResumePage } from './pages/service-resume/service-resume.page';
+import { UpdateCompanyPage } from './pages/update-company/update-company.page';
+import { UpdateServicesPage } from './pages/update-services/update-services.page';
 
 const routes: Routes = [
   {
@@ -139,6 +142,25 @@ const routes: Routes = [
       {
         path: authRoutingNames.REGISTRATION_FINISHED,
         component: RegistrationFinishedPage,
+      },
+      {
+        path: authRoutingNames.REGISTER_UPDATING,
+        component: RegistrationUpdatePage,
+        children: [
+          {
+            path: appRoutingNames.EMPTY,
+            redirectTo: authFullRoutingChildNames.UPDATE_COMPANY,
+            pathMatch: 'full',
+          },
+          {
+            path: authRoutingChildNames.UPDATE_COMPANY,
+            component: UpdateCompanyPage,
+          },
+          {
+            path: authRoutingChildNames.UPDATE_SERVICES,
+            component: UpdateServicesPage,
+          },
+        ],
       },
     ],
   },
