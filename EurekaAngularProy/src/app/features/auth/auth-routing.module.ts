@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { appRoutingNames } from 'src/app/app-routing.collection';
+import {
+  appRoutingNames,
+  authFullRoutingNames,
+} from 'src/app/app-routing.collection';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { ClientGuard } from '../../shared/guards/client.guard';
 import { GtpInputGuard } from '../../shared/guards/gtp-input.guard';
@@ -43,17 +46,8 @@ const routes: Routes = [
     children: [
       {
         path: appRoutingNames.EMPTY,
-        component: RecuperarContrasenaComponent,
-      },
-      {
-        path: authDynamicRoutingNames.CHANGE_PASSWORD,
-        component: CambiaContrasenaComponent,
-        canActivate: [LogoutGuard],
-      },
-      {
-        path: authRoutingNames.RECOVER_PASSWORD,
-        component: RecuperarContrasenaComponent,
-        canActivate: [LogoutGuard],
+        redirectTo: authFullRoutingNames.LOGIN,
+        pathMatch: 'full',
       },
       {
         path: authRoutingNames.SERVICES_EDIT_GTP,
@@ -147,6 +141,16 @@ const routes: Routes = [
         component: RegistrationFinishedPage,
       },
     ],
+  },
+  {
+    path: authRoutingNames.RECOVER_PASSWORD,
+    component: RecuperarContrasenaComponent,
+    canActivate: [LogoutGuard],
+  },
+  {
+    path: authDynamicRoutingNames.CHANGE_PASSWORD,
+    component: CambiaContrasenaComponent,
+    canActivate: [LogoutGuard],
   },
   {
     path: authRoutingNames.LOGIN,
