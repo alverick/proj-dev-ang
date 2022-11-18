@@ -61,6 +61,7 @@ export class AffiliationService {
       useAgent,
       chargeInterest,
       chargeType,
+      dataType,
       interestType,
       amount,
       percentage,
@@ -68,13 +69,14 @@ export class AffiliationService {
     } = this.servicesList[position];
 
     const amountField = interestType === 'M' ? amount : percentage;
-    this.editServiceForm.setValue({
+    return {
       name,
       debtorCode,
       useAppWeb,
       useAgent,
       currency,
       debt: {
+        dataType,
         paymentType,
         chargeInterest,
         chargeType,
@@ -82,7 +84,7 @@ export class AffiliationService {
         amount: amountField,
         partialPayment,
       },
-    });
+    };
   }
 
   public validateCompany(): Observable<ICompanyResult> {

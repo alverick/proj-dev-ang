@@ -31,6 +31,7 @@ export class ServiceListPage implements OnInit {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
+  formData;
 
   constructor(private router: Router, public affiliation: AffiliationService) {}
 
@@ -55,7 +56,7 @@ export class ServiceListPage implements OnInit {
   }
 
   actionEdit(position: number) {
-    this.affiliation.setEditForm(position);
+    this.formData = this.affiliation.setEditForm(position);
     this.position = position;
     this.showSidebar = true;
   }
