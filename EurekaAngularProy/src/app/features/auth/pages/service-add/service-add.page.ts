@@ -35,6 +35,6 @@ export class ServiceAddPage {
     confirm(
       'El registro de tu empresa no ha concluido, si sales ahora los cambios se perderán.'
     );
-    event.returnValue = false; // stay on same page
+    event.returnValue = false;
   }
 }
