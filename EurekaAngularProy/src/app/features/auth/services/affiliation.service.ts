@@ -251,6 +251,7 @@ export class AffiliationService {
     const {
       name,
       debtorCode,
+      debtorCodeCustom,
       useAgent,
       debt: {
         paymentType = 'C',
@@ -269,12 +270,17 @@ export class AffiliationService {
       },
     } = this.editServiceForm.value;
 
+    const parsedDebtorCode =
+      debtorCodeCustom === debtorCodeCustomEmpty
+        ? debtorCode
+        : debtorCodeCustom;
+
     this.servicesList[position] = {
       ...this.servicesList[position],
       name,
       newName: name,
-      debtorCode,
-      newNameCode: debtorCode,
+      debtorCode: parsedDebtorCode,
+      newNameCode: parsedDebtorCode,
       paymentType,
       useAgent,
       chargeInterest,
