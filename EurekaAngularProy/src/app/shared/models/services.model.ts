@@ -20,8 +20,8 @@ export interface IServiceModel {
   cobraMora: string;
   periodoMora: string;
   tipoMora: string;
-  monto?: number;
-  porcentaje?: number;
+  monto?: number | string;
+  porcentaje?: number | string;
   inReview?: boolean;
   pagoPartes?: string;
   NewNameCod?: boolean;
@@ -38,9 +38,9 @@ export interface IServiceModel {
 
 export interface IServiceRemoteModel {
   accountNumber?: string;
-  amount?: string | null;
+  amount?: string | number | null;
   chargeInterest?: string;
-  chargeType?: string | null;
+  chargeType?: string | number | null;
   currency?: string;
   currencySymbol?: string;
   dataType: string;
@@ -58,7 +58,7 @@ export interface IServiceRemoteModel {
   newNameGTPStatus?: number;
   partialPayment?: string;
   paymentType: string;
-  percentage?: string | null;
+  percentage?: string | number | null;
   res?: string;
   status?: string;
   useAgencyChannel?: boolean;
