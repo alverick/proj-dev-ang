@@ -38,9 +38,9 @@ export interface IServiceModel {
 
 export interface IServiceRemoteModel {
   accountNumber?: string;
-  amount?: number | null;
+  amount?: string | null;
   chargeInterest?: string;
-  chargeType?: number | null;
+  chargeType?: string | null;
   currency?: string;
   currencySymbol?: string;
   dataType: string;
@@ -58,7 +58,7 @@ export interface IServiceRemoteModel {
   newNameGTPStatus?: number;
   partialPayment?: string;
   paymentType: string;
-  percentage?: number | null;
+  percentage?: string | null;
   res?: string;
   status?: string;
   useAgencyChannel?: boolean;

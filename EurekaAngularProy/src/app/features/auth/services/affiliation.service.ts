@@ -196,16 +196,16 @@ export class AffiliationService {
         paymentType = 'C',
         partialPayment = 'N',
         chargeInterest = 'N',
-        chargeType = 0,
+        chargeType = '',
         interestType,
         amount,
       } = {
         paymentType: 'C',
         partialPayment: 'N',
         chargeInterest: 'N',
-        chargeType: '0',
+        chargeType: '',
         interestType: null,
-        amount: '0',
+        amount: '1.00',
       },
     } = this.serviceConfigForm.value;
 
@@ -215,7 +215,7 @@ export class AffiliationService {
         : debtorCodeCustom;
 
     this.servicesList.push({
-      id: 0,
+      id: null,
       name,
       newName: name,
       debtorCode: parsedDebtorCode,
@@ -229,10 +229,10 @@ export class AffiliationService {
       useAgent,
       useStore: false,
       chargeInterest,
-      chargeType: chargeType * 1,
+      chargeType,
       interestType: isNil(interestType) ? 'M' : interestType,
-      amount: interestType === 'M' ? amount * 1 : 0,
-      percentage: interestType === 'P' ? amount * 1 : 0,
+      amount: interestType === 'M' ? amount : '1.00',
+      percentage: interestType === 'P' ? amount : '1.00',
       partialPayment,
     });
     this.affiliationForms.resetServicesForms();
