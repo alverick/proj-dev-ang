@@ -8,7 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { has } from 'ramda';
+import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
 import { IErrorMessages } from '../../../../shared/models/forms';
@@ -52,6 +52,9 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   }
 
   setFormData() {
+    if (isNil(this.formData)) {
+      return;
+    }
     const { debtorCode } = this.formData;
     const debtorCodeVal = debtorCodeOptions.some(
       ({ value }) => value === debtorCode
