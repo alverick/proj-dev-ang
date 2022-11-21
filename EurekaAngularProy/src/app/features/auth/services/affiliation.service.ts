@@ -15,6 +15,7 @@ import {
 import { EnterpriseHeadingService } from '../../../shared/services/enterprise-heading.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
+import { debtorCodeCustomEmpty } from '../constants';
 import { AffiliationFormsService } from './affiliation-forms.service';
 
 @Injectable()
@@ -190,6 +191,7 @@ export class AffiliationService {
     const {
       dataType,
       debtorCode,
+      debtorCodeCustom,
       debt: {
         paymentType = 'C',
         partialPayment = 'N',
@@ -207,12 +209,17 @@ export class AffiliationService {
       },
     } = this.serviceConfigForm.value;
 
+    const parsedDebtorCode =
+      debtorCodeCustom === debtorCodeCustomEmpty
+        ? debtorCode
+        : debtorCodeCustom;
+
     this.servicesList.push({
       id: 0,
       name,
       newName: name,
-      debtorCode,
-      newNameCode: debtorCode,
+      debtorCode: parsedDebtorCode,
+      newNameCode: parsedDebtorCode,
       dataType,
       paymentType,
       idAccount,
