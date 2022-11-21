@@ -58,7 +58,9 @@ export class ServiceListPage implements OnInit {
   actionEdit(position: number) {
     this.formData = this.affiliation.setEditForm(position);
     this.position = position;
-    this.showSidebar = true;
+    setTimeout(() => {
+      this.showSidebar = true;
+    }, 200);
   }
 
   finalize() {
