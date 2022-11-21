@@ -34,6 +34,7 @@ export class ServiceResumePage implements OnInit {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
+  formData;
 
   constructor(
     private router: Router,
@@ -61,9 +62,11 @@ export class ServiceResumePage implements OnInit {
   }
 
   actionEdit(position: number) {
-    this.affiliation.setEditForm(position);
+    this.formData = this.affiliation.setEditForm(position);
     this.position = position;
-    this.showSidebar = true;
+    setTimeout(() => {
+      this.showSidebar = true;
+    }, 200);
   }
 
   createService() {
@@ -80,7 +83,11 @@ export class ServiceResumePage implements OnInit {
   }
 
   updateService(data) {
-    this.affiliation.updateService(this.position, data);
+    this.affiliation.updateEditService(this.position, data);
     this.showSidebar = false;
+  }
+
+  closePanel() {
+    this.affiliation.removeEditService();
   }
 }

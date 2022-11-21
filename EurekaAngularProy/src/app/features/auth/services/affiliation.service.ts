@@ -15,6 +15,7 @@ import {
 import { EnterpriseHeadingService } from '../../../shared/services/enterprise-heading.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
+import { debtorCodeCustomEmpty } from '../constants';
 import { AffiliationFormsService } from './affiliation-forms.service';
 
 @Injectable()
@@ -61,6 +62,7 @@ export class AffiliationService {
       useAgent,
       chargeInterest,
       chargeType,
+      dataType,
       interestType,
       amount,
       percentage,
@@ -68,13 +70,14 @@ export class AffiliationService {
     } = this.servicesList[position];
 
     const amountField = interestType === 'M' ? amount : percentage;
-    this.editServiceForm.setValue({
+    return {
       name,
       debtorCode,
       useAppWeb,
       useAgent,
       currency,
       debt: {
+        dataType,
         paymentType,
         chargeInterest,
         chargeType,
@@ -82,7 +85,7 @@ export class AffiliationService {
         amount: amountField,
         partialPayment,
       },
-    });
+    };
   }
 
   public validateCompany(): Observable<ICompanyResult> {
@@ -188,6 +191,7 @@ export class AffiliationService {
     const {
       dataType,
       debtorCode,
+      debtorCodeCustom,
       debt: {
         paymentType = 'C',
         partialPayment = 'N',
@@ -205,12 +209,17 @@ export class AffiliationService {
       },
     } = this.serviceConfigForm.value;
 
+    const parsedDebtorCode =
+      debtorCodeCustom === debtorCodeCustomEmpty
+        ? debtorCode
+        : debtorCodeCustom;
+
     this.servicesList.push({
       id: 0,
       name,
       newName: name,
-      debtorCode,
-      newNameCode: debtorCode,
+      debtorCode: parsedDebtorCode,
+      newNameCode: parsedDebtorCode,
       dataType,
       paymentType,
       idAccount,
@@ -238,10 +247,11 @@ export class AffiliationService {
     });
   }
 
-  updateService(position: number, data) {
+  updateEditService(position: number, data) {
     const {
       name,
       debtorCode,
+      debtorCodeCustom,
       useAgent,
       debt: {
         paymentType = 'C',
@@ -260,12 +270,17 @@ export class AffiliationService {
       },
     } = this.editServiceForm.value;
 
+    const parsedDebtorCode =
+      debtorCodeCustom === debtorCodeCustomEmpty
+        ? debtorCode
+        : debtorCodeCustom;
+
     this.servicesList[position] = {
       ...this.servicesList[position],
       name,
       newName: name,
-      debtorCode,
-      newNameCode: debtorCode,
+      debtorCode: parsedDebtorCode,
+      newNameCode: parsedDebtorCode,
       paymentType,
       useAgent,
       chargeInterest,
@@ -334,5 +349,9 @@ export class AffiliationService {
 
   deleteService(position: number) {
     this.servicesList.splice(position, 1);
+  }
+
+  removeEditService() {
+    this.editServiceForm.reset();
   }
 }

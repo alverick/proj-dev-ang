@@ -50,6 +50,7 @@
   [closeOnEscape]="false"
   [blockScroll]="true"
   [baseZIndex]="10000"
+  (onHide)="closePanel()"
   position="right"
   styleClass="ui-sidebar-md edit-form tw-h-screen tw-overflow-auto"
 >
@@ -61,6 +62,7 @@
     [currencyOptions]="currencyOptions"
     [chargeTypeOptions]="chargeTypeOptions"
     [interestTypeOptions]="interestTypeOptions"
+    [formData]="formData"
     (sendForm)="updateService($event)"
   ></cs-service-edit-form>
 </p-sidebar>

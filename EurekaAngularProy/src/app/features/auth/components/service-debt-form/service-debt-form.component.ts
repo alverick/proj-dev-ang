@@ -95,7 +95,6 @@ export class ServiceDebtFormComponent
   }
 
   setDisabledState(disabled: boolean) {
-    console.log('-> disabled', disabled);
     disabled ? this.form.disable() : this.form.enable();
   }
 
