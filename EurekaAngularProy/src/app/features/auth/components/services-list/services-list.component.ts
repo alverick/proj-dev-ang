@@ -1,15 +1,35 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'cs-services-list',
   templateUrl: './services-list.component.html',
   styleUrls: ['./services-list.component.scss'],
 })
-export class ServicesListComponent implements OnInit {
-  @Input() additionalButtons = false;
+export class ServicesListComponent implements OnInit, AfterViewInit {
   @Output() add = new EventEmitter();
   @Output() finish = new EventEmitter();
-  constructor() {}
+  additionalButtons = false;
+  constructor(private element: ElementRef, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit() {}
+  ngAfterViewInit(): void {
+    this.resize();
+  }
+
+  ngOnInit(): void {}
+
+  @HostListener('window:resize')
+  resize() {
+    this.additionalButtons =
+      this.element.nativeElement.offsetHeight > window.innerHeight + 50;
+    this.cdr.detectChanges();
+  }
 }
