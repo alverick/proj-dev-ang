@@ -1,28 +1,32 @@
 import { FormGroup } from '@angular/forms';
+import { isNil } from 'ramda';
 
-// custom validator to check that two fields match
 export function MustMatch(
   controlName: string,
   matchingControlName: string,
   useCase = false
 ) {
   return (formGroup: FormGroup) => {
-    const control = formGroup.controls[controlName];
-    const matchingControl = formGroup.controls[matchingControlName];
+    const { value: valueOriginal } = formGroup.controls[controlName];
+    const { errors, value: valueMatch } =
+      formGroup.controls[matchingControlName];
 
-    if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-      // return if another validator has already found an error on the matchingControl
+    if (isNil(valueOriginal) || isNil(valueMatch)) {
       return;
     }
 
-    const checkCase = (fieldValue: string) =>
-      useCase ? fieldValue.toLowerCase() : fieldValue;
+    if (errors && !errors.mustMatch) {
+      return;
+    }
 
-    // set error on matchingControl if validation fails
-    if (checkCase(control.value) !== checkCase(matchingControl.value)) {
-      matchingControl.setErrors({ mustMatch: true });
+    const checkCase = (fieldValue: string) => {
+      return useCase ? fieldValue.toLowerCase() : fieldValue;
+    };
+
+    if (checkCase(valueOriginal) !== checkCase(valueMatch)) {
+      formGroup.controls[matchingControlName].setErrors({ mustMatch: true });
     } else {
-      matchingControl.setErrors(null);
+      formGroup.controls[matchingControlName].setErrors(null);
     }
   };
 }
