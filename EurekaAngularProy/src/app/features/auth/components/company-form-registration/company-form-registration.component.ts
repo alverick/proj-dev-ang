@@ -23,7 +23,6 @@ export class CompanyFormRegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm.get('documentType').valueChanges.subscribe((value) => {
-      console.log('-> value', value);
       this.registerForm.get('documentNumber').setValue('');
       this.setDocumentNumberProps();
     });
