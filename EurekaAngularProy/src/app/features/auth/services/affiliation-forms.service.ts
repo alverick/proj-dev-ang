@@ -10,7 +10,6 @@ import { MustMatch } from '../../../shared/validators/must-match.validator';
 
 @Injectable()
 export class AffiliationFormsService {
-  testData = 'demo';
   registerForm: FormGroup;
   authForm: FormGroup;
   serviceForm: FormGroup;
@@ -52,7 +51,7 @@ export class AffiliationFormsService {
 
     this.authForm = this.formBuilder.group(
       {
-        ruc: new FormControl({ value: '10123456789', disabled: true }, [
+        ruc: new FormControl({ value: '', disabled: true }, [
           Validators.required,
           Validators.pattern('[1-2]0[0-9]+?'),
           Validators.minLength(11),
@@ -159,6 +158,11 @@ export class AffiliationFormsService {
       ]),
       debt: serviceDebtForm,
     });
+  }
+
+  resetCompanyForms() {
+    this.registerForm.reset();
+    this.authForm.reset();
   }
 
   resetServicesForms() {

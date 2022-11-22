@@ -20,6 +20,7 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 @Injectable()
 export class AffiliationService {
   companyId;
+  email;
   servicesList: IServiceRemoteModel[] = [];
 
   entryOptions: IEntryModel[] = [];
@@ -261,11 +262,22 @@ export class AffiliationService {
   }
 
   saveAllServices() {
-    return this.companyService.saveServices({
-      clientId: this.companyId,
-      deleted: [],
-      services: this.servicesList,
-    });
+    return this.companyService
+      .saveServices({
+        clientId: this.companyId,
+        deleted: [],
+        services: this.servicesList,
+      })
+      .pipe(
+        tap(() => {
+          this.resetRegistration();
+        })
+      );
+  }
+
+  resetRegistration() {
+    this.email = this.registerForm.value.email;
+    this.affiliationForms.resetCompanyForms();
   }
 
   updateEditService(position: number, data) {
