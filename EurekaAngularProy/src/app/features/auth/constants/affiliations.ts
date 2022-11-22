@@ -166,7 +166,7 @@ export const errorMessagesService: IErrorMessages = {
     alfa: 'El nombre debe tener por lo menos una letra o un numero',
     alfabetico: 'El nombre debe tener por lo menos una letra',
   },
-  idAccount: {
+  account: {
     required: 'Elige una opción',
   },
 };

@@ -40,6 +40,11 @@ export class MockService implements ApiMockService {
             number: '*********8180 ( CTA CTE PERSONA JURIDICA - Soles)',
             currency: '001',
           },
+          {
+            id: '8181',
+            number: '*********8181 ( CTA CTE PERSONA - Soles)',
+            currency: '001',
+          },
         ],
       },
       {

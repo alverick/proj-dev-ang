@@ -92,6 +92,7 @@ export class AffiliationFormsService {
           '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
         ),
       ]),
+      account: new FormControl('', [Validators.required]),
       idAccount: new FormControl('', [Validators.required]),
       currency: new FormControl(''),
       accountNumber: new FormControl(''),
@@ -169,6 +170,7 @@ export class AffiliationFormsService {
     this.serviceForm.reset();
     this.serviceForm.setValue({
       name: '',
+      account: '',
       idAccount: '',
       currency: '',
       accountNumber: '',
