@@ -277,6 +277,7 @@ export class AffiliationService {
 
   resetRegistration() {
     this.email = this.registerForm.value.email;
+    this.servicesList = [];
     this.affiliationForms.resetCompanyForms();
   }
 
