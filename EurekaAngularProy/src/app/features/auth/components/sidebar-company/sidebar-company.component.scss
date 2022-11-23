@@ -1,5 +1,9 @@
 :host {
-  @include media('>lg') {
+  width: 300px;
+  @include media('>=md') {
+    width: 436px;
+  }
+  @include media('>=lg') {
     width: 536px;
   }
   &::before {
@@ -9,7 +13,7 @@
     top: 0;
     left: -100vw;
     right: 0;
-    background-color: #05be50;
+    background-color: var(--primary-green-1);
     z-index: -1;
   }
 }

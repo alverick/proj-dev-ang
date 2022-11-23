@@ -1,8 +1,9 @@
-<div class="tw-max-w-8xl tw-m-auto sm:tw-flex tw-relative">
+<div class="tw-max-w-8xl tw-m-auto md:tw-flex tw-relative">
   <cs-sidebar-company class="info tw-relative"></cs-sidebar-company>
-  <div class="form-cmp tw-px-10 sm:tw-pr-0 sm:tw-pl-20 tw-py-10">
+  <div
+    class="form-cmp tw-px-10 xl:tw-pr-0 xl:tw-pl-20 md:tw-px-10 tw-py-10 md:tw-w-48 lg:tw-w-auto md:tw-flex-shrink-0"
+  >
     <cs-company-form-registration
-      class="tw-max-w-2xl tw-pl-20"
       [registerForm]="affiliation.registerForm"
       [errorMessages]="errors"
       [operators]="operators"
