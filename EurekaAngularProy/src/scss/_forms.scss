@@ -136,8 +136,10 @@ body {
 
   .ui-sidebar {
     &.edit-form {
-      padding: 0;
-      border-style: none;
+      @include media('>=md') {
+        padding: 0;
+        border-style: none;
+      }
 
       .ui-sidebar-close {
         position: absolute;
