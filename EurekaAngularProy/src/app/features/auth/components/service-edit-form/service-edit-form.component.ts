@@ -32,6 +32,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   debtForm: FormGroup;
   debtorCodeEditable = false;
   submittedForm = false;
+  formLoaded = false;
   showDebtFields = false;
 
   ngOnInit() {
@@ -42,6 +43,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (has('formData', changes) && isNotNil(this.formData)) {
       const { dataType, ...debt } = this.formData.debt;
+      this.formLoaded = false;
       this.setDebtForm(dataType, debt.chargeInterest);
     }
   }
@@ -67,6 +69,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
     const { dataType, chargeType, ...debt } = this.formData.debt;
 
     setTimeout(() => {
+      this.formLoaded = true;
       this.form.setValue({
         ...this.formData,
         ...debtorCodeObj,
@@ -80,7 +83,9 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       .get('chargeType')
       .statusChanges.pipe(throttleTime(1000))
       .subscribe(() => {
-        this.setFormData();
+        if (!this.formLoaded) {
+          this.setFormData();
+        }
       });
     this.form.get('debtorCode').valueChanges.subscribe((val) => {
       this.debtorCodeEditable = val === 'Otro';
