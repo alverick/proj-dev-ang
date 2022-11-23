@@ -136,7 +136,7 @@ body {
 
   .ui-sidebar {
     &.edit-form {
-      @include media('>=md') {
+      @include media('>=lg') {
         padding: 0;
         border-style: none;
       }
