@@ -73,7 +73,7 @@
     </cs-label-control>
   </div>
   <ng-container *ngIf="showArrearsFields">
-    <div class="form-elm tw-flex tw-gap-10">
+    <div class="form-elm">
       <cs-label-control
         class="tw-w-full"
         formControlName="chargeType"
@@ -89,7 +89,7 @@
       </cs-label-control>
       <div class="tw-w-full"></div>
     </div>
-    <div class="form-elm tw-flex tw-gap-10">
+    <div class="form-elm lg:tw-flex lg:tw-gap-4">
       <cs-label-control
         class="tw-w-full"
         formControlName="interestType"
@@ -109,7 +109,7 @@
         formControlLabel="El monto"
         [errorMessages]="errorMessages.amount"
         >Monto
-        <div class="control ui-inputgroup">
+        <div class="control tw-w-full ui-inputgroup">
           <span class="ui-inputgroup-addon">{{ unitAmount }}</span>
           <input
             type="text"
