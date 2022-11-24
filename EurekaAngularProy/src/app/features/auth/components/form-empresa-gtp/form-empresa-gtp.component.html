@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup" novalidate (submit)="onSubmitEmpresa()" class="form">
     <div class="form-group ">
         <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" formControlName="cu" (blur)="onBlurCu($event)" placeholder="Código Único" [class.is-invalid]="f.cu.invalid" appOnlynumbers maxlength="10" readonly>
+            <input class="input-text" matInput type="text" formControlName="cu" (blur)="onBlurCu($event)" placeholder="Código Único" [class.is-invalid]="f.cu.invalid" csOnlynumbers maxlength="10" readonly>
             <mat-error class="messsage-error">
                 <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('required') && submittedRequired">El CU es obligatorio</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('pattern')"> Ingrese un CU valido </mat-error>
@@ -10,7 +10,7 @@
     </div>
     <div class="form-group ">
         <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" formControlName="ruc" placeholder="RUC" [class.is-invalid]="f.ruc.invalid" appOnlynumbers minlength="11" maxlength="11">
+            <input class="input-text" matInput type="text" formControlName="ruc" placeholder="RUC" [class.is-invalid]="f.ruc.invalid" csOnlynumbers minlength="11" maxlength="11">
             <mat-error class="messsage-error">
                 <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required') && submittedRequired">El RUC es obligatorio</mat-error>
                 <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>

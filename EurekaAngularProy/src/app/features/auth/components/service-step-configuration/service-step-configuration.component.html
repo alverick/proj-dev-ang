@@ -1,0 +1,127 @@
+<form
+  [formGroup]="form"
+  novalidate
+  (submit)="onSubmit()"
+  autocomplete="off"
+  class="tw-max-w-2xl"
+>
+  <div
+    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-20 tw-py-14"
+  >
+    <h2 class="tw-font-medium tw-text-2xl tw-mb-7">
+      Configuración de tu servicio
+    </h2>
+    <div class="form-controls tw-max-w-xl">
+      <div class="form-elm tw-mb-5">
+        <div class="tw-font-medium">
+          Selecciona la modalidad del servicio : <br />
+          ¿Qué datos ingresarás para identificar a tus clientes?
+        </div>
+        <cs-label-control [onlyControl]="true" class="tw-w-full">
+          <p-radioButton
+            name="groupname"
+            value="S"
+            formControlName="dataType"
+          ></p-radioButton>
+          <ng-container label-inline
+            ><div class="description tw-flex tw-justify-between">
+              <div class="tw-text-base">Sin data</div>
+            </div>
+            <div class="sub">No ingresaré ninguna información.</div>
+          </ng-container>
+        </cs-label-control>
+        <cs-label-control [onlyControl]="true" class="tw-w-full">
+          <p-radioButton
+            name="groupname"
+            value="P"
+            formControlName="dataType"
+          ></p-radioButton>
+          <ng-container label-inline
+            ><div class="description tw-flex tw-justify-between">
+              <div class="tw-text-base">Data parcial</div>
+            </div>
+            <div class="sub">Código identificador y nombre</div>
+          </ng-container>
+        </cs-label-control>
+        <cs-label-control [onlyControl]="true" class="tw-w-full">
+          <p-radioButton
+            name="groupname"
+            value="C"
+            formControlName="dataType"
+          ></p-radioButton>
+          <ng-container label-inline
+            ><div class="description tw-flex tw-justify-between">
+              <div class="tw-text-base">Data completa</div>
+            </div>
+            <div class="sub">Código identificador, nombre y deuda</div>
+          </ng-container>
+        </cs-label-control>
+      </div>
+      <div *ngIf="!debtorCodeEditable" class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="debtorCode"
+          [errorMessages]="errorMessages.debtorCode"
+          >¿Con qué código identificarás a tus clientes?<p-dropdown
+            [options]="debtorCodeOptions"
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            formControlName="debtorCode"
+            placeholder="Selecciona"
+          ></p-dropdown>
+        </cs-label-control>
+      </div>
+      <div class="form-elm" *ngIf="debtorCodeEditable">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="debtorCodeCustom"
+          [errorMessages]="errorMessages.debtorCodeCustom"
+          >¿Con qué código identificarás a tus clientes?
+          <div class="control ui-inputgroup tw-w-full">
+            <input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              csInputWithoutSpaces
+              placeholder=""
+              maxlength="20"
+              formControlName="debtorCodeCustom"
+            />
+            <button
+              pButton
+              type="button"
+              icon="pi pi-times"
+              class="ui-button-secondary"
+              (click)="showDropdown()"
+            ></button>
+          </div>
+        </cs-label-control>
+      </div>
+      <div class="form-elm tw-mb-6">
+        <cs-message-alert class="" mode="info">
+          Este será el código que le pediremos a tu cliente al realizar un pago
+          y poder identificarlo. Podría ser un código como su DNI, RUC, celular,
+          número de suministro, etc.
+        </cs-message-alert>
+      </div>
+      <cs-service-debt-form
+        *ngIf="showDebtFields"
+        [form]="debtForm"
+        [errorMessages]="errorMessages"
+        [paymentTypeOptions]="paymentTypeOptions"
+        [currencyOptions]="currencyOptions"
+        [chargeTypeOptions]="chargeTypeOptions"
+        [interestTypeOptions]="interestTypeOptions"
+        [submitted]="submittedForm"
+      ></cs-service-debt-form>
+    </div>
+  </div>
+  <div class="tw-text-right tw-mt-10">
+    <button
+      type="submit"
+      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+    >
+      SIGUIENTE
+    </button>
+  </div>
+</form>

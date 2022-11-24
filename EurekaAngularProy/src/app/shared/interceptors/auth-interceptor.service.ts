@@ -10,13 +10,12 @@ import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import Swal from 'sweetalert2';
 import { environment } from '../../../environments/environment';
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
 import { GoogleAnalytics } from '../services/googleAnalytics.service';
 import { LoginService } from '../services/login.service';
 import { StorageService } from '../services/storage.service';
-import { drawPopup } from '../utils/helpers/popups';
+import { swalAlert } from '../utils/helpers/popups';
 
 @Injectable({
   providedIn: 'root',
@@ -63,14 +62,12 @@ export class AuthInterceptorService implements HttpInterceptor {
           if (err.status === 401) {
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();
-            Swal.fire({
+            swalAlert.fire({
               title: 'Su sesión ha sido cerrada por inactividad',
               showCloseButton: true,
-              showCancelButton: false,
               showConfirmButton: true,
               confirmButtonText: 'CERRAR',
               allowOutsideClick: false,
-              onOpen: drawPopup,
               onClose: () => {
                 location.href = authFullRoutingNames.LOGIN;
               },
@@ -78,14 +75,12 @@ export class AuthInterceptorService implements HttpInterceptor {
           } else if (err.status !== 400) {
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();
-            Swal.fire({
+            swalAlert.fire({
               title: 'Ha ocurrido un error en el servidor',
               showCloseButton: true,
-              showCancelButton: false,
               showConfirmButton: true,
               confirmButtonText: 'CERRAR',
               allowOutsideClick: false,
-              onOpen: drawPopup,
               onClose: () => {
                 location.href = authFullRoutingNames.LOGIN;
               },

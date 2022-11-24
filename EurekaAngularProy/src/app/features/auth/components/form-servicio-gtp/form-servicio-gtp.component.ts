@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MonedaModel, ServiceModel } from 'src/app/shared/models';
+import { MonedaModel, IServiceModel } from 'src/app/shared/models';
 
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { ConfigurarServiciosComponent } from '../../pages/configurar-servicios/configurar-servicios.component';
@@ -36,7 +36,7 @@ export class FormServicioGtpComponent implements OnInit {
     stateEdit.onFormAction.subscribe((e) => this.formAction(e));
   }
 
-  @Input() set service(value: ServiceModel) {
+  @Input() set service(value: IServiceModel) {
     /* if (value === null || value === undefined) {
        this._service = {
          nombre: 'Mensualidad',
@@ -88,9 +88,9 @@ export class FormServicioGtpComponent implements OnInit {
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
   cmoraporce: boolean = false;
-  private _service: ServiceModel;
+  private _service: IServiceModel;
   @Output() grabar = new EventEmitter<any>();
-  public services: ServiceModel[] = [];
+  public services: IServiceModel[] = [];
 
   ngOnInit(): void {
     this.afiliacionService.GetTipoCambio().subscribe((d) => (this.tc = d));
@@ -279,7 +279,7 @@ export class FormServicioGtpComponent implements OnInit {
   onSubmitServicio() {
     this.submittedRequired = true;
     if (this.frm.valid) {
-      let value: ServiceModel;
+      let value: IServiceModel;
       value = this._service;
 
       /* if (this._service.NewName) {

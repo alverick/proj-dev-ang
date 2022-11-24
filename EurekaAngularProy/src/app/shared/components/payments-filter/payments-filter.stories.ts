@@ -37,7 +37,7 @@ function initAppComponentFactory(
 }
 
 export default {
-  title: 'Payments Filter',
+  title: 'Shared/Molecules/Payments Filter',
   component: PaymentsFilterComponent,
   decorators: [
     withKnobs,

@@ -87,6 +87,7 @@
                   data-toggle="dropdown"
                 >
                   <img
+                    class="tw-inline"
                     src="../../../../../assets/images/plus_circle.svg"
                     alt="plus_circle"
                   />
@@ -117,10 +118,12 @@
                 >
                   <img
                     *ngIf="!enDescarga"
+                    class="tw-inline"
                     src="../../../../../assets/images/download.svg"
                     alt="download"
                   /><img
                     *ngIf="enDescarga"
+                    class="tw-inline"
                     src="../../../../../assets/images/download-d.svg"
                     alt="download"
                   />
@@ -556,7 +559,7 @@
                             class="input-text-dash"
                             type="text"
                             matInput
-                            appOnlyNumbersForm
+                            csOnlyNumbersForm
                             [(ngModel)]="nuevaDeuda.amount"
                             maxlength="12"
                             minlength="4"
@@ -644,7 +647,7 @@
                     {{items.amount| number : '1.2-2'}}</span>
                                                     <div *ngIf="items.editInput && items.dueDate !== null">
                                                         <mat-form-field class="inline-input" style="width: 100px">
-                                                            <input class="input-text-dash" type="text" matInput appOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" (blur)="MontoBlur(items)" (ngModelChange)="items.errores.amount = null" />
+                                                            <input class="input-text-dash" type="text" matInput csOnlyNumbersForm [(ngModel)]="items.newAmount" style="width: 100px" maxlength="12" minlength="4" (blur)="MontoBlur(items)" (ngModelChange)="items.errores.amount = null" />
                                                             <span matPrefix>{{items.currency}}&nbsp;</span>
                                                             <div class="msg-error" *ngIf="items.errores.amount">{{items.errores.amount}}</div>
                                                         </mat-form-field>
@@ -893,7 +896,7 @@
                                 class="input-text-dash"
                                 type="text"
                                 matInput
-                                appOnlyNumbersForm
+                                csOnlyNumbersForm
                                 [(ngModel)]="items.newAmount"
                                 style="width: 100px"
                                 maxlength="12"
@@ -954,6 +957,7 @@
                               >
                                 Pagado
                                 <img
+                                  class="tw-inline"
                                   src="../../../../../assets/images/ok.svg"
                                   alt="ok"
                                 />
@@ -964,6 +968,7 @@
                               >
                                 Vencido
                                 <img
+                                  class="tw-inline"
                                   src="../../../../../assets/images/cancel.svg"
                                   alt="cancel"
                                 />
@@ -1010,6 +1015,7 @@
                               >
                                 Deshabilitado
                                 <img
+                                  class="tw-inline"
                                   src="../../../../../assets/images/ok.svg"
                                   alt="ok"
                                 />
@@ -1102,10 +1108,10 @@
                         (keyup.enter)="p.previous()"
                         (click)="p.previous()"
                       >
-                        <img src="../../../../../assets/images/before.svg" />
+                        <img class="tw-inline" src="../../../../../assets/images/before.svg" />
                       </a>
                       <span *ngIf="p.isFirstPage()">
-                        <img src="../../../../../assets/images/before.svg" />
+                        <img class="tw-inline" src="../../../../../assets/images/before.svg" />
                       </span>
                     </li>
                     <li *ngIf="p.pages.length === 0" class="current">
@@ -1146,10 +1152,10 @@
                         (keyup.enter)="p.next()"
                         (click)="p.next()"
                       >
-                        <img src="../../../../../assets/images/after.svg" />
+                        <img class="tw-inline" src="../../../../../assets/images/after.svg" />
                       </a>
                       <span class="pr-0" *ngIf="p.isLastPage()">
-                        <img src="../../../../../assets/images/after.svg" />
+                        <img class="tw-inline" class="tw-inline" src="../../../../../assets/images/after.svg" />
                       </span>
                     </li>
                   </ul>

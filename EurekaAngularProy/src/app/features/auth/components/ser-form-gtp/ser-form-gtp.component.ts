@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MonedaModel, ServiceModel } from 'src/app/shared/models';
+import { MonedaModel, IServiceModel } from 'src/app/shared/models';
 
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
@@ -32,7 +32,7 @@ export class SerFormGtpComponent implements OnInit {
     stateEdit.onFormAction.subscribe((e) => this.formAction(e));
   }
 
-  @Input() set service(value: ServiceModel) {
+  @Input() set service(value: IServiceModel) {
     if (value === null || value === undefined) {
       this._service = {
         nombre: 'Mensualidad',
@@ -75,9 +75,9 @@ export class SerFormGtpComponent implements OnInit {
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
   cmoraporce: boolean = false;
-  private _service: ServiceModel;
+  private _service: IServiceModel;
   @Output() grabar = new EventEmitter<any>();
-  public services: ServiceModel[] = [];
+  public services: IServiceModel[] = [];
 
   ngOnInit(): void {
     this.editMode =
@@ -303,7 +303,7 @@ export class SerFormGtpComponent implements OnInit {
                   onOpen: drawPopup,
                 });
               } else {
-                let value: ServiceModel;
+                let value: IServiceModel;
                 // value.usaWebApp = true;
                 if (this.editMode) {
                   value = this._service;
@@ -418,7 +418,7 @@ export class SerFormGtpComponent implements OnInit {
                 onOpen: drawPopup,
               });
             } else {
-              let value: ServiceModel;
+              let value: IServiceModel;
               // value.usaWebApp = true;
               if (this.editMode) {
                 value = this._service;
@@ -482,7 +482,7 @@ export class SerFormGtpComponent implements OnInit {
             onOpen: drawPopup,
           });
         } else {
-          let value: ServiceModel;
+          let value: IServiceModel;
 
           if (this.editMode) {
             value = this._service;

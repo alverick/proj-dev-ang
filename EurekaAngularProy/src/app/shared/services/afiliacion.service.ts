@@ -7,12 +7,12 @@ import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import {
+  IEntryModel,
   IServiceRemoteModel,
   MonedaModel,
-  RubroModel,
-  ServiceModel,
+  IServiceModel,
 } from '../models';
-import { DataEnterpriseModel } from '../models/data-enterprise.model';
+import { IDataEnterpriseModel } from '../models/data-enterprise.model';
 import { drawPopup } from '../utils/helpers/popups';
 import { StorageService } from './storage.service';
 
@@ -29,11 +29,11 @@ export class AfiliacionService {
     this._currentIndex = value;
   }
 
-  set currentServiceModel(value: ServiceModel) {
+  set currentServiceModel(value: IServiceModel) {
     this._currentServiceModel = value;
   }
 
-  get currentServiceModel(): ServiceModel {
+  get currentServiceModel(): IServiceModel {
     return this._currentServiceModel;
   }
 
@@ -51,11 +51,11 @@ export class AfiliacionService {
   public email: string;
   public Guardado = false;
 
-  public services: ServiceModel[] = [];
-  private _rubros: RubroModel[] = null;
-  private _rubrosAll: RubroModel[] = null;
-  public dataEnterpriseModel: DataEnterpriseModel;
-  private _currentServiceModel: ServiceModel;
+  public services: IServiceModel[] = [];
+  private _rubros: IEntryModel[] = null;
+  private _rubrosAll: IEntryModel[] = null;
+  public dataEnterpriseModel: IDataEnterpriseModel;
+  private _currentServiceModel: IServiceModel;
 
   public Clear() {
     this.Guardado = false;
@@ -78,7 +78,7 @@ export class AfiliacionService {
     });
   }
 
-  public CrearSevice(): ServiceModel {
+  public CrearSevice(): IServiceModel {
     this.Guardado = false;
     let nombre = 'Mensualidad';
     const newName = 'Mensualidad';
@@ -114,7 +114,7 @@ export class AfiliacionService {
     if (nro > 1) {
       nombre += nro.toString();
     }
-    const svc: ServiceModel = {
+    const svc: IServiceModel = {
       id: null,
       nombre,
       newName: nombre,
@@ -139,7 +139,7 @@ export class AfiliacionService {
     return svc;
   }
 
-  public AddService(svc: ServiceModel) {
+  public AddService(svc: IServiceModel) {
     this.Guardado = false;
     const svc_old = this.services.find((v) => v.nombre === svc.nombre);
     if (svc_old) {
@@ -209,12 +209,12 @@ export class AfiliacionService {
       );
   }
 
-  public GetRubros(): Observable<RubroModel[]> {
+  public GetRubros(): Observable<IEntryModel[]> {
     if (this._rubros !== null) {
       return Observable.of(this._rubros);
     }
     return this.http
-      .get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading`)
+      .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading`)
       .pipe(
         map((r) => {
           this._rubros = r;
@@ -224,9 +224,9 @@ export class AfiliacionService {
       .pipe(catchError((err) => throwError(err)));
   }
 
-  public GetRubrosAll(): Observable<RubroModel[]> {
+  public GetRubrosAll(): Observable<IEntryModel[]> {
     return this.http
-      .get<RubroModel[]>(`${environment.END_POINT}/enterpriseHeading/all`)
+      .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading/all`)
       .pipe(
         map((r) => {
           this._rubrosAll = r;
@@ -343,7 +343,7 @@ export class AfiliacionService {
         `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`
       )
       .subscribe((d: IServiceRemoteModel[]) => {
-        const servicios: ServiceModel[] = [];
+        const servicios: IServiceModel[] = [];
         d.forEach((s) => {
           servicios.push({
             id: s.id,
@@ -390,7 +390,7 @@ export class AfiliacionService {
     newNameCode,
     newNameCodeGtpStatus,
     newNameGtpStatus,
-  }: ServiceModel): boolean {
+  }: IServiceModel): boolean {
     if (id === null) {
       return true;
     }
@@ -413,7 +413,7 @@ export class AfiliacionService {
     return false;
   }
 
-  public isNewService({ id, res }: ServiceModel) {
+  public isNewService({ id, res }: IServiceModel) {
     return isNil(id) && isEmpty(res);
   }
 

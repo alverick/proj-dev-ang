@@ -3,17 +3,17 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { DataEnterpriseModel } from '../models/data-enterprise.model';
+import { IDataEnterpriseModel } from '../models/data-enterprise.model';
 
 @Injectable()
 export class ConfiguracionService {
   constructor(private http: HttpClient) {}
 
-  public debtItems: DataEnterpriseModel;
-  getDatosEmpresa(): Observable<DataEnterpriseModel> {
+  public debtItems: IDataEnterpriseModel;
+  getDatosEmpresa(): Observable<IDataEnterpriseModel> {
     const url = `${environment.END_POINT}/company/getafiliate`;
     return this.http
-      .get<DataEnterpriseModel>(url)
+      .get<IDataEnterpriseModel>(url)
       .pipe(
         map((r) => {
           r.newPassword = '';

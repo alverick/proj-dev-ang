@@ -1,0 +1,26 @@
+<val-default-errors>
+  <ng-template valError="required" let-label
+    >{{ label || 'El campo' }} es obligatorio.</ng-template
+  >
+  <ng-template valError="minlength" let-error="error" let-label>
+    {{ label || 'El campo' }} debe tener al menos
+    {{ error.requiredLength | number }} caracteres
+  </ng-template>
+  <ng-template valError="maxlength" let-error="error" let-label>
+    {{ label || 'El campo' }} debe tener menos de
+    {{ error.requiredLength | number }} caracteres
+  </ng-template>
+  <ng-template valError="pattern" let-label
+    >{{ label || 'El campo' }} no tiene un formato válido</ng-template
+  >
+  <ng-template valError="email" let-label
+    >{{ label || 'El campo' }} debe ser una dirección de correo válida</ng-template
+  >
+  <ng-template valError="min" let-error="error" let-label>
+    {{ label || 'El campo' }} debe ser mayor que {{ error.min | number }}
+  </ng-template>
+  <ng-template valError="max" let-error="error" let-label
+    >{{ label || 'El campo' }} debe ser menor que
+    {{ error.max | number }}</ng-template
+  >
+</val-default-errors>
