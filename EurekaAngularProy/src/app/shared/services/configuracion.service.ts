@@ -3,21 +3,21 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { DataEnterpriseModel } from '../models/data-enterprise.model';
+import { IDataEnterpriseModel } from '../models/data-enterprise.model';
 import { StorageService } from './storage.service';
 
 @Injectable()
 export class ConfiguracionService {
   constructor(private http: HttpClient, private storage: StorageService) {}
 
-  public debtItems: DataEnterpriseModel;
-  getDatosEmpresa(): Observable<DataEnterpriseModel> {
+  public debtItems: IDataEnterpriseModel;
+  getDatosEmpresa(): Observable<IDataEnterpriseModel> {
     const url = `${environment.END_POINT}/company?_=` + new Date().getTime();
     const opts = {
       headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
     };
     return this.http
-      .get<DataEnterpriseModel>(url, opts)
+      .get<IDataEnterpriseModel>(url, opts)
       .pipe(
         map((r) => {
           r.newPassword = '';

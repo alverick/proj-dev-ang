@@ -234,7 +234,7 @@
             <mat-radio-group class="radio-group" formControlName="tipoMora">
                 <mat-radio-button class="radio-button" name="tipoMora" id="monto" value="M" class="texto-radio-small">Monto</mat-radio-button>
                 <mat-form-field style="margin-top: -14px;" class="ml-4 w-80 texto-mora" id="input-mora">
-                    <input formControlName="monto" type="text" name="monto" matInput appOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
+                    <input formControlName="monto" type="text" name="monto" matInput csOnlyNumbersForm maxlength="7" (blur)="MoraMontoBlur($event)">
                     <span matSuffix class="simbolos">{{simboloMoneda}}&nbsp;&nbsp;</span>
                     <mat-error>
                         <mat-error class="messsage-error" *ngIf="f.monto.invalid && f.monto.hasError('required') && submittedRequired">Debe ingresar un monto</mat-error>
@@ -245,7 +245,7 @@
                 </mat-form-field>
                 <mat-radio-button class="radio-button " style="padding-top: 10px" name="tipoMora" id="porcentaje" value="P" class="texto-radio-small">Porcentaje</mat-radio-button>
                 <mat-form-field style="margin-top: -14px;" class="ml-4  w-80 texto-mora" id="input-mora">
-                    <input formControlName="porcentaje" name="porcentaje" matInput appOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
+                    <input formControlName="porcentaje" name="porcentaje" matInput csOnlyNumbersForm type="text" maxlength="5" (blur)="MoraPorcenBlur($event)">
                     <span matSuffix class="simbolos">%</span>
                     <mat-error>
                         <mat-error class="messsage-error" *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('required') && submittedRequired">Debe ingresar un porcentaje</mat-error>

@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ServiceModel } from 'src/app/shared/models';
+import { IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
@@ -38,7 +38,7 @@ declare var $: any;
 })
 export class ConfiguraCobrosParteUnoComponent implements OnInit {
   frm: FormGroup;
-  public _service: ServiceModel;
+  public _service: IServiceModel;
   submittedRequired = false;
   public editMode: boolean = false;
   public labelDescription: string = '';
@@ -47,7 +47,7 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
     return this.frm.controls;
   }
 
-  @Input() set service(value: ServiceModel) {
+  @Input() set service(value: IServiceModel) {
     if (value === null || value === undefined) {
       this._service = {
         res: '',
@@ -177,7 +177,7 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
     this.submittedRequired = true;
 
     if (this.frm.valid) {
-      let value: ServiceModel;
+      let value: IServiceModel;
       if (this.editMode) {
         value = this._service;
         value.newName = value.nombreHabilitado

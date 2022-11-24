@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
-import { RubroModel } from 'src/app/shared/models';
+import { IEntryModel } from 'src/app/shared/models';
 import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
@@ -22,14 +22,14 @@ export class EmpresaGTPComponent implements OnInit {
   public _enterprise: DataEnterpriseGTP;
   formGroup: FormGroup;
   submitted = false;
-  rubros: RubroModel[] = [];
+  rubros: IEntryModel[] = [];
   errorMessages = {
     email: {
       required: 'El correo electrónico  es obligatorio',
       pattern: 'Ingrese un correo electrónico  válido',
       minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
     },
-    telefono: {
+    movilNumber: {
       required: 'Teléfono o celular es obligatorio',
       pattern: 'Teléfono o celular es obligatorio',
       minlength: 'El teléfono o celular debe tener mínimo 9 dígitos',

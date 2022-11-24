@@ -1,0 +1,54 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { throwError, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { IServicePostData } from '../models';
+
+export interface ICompanyResult {
+  success: boolean;
+  code?: number;
+  message?: string;
+  id?: number;
+}
+
+@Injectable()
+export class CompanyService {
+  constructor(private http: HttpClient) {}
+  public validateCompany(data: any): Observable<ICompanyResult> {
+    return this.http
+      .post<any>(`${environment.END_POINT}/company/validate`, data)
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
+  }
+  public saveCompany(data: any): Observable<ICompanyResult> {
+    return this.http.post<any>(`${environment.END_POINT}/company`, data).pipe(
+      catchError((err) => {
+        return throwError(err);
+      })
+    );
+  }
+
+  saveServices(data: IServicePostData) {
+    return this.http
+      .post<any>(`${environment.END_POINT}/company/service`, data)
+      .pipe(
+        catchError((err) => {
+          throw throwError(err);
+        })
+      );
+  }
+
+  getCompanyAccountsById(idCompany) {
+    return this.http.get<any[]>(
+      `${environment.END_POINT}/company/${idCompany}/cards`
+    );
+  }
+
+  getCompanyAccounts() {
+    return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
+  }
+}

@@ -42,7 +42,7 @@
     <div class="row">
         <mat-form-field *ngIf="!isPartial">
             <mat-label>Monto</mat-label>
-            <input class="input-text-dash" type="text" matInput appOnlyNumbersForm [(ngModel)]="nuevaDeuda.amount" maxlength="12" minlength="4" autocomplete="off" (blur)="MontoBlur(nuevaDeuda)" (ngModelChange)="nuevaDeuda.errores.amount = null" />
+            <input class="input-text-dash" type="text" matInput csOnlyNumbersForm [(ngModel)]="nuevaDeuda.amount" maxlength="12" minlength="4" autocomplete="off" (blur)="MontoBlur(nuevaDeuda)" (ngModelChange)="nuevaDeuda.errores.amount = null" />
             <div class="msg-error" *ngIf="nuevaDeuda.errores.amount">{{nuevaDeuda.errores.amount}}</div>
         </mat-form-field>
     </div>

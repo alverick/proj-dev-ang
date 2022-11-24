@@ -1,0 +1,31 @@
+<div
+  class="tw-h-full tw-rounded-md tw-border tw-py-5 tw-px-8 tw-border-solid tw-border-extended-grey-3 tw-text-extended-ibk-black"
+>
+  <div
+    class="tw-flex tw-justify-between tw-border-b tw-border-extended-grey-4 tw-pb-2"
+  >
+    <div class="tw-text-lg tw-font-medium tw-truncate tw-mr-2">
+      {{ serviceData.name }}
+    </div>
+    <div class="tw-flex tw-gap-2 tw-flex-shrink-0">
+      <div *ngIf="canEdit" (click)="actionEdit()" class="tw-cursor-pointer">
+        <img src="../../../../../assets/images/card-icon-edit.svg" />
+      </div>
+      <div (click)="actionDelete()" class="tw-cursor-pointer">
+        <img src="../../../../../assets/images/card-icon-delete.svg" />
+      </div>
+    </div>
+  </div>
+  <div class="tw-grid tw-grid-cols-2 tw-gap-2 tw-pt-3">
+    <div class="tw-text-extended-grey-2">Canales de pago:</div>
+    <div class="val">{{ paymentChannels }}</div>
+    <div class="tw-text-extended-grey-2">Código de cliente:</div>
+    <div class="val tw-overflow-ellipsis tw-overflow-hidden tw-break-all">
+      {{ serviceData.debtorCode }}
+    </div>
+    <div class="tw-text-extended-grey-2">Modalidad:</div>
+    <div class="val">{{ dataType }}</div>
+    <div class="tw-text-extended-grey-2">Nº Cta. deposito:</div>
+    <div class="val">{{ serviceData.accountNumber }}</div>
+  </div>
+</div>

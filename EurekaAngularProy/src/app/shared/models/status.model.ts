@@ -1,7 +1,6 @@
-import {Error} from "./error.model";
+import { IErrorObj } from './error.model';
 
-export interface Status{
-    status?: number;
-    error?: Error;
-    
+export interface IStatus {
+  status?: number;
+  error?: IErrorObj;
 }

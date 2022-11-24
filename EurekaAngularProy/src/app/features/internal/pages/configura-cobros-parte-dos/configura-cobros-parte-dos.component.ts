@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ServiceModel } from 'src/app/shared/models';
+import { IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
@@ -49,7 +49,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
   codDeudor: any[] = [];
   tiposPago: any[] = [];
   tiposMora: any[] = [];
-  _service: ServiceModel;
+  _service: IServiceModel;
   tipoDato = '';
   cobraMora = false;
   cmoraporce = false;
@@ -248,7 +248,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
               });
               return;
             } else {
-              let value: ServiceModel;
+              let value: IServiceModel;
               value = this._service;
               if (this.editMode) {
                 value.newNameCode = value.nombreCodHabilitado
@@ -319,7 +319,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
             });
             return;
           } else {
-            let value: ServiceModel;
+            let value: IServiceModel;
             value = this._service;
             if (this.editMode) {
               value.newNameCode = value.nombreCodHabilitado
@@ -343,7 +343,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
           }
         }
       } else {
-        let value: ServiceModel;
+        let value: IServiceModel;
         value = this._service;
         if (this.editMode) {
           value.newNameCode = value.nombreCodHabilitado

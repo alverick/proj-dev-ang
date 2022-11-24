@@ -28,19 +28,36 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { TooltipModule } from 'ngx-bootstrap';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { ValdemortModule } from 'ngx-valdemort';
+import { ButtonModule } from 'primeng-lts/button';
+import { CheckboxModule } from 'primeng-lts/checkbox';
+import { DropdownModule } from 'primeng-lts/dropdown';
+import { InputMaskModule } from 'primeng-lts/inputmask';
+import { InputTextModule } from 'primeng-lts/inputtext';
+import { KeyFilterModule } from 'primeng-lts/keyfilter';
+import { RadioButtonModule } from 'primeng-lts/radiobutton';
+import { SidebarModule } from 'primeng-lts/sidebar';
+import { StepsModule } from 'primeng-lts/steps';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LabelControlComponent } from './components/label-control/label-control.component';
+import { MessageAlertComponent } from './components/message-alert/message-alert.component';
+import { ModalTermsComponent } from './components/modal-terms/modal-terms.component';
 import { PaymentsFilterComponent } from './components/payments-filter/payments-filter.component';
+import { ServiceCardComponent } from './components/service-card/service-card.component';
+import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
 import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
+import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
+import { CompanyService } from './services/company.service';
+import { EnterpriseHeadingService } from './services/enterprise-heading.service';
 
 const FORM_MODULES = [
   FormsModule,
@@ -63,15 +80,21 @@ const FORM_MODULES = [
   NgxPaginationModule,
   ReactiveFormsModule,
 ];
+const PRIMENG_MODULES = [
+  KeyFilterModule,
+  InputMaskModule,
+  InputTextModule,
+  DropdownModule,
+  CheckboxModule,
+  RadioButtonModule,
+  StepsModule,
+  SidebarModule,
+  ButtonModule,
+];
 const UI_MODULES = [
   FontAwesomeModule,
   OverlayModule,
   PerfectScrollbarModule,
-  SweetAlert2Module.forRoot({
-    customClass: {
-      actions: 'actions-popup',
-    },
-  }),
   TooltipModule.forRoot(),
 ];
 
@@ -82,6 +105,8 @@ const UI_MODULES = [
     RouterModule,
     ...UI_MODULES,
     ...FORM_MODULES,
+    ...PRIMENG_MODULES,
+    ValdemortModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
@@ -92,8 +117,11 @@ const UI_MODULES = [
     },
 
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    CompanyService,
+    EnterpriseHeadingService,
   ],
   declarations: [
+    OnlyNumbersFormDirective,
     OnlynumbersDirective,
     SearchDirective,
     CorreoDirective,
@@ -101,17 +129,30 @@ const UI_MODULES = [
     HeaderComponent,
     PaymentsFilterComponent,
     FooterComponent,
+    LabelControlComponent,
+    ValidationDefaultsComponent,
+    MessageAlertComponent,
+    ModalTermsComponent,
+    ServiceCardComponent,
   ],
   exports: [
+    OnlyNumbersFormDirective,
     OnlynumbersDirective,
     SearchDirective,
     CorreoDirective,
     NameEnterpiseDirective,
     FooterComponent,
     ...FORM_MODULES,
+    ...PRIMENG_MODULES,
     HeaderComponent,
     PaymentsFilterComponent,
     TooltipModule,
+    ValdemortModule,
+    LabelControlComponent,
+    MessageAlertComponent,
+    ValidationDefaultsComponent,
+    ServiceCardComponent,
   ],
+  entryComponents: [ModalTermsComponent],
 })
 export class SharedModule {}

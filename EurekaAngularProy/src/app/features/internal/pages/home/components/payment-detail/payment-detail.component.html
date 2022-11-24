@@ -46,7 +46,7 @@
                   <input
                     type="text"
                     matInput
-                    appOnlyNumbersForm
+                    csOnlyNumbersForm
                     [(ngModel)]="itm.newAmount"
                     maxlength="12"
                     minlength="4"
@@ -128,6 +128,7 @@
                   (click)="editItm(itm); $event.stopPropagation()"
                 >
                   <img
+                    class="tw-inline"
                     src="../../../../../../../assets/images/pencil.svg"
                     alt="editar"
                     width="20"
@@ -139,6 +140,7 @@
                   (click)="delItm(itm); $event.stopPropagation()"
                 >
                   <img
+                    class="tw-inline"
                     src="../../../../../../../assets/images/trash.svg"
                     alt="eliminar"
                     width="20"
@@ -159,6 +161,7 @@
               (click)="addItem()"
             >
               <img
+                class="tw-inline"
                 src="../../../../../../../assets/images/plus_circle.svg"
                 alt="agregar"
               />

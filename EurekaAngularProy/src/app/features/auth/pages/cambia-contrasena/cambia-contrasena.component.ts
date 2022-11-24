@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import { RecuperaService } from 'src/app/shared/services/recupera.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
+import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
+import { MustMatch } from '../../../../shared/validators/must-match.validator';
 import { authFullRoutingNames } from '../../auth-routing.names';
-import { MustMatch } from '../crear-contrasena/must-match.validator';
 
 @Component({
   selector: 'cs-cambia-contrasena',

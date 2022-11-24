@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Error } from '../models/error.model';
+import { IErrorObj } from '../models/error.model';
 import { StorageService } from './storage.service';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class ExcelService {
 
   public service: any = '';
   public idProcess = 0;
-  public errores: Error[] = [];
+  public errores: IErrorObj[] = [];
 
   UploadExcel(
     files: any,
