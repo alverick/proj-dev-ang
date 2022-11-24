@@ -185,10 +185,7 @@ export class AfiliacionService {
     this.spinner.show();
     this.email = data.email;
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company`, data)
       .pipe(map((r) => this.setIdCompany(r)))
       .pipe(
         catchError((err) => {
@@ -202,10 +199,7 @@ export class AfiliacionService {
     this.spinner.show();
     this.email = data.email;
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company/validate?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company/validate`, data)
       .pipe(map((r) => this.setIdCompany(r)))
       .pipe(
         catchError((err) => {
@@ -220,9 +214,7 @@ export class AfiliacionService {
       return Observable.of(this._rubros);
     }
     return this.http
-      .get<IEntryModel[]>(
-        `${environment.END_POINT}/enterpriseHeading?_=` + new Date().getTime()
-      )
+      .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading`)
       .pipe(
         map((r) => {
           this._rubros = r;
@@ -234,10 +226,7 @@ export class AfiliacionService {
 
   public GetRubrosAll(): Observable<IEntryModel[]> {
     return this.http
-      .get<IEntryModel[]>(
-        `${environment.END_POINT}/enterpriseHeading/all?_=` +
-          new Date().getTime()
-      )
+      .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading/all`)
       .pipe(
         map((r) => {
           this._rubrosAll = r;
@@ -342,29 +331,16 @@ export class AfiliacionService {
   public GetCards(): Observable<any[]> {
     if (this.idCompany) {
       return this.http.get<any[]>(
-        `${environment.END_POINT}/company/${
-          this.idCompany
-        }/cards?_=${new Date().getTime()}`
+        `${environment.END_POINT}/company/${this.idCompany}/cards`
       );
     }
-    return this.http.get<any[]>(
-      `${environment.END_POINT}/company/cards?_=${new Date().getTime()}`
-    );
+    return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
   }
 
   public GetServicios(incDeactivates: boolean = false) {
-    const headers: any = {
-      'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
-      'Ocp-Apim-Trace': 'true',
-    };
-    if (this.storage.isAuthenticated) {
-      headers['Authorization'] = 'bearer ' + this.storage.getCurrentToken();
-    }
     this.http
       .get<any[]>(
-        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=` +
-          new Date().getTime(),
-        { headers }
+        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`
       )
       .subscribe((d: IServiceRemoteModel[]) => {
         const servicios: IServiceModel[] = [];
@@ -528,10 +504,7 @@ export class AfiliacionService {
       );
 
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company/service?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company/service`, data)
       .pipe(
         map((r) => {
           this.spinner.hide();

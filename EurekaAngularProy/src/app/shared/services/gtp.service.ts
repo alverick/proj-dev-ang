@@ -7,13 +7,13 @@ import { of, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IServiceModel } from '../models';
+import { CorreoGtpModel } from '../models/data-correoGtp';
 import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
 import { DataGTPChange } from '../models/data-gtpchange';
 import { DataServiceGTP } from '../models/data-service-gtp';
 import { EnterprisesPagedList } from '../models/enterprises-gtp';
 import { GtpFilter } from '../models/gtp-filter';
 import { StatesGtp } from '../models/states-gtp';
-import { CorreoGtpModel } from './../models/data-correoGtp';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -86,14 +86,9 @@ export class GtpService {
     if (isNilOrEmpty(filtro.status)) {
       filtro.status = '';
     }
-    const url =
-      `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&Solicitud=${filtro.statusSolicitud}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=` +
-      new Date().getTime();
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
+    const url = `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&Solicitud=${filtro.statusSolicitud}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
     return this.http
-      .get<EnterprisesPagedList>(url, opts)
+      .get<EnterprisesPagedList>(url)
       .pipe(
         map((r) => {
           this.EnterprisesItems = r;
@@ -124,11 +119,8 @@ export class GtpService {
 
   GetEnterpriseGtp(id: any): Observable<DataEnterpriseGTP> {
     const url = `${environment.END_POINT}/company/GTP/client/${id}`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
     return this.http
-      .get<DataEnterpriseGTP>(url, opts)
+      .get<DataEnterpriseGTP>(url)
       .pipe(
         map((r) => {
           return r;
@@ -139,11 +131,8 @@ export class GtpService {
 
   GetEnterpriseGtp2(id: any): Observable<any> {
     const url = `${environment.END_POINT}/company/GTP/client/${id}`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
     return this.http
-      .get<any>(url, opts)
+      .get<any>(url)
       .pipe(
         map((r) => {
           return r;
@@ -157,10 +146,7 @@ export class GtpService {
     const url = `${
       environment.END_POINT
     }/company/GTP/services/${enterpriseId}/${false}`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
-    this.http.get<any[]>(url, opts).subscribe((service) => {
+    this.http.get<any[]>(url).subscribe((service) => {
       const servicios = [];
       service.forEach(
         ({
@@ -268,10 +254,7 @@ export class GtpService {
   public GetEnterpriseServices(data: any): Observable<any> {
     this.spinner.show();
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/Login/dencrypt?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
       .pipe(
         map((r) => {
           this.spinner.hide();
@@ -416,11 +399,7 @@ export class GtpService {
       });
     });
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company/GTP/company/update?_=` +
-          new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company/GTP/company/update`, data)
       .pipe(
         map((r) => {
           this.spinner.hide();
@@ -439,8 +418,7 @@ export class GtpService {
     this.spinner.show();
     return this.http
       .post<any>(
-        `${environment.END_POINT}/company/GTP/client/${clientId}/pag?_=` +
-          new Date().getTime(),
+        `${environment.END_POINT}/company/GTP/client/${clientId}/pag`,
         {}
       )
       .pipe(
@@ -458,9 +436,7 @@ export class GtpService {
   }
 
   public clientsUnregistered(filtro: GtpFilter): Observable<any> {
-    const url =
-      `${environment.END_POINT}/company/GTP/client/unregistered?_=` +
-      new Date().getTime();
+    const url = `${environment.END_POINT}/company/GTP/client/unregistered`;
     const strDateFrom =
       filtro.dateFrom === null
         ? ''
@@ -480,22 +456,16 @@ export class GtpService {
 
   public GetCorreoGtp(): Observable<CorreoGtpModel[]> {
     const url = `${environment.END_POINT}/company/GTP/emailgtp`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
     return this.http
-      .get<any>(url, opts)
+      .get<any>(url)
       .pipe<CorreoGtpModel[]>(map((r) => r.emails))
       .pipe(catchError((err) => throwError(err)));
   }
 
   public PostConfigurarCorreoGtp(correos: CorreoGtpModel[]): Observable<any> {
     const url = `${environment.END_POINT}/company/GTP/emailgtp`;
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
     return this.http
-      .post(url, { emails: correos }, opts)
+      .post(url, { emails: correos })
       .pipe(catchError((err) => throwError(err)));
   }
 
