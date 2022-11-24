@@ -1,6 +1,12 @@
 :host {
-  width: 536px;
-  flex-shrink: 0;
+  width: 300px;
+  @include media('>=md') {
+    width: 436px;
+  }
+  @include media('>=lg') {
+    width: 536px;
+  }
+
   &::before {
     content: '';
     height: 100%;

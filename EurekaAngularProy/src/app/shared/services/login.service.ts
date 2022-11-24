@@ -29,7 +29,7 @@ export class LoginService {
 
   login(ruc: string, psw: string): Observable<RespuestaLogin> {
     this.notify.clear();
-    const url = `${this.URI_API}/login?_=` + new Date().getTime();
+    const url = `${this.URI_API}/login`;
     const data = `username=${ruc}&password=${psw}`;
     const opts = {
       headers: {
@@ -73,7 +73,7 @@ export class LoginService {
   }
 
   logout(): void {
-    const url = `${this.URI_API}/login/out?_=` + new Date().getTime();
+    const url = `${this.URI_API}/login/out`;
     this.http.post(url, {}).subscribe(() => {
       this.storage.removeCurrentSession();
       this.router.navigate([authFullRoutingNames.LOGIN]);
@@ -89,7 +89,7 @@ export class LoginService {
         const rfs = new Date(storage.refresh);
         if (now > rfs && now < exp) {
           this.callingRefresh = true;
-          const url = `${this.URI_API}/login?_=` + new Date().getTime();
+          const url = `${this.URI_API}/login`;
           this.http.get(url, {}).subscribe((r: RespuestaLogin) => {
             const storageSession = this.storage.getCurrentSession();
             this.storage.setCurrentSession({

@@ -4,20 +4,16 @@ import { throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IDataEnterpriseModel } from '../models/data-enterprise.model';
-import { StorageService } from './storage.service';
 
 @Injectable()
 export class ConfiguracionService {
-  constructor(private http: HttpClient, private storage: StorageService) {}
+  constructor(private http: HttpClient) {}
 
   public debtItems: IDataEnterpriseModel;
   getDatosEmpresa(): Observable<IDataEnterpriseModel> {
-    const url = `${environment.END_POINT}/company?_=` + new Date().getTime();
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
+    const url = `${environment.END_POINT}/company/getafiliate`;
     return this.http
-      .get<IDataEnterpriseModel>(url, opts)
+      .get<IDataEnterpriseModel>(url)
       .pipe(
         map((r) => {
           r.newPassword = '';
@@ -30,12 +26,7 @@ export class ConfiguracionService {
   }
 
   saveDatosEmpresa(data: any): Observable<any> {
-    const url = `${environment.END_POINT}/company?_=` + new Date().getTime();
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
-    return this.http
-      .put(url, data, opts)
-      .pipe(catchError((err) => throwError(err)));
+    const url = `${environment.END_POINT}/company`;
+    return this.http.put(url, data).pipe(catchError((err) => throwError(err)));
   }
 }

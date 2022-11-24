@@ -6,11 +6,11 @@
   class="tw-max-w-2xl"
 >
   <div
-    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-10 xl:tw-px-20 tw-py-14"
+    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-20 tw-py-14"
   >
     <h2 class="tw-font-medium tw-text-2xl tw-mb-7">Ingresa tus datos</h2>
     <div class="form-controls tw-max-w-xl">
-      <div class="form-elm xl:tw-flex xl:tw-gap-4">
+      <div class="form-elm lg:tw-flex lg:tw-gap-4">
         <cs-label-control
           class="tw-w-full"
           formControlName="documentType"
@@ -72,6 +72,7 @@
             type="text"
             class="tw-w-full"
             pInputText
+            csInputTrimSpaces
             minlength="10"
             maxlength="100"
             formControlName="email"
@@ -87,13 +88,14 @@
             type="text"
             class="tw-w-full"
             pInputText
+            csInputTrimSpaces
             minlength="10"
             maxlength="100"
             formControlName="emailConfirm"
           />
         </cs-label-control>
       </div>
-      <div class="form-elm xl:tw-flex xl:tw-gap-4">
+      <div class="form-elm lg:tw-flex lg:tw-gap-4">
         <cs-label-control
           class="tw-w-full"
           formControlName="movilOperator"
@@ -125,7 +127,7 @@
   <div class="tw-text-right tw-mt-10">
     <button
       type="submit"
-      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+      class="btn-big btn-eureca-green tw-w-full md:tw-w-56 tw-text-center text-white"
     >
       SIGUIENTE
     </button>

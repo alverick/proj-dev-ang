@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { isNil } from 'ramda';
+import { isEmpty, isNil } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
-import { IErrorMessages } from '../../../shared/models/forms';
 import {
   CompanyService,
   ICompanyResult,
@@ -21,6 +20,7 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 @Injectable()
 export class AffiliationService {
   companyId;
+  email;
   servicesList: IServiceRemoteModel[] = [];
 
   entryOptions: IEntryModel[] = [];
@@ -196,30 +196,31 @@ export class AffiliationService {
         paymentType = 'C',
         partialPayment = 'N',
         chargeInterest = 'N',
-        chargeType = 0,
+        chargeType = '',
         interestType,
         amount,
       } = {
         paymentType: 'C',
         partialPayment: 'N',
         chargeInterest: 'N',
-        chargeType: '0',
+        chargeType: '',
         interestType: null,
-        amount: '0',
+        amount: '1.00',
       },
     } = this.serviceConfigForm.value;
 
-    const parsedDebtorCode =
-      debtorCodeCustom === debtorCodeCustomEmpty
-        ? debtorCode
-        : debtorCodeCustom;
+    const serviceValues = this.parseParams(
+      debtorCodeCustom,
+      debtorCode,
+      amount,
+      chargeType,
+      interestType
+    );
 
     this.servicesList.push({
-      id: 0,
+      id: null,
       name,
       newName: name,
-      debtorCode: parsedDebtorCode,
-      newNameCode: parsedDebtorCode,
       dataType,
       paymentType,
       idAccount,
@@ -229,22 +230,55 @@ export class AffiliationService {
       useAgent,
       useStore: false,
       chargeInterest,
-      chargeType: chargeType * 1,
-      interestType: isNil(interestType) ? 'M' : interestType,
-      amount: interestType === 'M' ? amount * 1 : 0,
-      percentage: interestType === 'P' ? amount * 1 : 0,
       partialPayment,
+      ...serviceValues,
     });
     this.affiliationForms.resetServicesForms();
     console.log('-> this.servicesList', this.servicesList);
   }
 
+  private parseParams(
+    debtorCodeCustom,
+    debtorCode,
+    amount,
+    chargeType,
+    interestType
+  ) {
+    const parsedDebtorCode =
+      debtorCodeCustom === debtorCodeCustomEmpty
+        ? debtorCode
+        : debtorCodeCustom;
+
+    const parseAmount = parseFloat(amount).toFixed(2);
+
+    return {
+      debtorCode: parsedDebtorCode,
+      newNameCode: parsedDebtorCode,
+      chargeType: isEmpty(chargeType) ? '' : parseInt(chargeType, 10),
+      interestType: isNil(interestType) ? 'M' : interestType,
+      amount: interestType === 'M' ? parseAmount : '1.00',
+      percentage: interestType === 'P' ? parseAmount : '1.00',
+    };
+  }
+
   saveAllServices() {
-    return this.companyService.saveServices({
-      clientId: this.companyId,
-      deleted: [],
-      services: this.servicesList,
-    });
+    return this.companyService
+      .saveServices({
+        clientId: this.companyId,
+        deleted: [],
+        services: this.servicesList,
+      })
+      .pipe(
+        tap(() => {
+          this.resetRegistration();
+        })
+      );
+  }
+
+  resetRegistration() {
+    this.email = this.registerForm.value.email;
+    this.servicesList = [];
+    this.affiliationForms.resetCompanyForms();
   }
 
   updateEditService(position: number, data) {
@@ -257,38 +291,36 @@ export class AffiliationService {
         paymentType = 'C',
         partialPayment = 'N',
         chargeInterest = 'N',
-        chargeType = 0,
+        chargeType = '',
         interestType,
         amount,
       } = {
         paymentType: 'C',
         partialPayment: 'N',
         chargeInterest: 'N',
-        chargeType: '0',
+        chargeType: '',
         interestType: null,
-        amount: '0',
+        amount: '1.00',
       },
     } = this.editServiceForm.value;
 
-    const parsedDebtorCode =
-      debtorCodeCustom === debtorCodeCustomEmpty
-        ? debtorCode
-        : debtorCodeCustom;
+    const serviceValues = this.parseParams(
+      debtorCodeCustom,
+      debtorCode,
+      amount,
+      chargeType,
+      interestType
+    );
 
     this.servicesList[position] = {
       ...this.servicesList[position],
       name,
       newName: name,
-      debtorCode: parsedDebtorCode,
-      newNameCode: parsedDebtorCode,
       paymentType,
       useAgent,
       chargeInterest,
-      chargeType: chargeType * 1,
-      interestType: isNil(interestType) ? 'M' : interestType,
-      amount: interestType === 'M' ? amount * 1 : 0,
-      percentage: interestType === 'P' ? amount * 1 : 0,
       partialPayment,
+      ...serviceValues,
     };
   }
 

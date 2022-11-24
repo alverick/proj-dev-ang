@@ -11,6 +11,6 @@ export class RegistrationFinishedPage implements OnInit {
   constructor(public affiliation: AffiliationService) {}
 
   ngOnInit() {
-    this.email = this.affiliation.registerForm.value.email;
+    this.email = this.affiliation.email;
   }
 }

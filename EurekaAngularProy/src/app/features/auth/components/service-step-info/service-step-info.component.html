@@ -6,7 +6,7 @@
   class="tw-max-w-3xl"
 >
   <div
-    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-20 tw-py-14"
+    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-20 tw-py-14"
   >
     <h2 class="tw-font-medium tw-text-2xl tw-mb-7">
       Información de tu servicio
@@ -32,14 +32,14 @@
     <div class="form-controls tw-max-w-xl">
       <cs-label-control
         class="tw-w-full"
-        formControlName="idAccount"
-        [errorMessages]="errorMessages.idAccount"
+        formControlName="account"
+        [errorMessages]="errorMessages.account"
         >Selecciona la cuenta que se asociará al servicio<p-dropdown
           [options]="accounts"
           optionLabel="number"
           class="tw-w-full"
           styleClass="tw-w-full"
-          formControlName="idAccount"
+          formControlName="account"
           placeholder="Selecciona"
         ></p-dropdown>
       </cs-label-control>

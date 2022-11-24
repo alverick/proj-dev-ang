@@ -56,14 +56,12 @@ export class HomeService {
   }
 
   getServices(incDeactivates: boolean = false): Observable<any[]> {
-    const url =
-      `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=` +
-      new Date().getTime();
+    const url = `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`;
     return this.http
       .get<any[]>(url)
       .pipe(
         map((r) => {
-          let data: any[] = [];
+          const data: any[] = [];
           r.forEach((s) =>
             data.push({
               id: s.id,
@@ -78,14 +76,12 @@ export class HomeService {
   }
 
   getServicesActive(serviceWithoutData: boolean = true): Observable<any[]> {
-    const url =
-      `${environment.END_POINT}/company/service/active/${serviceWithoutData}?_=` +
-      new Date().getTime();
+    const url = `${environment.END_POINT}/company/service/active/${serviceWithoutData}`;
     return this.http
       .get<any[]>(url)
       .pipe(
         map((r) => {
-          let data: any[] = [];
+          const data: any[] = [];
           r.forEach((s) =>
             data.push({
               id: s.id,
@@ -100,16 +96,12 @@ export class HomeService {
   }
 
   getDebtorCode(service: string, code: string): Observable<any> {
-    const url =
-      `${environment.END_POINT}/debt/service/${service}/debtor/${code}?_=` +
-      new Date().getTime();
+    const url = `${environment.END_POINT}/debt/service/${service}/debtor/${code}`;
     return this.http.get<any>(url).pipe(catchError((err) => throwError(err)));
   }
 
   postNewDebt(service: string, data: any): Observable<any> {
-    const url =
-      `${environment.END_POINT}/debt/service/${service}/debtor?_=` +
-      new Date().getTime();
+    const url = `${environment.END_POINT}/debt/service/${service}/debtor`;
     return this.http
       .post<any>(url, data)
       .pipe(catchError((err) => throwError(err)));
