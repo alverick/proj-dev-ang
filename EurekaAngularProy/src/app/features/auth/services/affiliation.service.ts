@@ -166,7 +166,6 @@ export class AffiliationService {
       password,
       acceptTerms,
     };
-    console.log('-> companyData', companyData);
     return this.companyService.saveCompany(companyData).pipe(
       tap(({ code, success, id }) => {
         if (success) {
@@ -287,7 +286,7 @@ export class AffiliationService {
     this.affiliationForms.resetCompanyForms();
   }
 
-  updateEditService(position: number, data) {
+  updateEditService(position: number) {
     const {
       name,
       debtorCode,

@@ -82,8 +82,8 @@ export class ServiceResumePage implements OnInit {
     });
   }
 
-  updateService(data) {
-    this.affiliation.updateEditService(this.position, data);
+  updateService() {
+    this.affiliation.updateEditService(this.position);
     this.showSidebar = false;
   }
 
