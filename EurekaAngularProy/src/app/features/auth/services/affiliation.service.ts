@@ -127,10 +127,7 @@ export class AffiliationService {
         this.showMessageExistsCustomer();
         break;
       }
-      case 2: {
-        this.showMessageNoExistsAccounts();
-        break;
-      }
+      case 2:
       case 3: {
         this.showMessageNoExistsAccounts();
         break;
@@ -262,6 +259,15 @@ export class AffiliationService {
   }
 
   saveAllServices() {
+    if (this.servicesList.length < 1) {
+      swalAlert.fire({
+        icon: 'warning',
+        text: `Debes contar con al menos un servicio para continuar`,
+        showConfirmButton: true,
+        confirmButtonText: 'Entendido',
+      });
+      return throwError('No services');
+    }
     return this.companyService
       .saveServices({
         clientId: this.companyId,
@@ -336,24 +342,23 @@ export class AffiliationService {
   }
 
   showMessageExistsCustomer(): void {
-    const { ruc } = this.registerForm.value;
     swalAlert.fire({
-      title: 'Crea tu cuenta',
-      text: `El RUC: ${ruc} ya se encuentra registrado en Cobro Simple`,
+      icon: 'warning',
+      text: `El RUC ingresado ya se encuentra registrado en Cobro Simple`,
       showConfirmButton: true,
-      showCloseButton: true,
-      confirmButtonText: 'CERRAR',
+      confirmButtonText: 'Entendido',
     });
   }
 
   showMessageNoExistsAccounts(): void {
     swalAlert
       .fire({
-        title: 'Abre tu Cuenta Negocios',
-        text: `Te llevaremos a la página web de Interbank para abrir la cuenta. Una vez que llenes el formulario regresa aquí.`,
+        title: '¡Abre tu Cuenta Negocios!',
+        html: `Debes tener una cuenta corriente o ahorros persona jurídica para registrarte en Cobro Simple. <br>
+Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
         showConfirmButton: true,
         showCloseButton: true,
-        confirmButtonText: 'CREAR MI CUENTA',
+        confirmButtonText: '¡Vamos ahora!',
       })
       .then(({ value }) => {
         if (value) {
