@@ -1,3 +1,4 @@
+import { NgxLoggerLevel } from 'ngx-logger';
 import { serverUrl, IEnvironment } from './constants';
 
 export const environment: IEnvironment = {
@@ -6,4 +7,6 @@ export const environment: IEnvironment = {
   development: true,
   END_POINT: serverUrl.local,
   OCP_KEY: '',
+  logLevel: NgxLoggerLevel.TRACE,
+  serverLogLevel: NgxLoggerLevel.OFF,
 };
