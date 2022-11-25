@@ -1,11 +1,10 @@
-import { Component, Directive, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { first } from 'rxjs/operators';
 import { internalFullRoutingNames } from 'src/app/app-routing.collection';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
@@ -76,7 +75,6 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    private spinner: NgxSpinnerService,
     private cookieService: CookieService,
     private storageService: StorageService,
     public snackBar: MatSnackBar,
@@ -175,8 +173,6 @@ export class LoginPage implements OnInit {
     this.cookieService.delete('ruc');
 
     if (this.loginForm.valid && this.isCaptchaValidate) {
-      this.spinner.show();
-
       this.loginService
         .login(this.f.ruc.value, this.f.psw.value)
         .pipe(first())
@@ -210,7 +206,6 @@ export class LoginPage implements OnInit {
               }
 
               this.router.navigate([internalFullRoutingNames.HOME]);
-              this.spinner.hide();
             } else if (this.intentos < 4 && this.codRespuesta === 2) {
               this.codigo2 = true;
             } else if (this.intentos < 4 && this.codRespuesta === 3) {
@@ -329,7 +324,6 @@ export class LoginPage implements OnInit {
             }
           },
           (error) => {
-            this.spinner.hide();
             if (error.status === 500) {
               this.mensaje(
                 'error',
@@ -337,8 +331,7 @@ export class LoginPage implements OnInit {
                 'Error del Servidor comuníquese con el administrador'
               );
             }
-          },
-          () => this.spinner.hide()
+          }
         );
     }
   }

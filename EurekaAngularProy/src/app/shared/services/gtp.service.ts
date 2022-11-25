@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -14,7 +13,6 @@ import { DataServiceGTP } from '../models/data-service-gtp';
 import { EnterprisesPagedList } from '../models/enterprises-gtp';
 import { GtpFilter } from '../models/gtp-filter';
 import { StatesGtp } from '../models/states-gtp';
-import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,11 +22,7 @@ export class GtpService {
   private URI_API: string = environment.END_POINT;
   public pageMessage = 'Mostrando 0 de 0 elementos';
 
-  constructor(
-    private http: HttpClient,
-    private storage: StorageService,
-    private spinner: NgxSpinnerService
-  ) {}
+  constructor(private http: HttpClient) {}
   /// para los servicios que estan en eprobacin
   public services: DataServiceGTP[] = [];
   public Service: DataServiceGTP;
@@ -232,18 +226,15 @@ export class GtpService {
   }
 
   public AprobarEmpresaServ(data: any): Observable<any> {
-    this.spinner.show();
     return this.http
       .post<any>(`${environment.END_POINT}/company/gtp/approve`, data)
       .pipe(
         map((r) => {
-          this.spinner.hide();
           return r;
         })
       )
       .pipe(
         catchError((err) => {
-          this.spinner.hide();
           return throwError(err);
         })
       );
@@ -257,31 +248,26 @@ export class GtpService {
       .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
       .pipe(
         map((r) => {
-          this.spinner.hide();
           return r;
         })
       )
       .pipe(
         catchError((err) => {
-          this.spinner.hide();
           return throwError(err);
         })
       );
   }
 
   public EditChangeGTP(data: any) {
-    this.spinner.show();
     return this.http
       .post<any>(`${environment.END_POINT}/company/gtp/client/update`, data)
       .pipe(
         map((r) => {
-          this.spinner.hide();
           return r;
         })
       )
       .pipe(
         catchError((err) => {
-          this.spinner.hide();
           return throwError(err);
         })
       );
@@ -372,7 +358,6 @@ export class GtpService {
   }
 
   public GrabarServicios(id: number, emp: DataEnterpriseGTP): Observable<any> {
-    this.spinner.show();
     const data = { clientId: id, company: emp, services: [], deleted: [] };
     this.services.forEach((s) => {
       data.services.push({
@@ -402,20 +387,17 @@ export class GtpService {
       .post<any>(`${environment.END_POINT}/company/GTP/company/update`, data)
       .pipe(
         map((r) => {
-          this.spinner.hide();
           return r;
         })
       )
       .pipe(
         catchError((err) => {
-          this.spinner.hide();
           throw throwError(err);
         })
       );
   }
 
   public ReenviarPAG(clientId: number): Observable<any> {
-    this.spinner.show();
     return this.http
       .post<any>(
         `${environment.END_POINT}/company/GTP/client/${clientId}/pag`,
@@ -423,13 +405,11 @@ export class GtpService {
       )
       .pipe(
         map((r) => {
-          this.spinner.hide();
           return r;
         })
       )
       .pipe(
         catchError((err) => {
-          this.spinner.hide();
           throw throwError(err);
         })
       );

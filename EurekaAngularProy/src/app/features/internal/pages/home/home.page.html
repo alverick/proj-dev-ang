@@ -1108,10 +1108,16 @@
                         (keyup.enter)="p.previous()"
                         (click)="p.previous()"
                       >
-                        <img class="tw-inline" src="../../../../../assets/images/before.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/before.svg"
+                        />
                       </a>
                       <span *ngIf="p.isFirstPage()">
-                        <img class="tw-inline" src="../../../../../assets/images/before.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/before.svg"
+                        />
                       </span>
                     </li>
                     <li *ngIf="p.pages.length === 0" class="current">
@@ -1152,10 +1158,17 @@
                         (keyup.enter)="p.next()"
                         (click)="p.next()"
                       >
-                        <img class="tw-inline" src="../../../../../assets/images/after.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/after.svg"
+                        />
                       </a>
                       <span class="pr-0" *ngIf="p.isLastPage()">
-                        <img class="tw-inline" class="tw-inline" src="../../../../../assets/images/after.svg" />
+                        <img
+                          class="tw-inline"
+                          class="tw-inline"
+                          src="../../../../../assets/images/after.svg"
+                        />
                       </span>
                     </li>
                   </ul>
@@ -1169,5 +1182,6 @@
       </div>
     </div>
   </div>
+  <div class="test" (click)="loader()">button</div>
 </div>
 <template #fileLoad class="file-load"></template>

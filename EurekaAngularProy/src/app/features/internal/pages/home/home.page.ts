@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import * as saveAs from 'file-saver';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { all, equals, prop } from 'ramda';
 import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
@@ -47,7 +46,6 @@ export class HomePage implements OnInit {
     public transactionService: TransactionService,
     private excelService: ExcelService,
     public dialog: MatDialog,
-    private spinner: NgxSpinnerService,
     private loginService: LoginService,
     private popover: Popover,
     private gaService: GoogleAnalytics,
@@ -192,12 +190,7 @@ export class HomePage implements OnInit {
     this.homeService.getDate().subscribe((value) => {
       this.DateList = value;
     });
-    this.spinner.show('mySpinner', {
-      type: 'line-scale-party',
-      size: 'large',
-      bdColor: 'rgba(100,149,237, .8)',
-      color: 'white',
-    });
+
     this.transactionService.debtItems = {
       data: [],
       countNoIbkPayments: 0,
@@ -331,27 +324,20 @@ export class HomePage implements OnInit {
   consultaDeuda(cb: () => void = null) {
     // tslint:disable-next-line:prefer-const
 
-    this.spinner.show();
     this.transactionService
       .getDeuda(this.currentFilter, this.selectedUniverse)
-      .subscribe(
-        (debts) => {
-          if (this.transactionService.debtItems.data.length > 0) {
-            this.selectedAll = this.transactionService.isMarkedAll(
-              this.selectedUniverse
-            );
-          }
-
-          // this.selectedUniverse = false;
-          this.spinner.hide();
-          if (cb) {
-            cb();
-          }
-        },
-        (err) => {
-          this.spinner.hide();
+      .subscribe((debts) => {
+        if (this.transactionService.debtItems.data.length > 0) {
+          this.selectedAll = this.transactionService.isMarkedAll(
+            this.selectedUniverse
+          );
         }
-      );
+
+        // this.selectedUniverse = false;
+        if (cb) {
+          cb();
+        }
+      });
     this.messageTable = 'Para empezar, agrega la lista de las deudas';
     this.showArrow = true;
   }
@@ -528,46 +514,39 @@ export class HomePage implements OnInit {
       onOpen: drawPopup,
     }).then((result) => {
       if (result.value) {
-        this.spinner.show();
-
         const observable = this.selectedUniverse
           ? this.transactionService.deleteFiltered(this.filtro)
           : this.transactionService.deleteAll();
-        observable.subscribe(
-          () => {
-            this.gaService.sendEvent('EliminarDeudas', {
-              event_category: 'Dashboard',
-              event_label: 'eliminar_deudas',
-            });
-            this.consultaDeuda(() => {
-              if (totalForDelete === 1) {
-                mensaje_final =
-                  'Se han eliminado ' + totalForDelete + ' registro';
-              }
-              if (totalForDelete > 1) {
-                mensaje_final =
-                  'Se han eliminado ' + totalForDelete + ' registros';
-              }
+        observable.subscribe(() => {
+          this.gaService.sendEvent('EliminarDeudas', {
+            event_category: 'Dashboard',
+            event_label: 'eliminar_deudas',
+          });
+          this.consultaDeuda(() => {
+            if (totalForDelete === 1) {
+              mensaje_final =
+                'Se han eliminado ' + totalForDelete + ' registro';
+            }
+            if (totalForDelete > 1) {
+              mensaje_final =
+                'Se han eliminado ' + totalForDelete + ' registros';
+            }
 
-              Swal.fire({
-                title: 'Eliminado',
-                text: mensaje_final,
-                showCloseButton: true,
-                showCancelButton: false,
-                confirmButtonText: 'CERRAR',
-                onOpen: drawPopup,
-              });
+            Swal.fire({
+              title: 'Eliminado',
+              text: mensaje_final,
+              showCloseButton: true,
+              showCancelButton: false,
+              confirmButtonText: 'CERRAR',
+              onOpen: drawPopup,
             });
-            this.selectedAll = false;
-            this.selectedUniverse = false;
+          });
+          this.selectedAll = false;
+          this.selectedUniverse = false;
 
-            this.transactionService.debtItems.data = [];
-            this.transactionService.itemsForDelete = [];
-          },
-          (err) => {
-            this.spinner.hide();
-          }
-        );
+          this.transactionService.debtItems.data = [];
+          this.transactionService.itemsForDelete = [];
+        });
       }
     });
     this.DebtsAreSelected();
@@ -583,19 +562,10 @@ export class HomePage implements OnInit {
       onOpen: drawPopup,
     }).then((result) => {
       if (result.value) {
-        this.spinner.show();
-        this.transactionService.deleteDeuda(item.id).subscribe(
-          () =>
-            this.consultaDeuda(() => {
-              Swal.fire(
-                'Eliminado',
-                'Tu registro ha sido eliminado',
-                'success'
-              );
-            }),
-          (err) => {
-            this.spinner.hide();
-          }
+        this.transactionService.deleteDeuda(item.id).subscribe(() =>
+          this.consultaDeuda(() => {
+            Swal.fire('Eliminado', 'Tu registro ha sido eliminado', 'success');
+          })
         );
       }
     });
