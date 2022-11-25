@@ -7,9 +7,9 @@ import {
   Output,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs/internal/Subject';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { IErrorMessages } from '../../../../shared/models/forms';
 
 @Component({
@@ -31,7 +31,10 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.form
       .get('account')
-      .valueChanges.pipe(takeUntil(this.$destroy))
+      .valueChanges.pipe(
+        takeUntil(this.$destroy),
+        filter((value) => isNotNil(value))
+      )
       .subscribe(({ currency = '', id = '', number = '' }) => {
         if (isNotNilOrEmpty(number)) {
           const accountNumber = `${number.substr(0, 13)} (${
