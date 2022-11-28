@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IEntryModel } from '../../../../shared/models';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
@@ -24,10 +23,6 @@ export class UpdateCompanyPage implements OnInit {
   }
 
   onSubmit() {
-    this.affiliation.validateCompany().subscribe(({ success }) => {
-      if (success) {
-        this.router.navigate([authFullRoutingChildNames.UPDATE_SERVICES]);
-      }
-    });
+    this.router.navigate([authFullRoutingChildNames.UPDATE_SERVICES]);
   }
 }

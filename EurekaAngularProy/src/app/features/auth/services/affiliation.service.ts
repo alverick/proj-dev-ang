@@ -5,6 +5,8 @@ import { isEmpty, isNil } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { ICompanyUpdate } from 'src/app/shared/models/company';
+import { updateCompanyMock } from '../../../shared/mocks/affiliation';
 import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
@@ -12,6 +14,7 @@ import {
   ICompanyResult,
 } from '../../../shared/services/company.service';
 import { EnterpriseHeadingService } from '../../../shared/services/enterprise-heading.service';
+import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
 import { debtorCodeCustomEmpty } from '../constants';
@@ -34,6 +37,7 @@ export class AffiliationService {
     private router: Router,
     private formBuilder: FormBuilder,
     private companyService: CompanyService,
+    private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
     private affiliationForms: AffiliationFormsService
   ) {
@@ -389,5 +393,28 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
 
   removeEditService() {
     this.editServiceForm.reset();
+  }
+
+  setUpdateFormsData(data: ICompanyUpdate): void {
+    this.authForm.patchValue({
+      ruc: data.ruc,
+      name: data.name,
+      entry: data.entry,
+    });
+    this.authForm.get('entrySelect').disable();
+    this.affiliationForms.setAuthFormNameValidator(data.name);
+    this.servicesList = data.arrayServices;
+  }
+
+  validateTokenForUpdate(token: string): Observable<ICompanyUpdate | boolean> {
+    return this.loginService
+      .getCompanyDataUpdate({ TokenEncrypted: token })
+      .pipe(
+        tap((result: ICompanyUpdate | null) => {
+          if (result) {
+            this.setUpdateFormsData(result);
+          }
+        })
+      );
   }
 }

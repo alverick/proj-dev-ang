@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { isNil } from 'ramda';
@@ -15,6 +17,13 @@ export class AffiliationFormsService {
   serviceForm: FormGroup;
   serviceConfigForm: FormGroup;
   editServiceForm: FormGroup;
+
+  authNameValidators = [
+    Validators.required,
+    Validators.minLength(3),
+    Validators.maxLength(80),
+    notBlankSpaces,
+  ];
 
   constructor(private formBuilder: FormBuilder) {
     const emailValidators = [
@@ -56,13 +65,9 @@ export class AffiliationFormsService {
           Validators.pattern('[1-2]0[0-9]+?'),
           Validators.minLength(11),
         ]),
-        name: new FormControl('', [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(80),
-          notBlankSpaces,
-        ]),
+        name: new FormControl('', this.authNameValidators),
         entry: new FormControl('', [Validators.required]),
+        entrySelect: new FormControl('', [Validators.required]),
         password: new FormControl('', [
           Validators.required,
           Validators.minLength(6),
@@ -192,6 +197,21 @@ export class AffiliationFormsService {
       },
     });
   }
+
+  setAuthFormNameValidator(name: string) {
+    this.authForm
+      .get('name')
+      .setValidators([...this.authNameValidators, changeName(name)]);
+  }
+}
+
+function changeName(name: string) {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (control.value === name) {
+      return { change: true };
+    }
+    return null;
+  };
 }
 
 function notBlankSpaces(control: FormControl) {
