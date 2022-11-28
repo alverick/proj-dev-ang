@@ -24,6 +24,7 @@ interface IAuthRoutingNames extends IRouteNames {
   SERVICES_EDIT_GTP: string;
   SERVICES_ADD: string;
   REGISTER_UPDATING: string;
+  REGISTER_UPDATING_VALIDATION: string;
 }
 
 interface IAuthRoutingChildNames extends IRouteNames {
@@ -51,6 +52,7 @@ export const authRoutingNames: IAuthRoutingNames = {
   SERVICES_EDIT_GTP: 'gtp-editar-servicios',
   SERVICES_ADD: 'agregar-servicio',
   REGISTER_UPDATING: 'actualizacion',
+  REGISTER_UPDATING_VALIDATION: 'validacion',
 };
 
 export const authRoutingChildNames: IAuthRoutingChildNames = {
@@ -90,6 +92,7 @@ export const authDynamicRoutingNames: Partial<IAuthRoutingNames> = {
   CHANGE_PASSWORD: `${authRoutingNames.CHANGE_PASSWORD}/:llave`,
   COMPANY_CONFIGURATION: `${authRoutingNames.COMPANY_CONFIGURATION}/:llave`,
   GENERATE_PASSWORD: `${authRoutingNames.GENERATE_PASSWORD}/:llave`,
+  REGISTER_UPDATING_VALIDATION: `${authRoutingNames.REGISTER_UPDATING_VALIDATION}/:token`,
 };
 
 export const authFullRoutingNames: IAuthRoutingNames = generateFullRoutes(
