@@ -109,4 +109,14 @@ export class LoginService {
       }
     }
   }
+
+  public getCompanyDataUpdate(data: any): Observable<any> {
+    return this.http
+      .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
+  }
 }
