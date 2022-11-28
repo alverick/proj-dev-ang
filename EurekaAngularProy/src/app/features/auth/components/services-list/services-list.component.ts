@@ -5,6 +5,7 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
+  Input,
   OnInit,
   Output,
 } from '@angular/core';
@@ -15,6 +16,7 @@ import {
   styleUrls: ['./services-list.component.scss'],
 })
 export class ServicesListComponent implements OnInit, AfterViewInit {
+  @Input() edit = false;
   @Output() add = new EventEmitter();
   @Output() finish = new EventEmitter();
   additionalButtons = false;
