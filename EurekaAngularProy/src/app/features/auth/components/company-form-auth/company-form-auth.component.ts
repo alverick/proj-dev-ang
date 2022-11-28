@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -10,6 +11,9 @@ import {
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { has } from 'ramda';
+import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
+import { Subject } from 'rxjs/internal/Subject';
+import { filter, takeUntil } from 'rxjs/operators';
 import { ModalTermsComponent } from 'src/app/shared/components/modal-terms/modal-terms.component';
 import { IEntryModel } from '../../../../shared/models';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
@@ -20,7 +24,8 @@ import { IErrorMessages } from '../../../../shared/models/forms';
   templateUrl: './company-form-auth.component.html',
   styleUrls: ['./company-form-auth.component.scss'],
 })
-export class CompanyFormAuthComponent implements OnInit, OnChanges {
+export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
+  $destroy = new Subject();
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
   @Input() categories: IEntryModel[] = [];
   @Input() companyForm: FormGroup;
@@ -29,9 +34,25 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges {
 
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.companyForm
+      .get('entrySelect')
+      .valueChanges.pipe(
+        takeUntil(this.$destroy),
+        filter((value) => isNotNil(value))
+      )
+      .subscribe((value: IEntryModel) => {
+        this.companyForm.get('entry').setValue(value.code);
+      });
+  }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (
+      has('categories', changes) &&
+      isNotNilOrEmpty(this.companyForm.get('entry').value)
+    ) {
+      this.setCategorySelected();
+    }
     if (has('edit', changes)) {
       this.setForm();
     }
@@ -41,6 +62,13 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges {
     this.dialog.open(ModalTermsComponent, {
       width: '810px',
     });
+  }
+
+  setCategorySelected() {
+    const categorySelected = this.categories.find(
+      (category) => category.code === this.companyForm.get('entry').value
+    );
+    this.companyForm.get('entrySelect').setValue(categorySelected);
   }
 
   private setForm() {
@@ -62,5 +90,9 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges {
     if (this.companyForm.valid) {
       this.sendForm.emit({ entry: code, ...formValue });
     }
+  }
+  ngOnDestroy() {
+    this.$destroy.next();
+    this.$destroy.complete();
   }
 }
