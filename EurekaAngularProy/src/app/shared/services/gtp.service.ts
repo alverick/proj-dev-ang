@@ -6,8 +6,8 @@ import { of, throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IServiceModel } from '../models';
+import { ICompanyData } from '../models/company-data';
 import { CorreoGtpModel } from '../models/data-correoGtp';
-import { DataEnterpriseGTP } from '../models/data-enterprise-gtp';
 import { DataGTPChange } from '../models/data-gtpchange';
 import { DataServiceGTP } from '../models/data-service-gtp';
 import { EnterprisesPagedList } from '../models/enterprises-gtp';
@@ -35,7 +35,7 @@ export class GtpService {
   public llave: string;
   public nombre: string;
   public EdtEmpServ: DataGTPChange;
-  public EmpresaServicios: DataEnterpriseGTP;
+  public EmpresaServicios: ICompanyData;
   private States: StatesGtp[] = [
     { idState: 'Pendiente', descripcion: 'Pendiente' },
     { idState: 'Atendido', descripcion: 'Atendido' },
@@ -111,10 +111,10 @@ export class GtpService {
       .pipe(catchError((error) => throwError(error)));
   }
 
-  GetEnterpriseGtp(id: any): Observable<DataEnterpriseGTP> {
+  GetEnterpriseGtp(id: any): Observable<ICompanyData> {
     const url = `${environment.END_POINT}/company/GTP/client/${id}`;
     return this.http
-      .get<DataEnterpriseGTP>(url)
+      .get<ICompanyData>(url)
       .pipe(
         map((r) => {
           return r;
@@ -243,7 +243,6 @@ export class GtpService {
   /*ESTO ME TRAE EN LA CORRECION*/
 
   public GetEnterpriseServices(data: any): Observable<any> {
-    this.spinner.show();
     return this.http
       .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
       .pipe(
@@ -357,7 +356,7 @@ export class GtpService {
     return this.http.get<any>(url);
   }
 
-  public GrabarServicios(id: number, emp: DataEnterpriseGTP): Observable<any> {
+  public GrabarServicios(id: number, emp: ICompanyData): Observable<any> {
     const data = { clientId: id, company: emp, services: [], deleted: [] };
     this.services.forEach((s) => {
       data.services.push({

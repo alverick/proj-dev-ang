@@ -9,7 +9,7 @@ import {
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { IEntryModel } from 'src/app/shared/models';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { ICompanyData } from 'src/app/shared/models/company-data';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 
@@ -19,7 +19,7 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
   styleUrls: ['./empresa-gtp.component.scss'],
 })
 export class EmpresaGTPComponent implements OnInit {
-  public _enterprise: DataEnterpriseGTP;
+  public _enterprise: ICompanyData;
   formGroup: FormGroup;
   submitted = false;
   rubros: IEntryModel[] = [];
@@ -35,7 +35,7 @@ export class EmpresaGTPComponent implements OnInit {
       minlength: 'El teléfono o celular debe tener mínimo 9 dígitos',
     },
   };
-  @Input() set enterprise(value: DataEnterpriseGTP) {
+  @Input() set enterprise(value: ICompanyData) {
     this._enterprise = value;
   }
   @Output() grabar = new EventEmitter<any>();
@@ -149,7 +149,7 @@ export class EmpresaGTPComponent implements OnInit {
     const { valid, value } = this.formGroup;
     if (valid) {
       const isNotEditable = this._enterprise.newNameGTPStatus !== 1;
-      let dataEnterprise: DataEnterpriseGTP;
+      let dataEnterprise: ICompanyData;
       if (isNotEditable) {
         dataEnterprise = {
           ...this._enterprise,

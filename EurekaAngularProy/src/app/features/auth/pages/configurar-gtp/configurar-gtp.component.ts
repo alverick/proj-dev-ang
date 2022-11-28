@@ -2,7 +2,7 @@ import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { appFullRoutingNames } from 'src/app/app-routing.collection';
 import { IEntryModel, IServiceModel } from 'src/app/shared/models';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { ICompanyData } from 'src/app/shared/models/company-data';
 import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
 import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
@@ -37,8 +37,8 @@ export class ConfigurarGtpComponent implements OnInit {
   public inGTP = false;
   public titulo: string;
   public SvcEdit: ServicesGTPChange[];
-  public Empgtp: DataEnterpriseGTP = null;
-  public Enterprise: DataEnterpriseGTP = {
+  public Empgtp: ICompanyData = null;
+  public Enterprise: ICompanyData = {
     cu: '',
     ruc: '0',
     name: '',
@@ -530,7 +530,7 @@ export class ConfigurarGtpComponent implements OnInit {
     }
   }
 
-  VerCamposEnterprise(etp: DataEnterpriseGTP) {
+  VerCamposEnterprise(etp: ICompanyData) {
     if (this.Formulario === true) {
       this.mensaje(
         'Aprobando Servicio ',
@@ -554,7 +554,7 @@ export class ConfigurarGtpComponent implements OnInit {
     this.indiceActual = index;
   }
 
-  onGrabarEmp(emp: DataEnterpriseGTP) {
+  onGrabarEmp(emp: ICompanyData) {
     this.Enterprise = emp;
     this.EmpresaFormulario = false;
   }
