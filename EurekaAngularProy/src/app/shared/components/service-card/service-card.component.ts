@@ -11,14 +11,24 @@ export class ServiceCardComponent implements OnInit {
   @Input() serviceData: IServiceRemoteModel;
   @Input() position: number;
   @Input() canEdit = true;
+  @Input() update = false;
   @Output() edit = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
   paymentChannels = '';
   dataType = '';
+  name = '';
+  updateEditable = false;
 
   ngOnInit() {
     this.setPaymentChannels();
     this.setDataType();
+    this.isEditable();
+  }
+
+  isEditable() {
+    if (this.update) {
+      this.updateEditable = this.serviceData.inReview;
+    }
   }
 
   setDataType() {
