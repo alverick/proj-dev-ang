@@ -25,6 +25,15 @@ export class AffiliationFormsService {
     notBlankSpaces,
   ];
 
+  editNameValidators = [
+    Validators.required,
+    Validators.minLength(3),
+    onlyAlphaNumber,
+    Validators.pattern(
+      '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
+    ),
+  ];
+
   constructor(private formBuilder: FormBuilder) {
     const emailValidators = [
       Validators.required,
@@ -91,7 +100,7 @@ export class AffiliationFormsService {
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
-        onlyAlphaNuber,
+        onlyAlphaNumber,
         notBlankSpaces,
         Validators.pattern(
           '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
@@ -146,14 +155,7 @@ export class AffiliationFormsService {
     });
 
     this.editServiceForm = this.formBuilder.group({
-      name: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        onlyAlphaNuber,
-        Validators.pattern(
-          '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
-        ),
-      ]),
+      name: new FormControl('', this.editNameValidators),
       currency: new FormControl(''),
       useAppWeb: [true],
       useAgent: [false],
@@ -198,6 +200,12 @@ export class AffiliationFormsService {
     });
   }
 
+  setEditFormValidator(name: string) {
+    this.editServiceForm
+      .get('name')
+      .setValidators([...this.editNameValidators, changeName(name)]);
+  }
+
   setAuthFormNameValidator(name: string) {
     this.authForm
       .get('name')
@@ -235,7 +243,7 @@ function onlyOneLetter(control: FormControl) {
   return null;
 }
 
-function onlyAlphaNuber(control: FormControl) {
+function onlyAlphaNumber(control: FormControl) {
   const regex = /[0-9a-zA-Z]-?/g;
   if (isNil(control.value)) {
     return null;

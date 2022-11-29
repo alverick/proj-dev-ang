@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 import { isEmpty, isNil } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
@@ -32,6 +33,7 @@ export class AffiliationService {
   serviceForm: FormGroup;
   serviceConfigForm: FormGroup;
   editServiceForm: FormGroup;
+  private updateData: ICompanyUpdate;
 
   constructor(
     private router: Router,
@@ -39,9 +41,11 @@ export class AffiliationService {
     private companyService: CompanyService,
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
-    private affiliationForms: AffiliationFormsService
+    private affiliationForms: AffiliationFormsService,
+    private logger: NGXLogger
   ) {
     this.setRegisterForm();
+    this.setUpdateFormsData(updateCompanyMock);
   }
 
   public setRegisterForm() {
@@ -68,10 +72,19 @@ export class AffiliationService {
       chargeType,
       dataType,
       interestType,
+      inReview,
       amount,
       percentage,
       partialPayment,
     } = this.servicesList[position];
+    this.logger.trace(
+      '-> this.servicesList[position]',
+      this.servicesList[position]
+    );
+
+    if (inReview) {
+      this.affiliationForms.setEditFormValidator(name);
+    }
 
     const amountField = interestType === 'M' ? amount : percentage;
     return {
@@ -80,6 +93,7 @@ export class AffiliationService {
       useAppWeb,
       useAgent,
       currency,
+      inReview,
       debt: {
         dataType,
         paymentType,
@@ -279,13 +293,35 @@ export class AffiliationService {
       );
   }
 
+  saveUpdateInformation() {
+    if (this.updateData.name === this.authForm.get('name').value) {
+      swalAlert.fire({
+        icon: 'warning',
+        text: `El nombre comercial debe ser actualizado`,
+        showConfirmButton: true,
+        confirmButtonText: 'Entendido',
+      });
+    } else if (
+      this.servicesList.some(
+        ({ inReview, name, newName }) => name === newName && inReview
+      )
+    ) {
+      swalAlert.fire({
+        icon: 'warning',
+        text: `Debe actualizar el nombre de todos los servicios observados`,
+        showConfirmButton: true,
+        confirmButtonText: 'Entendido',
+      });
+    }
+  }
+
   resetRegistration() {
     this.email = this.registerForm.value.email;
     this.servicesList = [];
     this.affiliationForms.resetCompanyForms();
   }
 
-  updateEditService(position: number) {
+  updateEditService(position: number, isUpdate = false) {
     const {
       name,
       debtorCode,
@@ -316,10 +352,12 @@ export class AffiliationService {
       interestType
     );
 
+    const newName = isUpdate ? this.servicesList[position].newName : name;
+
     this.servicesList[position] = {
       ...this.servicesList[position],
       name,
-      newName: name,
+      newName,
       paymentType,
       useAgent,
       chargeInterest,
@@ -391,6 +429,7 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
   }
 
   setUpdateFormsData(data: ICompanyUpdate): void {
+    this.updateData = data;
     this.authForm.patchValue({
       ruc: data.ruc,
       name: data.name,
@@ -398,7 +437,9 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
     });
     this.authForm.get('entrySelect').disable();
     this.affiliationForms.setAuthFormNameValidator(data.name);
-    this.servicesList = data.arrayServices;
+    this.servicesList = data.arrayServices.map((service) => {
+      return { ...service, name: service.name || service.newName };
+    });
   }
 
   validateTokenForUpdate(token: string): Observable<ICompanyUpdate | boolean> {
