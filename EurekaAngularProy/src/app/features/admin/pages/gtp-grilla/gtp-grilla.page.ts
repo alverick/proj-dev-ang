@@ -214,8 +214,8 @@ export class GtpGrillaPage implements OnInit {
     ]);
   }
 
-  consultaGtp() {
-    this.gtpService.getEmpresas(this.currentFilter);
+  async consultaGtp() {
+    await this.gtpService.getEmpresas(this.currentFilter).toPromise();
   }
 
   ceroRegistros(): boolean {
