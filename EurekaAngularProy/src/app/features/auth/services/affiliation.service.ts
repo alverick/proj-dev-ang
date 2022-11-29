@@ -152,18 +152,13 @@ export class AffiliationService {
       movilOperator,
       ruc,
     } = this.registerForm.value;
-    const {
-      acceptTerms,
-      entry: { code: codeEntry },
-      password,
-      name,
-    } = this.authForm.value;
+    const { acceptTerms, entry, password, name } = this.authForm.value;
     const companyData: IDataEnterpriseModel = {
       documentType,
       documentNumber,
       ruc,
       name,
-      entry: codeEntry,
+      entry,
       email,
       movilNumber,
       movilOperator,
