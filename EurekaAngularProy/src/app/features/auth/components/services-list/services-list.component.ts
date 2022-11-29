@@ -17,6 +17,7 @@ import {
 })
 export class ServicesListComponent implements OnInit, AfterViewInit {
   @Input() edit = false;
+  @Input() empty = false;
   @Output() add = new EventEmitter();
   @Output() finish = new EventEmitter();
   additionalButtons = false;

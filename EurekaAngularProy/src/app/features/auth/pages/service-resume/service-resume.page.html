@@ -1,5 +1,6 @@
 <cs-services-list
   class="tw-w-full"
+  [empty]="affiliation.servicesList.length == 0"
   (add)="createService()"
   (finish)="finalize()"
 >
