@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
+import { authFullRoutingNames } from '../../auth-routing.names';
 import {
   chargeTypeOptions,
   currencyOptions,
@@ -18,7 +19,7 @@ import { AffiliationFormsService, AffiliationService } from '../../services';
   styleUrls: ['./update-services.page.scss'],
 })
 export class UpdateServicesPage implements OnInit {
-  position = 3;
+  position = 0;
   steps = [{ title: 'Step 1' }, { title: 'Step 2' }, { title: 'Step 3' }];
   showSidebar = false;
   errorMessages = {
@@ -30,6 +31,7 @@ export class UpdateServicesPage implements OnInit {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
+  formData;
 
   constructor(
     private router: Router,
@@ -57,10 +59,23 @@ export class UpdateServicesPage implements OnInit {
   }
 
   actionEdit(position: number) {
-    this.affiliation.setEditForm(position);
+    this.formData = this.affiliation.setEditForm(position);
     this.position = position;
-    this.showSidebar = true;
+    setTimeout(() => {
+      this.showSidebar = true;
+    }, 200);
   }
 
-  updateService($event: object) {}
+  finalize() {
+    this.affiliation.saveUpdateInformation();
+  }
+
+  updateService() {
+    this.affiliation.updateEditService(this.position, true);
+    this.showSidebar = false;
+  }
+
+  closePanel() {
+    this.affiliation.removeEditService();
+  }
 }

@@ -5,19 +5,21 @@
     Configura los servicios de tu empresa
   </div>
   <div class="tw-w-40 tw-py-4">
-    <p-steps [model]="steps" [activeIndex]="position"></p-steps>
+    <p-steps [model]="steps" [activeIndex]="2"></p-steps>
   </div>
 </div>
 <div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
   <cs-services-list
     class="tw-w-full"
     [edit]="true"
-    (finish)="updateService($event)"
+    (finish)="finalize()"
   >
     <cs-service-card
       *ngFor="let service of affiliation.servicesList;let position=index"
       [serviceData]="service"
       [position]="position"
+      [update]="true"
+      [canEdit]="service.inReview"
       (delete)="actionDelete($event)"
       (edit)="actionEdit(position)"
     ></cs-service-card>
@@ -28,6 +30,7 @@
     [closeOnEscape]="false"
     [blockScroll]="true"
     [baseZIndex]="10000"
+    (onHide)="closePanel()"
     position="right"
     styleClass="ui-sidebar-md edit-form tw-h-screen tw-overflow-auto"
   >
@@ -39,6 +42,7 @@
       [currencyOptions]="currencyOptions"
       [chargeTypeOptions]="chargeTypeOptions"
       [interestTypeOptions]="interestTypeOptions"
+      [formData]="formData"
       (sendForm)="updateService($event)"
     ></cs-service-edit-form>
   </p-sidebar>
