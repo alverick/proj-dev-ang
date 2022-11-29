@@ -169,6 +169,7 @@ export const errorMessagesService: IErrorMessages = {
     maxlength: 'El nombre no puede tener mas de 80 caracteres',
     alfa: 'El nombre debe tener por lo menos una letra o un numero',
     alfabetico: 'El nombre debe tener por lo menos una letra',
+    change: 'Ingresa otro nombre para el servicio',
   },
   account: {
     required: 'Elige una opción',
