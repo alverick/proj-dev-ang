@@ -59,6 +59,7 @@
             icon="pi pi-times"
             class="ui-button-secondary"
             (click)="showDropdown()"
+            [disabled]="formData.inReview"
           ></button>
         </div>
       </cs-label-control>
