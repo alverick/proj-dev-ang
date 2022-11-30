@@ -49,7 +49,6 @@ export class AffiliationService {
     private logger: NGXLogger
   ) {
     this.setRegisterForm();
-    this.setUpdateFormsData(updateCompanyMock);
   }
 
   public setRegisterForm() {
