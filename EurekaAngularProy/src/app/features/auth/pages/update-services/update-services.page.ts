@@ -67,7 +67,13 @@ export class UpdateServicesPage implements OnInit {
   }
 
   finalize() {
-    this.affiliation.saveUpdateInformation();
+    this.affiliation.saveUpdateInformation().subscribe((result) => {
+      if (result) {
+        this.router.navigate([authFullRoutingNames.PROCESSING]);
+      } else {
+        this.router.navigate([authFullRoutingNames.LOGIN]);
+      }
+    });
   }
 
   updateService() {
