@@ -45,3 +45,15 @@ export interface ICompanyUpdate {
   email: string;
   status: string;
 }
+
+interface IServiceSendUpdate {
+  NewName: string;
+  NewCodName: null;
+  ServiceId: number;
+}
+
+export interface ICompanySendUpdate {
+  ArrayServices: IServiceSendUpdate[];
+  Token: string;
+  NewName: null | string;
+}

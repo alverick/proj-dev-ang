@@ -3,10 +3,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isEmpty, isNil } from 'ramda';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { ICompanyUpdate } from 'src/app/shared/models/company';
+import {
+  ICompanySendUpdate,
+  ICompanyUpdate,
+} from 'src/app/shared/models/company';
 import { updateCompanyMock } from '../../../shared/mocks/affiliation';
 import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
@@ -34,6 +37,7 @@ export class AffiliationService {
   serviceConfigForm: FormGroup;
   editServiceForm: FormGroup;
   private updateData: ICompanyUpdate;
+  tokenUpdate;
 
   constructor(
     private router: Router,
@@ -293,26 +297,61 @@ export class AffiliationService {
       );
   }
 
-  saveUpdateInformation() {
+  saveUpdateInformation(): Observable<boolean> | Observable<never> {
+    let modalSettings;
     if (this.updateData.name === this.authForm.get('name').value) {
-      swalAlert.fire({
+      modalSettings = {
         icon: 'warning',
         text: `El nombre comercial debe ser actualizado`,
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
-      });
+      };
     } else if (
       this.servicesList.some(
         ({ inReview, name, newName }) => name === newName && inReview
       )
     ) {
-      swalAlert.fire({
+      modalSettings = {
         icon: 'warning',
         text: `Debe actualizar el nombre de todos los servicios observados`,
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
-      });
+      };
     }
+
+    if (isNotNil(modalSettings)) {
+      swalAlert.fire(modalSettings);
+      return throwError('Incomplete data');
+    }
+
+    const payload: ICompanySendUpdate = {
+      Token: this.tokenUpdate,
+      NewName: this.updateData.inReview
+        ? this.authForm.get('name').value
+        : null,
+      ArrayServices: this.servicesList.map((service) => {
+        return {
+          ServiceId: service.id,
+          NewName: service.inReview ? service.name : null,
+          NewCodName: null,
+        };
+      }),
+    };
+
+    return this.companyService.sendUpdateCompanyData(payload).pipe(
+      tap((result) => {
+        if (result) {
+          this.email = this.updateData.email;
+        } else {
+          swalAlert.fire({
+            icon: 'warning',
+            text: `Ha ocurrido un error`,
+            showConfirmButton: true,
+            confirmButtonText: 'Entendido',
+          });
+        }
+      })
+    );
   }
 
   resetRegistration() {
@@ -448,6 +487,7 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
       .pipe(
         tap((result: ICompanyUpdate | null) => {
           if (result) {
+            this.tokenUpdate = token;
             this.setUpdateFormsData(result);
           }
         })

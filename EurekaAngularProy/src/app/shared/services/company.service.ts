@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IServicePostData } from '../models';
 
@@ -50,5 +50,15 @@ export class CompanyService {
 
   getCompanyAccounts() {
     return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
+  }
+
+  sendUpdateCompanyData(data) {
+    return this.http
+      .post<any>(`${environment.END_POINT}/company/gtp/client/update`, data)
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
   }
 }
