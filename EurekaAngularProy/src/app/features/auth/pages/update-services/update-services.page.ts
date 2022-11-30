@@ -77,7 +77,7 @@ export class UpdateServicesPage implements OnInit {
   }
 
   updateService() {
-    this.affiliation.updateEditService(this.position, true);
+    this.affiliation.updateEditServiceName(this.position);
     this.showSidebar = false;
   }
 

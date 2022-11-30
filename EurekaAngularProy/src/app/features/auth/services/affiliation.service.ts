@@ -67,6 +67,7 @@ export class AffiliationService {
   setEditForm(position: number) {
     const {
       name,
+      newName,
       debtorCode,
       paymentType,
       currency,
@@ -87,7 +88,7 @@ export class AffiliationService {
     );
 
     if (inReview) {
-      this.affiliationForms.setEditFormValidator(name);
+      this.affiliationForms.setEditFormValidator(newName);
     }
 
     const amountField = interestType === 'M' ? amount : percentage;
@@ -360,7 +361,15 @@ export class AffiliationService {
     this.affiliationForms.resetCompanyForms();
   }
 
-  updateEditService(position: number, isUpdate = false) {
+  updateEditServiceName(position: number) {
+    const { name } = this.editServiceForm.value;
+    this.servicesList[position] = {
+      ...this.servicesList[position],
+      name,
+    };
+  }
+
+  updateEditService(position: number) {
     const {
       name,
       debtorCode,
@@ -391,12 +400,10 @@ export class AffiliationService {
       interestType
     );
 
-    const newName = isUpdate ? this.servicesList[position].newName : name;
-
     this.servicesList[position] = {
       ...this.servicesList[position],
       name,
-      newName,
+      newName: name,
       paymentType,
       useAgent,
       chargeInterest,
