@@ -8,6 +8,9 @@ import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import { EnterpriseHeadingService } from '../../../shared/services/enterprise-heading.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
+import { atLeastOneLetter } from '../../../shared/validators/atLeastOneLetter.validator';
+import { atLeastOneNumber } from '../../../shared/validators/atLeastOneNumber.validator';
+import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { internalFullRoutingNames } from '../internal-routing.names';
 
@@ -32,7 +35,6 @@ export class CompanyConfigurationService {
 
   getCompanyData() {
     this.companyService.getCompanyData().subscribe((data) => {
-      console.log(data);
       this.companyData = data;
       this.companyForm.patchValue(data);
       if (data.inReview) {
@@ -197,6 +199,7 @@ export class CompanyConfigurationService {
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(20),
+            atLeastOneLetter,
           ],
         ],
         newPassword: [
@@ -205,6 +208,8 @@ export class CompanyConfigurationService {
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(20),
+            atLeastOneLetter,
+            atLeastOneNumber,
           ],
         ],
         confirmNewPassword: [
@@ -213,11 +218,16 @@ export class CompanyConfigurationService {
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(20),
+            atLeastOneLetter,
+            atLeastOneNumber,
           ],
         ],
       },
       {
-        validator: MustMatch('newPassword', 'confirmNewPassword'),
+        validators: [
+          MustMatch('newPassword', 'confirmNewPassword'),
+          MustDifferent('password', 'newPassword'),
+        ],
       }
     );
   }
