@@ -1,15 +1,15 @@
 import { FormGroup } from '@angular/forms';
 import { isNil } from 'ramda';
 
-export function MustMatch(
+export function MustDifferent(
   controlName: string,
-  matchingControlName: string,
+  compareControlName: string,
   ignoreCase = false
 ) {
   return (formGroup: FormGroup) => {
     const { value: valueOriginal } = formGroup.controls[controlName];
     const { errors, value: valueMatch } =
-      formGroup.controls[matchingControlName];
+      formGroup.controls[compareControlName];
 
     if (isNil(valueOriginal) || isNil(valueMatch)) {
       return;
@@ -23,10 +23,10 @@ export function MustMatch(
       return ignoreCase ? fieldValue.toLowerCase() : fieldValue;
     };
 
-    if (checkCase(valueOriginal) !== checkCase(valueMatch)) {
-      formGroup.controls[matchingControlName].setErrors({ mustMatch: true });
+    if (checkCase(valueOriginal) === checkCase(valueMatch)) {
+      formGroup.controls[compareControlName].setErrors({ notEqual: true });
     } else {
-      formGroup.controls[matchingControlName].setErrors(null);
+      formGroup.controls[compareControlName].setErrors(null);
     }
   };
 }
