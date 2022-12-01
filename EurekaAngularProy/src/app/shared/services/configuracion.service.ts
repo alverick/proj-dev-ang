@@ -9,7 +9,6 @@ import { IDataEnterpriseModel } from '../models/data-enterprise.model';
 export class ConfiguracionService {
   constructor(private http: HttpClient) {}
 
-  public debtItems: IDataEnterpriseModel;
   getDatosEmpresa(): Observable<IDataEnterpriseModel> {
     const url = `${environment.END_POINT}/company/getafiliate`;
     return this.http
