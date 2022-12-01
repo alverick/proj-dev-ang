@@ -13,6 +13,7 @@ import {
   internalRoutingNames,
 } from './internal-routing.names';
 import { InternalComponent } from './internal.component';
+import { CompanyConfigurationPage } from './pages/company-configuration/company-configuration.page';
 import { ConfiguraCobrosParteCuatroComponent } from './pages/configura-cobros-parte-cuatro/configura-cobros-parte-cuatro.component';
 import { ConfiguraCobrosParteDosComponent } from './pages/configura-cobros-parte-dos/configura-cobros-parte-dos.component';
 import { ConfiguraCobrosParteTresComponent } from './pages/configura-cobros-parte-tres/configura-cobros-parte-tres.component';
@@ -35,7 +36,7 @@ const routes: Routes = [
       },
       {
         path: internalRoutingNames.COMPANY,
-        component: ConfigurarEmpresaComponent,
+        component: CompanyConfigurationPage,
         canActivate: [AuthGuard, GtpOutputGuard],
       },
       {
