@@ -16,7 +16,7 @@ import {
   chargeTypeOptions,
   currencyOptions,
   debtorCodeOptions,
-  errorMessagesServiceConfig,
+  errorServiceConfiguration,
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
@@ -40,7 +40,7 @@ import { ServiceEditFormComponent } from './service-edit-form.component';
 class FormDemoComponent {
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
   form: FormGroup;
-  errors = errorMessagesServiceConfig;
+  errors = errorServiceConfiguration;
   debtorCodeOptions = debtorCodeOptions;
   paymentTypeOptions = paymentTypeOptions;
   currencyOptions = currencyOptions;
