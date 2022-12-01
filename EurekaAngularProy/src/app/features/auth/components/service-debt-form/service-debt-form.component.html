@@ -72,7 +72,7 @@
       </ng-container>
     </cs-label-control>
   </div>
-  <ng-container *ngIf="showArrearsFields">
+  <ng-template [ngIf]="showArrearsFields">
     <div class="form-elm">
       <cs-label-control
         class="tw-w-full"
@@ -123,5 +123,5 @@
         </div>
       </cs-label-control>
     </div>
-  </ng-container>
+  </ng-template>
 </form>

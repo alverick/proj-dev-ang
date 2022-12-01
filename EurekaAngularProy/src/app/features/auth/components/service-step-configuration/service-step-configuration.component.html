@@ -116,7 +116,21 @@
       ></cs-service-debt-form>
     </div>
   </div>
-  <div class="tw-text-right tw-mt-10">
+  <div
+    class="tw-flex tw-mt-10"
+    [ngClass]="{
+      'tw-justify-between': showCancel,
+      'tw-justify-end': !showCancel
+    }"
+  >
+    <button
+      *ngIf="showCancel"
+      type="button"
+      (click)="onCancel()"
+      class="button-outline-green tw-w-56 tw-text-center"
+    >
+      CANCELAR
+    </button>
     <button
       type="submit"
       class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"

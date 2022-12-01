@@ -21,6 +21,7 @@ import { ServiceDebtFormComponent } from './components/service-debt-form/service
 import { ServiceEditFormComponent } from './components/service-edit-form/service-edit-form.component';
 import { ServiceStepConfigurationComponent } from './components/service-step-configuration/service-step-configuration.component';
 import { ServiceStepInfoComponent } from './components/service-step-info/service-step-info.component';
+import { ServicesListComponent } from './components/services-list/services-list.component';
 import { SidebarCompanyComponent } from './components/sidebar-company/sidebar-company.component';
 import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
 import { DIRECTIVES } from './directives';
@@ -36,10 +37,13 @@ import { LoginPage } from './pages/login/login.page';
 import { ProcesandoComponent } from './pages/procesando/procesando.component';
 import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recuperar-contrasena.component';
 import { RegistrationFinishedPage } from './pages/registration-finished/registration-finished.page';
+import { RegistrationUpdatePage } from './pages/registration-update/registration-update.page';
 import { ServiceAddPage } from './pages/service-add/service-add.page';
 import { ServiceConfigurationPage } from './pages/service-configuration/service-configuration.page';
 import { ServiceInfoPage } from './pages/service-info/service-info.page';
-import { ServiceListPage } from './pages/service-list/service-list.page';
+import { ServiceResumePage } from './pages/service-resume/service-resume.page';
+import { UpdateCompanyPage } from './pages/update-company/update-company.page';
+import { UpdateServicesPage } from './pages/update-services/update-services.page';
 import { SERVICES } from './services';
 
 @NgModule({
@@ -87,9 +91,13 @@ import { SERVICES } from './services';
     ServiceAddPage,
     SidebarServiceComponent,
     ServiceConfigurationPage,
-    ServiceListPage,
+    ServiceResumePage,
     RegistrationFinishedPage,
     ...DIRECTIVES,
+    RegistrationUpdatePage,
+    UpdateCompanyPage,
+    UpdateServicesPage,
+    ServicesListComponent,
   ],
   exports: [
     ServiceDebtFormComponent,

@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import * as saveAs from 'file-saver';
 import * as _moment from 'moment'; // dejalo si sale error
 import { default as _rollupMoment } from 'moment';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { IEntryModel } from 'src/app/shared/models';
@@ -131,7 +130,6 @@ export class GtpGrillaPage implements OnInit {
   ];
 
   constructor(
-    private spinner: NgxSpinnerService,
     private afiliacionService: AfiliacionService,
     public gtpService: GtpService,
     private router: Router
@@ -216,16 +214,8 @@ export class GtpGrillaPage implements OnInit {
     ]);
   }
 
-  consultaGtp() {
-    this.spinner.show();
-    this.gtpService.getEmpresas(this.currentFilter).subscribe(
-      () => {
-        this.spinner.hide();
-      },
-      () => {
-        this.spinner.hide();
-      }
-    );
+  async consultaGtp() {
+    await this.gtpService.getEmpresas(this.currentFilter).toPromise();
   }
 
   ceroRegistros(): boolean {

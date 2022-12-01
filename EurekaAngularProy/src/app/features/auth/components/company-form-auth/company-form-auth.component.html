@@ -49,69 +49,71 @@
       <div class="form-elm">
         <cs-label-control
           class="tw-w-full"
-          formControlName="entry"
-          [errorMessages]="errorMessages.entry"
+          formControlName="entrySelect"
+          [errorMessages]="errorMessages.entrySelect"
           >Rubro de tu empresa
           <p-dropdown
             [options]="categories"
             optionLabel="name"
             class="tw-w-full"
             styleClass="tw-w-full"
-            formControlName="entry"
+            formControlName="entrySelect"
             placeholder="Selecciona"
           ></p-dropdown>
         </cs-label-control>
       </div>
-      <div class="form-elm">
-        <cs-label-control
-          class="tw-w-full"
-          formControlName="password"
-          [errorMessages]="errorMessages.password"
-          >Crea tu contraseña<input
-            type="password"
+      <ng-template [ngIf]="!edit">
+        <div class="form-elm">
+          <cs-label-control
             class="tw-w-full"
-            pInputText
-            minlength="6"
-            maxlength="20"
             formControlName="password"
-          />
-        </cs-label-control>
-      </div>
-      <div class="form-elm">
-        <cs-label-control
-          class="tw-w-full"
-          formControlName="passwordConfirm"
-          [errorMessages]="errorMessages.passwordConfirm"
-          >Confirma tu contraseña<input
-            type="password"
+            [errorMessages]="errorMessages.password"
+            >Crea tu contraseña<input
+              type="password"
+              class="tw-w-full"
+              pInputText
+              minlength="6"
+              maxlength="20"
+              formControlName="password"
+            />
+          </cs-label-control>
+        </div>
+        <div class="form-elm">
+          <cs-label-control
             class="tw-w-full"
-            pInputText
-            minlength="6"
-            maxlength="20"
             formControlName="passwordConfirm"
-          />
-        </cs-label-control>
-      </div>
-      <div class="form-elm">
-        <cs-label-control
-          class="tw-w-full"
-          formControlName="acceptTerms"
-          [errorMessages]="errorMessages.acceptTerms"
-        >
-          <p-checkbox
-            class="tw-mr-1"
-            [binary]="true"
+            [errorMessages]="errorMessages.passwordConfirm"
+            >Confirma tu contraseña<input
+              type="password"
+              class="tw-w-full"
+              pInputText
+              minlength="6"
+              maxlength="20"
+              formControlName="passwordConfirm"
+            />
+          </cs-label-control>
+        </div>
+        <div class="form-elm">
+          <cs-label-control
+            class="tw-w-full"
             formControlName="acceptTerms"
+            [errorMessages]="errorMessages.acceptTerms"
           >
-          </p-checkbox>
-          <ng-container label-inline
-            >Acepto los
-            <a href="javascript:void(0)" (click)="showModalTerms()"
-              >Términos y Condiciones</a
-            ></ng-container
-          >
-        </cs-label-control>
-      </div>
+            <p-checkbox
+              class="tw-mr-1"
+              [binary]="true"
+              formControlName="acceptTerms"
+            >
+            </p-checkbox>
+            <ng-container label-inline
+              >Acepto los
+              <a href="javascript:void(0)" (click)="showModalTerms()"
+                >Términos y Condiciones</a
+              ></ng-container
+            >
+          </cs-label-control>
+        </div>
+      </ng-template>
     </div>
   </div>
   <div class="tw-text-right tw-mt-10">

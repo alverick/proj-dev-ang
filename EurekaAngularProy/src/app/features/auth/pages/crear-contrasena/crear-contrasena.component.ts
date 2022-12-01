@@ -6,11 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
 import { authFullRoutingNames } from 'src/app/app-routing.collection';
 import { IEntryModel } from 'src/app/shared/models';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { ICompanyData } from 'src/app/shared/models/company-data';
 import { IDataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
@@ -50,7 +49,7 @@ export class CrearContrasenaComponent implements OnInit {
 
   public llave: string;
   public inEdit: boolean = false;
-  public empresa: DataEnterpriseGTP;
+  public empresa: ICompanyData;
   public empresasEdit: IDataEnterpriseModel;
   constructor(
     private formBuilder: FormBuilder,
@@ -60,7 +59,6 @@ export class CrearContrasenaComponent implements OnInit {
     private route: ActivatedRoute,
     private rutaActiva: ActivatedRoute,
     public gtpService: GtpService,
-    private spinner: NgxSpinnerService
   ) {}
 
   rubros: IEntryModel[] = [];
@@ -233,7 +231,6 @@ export class CrearContrasenaComponent implements OnInit {
   }
 
   ObtenerDatos(): Observable<any> {
-    this.spinner.show();
     return new Observable((obs) => {
       this.gtpService
         .GetEnterpriseServices({ TokenEncrypted: this.llave })
@@ -288,7 +285,6 @@ export class CrearContrasenaComponent implements OnInit {
             obs.complete();
             // this.empresa = this.gtpService.EmpresaServicios;
           }
-          this.spinner.hide();
         });
     });
   }

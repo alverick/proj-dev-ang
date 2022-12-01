@@ -6,21 +6,22 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
+import { pathEq } from 'ramda';
 import { Observable } from 'rxjs';
 import {
   authFullRoutingChildNames,
   authFullRoutingNames,
 } from '../auth-routing.names';
 import { swalMesssageExit } from '../constants';
-import { ServiceListPage } from '../pages/service-list/service-list.page';
+import { ServiceResumePage } from '../pages/service-resume/service-resume.page';
 
 @Injectable()
 export class AffiliationResumeExitGuard
-  implements CanDeactivate<ServiceListPage>
+  implements CanDeactivate<ServiceResumePage>
 {
   constructor(private router: Router) {}
   canDeactivate(
-    component: ServiceListPage,
+    component: ServiceResumePage,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot
@@ -29,6 +30,10 @@ export class AffiliationResumeExitGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    const currentNavigation = this.router.getCurrentNavigation();
+    if (pathEq(['extras', 'state', 'navigateValid'], true, currentNavigation)) {
+      return true;
+    }
     if (nextState.url === authFullRoutingNames.REGISTRATION_FINISHED) {
       return true;
     }

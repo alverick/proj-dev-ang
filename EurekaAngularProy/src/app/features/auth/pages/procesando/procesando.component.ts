@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { authFullRoutingNames } from '../../auth-routing.names';
+import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-procesando',
@@ -10,10 +10,10 @@ import { authFullRoutingNames } from '../../auth-routing.names';
 })
 export class ProcesandoComponent implements OnInit {
   public email: string;
-  constructor(public afiliacion: AfiliacionService, private router: Router) {}
+  constructor(public affiliation: AffiliationService, private router: Router) {}
 
   ngOnInit() {
-    this.email = this.afiliacion.email;
+    this.email = this.affiliation.email;
   }
   onCerrar() {
     this.router.navigate([authFullRoutingNames.LOGIN]);

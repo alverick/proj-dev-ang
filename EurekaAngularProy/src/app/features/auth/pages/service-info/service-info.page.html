@@ -3,6 +3,8 @@
     [form]="affiliation.serviceForm"
     [errorMessages]="errors"
     [accounts]="accounts"
+    [showCancel]="affiliation.servicesList.length > 0"
     (sendForm)="onSubmit()"
+    (cancel)="onCancel()"
   ></cs-service-step-info>
 </div>

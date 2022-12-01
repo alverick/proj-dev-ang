@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { IEntryModel } from 'src/app/shared/models';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { ICompanyData } from 'src/app/shared/models/company-data';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 
@@ -16,10 +16,10 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
   styleUrls: ['./form-empresa-gtp.component.scss'],
 })
 export class FormEmpresaGTPComponent implements OnInit {
-  private _enterprise: DataEnterpriseGTP;
+  private _enterprise: ICompanyData;
   formGroup: FormGroup;
   rubros: IEntryModel[] = [];
-  @Input() set enterprise(value: DataEnterpriseGTP) {
+  @Input() set enterprise(value: ICompanyData) {
     this._enterprise = value;
   }
   @Output() grabar = new EventEmitter<any>();
@@ -75,7 +75,7 @@ export class FormEmpresaGTPComponent implements OnInit {
     this.submittedRequired = true;
     let entryName = this.rubros.find((r) => r.code === this.f.entry.value).name;
     if (this.formGroup.valid) {
-      let value: DataEnterpriseGTP;
+      let value: ICompanyData;
       value = this._enterprise;
       value.cu = this.f.cu.value;
       value.ruc = this.f.ruc.value;

@@ -57,7 +57,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
     if (isNil(this.formData)) {
       return;
     }
-    const { debtorCode } = this.formData;
+    const { inReview, debtorCode, ...formData } = this.formData;
     const debtorCodeVal = debtorCodeOptions.some(
       ({ value }) => value === debtorCode
     );
@@ -70,11 +70,28 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
 
     setTimeout(() => {
       this.formLoaded = true;
+      if (inReview) {
+        this.form.get('debt').disable();
+        this.form.get('useAgent').disable();
+        this.form.get('debtorCode').disable();
+        this.form.get('debtorCodeCustom').disable();
+        this.debtForm.get('chargeType').disable();
+        this.debtForm.get('interestType').disable();
+        this.debtForm.get('amount').disable();
+      }
       this.form.setValue({
-        ...this.formData,
+        ...formData,
+        debtorCode,
         ...debtorCodeObj,
         debt: { ...debt, chargeType: String(chargeType) },
       });
+    }, 300);
+    setTimeout(() => {
+      if (inReview) {
+        this.debtForm.get('chargeType').disable();
+        this.debtForm.get('interestType').disable();
+        this.debtForm.get('amount').disable();
+      }
     }, 400);
   }
 

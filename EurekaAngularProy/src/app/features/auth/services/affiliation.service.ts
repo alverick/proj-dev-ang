@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 import { isEmpty, isNil } from 'ramda';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import {
+  ICompanySendUpdate,
+  ICompanyUpdate,
+} from 'src/app/shared/models/company';
+import { updateCompanyMock } from '../../../shared/mocks/affiliation';
 import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
@@ -12,6 +18,7 @@ import {
   ICompanyResult,
 } from '../../../shared/services/company.service';
 import { EnterpriseHeadingService } from '../../../shared/services/enterprise-heading.service';
+import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
 import { debtorCodeCustomEmpty } from '../constants';
@@ -29,13 +36,17 @@ export class AffiliationService {
   serviceForm: FormGroup;
   serviceConfigForm: FormGroup;
   editServiceForm: FormGroup;
+  private updateData: ICompanyUpdate;
+  tokenUpdate;
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private companyService: CompanyService,
+    private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
-    private affiliationForms: AffiliationFormsService
+    private affiliationForms: AffiliationFormsService,
+    private logger: NGXLogger
   ) {
     this.setRegisterForm();
   }
@@ -55,6 +66,7 @@ export class AffiliationService {
   setEditForm(position: number) {
     const {
       name,
+      newName,
       debtorCode,
       paymentType,
       currency,
@@ -64,10 +76,19 @@ export class AffiliationService {
       chargeType,
       dataType,
       interestType,
+      inReview,
       amount,
       percentage,
       partialPayment,
     } = this.servicesList[position];
+    this.logger.trace(
+      '-> this.servicesList[position]',
+      this.servicesList[position]
+    );
+
+    if (inReview) {
+      this.affiliationForms.setEditFormValidator(newName);
+    }
 
     const amountField = interestType === 'M' ? amount : percentage;
     return {
@@ -76,6 +97,7 @@ export class AffiliationService {
       useAppWeb,
       useAgent,
       currency,
+      inReview,
       debt: {
         dataType,
         paymentType,
@@ -127,10 +149,7 @@ export class AffiliationService {
         this.showMessageExistsCustomer();
         break;
       }
-      case 2: {
-        this.showMessageNoExistsAccounts();
-        break;
-      }
+      case 2:
       case 3: {
         this.showMessageNoExistsAccounts();
         break;
@@ -151,25 +170,19 @@ export class AffiliationService {
       movilOperator,
       ruc,
     } = this.registerForm.value;
-    const {
-      acceptTerms,
-      entry: { code: codeEntry },
-      password,
-      name,
-    } = this.authForm.value;
+    const { acceptTerms, entry, password, name } = this.authForm.value;
     const companyData: IDataEnterpriseModel = {
       documentType,
       documentNumber,
       ruc,
       name,
-      entry: codeEntry,
+      entry,
       email,
       movilNumber,
       movilOperator,
       password,
       acceptTerms,
     };
-    console.log('-> companyData', companyData);
     return this.companyService.saveCompany(companyData).pipe(
       tap(({ code, success, id }) => {
         if (success) {
@@ -262,6 +275,15 @@ export class AffiliationService {
   }
 
   saveAllServices() {
+    if (this.servicesList.length < 1) {
+      swalAlert.fire({
+        icon: 'warning',
+        text: `Debes contar con al menos un servicio para continuar`,
+        showConfirmButton: true,
+        confirmButtonText: 'Entendido',
+      });
+      return throwError('No services');
+    }
     return this.companyService
       .saveServices({
         clientId: this.companyId,
@@ -275,13 +297,78 @@ export class AffiliationService {
       );
   }
 
+  saveUpdateInformation(): Observable<boolean> | Observable<never> {
+    let modalSettings;
+    if (this.updateData.name === this.authForm.get('name').value) {
+      modalSettings = {
+        icon: 'warning',
+        text: `El nombre comercial debe ser actualizado`,
+        showConfirmButton: true,
+        confirmButtonText: 'Entendido',
+      };
+    } else if (
+      this.servicesList.some(
+        ({ inReview, name, newName }) => name === newName && inReview
+      )
+    ) {
+      modalSettings = {
+        icon: 'warning',
+        text: `Debe actualizar el nombre de todos los servicios observados`,
+        showConfirmButton: true,
+        confirmButtonText: 'Entendido',
+      };
+    }
+
+    if (isNotNil(modalSettings)) {
+      swalAlert.fire(modalSettings);
+      return throwError('Incomplete data');
+    }
+
+    const payload: ICompanySendUpdate = {
+      Token: this.tokenUpdate,
+      NewName: this.updateData.inReview
+        ? this.authForm.get('name').value
+        : null,
+      ArrayServices: this.servicesList.map((service) => {
+        return {
+          ServiceId: service.id,
+          NewName: service.inReview ? service.name : null,
+          NewCodName: null,
+        };
+      }),
+    };
+
+    return this.companyService.sendUpdateCompanyData(payload).pipe(
+      tap((result) => {
+        if (result) {
+          this.email = this.updateData.email;
+        } else {
+          swalAlert.fire({
+            icon: 'warning',
+            text: `Ha ocurrido un error`,
+            showConfirmButton: true,
+            confirmButtonText: 'Entendido',
+          });
+        }
+      })
+    );
+  }
+
   resetRegistration() {
     this.email = this.registerForm.value.email;
     this.servicesList = [];
     this.affiliationForms.resetCompanyForms();
   }
 
-  updateEditService(position: number, data) {
+  updateEditServiceName(position: number) {
+    const { name } = this.editServiceForm.value;
+    this.servicesList[position] = {
+      ...this.servicesList[position],
+      name,
+    };
+  }
+
+  updateEditService(position: number) {
     const {
       name,
       debtorCode,
@@ -336,24 +423,23 @@ export class AffiliationService {
   }
 
   showMessageExistsCustomer(): void {
-    const { ruc } = this.registerForm.value;
     swalAlert.fire({
-      title: 'Crea tu cuenta',
-      text: `El RUC: ${ruc} ya se encuentra registrado en Cobro Simple`,
+      icon: 'warning',
+      text: `El RUC ingresado ya se encuentra registrado en Cobro Simple`,
       showConfirmButton: true,
-      showCloseButton: true,
-      confirmButtonText: 'CERRAR',
+      confirmButtonText: 'Entendido',
     });
   }
 
   showMessageNoExistsAccounts(): void {
     swalAlert
       .fire({
-        title: 'Abre tu Cuenta Negocios',
-        text: `Te llevaremos a la página web de Interbank para abrir la cuenta. Una vez que llenes el formulario regresa aquí.`,
+        title: '¡Abre tu Cuenta Negocios!',
+        html: `Debes tener una cuenta corriente o ahorros persona jurídica para registrarte en Cobro Simple. <br>
+Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
         showConfirmButton: true,
         showCloseButton: true,
-        confirmButtonText: 'CREAR MI CUENTA',
+        confirmButtonText: '¡Vamos ahora!',
       })
       .then(({ value }) => {
         if (value) {
@@ -385,5 +471,32 @@ export class AffiliationService {
 
   removeEditService() {
     this.editServiceForm.reset();
+  }
+
+  setUpdateFormsData(data: ICompanyUpdate): void {
+    this.updateData = data;
+    this.authForm.patchValue({
+      ruc: data.ruc,
+      name: data.name,
+      entry: data.entry,
+    });
+    this.authForm.get('entrySelect').disable();
+    this.affiliationForms.setAuthFormNameValidator(data.name);
+    this.servicesList = data.arrayServices.map((service) => {
+      return { ...service, name: service.name || service.newName };
+    });
+  }
+
+  validateTokenForUpdate(token: string): Observable<ICompanyUpdate | boolean> {
+    return this.loginService
+      .getCompanyDataUpdate({ TokenEncrypted: token })
+      .pipe(
+        tap((result: ICompanyUpdate | null) => {
+          if (result) {
+            this.tokenUpdate = token;
+            this.setUpdateFormsData(result);
+          }
+        })
+      );
   }
 }

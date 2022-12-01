@@ -1,4 +1,5 @@
 module.exports = {
+  mode: 'jit',
   content: ['./src/app/**/*.{html,ts}'],
   purge: {
     enabled: process?.argv?.indexOf('build') !== -1,

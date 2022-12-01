@@ -1,0 +1,36 @@
+<cs-services-list
+  class="tw-w-full"
+  [empty]="affiliation.servicesList.length == 0"
+  (add)="createService()"
+  (finish)="finalize()"
+>
+  <cs-service-card
+    *ngFor="let service of affiliation.servicesList;let position=index"
+    [serviceData]="service"
+    [position]="position"
+    (delete)="actionDelete($event)"
+    (edit)="actionEdit(position)"
+  ></cs-service-card>
+</cs-services-list>
+<p-sidebar
+  [(visible)]="showSidebar"
+  [dismissible]="false"
+  [closeOnEscape]="false"
+  [blockScroll]="true"
+  [baseZIndex]="10000"
+  (onHide)="closePanel()"
+  position="right"
+  styleClass="ui-sidebar-md edit-form lg:tw-h-screen tw-overflow-auto"
+>
+  <cs-service-edit-form
+    [form]="affiliation.editServiceForm"
+    [errorMessages]="errorMessages"
+    [debtorCodeOptions]="debtorCodeOptions"
+    [paymentTypeOptions]="paymentTypeOptions"
+    [currencyOptions]="currencyOptions"
+    [chargeTypeOptions]="chargeTypeOptions"
+    [interestTypeOptions]="interestTypeOptions"
+    [formData]="formData"
+    (sendForm)="updateService()"
+  ></cs-service-edit-form>
+</p-sidebar>

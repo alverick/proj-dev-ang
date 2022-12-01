@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IErrorMessages } from '../../../../shared/models/forms';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
-import { authFullRoutingNames } from '../../auth-routing.names';
+import {
+  authFullRoutingChildNames,
+  authFullRoutingNames,
+} from '../../auth-routing.names';
 import {
   chargeTypeOptions,
   currencyOptions,
@@ -12,14 +14,15 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
-import { AffiliationService } from '../../services/affiliation.service';
+import { AffiliationFormsService } from '../../services';
+import { AffiliationService } from '../../services';
 
 @Component({
-  selector: 'cs-service-list',
-  templateUrl: './service-list.page.html',
-  styleUrls: ['./service-list.page.scss'],
+  selector: 'cs-service-resume',
+  templateUrl: './service-resume.page.html',
+  styleUrls: ['./service-resume.page.scss'],
 })
-export class ServiceListPage implements OnInit {
+export class ServiceResumePage implements OnInit {
   showSidebar = false;
   position: number;
   errorMessages = {
@@ -33,19 +36,22 @@ export class ServiceListPage implements OnInit {
   interestTypeOptions = interestTypeOptions;
   formData;
 
-  constructor(private router: Router, public affiliation: AffiliationService) {}
+  constructor(
+    private router: Router,
+    private affiliationForms: AffiliationFormsService,
+    public affiliation: AffiliationService
+  ) {}
 
   ngOnInit() {}
 
   actionDelete(position: number) {
     swalAlert
       .fire({
-        text: 'Se eliminará el servicio de los canales de interbank',
-        title: 'Eliminación total el servicio',
+        text: '¿Estás seguro que deseas eliminar este servicio?',
         showCancelButton: true,
         showConfirmButton: true,
-        confirmButtonText: 'CONFIRMAR',
-        cancelButtonText: 'CANCELAR',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
         allowOutsideClick: false,
       })
       .then(({ value }) => {
@@ -63,14 +69,21 @@ export class ServiceListPage implements OnInit {
     }, 200);
   }
 
+  createService() {
+    this.affiliationForms.resetServicesForms();
+    this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_INFO], {
+      state: { navigateValid: true },
+    });
+  }
+
   finalize() {
     this.affiliation.saveAllServices().subscribe(() => {
       this.router.navigate([authFullRoutingNames.REGISTRATION_FINISHED]);
     });
   }
 
-  updateService(data) {
-    this.affiliation.updateEditService(this.position, data);
+  updateService() {
+    this.affiliation.updateEditService(this.position);
     this.showSidebar = false;
   }
 

@@ -136,8 +136,12 @@ export const errorMessagesAuth: IErrorMessages = {
     blankSpaces: 'El nombre comercial es obligatorio',
     pattern: 'Ingrese un nombre valido',
     minlength: 'El nombre debe tener mínimo 3 dígitos',
+    change: 'Escribe un nuevo nombre de la empresa',
   },
   entry: {
+    required: 'Elige una opción',
+  },
+  entrySelect: {
     required: 'Elige una opción',
   },
   password: {
@@ -165,6 +169,7 @@ export const errorMessagesService: IErrorMessages = {
     maxlength: 'El nombre no puede tener mas de 80 caracteres',
     alfa: 'El nombre debe tener por lo menos una letra o un numero',
     alfabetico: 'El nombre debe tener por lo menos una letra',
+    change: 'Ingresa otro nombre para el servicio',
   },
   account: {
     required: 'Elige una opción',

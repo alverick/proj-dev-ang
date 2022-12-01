@@ -2,13 +2,14 @@ import {
   APP_INITIALIZER,
   Component,
   EventEmitter,
+  Input,
   Output,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { centered } from '@storybook/addon-centered/angular';
-import { withKnobs } from '@storybook/addon-knobs';
+import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { SharedModule } from '../../../../shared/shared.module';
@@ -38,11 +39,15 @@ import { ServiceStepConfigurationComponent } from './service-step-configuration.
     [currencyOptions]="currencyOptions"
     [chargeTypeOptions]="chargeTypeOptions"
     [interestTypeOptions]="interestTypeOptions"
+    [showCancel]="showCancel"
+    (cancel)="onCancel()"
     (sendForm)="onSubmit($event)"
   ></cs-service-step-configuration>`,
 })
 class FormDemoComponent {
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
+  @Output() cancel = new EventEmitter();
+  @Input() showCancel = false;
   form: FormGroup;
   errors = errorMessagesServiceConfig;
   debtorCodeOptions = debtorCodeOptions;
@@ -55,6 +60,9 @@ class FormDemoComponent {
   }
   onSubmit($event) {
     this.sendForm.emit($event);
+  }
+  onCancel() {
+    this.cancel.emit();
   }
 }
 
@@ -96,8 +104,10 @@ export const normal = () => ({
     providers: [],
   },
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
-<cs-form-demo (sendForm)="onSubmit($event)"></cs-form-demo>`,
+<cs-form-demo [showCancel]="edit" (sendForm)="onSubmit($event)" (cancel)="onCancel()"></cs-form-demo>`,
   props: {
+    edit: boolean('Show Cancel', false),
+    onCancel: action('form cancel'),
     onSubmit: (e) => {
       console.log(e);
       action('form data')(e);
