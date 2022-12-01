@@ -36,10 +36,9 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.form.valueChanges.subscribe((value) => {
-      this.showDocumentFields = !(
-        isNil(value.documentType) && isNil(value.documentNumber)
-      );
+    this.form.valueChanges.subscribe(() => {
+      const { documentType, documentNumber } = this.form.getRawValue();
+      this.showDocumentFields = !(isNil(documentType) && isNil(documentNumber));
     });
   }
 
