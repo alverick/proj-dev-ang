@@ -1,0 +1,122 @@
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { action, withActions } from '@storybook/addon-actions';
+import { centered } from '@storybook/addon-centered/angular';
+import { withKnobs } from '@storybook/addon-knobs';
+import { moduleMetadata } from '@storybook/angular';
+import {
+  documentTypes,
+  mobileOperators,
+} from '../../../../shared/constants/company';
+import {
+  errorsRegisterForm,
+  errorRegisterAuth,
+} from '../../../../shared/constants/company-errors';
+import { SharedModule } from '../../../../shared/shared.module';
+import { CompanyUpdateFormComponent } from './company-update-form.component';
+
+@Component({
+  selector: 'cs-form-demo',
+  template: `<cs-company-update-form
+      class="tw-max-w-2xl tw-pl-20"
+      [form]="registerForm"
+      [errorMessages]="errors"
+      [operators]="operators"
+      [documentTypes]="documentTypes"
+      [submitted]="submitted"
+      (showPanel)="onShowPanel()"
+    ></cs-company-update-form>
+    {{ submitted }}
+    <button (click)="submitted = true" class="tw-block tw-m-3">
+      send form
+    </button>`,
+})
+class FormDemoComponent {
+  @Output() showPanel = new EventEmitter();
+  registerForm: FormGroup;
+  errors = { ...errorsRegisterForm, ...errorRegisterAuth };
+  operators = mobileOperators;
+  documentTypes = documentTypes;
+  submitted = false;
+  constructor(private fb: FormBuilder) {
+    this.registerForm = this.fb.group({
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(80),
+        ],
+      ],
+      ruc: [{ value: '', disabled: true }],
+      entry: [{ value: '', disabled: true }],
+      documentType: [{ value: '', disabled: true }],
+      documentNumber: [{ value: '', disabled: true }],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          ),
+          Validators.minLength(10),
+          Validators.maxLength(100),
+        ],
+      ],
+      movilOperator: ['', [Validators.required]],
+      movilNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^9\d{8}$/),
+          Validators.minLength(9),
+          Validators.maxLength(9),
+        ],
+      ],
+    });
+    this.registerForm.patchValue({
+      ruc: '20000000005',
+      name: 'demo 5',
+      entry: '01',
+      email: 'mnieva@gmail.com',
+      movilNumber: '123456',
+      movilOperator: 'C',
+      documentType: 'DNI',
+      documentNumber: '28235624',
+      newName: null,
+      newNameGTPStatus: 1,
+      status: 'Pendiente',
+      inReview: true,
+      requestDate: '2019-12-16T23:03:16.675169',
+    });
+  }
+  onShowPanel() {
+    this.showPanel.emit();
+  }
+}
+
+export default {
+  title: 'Internal/Module/Company Form',
+  decorators: [
+    withKnobs,
+    centered,
+    moduleMetadata({
+      declarations: [CompanyUpdateFormComponent],
+      imports: [BrowserAnimationsModule, SharedModule],
+    }),
+    withActions('sendForm', 'click .btn'),
+  ],
+};
+
+export const normal = () => ({
+  component: CompanyUpdateFormComponent,
+  moduleMetadata: {
+    declarations: [FormDemoComponent, CompanyUpdateFormComponent],
+    providers: [],
+  },
+  template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults><cs-form-demo (showPanel)="onSubmit()"></cs-form-demo>`,
+  props: {
+    onSubmit: action('show panel'),
+  },
+});
