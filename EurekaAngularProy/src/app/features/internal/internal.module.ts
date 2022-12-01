@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CompanyPasswordFormComponent } from './components/company-password-form/company-password-form.component';
+import { CompanyUpdateFormComponent } from './components/company-update-form/company-update-form.component';
 import { HelpItemComponent } from './components/help-item/help-item.component';
 import { InternalAuthComponent } from './components/internal-auth/internal-auth.component';
 import { InternalHeaderComponent } from './components/internal-header/internal-header.component';
@@ -49,6 +51,8 @@ import { SERVICES } from './services';
     InternalAuthComponent,
     PaymentDetailComponent,
     HelpItemComponent,
+    CompanyUpdateFormComponent,
+    CompanyPasswordFormComponent,
   ],
   imports: [
     CommonModule,
