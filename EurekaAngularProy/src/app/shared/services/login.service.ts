@@ -91,9 +91,9 @@ export class LoginService {
           this.callingRefresh = true;
           const url = `${this.URI_API}/login`;
           this.http.get(url, {}).subscribe((r: RespuestaLogin) => {
-            const sessionStorage = this.storage.getCurrentSession();
+            const storageSession = this.storage.getCurrentSession();
             this.storage.setCurrentSession({
-              user: sessionStorage.user,
+              user: storageSession.user,
               isAuthenticate: true,
               token: r.paramStr,
               expire: r.exp,
@@ -108,5 +108,15 @@ export class LoginService {
         }
       }
     }
+  }
+
+  public getCompanyDataUpdate(data: any): Observable<any> {
+    return this.http
+      .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
   }
 }

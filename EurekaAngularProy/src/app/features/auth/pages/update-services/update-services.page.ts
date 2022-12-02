@@ -1,30 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IErrorMessages } from '../../../../shared/models/forms';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import {
   chargeTypeOptions,
   currencyOptions,
   debtorCodeOptions,
-  errorServiceInformation,
-  errorServiceConfiguration,
+  errorMessagesService,
+  errorMessagesServiceConfig,
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
-import { AffiliationService } from '../../services/affiliation.service';
+import { AffiliationFormsService, AffiliationService } from '../../services';
 
 @Component({
-  selector: 'cs-service-list',
-  templateUrl: './service-list.page.html',
-  styleUrls: ['./service-list.page.scss'],
+  selector: 'cs-update-services',
+  templateUrl: './update-services.page.html',
+  styleUrls: ['./update-services.page.scss'],
 })
-export class ServiceListPage implements OnInit {
+export class UpdateServicesPage implements OnInit {
+  position = 0;
+  steps = [{ title: 'Step 1' }, { title: 'Step 2' }, { title: 'Step 3' }];
   showSidebar = false;
-  position: number;
   errorMessages = {
-    ...errorServiceConfiguration,
-    ...errorServiceInformation,
+    ...errorMessagesServiceConfig,
+    ...errorMessagesService,
   };
   debtorCodeOptions = debtorCodeOptions;
   paymentTypeOptions = paymentTypeOptions;
@@ -33,19 +33,22 @@ export class ServiceListPage implements OnInit {
   interestTypeOptions = interestTypeOptions;
   formData;
 
-  constructor(private router: Router, public affiliation: AffiliationService) {}
+  constructor(
+    private router: Router,
+    private affiliationForms: AffiliationFormsService,
+    public affiliation: AffiliationService
+  ) {}
 
   ngOnInit() {}
 
   actionDelete(position: number) {
     swalAlert
       .fire({
-        text: 'Se eliminará el servicio de los canales de interbank',
-        title: 'Eliminación total el servicio',
+        text: '¿Estás seguro que deseas eliminar este servicio?',
         showCancelButton: true,
         showConfirmButton: true,
-        confirmButtonText: 'CONFIRMAR',
-        cancelButtonText: 'CANCELAR',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
         allowOutsideClick: false,
       })
       .then(({ value }) => {
@@ -64,13 +67,17 @@ export class ServiceListPage implements OnInit {
   }
 
   finalize() {
-    this.affiliation.saveAllServices().subscribe(() => {
-      this.router.navigate([authFullRoutingNames.REGISTRATION_FINISHED]);
+    this.affiliation.saveUpdateInformation().subscribe((result) => {
+      if (result) {
+        this.router.navigate([authFullRoutingNames.PROCESSING]);
+      } else {
+        this.router.navigate([authFullRoutingNames.LOGIN]);
+      }
     });
   }
 
-  updateService(data) {
-    this.affiliation.updateEditService(this.position, data);
+  updateService() {
+    this.affiliation.updateEditServiceName(this.position);
     this.showSidebar = false;
   }
 

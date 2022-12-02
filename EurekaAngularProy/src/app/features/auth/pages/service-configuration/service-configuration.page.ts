@@ -9,6 +9,7 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
+import { AffiliationFormsService } from '../../services';
 import { AffiliationService } from '../../services/affiliation.service';
 
 @Component({
@@ -23,10 +24,19 @@ export class ServiceConfigurationPage {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
-  constructor(private router: Router, public affiliation: AffiliationService) {}
+  constructor(
+    private router: Router,
+    public affiliation: AffiliationService,
+    private affiliationForms: AffiliationFormsService
+  ) {}
 
   onSubmit() {
     this.affiliation.saveService();
+    this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]);
+  }
+
+  onCancel() {
+    this.affiliationForms.resetServicesForms();
     this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]);
   }
 }

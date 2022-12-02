@@ -1,0 +1,49 @@
+<div
+  class="tw-bg-primary-green-1 tw-text-center tw-py-4 tw-flex tw-flex-col tw-items-center"
+>
+  <div class="tw-text-white tw-text-3xl tw-font-medium">
+    Configura los servicios de tu empresa
+  </div>
+  <div class="tw-w-40 tw-py-4">
+    <p-steps [model]="steps" [activeIndex]="2"></p-steps>
+  </div>
+</div>
+<div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
+  <cs-services-list
+    class="tw-w-full"
+    [edit]="true"
+    (finish)="finalize()"
+  >
+    <cs-service-card
+      *ngFor="let service of affiliation.servicesList;let position=index"
+      [serviceData]="service"
+      [position]="position"
+      [update]="true"
+      [canEdit]="service.inReview"
+      (delete)="actionDelete($event)"
+      (edit)="actionEdit(position)"
+    ></cs-service-card>
+  </cs-services-list>
+  <p-sidebar
+    [(visible)]="showSidebar"
+    [dismissible]="false"
+    [closeOnEscape]="false"
+    [blockScroll]="true"
+    [baseZIndex]="10000"
+    (onHide)="closePanel()"
+    position="right"
+    styleClass="ui-sidebar-md edit-form tw-h-screen tw-overflow-auto"
+  >
+    <cs-service-edit-form
+      [form]="affiliation.editServiceForm"
+      [errorMessages]="errorMessages"
+      [debtorCodeOptions]="debtorCodeOptions"
+      [paymentTypeOptions]="paymentTypeOptions"
+      [currencyOptions]="currencyOptions"
+      [chargeTypeOptions]="chargeTypeOptions"
+      [interestTypeOptions]="interestTypeOptions"
+      [formData]="formData"
+      (sendForm)="updateService($event)"
+    ></cs-service-edit-form>
+  </p-sidebar>
+</div>

@@ -1,0 +1,13 @@
+<div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
+  <cs-sidebar-company class="info tw-relative"></cs-sidebar-company>
+  <div class="form-cmp tw-pl-20 tw-py-10">
+    <cs-company-form-auth
+      class="tw-max-w-2xl tw-pl-20"
+      [edit]="true"
+      [categories]="entryOptions"
+      [companyForm]="affiliation.authForm"
+      [errorMessages]="errors"
+      (sendForm)="onSubmit()"
+    ></cs-company-form-auth>
+  </div>
+</div>

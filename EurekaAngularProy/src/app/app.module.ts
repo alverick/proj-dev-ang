@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApiMockModule } from '@ng-stack/api-mock';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
+import { LoggerModule } from 'ngx-logger';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { environment } from '../environments/environment';
@@ -63,6 +64,12 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
     MatProgressSpinnerModule,
     PerfectScrollbarModule,
     HttpClientModule,
+    LoggerModule.forRoot({
+      level: environment.logLevel,
+      serverLogLevel: environment.serverLogLevel,
+      disableConsoleLogging: false,
+      enableSourceMaps: true,
+    }),
     environment.development ? apiMockModule : [],
     RecaptchaModule.forRoot(),
     SharedModule,

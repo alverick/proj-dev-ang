@@ -4,7 +4,7 @@ import { clone, equals, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { appFullRoutingNames } from 'src/app/app-routing.names';
 import { IEntryModel } from 'src/app/shared/models';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { ICompanyData } from 'src/app/shared/models/company-data';
 import { GtpEmpresa, GtpServcegtp } from 'src/app/shared/models/gtp-post';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
@@ -21,8 +21,8 @@ export class AprobacionesPage implements OnInit {
   public Formulario = false;
   public ServiciosFormulario = false;
   public llave: string;
-  public Empgtp: DataEnterpriseGTP = null;
-  public Enterprise: DataEnterpriseGTP = {
+  public Empgtp: ICompanyData = null;
+  public Enterprise: ICompanyData = {
     ruc: 0,
     name: '',
     entry: '',
@@ -87,7 +87,7 @@ export class AprobacionesPage implements OnInit {
     });
   }
 
-  onGrabar(enterpriseData: DataEnterpriseGTP) {
+  onGrabar(enterpriseData: ICompanyData) {
     this.Formulario = false;
     if (!equals(this.Enterprise, enterpriseData)) {
       this.Enterprise = enterpriseData;
@@ -108,7 +108,7 @@ export class AprobacionesPage implements OnInit {
     }
   }
 
-  VerCamposEnterprise(etp: DataEnterpriseGTP) {
+  VerCamposEnterprise(etp: ICompanyData) {
     if (this.ServiciosFormulario === true) {
       this.mensaje(
         'Aprobando Servicio ',
@@ -512,7 +512,7 @@ export class AprobacionesPage implements OnInit {
     }
   }
 
-  getStateEnterprise(Enterprise: DataEnterpriseGTP) {
+  getStateEnterprise(Enterprise: ICompanyData) {
     //
     if (Enterprise.newNameGTPStatus === 0) {
       return 'Nueva Empresa';

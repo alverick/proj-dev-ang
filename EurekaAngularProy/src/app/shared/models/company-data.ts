@@ -1,6 +1,6 @@
 import { DataServiceGTP } from './data-service-gtp';
 
-export interface DataEnterpriseGTP {
+export interface ICompanyData {
   cu?: string;
   ruc: string | number;
   name: string;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import { errorServiceInformation } from '../../constants';
+import { AffiliationFormsService } from '../../services';
 import { AffiliationService } from '../../services/affiliation.service';
 
 @Component({
@@ -12,7 +13,11 @@ import { AffiliationService } from '../../services/affiliation.service';
 export class ServiceInfoPage implements OnInit {
   accounts;
   errors = errorServiceInformation;
-  constructor(private router: Router, public affiliation: AffiliationService) {}
+  constructor(
+    private router: Router,
+    public affiliation: AffiliationService,
+    private affiliationForms: AffiliationFormsService
+  ) {}
 
   ngOnInit() {
     this.affiliation.getAccountsCompany().subscribe((accounts) => {
@@ -24,5 +29,10 @@ export class ServiceInfoPage implements OnInit {
     this.router.navigate([
       authFullRoutingChildNames.SERVICES_ADD_CONFIGURATION,
     ]);
+  }
+
+  onCancel() {
+    this.affiliationForms.resetServicesForms();
+    this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]);
   }
 }

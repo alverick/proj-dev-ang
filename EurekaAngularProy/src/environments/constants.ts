@@ -11,4 +11,6 @@ export interface IEnvironment {
   hmr: boolean;
   END_POINT: string;
   OCP_KEY: string;
+  logLevel: number;
+  serverLogLevel: number;
 }

@@ -53,6 +53,16 @@ export class CompanyService {
     return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
   }
 
+  sendUpdateCompanyData(data) {
+    return this.http
+      .post<any>(`${environment.END_POINT}/company/gtp/client/update`, data)
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
+  }
+
   getCompanyData(): Observable<IDataEnterpriseModel> {
     const url = `${environment.END_POINT}/company/getafiliate`;
     return this.http

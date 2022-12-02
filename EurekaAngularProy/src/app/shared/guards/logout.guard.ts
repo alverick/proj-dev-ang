@@ -19,7 +19,6 @@ export class LogoutGuard implements CanActivate {
       sessionStorage.getItem('tk') === 'El usuario esta bloqueado' ||
       sessionStorage.getItem('tk') === 'Vuelva a intentarlo mas tarde'
     ) {
-      this.spinner.hide();
       return true;
     }
     // si el token existe

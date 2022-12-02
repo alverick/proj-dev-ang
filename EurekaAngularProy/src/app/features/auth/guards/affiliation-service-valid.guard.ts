@@ -40,9 +40,6 @@ export class AffiliationServiceValidGuard implements CanActivate {
       this.router.navigate([redirect], {
         skipLocationChange: this.router.url === redirect,
       });
-      console.log('nav', {
-        skipLocationChange: this.router.url === redirect,
-      });
     }
     return isEmpty(redirect);
   }

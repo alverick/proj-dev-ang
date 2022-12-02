@@ -1,9 +1,12 @@
 import { Directive, HostListener } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 @Directive({
   selector: '[csInputMoney]',
 })
 export class InputMoneyDirective {
+  constructor(private ngControl: NgControl) {}
+
   @HostListener('input', ['$event'])
   onInputChange(event) {
     event.target.value = event.target.value
@@ -11,10 +14,13 @@ export class InputMoneyDirective {
       .replace(/[^0-9.]*/g, '');
   }
   @HostListener('blur', ['$event'])
-  onBlur(event) {
-    const value = parseFloat(event.target.value);
+  onBlur() {
+    const value = parseFloat(this.ngControl.value);
+
     if (!isNaN(value)) {
-      event.target.value = value.toFixed(2);
+      this.ngControl.control.setValue(value.toFixed(2), {
+        emitEvent: false,
+      });
     }
   }
 }

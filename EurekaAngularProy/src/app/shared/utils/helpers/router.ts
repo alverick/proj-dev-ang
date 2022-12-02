@@ -28,11 +28,11 @@ export const generateFullRoutes: any = (obj, path: string) => {
   return map(parseRoute, obj);
 };
 
-export const generateFullRoutesTree: any = (obj, tree, path: string) => {
+export const generateFullRoutesTree: any = (obj, tree) => {
   const links = TreeObject.reduce(flattenToArray, [], tree);
   const parseRoute = (val) => {
     const result = links.find((link) => link.key === val);
-    return result ? `${path}${result.link}` : false;
+    return result ? `/${result.link}` : false;
   };
   return map(parseRoute, obj);
 };
