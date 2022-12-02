@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IEntryModel } from '../../../../shared/models';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
-import { errorMessagesAuth } from '../../constants';
+import { errorRegisterAuth } from '../../constants';
 import { AffiliationService } from '../../services';
 
 @Component({
@@ -12,7 +12,7 @@ import { AffiliationService } from '../../services';
 })
 export class UpdateCompanyPage implements OnInit {
   entryOptions: IEntryModel[] = [];
-  errors = errorMessagesAuth;
+  errors = errorRegisterAuth;
 
   constructor(private router: Router, public affiliation: AffiliationService) {}
 
