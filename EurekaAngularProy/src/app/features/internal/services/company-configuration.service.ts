@@ -33,7 +33,10 @@ export class CompanyConfigurationService {
 
   setCompanyData() {
     this.companyForm.patchValue(this.companyData);
-    if (this.companyData.inReview) {
+    if (
+      this.companyData.newNameGTPStatus === 0 ||
+      this.companyData.newNameGTPStatus === 2
+    ) {
       this.companyForm.get('name').disable();
     }
     this.setCategory();
@@ -42,7 +45,7 @@ export class CompanyConfigurationService {
   saveCompanyData() {
     const { email, movilNumber, movilOperator, name } = this.companyForm.value;
     const companyDataUpdated = {
-      newName: name,
+      newName: name || this.companyData.name,
       email,
       movilNumber,
       movilOperator,
