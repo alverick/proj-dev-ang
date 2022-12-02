@@ -25,23 +25,17 @@ export class CompanyConfigurationService {
   constructor(
     private fb: FormBuilder,
     private companyService: CompanyService,
-    private enterpriseHeading: EnterpriseHeadingService,
     private router: Router
   ) {
     this.initForms();
-    this.getEntryOptions();
-    this.getCompanyData();
   }
 
-  getCompanyData() {
-    this.companyService.getCompanyData().subscribe((data) => {
-      this.companyData = data;
-      this.companyForm.patchValue(data);
-      if (data.inReview) {
-        this.companyForm.get('name').disable();
-      }
-      this.setCategory();
-    });
+  setCompanyData() {
+    this.companyForm.patchValue(this.companyData);
+    if (this.companyData.inReview) {
+      this.companyForm.get('name').disable();
+    }
+    this.setCategory();
   }
 
   saveCompanyData() {
@@ -76,21 +70,11 @@ export class CompanyConfigurationService {
             });
         }
         if (enterpriseUpdate.success === false) {
-          // this.mensaje(
-          //   'warning',
-          //   'Edicion de Empresa',
-          //   'La contraseña no coincide con la contraseña actual'
-          // );
           swalAlert.fire({
-            title: 'Datos de Empresa guardados',
-            text: 'Sus datos han sido actualizados',
+            icon: 'error',
+            text: 'Ha ocurrido un error',
             showCloseButton: true,
             confirmButtonText: 'ACEPTAR',
-            onAfterClose: () => {
-              // datosEmpresa.email = datosEmpresa.newEmail;
-              // datosEmpresa.movilNumber = datosEmpresa.newMovilNumber;
-              // datosEmpresa.password = datosEmpresa.newPassword;
-            },
           });
           return;
         }
@@ -133,13 +117,6 @@ export class CompanyConfigurationService {
         }
       })
     );
-  }
-
-  public getEntryOptions(): void {
-    this.enterpriseHeading.getEntryOptions().subscribe((result) => {
-      this.entryOptions = result;
-      this.setCategory();
-    });
   }
 
   setCategory() {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   documentTypes,
   mobileOperators,
@@ -29,14 +30,22 @@ export class CompanyConfigurationPage implements OnInit {
   };
   showSidebar = false;
 
-  constructor(public companyConfiguration: CompanyConfigurationService) {}
+  constructor(
+    public companyConfiguration: CompanyConfigurationService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.activatedRoute.data.subscribe((response: any) => {
+      this.companyConfiguration.entryOptions = response.entries;
+      this.companyConfiguration.companyData = response.company;
+      this.companyConfiguration.setCompanyData();
+    });
     this.companyForm = this.companyConfiguration.companyForm;
     this.passwordForm = this.companyConfiguration.passwordForm;
   }
-  onSendForm(event) {
-    this.companyConfiguration.savePassword().subscribe(()=>{
+  onSendForm() {
+    this.companyConfiguration.savePassword().subscribe(() => {
       this.showSidebar = false;
     });
   }
