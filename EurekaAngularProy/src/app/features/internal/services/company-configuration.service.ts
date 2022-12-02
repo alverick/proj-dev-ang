@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 import { CompanyService } from 'src/app/shared/services/company.service';
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
-import { EnterpriseHeadingService } from '../../../shared/services/enterprise-heading.service';
+import { GoogleAnalytics } from '../../../shared/services/googleAnalytics.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { atLeastOneLetter } from '../../../shared/validators/atLeastOneLetter.validator';
 import { atLeastOneNumber } from '../../../shared/validators/atLeastOneNumber.validator';
@@ -25,7 +25,8 @@ export class CompanyConfigurationService {
   constructor(
     private fb: FormBuilder,
     private companyService: CompanyService,
-    private router: Router
+    private router: Router,
+    private gaService: GoogleAnalytics
   ) {
     this.initForms();
   }
@@ -57,6 +58,10 @@ export class CompanyConfigurationService {
       .updateCompany(enterprise)
       .subscribe((enterpriseUpdate) => {
         if (enterpriseUpdate.success === true) {
+          this.gaService.sendEvent('ActualizaDatosEmpresa', {
+            event_category: GoogleAnalytics.Dashboard,
+            event_label: 'actualiza_datos_empresa',
+          });
           swalAlert
             .fire({
               text: 'Los datos de la empresa han sido actualizados',
