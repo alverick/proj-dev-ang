@@ -1,7 +1,6 @@
 <form
   [formGroup]="form"
   novalidate
-  (submit)="onSubmit()"
   autocomplete="off"
   class="tw-max-w-2xl"
   #formElm="ngForm"
@@ -22,6 +21,10 @@
             maxlength="80"
             formControlName="name"
           />
+          <div *ngIf="inReview" validation-messages>
+            El nuevo nombre <strong> {{ form.value.name }} </strong> esta siendo
+            procesado
+          </div>
         </cs-label-control>
       </div>
       <div class="form-elm lg:tw-flex lg:tw-gap-4">

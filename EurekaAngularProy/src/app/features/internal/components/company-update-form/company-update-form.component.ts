@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import { isNil, pathEq } from 'ramda';
 import { IErrorMessages } from 'src/app/shared/models/forms';
 import { IEntryModel } from '../../../../shared/models';
@@ -28,12 +28,13 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   @Input() errorMessages: IErrorMessages;
   @Input() form: FormGroup;
   @Input() submitted = false;
+  @Input() inReview = false;
   @Output() showPanel = new EventEmitter<any>();
   @ViewChild('formElm', { static: false })
   htmlForm: NgForm;
   showDocumentFields = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor() {}
 
   ngOnInit() {
     this.form.valueChanges.subscribe(() => {

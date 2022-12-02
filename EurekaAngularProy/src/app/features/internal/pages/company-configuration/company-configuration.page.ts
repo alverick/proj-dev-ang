@@ -23,6 +23,7 @@ export class CompanyConfigurationPage implements OnInit {
   operators = mobileOperators;
   documentTypes = documentTypes;
   submitted = false;
+  nameInReview = false;
   errorsPassword = {
     ...errorRegisterAuth,
     newPassword: errorRegisterAuth.password,
@@ -36,9 +37,11 @@ export class CompanyConfigurationPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe((response: any) => {
-      this.companyConfiguration.entryOptions = response.entries;
-      this.companyConfiguration.companyData = response.company;
+    this.activatedRoute.data.subscribe(({ company, entries }: any) => {
+      this.companyConfiguration.entryOptions = entries;
+      this.companyConfiguration.companyData = company;
+      this.nameInReview =
+        company.newNameGTPStatus === 0 || company.newNameGTPStatus === 2;
       this.companyConfiguration.setCompanyData();
     });
     this.companyForm = this.companyConfiguration.companyForm;

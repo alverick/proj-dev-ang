@@ -19,6 +19,7 @@
       [errorMessages]="errors"
       [operators]="operators"
       [documentTypes]="documentTypes"
+      [inReview]="nameInReview"
       [categories]="companyConfiguration.entryOptions"
       [submitted]="submitted"
       (showPanel)="onShowPanel()"
@@ -40,6 +41,6 @@
     class="tw-block tw-max-w-sm tw-mx-auto"
     [form]="passwordForm"
     [errorMessages]="errorsPassword"
-    (sendForm)="onSendForm($event)"
+    (sendForm)="onSendForm()"
   ></cs-company-password-form>
 </p-sidebar>
