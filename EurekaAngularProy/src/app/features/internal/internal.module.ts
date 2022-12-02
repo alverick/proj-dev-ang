@@ -14,12 +14,11 @@ import { PuntoDirective } from './directives/punto.directive';
 import { ShearDirective } from './directives/shear.directive';
 import { InternalRoutingModule } from './internal-routing.module';
 import { InternalComponent } from './internal.component';
-import { CompanyConfigurationPage } from './pages/company-configuration/company-configuration.page';
+import { PAGES } from './pages';
 import { ConfiguraCobrosParteCuatroComponent } from './pages/configura-cobros-parte-cuatro/configura-cobros-parte-cuatro.component';
 import { ConfiguraCobrosParteDosComponent } from './pages/configura-cobros-parte-dos/configura-cobros-parte-dos.component';
 import { ConfiguraCobrosParteTresComponent } from './pages/configura-cobros-parte-tres/configura-cobros-parte-tres.component';
 import { ConfiguraCobrosParteUnoComponent } from './pages/configura-cobros-parte-uno/configura-cobros-parte-uno.component';
-import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.component';
 import { HelpPage } from './pages/help/help.page';
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
@@ -34,7 +33,6 @@ import { SERVICES } from './services';
     InternalComponent,
     HomePage,
     HelpPage,
-    ConfigurarEmpresaComponent,
     ResumenCobrosComponent,
     AgregaCobroComponent,
     EditarCobrosComponent,
@@ -54,7 +52,7 @@ import { SERVICES } from './services';
     HelpItemComponent,
     CompanyUpdateFormComponent,
     CompanyPasswordFormComponent,
-    CompanyConfigurationPage,
+    ...PAGES,
   ],
   imports: [
     CommonModule,
