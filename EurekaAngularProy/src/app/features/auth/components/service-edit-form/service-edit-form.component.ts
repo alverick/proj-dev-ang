@@ -127,7 +127,6 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
 
   onSubmit() {
     const { emailConfirm, ...formValue } = this.form.value;
-    console.log('-> formValue', formValue, this.form);
     this.submittedForm = true;
     if (this.form.valid) {
       this.sendForm.emit({ ...formValue });

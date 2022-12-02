@@ -136,8 +136,6 @@ export class CompanyConfigurationService {
   }
 
   public getEntryOptions(): void {
-    console.log('-> getEntryOptions');
-
     this.enterpriseHeading.getEntryOptions().subscribe((result) => {
       this.entryOptions = result;
       this.setCategory();

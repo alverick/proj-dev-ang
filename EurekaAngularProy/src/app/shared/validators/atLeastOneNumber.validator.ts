@@ -6,7 +6,6 @@ export function atLeastOneNumber(control: FormControl) {
   if (isNil(control.value)) {
     return null;
   }
-  console.log('validate', regex.test(control.value));
   if (control.value && !regex.test(control.value)) {
     return { noNumber: true };
   }

@@ -10,7 +10,6 @@ import {
   ICompanySendUpdate,
   ICompanyUpdate,
 } from 'src/app/shared/models/company';
-import { updateCompanyMock } from '../../../shared/mocks/affiliation';
 import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
@@ -247,7 +246,6 @@ export class AffiliationService {
       ...serviceValues,
     });
     this.affiliationForms.resetServicesForms();
-    console.log('-> this.servicesList', this.servicesList);
   }
 
   private parseParams(

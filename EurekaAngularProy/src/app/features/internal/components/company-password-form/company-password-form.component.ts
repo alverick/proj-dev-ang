@@ -15,7 +15,6 @@ export class CompanyPasswordFormComponent implements OnInit {
 
   ngOnInit() {}
   onSubmit() {
-    console.log(this);
     if (this.form.valid) {
       this.sendForm.emit(this.form.value);
     }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import { errorServiceInformation } from '../../constants';
 import { AffiliationFormsService } from '../../services';
-import { AffiliationService } from '../../services/affiliation.service';
+import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-service-info',
@@ -25,7 +25,6 @@ export class ServiceInfoPage implements OnInit {
     });
   }
   onSubmit() {
-    console.log('onSubmit', this.affiliation.serviceForm.value);
     this.router.navigate([
       authFullRoutingChildNames.SERVICES_ADD_CONFIGURATION,
     ]);
