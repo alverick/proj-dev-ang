@@ -33,14 +33,14 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   @ViewChild('formElm', { static: false })
   htmlForm: NgForm;
   showDocumentFields = false;
+  actualName = false;
 
   constructor() {}
 
   ngOnInit() {
-    this.form.valueChanges.subscribe(() => {
-      const { documentType, documentNumber } = this.form.getRawValue();
-      this.showDocumentFields = !(isNil(documentType) && isNil(documentNumber));
-    });
+    const { documentType, documentNumber, name } = this.form.getRawValue();
+    this.showDocumentFields = !(isNil(documentType) && isNil(documentNumber));
+    this.actualName = name;
   }
 
   ngOnChanges(changes: SimpleChanges) {
