@@ -22,6 +22,8 @@ import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.compo
 import { HelpPage } from './pages/help/help.page';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
+import { CompanyDataResolver } from './resolvers/company-data.resolver';
+import { CompanyEntriesResolver } from './resolvers/company-entries.resolver';
 
 const routes: Routes = [
   {
@@ -36,6 +38,10 @@ const routes: Routes = [
       {
         path: internalRoutingNames.COMPANY,
         component: CompanyConfigurationPage,
+        resolve: {
+          entries: CompanyEntriesResolver,
+          company: CompanyDataResolver,
+        },
         canActivate: [AuthGuard, GtpOutputGuard],
       },
       {
