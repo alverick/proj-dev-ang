@@ -10,6 +10,7 @@ import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
+import { IAccountStateDetails } from '../../../../shared/models/company';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 
 @Component({
@@ -45,12 +46,13 @@ export class AprobacionesPage implements OnInit {
   public empresa: any;
   enterpriseChanged = false;
   servicesChanged = false;
+  stateDetail: IAccountStateDetails;
 
   rubros: IEntryModel[] = [];
 
   constructor(
     public gtpService: GtpService,
-    private rutaActiva: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     public afiliacionService: AfiliacionService,
     public router: Router
   ) {}
@@ -63,7 +65,10 @@ export class AprobacionesPage implements OnInit {
   }
 
   ngOnInit() {
-    this.llave = this.rutaActiva.snapshot.params.llave;
+    this.activatedRoute.data.subscribe(({ stateDetail }) => {
+      this.stateDetail = stateDetail;
+    });
+    this.llave = this.activatedRoute.snapshot.params.llave;
     /// TRAE LOS SERVICIOS
     this.afiliacionService.GetRubrosAll().subscribe((d) => {
       this.rubros = d;
