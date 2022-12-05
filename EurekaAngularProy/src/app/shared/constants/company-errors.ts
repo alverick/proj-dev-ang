@@ -51,7 +51,7 @@ export const errorRegisterAuth: IErrorMessages = {
     pattern: 'La contraseña debe tener por lo menos una letra',
     noLetter: 'La contraseña debe tener por lo menos una letra',
     noNumber: 'La contraseña debe tener por lo menos un número',
-    notEqual: 'La contraseña debe ser distinta a la original',
+    notEqual: 'La contraseña debe ser distinta a la actual',
   },
   passwordConfirm: {
     required: 'Debes repetir la contraseña',
