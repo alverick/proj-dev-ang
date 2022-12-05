@@ -60,8 +60,8 @@ export interface ICompanySendUpdate {
 
 export interface IAccountStateDetails {
   accountStateDetailsResponse: {
-    requestdate: string;
-    aprobationDate: string;
-    lastAcces: string;
+    requestDate: string;
+    approbationDate: string;
+    lastAccess: string;
   };
 }
