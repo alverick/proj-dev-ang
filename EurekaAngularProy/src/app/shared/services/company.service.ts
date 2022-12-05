@@ -76,4 +76,17 @@ export class CompanyService {
         })
       );
   }
+
+  getAcountStateDetailsList(): Observable<Blob> {
+    return this.http
+      .get<Blob>(
+        `${environment.END_POINT}/company/GTP/AccountStateDetailsList`,
+        { responseType: 'blob' }
+      )
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
+  }
 }

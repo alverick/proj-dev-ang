@@ -15,6 +15,7 @@ import { IEntryModel } from 'src/app/shared/models';
 import { GtpFilter } from 'src/app/shared/models/gtp-filter';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { StatesGtp } from '../../../../shared/models/states-gtp';
+import { CompanyService } from '../../../../shared/services/company.service';
 import { GtpService } from '../../../../shared/services/gtp.service';
 import { adminFullRoutingNames } from '../../admin-routing.names';
 
@@ -132,7 +133,8 @@ export class GtpGrillaPage implements OnInit {
   constructor(
     private afiliacionService: AfiliacionService,
     public gtpService: GtpService,
-    private router: Router
+    private router: Router,
+    private companyService: CompanyService
   ) {}
 
   rubros: IEntryModel[] = [];
@@ -228,6 +230,12 @@ export class GtpGrillaPage implements OnInit {
   clickClientesNoRegistrados() {
     this.gtpService.clientsUnregistered(this.filtro).subscribe((r: Blob) => {
       saveAs(r, 'ClientesNoRegistrados.xlsx');
+    });
+  }
+
+  getAccountStateList(): void {
+    this.companyService.getAcountStateDetailsList().subscribe((r: Blob) => {
+      saveAs(r, 'Detalles de cuentas.xlsx');
     });
   }
 }
