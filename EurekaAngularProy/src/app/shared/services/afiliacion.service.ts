@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import {
   IEntryModel,
+  IServiceModel,
   IServiceRemoteModel,
   MonedaModel,
-  IServiceModel,
 } from '../models';
 import { IDataEnterpriseModel } from '../models/data-enterprise.model';
 import { drawPopup } from '../utils/helpers/popups';
@@ -384,17 +384,20 @@ export class AfiliacionService {
       });
   }
 
-  public isServiceInReview({
-    id,
-    newName,
-    newNameCode,
-    newNameCodeGtpStatus,
-    newNameGtpStatus,
-  }: IServiceModel): boolean {
+  public isServiceInReview(
+    {
+      id,
+      newName,
+      newNameCode,
+      newNameCodeGtpStatus,
+      newNameGtpStatus,
+    }: IServiceModel,
+    ignoreEditedLocally = false
+  ): boolean {
     if (id === null) {
       return true;
     }
-    if (newName !== '' || newNameCode !== '') {
+    if (!ignoreEditedLocally && (newName !== '' || newNameCode !== '')) {
       return true;
     }
     if (
@@ -431,7 +434,7 @@ export class AfiliacionService {
     this.services
       .filter(
         (service) =>
-          !this.isServiceInReview(service) || this.isNewService(service)
+          !this.isServiceInReview(service, true) || this.isNewService(service)
       )
       .forEach(
         ({
