@@ -29,6 +29,15 @@
                   />&nbsp;Descargar Clientes No Registrados
                 </div>
               </div>
+              <div class="al-right">
+                <div class="lnk-label" (click)="getAccountStateList()">
+                  <img
+                    class="tw-inline"
+                    src="../../../../../assets/images/download.svg"
+                    alt="download"
+                  />&nbsp;Empresas registradas
+                </div>
+              </div>
               <div class="clear-float"></div>
             </section>
             <section class="lista">
@@ -90,9 +99,9 @@
                           *ngFor="let request of items?.requestTypeList"
                         >
                           <div *ngIf="request.type == 0">
-                            <span class="badge badge-primary">{{
-                              request.texto
-                            }}</span>
+                            <span class="badge badge-primary"
+                              >{{ request.texto }}</span
+                            >
                           </div>
                         </div>
                         <div
@@ -100,22 +109,22 @@
                           *ngFor="let request of items?.requestTypeList"
                         >
                           <div *ngIf="request.type == 1">
-                            <span class="badge badge-warning">{{
-                              request.texto
-                            }}</span>
+                            <span class="badge badge-warning"
+                              >{{ request.texto }}</span
+                            >
                           </div>
                           <div *ngIf="request.type == 2">
-                            <span class="badge badge-success">{{
-                              request.texto
-                            }}</span>
+                            <span class="badge badge-success"
+                              >{{ request.texto }}</span
+                            >
                           </div>
                           <div
                             *ngIf="request.type == 3"
                             tooltip="{{ request.detalles }}"
                           >
-                            <span class="badge badge-warning">{{
-                              request.texto
-                            }}</span>
+                            <span class="badge badge-warning"
+                              >{{ request.texto }}</span
+                            >
                           </div>
                         </div>
                         <!-- -->
@@ -186,10 +195,16 @@
                         (keyup.enter)="p.previous()"
                         (click)="p.previous()"
                       >
-                        <img class="tw-inline" src="../../../../../assets/images/before.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/before.svg"
+                        />
                       </a>
                       <span *ngIf="p.isFirstPage()">
-                        <img class="tw-inline" src="../../../../../assets/images/before.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/before.svg"
+                        />
                       </span>
                     </li>
                     <li *ngIf="p.pages.length === 0" class="current">
@@ -207,18 +222,16 @@
                         (click)="p.setCurrent(page.value)"
                         *ngIf="p.getCurrent() !== page.value"
                       >
-                        <span>{{
-                          page.label === '...'
-                            ? page.label
-                            : (page.label | number: '')
-                        }}</span>
+                        <span
+                          >{{ page.label === '...' ? page.label : (page.label |
+                          number: '') }}</span
+                        >
                       </a>
                       <ng-container *ngIf="p.getCurrent() === page.value">
-                        <span>{{
-                          page.label === '...'
-                            ? page.label
-                            : (page.label | number: '')
-                        }}</span>
+                        <span
+                          >{{ page.label === '...' ? page.label : (page.label |
+                          number: '') }}</span
+                        >
                       </ng-container>
                     </li>
                     <li
@@ -232,18 +245,22 @@
                         (keyup.enter)="p.next()"
                         (click)="p.next()"
                       >
-                        <img class="tw-inline" src="../../../../../assets/images/after.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/after.svg"
+                        />
                       </a>
                       <span class="pr-0" *ngIf="p.isLastPage()">
-                        <img class="tw-inline" src="../../../../../assets/images/after.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/after.svg"
+                        />
                       </span>
                     </li>
                   </ul>
                 </pagination-template>
               </div>
-              <div class="text pt-1">
-                {{ gtpService.pageMessage }}
-              </div>
+              <div class="text pt-1">{{ gtpService.pageMessage }}</div>
               <div class="clear-float"></div>
             </section>
           </div>

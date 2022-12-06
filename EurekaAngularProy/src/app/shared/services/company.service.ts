@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IServicePostData } from '../models';
+import { IAccountStateDetails } from '../models/company';
 import { IDataEnterpriseModel } from '../models/data-enterprise.model';
 
 export interface ICompanyResult {
@@ -16,6 +17,7 @@ export interface ICompanyResult {
 @Injectable()
 export class CompanyService {
   constructor(private http: HttpClient) {}
+
   public validateCompany(data: any): Observable<ICompanyResult> {
     return this.http
       .post<any>(`${environment.END_POINT}/company/validate`, data)
@@ -68,5 +70,29 @@ export class CompanyService {
     return this.http
       .get<IDataEnterpriseModel>(url)
       .pipe(catchError((err) => throwError(err)));
+  }
+
+  getAcountStateDetails(idCompany): Observable<IAccountStateDetails> {
+    return this.http
+      .get<any>(
+        `${environment.END_POINT}/company/GTP/accountStateDetails/${idCompany}`
+      )
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getAcountStateDetailsList(): Observable<Blob> {
+    return this.http
+      .get(`${environment.END_POINT}/company/GTP/AccountStateDetailsList`, {
+        responseType: 'blob',
+      })
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
   }
 }

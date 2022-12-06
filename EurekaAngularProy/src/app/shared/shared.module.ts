@@ -57,6 +57,7 @@ import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
+import { PIPES } from './pipes';
 import { CompanyService } from './services/company.service';
 import { EnterpriseHeadingService } from './services/enterprise-heading.service';
 
@@ -136,6 +137,7 @@ const UI_MODULES = [
     ModalTermsComponent,
     ServiceCardComponent,
     ...DIRECTIVES,
+    ...PIPES,
   ],
   exports: [
     OnlyNumbersFormDirective,
@@ -155,6 +157,7 @@ const UI_MODULES = [
     MessageAlertComponent,
     ValidationDefaultsComponent,
     ServiceCardComponent,
+    ...PIPES,
   ],
   entryComponents: [ModalTermsComponent],
 })

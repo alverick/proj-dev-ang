@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { appRoutingNames } from 'src/app/app-routing.collection';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpInputGuard } from '../../shared/guards/gtp-input.guard';
-import { SharedModule } from '../../shared/shared.module';
 import {
   adminDynamicRoutingNames,
   adminRoutingNames,
@@ -13,6 +12,7 @@ import { AprobacionesPage } from './pages/aprobaciones/aprobaciones.page';
 import { CargaHistoricoComponent } from './pages/carga-historico/carga-historico.component';
 import { ConfigurarCorreoGtpComponent } from './pages/configurar-correo-gtp/configurar-correo-gtp.component';
 import { GtpGrillaPage } from './pages/gtp-grilla/gtp-grilla.page';
+import { AccountStateDetailsResolver } from './resolvers';
 
 const routes: Routes = [
   {
@@ -26,8 +26,11 @@ const routes: Routes = [
       },
       {
         path: adminDynamicRoutingNames.APPROVE,
-        component: AprobacionesPage,
         canActivate: [AuthGuard, GtpInputGuard],
+        component: AprobacionesPage,
+        resolve: {
+          stateDetail: AccountStateDetailsResolver,
+        },
       },
       {
         path: adminDynamicRoutingNames.HISTORY,

@@ -6,7 +6,7 @@
           <div class="col-sm-11">
             <br />
             <div class="d-flex justify-content-start">
-              <div class="card-servicios mb-2">
+              <div class="card-servicios mb-2 tw-pb-2">
                 <div class="px-2">
                   <div class="pl-1 row pb-1">
                     <div class="col-sm-12 pt-1">
@@ -43,6 +43,38 @@
                       <td class="font-black-servicios-des-list">
                         {{ Enterprise.ruc }}
                       </td>
+                    </tr>
+                    <tr>
+                      <td class="font-black-servicios-list">
+                        Fecha de solicitud
+                      </td>
+                      <td class="font-black-servicios-list">
+                        Fecha de afiliación
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="font-black-servicios-des-list">
+                        {{
+                        stateDetail.accountStateDetailsResponse.requestDate|notEmpty:'-'
+                        }}
+                      </td>
+                      <td class="font-black-servicios-des-list">
+                        {{
+                        stateDetail.accountStateDetailsResponse.approbationDate|notEmpty:'-'
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="font-black-servicios-list">Último log in</td>
+                      <td class="font-black-servicios-list"></td>
+                    </tr>
+                    <tr>
+                      <td class="font-black-servicios-des-list">
+                        {{
+                        stateDetail.accountStateDetailsResponse.lastAccess|notEmpty:'-'
+                        }}
+                      </td>
+                      <td class="font-black-servicios-des-list"></td>
                     </tr>
                   </table>
                 </div>
@@ -312,7 +344,11 @@
                   (click)="OcultarFormulario()"
                   class="mano font-cerrar"
                 >
-                  <img class="tw-inline" src="../../../../../assets/images/cerrar.svg" /> <br />
+                  <img
+                    class="tw-inline"
+                    src="../../../../../assets/images/cerrar.svg"
+                  />
+                  <br />
                   Cerrar
                 </div>
               </div>
@@ -347,7 +383,11 @@
                   (click)="OcultarFormularioSer()"
                   class="mano font-cerrar"
                 >
-                  <img class="tw-inline" src="../../../../../assets/images/cerrar.svg" /> <br />
+                  <img
+                    class="tw-inline"
+                    src="../../../../../assets/images/cerrar.svg"
+                  />
+                  <br />
                   Cerrar
                 </div>
               </div>

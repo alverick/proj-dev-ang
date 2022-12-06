@@ -57,3 +57,11 @@ export interface ICompanySendUpdate {
   Token: string;
   NewName: null | string;
 }
+
+export interface IAccountStateDetails {
+  accountStateDetailsResponse: {
+    requestDate: string;
+    approbationDate: string;
+    lastAccess: string;
+  };
+}
