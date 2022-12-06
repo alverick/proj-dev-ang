@@ -5,7 +5,7 @@ import {
   chargeTypeOptions,
   currencyOptions,
   debtorCodeOptions,
-  errorMessagesServiceConfig,
+  errorServiceConfiguration,
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
@@ -18,7 +18,7 @@ import { AffiliationService } from '../../services/affiliation.service';
   styleUrls: ['./service-configuration.page.scss'],
 })
 export class ServiceConfigurationPage {
-  errorMessagesServiceConfig = errorMessagesServiceConfig;
+  errorMessagesServiceConfig = errorServiceConfiguration;
   debtorCodeOptions = debtorCodeOptions;
   paymentTypeOptions = paymentTypeOptions;
   currencyOptions = currencyOptions;

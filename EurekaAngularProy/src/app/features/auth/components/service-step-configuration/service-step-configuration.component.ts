@@ -88,7 +88,6 @@ export class ServiceStepConfigurationComponent implements OnInit {
 
   onSubmit() {
     const { debtorCodeCustom, ...formValue } = this.form.value;
-    console.log('-> formValue', formValue, this.form);
     this.submittedForm = true;
     if (this.form.valid) {
       this.sendForm.emit({
@@ -102,7 +101,6 @@ export class ServiceStepConfigurationComponent implements OnInit {
   }
 
   onCancel() {
-    console.log('-> onCancel');
     this.cancel.emit();
   }
 }

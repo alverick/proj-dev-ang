@@ -51,6 +51,7 @@ import { ModalTermsComponent } from './components/modal-terms/modal-terms.compon
 import { PaymentsFilterComponent } from './components/payments-filter/payments-filter.component';
 import { ServiceCardComponent } from './components/service-card/service-card.component';
 import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
+import { DIRECTIVES } from './directives';
 import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
@@ -135,6 +136,7 @@ const UI_MODULES = [
     MessageAlertComponent,
     ModalTermsComponent,
     ServiceCardComponent,
+    ...DIRECTIVES,
     ...PIPES,
   ],
   exports: [
@@ -143,6 +145,7 @@ const UI_MODULES = [
     SearchDirective,
     CorreoDirective,
     NameEnterpiseDirective,
+    ...DIRECTIVES,
     FooterComponent,
     ...FORM_MODULES,
     ...PRIMENG_MODULES,
