@@ -17,7 +17,7 @@ import {
   chargeTypeOptions,
   currencyOptions,
   debtorCodeOptions,
-  errorMessagesServiceConfig,
+  errorServiceConfiguration,
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
@@ -49,7 +49,7 @@ class FormDemoComponent {
   @Output() cancel = new EventEmitter();
   @Input() showCancel = false;
   form: FormGroup;
-  errors = errorMessagesServiceConfig;
+  errors = errorServiceConfiguration;
   debtorCodeOptions = debtorCodeOptions;
   paymentTypeOptions = paymentTypeOptions;
   currencyOptions = currencyOptions;

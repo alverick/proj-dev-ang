@@ -9,8 +9,8 @@ import {
   chargeTypeOptions,
   currencyOptions,
   debtorCodeOptions,
-  errorMessagesService,
-  errorMessagesServiceConfig,
+  errorServiceInformation,
+  errorServiceConfiguration,
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
@@ -26,8 +26,8 @@ export class ServiceResumePage implements OnInit {
   showSidebar = false;
   position: number;
   errorMessages = {
-    ...errorMessagesServiceConfig,
-    ...errorMessagesService,
+    ...errorServiceConfiguration,
+    ...errorServiceInformation,
   };
   debtorCodeOptions = debtorCodeOptions;
   paymentTypeOptions = paymentTypeOptions;
