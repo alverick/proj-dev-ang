@@ -2,25 +2,27 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { isEmpty, isNil } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { parseParams } from '../../../shared/constants/services';
+import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
 import {
   ICompanySendUpdate,
   ICompanyUpdate,
-} from 'src/app/shared/models/company';
-import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
+} from '../../../shared/models/company';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
+import {
+  EnterpriseHeadingService,
+  ServicesFormsService,
+} from '../../../shared/services';
 import {
   CompanyService,
   ICompanyResult,
 } from '../../../shared/services/company.service';
-import { EnterpriseHeadingService } from '../../../shared/services/enterprise-heading.service';
 import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
-import { debtorCodeCustomEmpty } from '../constants';
 import { AffiliationFormsService } from './affiliation-forms.service';
 
 @Injectable()
@@ -45,6 +47,7 @@ export class AffiliationService {
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
     private affiliationForms: AffiliationFormsService,
+    private serviceForms: ServicesFormsService,
     private logger: NGXLogger
   ) {
     this.setRegisterForm();
@@ -53,9 +56,9 @@ export class AffiliationService {
   public setRegisterForm() {
     this.registerForm = this.affiliationForms.registerForm;
     this.authForm = this.affiliationForms.authForm;
-    this.serviceForm = this.affiliationForms.serviceForm;
-    this.serviceConfigForm = this.affiliationForms.serviceConfigForm;
-    this.editServiceForm = this.affiliationForms.editServiceForm;
+    this.serviceForm = this.serviceForms.serviceForm;
+    this.serviceConfigForm = this.serviceForms.serviceConfigForm;
+    this.editServiceForm = this.serviceForms.editServiceForm;
 
     this.registerForm.controls.email.statusChanges.subscribe(() => {
       this.registerForm.controls.emailConfirm.updateValueAndValidity();
@@ -86,7 +89,7 @@ export class AffiliationService {
     );
 
     if (inReview) {
-      this.affiliationForms.setEditFormValidator(newName);
+      this.serviceForms.setEditFormValidator(newName);
     }
 
     const amountField = interestType === 'M' ? amount : percentage;
@@ -198,7 +201,7 @@ export class AffiliationService {
   }
 
   public saveService() {
-    const { idAccount, name, useAppWeb, useAgent, accountNumber, currency } =
+    const { idAccount, name, useAgent, accountNumber, currency } =
       this.serviceForm.value;
     const {
       dataType,
@@ -221,7 +224,7 @@ export class AffiliationService {
       },
     } = this.serviceConfigForm.value;
 
-    const serviceValues = this.parseParams(
+    const serviceValues = parseParams(
       debtorCodeCustom,
       debtorCode,
       amount,
@@ -238,38 +241,14 @@ export class AffiliationService {
       idAccount,
       accountNumber,
       currency,
-      useAppWeb,
+      useAppWeb: true,
       useAgent,
       useStore: false,
       chargeInterest,
       partialPayment,
       ...serviceValues,
     });
-    this.affiliationForms.resetServicesForms();
-  }
-
-  private parseParams(
-    debtorCodeCustom,
-    debtorCode,
-    amount,
-    chargeType,
-    interestType
-  ) {
-    const parsedDebtorCode =
-      debtorCodeCustom === debtorCodeCustomEmpty
-        ? debtorCode
-        : debtorCodeCustom;
-
-    const parseAmount = parseFloat(amount).toFixed(2);
-
-    return {
-      debtorCode: parsedDebtorCode,
-      newNameCode: parsedDebtorCode,
-      chargeType: isEmpty(chargeType) ? '' : parseInt(chargeType, 10),
-      interestType: isNil(interestType) ? 'M' : interestType,
-      amount: interestType === 'M' ? parseAmount : '1.00',
-      percentage: interestType === 'P' ? parseAmount : '1.00',
-    };
+    this.serviceForms.resetServicesForms();
   }
 
   saveAllServices() {
@@ -389,7 +368,7 @@ export class AffiliationService {
       },
     } = this.editServiceForm.value;
 
-    const serviceValues = this.parseParams(
+    const serviceValues = parseParams(
       debtorCodeCustom,
       debtorCode,
       amount,
