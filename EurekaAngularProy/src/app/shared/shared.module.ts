@@ -30,7 +30,6 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { TooltipModule } from 'ngx-bootstrap';
-import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
@@ -68,7 +67,6 @@ const FORM_MODULES = [
   MatDatepickerModule,
   MatDialogModule,
   MatExpansionModule,
-  MaterialFileInputModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
