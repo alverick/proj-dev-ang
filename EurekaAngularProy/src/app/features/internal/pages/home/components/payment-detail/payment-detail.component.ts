@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
