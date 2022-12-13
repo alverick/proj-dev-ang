@@ -57,28 +57,44 @@
         class="tw-inline tw-text-white tw-rounded-3xl tw-text-xs tw-px-4 tw-py-0.5"
         [ngClass]="{
           'tw-bg-extended-watermelon-1':
-            serviceData.newNameGTPStatus === 2 ||
-            serviceData.newNameCodeGTPStatus === 2,
+            serviceData.newNameGTPStatus === 3 ||
+            serviceData.newNameCodeGTPStatus === 3,
           'tw-bg-extended-orange-1':
             serviceData.newNameGTPStatus === 0 ||
-            serviceData.newNameCodeGTPStatus === 0
+            serviceData.newNameCodeGTPStatus === 0 ||
+            serviceData.newNameGTPStatus === 2 ||
+            serviceData.newNameCodeGTPStatus === 2
         }"
       >
         <ng-template
           [ngIf]="
-            serviceData.newNameGTPStatus === 2 ||
-            serviceData.newNameCodeGTPStatus === 2
+            serviceData.newNameGTPStatus === 3 ||
+            serviceData.newNameCodeGTPStatus === 3
           "
           >Error en la revisión</ng-template
         >
         <ng-template
           [ngIf]="
             serviceData.newNameGTPStatus === 0 ||
-            serviceData.newNameCodeGTPStatus === 0
+            serviceData.newNameCodeGTPStatus === 0 ||
+            serviceData.newNameGTPStatus === 2 ||
+            serviceData.newNameCodeGTPStatus === 2
           "
           >Pendiente de revisión</ng-template
         >
       </div>
+      <img
+        *ngIf="
+          serviceData.newNameGTPStatus === 3 ||
+          serviceData.newNameCodeGTPStatus === 3
+        "
+        pTooltip="¡Ups! Hubo un error al revisar tu servicio.
+Debes eliminarlo y volver a crearlo"
+        tooltipStyleClass="cs-tooltip"
+        hideDelay="30000"
+        class="tw-ml-2 tw-h-5 icon-information"
+        src="../../../../../assets/images/information.svg"
+      />
     </div>
     <div *ngIf="!serviceData.inReview" class="tw-h-8"></div>
   </ng-template>
