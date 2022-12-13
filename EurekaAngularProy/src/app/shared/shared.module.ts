@@ -29,7 +29,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { TooltipModule } from 'ngx-bootstrap';
+import { TooltipModule as TooltipModuleNgx } from 'ngx-bootstrap';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -43,6 +43,7 @@ import { KeyFilterModule } from 'primeng-lts/keyfilter';
 import { RadioButtonModule } from 'primeng-lts/radiobutton';
 import { SidebarModule } from 'primeng-lts/sidebar';
 import { StepsModule } from 'primeng-lts/steps';
+import { TooltipModule } from 'primeng-lts/tooltip';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LabelControlComponent } from './components/label-control/label-control.component';
@@ -97,12 +98,13 @@ const PRIMENG_MODULES = [
   StepsModule,
   SidebarModule,
   ButtonModule,
+  TooltipModule,
 ];
 const UI_MODULES = [
   FontAwesomeModule,
   OverlayModule,
   PerfectScrollbarModule,
-  TooltipModule.forRoot(),
+  TooltipModuleNgx.forRoot(),
 ];
 
 @NgModule({
@@ -161,7 +163,7 @@ const UI_MODULES = [
     ...PRIMENG_MODULES,
     HeaderComponent,
     PaymentsFilterComponent,
-    TooltipModule,
+    TooltipModuleNgx,
     ValdemortModule,
     LabelControlComponent,
     MessageAlertComponent,
