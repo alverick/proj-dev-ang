@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/operators';
-import { IErrorMessages } from '../../../../shared/models/forms';
-import { debtorCodeCustomEmpty } from '../../constants';
+import { debtorCodeCustomEmpty } from '../../constants/services';
+import { IErrorMessages } from '../../models/forms';
 
 @Component({
   selector: 'cs-service-step-configuration',
@@ -26,8 +26,6 @@ export class ServiceStepConfigurationComponent implements OnInit {
   debtorCodeEditable = false;
   submittedForm = false;
   $destroy = new Subject();
-
-  constructor() {}
 
   ngOnInit() {
     this.listenForms();

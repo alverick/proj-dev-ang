@@ -6,12 +6,10 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
+import { action, withActions } from '@storybook/addon-actions';
 import { centered } from '@storybook/addon-centered/angular';
 import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
-import { SharedModule } from '../../../../shared/shared.module';
 import {
   chargeTypeOptions,
   currencyOptions,
@@ -19,21 +17,25 @@ import {
   errorServiceConfiguration,
   interestTypeOptions,
   paymentTypeOptions,
-} from '../../constants';
-import { InputMoneyDirective } from '../../directives';
-import { AffiliationFormsService } from '../../services';
-import { ServiceDebtFormComponent } from './service-debt-form.component';
+} from '../../../features/auth/constants';
+import { AffiliationFormsService } from '../../../features/auth/services';
+import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
+import { ServicesFormsService } from '../../services';
+import { SharedModule } from '../../shared.module';
+import { ServiceEditFormComponent } from './service-edit-form.component';
 
 @Component({
   selector: 'cs-form-demo',
-  template: ` <cs-service-debt-form
+  template: ` <cs-service-edit-form
     [form]="form"
     [errorMessages]="errors"
+    [debtorCodeOptions]="debtorCodeOptions"
     [paymentTypeOptions]="paymentTypeOptions"
     [currencyOptions]="currencyOptions"
     [chargeTypeOptions]="chargeTypeOptions"
     [interestTypeOptions]="interestTypeOptions"
-  ></cs-service-debt-form>`,
+    (sendForm)="onSubmit($event)"
+  ></cs-service-edit-form>`,
 })
 class FormDemoComponent {
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
@@ -44,8 +46,8 @@ class FormDemoComponent {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
-  constructor(affiliationForms: AffiliationFormsService) {
-    this.form = affiliationForms.serviceConfigForm.controls.debt as FormGroup;
+  constructor(servicesForms: ServicesFormsService) {
+    this.form = servicesForms.editServiceForm;
   }
   onSubmit($event) {
     this.sendForm.emit($event);
@@ -57,7 +59,7 @@ const initAppComponentFactory =
     affiliationForms;
 
 export default {
-  title: 'Auth/Module/Service Debt Form',
+  title: 'Auth/Module/Service Edit Form',
   decorators: [
     centered,
     withKnobs,
@@ -73,17 +75,14 @@ export default {
         },
       ],
     }),
+    withActions('sendForm', 'click .btn'),
   ],
 };
 
 export const normal = () => ({
-  component: ServiceDebtFormComponent,
+  component: ServiceEditFormComponent,
   moduleMetadata: {
-    declarations: [
-      FormDemoComponent,
-      ServiceDebtFormComponent,
-      InputMoneyDirective,
-    ],
+    declarations: [FormDemoComponent],
     providers: [],
   },
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>

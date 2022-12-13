@@ -6,7 +6,6 @@ import {
   EventEmitter,
   HostListener,
   Input,
-  OnInit,
   Output,
 } from '@angular/core';
 
@@ -15,8 +14,9 @@ import {
   templateUrl: './services-list.component.html',
   styleUrls: ['./services-list.component.scss'],
 })
-export class ServicesListComponent implements OnInit, AfterViewInit {
-  @Input() edit = false;
+export class ServicesListComponent implements AfterViewInit {
+  @Input() onlyEdit = false;
+  @Input() showSaveAll = true;
   @Input() empty = false;
   @Output() add = new EventEmitter();
   @Output() finish = new EventEmitter();
@@ -26,8 +26,6 @@ export class ServicesListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.resize();
   }
-
-  ngOnInit(): void {}
 
   @HostListener('window:resize')
   resize() {

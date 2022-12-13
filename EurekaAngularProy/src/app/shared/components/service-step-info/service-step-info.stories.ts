@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { withActions } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedModule } from '../../shared.module';
 import { ServiceStepInfoComponent } from './service-step-info.component';
 
 export default {
@@ -13,7 +13,6 @@ export default {
   decorators: [
     withKnobs,
     moduleMetadata({
-      declarations: [ServiceStepInfoComponent],
       imports: [
         BrowserAnimationsModule,
         HttpClientModule,
@@ -55,7 +54,7 @@ export const normal = () => ({
       idAccount: new FormControl('', [Validators.required]),
       currency: new FormControl(''),
       accountNumber: new FormControl(''),
-      useAppWeb: new FormControl(''),
+      useAppWeb: new FormControl({ value: true, disabled: true }),
       useAgent: new FormControl(''),
     }),
   },

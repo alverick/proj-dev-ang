@@ -10,7 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs/internal/Subject';
 import { filter, takeUntil } from 'rxjs/operators';
-import { IErrorMessages } from '../../../../shared/models/forms';
+import { IErrorMessages } from '../../models/forms';
 
 @Component({
   selector: 'cs-service-step-info',
@@ -25,8 +25,6 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   @Input() errorMessages: IErrorMessages;
   @Input() accounts: any[];
   @Input() showCancel = false;
-
-  constructor() {}
 
   ngOnInit() {
     this.form

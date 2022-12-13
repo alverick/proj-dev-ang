@@ -11,8 +11,11 @@ import { FormGroup } from '@angular/forms';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
-import { IErrorMessages } from '../../../../shared/models/forms';
-import { debtorCodeCustomEmpty, debtorCodeOptions } from '../../constants';
+import {
+  debtorCodeCustomEmpty,
+  debtorCodeOptions,
+} from '../../constants/services';
+import { IErrorMessages } from '../../models/forms';
 
 @Component({
   selector: 'cs-service-edit-form',

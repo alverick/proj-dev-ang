@@ -11,8 +11,6 @@ import { action } from '@storybook/addon-actions';
 import { centered } from '@storybook/addon-centered/angular';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
-import { SharedModule } from '../../../../shared/shared.module';
 import {
   chargeTypeOptions,
   currencyOptions,
@@ -20,13 +18,15 @@ import {
   errorServiceConfiguration,
   interestTypeOptions,
   paymentTypeOptions,
-} from '../../constants';
+} from '../../../features/auth/constants';
+import { AffiliationFormsService } from '../../../features/auth/services';
 import {
   InputMoneyDirective,
   InputWithoutSpacesDirective,
 } from '../../directives';
-import { AffiliationFormsService } from '../../services';
-import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
+import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
+import { ServicesFormsService } from '../../services';
+import { SharedModule } from '../../shared.module';
 import { ServiceStepConfigurationComponent } from './service-step-configuration.component';
 
 @Component({
@@ -55,7 +55,7 @@ class FormDemoComponent {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
-  constructor(affiliationForms: AffiliationFormsService) {
+  constructor(affiliationForms: ServicesFormsService) {
     this.form = affiliationForms.serviceConfigForm;
   }
   onSubmit($event) {
@@ -96,8 +96,6 @@ export const normal = () => ({
   moduleMetadata: {
     declarations: [
       FormDemoComponent,
-      ServiceStepConfigurationComponent,
-      ServiceDebtFormComponent,
       InputWithoutSpacesDirective,
       InputMoneyDirective,
     ],

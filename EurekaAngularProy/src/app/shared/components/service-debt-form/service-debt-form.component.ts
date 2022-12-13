@@ -1,5 +1,4 @@
 import {
-  forwardRef,
   AfterViewInit,
   Component,
   Input,
@@ -14,8 +13,8 @@ import {
   NgForm,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { has, pathEq, propEq } from 'ramda';
-import { IErrorMessages } from '../../../../shared/models/forms';
+import { pathEq } from 'ramda';
+import { IErrorMessages } from '../../models/forms';
 
 @Component({
   selector: 'cs-service-debt-form',
@@ -44,8 +43,6 @@ export class ServiceDebtFormComponent
   showArrearsFields = false;
   unitAmount = 'S/';
   onTouched: any;
-
-  constructor() {}
 
   ngOnInit() {
     const { chargeInterest, interestType } = this.form.value;
