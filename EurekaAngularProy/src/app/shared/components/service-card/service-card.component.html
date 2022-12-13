@@ -4,24 +4,28 @@
   <div
     class="tw-flex tw-justify-between"
     [ngClass]="{
-      'tw-pb-2': !update || !canEdit,
-      'tw-border-b': !update || !canEdit,
-      'tw-border-extended-grey-4': !update || !canEdit
+      'tw-pb-2': !reviewMode && !lockedMode,
+      'tw-border-b': !reviewMode && !lockedMode,
+      'tw-border-extended-grey-4': !reviewMode && !lockedMode
     }"
   >
     <div class="tw-text-lg tw-font-medium tw-truncate tw-mr-2">
-      {{ serviceData.name }}
+      {{ name }}
     </div>
     <div class="tw-flex tw-gap-2 tw-flex-shrink-0">
       <div *ngIf="canEdit" (click)="actionEdit()" class="tw-cursor-pointer">
         <img src="../../../../../assets/images/card-icon-edit.svg" />
       </div>
-      <div *ngIf="!update" (click)="actionDelete()" class="tw-cursor-pointer">
+      <div
+        *ngIf="!reviewMode"
+        (click)="actionDelete()"
+        class="tw-cursor-pointer"
+      >
         <img src="../../../../../assets/images/card-icon-delete.svg" />
       </div>
     </div>
   </div>
-  <ng-template [ngIf]="update">
+  <ng-template [ngIf]="reviewMode">
     <div
       *ngIf="serviceData.inReview"
       class="tw-h-8 tw-flex tw-items-center tw-my-1"
@@ -44,17 +48,51 @@
     </div>
     <div *ngIf="!serviceData.inReview" class="tw-h-8"></div>
   </ng-template>
+  <ng-template [ngIf]="lockedMode">
+    <div
+      *ngIf="serviceData.inReview"
+      class="tw-h-8 tw-flex tw-items-center tw-my-1"
+    >
+      <div
+        class="tw-inline tw-text-white tw-rounded-3xl tw-text-xs tw-px-4 tw-py-0.5"
+        [ngClass]="{
+          'tw-bg-extended-watermelon-1':
+            serviceData.newNameGTPStatus === 2 ||
+            serviceData.newNameCodeGTPStatus === 2,
+          'tw-bg-extended-orange-1':
+            serviceData.newNameGTPStatus === 0 ||
+            serviceData.newNameCodeGTPStatus === 0
+        }"
+      >
+        <ng-template
+          [ngIf]="
+            serviceData.newNameGTPStatus === 2 ||
+            serviceData.newNameCodeGTPStatus === 2
+          "
+          >Error en la revisión</ng-template
+        >
+        <ng-template
+          [ngIf]="
+            serviceData.newNameGTPStatus === 0 ||
+            serviceData.newNameCodeGTPStatus === 0
+          "
+          >Pendiente de revisión</ng-template
+        >
+      </div>
+    </div>
+    <div *ngIf="!serviceData.inReview" class="tw-h-8"></div>
+  </ng-template>
   <div
     class="tw-grid tw-grid-cols-2 tw-gap-2"
     [ngClass]="{
-      'tw-pt-3': !update
+      'tw-pt-3': !reviewMode
     }"
   >
     <div class="tw-text-extended-grey-2">Canales de pago:</div>
     <div class="val">{{ paymentChannels }}</div>
     <div class="tw-text-extended-grey-2">Código de cliente:</div>
     <div class="val tw-overflow-ellipsis tw-overflow-hidden tw-break-all">
-      {{ serviceData.debtorCode }}
+      {{ debtorCode }}
     </div>
     <div class="tw-text-extended-grey-2">Modalidad:</div>
     <div class="val">{{ dataType }}</div>

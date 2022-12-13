@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { dataTypeOptions } from '../../../features/auth/constants';
+import { isNilOrEmpty } from 'ramda-adjunct';
+import { dataTypeOptions } from '../../constants/services';
 import { IServiceRemoteModel } from '../../models';
 
 @Component({
@@ -11,23 +12,33 @@ export class ServiceCardComponent implements OnInit {
   @Input() serviceData: IServiceRemoteModel;
   @Input() position: number;
   @Input() canEdit = true;
-  @Input() update = false;
+  @Input() reviewMode = false;
+  @Input() lockedMode = false;
   @Output() edit = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
   paymentChannels = '';
   dataType = '';
   name = '';
+  debtorCode = '';
   updateEditable = false;
 
   ngOnInit() {
     this.setPaymentChannels();
     this.setDataType();
-    this.isEditable();
+    this.isInReview();
   }
 
-  isEditable() {
-    if (this.update) {
+  isInReview() {
+    this.name = this.serviceData.name;
+    this.debtorCode = this.serviceData.debtorCode;
+    if (this.lockedMode) {
       this.updateEditable = this.serviceData.inReview;
+      if (isNilOrEmpty(this.serviceData.name)) {
+        this.name = this.serviceData.newName;
+      }
+      if (isNilOrEmpty(this.serviceData.debtorCode)) {
+        this.debtorCode = this.serviceData.newNameCode;
+      }
     }
   }
 
