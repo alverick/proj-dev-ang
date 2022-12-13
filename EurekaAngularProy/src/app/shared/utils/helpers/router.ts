@@ -1,4 +1,4 @@
-import { curry, map, prop } from 'ramda';
+import { curry, isEmpty, isNil, map, prop } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 
 function hasChildren(node) {
@@ -17,7 +17,13 @@ const TreeObject = {
     }
     return node.children
       .map((item) => {
-        return { ...item, key: item.link, link: `${node.link}/${item.link}` };
+        const link = isNil(item.path) ? item.link : item.path;
+        const parent = isEmpty(link) ? '' : '/';
+        return {
+          ...item,
+          key: item.link,
+          link: `${node.link}${parent}${link}`,
+        };
       })
       .reduce(TreeObject.reduce(reducerFn), acc);
   }),
@@ -30,9 +36,11 @@ export const generateFullRoutes: any = (obj, path: string) => {
 
 export const generateFullRoutesTree: any = (obj, tree) => {
   const links = TreeObject.reduce(flattenToArray, [], tree);
+
   const parseRoute = (val) => {
     const result = links.find((link) => link.key === val);
-    return result ? `/${result.link}` : false;
+    const parent = isEmpty(links[0].link) ? '' : '/';
+    return result ? `${parent}${result.link}` : false;
   };
   return map(parseRoute, obj);
 };
