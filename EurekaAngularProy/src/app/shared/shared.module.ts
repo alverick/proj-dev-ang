@@ -50,6 +50,12 @@ import { MessageAlertComponent } from './components/message-alert/message-alert.
 import { ModalTermsComponent } from './components/modal-terms/modal-terms.component';
 import { PaymentsFilterComponent } from './components/payments-filter/payments-filter.component';
 import { ServiceCardComponent } from './components/service-card/service-card.component';
+import { ServiceDebtFormComponent } from './components/service-debt-form/service-debt-form.component';
+import { ServiceEditFormComponent } from './components/service-edit-form/service-edit-form.component';
+import { ServiceStepConfigurationComponent } from './components/service-step-configuration/service-step-configuration.component';
+import { ServiceStepInfoComponent } from './components/service-step-info/service-step-info.component';
+import { ServicesListComponent } from './components/services-list/services-list.component';
+import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
 import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
 import { DIRECTIVES } from './directives';
 import { CorreoDirective } from './directives/correo.directive';
@@ -58,8 +64,7 @@ import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directi
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
-import { CompanyService } from './services/company.service';
-import { EnterpriseHeadingService } from './services/enterprise-heading.service';
+import { SERVICES } from './services';
 
 const FORM_MODULES = [
   FormsModule,
@@ -119,8 +124,7 @@ const UI_MODULES = [
     },
 
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-    CompanyService,
-    EnterpriseHeadingService,
+    SERVICES,
   ],
   declarations: [
     OnlyNumbersFormDirective,
@@ -136,6 +140,12 @@ const UI_MODULES = [
     MessageAlertComponent,
     ModalTermsComponent,
     ServiceCardComponent,
+    ServiceStepInfoComponent,
+    ServiceStepConfigurationComponent,
+    ServiceDebtFormComponent,
+    ServiceEditFormComponent,
+    ServicesListComponent,
+    SidebarServiceComponent,
     ...DIRECTIVES,
     ...PIPES,
   ],
@@ -156,6 +166,12 @@ const UI_MODULES = [
     LabelControlComponent,
     MessageAlertComponent,
     ValidationDefaultsComponent,
+    ServiceStepInfoComponent,
+    ServiceStepConfigurationComponent,
+    ServiceDebtFormComponent,
+    ServiceEditFormComponent,
+    ServicesListComponent,
+    SidebarServiceComponent,
     ServiceCardComponent,
     ...PIPES,
   ],
