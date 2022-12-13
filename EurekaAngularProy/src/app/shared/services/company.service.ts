@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { IServicePostData } from '../models';
+import { IServicePostData, IServiceRemoteModel } from '../models';
 import { IAccountStateDetails } from '../models/company';
 import { IDataEnterpriseModel } from '../models/data-enterprise.model';
 
@@ -89,6 +89,20 @@ export class CompanyService {
       .get(`${environment.END_POINT}/company/GTP/AccountStateDetailsList`, {
         responseType: 'blob',
       })
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getCompanyServices(
+    incDeactivates: boolean = false
+  ): Observable<IServiceRemoteModel[]> {
+    return this.http
+      .get<IServiceRemoteModel[]>(
+        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`
+      )
       .pipe(
         catchError((err) => {
           return throwError(err);
