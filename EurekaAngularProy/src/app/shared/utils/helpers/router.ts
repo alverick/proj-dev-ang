@@ -1,4 +1,4 @@
-import { curry, map, prop } from 'ramda';
+import { curry, mapObjIndexed, prop } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 
 function hasChildren(node) {
@@ -23,16 +23,16 @@ const TreeObject = {
   }),
 };
 
-export const generateFullRoutes: any = (obj, path: string) => {
+export function generateFullRoutes(obj, path: string): any {
   const parseRoute = (val) => path + val;
-  return map(parseRoute, obj);
-};
+  return mapObjIndexed(parseRoute, obj);
+}
 
-export const generateFullRoutesTree: any = (obj, tree) => {
+export function generateFullRoutesTree(obj, tree): any {
   const links = TreeObject.reduce(flattenToArray, [], tree);
   const parseRoute = (val) => {
     const result = links.find((link) => link.key === val);
     return result ? `/${result.link}` : false;
   };
-  return map(parseRoute, obj);
-};
+  return mapObjIndexed(parseRoute, obj);
+}
