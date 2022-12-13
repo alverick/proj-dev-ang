@@ -102,7 +102,7 @@ export class CompanyServicesService {
 
     return this.saveAllServices().pipe(
       tap((result) => {
-        this.logger.debug('-> result', result);
+        this.logger.debug('-> result saveService', result);
         this.serviceForms.resetServicesForms();
       })
     );
@@ -118,11 +118,7 @@ export class CompanyServicesService {
       });
       return throwError('No services');
     }
-    return this.companyService.saveServices({
-      clientId: null,
-      deleted: [],
-      services: this.services,
-    });
+    return this.saveServices();
   }
 
   setEditForm(position: number) {
@@ -213,7 +209,61 @@ export class CompanyServicesService {
       partialPayment,
       ...serviceValues,
     };
+    return this.saveServices();
+  }
 
+  private saveServices() {
+    const services = this.services
+      .filter(
+        ({ newNameGTPStatus, newNameCodeGTPStatus }) =>
+          !(
+            (newNameGTPStatus === 0 || newNameGTPStatus === 2) &&
+            (newNameCodeGTPStatus === 0 || newNameCodeGTPStatus === 2)
+          )
+      )
+      .map(
+        ({
+          id,
+          name,
+          newName,
+          debtorCode,
+          newNameCode,
+          dataType,
+          paymentType,
+          idAccount,
+          accountNumber,
+          currency,
+          useAgent,
+          chargeInterest,
+          chargeType,
+          interestType,
+          amount,
+          percentage,
+          partialPayment,
+        }) => {
+          return {
+            id,
+            name,
+            newName,
+            debtorCode,
+            newNameCode,
+            dataType,
+            paymentType,
+            idAccount,
+            accountNumber,
+            currency,
+            useAppWeb: true,
+            useAgent,
+            useStore: false,
+            chargeInterest,
+            chargeType,
+            interestType,
+            amount,
+            percentage,
+            partialPayment,
+          };
+        }
+      );
     return this.companyService.saveServices({
       clientId: null,
       deleted: [],
