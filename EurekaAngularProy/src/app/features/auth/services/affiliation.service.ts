@@ -29,7 +29,7 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 export class AffiliationService {
   companyId;
   email;
-  servicesList: IServiceRemoteModel[] = [];
+  servicesList: Array<Partial<IServiceRemoteModel>> = [];
 
   entryOptions: IEntryModel[] = [];
   registerForm: FormGroup;

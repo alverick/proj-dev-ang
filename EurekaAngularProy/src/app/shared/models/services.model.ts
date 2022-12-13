@@ -68,8 +68,12 @@ export interface IServiceRemoteModel {
   debt?: IServiceRemoteModel;
 }
 
+export interface IServiceRemoteModelForms extends IServiceRemoteModel {
+  debtorCodeCustom: string;
+}
+
 export interface IServicePostData {
-  clientId: number;
+  clientId?: number;
   deleted: any[];
-  services: IServiceRemoteModel[];
+  services: Array<Partial<IServiceRemoteModel>>;
 }

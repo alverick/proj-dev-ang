@@ -9,7 +9,7 @@ import { IServiceRemoteModel } from '../../models';
   styleUrls: ['./service-card.component.scss'],
 })
 export class ServiceCardComponent implements OnInit {
-  @Input() serviceData: IServiceRemoteModel;
+  @Input() serviceData: Partial<IServiceRemoteModel>;
   @Input() position: number;
   @Input() canEdit = true;
   @Input() reviewMode = false;

@@ -15,7 +15,7 @@ import { swalAlert } from '../../../shared/utils/helpers/popups';
 
 @Injectable()
 export class CompanyServicesService {
-  services: IServiceRemoteModel[] = [];
+  services: Array<Partial<IServiceRemoteModel>> = [];
   serviceForm: FormGroup;
   serviceConfigForm: FormGroup;
   editServiceForm: FormGroup;
@@ -46,9 +46,13 @@ export class CompanyServicesService {
     );
   }
   deleteService(position: number) {
-    return this.serviceService
+    this.serviceService
       .deleteService(this.services[position].id)
-      .pipe(tap(() => {}));
+      .subscribe(() => {
+        this.companyService.getCompanyServices().subscribe((value) => {
+          this.services = value;
+        });
+      });
   }
 
   public saveService() {

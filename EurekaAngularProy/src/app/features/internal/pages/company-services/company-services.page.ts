@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { isNil } from 'ramda';
 import {
   errorServiceConfiguration,
   errorServiceInformation,
@@ -25,7 +24,6 @@ import { CompanyServicesService } from '../../services';
   styleUrls: ['./company-services.page.scss'],
 })
 export class CompanyServicesPage implements OnInit {
-  servicesList: IServiceRemoteModel[] = [];
   showSidebar = false;
   position: number;
   errorMessages = {
@@ -53,55 +51,38 @@ export class CompanyServicesPage implements OnInit {
     );
     this.activatedRoute.data.subscribe((value: any) => {
       this.companyServices.services = value.services;
-      this.servicesList = value.services;
     });
   }
 
   actionDelete(position: number) {
-    if (isNil(this.servicesList[position].id)) {
+    this.companyServices.canDelete(position).subscribe((result) => {
+      const title = '¿Estás seguro que deseas eliminar este servicio?';
+      let text =
+        'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
+      if (result.hasPayed) {
+        text =
+          'Ya existe un historial de pagos realizados con este servicio, sólo se eliminarán las ' +
+          'deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
+      }
       swalAlert
         .fire({
-          text: '¿Estás seguro que deseas eliminar este servicio?',
+          text,
+          title,
           showCancelButton: true,
           showConfirmButton: true,
-          confirmButtonText: 'Sí, eliminar',
-          cancelButtonText: 'Cancelar',
-          allowOutsideClick: false,
+          confirmButtonText: 'CONFIRMAR',
+          cancelButtonText: 'CANCELAR',
         })
-        .then((r) => {
-          if (r.value) {
-            this.servicesList.splice(position, 1);
+        .then((confirm) => {
+          if (confirm.value) {
             this.gaService.sendEvent('ServicioEliminado', {
               event_category: GoogleAnalytics.Afiliacion,
               event_label: 'servicio_eliminado',
             });
+            this.companyServices.deleteService(position);
           }
         });
-    } else {
-      this.companyServices.canDelete(position).subscribe((result) => {
-        const title = '¿Estás seguro que deseas eliminar este servicio?';
-        let text =
-          'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
-        if (result.hasPayed) {
-          text =
-            'Ya existe un historial de pagos realizados con este servicio, sólo se eliminarán las ' +
-            'deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
-        }
-        swalAlert
-          .fire({
-            text,
-            title,
-            showCancelButton: true,
-            showConfirmButton: true,
-            confirmButtonText: 'CONFIRMAR',
-            cancelButtonText: 'CANCELAR',
-          })
-          .then((confirm) => {
-            if (confirm.value) {
-            }
-          });
-      });
-    }
+    });
   }
   actionEdit(position: number) {
     this.formData = this.companyServices.setEditForm(position);

@@ -5,7 +5,7 @@
     [showSaveAll]="false"
   >
     <cs-service-card
-      *ngFor="let service of servicesList;let position=index"
+      *ngFor="let service of companyServices.services;let position=index"
       [serviceData]="service"
       [position]="position"
       [lockedMode]="service.inReview"
