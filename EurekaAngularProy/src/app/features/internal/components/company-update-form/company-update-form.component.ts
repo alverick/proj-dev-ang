@@ -30,7 +30,7 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   @Input() submitted = false;
   @Input() inReview = false;
   @Output() showPanel = new EventEmitter<any>();
-  @ViewChild('formElm', { static: false })
+  @ViewChild('formElm')
   htmlForm: NgForm;
   showDocumentFields = false;
   actualName = false;

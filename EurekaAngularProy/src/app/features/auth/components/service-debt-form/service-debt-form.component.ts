@@ -39,7 +39,7 @@ export class ServiceDebtFormComponent
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
   @Input() submitted = false;
-  @ViewChild('formElm', { static: false })
+  @ViewChild('formElm')
   htmlForm: NgForm;
   showArrearsFields = false;
   unitAmount = 'S/';
