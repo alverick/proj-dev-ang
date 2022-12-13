@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { Resolve } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CompanyService } from '../../../shared/services';
 
 @Injectable()
-export class CompanyDataResolver implements Resolve<any> {
+export class CompanyServicesResolver implements Resolve<any> {
   constructor(private companyService: CompanyService) {}
-  resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.companyService.getCompanyData().pipe(
+  resolve(): Observable<any> {
+    return this.companyService.getCompanyServices().pipe(
       catchError(() => {
         return of('No data');
       })
