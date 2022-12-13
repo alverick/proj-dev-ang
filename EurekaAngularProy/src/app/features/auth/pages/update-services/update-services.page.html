@@ -11,14 +11,14 @@
 <div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
   <cs-services-list
     class="tw-w-full"
-    [edit]="true"
+    [onlyEdit]="true"
     (finish)="finalize()"
   >
     <cs-service-card
       *ngFor="let service of affiliation.servicesList;let position=index"
       [serviceData]="service"
       [position]="position"
-      [update]="true"
+      [reviewMode]="true"
       [canEdit]="service.inReview"
       (delete)="actionDelete($event)"
       (edit)="actionEdit(position)"
@@ -43,7 +43,7 @@
       [chargeTypeOptions]="chargeTypeOptions"
       [interestTypeOptions]="interestTypeOptions"
       [formData]="formData"
-      (sendForm)="updateService($event)"
+      (sendForm)="updateService()"
     ></cs-service-edit-form>
   </p-sidebar>
 </div>
