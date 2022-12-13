@@ -72,7 +72,7 @@ export class CompanyService {
       .pipe(catchError((err) => throwError(err)));
   }
 
-  getAcountStateDetails(idCompany): Observable<IAccountStateDetails> {
+  getAccountStateDetails(idCompany): Observable<IAccountStateDetails> {
     return this.http
       .get<any>(
         `${environment.END_POINT}/company/GTP/accountStateDetails/${idCompany}`
@@ -84,7 +84,7 @@ export class CompanyService {
       );
   }
 
-  getAcountStateDetailsList(): Observable<Blob> {
+  getAccountStateDetailsList(): Observable<Blob> {
     return this.http
       .get(`${environment.END_POINT}/company/GTP/AccountStateDetailsList`, {
         responseType: 'blob',
