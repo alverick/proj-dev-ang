@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { MonedaModel, ServiceModel } from 'src/app/shared/models';
+import { MonedaModel, IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
@@ -52,7 +52,7 @@ export class FormServicioComponent implements OnInit {
     stateEdit.onFormAction.subscribe((e) => this.formAction(e));
   }
 
-  @Input() set service(value: ServiceModel) {
+  @Input() set service(value: IServiceModel) {
     if (value === null || value === undefined) {
       this._service = {
         res: '',
@@ -103,9 +103,9 @@ export class FormServicioComponent implements OnInit {
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
   cmoraporce: boolean = false;
-  public _service: ServiceModel;
+  public _service: IServiceModel;
   @Output() grabar = new EventEmitter<any>();
-  public services: ServiceModel[] = [];
+  public services: IServiceModel[] = [];
 
   ngOnInit(): void {
     this.cuentas = [];
@@ -391,7 +391,7 @@ export class FormServicioComponent implements OnInit {
                   onOpen: drawPopup,
                 });
               } else {
-                let value: ServiceModel;
+                let value: IServiceModel;
                 // value.usaWebApp = true;
                 if (this.editMode) {
                   value = this._service;
@@ -509,7 +509,7 @@ export class FormServicioComponent implements OnInit {
                 onOpen: drawPopup,
               });
             } else {
-              let value: ServiceModel;
+              let value: IServiceModel;
               // value.usaWebApp = true;
               if (this.editMode) {
                 value = this._service;
@@ -576,7 +576,7 @@ export class FormServicioComponent implements OnInit {
             onOpen: drawPopup,
           });
         } else {
-          let value: ServiceModel;
+          let value: IServiceModel;
           if (this.editMode) {
             value = this._service;
             if (this.frm.value.idCuenta)

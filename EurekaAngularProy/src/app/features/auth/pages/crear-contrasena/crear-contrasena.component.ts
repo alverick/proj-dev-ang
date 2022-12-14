@@ -6,18 +6,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
 import { authFullRoutingNames } from 'src/app/app-routing.collection';
-import { RubroModel } from 'src/app/shared/models';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
-import { DataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
+import { IEntryModel } from 'src/app/shared/models';
+import { ICompanyData } from 'src/app/shared/models/company-data';
+import { IDataEnterpriseModel } from 'src/app/shared/models/data-enterprise.model';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
-import { MustMatch } from './must-match.validator';
+import { MustMatch } from '../../../../shared/validators/must-match.validator';
 
 declare var $: any;
 @Component({
@@ -50,8 +49,8 @@ export class CrearContrasenaComponent implements OnInit {
 
   public llave: string;
   public inEdit: boolean = false;
-  public empresa: DataEnterpriseGTP;
-  public empresasEdit: DataEnterpriseModel;
+  public empresa: ICompanyData;
+  public empresasEdit: IDataEnterpriseModel;
   constructor(
     private formBuilder: FormBuilder,
     private afiliacionService: AfiliacionService,
@@ -60,10 +59,9 @@ export class CrearContrasenaComponent implements OnInit {
     private route: ActivatedRoute,
     private rutaActiva: ActivatedRoute,
     public gtpService: GtpService,
-    private spinner: NgxSpinnerService
   ) {}
 
-  rubros: RubroModel[] = [];
+  rubros: IEntryModel[] = [];
 
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: any) {
@@ -233,7 +231,6 @@ export class CrearContrasenaComponent implements OnInit {
   }
 
   ObtenerDatos(): Observable<any> {
-    this.spinner.show();
     return new Observable((obs) => {
       this.gtpService
         .GetEnterpriseServices({ TokenEncrypted: this.llave })
@@ -288,7 +285,6 @@ export class CrearContrasenaComponent implements OnInit {
             obs.complete();
             // this.empresa = this.gtpService.EmpresaServicios;
           }
-          this.spinner.hide();
         });
     });
   }

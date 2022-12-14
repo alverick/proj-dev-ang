@@ -41,9 +41,7 @@ export class NotifyService {
       this.inExecution ? timer(timeCallNotify) : timer(2000);
 
     this.http
-      .get(
-        `${environment.END_POINT}/notification/total?_=${new Date().getTime()}`
-      )
+      .get(`${environment.END_POINT}/notification/total`)
       .pipe(delayWhen(setDelay), repeat(), takeUntil(stop))
       .subscribe(
         ({ total }: any) => {
@@ -74,9 +72,7 @@ export class NotifyService {
       this.loadingMsg = true;
       this.http
         .get<any>(
-          `${environment.END_POINT}/notification?skip=${
-            this.messages.length
-          }&_=${new Date().getTime()}`
+          `${environment.END_POINT}/notification?skip=${this.messages.length}`
         )
         .subscribe(
           (d) => {
@@ -98,12 +94,7 @@ export class NotifyService {
   }
 
   public changeRead(msg: any) {
-    this.http.post(
-      `${environment.END_POINT}/notification/mark/${
-        msg.id
-      }?_=${new Date().getTime()}`,
-      {}
-    );
+    this.http.post(`${environment.END_POINT}/notification/mark/${msg.id}`, {});
     msg.isNew = !msg.isNew;
     if (msg.isNew) {
       msg.icono = farCircle;
@@ -116,10 +107,7 @@ export class NotifyService {
 
   public markAll() {
     this.http
-      .post(
-        `${environment.END_POINT}/notification/mark?_=${new Date().getTime()}`,
-        {}
-      )
+      .post(`${environment.END_POINT}/notification/mark`, {})
       .subscribe(() => {
         this.total = -1;
       });

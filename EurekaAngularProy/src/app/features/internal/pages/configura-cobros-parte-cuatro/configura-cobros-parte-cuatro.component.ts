@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ServiceModel } from 'src/app/shared/models';
+import { IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import {
   internalAuthFullRoutingNames,
@@ -40,7 +40,7 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   frm: FormGroup;
   editMode = false;
   affiliationFlow = false;
-  _service: ServiceModel;
+  _service: IServiceModel;
   cuentas: any[] = [];
   simboloMoneda = 'S/';
   submittedRequired = false;
@@ -89,7 +89,7 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   onSubmitServicio() {
     this.submittedRequired = true;
     if (this.frm.valid) {
-      let value: ServiceModel;
+      let value: IServiceModel;
       value = this._service;
 
       value.idCuenta = this.frm.value.idCuenta

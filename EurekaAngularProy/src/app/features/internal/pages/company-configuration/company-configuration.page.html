@@ -1,0 +1,46 @@
+<div class="tw-py-8 tw-w-full tw-px-4 xl:tw-px-0 tw-max-w-8xl tw-mx-auto">
+  <div class="sm:tw-flex tw-text-center tw-justify-between tw-items-center">
+    <div class="tw-text-lg tw-font-medium">Información de tu empresa</div>
+    <div class="actions">
+      <button
+        class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+        (click)="saveInfo()"
+      >
+        GUARDAR
+      </button>
+    </div>
+  </div>
+  <div
+    class="tw-rounded-md tw-bg-white tw-py-12 tw-my-6 tw-w-full tw-px-5 md:tw-px-10 tw-shadow"
+  >
+    <cs-company-update-form
+      class="tw-block tw-max-w-2xl lg:tw-px-9 tw-mx-auto"
+      [form]="companyForm"
+      [errorMessages]="errors"
+      [operators]="operators"
+      [documentTypes]="documentTypes"
+      [inReview]="nameInReview"
+      [categories]="companyConfiguration.entryOptions"
+      [submitted]="submitted"
+      (showPanel)="onShowPanel()"
+    ></cs-company-update-form>
+  </div>
+</div>
+<p-sidebar
+  [(visible)]="showSidebar"
+  [dismissible]="false"
+  [closeOnEscape]="false"
+  [blockScroll]="true"
+  [baseZIndex]="10000"
+  (onHide)="closePanel()"
+  position="right"
+  styleClass="ui-sidebar-md edit-form lg:tw-h-screen tw-overflow-auto"
+>
+  <cs-company-password-form
+    *ngIf="showSidebar"
+    class="tw-block tw-max-w-sm tw-mx-auto"
+    [form]="passwordForm"
+    [errorMessages]="errorsPassword"
+    (sendForm)="onSendForm()"
+  ></cs-company-password-form>
+</p-sidebar>

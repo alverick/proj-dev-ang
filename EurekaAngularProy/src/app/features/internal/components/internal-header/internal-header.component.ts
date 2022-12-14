@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
@@ -33,7 +32,6 @@ export class InternalHeaderComponent implements OnInit {
     private router: Router,
     public notify: NotifyService,
     private loginService: LoginService,
-    private spinner: NgxSpinnerService,
     private excelser: ExcelService,
     public afiliacionService: AfiliacionService,
     private storage: StorageService
@@ -45,7 +43,6 @@ export class InternalHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.notify.clear();
-    this.spinner.hide();
     this.notify.iniciar();
     this.storage.getCurrentSession();
     this.showMenu = this.storage.isValidSession();
@@ -66,10 +63,8 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   public logout(): void {
-    this.spinner.show();
     this.loginService.logout();
     this.excelser.statusUpload = false;
-    this.spinner.hide();
     this.isExpanded = false;
   }
 

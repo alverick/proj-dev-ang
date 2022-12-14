@@ -1,4 +1,4 @@
-export interface ServiceModel {
+export interface IServiceModel {
   res?: string;
   id?: number;
   nombre: string;
@@ -20,8 +20,8 @@ export interface ServiceModel {
   cobraMora: string;
   periodoMora: string;
   tipoMora: string;
-  monto?: number;
-  porcentaje?: number;
+  monto?: number | string;
+  porcentaje?: number | string;
   inReview?: boolean;
   pagoPartes?: string;
   NewNameCod?: boolean;
@@ -38,9 +38,9 @@ export interface ServiceModel {
 
 export interface IServiceRemoteModel {
   accountNumber?: string;
-  amount?: number | null;
+  amount?: string | number | null;
   chargeInterest?: string;
-  chargeType?: number | null;
+  chargeType?: string | number | null;
   currency?: string;
   currencySymbol?: string;
   dataType: string;
@@ -58,11 +58,18 @@ export interface IServiceRemoteModel {
   newNameGTPStatus?: number;
   partialPayment?: string;
   paymentType: string;
-  percentage?: number | null;
+  percentage?: string | number | null;
   res?: string;
   status?: string;
   useAgencyChannel?: boolean;
   useAgent?: boolean;
   useAppWeb?: boolean;
   useStore?: boolean;
+  debt?: IServiceRemoteModel;
+}
+
+export interface IServicePostData {
+  clientId: number;
+  deleted: any[];
+  services: IServiceRemoteModel[];
 }

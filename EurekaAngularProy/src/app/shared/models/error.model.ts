@@ -1,8 +1,7 @@
-export interface Error{
-    code?: number,
-    row: number,
-    description?: string, 
-    field?: string,
-    value?: number
-
+export interface IErrorObj {
+  code?: number;
+  row: number;
+  description?: string;
+  field?: string;
+  value?: number;
 }

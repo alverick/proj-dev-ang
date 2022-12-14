@@ -51,8 +51,8 @@ const routes: Routes = [
     redirectTo: authFullRoutingNames.GENERATE_PASSWORD,
   },
   {
-    path: 'editaCuenta/:llave',
-    redirectTo: authFullDynamicRoutingNames.GENERATE_PASSWORD,
+    path: 'editaCuenta/:token',
+    redirectTo: authFullDynamicRoutingNames.REGISTER_UPDATING_VALIDATION,
   },
   {
     path: 'configuracion',

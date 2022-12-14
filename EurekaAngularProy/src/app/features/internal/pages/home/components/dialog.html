@@ -9,6 +9,7 @@
       ><span style="cursor: pointer" class="cancelar">Cancelar</span>
     </span>
     <img
+      class="tw-inline"
       height="20"
       width="20"
       style="cursor: pointer"
@@ -32,7 +33,7 @@
   <div *ngIf="!excelService.statusUpload && !ready" class="paso">
     PASO 1 DE 2
     <img
-      class="pl-3"
+      class="pl-3 tw-inline"
       style="cursor: pointer"
       (click)="right() "
       src="../../../../../../assets/images/arrow-right.svg"
@@ -41,7 +42,7 @@
   <div *ngIf="!excelService.statusUpload && ready" class="paso">
     PASO 2 DE 2
     <img
-      class="pl-3"
+      class="pl-3 tw-inline"
       style="cursor: pointer"
       (click)="left()"
       src="../../../../../../assets/images/arrow-left.svg"
@@ -62,7 +63,7 @@
       <!---  <div class="text">¿No tienes la plantilla excel del servicio {{excelService.service.name}} ? </div> -->
       <i class="fa fa-file-excel"></i>
     </div>
-    <img class="pb-3 img-excel" src="../../../../../../assets/images/excel.svg" alt="excel" />
+    <img class="pb-3 img-excel tw-inline" src="../../../../../../assets/images/excel.svg" alt="excel" />
     <div class="text-center">
       <button
         class="btn-eureca-green"
@@ -160,10 +161,10 @@
       <div class="texto">Se encontraron los siguientes errores:</div>
       <div class="resumen">
         <span *ngIf="rowsAccepted > 0" class="bien"
-          ><img src="../../../../../../assets/images/ok.svg" /> {{rowsAccepted}}</span
+          ><img class="tw-inline" src="../../../../../../assets/images/ok.svg" /> {{rowsAccepted}}</span
         >
         <span *ngIf="rowsRejected > 0" class="mal"
-          ><img src="../../../../../../assets/images/cancel.svg" /> {{rowsRejected}}</span
+          ><img class="tw-inline" src="../../../../../../assets/images/cancel.svg" /> {{rowsRejected}}</span
         >
       </div>
       <div class="clear-float"></div>

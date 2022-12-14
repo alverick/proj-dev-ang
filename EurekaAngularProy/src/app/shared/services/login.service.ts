@@ -29,7 +29,7 @@ export class LoginService {
 
   login(ruc: string, psw: string): Observable<RespuestaLogin> {
     this.notify.clear();
-    const url = `${this.URI_API}/login?_=` + new Date().getTime();
+    const url = `${this.URI_API}/login`;
     const data = `username=${ruc}&password=${psw}`;
     const opts = {
       headers: {
@@ -73,7 +73,7 @@ export class LoginService {
   }
 
   logout(): void {
-    const url = `${this.URI_API}/login/out?_=` + new Date().getTime();
+    const url = `${this.URI_API}/login/out`;
     this.http.post(url, {}).subscribe(() => {
       this.storage.removeCurrentSession();
       this.router.navigate([authFullRoutingNames.LOGIN]);
@@ -89,11 +89,11 @@ export class LoginService {
         const rfs = new Date(storage.refresh);
         if (now > rfs && now < exp) {
           this.callingRefresh = true;
-          const url = `${this.URI_API}/login?_=` + new Date().getTime();
+          const url = `${this.URI_API}/login`;
           this.http.get(url, {}).subscribe((r: RespuestaLogin) => {
-            let storage = this.storage.getCurrentSession();
+            const storageSession = this.storage.getCurrentSession();
             this.storage.setCurrentSession({
-              user: storage.user,
+              user: storageSession.user,
               isAuthenticate: true,
               token: r.paramStr,
               expire: r.exp,
@@ -108,5 +108,15 @@ export class LoginService {
         }
       }
     }
+  }
+
+  public getCompanyDataUpdate(data: any): Observable<any> {
+    return this.http
+      .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
+      .pipe(
+        catchError((err) => {
+          return throwError(err);
+        })
+      );
   }
 }

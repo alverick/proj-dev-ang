@@ -4,3 +4,13 @@ export const serverUrl = {
   uat: 'https://apis.uat.interbank.pe/eureca/api',
   prod: 'https://apis.interbank.pe/eureca/api',
 };
+
+export interface IEnvironment {
+  production: boolean;
+  development: boolean;
+  hmr: boolean;
+  END_POINT: string;
+  OCP_KEY: string;
+  logLevel: number;
+  serverLogLevel: number;
+}

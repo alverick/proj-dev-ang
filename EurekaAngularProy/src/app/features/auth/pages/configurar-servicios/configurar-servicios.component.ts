@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { internalFullRoutingNames } from 'src/app/app-routing.collection';
-import { ServiceModel } from 'src/app/shared/models';
+import { IServiceModel } from 'src/app/shared/models';
 import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
@@ -56,7 +56,7 @@ export class ConfigurarServiciosComponent implements OnInit {
   servicio_length = 0;
 
   public indiceActual = -1;
-  serviceActual: ServiceModel = null;
+  serviceActual: IServiceModel = null;
 
   addNewAfterSave = false;
   sendAfterSave = false;
@@ -364,7 +364,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     });
   }
 
-  getCanales(svc: ServiceModel) {
+  getCanales(svc: IServiceModel) {
     let str = '';
     if (svc.usaWebApp) {
       str += 'Digital';
@@ -403,7 +403,7 @@ export class ConfigurarServiciosComponent implements OnInit {
      }
   } */
 
-  getCodDebtor(svc: ServiceModel) {
+  getCodDebtor(svc: IServiceModel) {
     if (svc.newNameCodeGtpStatus === 0) {
       return svc.newNameCode;
     }
@@ -434,7 +434,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
   }
 
-  getCodDebtorCreate(svc: ServiceModel) {
+  getCodDebtorCreate(svc: IServiceModel) {
     if (
       svc.codDeudor === 'RUC' ||
       svc.codDeudor === 'DNI' ||
@@ -455,7 +455,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       return svc.newName.substring(3, svc.newName.length).toString();
    }
   } */
-  getNameGTP(svc: ServiceModel) {
+  getNameGTP(svc: IServiceModel) {
     if (svc.newNameGtpStatus === 1) {
       return svc.nombre;
     }
@@ -484,7 +484,7 @@ export class ConfigurarServiciosComponent implements OnInit {
    }
   } */
 
-  pendienteRevision(svc: ServiceModel) {
+  pendienteRevision(svc: IServiceModel) {
     if (this.inEdit) {
       if (svc.id === null) {
         return true;
@@ -530,7 +530,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
     return svc.nombre;
   }  */
-  getName(svc: ServiceModel) {
+  getName(svc: IServiceModel) {
     if (svc.newNameGtpStatus === 3 && svc.nombre === null) {
       return svc.newName;
     }
@@ -540,7 +540,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     return svc.nombre;
   }
 
-  getCodigoNameGTP2(svc: ServiceModel) {
+  getCodigoNameGTP2(svc: IServiceModel) {
     if (svc.codDeudor !== '?') {
       if (svc.codDeudor === 'Otro') {
         return svc.nameCod;
@@ -552,7 +552,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
   }
 
-  getCodigoNameGTP(svc: ServiceModel) {
+  getCodigoNameGTP(svc: IServiceModel) {
     if (svc.newNameCodeGtpStatus === 1) {
       if (svc.codDeudor === 'Otro') {
         return svc.nameCod;
@@ -642,7 +642,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     }
   }
 
-  editService(svc: ServiceModel, index: number) {
+  editService(svc: IServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
       /*Swal.fire({
         type: 'warning',
@@ -674,7 +674,7 @@ export class ConfigurarServiciosComponent implements OnInit {
     this.Formulario = true;
   }
 
-  onGrabar(svc: ServiceModel) {
+  onGrabar(svc: IServiceModel) {
     if (this.indiceActual >= 0) {
       if (this.inEdit) {
         if (svc.newNameGtpStatus === 3) {

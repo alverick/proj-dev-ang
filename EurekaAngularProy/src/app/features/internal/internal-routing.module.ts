@@ -13,15 +13,17 @@ import {
   internalRoutingNames,
 } from './internal-routing.names';
 import { InternalComponent } from './internal.component';
+import { CompanyConfigurationPage } from './pages';
 import { ConfiguraCobrosParteCuatroComponent } from './pages/configura-cobros-parte-cuatro/configura-cobros-parte-cuatro.component';
 import { ConfiguraCobrosParteDosComponent } from './pages/configura-cobros-parte-dos/configura-cobros-parte-dos.component';
 import { ConfiguraCobrosParteTresComponent } from './pages/configura-cobros-parte-tres/configura-cobros-parte-tres.component';
 import { ConfiguraCobrosParteUnoComponent } from './pages/configura-cobros-parte-uno/configura-cobros-parte-uno.component';
-import { ConfigurarEmpresaComponent } from './pages/configurar-empresa/configurar-empresa.component';
 import { EditarCobrosComponent } from './pages/editar-cobros/editar-cobros.component';
 import { HelpPage } from './pages/help/help.page';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
+import { CompanyDataResolver } from './resolvers/company-data.resolver';
+import { CompanyEntriesResolver } from './resolvers/company-entries.resolver';
 
 const routes: Routes = [
   {
@@ -35,7 +37,11 @@ const routes: Routes = [
       },
       {
         path: internalRoutingNames.COMPANY,
-        component: ConfigurarEmpresaComponent,
+        component: CompanyConfigurationPage,
+        resolve: {
+          entries: CompanyEntriesResolver,
+          company: CompanyDataResolver,
+        },
         canActivate: [AuthGuard, GtpOutputGuard],
       },
       {

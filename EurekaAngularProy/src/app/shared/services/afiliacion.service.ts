@@ -7,12 +7,12 @@ import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import {
+  IEntryModel,
+  IServiceModel,
   IServiceRemoteModel,
   MonedaModel,
-  RubroModel,
-  ServiceModel,
 } from '../models';
-import { DataEnterpriseModel } from '../models/data-enterprise.model';
+import { IDataEnterpriseModel } from '../models/data-enterprise.model';
 import { drawPopup } from '../utils/helpers/popups';
 import { StorageService } from './storage.service';
 
@@ -29,11 +29,11 @@ export class AfiliacionService {
     this._currentIndex = value;
   }
 
-  set currentServiceModel(value: ServiceModel) {
+  set currentServiceModel(value: IServiceModel) {
     this._currentServiceModel = value;
   }
 
-  get currentServiceModel(): ServiceModel {
+  get currentServiceModel(): IServiceModel {
     return this._currentServiceModel;
   }
 
@@ -51,11 +51,11 @@ export class AfiliacionService {
   public email: string;
   public Guardado = false;
 
-  public services: ServiceModel[] = [];
-  private _rubros: RubroModel[] = null;
-  private _rubrosAll: RubroModel[] = null;
-  public dataEnterpriseModel: DataEnterpriseModel;
-  private _currentServiceModel: ServiceModel;
+  public services: IServiceModel[] = [];
+  private _rubros: IEntryModel[] = null;
+  private _rubrosAll: IEntryModel[] = null;
+  public dataEnterpriseModel: IDataEnterpriseModel;
+  private _currentServiceModel: IServiceModel;
 
   public Clear() {
     this.Guardado = false;
@@ -78,7 +78,7 @@ export class AfiliacionService {
     });
   }
 
-  public CrearSevice(): ServiceModel {
+  public CrearSevice(): IServiceModel {
     this.Guardado = false;
     let nombre = 'Mensualidad';
     const newName = 'Mensualidad';
@@ -114,7 +114,7 @@ export class AfiliacionService {
     if (nro > 1) {
       nombre += nro.toString();
     }
-    const svc: ServiceModel = {
+    const svc: IServiceModel = {
       id: null,
       nombre,
       newName: nombre,
@@ -139,7 +139,7 @@ export class AfiliacionService {
     return svc;
   }
 
-  public AddService(svc: ServiceModel) {
+  public AddService(svc: IServiceModel) {
     this.Guardado = false;
     const svc_old = this.services.find((v) => v.nombre === svc.nombre);
     if (svc_old) {
@@ -185,10 +185,7 @@ export class AfiliacionService {
     this.spinner.show();
     this.email = data.email;
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company`, data)
       .pipe(map((r) => this.setIdCompany(r)))
       .pipe(
         catchError((err) => {
@@ -202,10 +199,7 @@ export class AfiliacionService {
     this.spinner.show();
     this.email = data.email;
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company/validate?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company/validate`, data)
       .pipe(map((r) => this.setIdCompany(r)))
       .pipe(
         catchError((err) => {
@@ -215,14 +209,12 @@ export class AfiliacionService {
       );
   }
 
-  public GetRubros(): Observable<RubroModel[]> {
+  public GetRubros(): Observable<IEntryModel[]> {
     if (this._rubros !== null) {
       return Observable.of(this._rubros);
     }
     return this.http
-      .get<RubroModel[]>(
-        `${environment.END_POINT}/enterpriseHeading?_=` + new Date().getTime()
-      )
+      .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading`)
       .pipe(
         map((r) => {
           this._rubros = r;
@@ -232,12 +224,9 @@ export class AfiliacionService {
       .pipe(catchError((err) => throwError(err)));
   }
 
-  public GetRubrosAll(): Observable<RubroModel[]> {
+  public GetRubrosAll(): Observable<IEntryModel[]> {
     return this.http
-      .get<RubroModel[]>(
-        `${environment.END_POINT}/enterpriseHeading/all?_=` +
-          new Date().getTime()
-      )
+      .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading/all`)
       .pipe(
         map((r) => {
           this._rubrosAll = r;
@@ -342,32 +331,19 @@ export class AfiliacionService {
   public GetCards(): Observable<any[]> {
     if (this.idCompany) {
       return this.http.get<any[]>(
-        `${environment.END_POINT}/company/${
-          this.idCompany
-        }/cards?_=${new Date().getTime()}`
+        `${environment.END_POINT}/company/${this.idCompany}/cards`
       );
     }
-    return this.http.get<any[]>(
-      `${environment.END_POINT}/company/cards?_=${new Date().getTime()}`
-    );
+    return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
   }
 
   public GetServicios(incDeactivates: boolean = false) {
-    const headers: any = {
-      'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
-      'Ocp-Apim-Trace': 'true',
-    };
-    if (this.storage.isAuthenticated) {
-      headers['Authorization'] = 'bearer ' + this.storage.getCurrentToken();
-    }
     this.http
       .get<any[]>(
-        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}&_=` +
-          new Date().getTime(),
-        { headers }
+        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`
       )
       .subscribe((d: IServiceRemoteModel[]) => {
-        const servicios: ServiceModel[] = [];
+        const servicios: IServiceModel[] = [];
         d.forEach((s) => {
           servicios.push({
             id: s.id,
@@ -408,17 +384,20 @@ export class AfiliacionService {
       });
   }
 
-  public isServiceInReview({
-    id,
-    newName,
-    newNameCode,
-    newNameCodeGtpStatus,
-    newNameGtpStatus,
-  }: ServiceModel): boolean {
+  public isServiceInReview(
+    {
+      id,
+      newName,
+      newNameCode,
+      newNameCodeGtpStatus,
+      newNameGtpStatus,
+    }: IServiceModel,
+    ignoreEditedLocally = false
+  ): boolean {
     if (id === null) {
       return true;
     }
-    if (newName !== '' || newNameCode !== '') {
+    if (!ignoreEditedLocally && (newName !== '' || newNameCode !== '')) {
       return true;
     }
     if (
@@ -437,7 +416,7 @@ export class AfiliacionService {
     return false;
   }
 
-  public isNewService({ id, res }: ServiceModel) {
+  public isNewService({ id, res }: IServiceModel) {
     return isNil(id) && isEmpty(res);
   }
 
@@ -451,84 +430,84 @@ export class AfiliacionService {
       clientId: this.idCompany,
       services: [],
       deleted: [],
-    };this.services
+    };
+    this.services
       .filter(
         (service) =>
-          !this.isServiceInReview(service) || this.isNewService(service)
+          !this.isServiceInReview(service, true) || this.isNewService(service)
       )
-      .forEach(({
-        cobraMora,
-        codDeudor,
-        id,
-        idCuenta,
-        moneda,
-        monto,
-        nameCod,
-        newName,
-        newNameCode,
-        nombre,
-        nroCuenta,
-        pagoPartes,
-        periodoMora,
-        porcentaje,
-        rubro,
-        tipoDato,
-        tipoMora,
-        tipoPago,
-        usaAgente,
-        usaTienda,
-        usaWebApp,
-      }) => {
-        let name = '';
-        if (nombre === null) {
-          name = newName;
-        } else if (nombre !== '?') {
-          name = nombre;
-        }
-          let debtorCode;
-        switch (codDeudor) {
-        case '?':
-            debtorCode = '';
-            break;
-          case 'Otro':
-          debtorCode = nameCod;
-          break;
-          case null:
-          debtorCode= 'DNI';
-            break;
-          default:
-            debtorCode = codDeudor;
-              break;
-              }
-              data.services.push({
-              id,
-          name,
+      .forEach(
+        ({
+          cobraMora,
+          codDeudor,
+          id,
+          idCuenta,
+          moneda,
+          monto,
+          nameCod,
           newName,
-          entry: rubro,
-            debtorCode ,
           newNameCode,
-          dataType: tipoDato,
-          paymentType: tipoPago,
-          idAccount: idCuenta,
-          accountNumber: nroCuenta,
-          currency: moneda,
-          useAppWeb: usaWebApp,
-          useAgent: usaAgente,
-          useStore: usaTienda,
-          chargeInterest: cobraMora,
-          chargeType: parseInt(periodoMora, 10),
-          interestType: tipoMora,
-          amount: monto,
-          percentage: porcentaje,
-          partialPayment: pagoPartes,
-        });
-      });
+          nombre,
+          nroCuenta,
+          pagoPartes,
+          periodoMora,
+          porcentaje,
+          rubro,
+          tipoDato,
+          tipoMora,
+          tipoPago,
+          usaAgente,
+          usaTienda,
+          usaWebApp,
+        }) => {
+          let name = '';
+          if (nombre === null) {
+            name = newName;
+          } else if (nombre !== '?') {
+            name = nombre;
+          }
+          let debtorCode;
+          switch (codDeudor) {
+            case '?':
+              debtorCode = '';
+              break;
+            case 'Otro':
+              debtorCode = nameCod;
+              break;
+            case null:
+              debtorCode = 'DNI';
+              break;
+            default:
+              debtorCode = codDeudor;
+              break;
+          }
+          data.services.push({
+            id,
+            name,
+            newName,
+            entry: rubro,
+            debtorCode,
+            newNameCode,
+            dataType: tipoDato,
+            paymentType: tipoPago,
+            idAccount: idCuenta,
+            accountNumber: nroCuenta,
+            currency: moneda,
+            useAppWeb: usaWebApp,
+            useAgent: usaAgente,
+            useStore: usaTienda,
+            chargeInterest: cobraMora,
+            chargeType: parseInt(periodoMora, 10),
+            interestType: tipoMora,
+            amount: monto,
+            percentage: porcentaje,
+            partialPayment: pagoPartes,
+          });
+        }
+      );
 
     return this.http
-      .post<any>(
-        `${environment.END_POINT}/company/service?_=` + new Date().getTime(),
-        data
-      )
+      .post<any>(`${environment.END_POINT}/company/service`, data)
       .pipe(
         map((r) => {
           this.spinner.hide();

@@ -73,8 +73,10 @@
               <span
                 ><img
                   *ngIf="!Formulario"
+                  class="tw-inline"
                   src="../../../../../assets/images/plus.svg" /><img
                   *ngIf="Formulario"
+                  class="tw-inline"
                   src="../../../../../assets/images/plus-gray.svg"
               /></span>
               Agregar otro Mail
@@ -105,7 +107,7 @@
                   (click)="Formulario = false; indiceActual = -1"
                   class="mano font-cerrar"
                 >
-                  <img src="../../../../../assets/images/cerrar.svg" /> <br />
+                  <img class="tw-inline" src="../../../../../assets/images/cerrar.svg" /> <br />
                   Cerrar
                 </div>
               </div>

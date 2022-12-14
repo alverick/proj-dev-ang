@@ -8,7 +8,7 @@
             (click)="goBack()"
             style="display: flex"
           >
-            <img src="../../../../../assets/images/left-blue.svg" />
+            <img class="tw-inline" src="../../../../../assets/images/left-blue.svg" />
             <div class="text-regresar">&nbsp;&nbsp;&nbsp;Regresar</div>
           </a>
         </li>
@@ -525,7 +525,7 @@
                     type="text"
                     name="monto"
                     matInput
-                    appOnlyNumbersForm
+                    csOnlyNumbersForm
                     maxlength="7"
                     (blur)="MoraMontoBlur($event)"
                   />
@@ -582,7 +582,7 @@
                     formControlName="porcentaje"
                     name="porcentaje"
                     matInput
-                    appOnlyNumbersForm
+                    csOnlyNumbersForm
                     type="text"
                     maxlength="5"
                     (blur)="MoraPorcenBlur($event)"

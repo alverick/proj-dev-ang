@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { isNilOrEmpty } from 'ramda-adjunct';
@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import { Debts, DebtsPagedList } from '../models/debts';
 import { DebtEdit } from '../models/debts-edit.model';
 import { DebstFilter } from '../models/debts-filter.model';
-import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +16,7 @@ export class TransactionService {
   private URI_API: string = environment.END_POINT;
   private lastFilter: DebstFilter = null;
 
-  constructor(public http: HttpClient, private storage: StorageService) {}
+  constructor(public http: HttpClient) {}
 
   public pageMessage = 'Mostrando 0 de 0 elementos';
   public debtItems: DebtsPagedList = {
@@ -78,14 +77,9 @@ export class TransactionService {
       filtro.dateForFilter = '';
     }
 
-    const url =
-      `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=` +
-      new Date().getTime();
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
+    const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
     return this.http
-      .get<DebtsPagedList>(url, opts)
+      .get<DebtsPagedList>(url)
       .pipe<DebtsPagedList>(
         map((r) => {
           if (selectedUniverse) {
@@ -130,22 +124,16 @@ export class TransactionService {
 
   deleteDeuda(idDebt: number): Observable<Debts> {
     // cambia link
-    const url = `${this.URI_API}/debt//${idDebt}?_=` + new Date().getTime();
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
+    const url = `${this.URI_API}/debt/${idDebt}`;
     return this.http
-      .post<Debts>(url, opts)
+      .post<Debts>(url, null)
       .pipe(catchError((error) => throwError(error)));
   }
 
   deleteAll(): Observable<any> {
-    const url = `${this.URI_API}/debt/deleteAll?_=` + new Date().getTime();
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
+    const url = `${this.URI_API}/debt/deleteAll`;
     return this.http
-      .post<Debts>(url, { ids: this.itemsForDelete }, opts)
+      .post<Debts>(url, { ids: this.itemsForDelete })
       .pipe(catchError((error) => throwError(error)));
   }
 
@@ -170,9 +158,7 @@ export class TransactionService {
       filtro.dateForFilter = '';
     }
 
-    const url =
-      `${this.URI_API}/debt/deleteFiltered?InputSearch=${filtro.inputSearch}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}&_=` +
-      new Date().getTime();
+    const url = `${this.URI_API}/debt/deleteFiltered?InputSearch=${filtro.inputSearch}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
     return this.http
       .post<Debts>(url, {})
       .pipe(catchError((error) => throwError(error)));
@@ -181,12 +167,9 @@ export class TransactionService {
   // ESITAR LA DEUDA
   editDeuda(id: number, debts: DebtEdit): Observable<any> {
     // cambia link
-    const url = `${this.URI_API}/debt/put/${id}?_=` + new Date().getTime();
-    const opts = {
-      headers: { Authorization: 'bearer ' + this.storage.getCurrentToken() },
-    };
+    const url = `${this.URI_API}/debt/put/${id}`;
     return this.http
-      .post(url, debts, opts)
+      .post(url, debts)
       .pipe(catchError((error) => throwError(error)));
   }
 
@@ -201,12 +184,7 @@ export class TransactionService {
     service,
     status,
   }: DebstFilter): Observable<any> {
-    const url = `${this.URI_API}/debt/report?_=` + new Date().getTime();
-    const headers = new HttpHeaders({
-      Authorization: 'bearer ' + this.storage.getCurrentToken(),
-      'Ocp-Apim-Subscription-Key': environment.OCP_KEY,
-      'Ocp-Apim-Trace': 'true',
-    });
+    const url = `${this.URI_API}/debt/report`;
     const parseDate: (date: Date | string) => Date | string = (date) =>
       isNilOrEmpty(date) ? '' : moment(date).format('YYYY/MM/DD');
 
@@ -223,17 +201,13 @@ export class TransactionService {
     };
     return this.http
       .post(url, filterRequest, {
-        headers,
         responseType: 'blob',
       })
       .pipe(catchError((err) => throwError(err)));
   }
 
   updateDeuda(id: number, paid: boolean): Observable<any> {
-    const url = `${this.URI_API}/debt/pay?_=` + new Date().getTime();
-    const opts = {
-      headers: { Authorization: 'bearer' + this.storage.getCurrentToken() },
-    };
+    const url = `${this.URI_API}/debt/pay`;
     const data = {
       idDebt: id,
       Payed: paid,
@@ -244,9 +218,7 @@ export class TransactionService {
   }
 
   getPayments(debtId: number): Observable<any[]> {
-    const url = `${
-      this.URI_API
-    }/payment/ofDebt/${debtId}?_=${new Date().getTime()}`;
+    const url = `${this.URI_API}/payment/ofDebt/${debtId}`;
     return this.http
       .post<any[]>(url, null)
       .pipe(
@@ -262,7 +234,7 @@ export class TransactionService {
   }
 
   addPayment(debtId: number, payment: any): Observable<any> {
-    const url = `${this.URI_API}/payment?_=${new Date().getTime()}`;
+    const url = `${this.URI_API}/payment`;
     payment.debtId = debtId;
     return this.http
       .post<any>(url, payment)
@@ -274,9 +246,7 @@ export class TransactionService {
     paymentId: number,
     payment: any
   ): Observable<any> {
-    const url = `${
-      this.URI_API
-    }/payment/${paymentId}?_=${new Date().getTime()}`;
+    const url = `${this.URI_API}/payment/${paymentId}`;
     payment.debtId = debtId;
     return this.http
       .post(url, payment)
@@ -284,9 +254,7 @@ export class TransactionService {
   }
 
   deletePayment(debtId: number, paymentId: number): Observable<any> {
-    const url = `${
-      this.URI_API
-    }/payment/${paymentId}/ofDebt/${debtId}?_=${new Date().getTime()}`;
+    const url = `${this.URI_API}/payment/${paymentId}/ofDebt/${debtId}`;
     return this.http.post(url, null).pipe(catchError((err) => throwError(err)));
   }
 

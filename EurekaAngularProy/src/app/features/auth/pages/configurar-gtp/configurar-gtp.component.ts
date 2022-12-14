@@ -1,8 +1,8 @@
 import { Component, EventEmitter, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { appFullRoutingNames } from 'src/app/app-routing.collection';
-import { RubroModel, ServiceModel } from 'src/app/shared/models';
-import { DataEnterpriseGTP } from 'src/app/shared/models/data-enterprise-gtp';
+import { IEntryModel, IServiceModel } from 'src/app/shared/models';
+import { ICompanyData } from 'src/app/shared/models/company-data';
 import { ServicesGTPChange } from 'src/app/shared/models/data-gtpchange';
 import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
@@ -37,8 +37,8 @@ export class ConfigurarGtpComponent implements OnInit {
   public inGTP = false;
   public titulo: string;
   public SvcEdit: ServicesGTPChange[];
-  public Empgtp: DataEnterpriseGTP = null;
-  public Enterprise: DataEnterpriseGTP = {
+  public Empgtp: ICompanyData = null;
+  public Enterprise: ICompanyData = {
     cu: '',
     ruc: '0',
     name: '',
@@ -53,11 +53,11 @@ export class ConfigurarGtpComponent implements OnInit {
     enabled: false,
   };
   public rubro: string;
-  rubros: RubroModel[] = [];
+  rubros: IEntryModel[] = [];
   public onFormAction: EventEmitter<string> = new EventEmitter();
 
   public indiceActual = -1;
-  serviceActual: ServiceModel = null;
+  serviceActual: IServiceModel = null;
 
   addNewAfterSave = false;
   sendAfterSave = false;
@@ -231,7 +231,7 @@ export class ConfigurarGtpComponent implements OnInit {
     });
   }
 
-  getCanales(svc: ServiceModel) {
+  getCanales(svc: IServiceModel) {
     let str = '';
     if (svc.usaWebApp) {
       str += 'Digital';
@@ -246,7 +246,7 @@ export class ConfigurarGtpComponent implements OnInit {
     return str;
   }
 
-  getCodDebtor(svc: ServiceModel) {
+  getCodDebtor(svc: IServiceModel) {
     if (svc.codDeudor === svc.newNameCode) {
       return svc.newNameCode;
     }
@@ -273,7 +273,7 @@ export class ConfigurarGtpComponent implements OnInit {
       return svc.codDeudor;
     }
   }
-  getCodDebtorCreate(svc: ServiceModel) {
+  getCodDebtorCreate(svc: IServiceModel) {
     if (
       svc.codDeudor === 'RUC' ||
       svc.codDeudor === 'DNI' ||
@@ -286,7 +286,7 @@ export class ConfigurarGtpComponent implements OnInit {
     }
   }
 
-  getNameGTP(svc: ServiceModel) {
+  getNameGTP(svc: IServiceModel) {
     if (svc.nombre !== '?') {
       return svc.nombre;
     }
@@ -295,7 +295,7 @@ export class ConfigurarGtpComponent implements OnInit {
     }
   }
 
-  pendienteRevision(svc: ServiceModel) {
+  pendienteRevision(svc: IServiceModel) {
     if (this.inEdit) {
       if (svc.id === null) {
         return true;
@@ -325,7 +325,7 @@ export class ConfigurarGtpComponent implements OnInit {
     }
   }
 
-  getName(svc: ServiceModel) {
+  getName(svc: IServiceModel) {
     if (svc.nombre === '?') {
       if (svc.newName.substring(0, 3) === '???') {
         return svc.newName.substring(3, svc.newName.length);
@@ -337,7 +337,7 @@ export class ConfigurarGtpComponent implements OnInit {
     return svc.nombre;
   }
 
-  getCodigoNameGTP(svc: ServiceModel) {
+  getCodigoNameGTP(svc: IServiceModel) {
     if (svc.codDeudor !== '?') {
       if (svc.codDeudor === 'Otro') {
         return svc.nameCod;
@@ -405,7 +405,7 @@ export class ConfigurarGtpComponent implements OnInit {
     }
   }
 
-  editService(svc: ServiceModel, index: number) {
+  editService(svc: IServiceModel, index: number) {
     if (this.Formulario && this.indiceActual !== index) {
       return;
     }
@@ -530,7 +530,7 @@ export class ConfigurarGtpComponent implements OnInit {
     }
   }
 
-  VerCamposEnterprise(etp: DataEnterpriseGTP) {
+  VerCamposEnterprise(etp: ICompanyData) {
     if (this.Formulario === true) {
       this.mensaje(
         'Aprobando Servicio ',
@@ -554,7 +554,7 @@ export class ConfigurarGtpComponent implements OnInit {
     this.indiceActual = index;
   }
 
-  onGrabarEmp(emp: DataEnterpriseGTP) {
+  onGrabarEmp(emp: ICompanyData) {
     this.Enterprise = emp;
     this.EmpresaFormulario = false;
   }

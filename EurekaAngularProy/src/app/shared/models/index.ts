@@ -1,3 +1,3 @@
 export * from './moneda.model';
-export * from './rubro.model';
+export * from './entryModel';
 export * from './services.model';
