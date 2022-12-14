@@ -157,6 +157,5 @@ const UI_MODULES = [
     ServiceCardComponent,
     ...PIPES,
   ],
-  entryComponents: [ModalTermsComponent],
 })
 export class SharedModule {}

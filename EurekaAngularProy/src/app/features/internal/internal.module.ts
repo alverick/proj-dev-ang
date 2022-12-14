@@ -60,11 +60,6 @@ import { SERVICES } from './services';
     PerfectScrollbarModule,
     SharedModule,
   ],
-  entryComponents: [
-    AgregaCobroComponent,
-    DebtComponent,
-    PaymentDetailComponent,
-  ],
   providers: [...SERVICES],
 })
 export class InternalModule {}

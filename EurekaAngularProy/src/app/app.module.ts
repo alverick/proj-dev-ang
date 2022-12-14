@@ -98,13 +98,5 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
   ],
   exports: [MatInputModule, MatSnackBarModule],
   bootstrap: [AppComponent],
-  entryComponents: [
-    DialogComponent,
-    UploadProgressComponent,
-    ValidationComponent,
-    PopoverComponent,
-    LoadFileComponent,
-    LoadBarComponent,
-  ],
 })
 export class AppModule {}
