@@ -12,7 +12,7 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../../../shared/constants/services';
-import { IServiceRemoteModel } from '../../../../shared/models';
+import { ServicesFormsService } from '../../../../shared/services';
 import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { internalFullRoutingChildNames } from '../../internal-routing.names';
@@ -40,6 +40,7 @@ export class CompanyServicesPage implements OnInit {
 
   constructor(
     public companyServices: CompanyServicesService,
+    private serviceForms: ServicesFormsService,
     private activatedRoute: ActivatedRoute,
     private gaService: GoogleAnalytics,
     private router: Router,
@@ -95,6 +96,7 @@ export class CompanyServicesPage implements OnInit {
   onClosePanel() {}
 
   createService() {
+    this.serviceForms.resetServicesForms();
     this.router.navigate([internalFullRoutingChildNames.SERVICES_ADD_INFO]);
   }
 
