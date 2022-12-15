@@ -1,4 +1,6 @@
 import { isEmpty, isNil } from 'ramda';
+import { isNotNil, isString } from 'ramda-adjunct';
+import { IServiceRemoteModel, IServiceRemoteModelForms } from '../models';
 import { ISelectOptions } from './company';
 
 export const debtorCodeOptions: ISelectOptions[] = [
@@ -78,23 +80,41 @@ export const dataTypeOptions: ISelectOptions[] = [
 export const debtorCodeCustomEmpty = 'empty__';
 
 export function parseParams(
-  debtorCodeCustom,
-  debtorCode,
-  amount,
-  chargeType,
-  interestType
-) {
+  {
+    debtorCodeCustom,
+    debtorCode,
+    amount = '1.00',
+    chargeType,
+    interestType,
+  }: Partial<IServiceRemoteModelForms>,
+  compareData: Partial<IServiceRemoteModel> = null
+): Partial<IServiceRemoteModel> {
+  let parsedNewNameCode;
   const parsedDebtorCode =
     debtorCodeCustom === debtorCodeCustomEmpty ? debtorCode : debtorCodeCustom;
 
-  const parseAmount = parseFloat(amount).toFixed(2);
+  const amountNumber = isString(amount) ? parseFloat(amount) : amount;
+  const parsedAmount = amountNumber.toFixed(2);
 
+  let parsedChargeType: string | number;
+  if (isEmpty(chargeType)) {
+    parsedChargeType = '';
+  } else {
+    parsedChargeType = isString(chargeType)
+      ? parseInt(chargeType, 10)
+      : chargeType;
+  }
+
+  parsedNewNameCode =
+    isNotNil(compareData) && parsedDebtorCode === compareData.debtorCode
+      ? ''
+      : parsedDebtorCode;
   return {
     debtorCode: parsedDebtorCode,
-    newNameCode: parsedDebtorCode,
-    chargeType: isEmpty(chargeType) ? '' : parseInt(chargeType, 10),
+    newNameCode: parsedNewNameCode,
+    chargeType: parsedChargeType,
     interestType: isNil(interestType) ? 'M' : interestType,
-    amount: interestType === 'M' ? parseAmount : '1.00',
-    percentage: interestType === 'P' ? parseAmount : '1.00',
+    amount: interestType === 'M' ? parsedAmount : '1.00',
+    percentage: interestType === 'P' ? parsedAmount : '1.00',
   };
 }

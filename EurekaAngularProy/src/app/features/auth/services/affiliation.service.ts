@@ -224,13 +224,13 @@ export class AffiliationService {
       },
     } = this.serviceConfigForm.value;
 
-    const serviceValues = parseParams(
+    const serviceValues = parseParams({
       debtorCodeCustom,
       debtorCode,
       amount,
       chargeType,
-      interestType
-    );
+      interestType,
+    });
 
     this.servicesList.push({
       id: null,
@@ -368,13 +368,13 @@ export class AffiliationService {
       },
     } = this.editServiceForm.value;
 
-    const serviceValues = parseParams(
+    const serviceValues = parseParams({
       debtorCodeCustom,
       debtorCode,
       amount,
       chargeType,
-      interestType
-    );
+      interestType,
+    });
 
     this.servicesList[position] = {
       ...this.servicesList[position],

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
+import { pathEq } from 'ramda';
 import { throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { parseParams } from '../../../shared/constants/services';
@@ -79,13 +80,13 @@ export class CompanyServicesService {
       },
     } = this.serviceConfigForm.value;
 
-    const serviceValues = parseParams(
+    const serviceValues = parseParams({
       debtorCodeCustom,
       debtorCode,
       amount,
       chargeType,
-      interestType
-    );
+      interestType,
+    });
 
     this.services.push({
       id: null,
@@ -196,17 +197,24 @@ export class CompanyServicesService {
     } = this.editServiceForm.value;
 
     const serviceValues = parseParams(
-      debtorCodeCustom,
-      debtorCode,
-      amount,
-      chargeType,
-      interestType
+      {
+        debtorCodeCustom,
+        debtorCode,
+        amount,
+        chargeType,
+        interestType,
+      },
+      this.services[position]
     );
+
+    const parsedName = pathEq(['services', position, 'name'], name, this)
+      ? ''
+      : name;
 
     this.services[position] = {
       ...this.services[position],
       name,
-      newName: name,
+      newName: parsedName,
       paymentType,
       useAgent,
       chargeInterest,
@@ -269,9 +277,8 @@ export class CompanyServicesService {
         }
       );
     return this.companyService.saveServices({
-      clientId: null,
       deleted: [],
-      services: this.services,
+      services,
     });
   }
 }
