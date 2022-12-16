@@ -79,6 +79,8 @@ export class AffiliationService {
       amount,
       percentage,
       partialPayment,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
     } = this.servicesList[position];
     this.logger.trace(
       '-> this.servicesList[position]',
@@ -86,7 +88,9 @@ export class AffiliationService {
     );
 
     if (inReview) {
-      this.affiliationForms.setEditFormValidator(newName);
+      if (newNameGTPStatus === 3) {
+        this.affiliationForms.setEditFormValidator(newName);
+      }
     }
 
     const amountField = interestType === 'M' ? amount : percentage;
@@ -97,6 +101,8 @@ export class AffiliationService {
       useAgent,
       currency,
       inReview,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
       debt: {
         dataType,
         paymentType,
@@ -473,15 +479,23 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
 
   setUpdateFormsData(data: ICompanyUpdate): void {
     this.updateData = data;
+    let parsedName = data.name;
+    if (data.newNameGTPStatus === 3) {
+      parsedName = data.newName;
+      this.affiliationForms.setAuthFormNameValidator(parsedName);
+    }
     this.authForm.patchValue({
       ruc: data.ruc,
-      name: data.name,
+      name: parsedName,
       entry: data.entry,
     });
     this.authForm.get('entrySelect').disable();
-    this.affiliationForms.setAuthFormNameValidator(data.name);
     this.servicesList = data.arrayServices.map((service) => {
-      return { ...service, name: service.name || service.newName };
+      return {
+        ...service,
+        name: service.name || service.newName,
+        debtorCode: service.debtorCode || service.newNameCode,
+      };
     });
   }
 

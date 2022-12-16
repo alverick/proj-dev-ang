@@ -59,7 +59,7 @@
             icon="pi pi-times"
             class="ui-button-secondary"
             (click)="showDropdown()"
-            [disabled]="formData.inReview"
+            [disabled]="formData.newNameCodeGTPStatus !== 3"
           ></button>
         </div>
       </cs-label-control>

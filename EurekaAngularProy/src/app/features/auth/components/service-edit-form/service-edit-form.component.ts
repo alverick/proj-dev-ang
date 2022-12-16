@@ -11,8 +11,10 @@ import { FormGroup } from '@angular/forms';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
+import { IServiceRemoteModel } from '../../../../shared/models';
 import { IErrorMessages } from '../../../../shared/models/forms';
 import { debtorCodeCustomEmpty, debtorCodeOptions } from '../../constants';
+import { AffiliationFormsService } from '../../services';
 
 @Component({
   selector: 'cs-service-edit-form',
@@ -28,12 +30,13 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Input() currencyOptions: any[];
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
-  @Input() formData: any;
+  @Input() formData: IServiceRemoteModel;
   debtForm: FormGroup;
   debtorCodeEditable = false;
   submittedForm = false;
   formLoaded = false;
   showDebtFields = false;
+  constructor(private affiliationForms: AffiliationFormsService) {}
 
   ngOnInit() {
     this.debtForm = this.form.get('debt') as FormGroup;
@@ -57,12 +60,18 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
     if (isNil(this.formData)) {
       return;
     }
-    const { inReview, debtorCode, ...formData } = this.formData;
-    const debtorCodeVal = debtorCodeOptions.some(
+    const {
+      inReview,
+      debtorCode,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
+      ...formData
+    } = this.formData;
+    const isNotDebtorCodeCustom = debtorCodeOptions.some(
       ({ value }) => value === debtorCode
     );
-    this.debtorCodeEditable = !debtorCodeVal;
-    const debtorCodeObj = debtorCodeVal
+    this.debtorCodeEditable = !isNotDebtorCodeCustom;
+    const debtorCodeObj = isNotDebtorCodeCustom
       ? { debtorCode, debtorCodeCustom: debtorCodeCustomEmpty }
       : { debtorCode: 'Otro', debtorCodeCustom: debtorCode };
 
@@ -73,11 +82,18 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       if (inReview) {
         this.form.get('debt').disable();
         this.form.get('useAgent').disable();
-        this.form.get('debtorCode').disable();
-        this.form.get('debtorCodeCustom').disable();
         this.debtForm.get('chargeType').disable();
         this.debtForm.get('interestType').disable();
         this.debtForm.get('amount').disable();
+        if (newNameGTPStatus !== 3) {
+          this.form.get('name').disable();
+        }
+        if (newNameCodeGTPStatus !== 3) {
+          this.form.get('debtorCode').disable();
+          this.form.get('debtorCodeCustom').disable();
+        } else if (this.debtorCodeEditable) {
+          this.affiliationForms.setServiceEditDebtorCodeValidate(debtorCode);
+        }
       }
       this.form.setValue({
         ...formData,

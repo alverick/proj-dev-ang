@@ -200,6 +200,12 @@ export class AffiliationFormsService {
     });
   }
 
+  setServiceEditDebtorCodeValidate(name: string) {
+    this.editServiceForm
+      .get('debtorCodeCustom')
+      .setValidators([Validators.required, notBlankSpaces, changeName(name)]);
+  }
+
   setEditFormValidator(name: string) {
     this.editServiceForm
       .get('name')
