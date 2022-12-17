@@ -1,4 +1,4 @@
-import { async, inject, TestBed } from '@angular/core/testing';
+import { inject, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AffiliationResumeExitGuard } from './affiliation-resume-exit.guard';
 

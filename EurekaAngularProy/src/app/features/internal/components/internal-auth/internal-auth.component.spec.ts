@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { InternalAuthComponent } from './internal-auth.component';
 
@@ -6,7 +6,7 @@ describe('InternalAuthComponent', () => {
   let component: InternalAuthComponent;
   let fixture: ComponentFixture<InternalAuthComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ InternalAuthComponent ]
     })
