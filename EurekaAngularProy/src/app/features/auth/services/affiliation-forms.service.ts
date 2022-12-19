@@ -200,10 +200,17 @@ export class AffiliationFormsService {
     });
   }
 
-  setServiceEditDebtorCodeValidate(name: string) {
+  setServiceEditDebtorCodeValidate(isCustom: boolean, name: string) {
+    const validators = [Validators.required];
+    if (isCustom) {
+      validators.push(changeName(name));
+    } else {
+      validators.push(changeName(name));
+    }
     this.editServiceForm
       .get('debtorCodeCustom')
-      .setValidators([Validators.required, notBlankSpaces, changeName(name)]);
+      .setValidators([notBlankSpaces, ...validators]);
+    this.editServiceForm.get('debtorCode').setValidators(validators);
   }
 
   setEditFormValidator(name: string) {

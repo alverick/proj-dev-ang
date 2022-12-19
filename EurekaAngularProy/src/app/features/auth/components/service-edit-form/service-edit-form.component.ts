@@ -11,7 +11,7 @@ import { FormGroup } from '@angular/forms';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
-import { IServiceRemoteModel } from '../../../../shared/models';
+import { IServiceRemoteModelForms } from '../../../../shared/models';
 import { IErrorMessages } from '../../../../shared/models/forms';
 import { debtorCodeCustomEmpty, debtorCodeOptions } from '../../constants';
 import { AffiliationFormsService } from '../../services';
@@ -30,7 +30,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Input() currencyOptions: any[];
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
-  @Input() formData: IServiceRemoteModel;
+  @Input() formData: IServiceRemoteModelForms;
   debtForm: FormGroup;
   debtorCodeEditable = false;
   submittedForm = false;
@@ -65,6 +65,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       debtorCode,
       newNameGTPStatus,
       newNameCodeGTPStatus,
+      debtorCodeOriginal,
       ...formData
     } = this.formData;
     const isNotDebtorCodeCustom = debtorCodeOptions.some(
@@ -85,14 +86,19 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
         this.debtForm.get('chargeType').disable();
         this.debtForm.get('interestType').disable();
         this.debtForm.get('amount').disable();
-        if (newNameGTPStatus !== 3) {
+        if (newNameGTPStatus === 3) {
+          this.form.get('name').enable();
+        } else {
           this.form.get('name').disable();
         }
         if (newNameCodeGTPStatus !== 3) {
           this.form.get('debtorCode').disable();
           this.form.get('debtorCodeCustom').disable();
-        } else if (this.debtorCodeEditable) {
-          this.affiliationForms.setServiceEditDebtorCodeValidate(debtorCode);
+        } else {
+          this.affiliationForms.setServiceEditDebtorCodeValidate(
+            this.debtorCodeEditable,
+            debtorCodeOriginal
+          );
         }
       }
       this.form.setValue({
