@@ -10,7 +10,11 @@ import {
   ICompanySendUpdate,
   ICompanyUpdate,
 } from 'src/app/shared/models/company';
-import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
+import {
+  IEntryModel,
+  IServiceRemoteModel,
+  IServiceRemoteModelForms,
+} from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
   CompanyService,
@@ -27,7 +31,7 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 export class AffiliationService {
   companyId;
   email;
-  servicesList: IServiceRemoteModel[] = [];
+  servicesList: Array<Partial<IServiceRemoteModelForms>> = [];
 
   entryOptions: IEntryModel[] = [];
   registerForm: FormGroup;
@@ -81,8 +85,10 @@ export class AffiliationService {
       partialPayment,
       newNameGTPStatus,
       newNameCodeGTPStatus,
+      nameOriginal,
+      debtorCodeOriginal,
     } = this.servicesList[position];
-    this.logger.trace(
+    this.logger.log(
       '-> this.servicesList[position]',
       this.servicesList[position]
     );
@@ -103,6 +109,8 @@ export class AffiliationService {
       inReview,
       newNameGTPStatus,
       newNameCodeGTPStatus,
+      nameOriginal,
+      debtorCodeOriginal,
       debt: {
         dataType,
         paymentType,
@@ -365,10 +373,26 @@ export class AffiliationService {
   }
 
   updateEditServiceName(position: number) {
-    const { name } = this.editServiceForm.value;
+    const { currency, ...formData } = this.editServiceForm.value;
+    const updatedData: Partial<IServiceRemoteModel> = {};
+    if (this.servicesList[position].newNameGTPStatus === 3) {
+      updatedData.name = formData.name;
+    }
+    if (this.servicesList[position].newNameCodeGTPStatus === 3) {
+      updatedData.debtorCode =
+        formData.debtorCode === 'Otro'
+          ? formData.debtorCodeCustom
+          : formData.debtorCode;
+    }
+    this.logger.debug(
+      '-> this.editServiceForm.value',
+      this.servicesList[position],
+      updatedData,
+      formData
+    );
     this.servicesList[position] = {
       ...this.servicesList[position],
-      name,
+      ...updatedData,
     };
   }
 
@@ -495,6 +519,8 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
         ...service,
         name: service.name || service.newName,
         debtorCode: service.debtorCode || service.newNameCode,
+        nameOriginal: service.name || service.newName,
+        debtorCodeOriginal: service.debtorCode || service.newNameCode,
       };
     });
   }
