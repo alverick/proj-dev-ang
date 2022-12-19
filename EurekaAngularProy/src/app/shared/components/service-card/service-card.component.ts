@@ -1,15 +1,23 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { dataTypeOptions } from '../../constants/services';
-import { IServiceRemoteModel } from '../../models';
+import { IServiceRemoteModelForms } from '../../models';
 
 @Component({
   selector: 'cs-service-card',
   templateUrl: './service-card.component.html',
   styleUrls: ['./service-card.component.scss'],
 })
-export class ServiceCardComponent implements OnInit {
-  @Input() serviceData: Partial<IServiceRemoteModel>;
+export class ServiceCardComponent implements OnInit, OnChanges {
+  @Input() serviceData: Partial<IServiceRemoteModelForms>;
   @Input() position: number;
   @Input() canEdit = true;
   @Input() reviewMode = false;
@@ -21,11 +29,18 @@ export class ServiceCardComponent implements OnInit {
   name = '';
   debtorCode = '';
   updateEditable = false;
+  pendingReview: boolean;
 
   ngOnInit() {
     this.setPaymentChannels();
     this.setDataType();
     this.isInReview();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.serviceData) {
+      this.setStatusCard();
+    }
   }
 
   isInReview() {
@@ -39,6 +54,24 @@ export class ServiceCardComponent implements OnInit {
       if (isNilOrEmpty(this.serviceData.debtorCode)) {
         this.debtorCode = this.serviceData.newNameCode;
       }
+    }
+  }
+
+  setStatusCard() {
+    this.pendingReview = false;
+    const {
+      newNameCodeGTPStatus,
+      newNameGTPStatus,
+      name: nameService,
+      debtorCode,
+      newNameCode,
+      newName,
+    } = this.serviceData;
+    if (newNameGTPStatus === 3 && nameService === newName) {
+      this.pendingReview = true;
+    }
+    if (newNameCodeGTPStatus === 3 && debtorCode === newNameCode) {
+      this.pendingReview = true;
     }
   }
 

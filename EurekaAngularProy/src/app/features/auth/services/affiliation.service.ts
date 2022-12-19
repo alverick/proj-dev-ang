@@ -5,12 +5,16 @@ import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { parseParams } from '../../../shared/constants/services';
-import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
 import {
   ICompanySendUpdate,
   ICompanyUpdate,
-} from '../../../shared/models/company';
+} from 'src/app/shared/models/company';
+import { parseParams } from '../../../shared/constants/services';
+import {
+  IEntryModel,
+  IServiceRemoteModel,
+  IServiceRemoteModelForms,
+} from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
   EnterpriseHeadingService,
@@ -29,7 +33,7 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 export class AffiliationService {
   companyId;
   email;
-  servicesList: Array<Partial<IServiceRemoteModel>> = [];
+  servicesList: Array<Partial<IServiceRemoteModelForms>> = [];
 
   entryOptions: IEntryModel[] = [];
   registerForm: FormGroup;
@@ -82,14 +86,20 @@ export class AffiliationService {
       amount,
       percentage,
       partialPayment,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
+      nameOriginal,
+      debtorCodeOriginal,
     } = this.servicesList[position];
-    this.logger.trace(
+    this.logger.log(
       '-> this.servicesList[position]',
       this.servicesList[position]
     );
 
     if (inReview) {
-      this.serviceForms.setEditFormValidator(newName);
+      if (newNameGTPStatus === 3) {
+        this.serviceForms.setEditFormValidator(newName);
+      }
     }
 
     const amountField = interestType === 'M' ? amount : percentage;
@@ -100,6 +110,10 @@ export class AffiliationService {
       useAgent,
       currency,
       inReview,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
+      nameOriginal,
+      debtorCodeOriginal,
       debt: {
         dataType,
         paymentType,
@@ -276,7 +290,10 @@ export class AffiliationService {
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {
     let modalSettings;
-    if (this.updateData.name === this.authForm.get('name').value) {
+    if (
+      this.updateData.newNameGTPStatus === 3 &&
+      this.updateData.newName === this.authForm.get('name').value
+    ) {
       modalSettings = {
         icon: 'warning',
         text: `El nombre comercial debe ser actualizado`,
@@ -285,12 +302,23 @@ export class AffiliationService {
       };
     } else if (
       this.servicesList.some(
-        ({ inReview, name, newName }) => name === newName && inReview
+        ({
+          inReview,
+          name,
+          newName,
+          newNameGTPStatus,
+          debtorCode,
+          newNameCode,
+          newNameCodeGTPStatus,
+        }) =>
+          inReview &&
+          ((newNameGTPStatus === 3 && name === newName) ||
+            (newNameCodeGTPStatus === 3 && debtorCode === newNameCode))
       )
     ) {
       modalSettings = {
         icon: 'warning',
-        text: `Debe actualizar el nombre de todos los servicios observados`,
+        text: `Debe actualizar todos los servicios observados`,
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
       };
@@ -306,13 +334,23 @@ export class AffiliationService {
       NewName: this.updateData.inReview
         ? this.authForm.get('name').value
         : null,
-      ArrayServices: this.servicesList.map((service) => {
-        return {
-          ServiceId: service.id,
-          NewName: service.inReview ? service.name : null,
-          NewCodName: null,
-        };
-      }),
+      ArrayServices: this.servicesList.map(
+        ({
+          debtorCode,
+          id,
+          inReview,
+          name,
+          newNameCodeGTPStatus,
+          newNameGTPStatus,
+        }) => {
+          return {
+            ServiceId: id,
+            NewName: inReview && newNameGTPStatus === 3 ? name : null,
+            NewCodName:
+              inReview && newNameCodeGTPStatus === 3 ? debtorCode : null,
+          };
+        }
+      ),
     };
 
     return this.companyService.sendUpdateCompanyData(payload).pipe(
@@ -338,10 +376,26 @@ export class AffiliationService {
   }
 
   updateEditServiceName(position: number) {
-    const { name } = this.editServiceForm.value;
+    const { currency, ...formData } = this.editServiceForm.value;
+    const updatedData: Partial<IServiceRemoteModel> = {};
+    if (this.servicesList[position].newNameGTPStatus === 3) {
+      updatedData.name = formData.name;
+    }
+    if (this.servicesList[position].newNameCodeGTPStatus === 3) {
+      updatedData.debtorCode =
+        formData.debtorCode === 'Otro'
+          ? formData.debtorCodeCustom
+          : formData.debtorCode;
+    }
+    this.logger.debug(
+      '-> this.editServiceForm.value',
+      this.servicesList[position],
+      updatedData,
+      formData
+    );
     this.servicesList[position] = {
       ...this.servicesList[position],
-      name,
+      ...updatedData,
     };
   }
 
@@ -452,15 +506,25 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
 
   setUpdateFormsData(data: ICompanyUpdate): void {
     this.updateData = data;
+    let parsedName = data.name;
+    if (data.newNameGTPStatus === 3) {
+      parsedName = data.newName;
+      this.affiliationForms.setAuthFormNameValidator(parsedName);
+    }
     this.authForm.patchValue({
       ruc: data.ruc,
-      name: data.name,
+      name: parsedName,
       entry: data.entry,
     });
     this.authForm.get('entrySelect').disable();
-    this.affiliationForms.setAuthFormNameValidator(data.name);
     this.servicesList = data.arrayServices.map((service) => {
-      return { ...service, name: service.name || service.newName };
+      return {
+        ...service,
+        name: service.name || service.newName,
+        debtorCode: service.debtorCode || service.newNameCode,
+        nameOriginal: service.name || service.newName,
+        debtorCodeOriginal: service.debtorCode || service.newNameCode,
+      };
     });
   }
 

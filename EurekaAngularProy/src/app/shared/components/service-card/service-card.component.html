@@ -33,17 +33,14 @@
       <div
         class="tw-inline tw-text-white tw-rounded-3xl tw-text-xs tw-px-4 tw-py-0.5"
         [ngClass]="{
-          'tw-bg-extended-watermelon-1':
-            serviceData.name === serviceData.newName,
-          'tw-bg-extended-orange-1': serviceData.name !== serviceData.newName
+          'tw-bg-extended-watermelon-1': pendingReview,
+          'tw-bg-extended-orange-1': !pendingReview
         }"
       >
-        <ng-template [ngIf]="serviceData.name === serviceData.newName">
+        <ng-template [ngIf]="pendingReview">
           Debes revisar este servicio</ng-template
         >
-        <ng-template [ngIf]="serviceData.name !== serviceData.newName">
-          Servicio actualizado</ng-template
-        >
+        <ng-template [ngIf]="!pendingReview"> Servicio actualizado</ng-template>
       </div>
     </div>
     <div *ngIf="!serviceData.inReview" class="tw-h-8"></div>

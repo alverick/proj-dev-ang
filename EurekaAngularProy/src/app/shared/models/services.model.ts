@@ -70,6 +70,8 @@ export interface IServiceRemoteModel {
 
 export interface IServiceRemoteModelForms extends IServiceRemoteModel {
   debtorCodeCustom: string;
+  nameOriginal: string;
+  debtorCodeOriginal: string;
 }
 
 export interface IServicePostData {

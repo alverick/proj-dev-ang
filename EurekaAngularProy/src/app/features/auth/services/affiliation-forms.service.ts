@@ -6,6 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { isNil } from 'ramda';
+import { atLeastOneLetter } from '../../../shared/validators/atLeastOneLetter.validator';
+import { atLeastOneNumber } from '../../../shared/validators/atLeastOneNumber.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { nameInvalid } from '../../../shared/validators/name-invalid.validator';
 
@@ -32,22 +34,28 @@ export class AffiliationFormsService {
     ];
     this.registerForm = this.formBuilder.group(
       {
-        documentType: new FormControl('', [Validators.required]),
-        documentNumber: new FormControl('', [Validators.required]),
-        ruc: new FormControl('', [
-          Validators.required,
-          Validators.pattern('[1-2]0[0-9]+?'),
-          Validators.minLength(11),
-        ]),
-        email: new FormControl('', emailValidators),
-        emailConfirm: new FormControl('', [Validators.required]),
-        movilNumber: new FormControl('', [
-          Validators.required,
-          Validators.pattern(/^9\d{8}$/),
-          Validators.minLength(9),
-          Validators.maxLength(9),
-        ]),
-        movilOperator: new FormControl('', [Validators.required]),
+        documentType: ['', [Validators.required]],
+        documentNumber: ['', [Validators.required]],
+        ruc: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('[1-2]0[0-9]+?'),
+            Validators.minLength(11),
+          ],
+        ],
+        email: ['', emailValidators],
+        emailConfirm: ['', [Validators.required]],
+        movilNumber: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(/^9\d{8}$/),
+            Validators.minLength(9),
+            Validators.maxLength(9),
+          ],
+        ],
+        movilOperator: ['', [Validators.required]],
       },
       {
         validator: MustMatch('email', 'emailConfirm', true),
@@ -56,27 +64,38 @@ export class AffiliationFormsService {
 
     this.authForm = this.formBuilder.group(
       {
-        ruc: new FormControl({ value: '', disabled: true }, [
-          Validators.required,
-          Validators.pattern('[1-2]0[0-9]+?'),
-          Validators.minLength(11),
-        ]),
-        name: new FormControl('', this.authNameValidators),
-        entry: new FormControl('', [Validators.required]),
-        entrySelect: new FormControl('', [Validators.required]),
-        password: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20),
-          onlyOneLetter,
-        ]),
-        passwordConfirm: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20),
-          onlyOneLetter,
-        ]),
-        acceptTerms: new FormControl('', Validators.requiredTrue),
+        ruc: [
+          { value: '', disabled: true },
+          [
+            Validators.required,
+            Validators.pattern('[1-2]0[0-9]+?'),
+            Validators.minLength(11),
+          ],
+        ],
+        name: ['', this.authNameValidators],
+        entry: ['', [Validators.required]],
+        entrySelect: ['', [Validators.required]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20),
+            atLeastOneLetter,
+            atLeastOneNumber,
+          ],
+        ],
+        passwordConfirm: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20),
+            atLeastOneLetter,
+            atLeastOneNumber,
+          ],
+        ],
+        acceptTerms: ['', Validators.requiredTrue],
       },
       {
         validator: MustMatch('password', 'passwordConfirm'),
@@ -102,17 +121,6 @@ function notBlankSpaces(control: FormControl) {
   }
   if (control.value.trim() === '') {
     return { blankSpaces: true };
-  }
-  return null;
-}
-
-function onlyOneLetter(control: FormControl) {
-  const regex = /[a-zA-Z]/g;
-  if (isNil(control.value)) {
-    return null;
-  }
-  if (control.value && !regex.test(control.value)) {
-    return { unaletra: true };
   }
   return null;
 }
