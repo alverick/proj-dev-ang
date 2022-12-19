@@ -39,11 +39,13 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   constructor(private affiliationForms: AffiliationFormsService) {}
 
   ngOnInit() {
-    this.debtForm = this.form.get('debt') as FormGroup;
     this.listenForChanges();
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (has('form', changes) && isNotNil(this.form)) {
+      this.debtForm = this.form.get('debt') as FormGroup;
+    }
     if (has('formData', changes) && isNotNil(this.formData)) {
       const { dataType, ...debt } = this.formData.debt;
       this.formLoaded = false;
@@ -95,6 +97,8 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
           this.form.get('debtorCode').disable();
           this.form.get('debtorCodeCustom').disable();
         } else {
+          this.form.get('debtorCode').enable();
+          this.form.get('debtorCodeCustom').enable();
           this.affiliationForms.setServiceEditDebtorCodeValidate(
             this.debtorCodeEditable,
             debtorCodeOriginal

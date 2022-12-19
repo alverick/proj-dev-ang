@@ -311,7 +311,10 @@ export class AffiliationService {
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {
     let modalSettings;
-    if (this.updateData.name === this.authForm.get('name').value) {
+    if (
+      this.updateData.newNameGTPStatus === 3 &&
+      this.updateData.newName === this.authForm.get('name').value
+    ) {
       modalSettings = {
         icon: 'warning',
         text: `El nombre comercial debe ser actualizado`,
@@ -320,12 +323,23 @@ export class AffiliationService {
       };
     } else if (
       this.servicesList.some(
-        ({ inReview, name, newName }) => name === newName && inReview
+        ({
+          inReview,
+          name,
+          newName,
+          newNameGTPStatus,
+          debtorCode,
+          newNameCode,
+          newNameCodeGTPStatus,
+        }) =>
+          inReview &&
+          ((newNameGTPStatus === 3 && name === newName) ||
+            (newNameCodeGTPStatus === 3 && debtorCode === newNameCode))
       )
     ) {
       modalSettings = {
         icon: 'warning',
-        text: `Debe actualizar el nombre de todos los servicios observados`,
+        text: `Debe actualizar todos los servicios observados`,
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
       };
@@ -341,13 +355,23 @@ export class AffiliationService {
       NewName: this.updateData.inReview
         ? this.authForm.get('name').value
         : null,
-      ArrayServices: this.servicesList.map((service) => {
-        return {
-          ServiceId: service.id,
-          NewName: service.inReview ? service.name : null,
-          NewCodName: null,
-        };
-      }),
+      ArrayServices: this.servicesList.map(
+        ({
+          debtorCode,
+          id,
+          inReview,
+          name,
+          newNameCodeGTPStatus,
+          newNameGTPStatus,
+        }) => {
+          return {
+            ServiceId: id,
+            NewName: inReview && newNameGTPStatus === 3 ? name : null,
+            NewCodName:
+              inReview && newNameCodeGTPStatus === 3 ? debtorCode : null,
+          };
+        }
+      ),
     };
 
     return this.companyService.sendUpdateCompanyData(payload).pipe(
