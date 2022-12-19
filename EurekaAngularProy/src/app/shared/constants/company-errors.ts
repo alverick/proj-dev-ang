@@ -76,6 +76,9 @@ export const errorServiceInformation: IErrorMessages = {
     alfabetico: 'El nombre debe tener por lo menos una letra',
     change: 'Ingresa otro nombre para el servicio',
   },
+  debtorCode: {
+    change: 'Ingresa otro código deudor',
+  },
   debtorCodeCustom: {
     change: 'Ingresa otro código deudor',
   },
