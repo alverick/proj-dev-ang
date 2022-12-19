@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { ApiMockModule } from '@ng-stack/api-mock';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
@@ -59,6 +60,7 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
     MatProgressSpinnerModule,
@@ -71,7 +73,7 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
       enableSourceMaps: true,
     }),
     environment.development ? apiMockModule : [],
-    RecaptchaModule.forRoot(),
+    RecaptchaModule,
     SharedModule,
   ],
   providers: [
