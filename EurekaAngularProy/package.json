@@ -39,7 +39,6 @@
     "@uiowa/digit-only": "^1.2.3",
     "ajv": "^6.10.2",
     "bootstrap": "^4.6.1",
-    "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.11",
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
@@ -72,7 +71,6 @@
     "symbol-observable": "^1.2.0",
     "tslib": "^2.0.0",
     "vendors": "^1.0.3",
-    "web-animations-js": "^2.3.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
