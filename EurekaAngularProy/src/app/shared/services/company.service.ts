@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { IServicePostData } from '../models';
 import { IDataEnterpriseModel } from '../models/data-enterprise.model';
