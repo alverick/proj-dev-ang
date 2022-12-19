@@ -101,7 +101,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
           );
         }
       }
-      this.form.setValue({
+      this.form.patchValue({
         ...formData,
         debtorCode,
         ...debtorCodeObj,
