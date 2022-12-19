@@ -47,8 +47,8 @@ export interface ICompanyUpdate {
 }
 
 interface IServiceSendUpdate {
-  NewName: string;
-  NewCodName: null;
+  NewName: string | null;
+  NewCodName: string | null;
   ServiceId: number;
 }
 
