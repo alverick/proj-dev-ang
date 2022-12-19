@@ -12,7 +12,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
-import { Subject } from 'rxjs/internal/Subject';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ModalTermsComponent } from 'src/app/shared/components/modal-terms/modal-terms.component';
 import { IEntryModel } from '../../../../shared/models';

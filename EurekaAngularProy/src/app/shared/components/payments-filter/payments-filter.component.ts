@@ -17,8 +17,7 @@ import {
 import * as moment from 'moment';
 import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
-import { combineLatest } from 'rxjs';
-import { Subject } from 'rxjs/internal/Subject';
+import { combineLatest, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { DateList } from '../../models/dateList';
 import { StatesGtp } from '../../models/states-gtp';
