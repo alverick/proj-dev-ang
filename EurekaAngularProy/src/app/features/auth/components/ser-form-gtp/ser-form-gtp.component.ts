@@ -75,7 +75,7 @@ export class SerFormGtpComponent implements OnInit {
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
   cmoraporce: boolean = false;
-  private _service: IServiceModel;
+  _service: IServiceModel;
   @Output() grabar = new EventEmitter<any>();
   public services: IServiceModel[] = [];
 
