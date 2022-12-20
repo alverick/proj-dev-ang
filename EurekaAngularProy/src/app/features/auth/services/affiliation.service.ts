@@ -212,7 +212,7 @@ export class AffiliationService {
   }
 
   public saveService() {
-    const { idAccount, name, useAppWeb, useAgent, accountNumber, currency } =
+    const { idAccount, name, useAgent, accountNumber, currency } =
       this.serviceForm.value;
     const {
       dataType,
@@ -252,7 +252,7 @@ export class AffiliationService {
       idAccount,
       accountNumber,
       currency,
-      useAppWeb,
+      useAppWeb: true,
       useAgent,
       useStore: false,
       chargeInterest,
