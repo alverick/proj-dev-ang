@@ -7,6 +7,7 @@ import {
 } from 'src/app/app-routing.names';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
+import { CompanyEntriesResolver } from '../../shared/resolvers';
 import { InternalAuthComponent } from './components/internal-auth/internal-auth.component';
 import {
   internalAuthRoutingNames,
@@ -23,7 +24,6 @@ import { HelpPage } from './pages/help/help.page';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
 import { CompanyDataResolver } from './resolvers/company-data.resolver';
-import { CompanyEntriesResolver } from './resolvers/company-entries.resolver';
 
 const routes: Routes = [
   {
