@@ -7,6 +7,7 @@ import {
 } from 'src/app/app-routing.names';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
+import { CompanyEntriesResolver } from '../../shared/resolvers';
 import { InternalAuthComponent } from './components/internal-auth/internal-auth.component';
 import {
   internalAuthRoutingNames,

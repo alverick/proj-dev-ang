@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { EnterpriseHeadingService } from '../../../shared/services';
+import { EnterpriseHeadingService } from '../services';
 import { CompanyConfigurationService } from '../services';
 
 @Injectable()

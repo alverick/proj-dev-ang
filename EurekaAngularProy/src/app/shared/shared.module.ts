@@ -64,6 +64,7 @@ import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
+import { RESOLVERS } from './resolvers';
 import { PIPES } from './pipes';
 import { SERVICES } from './services';
 
@@ -126,7 +127,8 @@ const UI_MODULES = [
     },
 
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-    SERVICES,
+    ...SERVICES,
+    ...RESOLVERS,
   ],
   declarations: [
     OnlyNumbersFormDirective,
