@@ -11,13 +11,13 @@ import { FormGroup } from '@angular/forms';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
-import { IServiceRemoteModelForms } from '../../../../shared/models';
 import {
   debtorCodeCustomEmpty,
   debtorCodeOptions,
 } from '../../constants/services';
+import { IServiceRemoteModelForms } from '../../models';
 import { IErrorMessages } from '../../models/forms';
-import { AffiliationFormsService } from '../../services';
+import { ServicesFormsService } from '../../services';
 
 @Component({
   selector: 'cs-service-edit-form',
@@ -39,7 +39,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   submittedForm = false;
   formLoaded = false;
   showDebtFields = false;
-  constructor(private affiliationForms: AffiliationFormsService) {}
+  constructor(private servicesForms: ServicesFormsService) {}
 
   ngOnInit() {
     this.listenForChanges();
@@ -102,7 +102,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
         } else {
           this.form.get('debtorCode').enable();
           this.form.get('debtorCodeCustom').enable();
-          this.affiliationForms.setServiceEditDebtorCodeValidate(
+          this.servicesForms.setServiceEditDebtorCodeValidate(
             this.debtorCodeEditable,
             debtorCodeOriginal
           );

@@ -25,30 +25,33 @@ export class ServicesFormsService {
 
   constructor(private formBuilder: FormBuilder) {
     this.serviceForm = this.formBuilder.group({
-      name: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        onlyAlphaNumber,
-        notBlankSpaces,
-        Validators.pattern(
-          '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
-        ),
-      ]),
-      account: new FormControl('', [Validators.required]),
-      idAccount: new FormControl('', [Validators.required]),
-      currency: new FormControl(''),
-      accountNumber: new FormControl(''),
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          onlyAlphaNumber,
+          notBlankSpaces,
+          Validators.pattern(
+            '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
+          ),
+        ],
+      ],
+      account: ['', [Validators.required]],
+      idAccount: ['', [Validators.required]],
+      currency: [''],
+      accountNumber: [''],
       useAppWeb: [{ value: true, disabled: true }],
       useAgent: [false],
     });
 
     const serviceDebtForm = this.formBuilder.group({
-      paymentType: new FormControl('', [Validators.required]),
-      partialPayment: new FormControl('S', [Validators.required]),
-      chargeInterest: new FormControl('N', [Validators.required]),
-      chargeType: new FormControl('', [Validators.required]),
-      interestType: new FormControl('', [Validators.required]),
-      amount: new FormControl('', [Validators.required]),
+      paymentType: ['', [Validators.required]],
+      partialPayment: ['S', [Validators.required]],
+      chargeInterest: ['N', [Validators.required]],
+      chargeType: ['', [Validators.required]],
+      interestType: ['', [Validators.required]],
+      amount: ['', [Validators.required]],
     });
 
     serviceDebtForm.get('interestType').valueChanges.subscribe((val) => {
@@ -73,25 +76,19 @@ export class ServicesFormsService {
     });
 
     this.serviceConfigForm = this.formBuilder.group({
-      dataType: new FormControl('S', [Validators.required]),
-      debtorCode: new FormControl('', [Validators.required]),
-      debtorCodeCustom: new FormControl('', [
-        Validators.required,
-        notBlankSpaces,
-      ]),
+      dataType: ['S', [Validators.required]],
+      debtorCode: ['', [Validators.required]],
+      debtorCodeCustom: ['', [Validators.required, notBlankSpaces]],
       debt: serviceDebtForm,
     });
 
     this.editServiceForm = this.formBuilder.group({
-      name: new FormControl('', this.editNameValidators),
-      currency: new FormControl(''),
-      useAppWeb: [true],
+      name: ['', this.editNameValidators],
+      currency: [''],
+      useAppWeb: [{ value: true, disabled: true }],
       useAgent: [false],
-      debtorCode: new FormControl('', [Validators.required]),
-      debtorCodeCustom: new FormControl('', [
-        Validators.required,
-        notBlankSpaces,
-      ]),
+      debtorCode: ['', [Validators.required]],
+      debtorCodeCustom: ['', [Validators.required, notBlankSpaces]],
       debt: serviceDebtForm,
     });
   }
@@ -121,6 +118,19 @@ export class ServicesFormsService {
         amount: '',
       },
     });
+  }
+
+  setServiceEditDebtorCodeValidate(isCustom: boolean, name: string) {
+    const validators = [Validators.required];
+    if (isCustom) {
+      validators.push(nameInvalid(name));
+    } else {
+      validators.push(nameInvalid(name));
+    }
+    this.editServiceForm
+      .get('debtorCodeCustom')
+      .setValidators([notBlankSpaces, ...validators]);
+    this.editServiceForm.get('debtorCode').setValidators(validators);
   }
 
   setEditFormValidator(name: string) {

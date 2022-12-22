@@ -34,7 +34,6 @@ import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.co
 import {
   CompanyAccountsResolver,
   CompanyDataResolver,
-  CompanyEntriesResolver,
   CompanyServicesResolver,
 } from './resolvers';
 
