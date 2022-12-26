@@ -102,7 +102,9 @@ export class CompanyServicesPage implements OnInit {
 
   updateService() {
     this.companyServices.updateEditService(this.position).subscribe(() => {
-      this.showSidebar = false;
+      this.companyServices.getServices().subscribe(() => {
+        this.showSidebar = false;
+      });
     });
   }
 }
