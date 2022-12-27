@@ -2,6 +2,8 @@
   <cs-services-list
     class="tw-w-full"
     (add)="createService()"
+    [empty]="companyServices.services.length===0"
+    [message]="'Aún no cuentas con servicios configurados'"
     [showSaveAll]="false"
   >
     <cs-service-card
