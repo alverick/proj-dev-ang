@@ -19,6 +19,7 @@ import { internalFullRoutingChildNames } from '../../internal-routing.names';
 import { CompanyServicesService } from '../../services';
 
 @Component({
+  host: { class: 'tw-w-full' },
   selector: 'cs-company-services',
   templateUrl: './company-services.page.html',
   styleUrls: ['./company-services.page.scss'],
