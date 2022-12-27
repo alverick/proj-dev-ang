@@ -18,6 +18,7 @@ export class ServicesListComponent implements AfterViewInit {
   @Input() onlyEdit = false;
   @Input() showSaveAll = true;
   @Input() empty = false;
+  @Input() message = '';
   @Output() add = new EventEmitter();
   @Output() finish = new EventEmitter();
   additionalButtons = false;
