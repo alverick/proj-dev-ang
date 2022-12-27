@@ -18,6 +18,7 @@ import {
 import { AffiliationService } from '../../services';
 
 @Component({
+  host: { class: 'tw-w-full' },
   selector: 'cs-service-resume',
   templateUrl: './service-resume.page.html',
   styleUrls: ['./service-resume.page.scss'],
