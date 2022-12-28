@@ -10,7 +10,7 @@
       *ngFor="let service of companyServices.services;let position=index"
       [serviceData]="service"
       [position]="position"
-      [lockedMode]="service.inReview"
+      [lockedMode]="true"
       [canEdit]="!service.inReview"
       (delete)="actionDelete($event)"
       (edit)="actionEdit(position)"
@@ -35,6 +35,7 @@
       [chargeTypeOptions]="chargeTypeOptions"
       [interestTypeOptions]="interestTypeOptions"
       [formData]="formData"
+      [reviewMode]="false"
       (sendForm)="updateService()"
     ></cs-service-edit-form>
   </p-sidebar>
