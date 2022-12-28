@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { pathEq } from 'ramda';
+import { isNil, pathEq } from 'ramda';
 import { throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { parseParams } from '../../../shared/constants/services';
@@ -131,6 +131,7 @@ export class CompanyServicesService {
       name,
       newName,
       debtorCode,
+      newNameCode,
       paymentType,
       currency,
       useAppWeb,
@@ -143,24 +144,32 @@ export class CompanyServicesService {
       amount,
       percentage,
       partialPayment,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
     } = this.services[position];
-    this.logger.trace(
-      '-> this.servicesList[position]',
-      this.services[position]
-    );
+    this.logger.log('-> this.servicesList[position]', this.services[position]);
 
     if (inReview) {
-      this.serviceForms.setEditFormValidator(newName);
+      if (newNameGTPStatus === 3) {
+        this.serviceForms.setEditFormValidator(newName);
+      }
     }
-
     const amountField = interestType === 'M' ? amount : percentage;
     return {
       name,
-      debtorCode,
+      debtorCode:
+        newNameCodeGTPStatus === 3 && isNil(debtorCode)
+          ? newNameCode
+          : debtorCode,
       useAppWeb,
       useAgent,
       currency,
       inReview,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
+      newNameCode,
+      nameOriginal: name || newName,
+      debtorCodeOriginal: debtorCode || newNameCode,
       debt: {
         dataType,
         paymentType,
