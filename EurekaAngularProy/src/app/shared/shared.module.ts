@@ -64,8 +64,8 @@ import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
-import { RESOLVERS } from './resolvers';
 import { PIPES } from './pipes';
+import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
 
 const FORM_MODULES = [
