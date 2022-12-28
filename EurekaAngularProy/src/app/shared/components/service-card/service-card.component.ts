@@ -67,11 +67,26 @@ export class ServiceCardComponent implements OnInit, OnChanges {
       newNameCode,
       newName,
     } = this.serviceData;
-    if (newNameGTPStatus === 3 && nameService === newName) {
-      this.pendingReview = true;
+    if (this.reviewMode) {
+      if (newNameGTPStatus === 3 && nameService === newName) {
+        this.pendingReview = true;
+      }
+      if (newNameCodeGTPStatus === 3 && debtorCode === newNameCode) {
+        this.pendingReview = true;
+      }
     }
-    if (newNameCodeGTPStatus === 3 && debtorCode === newNameCode) {
-      this.pendingReview = true;
+    if (this.lockedMode) {
+      if (newNameGTPStatus === 3 || newNameCodeGTPStatus === 3) {
+        this.pendingReview = false;
+      }
+      if (
+        newNameGTPStatus === 0 ||
+        newNameCodeGTPStatus === 0 ||
+        newNameGTPStatus === 2 ||
+        newNameCodeGTPStatus === 2
+      ) {
+        this.pendingReview = true;
+      }
     }
   }
 
