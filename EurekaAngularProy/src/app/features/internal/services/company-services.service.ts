@@ -229,8 +229,10 @@ export class CompanyServicesService {
       .filter(
         ({ newNameGTPStatus, newNameCodeGTPStatus }) =>
           !(
-            (newNameGTPStatus === 0 || newNameGTPStatus === 2) &&
-            (newNameCodeGTPStatus === 0 || newNameCodeGTPStatus === 2)
+            newNameGTPStatus === 0 ||
+            newNameGTPStatus === 2 ||
+            newNameCodeGTPStatus === 0 ||
+            newNameCodeGTPStatus === 2
           )
       )
       .map(
