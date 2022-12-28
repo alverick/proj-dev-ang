@@ -29,7 +29,9 @@ export class ServiceCardComponent implements OnInit, OnChanges {
   name = '';
   debtorCode = '';
   updateEditable = false;
-  pendingReview: boolean;
+  pendingUserReview: boolean;
+  pendingGtpReview: boolean;
+  hasWarnings: boolean;
 
   ngOnInit() {
     this.setPaymentChannels();
@@ -58,7 +60,8 @@ export class ServiceCardComponent implements OnInit, OnChanges {
   }
 
   setStatusCard() {
-    this.pendingReview = false;
+    this.pendingUserReview = false;
+    this.pendingGtpReview = false;
     const {
       newNameCodeGTPStatus,
       newNameGTPStatus,
@@ -69,15 +72,15 @@ export class ServiceCardComponent implements OnInit, OnChanges {
     } = this.serviceData;
     if (this.reviewMode) {
       if (newNameGTPStatus === 3 && nameService === newName) {
-        this.pendingReview = true;
+        this.pendingUserReview = true;
       }
       if (newNameCodeGTPStatus === 3 && debtorCode === newNameCode) {
-        this.pendingReview = true;
+        this.pendingUserReview = true;
       }
     }
     if (this.lockedMode) {
       if (newNameGTPStatus === 3 || newNameCodeGTPStatus === 3) {
-        this.pendingReview = false;
+        this.pendingUserReview = true;
       }
       if (
         newNameGTPStatus === 0 ||
@@ -85,9 +88,10 @@ export class ServiceCardComponent implements OnInit, OnChanges {
         newNameGTPStatus === 2 ||
         newNameCodeGTPStatus === 2
       ) {
-        this.pendingReview = true;
+        this.pendingGtpReview = true;
       }
     }
+    this.hasWarnings = this.pendingUserReview || this.pendingGtpReview;
   }
 
   setDataType() {

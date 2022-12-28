@@ -4,9 +4,9 @@
   <div
     class="tw-flex tw-justify-between"
     [ngClass]="{
-      'tw-pb-2': !reviewMode && !lockedMode,
-      'tw-border-b': !reviewMode && !lockedMode,
-      'tw-border-extended-grey-4': !reviewMode && !lockedMode
+      'tw-pb-2': !hasWarnings,
+      'tw-border-b': !hasWarnings,
+      'tw-border-extended-grey-4': !hasWarnings
     }"
   >
     <div class="tw-text-lg tw-font-medium tw-truncate tw-mr-2">
@@ -33,35 +33,41 @@
       <div
         class="tw-inline tw-text-white tw-rounded-3xl tw-text-xs tw-px-4 tw-py-0.5"
         [ngClass]="{
-          'tw-bg-extended-watermelon-1': pendingReview,
-          'tw-bg-extended-orange-1': !pendingReview
+          'tw-bg-extended-watermelon-1': pendingUserReview,
+          'tw-bg-extended-orange-1': !pendingUserReview
         }"
       >
-        <ng-template [ngIf]="pendingReview">
+        <ng-template [ngIf]="pendingUserReview">
           Debes revisar este servicio</ng-template
         >
-        <ng-template [ngIf]="!pendingReview"> Servicio actualizado</ng-template>
+        <ng-template [ngIf]="!pendingUserReview">
+          Servicio actualizado</ng-template
+        >
       </div>
     </div>
-    <div *ngIf="!serviceData.inReview" class="tw-h-8"></div>
+    <div *ngIf="!hasWarnings" class="tw-h-8"></div>
   </ng-template>
   <ng-template [ngIf]="lockedMode">
-    <div
-      *ngIf="serviceData.inReview"
-      class="tw-h-8 tw-flex tw-items-center tw-my-1"
-    >
+    <div *ngIf="hasWarnings" class="tw-h-8 tw-flex tw-items-center tw-my-1">
       <div
         class="tw-inline tw-text-white tw-rounded-3xl tw-text-xs tw-px-4 tw-py-0.5"
         [ngClass]="{
-          'tw-bg-extended-watermelon-1': !pendingReview,
-          'tw-bg-extended-orange-1': pendingReview
+          'tw-bg-extended-watermelon-1': !pendingUserReview,
+          'tw-bg-extended-orange-1': pendingUserReview
         }"
       >
-        <ng-template [ngIf]="!pendingReview">Error en la revisión</ng-template>
-        <ng-template [ngIf]="pendingReview">Pendiente de revisión</ng-template>
+        <ng-template [ngIf]="pendingGtpReview"
+          >Pendiente de revisión</ng-template
+        >
+        <ng-template [ngIf]="pendingUserReview">
+          Debes revisar este servicio</ng-template
+        >
+        <ng-template [ngIf]="!pendingUserReview"
+          >Error en la revisión</ng-template
+        >
       </div>
       <img
-        *ngIf="!pendingReview"
+        *ngIf="!pendingUserReview"
         pTooltip="¡Ups! Hubo un error al revisar tu servicio.
 Debes eliminarlo y volver a crearlo"
         tooltipStyleClass="cs-tooltip"
@@ -70,12 +76,12 @@ Debes eliminarlo y volver a crearlo"
         src="../../../../../assets/images/information.svg"
       />
     </div>
-    <div *ngIf="!serviceData.inReview" class="tw-h-8"></div>
+    <div *ngIf="!hasWarnings" class="tw-h-8"></div>
   </ng-template>
   <div
     class="tw-grid tw-grid-cols-2 tw-gap-2"
     [ngClass]="{
-      'tw-pt-3': !reviewMode
+      'tw-pt-3': !hasWarnings
     }"
   >
     <div class="tw-text-extended-grey-2">Canales de pago:</div>
