@@ -33,6 +33,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Input() currencyOptions: any[];
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
+  @Input() reviewMode = true;
   @Input() formData: IServiceRemoteModelForms;
   debtForm: FormGroup;
   debtorCodeEditable = false;
@@ -69,6 +70,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       inReview,
       debtorCode,
       newNameGTPStatus,
+      newNameCode,
       newNameCodeGTPStatus,
       debtorCodeOriginal,
       ...formData
@@ -85,23 +87,27 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
 
     setTimeout(() => {
       this.formLoaded = true;
-      if (inReview) {
-        this.form.get('debt').disable();
-        this.form.get('useAgent').disable();
-        this.debtForm.get('chargeType').disable();
-        this.debtForm.get('interestType').disable();
-        this.debtForm.get('amount').disable();
-        if (newNameGTPStatus === 3) {
-          this.form.get('name').enable();
-        } else {
-          this.form.get('name').disable();
+      if (inReview || newNameGTPStatus === 3 || newNameCodeGTPStatus === 3) {
+        if (this.reviewMode) {
+          this.form.get('debt').disable();
+          this.form.get('useAgent').disable();
+          this.debtForm.get('chargeType').disable();
+          this.debtForm.get('interestType').disable();
+          this.debtForm.get('amount').disable();
+          if (newNameGTPStatus === 3) {
+            this.form.get('name').enable();
+          } else {
+            this.form.get('name').disable();
+          }
+          if (newNameCodeGTPStatus === 3) {
+            this.form.get('debtorCode').enable();
+            this.form.get('debtorCodeCustom').enable();
+          } else {
+            this.form.get('debtorCode').disable();
+            this.form.get('debtorCodeCustom').disable();
+          }
         }
-        if (newNameCodeGTPStatus !== 3) {
-          this.form.get('debtorCode').disable();
-          this.form.get('debtorCodeCustom').disable();
-        } else {
-          this.form.get('debtorCode').enable();
-          this.form.get('debtorCodeCustom').enable();
+        if (newNameCodeGTPStatus === 3) {
           this.servicesForms.setServiceEditDebtorCodeValidate(
             this.debtorCodeEditable,
             debtorCodeOriginal
@@ -116,7 +122,10 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       });
     }, 300);
     setTimeout(() => {
-      if (inReview) {
+      if (
+        this.reviewMode &&
+        (inReview || newNameGTPStatus === 3 || newNameCodeGTPStatus === 3)
+      ) {
         this.debtForm.get('chargeType').disable();
         this.debtForm.get('interestType').disable();
         this.debtForm.get('amount').disable();
@@ -150,7 +159,9 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       this.debtForm.get('chargeInterest').setValue(chargeInterest);
     } else {
       this.setFormData();
-      this.debtForm.disable();
+      if (this.reviewMode) {
+        this.debtForm.disable();
+      }
     }
   }
 
