@@ -62,19 +62,7 @@
         <ng-template [ngIf]="pendingUserReview">
           Debes revisar este servicio</ng-template
         >
-        <ng-template [ngIf]="!pendingUserReview"
-          >Error en la revisión</ng-template
-        >
       </div>
-      <img
-        *ngIf="!pendingUserReview"
-        pTooltip="¡Ups! Hubo un error al revisar tu servicio.
-Debes eliminarlo y volver a crearlo"
-        tooltipStyleClass="cs-tooltip"
-        hideDelay="30000"
-        class="tw-ml-2 tw-h-5 icon-information"
-        src="../../../../../assets/images/information.svg"
-      />
     </div>
     <div *ngIf="!hasWarnings" class="tw-h-8"></div>
   </ng-template>
