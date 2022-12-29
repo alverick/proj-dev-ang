@@ -113,6 +113,10 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
             debtorCodeOriginal
           );
         }
+      } else {
+        this.servicesForms.setServiceEditDebtorCodeValidate(
+          this.debtorCodeEditable
+        );
       }
       this.form.patchValue({
         ...formData,

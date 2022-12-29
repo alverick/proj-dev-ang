@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { isNil } from 'ramda';
+import { isNotEmpty } from 'ramda-adjunct';
 import { nameInvalid } from '../validators/name-invalid.validator';
 
 @Injectable()
@@ -120,12 +121,14 @@ export class ServicesFormsService {
     });
   }
 
-  setServiceEditDebtorCodeValidate(isCustom: boolean, name: string) {
+  setServiceEditDebtorCodeValidate(isCustom: boolean, name = '') {
     const validators = [Validators.required];
-    if (isCustom) {
-      validators.push(nameInvalid(name));
-    } else {
-      validators.push(nameInvalid(name));
+    if (isNotEmpty(name)) {
+      if (isCustom) {
+        validators.push(nameInvalid(name));
+      } else {
+        validators.push(nameInvalid(name));
+      }
     }
     this.editServiceForm
       .get('debtorCodeCustom')
@@ -133,10 +136,12 @@ export class ServicesFormsService {
     this.editServiceForm.get('debtorCode').setValidators(validators);
   }
 
-  setEditFormValidator(name: string) {
-    this.editServiceForm
-      .get('name')
-      .setValidators([...this.editNameValidators, nameInvalid(name)]);
+  setEditFormValidator(name = '') {
+    const validators = [Validators.required];
+    if (isNotEmpty(name)) {
+      validators.push(nameInvalid(name));
+    }
+    this.editServiceForm.get('name').setValidators(validators);
   }
 }
 

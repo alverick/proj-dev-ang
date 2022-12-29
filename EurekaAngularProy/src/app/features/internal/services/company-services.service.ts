@@ -149,14 +149,15 @@ export class CompanyServicesService {
     } = this.services[position];
     this.logger.log('-> this.servicesList[position]', this.services[position]);
 
-    if (inReview) {
-      if (newNameGTPStatus === 3) {
-        this.serviceForms.setEditFormValidator(newName);
-      }
+    if (newNameGTPStatus === 3) {
+      this.serviceForms.setEditFormValidator(newName);
+    } else {
+      this.serviceForms.setEditFormValidator();
     }
+
     const amountField = interestType === 'M' ? amount : percentage;
     return {
-      name,
+      name: newNameGTPStatus === 3 && isNil(name) ? newName : name,
       debtorCode:
         newNameCodeGTPStatus === 3 && isNil(debtorCode)
           ? newNameCode
