@@ -105,12 +105,7 @@ export class CompanyServicesService {
       ...serviceValues,
     });
 
-    return this.saveAllServices().pipe(
-      tap((result) => {
-        this.logger.debug('-> result saveService', result);
-        this.serviceForms.resetServicesForms();
-      })
-    );
+    return this.saveAllServices();
   }
 
   saveAllServices() {

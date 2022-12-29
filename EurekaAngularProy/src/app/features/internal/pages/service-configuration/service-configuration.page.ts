@@ -40,7 +40,7 @@ export class ServiceConfigurationPage {
   }
 
   onCancel() {
-    this.serviceForms.resetServicesForms();
     this.router.navigate([internalFullRoutingNames.SERVICES]);
+    this.serviceForms.resetServicesForms();
   }
 }
