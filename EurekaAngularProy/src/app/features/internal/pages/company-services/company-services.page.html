@@ -27,6 +27,7 @@
     styleClass="ui-sidebar-md edit-form tw-h-screen tw-overflow-auto"
   >
     <cs-service-edit-form
+      *ngIf="loadFormEdit"
       [form]="companyServices.editServiceForm"
       [errorMessages]="errorMessages"
       [debtorCodeOptions]="debtorCodeOptions"

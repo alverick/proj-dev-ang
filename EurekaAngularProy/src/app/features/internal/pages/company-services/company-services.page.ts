@@ -37,7 +37,7 @@ export class CompanyServicesPage implements OnInit {
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
   formData;
-  ngOnInit() {}
+  loadFormEdit = false;
 
   constructor(
     public companyServices: CompanyServicesService,
@@ -55,6 +55,8 @@ export class CompanyServicesPage implements OnInit {
       this.companyServices.services = value.services;
     });
   }
+
+  ngOnInit() {}
 
   actionDelete(position: number) {
     this.companyServices.canDelete(position).subscribe((result) => {
@@ -87,6 +89,7 @@ export class CompanyServicesPage implements OnInit {
     });
   }
   actionEdit(position: number) {
+    this.loadFormEdit = true;
     this.formData = this.companyServices.setEditForm(position);
     this.position = position;
     setTimeout(() => {
@@ -94,7 +97,9 @@ export class CompanyServicesPage implements OnInit {
     }, 200);
   }
 
-  onClosePanel() {}
+  onClosePanel() {
+    this.loadFormEdit = false;
+  }
 
   createService() {
     this.serviceForms.resetServicesForms();
