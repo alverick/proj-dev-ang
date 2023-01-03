@@ -59,7 +59,7 @@
             icon="pi pi-times"
             class="ui-button-secondary"
             (click)="showDropdown()"
-            [disabled]="formData.inReview"
+            [disabled]="formData.newNameCodeGTPStatus !== 3"
           ></button>
         </div>
       </cs-label-control>
@@ -88,7 +88,6 @@
             class="tw-mr-1"
             [binary]="true"
             formControlName="useAppWeb"
-            [disabled]="true"
           >
           </p-checkbox>
           <ng-container label-inline

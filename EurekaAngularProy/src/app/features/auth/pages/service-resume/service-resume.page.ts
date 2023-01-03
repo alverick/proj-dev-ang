@@ -9,8 +9,8 @@ import {
   chargeTypeOptions,
   currencyOptions,
   debtorCodeOptions,
-  errorServiceInformation,
   errorServiceConfiguration,
+  errorServiceInformation,
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';

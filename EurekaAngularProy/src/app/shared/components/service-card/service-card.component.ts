@@ -1,14 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { dataTypeOptions } from '../../../features/auth/constants';
-import { IServiceRemoteModel } from '../../models';
+import { IServiceRemoteModelForms } from '../../models';
 
 @Component({
   selector: 'cs-service-card',
   templateUrl: './service-card.component.html',
   styleUrls: ['./service-card.component.scss'],
 })
-export class ServiceCardComponent implements OnInit {
-  @Input() serviceData: IServiceRemoteModel;
+export class ServiceCardComponent implements OnInit, OnChanges {
+  @Input() serviceData: Partial<IServiceRemoteModelForms>;
   @Input() position: number;
   @Input() canEdit = true;
   @Input() update = false;
@@ -18,11 +26,36 @@ export class ServiceCardComponent implements OnInit {
   dataType = '';
   name = '';
   updateEditable = false;
+  pendingReview: boolean;
 
   ngOnInit() {
     this.setPaymentChannels();
     this.setDataType();
     this.isEditable();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.serviceData) {
+      this.setStatusCard();
+    }
+  }
+
+  setStatusCard() {
+    this.pendingReview = false;
+    const {
+      newNameCodeGTPStatus,
+      newNameGTPStatus,
+      name: nameService,
+      debtorCode,
+      newNameCode,
+      newName,
+    } = this.serviceData;
+    if (newNameGTPStatus === 3 && nameService === newName) {
+      this.pendingReview = true;
+    }
+    if (newNameCodeGTPStatus === 3 && debtorCode === newNameCode) {
+      this.pendingReview = true;
+    }
   }
 
   isEditable() {

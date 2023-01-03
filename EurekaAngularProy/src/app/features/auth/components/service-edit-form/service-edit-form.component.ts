@@ -11,8 +11,10 @@ import { FormGroup } from '@angular/forms';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
+import { IServiceRemoteModelForms } from '../../../../shared/models';
 import { IErrorMessages } from '../../../../shared/models/forms';
 import { debtorCodeCustomEmpty, debtorCodeOptions } from '../../constants';
+import { AffiliationFormsService } from '../../services';
 
 @Component({
   selector: 'cs-service-edit-form',
@@ -28,19 +30,22 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Input() currencyOptions: any[];
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
-  @Input() formData: any;
+  @Input() formData: IServiceRemoteModelForms;
   debtForm: FormGroup;
   debtorCodeEditable = false;
   submittedForm = false;
   formLoaded = false;
   showDebtFields = false;
+  constructor(private affiliationForms: AffiliationFormsService) {}
 
   ngOnInit() {
-    this.debtForm = this.form.get('debt') as FormGroup;
     this.listenForChanges();
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (has('form', changes) && isNotNil(this.form)) {
+      this.debtForm = this.form.get('debt') as FormGroup;
+    }
     if (has('formData', changes) && isNotNil(this.formData)) {
       const { dataType, ...debt } = this.formData.debt;
       this.formLoaded = false;
@@ -57,12 +62,19 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
     if (isNil(this.formData)) {
       return;
     }
-    const { inReview, debtorCode, ...formData } = this.formData;
-    const debtorCodeVal = debtorCodeOptions.some(
+    const {
+      inReview,
+      debtorCode,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
+      debtorCodeOriginal,
+      ...formData
+    } = this.formData;
+    const isNotDebtorCodeCustom = debtorCodeOptions.some(
       ({ value }) => value === debtorCode
     );
-    this.debtorCodeEditable = !debtorCodeVal;
-    const debtorCodeObj = debtorCodeVal
+    this.debtorCodeEditable = !isNotDebtorCodeCustom;
+    const debtorCodeObj = isNotDebtorCodeCustom
       ? { debtorCode, debtorCodeCustom: debtorCodeCustomEmpty }
       : { debtorCode: 'Otro', debtorCodeCustom: debtorCode };
 
@@ -73,13 +85,27 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       if (inReview) {
         this.form.get('debt').disable();
         this.form.get('useAgent').disable();
-        this.form.get('debtorCode').disable();
-        this.form.get('debtorCodeCustom').disable();
         this.debtForm.get('chargeType').disable();
         this.debtForm.get('interestType').disable();
         this.debtForm.get('amount').disable();
+        if (newNameGTPStatus === 3) {
+          this.form.get('name').enable();
+        } else {
+          this.form.get('name').disable();
+        }
+        if (newNameCodeGTPStatus !== 3) {
+          this.form.get('debtorCode').disable();
+          this.form.get('debtorCodeCustom').disable();
+        } else {
+          this.form.get('debtorCode').enable();
+          this.form.get('debtorCodeCustom').enable();
+          this.affiliationForms.setServiceEditDebtorCodeValidate(
+            this.debtorCodeEditable,
+            debtorCodeOriginal
+          );
+        }
       }
-      this.form.setValue({
+      this.form.patchValue({
         ...formData,
         debtorCode,
         ...debtorCodeObj,
