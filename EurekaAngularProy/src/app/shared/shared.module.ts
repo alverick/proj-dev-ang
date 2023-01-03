@@ -43,6 +43,7 @@ import { KeyFilterModule } from 'primeng-lts/keyfilter';
 import { RadioButtonModule } from 'primeng-lts/radiobutton';
 import { SidebarModule } from 'primeng-lts/sidebar';
 import { StepsModule } from 'primeng-lts/steps';
+import { TableModule } from 'primeng-lts/table';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LabelControlComponent } from './components/label-control/label-control.component';
@@ -92,6 +93,7 @@ const PRIMENG_MODULES = [
   StepsModule,
   SidebarModule,
   ButtonModule,
+  TableModule,
 ];
 const UI_MODULES = [
   FontAwesomeModule,
