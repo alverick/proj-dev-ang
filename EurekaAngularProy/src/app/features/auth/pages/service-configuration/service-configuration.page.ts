@@ -10,7 +10,7 @@ import {
   paymentTypeOptions,
 } from '../../constants';
 import { AffiliationFormsService } from '../../services';
-import { AffiliationService } from '../../services/affiliation.service';
+import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-service-configuration',

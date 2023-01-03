@@ -11,6 +11,10 @@ import { action } from '@storybook/addon-actions';
 import { centered } from '@storybook/addon-centered/angular';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
+import {
+  InputMoneyDirective,
+  InputWithoutSpacesDirective,
+} from '../../../../shared/directives';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { SharedModule } from '../../../../shared/shared.module';
 import {
@@ -21,10 +25,6 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
-import {
-  InputMoneyDirective,
-  InputWithoutSpacesDirective,
-} from '../../directives';
 import { AffiliationFormsService } from '../../services';
 import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
 import { ServiceStepConfigurationComponent } from './service-step-configuration.component';
