@@ -1,0 +1,117 @@
+<div class="widget lista">
+  <p-table
+    [columns]="cols"
+    [value]="data"
+    [(selection)]="selectedRows"
+    [responsive]="true"
+    sortMode="multiple"
+    [paginator]="true"
+    [rows]="50"
+    [showCurrentPageReport]="true"
+    (onRowSelect)="onRowSelect()"
+    (onRowUnselect)="onRowSelect()"
+    currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} elementos"
+    class="table"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th style="width: 3em">
+          <p-tableHeaderCheckbox
+            (click)="onRowSelect()"
+          ></p-tableHeaderCheckbox>
+        </th>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{ col.header }}
+          <p-sortIcon
+            [field]="col.field"
+            ariaLabel="Activate to sort"
+            ariaLabelDesc="Activate to sort in descending order"
+            ariaLabelAsc="Activate to sort in ascending order"
+          ></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr
+        [pSelectableRow]="rowData"
+        [pSelectableRowDisabled]="
+          !(
+            rowData.status != 'PAGADO' &&
+            (rowData.totalAmount == '0' || !rowData.hasIBKPayments)
+          )
+        "
+      >
+        <td>
+          <p-tableCheckbox
+            *ngIf="
+              rowData.status != 'PAGADO' &&
+              (rowData.totalAmount == '0' || !rowData.hasIBKPayments)
+            "
+            [value]="rowData"
+          ></p-tableCheckbox>
+        </td>
+        <td *ngFor="let col of columns">
+          <ng-container [ngSwitch]="col.field">
+            <ng-container *ngSwitchCase="'firstName'"
+              >{{ rowData.id }}<br /><span
+                class="tw-text-xs tw-text-extended-ibk-grey"
+                >{{ rowData[col.field] }}</span
+              ></ng-container
+            >
+            <ng-container *ngSwitchCase="'emissionDate'">{{
+              rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
+            }}</ng-container>
+            <ng-container *ngSwitchCase="'dueDate'">{{
+              rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
+            }}</ng-container>
+            <ng-container *ngSwitchCase="'totalAmount'"
+              ><ng-container *ngIf="rowData[col.field] > 0">{{
+                rowData[col.field] | currency: rowData.currency
+              }}</ng-container
+              ><ng-container *ngIf="rowData[col.field] <= 0">-</ng-container>
+              <div *ngIf="rowData.amount > 0" class="tw-text-xxs">
+                Cuota: {{ rowData.amount | currency: rowData.currency }}
+              </div>
+              <div *ngIf="rowData.interestAmount > 0" class="tw-text-xxs">
+                Mora:
+                {{ rowData.interestAmount | currency: rowData.currency }}
+              </div></ng-container
+            >
+            <ng-container *ngSwitchCase="'totalAmountPayed'"
+              ><ng-container *ngIf="rowData[col.field] > 0">{{
+                rowData[col.field] | currency: rowData.currency
+              }}</ng-container
+              ><ng-container *ngIf="rowData[col.field] <= 0">-</ng-container>
+              <div
+                class="tw-cursor-pointer tw-text-primary-green-1 tw-text-xxs"
+                (click)="actionShowDetails(rowData)"
+              >
+                Ver Detalle
+              </div></ng-container
+            >
+            <ng-container *ngSwitchCase="'status'">
+              <div class="tw-flex">
+                <div
+                  class="tw-whitespace-nowrap tw-w-24 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
+                  [ngClass]="[setStatusRow(rowData).color]"
+                >
+                  <i class="pi pi-circle-on icon tw-pr-1 tw-align-middle"></i>
+                  {{ setStatusRow(rowData).text }}
+                </div>
+                <img
+                  *ngIf="setStatusRow(rowData).canEdit"
+                  class="tw-inline tw-w-6 tw-pl-2 tw-cursor-pointer"
+                  src="../../../../../assets/images/pencil.svg"
+                  alt="editar"
+                />
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchDefault>{{
+              rowData[col.field] | notEmpty: '-'
+            }}</ng-container>
+          </ng-container>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
