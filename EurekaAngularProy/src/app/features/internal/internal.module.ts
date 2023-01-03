@@ -24,6 +24,7 @@ import { HelpPage } from './pages/help/help.page';
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
 import { DebtComponent } from './pages/home/components/debt.component';
 import { PaymentDetailComponent } from './pages/home/components/payment-detail/payment-detail.component';
+import { TableMovementsComponent } from './pages/home/components/table-movements/table-movements.component';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
 import { SERVICES } from './services';
@@ -53,6 +54,7 @@ import { SERVICES } from './services';
     CompanyUpdateFormComponent,
     CompanyPasswordFormComponent,
     ...PAGES,
+    TableMovementsComponent,
   ],
   imports: [
     CommonModule,
