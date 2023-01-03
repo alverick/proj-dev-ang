@@ -146,6 +146,7 @@ export class HomePage implements OnInit {
   public nuevaDeuda: any = {
     errores: {},
   };
+  selectedRows = [];
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -326,7 +327,7 @@ export class HomePage implements OnInit {
 
     this.transactionService
       .getDeuda(this.currentFilter, this.selectedUniverse)
-      .subscribe((debts) => {
+      .subscribe(() => {
         if (this.transactionService.debtItems.data.length > 0) {
           this.selectedAll = this.transactionService.isMarkedAll(
             this.selectedUniverse
@@ -488,11 +489,6 @@ export class HomePage implements OnInit {
       ? this.transactionService.debtItems.countNoIbkPayments
       : this.transactionService.countMarksForDelete();
     if (totalForDelete === 0) {
-      this.mensaje(
-        'error',
-        'Eliminar cobros',
-        'Seleccione los cobros a eliminar por favor'
-      );
       return;
     }
     let mensaje = '';
@@ -960,5 +956,9 @@ export class HomePage implements OnInit {
           this.nuevaDeuda.firstName = d.firstName;
         }
       });
+  }
+
+  onSelected(event) {
+    this.selectedRows = event;
   }
 }
