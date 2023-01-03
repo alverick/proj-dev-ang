@@ -164,6 +164,108 @@ body {
       }
     }
   }
+
+  .ui-table {
+    p-sorticon {
+    }
+
+    .ui-paginator {
+      font-size: 12px;
+      background-color: #fff;
+      border-style: none;
+      text-align: right;
+      padding-right: 20px;
+      padding-top: 5px;
+
+      .ui-paginator-pages .ui-paginator-page.ui-state-active {
+        background-color: transparent;
+        color: var(--primary-green-1);
+      }
+    }
+
+    .ui-paginator-first {
+      display: none;
+    }
+
+    .ui-paginator-last {
+      display: none;
+    }
+
+    table {
+      font-size: 14px;
+    }
+
+    .ui-sortable-column {
+      .ui-sortable-column-icon {
+        color: var(--secondary-blue-1);
+        font-size: 12px;
+      }
+
+      &.ui-state-highlight {
+        background-color: #ffffff;
+        color: var(--secondary-blue-1);
+
+        .ui-sortable-column-icon {
+          color: var(--secondary-blue-1);
+        }
+      }
+    }
+
+    .ui-table-thead > tr {
+      color: var(--secondary-blue-1);
+
+      > th {
+        border-color: var(--grises-grey-4);
+        word-break: break-all;
+        vertical-align: middle;
+        background-color: #ffffff;
+        color: var(--secondary-blue-1);
+
+        &:not(:first-child) {
+          border-left-style: none;
+        }
+
+        &:not(:last-child) {
+          border-right-style: none;
+        }
+      }
+    }
+
+    .ui-table-tbody > tr {
+      color: var(--grises-ibk-black);
+
+      &:focus-visible {
+        outline-color: transparent;
+      }
+
+      &.ui-state-highlight {
+        color: var(--grises-ibk-black);
+        background-color: #ffffff;
+      }
+
+      &:nth-child(even) {
+        background-color: #ffffff;
+
+        &.ui-state-highlight {
+          color: var(--grises-ibk-black);
+          background-color: #ffffff;
+        }
+      }
+
+      > td {
+        border-color: var(--grises-grey-4);
+        vertical-align: top;
+
+        &:not(:first-child) {
+          //border-left-style: none;
+        }
+
+        &:not(:last-child) {
+          //border-right-style: none;
+        }
+      }
+    }
+  }
 }
 
 .cs-alert {
@@ -256,6 +358,7 @@ body {
   .swal2-icon {
     width: 3rem;
     height: 3rem;
+
     .swal2-icon-content {
       font-size: 2.5rem;
     }
