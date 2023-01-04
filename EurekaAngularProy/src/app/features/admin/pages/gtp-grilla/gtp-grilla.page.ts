@@ -15,13 +15,11 @@ import { IEntryModel } from 'src/app/shared/models';
 import { GtpFilter } from 'src/app/shared/models/gtp-filter';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { StatesGtp } from '../../../../shared/models/states-gtp';
-import { CompanyService } from '../../../../shared/services/company.service';
+import { CompanyService } from '../../../../shared/services';
 import { GtpService } from '../../../../shared/services/gtp.service';
 import { adminFullRoutingNames } from '../../admin-routing.names';
 
 //// END DATE ////////////////////
-
-const moment = _rollupMoment || _moment;
 
 export const MY_FORMATS = {
   parse: {
@@ -234,7 +232,7 @@ export class GtpGrillaPage implements OnInit {
   }
 
   getAccountStateList(): void {
-    this.companyService.getAcountStateDetailsList().subscribe((r: Blob) => {
+    this.companyService.getAccountStateDetailsList().subscribe((r: Blob) => {
       saveAs(r, 'Detalles de cuentas.xlsx');
     });
   }

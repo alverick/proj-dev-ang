@@ -9,6 +9,7 @@ import { ClientGuard } from '../../shared/guards/client.guard';
 import { GtpInputGuard } from '../../shared/guards/gtp-input.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
 import { LogoutGuard } from '../../shared/guards/logout.guard';
+import { CompanyEntriesResolver } from '../../shared/resolvers';
 import {
   authDynamicRoutingNames,
   authFullRoutingChildNames,
@@ -161,6 +162,9 @@ const routes: Routes = [
           {
             path: authRoutingChildNames.UPDATE_COMPANY,
             component: UpdateCompanyPage,
+            resolve: {
+              entries: CompanyEntriesResolver,
+            },
           },
           {
             path: authRoutingChildNames.UPDATE_SERVICES,
