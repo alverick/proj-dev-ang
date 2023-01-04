@@ -20,14 +20,9 @@ import {
   paymentTypeOptions,
 } from '../../../features/auth/constants';
 import { AffiliationFormsService } from '../../../features/auth/services';
-import {
-  InputMoneyDirective,
-  InputWithoutSpacesDirective,
-} from '../../directives';
 import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
-import { ServiceStepConfigurationComponent } from './service-step-configuration.component';
 
 @Component({
   selector: 'cs-form-demo',
@@ -72,7 +67,6 @@ const initAppComponentFactory =
 
 export default {
   title: 'Auth/Module/Service Form Configuration',
-  component: ServiceStepConfigurationComponent,
   decorators: [
     centered,
     withKnobs,
@@ -92,13 +86,8 @@ export default {
 };
 
 export const normal = () => ({
-  component: ServiceStepConfigurationComponent,
   moduleMetadata: {
-    declarations: [
-      FormDemoComponent,
-      InputWithoutSpacesDirective,
-      InputMoneyDirective,
-    ],
+    declarations: [FormDemoComponent],
     providers: [],
   },
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
