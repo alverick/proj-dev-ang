@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   ChangeDetectorRef,
   Component,
@@ -14,7 +15,7 @@ import {
   templateUrl: './services-list.component.html',
   styleUrls: ['./services-list.component.scss'],
 })
-export class ServicesListComponent implements AfterViewInit {
+export class ServicesListComponent implements AfterViewInit, AfterViewChecked {
   @Input() onlyEdit = false;
   @Input() showSaveAll = true;
   @Input() empty = false;
@@ -28,10 +29,15 @@ export class ServicesListComponent implements AfterViewInit {
     this.resize();
   }
 
+  ngAfterViewChecked() {
+    this.resize();
+  }
+
   @HostListener('window:resize')
   resize() {
+    this.cdr.detectChanges();
+
     this.additionalButtons =
       this.element.nativeElement.offsetHeight > window.innerHeight + 50;
-    this.cdr.detectChanges();
   }
 }
