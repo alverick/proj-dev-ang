@@ -14,11 +14,14 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { withActions } from '@storybook/addon-actions';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
 import { LoggerModule } from 'ngx-logger';
+import { isNil } from 'ramda';
 import { environment } from '../../../../../../../environments/environment';
+import { movementsDataMock } from '../../../../../../shared/mocks/home';
 import { SharedModule } from '../../../../../../shared/shared.module';
+import { SelectAllTableService } from '../../../../services';
 import { TableMovementsComponent } from './table-movements.component';
 
 function initAppComponentFactory(
@@ -70,16 +73,35 @@ export default {
         },
 
         { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+        SelectAllTableService,
       ],
     }),
     withActions('sendForm', 'click .btn'),
   ],
 };
 
-export const normal = () => ({
+const data = movementsDataMock.map((item) => {
+  return {
+    ...item,
+    emissionDate: isNil(item.emissionDate) ? '' : new Date(item.emissionDate),
+    dueDate: isNil(item.dueDate) ? '' : new Date(item.dueDate),
+    canEditFirstName: true,
+    canEditEmissionDate: isNil(item.emissionDate),
+    canEditDueDate: !isNil(item.dueDate),
+    canEditAmount: item.amount > 0,
+  };
+});
+
+export const normal = () => {
+  return {
+    component: TableMovementsComponent,
+    props: {
+      data,
+    },
+    argTypes: { sendForm: { action: 'clicked' } },
+  };
+};
+export const withoutData = () => ({
   component: TableMovementsComponent,
-  props: {
-    gtpMode: boolean('GTP Mode', false),
-  },
-  argTypes: { sendForm: { action: 'clicked' } },
+  props: {},
 });

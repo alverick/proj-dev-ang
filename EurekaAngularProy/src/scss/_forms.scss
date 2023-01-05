@@ -263,6 +263,12 @@ body {
         &:not(:last-child) {
           //border-right-style: none;
         }
+
+        .ui-inputtext {
+          font-size: 14px;
+          width: 100%;
+          padding: 3px;
+        }
       }
     }
   }

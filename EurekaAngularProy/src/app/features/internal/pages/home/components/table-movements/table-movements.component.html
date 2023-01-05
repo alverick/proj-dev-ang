@@ -1,5 +1,6 @@
 <div class="widget lista">
   <p-table
+    *ngIf="data.length > 0"
     [columns]="cols"
     [value]="data"
     [(selection)]="selectedRows"
@@ -10,6 +11,8 @@
     [showCurrentPageReport]="true"
     (onRowSelect)="onRowSelect()"
     (onRowUnselect)="onRowSelect()"
+    [editMode]="'row'"
+    dataKey="id"
     currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} elementos"
     class="table"
   >
@@ -31,16 +34,14 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr
-        [pSelectableRow]="rowData"
-        [pSelectableRowDisabled]="
-          !(
-            rowData.status != 'PAGADO' &&
-            (rowData.totalAmount == '0' || !rowData.hasIBKPayments)
-          )
-        "
-      >
+    <ng-template
+      pTemplate="body"
+      let-rowData
+      let-columns="columns"
+      let-editing="editing"
+      let-ri="rowIndex"
+    >
+      <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
         <td>
           <p-tableCheckbox
             *ngIf="
@@ -50,28 +51,111 @@
             [value]="rowData"
           ></p-tableCheckbox>
         </td>
-        <td *ngFor="let col of columns">
+        <td
+          *ngFor="let col of columns"
+          [attr.pEditableColumn]="
+            col.editable && rowData[col.checkEditableField]
+          "
+          [attr.data-edit]="col.editable && rowData[col.checkEditableField]"
+        >
           <ng-container [ngSwitch]="col.field">
             <ng-container *ngSwitchCase="'firstName'"
-              >{{ rowData.id }}<br /><span
-                class="tw-text-xs tw-text-extended-ibk-grey"
-                >{{ rowData[col.field] }}</span
+              >{{ rowData.id }}<br />
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input
+                    class="tw-w-full tw-text-sm"
+                    id="name"
+                    name="name"
+                    pInputText
+                    type="text"
+                    [(ngModel)]="rowData.firstName"
+                    #name="ngModel"
+                    required
+                  />
+                  <div
+                    *ngIf="name.invalid && (name.dirty || name.touched)"
+                    class="tw-text-extended-watermelon-1 tw-text-xxs"
+                  >
+                    <div *ngIf="name.errors?.required">Cliente es requerido.</div>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="output">
+                  <span class="tw-text-xs tw-text-extended-ibk-grey">{{
+                    rowData.firstName
+                  }}</span>
+                </ng-template>
+              </p-cellEditor></ng-container
+            >
+            <ng-container *ngSwitchCase="'emissionDate'">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-calendar
+                    class="tw-w-full tw-text-sm"
+                    [(ngModel)]="rowData.emissionDate"
+                    dateFormat="dd/mm/y"
+                    required
+                  ></p-calendar>
+                </ng-template>
+                <ng-template pTemplate="output">{{
+                  rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
+                }}</ng-template></p-cellEditor
               ></ng-container
             >
-            <ng-container *ngSwitchCase="'emissionDate'">{{
-              rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
-            }}</ng-container>
-            <ng-container *ngSwitchCase="'dueDate'">{{
-              rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
-            }}</ng-container>
+            <ng-container *ngSwitchCase="'dueDate'">
+              <ng-container
+                *ngIf="col.editable && rowData[col.checkEditableField]"
+              >
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-calendar
+                      class="tw-w-full"
+                      [(ngModel)]="rowData.dueDate"
+                      dateFormat="dd/mm/y"
+                      required
+                    ></p-calendar>
+                  </ng-template>
+                  <ng-template pTemplate="output">{{
+                    rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
+                  }}</ng-template></p-cellEditor
+                >
+              </ng-container>
+              <ng-container
+                *ngIf="!(col.editable && rowData[col.checkEditableField])"
+                >{{
+                  rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
+                }}</ng-container
+              >
+            </ng-container>
             <ng-container *ngSwitchCase="'totalAmount'"
               ><ng-container *ngIf="rowData[col.field] > 0">{{
                 rowData[col.field] | currency: rowData.currency
               }}</ng-container
-              ><ng-container *ngIf="rowData[col.field] <= 0">-</ng-container>
-              <div *ngIf="rowData.amount > 0" class="tw-text-xxs">
-                Cuota: {{ rowData.amount | currency: rowData.currency }}
-              </div>
+              ><ng-container *ngIf="rowData[col.field] <= 0">-</ng-container
+              ><ng-container
+                *ngIf="col.editable && rowData[col.checkEditableField]"
+                ><p-cellEditor
+                  ><ng-template pTemplate="input"
+                    ><div class="control ui-inputgroup">
+                      <span class="ui-inputgroup-addon">{{
+                        rowData.currency
+                      }}</span
+                      ><input
+                        id="amount"
+                        name="amount"
+                        pInputText
+                        type="text"
+                        [(ngModel)]="rowData.amount"
+                        #name="ngModel"
+                        required
+                      /></div></ng-template
+                  ><ng-template pTemplate="output">
+                    <div *ngIf="rowData.amount > 0" class="tw-text-xxs">
+                      Cuota: {{ rowData.amount | currency: rowData.currency }}
+                    </div>
+                  </ng-template></p-cellEditor
+                ></ng-container
+              >
               <div *ngIf="rowData.interestAmount > 0" class="tw-text-xxs">
                 Mora:
                 {{ rowData.interestAmount | currency: rowData.currency }}
@@ -98,12 +182,32 @@
                   <i class="pi pi-circle-on icon tw-pr-1 tw-align-middle"></i>
                   {{ setStatusRow(rowData).text }}
                 </div>
-                <img
-                  *ngIf="setStatusRow(rowData).canEdit"
-                  class="tw-inline tw-w-6 tw-pl-2 tw-cursor-pointer"
-                  src="../../../../../assets/images/pencil.svg"
-                  alt="editar"
-                />
+                <ng-container *ngIf="setStatusRow(rowData).canEdit">
+                  <img
+                    *ngIf="!editing"
+                    pInitEditableRow
+                    (click)="onRowEditInit(rowData)"
+                    class="tw-inline tw-w-6 tw-pl-2 tw-cursor-pointer"
+                    src="../../../../../assets/images/pencil.svg"
+                    alt="editar"
+                  />
+                  <div *ngIf="editing" class="actions-items">
+                    <div
+                      class="action tw-w-6 tw-h-6 tw-shadow-lg tw-rounded-3xl tw-flex tw-justify-center tw-items-center"
+                      pSaveEditableRow
+                      (click)="onRowEditSave(rowData)"
+                    >
+                      <i class="pi pi-check tw-text-primary-green-1"></i>
+                    </div>
+                    <div
+                      class="action tw-w-6 tw-h-6 tw-shadow-lg tw-rounded-3xl tw-flex tw-justify-center tw-items-center"
+                      pCancelEditableRow
+                      (click)="onRowEditCancel(rowData, ri)"
+                    >
+                      <i class="pi pi-times tw-text-extended-watermelon-1"></i>
+                    </div>
+                  </div>
+                </ng-container>
               </div>
             </ng-container>
             <ng-container *ngSwitchDefault>{{
@@ -114,4 +218,10 @@
       </tr>
     </ng-template>
   </p-table>
+  <div
+    *ngIf="data.length === 0"
+    class="empty tw-text-lg tw-text-extended-grey-2 tw-min-h-screen tw-flex tw-justify-center tw-items-center"
+  >
+    Agrega tu primera deuda dando clic al botón “Agregar cobros”
+  </div>
 </div>

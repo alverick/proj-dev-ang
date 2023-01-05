@@ -1,12 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { isNil } from 'ramda';
+import { forEachObjIndexed, isEmpty, isNil } from 'ramda';
 import { SelectAllTableService } from '../../../../services';
 
 @Component({
@@ -16,12 +10,32 @@ import { SelectAllTableService } from '../../../../services';
 })
 export class TableMovementsComponent implements OnInit {
   cols = [
-    { field: 'firstName', header: 'Cliente' },
+    {
+      field: 'firstName',
+      header: 'Cliente',
+      editable: true,
+      checkEditableField: 'canEditFirstName',
+    },
     { field: 'service', header: 'Servicio' },
     { field: 'concept', header: 'Descripción' },
-    { field: 'emissionDate', header: 'F. emisión' },
-    { field: 'dueDate', header: 'F. vcto.' },
-    { field: 'totalAmount', header: 'Total' },
+    {
+      field: 'emissionDate',
+      header: 'F. emisión',
+      editable: true,
+      checkEditableField: 'canEditEmissionDate',
+    },
+    {
+      field: 'dueDate',
+      header: 'F. vcto.',
+      editable: true,
+      checkEditableField: 'canEditDueDate',
+    },
+    {
+      field: 'totalAmount',
+      header: 'Total',
+      editable: true,
+      checkEditableField: 'canEditAmount',
+    },
     { field: 'totalAmountPayed', header: 'Monto pagado' },
     { field: 'status', header: 'Estado' },
   ];
@@ -29,6 +43,8 @@ export class TableMovementsComponent implements OnInit {
   selectedRows = [];
   @Output() selectedChange = new EventEmitter<any>();
   @Output() showDetails = new EventEmitter<any>();
+  @Output() saveRow = new EventEmitter<any>();
+  dataSet = {};
 
   constructor(
     private logger: NGXLogger,
@@ -114,5 +130,36 @@ export class TableMovementsComponent implements OnInit {
   }
   onRowSelect() {
     this.selectedChange.emit(this.selectedRows);
+  }
+
+  onRowEditInit(data: any) {
+    console.log(data, this.data[0]);
+    this.dataSet[data.id] = { ...data };
+  }
+
+  onRowEditSave(data: any) {
+    const changed = {};
+    forEachObjIndexed((val, key) => {
+      if (this.dataSet[data.id][key] !== val) {
+        changed[key] = val;
+      }
+    }, data);
+    delete this.dataSet[data.id];
+    console.log(data, this.data[0], changed);
+    if (!isEmpty(changed)) {
+      this.saveRow.emit({
+        emissionDate: data.emissionDate,
+        dueDate: data.dueDate,
+        concept: data.concept,
+        amount: data.amount,
+        firstName: data.firstName,
+        id: data.id,
+      });
+    }
+  }
+
+  onRowEditCancel(data: any, pos) {
+    this.data[pos] = this.dataSet[data.id];
+    delete this.dataSet[data.id];
   }
 }
