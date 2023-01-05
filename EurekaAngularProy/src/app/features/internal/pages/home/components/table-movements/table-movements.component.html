@@ -93,6 +93,7 @@
                   <p-calendar
                     class="tw-w-full tw-text-sm"
                     [(ngModel)]="rowData.emissionDate"
+                    [locale]="es"
                     dateFormat="dd/mm/y"
                     required
                   ></p-calendar>
@@ -111,6 +112,7 @@
                     <p-calendar
                       class="tw-w-full"
                       [(ngModel)]="rowData.dueDate"
+                      [locale]="es"
                       dateFormat="dd/mm/y"
                       required
                     ></p-calendar>
