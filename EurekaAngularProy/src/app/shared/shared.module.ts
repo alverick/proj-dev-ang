@@ -35,6 +35,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
 import { ButtonModule } from 'primeng-lts/button';
+import { CalendarModule } from 'primeng-lts/calendar';
 import { CheckboxModule } from 'primeng-lts/checkbox';
 import { DropdownModule } from 'primeng-lts/dropdown';
 import { InputMaskModule } from 'primeng-lts/inputmask';
@@ -94,6 +95,7 @@ const PRIMENG_MODULES = [
   SidebarModule,
   ButtonModule,
   TableModule,
+  CalendarModule,
 ];
 const UI_MODULES = [
   FontAwesomeModule,
