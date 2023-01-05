@@ -269,6 +269,9 @@ body {
           width: 100%;
           padding: 3px;
         }
+        .ui-datepicker:not(.ui-datepicker-inline){
+          min-width: 310px;
+        }
       }
     }
   }
