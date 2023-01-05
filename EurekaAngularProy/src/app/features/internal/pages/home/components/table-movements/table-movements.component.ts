@@ -153,6 +153,7 @@ export class TableMovementsComponent implements OnInit {
         concept: data.concept,
         amount: data.amount,
         firstName: data.firstName,
+        newStatus: '1',
         id: data.id,
       });
     }
