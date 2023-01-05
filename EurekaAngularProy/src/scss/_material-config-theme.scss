@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 
 $custom-typography: mat.define-typography-config(
@@ -80,5 +80,5 @@ $cs-app-theme: mat.define-light-theme($cs-app-primary, $cs-app-accent);
 
 @include mat.all-component-themes($cs-app-theme);
 
-@import '~@angular/cdk/overlay-prebuilt.css';
-//@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '@angular/cdk/overlay-prebuilt.css';
+//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
