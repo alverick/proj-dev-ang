@@ -371,18 +371,19 @@ export class HomePage implements OnInit {
   }
 
   BotonActualizar(item: Debts) {
-    this.validaEmissionDate(item);
-    if (item.dueDate) {
-      this.validaDueDate(item);
-      this.validaMonto(item);
-    }
-    this.validaNombresApellidos(item);
-
-    for (const s in item.errores) {
-      if (item.errores[s]) {
-        return;
-      }
-    }
+    // this.validaEmissionDate(item);
+    // if (item.dueDate) {
+    //   this.validaDueDate(item);
+    //   this.validaMonto(item);
+    // }
+    // this.validaNombresApellidos(item);
+    //
+    // console.log(item, item.errores);
+    // for (const s in item.errores) {
+    //   if (item.errores[s]) {
+    //     return;
+    //   }
+    // }
 
     Swal.fire({
       title: '¿Deseas actualizar?',
@@ -396,12 +397,22 @@ export class HomePage implements OnInit {
       if (result.value) {
         //  item.edit = false;
         const debts = {
-          emissionDate: item.newEmissionDate,
-          dueDate: item.newDueDate,
-          concept: item.newConcept,
-          amount: parseFloat(item.newAmount.toString()),
-          firstName: item.newFirstName,
+          emissionDate: item.emissionDate,
+          dueDate: item.dueDate,
+          concept: item.concept,
+          amount: item.amount,
+          firstName: item.firstName,
         };
+
+        console.log(debts);
+
+        // {
+        //   "emissionDate": "2021-06-16T05:00:00.000Z",
+        //   "dueDate": "",
+        //   "concept": null,
+        //   "amount": 0,
+        //   "firstName": "Cliente BBBB21"
+        // }
 
         if (item.newStatus === '1') {
           this.transactionService
