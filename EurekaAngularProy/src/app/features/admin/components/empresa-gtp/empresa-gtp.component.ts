@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { forEachObjIndexed } from 'ramda';
@@ -20,7 +20,7 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
 })
 export class EmpresaGTPComponent implements OnInit {
   public _enterprise: ICompanyData;
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   submitted = false;
   rubros: IEntryModel[] = [];
   errorMessages = {
@@ -42,7 +42,7 @@ export class EmpresaGTPComponent implements OnInit {
 
   constructor(
     public afiliacionService: AfiliacionService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public gtpService: GtpService
   ) {}
 
@@ -78,8 +78,8 @@ export class EmpresaGTPComponent implements OnInit {
     }
 
     this.formGroup = this.formBuilder.group({
-      ruc: new FormControl({ value: ruc, disabled: true }),
-      newName: new FormControl({
+      ruc: new UntypedFormControl({ value: ruc, disabled: true }),
+      newName: new UntypedFormControl({
         value: newName,
         disabled: true,
       }),
@@ -87,11 +87,11 @@ export class EmpresaGTPComponent implements OnInit {
         { value: newNombreApprovedValue, disabled: !isNotEditable },
         Validators.required,
       ],
-      entry: new FormControl({
+      entry: new UntypedFormControl({
         value: entry,
         disabled: true,
       }),
-      email: new FormControl(
+      email: new UntypedFormControl(
         {
           value: email,
           disabled: isNotEditable,
@@ -105,7 +105,7 @@ export class EmpresaGTPComponent implements OnInit {
           Validators.maxLength(100),
         ]
       ),
-      movilNumber: new FormControl(
+      movilNumber: new UntypedFormControl(
         {
           value: movilNumber,
           disabled: isNotEditable,
@@ -117,7 +117,7 @@ export class EmpresaGTPComponent implements OnInit {
           Validators.maxLength(9),
         ]
       ),
-      movilOperator: new FormControl({
+      movilOperator: new UntypedFormControl({
         value: movilOperator,
         disabled: true,
       }),
@@ -129,7 +129,7 @@ export class EmpresaGTPComponent implements OnInit {
   }
 
   getErrorMessage(
-    controlName: FormControl | AbstractControl,
+    controlName: UntypedFormControl | AbstractControl,
     errors: {
       [key: string]: string;
     }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ import { authFullRoutingNames } from '../../auth-routing.names';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public loginForm: FormGroup;
+  public loginForm: UntypedFormGroup;
   public submitted = false;
   public error: { ruc: string; message: string } = null;
   public respuestaHttp: number;
@@ -72,7 +72,7 @@ export class LoginPage implements OnInit {
   linkRegisterCompany = authFullRoutingNames.COMPANY_REGISTER;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private loginService: LoginService,
     private router: Router,
     private cookieService: CookieService,

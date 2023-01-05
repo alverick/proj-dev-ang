@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 
@@ -46,7 +46,7 @@ export class FormServicioComponent implements OnInit {
 
   constructor(
     private afiliacionService: AfiliacionService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private stateEdit: ConfigurarServiciosComponent
   ) {
     stateEdit.onFormAction.subscribe((e) => this.formAction(e));
@@ -90,7 +90,7 @@ export class FormServicioComponent implements OnInit {
     return this.frm.controls;
   }
 
-  frm: FormGroup;
+  frm: UntypedFormGroup;
 
   codDeudor: any[] = [];
   tiposDato: any[] = [];
@@ -142,7 +142,7 @@ export class FormServicioComponent implements OnInit {
 
     this.frm = this.fb.group({
       // tslint:disable-next-line:max-line-length
-      nombre: new FormControl(
+      nombre: new UntypedFormControl(
         {
           value:
             this._service.newNameGtpStatus === 0 ||
@@ -161,15 +161,15 @@ export class FormServicioComponent implements OnInit {
           ),
         ]
       ),
-      res: new FormControl({ value: this._service.res, disabled: true }),
-      codDeudor: new FormControl(
+      res: new UntypedFormControl({ value: this._service.res, disabled: true }),
+      codDeudor: new UntypedFormControl(
         {
           value: codDeudor,
           disabled: this._service.nombreCodHabilitado,
         },
         [Validators.required]
       ),
-      nameCod: new FormControl({
+      nameCod: new UntypedFormControl({
         value:
           this._service.codDeudor === null
             ? this._service.newNameCode
@@ -178,36 +178,36 @@ export class FormServicioComponent implements OnInit {
             : this._service.codDeudor,
         disabled: this._service.nombreCodHabilitado,
       }),
-      tipoDato: new FormControl(
+      tipoDato: new UntypedFormControl(
         { value: this._service.tipoDato, disabled: this.editMode },
         Validators.required
       ),
-      tipoPago: new FormControl(
+      tipoPago: new UntypedFormControl(
         { value: this._service.tipoPago, disabled: this.editMode },
         Validators.required
       ),
-      idCuenta: new FormControl(
+      idCuenta: new UntypedFormControl(
         { value: this._service.idCuenta.toString(), disabled: this.editMode },
         Validators.required
       ),
       moneda: [this._service.moneda, Validators.required],
-      usaAgente: new FormControl({
+      usaAgente: new UntypedFormControl({
         value: this._service.usaAgente,
         disabled: this.editMode,
       }),
-      usaTienda: new FormControl({
+      usaTienda: new UntypedFormControl({
         value: this._service.usaTienda,
         disabled: this.editMode,
       }),
-      usaWebApp: new FormControl({
+      usaWebApp: new UntypedFormControl({
         value: this._service.usaWebApp,
         disabled: true,
       }),
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
-      monto: new FormControl({ value: montod, disabled: true }),
-      porcentaje: new FormControl({ value: porcentajed, disabled: true }),
+      monto: new UntypedFormControl({ value: montod, disabled: true }),
+      porcentaje: new UntypedFormControl({ value: porcentajed, disabled: true }),
       pagoPartes: [this._service.pagoPartes, Validators.required],
     });
 
@@ -823,7 +823,7 @@ export class FormServicioComponent implements OnInit {
 }
 
 function Maximo(max: number) {
-  return (c: FormControl) => {
+  return (c: UntypedFormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro > max) {
@@ -835,7 +835,7 @@ function Maximo(max: number) {
 }
 
 function Minimo(min: number) {
-  return (c: FormControl) => {
+  return (c: UntypedFormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro < min) {
@@ -846,7 +846,7 @@ function Minimo(min: number) {
   };
 }
 
-function Alfanumerico(c: FormControl) {
+function Alfanumerico(c: UntypedFormControl) {
   let regex = /[0-9a-zA-Z]-?/g;
   if (c.value && !regex.test(c.value)) {
     return { alfa: true };
@@ -854,7 +854,7 @@ function Alfanumerico(c: FormControl) {
   return null;
 }
 
-function Alfabetico(c: FormControl) {
+function Alfabetico(c: UntypedFormControl) {
   let regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
   let numero = /[0-9]/g;
   let raro = /[-{1,}]-?/g;

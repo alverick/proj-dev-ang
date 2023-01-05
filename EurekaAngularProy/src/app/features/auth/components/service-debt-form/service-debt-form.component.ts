@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {
   ControlValueAccessor,
-  FormGroup,
+  UntypedFormGroup,
   NgForm,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
@@ -32,7 +32,7 @@ import { IErrorMessages } from '../../../../shared/models/forms';
 export class ServiceDebtFormComponent
   implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor
 {
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() paymentTypeOptions: any[];
   @Input() currencyOptions: any[];

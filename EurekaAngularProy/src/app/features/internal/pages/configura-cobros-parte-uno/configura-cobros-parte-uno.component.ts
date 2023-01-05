@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,7 +37,7 @@ declare var $: any;
   ],
 })
 export class ConfiguraCobrosParteUnoComponent implements OnInit {
-  frm: FormGroup;
+  frm: UntypedFormGroup;
   public _service: IServiceModel;
   submittedRequired = false;
   public editMode: boolean = false;
@@ -72,7 +72,7 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
   }
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private afiliacionService: AfiliacionService,
     private router: Router,
     private route: ActivatedRoute
@@ -99,7 +99,7 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
 
   initializeForm() {
     this.frm = this.fb.group({
-      nombre: new FormControl(
+      nombre: new UntypedFormControl(
         {
           value:
             this._service.newNameGtpStatus === 0 ||
@@ -296,7 +296,7 @@ export class ConfiguraCobrosParteUnoComponent implements OnInit {
   }
 }
 
-function Alfanumerico(c: FormControl) {
+function Alfanumerico(c: UntypedFormControl) {
   let regex = /[0-9a-zA-Z]-?/g;
   if (c.value && !regex.test(c.value)) {
     return { alfa: true };

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
@@ -34,7 +34,7 @@ import {
   ],
 })
 export class ConfiguraCobrosParteTresComponent implements OnInit {
-  frm: FormGroup;
+  frm: UntypedFormGroup;
   submittedRequired = false;
   _service: IServiceModel;
   editMode: boolean = false;
@@ -60,7 +60,7 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
   constructor(
     private router: Router,
     private afiliacionService: AfiliacionService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: ActivatedRoute
   ) {}
 
@@ -82,15 +82,15 @@ export class ConfiguraCobrosParteTresComponent implements OnInit {
     });
 
     this.frm = this.fb.group({
-      usaAgente: new FormControl({
+      usaAgente: new UntypedFormControl({
         value: this._service.usaAgente,
         disabled: this.editMode,
       }),
-      usaTienda: new FormControl({
+      usaTienda: new UntypedFormControl({
         value: this._service.usaTienda,
         disabled: this.editMode,
       }),
-      usaWebApp: new FormControl({
+      usaWebApp: new UntypedFormControl({
         value: this._service.usaWebApp,
         disabled: true,
       }),

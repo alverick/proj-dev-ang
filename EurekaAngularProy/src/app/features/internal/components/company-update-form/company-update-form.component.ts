@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormGroup, NgForm } from '@angular/forms';
+import { UntypedFormGroup, NgForm } from '@angular/forms';
 import { isNil, pathEq } from 'ramda';
 import { IErrorMessages } from 'src/app/shared/models/forms';
 import { IEntryModel } from '../../../../shared/models';
@@ -26,7 +26,7 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   @Input() documentTypes = [];
   @Input() categories: IEntryModel[] = [];
   @Input() errorMessages: IErrorMessages;
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() submitted = false;
   @Input() inReview = false;
   @Output() showPanel = new EventEmitter<any>();

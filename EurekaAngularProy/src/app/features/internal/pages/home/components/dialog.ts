@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import * as saveAs from 'file-saver';
 import { Observable } from 'rxjs';
@@ -16,11 +16,11 @@ import Swal from 'sweetalert2';
 export class DialogComponent implements OnInit {
   constructor(
     public excelService: ExcelService,
-    public formBuilder: FormBuilder,
+    public formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<DialogComponent>,
     private gaService: GoogleAnalytics
   ) {}
-  public inputXlsForm: FormGroup;
+  public inputXlsForm: UntypedFormGroup;
   public messageUploadExcel = false;
   public errores: any[] = [];
   public ready = false;

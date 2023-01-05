@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { IEntryModel } from 'src/app/shared/models';
@@ -17,7 +17,7 @@ import { GtpService } from 'src/app/shared/services/gtp.service';
 })
 export class FormEmpresaGTPComponent implements OnInit {
   private _enterprise: ICompanyData;
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   rubros: IEntryModel[] = [];
   @Input() set enterprise(value: ICompanyData) {
     this._enterprise = value;
@@ -27,7 +27,7 @@ export class FormEmpresaGTPComponent implements OnInit {
 
   constructor(
     public afiliacionService: AfiliacionService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public gtpService: GtpService
   ) {}
 
@@ -35,22 +35,22 @@ export class FormEmpresaGTPComponent implements OnInit {
     this.afiliacionService.GetRubros().subscribe((d) => (this.rubros = d));
 
     this.formGroup = this.formBuilder.group({
-      cu: new FormControl(this._enterprise.uniqueCodeIBK, [
+      cu: new UntypedFormControl(this._enterprise.uniqueCodeIBK, [
         Validators.required,
         Validators.pattern('[0-9]*'),
       ]),
-      ruc: new FormControl(this._enterprise.ruc, [
+      ruc: new UntypedFormControl(this._enterprise.ruc, [
         Validators.required,
         Validators.pattern('[1-2]0[0-9]+?'),
         Validators.minLength(11),
       ]),
-      newName: new FormControl(this._enterprise.newName, [
+      newName: new UntypedFormControl(this._enterprise.newName, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(80),
       ]),
-      entry: new FormControl(this._enterprise.entry, [Validators.required]),
-      email: new FormControl(this._enterprise.email, [
+      entry: new UntypedFormControl(this._enterprise.entry, [Validators.required]),
+      email: new UntypedFormControl(this._enterprise.email, [
         Validators.required,
         Validators.pattern(
           /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -58,7 +58,7 @@ export class FormEmpresaGTPComponent implements OnInit {
         Validators.minLength(10),
         Validators.maxLength(100),
       ]),
-      movilNumber: new FormControl(this._enterprise.movilNumber, [
+      movilNumber: new UntypedFormControl(this._enterprise.movilNumber, [
         Validators.required,
         Validators.pattern(/^9\d{8}$/),
         Validators.minLength(9),

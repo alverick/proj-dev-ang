@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   $destroy = new Subject();
   @Output() sendForm = new EventEmitter<object>();
   @Output() cancel = new EventEmitter();
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() accounts: any[];
   @Input() showCancel = false;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isEmpty, isNil } from 'ramda';
@@ -30,17 +30,17 @@ export class AffiliationService {
   servicesList: IServiceRemoteModel[] = [];
 
   entryOptions: IEntryModel[] = [];
-  registerForm: FormGroup;
-  authForm: FormGroup;
-  serviceForm: FormGroup;
-  serviceConfigForm: FormGroup;
-  editServiceForm: FormGroup;
+  registerForm: UntypedFormGroup;
+  authForm: UntypedFormGroup;
+  serviceForm: UntypedFormGroup;
+  serviceConfigForm: UntypedFormGroup;
+  editServiceForm: UntypedFormGroup;
   private updateData: ICompanyUpdate;
   tokenUpdate;
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private companyService: CompanyService,
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,

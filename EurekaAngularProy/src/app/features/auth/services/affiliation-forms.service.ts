@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
@@ -12,11 +12,11 @@ import { MustMatch } from '../../../shared/validators/must-match.validator';
 
 @Injectable()
 export class AffiliationFormsService {
-  registerForm: FormGroup;
-  authForm: FormGroup;
-  serviceForm: FormGroup;
-  serviceConfigForm: FormGroup;
-  editServiceForm: FormGroup;
+  registerForm: UntypedFormGroup;
+  authForm: UntypedFormGroup;
+  serviceForm: UntypedFormGroup;
+  serviceConfigForm: UntypedFormGroup;
+  editServiceForm: UntypedFormGroup;
 
   authNameValidators = [
     Validators.required,
@@ -34,7 +34,7 @@ export class AffiliationFormsService {
     ),
   ];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     const emailValidators = [
       Validators.required,
       Validators.pattern(
@@ -45,22 +45,22 @@ export class AffiliationFormsService {
     ];
     this.registerForm = this.formBuilder.group(
       {
-        documentType: new FormControl('', [Validators.required]),
-        documentNumber: new FormControl('', [Validators.required]),
-        ruc: new FormControl('', [
+        documentType: new UntypedFormControl('', [Validators.required]),
+        documentNumber: new UntypedFormControl('', [Validators.required]),
+        ruc: new UntypedFormControl('', [
           Validators.required,
           Validators.pattern('[1-2]0[0-9]+?'),
           Validators.minLength(11),
         ]),
-        email: new FormControl('', emailValidators),
-        emailConfirm: new FormControl('', [Validators.required]),
-        movilNumber: new FormControl('', [
+        email: new UntypedFormControl('', emailValidators),
+        emailConfirm: new UntypedFormControl('', [Validators.required]),
+        movilNumber: new UntypedFormControl('', [
           Validators.required,
           Validators.pattern(/^9\d{8}$/),
           Validators.minLength(9),
           Validators.maxLength(9),
         ]),
-        movilOperator: new FormControl('', [Validators.required]),
+        movilOperator: new UntypedFormControl('', [Validators.required]),
       },
       {
         validator: MustMatch('email', 'emailConfirm', true),
@@ -69,27 +69,27 @@ export class AffiliationFormsService {
 
     this.authForm = this.formBuilder.group(
       {
-        ruc: new FormControl({ value: '', disabled: true }, [
+        ruc: new UntypedFormControl({ value: '', disabled: true }, [
           Validators.required,
           Validators.pattern('[1-2]0[0-9]+?'),
           Validators.minLength(11),
         ]),
-        name: new FormControl('', this.authNameValidators),
-        entry: new FormControl('', [Validators.required]),
-        entrySelect: new FormControl('', [Validators.required]),
-        password: new FormControl('', [
+        name: new UntypedFormControl('', this.authNameValidators),
+        entry: new UntypedFormControl('', [Validators.required]),
+        entrySelect: new UntypedFormControl('', [Validators.required]),
+        password: new UntypedFormControl('', [
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(20),
           onlyOneLetter,
         ]),
-        passwordConfirm: new FormControl('', [
+        passwordConfirm: new UntypedFormControl('', [
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(20),
           onlyOneLetter,
         ]),
-        acceptTerms: new FormControl('', Validators.requiredTrue),
+        acceptTerms: new UntypedFormControl('', Validators.requiredTrue),
       },
       {
         validator: MustMatch('password', 'passwordConfirm'),
@@ -97,7 +97,7 @@ export class AffiliationFormsService {
     );
 
     this.serviceForm = this.formBuilder.group({
-      name: new FormControl('', [
+      name: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(3),
         onlyAlphaNumber,
@@ -106,21 +106,21 @@ export class AffiliationFormsService {
           '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
         ),
       ]),
-      account: new FormControl('', [Validators.required]),
-      idAccount: new FormControl('', [Validators.required]),
-      currency: new FormControl(''),
-      accountNumber: new FormControl(''),
+      account: new UntypedFormControl('', [Validators.required]),
+      idAccount: new UntypedFormControl('', [Validators.required]),
+      currency: new UntypedFormControl(''),
+      accountNumber: new UntypedFormControl(''),
       useAppWeb: [true],
       useAgent: [false],
     });
 
     const serviceDebtForm = this.formBuilder.group({
-      paymentType: new FormControl('', [Validators.required]),
-      partialPayment: new FormControl('S', [Validators.required]),
-      chargeInterest: new FormControl('N', [Validators.required]),
-      chargeType: new FormControl('', [Validators.required]),
-      interestType: new FormControl('', [Validators.required]),
-      amount: new FormControl('', [Validators.required]),
+      paymentType: new UntypedFormControl('', [Validators.required]),
+      partialPayment: new UntypedFormControl('S', [Validators.required]),
+      chargeInterest: new UntypedFormControl('N', [Validators.required]),
+      chargeType: new UntypedFormControl('', [Validators.required]),
+      interestType: new UntypedFormControl('', [Validators.required]),
+      amount: new UntypedFormControl('', [Validators.required]),
     });
 
     serviceDebtForm.get('interestType').valueChanges.subscribe((val) => {
@@ -145,9 +145,9 @@ export class AffiliationFormsService {
     });
 
     this.serviceConfigForm = this.formBuilder.group({
-      dataType: new FormControl('S', [Validators.required]),
-      debtorCode: new FormControl('', [Validators.required]),
-      debtorCodeCustom: new FormControl('', [
+      dataType: new UntypedFormControl('S', [Validators.required]),
+      debtorCode: new UntypedFormControl('', [Validators.required]),
+      debtorCodeCustom: new UntypedFormControl('', [
         Validators.required,
         notBlankSpaces,
       ]),
@@ -155,12 +155,12 @@ export class AffiliationFormsService {
     });
 
     this.editServiceForm = this.formBuilder.group({
-      name: new FormControl('', this.editNameValidators),
-      currency: new FormControl(''),
+      name: new UntypedFormControl('', this.editNameValidators),
+      currency: new UntypedFormControl(''),
       useAppWeb: [true],
       useAgent: [false],
-      debtorCode: new FormControl('', [Validators.required]),
-      debtorCodeCustom: new FormControl('', [
+      debtorCode: new UntypedFormControl('', [Validators.required]),
+      debtorCodeCustom: new UntypedFormControl('', [
         Validators.required,
         notBlankSpaces,
       ]),
@@ -222,7 +222,7 @@ function changeName(name: string) {
   };
 }
 
-function notBlankSpaces(control: FormControl) {
+function notBlankSpaces(control: UntypedFormControl) {
   if (isNil(control.value)) {
     return null;
   }
@@ -232,7 +232,7 @@ function notBlankSpaces(control: FormControl) {
   return null;
 }
 
-function onlyOneLetter(control: FormControl) {
+function onlyOneLetter(control: UntypedFormControl) {
   const regex = /[a-zA-Z]/g;
   if (isNil(control.value)) {
     return null;
@@ -243,7 +243,7 @@ function onlyOneLetter(control: FormControl) {
   return null;
 }
 
-function onlyAlphaNumber(control: FormControl) {
+function onlyAlphaNumber(control: UntypedFormControl) {
   const regex = /[0-9a-zA-Z]-?/g;
   if (isNil(control.value)) {
     return null;

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,7 +41,7 @@ declare var $: any;
   ],
 })
 export class ConfiguraCobrosParteDosComponent implements OnInit {
-  frm: FormGroup;
+  frm: UntypedFormGroup;
   public editMode = false;
   public affiliationFlow = false;
   public Dataparcial = true;
@@ -59,7 +59,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private afiliacionService: AfiliacionService,
     private route: ActivatedRoute
   ) {}
@@ -105,21 +105,21 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
         : 'DNI';
 
     this.frm = this.fb.group({
-      tipoDato: new FormControl(
+      tipoDato: new UntypedFormControl(
         {
           value: this._service.tipoDato,
           disabled: this.editMode,
         },
         Validators.required
       ),
-      codDeudor: new FormControl(
+      codDeudor: new UntypedFormControl(
         {
           value: codDeudor,
           disabled: this._service.nombreCodHabilitado,
         },
         [Validators.required]
       ),
-      nameCod: new FormControl({
+      nameCod: new UntypedFormControl({
         value:
           this._service.codDeudor === null
             ? this._service.newNameCode
@@ -128,7 +128,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
             : this._service.codDeudor,
         disabled: this._service.nombreCodHabilitado,
       }),
-      tipoPago: new FormControl(
+      tipoPago: new UntypedFormControl(
         { value: this._service.tipoPago, disabled: this.editMode },
         Validators.required
       ),
@@ -136,8 +136,8 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
-      monto: new FormControl({ value: montod, disabled: true }),
-      porcentaje: new FormControl({ value: porcentajed, disabled: true }),
+      monto: new UntypedFormControl({ value: montod, disabled: true }),
+      porcentaje: new UntypedFormControl({ value: porcentajed, disabled: true }),
     });
 
     // nameCod: new FormControl({
@@ -577,7 +577,7 @@ export class ConfiguraCobrosParteDosComponent implements OnInit {
 }
 
 function Maximo(max: number) {
-  return (c: FormControl) => {
+  return (c: UntypedFormControl) => {
     const nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro > max) {
@@ -589,7 +589,7 @@ function Maximo(max: number) {
 }
 
 function Minimo(min: number) {
-  return (c: FormControl) => {
+  return (c: UntypedFormControl) => {
     const nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro < min) {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,7 +37,7 @@ import {
   ],
 })
 export class ConfiguraCobrosParteCuatroComponent implements OnInit {
-  frm: FormGroup;
+  frm: UntypedFormGroup;
   editMode = false;
   affiliationFlow = false;
   _service: IServiceModel;
@@ -52,7 +52,7 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
   constructor(
     private router: Router,
     private afiliacionService: AfiliacionService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: ActivatedRoute
   ) {}
 
@@ -74,7 +74,7 @@ export class ConfiguraCobrosParteCuatroComponent implements OnInit {
       this._service.id > 0;
 
     this.frm = this.fb.group({
-      idCuenta: new FormControl(
+      idCuenta: new UntypedFormControl(
         { value: this._service.idCuenta.toString(), disabled: this.editMode },
         Validators.required
       ),

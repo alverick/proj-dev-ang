@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
@@ -19,11 +19,11 @@ import { internalFullRoutingNames } from '../internal-routing.names';
 })
 export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
-  companyForm: FormGroup;
-  passwordForm: FormGroup;
+  companyForm: UntypedFormGroup;
+  passwordForm: UntypedFormGroup;
   entryOptions: IEntryModel[] = [];
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private companyService: CompanyService,
     private router: Router,
     private gaService: GoogleAnalytics

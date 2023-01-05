@@ -1,8 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -43,7 +43,7 @@ declare var $: any;
   ],
 })
 export class CrearContrasenaComponent implements OnInit {
-  registerForm: FormGroup;
+  registerForm: UntypedFormGroup;
   submitted: boolean = false;
   submittedRequired = false;
 
@@ -52,7 +52,7 @@ export class CrearContrasenaComponent implements OnInit {
   public empresa: ICompanyData;
   public empresasEdit: IDataEnterpriseModel;
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private afiliacionService: AfiliacionService,
     private router: Router,
     private gaService: GoogleAnalytics,
@@ -79,20 +79,20 @@ export class CrearContrasenaComponent implements OnInit {
         this.llave = this.rutaActiva.snapshot.params.llave.toString();
         this.registerForm = this.formBuilder.group(
           {
-            ruc: new FormControl({ value: '', disabled: this.inEdit }, [
+            ruc: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
               Validators.pattern('[1-2]0[0-9]+?'),
               Validators.minLength(11),
             ]),
-            nombre: new FormControl({ value: '' }, [
+            nombre: new UntypedFormControl({ value: '' }, [
               Validators.required,
               Validators.minLength(3),
               Validators.maxLength(80),
             ]),
-            rubro: new FormControl({ value: '', disabled: this.inEdit }, [
+            rubro: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
             ]),
-            email: new FormControl({ value: '', disabled: this.inEdit }, [
+            email: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
               Validators.pattern(
                 /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -100,22 +100,22 @@ export class CrearContrasenaComponent implements OnInit {
               Validators.minLength(10),
               Validators.maxLength(100),
             ]),
-            telefono: new FormControl({ value: '', disabled: this.inEdit }, [
+            telefono: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
               Validators.pattern(/^9\d{8}$/),
               Validators.minLength(9),
               Validators.maxLength(9),
             ]),
-            movilOperator: new FormControl(
+            movilOperator: new UntypedFormControl(
               { value: 'M', disabled: this.inEdit },
               [Validators.required]
             ),
-            contrasena: new FormControl({ value: '', disabled: this.inEdit }),
-            repcontrasena: new FormControl({
+            contrasena: new UntypedFormControl({ value: '', disabled: this.inEdit }),
+            repcontrasena: new UntypedFormControl({
               value: '',
               disabled: this.inEdit,
             }),
-            acceptterms: new FormControl({
+            acceptterms: new UntypedFormControl({
               value: true,
               disabled: this.inEdit,
             }),
@@ -167,20 +167,20 @@ export class CrearContrasenaComponent implements OnInit {
       } else {
         this.registerForm = this.formBuilder.group(
           {
-            ruc: new FormControl({ value: '', disabled: this.inEdit }, [
+            ruc: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
               Validators.pattern('[1-2]0[0-9]+?'),
               Validators.minLength(11),
             ]),
-            nombre: new FormControl('', [
+            nombre: new UntypedFormControl('', [
               Validators.required,
               Validators.minLength(3),
               Validators.maxLength(80),
             ]),
-            rubro: new FormControl({ value: '', disabled: this.inEdit }, [
+            rubro: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
             ]),
-            email: new FormControl({ value: '', disabled: this.inEdit }, [
+            email: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
               Validators.pattern(
                 /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -188,20 +188,20 @@ export class CrearContrasenaComponent implements OnInit {
               Validators.minLength(10),
               Validators.maxLength(100),
             ]),
-            telefono: new FormControl({ value: '', disabled: this.inEdit }, [
+            telefono: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
               Validators.pattern(/^9\d{8}$/),
               Validators.minLength(9),
               Validators.maxLength(9),
             ]),
-            movilOperator: new FormControl('', [Validators.required]),
-            contrasena: new FormControl({ value: '', disabled: this.inEdit }, [
+            movilOperator: new UntypedFormControl('', [Validators.required]),
+            contrasena: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
               Validators.required,
               Validators.minLength(6),
               Validators.maxLength(20),
               UnaLetra,
             ]),
-            repcontrasena: new FormControl(
+            repcontrasena: new UntypedFormControl(
               { value: '', disabled: this.inEdit },
               [
                 Validators.required,
@@ -210,7 +210,7 @@ export class CrearContrasenaComponent implements OnInit {
                 UnaLetra,
               ]
             ),
-            acceptterms: new FormControl(
+            acceptterms: new UntypedFormControl(
               { value: '', disabled: this.inEdit },
               Validators.requiredTrue
             ),
@@ -430,7 +430,7 @@ export class CrearContrasenaComponent implements OnInit {
   }
 }
 
-function UnaLetra(c: FormControl) {
+function UnaLetra(c: UntypedFormControl) {
   let regex = /[a-zA-Z]/g;
   if (c.value && !regex.test(c.value)) {
     return { unaletra: true };

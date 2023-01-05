@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
@@ -21,7 +21,7 @@ import { debtorCodeCustomEmpty, debtorCodeOptions } from '../../constants';
 })
 export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Output() sendForm = new EventEmitter<object>();
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() debtorCodeOptions: any[];
   @Input() paymentTypeOptions: any[];
@@ -29,14 +29,14 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
   @Input() formData: any;
-  debtForm: FormGroup;
+  debtForm: UntypedFormGroup;
   debtorCodeEditable = false;
   submittedForm = false;
   formLoaded = false;
   showDebtFields = false;
 
   ngOnInit() {
-    this.debtForm = this.form.get('debt') as FormGroup;
+    this.debtForm = this.form.get('debt') as UntypedFormGroup;
     this.listenForChanges();
   }
 
