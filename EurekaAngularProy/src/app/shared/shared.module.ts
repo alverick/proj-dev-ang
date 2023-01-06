@@ -62,6 +62,7 @@ import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { CompanyService } from './services/company.service';
+import { DebtService } from './services/debt.service';
 import { EnterpriseHeadingService } from './services/enterprise-heading.service';
 
 const FORM_MODULES = [
@@ -127,6 +128,7 @@ const UI_MODULES = [
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     CompanyService,
     EnterpriseHeadingService,
+    DebtService,
   ],
   declarations: [
     OnlyNumbersFormDirective,
