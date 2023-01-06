@@ -23,9 +23,10 @@ import { LoadFileService } from 'src/app/shared/services/load-file.service';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
+import { drawPopup, swalAlert } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 import { DateList } from '../../../../shared/models/dateList';
+import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
@@ -50,7 +51,8 @@ export class HomePage implements OnInit {
     private popover: Popover,
     private gaService: GoogleAnalytics,
     private fileLoad: LoadFileService,
-    private barLoad: LoadBarService
+    private barLoad: LoadBarService,
+    private movementsService: MovementsService
   ) {
     transactionService.itemsForDelete = [];
   }
@@ -496,9 +498,8 @@ export class HomePage implements OnInit {
   }
 
   EliminarSeleccionados() {
-    const totalForDelete = this.selectedUniverse
-      ? this.transactionService.debtItems.countNoIbkPayments
-      : this.transactionService.countMarksForDelete();
+    console.log(this.selectedRows);
+    const totalForDelete = this.selectedRows.length;
     if (totalForDelete === 0) {
       return;
     }
@@ -511,51 +512,49 @@ export class HomePage implements OnInit {
       mensaje = `Esta acción va a eliminar ${totalForDelete} deudas`;
     }
 
-    Swal.fire({
-      title: '¿Seguro que deseas continuar?',
-      text: mensaje,
-      showCancelButton: true,
-      showCloseButton: true,
-      confirmButtonText: 'CONFIRMAR',
-      cancelButtonText: 'CANCELAR',
-      onOpen: drawPopup,
-    }).then((result) => {
-      if (result.value) {
-        const observable = this.selectedUniverse
-          ? this.transactionService.deleteFiltered(this.filtro)
-          : this.transactionService.deleteAll();
-        observable.subscribe(() => {
-          this.gaService.sendEvent('EliminarDeudas', {
-            event_category: 'Dashboard',
-            event_label: 'eliminar_deudas',
-          });
-          this.consultaDeuda(() => {
-            if (totalForDelete === 1) {
-              mensaje_final =
-                'Se han eliminado ' + totalForDelete + ' registro';
-            }
-            if (totalForDelete > 1) {
-              mensaje_final =
-                'Se han eliminado ' + totalForDelete + ' registros';
-            }
-
-            Swal.fire({
-              title: 'Eliminado',
-              text: mensaje_final,
-              showCloseButton: true,
-              showCancelButton: false,
-              confirmButtonText: 'CERRAR',
-              onOpen: drawPopup,
+    swalAlert
+      .fire({
+        title: '¿Seguro que deseas continuar?',
+        text: mensaje,
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: 'CONFIRMAR',
+        cancelButtonText: 'CANCELAR',
+      })
+      .then((result) => {
+        if (result.value) {
+          const ids = this.selectedRows.map((items) => items.id);
+          this.movementsService.deleteMovements(ids).subscribe(() => {
+            this.gaService.sendEvent('EliminarDeudas', {
+              event_category: 'Dashboard',
+              event_label: 'eliminar_deudas',
             });
-          });
-          this.selectedAll = false;
-          this.selectedUniverse = false;
+            this.consultaDeuda(() => {
+              if (totalForDelete === 1) {
+                mensaje_final =
+                  'Se han eliminado ' + totalForDelete + ' registro';
+              }
+              if (totalForDelete > 1) {
+                mensaje_final =
+                  'Se han eliminado ' + totalForDelete + ' registros';
+              }
 
-          this.transactionService.debtItems.data = [];
-          this.transactionService.itemsForDelete = [];
-        });
-      }
-    });
+              swalAlert.fire({
+                title: 'Eliminado',
+                text: mensaje_final,
+                showCloseButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'CERRAR',
+              });
+            });
+            this.selectedAll = false;
+            this.selectedUniverse = false;
+
+            this.transactionService.debtItems.data = [];
+            this.transactionService.itemsForDelete = [];
+          });
+        }
+      });
     this.DebtsAreSelected();
   }
 
