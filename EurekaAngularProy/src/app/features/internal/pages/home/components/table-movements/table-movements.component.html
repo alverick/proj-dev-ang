@@ -23,7 +23,12 @@
             (click)="onRowSelect()"
           ></p-tableHeaderCheckbox>
         </th>
-        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        <th class="md:tw-hidden"></th>
+        <th
+          *ngFor="let col of columns"
+          [pSortableColumn]="col.field"
+          class="tw-hidden md:tw-table-cell"
+        >
           {{ col.header }}
           <p-sortIcon
             [field]="col.field"
@@ -40,6 +45,7 @@
       let-columns="columns"
       let-editing="editing"
       let-ri="rowIndex"
+      let-expanded="expanded"
     >
       <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
         <td>
@@ -51,12 +57,33 @@
             [value]="rowData"
           ></p-tableCheckbox>
         </td>
+        <td class="md:tw-hidden tw-pb-2">
+          <div class="preview tw-flex tw-justify-between">
+            <div class="info">
+              <div class="tw-mb-2">{{ rowData.id }}</div>
+              <div class="tw-mb-2">{{ rowData.firstName }}</div>
+              <div
+                class="tw-whitespace-nowrap tw-w-24 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
+                [ngClass]="[setStatusRow(rowData).color]"
+              >
+                <i class="pi pi-circle-on icon tw-pr-1 tw-align-middle"></i>
+                {{ setStatusRow(rowData).text }}
+              </div>
+            </div>
+
+            <a href="#" [pRowToggler]="rowData"
+              ><i
+                [ngClass]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
+              ></i
+            ></a>
+          </div>
+        </td>
         <td
           *ngFor="let col of columns"
           [attr.pEditableColumn]="
             col.editable && rowData[col.checkEditableField]
           "
-          [attr.data-edit]="col.editable && rowData[col.checkEditableField]"
+          class="tw-hidden md:tw-table-cell"
         >
           <ng-container [ngSwitch]="col.field">
             <ng-container *ngSwitchCase="'firstName'"
@@ -77,7 +104,9 @@
                     *ngIf="name.invalid && (name.dirty || name.touched)"
                     class="tw-text-extended-watermelon-1 tw-text-xxs"
                   >
-                    <div *ngIf="name.errors?.required">Cliente es requerido.</div>
+                    <div *ngIf="name.errors?.required">
+                      Cliente es requerido.
+                    </div>
                   </div>
                 </ng-template>
                 <ng-template pTemplate="output">
@@ -219,6 +248,77 @@
         </td>
       </tr>
     </ng-template>
+    <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+      <tr>
+        <td [attr.colspan]="2">
+          <div class="">
+            <table class="tw-text-sm tw-max-w-xs table-details tw-m-auto">
+              <tr>
+                <td class="tw-text-extended-grey-1 tw-border-none">
+                  Servicio:
+                </td>
+                <td class="tw-border-none">{{ rowData.service }}</td>
+              </tr>
+              <tr>
+                <td>F. emisión:</td>
+                <td>
+                  {{ rowData.emissionDate | date: 'dd/MM/yy' | notEmpty: '-' }}
+                </td>
+              </tr>
+              <tr>
+                <td>F. vcto.:</td>
+                <td>
+                  {{ rowData.dueDate | date: 'dd/MM/yy' | notEmpty: '-' }}
+                </td>
+              </tr>
+              <tr>
+                <td>Cuota:</td>
+                <td>
+                  {{
+                    rowData.amount | currency: rowData.currency | notEmpty: '-'
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>Mora:</td>
+                <td>
+                  {{
+                    rowData.amount | currency: rowData.currency | notEmpty: '-'
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>Total:</td>
+                <td>
+                  {{
+                    rowData.totalAmount
+                      | currency: rowData.currency
+                      | notEmpty: '-'
+                  }}
+                </td>
+              </tr>
+              <tr>
+                <td>Monto pagado:</td>
+                <td>
+                  {{
+                    rowData.totalAmountPayed
+                      | currency: rowData.currency
+                      | notEmpty: '-'
+                  }}
+                </td>
+              </tr>
+              <tr
+                colspan="2"
+                class="tw-text-primary-green-1"
+                (click)="openDialog(rowData)"
+              >
+                <td>Editar</td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
   </p-table>
   <div
     *ngIf="data.length === 0"
@@ -227,3 +327,88 @@
     Agrega tu primera deuda dando clic al botón “Agregar cobros”
   </div>
 </div>
+<p-dialog
+  header="Editar registro"
+  [(visible)]="displayDialog"
+  [responsive]="true"
+  showEffect="fade"
+  [modal]="true"
+  [style]="{ width: '300px' }"
+>
+  <div class="ui-g ui-fluid tw-text-sm" *ngIf="editRowData">
+    <div *ngIf="editRowData.canEditFirstName" class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="vin">Nombre</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="vin" [(ngModel)]="editRowData.firstName" />
+      </div>
+    </div>
+    <div *ngIf="editRowData.canEditEmissionDate" class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="year">F. emisión</label>
+      </div>
+      <div class="ui-g-8">
+        <p-calendar
+          id="year"
+          class="tw-w-full"
+          [(ngModel)]="editRowData.emissionDate"
+          [locale]="es"
+          dateFormat="dd/mm/y"
+          appendTo="body"
+          required
+        ></p-calendar>
+      </div>
+    </div>
+    <div *ngIf="editRowData.canEditDueDate" class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="brand">F. vcto.</label>
+      </div>
+      <div class="ui-g-8">
+        <p-calendar
+          id="brand"
+          class="tw-w-full"
+          [(ngModel)]="editRowData.dueDate"
+          [locale]="es"
+          dateFormat="dd/mm/y"
+          appendTo="body"
+          required
+        ></p-calendar>
+      </div>
+    </div>
+    <div *ngIf="editRowData.canEditAmount > 0" class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="color">Cuota</label>
+      </div>
+      <div class="ui-g-8">
+        <div class="control ui-inputgroup">
+          <span class="ui-inputgroup-addon">{{ editRowData.currency }}</span
+          ><input
+            id="color"
+            name="amount"
+            pInputText
+            type="text"
+            [(ngModel)]="editRowData.amount"
+            required
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tw-text-center">
+    <button
+      type="button"
+      (click)="onSave()"
+      class="tw-bg-primary-green-1 tw-text-white tw-w-44 tw-h-9 tw-text-center tw-rounded-md tw-mb-3"
+    >
+      Guardar
+    </button>
+    <button
+      type="button"
+      (click)="onCancel()"
+      class="tw-text-primary-green-1 tw-border tw-border-green-1 tw-w-44 tw-h-9 tw-text-center tw-rounded-md tw-mb-3"
+    >
+      Cancelar
+    </button>
+  </div>
+</p-dialog>

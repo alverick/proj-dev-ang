@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { forEachObjIndexed, isEmpty, isNil } from 'ramda';
+import { clone, forEachObjIndexed, isEmpty, isNil } from 'ramda';
 import { SelectAllTableService } from '../../../../services';
 
 @Component({
@@ -44,6 +44,8 @@ export class TableMovementsComponent implements OnInit {
   @Output() selectedChange = new EventEmitter<any>();
   @Output() showDetails = new EventEmitter<any>();
   @Output() saveRow = new EventEmitter<any>();
+  displayDialog = false;
+  editRowData: any = {};
   dataSet = {};
   es = {
     firstDayOfWeek: 1,
@@ -206,5 +208,40 @@ export class TableMovementsComponent implements OnInit {
   onRowEditCancel(data: any, pos) {
     this.data[pos] = this.dataSet[data.id];
     delete this.dataSet[data.id];
+  }
+
+  openDialog(data: any) {
+    this.displayDialog = true;
+    this.dataSet[data.id] = { ...data };
+    this.editRowData = clone(data);
+    console.log(this.editRowData);
+  }
+
+  onSave() {
+    this.displayDialog = false;
+    console.log(this.editRowData);
+    const changed = {};
+    forEachObjIndexed((val, key) => {
+      if (this.dataSet[this.editRowData.id][key] !== val) {
+        changed[key] = val;
+      }
+    }, this.editRowData);
+    delete this.dataSet[this.editRowData.id];
+    console.log(this.editRowData, this.data[0], changed);
+    if (!isEmpty(changed)) {
+      this.saveRow.emit({
+        emissionDate: this.editRowData.emissionDate,
+        dueDate: this.editRowData.dueDate,
+        concept: this.editRowData.concept,
+        amount: this.editRowData.amount,
+        firstName: this.editRowData.firstName,
+        newStatus: '1',
+        id: this.editRowData.id,
+      });
+    }
+  }
+
+  onCancel() {
+    this.displayDialog = false;
   }
 }
