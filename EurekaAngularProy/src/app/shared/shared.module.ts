@@ -37,6 +37,7 @@ import { ValdemortModule } from 'ngx-valdemort';
 import { ButtonModule } from 'primeng-lts/button';
 import { CalendarModule } from 'primeng-lts/calendar';
 import { CheckboxModule } from 'primeng-lts/checkbox';
+import { DialogModule } from 'primeng-lts/dialog';
 import { DropdownModule } from 'primeng-lts/dropdown';
 import { InputMaskModule } from 'primeng-lts/inputmask';
 import { InputTextModule } from 'primeng-lts/inputtext';
@@ -96,6 +97,7 @@ const PRIMENG_MODULES = [
   ButtonModule,
   TableModule,
   CalendarModule,
+  DialogModule,
 ];
 const UI_MODULES = [
   FontAwesomeModule,
