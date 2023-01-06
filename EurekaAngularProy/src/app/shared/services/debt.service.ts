@@ -10,7 +10,7 @@ export class DebtService {
   constructor(private http: HttpClient) {}
 
   deleteAll(ids): Observable<any> {
-    const url = `${environment.END_POINT}/debt1/deleteAll`;
+    const url = `${environment.END_POINT}/debt/deleteAll`;
     return this.http
       .post<Debts>(url, { ids })
       .pipe(catchError((error) => throwError(error)));
