@@ -521,7 +521,7 @@
     margin-bottom: 34px !important;
   }
   .block-right {
-    margin-left: 10px !important ;
+    margin-left: 10px !important;
   }
   .label-title-sub-parte {
     font-size: 18px !important;
@@ -781,7 +781,7 @@
     text-align: center !important;
   }
   .descripcion {
-    font-size: 12xp !important;
+    font-size: 12px !important;
     text-align: center !important;
   }
   // .btn-eureca-green {
@@ -830,7 +830,7 @@
     font-size: 14px !important;
   }
   .text-afilacion4 {
-    font-size: 16 !important;
+    font-size: 16px !important;
   }
   .repnsive-nbt-af {
     display: none !important;
@@ -1011,19 +1011,8 @@
   }
 }
 
-@media screen and (max-width: 540px) {
-}
-
 @media only screen and (max-width: 400px) {
   body {
     font-size: 0.75em !important;
   }
 }
-
-@media screen and(max-width:320px) {
-}
-
-// @media only screen and (max-width: 800px) {
-// }
-// @media screen and (max-width: 440px) {
-// }
