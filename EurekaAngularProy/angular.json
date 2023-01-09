@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "allowedCommonJsDependencies": ["file-saver", "sweetalert2"],
             "customWebpackConfig": {
               "path": "./config/extra-webpack.config.js"
             },
