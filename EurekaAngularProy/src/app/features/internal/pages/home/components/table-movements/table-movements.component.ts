@@ -3,6 +3,24 @@ import { NGXLogger } from 'ngx-logger';
 import { clone, forEachObjIndexed, isEmpty, isNil } from 'ramda';
 import { SelectAllTableService } from '../../../../services';
 
+enum StatusRowType {
+  dueDate,
+  nilDueDate,
+}
+
+enum DataStatus {
+  PENDIENTE,
+  VENCIDO,
+  PARCIAL,
+  PAGADO,
+}
+
+interface IStatusRow {
+  color: string;
+  canEdit: boolean;
+  text: string;
+}
+
 @Component({
   selector: 'cs-table-movements',
   templateUrl: './table-movements.component.html',
@@ -104,8 +122,12 @@ export class TableMovementsComponent implements OnInit {
   actionShowDetails(data) {
     this.showDetails.emit(data);
   }
-  setStatusRow({ status, dueDate }) {
-    const statusData = {
+  setStatusRow({ status, dueDate, svcStatus, hasIBKPayments }): IStatusRow {
+    const statusData: {
+      [key in keyof typeof DataStatus]: {
+        [keyChild in keyof typeof StatusRowType]: IStatusRow;
+      };
+    } = {
       PAGADO: {
         dueDate: {
           text: 'Pagado',
@@ -156,23 +178,17 @@ export class TableMovementsComponent implements OnInit {
       },
     };
     // this.logger.debug('-> { status, dueDate }', status, dueDate);
-    let result = '';
-    switch (status) {
-      case 'PAGADO':
-        result = isNil(dueDate) ? ' Deshabilitado' : 'Pagado';
-        break;
-      case 'VENCIDO':
-        result = 'Vencido';
-        break;
-      case 'PARCIAL':
-        result = isNil(dueDate) ? 'Habilitado' : 'Parcial';
-        break;
-      case 'PENDIENTE':
-        result = isNil(dueDate) ? 'Habilitado' : 'Pendiente';
-        break;
-    }
 
-    return statusData[status][isNil(dueDate) ? 'nilDueDate' : 'dueDate'];
+    const isEditable = svcStatus !== 1 && status !== 'PAGADO';
+    const isEditableRow =
+      (dueDate === null && !hasIBKPayments) ||
+      dueDate !== null ||
+      hasIBKPayments;
+
+    return {
+      ...statusData[status][isNil(dueDate) ? 'nilDueDate' : 'dueDate'],
+      canEdit: isEditable && isEditableRow,
+    };
   }
   onRowSelect() {
     this.selectedChange.emit(this.selectedRows);
