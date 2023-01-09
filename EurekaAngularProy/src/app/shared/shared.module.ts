@@ -29,7 +29,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { TooltipModule } from 'ngx-bootstrap';
+import { TooltipModule as TooltipModuleNgx } from 'ngx-bootstrap';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -46,6 +46,7 @@ import { RadioButtonModule } from 'primeng-lts/radiobutton';
 import { SidebarModule } from 'primeng-lts/sidebar';
 import { StepsModule } from 'primeng-lts/steps';
 import { TableModule } from 'primeng-lts/table';
+import { TooltipModule } from 'primeng-lts/tooltip';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LabelControlComponent } from './components/label-control/label-control.component';
@@ -53,6 +54,12 @@ import { MessageAlertComponent } from './components/message-alert/message-alert.
 import { ModalTermsComponent } from './components/modal-terms/modal-terms.component';
 import { PaymentsFilterComponent } from './components/payments-filter/payments-filter.component';
 import { ServiceCardComponent } from './components/service-card/service-card.component';
+import { ServiceDebtFormComponent } from './components/service-debt-form/service-debt-form.component';
+import { ServiceEditFormComponent } from './components/service-edit-form/service-edit-form.component';
+import { ServiceStepConfigurationComponent } from './components/service-step-configuration/service-step-configuration.component';
+import { ServiceStepInfoComponent } from './components/service-step-info/service-step-info.component';
+import { ServicesListComponent } from './components/services-list/services-list.component';
+import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
 import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
 import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
@@ -62,8 +69,8 @@ import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directi
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
-import { CompanyService } from './services/company.service';
-import { EnterpriseHeadingService } from './services/enterprise-heading.service';
+import { RESOLVERS } from './resolvers';
+import { SERVICES } from './services';
 
 const FORM_MODULES = [
   FormsModule,
@@ -99,12 +106,13 @@ const PRIMENG_MODULES = [
   TableModule,
   CalendarModule,
   DialogModule,
+  TooltipModule,
 ];
 const UI_MODULES = [
   FontAwesomeModule,
   OverlayModule,
   PerfectScrollbarModule,
-  TooltipModule.forRoot(),
+  TooltipModuleNgx.forRoot(),
 ];
 
 @NgModule({
@@ -126,8 +134,8 @@ const UI_MODULES = [
     },
 
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-    CompanyService,
-    EnterpriseHeadingService,
+    ...SERVICES,
+    ...RESOLVERS,
     ...DATA_SERVICES,
   ],
   declarations: [
@@ -144,6 +152,12 @@ const UI_MODULES = [
     MessageAlertComponent,
     ModalTermsComponent,
     ServiceCardComponent,
+    ServiceStepInfoComponent,
+    ServiceStepConfigurationComponent,
+    ServiceDebtFormComponent,
+    ServiceEditFormComponent,
+    ServicesListComponent,
+    SidebarServiceComponent,
     ...DIRECTIVES,
     ...PIPES,
   ],
@@ -159,11 +173,17 @@ const UI_MODULES = [
     ...PRIMENG_MODULES,
     HeaderComponent,
     PaymentsFilterComponent,
-    TooltipModule,
+    TooltipModuleNgx,
     ValdemortModule,
     LabelControlComponent,
     MessageAlertComponent,
     ValidationDefaultsComponent,
+    ServiceStepInfoComponent,
+    ServiceStepConfigurationComponent,
+    ServiceDebtFormComponent,
+    ServiceEditFormComponent,
+    ServicesListComponent,
+    SidebarServiceComponent,
     ServiceCardComponent,
     ...PIPES,
   ],

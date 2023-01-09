@@ -27,6 +27,7 @@ import { PaymentDetailComponent } from './pages/home/components/payment-detail/p
 import { TableMovementsComponent } from './pages/home/components/table-movements/table-movements.component';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
+import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
 
 @NgModule({
@@ -67,6 +68,6 @@ import { SERVICES } from './services';
     DebtComponent,
     PaymentDetailComponent,
   ],
-  providers: [...SERVICES],
+  providers: [...SERVICES, ...RESOLVERS],
 })
 export class InternalModule {}

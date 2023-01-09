@@ -22,6 +22,7 @@ export class UpdateServicesPage {
   position = 0;
   steps = [{ title: 'Step 1' }, { title: 'Step 2' }, { title: 'Step 3' }];
   showSidebar = false;
+  loadFormEdit = false;
   errorMessages = {
     ...errorServiceConfiguration,
     ...errorServiceInformation,
@@ -53,6 +54,7 @@ export class UpdateServicesPage {
   }
 
   actionEdit(position: number) {
+    this.loadFormEdit = true;
     this.formData = this.affiliation.setEditForm(position);
     this.position = position;
     setTimeout(() => {
@@ -71,11 +73,13 @@ export class UpdateServicesPage {
   }
 
   updateService() {
-    this.affiliation.updateEditServiceName(this.position);
     this.showSidebar = false;
+    this.affiliation.updateEditServiceName(this.position);
+    this.loadFormEdit = false;
   }
 
   closePanel() {
+    this.loadFormEdit = false;
     this.affiliation.removeEditService();
   }
 }
