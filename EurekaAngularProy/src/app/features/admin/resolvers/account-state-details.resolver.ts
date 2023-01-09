@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { IAccountStateDetails } from 'src/app/shared/models/company';
-import { CompanyService } from '../../../shared/services/company.service';
+import { CompanyService } from '../../../shared/services';
 
 @Injectable()
 export class AccountStateDetailsResolver implements Resolve<any> {
@@ -11,7 +11,7 @@ export class AccountStateDetailsResolver implements Resolve<any> {
   resolve(
     route: ActivatedRouteSnapshot
   ): Observable<IAccountStateDetails | string> {
-    return this.companyService.getAcountStateDetails(route.params.llave).pipe(
+    return this.companyService.getAccountStateDetails(route.params.llave).pipe(
       catchError(() => {
         return of('No data');
       })

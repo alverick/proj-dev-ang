@@ -1,6 +1,7 @@
 <cs-services-list
   class="tw-w-full"
   [empty]="affiliation.servicesList.length == 0"
+  [message]="'Debes contar con al menos un servicio para continuar'"
   (add)="createService()"
   (finish)="finalize()"
 >
