@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DebtService } from '../../../shared/services/debt.service';
+import { DebtDataService } from '../../../shared/data';
 
 @Injectable()
 export class MovementsService {
-  constructor(private debtService: DebtService) {}
+  constructor(private debtService: DebtDataService) {}
 
   deleteMovements(ids) {
     return this.debtService.deleteAll(ids);
