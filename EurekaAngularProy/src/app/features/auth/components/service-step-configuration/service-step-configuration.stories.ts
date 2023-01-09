@@ -21,10 +21,6 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
-import {
-  InputMoneyDirective,
-  InputWithoutSpacesDirective,
-} from '../../directives';
 import { AffiliationFormsService } from '../../services';
 import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
 import { ServiceStepConfigurationComponent } from './service-step-configuration.component';
@@ -98,8 +94,6 @@ export const normal = () => ({
       FormDemoComponent,
       ServiceStepConfigurationComponent,
       ServiceDebtFormComponent,
-      InputWithoutSpacesDirective,
-      InputMoneyDirective,
     ],
     providers: [],
   },
