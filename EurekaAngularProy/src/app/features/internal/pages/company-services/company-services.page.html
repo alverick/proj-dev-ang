@@ -11,7 +11,7 @@
       [serviceData]="service"
       [position]="position"
       [lockedMode]="true"
-      [canEdit]="!service.inReview"
+      [canEdit]="!service.inReview || service.newNameCodeGTPStatus===3 || service.newNameGTPStatus===3"
       (delete)="actionDelete($event)"
       (edit)="actionEdit(position)"
     ></cs-service-card>
