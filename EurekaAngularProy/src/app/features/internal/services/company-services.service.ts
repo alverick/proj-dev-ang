@@ -238,7 +238,9 @@ export class CompanyServicesService {
             newNameGTPStatus === 2 ||
             newNameCodeGTPStatus === 0 ||
             newNameCodeGTPStatus === 2
-          )
+          ) ||
+          newNameGTPStatus === 3 ||
+          newNameCodeGTPStatus === 3
       )
       .map(
         ({
