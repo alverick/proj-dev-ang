@@ -22,7 +22,6 @@ import { GUARDS } from './guards';
 import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
 import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
 import { CompanyRegistrationPage } from './pages/company-registration/company-registration.page';
-import { CompletadoPrimeraParteComponent } from './pages/completado-primera-parte/completado-primera-parte.component';
 import { ConfigurarGtpComponent } from './pages/configurar-gtp/configurar-gtp.component';
 import { ConfigurarServiciosComponent } from './pages/configurar-servicios/configurar-servicios.component';
 import { CrearContrasenaComponent } from './pages/crear-contrasena/crear-contrasena.component';
@@ -59,7 +58,6 @@ import { SERVICES } from './services';
   ],
   declarations: [
     CambiaContrasenaComponent,
-    CompletadoPrimeraParteComponent,
     CompanyRegistrationAuthPage,
     ConfigurarGtpComponent,
     ConfigurarServiciosComponent,

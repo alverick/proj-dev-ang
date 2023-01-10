@@ -10,16 +10,10 @@ import {
 
 interface IInternalRoutingNames {
   AUTH: string;
-  CHARGES: string;
-  SERVICES: string;
-  CHARGES_ADD_STEP_1: string;
-  CHARGES_ADD_STEP_2: string;
-  CHARGES_ADD_STEP_3: string;
-  CHARGES_ADD_STEP_4: string;
-  CHARGES_EDIT: string;
   COMPANY: string;
-  HOME: string;
   HELP: string;
+  HOME: string;
+  SERVICES: string;
 }
 
 interface IInternalRoutingChildNames extends IRouteNames {
@@ -44,12 +38,6 @@ export const internalRoutingNames: IInternalRoutingNames = {
   HOME: 'home',
   COMPANY: 'configuracion-empresa',
   SERVICES: 'servicios',
-  CHARGES: 'servicios_',
-  CHARGES_EDIT: 'servicios/editar',
-  CHARGES_ADD_STEP_1: 'servicios/agregar-paso-1',
-  CHARGES_ADD_STEP_2: 'servicios/agregar-paso-2',
-  CHARGES_ADD_STEP_3: 'servicios/agregar-paso-3',
-  CHARGES_ADD_STEP_4: 'servicios/agregar-paso-4',
 };
 
 export const internalRoutingChildNames: IInternalRoutingChildNames = {

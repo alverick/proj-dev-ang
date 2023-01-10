@@ -28,7 +28,6 @@ import {
 import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
 import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
 import { CompanyRegistrationPage } from './pages/company-registration/company-registration.page';
-import { CompletadoPrimeraParteComponent } from './pages/completado-primera-parte/completado-primera-parte.component';
 import { ConfigurarGtpComponent } from './pages/configurar-gtp/configurar-gtp.component';
 import { ConfigurarServiciosComponent } from './pages/configurar-servicios/configurar-servicios.component';
 import { CrearContrasenaComponent } from './pages/crear-contrasena/crear-contrasena.component';
@@ -84,11 +83,6 @@ const routes: Routes = [
         path: authDynamicRoutingNames.GENERATE_PASSWORD,
         component: CrearContrasenaComponent,
         data: { isEdit: true },
-      },
-      {
-        path: authRoutingNames.COMPANY_FINISHED,
-        component: CompletadoPrimeraParteComponent,
-        data: { isEdit: false },
       },
       {
         path: authRoutingNames.PROCESSING,
