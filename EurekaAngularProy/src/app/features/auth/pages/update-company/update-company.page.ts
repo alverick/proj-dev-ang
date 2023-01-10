@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IEntryModel } from '../../../../shared/models';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import { errorRegisterAuth } from '../../constants';
@@ -14,12 +14,16 @@ export class UpdateCompanyPage implements OnInit {
   entryOptions: IEntryModel[] = [];
   errors = errorRegisterAuth;
 
-  constructor(private router: Router, public affiliation: AffiliationService) {}
+  constructor(
+    private router: Router,
+    public affiliation: AffiliationService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.affiliation
-      .getEntryOptions()
-      .subscribe((result) => (this.entryOptions = result));
+    this.activatedRoute.data.subscribe(({ entries }: any) => {
+      this.entryOptions = entries;
+    });
   }
 
   onSubmit() {

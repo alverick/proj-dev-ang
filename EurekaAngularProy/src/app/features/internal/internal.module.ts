@@ -26,6 +26,7 @@ import { DebtComponent } from './pages/home/components/debt.component';
 import { PaymentDetailComponent } from './pages/home/components/payment-detail/payment-detail.component';
 import { HomePage } from './pages/home/home.page';
 import { ResumenCobrosComponent } from './pages/resumen-cobros/resumen-cobros.component';
+import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
 
 @NgModule({
@@ -60,6 +61,6 @@ import { SERVICES } from './services';
     PerfectScrollbarModule,
     SharedModule,
   ],
-  providers: [...SERVICES],
+  providers: [...SERVICES, ...RESOLVERS],
 })
 export class InternalModule {}

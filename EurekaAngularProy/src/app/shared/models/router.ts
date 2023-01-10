@@ -5,5 +5,6 @@ export interface IRouteNames {
 export interface IRouteItem {
   link: string;
   key?: string;
+  path?: string;
   children?: IRouteItem[];
 }

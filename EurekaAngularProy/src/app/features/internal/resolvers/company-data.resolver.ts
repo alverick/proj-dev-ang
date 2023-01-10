@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { CompanyService } from '../../../shared/services/company.service';
+import { CompanyService } from '../../../shared/services';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CompanyDataResolver implements Resolve<any> {
   constructor(private companyService: CompanyService) {}
   resolve(route: ActivatedRouteSnapshot): Observable<any> {

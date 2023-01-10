@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { isEmpty, isNil } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -10,24 +9,31 @@ import {
   ICompanySendUpdate,
   ICompanyUpdate,
 } from 'src/app/shared/models/company';
-import { IEntryModel, IServiceRemoteModel } from '../../../shared/models';
+import { parseParams } from '../../../shared/constants/services';
+import {
+  IEntryModel,
+  IServiceRemoteModel,
+  IServiceRemoteModelForms,
+} from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
+import {
+  EnterpriseHeadingService,
+  ServicesFormsService,
+} from '../../../shared/services';
 import {
   CompanyService,
   ICompanyResult,
 } from '../../../shared/services/company.service';
-import { EnterpriseHeadingService } from '../../../shared/services/enterprise-heading.service';
 import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
-import { debtorCodeCustomEmpty } from '../constants';
 import { AffiliationFormsService } from './affiliation-forms.service';
 
 @Injectable()
 export class AffiliationService {
   companyId;
   email;
-  servicesList: IServiceRemoteModel[] = [];
+  servicesList: Array<Partial<IServiceRemoteModelForms>> = [];
 
   entryOptions: IEntryModel[] = [];
   registerForm: UntypedFormGroup;
@@ -45,6 +51,7 @@ export class AffiliationService {
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
     private affiliationForms: AffiliationFormsService,
+    private serviceForms: ServicesFormsService,
     private logger: NGXLogger
   ) {
     this.setRegisterForm();
@@ -53,9 +60,9 @@ export class AffiliationService {
   public setRegisterForm() {
     this.registerForm = this.affiliationForms.registerForm;
     this.authForm = this.affiliationForms.authForm;
-    this.serviceForm = this.affiliationForms.serviceForm;
-    this.serviceConfigForm = this.affiliationForms.serviceConfigForm;
-    this.editServiceForm = this.affiliationForms.editServiceForm;
+    this.serviceForm = this.serviceForms.serviceForm;
+    this.serviceConfigForm = this.serviceForms.serviceConfigForm;
+    this.editServiceForm = this.serviceForms.editServiceForm;
 
     this.registerForm.controls.email.statusChanges.subscribe(() => {
       this.registerForm.controls.emailConfirm.updateValueAndValidity();
@@ -79,14 +86,20 @@ export class AffiliationService {
       amount,
       percentage,
       partialPayment,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
+      nameOriginal,
+      debtorCodeOriginal,
     } = this.servicesList[position];
-    this.logger.trace(
+    this.logger.log(
       '-> this.servicesList[position]',
       this.servicesList[position]
     );
 
     if (inReview) {
-      this.affiliationForms.setEditFormValidator(newName);
+      if (newNameGTPStatus === 3) {
+        this.serviceForms.setEditFormValidator(newName);
+      }
     }
 
     const amountField = interestType === 'M' ? amount : percentage;
@@ -97,6 +110,10 @@ export class AffiliationService {
       useAgent,
       currency,
       inReview,
+      newNameGTPStatus,
+      newNameCodeGTPStatus,
+      nameOriginal,
+      debtorCodeOriginal,
       debt: {
         dataType,
         paymentType,
@@ -198,7 +215,7 @@ export class AffiliationService {
   }
 
   public saveService() {
-    const { idAccount, name, useAppWeb, useAgent, accountNumber, currency } =
+    const { idAccount, name, useAgent, accountNumber, currency } =
       this.serviceForm.value;
     const {
       dataType,
@@ -221,13 +238,13 @@ export class AffiliationService {
       },
     } = this.serviceConfigForm.value;
 
-    const serviceValues = this.parseParams(
+    const serviceValues = parseParams({
       debtorCodeCustom,
       debtorCode,
       amount,
       chargeType,
-      interestType
-    );
+      interestType,
+    });
 
     this.servicesList.push({
       id: null,
@@ -238,38 +255,14 @@ export class AffiliationService {
       idAccount,
       accountNumber,
       currency,
-      useAppWeb,
+      useAppWeb: true,
       useAgent,
       useStore: false,
       chargeInterest,
       partialPayment,
       ...serviceValues,
     });
-    this.affiliationForms.resetServicesForms();
-  }
-
-  private parseParams(
-    debtorCodeCustom,
-    debtorCode,
-    amount,
-    chargeType,
-    interestType
-  ) {
-    const parsedDebtorCode =
-      debtorCodeCustom === debtorCodeCustomEmpty
-        ? debtorCode
-        : debtorCodeCustom;
-
-    const parseAmount = parseFloat(amount).toFixed(2);
-
-    return {
-      debtorCode: parsedDebtorCode,
-      newNameCode: parsedDebtorCode,
-      chargeType: isEmpty(chargeType) ? '' : parseInt(chargeType, 10),
-      interestType: isNil(interestType) ? 'M' : interestType,
-      amount: interestType === 'M' ? parseAmount : '1.00',
-      percentage: interestType === 'P' ? parseAmount : '1.00',
-    };
+    this.serviceForms.resetServicesForms();
   }
 
   saveAllServices() {
@@ -297,7 +290,10 @@ export class AffiliationService {
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {
     let modalSettings;
-    if (this.updateData.name === this.authForm.get('name').value) {
+    if (
+      this.updateData.newNameGTPStatus === 3 &&
+      this.updateData.newName === this.authForm.get('name').value
+    ) {
       modalSettings = {
         icon: 'warning',
         text: `El nombre comercial debe ser actualizado`,
@@ -306,12 +302,23 @@ export class AffiliationService {
       };
     } else if (
       this.servicesList.some(
-        ({ inReview, name, newName }) => name === newName && inReview
+        ({
+          inReview,
+          name,
+          newName,
+          newNameGTPStatus,
+          debtorCode,
+          newNameCode,
+          newNameCodeGTPStatus,
+        }) =>
+          inReview &&
+          ((newNameGTPStatus === 3 && name === newName) ||
+            (newNameCodeGTPStatus === 3 && debtorCode === newNameCode))
       )
     ) {
       modalSettings = {
         icon: 'warning',
-        text: `Debe actualizar el nombre de todos los servicios observados`,
+        text: `Debe actualizar todos los servicios observados`,
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
       };
@@ -327,13 +334,23 @@ export class AffiliationService {
       NewName: this.updateData.inReview
         ? this.authForm.get('name').value
         : null,
-      ArrayServices: this.servicesList.map((service) => {
-        return {
-          ServiceId: service.id,
-          NewName: service.inReview ? service.name : null,
-          NewCodName: null,
-        };
-      }),
+      ArrayServices: this.servicesList.map(
+        ({
+          debtorCode,
+          id,
+          inReview,
+          name,
+          newNameCodeGTPStatus,
+          newNameGTPStatus,
+        }) => {
+          return {
+            ServiceId: id,
+            NewName: inReview && newNameGTPStatus === 3 ? name : null,
+            NewCodName:
+              inReview && newNameCodeGTPStatus === 3 ? debtorCode : null,
+          };
+        }
+      ),
     };
 
     return this.companyService.sendUpdateCompanyData(payload).pipe(
@@ -359,10 +376,26 @@ export class AffiliationService {
   }
 
   updateEditServiceName(position: number) {
-    const { name } = this.editServiceForm.value;
+    const { currency, ...formData } = this.editServiceForm.value;
+    const updatedData: Partial<IServiceRemoteModel> = {};
+    if (this.servicesList[position].newNameGTPStatus === 3) {
+      updatedData.name = formData.name;
+    }
+    if (this.servicesList[position].newNameCodeGTPStatus === 3) {
+      updatedData.debtorCode =
+        formData.debtorCode === 'Otro'
+          ? formData.debtorCodeCustom
+          : formData.debtorCode;
+    }
+    this.logger.debug(
+      '-> this.editServiceForm.value',
+      this.servicesList[position],
+      updatedData,
+      formData
+    );
     this.servicesList[position] = {
       ...this.servicesList[position],
-      name,
+      ...updatedData,
     };
   }
 
@@ -389,13 +422,13 @@ export class AffiliationService {
       },
     } = this.editServiceForm.value;
 
-    const serviceValues = this.parseParams(
+    const serviceValues = parseParams({
       debtorCodeCustom,
       debtorCode,
       amount,
       chargeType,
-      interestType
-    );
+      interestType,
+    });
 
     this.servicesList[position] = {
       ...this.servicesList[position],
@@ -473,15 +506,25 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
 
   setUpdateFormsData(data: ICompanyUpdate): void {
     this.updateData = data;
+    let parsedName = data.name;
+    if (data.newNameGTPStatus === 3) {
+      parsedName = data.newName;
+      this.affiliationForms.setAuthFormNameValidator(parsedName);
+    }
     this.authForm.patchValue({
       ruc: data.ruc,
-      name: data.name,
+      name: parsedName,
       entry: data.entry,
     });
     this.authForm.get('entrySelect').disable();
-    this.affiliationForms.setAuthFormNameValidator(data.name);
     this.servicesList = data.arrayServices.map((service) => {
-      return { ...service, name: service.name || service.newName };
+      return {
+        ...service,
+        name: service.name || service.newName,
+        debtorCode: service.debtorCode || service.newNameCode,
+        nameOriginal: service.name || service.newName,
+        debtorCodeOriginal: service.debtorCode || service.newNameCode,
+      };
     });
   }
 
