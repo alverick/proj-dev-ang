@@ -17,13 +17,7 @@ import { FormEmpresaGTPComponent } from './components/form-empresa-gtp/form-empr
 import { FormServicioGtpComponent } from './components/form-servicio-gtp/form-servicio-gtp.component';
 import { FormServicioComponent } from './components/form-servicio/form-servicio.component';
 import { SerFormGtpComponent } from './components/ser-form-gtp/ser-form-gtp.component';
-import { ServiceDebtFormComponent } from './components/service-debt-form/service-debt-form.component';
-import { ServiceEditFormComponent } from './components/service-edit-form/service-edit-form.component';
-import { ServiceStepConfigurationComponent } from './components/service-step-configuration/service-step-configuration.component';
-import { ServiceStepInfoComponent } from './components/service-step-info/service-step-info.component';
-import { ServicesListComponent } from './components/services-list/services-list.component';
 import { SidebarCompanyComponent } from './components/sidebar-company/sidebar-company.component';
-import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
 import { GUARDS } from './guards';
 import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
 import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
@@ -81,26 +75,16 @@ import { SERVICES } from './services';
     AuthComponent,
     CompanyFormRegistrationComponent,
     CompanyFormAuthComponent,
-    ServiceStepInfoComponent,
-    ServiceStepConfigurationComponent,
-    ServiceDebtFormComponent,
-    ServiceEditFormComponent,
     SidebarCompanyComponent,
     ServiceInfoPage,
     ServiceAddPage,
-    SidebarServiceComponent,
     ServiceConfigurationPage,
     ServiceResumePage,
     RegistrationFinishedPage,
     RegistrationUpdatePage,
     UpdateCompanyPage,
     UpdateServicesPage,
-    ServicesListComponent,
   ],
-  exports: [
-    ServiceDebtFormComponent,
-    SidebarCompanyComponent,
-    SidebarServiceComponent,
-  ],
+  exports: [],
 })
 export class AuthModule {}

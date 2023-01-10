@@ -5,11 +5,7 @@
         <a class="mano nav-link" [routerLink]="[homeLink]">{{ homeText }}</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a
-          class="mano nav-link"
-          [routerLink]="[chargesLink]"
-          (click)="goResumenCobros()"
-        >
+        <a class="tw-cursor-pointer nav-link" [routerLink]="[servicesLink]">
           {{ chargesText }}
         </a>
       </li>
@@ -271,8 +267,7 @@
         <li class="nav-item" routerLinkActive="active">
           <a
             class="mano nav-link mb-3"
-            [routerLink]="[chargesLink]"
-            (click)="goResumenCobros()"
+            [routerLink]="[servicesLink]"
             (click)="toggle()"
             >{{ chargesText }}</a
           >

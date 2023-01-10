@@ -19,7 +19,7 @@ export class InputMoneyDirective {
 
     if (!isNaN(value)) {
       this.ngControl.control.setValue(value.toFixed(2), {
-        emitEvent: false,
+        emitEvent: true,
       });
     }
   }
