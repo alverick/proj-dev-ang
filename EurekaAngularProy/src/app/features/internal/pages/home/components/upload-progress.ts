@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacySnackBarRef as MatSnackBarRef } from '@angular/material/legacy-snack-bar';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import Swal from 'sweetalert2';

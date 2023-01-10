@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';

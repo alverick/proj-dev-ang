@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import * as saveAs from 'file-saver';
 import { all, equals, prop } from 'ramda';
 import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
