@@ -196,7 +196,10 @@ export class EditarCobrosComponent implements OnInit {
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
       monto: new UntypedFormControl({ value: montod, disabled: true }),
-      porcentaje: new UntypedFormControl({ value: porcentajed, disabled: true }),
+      porcentaje: new UntypedFormControl({
+        value: porcentajed,
+        disabled: true,
+      }),
       idCuenta: new UntypedFormControl(
         { value: this._service.idCuenta.toString(), disabled: this.editMode },
         Validators.required

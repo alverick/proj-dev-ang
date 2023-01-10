@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';

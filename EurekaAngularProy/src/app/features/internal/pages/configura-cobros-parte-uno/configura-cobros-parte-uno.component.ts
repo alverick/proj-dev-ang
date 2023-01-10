@@ -10,7 +10,10 @@ import { IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { internalAuthFullRoutingNames, internalFullRoutingNames } from "../../internal-routing.names";
+import {
+  internalAuthFullRoutingNames,
+  internalFullRoutingNames,
+} from '../../internal-routing.names';
 
 declare var $: any;
 

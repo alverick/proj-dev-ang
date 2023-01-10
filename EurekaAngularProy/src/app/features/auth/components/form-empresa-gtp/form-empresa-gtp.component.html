@@ -1,65 +1,217 @@
-<form [formGroup]="formGroup" novalidate (submit)="onSubmitEmpresa()" class="form">
-    <div class="form-group ">
-        <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" formControlName="cu" (blur)="onBlurCu($event)" placeholder="Código Único" [class.is-invalid]="f.cu.invalid" csOnlynumbers maxlength="10" readonly>
-            <mat-error class="messsage-error">
-                <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('required') && submittedRequired">El CU es obligatorio</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.cu.invalid && f.cu.hasError('pattern')"> Ingrese un CU valido </mat-error>
-            </mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group ">
-        <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" formControlName="ruc" placeholder="RUC" [class.is-invalid]="f.ruc.invalid" csOnlynumbers minlength="11" maxlength="11">
-            <mat-error class="messsage-error">
-                <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('required') && submittedRequired">El RUC es obligatorio</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"> Ingrese un ruc valido </mat-error>
-                <mat-error class="messsage-error" *ngIf="f.ruc.invalid && !f.ruc.hasError('pattern') && f.ruc.hasError('minlength')"> El ruc debe tener 11 dígitos</mat-error>
-            </mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group ">
-        <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" formControlName="newName" placeholder="Nombre de la empresa" [class.is-invalid]="f.newName.invalid">
-            <mat-error class="messsage-error">
-                <mat-error class="messsage-error" *ngIf="f.newName.invalid && f.newName.hasError('required') && submittedRequired">El nombre es obligatorio</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.newName.invalid && f.newName.hasError('pattern')"> Ingrese un nombre valido </mat-error>
-                <mat-error class="messsage-error" *ngIf="f.newName.invalid && !f.newName.hasError('pattern') && f.newName.hasError('minlength')"> El nombre debe tener mínimo 3 dígitos</mat-error>
-            </mat-error>
-        </mat-form-field>
-    </div>
-    <div class="input-text form-group  ">
-        <mat-form-field class="w-100">
-            <mat-label>Rubro</mat-label>
-            <mat-select formControlName="entry">
-                <mat-option *ngFor="let r of rubros" [value]="r.code">
-                    {{r.name}}
-                </mat-option>
-            </mat-select>
-            <mat-error class="messsage-error" *ngIf="f.entry.invalid && f.entry.hasError('required') && submittedRequired">Elija una opción</mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group">
-        <mat-form-field class="w-100">
-            <input class="input-text" matInput type="email" placeholder="E-mail" minlength="10" maxlength="100" formControlName="email" (Keydown.space)="$event.preventDefault()" [class.is-invalid]="f.email.invalid">
-            <mat-error class="messsage-error">
-                <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('required') && submittedRequired">El E-mail es obligatorio</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.email.invalid && f.email.hasError('pattern')"> Ingrese un E-mail valido </mat-error>
-                <mat-error class="messsage-error" *ngIf="f.email.invalid && !f.email.hasError('pattern') && f.email.hasError('minlength')"> El E-mail debe tener mínimo 10 dígitos</mat-error>
-            </mat-error>
-        </mat-form-field>
-    </div>
-    <div class="form-group">
-        <mat-form-field class="w-100">
-            <input class="input-text" matInput type="text" (Keydown.space)="$event.preventDefault()" placeholder="Teléfono o celular" minlength="6" maxlength="9" formControlName="movilNumber" [class.is-invalid]="f.movilNumber.invalid">
-            <mat-error class="messsage-error">
-                <mat-error class="messsage-error" *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('required') && submittedRequired">Teléfono o celular es obligatorio</mat-error>
-                <mat-error class="messsage-error" *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('pattern')"> Ingrese un telefono o celular valido </mat-error>
-                <mat-error class="messsage-error" *ngIf="f.movilNumber.invalid  && !f.movilNumber.hasError('pattern') && f.movilNumber.hasError('minlength')"> El teléfono o celular debe tener mínimo 9 dígitos</mat-error>
-            </mat-error>
-        </mat-form-field>
-    </div>
-    <div class="mt-4 pb-4">
-        <button type="submit" class="btn-eureca-green ">GUARDAR</button>
-    </div>
+<form
+  [formGroup]="formGroup"
+  novalidate
+  (submit)="onSubmitEmpresa()"
+  class="form"
+>
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <input
+        class="input-text"
+        matInput
+        type="text"
+        formControlName="cu"
+        (blur)="onBlurCu($event)"
+        placeholder="Código Único"
+        [class.is-invalid]="f.cu.invalid"
+        csOnlynumbers
+        maxlength="10"
+        readonly
+      />
+      <mat-error class="messsage-error">
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.cu.invalid && f.cu.hasError('required') && submittedRequired"
+          >El CU es obligatorio</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.cu.invalid && f.cu.hasError('pattern')"
+        >
+          Ingrese un CU valido
+        </mat-error>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <input
+        class="input-text"
+        matInput
+        type="text"
+        formControlName="ruc"
+        placeholder="RUC"
+        [class.is-invalid]="f.ruc.invalid"
+        csOnlynumbers
+        minlength="11"
+        maxlength="11"
+      />
+      <mat-error class="messsage-error">
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.ruc.invalid && f.ruc.hasError('required') && submittedRequired
+          "
+          >El RUC es obligatorio</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.ruc.invalid && f.ruc.hasError('pattern')"
+        >
+          Ingrese un ruc valido
+        </mat-error>
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.ruc.invalid &&
+            !f.ruc.hasError('pattern') &&
+            f.ruc.hasError('minlength')
+          "
+        >
+          El ruc debe tener 11 dígitos</mat-error
+        >
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <input
+        class="input-text"
+        matInput
+        type="text"
+        formControlName="newName"
+        placeholder="Nombre de la empresa"
+        [class.is-invalid]="f.newName.invalid"
+      />
+      <mat-error class="messsage-error">
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.newName.invalid &&
+            f.newName.hasError('required') &&
+            submittedRequired
+          "
+          >El nombre es obligatorio</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.newName.invalid && f.newName.hasError('pattern')"
+        >
+          Ingrese un nombre valido
+        </mat-error>
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.newName.invalid &&
+            !f.newName.hasError('pattern') &&
+            f.newName.hasError('minlength')
+          "
+        >
+          El nombre debe tener mínimo 3 dígitos</mat-error
+        >
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="input-text form-group">
+    <mat-form-field class="w-100">
+      <mat-label>Rubro</mat-label>
+      <mat-select formControlName="entry">
+        <mat-option *ngFor="let r of rubros" [value]="r.code">
+          {{ r.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        class="messsage-error"
+        *ngIf="
+          f.entry.invalid && f.entry.hasError('required') && submittedRequired
+        "
+        >Elija una opción</mat-error
+      >
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <input
+        class="input-text"
+        matInput
+        type="email"
+        placeholder="E-mail"
+        minlength="10"
+        maxlength="100"
+        formControlName="email"
+        (Keydown.space)="$event.preventDefault()"
+        [class.is-invalid]="f.email.invalid"
+      />
+      <mat-error class="messsage-error">
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.email.invalid && f.email.hasError('required') && submittedRequired
+          "
+          >El E-mail es obligatorio</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.email.invalid && f.email.hasError('pattern')"
+        >
+          Ingrese un E-mail valido
+        </mat-error>
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.email.invalid &&
+            !f.email.hasError('pattern') &&
+            f.email.hasError('minlength')
+          "
+        >
+          El E-mail debe tener mínimo 10 dígitos</mat-error
+        >
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <mat-form-field class="w-100">
+      <input
+        class="input-text"
+        matInput
+        type="text"
+        (Keydown.space)="$event.preventDefault()"
+        placeholder="Teléfono o celular"
+        minlength="6"
+        maxlength="9"
+        formControlName="movilNumber"
+        [class.is-invalid]="f.movilNumber.invalid"
+      />
+      <mat-error class="messsage-error">
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.movilNumber.invalid &&
+            f.movilNumber.hasError('required') &&
+            submittedRequired
+          "
+          >Teléfono o celular es obligatorio</mat-error
+        >
+        <mat-error
+          class="messsage-error"
+          *ngIf="f.movilNumber.invalid && f.movilNumber.hasError('pattern')"
+        >
+          Ingrese un telefono o celular valido
+        </mat-error>
+        <mat-error
+          class="messsage-error"
+          *ngIf="
+            f.movilNumber.invalid &&
+            !f.movilNumber.hasError('pattern') &&
+            f.movilNumber.hasError('minlength')
+          "
+        >
+          El teléfono o celular debe tener mínimo 9 dígitos</mat-error
+        >
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="mt-4 pb-4">
+    <button type="submit" class="btn-eureca-green">GUARDAR</button>
+  </div>
 </form>

@@ -184,7 +184,10 @@ export class ServicesGTPComponent implements OnInit {
       // montoRadioButton: new FormControl({ value: montod, disabled: true }),
       monto: new UntypedFormControl({ value: montod, disabled: true }),
 
-      porcentaje: new UntypedFormControl({ value: porcentajed, disabled: true }),
+      porcentaje: new UntypedFormControl({
+        value: porcentajed,
+        disabled: true,
+      }),
       pagoPartes: new UntypedFormControl({
         value: this._service.partialPayment,
         disabled: true,

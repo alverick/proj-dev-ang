@@ -39,7 +39,7 @@
           <tr *ngFor="let itm of items">
             <td class="text-center">
               <span *ngIf="!itm.editing"
-                >{{ itm.currency }} {{ itm.amount | number: '1.2-2' }}</span
+                >{{ itm.currency }} {{ itm.amount | number : '1.2-2' }}</span
               >
               <div *ngIf="itm.editing">
                 <mat-form-field class="full-width inline-input">
@@ -62,7 +62,7 @@
             </td>
             <td class="text-center">
               <span *ngIf="!itm.editing">{{
-                itm.date | date: 'dd/MM/yy'
+                itm.date | date : 'dd/MM/yy'
               }}</span>
               <div *ngIf="itm.editing">
                 <mat-form-field class="full-width inline-input">

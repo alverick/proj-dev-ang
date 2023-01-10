@@ -49,7 +49,9 @@ export class FormEmpresaGTPComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(80),
       ]),
-      entry: new UntypedFormControl(this._enterprise.entry, [Validators.required]),
+      entry: new UntypedFormControl(this._enterprise.entry, [
+        Validators.required,
+      ]),
       email: new UntypedFormControl(this._enterprise.email, [
         Validators.required,
         Validators.pattern(

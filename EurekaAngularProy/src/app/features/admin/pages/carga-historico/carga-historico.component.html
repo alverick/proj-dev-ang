@@ -42,8 +42,8 @@
                               }
                       "
                     >
-                      <td class="c0">{{ itm.date | date: 'dd/MM/yyyy' }}</td>
-                      <td class="c1">{{ itm.date | date: 'hh:mm:ss' }}</td>
+                      <td class="c0">{{ itm.date | date : 'dd/MM/yyyy' }}</td>
+                      <td class="c1">{{ itm.date | date : 'hh:mm:ss' }}</td>
                       <td class="c2">{{ itm.service }}</td>
                       <td class="c3">{{ itm.rows }}</td>
                       <td class="c4">{{ itm.status }}</td>
@@ -79,10 +79,16 @@
                         (keyup.enter)="p.previous()"
                         (click)="p.previous()"
                       >
-                        <img class="tw-inline" src="../../../../../assets/images/before.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/before.svg"
+                        />
                       </a>
                       <span *ngIf="p.isFirstPage()">
-                        <img class="tw-inline" src="../../../../../assets/images/before.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/before.svg"
+                        />
                       </span>
                     </li>
                     <li *ngIf="p.pages.length === 0" class="current">
@@ -103,14 +109,14 @@
                         <span>{{
                           page.label === '...'
                             ? page.label
-                            : (page.label | number: '')
+                            : (page.label | number : '')
                         }}</span>
                       </a>
                       <ng-container *ngIf="p.getCurrent() === page.value">
                         <span>{{
                           page.label === '...'
                             ? page.label
-                            : (page.label | number: '')
+                            : (page.label | number : '')
                         }}</span>
                       </ng-container>
                     </li>
@@ -125,10 +131,16 @@
                         (keyup.enter)="p.next()"
                         (click)="p.next()"
                       >
-                        <img class="tw-inline" src="../../../../../assets/images/after.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/after.svg"
+                        />
                       </a>
                       <span class="pr-0" *ngIf="p.isLastPage()">
-                        <img class="tw-inline" src="../../../../../assets/images/after.svg" />
+                        <img
+                          class="tw-inline"
+                          src="../../../../../assets/images/after.svg"
+                        />
                       </span>
                     </li>
                   </ul>

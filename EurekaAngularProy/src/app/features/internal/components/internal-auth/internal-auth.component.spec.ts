@@ -8,9 +8,8 @@ describe('InternalAuthComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ InternalAuthComponent ]
-    })
-    .compileComponents();
+      declarations: [InternalAuthComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

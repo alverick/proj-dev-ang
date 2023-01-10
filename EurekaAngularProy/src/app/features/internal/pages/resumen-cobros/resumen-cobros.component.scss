@@ -31,7 +31,7 @@
   flex-direction: row;
 }
 
-.container-form-margin-top{
+.container-form-margin-top {
   margin-top: 80px;
 }
 
@@ -66,8 +66,6 @@
   letter-spacing: normal;
 }
 
-
-
 .img-information-green {
   width: 20px;
   height: 20px;
@@ -80,7 +78,7 @@
   margin-top: 10px;
 }
 
-.cuadro-form-resize{
+.cuadro-form-resize {
   @include cuadro(480px, $height: 613px);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   margin-top: 10px;
@@ -126,10 +124,6 @@
   margin: 7px 7px auto 0px;
 }
 
-
-
-
-
 .modal-container {
   padding-left: 9.34%;
   padding-right: 9.34%;
@@ -172,8 +166,7 @@
   border-radius: 10px !important;
 }
 
-
-.text-second-part{
+.text-second-part {
   font-family: $primary-font-family;
   font-size: 16px;
   font-weight: 500;
@@ -183,7 +176,7 @@
   letter-spacing: normal;
 }
 
-.label-text{
+.label-text {
   font-family: $primary-font-family;
   font-size: 18px;
   font-weight: 500;
@@ -194,7 +187,7 @@
   color: #0d131d;
 }
 
-.text-tipo-dato{
+.text-tipo-dato {
   margin-top: 10px;
   font-family: $primary-font-family;
   font-size: 18px;
@@ -206,7 +199,7 @@
   color: #0d131d;
 }
 
-.rectangle-success{
+.rectangle-success {
   margin: 0;
   padding: 0;
   height: 57px;
@@ -214,7 +207,7 @@
   //padding: 6px 8px 6px 4px;
   border-radius: 2px;
   background-color: #e5f6ed;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -223,13 +216,13 @@
   width: 100%;
 }
 
-.img-information{
+.img-information {
   width: 18px;
   height: 18px;
   margin: 17px 7px auto 7px;
 }
 
-.text-message-name{
+.text-message-name {
   font-family: $primary-font-family;
   font-size: 14px;
   font-weight: normal;
@@ -261,7 +254,6 @@
   font-style: normal;
   line-height: 1.17;
   letter-spacing: normal;
-
 }
 
 /* custom radio */
@@ -298,13 +290,12 @@
 }
 
 /* on mouse-over, add border color */
-.radio:hover input~.check {
+.radio:hover input ~ .check {
   border: 2px solid #2121c4;
 }
 
-
 /* add background color when the radio is checked */
-.radio input:checked~.check {
+.radio input:checked ~ .check {
   background-color: #2121c4;
   border: none;
 }
@@ -312,16 +303,15 @@
 /* create the radio and hide when not checked */
 
 .radio .check:after {
-  content: "";
+  content: '';
   position: absolute;
   display: none;
 }
 
 /* show the radio when checked */
-.radio input:checked~.check:after {
+.radio input:checked ~ .check:after {
   display: block;
 }
-
 
 /* radio style */
 .radio .check:after {
@@ -344,7 +334,10 @@
 }
 
 //radio button
-:host ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+:host
+  ::ng-deep
+  .mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
   border-color: $green;
 }
 
@@ -380,13 +373,12 @@
   border-top: 0;
 }
 
-
 .w-80 {
   width: 80%;
 }
 
-.container-boton{
-  display:flex;
+.container-boton {
+  display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-start;
@@ -410,7 +402,7 @@
   width: 361px;
   @include box-shadows();
   background-color: #ffffff;
-  padding: .3em 0em;
+  padding: 0.3em 0em;
 }
 
 .seleccionado {
@@ -436,7 +428,7 @@
   color: #0d131d;
 }
 
-.title-name-service{
+.title-name-service {
   flex-grow: 1;
   flex-shrink: 0;
   flex-basis: 60%;
@@ -450,12 +442,12 @@
   color: #0d131d;
 }
 
-.container-no-gtp{
+.container-no-gtp {
   display: flex;
   flex-direction: row;
 }
 
-.container-no-gtp-actions{
+.container-no-gtp-actions {
   display: flex;
   flex-direction: row;
   flex-grow: 0;
@@ -463,7 +455,7 @@
   //flex-basis: 60%;
 }
 
-.container-td{
+.container-td {
   width: 100%;
   height: 50px;
   display: flex;
@@ -472,7 +464,7 @@
   align-items: center;
 }
 
-.container-td-item{
+.container-td-item {
   flex-grow: 0;
   flex-shrink: 0;
   margin: 0px;
@@ -512,15 +504,15 @@
 }
 
 .btn-finalizar-s {
-   margin-top: 22px !important;
+  margin-top: 22px !important;
 }
 
-.card-content{
-  padding: 0em 1.5rem !important
+.card-content {
+  padding: 0em 1.5rem !important;
 }
 
-.container-actions{
-  display:flex;
+.container-actions {
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -552,7 +544,7 @@
     width: 100% !important;
     height: 440px !important;
   }
-  .cuadro-form-resize{
+  .cuadro-form-resize {
     width: 100% !important;
     height: 440px !important;
   }
@@ -595,7 +587,7 @@
     margin-left: 0px !important;
     margin-right: 0px !important;
   }
-  .cuadro-form-resize{
+  .cuadro-form-resize {
     width: 100% !important;
     height: 613px !important;
     padding-left: 0px !important;
@@ -618,7 +610,7 @@
     text-align: left !important;
     margin-right: 0% !important;
     margin-left: 0% !important;
-    text-align:center !important;
+    text-align: center !important;
   }
   .text-message-name {
     font-size: 12px !important;
@@ -666,15 +658,15 @@
   .block-right-part-one {
     margin-top: 20px !important;
   }
-  .text-second-part{
+  .text-second-part {
     font-size: 15px !important;
     line-height: 1.2 !important;
   }
-  .label-text{
+  .label-text {
     font-size: 16px !important;
     line-height: 1.19 !important;
   }
-  .text-tipo-dato{
+  .text-tipo-dato {
     margin-top: 5px !important;
     font-size: 16px !important;
     font-weight: normal !important;
@@ -684,7 +676,7 @@
     font-size: 16px !important;
     line-height: 1.19 !important;
   }
-  .title-complete-data{
+  .title-complete-data {
     font-size: 16px !important;
     line-height: 1.19 !important;
     text-align: center !important;
@@ -706,12 +698,12 @@
     font-size: 14px !important;
     font-weight: 300 !important;
   }
-  .font-black-servicios-des-list{
+  .font-black-servicios-des-list {
     font-size: 14px !important;
     line-height: 1 !important;
   }
-  .card-content{
-    padding: 0em .5rem !important
+  .card-content {
+    padding: 0em 0.5rem !important;
   }
   .content-container {
     width: 100% !important;
@@ -719,7 +711,7 @@
   .card-servicios {
     width: 100% !important;
   }
-  .container-actions{
+  .container-actions {
     //width: 272px !important;
   }
 }

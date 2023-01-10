@@ -58,7 +58,7 @@ export class CrearContrasenaComponent implements OnInit {
     private gaService: GoogleAnalytics,
     private route: ActivatedRoute,
     private rutaActiva: ActivatedRoute,
-    public gtpService: GtpService,
+    public gtpService: GtpService
   ) {}
 
   rubros: IEntryModel[] = [];
@@ -89,28 +89,38 @@ export class CrearContrasenaComponent implements OnInit {
               Validators.minLength(3),
               Validators.maxLength(80),
             ]),
-            rubro: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
-              Validators.required,
-            ]),
-            email: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
-              Validators.required,
-              Validators.pattern(
-                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-              ),
-              Validators.minLength(10),
-              Validators.maxLength(100),
-            ]),
-            telefono: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
-              Validators.required,
-              Validators.pattern(/^9\d{8}$/),
-              Validators.minLength(9),
-              Validators.maxLength(9),
-            ]),
+            rubro: new UntypedFormControl(
+              { value: '', disabled: this.inEdit },
+              [Validators.required]
+            ),
+            email: new UntypedFormControl(
+              { value: '', disabled: this.inEdit },
+              [
+                Validators.required,
+                Validators.pattern(
+                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                ),
+                Validators.minLength(10),
+                Validators.maxLength(100),
+              ]
+            ),
+            telefono: new UntypedFormControl(
+              { value: '', disabled: this.inEdit },
+              [
+                Validators.required,
+                Validators.pattern(/^9\d{8}$/),
+                Validators.minLength(9),
+                Validators.maxLength(9),
+              ]
+            ),
             movilOperator: new UntypedFormControl(
               { value: 'M', disabled: this.inEdit },
               [Validators.required]
             ),
-            contrasena: new UntypedFormControl({ value: '', disabled: this.inEdit }),
+            contrasena: new UntypedFormControl({
+              value: '',
+              disabled: this.inEdit,
+            }),
             repcontrasena: new UntypedFormControl({
               value: '',
               disabled: this.inEdit,
@@ -177,30 +187,40 @@ export class CrearContrasenaComponent implements OnInit {
               Validators.minLength(3),
               Validators.maxLength(80),
             ]),
-            rubro: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
-              Validators.required,
-            ]),
-            email: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
-              Validators.required,
-              Validators.pattern(
-                /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-              ),
-              Validators.minLength(10),
-              Validators.maxLength(100),
-            ]),
-            telefono: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
-              Validators.required,
-              Validators.pattern(/^9\d{8}$/),
-              Validators.minLength(9),
-              Validators.maxLength(9),
-            ]),
+            rubro: new UntypedFormControl(
+              { value: '', disabled: this.inEdit },
+              [Validators.required]
+            ),
+            email: new UntypedFormControl(
+              { value: '', disabled: this.inEdit },
+              [
+                Validators.required,
+                Validators.pattern(
+                  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                ),
+                Validators.minLength(10),
+                Validators.maxLength(100),
+              ]
+            ),
+            telefono: new UntypedFormControl(
+              { value: '', disabled: this.inEdit },
+              [
+                Validators.required,
+                Validators.pattern(/^9\d{8}$/),
+                Validators.minLength(9),
+                Validators.maxLength(9),
+              ]
+            ),
             movilOperator: new UntypedFormControl('', [Validators.required]),
-            contrasena: new UntypedFormControl({ value: '', disabled: this.inEdit }, [
-              Validators.required,
-              Validators.minLength(6),
-              Validators.maxLength(20),
-              UnaLetra,
-            ]),
+            contrasena: new UntypedFormControl(
+              { value: '', disabled: this.inEdit },
+              [
+                Validators.required,
+                Validators.minLength(6),
+                Validators.maxLength(20),
+                UnaLetra,
+              ]
+            ),
             repcontrasena: new UntypedFormControl(
               { value: '', disabled: this.inEdit },
               [

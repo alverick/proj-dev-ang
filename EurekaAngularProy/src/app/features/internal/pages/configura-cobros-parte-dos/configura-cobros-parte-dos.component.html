@@ -135,13 +135,14 @@
                 formControlName="codDeudor"
                 name="codDeudor"
                 (ngModelChange)="selectCodigo($event)"
-                tooltip="Código debe ser numérico">
+                tooltip="Código debe ser numérico"
+              >
                 <!--   <mat-option class="input-text">Código Deudor</mat-option>-->
                 <mat-option
-
                   class="input-text options-select"
                   *ngFor="let c of codDeudor"
-                  [value]="c.code">
+                  [value]="c.code"
+                >
                   {{ c.name }}
                 </mat-option>
               </mat-select>
@@ -155,12 +156,15 @@
                 name="nameCod"
                 tooltip="Código debe ser numérico"
                 (input)="nameCodInput($event)"
-                (blur)="nameCodBlur($event)"/>
+                (blur)="nameCodBlur($event)"
+              />
               <div
-                *ngIf="f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado"
+                *ngIf="
+                  f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado
+                "
                 (click)="f.codDeudor.reset()"
-                class="hide-name-cod fa fa-times">
-              </div>
+                class="hide-name-cod fa fa-times"
+              ></div>
               <mat-error>
                 <mat-error
                   class="messsage-error"
@@ -245,25 +249,29 @@
           </span>
           <div class="form-group pt-3" *ngIf="Dataparcial">
             <div class="form-group col-2 pl-0">
-              <mat-radio-group formControlName="pagoPartes"  [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''">
+              <mat-radio-group
+                formControlName="pagoPartes"
+                [ngClass]="submittedRequired ? 'onSubmitServicioClicked' : ''"
+              >
                 <mat-radio-button
                   name="pagoPartes"
                   id="pagoPartes-no"
                   value="N"
                   class="texto-mora"
                   >No. Solo podrán pagarme <br class="br-none-mobil" />la
-                  deuda/<br class="br-none-escritorio" /><br class="br-none-tablet" />monto
-                  total.</mat-radio-button
+                  deuda/<br class="br-none-escritorio" /><br
+                    class="br-none-tablet"
+                  />monto total.</mat-radio-button
                 >
                 <mat-radio-button
                   name="pagoPartes"
                   id="pagoPartes-si"
                   value="S"
                   class="texto-mora"
-                  >Sí. Podrán pagarme una <br class="br-none-mobil" />parte de la
-                  <br
-                    class="br-none-escritorio"
-                  /><br class="br-none-tablet" />deuda/monto.</mat-radio-button
+                  >Sí. Podrán pagarme una <br class="br-none-mobil" />parte de
+                  la <br class="br-none-escritorio" /><br
+                    class="br-none-tablet"
+                  />deuda/monto.</mat-radio-button
                 >
               </mat-radio-group>
             </div>
@@ -279,12 +287,14 @@
           </div>
           <!-- ¿Quieres que incluyamos el cobro de mora? -->
           <span class="texto-medios" *ngIf="Dataparcial">
-            ¿Quieres que incluyamos el cobro de <br
-              class="br-none-escritorio"
-            />mora?
+            ¿Quieres que incluyamos el cobro de
+            <br class="br-none-escritorio" />mora?
           </span>
           <div class="form-row pt-4" *ngIf="Dataparcial">
-            <div class="form-group col-2" [ngClass]="cobraMora ? 'col-2' : 'col-12'">
+            <div
+              class="form-group col-2"
+              [ngClass]="cobraMora ? 'col-2' : 'col-12'"
+            >
               <mat-radio-group
                 formControlName="cobraMora"
                 (change)="changeMora()"
@@ -297,7 +307,7 @@
                   class="texto-mora"
                   >No</mat-radio-button
                 >
-                <br>
+                <br />
                 <mat-radio-button
                   name="cobraMora"
                   id="mora-si"
@@ -714,7 +724,9 @@
         <div class="form-row mt-3">
           <div class="form-group col-12">
             <div class="description-no-data">
-              <strong>Identificaremos a tus clientes con un código cuando realicen un pago.
+              <strong
+                >Identificaremos a tus clientes con un código cuando realicen un
+                pago.
               </strong>
             </div>
           </div>

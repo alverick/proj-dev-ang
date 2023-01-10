@@ -197,7 +197,10 @@ export class FormServicioGtpComponent implements OnInit {
         disabled: true,
       }),
       monto: new UntypedFormControl({ value: montod, disabled: true }),
-      porcentaje: new UntypedFormControl({ value: porcentajed, disabled: true }),
+      porcentaje: new UntypedFormControl({
+        value: porcentajed,
+        disabled: true,
+      }),
       pagoPartes: new UntypedFormControl(
         { value: this._service.pagoPartes, disabled: true },
         Validators.required

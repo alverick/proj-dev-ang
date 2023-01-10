@@ -171,7 +171,10 @@ export class SerFormGtpComponent implements OnInit {
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
       monto: new UntypedFormControl({ value: montod, disabled: true }),
-      porcentaje: new UntypedFormControl({ value: porcentajed, disabled: true }),
+      porcentaje: new UntypedFormControl({
+        value: porcentajed,
+        disabled: true,
+      }),
       pagoPartes: [this._service.pagoPartes, Validators.required],
     });
 

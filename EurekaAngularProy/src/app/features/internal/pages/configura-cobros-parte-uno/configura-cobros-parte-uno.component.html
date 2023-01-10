@@ -9,7 +9,10 @@
             (click)="goBack()"
             style="display: flex"
           >
-            <img class="tw-inline" src="../../../../../assets/images/left-blue.svg" />
+            <img
+              class="tw-inline"
+              src="../../../../../assets/images/left-blue.svg"
+            />
             <div class="text-regresar">&nbsp;&nbsp;&nbsp;Regresar</div>
           </a>
         </li>
@@ -17,7 +20,10 @@
     </div>
   </div>
 
-  <div class="container-form" [ngClass]="this.editMode ? '' : 'container-form-margin-top'">
+  <div
+    class="container-form"
+    [ngClass]="this.editMode ? '' : 'container-form-margin-top'"
+  >
     <div class="block-left">
       <h1 class="texto-azul title-first-part">
         Configura los cobros de tu
@@ -49,9 +55,9 @@
         <div class="stepper-step">
           <label class="text-step">1</label>
         </div>
-          <!--Agrega el primer concepto por el que te pagarán-->
+        <!--Agrega el primer concepto por el que te pagarán-->
         <p class="text-first-part">
-          {{labelDescription}}
+          {{ labelDescription }}
           <br class="br-none-escritorio" />
           tus clientes
           <img

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Router } from '@angular/router';
 import * as saveAs from 'file-saver';

@@ -432,7 +432,7 @@
 /* create the radio and hide when not checked */
 
 .radio .check:after {
-  content: "";
+  content: '';
   position: absolute;
   display: none;
 }
@@ -619,8 +619,12 @@
 }
 */
 /*outer ring color change without checked*/
-:host ::ng-deep .mat-radio-group.ng-pristine.ng-invalid.onSubmitServicioClicked .mat-radio-button.mat-accent .mat-radio-outer-circle {
-  border-color:#f23a24 !important;
+:host
+  ::ng-deep
+  .mat-radio-group.ng-pristine.ng-invalid.onSubmitServicioClicked
+  .mat-radio-button.mat-accent
+  .mat-radio-outer-circle {
+  border-color: #f23a24 !important;
 }
 
 /*outer ring color change*/
@@ -654,7 +658,7 @@
   //background-color: blueviolet;
   display: flex-inline !important;
 }
-.modal-content{
+.modal-content {
   //background-color: aquamarine;
   display: flex-inline !important;
   border-radius: 10px !important;
@@ -666,7 +670,7 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .modal-content{
+  .modal-content {
     margin-left: auto !important;
     margin-right: auto !important;
     //height: 375px !important;
@@ -732,7 +736,7 @@
 }
 
 @media screen and (max-width: 570px) {
-  .modal-content{
+  .modal-content {
     //height: 426px !important;
     width: 320px !important;
     margin-left: auto !important;
@@ -919,7 +923,7 @@
     line-height: 1.14 !important;
     text-align: center !important;
   }
-  .modal-content{
+  .modal-content {
     width: 320px !important;
     margin-left: auto !important;
     margin-right: auto !important;
