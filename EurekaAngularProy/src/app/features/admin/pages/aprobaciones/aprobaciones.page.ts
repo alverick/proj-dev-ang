@@ -227,24 +227,12 @@ export class AprobacionesPage implements OnInit {
           newNameCodeGTPStatus === 0 ||
           res !== ''
       )
-      .map(
-        ({
-          acceptednewName,
-          acceptednewNameCode,
-          debtorCode,
-          id,
-          name,
-          newName,
-          newNameCode,
-          res,
-        }) => ({
-          ServiceId: id,
-          NombreAprobado: name === newName ? true : acceptednewName,
-          NombreCodAprobado:
-            debtorCode === newNameCode ? true : acceptednewNameCode,
-          Res: res,
-        })
-      );
+      .map(({ acceptednewName, acceptednewNameCode, id, res }) => ({
+        ServiceId: id,
+        NombreAprobado: acceptednewName,
+        NombreCodAprobado: acceptednewNameCode,
+        Res: res,
+      }));
 
     this.processDataEnterprise(totalObservations, notApproved);
   }
