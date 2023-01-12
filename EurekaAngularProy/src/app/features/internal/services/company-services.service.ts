@@ -5,7 +5,7 @@ import { NGXLogger } from 'ngx-logger';
 import { isNil, pathEq } from 'ramda';
 import { throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { parseParams } from '../../../shared/constants/services';
+import { parseParams, statusCodes } from '../../../shared/constants/services';
 import { IServiceRemoteModel } from '../../../shared/models';
 import {
   CompanyService,
@@ -144,7 +144,7 @@ export class CompanyServicesService {
     } = this.services[position];
     this.logger.log('-> this.servicesList[position]', this.services[position]);
 
-    if (newNameGTPStatus === 3) {
+    if (newNameGTPStatus === statusCodes.REJECTED) {
       this.serviceForms.setEditFormValidator(newName);
     } else {
       this.serviceForms.setEditFormValidator();
@@ -152,9 +152,12 @@ export class CompanyServicesService {
 
     const amountField = interestType === 'M' ? amount : percentage;
     return {
-      name: newNameGTPStatus === 3 && isNil(name) ? newName : name,
+      name:
+        newNameGTPStatus === statusCodes.REJECTED && isNil(name)
+          ? newName
+          : name,
       debtorCode:
-        newNameCodeGTPStatus === 3 && isNil(debtorCode)
+        newNameCodeGTPStatus === statusCodes.REJECTED && isNil(debtorCode)
           ? newNameCode
           : debtorCode,
       useAppWeb,
@@ -212,9 +215,22 @@ export class CompanyServicesService {
       this.services[position]
     );
 
-    const parsedName = pathEq(['services', position, 'name'], name, this)
-      ? ''
-      : name;
+    let parsedName: any;
+    if (pathEq(['services', position, 'name'], name, this)) {
+      if (
+        pathEq(
+          ['services', position, 'newNameGTPStatus'],
+          statusCodes.REJECTED,
+          this
+        )
+      ) {
+        parsedName = name;
+      } else {
+        parsedName = '';
+      }
+    } else {
+      parsedName = name;
+    }
 
     this.services[position] = {
       ...this.services[position],
@@ -234,13 +250,13 @@ export class CompanyServicesService {
       .filter(
         ({ newNameGTPStatus, newNameCodeGTPStatus }) =>
           !(
-            newNameGTPStatus === 0 ||
-            newNameGTPStatus === 2 ||
-            newNameCodeGTPStatus === 0 ||
-            newNameCodeGTPStatus === 2
+            newNameGTPStatus === statusCodes.NEW ||
+            newNameGTPStatus === statusCodes.EDITED ||
+            newNameCodeGTPStatus === statusCodes.NEW ||
+            newNameCodeGTPStatus === statusCodes.EDITED
           ) ||
-          newNameGTPStatus === 3 ||
-          newNameCodeGTPStatus === 3
+          newNameGTPStatus === statusCodes.REJECTED ||
+          newNameCodeGTPStatus === statusCodes.REJECTED
       )
       .map(
         ({
