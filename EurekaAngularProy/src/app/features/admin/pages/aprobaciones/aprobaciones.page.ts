@@ -172,12 +172,10 @@ export class AprobacionesPage implements OnInit {
     this.scv = [];
     // NO APROBADOS
     const nombreApp = this.gtpService.services.filter(
-      ({ acceptednewName, name, newName }) =>
-        acceptednewName === false && name !== newName
+      ({ acceptednewName }) => acceptednewName === false
     ).length;
     const CodDeuApp = this.gtpService.services.filter(
-      ({ acceptednewNameCode, debtorCode, newNameCode }) =>
-        acceptednewNameCode === false && debtorCode !== newNameCode
+      ({ acceptednewNameCode }) => acceptednewNameCode === false
     ).length;
 
     // tslint:disable-next-line: max-line-length cunatos son los que faltan revisar
