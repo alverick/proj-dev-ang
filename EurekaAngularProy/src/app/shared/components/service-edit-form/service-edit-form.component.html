@@ -23,6 +23,18 @@
         </cs-label-control>
       </div>
     </div>
+    <p-message
+      *ngIf="formData.newNameGTPStatus === 3"
+      class="tw-block tw-text-sm tw-mb-2"
+      severity="warn"
+      [text]="
+        'El nombre <strong>' +
+        formData.newName +
+        '</strong> ha sido rechazado, elija' +
+        ' un nuevo nombre'
+      "
+      [escape]="false"
+    ></p-message>
     <div *ngIf="!debtorCodeEditable" class="form-controls">
       <cs-label-control
         class="tw-w-full"
@@ -66,6 +78,18 @@
         </div>
       </cs-label-control>
     </div>
+    <p-message
+      *ngIf="formData.newNameCodeGTPStatus === 3"
+      class="tw-block tw-text-sm tw-mb-2"
+      severity="warn"
+      [text]="
+        'El código deudor <strong>' +
+        formData.newNameCode +
+        '</strong> ha sido rechazado, elija' +
+        ' un nuevo código deudor'
+      "
+      [escape]="false"
+    ></p-message>
     <cs-service-debt-form
       *ngIf="showDebtFields"
       [form]="debtForm"
