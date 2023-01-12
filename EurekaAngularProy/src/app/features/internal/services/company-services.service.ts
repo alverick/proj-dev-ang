@@ -167,6 +167,7 @@ export class CompanyServicesService {
       newNameGTPStatus,
       newNameCodeGTPStatus,
       newNameCode,
+      newName,
       nameOriginal: name || newName,
       debtorCodeOriginal: debtorCode || newNameCode,
       debt: {
