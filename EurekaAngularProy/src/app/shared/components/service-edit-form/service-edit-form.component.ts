@@ -33,7 +33,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Input() currencyOptions: any[];
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
-  @Input() reviewMode = true;
+  @Input() affiliationMode = true;
   @Input() formData: IServiceRemoteModelForms;
   debtForm: FormGroup;
   debtorCodeEditable = false;
@@ -88,7 +88,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.formLoaded = true;
       if (inReview || newNameGTPStatus === 3 || newNameCodeGTPStatus === 3) {
-        if (this.reviewMode) {
+        if (this.affiliationMode) {
           this.form.get('debt').disable();
           this.form.get('useAgent').disable();
           this.debtForm.get('chargeType').disable();
@@ -127,7 +127,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
     }, 300);
     setTimeout(() => {
       if (
-        this.reviewMode &&
+        this.affiliationMode &&
         (inReview || newNameGTPStatus === 3 || newNameCodeGTPStatus === 3)
       ) {
         this.debtForm.get('chargeType').disable();
@@ -163,7 +163,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       this.debtForm.get('chargeInterest').setValue(chargeInterest);
     } else {
       this.setFormData();
-      if (this.reviewMode) {
+      if (this.affiliationMode) {
         this.debtForm.disable();
       }
     }
