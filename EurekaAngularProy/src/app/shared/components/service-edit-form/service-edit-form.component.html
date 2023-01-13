@@ -24,7 +24,7 @@
       </div>
     </div>
     <p-message
-      *ngIf="formData.newNameGTPStatus === 3"
+      *ngIf="formData?.newNameGTPStatus === 3"
       class="tw-block tw-text-sm tw-mb-2"
       severity="warn"
       [text]="
@@ -79,7 +79,7 @@
       </cs-label-control>
     </div>
     <p-message
-      *ngIf="formData.newNameCodeGTPStatus === 3"
+      *ngIf="formData?.newNameCodeGTPStatus === 3"
       class="tw-block tw-text-sm tw-mb-2"
       severity="warn"
       [text]="
