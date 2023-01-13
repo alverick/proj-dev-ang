@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { clone, forEachObjIndexed, isEmpty, isNil } from 'ramda';
+import { clone, forEachObjIndexed, isEmpty } from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { SelectAllTableService } from '../../../../services';
 
 enum StatusRowType {
@@ -186,7 +187,7 @@ export class TableMovementsComponent implements OnInit {
       hasIBKPayments;
 
     return {
-      ...statusData[status][isNil(dueDate) ? 'nilDueDate' : 'dueDate'],
+      ...statusData[status][isNilOrEmpty(dueDate) ? 'nilDueDate' : 'dueDate'],
       canEdit: isEditable && isEditableRow,
     };
   }
