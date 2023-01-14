@@ -316,7 +316,7 @@ export class FormServicioGtpComponent implements OnInit {
         this._service.newNameGtpStatus === 3
           ? this.frm.value.nombre
           : value.nombre;
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       /* if (value.newNameCode === 'RUC' || value.newNameCode === 'DNI' || value.newNameCode === 'Codigo Interno' || value.newNameCode === 'Codigo') {
          value.newNameCode = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.codDeudor : this._service.newNameCode;
        } else {

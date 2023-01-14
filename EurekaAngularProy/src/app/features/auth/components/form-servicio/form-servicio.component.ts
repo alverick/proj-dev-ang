@@ -5,7 +5,6 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-
 import { MonedaModel, IServiceModel } from 'src/app/shared/models';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
@@ -141,7 +140,7 @@ export class FormServicioComponent implements OnInit {
         : 'DNI';
 
     this.frm = this.fb.group({
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       nombre: new UntypedFormControl(
         {
           value:
@@ -405,7 +404,7 @@ export class FormServicioComponent implements OnInit {
                   //   value.newName = this.frm.value.nombre;
                   // value.nameCod = this.frm.value.nameCod;
                   //  value.codDeudor = this.frm.value.codDeudor;
-                  // tslint:disable-next-line:max-line-length
+                  // eslint-disable-next-line max-len
                   value.newName = value.nombreHabilitado
                     ? value.newName
                     : this.frm.value.nombre === value.nombre
@@ -521,7 +520,7 @@ export class FormServicioComponent implements OnInit {
                 else value.idCuenta = this.f.idCuenta.value;
                 // value.nroCuenta = this.frm.value.nroCuenta;
                 // value.nombre = this.frm.value.nombre;
-                // tslint:disable-next-line:max-line-length
+                // eslint-disable-next-line max-len
                 value.newName = value.nombreHabilitado
                   ? value.newName
                   : this.frm.value.nombre === value.nombre
@@ -586,7 +585,7 @@ export class FormServicioComponent implements OnInit {
               value.idCuenta = this.frm.value.idCuenta;
             else value.idCuenta = this.f.idCuenta.value;
             // value.nroCuenta = this.frm.value.nroCuenta;
-            // tslint:disable-next-line:max-line-length
+            // eslint-disable-next-line max-len
             value.newName = value.nombreHabilitado
               ? value.newName
               : this.frm.value.nombre === value.nombre

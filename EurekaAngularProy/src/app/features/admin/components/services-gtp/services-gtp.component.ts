@@ -140,7 +140,7 @@ export class ServicesGTPComponent implements OnInit {
         [Validators.required]
       ),
 
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       // nameCods: new FormControl ({ value: ( this._service.newNameCodeGtpStatus === 0  || this._service.newNameCodeGtpStatus === 2 })? this._service.newNameCode : this._service.debtorCode     , disabled: true}),
 
       /*  nameCod: new FormControl({ value: (this._service.debtorCode === '?')?
@@ -192,7 +192,7 @@ export class ServicesGTPComponent implements OnInit {
         value: this._service.partialPayment,
         disabled: true,
       }),
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       NewNameCod: [
         this._service.acceptednewNameCode === null
           ? ''
@@ -201,7 +201,7 @@ export class ServicesGTPComponent implements OnInit {
           : 'N',
         Validators.required,
       ],
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       NewName: [
         this._service.acceptednewName === null
           ? ''
@@ -435,9 +435,9 @@ export class ServicesGTPComponent implements OnInit {
       value.res = this.frm.value.res;
       // value.acceptednewName = (this.frm.value.NewName === 'S');
       // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       //  value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       value.acceptednewName =
         this._service.newNameGTPStatus === 1 ||
         (this._service.newNameGTPStatus === 3 &&
@@ -447,9 +447,9 @@ export class ServicesGTPComponent implements OnInit {
           : this.frm.value.NewName === 'S'
           ? true
           : false;
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       //  value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       value.acceptednewNameCode =
         this._service.newNameCodeGTPStatus === 1 ||
         (this._service.newNameCodeGTPStatus === 3 &&
@@ -499,14 +499,14 @@ export class ServicesGTPComponent implements OnInit {
 
       // value.acceptednewName = (this.frm.value.NewName === 'S');
       // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       value.acceptednewName =
         this._service.name !== this._service.newName
           ? this.frm.value.NewName === 'S'
             ? true
             : false
           : true;
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       value.acceptednewNameCode =
         this._service.debtorCode !== this._service.newNameCode
           ? this.frm.value.NewNameCod === 'S'

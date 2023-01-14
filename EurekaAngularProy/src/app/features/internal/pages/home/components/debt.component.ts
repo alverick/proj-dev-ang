@@ -39,7 +39,7 @@ const MY_FORMATS = {
   ],
 })
 
-// tslint:disable-next-line:directive-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class DebtComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<DebtComponent>,

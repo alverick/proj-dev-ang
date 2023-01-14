@@ -322,7 +322,7 @@ export class HomePage implements OnInit {
   }
 
   consultaDeuda(cb: () => void = null) {
-    // tslint:disable-next-line:prefer-const
+    // eslint-disable-next-line prefer-const
 
     this.transactionService
       .getDeuda(this.currentFilter, this.selectedUniverse)

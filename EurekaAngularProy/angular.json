@@ -164,7 +164,19 @@
               "node_modules/core-js/client/shim.min.js",
               "node_modules/web-animations-js/web-animations.min.js"
             ],
-            "assets": ["src/faviconIbk.ico", "src/assets"]
+            "assets": [
+              "src/faviconIbk.ico",
+              "src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -194,6 +206,9 @@
     }
   },
   "cli": {
-    "analytics": "92e6e9c2-fa2f-4a6c-a6a1-45b6adf701be"
+    "analytics": "92e6e9c2-fa2f-4a6c-a6a1-45b6adf701be",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

@@ -37,7 +37,7 @@ export class UploadProgressComponent implements OnInit {
   //  const dialogRef =  this.dialog.open(ValidationComponent);
 
   private verifyStatus() {
-    // tslint:disable-next-line:prefer-const
+    // eslint-disable-next-line prefer-const
     let recursiveFunc = (value) => {
       if (value.status === 'REJECTED') {
         this.snackRef.dismiss();
@@ -90,7 +90,7 @@ export class UploadProgressComponent implements OnInit {
     }, 800);
   }
 
-  // tslint:disable-next-line:use-life-cycle-interface
+  // eslint-disable-next-line
   ngOnDestroy() {
     this.snackRef.dismiss();
   }

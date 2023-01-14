@@ -314,7 +314,7 @@ export class SerFormGtpComponent implements OnInit {
                   //   value.newName = this.frm.value.nombre;
                   // value.nameCod = this.frm.value.nameCod;
                   //  value.codDeudor = this.frm.value.codDeudor;
-                  // tslint:disable-next-line:max-line-length
+                  // eslint-disable-next-line max-len
                   value.newName = value.nombreHabilitado
                     ? value.newName
                     : this.frm.value.nombre === value.nombre
@@ -427,7 +427,7 @@ export class SerFormGtpComponent implements OnInit {
                 value = this._service;
                 value.idCuenta = this.frm.value.idCuenta;
                 // value.nombre = this.frm.value.nombre;
-                // tslint:disable-next-line:max-line-length
+                // eslint-disable-next-line max-len
                 value.newName = value.nombreHabilitado
                   ? value.newName
                   : this.frm.value.nombre === value.nombre
@@ -490,7 +490,7 @@ export class SerFormGtpComponent implements OnInit {
           if (this.editMode) {
             value = this._service;
             value.idCuenta = this.frm.value.idCuenta;
-            // tslint:disable-next-line:max-line-length
+            // eslint-disable-next-line max-len
             value.newName = value.nombreHabilitado
               ? value.newName
               : this.frm.value.nombre === value.nombre
