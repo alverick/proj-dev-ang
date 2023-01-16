@@ -27,6 +27,7 @@
           *ngFor="let col of columns"
           [pSortableColumn]="col.field"
           class="tw-hidden md:tw-table-cell"
+          [ngClass]="'th-' + col.field"
         >
           {{ col.header }}
           <p-sortIcon
@@ -62,7 +63,7 @@
               <div class="tw-mb-2">{{ rowData.id }}</div>
               <div class="tw-mb-2">{{ rowData.firstName }}</div>
               <div
-                class="tw-whitespace-nowrap tw-w-24 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
+                class="tw-whitespace-nowrap tw-w-32 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
                 [ngClass]="[setStatusRow(rowData).color]"
               >
                 <i class="pi pi-circle-on icon tw-pr-1 tw-align-middle"></i>
@@ -206,7 +207,7 @@
             <ng-container *ngSwitchCase="'status'">
               <div class="tw-flex">
                 <div
-                  class="tw-whitespace-nowrap tw-w-24 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
+                  class="tw-whitespace-nowrap tw-w-32 tw-flex-shrink-0 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
                   [ngClass]="[setStatusRow(rowData).color]"
                 >
                   <i class="pi pi-circle-on icon tw-pr-1 tw-align-middle"></i>
