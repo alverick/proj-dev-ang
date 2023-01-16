@@ -73,6 +73,7 @@ export class AffiliationService {
     const {
       name,
       newName,
+      newNameCode,
       debtorCode,
       paymentType,
       currency,
@@ -114,6 +115,7 @@ export class AffiliationService {
       newNameCodeGTPStatus,
       nameOriginal,
       debtorCodeOriginal,
+      newNameCode,
       debt: {
         dataType,
         paymentType,
