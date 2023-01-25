@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
@@ -103,7 +103,13 @@ export class AffiliationService {
       }
     }
 
-    const amountField = interestType === 'M' ? amount : percentage;
+    let amountField = interestType === 'M' ? amount : percentage;
+    if (inReview) {
+      if (isString(amountField)) {
+        amountField = parseFloat(amountField);
+      }
+      amountField = amountField.toFixed(2);
+    }
     return {
       name,
       debtorCode,
