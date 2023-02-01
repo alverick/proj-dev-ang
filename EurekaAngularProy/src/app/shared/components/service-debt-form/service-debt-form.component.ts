@@ -9,11 +9,12 @@ import {
 } from '@angular/core';
 import {
   ControlValueAccessor,
-  UntypedFormGroup,
-  NgForm,
   NG_VALUE_ACCESSOR,
+  NgForm,
+  UntypedFormGroup,
 } from '@angular/forms';
 import { pathEq } from 'ramda';
+
 import { IErrorMessages } from '../../models/forms';
 
 @Component({
