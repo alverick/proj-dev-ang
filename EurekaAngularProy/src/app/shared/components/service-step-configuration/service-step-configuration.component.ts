@@ -87,15 +87,17 @@ export class ServiceStepConfigurationComponent implements OnInit {
   onSubmit() {
     const { debtorCodeCustom, ...formValue } = this.form.value;
     this.submittedForm = true;
-    if (this.form.valid) {
-      this.sendForm.emit({
-        ...formValue,
-        debtorCode:
-          debtorCodeCustom === debtorCodeCustomEmpty
-            ? formValue.debtorCode
-            : debtorCodeCustom,
-      });
-    }
+    setTimeout(() => {
+      if (this.form.valid) {
+        this.sendForm.emit({
+          ...formValue,
+          debtorCode:
+            debtorCodeCustom === debtorCodeCustomEmpty
+              ? formValue.debtorCode
+              : debtorCodeCustom,
+        });
+      }
+    }, 200);
   }
 
   onCancel() {

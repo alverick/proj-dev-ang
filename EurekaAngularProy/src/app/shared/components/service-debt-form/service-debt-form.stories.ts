@@ -13,7 +13,6 @@ import { moduleMetadata } from '@storybook/angular';
 import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
-import { ServiceDebtFormComponent } from './service-debt-form.component';
 import { errorServiceConfiguration } from '../../constants/company-errors';
 import {
   chargeTypeOptions,
@@ -77,9 +76,8 @@ export default {
 };
 
 export const normal = () => ({
-  component: ServiceDebtFormComponent,
   moduleMetadata: {
-    declarations: [FormDemoComponent, ServiceDebtFormComponent],
+    declarations: [FormDemoComponent],
     providers: [],
   },
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>

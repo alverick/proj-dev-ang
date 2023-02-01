@@ -71,7 +71,7 @@ body {
 }
 
 .card-aprobaciones {
-  @include cuadro(350px, 145px);
+  @include cuadro(350px, auto);
   @include box-shadows();
   background-color: #ffffff;
 }

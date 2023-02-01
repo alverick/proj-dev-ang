@@ -5,8 +5,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { environment } from 'src/environments/environment';
 import { appFullRoutingNames } from './app-routing.names';
-import { authFullRoutingNames } from './features/auth/auth-routing.names';
-import { internalAuthFullRoutingNames } from './features/internal/internal-routing.names';
+import {
+  authFullRoutingChildNames,
+  authFullRoutingNames,
+} from './features/auth/auth-routing.names';
 import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
 
 declare let fbq: (...args: any[]) => void;
@@ -80,17 +82,7 @@ export class AppComponent {
   }
 
   private sendTrackPageViewPixel(pathComponent: string): void {
-    const path: string = pathComponent;
-
-    const { CHARGES_AFFILIATION } = internalAuthFullRoutingNames;
-
-    const {
-      CHARGES_AFFILIATION_ADD_STEP_4,
-      CHARGES_AFFILIATION_ADD_STEP_3,
-      CHARGES_AFFILIATION_ADD_STEP_2,
-      CHARGES_AFFILIATION_ADD_STEP_1,
-    } = internalAuthFullRoutingNames;
-    switch (path) {
+    switch (pathComponent) {
       case appFullRoutingNames.LANDING:
         fbq('track', 'PageView');
         break;
@@ -103,22 +95,16 @@ export class AppComponent {
       case authFullRoutingNames.COMPANY_FINISHED:
         fbq('track', 'PageView');
         break;
-      case CHARGES_AFFILIATION_ADD_STEP_1:
+      case authFullRoutingChildNames.SERVICES_ADD_INFO:
         fbq('track', 'PageView');
         break;
-      case CHARGES_AFFILIATION_ADD_STEP_2:
+      case authFullRoutingChildNames.SERVICES_ADD_CONFIGURATION:
         fbq('track', 'PageView');
         break;
-      case CHARGES_AFFILIATION_ADD_STEP_3:
+      case authFullRoutingChildNames.SERVICES_ADD_LIST:
         fbq('track', 'PageView');
         break;
-      case CHARGES_AFFILIATION_ADD_STEP_4:
-        fbq('track', 'PageView');
-        break;
-      case CHARGES_AFFILIATION:
-        fbq('track', 'PageView');
-        break;
-      case authFullRoutingNames.PROCESSING:
+      case authFullRoutingNames.REGISTRATION_FINISHED:
         fbq('track', 'Contact', {
           content_name: 'cobro-simple-5',
         });
