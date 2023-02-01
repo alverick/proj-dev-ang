@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { isNil } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { throwError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { movementsDataMock } from '../mocks/home';
 import { Debts, DebtsPagedList } from '../models/debts';
 import { DebtEdit } from '../models/debts-edit.model';
 import { DebstFilter } from '../models/debts-filter.model';
@@ -51,7 +53,7 @@ export class TransactionService {
   getDeuda(
     filtro: DebstFilter = null,
     selectedUniverse: boolean = false
-  ): Observable<DebtsPagedList> {
+  ): Observable<any> {
     // ultimo filtro aplicado
     if (filtro === null) {
       filtro = this.lastFilter;
@@ -100,7 +102,20 @@ export class TransactionService {
               this.itemsForDelete.push(d.id);
             }
           });
-          this.debtItems = r;
+          const data = r.data.map((item) => {
+            return {
+              ...item,
+              emissionDate: isNil(item.emissionDate)
+                ? ''
+                : new Date(item.emissionDate),
+              dueDate: isNil(item.dueDate) ? '' : new Date(item.dueDate),
+              canEditFirstName: true,
+              canEditEmissionDate: isNil(item.emissionDate),
+              canEditDueDate: !isNil(item.dueDate),
+              canEditAmount: item.amount > 0,
+            };
+          });
+          this.debtItems = { ...r, data };
           return r;
         })
       )

@@ -1,12 +1,12 @@
 .row {
   padding: 0 14px;
+  gap: 10px;
 }
 
 mat-form-field {
   width: 100%;
   &.inline-ctrl {
-    width: 126px;
-    margin-right: 6px;
+    width: 48%;
   }
   .msg-error {
     @include font-text(10px, 500);

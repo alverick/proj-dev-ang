@@ -34,7 +34,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
 import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
@@ -44,6 +46,7 @@ import { MessagesModule } from 'primeng/messages';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SidebarModule } from 'primeng/sidebar';
 import { StepsModule } from 'primeng/steps';
+import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -59,6 +62,7 @@ import { ServiceStepInfoComponent } from './components/service-step-info/service
 import { ServicesListComponent } from './components/services-list/services-list.component';
 import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
 import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
+import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
 import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
@@ -99,6 +103,9 @@ const PRIMENG_MODULES = [
   StepsModule,
   SidebarModule,
   ButtonModule,
+  TableModule,
+  CalendarModule,
+  DialogModule,
   TooltipModule,
   MessagesModule,
   MessageModule,
@@ -131,6 +138,7 @@ const UI_MODULES = [
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     ...SERVICES,
     ...RESOLVERS,
+    ...DATA_SERVICES,
   ],
   declarations: [
     OnlyNumbersFormDirective,

@@ -17,6 +17,7 @@ import { PAGES } from './pages';
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
 import { DebtComponent } from './pages/home/components/debt.component';
 import { PaymentDetailComponent } from './pages/home/components/payment-detail/payment-detail.component';
+import { TableMovementsComponent } from './pages/home/components/table-movements/table-movements.component';
 import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
 
@@ -36,6 +37,7 @@ import { SERVICES } from './services';
     CompanyUpdateFormComponent,
     CompanyPasswordFormComponent,
     ...PAGES,
+    TableMovementsComponent,
   ],
   imports: [
     CommonModule,
