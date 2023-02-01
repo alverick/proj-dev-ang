@@ -155,7 +155,6 @@
     }
   ],
   "extends": [
-    null,
     "plugin:storybook/recommended"
   ]
 }
