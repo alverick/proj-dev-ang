@@ -1,0 +1,56 @@
+trigger: none
+pr: none
+
+variables:
+  vmImageName: 'ubuntu-20.04'
+
+stages:
+- stage: Build
+  displayName: Build and push dev
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: '12.x'
+      
+    - task: Npm@1
+      displayName: 'install angular'
+      inputs:
+        command: custom
+        verbose: false
+        customCommand: 'install -g @angular/cli@8'
+
+    - task: Npm@1
+      displayName: 'npm install'
+      inputs:
+        workingDir: EurekaAngularProy
+        verbose: false
+
+    - task: Npm@1
+      displayName: 'run build '
+      inputs:
+        command: custom
+        workingDir: EurekaAngularProy
+        verbose: false
+        customCommand: 'run build -- --configuration dev'
+
+    - upload: EurekaAngularProy/dist/EurekaAngularProy
+      displayName: 'Publish dist'
+      artifact: web-cobrosimple
+      
+    - task: FtpUpload@2
+      displayName: 'FTP Upload'
+      inputs:
+        credentialsOption: inputs
+        serverUrl: 'ftps://waws-prod-bn1-041.ftp.azurewebsites.windows.net'
+        username: 'wappeu2c003eurcdev01\$wappeu2c003eurcdev01'
+        password: s9uknmWQQLqGPpkPNFg7Dxab4Pr7bzbLjsY0t9uQlQBfePqeyCSqfcs78xga
+        rootDirectory: EurekaAngularProy/dist/EurekaAngularProy
+        remoteDirectory: /site/wwwroot/ClientApp/dist/
+        cleanContents: true
+        preservePaths: true
