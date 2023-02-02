@@ -81,8 +81,7 @@ export class ServiceCardComponent implements OnInit, OnChanges {
     if (this.lockedMode) {
       if (newNameGTPStatus === 3 || newNameCodeGTPStatus === 3) {
         this.pendingUserReview = true;
-      }
-      if (
+      } else if (
         newNameGTPStatus === 0 ||
         newNameCodeGTPStatus === 0 ||
         newNameGTPStatus === 2 ||

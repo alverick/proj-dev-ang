@@ -40,6 +40,8 @@ import { DropdownModule } from 'primeng-lts/dropdown';
 import { InputMaskModule } from 'primeng-lts/inputmask';
 import { InputTextModule } from 'primeng-lts/inputtext';
 import { KeyFilterModule } from 'primeng-lts/keyfilter';
+import { MessageModule } from 'primeng-lts/message';
+import { MessagesModule } from 'primeng-lts/messages';
 import { RadioButtonModule } from 'primeng-lts/radiobutton';
 import { SidebarModule } from 'primeng-lts/sidebar';
 import { StepsModule } from 'primeng-lts/steps';
@@ -100,6 +102,8 @@ const PRIMENG_MODULES = [
   SidebarModule,
   ButtonModule,
   TooltipModule,
+  MessagesModule,
+  MessageModule,
 ];
 const UI_MODULES = [
   FontAwesomeModule,
