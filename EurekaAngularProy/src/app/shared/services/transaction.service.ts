@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { isNil } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { throwError, Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { movementsDataMock } from '../mocks/home';
+
 import { Debts, DebtsPagedList } from '../models/debts';
 import { DebtEdit } from '../models/debts-edit.model';
 import { DebstFilter } from '../models/debts-filter.model';

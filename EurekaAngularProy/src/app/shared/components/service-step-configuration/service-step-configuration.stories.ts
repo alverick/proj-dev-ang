@@ -9,8 +9,9 @@ import { FormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { centered } from '@storybook/addon-centered/angular';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
+
+import { AffiliationFormsService } from '../../../features/auth/services';
 import { errorServiceConfiguration } from '../../constants/company-errors';
 import {
   chargeTypeOptions,
@@ -19,7 +20,6 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants/services';
-import { AffiliationFormsService } from '../../../features/auth/services';
 import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
@@ -69,7 +69,6 @@ export default {
   title: 'Auth/Module/Service Form Configuration',
   decorators: [
     centered,
-    withKnobs,
     moduleMetadata({
       imports: [BrowserAnimationsModule, SharedModule],
       providers: [
@@ -93,7 +92,7 @@ export const normal = () => ({
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
 <cs-form-demo [showCancel]="edit" (sendForm)="onSubmit($event)" (cancel)="onCancel()"></cs-form-demo>`,
   props: {
-    edit: boolean('Show Cancel', false),
+    edit: false,
     onCancel: action('form cancel'),
     onSubmit: (e) => {
       console.log(e);

@@ -4,7 +4,6 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
 import { RecaptchaComponent } from 'ng-recaptcha';
@@ -16,6 +15,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
+
 import { authFullRoutingNames } from '../../auth-routing.names';
 
 @Component({

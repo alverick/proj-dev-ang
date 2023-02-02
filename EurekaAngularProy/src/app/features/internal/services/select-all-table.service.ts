@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Table, TableHeaderCheckbox } from 'primeng-lts/table';
+import { Table, TableHeaderCheckbox } from 'primeng/table';
 
 @Injectable()
 export class SelectAllTableService {
-  constructor() {}
   overridePrimeNGTableMethods() {
     TableHeaderCheckbox.prototype.updateCheckedState = function () {
       if (this.dt.filteredValue) {
