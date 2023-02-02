@@ -177,11 +177,8 @@ body {
     }
   }
 
-  .ui-table {
-    p-sorticon {
-    }
-
-    .ui-paginator {
+  .p-datatable {
+    .p-paginator {
       font-size: 12px;
       background-color: #fff;
       border-style: none;
@@ -189,17 +186,17 @@ body {
       padding-right: 20px;
       padding-top: 5px;
 
-      .ui-paginator-pages .ui-paginator-page.ui-state-active {
+      .p-paginator-pages .p-paginator-page.p-highlight {
         background-color: transparent;
         color: var(--primary-green-1);
       }
     }
 
-    .ui-paginator-first {
+    .p-paginator-first {
       display: none;
     }
 
-    .ui-paginator-last {
+    .p-paginator-last {
       display: none;
     }
 
@@ -207,23 +204,26 @@ body {
       font-size: 14px;
     }
 
-    .ui-sortable-column {
-      .ui-sortable-column-icon {
+    .p-sortable-column {
+      .p-sortable-column-icon {
         color: var(--secondary-blue-1);
         font-size: 12px;
       }
 
-      &.ui-state-highlight {
+      &.p-highlight {
         background-color: #ffffff;
         color: var(--secondary-blue-1);
+        &:hover {
+          background-color: var(--primary-green-1);
+        }
 
-        .ui-sortable-column-icon {
+        .p-sortable-column-icon {
           color: var(--secondary-blue-1);
         }
       }
     }
 
-    .ui-table-thead > tr {
+    .p-datatable-thead > tr {
       color: var(--secondary-blue-1);
 
       > th {
@@ -243,14 +243,14 @@ body {
       }
     }
 
-    .ui-table-tbody > tr {
+    .p-datatable-tbody > tr {
       color: var(--grises-ibk-black);
 
       &:focus-visible {
         outline-color: transparent;
       }
 
-      &.ui-state-highlight {
+      &.p-highlight {
         color: var(--grises-ibk-black);
         background-color: #ffffff;
       }
@@ -258,7 +258,7 @@ body {
       &:nth-child(even) {
         background-color: #ffffff;
 
-        &.ui-state-highlight {
+        &.p-highlight {
           color: var(--grises-ibk-black);
           background-color: #ffffff;
         }
@@ -280,12 +280,12 @@ body {
           border-left-style: solid;
         }
 
-        .ui-inputtext {
+        .p-inputtext {
           font-size: 14px;
           width: 100%;
           padding: 3px;
         }
-        .ui-datepicker:not(.ui-datepicker-inline) {
+        .p-datepicker:not(.p-datepicker-inline) {
           min-width: 310px;
         }
       }
@@ -336,17 +336,4 @@ body {
     border-radius: 20px;
     padding-left: 10px;
   }
-}
-
-.button-outline-green {
-  font-size: 16px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  border-radius: 4px;
-  background-color: #ffffff;
-  border: solid 1px var(--primary-green-1);
-  color: var(--primary-green-1);
 }

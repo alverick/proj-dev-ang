@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { clone, forEachObjIndexed, isEmpty } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+
 import { SelectAllTableService } from '../../../../services';
 
 enum StatusRowType {
