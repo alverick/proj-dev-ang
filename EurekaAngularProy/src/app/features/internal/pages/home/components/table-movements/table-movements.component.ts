@@ -59,10 +59,12 @@ export class TableMovementsComponent implements OnInit {
     { field: 'status', header: 'Estado' },
   ];
   @Input() data = [];
-  selectedRows = [];
+  @Input() totalRecords: number;
   @Output() selectedChange = new EventEmitter<any>();
   @Output() showDetails = new EventEmitter<any>();
   @Output() saveRow = new EventEmitter<any>();
+  @Output() loadData = new EventEmitter<any>();
+  selectedRows = [];
   displayDialog = false;
   editRowData: any = {};
   dataSet = {};
@@ -178,7 +180,6 @@ export class TableMovementsComponent implements OnInit {
         },
       },
     };
-    // this.logger.debug('-> { status, dueDate }', status, dueDate);
 
     const isEditable = svcStatus !== 1 && status !== 'PAGADO';
     const isEditableRow =
@@ -260,5 +261,9 @@ export class TableMovementsComponent implements OnInit {
 
   onCancel() {
     this.displayDialog = false;
+  }
+
+  loadDataLazy($event) {
+    this.loadData.emit($event);
   }
 }
