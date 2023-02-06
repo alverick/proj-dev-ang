@@ -43,13 +43,13 @@ stages:
         customCommand: 'run build -- --configuration dev'
 
     - script: |
-      echo Creating Directory
-      mkdir -p Deploy/ClientApp/dist
-      echo Move Directory Deploy
-      cp -a dist/EurekaAngularProy/. Deploy/ClientApp/dist/
-      ls Deploy/ClientApp/dist/
-    workingDirectory: EurekaAngularProy
-    displayName: 'Create directory'
+        echo Creating Directory
+        mkdir -p Deploy/ClientApp/dist
+        echo Move Directory Deploy
+        cp -a dist/EurekaAngularProy/. Deploy/ClientApp/dist/
+        ls Deploy/ClientApp/dist/
+      workingDirectory: EurekaAngularProy
+      displayName: 'Create directory'
 
     - upload: EurekaAngularProy/dist/EurekaAngularProy
       displayName: 'Publish dist'
