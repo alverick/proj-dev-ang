@@ -3,7 +3,7 @@ pr: none
 
 variables:
   appServiceConnection: 'gr2c003eurcdev01'
-  groupName: 'RG_EU2_C003_EURC_DEV_01'
+  groupName: RG_EU2_C003_EURC_DEV_01
   appServiceName: 'staeu2c008nexbiuat01'
   vmImageName: 'ubuntu-20.04'
 
