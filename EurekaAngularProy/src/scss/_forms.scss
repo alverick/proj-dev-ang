@@ -166,6 +166,16 @@ body {
     }
   }
 
+  .p-button {
+    color: #333333;
+
+    &:enabled:hover {
+      background-color: var(--primary-green-1);
+      color: #ffffff;
+      border-color: var(--primary-green-1);
+    }
+  }
+
   .p-dropdown-panel {
     .p-dropdown-items {
       .p-dropdown-item-group.p-highlight,
@@ -218,6 +228,7 @@ body {
       &.p-highlight {
         background-color: #ffffff;
         color: var(--secondary-blue-1);
+
         &:hover {
           background-color: var(--primary-green-1);
         }
@@ -290,6 +301,7 @@ body {
           width: 100%;
           padding: 3px;
         }
+
         .p-datepicker:not(.p-datepicker-inline) {
           min-width: 310px;
         }
