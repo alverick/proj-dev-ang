@@ -1,0 +1,89 @@
+<div class="tw-shadow tw-p-6 tw-pb-0">
+  <form
+    class="form tw-flex tw-gap-4"
+    [formGroup]="form"
+    (ngSubmit)="sendFilters()"
+  >
+    <cs-label-control
+      class="tw-w-60"
+      formControlName="services"
+      [hideLabel]="true"
+      [errorMessages]="errorMessages.services"
+    >
+      <p-multiSelect
+        [options]="services"
+        formControlName="services"
+        [showToggleAll]="true"
+        [filter]="false"
+        defaultLabel="Todos"
+        optionLabel="name"
+        styleClass="tw-w-60"
+        #multiselect
+        control
+      >
+        <ng-template let-value pTemplate="selectedItems">
+          <ng-container *ngIf="!value || value.length === 0">
+            Seleccione un servicio
+          </ng-container>
+          <ng-container *ngIf="value.length > 0">
+            {{ parseLabelServices(value) }}
+          </ng-container>
+        </ng-template>
+      </p-multiSelect>
+    </cs-label-control>
+    <cs-label-control
+      class="tw-w-40"
+      formControlName="payment"
+      [hideLabel]="true"
+      [errorMessages]="errorMessages.payment"
+    >
+      <p-dropdown
+        [options]="optionsDates"
+        placeholder="Tipo de pago"
+        formControlName="payment"
+        optionLabel="name"
+        styleClass="tw-w-40"
+        control
+      ></p-dropdown>
+    </cs-label-control>
+    <cs-label-control
+      class="tw-w-40"
+      formControlName="dateFrom"
+      [hideLabel]="true"
+      [errorMessages]="errorMessages.dateFrom"
+    >
+      <p-calendar
+        [showIcon]="true"
+        formControlName="dateFrom"
+        placeholder="Desde"
+        [maxDate]="maxDateFrom"
+        control
+      ></p-calendar>
+    </cs-label-control>
+    <cs-label-control
+      class="tw-w-40"
+      formControlName="dateTo"
+      [hideLabel]="true"
+      [errorMessages]="errorMessages.dateTo"
+    >
+      <p-calendar
+        [showIcon]="true"
+        formControlName="dateTo"
+        placeholder="Hasta"
+        [minDate]="minDateTo"
+        [maxDate]="maxDateTo"
+        control
+      ></p-calendar>
+    </cs-label-control>
+    <div class="actions tw-flex tw-gap-4 tw-h-10">
+      <button pButton type="submit" label="Filtrar"></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Enviar"
+        class="p-button-outlined"
+      ></button>
+    </div>
+  </form>
+</div>

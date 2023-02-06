@@ -108,7 +108,6 @@ body {
     }
 
     .p-steps-item {
-
       &:before {
         margin-top: auto;
       }
@@ -167,12 +166,25 @@ body {
   }
 
   .p-button {
-    color: #333333;
+    color: #fff;
+    background: var(--primary-green-1);
+    border: 1px solid var(--primary-green-1);
+
+    &.p-button-outlined {
+      background-color: transparent;
+      color: var(--primary-green-1);
+      border: 1px solid;
+
+      &:enabled:hover {
+        background-color: transparent;
+        color: var(--primary-green-2);
+      }
+    }
 
     &:enabled:hover {
-      background-color: var(--primary-green-1);
+      background-color: var(--primary-green-2);
       color: #ffffff;
-      border-color: var(--primary-green-1);
+      border-color: var(--primary-green-2);
     }
   }
 
@@ -310,6 +322,13 @@ body {
 
     .p-inputnumber-input {
       width: 100%;
+    }
+  }
+
+  .p-calendar {
+    &.p-calendar-w-btn .p-datepicker-trigger {
+      background: transparent;
+      color: var(--primary-green-1);
     }
   }
 
