@@ -42,13 +42,14 @@ export class ServiceDebtFormComponent
   @ViewChild('formElm')
   htmlForm: NgForm;
   showArrearsFields = false;
-  unitAmount = 'S/';
+  unitAmount = 'S/ ';
+  maxAmount = 1000;
   onTouched: any;
 
   ngOnInit() {
     const { chargeInterest, interestType } = this.form.value;
     this.processArrearsMode(chargeInterest === 'S');
-    this.unitAmount = interestType === 'M' ? 'S/' : '%';
+    this.setAmountProps(interestType);
     this.listenForms();
   }
 
@@ -69,12 +70,17 @@ export class ServiceDebtFormComponent
     });
   }
 
+  setAmountProps(val) {
+    this.unitAmount = val === 'M' ? 'S/ ' : '% ';
+    this.maxAmount = val === 'M' ? 1000 : 100;
+  }
+
   listenForms() {
     this.form.get('chargeInterest').valueChanges.subscribe((val) => {
       this.processArrearsMode(val === 'S');
     });
     this.form.get('interestType').valueChanges.subscribe((val) => {
-      this.unitAmount = val === 'M' ? 'S/' : '%';
+      this.setAmountProps(val);
     });
   }
 
