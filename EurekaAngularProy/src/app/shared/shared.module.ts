@@ -6,8 +6,8 @@ import {
   DateAdapter,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
+  MatNativeDateModule,
 } from '@angular/material/core';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -44,7 +44,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
@@ -105,9 +107,14 @@ const PRIMENG_MODULES = [
   InputNumberModule,
   InputTextModule,
   KeyFilterModule,
+  KeyFilterModule,
+  MessageModule,
   MessageModule,
   MessagesModule,
+  MessagesModule,
+  MultiSelectModule,
   RadioButtonModule,
+  RippleModule,
   SidebarModule,
   StepsModule,
   TableModule,

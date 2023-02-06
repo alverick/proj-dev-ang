@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
+import { PrimeNGConfig } from 'primeng/api';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { environment } from 'src/environments/environment';
+
 import { appFullRoutingNames } from './app-routing.names';
 import {
   authFullRoutingChildNames,
@@ -18,14 +20,15 @@ declare let fbq: (...args: any[]) => void;
   styleUrls: ['./app.component.css'],
   providers: [LoginService],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Cobro Simple – Interbank';
 
   constructor(
     private router: Router,
     matIconRegistry: MatIconRegistry,
     domSanitizer: DomSanitizer,
-    private gaService: GoogleAnalytics
+    private gaService: GoogleAnalytics,
+    private primengConfig: PrimeNGConfig
   ) {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
@@ -79,6 +82,10 @@ export class AppComponent {
       domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
       { viewBox: '0 0 24 24' }
     );
+  }
+
+  ngOnInit() {
+    this.primengConfig.ripple = true;
   }
 
   private sendTrackPageViewPixel(pathComponent: string): void {
