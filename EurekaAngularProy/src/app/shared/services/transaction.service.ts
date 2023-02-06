@@ -110,7 +110,7 @@ export class TransactionService {
                 : new Date(item.emissionDate),
               dueDate: isNil(item.dueDate) ? '' : new Date(item.dueDate),
               canEditFirstName: true,
-              canEditEmissionDate: isNil(item.emissionDate),
+              canEditEmissionDate: !isNil(item.emissionDate),
               canEditDueDate: !isNil(item.dueDate),
               canEditAmount: item.amount > 0,
             };
