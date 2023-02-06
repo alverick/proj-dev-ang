@@ -124,6 +124,8 @@
             <section class="lista">
               <cs-table-movements
                 [data]="transactionService.debtItems.data"
+                [totalRecords]="transactionService.debtItems.count"
+                (loadData)="loadData($event)"
                 (selectedChange)="onSelected($event)"
                 (showDetails)="showDetails($event)"
                 (saveRow)="BotonActualizar($event)"

@@ -971,4 +971,9 @@ export class HomePage implements OnInit {
   onSelected(event) {
     this.selectedRows = event;
   }
+
+  loadData(args: any) {
+    const pageSelected = args.first / args.rows + 1;
+    this.changePage(pageSelected);
+  }
 }
