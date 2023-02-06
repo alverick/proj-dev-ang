@@ -63,7 +63,7 @@
         <td class="md:tw-hidden tw-pb-2">
           <div class="preview tw-flex tw-justify-between">
             <div class="info">
-              <div class="tw-mb-2">{{ rowData.id }}</div>
+              <div class="tw-mb-2">{{ rowData.code }}</div>
               <div class="tw-mb-2">{{ rowData.firstName }}</div>
               <div
                 class="tw-whitespace-nowrap tw-w-32 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
@@ -90,7 +90,7 @@
         >
           <ng-container [ngSwitch]="col.field">
             <ng-container *ngSwitchCase="'firstName'"
-              >{{ rowData.id }}<br />
+              >{{ rowData.code }}<br />
               <p-cellEditor>
                 <ng-template pTemplate="input">
                   <input
