@@ -178,6 +178,10 @@ body {
 
   .p-dropdown-panel {
     .p-dropdown-items {
+      .p-dropdown-item {
+        white-space: normal;
+      }
+
       .p-dropdown-item-group.p-highlight,
       .p-dropdown-item.p-highlight {
         color: #ffffff;
