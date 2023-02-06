@@ -9,7 +9,7 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build and push dev
+  displayName: Build and push uat
   jobs:
   - job: Build
     displayName: Build
