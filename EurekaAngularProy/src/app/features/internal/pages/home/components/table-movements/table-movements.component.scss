@@ -14,3 +14,11 @@
     border-style: none;
   }
 }
+
+.modal-edit {
+  .field {
+    > * {
+      width: 100%;
+    }
+  }
+}
