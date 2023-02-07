@@ -116,6 +116,7 @@ export class AffiliationService {
       nameOriginal,
       debtorCodeOriginal,
       newNameCode,
+      newName,
       debt: {
         dataType,
         paymentType,
@@ -331,7 +332,26 @@ export class AffiliationService {
       return throwError('Incomplete data');
     }
 
-    const payload: ICompanySendUpdate = {
+    return this.companyService
+      .sendUpdateCompanyData(this.generatePayloadUpdate())
+      .pipe(
+        tap((result) => {
+          if (result) {
+            this.email = this.updateData.email;
+          } else {
+            swalAlert.fire({
+              icon: 'warning',
+              text: `Ha ocurrido un error`,
+              showConfirmButton: true,
+              confirmButtonText: 'Entendido',
+            });
+          }
+        })
+      );
+  }
+
+  generatePayloadUpdate(): ICompanySendUpdate {
+    return {
       Token: this.tokenUpdate,
       NewName: this.updateData.inReview
         ? this.authForm.get('name').value
@@ -354,21 +374,6 @@ export class AffiliationService {
         }
       ),
     };
-
-    return this.companyService.sendUpdateCompanyData(payload).pipe(
-      tap((result) => {
-        if (result) {
-          this.email = this.updateData.email;
-        } else {
-          swalAlert.fire({
-            icon: 'warning',
-            text: `Ha ocurrido un error`,
-            showConfirmButton: true,
-            confirmButtonText: 'Entendido',
-          });
-        }
-      })
-    );
   }
 
   resetRegistration() {
