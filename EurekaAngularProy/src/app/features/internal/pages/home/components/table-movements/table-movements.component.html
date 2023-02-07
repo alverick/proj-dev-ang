@@ -1,5 +1,4 @@
 <div class="widget lista">
-  {{ sortField }}--{{ sortTable }}
   <p-table
     *ngIf="data.length > 0"
     [columns]="cols"
@@ -335,7 +334,6 @@
   header="Editar registro"
   [(visible)]="displayDialog"
   [responsive]="true"
-  showEffect="fade"
   [modal]="true"
   [style]="{ width: '300px' }"
 >

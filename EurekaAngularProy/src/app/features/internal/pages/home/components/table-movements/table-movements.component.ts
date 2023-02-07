@@ -11,7 +11,7 @@ import {
 import { NGXLogger } from 'ngx-logger';
 import { LazyLoadEvent } from 'primeng-lts/api';
 import { Table } from 'primeng-lts/table';
-import { clone, forEachObjIndexed, isEmpty, pathEq, propEq } from 'ramda';
+import { clone, forEachObjIndexed, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { SelectAllTableService } from '../../../../services';
 
