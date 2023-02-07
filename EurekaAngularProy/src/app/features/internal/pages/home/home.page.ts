@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import * as saveAs from 'file-saver';
+import { LazyLoadEvent } from 'primeng-lts/api';
 import { all, equals, prop } from 'ramda';
-import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
+import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { Debts } from 'src/app/shared/models/debts';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
@@ -149,6 +150,7 @@ export class HomePage implements OnInit {
     errores: {},
   };
   selectedRows = [];
+  tableSortField = '';
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -253,6 +255,7 @@ export class HomePage implements OnInit {
   }
 
   resetDebts() {
+    this.tableSortField = '';
     if (!equals(this.initialFilter, this.currentFilter)) {
       this.currentFilter = this.initialFilter;
       const { dateForFilter, status, inputSearch, service } =
@@ -284,6 +287,7 @@ export class HomePage implements OnInit {
         ...this.currentFilter,
         ...filter,
       };
+      this.tableSortField = '';
       this.submitSearch(inputSearch, service, status, dateForFilter);
     }
   }
@@ -972,8 +976,12 @@ export class HomePage implements OnInit {
     this.selectedRows = event;
   }
 
-  loadData(args: any) {
+  loadData(args: LazyLoadEvent) {
     const pageSelected = args.first / args.rows + 1;
+    if (isNotNilOrEmpty(args.sortField)) {
+      this.currentFilter.columnName = args.sortField;
+      this.currentFilter.asc = args.sortOrder === 1;
+    }
     this.changePage(pageSelected);
   }
 }

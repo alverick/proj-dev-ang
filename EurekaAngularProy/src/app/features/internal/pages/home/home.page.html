@@ -125,6 +125,7 @@
               <cs-table-movements
                 [data]="transactionService.debtItems.data"
                 [totalRecords]="transactionService.debtItems.count"
+                [(sortField)]="tableSortField"
                 (loadData)="loadData($event)"
                 (selectedChange)="onSelected($event)"
                 (showDetails)="showDetails($event)"
