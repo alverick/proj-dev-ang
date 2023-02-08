@@ -3,13 +3,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER } from '@angular/core';
 import {
   DateAdapter,
-  MatIconRegistry,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
-} from '@angular/material';
+} from '@angular/material/core';
+import { MatIconRegistry } from '@angular/material/icon';
 import {
-  MomentDateAdapter,
   MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,6 +18,7 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
 import { LoggerModule } from 'ngx-logger';
 import { isNil } from 'ramda';
+
 import { environment } from '../../../../../../../environments/environment';
 import { movementsDataMock } from '../../../../../../shared/mocks/home';
 import { SharedModule } from '../../../../../../shared/shared.module';
