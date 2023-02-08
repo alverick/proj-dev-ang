@@ -9,8 +9,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { LazyLoadEvent } from 'primeng-lts/api';
-import { Table } from 'primeng-lts/table';
+import { LazyLoadEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { clone, forEachObjIndexed, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 

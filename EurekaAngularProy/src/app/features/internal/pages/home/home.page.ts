@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import * as saveAs from 'file-saver';
-import { LazyLoadEvent } from 'primeng-lts/api';
+import { LazyLoadEvent } from 'primeng/api';
 import { all, equals, prop } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';

@@ -3,12 +3,14 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
-import { of, throwError, Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
   ICompanySendUpdate,
   ICompanyUpdate,
 } from 'src/app/shared/models/company';
+import { SweetAlertOptions } from 'sweetalert2';
+
 import { parseParams } from '../../../shared/constants/services';
 import {
   IEntryModel,
@@ -33,7 +35,7 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 export class AffiliationService {
   companyId;
   email;
-  servicesList: Array<Partial<IServiceRemoteModelForms>> = [];
+  servicesList: Partial<IServiceRemoteModelForms>[] = [];
 
   entryOptions: IEntryModel[] = [];
   registerForm: UntypedFormGroup;
@@ -298,7 +300,7 @@ export class AffiliationService {
   }
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {
-    let modalSettings;
+    let modalSettings: SweetAlertOptions;
     if (
       this.updateData.newNameGTPStatus === 3 &&
       this.updateData.newName === this.authForm.get('name').value
@@ -334,7 +336,7 @@ export class AffiliationService {
     }
 
     if (isNotNil(modalSettings)) {
-      swalAlert.fire(modalSettings);
+      void swalAlert.fire(modalSettings);
       return throwError('Incomplete data');
     }
 
