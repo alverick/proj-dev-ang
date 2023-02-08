@@ -1,0 +1,9 @@
+<div class="tw-shadow tw-px-6 tw-py-5">
+  <p class="tw-text-lg tw-pb-2">{{ title }}</p>
+  <p class="tw-text-3xl tw-font-medium tw-pb-2">
+    <ng-container *ngIf="amount === ''">{{ currency }}</ng-container>
+    {{ amount | currency : currency | notEmpty : '-' }}
+  </p>
+  <p class="tw-text-sm tw-pb-4">{{ peopleQuantity }} personas</p>
+  <a class="tw-text-xs" [href]="link">Ver detalle ></a>
+</div>
