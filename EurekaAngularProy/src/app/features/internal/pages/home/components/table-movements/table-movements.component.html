@@ -6,13 +6,17 @@
     [(selection)]="selectedRows"
     [paginator]="true"
     [rows]="50"
+    [totalRecords]="totalRecords"
     [showCurrentPageReport]="true"
+    [lazy]="true"
+    (onLazyLoad)="loadDataLazy($event)"
     (onRowSelect)="onRowSelect()"
     (onRowUnselect)="onRowSelect()"
     [editMode]="'row'"
     dataKey="id"
     currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} elementos"
     class="table"
+    #table
   >
     <ng-template pTemplate="header" let-columns>
       <tr>
@@ -335,7 +339,6 @@
   header="Editar registro"
   [(visible)]="displayDialog"
   [responsive]="true"
-  showEffect="fade"
   [modal]="true"
   [style]="{ width: '300px' }"
   class="modal-edit"

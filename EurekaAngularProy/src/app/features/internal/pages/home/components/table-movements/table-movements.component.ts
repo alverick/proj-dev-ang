@@ -1,6 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { clone, forEachObjIndexed, isEmpty } from 'ramda';
+import { LazyLoadEvent } from 'primeng-lts/api';
+import { Table } from 'primeng-lts/table';
+import { clone, forEachObjIndexed, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
 import { SelectAllTableService } from '../../../../services';
@@ -28,7 +39,7 @@ interface IStatusRow {
   templateUrl: './table-movements.component.html',
   styleUrls: ['./table-movements.component.scss'],
 })
-export class TableMovementsComponent implements OnInit {
+export class TableMovementsComponent implements OnInit, OnChanges {
   cols = [
     {
       field: 'firstName',
@@ -60,10 +71,14 @@ export class TableMovementsComponent implements OnInit {
     { field: 'status', header: 'Estado' },
   ];
   @Input() data = [];
-  selectedRows = [];
+  @Input() totalRecords: number;
+  @Input() sortField = '';
+  @Output() sortFieldChange = new EventEmitter<string>();
   @Output() selectedChange = new EventEmitter<any>();
   @Output() showDetails = new EventEmitter<any>();
   @Output() saveRow = new EventEmitter<any>();
+  @Output() loadData = new EventEmitter<LazyLoadEvent>();
+  selectedRows = [];
   displayDialog = false;
   editRowData: any = {};
   dataSet = {};
@@ -111,6 +126,7 @@ export class TableMovementsComponent implements OnInit {
     today: 'Hoy',
     clear: 'Borrar',
   };
+  @ViewChild('table', { static: false }) table: Table;
 
   constructor(
     private logger: NGXLogger,
@@ -119,6 +135,14 @@ export class TableMovementsComponent implements OnInit {
 
   ngOnInit() {
     this.selectAllTable.overridePrimeNGTableMethods();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (pathEq(['sortField', 'currentValue'], '', changes)) {
+      this.table.sortOrder = 0;
+      this.table.sortField = '';
+      this.table.reset();
+    }
   }
 
   actionShowDetails(data) {
@@ -179,7 +203,6 @@ export class TableMovementsComponent implements OnInit {
         },
       },
     };
-    // this.logger.debug('-> { status, dueDate }', status, dueDate);
 
     const isEditable = svcStatus !== 1 && status !== 'PAGADO';
     const isEditableRow =
@@ -197,7 +220,6 @@ export class TableMovementsComponent implements OnInit {
   }
 
   onRowEditInit(data: any) {
-    console.log(data, this.data[0]);
     this.dataSet[data.id] = { ...data };
   }
 
@@ -232,12 +254,10 @@ export class TableMovementsComponent implements OnInit {
     this.displayDialog = true;
     this.dataSet[data.id] = { ...data };
     this.editRowData = clone(data);
-    console.log(this.editRowData);
   }
 
   onSave() {
     this.displayDialog = false;
-    console.log(this.editRowData);
     const changed = {};
     forEachObjIndexed((val, key) => {
       if (this.dataSet[this.editRowData.id][key] !== val) {
@@ -245,7 +265,6 @@ export class TableMovementsComponent implements OnInit {
       }
     }, this.editRowData);
     delete this.dataSet[this.editRowData.id];
-    console.log(this.editRowData, this.data[0], changed);
     if (!isEmpty(changed)) {
       this.saveRow.emit({
         emissionDate: this.editRowData.emissionDate,
@@ -261,5 +280,11 @@ export class TableMovementsComponent implements OnInit {
 
   onCancel() {
     this.displayDialog = false;
+  }
+
+  loadDataLazy(event: LazyLoadEvent) {
+    this.loadData.emit(event);
+    this.sortField = event.sortField || '';
+    this.sortFieldChange.emit(event.sortField || '');
   }
 }
