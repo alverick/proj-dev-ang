@@ -14,7 +14,8 @@ import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { ModalTermsComponent } from 'src/app/shared/components/modal-terms/modal-terms.component';
+
+import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import { IEntryModel } from '../../../../shared/models';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';

@@ -1,16 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER } from '@angular/core';
-
 import {
   MomentDateAdapter,
   MAT_MOMENT_DATE_FORMATS,
 } from '@angular/material-moment-adapter';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { withActions } from '@storybook/addon-actions';
@@ -25,6 +20,7 @@ import {
   DateAdapter,
   MAT_DATE_FORMATS,
 } from '@angular/material/core';
+import { MatLegacyDialogRef } from '@angular/material/legacy-dialog';
 
 function initAppComponentFactory(
   matIconRegistry: MatIconRegistry,
@@ -54,10 +50,7 @@ export default {
         MatDialogModule,
       ],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {},
-        },
+        MatLegacyDialogRef,
         CookieService,
         {
           provide: APP_INITIALIZER,
