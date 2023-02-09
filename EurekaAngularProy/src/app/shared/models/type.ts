@@ -1,5 +1,4 @@
 export interface Type {
-    idType: string;
-    descripcion: string;
- }
- 
+  idType: string;
+  descripcion: string;
+}

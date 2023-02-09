@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ import { GtpService } from '../../../../shared/services/gtp.service';
   styleUrls: ['./configurar-correo-gtp.component.scss'],
 })
 export class ConfigurarCorreoGtpComponent implements OnInit {
-  frmCorreoGtp: FormGroup;
+  frmCorreoGtp: UntypedFormGroup;
   Formulario = false;
   titleCorreo = 'Agregar E-mail';
   titlebtn = 'Agregar';
@@ -28,13 +28,13 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
 
   // correoGtp: CorreoGtpModel;
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     public gtpService: GtpService
   ) {}
 
   ngOnInit() {
     this.frmCorreoGtp = this.formBuilder.group({
-      correo: new FormControl('', [
+      correo: new UntypedFormControl('', [
         Validators.required,
         Validators.pattern(
           /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

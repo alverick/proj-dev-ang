@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs/internal/Subject';
+import { UntypedFormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { debtorCodeCustomEmpty } from '../../constants/services';
 import { IErrorMessages } from '../../models/forms';
@@ -13,7 +13,7 @@ import { IErrorMessages } from '../../models/forms';
 export class ServiceStepConfigurationComponent implements OnInit {
   @Output() sendForm = new EventEmitter<object>();
   @Output() cancel = new EventEmitter();
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() debtorCodeOptions: any[];
   @Input() paymentTypeOptions: any[];
@@ -21,7 +21,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
   @Input() showCancel = false;
-  debtForm: FormGroup;
+  debtForm: UntypedFormGroup;
   showDebtFields = false;
   debtorCodeEditable = false;
   submittedForm = false;
@@ -29,7 +29,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
 
   ngOnInit() {
     this.listenForms();
-    this.debtForm = this.form.get('debt') as FormGroup;
+    this.debtForm = this.form.get('debt') as UntypedFormGroup;
     this.setDebtForm(this.form.value.dataType);
     this.setDebtorCodeCustomField(
       this.form.value.debtorCode,

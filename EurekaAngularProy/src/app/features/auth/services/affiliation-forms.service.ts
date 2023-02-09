@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  AbstractControl,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { isNil } from 'ramda';
@@ -13,8 +14,8 @@ import { nameInvalid } from '../../../shared/validators/name-invalid.validator';
 
 @Injectable()
 export class AffiliationFormsService {
-  registerForm: FormGroup;
-  authForm: FormGroup;
+  registerForm: UntypedFormGroup;
+  authForm: UntypedFormGroup;
 
   authNameValidators = [
     Validators.required,
@@ -23,7 +24,7 @@ export class AffiliationFormsService {
     notBlankSpaces,
   ];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     const emailValidators = [
       Validators.required,
       Validators.pattern(
@@ -115,7 +116,7 @@ export class AffiliationFormsService {
   }
 }
 
-function notBlankSpaces(control: FormControl) {
+function notBlankSpaces(control: UntypedFormControl) {
   if (isNil(control.value)) {
     return null;
   }

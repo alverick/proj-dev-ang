@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { MatSnackBar } from '@angular/material';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
@@ -12,6 +15,7 @@ import { LoginService } from 'src/app/shared/services/login.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
+
 import { authFullRoutingNames } from '../../auth-routing.names';
 
 @Component({
@@ -20,7 +24,7 @@ import { authFullRoutingNames } from '../../auth-routing.names';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public loginForm: FormGroup;
+  public loginForm: UntypedFormGroup;
   public submitted = false;
   public error: { ruc: string; message: string } = null;
   public respuestaHttp: number;
@@ -72,7 +76,7 @@ export class LoginPage implements OnInit {
   linkRegisterCompany = authFullRoutingNames.COMPANY_REGISTER;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private loginService: LoginService,
     private router: Router,
     private cookieService: CookieService,

@@ -109,18 +109,17 @@
         formControlLabel="El monto"
         [errorMessages]="errorMessages.amount"
         >Monto
-        <div class="control tw-w-full ui-inputgroup">
-          <span class="ui-inputgroup-addon">{{ unitAmount }}</span>
-          <input
-            type="text"
-            class="tw-w-full"
-            pInputText
-            pKeyFilter="money"
-            csInputMoney
-            placeholder="1.00"
-            formControlName="amount"
-          />
-        </div>
+        <p-inputNumber
+          formControlName="amount"
+          class="tw-w-full tw-block"
+          mode="decimal"
+          csInputMoney
+          placeholder="1.00"
+          [prefix]="unitAmount"
+          [max]="maxAmount"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+        ></p-inputNumber>
       </cs-label-control>
     </div>
   </ng-template>

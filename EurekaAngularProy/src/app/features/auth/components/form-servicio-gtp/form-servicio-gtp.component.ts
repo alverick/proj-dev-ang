@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MonedaModel, IServiceModel } from 'src/app/shared/models';
@@ -30,7 +30,7 @@ export class FormServicioGtpComponent implements OnInit {
 
   constructor(
     private afiliacionService: AfiliacionService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private stateEdit: ConfigurarServiciosComponent
   ) {
     stateEdit.onFormAction.subscribe((e) => this.formAction(e));
@@ -75,7 +75,7 @@ export class FormServicioGtpComponent implements OnInit {
     return this.frm.controls;
   }
 
-  frm: FormGroup;
+  frm: UntypedFormGroup;
 
   codDeudor: any[] = [];
   tiposDato: any[] = [];
@@ -88,7 +88,7 @@ export class FormServicioGtpComponent implements OnInit {
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
   cmoraporce: boolean = false;
-  private _service: IServiceModel;
+  _service: IServiceModel;
   @Output() grabar = new EventEmitter<any>();
   public services: IServiceModel[] = [];
 
@@ -116,7 +116,7 @@ export class FormServicioGtpComponent implements OnInit {
         : '1.00';
 
     this.frm = this.fb.group({
-      nombre: new FormControl(
+      nombre: new UntypedFormControl(
         {
           value:
             this._service.newNameGtpStatus === 0 ||
@@ -135,7 +135,7 @@ export class FormServicioGtpComponent implements OnInit {
         ]
       ),
 
-      codDeudor: new FormControl(
+      codDeudor: new UntypedFormControl(
         {
           value:
             this._service.newNameCodeGtpStatus === 1 ||
@@ -151,54 +151,57 @@ export class FormServicioGtpComponent implements OnInit {
         [Validators.required]
       ),
 
-      nameCod: new FormControl({
+      nameCod: new UntypedFormControl({
         value: this._service.newNameCode,
         disabled: this._service.newNameCodeGtpStatus === 3 ? false : true,
       }),
 
-      tipoDato: new FormControl(
+      tipoDato: new UntypedFormControl(
         { value: this._service.tipoDato, disabled: this.gtpMode },
         Validators.required
       ),
-      tipoPago: new FormControl(
+      tipoPago: new UntypedFormControl(
         { value: this._service.tipoPago, disabled: this.gtpMode },
         Validators.required
       ),
-      idCuenta: new FormControl(
+      idCuenta: new UntypedFormControl(
         { value: this._service.idCuenta.toString(), disabled: true },
         [Validators.required, Validators.minLength(13)]
       ),
-      moneda: new FormControl(
+      moneda: new UntypedFormControl(
         { value: this._service.moneda, disabled: true },
         Validators.required
       ),
-      usaAgente: new FormControl({
+      usaAgente: new UntypedFormControl({
         value: this._service.usaAgente,
         disabled: true,
       }),
-      usaTienda: new FormControl({
+      usaTienda: new UntypedFormControl({
         value: this._service.usaTienda,
         disabled: true,
       }),
-      usaWebApp: new FormControl({
+      usaWebApp: new UntypedFormControl({
         value: this._service.usaWebApp,
         disabled: true,
       }),
-      cobraMora: new FormControl(
+      cobraMora: new UntypedFormControl(
         { value: this._service.cobraMora, disabled: true },
         Validators.required
       ),
-      periodoMora: new FormControl({
+      periodoMora: new UntypedFormControl({
         value: this._service.periodoMora,
         disabled: true,
       }),
-      tipoMora: new FormControl({
+      tipoMora: new UntypedFormControl({
         value: this._service.tipoMora,
         disabled: true,
       }),
-      monto: new FormControl({ value: montod, disabled: true }),
-      porcentaje: new FormControl({ value: porcentajed, disabled: true }),
-      pagoPartes: new FormControl(
+      monto: new UntypedFormControl({ value: montod, disabled: true }),
+      porcentaje: new UntypedFormControl({
+        value: porcentajed,
+        disabled: true,
+      }),
+      pagoPartes: new UntypedFormControl(
         { value: this._service.pagoPartes, disabled: true },
         Validators.required
       ),
@@ -313,7 +316,7 @@ export class FormServicioGtpComponent implements OnInit {
         this._service.newNameGtpStatus === 3
           ? this.frm.value.nombre
           : value.nombre;
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       /* if (value.newNameCode === 'RUC' || value.newNameCode === 'DNI' || value.newNameCode === 'Codigo Interno' || value.newNameCode === 'Codigo') {
          value.newNameCode = ( this._service.newNameCodeGtpStatus === 3 ) ? this.frm.value.codDeudor : this._service.newNameCode;
        } else {
@@ -529,7 +532,7 @@ export class FormServicioGtpComponent implements OnInit {
 }
 
 function Maximo(max: number) {
-  return (c: FormControl) => {
+  return (c: UntypedFormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro > max) {
@@ -541,7 +544,7 @@ function Maximo(max: number) {
 }
 
 function Minimo(min: number) {
-  return (c: FormControl) => {
+  return (c: UntypedFormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro < min) {
@@ -552,7 +555,7 @@ function Minimo(min: number) {
   };
 }
 
-function Alfanumerico(c: FormControl) {
+function Alfanumerico(c: UntypedFormControl) {
   let regex = /[0-9a-zA-Z]-?/g;
   if (c.value && !regex.test(c.value)) {
     return { alfa: true };
@@ -560,7 +563,7 @@ function Alfanumerico(c: FormControl) {
   return null;
 }
 
-function Alfabetico(c: FormControl) {
+function Alfabetico(c: UntypedFormControl) {
   let regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
   let numero = /[0-9]/g;
   let raro = /[-{1,}]-?/g;

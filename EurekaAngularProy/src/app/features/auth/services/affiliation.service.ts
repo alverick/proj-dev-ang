@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
-import { of, throwError, Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
   ICompanySendUpdate,
   ICompanyUpdate,
 } from 'src/app/shared/models/company';
+import { SweetAlertOptions } from 'sweetalert2';
+
 import { parseParams } from '../../../shared/constants/services';
 import {
   IEntryModel,
@@ -33,20 +35,20 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 export class AffiliationService {
   companyId;
   email;
-  servicesList: Array<Partial<IServiceRemoteModelForms>> = [];
+  servicesList: Partial<IServiceRemoteModelForms>[] = [];
 
   entryOptions: IEntryModel[] = [];
-  registerForm: FormGroup;
-  authForm: FormGroup;
-  serviceForm: FormGroup;
-  serviceConfigForm: FormGroup;
-  editServiceForm: FormGroup;
+  registerForm: UntypedFormGroup;
+  authForm: UntypedFormGroup;
+  serviceForm: UntypedFormGroup;
+  serviceConfigForm: UntypedFormGroup;
+  editServiceForm: UntypedFormGroup;
   private updateData: ICompanyUpdate;
   tokenUpdate;
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private companyService: CompanyService,
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
@@ -122,6 +124,7 @@ export class AffiliationService {
       nameOriginal,
       debtorCodeOriginal,
       newNameCode,
+      newName,
       debt: {
         dataType,
         paymentType,
@@ -297,7 +300,7 @@ export class AffiliationService {
   }
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {
-    let modalSettings;
+    let modalSettings: SweetAlertOptions;
     if (
       this.updateData.newNameGTPStatus === 3 &&
       this.updateData.newName === this.authForm.get('name').value
@@ -333,11 +336,30 @@ export class AffiliationService {
     }
 
     if (isNotNil(modalSettings)) {
-      swalAlert.fire(modalSettings);
+      void swalAlert.fire(modalSettings);
       return throwError('Incomplete data');
     }
 
-    const payload: ICompanySendUpdate = {
+    return this.companyService
+      .sendUpdateCompanyData(this.generatePayloadUpdate())
+      .pipe(
+        tap((result) => {
+          if (result) {
+            this.email = this.updateData.email;
+          } else {
+            swalAlert.fire({
+              icon: 'warning',
+              text: `Ha ocurrido un error`,
+              showConfirmButton: true,
+              confirmButtonText: 'Entendido',
+            });
+          }
+        })
+      );
+  }
+
+  generatePayloadUpdate(): ICompanySendUpdate {
+    return {
       Token: this.tokenUpdate,
       NewName: this.updateData.inReview
         ? this.authForm.get('name').value
@@ -360,21 +382,6 @@ export class AffiliationService {
         }
       ),
     };
-
-    return this.companyService.sendUpdateCompanyData(payload).pipe(
-      tap((result) => {
-        if (result) {
-          this.email = this.updateData.email;
-        } else {
-          swalAlert.fire({
-            icon: 'warning',
-            text: `Ha ocurrido un error`,
-            showConfirmButton: true,
-            confirmButtonText: 'Entendido',
-          });
-        }
-      })
-    );
   }
 
   resetRegistration() {

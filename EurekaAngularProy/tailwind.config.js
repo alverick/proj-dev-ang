@@ -1,10 +1,5 @@
 module.exports = {
-  mode: 'jit',
   content: ['./src/app/**/*.{html,ts}'],
-  purge: {
-    enabled: process?.argv?.indexOf('build') !== -1,
-    content: ['./src/app/**/*.html', './src/app/**/*.ts'],
-  },
   prefix: 'tw-',
   theme: {
     colors: {
@@ -72,6 +67,10 @@ module.exports = {
         '8xl': '1320px',
       },
     },
+    borderColor: (theme) => ({
+      ...theme('colors'),
+      'green-1': 'var(--primary-green-1)',
+    }),
   },
   plugins: [],
 };

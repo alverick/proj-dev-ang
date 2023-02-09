@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidationErrors,
   Validators,
   ValidatorFn,
@@ -17,8 +17,7 @@ import {
 import * as moment from 'moment';
 import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
-import { combineLatest } from 'rxjs';
-import { Subject } from 'rxjs/internal/Subject';
+import { combineLatest, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { DateList } from '../../models/dateList';
 import { StatesGtp } from '../../models/states-gtp';
@@ -71,14 +70,14 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     this.validDateOrderValidator(),
   ];
 
-  form = new FormGroup({
-    inputSearch: new FormControl(''),
-    service: new FormControl(''),
-    status: new FormControl(''),
-    statusSolicitud: new FormControl(''),
-    dateForFilter: new FormControl(''),
-    dateFrom: new FormControl({ value: '', disabled: true }),
-    dateTo: new FormControl({ value: '', disabled: true }),
+  form = new UntypedFormGroup({
+    inputSearch: new UntypedFormControl(''),
+    service: new UntypedFormControl(''),
+    status: new UntypedFormControl(''),
+    statusSolicitud: new UntypedFormControl(''),
+    dateForFilter: new UntypedFormControl(''),
+    dateFrom: new UntypedFormControl({ value: '', disabled: true }),
+    dateTo: new UntypedFormControl({ value: '', disabled: true }),
   });
 
   $destroy = new Subject();

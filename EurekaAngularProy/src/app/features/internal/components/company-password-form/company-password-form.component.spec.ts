@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CompanyPasswordFormComponent } from './company-password-form.component';
 
@@ -6,7 +6,7 @@ describe('CompanyPasswordFormComponent', () => {
   let component: CompanyPasswordFormComponent;
   let fixture: ComponentFixture<CompanyPasswordFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [CompanyPasswordFormComponent],
     }).compileComponents();

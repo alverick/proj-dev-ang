@@ -499,7 +499,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       ) {
         return false;
       }
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       if (
         (svc.newNameGtpStatus === 0 || svc.newNameGtpStatus === 2) &&
         (svc.newNameCodeGtpStatus === 0 || svc.newNameCodeGtpStatus === 2)

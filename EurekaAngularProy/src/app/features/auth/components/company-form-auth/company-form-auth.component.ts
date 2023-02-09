@@ -8,13 +8,14 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { UntypedFormGroup } from '@angular/forms';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
-import { Subject } from 'rxjs/internal/Subject';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { ModalTermsComponent } from 'src/app/shared/components/modal-terms/modal-terms.component';
+
+import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import { IEntryModel } from '../../../../shared/models';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';
@@ -28,7 +29,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   $destroy = new Subject();
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
   @Input() categories: IEntryModel[] = [];
-  @Input() companyForm: FormGroup;
+  @Input() companyForm: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() edit = false;
 

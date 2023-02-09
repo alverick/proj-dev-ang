@@ -4,48 +4,52 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   DateAdapter,
-  MatExpansionModule,
-  MatFormFieldModule,
-  MatRadioModule,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
-} from '@angular/material';
-import {
-  MatMomentDateModule,
-  MomentDateAdapter,
-  MAT_MOMENT_DATE_FORMATS,
-} from '@angular/material-moment-adapter';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+} from '@angular/material/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
+import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
+import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
+import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
+import { MatLegacyRadioModule as MatRadioModule } from '@angular/material/legacy-radio';
+import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MatMomentDateModule,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { TooltipModule as TooltipModuleNgx } from 'ngx-bootstrap';
-import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { TooltipModule as TooltipModuleNgx } from 'ngx-bootstrap/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
-import { ButtonModule } from 'primeng-lts/button';
-import { CheckboxModule } from 'primeng-lts/checkbox';
-import { DropdownModule } from 'primeng-lts/dropdown';
-import { InputMaskModule } from 'primeng-lts/inputmask';
-import { InputTextModule } from 'primeng-lts/inputtext';
-import { KeyFilterModule } from 'primeng-lts/keyfilter';
-import { MessageModule } from 'primeng-lts/message';
-import { MessagesModule } from 'primeng-lts/messages';
-import { RadioButtonModule } from 'primeng-lts/radiobutton';
-import { SidebarModule } from 'primeng-lts/sidebar';
-import { StepsModule } from 'primeng-lts/steps';
-import { TooltipModule } from 'primeng-lts/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { SidebarModule } from 'primeng/sidebar';
+import { StepsModule } from 'primeng/steps';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LabelControlComponent } from './components/label-control/label-control.component';
@@ -60,6 +64,7 @@ import { ServiceStepInfoComponent } from './components/service-step-info/service
 import { ServicesListComponent } from './components/services-list/services-list.component';
 import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
 import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
+import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
 import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
@@ -77,7 +82,6 @@ const FORM_MODULES = [
   MatDatepickerModule,
   MatDialogModule,
   MatExpansionModule,
-  MaterialFileInputModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -92,18 +96,22 @@ const FORM_MODULES = [
   ReactiveFormsModule,
 ];
 const PRIMENG_MODULES = [
-  KeyFilterModule,
-  InputMaskModule,
-  InputTextModule,
-  DropdownModule,
-  CheckboxModule,
-  RadioButtonModule,
-  StepsModule,
-  SidebarModule,
   ButtonModule,
-  TooltipModule,
-  MessagesModule,
+  CalendarModule,
+  CheckboxModule,
+  DialogModule,
+  DropdownModule,
+  InputMaskModule,
+  InputNumberModule,
+  InputTextModule,
+  KeyFilterModule,
   MessageModule,
+  MessagesModule,
+  RadioButtonModule,
+  SidebarModule,
+  StepsModule,
+  TableModule,
+  TooltipModule,
 ];
 const UI_MODULES = [
   FontAwesomeModule,
@@ -133,6 +141,7 @@ const UI_MODULES = [
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     ...SERVICES,
     ...RESOLVERS,
+    ...DATA_SERVICES,
   ],
   declarations: [
     OnlyNumbersFormDirective,
@@ -183,6 +192,5 @@ const UI_MODULES = [
     ServiceCardComponent,
     ...PIPES,
   ],
-  entryComponents: [ModalTermsComponent],
 })
 export class SharedModule {}

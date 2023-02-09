@@ -1,5 +1,10 @@
 import { Injectable, Injector } from '@angular/core';
-import { Overlay, ConnectionPositionPair, PositionStrategy, OverlayConfig } from '@angular/cdk/overlay';
+import {
+  Overlay,
+  ConnectionPositionPair,
+  PositionStrategy,
+  OverlayConfig,
+} from '@angular/cdk/overlay';
 import { PortalInjector, ComponentPortal } from '@angular/cdk/portal';
 import { PopoverRef, PopoverContent } from './popover-ref';
 import { PopoverComponent } from './popover.component';
@@ -10,16 +15,24 @@ export type PopoverParams<T> = {
   origin: HTMLElement;
   content: PopoverContent;
   data?: T;
-}
+};
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Popover {
-  constructor(private overlay: Overlay, private injector: Injector) { }
+  constructor(private overlay: Overlay, private injector: Injector) {}
 
-  open<T>({ origin, content, data, width, height }: PopoverParams<T>): PopoverRef<T> {
-    const overlayRef = this.overlay.create(this.getOverlayConfig({ origin, width, height }));
+  open<T>({
+    origin,
+    content,
+    data,
+    width,
+    height,
+  }: PopoverParams<T>): PopoverRef<T> {
+    const overlayRef = this.overlay.create(
+      this.getOverlayConfig({ origin, width, height })
+    );
     const popoverRef = new PopoverRef<T>(overlayRef, content, data);
 
     const injector = this.createInjector(popoverRef, this.injector);
@@ -35,12 +48,13 @@ export class Popover {
       height,
       backdropClass: 'popover-backdrop',
       positionStrategy: this.getOverlayPosition(origin),
-      scrollStrategy: this.overlay.scrollStrategies.reposition()
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
     });
   }
 
   private getOverlayPosition(origin: HTMLElement): PositionStrategy {
-    const positionStrategy = this.overlay.position()
+    const positionStrategy = this.overlay
+      .position()
       .flexibleConnectedTo(origin)
       .withPositions(this.getPositions())
       .withFlexibleDimensions(false)
@@ -60,7 +74,7 @@ export class Popover {
         originX: 'center',
         originY: 'top',
         overlayX: 'center',
-        overlayY: 'bottom'
+        overlayY: 'bottom',
       },
       {
         originX: 'center',
@@ -68,7 +82,6 @@ export class Popover {
         overlayX: 'center',
         overlayY: 'top',
       },
-    ]
+    ];
   }
-
 }

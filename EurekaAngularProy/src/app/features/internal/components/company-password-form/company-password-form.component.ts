@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { IErrorMessages } from '../../../../shared/models/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { IErrorMessages } from '../../../../shared/models/forms';
   styleUrls: ['./company-password-form.component.scss'],
 })
 export class CompanyPasswordFormComponent implements OnInit {
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Output() sendForm = new EventEmitter<any>();
   constructor() {}

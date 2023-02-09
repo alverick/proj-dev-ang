@@ -4,23 +4,24 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { centered } from '@storybook/addon-centered/angular';
-import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
+
+import { errorServiceConfiguration } from '../../constants/company-errors';
 import {
   chargeTypeOptions,
   currencyOptions,
   debtorCodeOptions,
-  errorServiceConfiguration,
   interestTypeOptions,
   paymentTypeOptions,
-} from '../../../features/auth/constants';
+} from '../../constants/services';
 import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
+
 @Component({
   selector: 'cs-form-demo',
   template: ` <cs-service-debt-form
@@ -34,7 +35,7 @@ import { SharedModule } from '../../shared.module';
 })
 class FormDemoComponent {
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
-  form: FormGroup;
+  form: UntypedFormGroup;
   errors = errorServiceConfiguration;
   debtorCodeOptions = debtorCodeOptions;
   paymentTypeOptions = paymentTypeOptions;
@@ -42,7 +43,8 @@ class FormDemoComponent {
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
   constructor(servicesForms: ServicesFormsService) {
-    this.form = servicesForms.serviceConfigForm.controls.debt as FormGroup;
+    this.form = servicesForms.serviceConfigForm.controls
+      .debt as UntypedFormGroup;
   }
   onSubmit($event) {
     this.sendForm.emit($event);
@@ -57,7 +59,6 @@ export default {
   title: 'Auth/Module/Service Debt Form',
   decorators: [
     centered,
-    withKnobs,
     moduleMetadata({
       imports: [BrowserAnimationsModule, SharedModule],
       providers: [

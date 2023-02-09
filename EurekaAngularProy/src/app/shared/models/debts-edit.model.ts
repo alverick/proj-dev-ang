@@ -1,5 +1,5 @@
 export class DebtEdit {
-    emissionDate: Date;
-    dueDate: Date;
-    concept:  string;
+  emissionDate: Date;
+  dueDate: Date;
+  concept: string;
 }

@@ -1,45 +1,53 @@
-<div class="container py-4" style="background: #f4f5f7  !important;">
-    <mat-dialog-actions align="end">
-        <div  >
-            <span class="h5 m-0 pr-2"></span>
-            <button class="button-close" [mat-dialog-close]="true">
-                <span class="icon-icono-x font-16" ></span>
-            </button>
+<div class="container py-4" style="background: #f4f5f7 !important">
+  <mat-dialog-actions align="end">
+    <div>
+      <span class="h5 m-0 pr-2"></span>
+      <button class="button-close" [mat-dialog-close]="true">
+        <span class="icon-icono-x font-16"></span>
+      </button>
+    </div>
+  </mat-dialog-actions>
+  <mat-dialog-content>
+    <div class="bg-blanco mb-3 custom-shadow pasos-add-registro">
+      <div class="d-none text-center">
+        <h6 class="my-4">Validacion</h6>
+        <div class="icon-grande"><span class="icon-papel"></span></div>
+        <div class="mb-3 mt-4">
+          <button class="btn-eureca btn-eureca-amarillo btn-small">
+            Descargar plantilla
+          </button>
         </div>
-    </mat-dialog-actions>
-    <mat-dialog-content>
-        <div class="bg-blanco mb-3 custom-shadow pasos-add-registro">
-            <div class="d-none text-center">
-                <h6 class="my-4">Validacion</h6>
-                <div class="icon-grande"><span class="icon-papel"></span></div>
-                <div class="mb-3 mt-4"><button class="btn-eureca btn-eureca-amarillo btn-small">Descargar plantilla</button>
-                </div>
+      </div>
+    </div>
+    <div class="bg-blanco custom-shadow pasos-add-registro activo">
+      <div class="title-popup-add-registo text-center position-relative h2 m-0">
+        <div>Se encontraron los siguientes errores:</div>
+      </div>
+      <div>
+        <table>
+          <div *ngFor="let error of excelService.errores">
+            <div data-spy="scroll">
+              <td>
+                <strong *ngIf="verFila(error)"
+                  >Fila &nbsp; {{ error.row}}:&nbsp;</strong
+                >
+                {{ error.description }} ,&nbsp;<span *ngIf="verFila(error)"
+                  >el campo {{ error.field }} &nbsp; tiene el valor &nbsp; {{
+                  error.value }}
+                </span>
+              </td>
             </div>
-        </div>
-        <div  class="bg-blanco custom-shadow pasos-add-registro activo">
-            <div class="title-popup-add-registo text-center position-relative h2 m-0">
-                <div>Se encontraron los siguientes errores:</div>
-            </div>
-            <div >
-                <table>
-                        <div *ngFor="let error of excelService.errores">
-                            <div data-spy="scroll">
-                                <td> <strong *ngIf="verFila(error)">Fila &nbsp; {{ error.row}}:&nbsp;</strong> {{ error.description }}
-                              ,&nbsp;<span *ngIf="verFila(error)">el campo
-                               {{ error.field }}  &nbsp; tiene el valor &nbsp; {{ error.value }}   </span></td>
-                            </div>
-                        </div>
-
-                </table>
-            </div>
-            <div>Corrige los errores y vuelve a subir la plantilla</div>
-        </div>
-    </mat-dialog-content>
+          </div>
+        </table>
+      </div>
+      <div>Corrige los errores y vuelve a subir la plantilla</div>
+    </div>
+  </mat-dialog-content>
 </div>
 
 <style>
-    .button-close {
-        background-color: #ffffff00;
-        border-color: #ffffff00;
-    }
+  .button-close {
+    background-color: #ffffff00;
+    border-color: #ffffff00;
+  }
 </style>
