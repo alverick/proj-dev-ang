@@ -30,8 +30,8 @@ const Template: Story<DashboardCardComponent> = (
   props: args,
 });
 
-export const normal = Template.bind({});
-normal.args = {
+export const Normal = Template.bind({});
+Normal.args = {
   title: 'Cobro total',
   currency: 'S/',
   amount: '100000.00',
@@ -39,8 +39,8 @@ normal.args = {
   link: '#home',
 };
 
-export const empty = Template.bind({});
-empty.args = {
+export const Empty = Template.bind({});
+Empty.args = {
   title: 'Cobro total',
   currency: 'S/',
   amount: '',
