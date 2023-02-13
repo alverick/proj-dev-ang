@@ -1,0 +1,16 @@
+<div class="tw-shadow tw-bg-white tw-rounded">
+  <div class="header tw-px-6 tw-py-4 tw-border-b tw-border-extended-grey-4">
+    <p>Recaudación histórica</p>
+  </div>
+  <div class="content tw-px-6 tw-py-4">
+    <ng-container *ngIf="serviceData?.labels?.length > 0">
+      <p-chart type="line" [data]="serviceData"></p-chart>
+    </ng-container>
+    <div
+      class="tw-text-center tw-text-xs"
+      *ngIf="serviceData?.labels?.length === 0"
+    >
+      Sin registros
+    </div>
+  </div>
+</div>
