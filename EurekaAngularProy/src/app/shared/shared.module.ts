@@ -35,6 +35,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -100,6 +101,7 @@ const FORM_MODULES = [
 const PRIMENG_MODULES = [
   ButtonModule,
   CalendarModule,
+  ChartModule,
   CheckboxModule,
   DialogModule,
   DropdownModule,
