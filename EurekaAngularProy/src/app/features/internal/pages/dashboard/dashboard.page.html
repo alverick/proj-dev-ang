@@ -1,0 +1,48 @@
+<div class="tw-max-w-8xl tw-m-auto tw-relative px-4 2xl:px-0">
+  <div class="tw-my-6">
+    <cs-dashboard-filter
+      [services]="services"
+      [optionsDates]="optionsDates"
+      [initialValue]="initialValue"
+      (sendForm)="sendFilters($event)"
+    ></cs-dashboard-filter>
+  </div>
+  <div class="output" #outputHtml>
+    <div class="tw-my-6 tw-flex tw-gap-6">
+      <cs-dashboard-card
+        title="Cobro total"
+        currency="S/"
+        [amount]="this.collectAmounts?.totalChargeAmount"
+        [peopleQuantity]="this.collectAmounts?.totalChargePersons"
+        link="#home"
+        class="tw-flex-grow"
+      ></cs-dashboard-card>
+      <cs-dashboard-card
+        title="Cobro pendiente"
+        currency="S/"
+        [amount]="this.collectAmounts?.pendingChargeAmount"
+        [peopleQuantity]="this.collectAmounts?.pendingChargePersons"
+        link="#home"
+        class="tw-flex-grow"
+      ></cs-dashboard-card>
+      <cs-dashboard-card
+        title="Cobro en mora"
+        currency="S/"
+        [amount]="this.collectAmounts?.defaultChargeAmount"
+        [peopleQuantity]="this.collectAmounts?.defaultChargePersons"
+        link="#home"
+        class="tw-flex-grow"
+      ></cs-dashboard-card>
+    </div>
+    <div class="tw-my-6 tw-flex tw-gap-6">
+      <cs-dashboard-table
+        class="tw-flex-grow"
+        [customers]="clients"
+      ></cs-dashboard-table>
+      <cs-dashboard-graph
+        [serviceData]="graphData"
+        class="tw-flex-grow"
+      ></cs-dashboard-graph>
+    </div>
+  </div>
+</div>
