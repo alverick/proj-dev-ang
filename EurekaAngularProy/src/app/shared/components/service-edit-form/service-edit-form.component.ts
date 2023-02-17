@@ -130,9 +130,9 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
         this.affiliationMode &&
         (inReview || newNameGTPStatus === 3 || newNameCodeGTPStatus === 3)
       ) {
-        this.debtForm.get('chargeType').disable();
-        this.debtForm.get('interestType').disable();
-        this.debtForm.get('amount').disable();
+        this.debtForm.get('chargeType').disable({ emitEvent: false });
+        this.debtForm.get('amount').disable({ emitEvent: false });
+        this.debtForm.get('interestType').disable({ emitEvent: false });
       }
     }, 400);
   }
