@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
 export class DashboardCardComponent {
   @Input() title: string;
   @Input() currency: string;
-  @Input() amount: number;
+  @Input() amount: number | string;
   @Input() link: number;
   @Input() peopleQuantity: number;
 }

@@ -43,7 +43,7 @@ export const Empty = Template.bind({});
 Empty.args = {
   title: 'Cobro total',
   currency: 'S/',
-  amount: '',
-  peopleQuantity: '0',
+  amount: 0,
+  peopleQuantity: 0,
   link: '#home',
 };
