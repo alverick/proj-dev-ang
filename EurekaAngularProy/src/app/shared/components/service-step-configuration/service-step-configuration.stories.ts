@@ -11,15 +11,15 @@ import { action } from '@storybook/addon-actions';
 import { centered } from '@storybook/addon-centered/angular';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
+import { AffiliationFormsService } from '../../../features/auth/services';
+import { errorServiceConfiguration } from '../../constants/company-errors';
 import {
   chargeTypeOptions,
   currencyOptions,
   debtorCodeOptions,
-  errorServiceConfiguration,
   interestTypeOptions,
   paymentTypeOptions,
-} from '../../../features/auth/constants';
-import { AffiliationFormsService } from '../../../features/auth/services';
+} from '../../constants/services';
 import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';

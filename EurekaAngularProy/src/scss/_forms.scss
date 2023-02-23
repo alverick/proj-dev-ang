@@ -165,6 +165,113 @@ body {
     }
   }
 
+  .ui-table {
+    p-sorticon {
+    }
+
+    .ui-paginator {
+      font-size: 12px;
+      background-color: #fff;
+      border-style: none;
+      text-align: right;
+      padding-right: 20px;
+      padding-top: 5px;
+
+      .ui-paginator-pages .ui-paginator-page.ui-state-active {
+        background-color: transparent;
+        color: var(--primary-green-1);
+      }
+    }
+
+    table {
+      font-size: 14px;
+    }
+
+    .ui-sortable-column {
+      .ui-sortable-column-icon {
+        color: var(--secondary-blue-1);
+        font-size: 12px;
+      }
+
+      &.ui-state-highlight {
+        background-color: #ffffff;
+        color: var(--secondary-blue-1);
+
+        .ui-sortable-column-icon {
+          color: var(--secondary-blue-1);
+        }
+      }
+    }
+
+    .ui-table-thead > tr {
+      color: var(--secondary-blue-1);
+
+      > th {
+        border-color: var(--grises-grey-4);
+        word-break: break-all;
+        vertical-align: middle;
+        background-color: #ffffff;
+        color: var(--secondary-blue-1);
+
+        &:not(:first-child) {
+          border-left-style: none;
+        }
+
+        &:not(:last-child) {
+          border-right-style: none;
+        }
+      }
+    }
+
+    .ui-table-tbody > tr {
+      color: var(--grises-ibk-black);
+
+      &:focus-visible {
+        outline-color: transparent;
+      }
+
+      &.ui-state-highlight {
+        color: var(--grises-ibk-black);
+        background-color: #ffffff;
+      }
+
+      &:nth-child(even) {
+        background-color: #ffffff;
+
+        &.ui-state-highlight {
+          color: var(--grises-ibk-black);
+          background-color: #ffffff;
+        }
+      }
+
+      > td {
+        border-color: var(--grises-grey-4);
+        vertical-align: top;
+
+        &:not(:first-child) {
+          border-left-style: none;
+        }
+
+        &:not(:last-child) {
+          border-right-style: none;
+        }
+
+        &:last-child {
+          border-left-style: solid;
+        }
+
+        .ui-inputtext {
+          font-size: 14px;
+          width: 100%;
+          padding: 3px;
+        }
+        .ui-datepicker:not(.ui-datepicker-inline) {
+          min-width: 310px;
+        }
+      }
+    }
+  }
+
   .ui-tooltip {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
@@ -209,4 +316,17 @@ body {
     border-radius: 20px;
     padding-left: 10px;
   }
+}
+
+.button-outline-green {
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  border-radius: 4px;
+  background-color: #ffffff;
+  border: solid 1px var(--primary-green-1);
+  color: var(--primary-green-1);
 }

@@ -1,0 +1,20 @@
+.table {
+  .icon {
+    font-size: 6px;
+  }
+
+  .th-status {
+    width: 11rem;
+  }
+}
+
+.table-details {
+  td,
+  th {
+    border-style: none;
+  }
+}
+
+.empty {
+  min-height: 400px;
+}
