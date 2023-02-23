@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { authFullRoutingNames } from 'src/app/app-routing.collection';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cs-landing',
@@ -9,8 +10,7 @@ import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service
 })
 export class LandingComponent implements OnInit {
   linkLogin = authFullRoutingNames.LOGIN;
-  linkRegisterCompany = authFullRoutingNames.COMPANY_REGISTER;
-  constructor(private gaService: GoogleAnalytics) {}
+  constructor(private gaService: GoogleAnalytics, public router: Router) {}
 
   ngOnInit() {
     this.gaService.sendEvent('Landing', {
@@ -23,6 +23,9 @@ export class LandingComponent implements OnInit {
     this.gaService.sendEvent('Registrarme', {
       event_category: GoogleAnalytics.Afiliacion,
       event_label: 'registrarme',
+    });
+    this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
+      state: { initNew: true },
     });
   }
 
