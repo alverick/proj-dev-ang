@@ -172,12 +172,10 @@ export class AprobacionesPage implements OnInit {
     this.scv = [];
     // NO APROBADOS
     const nombreApp = this.gtpService.services.filter(
-      ({ acceptednewName, name, newName }) =>
-        acceptednewName === false && name !== newName
+      ({ acceptednewName }) => acceptednewName === false
     ).length;
     const CodDeuApp = this.gtpService.services.filter(
-      ({ acceptednewNameCode, debtorCode, newNameCode }) =>
-        acceptednewNameCode === false && debtorCode !== newNameCode
+      ({ acceptednewNameCode }) => acceptednewNameCode === false
     ).length;
 
     // tslint:disable-next-line: max-line-length cunatos son los que faltan revisar
@@ -229,24 +227,12 @@ export class AprobacionesPage implements OnInit {
           newNameCodeGTPStatus === 0 ||
           res !== ''
       )
-      .map(
-        ({
-          acceptednewName,
-          acceptednewNameCode,
-          debtorCode,
-          id,
-          name,
-          newName,
-          newNameCode,
-          res,
-        }) => ({
-          ServiceId: id,
-          NombreAprobado: name === newName ? true : acceptednewName,
-          NombreCodAprobado:
-            debtorCode === newNameCode ? true : acceptednewNameCode,
-          Res: res,
-        })
-      );
+      .map(({ acceptednewName, acceptednewNameCode, id, res }) => ({
+        ServiceId: id,
+        NombreAprobado: acceptednewName,
+        NombreCodAprobado: acceptednewNameCode,
+        Res: res,
+      }));
 
     this.processDataEnterprise(totalObservations, notApproved);
   }

@@ -22,7 +22,6 @@ import { AffiliationFormsService } from '../../../features/auth/services';
 import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
-import { ServiceEditFormComponent } from './service-edit-form.component';
 
 @Component({
   selector: 'cs-form-demo',
@@ -34,6 +33,7 @@ import { ServiceEditFormComponent } from './service-edit-form.component';
     [currencyOptions]="currencyOptions"
     [chargeTypeOptions]="chargeTypeOptions"
     [interestTypeOptions]="interestTypeOptions"
+    [formData]="formData"
     (sendForm)="onSubmit($event)"
   ></cs-service-edit-form>`,
 })
@@ -46,6 +46,40 @@ class FormDemoComponent {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
+  formData = {
+    id: 1639,
+    res: '2000302',
+    name: 'PAGO3',
+    debtorCode: 'DNI',
+    idAccount: '',
+    accountNumber: '',
+    currency: '001',
+    useAppWeb: true,
+    useAgent: true,
+    useStore: true,
+    percentage: null,
+    currencySymbol: 'S/',
+    inReview: true,
+    newNameCode: 'DNI',
+    newNameCodeGTPStatus: 3,
+    newName: 'nombre invalido',
+    newNameGTPStatus: 3,
+    status: 'Activo',
+    debtorCodeType: 0,
+    useAgencyChannel: false,
+    debtorCodeCustom: '',
+    nameOriginal: 'PAGO3',
+    debtorCodeOriginal: 'DNI',
+    debt: {
+      dataType: 'C',
+      paymentType: 'C',
+      chargeInterest: 'S',
+      chargeType: 1,
+      interestType: 'M',
+      amount: 2,
+      partialPayment: 'N',
+    },
+  };
   constructor(servicesForms: ServicesFormsService) {
     this.form = servicesForms.editServiceForm;
   }
@@ -80,7 +114,6 @@ export default {
 };
 
 export const normal = () => ({
-  component: ServiceEditFormComponent,
   moduleMetadata: {
     declarations: [FormDemoComponent],
     providers: [],

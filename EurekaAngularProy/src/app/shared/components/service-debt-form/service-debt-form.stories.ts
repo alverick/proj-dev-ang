@@ -18,12 +18,9 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants/services';
-import { InputMoneyDirective } from '../../directives';
 import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
-import { ServiceDebtFormComponent } from './service-debt-form.component';
-
 @Component({
   selector: 'cs-form-demo',
   template: ` <cs-service-debt-form
@@ -77,13 +74,8 @@ export default {
 };
 
 export const normal = () => ({
-  component: ServiceDebtFormComponent,
   moduleMetadata: {
-    declarations: [
-      FormDemoComponent,
-      ServiceDebtFormComponent,
-      InputMoneyDirective,
-    ],
+    declarations: [FormDemoComponent],
     providers: [],
   },
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>

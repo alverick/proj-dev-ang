@@ -308,6 +308,14 @@ body {
       }
     }
   }
+
+  .ui-message {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    border-radius: 20px;
+    padding-left: 10px;
+  }
 }
 
 .button-outline-green {

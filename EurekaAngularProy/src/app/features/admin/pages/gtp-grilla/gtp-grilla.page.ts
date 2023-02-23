@@ -151,6 +151,7 @@ export class GtpGrillaPage implements OnInit {
   }
 
   Aprobar(ClientId: number) {
+    this.gtpService.services = [];
     this.router.navigate([adminFullRoutingNames.APPROVE + ClientId]);
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
@@ -73,6 +73,7 @@ export class AffiliationService {
     const {
       name,
       newName,
+      newNameCode,
       debtorCode,
       paymentType,
       currency,
@@ -102,7 +103,13 @@ export class AffiliationService {
       }
     }
 
-    const amountField = interestType === 'M' ? amount : percentage;
+    let amountField = interestType === 'M' ? amount : percentage;
+    if (inReview) {
+      if (isString(amountField)) {
+        amountField = parseFloat(amountField);
+      }
+      amountField = amountField.toFixed(2);
+    }
     return {
       name,
       debtorCode,
@@ -114,6 +121,8 @@ export class AffiliationService {
       newNameCodeGTPStatus,
       nameOriginal,
       debtorCodeOriginal,
+      newNameCode,
+      newName,
       debt: {
         dataType,
         paymentType,
@@ -329,7 +338,26 @@ export class AffiliationService {
       return throwError('Incomplete data');
     }
 
-    const payload: ICompanySendUpdate = {
+    return this.companyService
+      .sendUpdateCompanyData(this.generatePayloadUpdate())
+      .pipe(
+        tap((result) => {
+          if (result) {
+            this.email = this.updateData.email;
+          } else {
+            swalAlert.fire({
+              icon: 'warning',
+              text: `Ha ocurrido un error`,
+              showConfirmButton: true,
+              confirmButtonText: 'Entendido',
+            });
+          }
+        })
+      );
+  }
+
+  generatePayloadUpdate(): ICompanySendUpdate {
+    return {
       Token: this.tokenUpdate,
       NewName: this.updateData.inReview
         ? this.authForm.get('name').value
@@ -352,24 +380,10 @@ export class AffiliationService {
         }
       ),
     };
-
-    return this.companyService.sendUpdateCompanyData(payload).pipe(
-      tap((result) => {
-        if (result) {
-          this.email = this.updateData.email;
-        } else {
-          swalAlert.fire({
-            icon: 'warning',
-            text: `Ha ocurrido un error`,
-            showConfirmButton: true,
-            confirmButtonText: 'Entendido',
-          });
-        }
-      })
-    );
   }
 
   resetRegistration() {
+    this.companyId = '';
     this.email = this.registerForm.value.email;
     this.servicesList = [];
     this.affiliationForms.resetCompanyForms();

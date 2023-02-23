@@ -118,3 +118,10 @@ export function parseParams(
     percentage: interestType === 'P' ? parsedAmount : '1.00',
   };
 }
+
+export const statusCodes = {
+  NEW: 0,
+  APPROVED: 1,
+  EDITED: 2,
+  REJECTED: 3,
+};

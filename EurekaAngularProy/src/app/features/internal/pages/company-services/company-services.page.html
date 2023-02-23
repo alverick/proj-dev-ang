@@ -11,7 +11,7 @@
       [serviceData]="service"
       [position]="position"
       [lockedMode]="true"
-      [canEdit]="!service.inReview"
+      [canEdit]="!service.inReview || service.newNameCodeGTPStatus===3 || service.newNameGTPStatus===3"
       (delete)="actionDelete($event)"
       (edit)="actionEdit(position)"
     ></cs-service-card>
@@ -24,7 +24,7 @@
     [baseZIndex]="10000"
     (onHide)="onClosePanel()"
     position="right"
-    styleClass="ui-sidebar-md edit-form tw-h-screen tw-overflow-auto"
+    styleClass="ui-sidebar-md edit-form lg:tw-h-screen tw-overflow-auto"
   >
     <cs-service-edit-form
       *ngIf="loadFormEdit"
@@ -36,7 +36,7 @@
       [chargeTypeOptions]="chargeTypeOptions"
       [interestTypeOptions]="interestTypeOptions"
       [formData]="formData"
-      [reviewMode]="false"
+      [affiliationMode]="false"
       (sendForm)="updateService()"
     ></cs-service-edit-form>
   </p-sidebar>
