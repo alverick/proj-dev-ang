@@ -65,7 +65,7 @@ export class CompanyServicesPage implements OnInit {
         'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
       if (result.hasPayed) {
         text =
-          'Ya existe un historial de pagos realizados con este servicio, sólo se eliminarán las ' +
+          'Ya existe un historial de pagos realizados con este servicio, solo se eliminarán las ' +
           'deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
       }
       swalAlert
