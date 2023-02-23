@@ -12,6 +12,6 @@ export const mobileOperators: ISelectOptions[] = [
 ];
 export const documentTypes: ISelectOptions[] = [
   { value: 'DNI', label: 'DNI' },
-  { value: 'CE', label: 'Carnet de extranjeria' },
+  { value: 'CE', label: 'Carnet de extranjería' },
   { value: 'PASS', label: 'Pasaporte' },
 ];

@@ -345,5 +345,8 @@ export class LoginPage implements OnInit {
       event_category: GoogleAnalytics.Afiliacion,
       event_label: 'registrarme',
     });
+    this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
+      state: { initNew: true },
+    });
   }
 }
