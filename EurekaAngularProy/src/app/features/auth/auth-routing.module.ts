@@ -25,6 +25,7 @@ import {
   AffiliationServiceValidGuard,
   ValidateTokenGuard,
 } from './guards';
+import { AffiliationFinishedGuard } from './guards/affiliation-finished.guard';
 import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
 import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
 import { CompanyRegistrationPage } from './pages/company-registration/company-registration.page';
@@ -138,6 +139,7 @@ const routes: Routes = [
       {
         path: authRoutingNames.REGISTRATION_FINISHED,
         component: RegistrationFinishedPage,
+        canActivate: [AffiliationFinishedGuard],
       },
       {
         path: authDynamicRoutingNames.REGISTER_UPDATING_VALIDATION,
