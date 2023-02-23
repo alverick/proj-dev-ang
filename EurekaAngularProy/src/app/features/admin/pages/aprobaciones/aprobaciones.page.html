@@ -46,30 +46,19 @@
                     </tr>
                     <tr>
                       <td class="font-black-servicios-list">
-                        Fecha de solicitud
+                        Última actualización
                       </td>
-                      <td class="font-black-servicios-list">
-                        Fecha de afiliación
-                      </td>
+                      <td class="font-black-servicios-list">Último log in</td>
                     </tr>
                     <tr>
-                      <td class="font-black-servicios-des-list">
-                        {{
-                        stateDetail.accountStateDetailsResponse.requestDate|notEmpty:'-'
-                        }}
-                      </td>
                       <td class="font-black-servicios-des-list">
                         {{
                         stateDetail.accountStateDetailsResponse.approbationDate|notEmpty:'-'
                         }}
                       </td>
-                    </tr>
-                    <tr>
-                      <td class="font-black-servicios-list">Último log in</td>
-                      <td class="font-black-servicios-list"></td>
-                    </tr>
-                    <tr>
-                      <td class="font-black-servicios-des-list">
+                      <td
+                        class="font-black-servicios-des-list tw-whitespace-nowrap"
+                      >
                         {{
                         stateDetail.accountStateDetailsResponse.lastAccess|notEmpty:'-'
                         }}
