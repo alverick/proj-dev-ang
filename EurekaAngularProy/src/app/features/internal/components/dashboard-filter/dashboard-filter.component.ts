@@ -2,9 +2,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
@@ -14,8 +16,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { Subject } from 'rxjs/internal/Subject';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { has } from 'ramda';
 
 export interface OptionList {
   name: string;
@@ -52,12 +55,12 @@ interface FilterForm {
   templateUrl: './dashboard-filter.component.html',
   styleUrls: ['./dashboard-filter.component.scss'],
 })
-export class DashboardFilterComponent implements OnInit, OnDestroy {
+export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   /**
    * Gtp mode for component
    */
   @Input() services: ServiceItem[];
-  @Input() optionsDates: ServiceItem[];
+  @Input() optionsDates: any[];
   @Input() initialValue: FilterFormData;
   @Output() sendForm = new EventEmitter<object>();
   @Output() resetForm = new EventEmitter();
@@ -91,6 +94,12 @@ export class DashboardFilterComponent implements OnInit, OnDestroy {
 
   constructor(protected fb: FormBuilder) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (has('initialValue', changes) && this.form) {
+      this.form.patchValue(this.initialValue, { emitEvent: false });
+    }
+  }
+
   ngOnInit() {
     this.setForm();
     this.parseDates();
@@ -104,6 +113,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy {
       dateFrom: this.fb.control('', Validators.required),
       dateTo: this.fb.control('', Validators.required),
     });
+    console.log('setForm');
     this.form.patchValue(this.initialValue);
   }
 
