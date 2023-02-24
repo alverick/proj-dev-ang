@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta } from '@storybook/angular';
 import { moduleMetadata, Story } from '@storybook/angular';
 
+import { TopClients } from '../../../../shared/data/dashboard-data.service';
 import { SharedModule } from '../../../../shared/shared.module';
 import { DashboardTableComponent } from './dashboard-table.component';
 
@@ -29,42 +30,48 @@ const Template: Story<DashboardTableComponent> = (
   props: args,
 });
 
+const customers: TopClients[] = [
+  {
+    name: 'Pedro',
+    lastName: 'Perez',
+    code: '12345678',
+    service: 'Servicio 1',
+    currency: 'S/',
+    totalAmount: 100000.0,
+    totalDefault: 34,
+  },
+  {
+    code: '12345678',
+    name: 'Pedro',
+    lastName: 'Perez',
+    service: 'Servicio 1',
+    currency: 'S/',
+    totalAmount: 0,
+    totalDefault: 34,
+  },
+  {
+    code: '12345678',
+    name: 'Pedro',
+    lastName: 'Perez',
+    service: 'Servicio 1',
+    currency: 'S/',
+    totalAmount: 100000.0,
+    totalDefault: 34,
+  },
+  {
+    code: '12345678',
+    name: 'Pedro',
+    lastName: 'Perez',
+    service: 'Servicio 1',
+    currency: 'S/',
+    totalAmount: 100000.0,
+    totalDefault: 34,
+  },
+];
+
 export const Normal = Template.bind({});
 Normal.args = {
-  customers: [
-    {
-      id: '12345678',
-      name: 'Pedro Perez',
-      service: 'Servicio 1',
-      currency: 'S/',
-      totalAmount: '100000.00',
-      delayAmount: '34',
-    },
-    {
-      id: '12345678',
-      name: 'Pedro Perez',
-      service: 'Servicio 1',
-      currency: 'S/',
-      totalAmount: '100000.00',
-      delayAmount: '34',
-    },
-    {
-      id: '12345678',
-      name: 'Pedro Perez',
-      service: 'Servicio 1',
-      currency: 'S/',
-      totalAmount: '100000.00',
-      delayAmount: '34',
-    },
-    {
-      id: '12345678',
-      name: 'Pedro Perez',
-      service: 'Servicio 1',
-      currency: 'S/',
-      totalAmount: '100000.00',
-      delayAmount: '34',
-    },
-  ],
+  customers,
 };
 
 export const Empty = Template.bind({});

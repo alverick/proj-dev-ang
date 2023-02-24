@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+import { TopClients } from '../../../../shared/data/dashboard-data.service';
+
 export interface Customer {
   id: string;
   name: string;
@@ -15,5 +17,5 @@ export interface Customer {
   styleUrls: ['./dashboard-table.component.scss'],
 })
 export class DashboardTableComponent {
-  @Input() customers: Customer[] = [];
+  @Input() customers: TopClients[] = [];
 }

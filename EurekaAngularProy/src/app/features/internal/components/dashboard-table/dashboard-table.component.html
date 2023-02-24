@@ -1,24 +1,45 @@
-<div class="tw-shadow tw-px-6 tw-py-5 tw-bg-white">
-  <p class="tw-mb-2">Top 10 clientes</p>
-  <p-table [value]="customers" styleClass="tw-text-xs">
-    <ng-template pTemplate="header">
-      <tr class="tw-text-xs">
-        <th>Nombre</th>
-        <th>Servicio</th>
-        <th>Monto total</th>
-        <th>Moras</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-customer>
-      <tr>
-        <td>{{ customer.name }}<br />{{ customer.id }}</td>
-        <td>{{ customer.service }}</td>
-        <td>{{ customer.totalAmount }}</td>
-        <td>{{ customer.delayAmount }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-  <div class="tw-text-center tw-pt-4 tw-text-xs" *ngIf="customers.length === 0">
-    Sin registros
+<div class="tw-shadow tw-bg-white tw-rounded">
+  <div class="header tw-px-6 tw-py-4 tw-border-b tw-border-extended-grey-4">
+    <p>Top 10 clientes</p>
+  </div>
+  <div class="content tw-px-2 tw-pb-4">
+    <p-table [value]="customers" styleClass="tw-text-xs">
+      <ng-template pTemplate="header">
+        <tr class="tw-text-xs">
+          <th>Nombre</th>
+          <th>Servicio</th>
+          <th>Monto total</th>
+          <th>Moras</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-customer>
+        <tr>
+          <td>
+            {{ customer.name }} {{ customer.lastName }}<br />{{ customer.code }}
+          </td>
+          <td>{{ customer.service | notEmpty : '-' }}</td>
+          <td>
+            {{
+              customer.totalAmount
+                | currency : customer.currency
+                | notEmpty : '-'
+            }}
+          </td>
+          <td>
+            {{
+              customer.totalDefault
+                | currency : customer.currency
+                | notEmpty : '-'
+            }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <div
+      class="tw-text-center tw-text-xs tw-pt-4"
+      *ngIf="customers.length === 0"
+    >
+      Sin registros
+    </div>
   </div>
 </div>
