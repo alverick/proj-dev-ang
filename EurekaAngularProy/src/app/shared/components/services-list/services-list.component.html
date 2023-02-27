@@ -1,0 +1,51 @@
+<div class="tw-py-8 tw-w-full tw-px-5 md:tw-px-10 tw-w-full tw-max-w-8xl">
+  <div class="sm:tw-flex tw-text-center tw-items-center tw-justify-between">
+    <div class="tw-text-lg tw-font-medium tw-mb-4">Resumen de tus servicios</div>
+    <div class="actions tw-flex tw-justify-center tw-gap-2">
+      <button
+        *ngIf="!onlyEdit"
+        (click)="add.emit()"
+        class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+      >
+        Agregar otro servicio
+      </button>
+      <button
+        *ngIf="additionalButtons && showSaveAll"
+        (click)="finish.emit()"
+        class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+      >
+        FINALIZAR
+      </button>
+    </div>
+  </div>
+  <div
+    class="tw-rounded-md tw-bg-white tw-py-8 tw-my-6 tw-w-full tw-px-10 tw-shadow sm:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-2 tw-gap-3"
+    [ngClass]="{ 'tw-grid': !empty }"
+  >
+    <div
+      *ngIf="empty"
+      class="empty tw-text-extended-grey-2 tw-text-3xl tw-text-center tw-flex tw-items-center tw-justify-center"
+    >
+      {{ message }}
+    </div>
+    <ng-content></ng-content>
+  </div>
+  <div
+    class="tw-text-center sm:tw-text-right tw-justify-end tw-mt-10 tw-flex tw-gap-2"
+  >
+    <button
+      *ngIf="additionalButtons && !onlyEdit"
+      (click)="add.emit()"
+      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+    >
+      Agregar otro servicio
+    </button>
+    <button
+      *ngIf="showSaveAll"
+      (click)="finish.emit()"
+      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+    >
+      FINALIZAR
+    </button>
+  </div>
+</div>

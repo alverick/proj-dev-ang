@@ -58,7 +58,7 @@ body {
 }
 
 .card-servicios {
-  @include cuadro(350px, 200px);
+  width: 350px;
   @include box-shadows();
   background-color: #ffffff;
   .table-sm {
@@ -71,7 +71,7 @@ body {
 }
 
 .card-aprobaciones {
-  @include cuadro(350px, 145px);
+  @include cuadro(350px, auto);
   @include box-shadows();
   background-color: #ffffff;
 }

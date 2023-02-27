@@ -72,6 +72,10 @@ module.exports = {
         '8xl': '1320px',
       },
     },
+    borderColor: (theme) => ({
+      ...theme('colors'),
+      'green-1': 'var(--primary-green-1)',
+    }),
   },
   plugins: [],
 };

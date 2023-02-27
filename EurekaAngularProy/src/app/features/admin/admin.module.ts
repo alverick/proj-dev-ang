@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
@@ -12,6 +11,7 @@ import { AprobacionesPage } from './pages/aprobaciones/aprobaciones.page';
 import { CargaHistoricoComponent } from './pages/carga-historico/carga-historico.component';
 import { ConfigurarCorreoGtpComponent } from './pages/configurar-correo-gtp/configurar-correo-gtp.component';
 import { GtpGrillaPage } from './pages/gtp-grilla/gtp-grilla.page';
+import { RESOLVERS } from './resolvers';
 
 @NgModule({
   declarations: [
@@ -30,5 +30,6 @@ import { GtpGrillaPage } from './pages/gtp-grilla/gtp-grilla.page';
     PerfectScrollbarModule,
     SharedModule,
   ],
+  providers: [...RESOLVERS],
 })
 export class AdminModule {}
