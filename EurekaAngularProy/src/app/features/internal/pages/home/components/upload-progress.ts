@@ -79,14 +79,14 @@ export class UploadProgressComponent implements OnInit {
           th.excelService
             .StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
-        }, 500);
+        }, 2000);
       }
     };
     setTimeout(() => {
       this.excelService
         .StatusExcel(this.excelService.idProcess)
         .subscribe(recursiveFunc);
-    }, 800);
+    }, 2000);
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
