@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
 @Component({
@@ -7,11 +8,11 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
   templateUrl: './help.page.html',
   styleUrls: ['./help.page.scss'],
 })
-export class HelpPage implements OnInit {
+export class HelpPage {
+  activeIndex: number;
   constructor(private router: Router) {}
 
-  ngOnInit() {}
   goBack() {
-    this.router.navigate([internalFullRoutingNames.HOME]);
+    void this.router.navigate([internalFullRoutingNames.HOME]);
   }
 }
