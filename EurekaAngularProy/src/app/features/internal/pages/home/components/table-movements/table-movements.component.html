@@ -369,7 +369,7 @@
           [(ngModel)]="editRowData.emissionDate"
           [locale]="es"
           dateFormat="dd/mm/y"
-          appendTo="body"
+          [touchUI]="true"
           required
         ></p-calendar>
       </div>
@@ -388,7 +388,7 @@
           [(ngModel)]="editRowData.dueDate"
           [locale]="es"
           dateFormat="dd/mm/y"
-          appendTo="body"
+          [touchUI]="true"
           required
         ></p-calendar>
       </div>
