@@ -176,6 +176,7 @@
                       mode="decimal"
                       csInputMoney
                       placeholder="1.00"
+                      [useGrouping]="false"
                       [prefix]="rowData.currency + ' '"
                       [(ngModel)]="rowData.amount"
                       [minFractionDigits]="2"
@@ -407,6 +408,7 @@
           mode="decimal"
           csInputMoney
           placeholder="1.00"
+          [useGrouping]="false"
           [prefix]="editRowData.currency + ' '"
           [(ngModel)]="editRowData.amount"
           [minFractionDigits]="2"
