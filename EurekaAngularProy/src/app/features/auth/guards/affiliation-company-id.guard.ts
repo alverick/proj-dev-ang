@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
+
 import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';
 
@@ -26,7 +27,7 @@ export class AffiliationCompanyIdGuard implements CanActivateChild {
     | boolean
     | UrlTree {
     if (!isNotNilOrEmpty(this.affiliation.companyId)) {
-      this.router.navigate([authFullRoutingNames.COMPANY_REGISTER]);
+      void this.router.navigate([authFullRoutingNames.COMPANY_REGISTER]);
     }
     return isNotNilOrEmpty(this.affiliation.companyId);
   }

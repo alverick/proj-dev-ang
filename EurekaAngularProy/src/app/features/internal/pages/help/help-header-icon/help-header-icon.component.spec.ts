@@ -8,9 +8,8 @@ describe('HelpHeaderIconComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HelpHeaderIconComponent ]
-    })
-    .compileComponents();
+      declarations: [HelpHeaderIconComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(HelpHeaderIconComponent);
     component = fixture.componentInstance;

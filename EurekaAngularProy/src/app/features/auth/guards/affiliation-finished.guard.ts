@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
+
 import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';
 
@@ -27,9 +28,8 @@ export class AffiliationFinishedGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log('email', this.affiliation.email);
     if (isNilOrEmpty(this.affiliation.email)) {
-      this.router.navigate([authFullRoutingNames.COMPANY_REGISTER]);
+      void this.router.navigate([authFullRoutingNames.COMPANY_REGISTER]);
     }
     return !isNilOrEmpty(this.affiliation.email);
   }
