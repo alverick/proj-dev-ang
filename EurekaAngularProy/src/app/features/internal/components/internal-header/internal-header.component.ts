@@ -18,7 +18,7 @@ export class InternalHeaderComponent implements OnInit {
   showMenu = false;
   companyLink = internalFullRoutingNames.COMPANY;
   homeLink = internalFullRoutingNames.HOME;
-  chargesLink = internalFullRoutingNames.CHARGES;
+  servicesLink = internalFullRoutingNames.SERVICES;
   helpLink = internalFullRoutingNames.HELP;
   homeText = 'Mis Movimientos';
   helpText = 'Ayuda';

@@ -7,7 +7,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { dataTypeOptions } from '../../../features/auth/constants';
+import { isNilOrEmpty } from 'ramda-adjunct';
+import { dataTypeOptions } from '../../constants/services';
 import { IServiceRemoteModelForms } from '../../models';
 
 @Component({
@@ -19,19 +20,23 @@ export class ServiceCardComponent implements OnInit, OnChanges {
   @Input() serviceData: Partial<IServiceRemoteModelForms>;
   @Input() position: number;
   @Input() canEdit = true;
-  @Input() update = false;
+  @Input() reviewMode = false;
+  @Input() lockedMode = false;
   @Output() edit = new EventEmitter<number>();
   @Output() delete = new EventEmitter<number>();
   paymentChannels = '';
   dataType = '';
   name = '';
+  debtorCode = '';
   updateEditable = false;
-  pendingReview: boolean;
+  pendingUserReview: boolean;
+  pendingGtpReview: boolean;
+  hasWarnings: boolean;
 
   ngOnInit() {
     this.setPaymentChannels();
     this.setDataType();
-    this.isEditable();
+    this.isInReview();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -40,8 +45,23 @@ export class ServiceCardComponent implements OnInit, OnChanges {
     }
   }
 
+  isInReview() {
+    this.name = this.serviceData.name;
+    this.debtorCode = this.serviceData.debtorCode;
+    if (this.lockedMode) {
+      this.updateEditable = this.serviceData.inReview;
+      if (isNilOrEmpty(this.serviceData.name)) {
+        this.name = this.serviceData.newName;
+      }
+      if (isNilOrEmpty(this.serviceData.debtorCode)) {
+        this.debtorCode = this.serviceData.newNameCode;
+      }
+    }
+  }
+
   setStatusCard() {
-    this.pendingReview = false;
+    this.pendingUserReview = false;
+    this.pendingGtpReview = false;
     const {
       newNameCodeGTPStatus,
       newNameGTPStatus,
@@ -50,18 +70,27 @@ export class ServiceCardComponent implements OnInit, OnChanges {
       newNameCode,
       newName,
     } = this.serviceData;
-    if (newNameGTPStatus === 3 && nameService === newName) {
-      this.pendingReview = true;
+    if (this.reviewMode) {
+      if (newNameGTPStatus === 3 && nameService === newName) {
+        this.pendingUserReview = true;
+      }
+      if (newNameCodeGTPStatus === 3 && debtorCode === newNameCode) {
+        this.pendingUserReview = true;
+      }
     }
-    if (newNameCodeGTPStatus === 3 && debtorCode === newNameCode) {
-      this.pendingReview = true;
+    if (this.lockedMode) {
+      if (newNameGTPStatus === 3 || newNameCodeGTPStatus === 3) {
+        this.pendingUserReview = true;
+      } else if (
+        newNameGTPStatus === 0 ||
+        newNameCodeGTPStatus === 0 ||
+        newNameGTPStatus === 2 ||
+        newNameCodeGTPStatus === 2
+      ) {
+        this.pendingGtpReview = true;
+      }
     }
-  }
-
-  isEditable() {
-    if (this.update) {
-      this.updateEditable = this.serviceData.inReview;
-    }
+    this.hasWarnings = this.pendingUserReview || this.pendingGtpReview;
   }
 
   setDataType() {

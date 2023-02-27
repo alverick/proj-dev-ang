@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ServicesFormsService } from '../../../../shared/services';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import { errorServiceInformation } from '../../constants';
-import { AffiliationFormsService } from '../../services';
 import { AffiliationService } from '../../services';
 
 @Component({
@@ -16,7 +16,7 @@ export class ServiceInfoPage implements OnInit {
   constructor(
     private router: Router,
     public affiliation: AffiliationService,
-    private affiliationForms: AffiliationFormsService
+    private serviceForms: ServicesFormsService
   ) {}
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class ServiceInfoPage implements OnInit {
   }
 
   onCancel() {
-    this.affiliationForms.resetServicesForms();
+    this.serviceForms.resetServicesForms();
     this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]);
   }
 }

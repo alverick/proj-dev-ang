@@ -15,12 +15,11 @@ import { IEntryModel } from 'src/app/shared/models';
 import { GtpFilter } from 'src/app/shared/models/gtp-filter';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { StatesGtp } from '../../../../shared/models/states-gtp';
+import { CompanyService } from '../../../../shared/services';
 import { GtpService } from '../../../../shared/services/gtp.service';
 import { adminFullRoutingNames } from '../../admin-routing.names';
 
 //// END DATE ////////////////////
-
-const moment = _rollupMoment || _moment;
 
 export const MY_FORMATS = {
   parse: {
@@ -132,7 +131,8 @@ export class GtpGrillaPage implements OnInit {
   constructor(
     private afiliacionService: AfiliacionService,
     public gtpService: GtpService,
-    private router: Router
+    private router: Router,
+    private companyService: CompanyService
   ) {}
 
   rubros: IEntryModel[] = [];
@@ -151,6 +151,7 @@ export class GtpGrillaPage implements OnInit {
   }
 
   Aprobar(ClientId: number) {
+    this.gtpService.services = [];
     this.router.navigate([adminFullRoutingNames.APPROVE + ClientId]);
   }
 
@@ -228,6 +229,12 @@ export class GtpGrillaPage implements OnInit {
   clickClientesNoRegistrados() {
     this.gtpService.clientsUnregistered(this.filtro).subscribe((r: Blob) => {
       saveAs(r, 'ClientesNoRegistrados.xlsx');
+    });
+  }
+
+  getAccountStateList(): void {
+    this.companyService.getAccountStateDetailsList().subscribe((r: Blob) => {
+      saveAs(r, 'Detalles de cuentas.xlsx');
     });
   }
 }

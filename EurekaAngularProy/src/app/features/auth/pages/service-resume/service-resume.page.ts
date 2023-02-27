@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ServicesFormsService } from '../../../../shared/services';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import {
   authFullRoutingChildNames,
@@ -14,15 +15,15 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants';
-import { AffiliationFormsService } from '../../services';
 import { AffiliationService } from '../../services';
 
 @Component({
+  host: { class: 'tw-w-full' },
   selector: 'cs-service-resume',
   templateUrl: './service-resume.page.html',
   styleUrls: ['./service-resume.page.scss'],
 })
-export class ServiceResumePage implements OnInit {
+export class ServiceResumePage {
   showSidebar = false;
   position: number;
   errorMessages = {
@@ -38,11 +39,9 @@ export class ServiceResumePage implements OnInit {
 
   constructor(
     private router: Router,
-    private affiliationForms: AffiliationFormsService,
+    private serviceForms: ServicesFormsService,
     public affiliation: AffiliationService
   ) {}
-
-  ngOnInit() {}
 
   actionDelete(position: number) {
     swalAlert
@@ -70,7 +69,7 @@ export class ServiceResumePage implements OnInit {
   }
 
   createService() {
-    this.affiliationForms.resetServicesForms();
+    this.serviceForms.resetServicesForms();
     this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_INFO], {
       state: { navigateValid: true },
     });

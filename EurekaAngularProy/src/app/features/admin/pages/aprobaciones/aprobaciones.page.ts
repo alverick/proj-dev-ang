@@ -10,6 +10,7 @@ import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
 import { GtpService } from 'src/app/shared/services/gtp.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
+import { IAccountStateDetails } from '../../../../shared/models/company';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 
 @Component({
@@ -45,12 +46,13 @@ export class AprobacionesPage implements OnInit {
   public empresa: any;
   enterpriseChanged = false;
   servicesChanged = false;
+  stateDetail: IAccountStateDetails;
 
   rubros: IEntryModel[] = [];
 
   constructor(
     public gtpService: GtpService,
-    private rutaActiva: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     public afiliacionService: AfiliacionService,
     public router: Router
   ) {}
@@ -63,7 +65,10 @@ export class AprobacionesPage implements OnInit {
   }
 
   ngOnInit() {
-    this.llave = this.rutaActiva.snapshot.params.llave;
+    this.activatedRoute.data.subscribe(({ stateDetail }) => {
+      this.stateDetail = stateDetail;
+    });
+    this.llave = this.activatedRoute.snapshot.params.llave;
     /// TRAE LOS SERVICIOS
     this.afiliacionService.GetRubrosAll().subscribe((d) => {
       this.rubros = d;
@@ -167,12 +172,10 @@ export class AprobacionesPage implements OnInit {
     this.scv = [];
     // NO APROBADOS
     const nombreApp = this.gtpService.services.filter(
-      ({ acceptednewName, name, newName }) =>
-        acceptednewName === false && name !== newName
+      ({ acceptednewName }) => acceptednewName === false
     ).length;
     const CodDeuApp = this.gtpService.services.filter(
-      ({ acceptednewNameCode, debtorCode, newNameCode }) =>
-        acceptednewNameCode === false && debtorCode !== newNameCode
+      ({ acceptednewNameCode }) => acceptednewNameCode === false
     ).length;
 
     // tslint:disable-next-line: max-line-length cunatos son los que faltan revisar
@@ -224,24 +227,12 @@ export class AprobacionesPage implements OnInit {
           newNameCodeGTPStatus === 0 ||
           res !== ''
       )
-      .map(
-        ({
-          acceptednewName,
-          acceptednewNameCode,
-          debtorCode,
-          id,
-          name,
-          newName,
-          newNameCode,
-          res,
-        }) => ({
-          ServiceId: id,
-          NombreAprobado: name === newName ? true : acceptednewName,
-          NombreCodAprobado:
-            debtorCode === newNameCode ? true : acceptednewNameCode,
-          Res: res,
-        })
-      );
+      .map(({ acceptednewName, acceptednewNameCode, id, res }) => ({
+        ServiceId: id,
+        NombreAprobado: acceptednewName,
+        NombreCodAprobado: acceptednewNameCode,
+        Res: res,
+      }));
 
     this.processDataEnterprise(totalObservations, notApproved);
   }
