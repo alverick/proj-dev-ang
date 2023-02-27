@@ -43,7 +43,7 @@ export class AffiliationService {
   serviceForm: UntypedFormGroup;
   serviceConfigForm: UntypedFormGroup;
   editServiceForm: UntypedFormGroup;
-  private updateData: ICompanyUpdate;
+  updateData: ICompanyUpdate;
   tokenUpdate;
 
   constructor(
@@ -344,10 +344,11 @@ export class AffiliationService {
       .sendUpdateCompanyData(this.generatePayloadUpdate())
       .pipe(
         tap((result) => {
+          this.updateData = null;
           if (result) {
             this.email = this.updateData.email;
           } else {
-            swalAlert.fire({
+            void swalAlert.fire({
               icon: 'warning',
               text: `Ha ocurrido un error`,
               showConfirmButton: true,
