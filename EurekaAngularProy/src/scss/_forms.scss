@@ -108,7 +108,6 @@ body {
     }
 
     .p-steps-item {
-
       &:before {
         margin-top: auto;
       }
@@ -194,6 +193,22 @@ body {
         background-color: #eaeaea;
       }
     }
+  }
+
+  .p-datepicker-group-container {
+    .p-datepicker-calendar {
+      thead th {
+        border-bottom-style: none;
+      }
+
+      td {
+        border-top-style: none;
+      }
+    }
+  }
+
+  .p-datepicker table td > span.p-highlight {
+    background-color: var(--primary-green-1);
   }
 
   .p-datatable {
@@ -347,6 +362,58 @@ body {
       .ui-tooltip-arrow {
         border-bottom-color: var(--grises-grey-5);
       }
+    }
+  }
+
+  .p-accordion {
+    p-accordiontab .p-accordion-tab {
+      @apply tw-mb-4 tw-shadow-md;
+    }
+
+    .p-accordion-header {
+      .p-accordion-header-link {
+        background: white;
+        color: #000;
+        font-weight: 400;
+        border-color: transparent;
+        @apply tw-px-6;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      &:not(.p-disabled) {
+        .p-accordion-header-link:focus {
+          box-shadow: none;
+        }
+
+        &.p-highlight {
+          .p-accordion-header-link {
+            background: white;
+            color: var(--secondary-blue-1);
+            border-color: transparent;
+          }
+
+          &:hover .p-accordion-header-link {
+            background: white;
+            color: var(--secondary-blue-1);
+            border-color: transparent;
+          }
+        }
+      }
+
+      &:not(.p-highlight):not(.p-disabled):hover {
+        .p-accordion-header-link {
+          background: white;
+          border-color: transparent;
+        }
+      }
+    }
+
+    .p-accordion-content {
+      border-color: transparent;
+      @apply tw-px-6 tw-py-4;
     }
   }
 
