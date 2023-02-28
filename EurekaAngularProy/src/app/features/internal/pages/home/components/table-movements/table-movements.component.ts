@@ -138,7 +138,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (pathEq(['sortField', 'currentValue'], '', changes)) {
+    if (pathEq(['sortField', 'currentValue'], '', changes) && this.table) {
       this.table.sortOrder = 0;
       this.table.sortField = '';
       this.table.reset();
