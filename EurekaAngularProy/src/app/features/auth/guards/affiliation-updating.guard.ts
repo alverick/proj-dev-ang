@@ -17,7 +17,6 @@ export class AffiliationUpdatingGuard implements CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.affiliation.updateData);
     if (!isNotNilOrEmpty(this.affiliation.updateData)) {
       void this.router.navigate([authFullRoutingNames.LOGIN]);
     }
