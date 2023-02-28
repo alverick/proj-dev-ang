@@ -11,7 +11,8 @@ $custom-typography: mat.define-typography-config(
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-@include mat.core();
+//    `@include mat.legacy-typography-hierarchy($custom-typography);`
+@include mat.legacy-core();
 
 $md-mcgpalette0: (
   50: #e1f7ea,
@@ -82,17 +83,16 @@ $md-mcgpalette1: (
 $cs-app-primary: mat.define-palette($md-mcgpalette0);
 $cs-app-accent: mat.define-palette($md-mcgpalette1, A200, A100, A400);
 
-$cs-app-theme: mat.define-light-theme(
-  (
-    color: (
-      primary: $cs-app-primary,
-      accent: $cs-app-accent,
-    ),
-    typography: $custom-typography,
-    density: 0,
-  )
-);
+$cs-app-theme: mat.define-light-theme((
+  color: (
+    primary: $cs-app-primary,
+    accent: $cs-app-accent,
+  ),
+  typography: $custom-typography,
+  density: 0,
+));
 
-@include mat.all-component-themes($cs-app-theme);
+@include mat.all-legacy-component-themes($cs-app-theme);
 
 @import '@angular/cdk/overlay-prebuilt.css';
+//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
