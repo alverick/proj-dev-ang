@@ -1,5 +1,6 @@
 import { NgxLoggerLevel } from 'ngx-logger';
-import { serverUrl, IEnvironment } from './constants';
+
+import { IEnvironment, serverUrl } from './constants';
 
 export const environment: IEnvironment = {
   development: false,

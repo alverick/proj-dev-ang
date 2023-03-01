@@ -9,13 +9,14 @@ import { Router } from '@angular/router';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { first } from 'rxjs/operators';
-import { internalFullRoutingNames } from 'src/app/app-routing.collection';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { LoginService } from 'src/app/shared/services/login.service';
-import { StorageService } from 'src/app/shared/services/storage.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 
+import { environment } from '../../../../../environments/environment';
+import { internalFullRoutingNames } from '../../../../app-routing.collection';
+import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
+import { LoginService } from '../../../../shared/services/login.service';
+import { StorageService } from '../../../../shared/services/storage.service';
+import { drawPopup } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
 @Component({
