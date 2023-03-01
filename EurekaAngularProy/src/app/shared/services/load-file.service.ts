@@ -110,7 +110,7 @@ export class LoadFileService {
           th.excelService
             .StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
-        }, 2000);
+        }, 500);
       }
     };
     this.componentRef.instance.progress.mode = 'determinate';
@@ -120,6 +120,6 @@ export class LoadFileService {
       this.excelService
         .StatusExcel(this.excelService.idProcess)
         .subscribe(recursiveFunc);
-    }, 2000);
+    }, 800);
   }
 }
