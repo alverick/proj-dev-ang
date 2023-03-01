@@ -19,6 +19,8 @@ import { StorageService } from '../../../../shared/services/storage.service';
 import { drawPopup } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
+const userData = environment.credentials[0];
+
 @Component({
   selector: 'cs-login',
   templateUrl: './login.page.html',
@@ -90,7 +92,7 @@ export class LoginPage implements OnInit {
     this.snackBar.dismiss();
     const rucStr = this.cookieService.check('ruc')
       ? this.cookieService.get('ruc')
-      : '';
+      : userData[0];
 
     this.validationLogin(rucStr);
   }
@@ -108,7 +110,7 @@ export class LoginPage implements OnInit {
           Validators.pattern('^[0-9]*$'),
         ]),
       ],
-      psw: ['', Validators.required],
+      psw: [userData[1], Validators.required],
       rememberme: [this.rememberMe, Validators.required],
     });
   }

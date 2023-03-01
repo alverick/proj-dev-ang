@@ -1,13 +1,7 @@
-import { NgxLoggerLevel } from 'ngx-logger';
-
-import { IEnvironment, serverUrl } from './constants';
+import type { IEnvironment } from './constants';
+import { environmentDefault } from './constants';
 
 export const environment: IEnvironment = {
+  ...environmentDefault,
   development: false,
-  production: false,
-  hmr: false,
-  END_POINT: serverUrl.local,
-  OCP_KEY: '',
-  logLevel: NgxLoggerLevel.WARN,
-  serverLogLevel: NgxLoggerLevel.OFF,
 };
