@@ -148,7 +148,7 @@ export class DialogComponent implements OnInit {
           th.excelService
             .StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
-        }, 2000);
+        }, 500);
       }
     };
     this.progress.mode = 'determinate';
@@ -158,7 +158,7 @@ export class DialogComponent implements OnInit {
       this.excelService
         .StatusExcel(this.excelService.idProcess)
         .subscribe(recursiveFunc);
-    }, 2000);
+    }, 800);
   }
 
   right() {
