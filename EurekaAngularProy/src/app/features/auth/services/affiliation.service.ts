@@ -344,6 +344,16 @@ export class AffiliationService {
       .sendUpdateCompanyData(this.generatePayloadUpdate())
       .pipe(
         tap((result) => {
+          if (result) {
+            this.email = this.updateData.email;
+          } else {
+            void swalAlert.fire({
+              icon: 'warning',
+              text: `Ha ocurrido un error`,
+              showConfirmButton: true,
+              confirmButtonText: 'Entendido',
+            });
+          }
           this.updateData = null;
           if (result) {
             this.email = this.updateData.email;
