@@ -168,8 +168,8 @@ export class CompanyServicesService {
       newNameCodeGTPStatus,
       newNameCode,
       newName,
-      nameOriginal: name || newName,
-      debtorCodeOriginal: debtorCode || newNameCode,
+      nameOriginal: newName || name,
+      debtorCodeOriginal: newNameCode || debtorCode,
       debt: {
         dataType,
         paymentType,
