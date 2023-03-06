@@ -33,8 +33,8 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 
 @Injectable()
 export class AffiliationService {
-  companyId;
-  email;
+  companyId: number;
+  email: string;
   servicesList: Partial<IServiceRemoteModelForms>[] = [];
 
   entryOptions: IEntryModel[] = [];
@@ -43,7 +43,7 @@ export class AffiliationService {
   serviceForm: UntypedFormGroup;
   serviceConfigForm: UntypedFormGroup;
   editServiceForm: UntypedFormGroup;
-  private updateData: ICompanyUpdate;
+  updateData: ICompanyUpdate;
   tokenUpdate;
 
   constructor(
@@ -278,7 +278,7 @@ export class AffiliationService {
 
   saveAllServices() {
     if (this.servicesList.length < 1) {
-      swalAlert.fire({
+      void swalAlert.fire({
         icon: 'warning',
         text: `Debes contar con al menos un servicio para continuar`,
         showConfirmButton: true,
@@ -347,13 +347,14 @@ export class AffiliationService {
           if (result) {
             this.email = this.updateData.email;
           } else {
-            swalAlert.fire({
+            void swalAlert.fire({
               icon: 'warning',
               text: `Ha ocurrido un error`,
               showConfirmButton: true,
               confirmButtonText: 'Entendido',
             });
           }
+          this.updateData = null;
         })
       );
   }
@@ -385,6 +386,7 @@ export class AffiliationService {
   }
 
   resetRegistration() {
+    this.companyId = null;
     this.email = this.registerForm.value.email;
     this.servicesList = [];
     this.affiliationForms.resetCompanyForms();
@@ -402,12 +404,6 @@ export class AffiliationService {
           ? formData.debtorCodeCustom
           : formData.debtorCode;
     }
-    this.logger.debug(
-      '-> this.editServiceForm.value',
-      this.servicesList[position],
-      updatedData,
-      formData
-    );
     this.servicesList[position] = {
       ...this.servicesList[position],
       ...updatedData,
@@ -469,7 +465,7 @@ export class AffiliationService {
   }
 
   showMessageExistsCustomer(): void {
-    swalAlert.fire({
+    void swalAlert.fire({
       icon: 'warning',
       text: `El RUC ingresado ya se encuentra registrado en Cobro Simple`,
       showConfirmButton: true,
@@ -478,7 +474,7 @@ export class AffiliationService {
   }
 
   showMessageNoExistsAccounts(): void {
-    swalAlert
+    void swalAlert
       .fire({
         title: '¡Abre tu Cuenta Negocios!',
         html: `Debes tener una cuenta corriente o ahorros persona jurídica para registrarte en Cobro Simple. <br>
@@ -490,13 +486,13 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
       .then(({ value }) => {
         if (value) {
           window.open('https://interbank.pe/cuenta-negocios');
-          this.router.navigate([authFullRoutingNames.LOGIN]);
+          void this.router.navigate([authFullRoutingNames.LOGIN]);
         }
       });
   }
 
   showErrorServer() {
-    swalAlert.fire({
+    void swalAlert.fire({
       title: 'Regístrame',
       html: 'Ha ocurrido un error con el servidor<br />Intente de nuevo',
       showCloseButton: true,

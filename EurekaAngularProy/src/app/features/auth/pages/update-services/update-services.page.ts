@@ -65,9 +65,9 @@ export class UpdateServicesPage {
   finalize() {
     this.affiliation.saveUpdateInformation().subscribe((result) => {
       if (result) {
-        this.router.navigate([authFullRoutingNames.PROCESSING]);
+        void this.router.navigate([authFullRoutingNames.PROCESSING]);
       } else {
-        this.router.navigate([authFullRoutingNames.LOGIN]);
+        void this.router.navigate([authFullRoutingNames.LOGIN]);
       }
     });
   }

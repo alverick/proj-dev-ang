@@ -9,14 +9,17 @@ import { Router } from '@angular/router';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { first } from 'rxjs/operators';
-import { internalFullRoutingNames } from 'src/app/app-routing.collection';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { LoginService } from 'src/app/shared/services/login.service';
-import { StorageService } from 'src/app/shared/services/storage.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 
+import { environment } from '../../../../../environments/environment';
+import { internalFullRoutingNames } from '../../../../app-routing.collection';
+import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
+import { LoginService } from '../../../../shared/services/login.service';
+import { StorageService } from '../../../../shared/services/storage.service';
+import { drawPopup } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
+
+const userData = environment.credentials[0];
 
 @Component({
   selector: 'cs-login',
@@ -89,7 +92,7 @@ export class LoginPage implements OnInit {
     this.snackBar.dismiss();
     const rucStr = this.cookieService.check('ruc')
       ? this.cookieService.get('ruc')
-      : '';
+      : userData[0];
 
     this.validationLogin(rucStr);
   }
@@ -107,7 +110,7 @@ export class LoginPage implements OnInit {
           Validators.pattern('^[0-9]*$'),
         ]),
       ],
-      psw: ['', Validators.required],
+      psw: [userData[1], Validators.required],
       rememberme: [this.rememberMe, Validators.required],
     });
   }
@@ -344,6 +347,9 @@ export class LoginPage implements OnInit {
     this.gaService.sendEvent('Registrarme', {
       event_category: GoogleAnalytics.Afiliacion,
       event_label: 'registrarme',
+    });
+    this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
+      state: { initNew: true },
     });
   }
 }

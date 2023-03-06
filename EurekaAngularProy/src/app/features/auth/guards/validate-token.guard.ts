@@ -36,10 +36,10 @@ export class ValidateTokenGuard implements CanActivate {
     return this.affiliation.validateTokenForUpdate(next.params.token).pipe(
       map((result) => {
         if (result) {
-          this.router.navigate([authFullRoutingChildNames.UPDATE_COMPANY]);
+          void this.router.navigate([authFullRoutingChildNames.UPDATE_COMPANY]);
           return false;
         } else {
-          swalAlert.fire({
+          void swalAlert.fire({
             title: 'Enlace expirado',
             html: 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro',
           });

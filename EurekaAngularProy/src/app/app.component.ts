@@ -11,6 +11,7 @@ import {
   authFullRoutingChildNames,
   authFullRoutingNames,
 } from './features/auth/auth-routing.names';
+import { primeng } from './shared/lang/es';
 import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
 
 declare let fbq: (...args: any[]) => void;
@@ -86,6 +87,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
+    this.primengConfig.setTranslation(primeng);
   }
 
   private sendTrackPageViewPixel(pathComponent: string): void {

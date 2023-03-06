@@ -26,6 +26,7 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { drawPopup, swalAlert } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
+
 import { DateList } from '../../../../shared/models/dateList';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
@@ -410,8 +411,6 @@ export class HomePage implements OnInit {
           firstName: item.firstName,
         };
 
-        console.log(debts);
-
         // {
         //   "emissionDate": "2021-06-16T05:00:00.000Z",
         //   "dueDate": "",
@@ -447,6 +446,7 @@ export class HomePage implements OnInit {
                   showCancelButton: false,
                   onOpen: drawPopup,
                 });
+                this.transactionService.resetDebts();
               }
             });
         } else if (item.newStatus === '2') {
@@ -475,6 +475,8 @@ export class HomePage implements OnInit {
               });
             });
         }
+      } else {
+        this.transactionService.resetDebts();
       }
     });
   }
@@ -502,7 +504,6 @@ export class HomePage implements OnInit {
   }
 
   EliminarSeleccionados() {
-    console.log(this.selectedRows);
     const totalForDelete = this.selectedRows.length;
     if (totalForDelete === 0) {
       return;

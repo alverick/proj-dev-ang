@@ -125,7 +125,8 @@
                   <p-calendar
                     class="tw-w-full tw-text-sm"
                     [(ngModel)]="rowData.emissionDate"
-                    [locale]="es"
+                    appendTo="body"
+                    [showIcon]="true"
                     dateFormat="dd/mm/y"
                     required
                   ></p-calendar>
@@ -144,7 +145,8 @@
                     <p-calendar
                       class="tw-w-full"
                       [(ngModel)]="rowData.dueDate"
-                      [locale]="es"
+                      appendTo="body"
+                      [showIcon]="true"
                       dateFormat="dd/mm/y"
                       required
                     ></p-calendar>
@@ -176,6 +178,7 @@
                       mode="decimal"
                       csInputMoney
                       placeholder="1.00"
+                      locale="es-PE"
                       [prefix]="rowData.currency + ' '"
                       [(ngModel)]="rowData.amount"
                       [minFractionDigits]="2"
@@ -348,7 +351,7 @@
       *ngIf="editRowData.canEditFirstName"
       class="tw-flex tw-items-center tw-mb-2"
     >
-      <div class="tw-w-20 tw-flex-grow">
+      <div class="tw-w-20 tw-flex-shrink-0">
         <label for="vin" class="tw-m-0">Nombre</label>
       </div>
       <div class="field">
@@ -359,7 +362,7 @@
       *ngIf="editRowData.canEditEmissionDate"
       class="tw-flex tw-items-center tw-mb-2"
     >
-      <div class="tw-w-20">
+      <div class="tw-w-20 tw-flex-shrink-0">
         <label for="year" class="tw-m-0">F. emisión</label>
       </div>
       <div class="field">
@@ -367,9 +370,9 @@
           id="year"
           class="tw-w-full"
           [(ngModel)]="editRowData.emissionDate"
-          [locale]="es"
           dateFormat="dd/mm/y"
-          appendTo="body"
+          [touchUI]="true"
+          [showIcon]="true"
           required
         ></p-calendar>
       </div>
@@ -378,7 +381,7 @@
       *ngIf="editRowData.canEditDueDate"
       class="tw-flex tw-items-center tw-mb-2"
     >
-      <div class="tw-w-20">
+      <div class="tw-w-20 tw-flex-shrink-0">
         <label for="brand" class="tw-m-0">F. vcto.</label>
       </div>
       <div class="field">
@@ -386,9 +389,9 @@
           id="brand"
           class="tw-w-full"
           [(ngModel)]="editRowData.dueDate"
-          [locale]="es"
           dateFormat="dd/mm/y"
-          appendTo="body"
+          [touchUI]="true"
+          [showIcon]="true"
           required
         ></p-calendar>
       </div>
@@ -397,7 +400,7 @@
       *ngIf="editRowData.canEditAmount > 0"
       class="tw-flex tw-items-center tw-mb-2"
     >
-      <div class="tw-w-20">
+      <div class="tw-w-20 tw-flex-shrink-0">
         <label for="amount" class="tw-m-0">Cuota</label>
       </div>
       <div class="field">
@@ -407,6 +410,7 @@
           mode="decimal"
           csInputMoney
           placeholder="1.00"
+          locale="es-PE"
           [prefix]="editRowData.currency + ' '"
           [(ngModel)]="editRowData.amount"
           [minFractionDigits]="2"

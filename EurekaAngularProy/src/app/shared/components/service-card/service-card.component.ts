@@ -69,6 +69,7 @@ export class ServiceCardComponent implements OnInit, OnChanges {
       debtorCode,
       newNameCode,
       newName,
+      inReview,
     } = this.serviceData;
     if (this.reviewMode) {
       if (newNameGTPStatus === 3 && nameService === newName) {
@@ -90,7 +91,8 @@ export class ServiceCardComponent implements OnInit, OnChanges {
         this.pendingGtpReview = true;
       }
     }
-    this.hasWarnings = this.pendingUserReview || this.pendingGtpReview;
+    this.hasWarnings =
+      inReview || this.pendingUserReview || this.pendingGtpReview;
   }
 
   setDataType() {

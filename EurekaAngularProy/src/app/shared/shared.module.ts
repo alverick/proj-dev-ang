@@ -9,7 +9,6 @@ import {
   MatNativeDateModule,
 } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatLegacyCheckboxModule as MatCheckboxModule } from '@angular/material/legacy-checkbox';
@@ -33,6 +32,7 @@ import { TooltipModule as TooltipModuleNgx } from 'ngx-bootstrap/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
+import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { ChartModule } from 'primeng/chart';
@@ -84,7 +84,6 @@ const FORM_MODULES = [
   MatCheckboxModule,
   MatDatepickerModule,
   MatDialogModule,
-  MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -99,6 +98,7 @@ const FORM_MODULES = [
   ReactiveFormsModule,
 ];
 const PRIMENG_MODULES = [
+  AccordionModule,
   ButtonModule,
   CalendarModule,
   ChartModule,

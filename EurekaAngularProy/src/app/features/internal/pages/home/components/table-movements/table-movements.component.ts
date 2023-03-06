@@ -138,7 +138,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (pathEq(['sortField', 'currentValue'], '', changes)) {
+    if (pathEq(['sortField', 'currentValue'], '', changes) && this.table) {
       this.table.sortOrder = 0;
       this.table.sortField = '';
       this.table.reset();
@@ -231,7 +231,6 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       }
     }, data);
     delete this.dataSet[data.id];
-    console.log(data, this.data[0], changed);
     if (!isEmpty(changed)) {
       this.saveRow.emit({
         emissionDate: data.emissionDate,

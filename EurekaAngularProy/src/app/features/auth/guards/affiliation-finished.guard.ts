@@ -1,24 +1,26 @@
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
-  CanActivateChild,
+  CanActivate,
   Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 
 import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';
 
-@Injectable()
-export class AffiliationCompanyIdGuard implements CanActivateChild {
+@Injectable({
+  providedIn: 'root',
+})
+export class AffiliationFinishedGuard implements CanActivate {
   constructor(
     private affiliation: AffiliationService,
     private router: Router
   ) {}
-  canActivateChild(
+  canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ):
@@ -26,9 +28,9 @@ export class AffiliationCompanyIdGuard implements CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (!isNotNilOrEmpty(this.affiliation.companyId)) {
+    if (isNilOrEmpty(this.affiliation.email)) {
       void this.router.navigate([authFullRoutingNames.COMPANY_REGISTER]);
     }
-    return isNotNilOrEmpty(this.affiliation.companyId);
+    return !isNilOrEmpty(this.affiliation.email);
   }
 }
