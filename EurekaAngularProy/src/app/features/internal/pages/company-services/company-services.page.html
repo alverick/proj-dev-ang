@@ -2,16 +2,20 @@
   <cs-services-list
     class="tw-w-full"
     (add)="createService()"
-    [empty]="companyServices.services.length===0"
+    [empty]="companyServices.services.length === 0"
     [message]="'Aún no cuentas con servicios configurados'"
     [showSaveAll]="false"
   >
     <cs-service-card
-      *ngFor="let service of companyServices.services;let position=index"
+      *ngFor="let service of companyServices.services; let position = index"
       [serviceData]="service"
       [position]="position"
       [lockedMode]="true"
-      [canEdit]="!service.inReview || service.newNameCodeGTPStatus===3 || service.newNameGTPStatus===3"
+      [canEdit]="
+        !service.inReview ||
+        service.newNameCodeGTPStatus === 3 ||
+        service.newNameGTPStatus === 3
+      "
       (delete)="actionDelete($event)"
       (edit)="actionEdit(position)"
     ></cs-service-card>
