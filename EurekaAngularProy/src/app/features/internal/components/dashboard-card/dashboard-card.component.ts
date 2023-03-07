@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'cs-dashboard-card',
@@ -9,6 +9,10 @@ export class DashboardCardComponent {
   @Input() title: string;
   @Input() currency: string;
   @Input() amount: number | string;
-  @Input() link: number;
+  @Output() link = new EventEmitter();
   @Input() peopleQuantity: number;
+
+  goto() {
+    this.link.emit();
+  }
 }

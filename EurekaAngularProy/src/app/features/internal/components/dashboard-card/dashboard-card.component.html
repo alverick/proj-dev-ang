@@ -7,5 +7,7 @@
     }}</ng-container>
   </p>
   <p class="tw-text-sm tw-pb-4 bg-gray-300">{{ peopleQuantity }} personas</p>
-  <a class="tw-text-xs bg-gray-300" [href]="link">Ver detalle ></a>
+  <a class="tw-text-xs bg-gray-300 tw-cursor-pointer" (click)="goto()"
+    >Ver detalle ></a
+  >
 </div>
