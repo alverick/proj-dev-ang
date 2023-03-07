@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { pathOr } from 'ramda';
+import { Router } from '@angular/router';
+import { jsPDF } from 'jspdf';
+import { clone, pathOr } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
 
@@ -9,6 +11,7 @@ import {
   TopClients,
 } from '../../../../shared/data/dashboard-data.service';
 import { GraphData } from '../../components/dashboard-graph/dashboard-graph.component';
+import { internalFullRoutingNames } from '../../internal-routing.names';
 import { DashboardService } from '../../services';
 
 const dateFormat: Intl.DateTimeFormatOptions = {
@@ -38,13 +41,15 @@ export class DashboardPage implements OnInit {
   dateTo = new Date();
   dateFrom = new Date();
   initialValue;
+  filter;
   services: any;
   collectAmounts: CollectAmounts;
   clients: TopClients[] = [];
   graphData: GraphData;
+  currency = 'S/';
   @ViewChild('outputHtml', { static: false }) outputHtml: ElementRef;
 
-  constructor(private dashboard: DashboardService) {
+  constructor(private dashboard: DashboardService, private router: Router) {
     this.dateFrom.setMonth(this.dateFrom.getMonth() - 1);
     console.log(this.dateFrom);
   }
@@ -69,6 +74,7 @@ export class DashboardPage implements OnInit {
           services: servicesList,
         };
         console.log('initialValue', this.initialValue);
+        this.filter = clone(this.initialValue);
         this.query({
           service: servicesListId,
           dateType: 'PaymentDate',
@@ -81,6 +87,7 @@ export class DashboardPage implements OnInit {
 
   sendFilters(value: any) {
     console.log(value);
+    this.filter = value;
     this.query({
       service: value.services.map(({ id }) => id),
       dateType: value.payment.code,
@@ -97,7 +104,9 @@ export class DashboardPage implements OnInit {
     });
     this.dashboard.getClients(filterData).subscribe((value) => {
       console.log('getClients', value);
-      this.clients = value;
+      this.clients = value.map((item) => {
+        return { ...item, currency: this.currency };
+      });
     });
     this.dashboard.getHistorical(filterData).subscribe((value) => {
       const labels: string[] = pathOr([], [0, 'date'], value);
@@ -110,6 +119,12 @@ export class DashboardPage implements OnInit {
         labels: labels.map((item) => item.replace(' 00:00:00', '')),
         datasets,
       };
+    });
+  }
+
+  goto(typePayment: string) {
+    void this.router.navigate([internalFullRoutingNames.HOME], {
+      state: { filter: this.filter },
     });
   }
 }
