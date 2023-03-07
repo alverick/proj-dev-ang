@@ -8,13 +8,13 @@
     ></cs-dashboard-filter>
   </div>
   <div class="output" #outputHtml>
-    <div class="tw-my-6 tw-flex tw-gap-6">
+    <div class="tw-my-6 tw-flex tw-flex-col md:tw-flex-row tw-gap-6">
       <cs-dashboard-card
         title="Cobro total"
         currency="S/"
         [amount]="this.collectAmounts?.totalChargeAmount"
         [peopleQuantity]="this.collectAmounts?.totalChargePersons"
-        link="#home"
+        (link)="goto('total')"
         class="tw-flex-grow"
       ></cs-dashboard-card>
       <cs-dashboard-card
@@ -34,7 +34,7 @@
         class="tw-flex-grow"
       ></cs-dashboard-card>
     </div>
-    <div class="tw-my-6 tw-flex tw-gap-6">
+    <div class="tw-my-6 tw-flex tw-flex-col lg:tw-flex-row tw-gap-6">
       <cs-dashboard-table
         class="tw-flex-grow"
         [customers]="clients"
