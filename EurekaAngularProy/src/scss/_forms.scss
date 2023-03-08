@@ -34,6 +34,28 @@ body {
     }
   }
 
+  .p-multiselect {
+    .p-multiselect-trigger {
+      color: var(--primary-green-1);
+
+      .p-multiselect-trigger-icon {
+        font-size: 0.5rem;
+        transition: all 0.5s;
+      }
+    }
+
+    &.p-multiselect-open {
+      .p-multiselect-trigger .p-multiselect-trigger-icon {
+        transform: rotate(180deg);
+      }
+    }
+
+    &:not(.p-disabled).p-focus {
+      border-color: var(--primary-green-1);
+      box-shadow: 0 0 0 0.2rem var(--primary-green-5);
+    }
+  }
+
   .p-checkbox {
     .p-checkbox-box {
       transition: all 0.5s;
