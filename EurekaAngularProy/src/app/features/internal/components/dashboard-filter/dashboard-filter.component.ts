@@ -29,6 +29,7 @@ export interface ServiceItem {
   id: number;
   name: string;
   currency: string;
+  dataType: string;
 }
 
 const INTERVAL_DATE = 0;
@@ -66,6 +67,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   @Output() resetForm = new EventEmitter();
   @ViewChild('multiselect') multiselect!: any;
 
+  internalDates: any[];
   maxDateTo = new Date();
   minDateTo: Date | null = null;
   maxDateFrom = new Date();
@@ -101,8 +103,10 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
+    this.internalDates = this.optionsDates;
     this.setForm();
     this.parseDates();
+    this.parseServices();
   }
 
   private setForm() {
@@ -124,6 +128,20 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
           .map((item) => item.name)
           .sort()
           .join(', ');
+  }
+
+  private parseServices(): void {
+    this.form
+      .get('services')
+      .valueChanges.pipe(takeUntil(this.$destroy))
+      .subscribe((value) => {
+        const showAll =
+          value.some(({ dataType }) => dataType === 'C') && value.length > 0;
+        this.internalDates = showAll
+          ? this.optionsDates
+          : [this.optionsDates[0]];
+        console.log(value, showAll, this.optionsDates, this.internalDates);
+      });
   }
 
   private parseDates() {

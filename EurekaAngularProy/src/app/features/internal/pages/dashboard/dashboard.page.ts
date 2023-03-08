@@ -60,10 +60,11 @@ export class DashboardPage implements OnInit {
       .pipe(filter((value) => isNotNilOrEmpty(value)))
       .subscribe((value) => {
         console.log('getServices', value);
-        const servicesList = value.map(({ currency, id, name }) => ({
+        const servicesList = value.map(({ currency, id, name, dataType }) => ({
           id,
           name,
           currency,
+          dataType,
         }));
         const servicesListId = value.map(({ id }) => id);
         this.services = servicesList;
