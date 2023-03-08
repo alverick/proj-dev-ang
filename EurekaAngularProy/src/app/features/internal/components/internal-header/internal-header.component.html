@@ -272,6 +272,14 @@
         <li class="nav-item" routerLinkActive="active">
           <a
             class="mano nav-link mb-3"
+            [routerLink]="[dashboardLink]"
+            (click)="toggle()"
+            >{{ dashboardText }}</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a
+            class="mano nav-link mb-3"
             [routerLink]="[servicesLink]"
             (click)="toggle()"
             >{{ chargesText }}</a
