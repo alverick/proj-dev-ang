@@ -17,4 +17,5 @@ export interface GraphData {
 })
 export class DashboardGraphComponent {
   @Input() serviceData: GraphData;
+  @Input() printMode = false;
 }

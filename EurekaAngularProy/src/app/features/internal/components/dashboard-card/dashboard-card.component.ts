@@ -9,6 +9,7 @@ export class DashboardCardComponent {
   @Input() title: string;
   @Input() currency: string;
   @Input() amount: number | string;
+  @Input() printMode = false;
   @Output() link = new EventEmitter();
   @Input() peopleQuantity: number;
 

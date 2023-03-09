@@ -1,4 +1,7 @@
-<div class="tw-shadow tw-bg-white tw-rounded">
+<div
+  class="tw-shadow tw-bg-white tw-rounded tw-border-extended-grey-3"
+  [ngClass]="{ 'tw-shadow': !printMode, 'tw-border': printMode }"
+>
   <div class="header tw-px-6 tw-py-4 tw-border-b tw-border-extended-grey-4">
     <p>Top 10 clientes</p>
   </div>

@@ -17,5 +17,6 @@ export interface Customer {
   styleUrls: ['./dashboard-table.component.scss'],
 })
 export class DashboardTableComponent {
+  @Input() printMode = false;
   @Input() customers: TopClients[] = [];
 }

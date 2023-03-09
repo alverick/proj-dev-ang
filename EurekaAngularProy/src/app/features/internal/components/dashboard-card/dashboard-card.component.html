@@ -1,4 +1,7 @@
-<div class="tw-shadow tw-px-6 tw-py-5 tw-bg-white">
+<div
+  class="tw-shadow tw-px-6 tw-py-5 tw-bg-white tw-border-extended-grey-3"
+  [ngClass]="{ 'tw-shadow': !printMode, 'tw-border': printMode }"
+>
   <p class="tw-text-lg tw-pb-2">{{ title }}</p>
   <p class="tw-text-3xl tw-font-medium tw-pb-2 bg-gray-300">
     <ng-container *ngIf="amount === 0">{{ currency }} -</ng-container>
