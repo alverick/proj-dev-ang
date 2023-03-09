@@ -64,7 +64,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   @Input() optionsDates: any[];
   @Input() initialValue: FilterFormData;
   @Output() sendForm = new EventEmitter<object>();
-  @Output() resetForm = new EventEmitter();
+  @Output() sendEmail = new EventEmitter();
   @ViewChild('multiselect') multiselect!: any;
 
   internalDates: any[];
@@ -165,6 +165,10 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
     if (this.form.valid) {
       this.sendForm.emit(this.form.value);
     }
+  }
+
+  send() {
+    this.sendEmail.emit();
   }
 
   ngOnDestroy() {
