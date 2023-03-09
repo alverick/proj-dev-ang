@@ -174,14 +174,38 @@ export class DashboardPage implements OnInit {
       });
     });
     this.dashboard.getHistorical(filterData).subscribe((value) => {
-      const labels: string[] = pathOr([], [0, 'date'], value);
-      const datasets = value.map(({ amountCollected, service }) => ({
-        label: service,
-        data: amountCollected,
-      }));
-      console.log('getHistorical', value, labels, datasets);
+      const dates: string[] = [];
+      value.forEach(({ date }) => {
+        date.forEach((item) => {
+          dates.push(item);
+        });
+      });
+
+      dates.sort((dateA, dateB): number => {
+        const makeDate = (dateVal: string) => {
+          const dateParts = dateVal.split('/');
+          const date = new Date(
+            parseInt(dateParts[2]),
+            parseInt(dateParts[1]) - 1,
+            parseInt(dateParts[0])
+          );
+          return date;
+        };
+        return makeDate(dateA) > makeDate(dateB) ? 1 : -1;
+      });
+
+      const datasets = value.map(({ amountCollected, service, date }) => {
+        const amounts = dates.map((item) => {
+          const position = date.indexOf(item);
+          return position >= 0 ? amountCollected[position] : 0;
+        });
+        return {
+          label: service,
+          data: amounts,
+        };
+      });
       this.graphData = {
-        labels: labels.map((item) => item.replace(' 00:00:00', '')),
+        labels: dates,
         datasets,
       };
     });
