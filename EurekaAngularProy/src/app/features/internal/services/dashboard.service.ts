@@ -25,4 +25,8 @@ export class DashboardService {
   getHistorical(data) {
     return this.dashboard.getHistorical(data);
   }
+
+  sendEmail(data: FormData) {
+    return this.dashboard.sendEmail(data);
+  }
 }

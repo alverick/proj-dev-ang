@@ -30,6 +30,10 @@ export interface HistoricalData {
   date: string[];
 }
 
+export interface SendReport {
+  status: string;
+}
+
 @Injectable()
 export class DashboardDataService {
   constructor(private http: HttpClient) {}
@@ -52,6 +56,13 @@ export class DashboardDataService {
     const url = `${environment.END_POINT}/dashBoard/historicalCollect`;
     return this.http
       .get<HistoricalData[]>(url, { params: filterData })
+      .pipe(catchError((error) => throwError(error)));
+  }
+
+  sendEmail(form: FormData): Observable<SendReport[]> {
+    const url = `${environment.END_POINT}/dashBoard/sendReport`;
+    return this.http
+      .post<SendReport[]>(url, form)
       .pipe(catchError((error) => throwError(error)));
   }
 }
