@@ -1,21 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
 import {
-  MAT_DATE_LOCALE,
   DateAdapter,
   MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
 } from '@angular/material/core';
+import { MatIconRegistry } from '@angular/material/icon';
 import {
-  MomentDateAdapter,
   MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { withActions } from '@storybook/addon-actions';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
+
 import { DateList } from '../../models/dateList';
 import { WayPay } from '../../models/way-pay';
 import { SharedModule } from '../../shared.module';
@@ -75,9 +76,56 @@ const listStates: WayPay[] = [
 ];
 
 const listDates: DateList[] = [
-  { idDate: '1', descripcion: 'Hoy' },
-  { idDate: '2', descripcion: 'Ayer' },
+  { idDate: 'EmissionDate', descripcion: 'Emisión' },
+  { idDate: 'DueDate', descripcion: 'Vencimiento' },
+  { idDate: 'PaymentDate', descripcion: 'Pago' },
 ];
+
+const initialOrig = {
+  payment: {
+    name: 'Pago',
+    code: 'PaymentDate',
+  },
+  dateTo: '2023-03-08T10:08:25.379Z',
+  dateFrom: '2023-02-08T10:08:25.379Z',
+  services: [
+    {
+      id: 456,
+      name: 'Paquete basico',
+      currency: '001',
+      dataType: 'S',
+    },
+    {
+      id: 455,
+      name: 'Paquete familiar',
+      currency: '001',
+      dataType: 'P',
+    },
+    {
+      id: 452,
+      name: 'Paquete turistico 1',
+      currency: '001',
+      dataType: 'C',
+    },
+    {
+      id: 453,
+      name: 'Paquete Turistico 2',
+      currency: '002',
+      dataType: 'C',
+    },
+    {
+      id: 454,
+      name: 'Paquete turistico 4',
+      currency: '001',
+      dataType: 'C',
+    },
+  ],
+};
+const initial = {
+  ...initialOrig,
+  payment: initialOrig.payment.code,
+};
+console.log('initial', initial);
 
 export const normal = () => ({
   component: PaymentsFilterComponent,
@@ -85,6 +133,7 @@ export const normal = () => ({
     stateList: listStates,
     dateList: listDates,
     gtpMode: boolean('GTP Mode', false),
+    initial,
   },
   argTypes: { sendForm: { action: 'clicked' } },
 });
