@@ -17,6 +17,7 @@
               [services]="services"
               [stateList]="waypayList"
               [dateList]="DateList"
+              [initial]="formValues"
               (sendForm)="searchDebts($event)"
               (resetForm)="resetDebts()"
             ></cs-payments-filter>
