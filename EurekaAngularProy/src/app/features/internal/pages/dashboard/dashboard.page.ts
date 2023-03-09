@@ -1,5 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { clone, pathOr } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
@@ -27,6 +34,11 @@ export interface FilterParams {
   endDate: string;
 }
 
+interface EmailForm {
+  email: FormControl<string>;
+  subject: FormControl<string>;
+}
+
 @Component({
   selector: 'cs-dashboard',
   templateUrl: './dashboard.page.html',
@@ -47,14 +59,24 @@ export class DashboardPage implements OnInit {
   clients: TopClients[] = [];
   graphData: GraphData;
   currency = 'S/';
+  showModal = false;
+  emailForm: FormGroup<EmailForm>;
   @ViewChild('outputHtml', { static: false }) outputHtml: ElementRef;
 
-  constructor(private dashboard: DashboardService, private router: Router) {
+  constructor(
+    private dashboard: DashboardService,
+    private router: Router,
+    protected fb: FormBuilder
+  ) {
     this.dateFrom.setMonth(this.dateFrom.getMonth() - 1);
     console.log(this.dateFrom);
   }
 
   ngOnInit() {
+    this.emailForm = this.fb.group({
+      email: this.fb.nonNullable.control('', Validators.required),
+      subject: this.fb.control(''),
+    });
     this.dashboard
       .getServices()
       .pipe(filter((value) => isNotNilOrEmpty(value)))
@@ -94,6 +116,48 @@ export class DashboardPage implements OnInit {
       dateType: value.payment.code,
       startDate: value.dateFrom.toLocaleDateString('zh-TW', dateFormat),
       endDate: value.dateTo.toLocaleDateString('zh-TW', dateFormat),
+    });
+  }
+
+  sendEmail() {
+    console.log('sendEmail');
+    this.showModal = true;
+  }
+
+  sendEmailForm() {
+    const output: HTMLElement = document.querySelector('.output-mail');
+    output.style.visibility = 'visible';
+    const formData = new FormData();
+    formData.append('to', this.emailForm.value.email);
+    formData.append('subject', this.emailForm.value.subject);
+    void html2canvas(output).then((canvas) => {
+      output.style.visibility = 'hidden';
+      const doc = new jsPDF();
+      const width = 120;
+      const paper = 210;
+      const imgData = canvas.toDataURL('image/png');
+      doc.addImage(
+        imgData,
+        'PNG',
+        (paper - width) / 2,
+        5,
+        width,
+        (output.offsetHeight * width) / output.offsetWidth
+      );
+      const report = doc.output('blob');
+      formData.append('filename', report);
+      this.dashboard.sendEmail(formData).subscribe(
+        (value) => {
+          console.log('sendEmail', value);
+          this.emailForm.reset();
+          this.showModal = false;
+        },
+        (error) => {
+          console.log('error', error);
+          this.emailForm.reset();
+          this.showModal = false;
+        }
+      );
     });
   }
 
