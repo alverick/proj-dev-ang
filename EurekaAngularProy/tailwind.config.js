@@ -66,6 +66,10 @@ module.exports = {
       maxWidth: {
         '8xl': '1320px',
       },
+      width: {
+        112: '28rem',
+        128: '32rem',
+      },
     },
     borderColor: (theme) => ({
       ...theme('colors'),
