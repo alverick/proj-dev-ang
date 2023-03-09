@@ -51,6 +51,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   @Input() stateTypeList: StatesGtp[];
   @Input() services: any[];
   @Input() stateList: WayPay[] | StatesGtp[];
+  @Input() initial;
   @Output() sendForm = new EventEmitter<object>();
   @Output() resetForm = new EventEmitter();
 
@@ -87,6 +88,21 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     this.parseDates();
     this.listenChangesForm();
     this.setMode();
+    if (isNotNil(this.initial)) {
+      this.form.patchValue(
+        {
+          dateForFilter: this.initial.payment,
+          dateTo: this.initial.dateTo,
+          dateFrom: this.initial.dateFrom,
+        },
+        { emitEvent: false }
+      );
+      const { dateTo, dateFrom } = this.form.controls;
+
+      dateFrom.enable();
+      dateTo.enable();
+      this.sendFilters();
+    }
   }
 
   private setMode() {
