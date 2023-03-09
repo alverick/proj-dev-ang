@@ -8,30 +8,30 @@
       (sendEmail)="sendEmail()"
     ></cs-dashboard-filter>
   </div>
-  <div class="output" #outputHtml>
+  <div class="output">
     <div class="tw-my-6 tw-flex tw-flex-col md:tw-flex-row tw-gap-6">
       <cs-dashboard-card
         title="Cobro total"
         currency="S/"
-        [amount]="this.collectAmounts?.totalChargeAmount"
-        [peopleQuantity]="this.collectAmounts?.totalChargePersons"
+        [amount]="collectAmounts?.totalChargeAmount"
+        [peopleQuantity]="collectAmounts?.totalChargePersons"
         (link)="goto('total')"
         class="tw-flex-grow"
       ></cs-dashboard-card>
       <cs-dashboard-card
         title="Cobro pendiente"
         currency="S/"
-        [amount]="this.collectAmounts?.pendingChargeAmount"
-        [peopleQuantity]="this.collectAmounts?.pendingChargePersons"
-        link="#home"
+        [amount]="collectAmounts?.pendingChargeAmount"
+        [peopleQuantity]="collectAmounts?.pendingChargePersons"
+        (link)="goto('pendant')"
         class="tw-flex-grow"
       ></cs-dashboard-card>
       <cs-dashboard-card
         title="Cobro en mora"
         currency="S/"
-        [amount]="this.collectAmounts?.defaultChargeAmount"
-        [peopleQuantity]="this.collectAmounts?.defaultChargePersons"
-        link="#home"
+        [amount]="collectAmounts?.defaultChargeAmount"
+        [peopleQuantity]="collectAmounts?.defaultChargePersons"
+        (link)="goto('default')"
         class="tw-flex-grow"
       ></cs-dashboard-card>
     </div>
