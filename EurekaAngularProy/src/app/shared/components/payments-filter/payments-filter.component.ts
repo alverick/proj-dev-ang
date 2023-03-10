@@ -94,6 +94,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
           dateForFilter: this.initial.payment,
           dateTo: this.initial.dateTo,
           dateFrom: this.initial.dateFrom,
+          status: this.initial.status,
         },
         { emitEvent: false }
       );
