@@ -215,7 +215,7 @@ export class DashboardPage implements OnInit {
 
   goto(typePayment: string) {
     void this.router.navigate([internalFullRoutingNames.HOME], {
-      state: { filter: this.filter },
+      state: { filter: { ...this.filter, status: typePayment } },
     });
   }
 }

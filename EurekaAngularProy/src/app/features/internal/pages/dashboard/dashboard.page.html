@@ -15,7 +15,7 @@
         currency="S/"
         [amount]="collectAmounts?.totalChargeAmount"
         [peopleQuantity]="collectAmounts?.totalChargePersons"
-        (link)="goto('total')"
+        (link)="goto('')"
         class="tw-flex-grow"
       ></cs-dashboard-card>
       <cs-dashboard-card
@@ -23,7 +23,7 @@
         currency="S/"
         [amount]="collectAmounts?.pendingChargeAmount"
         [peopleQuantity]="collectAmounts?.pendingChargePersons"
-        (link)="goto('pendant')"
+        (link)="goto('PENDIENTE')"
         class="tw-flex-grow"
       ></cs-dashboard-card>
       <cs-dashboard-card
@@ -31,7 +31,7 @@
         currency="S/"
         [amount]="collectAmounts?.defaultChargeAmount"
         [peopleQuantity]="collectAmounts?.defaultChargePersons"
-        (link)="goto('default')"
+        (link)="goto('VENCIDO')"
         class="tw-flex-grow"
       ></cs-dashboard-card>
     </div>
