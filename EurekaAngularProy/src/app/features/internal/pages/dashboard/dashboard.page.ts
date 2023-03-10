@@ -142,7 +142,9 @@ export class DashboardPage implements OnInit {
         (paper - width) / 2,
         5,
         width,
-        (output.offsetHeight * width) / output.offsetWidth
+        (output.offsetHeight * width) / output.offsetWidth,
+        '',
+        'FAST'
       );
       const report = doc.output('blob');
       formData.append('filename', report);
