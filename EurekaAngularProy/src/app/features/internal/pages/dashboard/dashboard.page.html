@@ -50,6 +50,7 @@
 <p-dialog
   header="Compartir resumen"
   [(visible)]="showModal"
+  [modal]="true"
   styleClass="tw-w-112"
 >
   <div class="tw-px-2 tw-pb-2">
@@ -59,6 +60,7 @@
     </div>
     <form
       class="form lg:tw-gap-4"
+      *ngIf="showModal"
       [formGroup]="emailForm"
       (ngSubmit)="sendEmailForm()"
     >
