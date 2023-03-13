@@ -8,7 +8,7 @@ import {
 import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { clone, pathOr } from 'ramda';
+import { clone, flatten, pipe, pluck, uniq } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
 
@@ -53,7 +53,7 @@ export class DashboardPage implements OnInit {
   dateTo = new Date();
   dateFrom = new Date();
   initialValue;
-  filter;
+  filter: any;
   services: any;
   collectAmounts: CollectAmounts;
   clients: TopClients[] = [];
@@ -176,12 +176,11 @@ export class DashboardPage implements OnInit {
       });
     });
     this.dashboard.getHistorical(filterData).subscribe((value) => {
-      const dates: string[] = [];
-      value.forEach(({ date }) => {
-        date.forEach((item) => {
-          dates.push(item);
-        });
-      });
+      const dates: string[] = pipe(
+        pluck('date'),
+        flatten,
+        uniq
+      )(value) as string[];
 
       dates.sort((dateA, dateB): number => {
         const makeDate = (dateVal: string) => {
