@@ -218,8 +218,12 @@ export class DashboardPage implements OnInit {
   }
 
   goto(typePayment: string) {
+    const services =
+      this.filter.services.length === this.services.length
+        ? []
+        : this.filter.services;
     void this.router.navigate([internalFullRoutingNames.HOME], {
-      state: { filter: { ...this.filter, status: typePayment } },
+      state: { filter: { ...this.filter, services, status: typePayment } },
     });
   }
 
