@@ -15,10 +15,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { flatten, has, path, pipe, pluck, prop, uniq } from 'ramda';
+import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { has } from 'ramda';
+
+import { currencies, Currency } from '../../../../shared/constants/currencies';
 
 export interface OptionList {
   name: string;
@@ -29,6 +31,7 @@ export interface ServiceItem {
   id: number;
   name: string;
   currency: string;
+  currencySymbol: string;
   dataType: string;
 }
 
@@ -36,6 +39,7 @@ const INTERVAL_DATE = 0;
 
 export interface FilterFormData {
   services: ServiceItem[];
+  currency?: Currency;
   payment: string;
   dateFrom: string;
   dateTo: string;
@@ -43,6 +47,7 @@ export interface FilterFormData {
 
 interface FilterForm {
   services: FormControl<ServiceItem[]>;
+  currency: FormControl<Currency>;
   payment: FormControl<string>;
   dateFrom: FormControl<string>;
   dateTo: FormControl<string>;
@@ -63,19 +68,27 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   @Input() services: ServiceItem[];
   @Input() optionsDates: any[];
   @Input() initialValue: FilterFormData;
+  @Input() currency: string;
+  @Output() currencyChange = new EventEmitter<string>();
   @Output() sendForm = new EventEmitter<object>();
   @Output() sendEmail = new EventEmitter();
   @ViewChild('multiselect') multiselect!: any;
 
   internalDates: any[];
+  internalServices: ServiceItem[] = [];
+  currencies = currencies;
   maxDateTo = new Date();
   minDateTo: Date | null = null;
   maxDateFrom = new Date();
+  showCurrency = false;
   errorMessages = {
     services: {
       required: 'Elija una opción',
     },
     payment: {
+      required: 'Elija una opción',
+    },
+    currency: {
       required: 'Elija una opción',
     },
     dateFrom: {
@@ -97,6 +110,19 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   constructor(protected fb: FormBuilder) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (isNotNil(path(['services', 'currentValue'], changes))) {
+      const selCurrencies = pipe(pluck('currency'), uniq)(this.services);
+      this.showCurrency = selCurrencies.length > 1;
+      this.internalServices =
+        selCurrencies.length > 1
+          ? this.services.filter((item) => item.currency === selCurrencies[0])
+          : this.services;
+      this.currencyChange.emit(selCurrencies[0]);
+      this.form.patchValue({
+        currency: currencies[0],
+        services: this.internalServices,
+      });
+    }
     if (has('initialValue', changes) && this.form) {
       this.form.patchValue(this.initialValue, { emitEvent: false });
     }
@@ -107,22 +133,34 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
     this.setForm();
     this.parseDates();
     this.parseServices();
+    this.form.get('currency').valueChanges.subscribe((value) => {
+      this.currencyChange.emit(value.code);
+      this.form.patchValue({ services: [] });
+      this.internalServices = this.services.filter(
+        (item) => item.currency === value.code
+      );
+    });
   }
 
   private setForm() {
     this.maxDateFrom.setDate(this.maxDateTo.getDate() - INTERVAL_DATE);
     this.form = this.fb.nonNullable.group({
       services: this.fb.nonNullable.control([], Validators.required),
+      currency: this.fb.control(null, Validators.required),
       payment: this.fb.control('', Validators.required),
       dateFrom: this.fb.control('', Validators.required),
       dateTo: this.fb.control('', Validators.required),
     });
-    console.log('setForm');
+
     this.form.patchValue(this.initialValue);
+    this.form.patchValue({
+      currency: currencies[0],
+      services: this.internalServices,
+    });
   }
 
   parseLabelServices(value: OptionList[]) {
-    return value.length === this.services.length
+    return value.length === this.internalServices.length
       ? 'Todos los servicios'
       : value
           .map((item) => item.name)
@@ -140,7 +178,6 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
         this.internalDates = showAll
           ? this.optionsDates
           : [this.optionsDates[0]];
-        console.log(value, showAll, this.optionsDates, this.internalDates);
       });
   }
 
@@ -161,7 +198,6 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   sendFilters() {
-    console.log(this.form.valid, this.form);
     if (this.form.valid) {
       this.sendForm.emit(this.form.value);
     }

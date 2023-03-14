@@ -178,12 +178,15 @@ const Template: Story<DashboardFilterComponent> = (
   props: args,
 });
 
-const services = serviceList.map(({ currency, id, name, dataType }) => ({
-  id,
-  name,
-  currency,
-  dataType,
-}));
+const services = serviceList.map(
+  ({ currency, currencySymbol, id, name, dataType }) => ({
+    id,
+    name,
+    currency,
+    currencySymbol,
+    dataType,
+  })
+);
 const optionsDates = [
   { name: 'Pago', code: 'payment' },
   { name: 'Emisión', code: 'emission' },
