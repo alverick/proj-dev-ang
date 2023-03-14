@@ -70,6 +70,13 @@ module.exports = {
         112: '28rem',
         128: '32rem',
       },
+      keyframes: {
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
+        },
+      },
     },
     borderColor: (theme) => ({
       ...theme('colors'),
