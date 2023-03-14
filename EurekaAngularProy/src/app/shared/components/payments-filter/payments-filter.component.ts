@@ -89,12 +89,14 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     this.listenChangesForm();
     this.setMode();
     if (isNotNil(this.initial)) {
+      const service = this.initial.services.map((item) => item.name);
       this.form.patchValue(
         {
           dateForFilter: this.initial.payment,
           dateTo: this.initial.dateTo,
           dateFrom: this.initial.dateFrom,
           status: this.initial.status,
+          service,
         },
         { emitEvent: false }
       );
