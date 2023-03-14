@@ -92,13 +92,18 @@ export class DashboardPage implements OnInit {
           currency,
           dataType,
         }));
-        const servicesListId = value.map(({ id }) => id);
+        const currencies = pipe(pluck('currency'), uniq)(value);
+        const servicesFiltered =
+          currencies.length > 1
+            ? servicesList.filter((item) => item.currency === currencies[0])
+            : servicesList;
         this.services = servicesList;
+        const servicesListId = servicesFiltered.map(({ id }) => id);
         this.initialValue = {
           payment: this.optionsDates[0],
           dateTo: this.dateTo,
           dateFrom: this.dateFrom,
-          services: servicesList,
+          services: servicesFiltered,
         };
         console.log('initialValue', this.initialValue);
         this.filter = clone(this.initialValue);
