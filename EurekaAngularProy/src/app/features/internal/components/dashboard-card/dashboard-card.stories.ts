@@ -47,3 +47,13 @@ Empty.args = {
   peopleQuantity: 0,
   link: '#home',
 };
+
+export const skeleton = Template.bind({});
+skeleton.args = {
+  title: 'Cobro total',
+  currency: 'S/',
+  amount: 0,
+  loading: true,
+  peopleQuantity: 0,
+  link: '#home',
+};
