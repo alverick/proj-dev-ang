@@ -134,7 +134,6 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
     this.parseDates();
     this.parseServices();
     this.form.get('currency').valueChanges.subscribe((value) => {
-      this.currencyChange.emit(value.code);
       this.form.patchValue({ services: [] });
       this.internalServices = this.services.filter(
         (item) => item.currency === value.code
@@ -199,6 +198,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
 
   sendFilters() {
     if (this.form.valid) {
+      this.currencyChange.emit(this.form.value.currency.code);
       this.sendForm.emit(this.form.value);
     }
   }
