@@ -176,9 +176,7 @@ export class DashboardPage implements OnInit {
       this.loading = false;
     });
     this.dashboard.getClients(filterData).subscribe((value) => {
-      this.clients = value.map((item) => {
-        return { ...item, currency: this.currency };
-      });
+      this.clients = value;
     });
     this.dashboard.getHistorical(filterData).subscribe((value) => {
       const dates: string[] = pipe(
