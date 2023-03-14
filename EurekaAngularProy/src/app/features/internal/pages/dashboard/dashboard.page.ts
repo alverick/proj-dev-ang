@@ -85,7 +85,6 @@ export class DashboardPage implements OnInit {
       .getServices()
       .pipe(filter((value) => isNotNilOrEmpty(value)))
       .subscribe((value) => {
-        console.log('getServices', value);
         const servicesList = value.map(({ currency, id, name, dataType }) => ({
           id,
           name,
@@ -105,7 +104,6 @@ export class DashboardPage implements OnInit {
           dateFrom: this.dateFrom,
           services: servicesFiltered,
         };
-        console.log('initialValue', this.initialValue);
         this.filter = clone(this.initialValue);
         this.query({
           service: servicesListId,
@@ -173,14 +171,11 @@ export class DashboardPage implements OnInit {
   }
 
   query(filterData: FilterParams) {
-    console.log('filterData', filterData);
     this.dashboard.getCollect(filterData).subscribe((value) => {
-      console.log('getCollect', value);
       this.collectAmounts = value[0];
       this.loading = false;
     });
     this.dashboard.getClients(filterData).subscribe((value) => {
-      console.log('getClients', value);
       this.clients = value.map((item) => {
         return { ...item, currency: this.currency };
       });
