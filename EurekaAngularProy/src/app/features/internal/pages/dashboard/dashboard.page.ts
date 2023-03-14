@@ -62,6 +62,7 @@ export class DashboardPage implements OnInit {
   currencyCode = '001';
   currencyLabel = 'S/';
   showModal = false;
+  loading = false;
   emailForm: FormGroup<EmailForm>;
   @ViewChild('outputHtml', { static: false }) outputHtml: ElementRef;
 
@@ -79,6 +80,7 @@ export class DashboardPage implements OnInit {
       email: this.fb.nonNullable.control('', Validators.required),
       subject: this.fb.control(''),
     });
+    this.loading = true;
     this.dashboard
       .getServices()
       .pipe(filter((value) => isNotNilOrEmpty(value)))
@@ -170,6 +172,7 @@ export class DashboardPage implements OnInit {
     this.dashboard.getCollect(filterData).subscribe((value) => {
       console.log('getCollect', value);
       this.collectAmounts = value[0];
+      this.loading = false;
     });
     this.dashboard.getClients(filterData).subscribe((value) => {
       console.log('getClients', value);
