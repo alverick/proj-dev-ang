@@ -4,6 +4,8 @@
       [services]="services"
       [optionsDates]="optionsDates"
       [initialValue]="initialValue"
+      [currency]="currencyCode"
+      (currencyChange)="currencyChanged($event)"
       (sendForm)="sendFilters($event)"
       (sendEmail)="sendEmail()"
     ></cs-dashboard-filter>
@@ -12,7 +14,7 @@
     <div class="tw-my-6 tw-flex tw-flex-col md:tw-flex-row tw-gap-6">
       <cs-dashboard-card
         title="Cobro total"
-        currency="S/"
+        [currency]="currencyLabel"
         [amount]="collectAmounts?.totalChargeAmount"
         [peopleQuantity]="collectAmounts?.totalChargePersons"
         (link)="goto('')"
@@ -20,7 +22,7 @@
       ></cs-dashboard-card>
       <cs-dashboard-card
         title="Cobro pendiente"
-        currency="S/"
+        [currency]="currencyLabel"
         [amount]="collectAmounts?.pendingChargeAmount"
         [peopleQuantity]="collectAmounts?.pendingChargePersons"
         (link)="goto('PENDIENTE')"
@@ -28,7 +30,7 @@
       ></cs-dashboard-card>
       <cs-dashboard-card
         title="Monto en mora"
-        currency="S/"
+        [currency]="currencyLabel"
         [amount]="collectAmounts?.defaultChargeAmount"
         [peopleQuantity]="collectAmounts?.defaultChargePersons"
         (link)="goto('VENCIDO')"
@@ -38,6 +40,7 @@
     <div class="tw-my-6 tw-flex tw-flex-col lg:tw-flex-row tw-gap-6">
       <cs-dashboard-table
         class="tw-flex-grow"
+        [currency]="currencyLabel"
         [customers]="clients"
       ></cs-dashboard-table>
       <cs-dashboard-graph

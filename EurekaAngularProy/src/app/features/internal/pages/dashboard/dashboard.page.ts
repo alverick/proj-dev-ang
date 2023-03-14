@@ -20,6 +20,7 @@ import {
 import { GraphData } from '../../components/dashboard-graph/dashboard-graph.component';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 import { DashboardService } from '../../services';
+import { currencies } from '../../../../shared/constants/currencies';
 
 const dateFormat: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -58,7 +59,8 @@ export class DashboardPage implements OnInit {
   collectAmounts: CollectAmounts;
   clients: TopClients[] = [];
   graphData: GraphData;
-  currency = 'S/';
+  currencyCode = '001';
+  currencyLabel = 'S/';
   showModal = false;
   emailForm: FormGroup<EmailForm>;
   @ViewChild('outputHtml', { static: false }) outputHtml: ElementRef;
@@ -216,5 +218,10 @@ export class DashboardPage implements OnInit {
     void this.router.navigate([internalFullRoutingNames.HOME], {
       state: { filter: { ...this.filter, status: typePayment } },
     });
+  }
+
+  currencyChanged($event: string) {
+    this.currencyCode = $event;
+    this.currencyLabel = currencies.find((item) => item.code === $event).symbol;
   }
 }
