@@ -22,18 +22,10 @@
           </td>
           <td>{{ customer.service | notEmpty : '-' }}</td>
           <td>
-            {{
-              customer.totalAmount
-                | currency : customer.currency
-                | notEmpty : '-'
-            }}
+            {{ customer.totalAmount | currency : currency | notEmpty : '-' }}
           </td>
           <td>
-            {{
-              customer.totalDefault
-                | currency : customer.currency
-                | notEmpty : '-'
-            }}
+            {{ customer.totalDefault | currency : currency | notEmpty : '-' }}
           </td>
         </tr>
       </ng-template>

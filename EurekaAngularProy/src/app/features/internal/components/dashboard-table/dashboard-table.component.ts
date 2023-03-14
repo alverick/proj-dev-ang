@@ -19,4 +19,5 @@ export interface Customer {
 export class DashboardTableComponent {
   @Input() printMode = false;
   @Input() customers: TopClients[] = [];
+  @Input() currency = 'S/';
 }
