@@ -11,7 +11,7 @@ export class DashboardService {
   ) {}
 
   getServices() {
-    return this.company.getCompanyServices(false);
+    return this.company.getCompanyServices(true);
   }
 
   getCollect(data) {
