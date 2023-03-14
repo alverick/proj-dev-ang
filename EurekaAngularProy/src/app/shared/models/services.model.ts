@@ -41,7 +41,7 @@ export interface IServiceRemoteModel {
   amount?: string | number | null;
   chargeInterest?: string;
   chargeType?: string | number | null;
-  currency?: string;
+  currency: string;
   currencySymbol?: string;
   dataType: string;
   debtorCode: string;
