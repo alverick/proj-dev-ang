@@ -15,7 +15,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { flatten, has, path, pipe, pluck, prop, uniq } from 'ramda';
+import { has, path, pipe, pluck, uniq } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -115,9 +115,9 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
       this.showCurrency = selCurrencies.length > 1;
       this.internalServices =
         selCurrencies.length > 1
-          ? this.services.filter((item) => item.currency === selCurrencies[0])
+          ? this.services.filter((item) => item.currency === currencies[0].code)
           : this.services;
-      this.currencyChange.emit(selCurrencies[0]);
+      this.currencyChange.emit(currencies[0].code);
       this.form.patchValue({
         currency: currencies[0],
         services: this.internalServices,

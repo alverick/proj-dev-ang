@@ -12,15 +12,14 @@ import { clone, flatten, pipe, pluck, uniq } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
 
+import { currencies } from '../../../../shared/constants/currencies';
 import {
   CollectAmounts,
-  HistoricalData,
   TopClients,
 } from '../../../../shared/data/dashboard-data.service';
 import { GraphData } from '../../components/dashboard-graph/dashboard-graph.component';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 import { DashboardService } from '../../services';
-import { currencies } from '../../../../shared/constants/currencies';
 
 const dateFormat: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -91,10 +90,12 @@ export class DashboardPage implements OnInit {
           currency,
           dataType,
         }));
-        const currencies = pipe(pluck('currency'), uniq)(value);
+        const currenciesServices = pipe(pluck('currency'), uniq)(value);
         const servicesFiltered =
-          currencies.length > 1
-            ? servicesList.filter((item) => item.currency === currencies[0])
+          currenciesServices.length > 1
+            ? servicesList.filter(
+                (item) => item.currency === currencies[0].code
+              )
             : servicesList;
         this.services = servicesList;
         const servicesListId = servicesFiltered.map(({ id }) => id);
