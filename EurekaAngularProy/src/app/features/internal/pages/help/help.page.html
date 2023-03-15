@@ -1,154 +1,231 @@
-<div class="py-4">
-  <div class="custom-container col-12">
-    <div class="py-3 d-lg-none">
-      <a (click)="goBack()">
-        <img src="../../../../../assets/images/left-blue.svg" />
-      </a>
-    </div>
-    <div class="help-container">
-      <h3 class="mb-lg-3 mb-5">Centro de Ayuda</h3>
-      <div class="lists">
-        <mat-accordion>
-          <cs-help-item title="¿Cómo empezar a usar Cobro Simple?">
-            <p>
-              Si tienes un servicio de modalidad Data completa o Data parcial,
-              debes cargar tu lista de cobros pendientes con la información de
-              tus clientes para que puedan pagarte a través de los canales
-              Interbank.
-            </p>
-            <p>
-              Si tienes un servicio de modalidad Sin data, no es necesario que
-              agregues un cobro pendiente. Solo deberás indicarle a tu cliente
-              que realice el pago a través de los canales Interbank indicando el
-              código o nombre del servicio a pagar y su código de
-              identificación.
-            </p>
-            <p>
-              Podrás visualizar el detalle de tus cobranzas desde la sección
-              “Mis Movimientos” en tiempo real.
-            </p>
-          </cs-help-item>
-          <cs-help-item title="¿Cómo cargar mi lista de cobros?">
-            Para hacerlo sigue estos pasos:
-            <ol class="pl-4">
-              <li>
-                En la sección “Mis Movimientos” haz clic en “Agregar cobros” y
-                selecciona el nombre del servicio.
-              </li>
-              <li>
-                Selecciona si deseas ingresar un nuevo cobro en línea o a través
-                de una plantilla en Excel.
-              </li>
-              <li>
-                Si seleccionas la opción “Agregar en la web”, deberás completar
-                los datos del formulario y dar clic en “Grabar”
-              </li>
-              <li>
-                Si seleccionas la opción “Cargar Excel”, deberás completar la
-                plantilla con la información de tus clientes y subirla a la web.
-              </li>
-              <li>
-                ¡Listo! Podrás visualizar tu lista de cobranzas en la sección
-                “Mis Movimientos”
-              </li>
-            </ol>
-          </cs-help-item>
-          <cs-help-item title="¿Qué es un servicio y cómo lo configuro?">
-            <p>
-              El servicio es el concepto por el cual te pagarán tus clientes.
-              Por ejemplo, si eres una Institución educativa, el nombre del
-              servicio podría ser “Mensualidad”.
-            </p>
+<div class="tw-max-w-8xl tw-m-auto tw-relative tw-py-6 tw-px-4 lg:tw-px-0">
+  <div class="tw-py-3 lg:tw-hidden">
+    <a (click)="goBack()">
+      <img src="../../../../../assets/images/left-blue.svg" alt="Regresar" />
+    </a>
+  </div>
+  <div class="help-container lg:tw-mx-20">
+    <h3
+      class="tw-mb-5 tw-text-xl lg:tw-text-4xl tw-text-secondary-blue-1 lg:tw-text-center"
+    >
+      Centro de Ayuda
+    </h3>
+    <div class="lists">
+      <p-accordion
+        expandIcon="tw-hidden"
+        collapseIcon="tw-hidden"
+        [(activeIndex)]="activeIndex"
+      >
+        <p-accordionTab
+          header="¿Cómo empezar a usar Cobro Simple?"
+          iconPos="end"
+          headerStyleClass="lg:tw-text-2xl"
+          contentStyleClass="tw-text-sm lg:tw-text-base"
+        >
+          <ng-template pTemplate="header">
+            <cs-help-header-icon
+              class="p-accordion-toggle-icon-end tw-shrink-0"
+              [position]="0"
+              [activeIndex]="activeIndex"
+            ></cs-help-header-icon>
+          </ng-template>
+          <p class="tw-mb-2">
+            Si tienes un servicio de modalidad Data completa o Data parcial,
+            debes cargar tu lista de cobros pendientes con la información de tus
+            clientes para que puedan pagarte a través de los canales Interbank.
+          </p>
+          <p class="tw-mb-2">
+            Si tienes un servicio de modalidad Sin data, no es necesario que
+            agregues un cobro pendiente. Solo deberás indicarle a tu cliente que
+            realice el pago a través de los canales Interbank indicando el
+            código o nombre del servicio a pagar y su código de identificación.
+          </p>
+          <p class="tw-mb-2">
+            Podrás visualizar el detalle de tus cobranzas desde la sección “Mis
+            Movimientos” en tiempo real.
+          </p>
+        </p-accordionTab>
+        <p-accordionTab
+          header="¿Cómo cargar mi lista de cobros?"
+          iconPos="end"
+          headerStyleClass="lg:tw-text-2xl"
+          contentStyleClass="tw-text-sm lg:tw-text-base"
+        >
+          <ng-template pTemplate="header">
+            <cs-help-header-icon
+              class="p-accordion-toggle-icon-end tw-shrink-0"
+              [position]="1"
+              [activeIndex]="activeIndex"
+            ></cs-help-header-icon>
+          </ng-template>
+          <p class="tw-mb-2">Para hacerlo sigue estos pasos:</p>
+          <ol class="tw-pl-6 tw-list-decimal">
+            <li class="tw-mb-1">
+              En la sección “Mis Movimientos” haz clic en “Agregar cobros” y
+              selecciona el nombre del servicio.
+            </li>
+            <li class="tw-mb-1">
+              Selecciona si deseas ingresar un nuevo cobro en línea o a través
+              de una plantilla en Excel.
+            </li>
+            <li class="tw-mb-1">
+              Si seleccionas la opción “Agregar en la web”, deberás completar
+              los datos del formulario y dar clic en “Grabar”
+            </li>
+            <li class="tw-mb-1">
+              Si seleccionas la opción “Cargar Excel”, deberás completar la
+              plantilla con la información de tus clientes y subirla a la web.
+            </li>
+            <li class="tw-mb-1">
+              ¡Listo! Podrás visualizar tu lista de cobranzas en la sección “Mis
+              Movimientos”
+            </li>
+          </ol>
+        </p-accordionTab>
+        <p-accordionTab
+          header="¿Qué es un servicio y cómo lo configuro?"
+          iconPos="end"
+          headerStyleClass="lg:tw-text-2xl"
+          contentStyleClass="tw-text-sm lg:tw-text-base"
+        >
+          <ng-template pTemplate="header">
+            <cs-help-header-icon
+              class="p-accordion-toggle-icon-end tw-shrink-0"
+              [position]="2"
+              [activeIndex]="activeIndex"
+            ></cs-help-header-icon>
+          </ng-template>
+          <p class="tw-mb-2">
+            El servicio es el concepto por el cual te pagarán tus clientes. Por
+            ejemplo, si eres una Institución educativa, el nombre del servicio
+            podría ser “Mensualidad”.
+          </p>
 
-            Para agregar un nuevo servicio:
-            <ol class="pl-4">
-              <li>
-                Da clic en “Agregar otro servicio” dentro de la sección “Mis
-                Servicios”.
-              </li>
-              <li>
-                Completa la información del concepto, modalidad, canal de pago y
-                configuraciones deseadas.
-              </li>
-              <li>
-                ¡Listo! Tu solicitud será revisada y gestionada dentro de las 24
-                horas siguientes.
-              </li>
-            </ol>
+          <p class="tw-mb-2">Para agregar un nuevo servicio:</p>
+          <ol class="tw-pl-6 tw-list-decimal">
+            <li class="tw-mb-1">
+              Da clic en “Agregar otro servicio” dentro de la sección “Mis
+              Servicios”.
+            </li>
+            <li class="tw-mb-1">
+              Completa la información del concepto, modalidad, canal de pago y
+              configuraciones deseadas.
+            </li>
+            <li class="tw-mb-1">
+              ¡Listo! Tu solicitud será revisada y gestionada dentro de las 24
+              horas siguientes.
+            </li>
+          </ol>
 
-            Para modificar un servicio:
-            <ol class="pl-4">
-              <li>
-                Dentro de la sección “Mis Servicios”, ubica el servicio que
-                deseas modificar.
-              </li>
-              <li>Da clic al ícono del lápiz para editar el servicio.</li>
-              <li>
-                Realiza las modificaciones a tu servicio, da clic al botón
-                “Guardar” y luego al botón “Finalizar”.
-              </li>
-            </ol>
-          </cs-help-item>
-          <cs-help-item title="¿Cómo podrán pagarme mis clientes?">
-            <p>
-              Tus clientes podrán pagarte de manera digital en su Interbank APP
-              o Banca por Internet con la opción “Pago de Servicios”. Te
-              enseñamos cómo
-              <a
-                href="https://www.youtube.com/watch?v=tm9YrkkUEH0"
-                target="_blank"
-                >aquí</a
-              >.
-            </p>
+          <p class="tw-mb-2">Para modificar un servicio:</p>
+          <ol class="tw-pl-6 tw-list-decimal">
+            <li class="tw-mb-1">
+              Dentro de la sección “Mis Servicios”, ubica el servicio que deseas
+              modificar.
+            </li>
+            <li class="tw-mb-1">
+              Da clic al ícono del lápiz para editar el servicio.
+            </li>
+            <li class="tw-mb-1">
+              Realiza las modificaciones a tu servicio, da clic al botón
+              “Guardar” y luego al botón “Finalizar”.
+            </li>
+          </ol>
+        </p-accordionTab>
+        <p-accordionTab
+          header="¿Cómo podrán pagarme mis clientes?"
+          iconPos="end"
+          headerStyleClass="lg:tw-text-2xl"
+          contentStyleClass="tw-text-sm lg:tw-text-base"
+        >
+          <ng-template pTemplate="header">
+            <cs-help-header-icon
+              class="p-accordion-toggle-icon-end tw-shrink-0"
+              [position]="3"
+              [activeIndex]="activeIndex"
+            ></cs-help-header-icon>
+          </ng-template>
+          <p class="tw-mb-2">
+            Tus clientes podrán pagarte de manera digital en su Interbank APP o
+            Banca por Internet con la opción “Pago de Servicios”. Te enseñamos
+            cómo
+            <a
+              href="https://www.youtube.com/watch?v=tm9YrkkUEH0"
+              target="_blank"
+              >aquí</a
+            >.
+          </p>
 
-            <p>
-              También podrán pagarte a través de agentes Interbank a nivel
-              nacional. Te enseñamos cómo
-              <a
-                href="https://www.youtube.com/watch?v=6cbVXgAgLSs"
-                target="_blank"
-                >aquí</a
-              >.
-            </p>
-          </cs-help-item>
-          <cs-help-item title="¿Cómo visualizar y editar mis cobranzas?">
-            <p>
-              En la sección “Mis Movimientos” podrás visualizar el detalle de
-              tus cobranzas en tiempo real.
-            </p>
+          <p class="tw-mb-2">
+            También podrán pagarte a través de agentes Interbank a nivel
+            nacional. Te enseñamos cómo
+            <a
+              href="https://www.youtube.com/watch?v=6cbVXgAgLSs"
+              target="_blank"
+              >aquí</a
+            >.
+          </p>
+        </p-accordionTab>
+        <p-accordionTab
+          header="¿Cómo visualizar y editar mis cobranzas?"
+          iconPos="end"
+          headerStyleClass="lg:tw-text-2xl"
+          contentStyleClass="tw-text-sm lg:tw-text-base"
+        >
+          <ng-template pTemplate="header">
+            <cs-help-header-icon
+              class="p-accordion-toggle-icon-end tw-shrink-0"
+              [position]="4"
+              [activeIndex]="activeIndex"
+            ></cs-help-header-icon>
+          </ng-template>
+          <p class="tw-mb-2">
+            En la sección “Mis Movimientos” podrás visualizar el detalle de tus
+            cobranzas en tiempo real.
+          </p>
+          <p class="tw-mb-2">
             Para tener un mejor control y seguimiento de tus cobros, puedes
             editarlos de la siguiente manera:
-            <ol class="pl-4">
-              <li>
-                Para modificar el nombre de cliente, fecha de emisión, fecha de
-                vencimiento o monto a pagar da clic en el ícono de “Editar”.
-              </li>
-              <li>
-                Para ver o agregar el detalle de un pago recibido da clic a “Ver
-                detalle” en la columna “Monto pagado”. Te aparecerá una ventana
-                donde podrás agregar el detalle de pagos recibidos a través de
-                otros medios como POS, efectivo u otros bancos.
-              </li>
-            </ol>
-          </cs-help-item>
-          <cs-help-item
-            title="¿Qué pasa si mi cliente no es cliente Interbank?"
-          >
-            <p>
-              Si tu cliente no tiene una cuenta en Interbank, podrá realizar su
-              pago a través de un agente Interbank brindando el código del
-              servicio a pagar.
-            </p>
-
-            <p>
-              Si tu cliente realiza el pago a través de otro medio (POS,
-              efectivo, otro banco), también podrás registrarlo en Cobro Simple
-              para tener el estado de tus cobranzas actualizado desde la opción
-              “Ver detalle” en la sección “Mis Movimientos”.
-            </p></cs-help-item
-          >
-        </mat-accordion>
-      </div>
+          </p>
+          <ol class="tw-pl-6 tw-list-decimal">
+            <li class="tw-mb-1">
+              Para modificar el nombre de cliente, fecha de emisión, fecha de
+              vencimiento o monto a pagar da clic en el ícono de “Editar”.
+            </li>
+            <li class="tw-mb-1">
+              Para ver o agregar el detalle de un pago recibido da clic a “Ver
+              detalle” en la columna “Monto pagado”. Te aparecerá una ventana
+              donde podrás agregar el detalle de pagos recibidos a través de
+              otros medios como POS, efectivo u otros bancos.
+            </li>
+          </ol>
+        </p-accordionTab>
+        <p-accordionTab
+          header="¿Qué pasa si mi cliente no es cliente Interbank?"
+          iconPos="end"
+          headerStyleClass="lg:tw-text-2xl"
+          contentStyleClass="tw-text-sm lg:tw-text-base"
+        >
+          <ng-template pTemplate="header">
+            <cs-help-header-icon
+              class="p-accordion-toggle-icon-end tw-shrink-0"
+              [position]="5"
+              [activeIndex]="activeIndex"
+            ></cs-help-header-icon>
+          </ng-template>
+          <p class="tw-mb-2">
+            Si tu cliente no tiene una cuenta en Interbank, podrá realizar su
+            pago a través de un agente Interbank brindando el código del
+            servicio a pagar.
+          </p>
+          <p class="tw-mb-2">
+            Si tu cliente realiza el pago a través de otro medio (POS, efectivo,
+            otro banco), también podrás registrarlo en Cobro Simple para tener
+            el estado de tus cobranzas actualizado desde la opción “Ver detalle”
+            en la sección “Mis Movimientos”.
+          </p>
+        </p-accordionTab>
+      </p-accordion>
     </div>
   </div>
 </div>

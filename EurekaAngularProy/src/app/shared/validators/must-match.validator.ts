@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { isNil } from 'ramda';
 
 export function MustMatch(
@@ -6,7 +6,7 @@ export function MustMatch(
   matchingControlName: string,
   ignoreCase = false
 ) {
-  return (formGroup: FormGroup) => {
+  return (formGroup: UntypedFormGroup) => {
     const { value: valueOriginal } = formGroup.controls[controlName];
     const { errors, value: valueMatch } =
       formGroup.controls[matchingControlName];

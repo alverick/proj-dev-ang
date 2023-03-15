@@ -9,11 +9,12 @@ import {
 } from '@angular/core';
 import {
   ControlValueAccessor,
-  FormGroup,
-  NgForm,
   NG_VALUE_ACCESSOR,
+  NgForm,
+  UntypedFormGroup,
 } from '@angular/forms';
 import { pathEq } from 'ramda';
+
 import { IErrorMessages } from '../../models/forms';
 
 @Component({
@@ -31,23 +32,24 @@ import { IErrorMessages } from '../../models/forms';
 export class ServiceDebtFormComponent
   implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor
 {
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() paymentTypeOptions: any[];
   @Input() currencyOptions: any[];
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
   @Input() submitted = false;
-  @ViewChild('formElm', { static: false })
+  @ViewChild('formElm')
   htmlForm: NgForm;
   showArrearsFields = false;
-  unitAmount = 'S/';
+  unitAmount = 'S/ ';
+  maxAmount = 1000;
   onTouched: any;
 
   ngOnInit() {
     const { chargeInterest, interestType } = this.form.value;
     this.processArrearsMode(chargeInterest === 'S');
-    this.unitAmount = interestType === 'M' ? 'S/' : '%';
+    this.setAmountProps(interestType);
     this.listenForms();
   }
 
@@ -68,12 +70,17 @@ export class ServiceDebtFormComponent
     });
   }
 
+  setAmountProps(val) {
+    this.unitAmount = val === 'M' ? 'S/ ' : '% ';
+    this.maxAmount = val === 'M' ? 1000 : 100;
+  }
+
   listenForms() {
     this.form.get('chargeInterest').valueChanges.subscribe((val) => {
       this.processArrearsMode(val === 'S');
     });
     this.form.get('interestType').valueChanges.subscribe((val) => {
-      this.unitAmount = val === 'M' ? 'S/' : '%';
+      this.setAmountProps(val);
     });
   }
 

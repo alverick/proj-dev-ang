@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-import { isNil } from 'ramda';
+import { clone, isNil } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { throwError, Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { movementsDataMock } from '../mocks/home';
+
 import { Debts, DebtsPagedList } from '../models/debts';
 import { DebtEdit } from '../models/debts-edit.model';
 import { DebstFilter } from '../models/debts-filter.model';
@@ -21,6 +21,11 @@ export class TransactionService {
   constructor(public http: HttpClient) {}
 
   public pageMessage = 'Mostrando 0 de 0 elementos';
+  public debtItemsOriginal: DebtsPagedList = {
+    count: 0,
+    countNoIbkPayments: 0,
+    data: [],
+  };
   public debtItems: DebtsPagedList = {
     count: 0,
     countNoIbkPayments: 0,
@@ -61,13 +66,13 @@ export class TransactionService {
       // el nuevo filtro
       this.lastFilter = filtro;
     }
-    const strDateFrom = isNilOrEmpty(filtro.dateFrom)
-      ? ''
-      : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD'));
-    const strDateTo = isNilOrEmpty(filtro.dateTo)
-      ? ''
-      : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD'));
-    // fechas
+    const processDate = (value: string | Date) => {
+      return isNilOrEmpty(value)
+        ? ''
+        : encodeURI(moment(value).format('YYYY/MM/DD'));
+    };
+    const strDateFrom = processDate(filtro.dateFrom);
+    const strDateTo = processDate(filtro.dateTo);
 
     if (isNilOrEmpty(filtro.service)) {
       filtro.service = '';
@@ -79,30 +84,38 @@ export class TransactionService {
       filtro.dateForFilter = '';
     }
 
-    const url = `${this.URI_API}/debt?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.columnName}&InputSearch=${filtro.inputSearch}&Asc=${filtro.asc}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
+    const url = `${this.URI_API}/debt?PageNumber=${
+      filtro.pageNumber
+    }&ColumnName=${filtro.columnName}&InputSearch=${
+      filtro.inputSearch
+    }&Asc=${filtro.asc.toString()}&Service=${filtro.service}&Status=${
+      filtro.status
+    }&DateForFilter=${
+      filtro.dateForFilter
+    }&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
     return this.http
       .get<DebtsPagedList>(url)
       .pipe<DebtsPagedList>(
-        map((r) => {
+        map((response: DebtsPagedList) => {
           if (selectedUniverse) {
             this.itemsForDelete = [];
           }
-          r.data.forEach((d) => {
-            d.emissionDate = new Date(d.emissionDate);
-            if (d.dueDate !== null && d.dueDate !== undefined) {
-              d.dueDate = new Date(d.dueDate);
+          response.data.forEach((item) => {
+            item.emissionDate = new Date(item.emissionDate);
+            if (item.dueDate !== null && item.dueDate !== undefined) {
+              item.dueDate = new Date(item.dueDate);
             }
-            d.editInput = false;
-            d.editButton = false;
-            d.newStatus = '1';
-            d.errores = {};
-            d.selected = this.mustBeSelected(d, selectedUniverse);
+            item.editInput = false;
+            item.editButton = false;
+            item.newStatus = '1';
+            item.errores = {};
+            item.selected = this.mustBeSelected(item, selectedUniverse);
 
-            if (selectedUniverse && d.selected) {
-              this.itemsForDelete.push(d.id);
+            if (selectedUniverse && item.selected) {
+              this.itemsForDelete.push(item.id);
             }
           });
-          const data = r.data.map((item) => {
+          const data = response.data.map((item: Debts) => {
             return {
               ...item,
               emissionDate: isNil(item.emissionDate)
@@ -110,28 +123,29 @@ export class TransactionService {
                 : new Date(item.emissionDate),
               dueDate: isNil(item.dueDate) ? '' : new Date(item.dueDate),
               canEditFirstName: true,
-              canEditEmissionDate: isNil(item.emissionDate),
+              canEditEmissionDate: !isNil(item.emissionDate),
               canEditDueDate: !isNil(item.dueDate),
               canEditAmount: item.amount > 0,
             };
           });
-          this.debtItems = { ...r, data };
-          return r;
+          this.debtItems = { ...response, data };
+          this.debtItemsOriginal = clone(this.debtItems);
+          return response;
         })
       )
       .pipe(
-        map((r) => {
-          if (r.count == 0) {
+        map((response) => {
+          if (response.count == 0) {
             this.pageMessage = 'Mostrando 0 de 0 elementos';
           } else {
             const beg = (filtro.pageNumber - 1) * 50 + 1;
             let end = filtro.pageNumber * 50;
-            if (end > r.count) {
-              end = r.count;
+            if (end > response.count) {
+              end = response.count;
             }
-            this.pageMessage = `Mostrando ${beg} - ${end} de ${r.count} elementos`;
+            this.pageMessage = `Mostrando ${beg} - ${end} de ${response.count} elementos`;
           }
-          return r;
+          return response;
         })
       )
       .pipe(catchError((error) => throwError(error)));
@@ -312,5 +326,9 @@ export class TransactionService {
       }
     });
     return markAll && mustBeChecked;
+  }
+
+  resetDebts() {
+    this.debtItems = clone(this.debtItemsOriginal);
   }
 }

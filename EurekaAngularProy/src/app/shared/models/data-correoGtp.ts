@@ -1,3 +1,3 @@
 export interface CorreoGtpModel {
-    correo: string;
+  correo: string;
 }

@@ -11,8 +11,8 @@
 
 .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
 .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-    background-color: var(--primary-green-1);
-  }
+  background-color: var(--primary-green-1);
+}
 
 .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background {
@@ -68,7 +68,8 @@
   }
 
   .mat-datepicker-toggle {
-    .mat-icon-button {
+    .mdc-icon-button {
+      font-size: 15px;
       color: $textgreen;
     }
   }
@@ -89,7 +90,8 @@
 
   &.mat-form-field-disabled {
     .mat-datepicker-toggle {
-      .mat-icon-button {
+      .mat-mdc-icon-button {
+        font-size: 15px;
         color: rgba(0, 0, 0, 0.42);
       }
     }
@@ -97,6 +99,13 @@
 }
 
 .mat-form-field-appearance-legacy {
+  .mat-form-field-prefix .mat-datepicker-toggle .mat-mdc-icon-button,
+  .mat-form-field-suffix
+    .mat-datepicker-toggle
+    .mat-mdc-icon-button.mdc-icon-button {
+    font-size: 15px;
+  }
+
   .mat-form-field-label-wrapper {
     .mat-form-field-label {
       color: #b7babc;

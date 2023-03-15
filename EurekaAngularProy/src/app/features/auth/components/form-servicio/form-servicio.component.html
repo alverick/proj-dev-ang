@@ -107,12 +107,14 @@
         formControlName="codDeudor"
         name="codDeudor"
         (ngModelChange)="selectCodigo($event)"
-        tooltip="Código debe ser numérico">
+        tooltip="Código debe ser numérico"
+      >
         <!--   <mat-option class="input-text">Código Deudor</mat-option>-->
         <mat-option
           class="input-text options-select"
           *ngFor="let c of codDeudor"
-          [value]="c.code">
+          [value]="c.code"
+        >
           {{ c.name }}
         </mat-option>
       </mat-select>
@@ -126,30 +128,37 @@
         name="nameCod"
         tooltip="Código debe ser numérico"
         (input)="nameCodInput($event)"
-        (blur)="nameCodBlur($event)"/>
+        (blur)="nameCodBlur($event)"
+      />
       <div
         *ngIf="f.codDeudor.value === 'Otro' && !_service.nombreCodHabilitado"
         (click)="f.codDeudor.reset()"
-        class="hide-name-cod fa fa-times"></div>
+        class="hide-name-cod fa fa-times"
+      ></div>
       <mat-error>
         <mat-error
           class="messsage-error"
           *ngIf="
             f.codDeudor.invalid &&
             f.codDeudor.hasError('required') &&
-            submittedRequired">
-            Elija una opcion
+            submittedRequired
+          "
+        >
+          Elija una opcion
         </mat-error>
         <mat-error
           class="messsage-error"
           *ngIf="
             f.nameCod.invalid &&
             f.nameCod.hasError('required') &&
-            submittedRequired">Escriba una opcion
+            submittedRequired
+          "
+          >Escriba una opcion
         </mat-error>
         <mat-error
           class="messsage-error"
-          *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')">Ingrese un codigo correcto
+          *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')"
+          >Ingrese un codigo correcto
         </mat-error>
       </mat-error>
     </mat-form-field>
@@ -203,7 +212,8 @@
         formControlName="tipoPago"
         name="tipoPago"
         disableOptionCentering
-        panelClass="pts30">
+        panelClass="pts30"
+      >
         <!--  <mat-option class="input-text">¿Cómo quieres que te paguen tus clientes?</mat-option> -->
         <mat-option
           class="input-text"
@@ -277,7 +287,7 @@
           class="card-medio-pago"
           [class.seleccionado-card]="f.usaWebApp.value"
         >
-        <div class="pt-3">
+          <div class="pt-3">
             <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-4">
             </mat-checkbox>
           </div>
@@ -460,7 +470,8 @@
           formControlName="periodoMora"
           (ngModelChange)="TipoCobro()"
           disableOptionCentering
-          panelClass="pts30">
+          panelClass="pts30"
+        >
           <!-- <mat-option class="texto-mora">Tipo de Cobro</mat-option> -->
           <mat-option
             class="input-text"

@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
@@ -26,7 +26,7 @@ import { ServicesFormsService } from '../../services';
 })
 export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Output() sendForm = new EventEmitter<object>();
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() debtorCodeOptions: any[];
   @Input() paymentTypeOptions: any[];
@@ -35,7 +35,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Input() interestTypeOptions: any[];
   @Input() affiliationMode = true;
   @Input() formData: IServiceRemoteModelForms;
-  debtForm: FormGroup;
+  debtForm: UntypedFormGroup;
   debtorCodeEditable = false;
   submittedForm = false;
   formLoaded = false;
@@ -48,7 +48,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (has('form', changes) && isNotNil(this.form)) {
-      this.debtForm = this.form.get('debt') as FormGroup;
+      this.debtForm = this.form.get('debt') as UntypedFormGroup;
     }
     if (has('formData', changes) && isNotNil(this.formData)) {
       const { dataType, ...debt } = this.formData.debt;

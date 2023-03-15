@@ -6,7 +6,9 @@ describe('AffiliationFormsService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: AffiliationFormsService = TestBed.get(AffiliationFormsService);
+    const service: AffiliationFormsService = TestBed.get(
+      AffiliationFormsService
+    );
     expect(service).toBeTruthy();
   });
 });

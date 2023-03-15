@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
-import { of, throwError, Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
   ICompanySendUpdate,
   ICompanyUpdate,
 } from 'src/app/shared/models/company';
+import { SweetAlertOptions } from 'sweetalert2';
+
 import { parseParams } from '../../../shared/constants/services';
 import {
   IEntryModel,
@@ -31,22 +33,22 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 
 @Injectable()
 export class AffiliationService {
-  companyId;
-  email;
-  servicesList: Array<Partial<IServiceRemoteModelForms>> = [];
+  companyId: number;
+  email: string;
+  servicesList: Partial<IServiceRemoteModelForms>[] = [];
 
   entryOptions: IEntryModel[] = [];
-  registerForm: FormGroup;
-  authForm: FormGroup;
-  serviceForm: FormGroup;
-  serviceConfigForm: FormGroup;
-  editServiceForm: FormGroup;
-  private updateData: ICompanyUpdate;
+  registerForm: UntypedFormGroup;
+  authForm: UntypedFormGroup;
+  serviceForm: UntypedFormGroup;
+  serviceConfigForm: UntypedFormGroup;
+  editServiceForm: UntypedFormGroup;
+  updateData: ICompanyUpdate;
   tokenUpdate;
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private companyService: CompanyService,
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
@@ -276,7 +278,7 @@ export class AffiliationService {
 
   saveAllServices() {
     if (this.servicesList.length < 1) {
-      swalAlert.fire({
+      void swalAlert.fire({
         icon: 'warning',
         text: `Debes contar con al menos un servicio para continuar`,
         showConfirmButton: true,
@@ -298,7 +300,7 @@ export class AffiliationService {
   }
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {
-    let modalSettings;
+    let modalSettings: SweetAlertOptions;
     if (
       this.updateData.newNameGTPStatus === 3 &&
       this.updateData.newName === this.authForm.get('name').value
@@ -334,7 +336,7 @@ export class AffiliationService {
     }
 
     if (isNotNil(modalSettings)) {
-      swalAlert.fire(modalSettings);
+      void swalAlert.fire(modalSettings);
       return throwError('Incomplete data');
     }
 
@@ -345,13 +347,14 @@ export class AffiliationService {
           if (result) {
             this.email = this.updateData.email;
           } else {
-            swalAlert.fire({
+            void swalAlert.fire({
               icon: 'warning',
               text: `Ha ocurrido un error`,
               showConfirmButton: true,
               confirmButtonText: 'Entendido',
             });
           }
+          this.updateData = null;
         })
       );
   }
@@ -383,7 +386,7 @@ export class AffiliationService {
   }
 
   resetRegistration() {
-    this.companyId = '';
+    this.companyId = null;
     this.email = this.registerForm.value.email;
     this.servicesList = [];
     this.affiliationForms.resetCompanyForms();
@@ -401,12 +404,6 @@ export class AffiliationService {
           ? formData.debtorCodeCustom
           : formData.debtorCode;
     }
-    this.logger.debug(
-      '-> this.editServiceForm.value',
-      this.servicesList[position],
-      updatedData,
-      formData
-    );
     this.servicesList[position] = {
       ...this.servicesList[position],
       ...updatedData,
@@ -468,7 +465,7 @@ export class AffiliationService {
   }
 
   showMessageExistsCustomer(): void {
-    swalAlert.fire({
+    void swalAlert.fire({
       icon: 'warning',
       text: `El RUC ingresado ya se encuentra registrado en Cobro Simple`,
       showConfirmButton: true,
@@ -477,7 +474,7 @@ export class AffiliationService {
   }
 
   showMessageNoExistsAccounts(): void {
-    swalAlert
+    void swalAlert
       .fire({
         title: '¡Abre tu Cuenta Negocios!',
         html: `Debes tener una cuenta corriente o ahorros persona jurídica para registrarte en Cobro Simple. <br>
@@ -489,13 +486,13 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
       .then(({ value }) => {
         if (value) {
           window.open('https://interbank.pe/cuenta-negocios');
-          this.router.navigate([authFullRoutingNames.LOGIN]);
+          void this.router.navigate([authFullRoutingNames.LOGIN]);
         }
       });
   }
 
   showErrorServer() {
-    swalAlert.fire({
+    void swalAlert.fire({
       title: 'Regístrame',
       html: 'Ha ocurrido un error con el servidor<br />Intente de nuevo',
       showCloseButton: true,

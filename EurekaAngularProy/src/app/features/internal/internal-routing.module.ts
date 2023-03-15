@@ -9,6 +9,7 @@ import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
 import { CompanyEntriesResolver } from '../../shared/resolvers';
 import {
+  internalFullRoutingChildNames,
   internalRoutingChildNames,
   internalRoutingNames,
 } from './internal-routing.names';
@@ -63,7 +64,8 @@ const routes: Routes = [
             children: [
               {
                 path: appRoutingNames.EMPTY,
-                redirectTo: internalRoutingChildNames.SERVICES_ADD_INFO,
+                redirectTo: internalFullRoutingChildNames.SERVICES_ADD_INFO,
+                pathMatch: 'full',
               },
               {
                 path: internalRoutingChildNames.SERVICES_ADD_INFO,

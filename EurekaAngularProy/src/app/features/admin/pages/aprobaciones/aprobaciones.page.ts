@@ -178,13 +178,13 @@ export class AprobacionesPage implements OnInit {
       ({ acceptednewNameCode }) => acceptednewNameCode === false
     ).length;
 
-    // tslint:disable-next-line: max-line-length cunatos son los que faltan revisar
+    // eslint-disable-next-line max-len
     const ListCantidadNombre = this.gtpService.services.filter(
       ({ acceptednewName, newNameGTPStatus }) =>
         (newNameGTPStatus === 0 || newNameGTPStatus === 2) &&
         acceptednewName === null
     ).length;
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     const ListCantidadCodigoDeudor = this.gtpService.services.filter(
       ({ acceptednewNameCode, newNameCodeGTPStatus }) =>
         (newNameCodeGTPStatus === 0 || newNameCodeGTPStatus === 2) &&

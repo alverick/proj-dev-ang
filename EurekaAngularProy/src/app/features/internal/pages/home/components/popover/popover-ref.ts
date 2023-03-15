@@ -5,11 +5,11 @@ import { TemplateRef, Type, EventEmitter } from '@angular/core';
 export type PopoverCloseEvent<T = any> = {
   type: 'backdropClick' | 'close';
   data: T;
-}
+};
 
 export type StatusChangeEvent = {
-  data: string
-}
+  data: string;
+};
 
 export type PopoverContent = TemplateRef<any> | Type<any> | string;
 
@@ -19,9 +19,11 @@ export class PopoverRef<T = any> {
   private statusChange = new Subject<StatusChangeEvent>();
   statusChange$ = this.statusChange.asObservable();
 
-  constructor(public overlay: OverlayRef,
+  constructor(
+    public overlay: OverlayRef,
     public content: PopoverContent,
-    public data: T) {
+    public data: T
+  ) {
     overlay.backdropClick().subscribe(() => {
       this._close('backdropClick', null);
     });
@@ -33,7 +35,7 @@ export class PopoverRef<T = any> {
 
   changeStatus(status: string) {
     this.statusChange.next({
-      data: status
+      data: status,
     });
   }
 
@@ -41,7 +43,7 @@ export class PopoverRef<T = any> {
     this.overlay.dispose();
     this.afterClosed.next({
       type,
-      data
+      data,
     });
     this.afterClosed.complete();
   }

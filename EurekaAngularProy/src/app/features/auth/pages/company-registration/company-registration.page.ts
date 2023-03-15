@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { pathEq } from 'ramda';
 import { authFullRoutingNames } from '../../auth-routing.names';
@@ -16,7 +16,7 @@ import { AffiliationService } from '../../services/affiliation.service';
   styleUrls: ['./company-registration.page.scss'],
 })
 export class CompanyRegistrationPage implements OnInit {
-  registerForm: FormGroup;
+  registerForm: UntypedFormGroup;
   errors = errorsRegisterForm;
   operators = mobileOperators;
   documentTypes = documentTypes;

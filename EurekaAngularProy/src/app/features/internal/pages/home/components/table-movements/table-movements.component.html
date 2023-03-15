@@ -55,7 +55,7 @@
           <p-tableCheckbox
             *ngIf="
               rowData.status != 'PAGADO' &&
-              (rowData.totalAmount == '0' || !rowData.hasIBKPayments)
+              (rowData.totalAmount === '0' || !rowData.hasIBKPayments)
             "
             [value]="rowData"
           ></p-tableCheckbox>
@@ -117,24 +117,25 @@
                     rowData.firstName
                   }}</span>
                 </ng-template>
-              </p-cellEditor></ng-container
-            >
+              </p-cellEditor>
+            </ng-container>
             <ng-container *ngSwitchCase="'emissionDate'">
               <p-cellEditor>
                 <ng-template pTemplate="input">
                   <p-calendar
                     class="tw-w-full tw-text-sm"
                     [(ngModel)]="rowData.emissionDate"
-                    [locale]="es"
+                    appendTo="body"
+                    [showIcon]="true"
                     dateFormat="dd/mm/y"
                     required
                   ></p-calendar>
                 </ng-template>
                 <ng-template pTemplate="output">{{
-                  rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
-                }}</ng-template></p-cellEditor
-              ></ng-container
-            >
+                  rowData[col.field] | date : 'dd/MM/yy' | notEmpty : '-'
+                }}</ng-template>
+              </p-cellEditor>
+            </ng-container>
             <ng-container *ngSwitchCase="'dueDate'">
               <ng-container
                 *ngIf="col.editable && rowData[col.checkEditableField]"
@@ -144,69 +145,70 @@
                     <p-calendar
                       class="tw-w-full"
                       [(ngModel)]="rowData.dueDate"
-                      [locale]="es"
+                      appendTo="body"
+                      [showIcon]="true"
                       dateFormat="dd/mm/y"
                       required
                     ></p-calendar>
                   </ng-template>
                   <ng-template pTemplate="output">{{
-                    rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
-                  }}</ng-template></p-cellEditor
-                >
+                    rowData[col.field] | date : 'dd/MM/yy' | notEmpty : '-'
+                  }}</ng-template>
+                </p-cellEditor>
               </ng-container>
               <ng-container
                 *ngIf="!(col.editable && rowData[col.checkEditableField])"
                 >{{
-                  rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
+                  rowData[col.field] | date : 'dd/MM/yy' | notEmpty : '-'
                 }}</ng-container
               >
             </ng-container>
-            <ng-container *ngSwitchCase="'totalAmount'"
-              ><ng-container *ngIf="rowData[col.field] > 0">{{
-                rowData[col.field] | currency: rowData.currency
-              }}</ng-container
-              ><ng-container *ngIf="rowData[col.field] <= 0">-</ng-container
-              ><ng-container
+            <ng-container *ngSwitchCase="'totalAmount'">
+              <ng-container *ngIf="rowData[col.field] > 0">{{
+                rowData[col.field] | currency : rowData.currency
+              }}</ng-container>
+              <ng-container *ngIf="rowData[col.field] <= 0">-</ng-container>
+              <ng-container
                 *ngIf="col.editable && rowData[col.checkEditableField]"
-                ><p-cellEditor
-                  ><ng-template pTemplate="input"
-                    ><div class="control ui-inputgroup">
-                      <span class="ui-inputgroup-addon">{{
-                        rowData.currency
-                      }}</span
-                      ><input
-                        id="amount"
-                        name="amount"
-                        pInputText
-                        type="text"
-                        [(ngModel)]="rowData.amount"
-                        #name="ngModel"
-                        required
-                      /></div></ng-template
-                  ><ng-template pTemplate="output">
-                    <div *ngIf="rowData.amount > 0" class="tw-text-xxs">
-                      Cuota: {{ rowData.amount | currency: rowData.currency }}
-                    </div>
-                  </ng-template></p-cellEditor
-                ></ng-container
               >
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-inputNumber
+                      class="tw-w-full tw-block"
+                      mode="decimal"
+                      csInputMoney
+                      placeholder="1.00"
+                      locale="es-PE"
+                      [prefix]="rowData.currency + ' '"
+                      [(ngModel)]="rowData.amount"
+                      [minFractionDigits]="2"
+                      [maxFractionDigits]="2"
+                    ></p-inputNumber>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    <div *ngIf="rowData.amount > 0" class="tw-text-xxs">
+                      Cuota: {{ rowData.amount | currency : rowData.currency }}
+                    </div>
+                  </ng-template>
+                </p-cellEditor>
+              </ng-container>
               <div *ngIf="rowData.interestAmount > 0" class="tw-text-xxs">
                 Mora:
-                {{ rowData.interestAmount | currency: rowData.currency }}
-              </div></ng-container
-            >
-            <ng-container *ngSwitchCase="'totalAmountPayed'"
-              ><ng-container *ngIf="rowData[col.field] > 0">{{
-                rowData[col.field] | currency: rowData.currency
-              }}</ng-container
-              ><ng-container *ngIf="rowData[col.field] <= 0">-</ng-container>
+                {{ rowData.interestAmount | currency : rowData.currency }}
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'totalAmountPayed'">
+              <ng-container *ngIf="rowData[col.field] > 0">{{
+                rowData[col.field] | currency : rowData.currency
+              }}</ng-container>
+              <ng-container *ngIf="rowData[col.field] <= 0">-</ng-container>
               <div
                 class="tw-cursor-pointer tw-text-primary-green-1 tw-text-xxs"
                 (click)="actionShowDetails(rowData)"
               >
                 Ver Detalle
-              </div></ng-container
-            >
+              </div>
+            </ng-container>
             <ng-container *ngSwitchCase="'status'">
               <div class="tw-flex">
                 <div
@@ -245,7 +247,7 @@
               </div>
             </ng-container>
             <ng-container *ngSwitchDefault>{{
-              rowData[col.field] | notEmpty: '-'
+              rowData[col.field] | notEmpty : '-'
             }}</ng-container>
           </ng-container>
         </td>
@@ -265,20 +267,24 @@
               <tr>
                 <td>F. emisión:</td>
                 <td>
-                  {{ rowData.emissionDate | date: 'dd/MM/yy' | notEmpty: '-' }}
+                  {{
+                    rowData.emissionDate | date : 'dd/MM/yy' | notEmpty : '-'
+                  }}
                 </td>
               </tr>
               <tr>
                 <td>F. vcto.:</td>
                 <td>
-                  {{ rowData.dueDate | date: 'dd/MM/yy' | notEmpty: '-' }}
+                  {{ rowData.dueDate | date : 'dd/MM/yy' | notEmpty : '-' }}
                 </td>
               </tr>
               <tr>
                 <td>Cuota:</td>
                 <td>
                   {{
-                    rowData.amount | currency: rowData.currency | notEmpty: '-'
+                    rowData.amount
+                      | currency : rowData.currency
+                      | notEmpty : '-'
                   }}
                 </td>
               </tr>
@@ -286,7 +292,9 @@
                 <td>Mora:</td>
                 <td>
                   {{
-                    rowData.amount | currency: rowData.currency | notEmpty: '-'
+                    rowData.amount
+                      | currency : rowData.currency
+                      | notEmpty : '-'
                   }}
                 </td>
               </tr>
@@ -295,8 +303,8 @@
                 <td>
                   {{
                     rowData.totalAmount
-                      | currency: rowData.currency
-                      | notEmpty: '-'
+                      | currency : rowData.currency
+                      | notEmpty : '-'
                   }}
                 </td>
               </tr>
@@ -305,8 +313,8 @@
                 <td>
                   {{
                     rowData.totalAmountPayed
-                      | currency: rowData.currency
-                      | notEmpty: '-'
+                      | currency : rowData.currency
+                      | notEmpty : '-'
                   }}
                 </td>
               </tr>
@@ -336,64 +344,78 @@
   [responsive]="true"
   [modal]="true"
   [style]="{ width: '300px' }"
+  class="modal-edit"
 >
-  <div class="ui-g ui-fluid tw-text-sm" *ngIf="editRowData">
-    <div *ngIf="editRowData.canEditFirstName" class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="vin">Nombre</label>
+  <div class="tw-text-sm" *ngIf="editRowData">
+    <div
+      *ngIf="editRowData.canEditFirstName"
+      class="tw-flex tw-items-center tw-mb-2"
+    >
+      <div class="tw-w-20 tw-flex-shrink-0">
+        <label for="vin" class="tw-m-0">Nombre</label>
       </div>
-      <div class="ui-g-8">
+      <div class="field">
         <input pInputText id="vin" [(ngModel)]="editRowData.firstName" />
       </div>
     </div>
-    <div *ngIf="editRowData.canEditEmissionDate" class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="year">F. emisión</label>
+    <div
+      *ngIf="editRowData.canEditEmissionDate"
+      class="tw-flex tw-items-center tw-mb-2"
+    >
+      <div class="tw-w-20 tw-flex-shrink-0">
+        <label for="year" class="tw-m-0">F. emisión</label>
       </div>
-      <div class="ui-g-8">
+      <div class="field">
         <p-calendar
           id="year"
           class="tw-w-full"
           [(ngModel)]="editRowData.emissionDate"
-          [locale]="es"
           dateFormat="dd/mm/y"
-          appendTo="body"
+          [touchUI]="true"
+          [showIcon]="true"
           required
         ></p-calendar>
       </div>
     </div>
-    <div *ngIf="editRowData.canEditDueDate" class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="brand">F. vcto.</label>
+    <div
+      *ngIf="editRowData.canEditDueDate"
+      class="tw-flex tw-items-center tw-mb-2"
+    >
+      <div class="tw-w-20 tw-flex-shrink-0">
+        <label for="brand" class="tw-m-0">F. vcto.</label>
       </div>
-      <div class="ui-g-8">
+      <div class="field">
         <p-calendar
           id="brand"
           class="tw-w-full"
           [(ngModel)]="editRowData.dueDate"
-          [locale]="es"
           dateFormat="dd/mm/y"
-          appendTo="body"
+          [touchUI]="true"
+          [showIcon]="true"
           required
         ></p-calendar>
       </div>
     </div>
-    <div *ngIf="editRowData.canEditAmount > 0" class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="color">Cuota</label>
+    <div
+      *ngIf="editRowData.canEditAmount > 0"
+      class="tw-flex tw-items-center tw-mb-2"
+    >
+      <div class="tw-w-20 tw-flex-shrink-0">
+        <label for="amount" class="tw-m-0">Cuota</label>
       </div>
-      <div class="ui-g-8">
-        <div class="control ui-inputgroup">
-          <span class="ui-inputgroup-addon">{{ editRowData.currency }}</span
-          ><input
-            id="color"
-            name="amount"
-            pInputText
-            type="text"
-            [(ngModel)]="editRowData.amount"
-            required
-          />
-        </div>
+      <div class="field">
+        <p-inputNumber
+          id="amount"
+          class="tw-w-full tw-block"
+          mode="decimal"
+          csInputMoney
+          placeholder="1.00"
+          locale="es-PE"
+          [prefix]="editRowData.currency + ' '"
+          [(ngModel)]="editRowData.amount"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="2"
+        ></p-inputNumber>
       </div>
     </div>
   </div>

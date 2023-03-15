@@ -1,8 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -18,12 +18,12 @@ import Swal from 'sweetalert2';
 })
 export class RecuperarContrasenaComponent implements OnInit {
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private recuperaService: RecuperaService,
     private router: Router
   ) {}
   public formulario = true;
-  recupera: FormGroup;
+  recupera: UntypedFormGroup;
   public submitted = false;
   isCaptchaValidate = false;
   submittedRequired = false;
@@ -37,12 +37,12 @@ export class RecuperarContrasenaComponent implements OnInit {
 
   ngOnInit() {
     this.recupera = this.formBuilder.group({
-      ruc: new FormControl('', [
+      ruc: new UntypedFormControl('', [
         Validators.required,
         Validators.pattern('[1-2]0[0-9]+?'),
         Validators.minLength(11),
       ]),
-      email: new FormControl('', [
+      email: new UntypedFormControl('', [
         Validators.required,
         Validators.pattern(
           /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

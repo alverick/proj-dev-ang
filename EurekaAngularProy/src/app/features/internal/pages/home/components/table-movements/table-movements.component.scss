@@ -18,3 +18,11 @@
 .empty {
   min-height: 400px;
 }
+
+.modal-edit {
+  .field {
+    > * {
+      width: 100%;
+    }
+  }
+}

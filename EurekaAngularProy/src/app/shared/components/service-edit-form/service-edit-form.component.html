@@ -55,7 +55,7 @@
         formControlName="debtorCodeCustom"
         [errorMessages]="errorMessages.debtorCodeCustom"
         >¿Con qué código identificarás a tus clientes?
-        <div class="control ui-inputgroup tw-w-full">
+        <div class="control p-inputgroup tw-w-full">
           <input
             type="text"
             class="tw-w-full"
@@ -69,7 +69,7 @@
             pButton
             type="button"
             icon="pi pi-times"
-            class="ui-button-secondary"
+            class="p-button-secondary"
             (click)="showDropdown()"
             [disabled]="
               formData.inReview && formData.newNameCodeGTPStatus !== 3

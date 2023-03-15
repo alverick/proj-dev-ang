@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecuperaService } from 'src/app/shared/services/recupera.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -19,23 +19,23 @@ export class CambiaContrasenaComponent implements OnInit {
   public formulario: boolean;
 
   constructor(
-    public formBuilder: FormBuilder,
+    public formBuilder: UntypedFormBuilder,
     private rutaActiva: ActivatedRoute,
     private router: Router,
     private recuperaService: RecuperaService,
     public storage: StorageService
   ) {}
-  public Cambia: FormGroup;
+  public Cambia: UntypedFormGroup;
   ngOnInit() {
     this.Cambia = this.formBuilder.group(
       {
-        contrasena: new FormControl('', [
+        contrasena: new UntypedFormControl('', [
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(20),
           UnaLetra,
         ]),
-        repcontrasena: new FormControl('', [
+        repcontrasena: new UntypedFormControl('', [
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(20),
@@ -127,7 +127,7 @@ export class CambiaContrasenaComponent implements OnInit {
   }
 }
 
-function UnaLetra(c: FormControl) {
+function UnaLetra(c: UntypedFormControl) {
   let regex = /[a-zA-Z]/g;
   if (c.value && !regex.test(c.value)) {
     return { unaletra: true };

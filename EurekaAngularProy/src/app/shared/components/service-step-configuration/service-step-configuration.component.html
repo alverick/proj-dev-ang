@@ -18,11 +18,7 @@
           ¿Qué datos ingresarás para identificar a tus clientes?
         </div>
         <cs-label-control [onlyControl]="true" class="tw-w-full">
-          <p-radioButton
-            name="groupname"
-            value="S"
-            formControlName="dataType"
-          ></p-radioButton>
+          <p-radioButton value="S" formControlName="dataType"></p-radioButton>
           <ng-container label-inline
             ><div class="description tw-flex tw-justify-between">
               <div class="tw-text-base">Sin data</div>
@@ -31,11 +27,7 @@
           </ng-container>
         </cs-label-control>
         <cs-label-control [onlyControl]="true" class="tw-w-full">
-          <p-radioButton
-            name="groupname"
-            value="P"
-            formControlName="dataType"
-          ></p-radioButton>
+          <p-radioButton value="P" formControlName="dataType"></p-radioButton>
           <ng-container label-inline
             ><div class="description tw-flex tw-justify-between">
               <div class="tw-text-base">Data parcial</div>
@@ -44,11 +36,7 @@
           </ng-container>
         </cs-label-control>
         <cs-label-control [onlyControl]="true" class="tw-w-full">
-          <p-radioButton
-            name="groupname"
-            value="C"
-            formControlName="dataType"
-          ></p-radioButton>
+          <p-radioButton value="C" formControlName="dataType"></p-radioButton>
           <ng-container label-inline
             ><div class="description tw-flex tw-justify-between">
               <div class="tw-text-base">Data completa</div>
@@ -77,7 +65,7 @@
           formControlName="debtorCodeCustom"
           [errorMessages]="errorMessages.debtorCodeCustom"
           >¿Con qué código identificarás a tus clientes?
-          <div class="control ui-inputgroup tw-w-full">
+          <div class="control p-inputgroup tw-w-full">
             <input
               type="text"
               class="tw-w-full"
@@ -89,9 +77,10 @@
             />
             <button
               pButton
+              pRipple
               type="button"
               icon="pi pi-times"
-              class="ui-button-secondary"
+              class="p-button-outlined"
               (click)="showDropdown()"
             ></button>
           </div>
