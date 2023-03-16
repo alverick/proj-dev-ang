@@ -7,7 +7,7 @@
   </div>
   <div class="content tw-px-6 tw-py-4">
     <ng-container *ngIf="serviceData?.labels?.length > 0">
-      <p-chart type="line" [data]="serviceData"></p-chart>
+      <p-chart type="bar" [data]="serviceData" [height]="height"></p-chart>
     </ng-container>
     <div
       class="tw-text-center tw-text-xs"

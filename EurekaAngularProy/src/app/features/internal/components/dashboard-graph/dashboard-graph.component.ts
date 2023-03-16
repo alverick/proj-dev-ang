@@ -18,4 +18,8 @@ export interface GraphData {
 export class DashboardGraphComponent {
   @Input() serviceData: GraphData;
   @Input() printMode = false;
+  height = '500';
+  constructor() {
+    this.height = window.innerWidth > 768 ? '500' : '300';
+  }
 }
