@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { pathEq } from 'ramda';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import {
   documentTypes,
@@ -15,12 +16,18 @@ import { AffiliationService } from '../../services/affiliation.service';
   styleUrls: ['./company-registration.page.scss'],
 })
 export class CompanyRegistrationPage implements OnInit {
-  registerForm: FormGroup;
+  registerForm: UntypedFormGroup;
   errors = errorsRegisterForm;
   operators = mobileOperators;
   documentTypes = documentTypes;
 
-  constructor(private router: Router, public affiliation: AffiliationService) {}
+  constructor(private router: Router, public affiliation: AffiliationService) {
+    const navigation = this.router.getCurrentNavigation();
+    if (pathEq(['extras', 'state', 'initNew'], true, navigation)) {
+      this.affiliation.registerForm.get('email').setValue('');
+      this.affiliation.resetRegistration();
+    }
+  }
 
   ngOnInit() {
     this.registerForm = this.affiliation.registerForm;

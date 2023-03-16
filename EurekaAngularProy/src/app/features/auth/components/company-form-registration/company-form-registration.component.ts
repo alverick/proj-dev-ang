@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { UntypedFormGroup, Validators } from '@angular/forms';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';
 
@@ -15,13 +15,14 @@ export class CompanyFormRegistrationComponent implements OnInit {
   documentNumberMax = '8';
   documentNumberFilter: string | RegExp = 'int';
   blockSpecial: RegExp = /^[a-z0-9]+$/i;
-  @Input() registerForm: FormGroup;
+  @Input() registerForm: UntypedFormGroup;
   @Input() operators = [];
   @Input() documentTypes = [];
   @Input() errorMessages: IErrorMessages;
   constructor() {}
 
   ngOnInit() {
+    this.setDocumentNumberProps();
     this.registerForm.get('documentType').valueChanges.subscribe((value) => {
       this.registerForm.get('documentNumber').setValue('');
       this.setDocumentNumberProps();

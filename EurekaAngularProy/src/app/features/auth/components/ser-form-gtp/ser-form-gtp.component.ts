@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MonedaModel, IServiceModel } from 'src/app/shared/models';
@@ -26,7 +26,7 @@ export class SerFormGtpComponent implements OnInit {
 
   constructor(
     private afiliacionService: AfiliacionService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private stateEdit: ConfigurarServiciosComponent
   ) {
     stateEdit.onFormAction.subscribe((e) => this.formAction(e));
@@ -62,7 +62,7 @@ export class SerFormGtpComponent implements OnInit {
     return this.frm.controls;
   }
 
-  frm: FormGroup;
+  frm: UntypedFormGroup;
 
   codDeudor: any[] = [];
   tiposDato: any[] = [];
@@ -75,7 +75,7 @@ export class SerFormGtpComponent implements OnInit {
   cobraMonto: boolean = true;
   cobraPorcentaje: boolean = false;
   cmoraporce: boolean = false;
-  private _service: IServiceModel;
+  _service: IServiceModel;
   @Output() grabar = new EventEmitter<any>();
   public services: IServiceModel[] = [];
 
@@ -97,7 +97,7 @@ export class SerFormGtpComponent implements OnInit {
         : '1.00';
 
     this.frm = this.fb.group({
-      nombre: new FormControl(
+      nombre: new UntypedFormControl(
         {
           value:
             this._service.nombre === '?'
@@ -119,7 +119,7 @@ export class SerFormGtpComponent implements OnInit {
           ),
         ]
       ),
-      codDeudor: new FormControl(
+      codDeudor: new UntypedFormControl(
         {
           value:
             this._service.codDeudor === '?'
@@ -133,7 +133,7 @@ export class SerFormGtpComponent implements OnInit {
         },
         [Validators.required]
       ),
-      nameCod: new FormControl({
+      nameCod: new UntypedFormControl({
         value:
           this._service.codDeudor === '?'
             ? this._service.newNameCode
@@ -142,11 +142,11 @@ export class SerFormGtpComponent implements OnInit {
             : this._service.codDeudor,
         disabled: this._service.nombreCodHabilitado,
       }),
-      tipoDato: new FormControl(
+      tipoDato: new UntypedFormControl(
         { value: this._service.tipoDato, disabled: this.editMode },
         Validators.required
       ),
-      tipoPago: new FormControl(
+      tipoPago: new UntypedFormControl(
         { value: this._service.tipoPago, disabled: this.editMode },
         Validators.required
       ),
@@ -155,23 +155,26 @@ export class SerFormGtpComponent implements OnInit {
         [Validators.required, Validators.minLength(13)],
       ],
       moneda: [this._service.moneda, Validators.required],
-      usaAgente: new FormControl({
+      usaAgente: new UntypedFormControl({
         value: this._service.usaAgente,
         disabled: this.editMode,
       }),
-      usaTienda: new FormControl({
+      usaTienda: new UntypedFormControl({
         value: this._service.usaTienda,
         disabled: this.editMode,
       }),
-      usaWebApp: new FormControl({
+      usaWebApp: new UntypedFormControl({
         value: this._service.usaWebApp,
         disabled: true,
       }),
       cobraMora: [this._service.cobraMora, Validators.required],
       periodoMora: [this._service.periodoMora],
       tipoMora: [this._service.tipoMora],
-      monto: new FormControl({ value: montod, disabled: true }),
-      porcentaje: new FormControl({ value: porcentajed, disabled: true }),
+      monto: new UntypedFormControl({ value: montod, disabled: true }),
+      porcentaje: new UntypedFormControl({
+        value: porcentajed,
+        disabled: true,
+      }),
       pagoPartes: [this._service.pagoPartes, Validators.required],
     });
 
@@ -311,7 +314,7 @@ export class SerFormGtpComponent implements OnInit {
                   //   value.newName = this.frm.value.nombre;
                   // value.nameCod = this.frm.value.nameCod;
                   //  value.codDeudor = this.frm.value.codDeudor;
-                  // tslint:disable-next-line:max-line-length
+                  // eslint-disable-next-line max-len
                   value.newName = value.nombreHabilitado
                     ? value.newName
                     : this.frm.value.nombre === value.nombre
@@ -424,7 +427,7 @@ export class SerFormGtpComponent implements OnInit {
                 value = this._service;
                 value.idCuenta = this.frm.value.idCuenta;
                 // value.nombre = this.frm.value.nombre;
-                // tslint:disable-next-line:max-line-length
+                // eslint-disable-next-line max-len
                 value.newName = value.nombreHabilitado
                   ? value.newName
                   : this.frm.value.nombre === value.nombre
@@ -487,7 +490,7 @@ export class SerFormGtpComponent implements OnInit {
           if (this.editMode) {
             value = this._service;
             value.idCuenta = this.frm.value.idCuenta;
-            // tslint:disable-next-line:max-line-length
+            // eslint-disable-next-line max-len
             value.newName = value.nombreHabilitado
               ? value.newName
               : this.frm.value.nombre === value.nombre
@@ -713,7 +716,7 @@ export class SerFormGtpComponent implements OnInit {
 }
 
 function Maximo(max: number) {
-  return (c: FormControl) => {
+  return (c: UntypedFormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro > max) {
@@ -725,7 +728,7 @@ function Maximo(max: number) {
 }
 
 function Minimo(min: number) {
-  return (c: FormControl) => {
+  return (c: UntypedFormControl) => {
     let nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro < min) {
@@ -736,7 +739,7 @@ function Minimo(min: number) {
   };
 }
 
-function Alfanumerico(c: FormControl) {
+function Alfanumerico(c: UntypedFormControl) {
   let regex = /[0-9a-zA-Z]-?/g;
   if (c.value && !regex.test(c.value)) {
     return { alfa: true };
@@ -744,7 +747,7 @@ function Alfanumerico(c: FormControl) {
   return null;
 }
 
-function Alfabetico(c: FormControl) {
+function Alfabetico(c: UntypedFormControl) {
   let regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
   let numero = /[0-9]/g;
   let raro = /[-{1,}]-?/g;

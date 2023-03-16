@@ -1,4 +1,4 @@
-import Button from '@storybook/angular/dist/demo/button.component';
+import { Button } from '@storybook/angular/demo';
 
 export default { title: 'My Button' };
 

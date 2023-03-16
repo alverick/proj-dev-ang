@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { pathEq } from 'ramda';
 import { Observable } from 'rxjs';
+
 import {
   authFullRoutingChildNames,
   authFullRoutingNames,
@@ -37,7 +38,7 @@ export class AffiliationResumeExitGuard
     if (nextState.url === authFullRoutingNames.REGISTRATION_FINISHED) {
       return true;
     }
-    swalMesssageExit.fire();
+    void swalMesssageExit.fire();
     return this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST], {
       skipLocationChange: false,
     });

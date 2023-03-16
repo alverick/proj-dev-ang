@@ -1,0 +1,83 @@
+<div class="tw-relative tw-text-extended-ibk-black tw-py-12">
+  <div
+    class="tw-w-80 lg:tw-w-80 md:tw-w-auto md:tw-mx-6 lg:tw-mx-auto tw-mx-auto"
+  >
+    <h2 class="tw-font-medium tw-text-3xl tw-mb-7">
+      Configura
+      {{ this.existServices ? 'tus servicios' : 'tu primer servicio' }} y
+      gestiona tus cobranzas 100% digital
+    </h2>
+    <ng-container *ngIf="position === 0">
+      <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20">
+        Un servicio es el concepto por el cual te pagarán tus clientes
+      </div>
+      <div class="tw-pl-12">
+        <div class="tw-text-primary-green-1 tw-text-lg tw-mb-9">
+          Por ejemplo:
+        </div>
+        <ul class="tw-list-disc tw-pl-4 tw-text-sm">
+          <li class="tw-mb-3">
+            Si eres una Institución educativa, el nombre del servicio podría ser
+            <strong>“Matrícula”</strong>
+          </li>
+          <li class="tw-mb-3">
+            Si eres una comercializadora de productos, el nombre del servicio
+            podría ser <strong>“Venta de productos”</strong>.
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="position === 1">
+      <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20">
+        ¿Qué modalidad elegir?
+      </div>
+      <div class="tw-pl-12 tw-mb-9">
+        <div class="tw-text-primary-green-1 tw-text-lg tw-mb-4">Sin data</div>
+        <ul class="tw-list-disc tw-pl-4 tw-text-sm">
+          <li class="tw-mb-3">
+            Elige esta modalidad si no cuentas con información de tus clientes.
+          </li>
+          <li class="tw-mb-3">
+            <strong>No deberás cargar ninguna información.</strong> Tu cliente
+            tendrá que ingresar su código de deudor e ingresar el monto que
+            pagará en cada operación.
+          </li>
+        </ul>
+      </div>
+      <div class="tw-pl-12 tw-mb-9">
+        <div class="tw-text-primary-green-1 tw-text-lg tw-mb-4">
+          Data parcial
+        </div>
+        <ul class="tw-list-disc tw-pl-4 tw-text-sm">
+          <li class="tw-mb-3">
+            Elige esta modalidad si tienes la
+            <strong>lista de clientes</strong> y su
+            <strong>código de identificación</strong>, pero no el monto de la
+            deuda a pagar.
+          </li>
+          <li class="tw-mb-3">
+            Tu cliente tendrá que ingresar el monto que pagará en cada
+            operación.
+          </li>
+        </ul>
+      </div>
+      <div class="tw-pl-12">
+        <div class="tw-text-primary-green-1 tw-text-lg tw-mb-4">
+          Data completa
+        </div>
+        <ul class="tw-list-disc tw-pl-4 tw-text-sm">
+          <li class="tw-mb-3">
+            Elige esta modalidad si tienes la
+            <strong>lista de clientes</strong>, su
+            <strong>código de identificación</strong> y el monto de la
+            <strong>deuda a pagar</strong>.
+          </li>
+          <li class="tw-mb-3">
+            Podrás configurar el orden de pago de las deudas, si aceptarás pago
+            por partes o incluir el cobro de mora.
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </div>
+</div>

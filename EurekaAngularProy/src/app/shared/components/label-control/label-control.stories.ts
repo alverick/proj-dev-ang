@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action, withActions } from '@storybook/addon-actions';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
-import Button from '@storybook/angular/dist/demo/button.component';
+import { Button } from '@storybook/angular/demo';
 import { SharedModule } from '../../shared.module';
 import { LabelControlComponent } from './label-control.component';
 

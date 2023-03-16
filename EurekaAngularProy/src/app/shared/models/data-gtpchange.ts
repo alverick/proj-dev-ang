@@ -1,6 +1,6 @@
 export interface DataGTPChange {
-    token?: String;
-    NewName?: String;
+  token?: String;
+  NewName?: String;
   //  ArrayService?: ServicesGTPChange [];
 }
 

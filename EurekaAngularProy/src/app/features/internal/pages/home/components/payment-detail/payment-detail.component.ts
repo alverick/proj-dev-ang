@@ -1,9 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { TransactionService } from 'src/app/shared/services/transaction.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
+import {
+  MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
+  MatLegacyDialogRef as MatDialogRef,
+} from '@angular/material/legacy-dialog';
 import Swal from 'sweetalert2';
+
+import { GoogleAnalytics } from '../../../../../../shared/services/googleAnalytics.service';
+import { TransactionService } from '../../../../../../shared/services/transaction.service';
+import { drawPopup } from '../../../../../../shared/utils/helpers/popups';
 
 @Component({
   selector: 'cs-payment-detail',

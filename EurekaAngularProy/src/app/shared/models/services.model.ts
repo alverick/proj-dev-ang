@@ -75,7 +75,7 @@ export interface IServiceRemoteModelForms extends IServiceRemoteModel {
 }
 
 export interface IServicePostData {
-  clientId: number;
+  clientId?: number;
   deleted: any[];
   services: Array<Partial<IServiceRemoteModel>>;
 }

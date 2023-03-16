@@ -1,34 +1,36 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import {
   appRoutingNames,
   authFullRoutingNames,
-} from 'src/app/app-routing.collection';
+} from '../../app-routing.collection';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { ClientGuard } from '../../shared/guards/client.guard';
 import { GtpInputGuard } from '../../shared/guards/gtp-input.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
 import { LogoutGuard } from '../../shared/guards/logout.guard';
 import { CompanyEntriesResolver } from '../../shared/resolvers';
+import { AuthComponent } from './auth.component';
 import {
   authDynamicRoutingNames,
   authFullRoutingChildNames,
   authRoutingChildNames,
   authRoutingNames,
 } from './auth-routing.names';
-import { AuthComponent } from './auth.component';
 import {
   AffiliationCompanyIdGuard,
   AffiliationExitGuard,
+  AffiliationFinishedGuard,
   AffiliationResumeExitGuard,
   AffiliationRucGuard,
   AffiliationServiceValidGuard,
+  AffiliationUpdatingGuard,
   ValidateTokenGuard,
 } from './guards';
 import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
-import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
 import { CompanyRegistrationPage } from './pages/company-registration/company-registration.page';
-import { CompletadoPrimeraParteComponent } from './pages/completado-primera-parte/completado-primera-parte.component';
+import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
 import { ConfigurarGtpComponent } from './pages/configurar-gtp/configurar-gtp.component';
 import { ConfigurarServiciosComponent } from './pages/configurar-servicios/configurar-servicios.component';
 import { CrearContrasenaComponent } from './pages/crear-contrasena/crear-contrasena.component';
@@ -86,11 +88,6 @@ const routes: Routes = [
         data: { isEdit: true },
       },
       {
-        path: authRoutingNames.COMPANY_FINISHED,
-        component: CompletadoPrimeraParteComponent,
-        data: { isEdit: false },
-      },
-      {
         path: authRoutingNames.PROCESSING,
         component: ProcesandoComponent,
         canActivate: [LogoutGuard],
@@ -144,6 +141,7 @@ const routes: Routes = [
       {
         path: authRoutingNames.REGISTRATION_FINISHED,
         component: RegistrationFinishedPage,
+        canActivate: [AffiliationFinishedGuard],
       },
       {
         path: authDynamicRoutingNames.REGISTER_UPDATING_VALIDATION,
@@ -153,6 +151,7 @@ const routes: Routes = [
       {
         path: authRoutingNames.REGISTER_UPDATING,
         component: RegistrationUpdatePage,
+        canActivateChild: [AffiliationUpdatingGuard],
         children: [
           {
             path: appRoutingNames.EMPTY,

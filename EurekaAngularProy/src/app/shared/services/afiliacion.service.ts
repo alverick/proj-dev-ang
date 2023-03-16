@@ -211,7 +211,7 @@ export class AfiliacionService {
 
   public GetRubros(): Observable<IEntryModel[]> {
     if (this._rubros !== null) {
-      return Observable.of(this._rubros);
+      return of(this._rubros);
     }
     return this.http
       .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading`)
@@ -265,7 +265,7 @@ export class AfiliacionService {
       },
       {
         code: 'P',
-        name: 'Tengo sólo código y nombres',
+        name: 'Tengo solo código y nombres',
       },
       {
         code: 'S',
@@ -539,7 +539,7 @@ export class AfiliacionService {
   }
 
   GetTipoCambio(): Observable<number> {
-    return Observable.of(3.37);
+    return of(3.37);
   }
 
   IniciarServicios() {

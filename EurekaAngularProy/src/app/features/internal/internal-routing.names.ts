@@ -1,17 +1,26 @@
-import { appModuleRoutingNames } from 'src/app/app-routing.names';
-import { generateFullRoutes } from '../../shared/utils/helpers/router';
+import {
+  appModuleRoutingNames,
+  appRoutingNames,
+} from '../../app-routing.collection';
+import { IRouteItem, IRouteNames } from '../../shared/models/router';
+import {
+  generateFullRoutes,
+  generateFullRoutesTree,
+} from '../../shared/utils/helpers/router';
 
 interface IInternalRoutingNames {
   AUTH: string;
-  CHARGES: string;
-  CHARGES_ADD_STEP_1: string;
-  CHARGES_ADD_STEP_2: string;
-  CHARGES_ADD_STEP_3: string;
-  CHARGES_ADD_STEP_4: string;
-  CHARGES_EDIT: string;
   COMPANY: string;
-  HOME: string;
   HELP: string;
+  HOME: string;
+  SERVICES: string;
+}
+
+interface IInternalRoutingChildNames extends IRouteNames {
+  SERVICES_LIST: string;
+  SERVICES_ADD: string;
+  SERVICES_ADD_INFO: string;
+  SERVICES_ADD_CONFIGURATION: string;
 }
 
 interface IInternalAuthRoutingNames {
@@ -28,12 +37,38 @@ export const internalRoutingNames: IInternalRoutingNames = {
   HELP: 'ayuda',
   HOME: 'home',
   COMPANY: 'configuracion-empresa',
-  CHARGES: 'servicios',
-  CHARGES_EDIT: 'servicios/editar',
-  CHARGES_ADD_STEP_1: 'servicios/agregar-paso-1',
-  CHARGES_ADD_STEP_2: 'servicios/agregar-paso-2',
-  CHARGES_ADD_STEP_3: 'servicios/agregar-paso-3',
-  CHARGES_ADD_STEP_4: 'servicios/agregar-paso-4',
+  SERVICES: 'servicios',
+};
+
+export const internalRoutingChildNames: IInternalRoutingChildNames = {
+  SERVICES_LIST: 'list',
+  SERVICES_ADD: 'agregar',
+  SERVICES_ADD_INFO: 'informacion',
+  SERVICES_ADD_CONFIGURATION: 'configuracion',
+};
+
+export const internalRoutingChildNamesTree: IRouteItem = {
+  link: appRoutingNames.EMPTY,
+  children: [
+    {
+      link: internalRoutingNames.SERVICES,
+      children: [
+        {
+          link: internalRoutingChildNames.SERVICES_LIST,
+          path: '',
+        },
+        {
+          link: internalRoutingChildNames.SERVICES_ADD,
+          children: [
+            { link: internalRoutingChildNames.SERVICES_ADD_INFO },
+            {
+              link: internalRoutingChildNames.SERVICES_ADD_CONFIGURATION,
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };
 
 export const internalAuthModuleRoutingNames = `/${internalRoutingNames.AUTH}/`;
@@ -49,6 +84,12 @@ export const internalAuthRoutingNames: IInternalAuthRoutingNames = {
 
 export const internalFullRoutingNames: IInternalRoutingNames =
   generateFullRoutes(internalRoutingNames, appModuleRoutingNames);
+
+export const internalFullRoutingChildNames: IInternalRoutingChildNames =
+  generateFullRoutesTree(
+    internalRoutingChildNames,
+    internalRoutingChildNamesTree
+  );
 
 export const internalAuthFullRoutingNames: IInternalAuthRoutingNames =
   generateFullRoutes(internalAuthRoutingNames, internalAuthModuleRoutingNames);

@@ -2,18 +2,10 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER } from '@angular/core';
 import {
-  DateAdapter,
-  MatDialogRef,
-  MatIconRegistry,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-  MAT_DIALOG_DATA,
-} from '@angular/material';
-import {
   MomentDateAdapter,
   MAT_MOMENT_DATE_FORMATS,
 } from '@angular/material-moment-adapter';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { withActions } from '@storybook/addon-actions';
@@ -22,6 +14,13 @@ import { moduleMetadata } from '@storybook/angular';
 import { CookieService } from 'ngx-cookie-service';
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { PaymentDetailComponent } from './payment-detail.component';
+import { MatIconRegistry } from '@angular/material/icon';
+import {
+  MAT_DATE_LOCALE,
+  DateAdapter,
+  MAT_DATE_FORMATS,
+} from '@angular/material/core';
+import { MatLegacyDialogRef } from '@angular/material/legacy-dialog';
 
 function initAppComponentFactory(
   matIconRegistry: MatIconRegistry,
@@ -51,10 +50,7 @@ export default {
         MatDialogModule,
       ],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {},
-        },
+        MatLegacyDialogRef,
         CookieService,
         {
           provide: APP_INITIALIZER,

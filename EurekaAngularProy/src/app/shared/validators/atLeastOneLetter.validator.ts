@@ -1,7 +1,7 @@
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { isNil } from 'ramda';
 
-export function atLeastOneLetter(control: FormControl) {
+export function atLeastOneLetter(control: UntypedFormControl) {
   const regex = /[a-zA-Z]/g;
   if (isNil(control.value)) {
     return null;

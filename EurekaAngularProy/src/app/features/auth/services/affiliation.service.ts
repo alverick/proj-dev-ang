@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { isEmpty, isNil } from 'ramda';
-import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
-import { of, throwError, Observable } from 'rxjs';
+import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
   ICompanySendUpdate,
   ICompanyUpdate,
 } from 'src/app/shared/models/company';
+import { SweetAlertOptions } from 'sweetalert2';
+
+import { parseParams } from '../../../shared/constants/services';
 import {
   IEntryModel,
   IServiceRemoteModel,
@@ -17,38 +19,41 @@ import {
 } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
+  EnterpriseHeadingService,
+  ServicesFormsService,
+} from '../../../shared/services';
+import {
   CompanyService,
   ICompanyResult,
 } from '../../../shared/services/company.service';
-import { EnterpriseHeadingService } from '../../../shared/services/enterprise-heading.service';
 import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
-import { debtorCodeCustomEmpty } from '../constants';
 import { AffiliationFormsService } from './affiliation-forms.service';
 
 @Injectable()
 export class AffiliationService {
-  companyId;
-  email;
-  servicesList: Array<Partial<IServiceRemoteModelForms>> = [];
+  companyId: number;
+  email: string;
+  servicesList: Partial<IServiceRemoteModelForms>[] = [];
 
   entryOptions: IEntryModel[] = [];
-  registerForm: FormGroup;
-  authForm: FormGroup;
-  serviceForm: FormGroup;
-  serviceConfigForm: FormGroup;
-  editServiceForm: FormGroup;
-  private updateData: ICompanyUpdate;
+  registerForm: UntypedFormGroup;
+  authForm: UntypedFormGroup;
+  serviceForm: UntypedFormGroup;
+  serviceConfigForm: UntypedFormGroup;
+  editServiceForm: UntypedFormGroup;
+  updateData: ICompanyUpdate;
   tokenUpdate;
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private companyService: CompanyService,
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
     private affiliationForms: AffiliationFormsService,
+    private serviceForms: ServicesFormsService,
     private logger: NGXLogger
   ) {
     this.setRegisterForm();
@@ -57,9 +62,9 @@ export class AffiliationService {
   public setRegisterForm() {
     this.registerForm = this.affiliationForms.registerForm;
     this.authForm = this.affiliationForms.authForm;
-    this.serviceForm = this.affiliationForms.serviceForm;
-    this.serviceConfigForm = this.affiliationForms.serviceConfigForm;
-    this.editServiceForm = this.affiliationForms.editServiceForm;
+    this.serviceForm = this.serviceForms.serviceForm;
+    this.serviceConfigForm = this.serviceForms.serviceConfigForm;
+    this.editServiceForm = this.serviceForms.editServiceForm;
 
     this.registerForm.controls.email.statusChanges.subscribe(() => {
       this.registerForm.controls.emailConfirm.updateValueAndValidity();
@@ -70,6 +75,7 @@ export class AffiliationService {
     const {
       name,
       newName,
+      newNameCode,
       debtorCode,
       paymentType,
       currency,
@@ -95,11 +101,17 @@ export class AffiliationService {
 
     if (inReview) {
       if (newNameGTPStatus === 3) {
-        this.affiliationForms.setEditFormValidator(newName);
+        this.serviceForms.setEditFormValidator(newName);
       }
     }
 
-    const amountField = interestType === 'M' ? amount : percentage;
+    let amountField = interestType === 'M' ? amount : percentage;
+    if (inReview) {
+      if (isString(amountField)) {
+        amountField = parseFloat(amountField);
+      }
+      amountField = amountField.toFixed(2);
+    }
     return {
       name,
       debtorCode,
@@ -111,6 +123,8 @@ export class AffiliationService {
       newNameCodeGTPStatus,
       nameOriginal,
       debtorCodeOriginal,
+      newNameCode,
+      newName,
       debt: {
         dataType,
         paymentType,
@@ -235,13 +249,13 @@ export class AffiliationService {
       },
     } = this.serviceConfigForm.value;
 
-    const serviceValues = this.parseParams(
+    const serviceValues = parseParams({
       debtorCodeCustom,
       debtorCode,
       amount,
       chargeType,
-      interestType
-    );
+      interestType,
+    });
 
     this.servicesList.push({
       id: null,
@@ -259,36 +273,12 @@ export class AffiliationService {
       partialPayment,
       ...serviceValues,
     });
-    this.affiliationForms.resetServicesForms();
-  }
-
-  private parseParams(
-    debtorCodeCustom,
-    debtorCode,
-    amount,
-    chargeType,
-    interestType
-  ) {
-    const parsedDebtorCode =
-      debtorCodeCustom === debtorCodeCustomEmpty
-        ? debtorCode
-        : debtorCodeCustom;
-
-    const parseAmount = parseFloat(amount).toFixed(2);
-
-    return {
-      debtorCode: parsedDebtorCode,
-      newNameCode: parsedDebtorCode,
-      chargeType: isEmpty(chargeType) ? '' : parseInt(chargeType, 10),
-      interestType: isNil(interestType) ? 'M' : interestType,
-      amount: interestType === 'M' ? parseAmount : '1.00',
-      percentage: interestType === 'P' ? parseAmount : '1.00',
-    };
+    this.serviceForms.resetServicesForms();
   }
 
   saveAllServices() {
     if (this.servicesList.length < 1) {
-      swalAlert.fire({
+      void swalAlert.fire({
         icon: 'warning',
         text: `Debes contar con al menos un servicio para continuar`,
         showConfirmButton: true,
@@ -310,7 +300,7 @@ export class AffiliationService {
   }
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {
-    let modalSettings;
+    let modalSettings: SweetAlertOptions;
     if (
       this.updateData.newNameGTPStatus === 3 &&
       this.updateData.newName === this.authForm.get('name').value
@@ -346,11 +336,31 @@ export class AffiliationService {
     }
 
     if (isNotNil(modalSettings)) {
-      swalAlert.fire(modalSettings);
+      void swalAlert.fire(modalSettings);
       return throwError('Incomplete data');
     }
 
-    const payload: ICompanySendUpdate = {
+    return this.companyService
+      .sendUpdateCompanyData(this.generatePayloadUpdate())
+      .pipe(
+        tap((result) => {
+          if (result) {
+            this.email = this.updateData.email;
+          } else {
+            void swalAlert.fire({
+              icon: 'warning',
+              text: `Ha ocurrido un error`,
+              showConfirmButton: true,
+              confirmButtonText: 'Entendido',
+            });
+          }
+          this.updateData = null;
+        })
+      );
+  }
+
+  generatePayloadUpdate(): ICompanySendUpdate {
+    return {
       Token: this.tokenUpdate,
       NewName: this.updateData.inReview
         ? this.authForm.get('name').value
@@ -373,24 +383,10 @@ export class AffiliationService {
         }
       ),
     };
-
-    return this.companyService.sendUpdateCompanyData(payload).pipe(
-      tap((result) => {
-        if (result) {
-          this.email = this.updateData.email;
-        } else {
-          swalAlert.fire({
-            icon: 'warning',
-            text: `Ha ocurrido un error`,
-            showConfirmButton: true,
-            confirmButtonText: 'Entendido',
-          });
-        }
-      })
-    );
   }
 
   resetRegistration() {
+    this.companyId = null;
     this.email = this.registerForm.value.email;
     this.servicesList = [];
     this.affiliationForms.resetCompanyForms();
@@ -408,12 +404,6 @@ export class AffiliationService {
           ? formData.debtorCodeCustom
           : formData.debtorCode;
     }
-    this.logger.debug(
-      '-> this.editServiceForm.value',
-      this.servicesList[position],
-      updatedData,
-      formData
-    );
     this.servicesList[position] = {
       ...this.servicesList[position],
       ...updatedData,
@@ -443,13 +433,13 @@ export class AffiliationService {
       },
     } = this.editServiceForm.value;
 
-    const serviceValues = this.parseParams(
+    const serviceValues = parseParams({
       debtorCodeCustom,
       debtorCode,
       amount,
       chargeType,
-      interestType
-    );
+      interestType,
+    });
 
     this.servicesList[position] = {
       ...this.servicesList[position],
@@ -475,7 +465,7 @@ export class AffiliationService {
   }
 
   showMessageExistsCustomer(): void {
-    swalAlert.fire({
+    void swalAlert.fire({
       icon: 'warning',
       text: `El RUC ingresado ya se encuentra registrado en Cobro Simple`,
       showConfirmButton: true,
@@ -484,7 +474,7 @@ export class AffiliationService {
   }
 
   showMessageNoExistsAccounts(): void {
-    swalAlert
+    void swalAlert
       .fire({
         title: '¡Abre tu Cuenta Negocios!',
         html: `Debes tener una cuenta corriente o ahorros persona jurídica para registrarte en Cobro Simple. <br>
@@ -496,13 +486,13 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
       .then(({ value }) => {
         if (value) {
           window.open('https://interbank.pe/cuenta-negocios');
-          this.router.navigate([authFullRoutingNames.LOGIN]);
+          void this.router.navigate([authFullRoutingNames.LOGIN]);
         }
       });
   }
 
   showErrorServer() {
-    swalAlert.fire({
+    void swalAlert.fire({
       title: 'Regístrame',
       html: 'Ha ocurrido un error con el servidor<br />Intente de nuevo',
       showCloseButton: true,

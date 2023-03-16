@@ -499,7 +499,7 @@ export class ConfigurarServiciosComponent implements OnInit {
       ) {
         return false;
       }
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       if (
         (svc.newNameGtpStatus === 0 || svc.newNameGtpStatus === 2) &&
         (svc.newNameCodeGtpStatus === 0 || svc.newNameCodeGtpStatus === 2)
@@ -586,7 +586,7 @@ export class ConfigurarServiciosComponent implements OnInit {
           title = 'Eliminación Parcial del Servicio';
           msg =
             'Ya existe un historial de pagos realizados con este servicio, ' +
-            'sólo se eliminarán las deudas pendientes. ' +
+            'solo se eliminarán las deudas pendientes. ' +
             'Ya no se podrá pagar más este servicio por los canales de Interbank';
         }
         Swal.fire({

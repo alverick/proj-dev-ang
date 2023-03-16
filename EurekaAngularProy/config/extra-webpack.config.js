@@ -1,4 +1,6 @@
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
+const path = require('path');
+
 module.exports = (config) => {
   config.plugins.push(
     new WebpackBuildNotifierPlugin({
@@ -10,11 +12,16 @@ module.exports = (config) => {
   config.module.rules.push({
     test: /\.scss$/,
     use: [
-      'postcss-loader',
       {
         loader: 'sass-resources-loader',
         options: {
-          resources: ['./src/scss/_configuration.scss'],
+          resources: [
+            './src/scss/_configuration.scss',
+            path.resolve(
+              __dirname,
+              '../node_modules/include-media/dist/_include-media.scss'
+            ),
+          ],
         },
       },
     ],

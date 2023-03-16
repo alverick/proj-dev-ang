@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
-import { CompanyService } from 'src/app/shared/services/company.service';
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
+import { CompanyService } from '../../../shared/services';
 import { GoogleAnalytics } from '../../../shared/services/googleAnalytics.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { atLeastOneLetter } from '../../../shared/validators/atLeastOneLetter.validator';
@@ -14,16 +18,15 @@ import { MustDifferent } from '../../../shared/validators/must-different.validat
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { internalFullRoutingNames } from '../internal-routing.names';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
-  companyForm: FormGroup;
-  passwordForm: FormGroup;
+  companyForm: UntypedFormGroup;
+  passwordForm: UntypedFormGroup;
   entryOptions: IEntryModel[] = [];
+  entryOptionsAdd: IEntryModel[] = [];
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private companyService: CompanyService,
     private router: Router,
     private gaService: GoogleAnalytics

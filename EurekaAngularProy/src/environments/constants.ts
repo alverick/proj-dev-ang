@@ -1,3 +1,5 @@
+import { NgxLoggerLevel } from 'ngx-logger';
+
 export const serverUrl = {
   local: 'https://localhost:5001/api',
   dev: 'https://apis.dev.interbank.pe/eureca/api',
@@ -13,4 +15,16 @@ export interface IEnvironment {
   OCP_KEY: string;
   logLevel: number;
   serverLogLevel: number;
+  credentials: string[][];
 }
+
+export const environmentDefault: IEnvironment = {
+  production: false,
+  development: true,
+  hmr: false,
+  END_POINT: serverUrl.local,
+  OCP_KEY: '',
+  logLevel: NgxLoggerLevel.WARN,
+  serverLogLevel: NgxLoggerLevel.OFF,
+  credentials: [['', '', '']],
+};

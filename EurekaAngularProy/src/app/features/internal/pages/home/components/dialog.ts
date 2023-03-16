@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import * as saveAs from 'file-saver';
 import { Observable } from 'rxjs';
 import { ExcelService } from 'src/app/shared/services/excel.service';
@@ -16,11 +20,11 @@ import Swal from 'sweetalert2';
 export class DialogComponent implements OnInit {
   constructor(
     public excelService: ExcelService,
-    public formBuilder: FormBuilder,
+    public formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<DialogComponent>,
     private gaService: GoogleAnalytics
   ) {}
-  public inputXlsForm: FormGroup;
+  public inputXlsForm: UntypedFormGroup;
   public messageUploadExcel = false;
   public errores: any[] = [];
   public ready = false;
@@ -148,7 +152,7 @@ export class DialogComponent implements OnInit {
           th.excelService
             .StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
-        }, 500);
+        }, 2000);
       }
     };
     this.progress.mode = 'determinate';
@@ -158,7 +162,7 @@ export class DialogComponent implements OnInit {
       this.excelService
         .StatusExcel(this.excelService.idProcess)
         .subscribe(recursiveFunc);
-    }, 800);
+    }, 2000);
   }
 
   right() {

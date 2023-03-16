@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBarRef } from '@angular/material';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacySnackBarRef as MatSnackBarRef } from '@angular/material/legacy-snack-bar';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
 import Swal from 'sweetalert2';
@@ -36,7 +37,7 @@ export class UploadProgressComponent implements OnInit {
   //  const dialogRef =  this.dialog.open(ValidationComponent);
 
   private verifyStatus() {
-    // tslint:disable-next-line:prefer-const
+    // eslint-disable-next-line prefer-const
     let recursiveFunc = (value) => {
       if (value.status === 'REJECTED') {
         this.snackRef.dismiss();
@@ -79,17 +80,17 @@ export class UploadProgressComponent implements OnInit {
           th.excelService
             .StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
-        }, 500);
+        }, 2000);
       }
     };
     setTimeout(() => {
       this.excelService
         .StatusExcel(this.excelService.idProcess)
         .subscribe(recursiveFunc);
-    }, 800);
+    }, 2000);
   }
 
-  // tslint:disable-next-line:use-life-cycle-interface
+  // eslint-disable-next-line
   ngOnDestroy() {
     this.snackRef.dismiss();
   }

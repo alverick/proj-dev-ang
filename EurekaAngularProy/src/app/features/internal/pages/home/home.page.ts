@@ -6,10 +6,11 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import * as saveAs from 'file-saver';
+import { LazyLoadEvent } from 'primeng/api';
 import { all, equals, prop } from 'ramda';
-import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
+import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { Debts } from 'src/app/shared/models/debts';
 import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
@@ -23,9 +24,11 @@ import { LoadFileService } from 'src/app/shared/services/load-file.service';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { TransactionService } from 'src/app/shared/services/transaction.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
+import { drawPopup, swalAlert } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
+
 import { DateList } from '../../../../shared/models/dateList';
+import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
@@ -50,7 +53,8 @@ export class HomePage implements OnInit {
     private popover: Popover,
     private gaService: GoogleAnalytics,
     private fileLoad: LoadFileService,
-    private barLoad: LoadBarService
+    private barLoad: LoadBarService,
+    private movementsService: MovementsService
   ) {
     transactionService.itemsForDelete = [];
   }
@@ -146,6 +150,8 @@ export class HomePage implements OnInit {
   public nuevaDeuda: any = {
     errores: {},
   };
+  selectedRows = [];
+  tableSortField = '';
 
   @HostListener('window:scroll', ['$event'])
   onWindowScroll() {
@@ -250,6 +256,7 @@ export class HomePage implements OnInit {
   }
 
   resetDebts() {
+    this.tableSortField = '';
     if (!equals(this.initialFilter, this.currentFilter)) {
       this.currentFilter = this.initialFilter;
       const { dateForFilter, status, inputSearch, service } =
@@ -281,6 +288,7 @@ export class HomePage implements OnInit {
         ...this.currentFilter,
         ...filter,
       };
+      this.tableSortField = '';
       this.submitSearch(inputSearch, service, status, dateForFilter);
     }
   }
@@ -322,11 +330,11 @@ export class HomePage implements OnInit {
   }
 
   consultaDeuda(cb: () => void = null) {
-    // tslint:disable-next-line:prefer-const
+    // eslint-disable-next-line prefer-const
 
     this.transactionService
       .getDeuda(this.currentFilter, this.selectedUniverse)
-      .subscribe((debts) => {
+      .subscribe(() => {
         if (this.transactionService.debtItems.data.length > 0) {
           this.selectedAll = this.transactionService.isMarkedAll(
             this.selectedUniverse
@@ -370,18 +378,19 @@ export class HomePage implements OnInit {
   }
 
   BotonActualizar(item: Debts) {
-    this.validaEmissionDate(item);
-    if (item.dueDate) {
-      this.validaDueDate(item);
-      this.validaMonto(item);
-    }
-    this.validaNombresApellidos(item);
-
-    for (const s in item.errores) {
-      if (item.errores[s]) {
-        return;
-      }
-    }
+    // this.validaEmissionDate(item);
+    // if (item.dueDate) {
+    //   this.validaDueDate(item);
+    //   this.validaMonto(item);
+    // }
+    // this.validaNombresApellidos(item);
+    //
+    // console.log(item, item.errores);
+    // for (const s in item.errores) {
+    //   if (item.errores[s]) {
+    //     return;
+    //   }
+    // }
 
     Swal.fire({
       title: '¿Deseas actualizar?',
@@ -395,12 +404,20 @@ export class HomePage implements OnInit {
       if (result.value) {
         //  item.edit = false;
         const debts = {
-          emissionDate: item.newEmissionDate,
-          dueDate: item.newDueDate,
-          concept: item.newConcept,
-          amount: parseFloat(item.newAmount.toString()),
-          firstName: item.newFirstName,
+          emissionDate: item.emissionDate,
+          dueDate: item.dueDate,
+          concept: item.concept,
+          amount: item.amount,
+          firstName: item.firstName,
         };
+
+        // {
+        //   "emissionDate": "2021-06-16T05:00:00.000Z",
+        //   "dueDate": "",
+        //   "concept": null,
+        //   "amount": 0,
+        //   "firstName": "Cliente BBBB21"
+        // }
 
         if (item.newStatus === '1') {
           this.transactionService
@@ -429,6 +446,7 @@ export class HomePage implements OnInit {
                   showCancelButton: false,
                   onOpen: drawPopup,
                 });
+                this.transactionService.resetDebts();
               }
             });
         } else if (item.newStatus === '2') {
@@ -457,6 +475,8 @@ export class HomePage implements OnInit {
               });
             });
         }
+      } else {
+        this.transactionService.resetDebts();
       }
     });
   }
@@ -484,15 +504,8 @@ export class HomePage implements OnInit {
   }
 
   EliminarSeleccionados() {
-    const totalForDelete = this.selectedUniverse
-      ? this.transactionService.debtItems.countNoIbkPayments
-      : this.transactionService.countMarksForDelete();
+    const totalForDelete = this.selectedRows.length;
     if (totalForDelete === 0) {
-      this.mensaje(
-        'error',
-        'Eliminar cobros',
-        'Seleccione los cobros a eliminar por favor'
-      );
       return;
     }
     let mensaje = '';
@@ -504,51 +517,49 @@ export class HomePage implements OnInit {
       mensaje = `Esta acción va a eliminar ${totalForDelete} deudas`;
     }
 
-    Swal.fire({
-      title: '¿Seguro que deseas continuar?',
-      text: mensaje,
-      showCancelButton: true,
-      showCloseButton: true,
-      confirmButtonText: 'CONFIRMAR',
-      cancelButtonText: 'CANCELAR',
-      onOpen: drawPopup,
-    }).then((result) => {
-      if (result.value) {
-        const observable = this.selectedUniverse
-          ? this.transactionService.deleteFiltered(this.filtro)
-          : this.transactionService.deleteAll();
-        observable.subscribe(() => {
-          this.gaService.sendEvent('EliminarDeudas', {
-            event_category: 'Dashboard',
-            event_label: 'eliminar_deudas',
-          });
-          this.consultaDeuda(() => {
-            if (totalForDelete === 1) {
-              mensaje_final =
-                'Se han eliminado ' + totalForDelete + ' registro';
-            }
-            if (totalForDelete > 1) {
-              mensaje_final =
-                'Se han eliminado ' + totalForDelete + ' registros';
-            }
-
-            Swal.fire({
-              title: 'Eliminado',
-              text: mensaje_final,
-              showCloseButton: true,
-              showCancelButton: false,
-              confirmButtonText: 'CERRAR',
-              onOpen: drawPopup,
+    swalAlert
+      .fire({
+        title: '¿Seguro que deseas continuar?',
+        text: mensaje,
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: 'CONFIRMAR',
+        cancelButtonText: 'CANCELAR',
+      })
+      .then((result) => {
+        if (result.value) {
+          const ids = this.selectedRows.map((items) => items.id);
+          this.movementsService.deleteMovements(ids).subscribe(() => {
+            this.gaService.sendEvent('EliminarDeudas', {
+              event_category: 'Dashboard',
+              event_label: 'eliminar_deudas',
             });
-          });
-          this.selectedAll = false;
-          this.selectedUniverse = false;
+            this.consultaDeuda(() => {
+              if (totalForDelete === 1) {
+                mensaje_final =
+                  'Se han eliminado ' + totalForDelete + ' registro';
+              }
+              if (totalForDelete > 1) {
+                mensaje_final =
+                  'Se han eliminado ' + totalForDelete + ' registros';
+              }
 
-          this.transactionService.debtItems.data = [];
-          this.transactionService.itemsForDelete = [];
-        });
-      }
-    });
+              swalAlert.fire({
+                title: 'Eliminado',
+                text: mensaje_final,
+                showCloseButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'CERRAR',
+              });
+            });
+            this.selectedAll = false;
+            this.selectedUniverse = false;
+
+            this.transactionService.debtItems.data = [];
+            this.transactionService.itemsForDelete = [];
+          });
+        }
+      });
     this.DebtsAreSelected();
   }
 
@@ -960,5 +971,18 @@ export class HomePage implements OnInit {
           this.nuevaDeuda.firstName = d.firstName;
         }
       });
+  }
+
+  onSelected(event) {
+    this.selectedRows = event;
+  }
+
+  loadData(args: LazyLoadEvent) {
+    const pageSelected = args.first / args.rows + 1;
+    if (isNotNilOrEmpty(args.sortField)) {
+      this.currentFilter.columnName = args.sortField;
+      this.currentFilter.asc = args.sortOrder === 1;
+    }
+    this.changePage(pageSelected);
   }
 }

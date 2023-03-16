@@ -1,12 +1,17 @@
-import { Component } from '@angular/core';
-import { MatIconRegistry } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
+import { PrimeNGConfig } from 'primeng/api';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { environment } from 'src/environments/environment';
+
 import { appFullRoutingNames } from './app-routing.names';
-import { authFullRoutingNames } from './features/auth/auth-routing.names';
-import { internalAuthFullRoutingNames } from './features/internal/internal-routing.names';
+import {
+  authFullRoutingChildNames,
+  authFullRoutingNames,
+} from './features/auth/auth-routing.names';
+import { primeng } from './shared/lang/es';
 import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
 
 declare let fbq: (...args: any[]) => void;
@@ -16,14 +21,15 @@ declare let fbq: (...args: any[]) => void;
   styleUrls: ['./app.component.css'],
   providers: [LoginService],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Cobro Simple – Interbank';
 
   constructor(
     private router: Router,
     matIconRegistry: MatIconRegistry,
     domSanitizer: DomSanitizer,
-    private gaService: GoogleAnalytics
+    private gaService: GoogleAnalytics,
+    private config: PrimeNGConfig
   ) {
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
@@ -79,18 +85,12 @@ export class AppComponent {
     );
   }
 
+  ngOnInit() {
+    this.config.setTranslation(primeng);
+  }
+
   private sendTrackPageViewPixel(pathComponent: string): void {
-    const path: string = pathComponent;
-
-    const { CHARGES_AFFILIATION } = internalAuthFullRoutingNames;
-
-    const {
-      CHARGES_AFFILIATION_ADD_STEP_4,
-      CHARGES_AFFILIATION_ADD_STEP_3,
-      CHARGES_AFFILIATION_ADD_STEP_2,
-      CHARGES_AFFILIATION_ADD_STEP_1,
-    } = internalAuthFullRoutingNames;
-    switch (path) {
+    switch (pathComponent) {
       case appFullRoutingNames.LANDING:
         fbq('track', 'PageView');
         break;
@@ -103,22 +103,16 @@ export class AppComponent {
       case authFullRoutingNames.COMPANY_FINISHED:
         fbq('track', 'PageView');
         break;
-      case CHARGES_AFFILIATION_ADD_STEP_1:
+      case authFullRoutingChildNames.SERVICES_ADD_INFO:
         fbq('track', 'PageView');
         break;
-      case CHARGES_AFFILIATION_ADD_STEP_2:
+      case authFullRoutingChildNames.SERVICES_ADD_CONFIGURATION:
         fbq('track', 'PageView');
         break;
-      case CHARGES_AFFILIATION_ADD_STEP_3:
+      case authFullRoutingChildNames.SERVICES_ADD_LIST:
         fbq('track', 'PageView');
         break;
-      case CHARGES_AFFILIATION_ADD_STEP_4:
-        fbq('track', 'PageView');
-        break;
-      case CHARGES_AFFILIATION:
-        fbq('track', 'PageView');
-        break;
-      case authFullRoutingNames.PROCESSING:
+      case authFullRoutingNames.REGISTRATION_FINISHED:
         fbq('track', 'Contact', {
           content_name: 'cobro-simple-5',
         });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
   documentTypes,
@@ -17,8 +17,8 @@ import { CompanyConfigurationService } from '../../services';
   styleUrls: ['./company-configuration.page.scss'],
 })
 export class CompanyConfigurationPage implements OnInit {
-  companyForm: FormGroup;
-  passwordForm: FormGroup;
+  companyForm: UntypedFormGroup;
+  passwordForm: UntypedFormGroup;
   errors = { ...errorsRegisterForm, ...errorRegisterAuth };
   operators = mobileOperators;
   documentTypes = documentTypes;
