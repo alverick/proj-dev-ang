@@ -5,21 +5,23 @@ import { NGXLogger } from 'ngx-logger';
 import { isNil, pathEq } from 'ramda';
 import { throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
 import { parseParams, statusCodes } from '../../../shared/constants/services';
 import { IServiceRemoteModel } from '../../../shared/models';
 import {
   CompanyService,
-  ServicesFormsService,
   ServiceService,
+  ServicesFormsService,
 } from '../../../shared/services';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 
 @Injectable()
 export class CompanyServicesService {
-  services: Array<Partial<IServiceRemoteModel>> = [];
+  services: Partial<IServiceRemoteModel>[] = [];
   serviceForm: FormGroup;
   serviceConfigForm: FormGroup;
   editServiceForm: FormGroup;
+
   constructor(
     private companyService: CompanyService,
     private serviceForms: ServicesFormsService,
@@ -27,7 +29,6 @@ export class CompanyServicesService {
     public activatedRoute: ActivatedRoute,
     private logger: NGXLogger
   ) {
-    this.logger.debug('-> activatedRoute', activatedRoute);
     this.serviceForm = this.serviceForms.serviceForm;
     this.serviceConfigForm = this.serviceForms.serviceConfigForm;
     this.editServiceForm = this.serviceForms.editServiceForm;
@@ -46,6 +47,7 @@ export class CompanyServicesService {
       this.services[position].id
     );
   }
+
   deleteService(position: number) {
     this.serviceService
       .deleteService(this.services[position].id)
@@ -249,15 +251,23 @@ export class CompanyServicesService {
   private saveServices() {
     const services = this.services
       .filter(
-        ({ newNameGTPStatus, newNameCodeGTPStatus }) =>
-          !(
+        ({ id, name, debtorCode, newNameGTPStatus, newNameCodeGTPStatus }) => {
+          if (newNameGTPStatus === statusCodes.REJECTED && isNil(name)) {
+            return false;
+          }
+          if (
+            newNameCodeGTPStatus === statusCodes.REJECTED &&
+            isNil(debtorCode)
+          ) {
+            return false;
+          }
+          return !(
             newNameGTPStatus === statusCodes.NEW ||
             newNameGTPStatus === statusCodes.EDITED ||
             newNameCodeGTPStatus === statusCodes.NEW ||
             newNameCodeGTPStatus === statusCodes.EDITED
-          ) ||
-          newNameGTPStatus === statusCodes.REJECTED ||
-          newNameCodeGTPStatus === statusCodes.REJECTED
+          );
+        }
       )
       .map(
         ({
