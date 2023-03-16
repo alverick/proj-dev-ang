@@ -17,7 +17,7 @@
         [currency]="currencyLabel"
         [amount]="collectAmounts?.totalChargeAmount"
         [peopleQuantity]="collectAmounts?.totalChargePersons"
-        (link)="goto('')"
+        (link)="goto([])"
         [loading]="loading"
         class="tw-flex-grow"
       ></cs-dashboard-card>
@@ -26,7 +26,7 @@
         [currency]="currencyLabel"
         [amount]="collectAmounts?.pendingChargeAmount"
         [peopleQuantity]="collectAmounts?.pendingChargePersons"
-        (link)="goto('PENDIENTE')"
+        (link)="goto([], true)"
         [loading]="loading"
         class="tw-flex-grow"
       ></cs-dashboard-card>
@@ -35,7 +35,7 @@
         [currency]="currencyLabel"
         [amount]="collectAmounts?.defaultChargeAmount"
         [peopleQuantity]="collectAmounts?.defaultChargePersons"
-        (link)="goto('VENCIDO')"
+        (link)="goto(['VENCIDO'])"
         [loading]="loading"
         class="tw-flex-grow"
       ></cs-dashboard-card>
@@ -115,7 +115,6 @@
       [printMode]="true"
       [amount]="collectAmounts?.totalChargeAmount"
       [peopleQuantity]="collectAmounts?.totalChargePersons"
-      (link)="goto('total')"
       class="tw-flex-grow"
     ></cs-dashboard-card>
     <cs-dashboard-card
@@ -124,7 +123,6 @@
       [printMode]="true"
       [amount]="collectAmounts?.pendingChargeAmount"
       [peopleQuantity]="collectAmounts?.pendingChargePersons"
-      (link)="goto('pendant')"
       class="tw-flex-grow"
     ></cs-dashboard-card>
     <cs-dashboard-card
@@ -133,7 +131,6 @@
       [printMode]="true"
       [amount]="collectAmounts?.defaultChargeAmount"
       [peopleQuantity]="collectAmounts?.defaultChargePersons"
-      (link)="goto('default')"
       class="tw-flex-grow"
     ></cs-dashboard-card>
   </div>

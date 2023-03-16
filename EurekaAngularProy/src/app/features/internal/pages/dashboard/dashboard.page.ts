@@ -216,13 +216,27 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  goto(typePayment: string) {
+  goto(typePayment: string[], useStatus = false) {
+    const statusOptions = {
+      PaymentDate: ['PENDIENTE', 'PARCIAL'],
+      EmissionDate: ['PENDIENTE', 'VENCIDO', 'PARCIAL'],
+      DueDate: ['VENCIDO'],
+    };
+
     const services =
       this.filter.services.length === this.services.length
         ? []
         : this.filter.services;
     void this.router.navigate([internalFullRoutingNames.HOME], {
-      state: { filter: { ...this.filter, services, status: typePayment } },
+      state: {
+        filter: {
+          ...this.filter,
+          services,
+          status: useStatus
+            ? statusOptions[this.filter.payment.code]
+            : typePayment,
+        },
+      },
     });
   }
 
