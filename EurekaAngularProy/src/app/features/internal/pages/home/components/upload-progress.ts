@@ -80,14 +80,14 @@ export class UploadProgressComponent implements OnInit {
           th.excelService
             .StatusExcel(th.excelService.idProcess)
             .subscribe(recursiveFunc);
-        }, 2000);
+        }, 500);
       }
     };
     setTimeout(() => {
       this.excelService
         .StatusExcel(this.excelService.idProcess)
         .subscribe(recursiveFunc);
-    }, 2000);
+    }, 800);
   }
 
   // eslint-disable-next-line
