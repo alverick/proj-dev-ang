@@ -21,7 +21,7 @@ export default {
       ],
     }),
   ],
-  argTypes: { sendForm: { action: 'clicked' } },
+  argTypes: { link: { action: 'clicked' } },
 } as Meta;
 
 const Template: Story<DashboardCardComponent> = (
@@ -34,9 +34,8 @@ export const Normal = Template.bind({});
 Normal.args = {
   title: 'Cobro total',
   currency: 'S/',
-  amount: '100000.00',
-  peopleQuantity: '1234',
-  link: '#home',
+  amount: -50,
+  peopleQuantity: 1,
 };
 
 export const Empty = Template.bind({});
@@ -45,7 +44,6 @@ Empty.args = {
   currency: 'S/',
   amount: 0,
   peopleQuantity: 0,
-  link: '#home',
 };
 
 export const skeleton = Template.bind({});
@@ -55,5 +53,4 @@ skeleton.args = {
   amount: 0,
   loading: true,
   peopleQuantity: 0,
-  link: '#home',
 };
