@@ -77,9 +77,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   internalDates: any[];
   internalServices: ServiceItem[] = [];
   currencies = currencies;
-  maxDateTo = new Date();
   minDateTo: Date | null = null;
-  maxDateFrom = new Date();
   showCurrency = false;
   errorMessages = {
     services: {
@@ -142,7 +140,6 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private setForm() {
-    this.maxDateFrom.setDate(this.maxDateTo.getDate() - INTERVAL_DATE);
     this.form = this.fb.nonNullable.group({
       services: this.fb.nonNullable.control([], Validators.required),
       currency: this.fb.control(null, Validators.required),
