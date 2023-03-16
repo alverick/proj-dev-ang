@@ -186,9 +186,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
       .get('dateFrom')
       .valueChanges.pipe(takeUntil(this.$destroy), filter(filterNotValidValues))
       .subscribe((value: Date) => {
-        const dateTo = new Date();
-        dateTo.setDate(value.getDate() + INTERVAL_DATE);
-        this.minDateTo = dateTo;
+        this.minDateTo = value;
         this.form.get('dateTo').setValue(null);
       });
   }
