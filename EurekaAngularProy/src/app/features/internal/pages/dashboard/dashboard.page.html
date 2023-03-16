@@ -45,9 +45,11 @@
         class="lg:tw-w-[500px]"
         [currency]="currencyLabel"
         [customers]="clients"
+        [loading]="loadingTable"
       ></cs-dashboard-table>
       <cs-dashboard-graph
         [serviceData]="graphData"
+        [loading]="loadingChart"
         class="tw-flex-grow"
       ></cs-dashboard-graph>
     </div>

@@ -62,6 +62,8 @@ export class DashboardPage implements OnInit {
   currencyLabel = 'S/';
   showModal = false;
   loading = false;
+  loadingTable = false;
+  loadingChart = false;
   emailForm: FormGroup<EmailForm>;
   @ViewChild('outputHtml', { static: false }) outputHtml: ElementRef;
 
@@ -80,6 +82,8 @@ export class DashboardPage implements OnInit {
       subject: this.fb.control(''),
     });
     this.loading = true;
+    this.loadingTable = true;
+    this.loadingChart = true;
     this.dashboard
       .getServices()
       .pipe(filter((value) => isNotNilOrEmpty(value)))
@@ -178,8 +182,10 @@ export class DashboardPage implements OnInit {
     });
     this.dashboard.getClients(filterData).subscribe((value) => {
       this.clients = value;
+      this.loadingTable = false;
     });
     this.dashboard.getHistorical(filterData).subscribe((value) => {
+      this.loadingChart = false;
       const dates: string[] = pipe(
         pluck('date'),
         flatten,
