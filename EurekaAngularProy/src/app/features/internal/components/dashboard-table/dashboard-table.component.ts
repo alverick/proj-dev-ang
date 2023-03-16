@@ -20,4 +20,5 @@ export class DashboardTableComponent {
   @Input() printMode = false;
   @Input() customers: TopClients[] = [];
   @Input() currency = 'S/';
+  @Input() loading = true;
 }
