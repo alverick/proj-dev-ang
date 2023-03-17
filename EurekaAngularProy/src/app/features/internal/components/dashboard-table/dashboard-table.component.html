@@ -7,7 +7,9 @@
   }"
 >
   <ng-container *ngIf="!loading">
-    <div class="tw-px-5 tw-py-4 tw-border-b tw-border-extended-grey-4">
+    <div
+      class="tw-px-5 tw-py-4 tw-font-medium tw-border-b tw-border-extended-grey-4"
+    >
       <p>Top 10 clientes</p>
     </div>
     <div class="tw-px-2 tw-pb-4">
@@ -23,9 +25,9 @@
         <ng-template pTemplate="body" let-customer>
           <tr>
             <td>
-              {{ customer.name }} {{ customer.lastName }}<br />{{
-                customer.code
-              }}
+              <span class="tw-font-medium"
+                >{{ customer.name }} {{ customer.lastName }}</span
+              ><br />{{ customer.code }}
             </td>
             <td>{{ customer.service | notEmpty : '-' }}</td>
             <td>

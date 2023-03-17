@@ -7,7 +7,7 @@
   }"
 >
   <ng-container *ngIf="!loading">
-    <p class="tw-text-lg">{{ title }}</p>
+    <p class="tw-text-lg tw-font-medium">{{ title }}</p>
     <p class="tw-text-3xl tw-font-medium tw-pb-2 bg-gray-300">
       <ng-container *ngIf="amount === 0">{{ currency }} -</ng-container>
       <ng-container *ngIf="amount !== 0">{{
