@@ -18,7 +18,7 @@ declare let fbq: (...args: any[]) => void;
 @Component({
   selector: 'cs-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   providers: [LoginService],
 })
 export class AppComponent implements OnInit {
