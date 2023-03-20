@@ -224,7 +224,7 @@ export class DashboardPage implements OnInit {
 
   goto(typePayment: string[], useStatus = false) {
     const statusOptions = {
-      PaymentDate: ['PENDIENTE', 'PARCIAL'],
+      PaymentDate: ['PENDIENTE', 'VENCIDO', 'PARCIAL'],
       EmissionDate: ['PENDIENTE', 'VENCIDO', 'PARCIAL'],
       DueDate: ['VENCIDO'],
     };
