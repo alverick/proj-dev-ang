@@ -35,8 +35,6 @@ export interface ServiceItem {
   dataType: string;
 }
 
-const INTERVAL_DATE = 0;
-
 export interface FilterFormData {
   services: ServiceItem[];
   currency?: Currency;
