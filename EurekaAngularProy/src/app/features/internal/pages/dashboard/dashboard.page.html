@@ -26,7 +26,7 @@
         [currency]="currencyLabel"
         [amount]="collectAmounts?.pendingChargeAmount"
         [peopleQuantity]="collectAmounts?.pendingChargePersons"
-        (link)="goto([], true)"
+        (link)="goto(['PENDIENTE', 'VENCIDO', 'PARCIAL'])"
         [loading]="loading"
         class="tw-flex-grow"
       ></cs-dashboard-card>
