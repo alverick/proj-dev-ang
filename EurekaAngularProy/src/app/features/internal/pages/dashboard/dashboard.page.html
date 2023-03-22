@@ -11,7 +11,10 @@
     ></cs-dashboard-filter>
   </div>
   <div class="output">
-    <div class="tw-my-6 tw-flex tw-flex-col md:tw-flex-row tw-gap-6">
+    <div
+      *ngIf="false"
+      class="tw-my-6 tw-flex tw-flex-col md:tw-flex-row tw-gap-6"
+    >
       <cs-dashboard-card
         title="Cobro total"
         [currency]="currencyLabel"
@@ -41,12 +44,22 @@
       ></cs-dashboard-card>
     </div>
     <div class="tw-my-6 tw-flex tw-flex-col lg:tw-flex-row tw-gap-6">
-      <cs-dashboard-table
-        class="lg:tw-w-[500px]"
-        [currency]="currencyLabel"
-        [customers]="clients"
-        [loading]="loadingTable"
-      ></cs-dashboard-table>
+      <div class="lg:tw-w-[500px] tw-flex tw-flex-col tw-gap-6">
+        <cs-dashboard-card
+          title="Cobro total"
+          [currency]="currencyLabel"
+          [amount]="collectAmounts?.totalChargeAmount"
+          [peopleQuantity]="collectAmounts?.totalChargePersons"
+          (link)="goto([])"
+          [loading]="loading"
+        ></cs-dashboard-card>
+        <cs-dashboard-table
+          [currency]="currencyLabel"
+          [customers]="clients"
+          [loading]="loadingTable"
+        ></cs-dashboard-table>
+      </div>
+
       <cs-dashboard-graph
         [serviceData]="graphData"
         [loading]="loadingChart"
