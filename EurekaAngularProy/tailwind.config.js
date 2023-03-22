@@ -66,6 +66,9 @@ module.exports = {
       maxWidth: {
         '8xl': '1320px',
       },
+      screens: {
+        hover: { raw: '(hover: hover)' },
+      },
     },
     borderColor: (theme) => ({
       ...theme('colors'),
