@@ -1,28 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { QueryParams } from '@ngrx/data';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-
-export interface CollectAmounts {
-  totalChargeAmount: number;
-  totalChargePersons: number;
-  pendingChargeAmount: number;
-  pendingChargePersons: number;
-  defaultChargeAmount: number;
-  defaultChargePersons: number;
-}
-
-export interface TopClients {
-  name: string;
-  lastName: string;
-  code: string;
-  service: string;
-  currency?: string;
-  totalAmount: number;
-  totalDefault: number;
-}
+import { CollectAmount, TopClient } from '../../store/entities';
 
 export interface HistoricalData {
   service: string;
@@ -38,17 +21,17 @@ export interface SendReport {
 export class DashboardDataService {
   constructor(private http: HttpClient) {}
 
-  getAmounts(filterData: any): Observable<CollectAmounts[]> {
+  getAmounts(filterData: QueryParams): Observable<CollectAmount[]> {
     const url = `${environment.END_POINT}/dashBoard/collectAmount`;
     return this.http
-      .get<CollectAmounts[]>(url, { params: filterData })
+      .get<CollectAmount[]>(url, { params: filterData })
       .pipe(catchError((error) => throwError(error)));
   }
 
-  getClients(filterData: any): Observable<TopClients[]> {
+  getClients(filterData: any): Observable<TopClient[]> {
     const url = `${environment.END_POINT}/dashBoard/topClients`;
     return this.http
-      .get<TopClients[]>(url, { params: filterData })
+      .get<TopClient[]>(url, { params: filterData })
       .pipe(catchError((error) => throwError(error)));
   }
 
