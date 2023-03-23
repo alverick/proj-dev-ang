@@ -10,16 +10,16 @@
     <div
       class="tw-px-5 tw-py-4 tw-font-medium tw-border-b tw-border-extended-grey-4"
     >
-      <p>Top 10 clientes</p>
+      <p id="title">Top 10 clientes</p>
     </div>
     <div class="tw-px-2 tw-pb-4">
       <p-table [value]="customers" styleClass="tw-text-xs">
         <ng-template pTemplate="header">
           <tr class="tw-text-xs">
-            <th>Nombre</th>
-            <th>Servicio</th>
-            <th>Cobros</th>
-            <th>Moras</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Servicio</th>
+            <th scope="col">Recaudación Total</th>
+            <th *ngIf="false" scope="col">Moras</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-customer>
@@ -33,7 +33,7 @@
             <td>
               {{ customer.totalAmount | currency : currency | notEmpty : '-' }}
             </td>
-            <td>
+            <td *ngIf="false">
               {{ customer.totalDefault | currency : currency | notEmpty : '-' }}
             </td>
           </tr>
@@ -52,8 +52,11 @@
       <div class="tw-h-3.5 tw-bg-extended-grey-3 tw-rounded-full tw-w-24"></div>
     </div>
     <div class="tw-pb-1 tw-mx-2">
-      <table class="tw-mb-2 tw-w-full">
-        <tr class="tw-border-b tw-border-extended-grey-4 tw-h-10">
+      <table class="tw-mb-2 tw-w-full" aria-describedby="title">
+        <tr
+          class="tw-border-b tw-border-extended-grey-4 tw-h-10"
+          *ngFor="let row of rows"
+        >
           <th class="tw-px-4 tw-text-center">
             <div
               class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
@@ -69,77 +72,11 @@
               class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
             ></div>
           </th>
-          <th class="tw-px-4">
+          <th *ngIf="false" class="tw-px-4">
             <div
               class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
             ></div>
           </th>
-        </tr>
-        <tr class="tw-border-b tw-border-extended-grey-4 tw-h-10">
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-        </tr>
-        <tr class="tw-border-b tw-border-extended-grey-4 tw-h-10">
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-        </tr>
-        <tr class="tw-border-b tw-border-extended-grey-4 tw-h-10">
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
-          <td class="tw-px-4">
-            <div
-              class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-3/4"
-            ></div>
-          </td>
         </tr>
       </table>
     </div>
