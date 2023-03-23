@@ -1,5 +1,5 @@
 a {
-  @apply tw-right-4;
+  @apply tw-right-4 tw-bottom-5;
   @screen hover {
     &:hover {
       @apply tw-pl-4;
@@ -9,14 +9,15 @@ a {
     }
   }
 
-  @screen lg {
-    @apply tw-right-8;
-  }
   @screen xl {
     @apply tw-pl-4;
     .text {
       @apply tw-block;
     }
+  }
+
+  @screen 2xl {
+    @apply tw-right-8 tw-bottom-10;
   }
   &.hide {
     @apply -tw-right-72;
