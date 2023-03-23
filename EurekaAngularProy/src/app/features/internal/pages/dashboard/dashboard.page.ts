@@ -6,17 +6,19 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { QueryParams } from '@ngrx/data';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-import { clone, flatten, pipe, pluck, uniq } from 'ramda';
+import { clone, flatten, pipe, pluck, uniq, values } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { combineLatest } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { currencies } from '../../../../shared/constants/currencies';
-import {
-  CollectAmounts,
-  TopClients,
-} from '../../../../shared/data/dashboard-data.service';
+import { CollectAmountService } from '../../../../store/collections/collect-amount.service';
+import { HistoricalCollectService } from '../../../../store/collections/historical-collect.service';
+import { TopClientService } from '../../../../store/collections/top-client.service';
+import { CollectAmount, TopClient } from '../../../../store/entities';
 import { GraphData } from '../../components/dashboard-graph/dashboard-graph.component';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 import { DashboardService } from '../../services';
@@ -55,13 +57,13 @@ export class DashboardPage implements OnInit {
   initialValue;
   filter: any;
   services: any;
-  collectAmounts: CollectAmounts;
-  clients: TopClients[] = [];
+  collectAmounts: CollectAmount;
+  clients: TopClient[] = [];
   graphData: GraphData;
   currencyCode = '001';
   currencyLabel = 'S/';
   showModal = false;
-  loading = false;
+  loadingAmounts = true;
   loadingTable = false;
   loadingChart = false;
   emailForm: FormGroup<EmailForm>;
@@ -70,10 +72,15 @@ export class DashboardPage implements OnInit {
   constructor(
     private dashboard: DashboardService,
     private router: Router,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    private collectAmountService: CollectAmountService,
+    private historicalCollectService: HistoricalCollectService,
+    private topClientService: TopClientService
   ) {
     this.dateFrom.setMonth(this.dateFrom.getMonth() - 1);
-    console.log(this.dateFrom);
+    this.setCollectAmount();
+    this.setTopClient();
+    this.setHistoricalCollect();
   }
 
   ngOnInit() {
@@ -81,7 +88,6 @@ export class DashboardPage implements OnInit {
       email: this.fb.nonNullable.control('', Validators.required),
       subject: this.fb.control(''),
     });
-    this.loading = true;
     this.loadingTable = true;
     this.loadingChart = true;
     this.dashboard
@@ -117,11 +123,84 @@ export class DashboardPage implements OnInit {
           endDate: this.dateTo.toLocaleDateString('zh-TW', dateFormat),
         });
       });
-    console.log('ngOnInit', this.services);
+  }
+
+  private setCollectAmount() {
+    this.collectAmountService.collection$.subscribe((value) => {
+      this.collectAmounts = value.entities[1];
+    });
+    combineLatest([
+      this.collectAmountService.loaded$,
+      this.collectAmountService.loading$,
+    ]).subscribe(([loaded, loading]) => {
+      if (loaded) {
+        this.loadingAmounts = loading;
+      }
+    });
+  }
+
+  private setHistoricalCollect() {
+    this.historicalCollectService.collection$.subscribe((value) => {
+      const dataList = values(value.entities);
+      const dates: string[] = pipe(
+        pluck('date'),
+        flatten,
+        uniq
+      )(dataList) as string[];
+
+      dates.sort((dateA, dateB): number => {
+        const makeDate = (dateVal: string) => {
+          const dateParts = dateVal.split('/');
+          const date = new Date(
+            parseInt(dateParts[2]),
+            parseInt(dateParts[1]) - 1,
+            parseInt(dateParts[0])
+          );
+          return date;
+        };
+        return makeDate(dateA) > makeDate(dateB) ? 1 : -1;
+      });
+
+      const datasets = dataList.map(({ amountCollected, service, date }) => {
+        const amounts = dates.map((item) => {
+          const position = date.indexOf(item);
+          return position >= 0 ? amountCollected[position] : 0;
+        });
+        return {
+          label: service,
+          data: amounts,
+        };
+      });
+      this.graphData = {
+        labels: dates,
+        datasets,
+      };
+    });
+    combineLatest([
+      this.historicalCollectService.loaded$,
+      this.historicalCollectService.loading$,
+    ]).subscribe(([loaded, loading]) => {
+      if (loaded) {
+        this.loadingChart = loading;
+      }
+    });
+  }
+
+  private setTopClient() {
+    this.topClientService.collection$.subscribe((value) => {
+      this.clients = values(value.entities);
+    });
+    combineLatest([
+      this.topClientService.loaded$,
+      this.topClientService.loading$,
+    ]).subscribe(([loaded, loading]) => {
+      if (loaded) {
+        this.loadingTable = loading;
+      }
+    });
   }
 
   sendFilters(value: any) {
-    console.log(value);
     this.filter = value;
     this.query({
       service: value.services.map(({ id }) => id),
@@ -175,51 +254,10 @@ export class DashboardPage implements OnInit {
     });
   }
 
-  query(filterData: FilterParams) {
-    this.dashboard.getCollect(filterData).subscribe((value) => {
-      this.collectAmounts = value[0];
-      this.loading = false;
-    });
-    this.dashboard.getClients(filterData).subscribe((value) => {
-      this.clients = value;
-      this.loadingTable = false;
-    });
-    this.dashboard.getHistorical(filterData).subscribe((value) => {
-      this.loadingChart = false;
-      const dates: string[] = pipe(
-        pluck('date'),
-        flatten,
-        uniq
-      )(value) as string[];
-
-      dates.sort((dateA, dateB): number => {
-        const makeDate = (dateVal: string) => {
-          const dateParts = dateVal.split('/');
-          const date = new Date(
-            parseInt(dateParts[2]),
-            parseInt(dateParts[1]) - 1,
-            parseInt(dateParts[0])
-          );
-          return date;
-        };
-        return makeDate(dateA) > makeDate(dateB) ? 1 : -1;
-      });
-
-      const datasets = value.map(({ amountCollected, service, date }) => {
-        const amounts = dates.map((item) => {
-          const position = date.indexOf(item);
-          return position >= 0 ? amountCollected[position] : 0;
-        });
-        return {
-          label: service,
-          data: amounts,
-        };
-      });
-      this.graphData = {
-        labels: dates,
-        datasets,
-      };
-    });
+  query(filterData: QueryParams) {
+    this.collectAmountService.getWithQuery(filterData);
+    this.topClientService.getWithQuery(filterData);
+    this.historicalCollectService.getWithQuery(filterData);
   }
 
   goto(typePayment: string[], useStatus = false) {

@@ -21,7 +21,7 @@
         [amount]="collectAmounts?.totalChargeAmount"
         [peopleQuantity]="collectAmounts?.totalChargePersons"
         (link)="goto([])"
-        [loading]="loading"
+        [loading]="loadingAmounts"
         class="tw-flex-grow"
       ></cs-dashboard-card>
       <cs-dashboard-card
@@ -30,7 +30,7 @@
         [amount]="collectAmounts?.pendingChargeAmount"
         [peopleQuantity]="collectAmounts?.pendingChargePersons"
         (link)="goto(['PENDIENTE', 'VENCIDO', 'PARCIAL'])"
-        [loading]="loading"
+        [loading]="loadingAmounts"
         class="tw-flex-grow"
       ></cs-dashboard-card>
       <cs-dashboard-card
@@ -39,7 +39,7 @@
         [amount]="collectAmounts?.defaultChargeAmount"
         [peopleQuantity]="collectAmounts?.defaultChargePersons"
         (link)="goto(['VENCIDO'])"
-        [loading]="loading"
+        [loading]="loadingAmounts"
         class="tw-flex-grow"
       ></cs-dashboard-card>
     </div>
@@ -51,7 +51,7 @@
           [amount]="collectAmounts?.totalChargeAmount"
           [peopleQuantity]="collectAmounts?.totalChargePersons"
           (link)="goto([])"
-          [loading]="loading"
+          [loading]="loadingAmounts"
         ></cs-dashboard-card>
         <cs-dashboard-table
           [currency]="currencyLabel"
