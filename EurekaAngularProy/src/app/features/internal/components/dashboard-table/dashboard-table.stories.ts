@@ -5,8 +5,8 @@ import type { Meta } from '@storybook/angular';
 import { moduleMetadata, Story } from '@storybook/angular';
 
 import { SharedModule } from '../../../../shared/shared.module';
+import { TopClient } from '../../../../store/entities';
 import { DashboardTableComponent } from './dashboard-table.component';
-import { TopClient } from '../../../../store/entities/TopClient';
 
 export default {
   title: 'Internal/Dashboard/Dashboard Table',

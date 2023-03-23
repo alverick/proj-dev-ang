@@ -6,9 +6,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { environment } from '../../environments/environment';
 import {
+  CollectAmountDataService,
   DATA_SERVICES,
   HistoricalCollectDataService,
-  CollectAmountDataService,
   TopClientDataService,
 } from './dataservices';
 import { entityConfig } from './entity-metadata';

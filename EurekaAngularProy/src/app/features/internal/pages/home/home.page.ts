@@ -60,7 +60,6 @@ export class HomePage implements OnInit {
   ) {
     transactionService.itemsForDelete = [];
     const navigation = this.router.getCurrentNavigation();
-    console.log('navigation', navigation);
     let form = pathOr(null, ['extras', 'state', 'filter'], navigation);
     if (isNotNil(form)) {
       form = { ...form, payment: form.payment.code };

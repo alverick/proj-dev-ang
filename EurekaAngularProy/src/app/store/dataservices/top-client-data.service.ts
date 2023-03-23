@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { DashboardDataService } from '../../shared/data';
-import { TopClient } from '../entities/TopClient';
+import { TopClient } from '../entities';
 
 @Injectable()
 export class TopClientDataService extends DefaultDataService<TopClient> {

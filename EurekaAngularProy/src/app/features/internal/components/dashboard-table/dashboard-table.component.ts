@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { TopClient } from '../../../../store/entities/TopClient';
+import { TopClient } from '../../../../store/entities';
 
 export interface Customer {
   id: string;

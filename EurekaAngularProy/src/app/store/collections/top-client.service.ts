@@ -4,7 +4,7 @@ import {
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 
-import { TopClient } from '../entities/TopClient';
+import { TopClient } from '../entities';
 
 @Injectable({
   providedIn: 'root',
