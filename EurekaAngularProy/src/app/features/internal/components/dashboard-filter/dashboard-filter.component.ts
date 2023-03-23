@@ -75,7 +75,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   internalDates: any[];
   internalServices: ServiceItem[] = [];
   currencies = currencies;
-  minDateTo: Date | null = null;
+  minDateTo: Date | string | null = null;
   showCurrency = false;
   errorMessages = {
     services: {
@@ -183,9 +183,11 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
     this.form
       .get('dateFrom')
       .valueChanges.pipe(takeUntil(this.$destroy), filter(filterNotValidValues))
-      .subscribe((value: Date) => {
+      .subscribe((value: string) => {
         this.minDateTo = value;
-        this.form.get('dateTo').setValue(null);
+        if (this.form.get('dateTo').value < value) {
+          this.form.get('dateTo').setValue(null);
+        }
       });
   }
 
