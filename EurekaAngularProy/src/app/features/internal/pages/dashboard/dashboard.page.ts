@@ -255,8 +255,11 @@ export class DashboardPage implements OnInit {
   }
 
   query(filterData: QueryParams) {
+    this.collectAmountService.clearCache();
     this.collectAmountService.getWithQuery(filterData);
+    this.topClientService.clearCache();
     this.topClientService.getWithQuery(filterData);
+    this.historicalCollectService.clearCache();
     this.historicalCollectService.getWithQuery(filterData);
   }
 
