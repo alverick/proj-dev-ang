@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { DashboardDataService } from '../../shared/data';
-import { CollectAmount } from '../entities/CollectAmount';
+import { CollectAmount } from '../entities';
 
 @Injectable()
 export class CollectAmountDataService extends DefaultDataService<CollectAmount> {

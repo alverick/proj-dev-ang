@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { DashboardDataService } from '../../shared/data';
-import { HistoricalCollect } from '../entities/HistoricalCollect';
+import { HistoricalCollect } from '../entities';
 
 @Injectable()
 export class HistoricalCollectDataService extends DefaultDataService<HistoricalCollect> {

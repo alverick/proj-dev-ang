@@ -4,7 +4,7 @@ import {
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 
-import { HistoricalCollect } from '../entities/HistoricalCollect';
+import { HistoricalCollect } from '../entities';
 
 @Injectable({
   providedIn: 'root',
