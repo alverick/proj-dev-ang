@@ -4,9 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import type { Meta } from '@storybook/angular';
 import { moduleMetadata, Story } from '@storybook/angular';
 
-import { TopClients } from '../../../../shared/data/dashboard-data.service';
 import { SharedModule } from '../../../../shared/shared.module';
 import { DashboardTableComponent } from './dashboard-table.component';
+import { TopClient } from '../../../../store/entities/TopClient';
 
 export default {
   title: 'Internal/Dashboard/Dashboard Table',
@@ -30,7 +30,7 @@ const Template: Story<DashboardTableComponent> = (
   props: args,
 });
 
-const customers: TopClients[] = [
+const customers: TopClient[] = [
   {
     name: 'Pedro',
     lastName: 'Perez',

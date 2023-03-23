@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { TopClients } from '../../../../shared/data/dashboard-data.service';
+import { TopClient } from '../../../../store/entities/TopClient';
 
 export interface Customer {
   id: string;
@@ -18,7 +18,7 @@ export interface Customer {
 })
 export class DashboardTableComponent {
   @Input() printMode = false;
-  @Input() customers: TopClients[] = [];
+  @Input() customers: TopClient[] = [];
   @Input() currency = 'S/';
   @Input() loading = true;
 }
