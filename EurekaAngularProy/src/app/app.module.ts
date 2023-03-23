@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {
   ErrorStateMatcher,
@@ -16,9 +16,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoggerModule } from 'ngx-logger';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgxSpinnerModule } from 'ngx-spinner';
+
 import { environment } from '../environments/environment';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { EmailDirective } from './features/internal/directives/email.directive';
 import { DialogComponent } from './features/internal/pages/home/components/dialog';
 import { PopoverComponent } from './features/internal/pages/home/components/popover/popover.component';
@@ -39,6 +40,7 @@ import { ExcelService } from './shared/services/excel.service';
 import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
 import { SharedModule } from './shared/shared.module';
+import { EntityStoreModule } from './store/entity-store.module';
 
 const apiMockModule = ApiMockModule.forRoot(MockService, {
   passThruUnknownUrl: true,
@@ -75,6 +77,7 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
     environment.development ? apiMockModule : [],
     RecaptchaModule,
     SharedModule,
+    EntityStoreModule,
   ],
   providers: [
     ExcelService,
