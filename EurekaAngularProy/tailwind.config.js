@@ -67,6 +67,7 @@ module.exports = {
         '8xl': '1320px',
       },
       screens: {
+        '2xlplus': '1537px',
         hover: { raw: '(hover: hover)' },
       },
     },
