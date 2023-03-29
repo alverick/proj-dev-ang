@@ -68,7 +68,7 @@ module.exports = {
       },
       screens: {
         '2xlplus': '1537px',
-        hover: { raw: '(hover: hover)' },
+        hoversupport: { raw: '(hover: hover)' },
       },
     },
     borderColor: (theme) => ({

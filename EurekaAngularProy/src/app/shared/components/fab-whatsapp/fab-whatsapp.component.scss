@@ -1,6 +1,6 @@
 a {
   @apply tw-right-4 tw-bottom-5;
-  @screen hover {
+  @screen hoversupport {
     &:hover {
       @apply tw-pl-4;
       .text {
