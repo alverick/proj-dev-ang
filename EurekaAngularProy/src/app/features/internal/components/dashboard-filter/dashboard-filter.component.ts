@@ -169,9 +169,11 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
       .subscribe((value) => {
         const showAll =
           value.some(({ dataType }) => dataType === 'C') && value.length > 0;
-        this.internalDates = showAll
-          ? this.optionsDates
-          : [this.optionsDates[0]];
+        const optionsDatesSel =
+          value.some(({ dataType }) => dataType === 'P') && value.length > 0
+            ? [this.optionsDates[0], this.optionsDates[1]]
+            : [this.optionsDates[0]];
+        this.internalDates = showAll ? this.optionsDates : optionsDatesSel;
       });
   }
 
