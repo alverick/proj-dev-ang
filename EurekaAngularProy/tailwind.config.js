@@ -57,6 +57,7 @@ module.exports = {
         'yellow-3': '#ffe166',
         'yellow-4': '#ffeb99',
         'yellow-5': '#fff5cc',
+        'bleached-silk': 'var(--extended-bleached-silk)',
       },
     },
     extend: {
