@@ -48,7 +48,7 @@ export class LandingComponent implements OnInit {
       {
         title: '2. Ingresa y carga* tu lista de clientes por cobrar',
         content:
-          'Ingresa a la plataforma con tu RUC y contraseña, luego carga tu lista de clientes en la sección “agregar cobros”. <br /><br />*Solo si eliges la opción de ingresar datos de tus clientes.',
+          'Ingresa a la plataforma con tu RUC y contraseña, luego carga tu lista de clientes en la sección “agregar cobros”. <br /><br />*Sólo si eliges la opción de ingresar datos de tus clientes.',
       },
     ],
     [
@@ -78,7 +78,7 @@ export class LandingComponent implements OnInit {
     {
       title: 'Cobro de mora',
       content:
-        'Configura si deseas que tus clientes paguen una mora y define el importe de la misma',
+        'Configura si deseas que tus clientes paguen una mora y define el importe de esta misma',
     },
   ];
 
