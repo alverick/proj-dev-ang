@@ -35,6 +35,7 @@ import { ValdemortModule } from 'ngx-valdemort';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { CarouselModule } from 'primeng/carousel';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -98,6 +99,7 @@ const PRIMENG_MODULES = [
   AccordionModule,
   ButtonModule,
   CalendarModule,
+  CarouselModule,
   CheckboxModule,
   DialogModule,
   DropdownModule,
