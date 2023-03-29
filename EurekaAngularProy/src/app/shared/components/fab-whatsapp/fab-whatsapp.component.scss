@@ -9,7 +9,7 @@ a {
     }
   }
 
-  @screen xl {
+  @screen 2xl {
     @apply tw-pl-4;
     .text {
       @apply tw-block;
