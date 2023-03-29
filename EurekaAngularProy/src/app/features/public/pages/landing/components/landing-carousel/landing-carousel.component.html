@@ -1,0 +1,27 @@
+<p-carousel
+  class="lg:tw-hidden"
+  [value]="items"
+  [numVisible]="1"
+  [numScroll]="1"
+  [showNavigators]="false"
+  [circular]="true"
+  [autoplayInterval]="10000"
+  indicatorStyleClass="extended-grey-3"
+>
+  <ng-template let-item pTemplate="item">
+    <div class="tw-px-4 sm:tw-px-12 sm:tw-flex tw-gap-8 tw-justify-center">
+      <div
+        class="tw-text-center sm:tw-w-1/2 tw-mx-auto"
+        *ngFor="let groupInt of item"
+      >
+        <div class="tw-text-lg lg:tw-text-xl tw-font-medium tw-leading-6">
+          {{ groupInt.title }}
+        </div>
+        <div
+          class="tw-min-h-[110px] tw-mb-4"
+          [innerHtml]="groupInt.content"
+        ></div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>
