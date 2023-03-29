@@ -61,28 +61,10 @@
     >
       ¡No pierdas ni una venta!
     </h2>
-    <p-carousel
-      class="lg:tw-hidden"
-      [value]="benefits"
-      [numVisible]="1"
-      [numScroll]="1"
-      [showNavigators]="false"
-      [circular]="true"
-      indicatorStyleClass="extended-grey-3"
-    >
-      <ng-template let-benefits pTemplate="item">
-        <div class="item">
-          <div class="tw-text-center" *ngFor="let groupInt of benefits">
-            <div class="tw-text-xl tw-font-medium tw-leading-6">
-              {{ groupInt.title }}
-            </div>
-            <div class="tw-min-h-[110px]">
-              {{ groupInt.content }}
-            </div>
-          </div>
-        </div>
-      </ng-template>
-    </p-carousel>
+    <cs-landing-carousel
+      [items]="benefits"
+      styleIndicator="extended-grey-3"
+    ></cs-landing-carousel>
     <div class="tw-flex lg:tw-pt-20 tw-gap-14">
       <div
         class="tw-hidden lg:tw-flex tw-flex-col tw-justify-between tw-w-56 tw-shrink-0"
@@ -194,32 +176,11 @@
     >
       ¿Cómo Funciona?
     </h2>
-    <p-carousel
-      class="lg:tw-hidden"
-      [value]="howWorks"
-      [numVisible]="1"
-      [numScroll]="1"
-      [showNavigators]="false"
-      [circular]="true"
-      indicatorStyleClass="extended-grey-3"
-    >
-      <ng-template let-howWorks pTemplate="item">
-        <div class="item">
-          <div class="tw-text-center" *ngFor="let groupInt of howWorks">
-            <div class="tw-text-xl tw-font-medium tw-leading-6">
-              {{ groupInt.title }}
-            </div>
-            <div
-              class="tw-pt-1 tw-leading-5"
-              [innerHtml]="groupInt.content"
-            ></div>
-          </div>
-        </div>
-      </ng-template>
-    </p-carousel>
-    <div class="tw-flex tw-pt-20 tw-gap-14">
-      <!--/////// COMO FUNCIONA? REPONSIVE  ////////-->
-
+    <cs-landing-carousel
+      [items]="howWorks"
+      styleIndicator="extended-grey-3"
+    ></cs-landing-carousel>
+    <div class="tw-flex lg:tw-pt-20 tw-gap-14">
       <div
         class="tw-hidden lg:tw-flex tw-flex-col tw-mb-28 tw-justify-between tw-gap-6 tw-w-72 tw-shrink-0"
       >
