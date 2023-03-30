@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
+import { DialogService } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
@@ -10,6 +10,7 @@ import { authFullRoutingNames } from '../../../auth/auth-routing.names';
   selector: 'cs-landing',
   templateUrl: './landing.page.html',
   styleUrls: ['./landing.page.scss'],
+  providers: [DialogService],
 })
 export class LandingPage implements OnInit {
   linkLogin = authFullRoutingNames.LOGIN;
@@ -85,7 +86,7 @@ export class LandingPage implements OnInit {
   constructor(
     private gaService: GoogleAnalytics,
     public router: Router,
-    public dialog: MatDialog
+    public dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -113,8 +114,9 @@ export class LandingPage implements OnInit {
   }
 
   showModalTerms() {
-    this.dialog.open(ModalTermsComponent, {
+    this.dialogService.open(ModalTermsComponent, {
       width: '810px',
+      showHeader: false,
     });
   }
 }
