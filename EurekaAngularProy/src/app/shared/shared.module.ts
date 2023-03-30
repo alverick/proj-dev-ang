@@ -39,6 +39,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -110,6 +111,7 @@ const PRIMENG_MODULES = [
   MessageModule,
   MessagesModule,
   RadioButtonModule,
+  DynamicDialogModule,
   SidebarModule,
   StepsModule,
   TableModule,
