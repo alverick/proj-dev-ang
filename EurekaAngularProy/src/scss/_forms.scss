@@ -167,6 +167,8 @@ body {
 
   .p-button {
     border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+      box-shadow 0.2s, color 0.2s;
   }
 
   .p-button,
@@ -182,8 +184,9 @@ body {
       border: 1px solid;
 
       &:enabled:hover {
-        background-color: transparent;
-        color: var(--primary-green-2);
+        color: #fff;
+        background: var(--primary-green-1);
+        border: 1px solid var(--primary-green-1);
       }
     }
 
