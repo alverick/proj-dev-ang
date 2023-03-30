@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { DialogService } from 'primeng/dynamicdialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
@@ -24,6 +24,7 @@ import { IErrorMessages } from '../../../../shared/models/forms';
   selector: 'cs-company-form-auth',
   templateUrl: './company-form-auth.component.html',
   styleUrls: ['./company-form-auth.component.scss'],
+  providers: [DialogService],
 })
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   $destroy = new Subject();
@@ -33,7 +34,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   @Input() errorMessages: IErrorMessages;
   @Input() edit = false;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialogService: DialogService) {}
 
   ngOnInit() {
     this.companyForm
@@ -60,8 +61,9 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   showModalTerms() {
-    this.dialog.open(ModalTermsComponent, {
+    this.dialogService.open(ModalTermsComponent, {
       width: '810px',
+      showHeader: false,
     });
   }
 
