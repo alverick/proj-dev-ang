@@ -258,7 +258,7 @@
         >
           <ng-template let-payment pTemplate="item">
             <div class="item tw-px-4 sm:tw-px-12">
-              <div class="tw-text-xl tw-font-medium tw-leading-6">
+              <div class="tw-text-xl tw-font-bold tw-leading-6">
                 {{ payment.title }}
               </div>
               <div
@@ -270,7 +270,7 @@
         </p-carousel>
         <div class="tw-hidden sm:tw-flex tw-gap-8 tw-py-9 tw-relative">
           <div *ngFor="let groupInt of payments">
-            <div class="tw-font-medium">{{ groupInt.title }}</div>
+            <div class="tw-font-bold">{{ groupInt.title }}</div>
             <div class="">
               {{ groupInt.content }}
             </div>
