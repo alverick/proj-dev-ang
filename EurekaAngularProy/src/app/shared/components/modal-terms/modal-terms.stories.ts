@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { withActions } from '@storybook/addon-actions';
 import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
+
 import { SharedModule } from '../../shared.module';
 import { ModalTermsComponent } from './modal-terms.component';
 
