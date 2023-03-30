@@ -73,14 +73,14 @@
           <div class="tw-text-xl tw-font-medium tw-leading-6">
             {{ groupInt.title }}
           </div>
-          <div class="tw-min-h-[110px]">
-            {{ groupInt.content }}
-          </div>
+          <div class="tw-min-h-[110px]">{{ groupInt.content }}</div>
         </div>
       </div>
 
       <div class="tw-grow">
-        <div class="tw-w-60 sm:tw-w-[440px] tw-mx-auto">
+        <div
+          class="tw-w-60 lg:tw-w-auto sm:tw-w-[440px] lg:tw-w-[440px] tw-mx-auto"
+        >
           <img alt="Beneficios" src="assets/images/beneficios.svg" />
         </div>
       </div>
@@ -92,9 +92,7 @@
           <div class="tw-text-xl tw-font-medium tw-leading-6">
             {{ groupInt.title }}
           </div>
-          <div class="tw-min-h-[110px]">
-            {{ groupInt.content }}
-          </div>
+          <div class="tw-min-h-[110px]">{{ groupInt.content }}</div>
         </div>
       </div>
     </div>
@@ -271,9 +269,7 @@
         <div class="tw-hidden sm:tw-flex tw-gap-8 tw-py-9 tw-relative">
           <div *ngFor="let groupInt of payments">
             <div class="tw-font-bold">{{ groupInt.title }}</div>
-            <div class="">
-              {{ groupInt.content }}
-            </div>
+            <div class="">{{ groupInt.content }}</div>
           </div>
         </div>
         <div class="mb-2">

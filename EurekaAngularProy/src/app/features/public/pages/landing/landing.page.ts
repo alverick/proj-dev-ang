@@ -8,10 +8,10 @@ import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 
 @Component({
   selector: 'cs-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss'],
+  templateUrl: './landing.page.html',
+  styleUrls: ['./landing.page.scss'],
 })
-export class LandingComponent implements OnInit {
+export class LandingPage implements OnInit {
   linkLogin = authFullRoutingNames.LOGIN;
   benefits = [
     [
