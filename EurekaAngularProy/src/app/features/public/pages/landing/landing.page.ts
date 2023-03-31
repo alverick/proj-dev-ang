@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
@@ -12,7 +12,8 @@ import { authFullRoutingNames } from '../../../auth/auth-routing.names';
   styleUrls: ['./landing.page.scss'],
   providers: [DialogService],
 })
-export class LandingPage implements OnInit {
+export class LandingPage implements OnInit, OnDestroy {
+  ref: DynamicDialogRef;
   linkLogin = authFullRoutingNames.LOGIN;
   benefits = [
     [
@@ -89,6 +90,12 @@ export class LandingPage implements OnInit {
     public dialogService: DialogService
   ) {}
 
+  ngOnDestroy(): void {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
+
   ngOnInit() {
     this.gaService.sendEvent('Landing', {
       event_category: 'Landing',
@@ -114,7 +121,7 @@ export class LandingPage implements OnInit {
   }
 
   showModalTerms() {
-    this.dialogService.open(ModalTermsComponent, {
+    this.ref = this.dialogService.open(ModalTermsComponent, {
       width: '810px',
       showHeader: false,
     });

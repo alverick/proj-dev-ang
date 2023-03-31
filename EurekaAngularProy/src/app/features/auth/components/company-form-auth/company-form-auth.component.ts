@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
@@ -28,6 +28,7 @@ import { IErrorMessages } from '../../../../shared/models/forms';
 })
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   $destroy = new Subject();
+  ref: DynamicDialogRef;
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
   @Input() categories: IEntryModel[] = [];
   @Input() companyForm: UntypedFormGroup;
@@ -61,7 +62,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   showModalTerms() {
-    this.dialogService.open(ModalTermsComponent, {
+    this.ref = this.dialogService.open(ModalTermsComponent, {
       width: '810px',
       showHeader: false,
     });
@@ -95,6 +96,9 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
     this.$destroy.next();
     this.$destroy.complete();
   }
