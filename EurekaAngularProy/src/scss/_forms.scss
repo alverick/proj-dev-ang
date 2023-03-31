@@ -1,3 +1,34 @@
+:root {
+  --font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+}
+
+.p-component {
+  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+}
+
+.p-link {
+  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+}
+
+.p-autocomplete
+  .p-autocomplete-multiple-container
+  .p-autocomplete-input-token
+  input {
+  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+}
+
+.p-chips .p-chips-multiple-container .p-chips-input-token input {
+  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+}
+
+.p-inputtext {
+  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+}
+
+.p-terminal .p-terminal-input {
+  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+}
+
 body {
   a {
     color: var(--primary-green-1);
@@ -169,6 +200,10 @@ body {
     border-radius: 4px;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s,
       box-shadow 0.2s, color 0.2s;
+  }
+
+  .p-button-label {
+    font-weight: 400;
   }
 
   .p-button,
@@ -461,6 +496,7 @@ body {
       &.p-highlight button {
         background: var(--primary-green-1);
         color: #ffffff;
+
         &.secondary-blue-1 {
           background: var(--secondary-blue-1);
         }
