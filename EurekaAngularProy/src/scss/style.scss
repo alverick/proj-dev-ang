@@ -1,6 +1,21 @@
 @import 'normalize';
 @tailwind base;
 @tailwind components;
+
+@layer components {
+  .modal-custom-cs {
+    .p-dialog-header {
+      .p-dialog-title {
+        @apply tw-text-2xl tw-font-medium lg:tw-pl-6;
+      }
+    }
+
+    .p-dialog-content {
+      @apply lg:tw-px-12;
+    }
+  }
+}
+
 @tailwind utilities;
 
 /* Reset Styles */
