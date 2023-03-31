@@ -80,7 +80,7 @@ export class LandingPage implements OnInit, OnDestroy {
     {
       title: 'Cobro de mora',
       content:
-        'Configura si deseas que tus clientes paguen una mora y define el importe de esta misma',
+        'Configura si deseas que tus clientes paguen una mora y define el importe de esta',
     },
   ];
 
