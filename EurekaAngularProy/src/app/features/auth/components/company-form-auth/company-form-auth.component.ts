@@ -64,7 +64,8 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   showModalTerms() {
     this.ref = this.dialogService.open(ModalTermsComponent, {
       width: '810px',
-      showHeader: false,
+      header: 'Términos y condiciones',
+      styleClass: 'modal-custom-cs',
     });
   }
 
