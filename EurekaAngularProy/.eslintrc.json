@@ -71,6 +71,12 @@
           }
         ],
         "@typescript-eslint/no-var-requires": "error",
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
         "arrow-parens": [
           "off",
           "always"

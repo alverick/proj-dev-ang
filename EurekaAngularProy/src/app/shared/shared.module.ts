@@ -35,10 +35,12 @@ import { ValdemortModule } from 'ngx-valdemort';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { CarouselModule } from 'primeng/carousel';
 import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -102,6 +104,7 @@ const PRIMENG_MODULES = [
   AccordionModule,
   ButtonModule,
   CalendarModule,
+  CarouselModule,
   ChartModule,
   CheckboxModule,
   DialogModule,
@@ -118,6 +121,7 @@ const PRIMENG_MODULES = [
   MultiSelectModule,
   RadioButtonModule,
   RippleModule,
+  DynamicDialogModule,
   SidebarModule,
   StepsModule,
   TableModule,

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'cs-modal-terms',
@@ -7,9 +7,9 @@ import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dia
   styleUrls: ['./modal-terms.component.scss'],
 })
 export class ModalTermsComponent {
-  constructor(public dialogRef: MatDialogRef<ModalTermsComponent>) {}
+  constructor(public ref: DynamicDialogRef) {}
 
   close() {
-    this.dialogRef.close();
+    this.ref.close();
   }
 }

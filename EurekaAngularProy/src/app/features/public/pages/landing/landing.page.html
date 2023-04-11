@@ -1,0 +1,334 @@
+<cs-header></cs-header>
+<div class="tw-bg-extended-bleached-silk tw-pt-6 tw-px-6 xl:tw-px-0">
+  <div class="tw-max-w-6xl tw-mx-auto">
+    <div class="tw-relative">
+      <div class="md:tw-max-w-2xl">
+        <h2
+          class="tw-pt-2 tw-text-2xl lg:tw-text-3xl tw-text-center md:tw-text-left xl:tw-text-5xl tw-font-medium tw-text-secondary-blue-1"
+        >
+          Gestiona tus cobranzas 100% digital con <br />
+          Cobro Simple
+        </h2>
+        <div
+          class="tw-pt-6 tw-text-center md:tw-text-left xl:tw-text-xl tw-text-secondary-blue-1 md:tw-max-w-[440px]"
+        >
+          Recibe el pago de tus clientes en nuestros canales Interbank
+        </div>
+        <div
+          class="tw-pt-6 tw-text-2xl tw-text-center tw-font-medium md:tw-text-left tw-text-secondary-blue-1"
+        >
+          ¡Es gratis para tu empresa!
+        </div>
+        <div
+          class="tw-pt-11 tw-pb-20 tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-items-center"
+        >
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Regístrate"
+            class="tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
+            (click)="clickRegistrarse()"
+          ></button>
+
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Inicia sesión"
+            class="p-button-outlined tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
+            [routerLink]="[linkLogin]"
+          ></button>
+        </div>
+      </div>
+
+      <div class="md:tw-absolute tw-bottom-0 tw-right-0">
+        <div class="">
+          <img
+            alt=""
+            class="tw-mx-auto sm:tw-w-[400px] lg:tw-w-[480px] xl:tw-w-[644px]"
+            src="assets/images/landing.svg"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tw-bg-white tw-pt-14 tw-pb-14 tw-px-6 xl:tw-px-0">
+  <div class="tw-max-w-6xl tw-mx-auto">
+    <h2
+      class="tw-text-2xl lg:tw-text-3xl tw-text-center xl:tw-text-5xl tw-font-medium tw-text-secondary-blue-1 tw-mb-10 lg:tw-mb-0"
+    >
+      ¡No pierdas ni una venta!
+    </h2>
+    <cs-landing-carousel
+      [items]="benefits"
+      styleIndicator="extended-grey-3"
+    ></cs-landing-carousel>
+    <div class="tw-flex lg:tw-pt-20 tw-gap-14">
+      <div
+        class="tw-hidden lg:tw-flex tw-flex-col tw-justify-between tw-w-56 tw-shrink-0"
+      >
+        <div class="tw-text-center" *ngFor="let groupInt of benefits[0]">
+          <div class="tw-text-xl tw-font-medium tw-leading-6">
+            {{ groupInt.title }}
+          </div>
+          <div class="tw-min-h-[110px]">{{ groupInt.content }}</div>
+        </div>
+      </div>
+
+      <div class="tw-grow">
+        <div
+          class="tw-w-60 lg:tw-w-auto sm:tw-w-[440px] xl:tw-w-[440px] tw-mx-auto"
+        >
+          <img alt="Beneficios" src="assets/images/beneficios.svg" />
+        </div>
+      </div>
+
+      <div
+        class="tw-hidden lg:tw-flex tw-flex-col tw-justify-between tw-w-56 tw-shrink-0"
+      >
+        <div class="tw-text-center" *ngFor="let groupInt of benefits[1]">
+          <div class="tw-text-xl tw-font-medium tw-leading-6">
+            {{ groupInt.title }}
+          </div>
+          <div class="tw-min-h-[110px]">{{ groupInt.content }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tw-bg-white tw-py-14 tw-px-6 2xl:tw-px-0">
+  <div
+    class="tw-max-w-8xl tw-mx-auto tw-border tw-border-extended-grey-3 tw-rounded-lg tw-p-4 lg:tw-p-8 lg:tw-pr-12 tw-flex tw-flex-col lg:tw-flex-row tw-gap-6 tw-relative"
+  >
+    <div class="tw-flex-shrink-0 tw-mx-auto">
+      <img
+        ngSrc="assets/images/laptop.png"
+        alt="Resumen"
+        height="222"
+        width="382"
+      />
+    </div>
+    <div class="tw-py-2 tw-flex tw-flex-col tw-justify-between tw-gap-4">
+      <div
+        class="tw-font-medium tw-text-xl lg:tw-text-4xl 2xl:tw-pr-20 tw-mb-4 lg:tw-mb-0"
+      >
+        Conoce los indicadores de tus cobros en el Dashboard Resumen
+      </div>
+      <div class="tw-flex tw-text-base tw-flex-col sm:tw-flex-row tw-gap-6">
+        <div class="lg:tw-w-1/3">
+          <div class="tw-font-medium">Indicadores</div>
+          <div class="text">
+            Conoce el 360º de tus cobros con indicador de cobro total.
+          </div>
+        </div>
+        <div class="lg:tw-w-1/3">
+          <div class="tw-font-medium">Gráfico</div>
+          <div class="text">
+            Te permite ver el histórico de recaudación de tus servicios.
+          </div>
+        </div>
+        <div class="lg:tw-w-1/3">
+          <div class="tw-font-medium">Clientes top</div>
+          <div class="text">Conoce a los clientes que más contribuyen.</div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="tw-absolute tw-top-0 tw-right-0 tw-p-2 tw-px-4 tw-text-white tw-bg-extended-watermelon-1 tw-rounded-bl-lg tw-rounded-tr-lg"
+    >
+      NUEVO
+    </div>
+  </div>
+</div>
+<div class="tw-bg-primary-green-1 tw-py-10 tw-px-6 xl:tw-px-0">
+  <div class="tw-max-w-8xl tw-mx-auto lg:tw-px-20">
+    <div class="tw-text-white tw-flex lg:tw-gap-24 tw-flex-col lg:tw-flex-row">
+      <div class="tw-mb-5 lg:tw-mb-0">
+        <div class="tw-text-2xl lg:tw-text-3xl lg:tw-text-4xl tw-font-medium">
+          ¿Qué necesito?
+        </div>
+      </div>
+      <div class="">
+        <div class="lg:tw-text-2xl tw-text-base">
+          Sólo necesitas tener una cuenta en Interbank:
+          <ul class="tw-list-disc tw-ml-6">
+            <li class="tw-mb-1">
+              <a
+                href="https://bancacomercial.interbank.pe/cuenta-negocios/solicitud/verificacion-datos?utm_source=interbank.pe&utm_medium=web&utm_campaign=landing_producto_apertura_cuenta_negocios"
+                class="tw-text-white hover:tw-text-white tw-underline tw-underline-offset-4"
+                target="_blank"
+                >Cuenta Negocio (ábrela 100% online haciendo clic aquí).</a
+              >
+            </li>
+            <li class="tw-mb-1">
+              Cuenta Corriente o Ahorros Persona Jurídica.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tw-bg-extended-bleached-silk tw-pt-14 tw-px-6 xl:tw-px-0">
+  <div class="tw-max-w-6xl tw-mx-auto">
+    <h2
+      class="tw-text-2xl lg:tw-text-3xl tw-text-center xl:tw-text-5xl tw-font-medium tw-text-secondary-blue-1 tw-mb-10 lg:tw-mb-0"
+    >
+      ¿Cómo Funciona?
+    </h2>
+    <cs-landing-carousel
+      [items]="howWorks"
+      styleIndicator="extended-grey-3"
+    ></cs-landing-carousel>
+    <div class="tw-flex lg:tw-pt-20 tw-gap-14">
+      <div
+        class="tw-hidden lg:tw-flex tw-flex-col tw-mb-28 tw-justify-between tw-gap-6 tw-w-72 tw-shrink-0"
+      >
+        <div class="tw-text-center" *ngFor="let groupInt of howWorks[0]">
+          <div class="tw-text-xl tw-font-medium tw-leading-6">
+            {{ groupInt.title }}
+          </div>
+          <div
+            class="tw-pt-1 tw-leading-5"
+            [innerHtml]="groupInt.content"
+          ></div>
+        </div>
+      </div>
+      <div class="tw-grow">
+        <div class="lg:tw-max-w-[440px] tw-mx-auto">
+          <img
+            alt="¿Cómo Funciona?"
+            class="md:tw-w-80 tw-pt-8 tw-mx-auto -tw-mb-[11px] md:-tw-mb-[18px]"
+            height="451"
+            src="assets/images/ilustracion-boy.svg"
+          />
+        </div>
+      </div>
+
+      <div
+        class="tw-hidden lg:tw-flex tw-flex-col tw-mb-32 tw-justify-between tw-gap-6 tw-w-72 tw-shrink-0"
+      >
+        <div class="tw-text-center" *ngFor="let groupInt of howWorks[1]">
+          <div class="tw-text-xl tw-font-medium tw-leading-6">
+            {{ groupInt.title }}
+          </div>
+          <div
+            class="tw-pt-1 tw-leading-5"
+            [innerHtml]="groupInt.content"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tw-bg-primary-green-1 tw-px-6 xl:tw-px-0">
+  <div class="tw-max-w-6xl tw-mx-auto">
+    <div
+      class="tw-flex tw-flex-col-reverse lg:tw-flex-row tw-gap-10 lg:tw-gap-28"
+    >
+      <div class="tw-grow">
+        <div
+          class="tw-w-40 tw-max-w-[280px] lg:tw-max-w-none lg:tw-w-80 tw-mx-auto"
+        >
+          <img alt="Pagos" class="-tw-mt-[26px]" src="assets/images/pago.svg" />
+        </div>
+      </div>
+
+      <div
+        class="tw-text-white tw-flex tw-flex-col tw-justify-evenly tw-shrink tw-py-12 tw-text-center lg:tw-text-left"
+      >
+        <h2
+          class="tw-text-2xl lg:tw-text-3xl xl:tw-text-5xl tw-font-medium tw-mb-10 lg:tw-mb-0"
+        >
+          Podrás configurar tus cobros según tu modelo de negocio
+        </h2>
+        <p-carousel
+          class="sm:tw-hidden"
+          [value]="payments"
+          [numVisible]="1"
+          [numScroll]="1"
+          [showNavigators]="false"
+          [circular]="true"
+          [autoplayInterval]="10000"
+          indicatorStyleClass="secondary-blue-1"
+        >
+          <ng-template let-payment pTemplate="item">
+            <div class="item tw-px-4 sm:tw-px-12">
+              <div class="tw-text-xl tw-font-bold tw-leading-6">
+                {{ payment.title }}
+              </div>
+              <div
+                class="tw-pt-2 tw-leading-5 tw-max-w-[230px] tw-mx-auto"
+                [innerHtml]="payment.content"
+              ></div>
+            </div>
+          </ng-template>
+        </p-carousel>
+        <div class="tw-hidden sm:tw-flex tw-gap-8 tw-py-9 tw-relative">
+          <div class="tw-w-1/3" *ngFor="let groupInt of payments">
+            <div class="tw-font-bold">{{ groupInt.title }}</div>
+            <div class="">{{ groupInt.content }}</div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Regístrate"
+            class="p-button-secondary tw-w-48 tw-h-12"
+            (click)="clickRegistrarse()"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tw-bg-white tw-pt-10 tw-pb-12 tw-px-6 xl:tw-px-0">
+  <div class="tw-max-w-6xl tw-mx-auto">
+    <h2 class="tw-text-2xl lg:tw-text-3xl">Contáctanos</h2>
+    <div class="tw-text-lg">
+      <div class="tw-pt-5">
+        <a
+          href="https://api.whatsapp.com/send?phone=51993119001&text=Hola%20Interbank!"
+          target="_blank"
+          ><i class="pi pi-whatsapp tw-text-primary-green-1"></i> 993 119 001</a
+        >
+      </div>
+
+      <div class="tw-pt-4">
+        Horario de atención <br />
+        Lunes a viernes 8:30am a 6:00pm
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="tw-bg-primary-green-1 tw-py-6 tw-px-6 xl:tw-px-0">
+  <div class="tw-max-w-6xl tw-mx-auto tw-text-white tw-px-6">
+    <div class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-gap-2">
+      <div class="tw-w-32">
+        <img
+          alt="Interbank"
+          class="logo-footer"
+          src="assets/images/blanco.svg"
+        />
+      </div>
+      <div
+        class="tw-flex tw-flex-col lg:tw-flex-row lg:tw-text-lg tw-gap-1 tw-text-center tw-text-xs"
+      >
+        <p>© Copyright 2023</p>
+        <p class="tw-hidden lg:tw-block">-</p>
+        <p>Todos los derechos reservados</p>
+        <p class="tw-hidden lg:tw-block">-</p>
+        <p
+          (click)="showModalTerms()"
+          class="tw-underline tw-underline-offset-4 tw-cursor-pointer"
+        >
+          Términos y condiciones
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
