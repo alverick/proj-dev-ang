@@ -6,8 +6,8 @@ import {
   DateAdapter,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
+  MatNativeDateModule,
 } from '@angular/material/core';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
@@ -36,6 +36,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
+import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -46,12 +47,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 
+import { FabWhatsappComponent } from './components/fab-whatsapp/fab-whatsapp.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LabelControlComponent } from './components/label-control/label-control.component';
@@ -101,6 +105,7 @@ const PRIMENG_MODULES = [
   ButtonModule,
   CalendarModule,
   CarouselModule,
+  ChartModule,
   CheckboxModule,
   DialogModule,
   DropdownModule,
@@ -108,9 +113,14 @@ const PRIMENG_MODULES = [
   InputNumberModule,
   InputTextModule,
   KeyFilterModule,
+  KeyFilterModule,
+  MessageModule,
   MessageModule,
   MessagesModule,
+  MessagesModule,
+  MultiSelectModule,
   RadioButtonModule,
+  RippleModule,
   DynamicDialogModule,
   SidebarModule,
   StepsModule,
@@ -169,6 +179,7 @@ const UI_MODULES = [
     SidebarServiceComponent,
     ...DIRECTIVES,
     ...PIPES,
+    FabWhatsappComponent,
   ],
   exports: [
     OnlyNumbersFormDirective,
@@ -195,6 +206,7 @@ const UI_MODULES = [
     SidebarServiceComponent,
     ServiceCardComponent,
     ...PIPES,
+    FabWhatsappComponent,
   ],
 })
 export class SharedModule {}

@@ -84,17 +84,21 @@ export class TransactionService {
       filtro.dateForFilter = '';
     }
 
-    const url = `${this.URI_API}/debt?PageNumber=${
-      filtro.pageNumber
-    }&ColumnName=${filtro.columnName}&InputSearch=${
-      filtro.inputSearch
-    }&Asc=${filtro.asc.toString()}&Service=${filtro.service}&Status=${
-      filtro.status
-    }&DateForFilter=${
-      filtro.dateForFilter
-    }&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
+    const params = {
+      PageNumber: filtro.pageNumber,
+      ColumnName: filtro.columnName,
+      InputSearch: filtro.inputSearch,
+      Asc: filtro.asc.toString(),
+      Service: filtro.service,
+      Status: filtro.status,
+      DateForFilter: filtro.dateForFilter,
+      DateFrom: strDateFrom,
+      DateTo: strDateTo,
+    };
+
+    const url = `${this.URI_API}/debt`;
     return this.http
-      .get<DebtsPagedList>(url)
+      .get<DebtsPagedList>(url, { params })
       .pipe<DebtsPagedList>(
         map((response: DebtsPagedList) => {
           if (selectedUniverse) {

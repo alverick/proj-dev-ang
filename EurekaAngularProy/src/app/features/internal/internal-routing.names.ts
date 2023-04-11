@@ -12,6 +12,7 @@ interface IInternalRoutingNames {
   AUTH: string;
   COMPANY: string;
   HELP: string;
+  DASHBOARD: string;
   HOME: string;
   SERVICES: string;
 }
@@ -34,6 +35,7 @@ interface IInternalAuthRoutingNames {
 
 export const internalRoutingNames: IInternalRoutingNames = {
   AUTH: 'auth',
+  DASHBOARD: 'resumen',
   HELP: 'ayuda',
   HOME: 'home',
   COMPANY: 'configuracion-empresa',

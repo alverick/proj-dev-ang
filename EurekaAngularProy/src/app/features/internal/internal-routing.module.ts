@@ -1,28 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import {
   appFullRoutingNames,
   appRoutingNames,
 } from 'src/app/app-routing.names';
+
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
 import { CompanyEntriesResolver } from '../../shared/resolvers';
+import { InternalComponent } from './internal.component';
 import {
   internalFullRoutingChildNames,
   internalRoutingChildNames,
   internalRoutingNames,
 } from './internal-routing.names';
-import { InternalComponent } from './internal.component';
 import {
   CompanyConfigurationPage,
   CompanyServicesPage,
+  DashboardPage,
   HelpPage,
   HomePage,
-  ServicesMainPage,
   ServiceAddPage,
   ServiceConfigurationPage,
   ServiceInfoPage,
+  ServicesMainPage,
 } from './pages';
 import {
   CompanyAccountsResolver,
@@ -79,6 +80,11 @@ const routes: Routes = [
             ],
           },
         ],
+      },
+      {
+        path: internalRoutingNames.DASHBOARD,
+        component: DashboardPage,
+        canActivate: [AuthGuard],
       },
       {
         path: internalRoutingNames.HELP,

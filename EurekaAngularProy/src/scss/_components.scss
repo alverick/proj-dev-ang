@@ -1,0 +1,17 @@
+@layer components {
+  .skeleton-background {
+    @apply tw-relative tw-isolate tw-overflow-hidden before:tw-absolute before:tw-inset-0 before:-tw-translate-x-full before:tw-animate-[shimmer_2s_infinite] before:tw-bg-gradient-to-r before:tw-from-transparent before:tw-via-extended-grey-5 before:tw-to-transparent;
+  }
+
+  .modal-custom-cs {
+    .p-dialog-header {
+      .p-dialog-title {
+        @apply tw-text-2xl tw-font-medium lg:tw-pl-6;
+      }
+    }
+
+    .p-dialog-content {
+      @apply lg:tw-px-12;
+    }
+  }
+}

@@ -67,6 +67,21 @@ module.exports = {
       maxWidth: {
         '8xl': '1320px',
       },
+      width: {
+        112: '28rem',
+        128: '32rem',
+      },
+      keyframes: {
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
+        },
+      },
+      screens: {
+        '2xlplus': '1537px',
+        hoversupport: { raw: '(hover: hover)' },
+      },
     },
     borderColor: (theme) => ({
       ...theme('colors'),

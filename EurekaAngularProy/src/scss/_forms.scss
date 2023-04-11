@@ -65,6 +65,28 @@ body {
     }
   }
 
+  .p-multiselect {
+    .p-multiselect-trigger {
+      color: var(--primary-green-1);
+
+      .p-multiselect-trigger-icon {
+        font-size: 0.5rem;
+        transition: all 0.5s;
+      }
+    }
+
+    &.p-multiselect-open {
+      .p-multiselect-trigger .p-multiselect-trigger-icon {
+        transform: rotate(180deg);
+      }
+    }
+
+    &:not(.p-disabled).p-focus {
+      border-color: var(--primary-green-1);
+      box-shadow: 0 0 0 0.2rem var(--primary-green-5);
+    }
+  }
+
   .p-checkbox {
     .p-checkbox-box {
       transition: all 0.5s;
@@ -240,8 +262,11 @@ body {
 
   .p-dropdown-panel {
     .p-dropdown-items {
+      padding: 0;
+
       .p-dropdown-item {
         white-space: normal;
+        padding: 0.429rem 0.857rem;
       }
 
       .p-dropdown-item-group.p-highlight,
@@ -318,7 +343,6 @@ body {
 
       > th {
         border-color: var(--grises-grey-4);
-        word-break: break-all;
         vertical-align: middle;
         background-color: #ffffff;
         color: var(--secondary-blue-1);
@@ -388,6 +412,13 @@ body {
 
     .p-inputnumber-input {
       width: 100%;
+    }
+  }
+
+  .p-calendar {
+    &.p-calendar-w-btn .p-datepicker-trigger {
+      background: transparent;
+      color: var(--primary-green-1);
     }
   }
 

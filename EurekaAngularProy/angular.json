@@ -15,7 +15,9 @@
           "options": {
             "allowedCommonJsDependencies": [
               "file-saver",
-              "sweetalert2",
+             "moment",
+              "sweetalert2"
+            ,
               "moment"
             ],
             "customWebpackConfig": {
@@ -41,7 +43,8 @@
               "node_modules/jquery/dist/jquery.js",
               "node_modules/popper.js/dist/umd/popper.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
-              "node_modules/core-js/client/shim.min.js"
+              "node_modules/core-js/client/shim.min.js",
+              "node_modules/chart.js/dist/chart.umd.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/scss", "node_modules"]
