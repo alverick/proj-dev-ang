@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     matIconRegistry: MatIconRegistry,
     domSanitizer: DomSanitizer,
     private gaService: GoogleAnalytics,
-    private config: PrimeNGConfig
+    private primengConfig: PrimeNGConfig
   ) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -88,7 +88,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.config.setTranslation(primeng);
+    this.primengConfig.ripple = true;
+    this.primengConfig.setTranslation(primeng);
   }
 
   private sendTrackPageViewPixel(pathComponent: string): void {

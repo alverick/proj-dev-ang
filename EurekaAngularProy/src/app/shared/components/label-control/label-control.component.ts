@@ -23,7 +23,8 @@ export class LabelControlComponent
   useDefaultContent = false;
   useGap = false;
 
-  @Input() labelInputID = 'form-label-' + LabelControlComponent.labelCounter;
+  @Input() hideLabel = false;
+  @Input() labelInputID = `form-label-${LabelControlComponent.labelCounter}`;
   @Input() onlyControl = false;
   @Input() formControlName: string;
   @Input() formControlLabel: string;

@@ -40,6 +40,7 @@ import { ExcelService } from './shared/services/excel.service';
 import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
 import { SharedModule } from './shared/shared.module';
+import { EntityStoreModule } from './store/entity-store.module';
 
 const apiMockModule = ApiMockModule.forRoot(MockService, {
   passThruUnknownUrl: true,
@@ -76,6 +77,7 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
     environment.development ? apiMockModule : [],
     RecaptchaModule,
     SharedModule,
+    EntityStoreModule,
   ],
   providers: [
     ExcelService,

@@ -1,0 +1,164 @@
+<div class="tw-max-w-8xl tw-m-auto tw-relative px-4 2xl:px-0">
+  <div class="tw-my-6">
+    <cs-dashboard-filter
+      [services]="services"
+      [optionsDates]="optionsDates"
+      [initialValue]="initialValue"
+      [currency]="currencyCode"
+      (currencyChange)="currencyChanged($event)"
+      (sendForm)="sendFilters($event)"
+      (sendEmail)="sendEmail()"
+    ></cs-dashboard-filter>
+  </div>
+  <div class="output">
+    <div
+      *ngIf="false"
+      class="tw-my-6 tw-flex tw-flex-col md:tw-flex-row tw-gap-6"
+    >
+      <cs-dashboard-card
+        title="Cobro total"
+        [currency]="currencyLabel"
+        [amount]="collectAmounts?.totalChargeAmount"
+        [peopleQuantity]="collectAmounts?.totalChargePersons"
+        (link)="goto([])"
+        [loading]="loadingAmounts"
+        class="tw-flex-grow"
+      ></cs-dashboard-card>
+      <cs-dashboard-card
+        title="Cobro pendiente"
+        [currency]="currencyLabel"
+        [amount]="collectAmounts?.pendingChargeAmount"
+        [peopleQuantity]="collectAmounts?.pendingChargePersons"
+        (link)="goto(['PENDIENTE', 'VENCIDO', 'PARCIAL'])"
+        [loading]="loadingAmounts"
+        class="tw-flex-grow"
+      ></cs-dashboard-card>
+      <cs-dashboard-card
+        title="Monto en mora"
+        [currency]="currencyLabel"
+        [amount]="collectAmounts?.defaultChargeAmount"
+        [peopleQuantity]="collectAmounts?.defaultChargePersons"
+        (link)="goto(['VENCIDO'])"
+        [loading]="loadingAmounts"
+        class="tw-flex-grow"
+      ></cs-dashboard-card>
+    </div>
+    <div class="tw-my-6 tw-flex tw-flex-col lg:tw-flex-row tw-gap-6">
+      <div class="lg:tw-w-[500px] tw-flex tw-flex-col tw-gap-6">
+        <cs-dashboard-card
+          title="Cobro total"
+          [currency]="currencyLabel"
+          [amount]="collectAmounts?.totalChargeAmount"
+          [peopleQuantity]="collectAmounts?.totalChargePersons"
+          (link)="goto([])"
+          [loading]="loadingAmounts"
+        ></cs-dashboard-card>
+        <cs-dashboard-table
+          [currency]="currencyLabel"
+          [customers]="clients"
+          [loading]="loadingTable"
+        ></cs-dashboard-table>
+      </div>
+
+      <cs-dashboard-graph
+        [serviceData]="graphData"
+        [loading]="loadingChart"
+        class="tw-flex-grow"
+      ></cs-dashboard-graph>
+    </div>
+  </div>
+</div>
+<p-dialog
+  header="Compartir resumen"
+  [(visible)]="showModal"
+  [modal]="true"
+  styleClass="tw-w-112"
+>
+  <div class="tw-px-2 tw-pb-2">
+    <div class="tw-pb-2">
+      Envía un correo con el resumen del dashboard adjunto a quien desees.
+      Puedes agregar un asunto personalizado
+    </div>
+    <form
+      class="form lg:tw-gap-4"
+      *ngIf="showModal"
+      [formGroup]="emailForm"
+      (ngSubmit)="sendEmailForm()"
+    >
+      <cs-label-control class="tw-w-full" formControlName="email">
+        Correo de destino
+        <input
+          pInputText
+          formControlName="email"
+          class="tw-w-full"
+          styleClass="tw-w-full"
+          control
+        />
+      </cs-label-control>
+      <cs-label-control class="tw-w-full" formControlName="subject">
+        Asunto (opcional)
+        <input
+          pInputText
+          formControlName="subject"
+          class="tw-w-full"
+          styleClass="tw-w-full"
+          control
+        />
+      </cs-label-control>
+      <div class="tw-py-2">
+        El asunto predefinido es: Resumen Cobro Simple [Nombre empresa] del
+        [DD/MM/AAAA]
+      </div>
+      <button
+        pButton
+        pRipple
+        type="submit"
+        label="Enviar"
+        class="tw-w-full"
+      ></button>
+    </form>
+  </div>
+</p-dialog>
+<div
+  class="output-mail tw-max-w-2xl tw-px-2 tw-absolute -tw-top-full -tw-left-full -tw-z-10 tw-invisible"
+>
+  <div class="tw-text-3xl tw-py-3">Tu informe de cobro simple</div>
+  <div class="tw-my-6 tw-flex tw-flex-col md:tw-flex-row tw-gap-6">
+    <cs-dashboard-card
+      title="Cobro total"
+      currency="S/"
+      [printMode]="true"
+      [amount]="collectAmounts?.totalChargeAmount"
+      [peopleQuantity]="collectAmounts?.totalChargePersons"
+      class="tw-flex-grow"
+    ></cs-dashboard-card>
+    <cs-dashboard-card
+      title="Cobro pendiente"
+      currency="S/"
+      [printMode]="true"
+      [amount]="collectAmounts?.pendingChargeAmount"
+      [peopleQuantity]="collectAmounts?.pendingChargePersons"
+      class="tw-flex-grow"
+    ></cs-dashboard-card>
+    <cs-dashboard-card
+      title="Cobro en mora"
+      currency="S/"
+      [printMode]="true"
+      [amount]="collectAmounts?.defaultChargeAmount"
+      [peopleQuantity]="collectAmounts?.defaultChargePersons"
+      class="tw-flex-grow"
+    ></cs-dashboard-card>
+  </div>
+  <div class="tw-my-6 tw-flex tw-flex-col tw-gap-6">
+    <cs-dashboard-graph
+      [printMode]="true"
+      [serviceData]="graphData"
+      class="tw-flex-grow"
+    ></cs-dashboard-graph>
+    <cs-dashboard-table
+      class="tw-flex-grow"
+      [printMode]="true"
+      [customers]="clients"
+    ></cs-dashboard-table>
+  </div>
+</div>

@@ -13,7 +13,11 @@
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
-            "allowedCommonJsDependencies": ["file-saver", "sweetalert2"],
+            "allowedCommonJsDependencies": [
+              "file-saver",
+              "moment",
+              "sweetalert2"
+            ],
             "customWebpackConfig": {
               "path": "./config/extra-webpack.config.js"
             },
@@ -29,7 +33,6 @@
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/primeicons/primeicons.css",
-              "src/scss/nova-theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "src/scss/style.scss"
             ],
@@ -37,7 +40,8 @@
               "node_modules/jquery/dist/jquery.js",
               "node_modules/popper.js/dist/umd/popper.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
-              "node_modules/core-js/client/shim.min.js"
+              "node_modules/core-js/client/shim.min.js",
+              "node_modules/chart.js/dist/chart.umd.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/scss", "node_modules"]
@@ -51,6 +55,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "index": "src/environments/production/index.html",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -164,19 +169,13 @@
               "node_modules/core-js/client/shim.min.js",
               "node_modules/web-animations-js/web-animations.min.js"
             ],
-            "assets": [
-              "src/faviconIbk.ico",
-              "src/assets"
-            ]
+            "assets": ["src/faviconIbk.ico", "src/assets"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
@@ -207,8 +206,6 @@
   },
   "cli": {
     "analytics": "92e6e9c2-fa2f-4a6c-a6a1-45b6adf701be",
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }
