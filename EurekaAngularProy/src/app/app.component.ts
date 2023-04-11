@@ -18,11 +18,12 @@ declare let fbq: (...args: any[]) => void;
 @Component({
   selector: 'cs-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   providers: [LoginService],
 })
 export class AppComponent implements OnInit {
   title = 'Cobro Simple – Interbank';
+  showButton = false;
 
   constructor(
     private router: Router,
@@ -31,12 +32,13 @@ export class AppComponent implements OnInit {
     private gaService: GoogleAnalytics,
     private primengConfig: PrimeNGConfig
   ) {
-    this.router.events.subscribe((e) => {
-      if (e instanceof NavigationEnd) {
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.showButton = val.url.indexOf(appFullRoutingNames.ADMIN) !== 0;
         if (environment.production) {
           this.gaService.sendUrl(
-            e.urlAfterRedirects.substr(1),
-            e.urlAfterRedirects
+            val.urlAfterRedirects.substr(1),
+            val.urlAfterRedirects
           );
 
           /*
@@ -46,7 +48,7 @@ export class AppComponent implements OnInit {
           });
           */
           // Pixel Facebook
-          this.sendTrackPageViewPixel(e.urlAfterRedirects);
+          this.sendTrackPageViewPixel(val.urlAfterRedirects);
         }
         // gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
       }
