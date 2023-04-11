@@ -71,6 +71,12 @@
           }
         ],
         "@typescript-eslint/no-var-requires": "error",
+        "@typescript-eslint/unbound-method": [
+          "error",
+          {
+            "ignoreStatic": true
+          }
+        ],
         "arrow-parens": [
           "off",
           "always"
@@ -152,6 +158,14 @@
           }
         ]
       }
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@ngrx/recommended-requiring-type-checking"
+      ]
     }
   ],
   "extends": [

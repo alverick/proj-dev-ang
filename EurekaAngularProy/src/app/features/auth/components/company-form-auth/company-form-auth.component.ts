@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
@@ -24,16 +24,18 @@ import { IErrorMessages } from '../../../../shared/models/forms';
   selector: 'cs-company-form-auth',
   templateUrl: './company-form-auth.component.html',
   styleUrls: ['./company-form-auth.component.scss'],
+  providers: [DialogService],
 })
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   $destroy = new Subject();
+  ref: DynamicDialogRef;
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
   @Input() categories: IEntryModel[] = [];
   @Input() companyForm: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() edit = false;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialogService: DialogService) {}
 
   ngOnInit() {
     this.companyForm
@@ -60,8 +62,10 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   showModalTerms() {
-    this.dialog.open(ModalTermsComponent, {
+    this.ref = this.dialogService.open(ModalTermsComponent, {
       width: '810px',
+      header: 'Términos y condiciones',
+      styleClass: 'modal-custom-cs',
     });
   }
 
@@ -93,6 +97,9 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
   ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
     this.$destroy.next();
     this.$destroy.complete();
   }
