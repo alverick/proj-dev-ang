@@ -1,0 +1,17 @@
+:host ::ng-deep .p-datatable {
+  .p-datatable-thead > tr > th {
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    font-weight: normal;
+  }
+
+  .p-datatable-tbody > tr > td {
+    border-left-style: none;
+    border-right-style: none;
+
+    &:last-child {
+      border-left-style: none;
+    }
+  }
+}

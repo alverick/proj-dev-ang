@@ -5,6 +5,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { CompanyPasswordFormComponent } from './components/company-password-form/company-password-form.component';
 import { CompanyUpdateFormComponent } from './components/company-update-form/company-update-form.component';
+import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';
+import { DashboardFilterComponent } from './components/dashboard-filter/dashboard-filter.component';
+import { DashboardGraphComponent } from './components/dashboard-graph/dashboard-graph.component';
+import { DashboardTableComponent } from './components/dashboard-table/dashboard-table.component';
 import { InternalHeaderComponent } from './components/internal-header/internal-header.component';
 import { DateDirective } from './directives/date.directive';
 import { DecimalesDirective } from './directives/decimales.directive';
@@ -38,6 +42,10 @@ import { SERVICES } from './services';
     CompanyPasswordFormComponent,
     ...PAGES,
     TableMovementsComponent,
+    DashboardCardComponent,
+    DashboardFilterComponent,
+    DashboardTableComponent,
+    DashboardGraphComponent,
     HelpHeaderIconComponent,
   ],
   imports: [

@@ -17,6 +17,7 @@
               [services]="services"
               [stateList]="waypayList"
               [dateList]="DateList"
+              [initial]="formValues"
               (sendForm)="searchDebts($event)"
               (resetForm)="resetDebts()"
             ></cs-payments-filter>
@@ -29,7 +30,10 @@
               <div class="rows-actions">
                 <div
                   class="select-all tw-flex tw-items-center tw-text-sm"
-                  [ngClass]="{'tw-text-primary-green-1':selectedRows.length>0,'tw-text-extended-grey-2':selectedRows.length===0}"
+                  [ngClass]="{
+                    'tw-text-primary-green-1': selectedRows.length > 0,
+                    'tw-text-extended-grey-2': selectedRows.length === 0
+                  }"
                   (click)="EliminarSeleccionados()"
                 >
                   <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
@@ -96,12 +100,12 @@
                 <span *ngIf="transactionService.debtItems.count > 1">han</span
                 ><span *ngIf="transactionService.debtItems.count == 1">ha</span>
                 seleccionado los
-                <span *ngIf="!selectedUniverse" style="font-weight: 500"
-                  >{{ transactionService.itemsForDelete.length }}</span
-                >
-                <span *ngIf="selectedUniverse" style="font-weight: 500"
-                  >{{ transactionService.debtItems.countNoIbkPayments }}</span
-                >
+                <span *ngIf="!selectedUniverse" style="font-weight: 500">{{
+                  transactionService.itemsForDelete.length
+                }}</span>
+                <span *ngIf="selectedUniverse" style="font-weight: 500">{{
+                  transactionService.debtItems.countNoIbkPayments
+                }}</span>
                 registros de esta página
                 <button
                   type="button"
@@ -113,8 +117,8 @@
                   (click)="selectedUniverse = !selectedUniverse"
                 >
                   <span *ngIf="!selectedUniverse"
-                    >Seleccionar los {{
-                    transactionService.debtItems.countNoIbkPayments }}
+                    >Seleccionar los
+                    {{ transactionService.debtItems.countNoIbkPayments }}
                     registros</span
                   >
                   <span *ngIf="selectedUniverse">Anular la selección</span>

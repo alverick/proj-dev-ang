@@ -20,17 +20,18 @@
   >
     <ng-template pTemplate="header" let-columns>
       <tr>
-        <th style="width: 3em">
+        <th scope="col" style="width: 3em">
           <p-tableHeaderCheckbox
             (click)="onRowSelect()"
           ></p-tableHeaderCheckbox>
         </th>
-        <th class="md:tw-hidden"></th>
+        <th scope="col" class="md:tw-hidden"></th>
         <th
           *ngFor="let col of columns"
           [pSortableColumn]="col.field"
-          class="tw-hidden md:tw-table-cell"
+          class="tw-hidden md:tw-table-cell tw-break-all"
           [ngClass]="'th-' + col.field"
+          scope="col"
         >
           {{ col.header }}
           <p-sortIcon
@@ -259,9 +260,9 @@
           <div class="">
             <table class="tw-text-sm tw-max-w-xs table-details tw-m-auto">
               <tr>
-                <td class="tw-text-extended-grey-1 tw-border-none">
+                <th scope="row" class="tw-text-extended-grey-1 tw-border-none">
                   Servicio:
-                </td>
+                </th>
                 <td class="tw-border-none">{{ rowData.service }}</td>
               </tr>
               <tr>

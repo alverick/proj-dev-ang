@@ -18,11 +18,13 @@ export class InternalHeaderComponent implements OnInit {
   showMenu = false;
   companyLink = internalFullRoutingNames.COMPANY;
   homeLink = internalFullRoutingNames.HOME;
+  dashboardLink = internalFullRoutingNames.DASHBOARD;
   servicesLink = internalFullRoutingNames.SERVICES;
   helpLink = internalFullRoutingNames.HELP;
   homeText = 'Mis Movimientos';
   helpText = 'Ayuda';
   companyText = 'Mi Empresa';
+  dashboardText = 'Mi Resumen';
   chargesText = 'Mis Servicios';
   scrollConfig = {
     suppressScrollX: true,

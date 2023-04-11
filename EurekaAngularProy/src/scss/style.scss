@@ -1,6 +1,7 @@
 @import 'normalize';
 @tailwind base;
 @tailwind components;
+@import 'components';
 @tailwind utilities;
 
 /* Reset Styles */
@@ -10,6 +11,7 @@
 @import 'fonts';
 @import 'material-config-theme';
 @import 'material-custom';
+@import 'nova-theme.css';
 @import 'forms';
 @import 'main';
 @import 'global';

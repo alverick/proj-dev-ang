@@ -7,9 +7,10 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { Router } from '@angular/router';
 import * as saveAs from 'file-saver';
 import { LazyLoadEvent } from 'primeng/api';
-import { all, equals, prop } from 'ramda';
+import { all, equals, isNil, pathOr, prop } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { Debts } from 'src/app/shared/models/debts';
@@ -54,9 +55,16 @@ export class HomePage implements OnInit {
     private gaService: GoogleAnalytics,
     private fileLoad: LoadFileService,
     private barLoad: LoadBarService,
-    private movementsService: MovementsService
+    private movementsService: MovementsService,
+    private router: Router
   ) {
     transactionService.itemsForDelete = [];
+    const navigation = this.router.getCurrentNavigation();
+    let form = pathOr(null, ['extras', 'state', 'filter'], navigation);
+    if (isNotNil(form)) {
+      form = { ...form, payment: form.payment.code };
+    }
+    this.formValues = form;
   }
 
   numeroPagina: number;
@@ -140,6 +148,7 @@ export class HomePage implements OnInit {
 
   @ViewChild('fileLoad', { read: ViewContainerRef, static: true })
   fileLoadContainer: ViewContainerRef;
+  formValues;
 
   innerHeight = 0;
 
@@ -202,7 +211,9 @@ export class HomePage implements OnInit {
       countNoIbkPayments: 0,
       count: 0,
     };
-    this.consultaDeuda();
+    if (isNil(this.formValues)) {
+      this.consultaDeuda();
+    }
     this.recortarNombres();
     this.cargaExcel = false;
 
