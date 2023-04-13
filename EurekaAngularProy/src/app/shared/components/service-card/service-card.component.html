@@ -14,14 +14,14 @@
     </div>
     <div class="tw-flex tw-gap-2 tw-flex-shrink-0">
       <div *ngIf="canEdit" (click)="actionEdit()" class="tw-cursor-pointer">
-        <img src="../../../../../assets/images/card-icon-edit.svg" />
+        <img alt="Editar" src="assets/images/card-icon-edit.svg" />
       </div>
       <div
         *ngIf="!reviewMode"
         (click)="actionDelete()"
         class="tw-cursor-pointer"
       >
-        <img src="../../../../../assets/images/card-icon-delete.svg" />
+        <img alt="Eliminar" src="assets/images/card-icon-delete.svg" />
       </div>
     </div>
   </div>
@@ -72,6 +72,8 @@
       'tw-pt-3': !hasWarnings
     }"
   >
+    <div class="tw-text-extended-grey-2">Código de servicio:</div>
+    <div class="val">{{ serviceData.res | notEmpty : '-' }}</div>
     <div class="tw-text-extended-grey-2">Canales de pago:</div>
     <div class="val">{{ paymentChannels }}</div>
     <div class="tw-text-extended-grey-2">Código de cliente:</div>
