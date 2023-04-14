@@ -25,53 +25,18 @@
       </div>
     </div>
   </div>
-  <ng-template [ngIf]="reviewMode">
-    <div
-      *ngIf="serviceData.inReview"
-      class="tw-h-8 tw-flex tw-items-center tw-my-1"
-    >
+  <ng-template [ngIf]="messageStatus !== ''">
+    <div class="tw-h-8 tw-flex tw-items-center tw-my-1">
       <div
         class="tw-inline tw-text-white tw-rounded-3xl tw-text-xs tw-px-4 tw-py-0.5"
-        [ngClass]="{
-          'tw-bg-extended-watermelon-1': pendingUserReview,
-          'tw-bg-extended-orange-1': !pendingUserReview
-        }"
+        [ngClass]="[messagesOptions[messageStatus].color]"
       >
-        <ng-template [ngIf]="pendingUserReview">
-          Debes revisar este servicio</ng-template
-        >
-        <ng-template [ngIf]="!pendingUserReview">
-          Servicio actualizado</ng-template
-        >
+        {{ messagesOptions[messageStatus].text }}
       </div>
     </div>
-    <div *ngIf="!hasWarnings" class="tw-h-8"></div>
   </ng-template>
-  <ng-template [ngIf]="lockedMode">
-    <div *ngIf="hasWarnings" class="tw-h-8 tw-flex tw-items-center tw-my-1">
-      <div
-        class="tw-inline tw-text-white tw-rounded-3xl tw-text-xs tw-px-4 tw-py-0.5"
-        [ngClass]="{
-          'tw-bg-extended-watermelon-1': pendingUserReview,
-          'tw-bg-extended-orange-1': pendingGtpReview
-        }"
-      >
-        <ng-template [ngIf]="pendingGtpReview"
-          >Pendiente de revisión</ng-template
-        >
-        <ng-template [ngIf]="pendingUserReview">
-          Debes revisar este servicio</ng-template
-        >
-      </div>
-    </div>
-    <div *ngIf="!hasWarnings" class="tw-h-8"></div>
-  </ng-template>
-  <div
-    class="tw-grid tw-grid-cols-2 tw-gap-2"
-    [ngClass]="{
-      'tw-pt-3': !hasWarnings
-    }"
-  >
+  <div *ngIf="!hasWarnings" class="tw-h-8"></div>
+  <div class="tw-grid tw-grid-cols-2 tw-gap-2">
     <div class="tw-text-extended-grey-2">Código de servicio:</div>
     <div class="val">{{ serviceData.res | notEmpty : '-' }}</div>
     <div class="tw-text-extended-grey-2">Canales de pago:</div>
