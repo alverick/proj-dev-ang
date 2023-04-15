@@ -23,17 +23,17 @@ variables:
   - name: appServiceNameDev
     value: 'wappeu2c003eurcdev01'
   - name: appServiceConnectionUat
-    value: 'gr2c003eurcdev01'
+    value: 'RG_EU2_C003_EURC_UAT_01'
   - name: groupNameUat
-    value: 'RG_EU2_C003_EURC_DEV_01'
+    value: 'rg_eu2_c003_eurc_uat_01'
   - name: appServiceNameUat
-    value: 'wappeu2c003eurcdev01'
+    value: 'wappeu2c003eurcuat01'
   - name: appServiceConnectionPrd
-    value: 'gr2c003eurcdev01'
+    value: 'RG_EU2_C003_EURC_UAT_01'
   - name: groupNamePrd
-    value: 'RG_EU2_C003_EURC_DEV_01'
+    value: 'rg_eu2_c003_eurc_uat_01'
   - name: appServiceNamePrd
-    value: 'wappeu2c003eurcdev01'
+    value: 'wappeu2c003eurcuat01'
   - name: vmImageName
     value: 'ubuntu-20.04'
 
