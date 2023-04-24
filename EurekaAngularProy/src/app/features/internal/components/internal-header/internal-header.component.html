@@ -4,7 +4,7 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="mano nav-link" [routerLink]="[homeLink]">{{ homeText }}</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
+      <li *ngIf="false" class="nav-item" routerLinkActive="active">
         <a class="mano nav-link" [routerLink]="[dashboardLink]">{{
           dashboardText
         }}</a>
@@ -269,7 +269,7 @@
             >{{ homeText }}</a
           >
         </li>
-        <li class="nav-item" routerLinkActive="active">
+        <li *ngIf="false" class="nav-item" routerLinkActive="active">
           <a
             class="mano nav-link mb-3"
             [routerLink]="[dashboardLink]"
