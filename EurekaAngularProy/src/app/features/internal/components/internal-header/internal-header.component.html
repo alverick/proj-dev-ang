@@ -1,31 +1,27 @@
 <cs-header>
-  <div *ngIf="showMenu" class="collapse custom-navbar-collapse">
-    <ul class="navbar-nav ml-auto reponsive-emp">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="mano nav-link" [routerLink]="[homeLink]">{{ homeText }}</a>
+  <div *ngIf="showMenu" class="tw-flex">
+    <ul class="navigation-menu">
+      <li class="tw-h-full" routerLinkActive="active">
+        <a class="link" [routerLink]="[homeLink]">{{ homeText }}</a>
       </li>
-      <li *ngIf="false" class="nav-item" routerLinkActive="active">
-        <a class="mano nav-link" [routerLink]="[dashboardLink]">{{
-          dashboardText
-        }}</a>
+      <li *ngIf="false" class="tw-h-full" routerLinkActive="active">
+        <a class="link" [routerLink]="[dashboardLink]">{{ dashboardText }}</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="tw-cursor-pointer nav-link" [routerLink]="[servicesLink]">
+      <li class="tw-h-full" routerLinkActive="active">
+        <a class="link" [routerLink]="[servicesLink]">
           {{ chargesText }}
         </a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="mano nav-link" [routerLink]="[companyLink]">{{
-          companyText
-        }}</a>
+      <li class="tw-h-full" routerLinkActive="active">
+        <a class="link" [routerLink]="[companyLink]">{{ companyText }}</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="mano nav-link" [routerLink]="[helpLink]">{{ helpText }}</a>
+      <li class="tw-h-full" routerLinkActive="active">
+        <a class="link" [routerLink]="[helpLink]">{{ helpText }}</a>
       </li>
       <li class="nav-item dropdown ml-4">
         <a
           href="#"
-          class="nav-link dropdown-toggle no-caret"
+          class="dropdown-toggle no-caret tw-px-2 tw-h-full tw-flex tw-items-center"
           id="lnkMessages"
           data-toggle="dropdown"
           aria-haspopup="true"
@@ -82,7 +78,8 @@
                   >
                     <img
                       class="item-icono"
-                      src="../../../../assets/images/badge-bg.svg"
+                      src="assets/images/badge-bg.svg"
+                      alt="Notificación"
                     />
                   </div>
                   <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
@@ -98,7 +95,8 @@
                   >
                     <img
                       class="item-icono"
-                      src="../../../../assets/images/ok.svg"
+                      src="assets/images/ok.svg"
+                      alt="ok"
                     />
                   </div>
                   <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
@@ -149,7 +147,7 @@
       </li>
     </ul>
 
-    <ul class="navbar-nav ml-auto reponsive-emp1">
+    <ul class="navbar-nav tw-flex-row lg:tw-hidden">
       <li class="nav-item dropdown mr-3">
         <a
           href="#"
@@ -209,7 +207,8 @@
                   >
                     <img
                       class="item-icono"
-                      src="../../../../assets/images/badge-bg.svg"
+                      src="assets/images/badge-bg.svg"
+                      alt="Notificación"
                     />
                   </div>
                   <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
@@ -225,7 +224,8 @@
                   >
                     <img
                       class="item-icono"
-                      src="../../../../assets/images/ok.svg"
+                      src="assets/images/ok.svg"
+                      alt="ok"
                     />
                   </div>
                   <div class="pl-2 pr-2 texto">{{ msg.message }}</div>

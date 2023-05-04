@@ -1,3 +1,13 @@
+@tailwind components;
+@layer components {
+  .navigation-menu {
+    @apply tw-hidden lg:tw-flex tw-gap-2 tw-items-center tw-text-xs tw-font-medium;
+    .link {
+      @apply tw-h-full tw-flex tw-items-center tw-text-extended-grey-2 hover:tw-no-underline hover:tw-text-extended-ibk-black tw-uppercase tw-transition tw-px-3;
+    }
+  }
+}
+
 li.nav-item {
   height: 72px;
   display: flex;
@@ -20,6 +30,12 @@ li.nav-item {
     a.nav-link {
       color: var(--grises-ibk-black);
     }
+  }
+}
+
+.active {
+  a.link {
+    color: var(--grises-ibk-black);
   }
 }
 
@@ -76,106 +92,104 @@ img.bell {
   }
 }
 
-.navbar-nav {
-  .lnk-regresar {
-    @include font-text(18px, 500);
-    color: #9ea1a5 !important;
-    margin-bottom: auto;
+.lnk-regresar {
+  @include font-text(18px, 500);
+  color: #9ea1a5 !important;
+  margin-bottom: auto;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  @include border-radius(4px !important);
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  @include box-shadows(4px, 10px, 0, rgba(0, 0, 0, 0.1), 0);
+  background-color: #ffffff;
+
+  .dropdown-item {
+    @include font-text(14px);
+    padding: 20px 19px;
+    color: $textblack;
     cursor: pointer;
+    border-bottom: $separador;
   }
 
-  .dropdown-menu {
-    @include border-radius(4px !important);
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    @include box-shadows(4px, 10px, 0, rgba(0, 0, 0, 0.1), 0);
-    background-color: #ffffff;
+  .dropdown-item:last-child {
+    border-bottom: 0;
+  }
+}
+
+.dropdown-menu.scroll-menu {
+  width: 453px;
+
+  .title {
+    padding: 6px 12px;
+    border-bottom: $separador;
+
+    .text {
+      @include font-text(12px, 500);
+      color: $textblack;
+    }
+
+    .mark-all {
+      @include font-text(12px);
+      color: $textgreen;
+      cursor: pointer;
+    }
+  }
+
+  .notifies {
+    max-height: 388px;
+    overflow-y: auto;
 
     .dropdown-item {
-      @include font-text(14px);
-      padding: 20px 19px;
-      color: $textblack;
-      cursor: pointer;
-      border-bottom: $separador;
+      padding: 0px;
+      white-space: normal;
+      cursor: default;
+
+      .espacio {
+        padding: 8px;
+
+        .item-icono {
+          float: left;
+          width: 8px;
+          height: 8px;
+          margin: 4px;
+          cursor: pointer;
+        }
+
+        .texto {
+          @include font-text(14px);
+          color: $textblack;
+          margin-left: 15px;
+        }
+
+        .tiempo {
+          @include font-text(14px, 300);
+          color: $textblack;
+          margin-left: 15px;
+        }
+      }
     }
 
-    .dropdown-item:last-child {
-      border-bottom: 0;
+    .dropdown-item:active {
+      background-color: $textgray;
+    }
+
+    .loading {
+      text-align: center;
     }
   }
 
-  .dropdown-menu.scroll-menu {
-    width: 453px;
+  .more {
+    @include font-text(14px, normal);
+    padding: 6px 12px;
+    color: $textblack;
+    text-align: center;
 
-    .title {
-      padding: 6px 12px;
-      border-bottom: $separador;
-
-      .text {
-        @include font-text(12px, 500);
-        color: $textblack;
-      }
-
-      .mark-all {
-        @include font-text(12px);
-        color: $textgreen;
-        cursor: pointer;
-      }
-    }
-
-    .notifies {
-      max-height: 388px;
-      overflow-y: auto;
-
-      .dropdown-item {
-        padding: 0px;
-        white-space: normal;
-        cursor: default;
-
-        .espacio {
-          padding: 8px;
-
-          .item-icono {
-            float: left;
-            width: 8px;
-            height: 8px;
-            margin: 4px;
-            cursor: pointer;
-          }
-
-          .texto {
-            @include font-text(14px);
-            color: $textblack;
-            margin-left: 15px;
-          }
-
-          .tiempo {
-            @include font-text(14px, 300);
-            color: $textblack;
-            margin-left: 15px;
-          }
-        }
-      }
-
-      .dropdown-item:active {
-        background-color: $textgray;
-      }
-
-      .loading {
-        text-align: center;
-      }
-    }
-
-    .more {
-      @include font-text(14px, normal);
-      padding: 6px 12px;
-      color: $textblack;
-      text-align: center;
-
-      .text {
-        cursor: pointer;
-      }
+    .text {
+      cursor: pointer;
     }
   }
 }
