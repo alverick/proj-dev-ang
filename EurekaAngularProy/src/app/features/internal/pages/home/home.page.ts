@@ -14,7 +14,7 @@ import { ShepherdService } from 'angular-shepherd';
 import * as saveAs from 'file-saver';
 import { CookieService } from 'ngx-cookie-service';
 import { LazyLoadEvent } from 'primeng/api';
-import { all, equals, isNil, pathOr, prop } from 'ramda';
+import { all, equals, isNil, pathEq, pathOr, prop } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { Debts } from 'src/app/shared/models/debts';
@@ -479,12 +479,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             this.selectedUniverse
           );
         } else {
-          if (!this.cookieStorage.check('onboarding')) {
-            const expire = new Date();
-            expire.setDate(expire.getDate() + 25000);
-            this.cookieStorage.set('onboarding', '1');
-            this.shepherdService.start();
-          }
+          this.validateOnboarding();
         }
 
         // this.selectedUniverse = false;
@@ -494,6 +489,21 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       });
     this.messageTable = 'Para empezar, agrega la lista de las deudas';
     this.showArrow = true;
+  }
+
+  validateOnboarding() {
+    const localStorage = window.localStorage;
+    const username = window.sessionStorage.getItem('username');
+    let settings = JSON.parse(localStorage.getItem('settings'));
+    console.log('validateOnboarding',settings);
+    if (!pathEq([username, 'ob', 'mov'], 1, settings)) {
+      if (isNil(settings)) {
+        settings = {};
+      }
+      settings[username] = { ob: { mov: 1 } };
+      localStorage.setItem('settings', JSON.stringify(settings));
+      this.shepherdService.start();
+    }
   }
 
   recortarNombres() {
