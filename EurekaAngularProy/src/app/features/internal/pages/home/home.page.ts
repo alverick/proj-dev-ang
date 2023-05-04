@@ -532,14 +532,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           firstName: item.firstName,
         };
 
-        // {
-        //   "emissionDate": "2021-06-16T05:00:00.000Z",
-        //   "dueDate": "",
-        //   "concept": null,
-        //   "amount": 0,
-        //   "firstName": "Cliente BBBB21"
-        // }
-
         if (item.newStatus === '1') {
           this.transactionService
             .editDeuda(item.id, debts)
@@ -638,7 +630,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       mensaje = `Esta acción va a eliminar ${totalForDelete} deudas`;
     }
 
-    swalAlert
+    void swalAlert
       .fire({
         title: '¿Seguro que deseas continuar?',
         text: mensaje,
