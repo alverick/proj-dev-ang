@@ -509,21 +509,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     item.newLastName = item.lastName;
   }
 
-  BotonActualizar(item: Debts) {
-    // this.validaEmissionDate(item);
-    // if (item.dueDate) {
-    //   this.validaDueDate(item);
-    //   this.validaMonto(item);
-    // }
-    // this.validaNombresApellidos(item);
-    //
-    // console.log(item, item.errores);
-    // for (const s in item.errores) {
-    //   if (item.errores[s]) {
-    //     return;
-    //   }
-    // }
-
+  saveDebt(item: Debts) {
     Swal.fire({
       title: '¿Deseas actualizar?',
       text: '¡No podrás revertir esto!',
