@@ -273,6 +273,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         highlightClass: 'highlight',
         title: () => this.getStepPositionTitle(),
         text: '<h4 class="tw-font-medium tw-pb-2">Agrega cobros</h4><p class="tw-text-sm">Si tienes un servicio con data completa o parcial, el primer paso es agregar cobros. Puedes hacerlo de manera individual o masiva con nuestra plantilla de Excel.</p>',
+        when: {
+          show: () => {
+            setTimeout(() => {
+              this.updatePositionModal();
+            }, 200);
+          },
+        },
       },
       {
         id: 'lista',
