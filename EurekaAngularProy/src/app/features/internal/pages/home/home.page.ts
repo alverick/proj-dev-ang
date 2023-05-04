@@ -12,6 +12,7 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import { ShepherdService } from 'angular-shepherd';
 import * as saveAs from 'file-saver';
+import { CookieService } from 'ngx-cookie-service';
 import { LazyLoadEvent } from 'primeng/api';
 import { all, equals, isNil, pathOr, prop } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
@@ -58,7 +59,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private barLoad: LoadBarService,
     private movementsService: MovementsService,
     private router: Router,
-    private shepherdService: ShepherdService
+    private shepherdService: ShepherdService,
+    private cookieStorage: CookieService
   ) {
     transactionService.itemsForDelete = [];
     const navigation = this.router.getCurrentNavigation();
@@ -462,6 +464,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.selectedAll = this.transactionService.isMarkedAll(
             this.selectedUniverse
           );
+        } else {
+          if (!this.cookieStorage.check('onboarding')) {
+            const expire = new Date();
+            expire.setDate(expire.getDate() + 25000);
+            this.cookieStorage.set('onboarding', '1');
+            this.shepherdService.start();
+          }
         }
 
         // this.selectedUniverse = false;
