@@ -165,17 +165,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   };
   selectedRows = [];
   tableSortField = '';
-
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    let height = window.innerHeight;
-    if (!height) {
-      height = document.documentElement.clientHeight;
-    }
-    if (height !== this.innerHeight) {
-      height -= 150;
-      $('.ps-body .ps-content').css('height', height + 'px');
-    }
+  styleTag: HTMLStyleElement;
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updatePositionModal();
   }
 
   ngOnInit() {
@@ -346,7 +339,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         text: '<h4 class="tw-font-medium tw-pb-2">Siempre actualizado</h4><p class="tw-text-sm">Cada vez que un cliente realice un pago, recibirás una notificación.</p>',
       },
     ]);
-    this.updateModal();
+    this.updatePositionModal();
   }
 
   ngOnDestroy(): void {
@@ -369,9 +362,19 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.shepherdService.start();
   }
 
-    this.currentFilter.asc = asc;
-    this.currentFilter.columnName = this.orderDef[index].name;
-    this.consultaDeuda();
+  updatePositionModal() {
+    const element: HTMLElement = document.querySelector('.movements');
+    const top =
+      element.getBoundingClientRect().top +
+      element.getBoundingClientRect().height +
+      window.scrollY;
+    const left = element.getBoundingClientRect().left - 10;
+    const width = element.getBoundingClientRect().width + 20;
+    this.styleTag.innerHTML = `.shepherd-element.records.onboarding-step {
+    top: ${top}px!important;
+    left: ${left}px!important;
+    width: ${width}px!important;
+     }`;
   }
 
   resetControlsGrid() {
