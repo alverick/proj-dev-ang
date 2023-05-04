@@ -166,6 +166,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   selectedRows = [];
   tableSortField = '';
   styleTag: HTMLStyleElement;
+  firstLoad = false;
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.updatePositionModal();
@@ -478,10 +479,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.selectedAll = this.transactionService.isMarkedAll(
             this.selectedUniverse
           );
-        } else {
+        } else if (!this.firstLoad) {
+          this.firstLoad = true;
           this.validateOnboarding();
         }
-
         // this.selectedUniverse = false;
         if (cb) {
           cb();
