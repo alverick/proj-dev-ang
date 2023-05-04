@@ -212,6 +212,7 @@ export class LoginPage implements OnInit {
                 this.cookieService.set('ruc', this.f.ruc.value, expire);
               }
 
+              window.sessionStorage.setItem('username', this.f.ruc.value);
               this.router.navigate([internalFullRoutingNames.HOME]);
             } else if (this.intentos < 4 && this.codRespuesta === 2) {
               this.codigo2 = true;
