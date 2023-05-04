@@ -1,13 +1,16 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   HostListener,
+  OnDestroy,
   OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
+import { ShepherdService } from 'angular-shepherd';
 import * as saveAs from 'file-saver';
 import { LazyLoadEvent } from 'primeng/api';
 import { all, equals, isNil, pathOr, prop } from 'ramda';
@@ -36,14 +39,12 @@ import { DialogComponent } from './components/dialog';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { Popover } from './components/popover/popover.service';
 
-declare var $: any;
-
 @Component({
   selector: 'cs-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private storageService: StorageService,
     private homeService: HomeService,
@@ -56,7 +57,8 @@ export class HomePage implements OnInit {
     private fileLoad: LoadFileService,
     private barLoad: LoadBarService,
     private movementsService: MovementsService,
-    private router: Router
+    private router: Router,
+    private shepherdService: ShepherdService
   ) {
     transactionService.itemsForDelete = [];
     const navigation = this.router.getCurrentNavigation();
@@ -219,41 +221,151 @@ export class HomePage implements OnInit {
 
     this.selectedAll = false;
     this.selectedUniverse = false;
+    this.styleTag = document.createElement('style');
+    this.styleTag.type = 'text/css';
+    document.getElementsByTagName('head')[0].appendChild(this.styleTag);
   }
 
-  ceroRegistros(): boolean {
-    return isNilOrEmpty(sessionStorage.getItem('tk'))
-      ? false
-      : this.transactionService.debtItems.count === 0;
+  ngAfterViewInit(): void {
+    const buttonSkip = {
+      text: 'Omitir',
+      classes: 'btn-outline-primary',
+      type: 'cancel',
+    };
+    const buttonBack = {
+      text: 'Atrás',
+      classes: 'btn-outline-primary',
+      type: 'back',
+    };
+    const buttonNext = {
+      text: 'Siguiente',
+      classes: 'btn-primary',
+      type: 'next',
+    };
+    this.shepherdService.defaultStepOptions = {
+      classes: 'onboarding-step',
+      scrollTo: true,
+      modalOverlayOpeningRadius: 4,
+      arrow: false,
+      canClickTarget: false,
+      cancelIcon: {
+        enabled: true,
+      },
+    };
+    this.shepherdService.modal = true;
+    this.shepherdService.confirmCancel = false;
+    this.shepherdService.addSteps([
+      {
+        id: 'intro',
+        buttons: [buttonSkip, { ...buttonNext, text: 'Empezar' }],
+        cancelIcon: {
+          enabled: false,
+        },
+        classes: 'custom-class-name-1 custom-class-name-2',
+        highlightClass: 'highlight',
+        text: [
+          '<img src="assets/images/ilustracion-boy-elm.png" alt="Resumen" height="242" width="326" class="tw-mx-auto" /><h4 class="tw-font-medium tw-py-2">¡Bienvenido a Cobro Simple!</h4><p class="tw-text-sm">Hemos preparado un pequeño tutorial para orientarte.</p>',
+        ],
+      },
+      {
+        id: 'addDeuda',
+        attachTo: {
+          element: '.addDeuda',
+          on: 'bottom',
+        },
+        buttons: [{ ...buttonSkip, text: 'Cerrar' }, buttonNext],
+        classes: 'tw-translate-y-2',
+        highlightClass: 'highlight',
+        title: () => this.getStepPositionTitle(),
+        text: '<h4 class="tw-font-medium tw-pb-2">Agrega cobros</h4><p class="tw-text-sm">Si tienes un servicio con data completa o parcial, el primer paso es agregar cobros. Puedes hacerlo de manera individual o masiva con nuestra plantilla de Excel.</p>',
+      },
+      {
+        id: 'lista',
+        attachTo: {
+          element: '.movements',
+          on: 'bottom-end',
+        },
+        buttons: [buttonBack, buttonNext],
+        classes: 'records tw-translate-y-4',
+        highlightClass: 'highlight',
+        modalOverlayOpeningPadding: 9,
+        title: () => this.getStepPositionTitle(),
+        text: '<h4 class="tw-font-medium tw-pb-2">Ver y editar registros</h4><p class="tw-text-sm">Podrás ver el estado de tus cobros y agregar/editar pagos haciendo clic en “Ver detalle”. Solo se pueden editar los pagos que son agregados manualmente.</p><img src="assets/images/movements-example.png" alt="Ejemplo"  class="tw-mx-auto tw-w-full" />',
+      },
+      {
+        id: 'filter',
+        attachTo: {
+          element: '.widget.filtros .content',
+          on: 'bottom-end',
+        },
+        buttons: [buttonBack, buttonNext],
+        classes: 'tw-translate-y-2',
+        highlightClass: 'highlight',
+        title: () => this.getStepPositionTitle(),
+        text: '<h4 class="tw-font-medium tw-pb-2">Encuentra rápido a tus clientes</h4><p class="tw-text-sm">Puedes buscarlos por código o filtrar el servicio, estado del cobro y un rango de fechas.</p>',
+      },
+      {
+        id: 'menu-services',
+        attachTo: {
+          element:
+            'cs-internal-header ul.navigation-menu > li:nth-child(2) > a',
+          on: 'bottom',
+        },
+        buttons: [buttonBack, buttonNext],
+        classes: 'tw-translate-y-2',
+        highlightClass: 'highlight',
+        title: () => this.getStepPositionTitle(),
+        text: '<h4 class="tw-font-medium tw-pb-2">Edita y crea nuevos servicios</h4><p class="tw-text-sm">Podrás ver la lista completa de servicios y editarlos o eliminarlos.</p>',
+      },
+      {
+        id: 'menu-company',
+        attachTo: {
+          element:
+            'cs-internal-header ul.navigation-menu > li:nth-child(3) > a',
+          on: 'bottom',
+        },
+        buttons: [buttonBack, buttonNext],
+        classes: 'tw-translate-y-2',
+        highlightClass: 'highlight',
+        title: () => this.getStepPositionTitle(),
+        text: '<h4 class="tw-font-medium tw-pb-2">Edita los datos de tu empresa</h4><p class="tw-text-sm">Cambia el nombre con el que tus clientes te encontrarán en nuestros canales digitales. Aquí también puedes cambiar tu contraseña.</p>',
+      },
+      {
+        id: 'menu-notifications',
+        attachTo: {
+          element: '#lnkMessages',
+          on: 'bottom',
+        },
+        buttons: [buttonBack, { ...buttonNext, text: 'Finalizar' }],
+        classes: 'tw-translate-y-2',
+        highlightClass: 'highlight',
+        scrollTo: false,
+        title: () => this.getStepPositionTitle(),
+        text: '<h4 class="tw-font-medium tw-pb-2">Siempre actualizado</h4><p class="tw-text-sm">Cada vez que un cliente realice un pago, recibirás una notificación.</p>',
+      },
+    ]);
+    this.updateModal();
   }
 
-  ceroRegistrosEliminar(): boolean {
-    if (
-      sessionStorage.getItem('tk') === null ||
-      sessionStorage.getItem('tk') === ''
-    ) {
-      return false;
-    } else {
-      let id = 0;
-      this.transactionService.debtItems.data.forEach((itm) => {
-        if (
-          (!itm.hasIBKPayments && itm.status !== 'PAGADO') ||
-          itm.status === 'PARCIAL'
-        ) {
-          id++;
-        }
-      });
-      if (this.transactionService.debtItems.count === 0) {
-        return true;
-      } else {
-        return id <= 0;
-      }
-    }
+  ngOnDestroy(): void {
+    this.shepherdService.complete();
   }
 
-  orderList(index: number, asc: boolean) {
-    this.orderBy = index;
-    this.orderDef[index].asc = asc;
+  getStepPositionTitle() {
+    const tourObject = this.shepherdService.tourObject;
+    const intro = tourObject.getById('intro');
+    const current = tourObject.getCurrentStep();
+    const position = tourObject.steps.indexOf(current) + (isNil(intro) ? 1 : 0);
+    const steps = isNil(intro)
+      ? tourObject.steps.length
+      : tourObject.steps.length - 1;
+    return `<i class="pi pi-question-circle tw-pr-2 tw-text-xs"></i>${position} de ${steps}`;
+  }
+
+  showOnboarding() {
+    this.shepherdService.tourObject.removeStep('intro');
+    this.shepherdService.start();
+  }
 
     this.currentFilter.asc = asc;
     this.currentFilter.columnName = this.orderDef[index].name;
