@@ -1,9 +1,6 @@
-.addDeuda {
-}
 .select-all {
   &.tw-text-extended-grey-2 {
-    filter: brightness(0) saturate(100%) invert(82%) sepia(0%) saturate(468%)
-      hue-rotate(266deg) brightness(87%) contrast(110%);
+    filter: brightness(0) saturate(100%) invert(82%) sepia(0%) saturate(468%) hue-rotate(266deg) brightness(87%) contrast(110%);
   }
 }
 
@@ -56,17 +53,6 @@
   @include font-text(12px !important, normal);
 
   color: #0d131d !important;
-}
-
-.link-manual {
-  @include font-text(16px, 500);
-  color: #05be50 !important;
-  text-align: right;
-  margin-left: 10px;
-}
-
-.link-manual:hover {
-  text-decoration: none !important;
 }
 
 .ngx-pagination .current {
@@ -247,36 +233,9 @@
   color: #ff8900 !important;
 }
 
-.title {
-  padding: 6px 12px;
-  border-bottom: $separador;
-
-  .text {
-    @include font-text(12px, 500);
-
-    color: $textblack;
-  }
-
-  .mark-all {
-    @include font-text(12px);
-
-    color: $textgreen;
-    cursor: pointer;
-  }
-}
 
 .widget {
   width: 100%;
-
-  .title {
-    @include font-text(18px, 500);
-
-    padding: 20px 15px 10px;
-    color: $negro;
-    display: flex;
-    //flex-direction: column;
-    justify-content: space-between;
-  }
 
   .content {
     width: 100%;
@@ -745,95 +704,3 @@
     }
   }
 }
-
-:host
-  ::ng-deep
-  .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
-  .mat-form-field-label {
-  //transform: translateY(-1.28125em) scale(1) perspective(100px)
-  //  translateZ(0.001px);
-  //font-size: 10px;
-  //font-weight: 500 !important;
-}
-
-/* TOOLTIP */
-
-//:host ::ng-deep .inline-input {
-//  .mat-form-field-wrapper {
-//    padding-bottom: 0;
-//
-//    .mat-form-field-infix {
-//      padding: 0;
-//      border-top: none;
-//    }
-//
-//    .mat-form-field-underline {
-//      bottom: 0;
-//    }
-//  }
-//}
-
-:host ::ng-deep .mat-checkbox-inner-container-no-side-margin {
-  margin-left: 12px !important;
-}
-
-:host ::ng-deep .mat-select-value {
-  color: #0d131d;
-
-  // color: #0d131d !important;
-}
-
-:host ::ng-deep .ngx-pagination {
-  @include font-text(14px, 500);
-
-  color: #9b9b9b;
-
-  &::before,
-  &::after {
-    content: none !important;
-  }
-
-  .pagination-previous {
-    a::before,
-    &.disabled::before {
-      content: none !important;
-    }
-  }
-
-  .pagination-next {
-    a::after,
-    &.disabled::after {
-      content: none !important;
-    }
-  }
-
-  .current {
-    background: transparent !important;
-    color: $textgreen !important;
-    text-decoration: underline !important;
-    font-weight: 500;
-    font-size: 14px;
-  }
-}
-
-:host ::ng-deep .ps--active-x > .ps__rail-x,
-.ps--active-y > .ps__rail-y {
-  display: none !important;
-}
-
-@media screen and (max-width: 601px) {
-  .ngx-pagination.responsive .small-screen {
-    display: inline-block;
-  }
-
-  .ngx-pagination.responsive
-    li:not(.small-screen):not(.pagination-previous):not(.pagination-next) {
-    display: none;
-  }
-}
-
-b {
-  @include font-text(16px, 500);
-}
-
-/* [END] TOOLTIP BOOSTRAP */
