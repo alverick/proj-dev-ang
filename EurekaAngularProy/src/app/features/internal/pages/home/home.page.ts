@@ -216,9 +216,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     this.selectedAll = false;
     this.selectedUniverse = false;
-    this.styleTag = document.createElement('style');
-    this.styleTag.type = 'text/css';
-    document.getElementsByTagName('head')[0].appendChild(this.styleTag);
+    if (document.querySelector('style.onboarding-style')) {
+      this.styleTag = document.querySelector('style.onboarding-style');
+    } else {
+      this.styleTag = document.createElement('style');
+      this.styleTag.className = 'onboarding-style';
+      document.getElementsByTagName('head')[0].appendChild(this.styleTag);
+    }
   }
 
   ngAfterViewInit(): void {
