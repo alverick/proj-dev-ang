@@ -166,7 +166,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   selectedRows = [];
   tableSortField = '';
   styleTag: HTMLStyleElement;
-  firstLoad = false;
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.updatePositionModal();
@@ -479,10 +478,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.selectedAll = this.transactionService.isMarkedAll(
             this.selectedUniverse
           );
-        } else if (!this.firstLoad) {
-          this.firstLoad = true;
-          this.validateOnboarding();
         }
+        this.validateOnboarding(
+          this.transactionService.debtItems.data.length > 0
+        );
         // this.selectedUniverse = false;
         if (cb) {
           cb();
@@ -492,17 +491,19 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.showArrow = true;
   }
 
-  validateOnboarding() {
+  validateOnboarding(hasRecords: boolean) {
     const localStorage = window.localStorage;
     const username = window.sessionStorage.getItem('username');
     let settings = JSON.parse(localStorage.getItem('settings'));
-    console.log('validateOnboarding',settings);
-    if (!pathEq([username, 'ob', 'mov'], 1, settings)) {
+    const saved = pathEq([username, 'ob', 'mov'], 1, settings);
+    if (!saved) {
       if (isNil(settings)) {
         settings = {};
       }
       settings[username] = { ob: { mov: 1 } };
       localStorage.setItem('settings', JSON.stringify(settings));
+    }
+    if (!hasRecords && !saved) {
       this.shepherdService.start();
     }
   }
