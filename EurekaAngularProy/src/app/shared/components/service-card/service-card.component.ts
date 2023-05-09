@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { isNilOrEmpty } from 'ramda-adjunct';
+
 import { dataTypeOptions } from '../../constants/services';
 import { IServiceRemoteModelForms } from '../../models';
 
@@ -28,10 +29,29 @@ export class ServiceCardComponent implements OnInit, OnChanges {
   dataType = '';
   name = '';
   debtorCode = '';
+  messageStatus = '';
   updateEditable = false;
   pendingUserReview: boolean;
   pendingGtpReview: boolean;
   hasWarnings: boolean;
+  messagesOptions = {
+    pendingUserReview: {
+      color: 'tw-bg-extended-watermelon-1',
+      text: 'Debes revisar este servicio',
+    },
+    notPendingUserReview: {
+      color: 'tw-bg-extended-orange-1',
+      text: 'Servicio actualizado',
+    },
+    pendingGtpReview: {
+      color: 'tw-bg-extended-orange-1',
+      text: 'Pendiente de revisión',
+    },
+    pendingUserFix: {
+      color: 'tw-bg-extended-watermelon-1',
+      text: 'Debes revisar este servicio',
+    },
+  };
 
   ngOnInit() {
     this.setPaymentChannels();
@@ -60,6 +80,7 @@ export class ServiceCardComponent implements OnInit, OnChanges {
   }
 
   setStatusCard() {
+    this.messageStatus = '';
     this.pendingUserReview = false;
     this.pendingGtpReview = false;
     const {
@@ -71,17 +92,22 @@ export class ServiceCardComponent implements OnInit, OnChanges {
       newName,
       inReview,
     } = this.serviceData;
+
     if (this.reviewMode) {
+      this.messageStatus = 'notPendingUserReview';
       if (newNameGTPStatus === 3 && nameService === newName) {
         this.pendingUserReview = true;
+        this.messageStatus = 'pendingUserReview';
       }
       if (newNameCodeGTPStatus === 3 && debtorCode === newNameCode) {
         this.pendingUserReview = true;
+        this.messageStatus = 'pendingUserReview';
       }
     }
     if (this.lockedMode) {
       if (newNameGTPStatus === 3 || newNameCodeGTPStatus === 3) {
         this.pendingUserReview = true;
+        this.messageStatus = 'pendingUserFix';
       } else if (
         newNameGTPStatus === 0 ||
         newNameCodeGTPStatus === 0 ||
@@ -89,6 +115,7 @@ export class ServiceCardComponent implements OnInit, OnChanges {
         newNameCodeGTPStatus === 2
       ) {
         this.pendingGtpReview = true;
+        this.messageStatus = 'pendingGtpReview';
       }
     }
     this.hasWarnings =
@@ -115,6 +142,7 @@ export class ServiceCardComponent implements OnInit, OnChanges {
   actionEdit() {
     this.edit.emit(this.position);
   }
+
   actionDelete() {
     this.delete.emit(this.position);
   }
