@@ -166,6 +166,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   selectedRows = [];
   tableSortField = '';
   styleTag: HTMLStyleElement;
+  tableMovementsInactive = false;
+
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.updatePositionModal();
@@ -226,6 +228,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    this.setOnboarding();
+    this.updatePositionModal();
+  }
+
+  private setOnboarding() {
     const buttonSkip = {
       text: 'Omitir',
       classes: 'btn-outline-primary',
@@ -297,6 +304,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         modalOverlayOpeningPadding: 9,
         title: () => this.getStepPositionTitle(),
         text: '<h4 class="tw-font-medium tw-pb-2">Ver y editar registros</h4><p class="tw-text-sm">Podrás ver el estado de tus cobros y agregar/editar pagos haciendo clic en “Ver detalle”. Solo se pueden editar los pagos que son agregados manualmente.</p><img src="assets/images/movements-example.png" alt="Ejemplo"  class="tw-mx-auto tw-w-full" />',
+        when: {
+          show: () => {
+            this.tableMovementsInactive = true;
+          },
+          hide: () => {
+            this.tableMovementsInactive = false;
+          },
+        },
       },
       {
         id: 'filter',
@@ -350,7 +365,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         text: '<h4 class="tw-font-medium tw-pb-2">Siempre actualizado</h4><p class="tw-text-sm">Cada vez que un cliente realice un pago, recibirás una notificación.</p>',
       },
     ]);
-    this.updatePositionModal();
   }
 
   ngOnDestroy(): void {

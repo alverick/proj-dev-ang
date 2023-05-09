@@ -47,7 +47,10 @@
           >
             <div class="tw-text-lg">Movimientos</div>
           </div>
-          <div class="content">
+          <div
+            class="content"
+            [ngClass]="{ 'tw-pointer-events-none': tableMovementsInactive }"
+          >
             <section class="actions tw-flex tw-items-center tw-justify-between">
               <div class="rows-actions">
                 <div
@@ -115,37 +118,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
-            </section>
-            <section *ngIf="selectedAll" class="counter">
-              <div class="text">
-                Se
-                <span *ngIf="transactionService.debtItems.count > 1">han</span
-                ><span *ngIf="transactionService.debtItems.count == 1">ha</span>
-                seleccionado los
-                <span *ngIf="!selectedUniverse" style="font-weight: 500">{{
-                  transactionService.itemsForDelete.length
-                }}</span>
-                <span *ngIf="selectedUniverse" style="font-weight: 500">{{
-                  transactionService.debtItems.countNoIbkPayments
-                }}</span>
-                registros de esta página
-                <button
-                  type="button"
-                  *ngIf="
-                    transactionService.debtItems.count >
-                    transactionService.debtItems.data.length
-                  "
-                  class="btn-select-all"
-                  (click)="selectedUniverse = !selectedUniverse"
-                >
-                  <span *ngIf="!selectedUniverse"
-                    >Seleccionar los
-                    {{ transactionService.debtItems.countNoIbkPayments }}
-                    registros</span
-                  >
-                  <span *ngIf="selectedUniverse">Anular la selección</span>
-                </button>
               </div>
             </section>
             <section class="lista">
