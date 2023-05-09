@@ -11,7 +11,7 @@
 <div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
   <cs-services-list class="tw-w-full" [onlyEdit]="true" (finish)="finalize()">
     <cs-service-card
-      *ngFor="let service of affiliation.servicesList;let position=index"
+      *ngFor="let service of affiliation.servicesList; let position = index"
       [serviceData]="service"
       [position]="position"
       [reviewMode]="true"
