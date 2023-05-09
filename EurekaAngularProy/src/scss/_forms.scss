@@ -23,6 +23,7 @@
 
 .p-inputtext {
   font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+  padding: 0.429rem;
 }
 
 .p-terminal .p-terminal-input {
@@ -66,6 +67,9 @@ body {
   }
 
   .p-multiselect {
+    .p-multiselect-label {
+      padding: 0.429rem;
+    }
     .p-multiselect-trigger {
       color: var(--primary-green-1);
 
@@ -419,6 +423,7 @@ body {
     &.p-calendar-w-btn .p-datepicker-trigger {
       background: transparent;
       color: var(--primary-green-1);
+      padding: .429rem;
     }
   }
 

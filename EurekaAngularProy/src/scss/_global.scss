@@ -1,6 +1,7 @@
 .tooltip.cs-tooltip {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   font-family: $primary-font-family;
+
   .tooltip-inner {
     background-color: #fff;
     color: #b7babc;
@@ -20,13 +21,13 @@
 
   &.right {
     margin-left: 3px;
+
     .tooltip-arrow:before,
     .tooltip-arrow {
       border-right-color: #fff;
     }
   }
 }
-
 
 .cs-alert {
   .swal2-popup {
@@ -138,3 +139,17 @@
   color: var(--primary-green-1);
 }
 
+.shepherd-button {
+  background: var(--primary-green-1);
+  color: var(--grises-ibk-white);
+  &:not(:disabled) {
+    &:hover {
+      background: var(--primary-green-2);
+      color: var(--grises-ibk-white);
+    }
+  }
+}
+
+.shepherd-target-click-disabled.shepherd-enabled.shepherd-target.movements.highlight.movements {
+  pointer-events: auto;
+}
