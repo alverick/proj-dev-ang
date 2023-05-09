@@ -228,6 +228,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    this.setOnboarding();
+    this.updatePositionModal();
+  }
+
+  private setOnboarding() {
     const buttonSkip = {
       text: 'Omitir',
       classes: 'btn-outline-primary',
@@ -360,7 +365,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         text: '<h4 class="tw-font-medium tw-pb-2">Siempre actualizado</h4><p class="tw-text-sm">Cada vez que un cliente realice un pago, recibirás una notificación.</p>',
       },
     ]);
-    this.updatePositionModal();
   }
 
   ngOnDestroy(): void {
