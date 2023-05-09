@@ -3,14 +3,32 @@
     <div class="row">
       <div class="col-sm-12 col-md-12">
         <div class="widget filtros">
-          <div class="title">
-            Buscar
-            <a
-              class="link-manual"
-              href="https://www.youtube.com/watch?v=oI4gEpfYwLQ"
-              target="_blank"
-              >¿Cómo usar cobro simple?</a
-            >
+          <div
+            class="tw-flex tw-justify-between tw-items-center tw-pt-10 tw-pb-4"
+          >
+            <div class="tw-text-lg">
+              ¡Bienvenido a <span class="tw-font-medium">Cobro Simple</span>!
+            </div>
+            <div class="tw-text-sm tw-flex tw-gap-5">
+              <a
+                href="javascript:void(0)"
+                class="tw-flex tw-items-center hover:tw-no-underline"
+                (click)="showOnboarding()"
+                ><i class="pi pi-question-circle tw-pr-1 tw-text-xs"></i>¿Cómo
+                usar cobro simple?</a
+              >
+              <a
+                class="tw-flex tw-items-center"
+                href="https://www.youtube.com/watch?v=oI4gEpfYwLQ"
+                target="_blank"
+                ><img
+                  class="tw-pr-1"
+                  src="assets/images/icon-play-circle.svg"
+                  alt="Vídeo tutorial"
+                />
+                Ver vídeo tutorial</a
+              >
+            </div>
           </div>
           <div class="content">
             <cs-payments-filter
@@ -23,8 +41,12 @@
             ></cs-payments-filter>
           </div>
         </div>
-        <div class="widget lista">
-          <div class="title">Movimientos</div>
+        <div class="widget lista tw-relative">
+          <div
+            class="tw-flex tw-justify-between tw-items-center tw-pt-10 tw-pb-4"
+          >
+            <div class="tw-text-lg">Movimientos</div>
+          </div>
           <div class="content">
             <section class="actions tw-flex tw-items-center tw-justify-between">
               <div class="rows-actions">
@@ -41,18 +63,20 @@
                 </div>
               </div>
               <div
-                class="movements-actions tw-flex tw-items-center tw-text-primary-green-1 tw-text-sm"
+                class="movements-actions tw-h-full tw-flex tw-items-center tw-text-primary-green-1 tw-text-sm"
               >
-                <div class="download tw-cursor-pointer">
+                <div
+                  class="download tw-cursor-pointer tw-h-full tw-flex tw-items-center tw-px-2"
+                >
                   <div
-                    class="lnk-label"
+                    class="lnk-label tw-px-4"
                     [class.disabled]="enDescarga"
                     (click)="DescargarReporte()"
                   >
                     <img
                       *ngIf="!enDescarga"
                       class="tw-inline"
-                      src="../../../../../assets/images/download.svg"
+                      src="assets/images/download.svg"
                       alt="download"
                     /><img
                       *ngIf="enDescarga"
@@ -63,11 +87,10 @@
                     Descargar movimientos
                   </div>
                 </div>
-                <div class="addDeuda tw-cursor-pointer">
-                  <div
-                    class="btn btn-default dropdown-toggle"
-                    data-toggle="dropdown"
-                  >
+                <div
+                  class="addDeuda tw-cursor-pointer tw-h-full tw-flex tw-items-center"
+                >
+                  <div class="tw-px-4" data-toggle="dropdown">
                     <img
                       class="tw-inline"
                       src="../../../../../assets/images/plus_circle.svg"
@@ -133,10 +156,13 @@
                 (loadData)="loadData($event)"
                 (selectedChange)="onSelected($event)"
                 (showDetails)="showDetails($event)"
-                (saveRow)="BotonActualizar($event)"
+                (saveRow)="saveDebt($event)"
               ></cs-table-movements>
             </section>
           </div>
+          <div
+            class="movements tw-absolute tw-w-full tw-h-[220px] tw-top-4 tw-pointer-events-none"
+          ></div>
         </div>
       </div>
     </div>

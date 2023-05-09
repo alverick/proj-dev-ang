@@ -82,11 +82,6 @@ const routes: Routes = [
         ],
       },
       {
-        path: internalRoutingNames.DASHBOARD,
-        component: DashboardPage,
-        canActivate: [AuthGuard],
-      },
-      {
         path: internalRoutingNames.HELP,
         component: HelpPage,
         canActivate: [AuthGuard],

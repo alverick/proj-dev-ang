@@ -37,6 +37,7 @@
               "node_modules/primeicons/primeicons.css",
               "src/scss/lara-light-theme.css",
               "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/shepherd.js/dist/css/shepherd.css",
               "src/scss/style.scss"
             ],
             "scripts": [
