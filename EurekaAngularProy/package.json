@@ -131,7 +131,6 @@
     "postcss-scss": "^4.0.6",
     "postcss-strip-inline-comments": "^0.1.5",
     "prettier": "^2.6.2",
-    "protractor": "~7.0.0",
     "sass-loader": "^13.2.0",
     "sass-resources-loader": "^2.2.5",
     "stylelint": "^13.13.1",
