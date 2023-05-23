@@ -1,72 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Router } from '@angular/router';
 import * as saveAs from 'file-saver';
-import * as _moment from 'moment'; // dejalo si sale error
-import { default as _rollupMoment } from 'moment';
 import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { IEntryModel } from 'src/app/shared/models';
 import { GtpFilter } from 'src/app/shared/models/gtp-filter';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+
+import { QueryDataService } from '../../../../shared/data';
 import { StatesGtp } from '../../../../shared/models/states-gtp';
 import { CompanyService } from '../../../../shared/services';
 import { GtpService } from '../../../../shared/services/gtp.service';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { adminFullRoutingNames } from '../../admin-routing.names';
-
-//// END DATE ////////////////////
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
-
-////////////////////////////
 
 @Component({
   selector: 'cs-gtp-grilla',
   templateUrl: './gtp-grilla.page.html',
   styleUrls: ['./gtp-grilla.page.scss'],
-  styles: [
-    `
-      :host >>> .tooltip-inner {
-        background-color: #fff;
-        color: #0d131d !important;
-        border-radius: 4px;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-        font-size: 11px !important;
-        padding: 0.5em 0.3em;
-        min-width: 300px !important;
-      }
-
-      :host >>> .tooltip.top .tooltip-arrow:before,
-      :host >>> .tooltip.top .tooltip-arrow {
-        border-top-color: #0d131d57;
-      }
-    `,
-  ],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ],
 })
 export class GtpGrillaPage implements OnInit {
   messageTable = '';
@@ -74,6 +25,22 @@ export class GtpGrillaPage implements OnInit {
   showArrow = false;
   asc = true;
   orderBys = 0;
+  items = [
+    {
+      label: 'Clientes No Registrados',
+      icon: 'pi pi-file-excel',
+      command: () => {
+        this.clickClientesNoRegistrados();
+      },
+    },
+    {
+      label: 'Empresas registradas',
+      icon: 'pi pi-file-excel',
+      command: () => {
+        this.getAccountStateList();
+      },
+    },
+  ];
   initialFilter: GtpFilter = {
     pageNumber: 1,
     ColumnName: 'requestDate',
@@ -132,7 +99,8 @@ export class GtpGrillaPage implements OnInit {
     private afiliacionService: AfiliacionService,
     public gtpService: GtpService,
     private router: Router,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private queryDataService: QueryDataService
   ) {}
 
   rubros: IEntryModel[] = [];
@@ -236,5 +204,30 @@ export class GtpGrillaPage implements OnInit {
     this.companyService.getAccountStateDetailsList().subscribe((r: Blob) => {
       saveAs(r, 'Detalles de cuentas.xlsx');
     });
+  }
+
+  fixAccounts(): void {
+    void swalAlert
+      .fire({
+        title: 'Actualización masiva de estado saving',
+        text: `Actualiza el estado de todos los registros saving a completed, tras error en carga de archivos Excel.`,
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+      })
+      .then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          this.queryDataService.regularizeAll().subscribe((result) => {
+            console.log(result);
+            void swalAlert.fire({
+              title: 'Actualización masiva de estado saving',
+              text: result.message,
+              showConfirmButton: true,
+              confirmButtonText: 'Aceptar',
+            });
+          });
+        }
+      });
   }
 }
