@@ -51,6 +51,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
@@ -123,6 +124,7 @@ const PRIMENG_MODULES = [
   RippleModule,
   DynamicDialogModule,
   SidebarModule,
+  SplitButtonModule,
   StepsModule,
   TableModule,
   TooltipModule,
