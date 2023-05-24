@@ -22,7 +22,7 @@
             <section
               class="tw-flex tw-justify-between tw-border-extended-grey-4 tw-border-b tw-border-solid tw-px-4 tw-py-4"
             >
-              <div class="tw-flex tw-gap-1">
+              <div class="tw-flex">
                 <p-splitButton
                   #ua
                   label="Descargar"
@@ -33,15 +33,17 @@
                 ></p-splitButton>
               </div>
               <div class="tw-flex">
-                <p-button
+                <button
+                  pButton
                   pRipple
                   (click)="fixAccounts()"
                   pTooltip='Haz clic en este botón para solucionar el problema de estado "Saving" de forma masiva.'
                   tooltipPosition="top"
-                  label='Corregir casos "saving"'
-                  styleClass="p-button-text p-button-sm p-button-outlined"
+                  type="button"
                   icon="pi pi-sync"
-                ></p-button>
+                  label='Corregir casos "saving"'
+                  class="p-button-text p-button-sm p-button-outlined tw-h-11"
+                ></button>
               </div>
             </section>
             <section class="lista">
