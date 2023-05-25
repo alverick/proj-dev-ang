@@ -3,6 +3,7 @@ import {
   MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
   MatLegacyDialogRef as MatDialogRef,
 } from '@angular/material/legacy-dialog';
+import { isNil } from 'ramda';
 import Swal from 'sweetalert2';
 
 import { GoogleAnalytics } from '../../../../../../shared/services/googleAnalytics.service';
@@ -49,6 +50,7 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   editItm(itm) {
+    this.cancelItm(this.getItemEditing());
     this.isEditingRow = true;
     itm.editing = true;
     itm.newAmount = itm.amount;
@@ -166,6 +168,9 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   cancelItm(itm) {
+    if (isNil(itm)) {
+      return;
+    }
     this.isEditingRow = false;
     if (itm.id === undefined) {
       this.items.pop();
