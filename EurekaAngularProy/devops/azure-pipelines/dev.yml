@@ -19,14 +19,14 @@ stages:
     - task: NodeTool@0
       displayName: 'Install Node.js'
       inputs:
-        versionSpec: '12.x'
-      
+        versionSpec: '14.x'
+
     - task: Npm@1
       displayName: 'Install angular'
       inputs:
         command: custom
         verbose: false
-        customCommand: 'install -g @angular/cli@8'
+        customCommand: 'install -g @angular/cli@15'
 
     - task: Npm@1
       displayName: 'Install npm'
@@ -54,7 +54,7 @@ stages:
     - upload: EurekaAngularProy/dist/EurekaAngularProy
       displayName: 'Publish dist'
       artifact: web-cobrosimple
-      
+
     - task: ArchiveFiles@2
       displayName: 'Archive File'
       inputs:
