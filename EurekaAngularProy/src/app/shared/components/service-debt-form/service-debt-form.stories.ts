@@ -7,7 +7,6 @@ import {
 import { UntypedFormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
-import { centered } from '@storybook/addon-centered/angular';
 import { moduleMetadata } from '@storybook/angular';
 
 import { errorServiceConfiguration } from '../../constants/company-errors';
@@ -58,7 +57,6 @@ const initAppComponentFactory =
 export default {
   title: 'Auth/Module/Service Debt Form',
   decorators: [
-    centered,
     moduleMetadata({
       imports: [BrowserAnimationsModule, SharedModule],
       providers: [

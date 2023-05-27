@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action, withActions } from '@storybook/addon-actions';
-import { centered } from '@storybook/addon-centered/angular';
-import { withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
+
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CompanyPasswordFormComponent } from './company-password-form.component';
@@ -73,13 +72,10 @@ class FormDemoComponent {
 export default {
   title: 'Internal/Module/Company Form Password',
   decorators: [
-    withKnobs,
-    centered,
     moduleMetadata({
       declarations: [CompanyPasswordFormComponent],
       imports: [BrowserAnimationsModule, SharedModule],
     }),
-    withActions('sendForm', 'click .btn'),
   ],
 };
 
