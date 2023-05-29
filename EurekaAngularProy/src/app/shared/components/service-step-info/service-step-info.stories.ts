@@ -2,16 +2,14 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { withActions } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
+
 import { SharedModule } from '../../shared.module';
 import { ServiceStepInfoComponent } from './service-step-info.component';
 
 export default {
   title: 'Auth/Module/Service Form Info',
   decorators: [
-    withKnobs,
     moduleMetadata({
       imports: [
         BrowserAnimationsModule,
@@ -20,7 +18,6 @@ export default {
         SharedModule,
       ],
     }),
-    withActions('sendForm', 'click .btn'),
   ],
 };
 
