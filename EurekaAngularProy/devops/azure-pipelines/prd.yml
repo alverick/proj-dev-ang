@@ -9,6 +9,13 @@ variables:
 
 stages:
 - stage: Build
+  condition: |
+    or(and(in(variables['Build.Reason'],'Manual') ,
+          in(variables['Build.SourceBranch'],'refs/heads/master')) ,
+      and(in(variables['Build.Reason'],'Manual') ,
+          or(startsWith(variables['Build.SourceBranch'],'refs/heads/hotfix/'),
+              startsWith(variables['Build.SourceBranch'],'refs/heads/release/')))
+      )
   displayName: Build and push uat
   jobs:
   - job: Build
