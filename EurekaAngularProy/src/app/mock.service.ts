@@ -4,6 +4,7 @@ import {
   ApiMockRootRoute,
   ApiMockService,
 } from '@ng-stack/api-mock';
+
 import { environment } from '../environments/environment';
 import { updateCompanyMock } from './shared/mocks/affiliation';
 
@@ -54,6 +55,11 @@ export class MockService implements ApiMockService {
             currency: '001',
           },
         ],
+      },
+      {
+        host: environment.END_POINT,
+        path: 'company/gtp/client/update',
+        responseCallback: () => true,
       },
       {
         host: environment.END_POINT,
