@@ -6,36 +6,17 @@ import { CookieService } from 'ngx-cookie-service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { StorageService } from 'src/app/shared/services/storage.service';
+
 import { CloseViewGuard } from '../../shared/guards/close-view.guard';
 import { LogoutGuard } from '../../shared/guards/logout.guard';
 import { SharedModule } from '../../shared/shared.module';
-import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
+import { AuthRoutingModule } from './auth-routing.module';
 import { CompanyFormAuthComponent } from './components/company-form-auth/company-form-auth.component';
 import { CompanyFormRegistrationComponent } from './components/company-form-registration/company-form-registration.component';
-import { FormEmpresaGTPComponent } from './components/form-empresa-gtp/form-empresa-gtp.component';
-import { FormServicioGtpComponent } from './components/form-servicio-gtp/form-servicio-gtp.component';
-import { FormServicioComponent } from './components/form-servicio/form-servicio.component';
-import { SerFormGtpComponent } from './components/ser-form-gtp/ser-form-gtp.component';
 import { SidebarCompanyComponent } from './components/sidebar-company/sidebar-company.component';
 import { GUARDS } from './guards';
-import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
-import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
-import { CompanyRegistrationPage } from './pages/company-registration/company-registration.page';
-import { ConfigurarGtpComponent } from './pages/configurar-gtp/configurar-gtp.component';
-import { ConfigurarServiciosComponent } from './pages/configurar-servicios/configurar-servicios.component';
-import { CrearContrasenaComponent } from './pages/crear-contrasena/crear-contrasena.component';
-import { LoginPage } from './pages/login/login.page';
-import { ProcesandoComponent } from './pages/procesando/procesando.component';
-import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recuperar-contrasena.component';
-import { RegistrationFinishedPage } from './pages/registration-finished/registration-finished.page';
-import { RegistrationUpdatePage } from './pages/registration-update/registration-update.page';
-import { ServiceAddPage } from './pages/service-add/service-add.page';
-import { ServiceConfigurationPage } from './pages/service-configuration/service-configuration.page';
-import { ServiceInfoPage } from './pages/service-info/service-info.page';
-import { ServiceResumePage } from './pages/service-resume/service-resume.page';
-import { UpdateCompanyPage } from './pages/update-company/update-company.page';
-import { UpdateServicesPage } from './pages/update-services/update-services.page';
+import { PAGES } from './pages';
 import { SERVICES } from './services';
 
 @NgModule({
@@ -57,31 +38,11 @@ import { SERVICES } from './services';
     CloseViewGuard,
   ],
   declarations: [
-    CambiaContrasenaComponent,
-    CompanyRegistrationAuthPage,
-    ConfigurarGtpComponent,
-    ConfigurarServiciosComponent,
-    CrearContrasenaComponent,
-    FormEmpresaGTPComponent,
-    FormServicioComponent,
-    FormServicioGtpComponent,
-    CompanyRegistrationPage,
-    LoginPage,
-    ProcesandoComponent,
-    RecuperarContrasenaComponent,
-    SerFormGtpComponent,
     AuthComponent,
     CompanyFormRegistrationComponent,
     CompanyFormAuthComponent,
     SidebarCompanyComponent,
-    ServiceInfoPage,
-    ServiceAddPage,
-    ServiceConfigurationPage,
-    ServiceResumePage,
-    RegistrationFinishedPage,
-    RegistrationUpdatePage,
-    UpdateCompanyPage,
-    UpdateServicesPage,
+    ...PAGES,
   ],
   exports: [],
 })
