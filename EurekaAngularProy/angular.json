@@ -17,7 +17,10 @@
               "file-saver",
               "moment",
               "sweetalert2",
-              "moment"
+              "raf",
+              "core-js",
+              "html2canvas",
+              "rgbcolor"
             ],
             "customWebpackConfig": {
               "path": "./config/extra-webpack.config.js"
