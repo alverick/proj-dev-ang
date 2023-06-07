@@ -7,6 +7,7 @@ import {
 import { Router } from '@angular/router';
 import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
+
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import { CompanyService } from '../../../shared/services';
