@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { LazyLoadEvent } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { clone, forEachObjIndexed, isEmpty, pathEq } from 'ramda';
+import { Table, TableHeaderCheckbox } from 'primeng/table';
+import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
 import { SelectAllTableService } from '../../../../services';
@@ -82,51 +82,8 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   displayDialog = false;
   editRowData: any = {};
   dataSet = {};
-  es = {
-    firstDayOfWeek: 1,
-    dayNames: [
-      'domingo',
-      'lunes',
-      'martes',
-      'miércoles',
-      'jueves',
-      'viernes',
-      'sábado',
-    ],
-    dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
-    dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-    monthNames: [
-      'enero',
-      'febrero',
-      'marzo',
-      'abril',
-      'mayo',
-      'junio',
-      'julio',
-      'agosto',
-      'septiembre',
-      'octubre',
-      'noviembre',
-      'diciembre',
-    ],
-    monthNamesShort: [
-      'ene',
-      'feb',
-      'mar',
-      'abr',
-      'may',
-      'jun',
-      'jul',
-      'ago',
-      'sep',
-      'oct',
-      'nov',
-      'dic',
-    ],
-    today: 'Hoy',
-    clear: 'Borrar',
-  };
-  @ViewChild('table', { static: false }) table: Table;
+  @ViewChild('table') table: Table;
+  @ViewChild('selectAll') selectAll: TableHeaderCheckbox;
 
   constructor(
     private logger: NGXLogger,
@@ -221,6 +178,23 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     };
   }
   onRowSelect() {
+    this.selectedChange.emit(this.selectedRows);
+  }
+
+  updateSelected(rowData: Debts) {
+    if (!this.selectAll.checked) {
+      return;
+    }
+    if (
+      rowData.status != 'PAGADO' &&
+      (rowData.totalAmount === '0' || !rowData.hasIBKPayments)
+    ) {
+      this.selectedRows = [...this.selectedRows, rowData];
+    } else {
+      this.selectedRows = this.selectedRows.filter(
+        (item) => item.id !== rowData.id
+      );
+    }
     this.selectedChange.emit(this.selectedRows);
   }
 
