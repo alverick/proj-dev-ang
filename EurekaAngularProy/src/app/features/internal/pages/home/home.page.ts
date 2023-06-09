@@ -435,6 +435,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       dateTo,
       dateFrom,
       service,
+      pageNumber: 1,
     };
     if (!equals(filter, this.currentFilter)) {
       this.currentFilter = {
