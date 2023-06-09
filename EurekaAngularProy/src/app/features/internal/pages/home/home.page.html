@@ -56,6 +56,7 @@
                 <div
                   class="select-all tw-flex tw-items-center tw-text-sm"
                   [ngClass]="{
+                    'tw-cursor-pointer': selectedRows.length > 0,
                     'tw-text-primary-green-1': selectedRows.length > 0,
                     'tw-text-extended-grey-2': selectedRows.length === 0
                   }"
