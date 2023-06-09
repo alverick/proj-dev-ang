@@ -14,6 +14,7 @@ import { Table, TableHeaderCheckbox } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
+import { Debts } from '../../../../../../shared/models/debts';
 import { SelectAllTableService } from '../../../../services';
 
 enum StatusRowType {
@@ -74,11 +75,11 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Input() totalRecords: number;
   @Input() sortField = '';
   @Output() sortFieldChange = new EventEmitter<string>();
-  @Output() selectedChange = new EventEmitter<any>();
+  @Output() selectedChange = new EventEmitter<Debts[]>();
   @Output() showDetails = new EventEmitter<any>();
   @Output() saveRow = new EventEmitter<any>();
   @Output() loadData = new EventEmitter<LazyLoadEvent>();
-  selectedRows = [];
+  selectedRows: Debts[] = [];
   displayDialog = false;
   editRowData: any = {};
   dataSet = {};
