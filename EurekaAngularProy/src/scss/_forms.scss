@@ -364,6 +364,10 @@ body {
     .p-datatable-tbody > tr {
       color: var(--grises-ibk-black);
 
+      &:focus {
+        outline-color: transparent;
+      }
+
       &:focus-visible {
         outline-color: transparent;
       }
