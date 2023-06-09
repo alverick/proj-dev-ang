@@ -32,7 +32,6 @@ export class PaymentDetailComponent implements OnInit {
   ) {
     this.debtId = data.debtId;
     this.customer = data.customer;
-    this.status = data.status;
     this.currency = data.currency;
   }
 
