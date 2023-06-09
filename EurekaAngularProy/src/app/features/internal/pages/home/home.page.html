@@ -122,6 +122,7 @@
             </section>
             <section class="lista">
               <cs-table-movements
+                #tableMovements
                 [data]="transactionService.debtItems.data"
                 [totalRecords]="transactionService.debtItems.count"
                 [(sortField)]="tableSortField"

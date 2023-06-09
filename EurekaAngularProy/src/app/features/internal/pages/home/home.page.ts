@@ -39,6 +39,7 @@ import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { Popover } from './components/popover/popover.service';
+import { TableMovementsComponent } from './components/table-movements/table-movements.component';
 
 @Component({
   selector: 'cs-home',
@@ -167,6 +168,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   tableSortField = '';
   styleTag: HTMLStyleElement;
   tableMovementsInactive = false;
+  @ViewChild('tableMovements') tableMovements: TableMovementsComponent;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -963,6 +965,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (isNotNil(prop('status', result))) {
         itm.status = result.status;
+        this.consultaDeuda(() => this.tableMovements.updateSelected(itm));
       }
     });
   }
