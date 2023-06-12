@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
+
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import { CompanyService } from '../../../shared/services';
@@ -30,7 +31,7 @@ export interface PasswordForm {
 export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
   companyForm: UntypedFormGroup;
-  passwordForm: UntypedFormGroup;
+  passwordForm: FormGroup<PasswordForm>;
   entryOptions: IEntryModel[] = [];
   entryOptionsAdd: IEntryModel[] = [];
   constructor(
@@ -76,7 +77,7 @@ export class CompanyConfigurationService {
             event_category: GoogleAnalytics.Dashboard,
             event_label: 'actualiza_datos_empresa',
           });
-          swalAlert
+          void swalAlert
             .fire({
               text: 'Los datos de la empresa han sido actualizados',
               showCloseButton: true,
@@ -84,18 +85,17 @@ export class CompanyConfigurationService {
             })
             .then((result) => {
               if (result.value) {
-                this.router.navigate([internalFullRoutingNames.HOME]);
+                void this.router.navigate([internalFullRoutingNames.HOME]);
               }
             });
         }
         if (enterpriseUpdate.success === false) {
-          swalAlert.fire({
+          void swalAlert.fire({
             icon: 'error',
             text: 'Ha ocurrido un error',
             showCloseButton: true,
             confirmButtonText: 'ACEPTAR',
           });
-          return;
         }
       });
   }
@@ -120,14 +120,14 @@ export class CompanyConfigurationService {
     return this.companyService.updateCompany(enterprise).pipe(
       tap((enterpriseUpdate) => {
         if (enterpriseUpdate.success === true) {
-          swalAlert.fire({
+          void swalAlert.fire({
             text: 'Los datos de la empresa han sido actualizados',
             showCloseButton: true,
             confirmButtonText: 'ACEPTAR',
           });
         }
         if (enterpriseUpdate.success === false) {
-          swalAlert.fire({
+          void swalAlert.fire({
             icon: 'warning',
             text: 'La contraseña no coincide con la contraseña actual',
             showCloseButton: true,
