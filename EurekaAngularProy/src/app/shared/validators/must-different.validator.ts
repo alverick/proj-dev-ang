@@ -1,15 +1,21 @@
-import { UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { isNil } from 'ramda';
+
+import { PasswordForm } from '../../features/internal/services/company-configuration.service';
 
 export function MustDifferent(
   controlName: string,
   compareControlName: string,
   ignoreCase = false
 ) {
-  return (formGroup: UntypedFormGroup) => {
-    const { value: valueOriginal } = formGroup.controls[controlName];
-    const { errors, value: valueMatch } =
-      formGroup.controls[compareControlName];
+  return (formGroup: FormGroup<PasswordForm>): ValidationErrors | null => {
+    const { value: valueOriginal } = formGroup.controls[
+      controlName
+    ] as FormControl<string>;
+    const compareControl = formGroup.controls[
+      compareControlName
+    ] as FormControl<string>;
+    const { errors, value: valueMatch } = compareControl;
 
     if (isNil(valueOriginal) || isNil(valueMatch)) {
       return;
@@ -24,9 +30,9 @@ export function MustDifferent(
     };
 
     if (checkCase(valueOriginal) === checkCase(valueMatch)) {
-      formGroup.controls[compareControlName].setErrors({ notEqual: true });
+      compareControl.setErrors({ notEqual: true });
     } else {
-      formGroup.controls[compareControlName].setErrors(null);
+      compareControl.setErrors(null);
     }
   };
 }

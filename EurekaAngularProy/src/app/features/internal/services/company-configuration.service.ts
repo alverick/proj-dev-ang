@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
+  FormControl,
+  FormGroup,
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
@@ -17,6 +19,12 @@ import { atLeastOneNumber } from '../../../shared/validators/atLeastOneNumber.va
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { internalFullRoutingNames } from '../internal-routing.names';
+
+export interface PasswordForm {
+  password: FormControl<string>;
+  newPassword: FormControl<string>;
+  confirmNewPassword: FormControl<string>;
+}
 
 @Injectable()
 export class CompanyConfigurationService {
@@ -177,7 +185,7 @@ export class CompanyConfigurationService {
         ],
       ],
     });
-    this.passwordForm = this.fb.group(
+    this.passwordForm = this.fb.nonNullable.group(
       {
         password: [
           '',

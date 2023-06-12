@@ -1,15 +1,26 @@
-import { UntypedFormGroup } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 import { isNil } from 'ramda';
+
+import { PasswordForm } from '../../features/internal/services/company-configuration.service';
 
 export function MustMatch(
   controlName: string,
   matchingControlName: string,
   ignoreCase = false
-) {
-  return (formGroup: UntypedFormGroup) => {
-    const { value: valueOriginal } = formGroup.controls[controlName];
-    const { errors, value: valueMatch } =
-      formGroup.controls[matchingControlName];
+): ValidatorFn {
+  return (formGroup: FormGroup<PasswordForm>): ValidationErrors | null => {
+    const { value: valueOriginal } = formGroup.controls[
+      controlName
+    ] as FormControl<string>;
+    const matchingControl = formGroup.controls[
+      matchingControlName
+    ] as FormControl<string>;
+    const { errors, value: valueMatch } = matchingControl;
 
     if (isNil(valueOriginal) || isNil(valueMatch)) {
       return;
@@ -24,9 +35,9 @@ export function MustMatch(
     };
 
     if (checkCase(valueOriginal) !== checkCase(valueMatch)) {
-      formGroup.controls[matchingControlName].setErrors({ mustMatch: true });
+      matchingControl.setErrors({ mustMatch: true });
     } else {
-      formGroup.controls[matchingControlName].setErrors(null);
+      matchingControl.setErrors(null);
     }
   };
 }
