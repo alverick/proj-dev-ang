@@ -4,11 +4,10 @@ import {
   MatLegacyDialogRef as MatDialogRef,
 } from '@angular/material/legacy-dialog';
 import { isNil } from 'ramda';
-import Swal from 'sweetalert2';
 
 import { GoogleAnalytics } from '../../../../../../shared/services/googleAnalytics.service';
 import { TransactionService } from '../../../../../../shared/services/transaction.service';
-import { drawPopup } from '../../../../../../shared/utils/helpers/popups';
+import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
 
 @Component({
   selector: 'cs-payment-detail',
@@ -105,65 +104,64 @@ export class PaymentDetailComponent implements OnInit {
       }
     }
 
-    Swal.fire({
-      title: '¿Deseas Actualizar?',
-      text: '¡No podrás revertir esto!',
-      showCancelButton: true,
-      showCloseButton: true,
-      confirmButtonText: 'Sí, actualizar!',
-      cancelButtonText: 'Cancelar',
-      onOpen: drawPopup,
-    }).then((result) => {
-      if (result.value) {
-        const payment = {
-          date: itm.newDate,
-          channel: itm.newChannel,
-          amount: parseFloat(itm.newAmount.toString()),
-        };
-        const response = itm.id
-          ? this.transaction.editPayment(this.debtId, itm.id, payment)
-          : this.transaction.addPayment(this.debtId, payment);
-        response.subscribe((r) => {
-          if (r.success) {
-            if (itm.id) {
-              this.gaService.sendEvent('EditaPago', {
-                event_category: 'Dashboard',
-                event_label: 'edita_pago',
+    void swalAlert
+      .fire({
+        title: '¿Deseas Actualizar?',
+        text: '¡No podrás revertir esto!',
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: 'Sí, actualizar!',
+        cancelButtonText: 'Cancelar',
+      })
+      .then((result) => {
+        if (result.value) {
+          const payment = {
+            date: itm.newDate,
+            channel: itm.newChannel,
+            amount: parseFloat(itm.newAmount.toString()),
+          };
+          const response = itm.id
+            ? this.transaction.editPayment(this.debtId, itm.id, payment)
+            : this.transaction.addPayment(this.debtId, payment);
+          response.subscribe((r) => {
+            if (r.success) {
+              if (itm.id) {
+                this.gaService.sendEvent('EditaPago', {
+                  event_category: 'Dashboard',
+                  event_label: 'edita_pago',
+                });
+              } else {
+                this.gaService.sendEvent('AgregaPago', {
+                  event_category: 'Dashboard',
+                  event_label: 'agrega_pago',
+                });
+              }
+              this.status = r.status;
+              this.loadData();
+              void swalAlert.fire({
+                titleText: 'Editado!',
+                text: 'El pago ha sido editado',
+                showCloseButton: true,
+                showCancelButton: false,
+                didClose: () => {
+                  this.isEditingRow = false;
+                  itm.editing = false;
+                  itm.amount = itm.newAmount;
+                  itm.date = itm.newDate;
+                  itm.channel = itm.newChannel;
+                },
               });
             } else {
-              this.gaService.sendEvent('AgregaPago', {
-                event_category: 'Dashboard',
-                event_label: 'agrega_pago',
+              void swalAlert.fire({
+                titleText: 'ERROR',
+                text: r.message,
+                showCloseButton: true,
+                showCancelButton: false,
               });
             }
-            this.status = r.status;
-            this.loadData();
-            Swal.fire({
-              titleText: 'Editado!',
-              text: 'El pago ha sido editado',
-              showCloseButton: true,
-              showCancelButton: false,
-              onOpen: drawPopup,
-              onAfterClose: () => {
-                this.isEditingRow = false;
-                itm.editing = false;
-                itm.amount = itm.newAmount;
-                itm.date = itm.newDate;
-                itm.channel = itm.newChannel;
-              },
-            });
-          } else {
-            Swal.fire({
-              titleText: 'ERROR',
-              text: r.message,
-              showCloseButton: true,
-              showCancelButton: false,
-              onOpen: drawPopup,
-            });
-          }
-        });
-      }
-    });
+          });
+        }
+      });
   }
 
   cancelItm(itm) {
@@ -192,35 +190,35 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   delItm(itm) {
-    Swal.fire({
-      title: '¿Estás seguro que deseas eliminar el pago?',
-      showCancelButton: true,
-      showCloseButton: true,
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar',
-      onOpen: drawPopup,
-    }).then((result) => {
-      if (result.value) {
-        this.transaction.deletePayment(this.debtId, itm.id).subscribe((r) => {
-          if (r.success) {
-            this.gaService.sendEvent('EliminarPagos', {
-              event_category: 'Dashboard',
-              event_label: 'eliminar_pagos',
-            });
-            this.status = r.status;
-            this.loadData();
-          } else {
-            Swal.fire({
-              titleText: 'ERROR',
-              text: r.message,
-              showCloseButton: true,
-              showCancelButton: false,
-              onOpen: drawPopup,
-            });
-          }
-        });
-      }
-    });
+    void swalAlert
+      .fire({
+        title: '¿Estás seguro que deseas eliminar el pago?',
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+      })
+      .then((result) => {
+        if (result.value) {
+          this.transaction.deletePayment(this.debtId, itm.id).subscribe((r) => {
+            if (r.success) {
+              this.gaService.sendEvent('EliminarPagos', {
+                event_category: 'Dashboard',
+                event_label: 'eliminar_pagos',
+              });
+              this.status = r.status;
+              this.loadData();
+            } else {
+              void swalAlert.fire({
+                titleText: 'ERROR',
+                text: r.message,
+                showCloseButton: true,
+                showCancelButton: false,
+              });
+            }
+          });
+        }
+      });
   }
 
   amountBlur(itm) {
