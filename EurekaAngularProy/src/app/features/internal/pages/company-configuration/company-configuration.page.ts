@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+
 import {
   documentTypes,
   mobileOperators,
 } from '../../../../shared/constants/company';
 import {
-  errorsRegisterForm,
   errorRegisterAuth,
+  errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
 import { CompanyConfigurationService } from '../../services';
 
@@ -23,7 +24,7 @@ export class CompanyConfigurationPage implements OnInit {
   operators = mobileOperators;
   documentTypes = documentTypes;
   submitted = false;
-  nameInReview = false;
+  isInReview = false;
   errorsPassword = {
     ...errorRegisterAuth,
     newPassword: errorRegisterAuth.password,
@@ -40,7 +41,7 @@ export class CompanyConfigurationPage implements OnInit {
     this.activatedRoute.data.subscribe(({ company, entries }: any) => {
       this.companyConfiguration.entryOptions = entries;
       this.companyConfiguration.companyData = company;
-      this.nameInReview =
+      this.isInReview =
         company.newNameGTPStatus === 0 || company.newNameGTPStatus === 2;
       this.companyConfiguration.setCompanyData();
     });
