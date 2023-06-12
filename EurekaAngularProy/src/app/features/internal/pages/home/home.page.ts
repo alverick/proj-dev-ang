@@ -710,6 +710,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
             this.transactionService.debtItems.data = [];
             this.transactionService.itemsForDelete = [];
+            this.selectedRows = [];
           });
         }
       });
