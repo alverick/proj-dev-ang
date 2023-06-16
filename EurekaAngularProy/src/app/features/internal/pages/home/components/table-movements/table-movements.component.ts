@@ -74,12 +74,12 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Input() data = [];
   @Input() totalRecords: number;
   @Input() sortField = '';
+  @Input() selectedRows: Debts[] = [];
   @Output() sortFieldChange = new EventEmitter<string>();
-  @Output() selectedChange = new EventEmitter<Debts[]>();
+  @Output() selectedRowsChange = new EventEmitter<Debts[]>();
   @Output() showDetails = new EventEmitter<any>();
   @Output() saveRow = new EventEmitter<any>();
   @Output() loadData = new EventEmitter<LazyLoadEvent>();
-  selectedRows: Debts[] = [];
   displayDialog = false;
   editRowData: any = {};
   dataSet = {};
@@ -179,7 +179,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     };
   }
   onRowSelect() {
-    this.selectedChange.emit(this.selectedRows);
+    this.selectedRowsChange.emit(this.selectedRows);
   }
 
   updateSelected(rowData: Debts) {
@@ -196,7 +196,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
         (item) => item.id !== rowData.id
       );
     }
-    this.selectedChange.emit(this.selectedRows);
+    this.selectedRowsChange.emit(this.selectedRows);
   }
 
   onRowEditInit(data: any) {
