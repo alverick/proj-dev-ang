@@ -770,10 +770,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  onSelected(event: Debts[]) {
-    this.selectedRows = event;
-  }
-
   loadData(args: LazyLoadEvent) {
     const pageSelected = args.first / args.rows + 1;
     if (isNotNilOrEmpty(args.sortField)) {

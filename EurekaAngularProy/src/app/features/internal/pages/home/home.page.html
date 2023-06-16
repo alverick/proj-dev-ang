@@ -127,8 +127,8 @@
                 [data]="transactionService.debtItems.data"
                 [totalRecords]="transactionService.debtItems.count"
                 [(sortField)]="tableSortField"
+                [(selectedRows)]="selectedRows"
                 (loadData)="loadData($event)"
-                (selectedChange)="onSelected($event)"
                 (showDetails)="showDetails($event)"
                 (saveRow)="saveDebt($event)"
               ></cs-table-movements>
