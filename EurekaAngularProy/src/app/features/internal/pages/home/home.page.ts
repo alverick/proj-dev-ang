@@ -429,7 +429,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   mesageeError(_tipo: any, titulo: string, text: string) {
-    Swal.fire({
+    void Swal.fire({
       title: titulo,
       html: text,
       showCloseButton: true,
@@ -454,7 +454,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.validateOnboarding(
           this.transactionService.debtItems.data.length > 0
         );
-        // this.selectedUniverse = false;
         if (cb) {
           cb();
         }
@@ -487,7 +486,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveDebt(item: Debts) {
-    Swal.fire({
+    void Swal.fire({
       title: '¿Deseas actualizar?',
       text: '¡No podrás revertir esto!',
       showCancelButton: true,
@@ -515,7 +514,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                   event_category: 'Dashboard',
                   event_label: 'editar_deuda',
                 });
-                Swal.fire({
+                void Swal.fire({
                   titleText: 'Editado',
                   text: 'Su registro ha sido editado',
                   showCloseButton: true,
@@ -526,7 +525,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                   },
                 });
               } else {
-                Swal.fire({
+                void Swal.fire({
                   titleText: 'ERROR',
                   text: debtsUpdate.message,
                   showCloseButton: true,
@@ -540,7 +539,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.transactionService
             .updateDeuda(item.id, true)
             .subscribe((statusUpdate) => {
-              Swal.fire({
+              void Swal.fire({
                 titleText: 'Editado',
                 text: 'Su registro a sido editado',
                 showCloseButton: true,
