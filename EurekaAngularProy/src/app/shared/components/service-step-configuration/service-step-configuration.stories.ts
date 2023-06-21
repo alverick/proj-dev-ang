@@ -8,7 +8,6 @@ import {
 import { FormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
-import { centered } from '@storybook/addon-centered/angular';
 import { moduleMetadata } from '@storybook/angular';
 
 import { AffiliationFormsService } from '../../../features/auth/services';
@@ -68,7 +67,6 @@ const initAppComponentFactory =
 export default {
   title: 'Auth/Module/Service Form Configuration',
   decorators: [
-    centered,
     moduleMetadata({
       imports: [BrowserAnimationsModule, SharedModule],
       providers: [

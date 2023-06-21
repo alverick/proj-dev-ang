@@ -34,6 +34,12 @@
     width: 410px;
   }
 
+  &.cs-alert-legacy {
+    .swal2-popup {
+      width: 32em;
+    }
+  }
+
   .swal2-close {
     background-image: url('/assets/images/cerrar.svg');
     background-repeat: no-repeat;

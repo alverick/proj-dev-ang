@@ -13,8 +13,6 @@ import {
 } from '@angular/material-moment-adapter';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { withActions } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
 import { LoggerModule } from 'ngx-logger';
 import { isNil } from 'ramda';
@@ -44,7 +42,6 @@ export default {
   title: 'Internal/Home/Movements Table',
   component: TableMovementsComponent,
   decorators: [
-    withKnobs,
     moduleMetadata({
       declarations: [],
       imports: [
@@ -77,7 +74,6 @@ export default {
         SelectAllTableService,
       ],
     }),
-    withActions('sendForm', 'click .btn'),
   ],
 };
 

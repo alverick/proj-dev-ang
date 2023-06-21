@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { ServicesFormsService } from '../../../../shared/services';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import {
@@ -44,7 +45,7 @@ export class ServiceResumePage {
   ) {}
 
   actionDelete(position: number) {
-    swalAlert
+    void swalAlert
       .fire({
         text: '¿Estás seguro que deseas eliminar este servicio?',
         showCancelButton: true,
@@ -70,14 +71,14 @@ export class ServiceResumePage {
 
   createService() {
     this.serviceForms.resetServicesForms();
-    this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_INFO], {
+    void this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_INFO], {
       state: { navigateValid: true },
     });
   }
 
   finalize() {
     this.affiliation.saveAllServices().subscribe(() => {
-      this.router.navigate([authFullRoutingNames.REGISTRATION_FINISHED]);
+      void this.router.navigate([authFullRoutingNames.REGISTRATION_FINISHED]);
     });
   }
 

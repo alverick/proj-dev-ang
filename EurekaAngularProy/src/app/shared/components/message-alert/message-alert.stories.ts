@@ -1,17 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action, withActions } from '@storybook/addon-actions';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
-import { Button } from '@storybook/angular/demo';
+import { Button } from 'primeng/button';
+
 import { SharedModule } from '../../shared.module';
 import { MessageAlertComponent } from './message-alert.component';
 
 export default {
   title: 'UI/Message alert',
   decorators: [
-    withKnobs,
     moduleMetadata({
       declarations: [],
       imports: [
@@ -21,7 +20,6 @@ export default {
         SharedModule,
       ],
     }),
-    withActions('sendForm', 'click .btn'),
   ],
 };
 
@@ -47,7 +45,7 @@ DefaultStory.story = {
 export const normal = () => ({
   component: MessageAlertComponent,
   props: {
-    gtpMode: boolean('GTP Mode', false),
+    gtpMode: false,
   },
   argTypes: { sendForm: { action: 'clicked' } },
 });

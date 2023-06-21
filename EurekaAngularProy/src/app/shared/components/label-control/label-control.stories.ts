@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { withActions } from '@storybook/addon-actions';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';
@@ -19,7 +18,6 @@ export default {
         SharedModule,
       ],
     }),
-    withActions('sendForm', 'click .btn'),
   ],
 } as Meta;
 

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { SharedModule } from '../../shared.module';
 import { ModalTermsComponent } from './modal-terms.component';
@@ -12,11 +12,14 @@ import { ModalTermsComponent } from './modal-terms.component';
   template: ` <button pButton pRipple (click)="launch()">Launch</button>`,
 })
 class LaunchComponent {
-  constructor(private dialog: MatDialog) {}
+  ref: DynamicDialogRef;
+  constructor(public dialogService: DialogService) {}
 
   public launch(): void {
-    this.dialog.open(ModalTermsComponent, {
+    this.ref = this.dialogService.open(ModalTermsComponent, {
       width: '810px',
+      header: 'Términos y condiciones',
+      styleClass: 'modal-custom-cs',
     });
   }
 }
@@ -33,7 +36,7 @@ export default {
         CommonModule,
         SharedModule,
       ],
-      providers: [],
+      providers: [DialogService],
     }),
   ],
   argTypes: { sendForm: { action: 'clicked' } },

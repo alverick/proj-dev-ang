@@ -8,8 +8,6 @@ import {
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { withActions } from '@storybook/addon-actions';
-import { boolean, withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
 import { CookieService } from 'ngx-cookie-service';
 import { SharedModule } from '../../../../../../shared/shared.module';
@@ -39,7 +37,6 @@ export default {
   title: 'Internal/Home/Payment Detail',
   component: PaymentDetailComponent,
   decorators: [
-    withKnobs,
     moduleMetadata({
       declarations: [],
       imports: [
@@ -80,14 +77,13 @@ export default {
         },
       ],
     }),
-    withActions('sendForm', 'click .btn'),
   ],
 };
 
 export const normal = () => ({
   component: PaymentDetailComponent,
   props: {
-    gtpMode: boolean('GTP Mode', false),
+    gtpMode: false,
   },
   argTypes: { sendForm: { action: 'clicked' } },
 });
@@ -95,7 +91,7 @@ export const normal = () => ({
 export const gtp = () => ({
   component: PaymentDetailComponent,
   props: {
-    gtpMode: boolean('GTP Mode', true),
+    gtpMode: true,
   },
   argTypes: { sendForm: { action: 'clicked' } },
 });

@@ -15,10 +15,12 @@
           "options": {
             "allowedCommonJsDependencies": [
               "file-saver",
-             "moment",
-              "sweetalert2"
-            ,
-              "moment"
+              "moment",
+              "sweetalert2",
+              "raf",
+              "core-js",
+              "html2canvas",
+              "rgbcolor"
             ],
             "customWebpackConfig": {
               "path": "./config/extra-webpack.config.js"
@@ -193,6 +195,26 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "EurekaAngularProy:build",
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", "."],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "EurekaAngularProy:build",
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-d", "."],
+            "outputDir": "dist/storybook/EurekaAngularProy"
           }
         }
       }

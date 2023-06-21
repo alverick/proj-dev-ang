@@ -5,10 +5,6 @@ import {
   appRoutingNames,
   authFullRoutingNames,
 } from '../../app-routing.collection';
-import { AuthGuard } from '../../shared/guards/auth.guard';
-import { ClientGuard } from '../../shared/guards/client.guard';
-import { GtpInputGuard } from '../../shared/guards/gtp-input.guard';
-import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
 import { LogoutGuard } from '../../shared/guards/logout.guard';
 import { CompanyEntriesResolver } from '../../shared/resolvers';
 import { AuthComponent } from './auth.component';
@@ -28,23 +24,22 @@ import {
   AffiliationUpdatingGuard,
   ValidateTokenGuard,
 } from './guards';
-import { CambiaContrasenaComponent } from './pages/cambia-contrasena/cambia-contrasena.component';
-import { CompanyRegistrationPage } from './pages/company-registration/company-registration.page';
-import { CompanyRegistrationAuthPage } from './pages/company-registration-auth/company-registration-auth.page';
-import { ConfigurarGtpComponent } from './pages/configurar-gtp/configurar-gtp.component';
-import { ConfigurarServiciosComponent } from './pages/configurar-servicios/configurar-servicios.component';
-import { CrearContrasenaComponent } from './pages/crear-contrasena/crear-contrasena.component';
-import { LoginPage } from './pages/login/login.page';
-import { ProcesandoComponent } from './pages/procesando/procesando.component';
-import { RecuperarContrasenaComponent } from './pages/recuperar-contrasena/recuperar-contrasena.component';
-import { RegistrationFinishedPage } from './pages/registration-finished/registration-finished.page';
-import { RegistrationUpdatePage } from './pages/registration-update/registration-update.page';
-import { ServiceAddPage } from './pages/service-add/service-add.page';
-import { ServiceConfigurationPage } from './pages/service-configuration/service-configuration.page';
-import { ServiceInfoPage } from './pages/service-info/service-info.page';
-import { ServiceResumePage } from './pages/service-resume/service-resume.page';
-import { UpdateCompanyPage } from './pages/update-company/update-company.page';
-import { UpdateServicesPage } from './pages/update-services/update-services.page';
+import {
+  CambiaContrasenaComponent,
+  CompanyRegistrationAuthPage,
+  CompanyRegistrationPage,
+  LoginPage,
+  ProcessingUpdatePage,
+  RecuperarContrasenaComponent,
+  RegistrationFinishedPage,
+  RegistrationUpdatePage,
+  ServiceAddPage,
+  ServiceConfigurationPage,
+  ServiceInfoPage,
+  ServiceResumePage,
+  UpdateCompanyPage,
+  UpdateServicesPage,
+} from './pages';
 
 const routes: Routes = [
   {
@@ -57,50 +52,9 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: authRoutingNames.SERVICES_EDIT_GTP,
-        component: ConfigurarServiciosComponent,
-        data: { isgtp: true },
-      },
-      {
-        path: authRoutingNames.SERVICES_CONFIGURE,
-        component: ConfigurarServiciosComponent,
-        data: { isEdit: false },
-        canActivate: [ClientGuard],
-      },
-      {
-        path: authRoutingNames.SERVICES_EDIT,
-        component: ConfigurarServiciosComponent,
-        data: { isEdit: true },
-        canActivate: [AuthGuard, GtpOutputGuard],
-      },
-      {
-        path: authRoutingNames.CONFIGURATION,
-        component: ConfigurarServiciosComponent,
-      },
-      {
-        path: authRoutingNames.GENERATE_PASSWORD,
-        component: CrearContrasenaComponent,
-        data: { isEdit: false },
-      },
-      {
-        path: authDynamicRoutingNames.GENERATE_PASSWORD,
-        component: CrearContrasenaComponent,
-        data: { isEdit: true },
-      },
-      {
         path: authRoutingNames.PROCESSING,
-        component: ProcesandoComponent,
+        component: ProcessingUpdatePage,
         canActivate: [LogoutGuard],
-      },
-      {
-        path: authDynamicRoutingNames.COMPANY_CONFIGURATION,
-        component: ConfigurarGtpComponent,
-        data: { isEdit: true },
-        canActivate: [AuthGuard, GtpInputGuard],
-      },
-      {
-        path: authRoutingNames.COMPANY_CONFIGURATION,
-        component: ConfigurarGtpComponent,
       },
       {
         path: authRoutingNames.COMPANY_REGISTER,

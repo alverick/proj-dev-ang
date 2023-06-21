@@ -7,7 +7,6 @@ import {
 import { FormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
 import { moduleMetadata } from '@storybook/angular';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { SharedModule } from '../../../../shared/shared.module';
@@ -61,7 +60,6 @@ export default {
   title: 'Auth/Module/Company Form Registration',
   component: CompanyFormRegistrationComponent,
   decorators: [
-    withKnobs,
     moduleMetadata({
       imports: [BrowserAnimationsModule, SharedModule],
       providers: [

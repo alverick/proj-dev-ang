@@ -2,14 +2,21 @@ trigger: none
 pr: none
 
 variables:
-  appServiceConnection: 'gr2c003eurcdev01'
-  groupName: 'RG_EU2_C003_EURC_DEV_01'
-  appServiceName: 'wappeu2c003eurcdev01'
+  appServiceConnection: 'RG_EU2_C003_EURC_UAT_01'
+  groupName: 'rg_eu2_c003_eurc_uat_01'
+  appServiceName: 'wappeu2c003eurcuat01'
   vmImageName: 'ubuntu-20.04'
 
 stages:
 - stage: Build
-  displayName: Build and push dev
+  condition: |
+    or(and(in(variables['Build.Reason'],'Manual') ,
+          in(variables['Build.SourceBranch'],'refs/heads/master')) ,
+      and(in(variables['Build.Reason'],'Manual') ,
+          or(startsWith(variables['Build.SourceBranch'],'refs/heads/hotfix/'),
+              startsWith(variables['Build.SourceBranch'],'refs/heads/release/')))
+      )
+  displayName: Build and push uat
   jobs:
   - job: Build
     displayName: Build
@@ -20,7 +27,7 @@ stages:
       displayName: 'Install Node.js'
       inputs:
         versionSpec: '14.x'
-
+      
     - task: Npm@1
       displayName: 'Install angular'
       inputs:
@@ -40,7 +47,7 @@ stages:
         command: custom
         workingDir: EurekaAngularProy
         verbose: false
-        customCommand: 'run build -- --configuration dev'
+        customCommand: 'run build -- --configuration uat'
 
     - script: |
         echo Creating Directory
@@ -54,7 +61,7 @@ stages:
     - upload: EurekaAngularProy/dist/EurekaAngularProy
       displayName: 'Publish dist'
       artifact: web-cobrosimple
-
+      
     - task: ArchiveFiles@2
       displayName: 'Archive File'
       inputs:
