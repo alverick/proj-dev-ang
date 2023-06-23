@@ -13,7 +13,11 @@ import { finalize } from 'rxjs/operators';
 export class LoaderInterceptor implements HttpInterceptor {
   totalRequests = 0;
   requestsCompleted = 0;
-  forbiddenUrls = ['notification?skip', 'notification/total'];
+  forbiddenUrls = [
+    'notification?skip',
+    'notification/total',
+    'debt/process/[\\d]+/status',
+  ];
 
   constructor(private spinner: NgxSpinnerService) {}
 
@@ -24,14 +28,15 @@ export class LoaderInterceptor implements HttpInterceptor {
     const validUrl = () => {
       let isValid = true;
       this.forbiddenUrls.forEach((url) => {
-        if (request.url.includes(url)) {
+        const regex = new RegExp(url);
+        if (regex.test(request.url)) {
           isValid = false;
         }
       });
       return isValid;
     };
     if (validUrl()) {
-      this.spinner.show();
+      void this.spinner.show();
       this.totalRequests++;
     }
 
@@ -42,7 +47,7 @@ export class LoaderInterceptor implements HttpInterceptor {
         }
 
         if (this.requestsCompleted === this.totalRequests) {
-          this.spinner.hide();
+          void this.spinner.hide();
           this.totalRequests = 0;
           this.requestsCompleted = 0;
         }
