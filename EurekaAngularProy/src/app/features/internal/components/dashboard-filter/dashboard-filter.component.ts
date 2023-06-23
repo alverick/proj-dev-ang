@@ -205,7 +205,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy() {
-    this.$destroy.next();
+    this.$destroy.next(true);
     this.$destroy.complete();
   }
 }

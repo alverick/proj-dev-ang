@@ -100,7 +100,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
     if (this.ref) {
       this.ref.close();
     }
-    this.$destroy.next();
+    this.$destroy.next(true);
     this.$destroy.complete();
   }
 }

@@ -303,7 +303,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.$destroy.next();
+    this.$destroy.next(true);
     this.$destroy.complete();
   }
 }
