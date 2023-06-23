@@ -6,12 +6,13 @@ export interface Debts {
   firstName: string;
   lastName: string;
   service: string;
+  currency: string;
   svcStatus?: number;
   concept: string;
   amount: number;
   amountPayed?: number;
   interestAmount?: number;
-  totalAmount?: number;
+  totalAmount?: number | string;
   totalAmountPayed?: number;
   status: string;
   payDate: Date;

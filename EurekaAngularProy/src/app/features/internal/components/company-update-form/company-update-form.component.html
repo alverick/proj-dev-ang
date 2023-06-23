@@ -21,8 +21,8 @@
             maxlength="80"
             formControlName="name"
           />
-          <div *ngIf="inReview" validation-messages>
-            El nuevo nombre <strong> {{ actualName }} </strong> esta siendo
+          <div *ngIf="inReview" hint class="tw-text-error">
+            El nuevo nombre <strong> {{ nameInReview }} </strong> esta siendo
             procesado
           </div>
         </cs-label-control>

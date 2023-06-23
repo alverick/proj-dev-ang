@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError, Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+
 import { environment } from '../../../environments/environment';
 import { IServicePostData, IServiceRemoteModel } from '../models';
 import { IAccountStateDetails } from '../models/company';
@@ -30,9 +31,11 @@ export class CompanyService {
       .pipe(catchError((err) => throwError(err)));
   }
 
-  updateCompany(data: any): Observable<any> {
+  updateCompany(data: any): Observable<ICompanyResult> {
     const url = `${environment.END_POINT}/company`;
-    return this.http.put(url, data).pipe(catchError((err) => throwError(err)));
+    return this.http
+      .put<ICompanyResult>(url, data)
+      .pipe(catchError((err) => throwError(err)));
   }
 
   saveServices(data: IServicePostData) {

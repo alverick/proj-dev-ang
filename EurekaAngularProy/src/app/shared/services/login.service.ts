@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { throwError, Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
 import { RespuestaLogin } from '../models/respuestaLogin.model';
 import { GoogleAnalytics } from './googleAnalytics.service';
@@ -30,7 +31,7 @@ export class LoginService {
   login(ruc: string, psw: string): Observable<RespuestaLogin> {
     this.notify.clear();
     const url = `${this.URI_API}/login`;
-    const data = `username=${ruc}&password=${psw}`;
+    const data = new HttpParams().set('username', ruc).set('password', psw);
     const opts = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -39,7 +40,7 @@ export class LoginService {
     };
 
     return this.http
-      .post(url, data, opts)
+      .post(url, data.toString(), opts)
       .pipe(
         map((r: RespuestaLogin) => {
           if (r.estado) {
@@ -76,7 +77,7 @@ export class LoginService {
     const url = `${this.URI_API}/login/out`;
     this.http.post(url, {}).subscribe(() => {
       this.storage.removeCurrentSession();
-      this.router.navigate([authFullRoutingNames.LOGIN]);
+      void this.router.navigate([authFullRoutingNames.LOGIN]);
     });
   }
 

@@ -8,9 +8,10 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { UntypedFormGroup, NgForm } from '@angular/forms';
+import { NgForm, UntypedFormGroup } from '@angular/forms';
 import { isNil, pathEq } from 'ramda';
 import { IErrorMessages } from 'src/app/shared/models/forms';
+
 import { IEntryModel } from '../../../../shared/models';
 
 @Component({
@@ -21,7 +22,6 @@ import { IEntryModel } from '../../../../shared/models';
 export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   documentNumberMax = '8';
   documentNumberFilter: string | RegExp = 'int';
-  blockSpecial: RegExp = /^[a-z0-9]+$/i;
   @Input() operators = [];
   @Input() documentTypes = [];
   @Input() categories: IEntryModel[] = [];
@@ -29,18 +29,15 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   @Input() form: UntypedFormGroup;
   @Input() submitted = false;
   @Input() inReview = false;
+  @Input() nameInReview = '';
   @Output() showPanel = new EventEmitter<any>();
   @ViewChild('formElm')
   htmlForm: NgForm;
   showDocumentFields = false;
-  actualName = false;
-
-  constructor() {}
 
   ngOnInit() {
-    const { documentType, documentNumber, name } = this.form.getRawValue();
+    const { documentType, documentNumber } = this.form.getRawValue();
     this.showDocumentFields = !(isNil(documentType) && isNil(documentNumber));
-    this.actualName = name;
   }
 
   ngOnChanges(changes: SimpleChanges) {
