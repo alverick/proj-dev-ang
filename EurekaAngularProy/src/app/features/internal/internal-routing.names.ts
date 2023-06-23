@@ -1,7 +1,7 @@
 import {
   appModuleRoutingNames,
   appRoutingNames,
-} from '../../app-routing.collection';
+} from '../../app-routing.names';
 import { IRouteItem, IRouteNames } from '../../shared/models/router';
 import {
   generateFullRoutes,

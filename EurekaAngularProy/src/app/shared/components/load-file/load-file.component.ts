@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { ExcelService } from '../../services/excel.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { ExcelService } from '../../services/excel.service';
   styleUrls: ['./load-file.component.scss'],
 })
 export class LoadFileComponent {
-  public progress: any = {
+  public progress = {
     status: 'Subiendo',
     mode: 'indeterminate',
     value: 0,

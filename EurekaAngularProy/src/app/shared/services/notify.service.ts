@@ -5,10 +5,10 @@ import {
   faCircle as farCircle,
 } from '@fortawesome/free-regular-svg-icons';
 import { faCircle as fasCircle } from '@fortawesome/free-solid-svg-icons';
-import { timer } from 'rxjs';
-import { Subject } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import { delayWhen, repeat, takeUntil } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+
 import { StorageService } from './storage.service';
 
 const timeCallNotify = 60000;
@@ -43,7 +43,7 @@ export class NotifyService {
       .get(`${environment.END_POINT}/notification/total`)
       .pipe(delayWhen(setDelay), repeat(), takeUntil(stop))
       .subscribe(
-        ({ total }: any) => {
+        ({ total }: { total: number }) => {
           this.inExecution = true;
           if (total !== this.total) {
             this.total = total;
