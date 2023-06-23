@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as saveAs from 'file-saver';
 import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { Subscription, timer } from 'rxjs';
 import { IEntryModel } from 'src/app/shared/models';
 import { GtpFilter } from 'src/app/shared/models/gtp-filter';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
@@ -19,10 +20,11 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
   templateUrl: './gtp-grilla.page.html',
   styleUrls: ['./gtp-grilla.page.scss'],
 })
-export class GtpGrillaPage implements OnInit {
+export class GtpGrillaPage implements OnInit, OnDestroy {
   messageTable = '';
   linkHistory = adminFullRoutingNames.HISTORY;
   showArrow = false;
+  disabledButtonFixSaving = true;
   asc = true;
   orderBys = 0;
   items = [
@@ -95,6 +97,11 @@ export class GtpGrillaPage implements OnInit {
     { name: 'Estado', asc: false, orderBy: 5, class: 'c6' },
   ];
 
+  rubros: IEntryModel[] = [];
+  states: StatesGtp[] = [];
+  solicitudes: StatesGtp[] = [];
+  checkTimeObservable: Subscription;
+
   constructor(
     private afiliacionService: AfiliacionService,
     public gtpService: GtpService,
@@ -102,10 +109,6 @@ export class GtpGrillaPage implements OnInit {
     private companyService: CompanyService,
     private queryDataService: QueryDataService
   ) {}
-
-  rubros: IEntryModel[] = [];
-  states: StatesGtp[] = [];
-  solicitudes: StatesGtp[] = [];
 
   ngOnInit() {
     this.afiliacionService.GetRubros().subscribe((d) => (this.rubros = d));
@@ -115,23 +118,33 @@ export class GtpGrillaPage implements OnInit {
     this.gtpService.getTipoSolicitudes().subscribe((d) => {
       this.solicitudes = d;
     });
-    this.consultaGtp();
+    void this.consultaGtp();
+    const intervalMs = 10000;
+
+    this.checkTimeObservable = timer(0, intervalMs).subscribe(() => {
+      const timeVal = new Date().getHours();
+      this.disabledButtonFixSaving = timeVal < 20 || timeVal > 22;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.checkTimeObservable.unsubscribe();
   }
 
   Aprobar(ClientId: number) {
     this.gtpService.services = [];
-    this.router.navigate([adminFullRoutingNames.APPROVE + ClientId]);
+    void this.router.navigate([`${adminFullRoutingNames.APPROVE}${ClientId}`]);
   }
 
   onUpdateEAG(ClientId: number) {
     this.gtpService.ReenviarPAG(ClientId).subscribe(() => {
-      this.consultaGtp();
+      void this.consultaGtp();
     });
   }
 
   changePage(nro: number) {
     this.currentFilter.pageNumber = nro;
-    this.consultaGtp();
+    void this.consultaGtp();
   }
 
   //// ORDENAMIENTO OCULTAR LAS FLECHAS
@@ -141,7 +154,7 @@ export class GtpGrillaPage implements OnInit {
     this.orderDef[items.orderBy].asc = items.asc;
     this.currentFilter.asc = items.asc;
     this.currentFilter.ColumnName = this.orderDef[items.orderBy].name;
-    this.consultaGtp();
+    void this.consultaGtp();
   }
 
   resetDebts() {
@@ -173,7 +186,7 @@ export class GtpGrillaPage implements OnInit {
   }
 
   private submitSearch(inputSearch, BusinessHeading, status, statusSolicitud) {
-    this.consultaGtp();
+    void this.consultaGtp();
     this.messageTable = 'No se encontraron empresas para esta búsqueda';
     this.showArrow = all(isNilOrEmpty, [
       inputSearch,
@@ -219,7 +232,6 @@ export class GtpGrillaPage implements OnInit {
       .then(({ isConfirmed }) => {
         if (isConfirmed) {
           this.queryDataService.regularizeAll().subscribe((result) => {
-            console.log(result);
             void swalAlert.fire({
               title: 'Sincronización exitosa',
               text: result.message,
