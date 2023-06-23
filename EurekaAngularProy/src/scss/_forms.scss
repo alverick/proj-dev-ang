@@ -227,6 +227,9 @@ body {
     border-radius: 4px;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s,
       box-shadow 0.2s, color 0.2s;
+    color: #fff;
+    background: var(--primary-green-1);
+    border: 1px solid var(--primary-green-1);
 
     &.p-button-text {
       color: var(--primary-green-1);
@@ -245,16 +248,6 @@ body {
         padding: 0.25rem 0;
       }
     }
-  }
-
-  .p-button-label {
-    font-weight: 400;
-  }
-
-  .p-button {
-    color: #fff;
-    background: var(--primary-green-1);
-    border: 1px solid var(--primary-green-1);
 
     &.p-button-outlined {
       background-color: transparent;
@@ -279,6 +272,16 @@ body {
       color: #fff;
       background: var(--secondary-blue-1);
     }
+
+    &:disabled {
+      opacity: 1;
+      color: var(--grises-grey-2);
+      border-color: var(--grises-grey-2);
+    }
+  }
+
+  .p-button-label {
+    font-weight: 400;
   }
 
   .p-dropdown-panel {
