@@ -32,6 +32,7 @@ import { TransactionService } from 'src/app/shared/services/transaction.service'
 import { drawPopup, swalAlert } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 
+import { CompanyServices } from '../../../../shared/models/company';
 import { DateList } from '../../../../shared/models/dateList';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
@@ -99,7 +100,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   state = false;
   public user: User;
   OcultaListaExcel = true;
-  typeList: any[];
+  typeList: Partial<CompanyServices>[];
   waypayList: WayPay[];
   DateList: DateList[];
   type: string[];
@@ -752,7 +753,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.DebtsAreSelected();
   }
 
-  openDialog(service: any) {
+  openDialog(service: Partial<CompanyServices>) {
     this.OcultaListaExcel = false;
     this.cargaExcel = false;
     this.fileLoad.close();

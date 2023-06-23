@@ -4,6 +4,8 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { DateList } from 'src/app/shared/models/dateList';
 import { environment } from 'src/environments/environment';
+
+import { CompanyServices } from '../models/company';
 import { Debts } from '../models/debts';
 import { Type } from '../models/type';
 import { WayPay } from '../models/way-pay';
@@ -75,13 +77,15 @@ export class HomeService {
       .pipe(catchError((err) => throwError(err)));
   }
 
-  getServicesActive(serviceWithoutData: boolean = true): Observable<any[]> {
+  getServicesActive(
+    serviceWithoutData: boolean = true
+  ): Observable<Partial<CompanyServices>[]> {
     const url = `${environment.END_POINT}/company/service/active/${serviceWithoutData}`;
     return this.http
-      .get<any[]>(url)
+      .get<CompanyServices[]>(url)
       .pipe(
         map((r) => {
-          const data: any[] = [];
+          const data: Partial<CompanyServices>[] = [];
           r.forEach((s) =>
             data.push({
               id: s.id,

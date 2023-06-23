@@ -7,7 +7,10 @@ import {
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import * as saveAs from 'file-saver';
 import { Observable } from 'rxjs';
-import { ExcelService } from 'src/app/shared/services/excel.service';
+import {
+  ExcelService,
+  ProcessStatus,
+} from 'src/app/shared/services/excel.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
 import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
@@ -101,7 +104,7 @@ export class DialogComponent implements OnInit {
 
   private verifyStatus() {
     this.ready = true;
-    const recursiveFunc = (value) => {
+    const recursiveFunc = (value: ProcessStatus) => {
       if (!this.ready) {
         return;
       }
