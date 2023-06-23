@@ -1,5 +1,4 @@
 import {
-  ComponentFactoryResolver,
   ComponentRef,
   EventEmitter,
   Injectable,
@@ -15,11 +14,7 @@ import { GoogleAnalytics } from './googleAnalytics.service';
   providedIn: 'root',
 })
 export class LoadFileService {
-  constructor(
-    private excelService: ExcelService,
-    private resolver: ComponentFactoryResolver,
-    private gaService: GoogleAnalytics
-  ) {}
+  constructor(private excelService: ExcelService) {}
 
   private componentRef: ComponentRef<LoadFileComponent> = null;
   private cancel = true;
@@ -28,21 +23,12 @@ export class LoadFileService {
   public verify(container: ViewContainerRef) {
     container.clear();
     if (this.excelService.statusUpload) {
-      const factory =
-        this.resolver.resolveComponentFactory<LoadFileComponent>(
-          LoadFileComponent
-        );
-      this.componentRef = container.createComponent<LoadFileComponent>(factory);
+      this.componentRef = container.createComponent(LoadFileComponent);
       this.verifyStatus();
     } else {
       this.excelService.GetLastProcess().subscribe((d) => {
         if (d.status !== 'COMPLETED' && d.status !== 'REJECTED') {
-          const factory =
-            this.resolver.resolveComponentFactory<LoadFileComponent>(
-              LoadFileComponent
-            );
-          this.componentRef =
-            container.createComponent<LoadFileComponent>(factory);
+          this.componentRef = container.createComponent(LoadFileComponent);
           this.verifyStatus();
         }
       });
