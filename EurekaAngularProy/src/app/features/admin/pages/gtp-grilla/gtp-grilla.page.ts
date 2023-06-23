@@ -209,11 +209,11 @@ export class GtpGrillaPage implements OnInit {
   fixAccounts(): void {
     void swalAlert
       .fire({
-        title: 'Actualización masiva de estado saving',
-        text: `Actualiza el estado de todos los registros saving a completed, tras error en carga de archivos Excel.`,
+        title: 'Sincronización masiva de cargas de cobros',
+        text: `Todas las cargas de excel de todas las empresas registradas pasarán del estado SAVING a FAILED, luego el cliente podrá realizar una nueva carga`,
         showConfirmButton: true,
         showCancelButton: true,
-        confirmButtonText: 'Confirmar',
+        confirmButtonText: 'Sí, sincronizar',
         cancelButtonText: 'Cancelar',
       })
       .then(({ isConfirmed }) => {
@@ -221,10 +221,10 @@ export class GtpGrillaPage implements OnInit {
           this.queryDataService.regularizeAll().subscribe((result) => {
             console.log(result);
             void swalAlert.fire({
-              title: 'Actualización masiva de estado saving',
+              title: 'Sincronización exitosa',
               text: result.message,
               showConfirmButton: true,
-              confirmButtonText: 'Aceptar',
+              confirmButtonText: 'Entendido',
             });
           });
         }

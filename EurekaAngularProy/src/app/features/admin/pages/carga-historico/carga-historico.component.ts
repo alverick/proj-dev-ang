@@ -51,11 +51,11 @@ export class CargaHistoricoComponent implements OnInit {
   fixProcess(processId: number): void {
     void swalAlert
       .fire({
-        title: 'Actualización de estado saving',
-        text: `Actualiza el estado saving a completed, tras error en carga de archivos Excel.`,
+        title: 'Sincronizar carga de cobros',
+        text: `La carga de excel pasará del estado SAVING a FAILED, luego el cliente podrá realizar una nueva carga. Recuerda que la empresa de esta carga deberá cerrar sesión para una mejor sincronización.`,
         showConfirmButton: true,
         showCancelButton: true,
-        confirmButtonText: 'Confirmar',
+        confirmButtonText: 'Sí, sincronizar',
         cancelButtonText: 'Cancelar',
       })
       .then(({ isConfirmed }) => {
@@ -65,10 +65,10 @@ export class CargaHistoricoComponent implements OnInit {
             .subscribe((result) => {
               this.cargarItems();
               void swalAlert.fire({
-                title: 'Actualización de estado saving',
+                title: 'Sincronización exitosa',
                 text: result.message,
                 showConfirmButton: true,
-                confirmButtonText: 'Aceptar',
+                confirmButtonText: 'Entendido',
               });
             });
         }
