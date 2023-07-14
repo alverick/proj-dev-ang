@@ -29,18 +29,8 @@ export class CambiaContrasenaComponent implements OnInit {
   ngOnInit() {
     this.Cambia = this.formBuilder.group(
       {
-        contrasena: new UntypedFormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20),
-          UnaLetra,
-        ]),
-        repcontrasena: new UntypedFormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(20),
-          UnaLetra,
-        ]),
+        contrasena: new UntypedFormControl('', passwordValidators),
+        repcontrasena: new UntypedFormControl('', passwordValidators),
       },
       {
         validator: MustMatch('contrasena', 'repcontrasena'),
@@ -125,12 +115,4 @@ export class CambiaContrasenaComponent implements OnInit {
       this.router.navigate([authFullRoutingNames.LOGIN]);
     });
   }
-}
-
-function UnaLetra(c: UntypedFormControl) {
-  let regex = /[a-zA-Z]/g;
-  if (c.value && !regex.test(c.value)) {
-    return { unaletra: true };
-  }
-  return null;
 }

@@ -15,10 +15,9 @@ import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.mod
 import { CompanyService } from '../../../shared/services';
 import { GoogleAnalytics } from '../../../shared/services/googleAnalytics.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
-import { atLeastOneLetter } from '../../../shared/validators/atLeastOneLetter.validator';
-import { atLeastOneNumber } from '../../../shared/validators/atLeastOneNumber.validator';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
+import { passwordValidators } from '../../../shared/validators/password-validators';
 import { internalFullRoutingNames } from '../internal-routing.names';
 
 export interface PasswordForm {
@@ -193,29 +192,10 @@ export class CompanyConfigurationService {
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(20),
-            atLeastOneLetter,
           ],
         ],
-        newPassword: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(20),
-            atLeastOneLetter,
-            atLeastOneNumber,
-          ],
-        ],
-        confirmNewPassword: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(20),
-            atLeastOneLetter,
-            atLeastOneNumber,
-          ],
-        ],
+        newPassword: ['', passwordValidators],
+        confirmNewPassword: ['', passwordValidators],
       },
       {
         validators: [
