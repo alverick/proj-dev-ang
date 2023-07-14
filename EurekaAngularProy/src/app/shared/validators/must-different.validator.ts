@@ -1,14 +1,17 @@
 import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { isNil } from 'ramda';
 
-import { PasswordForm } from '../../features/internal/services/company-configuration.service';
+import { ChangePasswordForm } from '../../features/internal/services/company-configuration.service';
+import { ModelFormGroup } from '../models/forms';
 
 export function MustDifferent(
   controlName: string,
   compareControlName: string,
   ignoreCase = false
 ) {
-  return (formGroup: FormGroup<PasswordForm>): ValidationErrors | null => {
+  return (
+    formGroup: ModelFormGroup<ChangePasswordForm>
+  ): ValidationErrors | null => {
     const { value: valueOriginal } = formGroup.controls[
       controlName
     ] as FormControl<string>;

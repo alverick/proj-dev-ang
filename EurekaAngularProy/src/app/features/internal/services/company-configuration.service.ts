@@ -12,6 +12,7 @@ import { tap } from 'rxjs/operators';
 
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
+import { ModelFormGroup } from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
 import { GoogleAnalytics } from '../../../shared/services/googleAnalytics.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
@@ -20,17 +21,17 @@ import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { passwordValidators } from '../../../shared/validators/password-validators';
 import { internalFullRoutingNames } from '../internal-routing.names';
 
-export interface PasswordForm {
-  password: FormControl<string>;
-  newPassword: FormControl<string>;
-  confirmNewPassword: FormControl<string>;
+export interface ChangePasswordForm {
+  password: string;
+  newPassword: string;
+  confirmNewPassword: string;
 }
 
 @Injectable()
 export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
   companyForm: UntypedFormGroup;
-  passwordForm: FormGroup<PasswordForm>;
+  passwordForm: ModelFormGroup<ChangePasswordForm>;
   entryOptions: IEntryModel[] = [];
   entryOptionsAdd: IEntryModel[] = [];
   constructor(
