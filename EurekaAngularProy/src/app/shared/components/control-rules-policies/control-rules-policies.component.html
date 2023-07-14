@@ -1,0 +1,23 @@
+<div class="c-black">
+  <div class="tw-text-sm">
+    <ng-content></ng-content>
+  </div>
+  <div class="tw-py-3">
+    <div
+      *ngFor="let rule of rules; trackBy: ruleTrackBy"
+      class="tw-flex tw-items-center tw-gap-2 tw-text-xs"
+    >
+      <i
+        class="pi"
+        [ngClass]="{
+          'pi-times': control.hasError(rule.key) || control.value === '',
+          'tw-text-extended-grey-3':
+            control.hasError(rule.key) || control.value === '',
+          'pi-check': !control.hasError(rule.key),
+          'tw-text-primary-green-1': !control.hasError(rule.key)
+        }"
+      ></i>
+      <span class="control">{{ rule.message }}</span>
+    </div>
+  </div>
+</div>

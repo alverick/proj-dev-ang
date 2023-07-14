@@ -54,6 +54,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { ControlRulesPoliciesComponent } from './components/control-rules-policies/control-rules-policies.component';
 
 import { FabWhatsappComponent } from './components/fab-whatsapp/fab-whatsapp.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -180,6 +181,7 @@ const UI_MODULES = [
     ...DIRECTIVES,
     ...PIPES,
     FabWhatsappComponent,
+    ControlRulesPoliciesComponent,
   ],
   exports: [
     OnlyNumbersFormDirective,
@@ -207,6 +209,7 @@ const UI_MODULES = [
     ServiceCardComponent,
     ...PIPES,
     FabWhatsappComponent,
+    ControlRulesPoliciesComponent,
   ],
 })
 export class SharedModule {}
