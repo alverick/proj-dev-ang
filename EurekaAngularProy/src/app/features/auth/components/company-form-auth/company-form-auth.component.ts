@@ -19,6 +19,7 @@ import { ModalTermsComponent } from '../../../../shared/components/modal-terms/m
 import { IEntryModel } from '../../../../shared/models';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';
+import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
 
 @Component({
   selector: 'cs-company-form-auth',
@@ -34,6 +35,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   @Input() companyForm: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() edit = false;
+  protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
 
   constructor(public dialogService: DialogService) {}
 
