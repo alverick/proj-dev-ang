@@ -48,6 +48,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
@@ -110,6 +111,7 @@ const PRIMENG_MODULES = [
   CheckboxModule,
   DialogModule,
   DropdownModule,
+  DynamicDialogModule,
   InputMaskModule,
   InputNumberModule,
   InputTextModule,
@@ -120,9 +122,9 @@ const PRIMENG_MODULES = [
   MessagesModule,
   MessagesModule,
   MultiSelectModule,
+  PasswordModule,
   RadioButtonModule,
   RippleModule,
-  DynamicDialogModule,
   SidebarModule,
   StepsModule,
   TableModule,
