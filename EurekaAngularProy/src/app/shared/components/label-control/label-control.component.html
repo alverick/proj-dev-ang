@@ -19,16 +19,11 @@
     ></label>
   </div>
   <div
-    *ngIf="!onlyControl && !ngControl.errors"
+    *ngIf="!onlyControl"
     class="tw-absolute tw-w-full tw-text-xxs tw-inline-block tw-align-middle tw-mt-1"
+    [ngClass]="{ 'tw-text-error': ngControl?.errors }"
   >
-    <ng-content select="[hint]"></ng-content>
-  </div>
-  <div
-    *ngIf="!onlyControl && ngControl.errors"
-    class="tw-absolute tw-w-full tw-text-xxs tw-inline-block tw-align-middle tw-text-error tw-mt-1"
-  >
-    <ng-content select="[validation-messages]"></ng-content>
+    <ng-content select="[validation-messages],[hint]"></ng-content>
     <ng-container *ngIf="useDefaultContent">
       <val-errors [controlName]="formControlName" [label]="formControlLabel">
         <ng-template

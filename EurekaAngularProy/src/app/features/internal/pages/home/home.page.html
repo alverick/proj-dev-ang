@@ -56,6 +56,7 @@
                 <div
                   class="select-all tw-flex tw-items-center tw-text-sm"
                   [ngClass]="{
+                    'tw-cursor-pointer': selectedRows.length > 0,
                     'tw-text-primary-green-1': selectedRows.length > 0,
                     'tw-text-extended-grey-2': selectedRows.length === 0
                   }"
@@ -122,11 +123,12 @@
             </section>
             <section class="lista">
               <cs-table-movements
+                #tableMovements
                 [data]="transactionService.debtItems.data"
                 [totalRecords]="transactionService.debtItems.count"
                 [(sortField)]="tableSortField"
+                [(selectedRows)]="selectedRows"
                 (loadData)="loadData($event)"
-                (selectedChange)="onSelected($event)"
                 (showDetails)="showDetails($event)"
                 (saveRow)="saveDebt($event)"
               ></cs-table-movements>
