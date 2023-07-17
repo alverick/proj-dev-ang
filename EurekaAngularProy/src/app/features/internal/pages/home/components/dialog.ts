@@ -12,8 +12,7 @@ import {
   ProcessStatus,
 } from 'src/app/shared/services/excel.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
-import Swal from 'sweetalert2';
+import { swalAlert } from 'src/app/shared/utils/helpers/popups';
 
 @Component({
   selector: 'cs-dialog',
@@ -143,9 +142,8 @@ export class DialogComponent implements OnInit {
             title: msg,
             text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
             showCloseButton: true,
-            onOpen: drawPopup,
             confirmButtonText: 'CERRAR',
-            onAfterClose: () => {
+            didClose: () => {
               observer.next();
               observer.complete();
             },

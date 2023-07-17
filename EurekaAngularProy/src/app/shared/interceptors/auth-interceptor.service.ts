@@ -69,7 +69,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               showConfirmButton: true,
               confirmButtonText: 'CERRAR',
               allowOutsideClick: false,
-              onClose: () => {
+              willClose: () => {
                 location.href = authFullRoutingNames.LOGIN;
               },
             });
@@ -82,7 +82,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               showConfirmButton: true,
               confirmButtonText: 'CERRAR',
               allowOutsideClick: false,
-              onClose: () => {
+              willClose: () => {
                 location.href = authFullRoutingNames.LOGIN;
               },
             });
