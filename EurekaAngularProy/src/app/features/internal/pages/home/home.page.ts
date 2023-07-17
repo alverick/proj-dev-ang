@@ -17,23 +17,26 @@ import { LazyLoadEvent } from 'primeng/api';
 import { all, equals, isNil, pathEq, pathOr, prop } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
-import { Debts } from 'src/app/shared/models/debts';
-import { DebstFilter } from 'src/app/shared/models/debts-filter.model';
-import { User } from 'src/app/shared/models/user.model';
-import { WayPay } from 'src/app/shared/models/way-pay';
-import { ExcelService } from 'src/app/shared/services/excel.service';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { HomeService } from 'src/app/shared/services/home.service';
-import { LoadBarService } from 'src/app/shared/services/load-bar.service';
-import { LoadFileService } from 'src/app/shared/services/load-file.service';
-import { LoginService } from 'src/app/shared/services/login.service';
-import { StorageService } from 'src/app/shared/services/storage.service';
-import { TransactionService } from 'src/app/shared/services/transaction.service';
-import { drawPopup, swalAlert } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
 
 import { CompanyServices } from '../../../../shared/models/company';
 import { DateList } from '../../../../shared/models/dateList';
+import { Debts } from '../../../../shared/models/debts';
+import { DebstFilter } from '../../../../shared/models/debts-filter.model';
+import { User } from '../../../../shared/models/user.model';
+import { WayPay } from '../../../../shared/models/way-pay';
+import { ExcelService } from '../../../../shared/services/excel.service';
+import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
+import { HomeService } from '../../../../shared/services/home.service';
+import { LoadBarService } from '../../../../shared/services/load-bar.service';
+import {
+  LoadFileService,
+  ModalCloseData,
+} from '../../../../shared/services/load-file.service';
+import { LoginService } from '../../../../shared/services/login.service';
+import { StorageService } from '../../../../shared/services/storage.service';
+import { TransactionService } from '../../../../shared/services/transaction.service';
+import { drawPopup, swalAlert } from '../../../../shared/utils/helpers/popups';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
@@ -175,20 +178,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.fileLoad.onClose.subscribe((m) => {
-      if (m.status === 'completed') {
-        this.consultaDeuda();
-      } else if (m.status === 'rejected') {
-        this.excelService.statusUpload = false;
-        const dialogRef = this.dialog.open(DialogComponent, {
-          width: '899px',
-          backdropClass: 'backdrop-background-opaque',
-        });
-        dialogRef.componentInstance.ready = true;
-        dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
-        dialogRef.componentInstance.rowsRejected = m.rowsRejected;
-      }
-    });
+    this.fileLoad.onClose.subscribe(this.onClose());
     this.fileLoad.verify(this.fileLoadContainer);
     this.user = this.storageService.getCurrentUser();
     this.loginService.refresh();
@@ -226,6 +216,44 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.styleTag.className = 'onboarding-style';
       document.getElementsByTagName('head')[0].appendChild(this.styleTag);
     }
+  }
+
+  private onClose() {
+    return (m: ModalCloseData) => {
+      if (m.status === 'completed') {
+        let msg = '';
+        if (m.dataType === 'C') {
+          msg = `¡Listo! Se agregaron nuevas deudas `;
+        } else {
+          msg = `¡Listo! Se agregaron nuevos clientes`;
+        }
+        void swalAlert.fire({
+          title: msg,
+          text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
+          showCloseButton: true,
+          confirmButtonText: 'CERRAR',
+          didClose: () => {
+            this.consultaDeuda();
+          },
+        });
+      } else if (m.status === 'failed') {
+        void swalAlert.fire({
+          title: 'Carga de cobros',
+          text: 'Por favor, revise si los cobros se cargaron correctamente o vuelva a intentarlo.',
+          showCloseButton: true,
+          confirmButtonText: 'CERRAR',
+        });
+      } else if (m.status === 'rejected') {
+        this.excelService.statusUpload = false;
+        const dialogRef = this.dialog.open(DialogComponent, {
+          width: '899px',
+          backdropClass: 'backdrop-background-opaque',
+        });
+        dialogRef.componentInstance.ready = true;
+        dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
+        dialogRef.componentInstance.rowsRejected = m.rowsRejected;
+      }
+    };
   }
 
   ngAfterViewInit(): void {
