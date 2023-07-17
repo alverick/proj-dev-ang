@@ -52,7 +52,7 @@ export class CargaHistoricoComponent implements OnInit {
     void swalAlert
       .fire({
         title: 'Sincronizar carga de cobros',
-        text: `La carga de excel pasará del estado SAVING a FAILED, luego el cliente podrá realizar una nueva carga. Recuerda que la empresa de esta carga deberá cerrar sesión para una mejor sincronización.`,
+        html: `La carga de excel pasará del estado SAVING a FAILED, luego el cliente podrá realizar una nueva carga. Recuerda que <strong>la empresa de esta carga deberá cerrar sesión</strong> para una mejor sincronización.`,
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonText: 'Sí, sincronizar',
