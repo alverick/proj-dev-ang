@@ -114,6 +114,15 @@ export class DialogComponent implements OnInit {
         this.rowsRejected = value.rowsRejected;
         this.excelService.errores = value.errors;
         this.cuadro_errores = true;
+      } else if (value.status === 'FAILED') {
+        void swalAlert.fire({
+          title: 'Carga de cobros',
+          text: 'Por favor, revise si los cobros se cargaron correctamente o vuelva a intentarlo.',
+          showCloseButton: true,
+          confirmButtonText: 'CERRAR',
+        });
+        this.excelService.statusUpload = false;
+        this.dialogRef.close();
       } else if (value.status === 'COMPLETED') {
         this.gaService.sendEvent('CargarExcel', {
           event_category: 'CargaExcel',
