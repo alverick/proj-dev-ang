@@ -63,7 +63,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           if (err.status === 401) {
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();
-            swalAlert.fire({
+            void swalAlert.fire({
               title: 'Su sesión ha sido cerrada por inactividad',
               showCloseButton: true,
               showConfirmButton: true,
@@ -76,7 +76,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           } else if (err.status !== 400) {
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();
-            swalAlert.fire({
+            void swalAlert.fire({
               title: 'Ha ocurrido un error en el servidor',
               showCloseButton: true,
               showConfirmButton: true,

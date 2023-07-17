@@ -27,6 +27,7 @@ export class DialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogComponent>,
     private gaService: GoogleAnalytics
   ) {}
+
   public inputXlsForm: UntypedFormGroup;
   public messageUploadExcel = false;
   public errores: any[] = [];
@@ -39,7 +40,7 @@ export class DialogComponent implements OnInit {
 
   public rowsAccepted = 0;
   public rowsRejected = 0;
-  public progress: any = {
+  public progress = {
     status: 'Subiendo',
     mode: 'indeterminate',
     value: 0,
@@ -138,7 +139,7 @@ export class DialogComponent implements OnInit {
           } else {
             msg = `¡Listo! Se agregaron nuevos clientes`;
           }
-          Swal.fire({
+          void swalAlert.fire({
             title: msg,
             text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
             showCloseButton: true,
@@ -183,10 +184,12 @@ export class DialogComponent implements OnInit {
       this.cuadro_errores = true;
     }
   }
+
   left() {
     this.cuadro_errores = false;
     this.ready = false;
   }
+
   descargarPlantilla() {
     this.excelService.GetTemplate().subscribe((r: Blob) => {
       this.gaService.sendEvent('DescargaPlantilla', {
