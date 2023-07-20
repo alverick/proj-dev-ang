@@ -179,6 +179,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private onClose() {
     return (m: ModalCloseData) => {
       if (m.status === 'completed') {
+        this.fileLoad.close();
         let msg = '';
         if (m.dataType === 'C') {
           msg = `¡Listo! Se agregaron nuevas deudas `;
@@ -195,6 +196,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           },
         });
       } else if (m.status === 'failed') {
+        this.fileLoad.close();
         void swalAlert.fire({
           title: 'Carga de cobros',
           text: 'Por favor, revise si los cobros se cargaron correctamente o vuelva a intentarlo.',
@@ -205,6 +207,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           },
         });
       } else if (m.status === 'rejected') {
+        this.fileLoad.close();
         this.excelService.statusUpload = false;
         const dialogRef = this.dialog.open(DialogComponent, {
           width: '899px',
