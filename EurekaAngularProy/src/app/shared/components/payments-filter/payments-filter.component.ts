@@ -52,6 +52,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   @Input() services: any[];
   @Input() stateList: WayPay[] | StatesGtp[];
   @Input() initial;
+  @Input() resetFilters: Subject<boolean>;
   @Output() sendForm = new EventEmitter<object>();
   @Output() resetForm = new EventEmitter();
 
@@ -106,6 +107,9 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
       dateTo.enable();
       this.sendFilters();
     }
+    this.resetFilters?.subscribe(() => {
+      this.cleanAllFilters();
+    });
   }
 
   private setMode() {
