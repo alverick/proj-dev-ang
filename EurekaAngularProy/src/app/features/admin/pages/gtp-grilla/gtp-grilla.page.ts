@@ -123,7 +123,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
 
     this.checkTimeObservable = timer(0, intervalMs).subscribe(() => {
       const timeVal = new Date().getHours();
-      this.disabledButtonFixSaving = timeVal < 20 || timeVal > 22;
+      this.disabledButtonFixSaving = timeVal < 9 || timeVal > 17;
     });
   }
 
