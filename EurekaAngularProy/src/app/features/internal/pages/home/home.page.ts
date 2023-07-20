@@ -695,7 +695,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   openDialog(service: Partial<CompanyServices>) {
     this.OcultaListaExcel = false;
     this.cargaExcel = false;
-    this.fileLoad.close();
     this.excelService.service = service;
     if (this.fileLoad.isRunning()) {
       const dialogRef = this.dialog.open(DialogComponent, {
