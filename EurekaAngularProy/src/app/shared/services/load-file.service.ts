@@ -57,6 +57,7 @@ export class LoadFileService {
     if (this.componentRef) {
       this.cancel = true;
       this.componentRef.destroy();
+      this.componentRef = null;
     }
   }
 
