@@ -233,8 +233,13 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
         if (isConfirmed) {
           this.queryDataService.regularizeAll().subscribe((result) => {
             void swalAlert.fire({
-              title: 'Sincronización exitosa',
-              text: result.message,
+              title: result.success
+                ? 'Sincronización exitosa'
+                : 'Ha ocurrido un error',
+              html:
+                result.rows === 0
+                  ? result.message
+                  : `Se actualizó <strong>${result.rows} registro(s)</strong> de carga de cobros, del estado SAVING a FAILED.`,
               showConfirmButton: true,
               confirmButtonText: 'Entendido',
             });

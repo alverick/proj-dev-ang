@@ -66,7 +66,10 @@ export class CargaHistoricoComponent implements OnInit {
               this.cargarItems();
               void swalAlert.fire({
                 title: 'Sincronización exitosa',
-                text: result.message,
+                html:
+                  result.rows === 0
+                    ? result.message
+                    : `Se actualizó <strong>${result.rows} registro(s)</strong> de carga de cobros, del estado SAVING a FAILED.`,
                 showConfirmButton: true,
                 confirmButtonText: 'Entendido',
               });

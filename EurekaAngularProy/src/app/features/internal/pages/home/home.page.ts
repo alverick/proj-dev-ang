@@ -198,8 +198,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       } else if (m.status === 'failed') {
         this.fileLoad.close();
         void swalAlert.fire({
-          title: 'Carga de cobros',
-          text: 'Por favor, revise si los cobros se cargaron correctamente o vuelva a intentarlo.',
+          title: 'Lo sentimos, no se pudo finalizar la carga de cobros',
+          text: 'Por favor, revisa si algunos cobros se cargaron correctamente y luego inténtalo nuevamente.',
           showCloseButton: true,
           confirmButtonText: 'Ver cobros cargados',
           didClose: () => {

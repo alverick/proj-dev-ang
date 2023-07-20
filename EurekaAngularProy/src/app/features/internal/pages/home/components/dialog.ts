@@ -115,14 +115,20 @@ export class DialogComponent implements OnInit {
         this.excelService.errores = value.errors;
         this.cuadro_errores = true;
       } else if (value.status === 'FAILED') {
-        void swalAlert.fire({
-          title: 'Carga de cobros',
-          text: 'Por favor, revise si los cobros se cargaron correctamente o vuelva a intentarlo.',
-          showCloseButton: true,
-          confirmButtonText: 'CERRAR',
+        const obsClose = new Observable((observer) => {
+          void swalAlert.fire({
+            title: 'Lo sentimos, no se pudo finalizar la carga de cobros',
+            text: 'Por favor, revisa si algunos cobros se cargaron correctamente y luego inténtalo nuevamente.',
+            showCloseButton: true,
+            confirmButtonText: 'Ver cobros cargados',
+            didClose: () => {
+              observer.next();
+              observer.complete();
+            },
+          });
         });
         this.excelService.statusUpload = false;
-        this.dialogRef.close();
+        this.dialogRef.close(obsClose);
       } else if (value.status === 'COMPLETED') {
         this.gaService.sendEvent('CargarExcel', {
           event_category: 'CargaExcel',
