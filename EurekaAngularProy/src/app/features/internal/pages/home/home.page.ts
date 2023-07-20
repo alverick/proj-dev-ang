@@ -14,7 +14,7 @@ import * as saveAs from 'file-saver';
 import { LazyLoadEvent } from 'primeng/api';
 import { all, equals, isNil, pathEq, pathOr, prop } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 
 import { CompanyServices } from '../../../../shared/models/company';
@@ -128,6 +128,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   styleTag: HTMLStyleElement;
   tableMovementsInactive = false;
   @ViewChild('tableMovements') tableMovements: TableMovementsComponent;
+  resetFilterEvt: Subject<boolean> = new Subject();
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -190,7 +191,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           showCloseButton: true,
           confirmButtonText: 'CERRAR',
           didClose: () => {
-            this.consultaDeuda();
+            this.resetFilterEvt.next(true);
           },
         });
       } else if (m.status === 'failed') {
@@ -198,7 +199,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           title: 'Carga de cobros',
           text: 'Por favor, revise si los cobros se cargaron correctamente o vuelva a intentarlo.',
           showCloseButton: true,
-          confirmButtonText: 'CERRAR',
+          confirmButtonText: 'Ver cobros cargados',
+          didClose: () => {
+            this.resetFilterEvt.next(true);
+          },
         });
       } else if (m.status === 'rejected') {
         this.excelService.statusUpload = false;
@@ -702,7 +706,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.fileLoad.verify(this.fileLoadContainer);
         if (result) {
           result.subscribe(() => {
-            this.consultaDeuda();
+            this.resetFilterEvt.next(true);
           });
         }
       });
@@ -718,7 +722,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
               });
               dlg.afterClosed().subscribe((result) => {
                 if (result && result.grabado) {
-                  this.consultaDeuda();
+                  this.resetFilterEvt.next(true);
                 }
               });
             } else {
@@ -731,7 +735,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 this.fileLoad.verify(this.fileLoadContainer);
                 if (result) {
                   result.subscribe(() => {
-                    this.consultaDeuda();
+                    this.resetFilterEvt.next(true);
                   });
                 }
               });
