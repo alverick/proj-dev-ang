@@ -48,13 +48,20 @@
                       <td class="c3">{{ itm.rows }}</td>
                       <td class="c4">{{ itm.status }}</td>
                       <td class="c5">
-                        <button
-                          type="button"
-                          class="f3 btn-eureca-green"
-                          (click)="bajarExcel(itm)"
-                        >
-                          <i class="fa fa-download" aria-hidden="true"></i>
-                        </button>
+                        <div class="tw-flex tw-gap-2">
+                          <p-button
+                            icon="pi pi-download"
+                            styleClass="p-button-xs"
+                            (click)="bajarExcel(itm)"
+                          ></p-button>
+                          <p-button
+                            *ngIf="itm.status === 'SAVING'"
+                            (click)="fixProcess(itm.id)"
+                            pTooltip="Te permite actualizar la carga del excel que se quedó en estado SAVING a FAILED."
+                            icon="pi pi-sync"
+                            styleClass="p-button-xs"
+                          ></p-button>
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -80,14 +87,16 @@
                         (click)="p.previous()"
                       >
                         <img
+                          alt="Anterior"
                           class="tw-inline"
-                          src="../../../../../assets/images/before.svg"
+                          src="/assets/images/before.svg"
                         />
                       </a>
                       <span *ngIf="p.isFirstPage()">
                         <img
+                          alt="Anterior"
                           class="tw-inline"
-                          src="../../../../../assets/images/before.svg"
+                          src="/assets/images/before.svg"
                         />
                       </span>
                     </li>
@@ -132,14 +141,16 @@
                         (click)="p.next()"
                       >
                         <img
+                          alt="Siguiente"
                           class="tw-inline"
-                          src="../../../../../assets/images/after.svg"
+                          src="/assets/images/after.svg"
                         />
                       </a>
                       <span class="pr-0" *ngIf="p.isLastPage()">
                         <img
+                          alt="Siguiente"
                           class="tw-inline"
-                          src="../../../../../assets/images/after.svg"
+                          src="/assets/images/after.svg"
                         />
                       </span>
                     </li>

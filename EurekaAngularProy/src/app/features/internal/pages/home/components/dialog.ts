@@ -7,10 +7,12 @@ import {
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import * as saveAs from 'file-saver';
 import { Observable } from 'rxjs';
-import { ExcelService } from 'src/app/shared/services/excel.service';
+import {
+  ExcelService,
+  ProcessStatus,
+} from 'src/app/shared/services/excel.service';
 import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
-import Swal from 'sweetalert2';
+import { swalAlert } from 'src/app/shared/utils/helpers/popups';
 
 @Component({
   selector: 'cs-dialog',
@@ -24,6 +26,7 @@ export class DialogComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogComponent>,
     private gaService: GoogleAnalytics
   ) {}
+
   public inputXlsForm: UntypedFormGroup;
   public messageUploadExcel = false;
   public errores: any[] = [];
@@ -36,7 +39,7 @@ export class DialogComponent implements OnInit {
 
   public rowsAccepted = 0;
   public rowsRejected = 0;
-  public progress: any = {
+  public progress = {
     status: 'Subiendo',
     mode: 'indeterminate',
     value: 0,
@@ -101,7 +104,7 @@ export class DialogComponent implements OnInit {
 
   private verifyStatus() {
     this.ready = true;
-    const recursiveFunc = (value) => {
+    const recursiveFunc = (value: ProcessStatus) => {
       if (!this.ready) {
         return;
       }
@@ -111,6 +114,21 @@ export class DialogComponent implements OnInit {
         this.rowsRejected = value.rowsRejected;
         this.excelService.errores = value.errors;
         this.cuadro_errores = true;
+      } else if (value.status === 'FAILED') {
+        const obsClose = new Observable((observer) => {
+          void swalAlert.fire({
+            title: 'Lo sentimos, no se pudo finalizar la carga de cobros',
+            text: 'Por favor, revisa si algunos cobros se cargaron correctamente y luego inténtalo nuevamente.',
+            showCloseButton: true,
+            confirmButtonText: 'Ver cobros cargados',
+            didClose: () => {
+              observer.next();
+              observer.complete();
+            },
+          });
+        });
+        this.excelService.statusUpload = false;
+        this.dialogRef.close(obsClose);
       } else if (value.status === 'COMPLETED') {
         this.gaService.sendEvent('CargarExcel', {
           event_category: 'CargaExcel',
@@ -126,13 +144,12 @@ export class DialogComponent implements OnInit {
           } else {
             msg = `¡Listo! Se agregaron nuevos clientes`;
           }
-          Swal.fire({
+          void swalAlert.fire({
             title: msg,
             text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
             showCloseButton: true,
-            onOpen: drawPopup,
             confirmButtonText: 'CERRAR',
-            onAfterClose: () => {
+            didClose: () => {
               observer.next();
               observer.complete();
             },
@@ -171,10 +188,12 @@ export class DialogComponent implements OnInit {
       this.cuadro_errores = true;
     }
   }
+
   left() {
     this.cuadro_errores = false;
     this.ready = false;
   }
+
   descargarPlantilla() {
     this.excelService.GetTemplate().subscribe((r: Blob) => {
       this.gaService.sendEvent('DescargaPlantilla', {

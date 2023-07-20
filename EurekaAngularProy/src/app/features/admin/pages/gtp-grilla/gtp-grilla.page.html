@@ -19,26 +19,33 @@
         <div class="widget lista">
           <div class="title">Empresas</div>
           <div class="content">
-            <section class="actions">
-              <div class="al-left">
-                <div class="lnk-label" (click)="clickClientesNoRegistrados()">
-                  <img
-                    class="tw-inline"
-                    src="../../../../../assets/images/download.svg"
-                    alt="download"
-                  />&nbsp;Descargar Clientes No Registrados
-                </div>
+            <section
+              class="tw-flex tw-justify-between tw-border-extended-grey-4 tw-border-b tw-border-solid tw-px-4 tw-py-4"
+            >
+              <div class="tw-flex">
+                <p-splitButton
+                  #ua
+                  label="Descargar"
+                  icon="pi pi-download"
+                  [model]="this.items"
+                  (onClick)="ua.onDropdownButtonClick($event)"
+                  styleClass="p-button-outlined p-button-sm p-button-success mr-2 mb-2"
+                ></p-splitButton>
               </div>
-              <div class="al-right">
-                <div class="lnk-label" (click)="getAccountStateList()">
-                  <img
-                    class="tw-inline"
-                    src="../../../../../assets/images/download.svg"
-                    alt="download"
-                  />&nbsp;Empresas registradas
-                </div>
+              <div class="tw-flex">
+                <button
+                  pButton
+                  pRipple
+                  (click)="fixAccounts()"
+                  pTooltip="Te permite actualizar las cargas de excel que se quedaron en estado SAVING a FAILED. Realiza la sincronización masiva de Lunes a Domingo de 8:00 p.m. a 10:00pm"
+                  tooltipPosition="top"
+                  type="button"
+                  icon="pi pi-sync"
+                  label="Sincronizar cargas de cobros"
+                  class="p-button-text p-button-sm p-button-outlined tw-h-11"
+                  [disabled]="disabledButtonFixSaving"
+                ></button>
               </div>
-              <div class="clear-float"></div>
             </section>
             <section class="lista">
               <table>
@@ -160,9 +167,6 @@
                         >
                           <i class="fa fa-external-link" aria-hidden="true"></i>
                         </button>
-                        <!-- <button *ngIf="items.status=='Pendiente'" type="button" style="margin: 0em .5em;" class="f3 btn-eureca-yellow" (click)="onUpdateEAG(items.clientId)">
-                                                <i class="fa fa-refresh" aria-hidden="true"></i>
-                                            </button> -->
                       </td>
                     </tr>
                     <tr
@@ -196,14 +200,16 @@
                         (click)="p.previous()"
                       >
                         <img
+                          alt="Anterior"
                           class="tw-inline"
-                          src="../../../../../assets/images/before.svg"
+                          src="/assets/images/before.svg"
                         />
                       </a>
                       <span *ngIf="p.isFirstPage()">
                         <img
+                          alt="Anterior"
                           class="tw-inline"
-                          src="../../../../../assets/images/before.svg"
+                          src="/assets/images/before.svg"
                         />
                       </span>
                     </li>
@@ -246,14 +252,16 @@
                         (click)="p.next()"
                       >
                         <img
+                          alt="Siguiente"
                           class="tw-inline"
-                          src="../../../../../assets/images/after.svg"
+                          src="/assets/images/after.svg"
                         />
                       </a>
                       <span class="pr-0" *ngIf="p.isLastPage()">
                         <img
+                          alt="Siguiente"
                           class="tw-inline"
-                          src="../../../../../assets/images/after.svg"
+                          src="/assets/images/after.svg"
                         />
                       </span>
                     </li>
