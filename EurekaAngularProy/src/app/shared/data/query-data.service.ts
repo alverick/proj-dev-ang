@@ -9,6 +9,7 @@ export interface MessageResult {
   success: boolean;
   code?: number;
   message?: string;
+  rows?: number;
   id?: number;
 }
 
