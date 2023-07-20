@@ -41,7 +41,11 @@ export class LoadFileService {
       this.verifyStatus();
     } else {
       this.excelService.GetLastProcess().subscribe((d) => {
-        if (d.status !== 'COMPLETED' && d.status !== 'REJECTED') {
+        if (
+          d.status !== 'COMPLETED' &&
+          d.status !== 'REJECTED' &&
+          d.status !== 'FAILED'
+        ) {
           this.componentRef = container.createComponent(LoadFileComponent);
           this.verifyStatus();
         }
@@ -104,6 +108,7 @@ export class LoadFileService {
             this.onClose.emit({
               status: 'failed',
             });
+            this.excelService.statusUpload = false;
           } else if (status === 'COMPLETED') {
             stopLoop();
             this.componentRef.destroy();

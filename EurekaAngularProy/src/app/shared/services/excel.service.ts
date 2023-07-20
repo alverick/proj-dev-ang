@@ -77,7 +77,11 @@ export class ExcelService {
     const url = `${this.URI_API}/debt/process/last`;
     return this.http.get<LastProcessStatus>(url).pipe(
       map((result) => {
-        if (result.status !== 'COMPLETED' && result.status !== 'REJECTED') {
+        if (
+          result.status !== 'COMPLETED' &&
+          result.status !== 'REJECTED' &&
+          result.status !== 'FAILED'
+        ) {
           this.statusUpload = true;
           this.idProcess = result.id;
         }
