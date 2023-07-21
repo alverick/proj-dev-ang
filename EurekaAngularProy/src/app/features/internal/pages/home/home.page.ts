@@ -192,7 +192,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           showCloseButton: true,
           confirmButtonText: 'CERRAR',
           didClose: () => {
-            this.resetFilterEvt.next(true);
+            this.validateResetForm();
           },
         });
       } else if (m.status === 'failed') {
@@ -203,7 +203,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           showCloseButton: true,
           confirmButtonText: 'Ver cobros cargados',
           didClose: () => {
-            this.resetFilterEvt.next(true);
+            this.validateResetForm();
           },
         });
       } else if (m.status === 'rejected') {
@@ -408,6 +408,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       const { dateForFilter, status, inputSearch, service } =
         this.initialFilter;
       this.submitSearch(inputSearch, service, status, dateForFilter);
+    }
+  }
+
+  validateResetForm() {
+    if (equals(this.initialFilter, this.currentFilter)) {
+      this.resetControlsGrid();
+      this.consultaDeuda();
+    } else {
+      this.resetFilterEvt.next(true);
     }
   }
 
@@ -708,7 +717,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.fileLoad.verify(this.fileLoadContainer);
         if (result) {
           result.subscribe(() => {
-            this.resetFilterEvt.next(true);
+            this.validateResetForm();
           });
         }
       });
@@ -724,7 +733,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
               });
               dlg.afterClosed().subscribe((result) => {
                 if (result && result.grabado) {
-                  this.resetFilterEvt.next(true);
+                  this.validateResetForm();
                 }
               });
             } else {
@@ -737,7 +746,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 this.fileLoad.verify(this.fileLoadContainer);
                 if (result) {
                   result.subscribe(() => {
-                    this.resetFilterEvt.next(true);
+                    this.validateResetForm();
                   });
                 }
               });
