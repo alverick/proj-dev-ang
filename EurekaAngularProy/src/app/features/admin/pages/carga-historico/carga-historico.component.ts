@@ -65,7 +65,9 @@ export class CargaHistoricoComponent implements OnInit {
             .subscribe((result) => {
               this.cargarItems();
               void swalAlert.fire({
-                title: 'Sincronización exitosa',
+                title: result.success
+                  ? 'Sincronización exitosa'
+                  : 'Ha ocurrido un error',
                 html:
                   result.rows === 0
                     ? result.message
