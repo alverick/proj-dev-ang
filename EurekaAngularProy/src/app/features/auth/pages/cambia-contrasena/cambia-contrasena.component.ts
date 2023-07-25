@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecuperaService } from 'src/app/shared/services/recupera.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { swalAlert } from 'src/app/shared/utils/helpers/popups';
-import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 
+import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import { MustMatch } from '../../../../shared/validators/must-match.validator';
 import {
   messageErrorNewPasswords,

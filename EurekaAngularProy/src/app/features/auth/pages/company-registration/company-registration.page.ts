@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { pathEq } from 'ramda';
+
 import { authFullRoutingNames } from '../../auth-routing.names';
 import {
   documentTypes,
   errorsRegisterForm,
   mobileOperators,
 } from '../../constants';
-import { AffiliationService } from '../../services/affiliation.service';
+import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-company-registration',
