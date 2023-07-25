@@ -5,7 +5,7 @@
   <div class="tw-py-3">
     <div
       *ngFor="let rule of rules; trackBy: ruleTrackBy"
-      class="tw-flex tw-items-center tw-gap-2 tw-text-xs"
+      class="tw-flex tw-items-center tw-gap-2 tw-text-xs tw-mb-1"
     >
       <i
         class="pi"
@@ -14,7 +14,8 @@
           'tw-text-extended-grey-3':
             control.hasError(rule.key) || control.value === '',
           'pi-check': !control.hasError(rule.key),
-          'tw-text-primary-green-1': !control.hasError(rule.key)
+          'tw-text-primary-green-1':
+            !control.hasError(rule.key) && control.value !== ''
         }"
       ></i>
       <span class="control">{{ rule.message }}</span>
