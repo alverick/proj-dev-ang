@@ -1,123 +1,77 @@
-<div class="tw-bg-no-repeat tw-bg-cover container-style">
-  <div
-    class="tw-max-w-6xl tw-m-auto tw-flex tw-justify-center lg:tw-justify-start tw-relative tw-pt-6 lg:tw-pb-24 tw-pb-6"
-  >
-    <a class="lg:tw-pl-12 tw-py-1" href="#">
-      <img
-        class="img-login"
-        src="/assets/images/ibkempresas-logo-negativo.svg"
-        alt="Logo"
-      />
-    </a>
-  </div>
-
-  <div class="tw-max-w-6xl tw-m-auto md:tw-flex tw-relative">
-    <div class="lg:tw-flex">
-      <div class="sm:tw-w-full tw-pr-4 tw-pl-4 lg:tw-w-1/2">
-        <div
-          class="lg:tw-ml-20 tw-text-xl lg:tw-text-6xl tw-font-medium tw-text-white tw-leading-none tw-text-center lg:tw-text-left lg:tw-mb-32 lg:tw-pr-8 tw-mb-6"
-        >
-          Gestiona tus cobranzas fácil y rápido
-        </div>
-        <div class="tw-ml-20 tw-hidden lg:tw-block">
-          <img
-            class="img-login-ing"
-            src="/assets/images/login.svg"
-            alt="Login"
-          />
-        </div>
-      </div>
-
-      <div class="tw-w-full lg:tw-px-4 lg:tw-w-1/2">
-        <div class="tw-flex tw-justify-center lg:tw-justify-end">
-          <div
-            *ngIf="!formulario"
-            class="tw-bg-white lg:tw-min-w-[450px] tw-p-8"
-          >
-            <div
-              class="tw-text-secondary-blue-1 tw-text-2xl lg:tw-text-3xl tw-font-medium tw-text-center mb-4"
-            >
-              Crea una <br />
-              nueva contraseña
-            </div>
-
-            <form
-              id="login-form"
-              [formGroup]="Cambia"
-              (ngSubmit)="SubmitCambia()"
-              autocomplete="off"
-            >
-              <div class="tw-pb-4">
-                <cs-label-control
-                  class="tw-w-full"
-                  formControlName="contrasena"
-                  [errorMessages]="errorMessages.password"
-                  ><i class="pi pi-lock tw-text-primary-green-1"></i>
-                  Nueva contraseña
-                  <p-password
-                    class="tw-w-full"
-                    styleClass="tw-w-full"
-                    inputStyleClass="tw-w-full"
-                    minlength="8"
-                    [maxLength]="25"
-                    formControlName="contrasena"
-                    [toggleMask]="true"
-                    control
-                  >
-                    <ng-template pTemplate="content">
-                      <cs-control-rules-policies
-                        [control]="Cambia.get('contrasena')"
-                        [rules]="messageErrorNewPasswords"
-                        >Por seguridad, tu nueva contraseña debe tener por lo
-                        menos:</cs-control-rules-policies
-                      >
-                    </ng-template>
-                  </p-password>
-                </cs-label-control>
-              </div>
-
-              <div class="tw-pb-4">
-                <cs-label-control
-                  class="tw-w-full"
-                  formControlName="repcontrasena"
-                  [errorMessages]="errorMessages.passwordConfirm"
-                  ><i class="pi pi-lock tw-text-primary-green-1"></i> Repite la
-                  contraseña
-                  <p-password
-                    class="tw-w-full"
-                    styleClass="tw-w-full"
-                    inputStyleClass="tw-w-full"
-                    minlength="8"
-                    [maxLength]="20"
-                    formControlName="repcontrasena"
-                    [toggleMask]="true"
-                    [feedback]="false"
-                    control
-                  ></p-password>
-                </cs-label-control>
-              </div>
-              <div class="tw-text-center tw-mb-6">
-                <button
-                  type="submit"
-                  pButton
-                  pRipple
-                  class="tw-w-[230px] tw-justify-center"
-                >
-                  INGRESAR
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="lg:tw-hidden">
-          <img
-            class="tw-w-[275px]"
-            src="/assets/images/login.svg"
-            alt="Login"
-          />
-        </div>
-      </div>
+<cs-layout-form>
+  <div *ngIf="!formulario" class="tw-bg-white lg:tw-min-w-[450px] tw-p-8">
+    <div
+      class="tw-text-secondary-blue-1 tw-text-2xl lg:tw-text-3xl tw-font-medium tw-text-center mb-4"
+    >
+      Crea una <br />
+      nueva contraseña
     </div>
+
+    <form
+      id="login-form"
+      [formGroup]="Cambia"
+      (ngSubmit)="SubmitCambia()"
+      autocomplete="off"
+    >
+      <div class="tw-pb-4">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="contrasena"
+          [errorMessages]="errorMessages.password"
+          ><i class="pi pi-lock tw-text-primary-green-1"></i>
+          Nueva contraseña
+          <p-password
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            inputStyleClass="tw-w-full"
+            minlength="8"
+            [maxLength]="25"
+            formControlName="contrasena"
+            [toggleMask]="true"
+            control
+          >
+            <ng-template pTemplate="content">
+              <cs-control-rules-policies
+                [control]="Cambia.get('contrasena')"
+                [rules]="messageErrorNewPasswords"
+                >Por seguridad, tu nueva contraseña debe tener por lo
+                menos:</cs-control-rules-policies
+              >
+            </ng-template>
+          </p-password>
+        </cs-label-control>
+      </div>
+
+      <div class="tw-pb-4">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="repcontrasena"
+          [errorMessages]="errorMessages.passwordConfirm"
+          ><i class="pi pi-lock tw-text-primary-green-1"></i> Repite la
+          contraseña
+          <p-password
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            inputStyleClass="tw-w-full"
+            minlength="8"
+            [maxLength]="20"
+            formControlName="repcontrasena"
+            [toggleMask]="true"
+            [feedback]="false"
+            control
+          ></p-password>
+        </cs-label-control>
+      </div>
+      <div class="tw-text-center tw-mb-6">
+        <button
+          type="submit"
+          pButton
+          pRipple
+          class="tw-w-[230px] tw-justify-center"
+        >
+          INGRESAR
+        </button>
+      </div>
+    </form>
   </div>
-</div>
+</cs-layout-form>
