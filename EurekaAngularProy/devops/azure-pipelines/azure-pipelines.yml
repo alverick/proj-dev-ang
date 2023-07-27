@@ -125,13 +125,8 @@ stages:
               echo $(mode)
               # Your build commands go here
             displayName: 'show variable ${{variables.mode}}'
-
-      - job: DeployJob
-        displayName: 'Deploy'
-        dependsOn: BuildJob
-        condition: and(succeeded(), or(eq(variables['mode'], 'dev'),eq(variables['mode'], 'main')))
-        steps:
-          - script: |
-              echo "Deploy the application!"
-              # Your build commands go here
-            displayName: 'Deploy the application'
+          - ${{ if not(eq(variables.mode, 'production')) }}:
+            - script: |
+                echo "Deploy the application!"
+                # Your build commands go here
+              displayName: 'Deploy the application'
