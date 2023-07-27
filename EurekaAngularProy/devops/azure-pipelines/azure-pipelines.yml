@@ -126,13 +126,10 @@ stages:
               # Your build commands go here
             displayName: 'show variable ${{variables.mode}}'
 
-  - stage: Deploy
-    displayName: Deploy stage
-    dependsOn: Build
-    condition: and(succeeded(), or(eq(variables['mode'], 'dev'),eq(variables['mode'], 'main')))
-    jobs:
       - job: DeployJob
         displayName: 'Deploy'
+        dependsOn: BuildJob
+        condition: and(succeeded(), or(eq(variables['mode'], 'dev'),eq(variables['mode'], 'main')))
         steps:
           - script: |
               echo "Deploy the application!"
