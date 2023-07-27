@@ -3,6 +3,23 @@ trigger:
     include:
       - feature/*
 
+variables:
+  vmImageName: ubuntu-20.04
+  azureSubscription: 'armpiloto'
+  artifactDeploy: '$(Build.SourcesDirectory)/tipocambio-web'
+  azureResourceGroup: 'rg-piloto'
+
+  ${{ if contains(variables['Build.SourceBranchName'], 'dev') }}:
+    urlbase: 'https://pilotoibk.azure-api.net/dev-ms-tipocambio'
+    environment: 'Dev'
+    webAppName: 'webapp-pilotoibk-fe-eastus2-dev'
+
+
+  ${{ if contains(variables['Build.SourceBranchName'], 'main') }}:
+    urlbase: 'https://pilotoibk.azure-api.net/prod-ms-tipocambio'
+    environment: 'Prod'
+    webAppName: 'webapp-pilotoibk-fe-eastus2'
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -24,5 +41,7 @@ stages:
             displayName: Set the tag name as an environment variable
           - script: |
               echo $(VERSION_TAG)
+              echo echo $(build.SourceBranchName)
+              echo echo $(urlbase)
               # Your build commands go here
             displayName: 'show variable'
