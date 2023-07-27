@@ -4,22 +4,12 @@ trigger:
       - refs/tags/*
 
 variables:
-  vmImageName: ubuntu-20.04
-  azureSubscription: 'armpiloto'
-  artifactDeploy: '$(Build.SourcesDirectory)/tipocambio-web'
-  azureResourceGroup: 'rg-piloto'
-  urlbase: 'prod'
-
-  ${{ if contains(variables['Build.SourceBranchName'], 'dev') }}:
-    urlbase: 'dev'
-    environment: 'Dev'
-    webAppName: 'webapp-pilotoibk-fe-eastus2-dev'
-
-
-  ${{ if contains(variables['Build.SourceBranchName'], 'main') }}:
-    urlbase: 'main'
-    environment: 'Prod'
-    webAppName: 'webapp-pilotoibk-fe-eastus2'
+  - name: urlbase
+    value: prod
+    ${{ if contains(variables['Build.SourceBranchName'], 'dev') }}:
+    value: dev
+    ${{ if contains(variables['Build.SourceBranchName'], 'main') }}:
+    value: main
 
 pool:
   vmImage: 'ubuntu-latest'
