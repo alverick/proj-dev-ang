@@ -41,7 +41,7 @@ stages:
             displayName: Set the tag name as an environment variable
           - script: |
               echo $(VERSION_TAG)
-              echo echo $(build.SourceBranchName)
-              echo echo $(urlbase)
+              echo $(build.SourceBranchName)
+              echo $(urlbase)
               # Your build commands go here
             displayName: 'show variable'
