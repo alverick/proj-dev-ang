@@ -44,4 +44,4 @@ stages:
               echo $(build.SourceBranchName)
               echo $(urlbase)
               # Your build commands go here
-            displayName: 'show variable'
+            displayName: 'show variable ${{variables.urlbase}}'
