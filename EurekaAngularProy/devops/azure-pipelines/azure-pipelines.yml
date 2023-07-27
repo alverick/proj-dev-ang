@@ -1,0 +1,18 @@
+trigger:
+  branches:
+    include:
+      - feature/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: BuildJob
+        displayName: 'Build'
+        steps:
+          - script: |
+              echo "Building the application..."
+              # Your build commands go here
+            displayName: 'Build the application'
