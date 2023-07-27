@@ -5,8 +5,6 @@ trigger:
 
 variables:
   vmImageName: 'ubuntu-20.04'
-  ${{ if contains(variables['Build.sourceBranch'], 'tags') }}:
-    mode: 'production'
 
   ${{ if contains(variables['Build.SourceBranchName'], 'dev') }}:
     mode: 'dev'
@@ -14,11 +12,14 @@ variables:
     groupName: 'RG_EU2_C003_EURC_DEV_01'
     appServiceName: 'wappeu2c003eurcdev01'
 
-  ${{ if contains(variables['Build.SourceBranchName'], 'uat') }}:
+  ${{ elseif contains(variables['Build.SourceBranchName'], 'uat') }}:
     mode: 'uat'
     appServiceConnection: 'RG_EU2_C003_EURC_UAT_01'
     groupName: 'rg_eu2_c003_eurc_uat_01'
     appServiceName: 'wappeu2c003eurcuat01'
+
+  ${{ else }}:
+    mode: 'production'
 
 #stages:
 #  - stage: Build
