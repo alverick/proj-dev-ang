@@ -7,8 +7,10 @@ variables:
   - name: urlbase
     value: prod
     ${{ if contains(variables['Build.SourceBranchName'], 'dev') }}:
+  - name: urlbase
     value: dev
     ${{ if contains(variables['Build.SourceBranchName'], 'main') }}:
+  - name: urlbase
     value: main
 
 pool:
