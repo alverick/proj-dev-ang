@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-      - feature/*
+      - refs/tags/*
 
 variables:
   vmImageName: ubuntu-20.04
