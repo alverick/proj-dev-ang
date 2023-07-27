@@ -48,7 +48,7 @@ stages:
   - stage: Deploy
     displayName: Deploy stage
     dependsOn: Build
-    condition: and(succeeded(), not(or(eq(variables['urlbase'], 'dev'),eq(variables['urlbase'], 'main'))))
+    condition: and(succeeded(), or(eq(variables['urlbase'], 'dev'),eq(variables['urlbase'], 'main')))
     jobs:
       - job: DeployJob
         displayName: 'Deploy'
