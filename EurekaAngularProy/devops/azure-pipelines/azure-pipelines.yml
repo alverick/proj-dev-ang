@@ -8,15 +8,16 @@ variables:
   azureSubscription: 'armpiloto'
   artifactDeploy: '$(Build.SourcesDirectory)/tipocambio-web'
   azureResourceGroup: 'rg-piloto'
+  urlbase: 'prod'
 
   ${{ if contains(variables['Build.SourceBranchName'], 'dev') }}:
-    urlbase: 'https://pilotoibk.azure-api.net/dev-ms-tipocambio'
+    urlbase: 'dev'
     environment: 'Dev'
     webAppName: 'webapp-pilotoibk-fe-eastus2-dev'
 
 
   ${{ if contains(variables['Build.SourceBranchName'], 'main') }}:
-    urlbase: 'https://pilotoibk.azure-api.net/prod-ms-tipocambio'
+    urlbase: 'main'
     environment: 'Prod'
     webAppName: 'webapp-pilotoibk-fe-eastus2'
 
@@ -45,3 +46,16 @@ stages:
               echo $(urlbase)
               # Your build commands go here
             displayName: 'show variable ${{variables.urlbase}}'
+
+  - stage: Deploy
+    displayName: Deploy stage
+    dependsOn: Build
+    condition: and(succeeded(), not(eq(variables['urlbase'], 'prod')))
+    jobs:
+      - job: DeployJob
+        displayName: 'Deploy'
+        steps:
+          - script: |
+              echo "Deploy the application!"
+              # Your build commands go here
+            displayName: 'Deploy the application'
