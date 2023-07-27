@@ -4,6 +4,7 @@ trigger:
       - refs/tags/*
 
 variables:
+  - group: "Contoso Variable Group"
   - name: urlbase
     value: prod
     ${{ if contains(variables['Build.SourceBranchName'], 'dev') }}:
