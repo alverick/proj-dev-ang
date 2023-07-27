@@ -1,4 +1,4 @@
-interface IServicesUpdate {
+export interface CompanyServices {
   idAccount: string;
   debtorCode: string;
   newNameGTPStatus: number;
@@ -31,7 +31,7 @@ interface IServicesUpdate {
 export interface ICompanyUpdate {
   ruc: string;
   inReview: boolean;
-  arrayServices: IServicesUpdate[];
+  arrayServices: CompanyServices[];
   newNameGTPStatus: number;
   movilOperator: string;
   entry: string;

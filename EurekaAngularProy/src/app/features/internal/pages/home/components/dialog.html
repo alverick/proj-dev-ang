@@ -13,7 +13,8 @@
       height="20"
       width="20"
       style="cursor: pointer"
-      src="../../../../../../assets/images/cerrar.svg"
+      src="/assets/images/cerrar.svg"
+      alt="Close"
     />
   </div>
   <div
@@ -35,8 +36,9 @@
     <img
       class="pl-3 tw-inline"
       style="cursor: pointer"
-      (click)="right() "
-      src="../../../../../../assets/images/arrow-right.svg"
+      (click)="right()"
+      src="/assets/images/arrow-right.svg"
+      alt="Right"
     />
   </div>
   <div *ngIf="!excelService.statusUpload && ready" class="paso">
@@ -45,13 +47,14 @@
       class="pl-3 tw-inline"
       style="cursor: pointer"
       (click)="left()"
-      src="../../../../../../assets/images/arrow-left.svg"
+      src="/assets/images/arrow-left.svg"
+      alt="Left"
     />
   </div>
 
   <div class="title pt-2">
     Agrega cobros del servicio
-    <span class="resaltado">{{excelService.service.name}}</span>
+    <span class="resaltado">{{ excelService.service.name }}</span>
   </div>
   <br />
   <div *ngIf="!excelService.statusUpload && !ready">
@@ -115,7 +118,7 @@
   >
     <div class="input-file" (click)="uploadFile.click()">
       <span class="text-input-file">
-        <div class="name-file pl-4 pt-2 pr-4">{{fileName}}</div>
+        <div class="name-file pl-4 pt-2 pr-4">{{ fileName }}</div>
         <div *ngIf="!fileName" class="name-file pl-4 pr-4">
           Seleccione el archivo aquí
         </div>
@@ -125,7 +128,7 @@
   </div>
 
   <div *ngIf="excelService.statusUpload" class="progress-text">
-    {{progress.status}}
+    {{ progress.status }}
   </div>
   <mat-progress-bar
     *ngIf="excelService.statusUpload"
@@ -142,7 +145,7 @@
       class="btn-eureca-green"
       type="button"
       form="input-form"
-      (click)="(fileName === undefined)? uploadFile.click() : openSnackBar()"
+      (click)="fileName === undefined ? uploadFile.click() : openSnackBar()"
     >
       SUBIR PLANTILLA
     </button>
@@ -151,32 +154,30 @@
       class="btn-eureka-block"
       type="button"
       form="input-form"
-      (click)="(fileName === undefined)? uploadFile.click() : openSnackBar()"
+      (click)="fileName === undefined ? uploadFile.click() : openSnackBar()"
     >
       SUBIR PLANTILLA
     </button>
   </div>
   <div
     style="margin-left: 160px"
-    *ngIf="excelService.errores.length > 0 &&  cuadro_errores === true"
+    *ngIf="excelService.errores.length > 0 && cuadro_errores === true"
     class="errores"
   >
     <div class="header">
       <div class="texto">Se encontraron los siguientes errores:</div>
       <div class="resumen">
         <span *ngIf="rowsAccepted > 0" class="bien"
-          ><img
-            class="tw-inline"
-            src="../../../../../../assets/images/ok.svg"
-          />
-          {{rowsAccepted}}</span
+          ><img class="tw-inline" src="/assets/images/ok.svg" alt="Ok" /> {{
+          rowsAccepted }}</span
         >
         <span *ngIf="rowsRejected > 0" class="mal"
           ><img
             class="tw-inline"
-            src="../../../../../../assets/images/cancel.svg"
+            src="/assets/images/cancel.svg"
+            alt="Cancel"
           />
-          {{rowsRejected}}</span
+          {{ rowsRejected }}</span
         >
       </div>
       <div class="clear-float"></div>
@@ -184,8 +185,8 @@
     <perfect-scrollbar class="list">
       <div class="err-item" *ngFor="let err of excelService.errores">
         <span *ngIf="err.row > 0"
-          ><strong class="resaltado">Fila {{err.row}}</strong> : </span
-        >{{err.description}}
+          ><strong class="resaltado">Fila {{ err.row }}</strong> : </span
+        >{{ err.description }}
       </div>
     </perfect-scrollbar>
     <div class="footer">Corrige los errores y vuelve a subir la plantilla</div>

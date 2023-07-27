@@ -30,7 +30,7 @@ const TreeObject = {
 };
 
 export const generateFullRoutes: any = (obj, path: string) => {
-  const parseRoute = (val) => path + val;
+  const parseRoute = (val: string) => path + val;
   return map(parseRoute, obj);
 };
 
