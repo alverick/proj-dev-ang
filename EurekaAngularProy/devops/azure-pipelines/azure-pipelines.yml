@@ -3,16 +3,26 @@ trigger:
     include:
       - refs/tags/*
 
+parameters:
+  - name: destiny
+    displayName: Deploy to
+    type: string
+    default: production
+    values:
+      - dev
+      - uat
+      - production
+
 variables:
   vmImageName: 'ubuntu-20.04'
 
-  ${{ if contains(variables['Build.SourceBranchName'], 'dev') }}:
+  ${{ if or(contains(variables['Build.SourceBranchName'], 'dev'),eq(parameters.destiny,'dev')) }}:
     mode: 'dev'
     appServiceConnection: 'gr2c003eurcdev01'
     groupName: 'RG_EU2_C003_EURC_DEV_01'
     appServiceName: 'wappeu2c003eurcdev01'
 
-  ${{ elseif contains(variables['Build.SourceBranchName'], 'uat') }}:
+  ${{ elseif or(contains(variables['Build.SourceBranchName'], 'uat'),eq(parameters.destiny,'uat')) }}:
     mode: 'uat'
     appServiceConnection: 'RG_EU2_C003_EURC_UAT_01'
     groupName: 'rg_eu2_c003_eurc_uat_01'
@@ -21,112 +31,65 @@ variables:
   ${{ else }}:
     mode: 'production'
 
-#stages:
-#  - stage: Build
-#    displayName: Build and push ${{variables.mode}}
-#    jobs:
-#      - job: Build
-#        displayName: Build
-#        pool:
-#          vmImage: $(vmImageName)
-#        steps:
-#          - task: NodeTool@0
-#            displayName: 'Install Node.js'
-#            inputs:
-#              versionSpec: '14.x'
-#
-#          - task: Npm@1
-#            displayName: 'Install angular'
-#            inputs:
-#              command: custom
-#              verbose: false
-#              customCommand: 'install -g @angular/cli@15'
-#
-#          - task: Npm@1
-#            displayName: 'Install npm'
-#            inputs:
-#              workingDir: EurekaAngularProy
-#              verbose: false
-#
-#          - task: Npm@1
-#            displayName: 'Run build '
-#            inputs:
-#              command: custom
-#              workingDir: EurekaAngularProy
-#              verbose: false
-#              customCommand: 'run build -- --configuration ${{variables.mode}}'
-#
-#          - script: |
-#              echo Creating Directory
-#              mkdir -p Deploy/ClientApp/dist
-#              echo Move Directory Deploy
-#              cp -a dist/EurekaAngularProy/. Deploy/ClientApp/dist/
-#              ls Deploy/ClientApp/dist/
-#            workingDirectory: EurekaAngularProy
-#            displayName: 'Create directory'
-#
-#          - upload: EurekaAngularProy/dist/EurekaAngularProy
-#            displayName: 'Publish dist'
-#            artifact: web-cobrosimple
-#
-#          - task: ArchiveFiles@2
-#            displayName: 'Archive File'
-#            inputs:
-#              rootFolderOrFile: EurekaAngularProy/Deploy
-#              includeRootFolder: false
-#              archiveFile: '$(Build.ArtifactStagingDirectory)/ClientApp.zip'
-#
-#          - task: AzureCLI@2
-#            displayName: 'Webapp deployment'
-#            inputs:
-#              azureSubscription: $(appServiceConnection)
-#              scriptType: bash
-#              scriptLocation: inlineScript
-#              inlineScript: 'az webapp deployment source config-zip -g $(groupName) -n $(appServiceName) --src $(Build.ArtifactStagingDirectory)/ClientApp.zip'
-#
-#  - stage: Deploy
-#    displayName: Deploy stage
-#    dependsOn: Build
-#    condition: and(succeeded(), or(eq(variables['mode'], 'dev'),eq(variables['mode'], 'uat')))
-#    jobs:
-#      - job: DeployJob
-#        displayName: 'Deploy'
-#        steps:
-#          - task: AzureCLI@2
-#            displayName: 'Webapp deployment'
-#            inputs:
-#              azureSubscription: $(appServiceConnection)
-#              scriptType: bash
-#              scriptLocation: inlineScript
-#              inlineScript: 'az webapp deployment source config-zip -g $(groupName) -n $(appServiceName) --src $(Build.ArtifactStagingDirectory)/ClientApp.zip'
-
-pool:
-  vmImage: 'ubuntu-latest'
-
 stages:
   - stage: Build
+    displayName: Build and push ${{variables.mode}}
     jobs:
-      - job: BuildJob
-        displayName: 'Build'
+      - job: Build
+        displayName: Build
+        pool:
+          vmImage: $(vmImageName)
         steps:
+          - task: NodeTool@0
+            displayName: 'Install Node.js'
+            inputs:
+              versionSpec: '14.x'
+
+          - task: Npm@1
+            displayName: 'Install angular'
+            inputs:
+              command: custom
+              verbose: false
+              customCommand: 'install -g @angular/cli@15'
+
+          - task: Npm@1
+            displayName: 'Install npm'
+            inputs:
+              workingDir: EurekaAngularProy
+              verbose: false
+
+          - task: Npm@1
+            displayName: 'Run build '
+            inputs:
+              command: custom
+              workingDir: EurekaAngularProy
+              verbose: false
+              customCommand: 'run build -- --configuration ${{variables.mode}}'
+
           - script: |
-              echo "Building the application!"
-              # Your build commands go here
-            displayName: 'Build the application'
-          - script: |
-              echo $(build.sourceBranch)
-              # Your build commands go here
-            displayName: 'show branch'
-          - script: VERSION_TAG=`git describe --tags` && echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
-            displayName: Set the tag name as an environment variable
-          - script: |
-              echo $(VERSION_TAG)
-              echo $(build.SourceBranchName)
-              echo $(mode)
-              # Your build commands go here
-            displayName: 'show variable ${{variables.mode}}'
+              echo Creating Directory
+              mkdir -p Deploy/ClientApp/dist
+              echo Move Directory Deploy
+              cp -a dist/EurekaAngularProy/. Deploy/ClientApp/dist/
+              ls Deploy/ClientApp/dist/
+            workingDirectory: EurekaAngularProy
+            displayName: 'Create directory'
+
+          - upload: EurekaAngularProy/dist/EurekaAngularProy
+            displayName: 'Publish dist'
+            artifact: web-cobrosimple
+
+          - task: ArchiveFiles@2
+            displayName: 'Archive File'
+            inputs:
+              rootFolderOrFile: EurekaAngularProy/Deploy
+              includeRootFolder: false
+              archiveFile: '$(Build.ArtifactStagingDirectory)/ClientApp.zip'
           - ${{ if not(eq(variables.mode, 'production')) }}:
-            - script: |
-                echo "Deploy the application!"
-                # Your build commands go here
-              displayName: 'Deploy the application'
+              - task: AzureCLI@2
+                displayName: 'Webapp deployment'
+                inputs:
+                  azureSubscription: $(appServiceConnection)
+                  scriptType: bash
+                  scriptLocation: inlineScript
+                  inlineScript: 'az webapp deployment source config-zip -g $(groupName) -n $(appServiceName) --src $(Build.ArtifactStagingDirectory)/ClientApp.zip'
