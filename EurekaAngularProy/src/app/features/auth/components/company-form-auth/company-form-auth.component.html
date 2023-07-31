@@ -68,14 +68,26 @@
             class="tw-w-full"
             formControlName="password"
             [errorMessages]="errorMessages.password"
-            >Crea tu contraseña<input
-              type="password"
+            >Crea tu contraseña
+            <p-password
               class="tw-w-full"
-              pInputText
-              minlength="6"
-              maxlength="20"
+              styleClass="tw-w-full"
+              inputStyleClass="tw-w-full"
+              minlength="8"
+              [maxLength]="25"
               formControlName="password"
-            />
+              [toggleMask]="true"
+              control
+            >
+              <ng-template pTemplate="content">
+                <cs-control-rules-policies
+                  [control]="companyForm.get('password')"
+                  [rules]="messageErrorNewPasswords"
+                  >Por seguridad, tu nueva contraseña debe tener por lo
+                  menos:</cs-control-rules-policies
+                >
+              </ng-template>
+            </p-password>
           </cs-label-control>
         </div>
         <div class="form-elm">
@@ -83,14 +95,18 @@
             class="tw-w-full"
             formControlName="passwordConfirm"
             [errorMessages]="errorMessages.passwordConfirm"
-            >Confirma tu contraseña<input
-              type="password"
+            >Confirma tu contraseña
+            <p-password
               class="tw-w-full"
-              pInputText
-              minlength="6"
-              maxlength="20"
+              styleClass="tw-w-full"
+              inputStyleClass="tw-w-full"
+              minlength="8"
+              [maxLength]="25"
               formControlName="passwordConfirm"
-            />
+              [toggleMask]="true"
+              [feedback]="false"
+              control
+            ></p-password>
           </cs-label-control>
         </div>
         <div class="form-elm">

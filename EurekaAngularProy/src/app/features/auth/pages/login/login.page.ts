@@ -53,6 +53,7 @@ export class LoginPage implements OnInit {
   isTrue = false;
   codigo2 = false;
   isCaptchaValidate = true;
+  hide = true;
 
   storeRuc: any;
 

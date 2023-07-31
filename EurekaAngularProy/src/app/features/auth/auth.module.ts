@@ -18,6 +18,7 @@ import { SidebarCompanyComponent } from './components/sidebar-company/sidebar-co
 import { GUARDS } from './guards';
 import { PAGES } from './pages';
 import { SERVICES } from './services';
+import { LayoutFormComponent } from './components/layout-form/layout-form.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { SERVICES } from './services';
     CompanyFormAuthComponent,
     SidebarCompanyComponent,
     ...PAGES,
+    LayoutFormComponent,
   ],
   exports: [],
 })
