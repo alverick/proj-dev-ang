@@ -1,19 +1,17 @@
-import {
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-} from '@angular/forms';
+import { FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { isNil } from 'ramda';
 
-import { PasswordForm } from '../../features/internal/services/company-configuration.service';
+import { ChangePasswordForm } from '../../features/internal/services/company-configuration.service';
+import { ModelFormGroup } from '../models/forms';
 
 export function MustMatch(
   controlName: string,
   matchingControlName: string,
   ignoreCase = false
 ): ValidatorFn {
-  return (formGroup: FormGroup<PasswordForm>): ValidationErrors | null => {
+  return (
+    formGroup: ModelFormGroup<ChangePasswordForm>
+  ): ValidationErrors | null => {
     const { value: valueOriginal } = formGroup.controls[
       controlName
     ] as FormControl<string>;

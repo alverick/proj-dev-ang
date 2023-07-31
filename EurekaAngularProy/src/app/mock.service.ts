@@ -64,7 +64,7 @@ export class MockService implements ApiMockService {
       {
         host: environment.END_POINT,
         path: 'Login/dencrypt',
-        responseCallback: () => updateCompanyMock,
+        responseCallback: () => true,
       },
     ];
   }

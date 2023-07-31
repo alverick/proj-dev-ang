@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  FormControl,
-  FormGroup,
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
@@ -12,26 +10,26 @@ import { tap } from 'rxjs/operators';
 
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
+import { ModelFormGroup } from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
 import { GoogleAnalytics } from '../../../shared/services/googleAnalytics.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
-import { atLeastOneLetter } from '../../../shared/validators/atLeastOneLetter.validator';
-import { atLeastOneNumber } from '../../../shared/validators/atLeastOneNumber.validator';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
+import { passwordValidators } from '../../../shared/validators/password-validators';
 import { internalFullRoutingNames } from '../internal-routing.names';
 
-export interface PasswordForm {
-  password: FormControl<string>;
-  newPassword: FormControl<string>;
-  confirmNewPassword: FormControl<string>;
+export interface ChangePasswordForm {
+  password: string;
+  newPassword: string;
+  confirmNewPassword: string;
 }
 
 @Injectable()
 export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
   companyForm: UntypedFormGroup;
-  passwordForm: FormGroup<PasswordForm>;
+  passwordForm: ModelFormGroup<ChangePasswordForm>;
   entryOptions: IEntryModel[] = [];
   entryOptionsAdd: IEntryModel[] = [];
   constructor(
@@ -193,29 +191,10 @@ export class CompanyConfigurationService {
             Validators.required,
             Validators.minLength(6),
             Validators.maxLength(20),
-            atLeastOneLetter,
           ],
         ],
-        newPassword: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(20),
-            atLeastOneLetter,
-            atLeastOneNumber,
-          ],
-        ],
-        confirmNewPassword: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(20),
-            atLeastOneLetter,
-            atLeastOneNumber,
-          ],
-        ],
+        newPassword: ['', passwordValidators],
+        confirmNewPassword: ['', passwordValidators],
       },
       {
         validators: [

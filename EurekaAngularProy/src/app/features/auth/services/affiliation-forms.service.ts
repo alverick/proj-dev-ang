@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import {
-  AbstractControl,
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { isNil } from 'ramda';
-import { atLeastOneLetter } from '../../../shared/validators/atLeastOneLetter.validator';
-import { atLeastOneNumber } from '../../../shared/validators/atLeastOneNumber.validator';
+
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { nameInvalid } from '../../../shared/validators/name-invalid.validator';
+import { passwordValidators } from '../../../shared/validators/password-validators';
 
 @Injectable()
 export class AffiliationFormsService {
@@ -76,26 +75,8 @@ export class AffiliationFormsService {
         name: ['', this.authNameValidators],
         entry: ['', [Validators.required]],
         entrySelect: ['', [Validators.required]],
-        password: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(20),
-            atLeastOneLetter,
-            atLeastOneNumber,
-          ],
-        ],
-        passwordConfirm: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(20),
-            atLeastOneLetter,
-            atLeastOneNumber,
-          ],
-        ],
+        password: ['', passwordValidators],
+        passwordConfirm: ['', passwordValidators],
         acceptTerms: ['', Validators.requiredTrue],
       },
       {

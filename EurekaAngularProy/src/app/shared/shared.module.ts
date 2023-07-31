@@ -48,6 +48,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { PasswordModule } from 'primeng/password';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
@@ -55,6 +56,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { ControlRulesPoliciesComponent } from './components/control-rules-policies/control-rules-policies.component';
 
 import { FabWhatsappComponent } from './components/fab-whatsapp/fab-whatsapp.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -110,6 +112,7 @@ const PRIMENG_MODULES = [
   CheckboxModule,
   DialogModule,
   DropdownModule,
+  DynamicDialogModule,
   InputMaskModule,
   InputNumberModule,
   InputTextModule,
@@ -120,9 +123,9 @@ const PRIMENG_MODULES = [
   MessagesModule,
   MessagesModule,
   MultiSelectModule,
+  PasswordModule,
   RadioButtonModule,
   RippleModule,
-  DynamicDialogModule,
   SidebarModule,
   SplitButtonModule,
   StepsModule,
@@ -182,6 +185,7 @@ const UI_MODULES = [
     ...DIRECTIVES,
     ...PIPES,
     FabWhatsappComponent,
+    ControlRulesPoliciesComponent,
   ],
   exports: [
     OnlyNumbersFormDirective,
@@ -209,6 +213,7 @@ const UI_MODULES = [
     ServiceCardComponent,
     ...PIPES,
     FabWhatsappComponent,
+    ControlRulesPoliciesComponent,
   ],
 })
 export class SharedModule {}

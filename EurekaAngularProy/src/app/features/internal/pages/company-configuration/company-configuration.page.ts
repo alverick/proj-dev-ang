@@ -10,7 +10,9 @@ import {
   errorRegisterAuth,
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
+import { ModelFormGroup } from '../../../../shared/models/forms';
 import { CompanyConfigurationService } from '../../services';
+import { ChangePasswordForm } from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-configuration',
@@ -19,7 +21,7 @@ import { CompanyConfigurationService } from '../../services';
 })
 export class CompanyConfigurationPage implements OnInit {
   companyForm: UntypedFormGroup;
-  passwordForm: UntypedFormGroup;
+  passwordForm: ModelFormGroup<ChangePasswordForm>;
   errors = { ...errorsRegisterForm, ...errorRegisterAuth };
   operators = mobileOperators;
   documentTypes = documentTypes;
@@ -27,7 +29,7 @@ export class CompanyConfigurationPage implements OnInit {
   isInReview = false;
   errorsPassword = {
     ...errorRegisterAuth,
-    newPassword: errorRegisterAuth.password,
+    newPassword: errorRegisterAuth.newPassword,
     confirmNewPassword: errorRegisterAuth.passwordConfirm,
   };
   showSidebar = false;
