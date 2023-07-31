@@ -156,11 +156,11 @@ export class AffiliationService {
         documentNumber,
       })
       .pipe(
-        tap(({ code, success }) => {
+        tap(({ code, message, success }) => {
           if (success) {
             this.authForm.get('ruc').setValue(ruc);
           } else {
-            this.processResultCode(code);
+            this.processResultCode(code, message);
           }
         }),
         catchError((err) => {
@@ -170,7 +170,7 @@ export class AffiliationService {
       );
   }
 
-  processResultCode(code: number) {
+  processResultCode(code: number, message = '') {
     switch (code) {
       case 1: {
         this.showMessageExistsCustomer();
@@ -182,7 +182,7 @@ export class AffiliationService {
         break;
       }
       default: {
-        this.showErrorServer();
+        this.showErrorServer(message);
         break;
       }
     }
@@ -211,11 +211,11 @@ export class AffiliationService {
       acceptTerms,
     };
     return this.companyService.saveCompany(companyData).pipe(
-      tap(({ code, success, id }) => {
+      tap(({ code, success, id, message }) => {
         if (success) {
           this.companyId = id;
         } else {
-          this.processResultCode(code);
+          this.processResultCode(code, message);
         }
       }),
       catchError((err) => {
@@ -491,10 +491,11 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
       });
   }
 
-  showErrorServer() {
+  showErrorServer(message: string = '') {
     void swalAlert.fire({
       title: 'Regístrame',
-      html: 'Ha ocurrido un error con el servidor<br />Intente de nuevo',
+      html:
+        message || 'Ha ocurrido un error con el servidor<br />Intente de nuevo',
       showCloseButton: true,
       showConfirmButton: true,
     });
