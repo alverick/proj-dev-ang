@@ -1,0 +1,7 @@
+.container-style {
+  background-image: url('/assets/images/fondo.svg');
+  @screen lg {
+    min-height: 864px;
+    height: 100vh;
+  }
+}

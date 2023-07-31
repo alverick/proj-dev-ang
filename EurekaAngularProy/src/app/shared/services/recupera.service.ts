@@ -4,6 +4,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+interface TokenChangePassword {
+  TokenEncrypted: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -30,9 +34,9 @@ export class RecuperaService {
       );
   }
 
-  public VerifingToken(data: any): Observable<any> {
+  public VerifingToken(data: TokenChangePassword): Observable<boolean> {
     return this.http
-      .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
+      .post<boolean>(`${environment.END_POINT}/Login/dencrypt`, data)
       .pipe(
         map((r) => {
           return r;
