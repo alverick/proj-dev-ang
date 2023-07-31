@@ -1,9 +1,10 @@
-import * as saveAs from 'file-saver';
-
 import { Component, OnInit } from '@angular/core';
-
 import { ActivatedRoute } from '@angular/router';
+import * as saveAs from 'file-saver';
 import { ProcessService } from 'src/app/shared/services/process.service';
+
+import { QueryDataService } from '../../../../shared/data';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
 
 @Component({
   selector: 'cs-carga-historico',
@@ -17,7 +18,8 @@ export class CargaHistoricoComponent implements OnInit {
 
   constructor(
     private processService: ProcessService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private queryDataService: QueryDataService
   ) {}
 
   ngOnInit(): void {
@@ -44,5 +46,37 @@ export class CargaHistoricoComponent implements OnInit {
     this.processService.getFile(itm.id).subscribe((r: Blob) => {
       saveAs(r, itm.filename);
     });
+  }
+
+  fixProcess(processId: number): void {
+    void swalAlert
+      .fire({
+        title: 'Sincronizar carga de cobros',
+        html: `La carga de excel pasará del estado SAVING a FAILED, luego el cliente podrá realizar una nueva carga. Recuerda que <strong>la empresa de esta carga deberá cerrar sesión</strong> para una mejor sincronización.`,
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Sí, sincronizar',
+        cancelButtonText: 'Cancelar',
+      })
+      .then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          this.queryDataService
+            .regularizeProcessById(processId)
+            .subscribe((result) => {
+              this.cargarItems();
+              void swalAlert.fire({
+                title: result.success
+                  ? 'Sincronización exitosa'
+                  : 'Ha ocurrido un error',
+                html:
+                  result.rows === 0
+                    ? result.message
+                    : `Se actualizó <strong>${result.rows} registro(s)</strong> de carga de cobros, del estado SAVING a FAILED.`,
+                showConfirmButton: true,
+                confirmButtonText: 'Entendido',
+              });
+            });
+        }
+      });
   }
 }

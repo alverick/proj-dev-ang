@@ -1,79 +1,48 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as saveAs from 'file-saver';
-import * as _moment from 'moment'; // dejalo si sale error
-import { default as _rollupMoment } from 'moment';
 import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { Subscription, timer } from 'rxjs';
 import { IEntryModel } from 'src/app/shared/models';
 import { GtpFilter } from 'src/app/shared/models/gtp-filter';
 import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+
+import { QueryDataService } from '../../../../shared/data';
 import { StatesGtp } from '../../../../shared/models/states-gtp';
 import { CompanyService } from '../../../../shared/services';
 import { GtpService } from '../../../../shared/services/gtp.service';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { adminFullRoutingNames } from '../../admin-routing.names';
-
-//// END DATE ////////////////////
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
-
-////////////////////////////
 
 @Component({
   selector: 'cs-gtp-grilla',
   templateUrl: './gtp-grilla.page.html',
   styleUrls: ['./gtp-grilla.page.scss'],
-  styles: [
-    `
-      :host >>> .tooltip-inner {
-        background-color: #fff;
-        color: #0d131d !important;
-        border-radius: 4px;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-        font-size: 11px !important;
-        padding: 0.5em 0.3em;
-        min-width: 300px !important;
-      }
-
-      :host >>> .tooltip.top .tooltip-arrow:before,
-      :host >>> .tooltip.top .tooltip-arrow {
-        border-top-color: #0d131d57;
-      }
-    `,
-  ],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-  ],
 })
-export class GtpGrillaPage implements OnInit {
+export class GtpGrillaPage implements OnInit, OnDestroy {
   messageTable = '';
   linkHistory = adminFullRoutingNames.HISTORY;
   showArrow = false;
+  disabledButtonFixSaving = true;
   asc = true;
   orderBys = 0;
+  items = [
+    {
+      label: 'Clientes No Registrados',
+      icon: 'pi pi-file-excel',
+      command: () => {
+        this.clickClientesNoRegistrados();
+      },
+    },
+    {
+      label: 'Empresas registradas',
+      icon: 'pi pi-file-excel',
+      command: () => {
+        this.getAccountStateList();
+      },
+    },
+  ];
   initialFilter: GtpFilter = {
     pageNumber: 1,
     ColumnName: 'requestDate',
@@ -128,16 +97,18 @@ export class GtpGrillaPage implements OnInit {
     { name: 'Estado', asc: false, orderBy: 5, class: 'c6' },
   ];
 
+  rubros: IEntryModel[] = [];
+  states: StatesGtp[] = [];
+  solicitudes: StatesGtp[] = [];
+  checkTimeObservable: Subscription;
+
   constructor(
     private afiliacionService: AfiliacionService,
     public gtpService: GtpService,
     private router: Router,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private queryDataService: QueryDataService
   ) {}
-
-  rubros: IEntryModel[] = [];
-  states: StatesGtp[] = [];
-  solicitudes: StatesGtp[] = [];
 
   ngOnInit() {
     this.afiliacionService.GetRubros().subscribe((d) => (this.rubros = d));
@@ -147,23 +118,33 @@ export class GtpGrillaPage implements OnInit {
     this.gtpService.getTipoSolicitudes().subscribe((d) => {
       this.solicitudes = d;
     });
-    this.consultaGtp();
+    void this.consultaGtp();
+    const intervalMs = 10000;
+
+    this.checkTimeObservable = timer(0, intervalMs).subscribe(() => {
+      const timeVal = new Date().getHours();
+      this.disabledButtonFixSaving = timeVal < 20 || timeVal > 22;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.checkTimeObservable.unsubscribe();
   }
 
   Aprobar(ClientId: number) {
     this.gtpService.services = [];
-    this.router.navigate([adminFullRoutingNames.APPROVE + ClientId]);
+    void this.router.navigate([`${adminFullRoutingNames.APPROVE}${ClientId}`]);
   }
 
   onUpdateEAG(ClientId: number) {
     this.gtpService.ReenviarPAG(ClientId).subscribe(() => {
-      this.consultaGtp();
+      void this.consultaGtp();
     });
   }
 
   changePage(nro: number) {
     this.currentFilter.pageNumber = nro;
-    this.consultaGtp();
+    void this.consultaGtp();
   }
 
   //// ORDENAMIENTO OCULTAR LAS FLECHAS
@@ -173,7 +154,7 @@ export class GtpGrillaPage implements OnInit {
     this.orderDef[items.orderBy].asc = items.asc;
     this.currentFilter.asc = items.asc;
     this.currentFilter.ColumnName = this.orderDef[items.orderBy].name;
-    this.consultaGtp();
+    void this.consultaGtp();
   }
 
   resetDebts() {
@@ -205,7 +186,7 @@ export class GtpGrillaPage implements OnInit {
   }
 
   private submitSearch(inputSearch, BusinessHeading, status, statusSolicitud) {
-    this.consultaGtp();
+    void this.consultaGtp();
     this.messageTable = 'No se encontraron empresas para esta búsqueda';
     this.showArrow = all(isNilOrEmpty, [
       inputSearch,
@@ -236,5 +217,34 @@ export class GtpGrillaPage implements OnInit {
     this.companyService.getAccountStateDetailsList().subscribe((r: Blob) => {
       saveAs(r, 'Detalles de cuentas.xlsx');
     });
+  }
+
+  fixAccounts(): void {
+    void swalAlert
+      .fire({
+        title: 'Sincronización masiva de cargas de cobros',
+        text: `Todas las cargas de excel de todas las empresas registradas pasarán del estado SAVING a FAILED, luego el cliente podrá realizar una nueva carga`,
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Sí, sincronizar',
+        cancelButtonText: 'Cancelar',
+      })
+      .then(({ isConfirmed }) => {
+        if (isConfirmed) {
+          this.queryDataService.regularizeAll().subscribe((result) => {
+            void swalAlert.fire({
+              title: result.success
+                ? 'Sincronización exitosa'
+                : 'Ha ocurrido un error',
+              html:
+                result.rows === 0
+                  ? result.message
+                  : `Se actualizó <strong>${result.rows} registro(s)</strong> de carga de cobros, del estado SAVING a FAILED.`,
+              showConfirmButton: true,
+              confirmButtonText: 'Entendido',
+            });
+          });
+        }
+      });
   }
 }

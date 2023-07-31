@@ -4,7 +4,33 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+import { CompanyServices } from '../models/company';
 import { IErrorObj } from '../models/error.model';
+
+export type StatusValues =
+  | 'CREATED'
+  | 'VALIDATED'
+  | 'REJECTED'
+  | 'COMPLETED'
+  | 'FAILED'
+  | 'VALIDATING'
+  | 'SAVING';
+
+export interface ProcessStatus {
+  status: StatusValues;
+  errors: IErrorObj[];
+  rowsUploaded: number;
+  rowsRejected: number;
+  advance: number;
+  phase: number;
+}
+
+export interface LastProcessStatus {
+  id: number;
+  status: StatusValues;
+  advance: number;
+  phase: number;
+}
 
 @Injectable()
 export class ExcelService {
@@ -13,16 +39,16 @@ export class ExcelService {
 
   constructor(public http: HttpClient) {}
 
-  public service: any = '';
+  public service: Partial<CompanyServices> = {};
   public idProcess = 0;
   public errores: IErrorObj[] = [];
 
   UploadExcel(
     files: any,
     service: string,
-    changestatus: boolean
+    changeStatus: boolean
   ): Observable<any> {
-    this.statusUpload = changestatus;
+    this.statusUpload = changeStatus;
     this.errores = [];
     const url = `${this.URI_API}/debt/load/${service}`;
     const formData = new FormData();
@@ -32,10 +58,10 @@ export class ExcelService {
       .pipe(catchError((error) => throwError(error)));
   }
 
-  StatusExcel(id: number): Observable<any> {
+  StatusExcel(id: number): Observable<ProcessStatus> {
     const url = `${this.URI_API}/debt/process/${id}/status`;
     return this.http
-      .get<any>(url)
+      .get<ProcessStatus>(url)
       .pipe(catchError((error) => throwError(error)));
   }
 
@@ -47,15 +73,19 @@ export class ExcelService {
     });
   }
 
-  GetLastProcess(): Observable<any> {
+  GetLastProcess(): Observable<LastProcessStatus> {
     const url = `${this.URI_API}/debt/process/last`;
-    return this.http.get<any>(url).pipe(
-      map((v) => {
-        if (v.status !== 'COMPLETED' && v.status !== 'REJECTED') {
+    return this.http.get<LastProcessStatus>(url).pipe(
+      map((result) => {
+        if (
+          result.status !== 'COMPLETED' &&
+          result.status !== 'REJECTED' &&
+          result.status !== 'FAILED'
+        ) {
           this.statusUpload = true;
-          this.idProcess = v.id;
+          this.idProcess = result.id;
         }
-        return v;
+        return result;
       })
     );
   }

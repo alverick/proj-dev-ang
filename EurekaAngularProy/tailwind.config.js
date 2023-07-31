@@ -79,7 +79,8 @@ module.exports = {
         },
       },
       screens: {
-        '2xlplus': '1537px',
+        'lg-greater': '1025px',
+        '2xl-greater': '1537px',
         hoversupport: { raw: '(hover: hover)' },
       },
     },

@@ -16,7 +16,7 @@ a {
     }
   }
 
-  @screen 2xlplus {
+  @screen 2xl-greater {
     @apply tw-right-8 tw-bottom-10;
   }
   &.hide {
