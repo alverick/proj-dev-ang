@@ -407,3 +407,7 @@ mat-icon.svg-custom {
     cursor: pointer;
   }
 }
+
+.mat-form-field .input-text[type=password]::-ms-reveal {
+  display: none;
+}
