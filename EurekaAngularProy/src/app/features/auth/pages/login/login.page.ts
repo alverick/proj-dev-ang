@@ -168,7 +168,7 @@ export class LoginPage implements OnInit {
       continuar = false;
     } else if (
       this.loginForm.get('psw').value.length < 6 ||
-      this.loginForm.get('psw').value.length > 20
+      this.loginForm.get('psw').value.length > 25
     ) {
       this.validarCantPass = true;
       continuar = false;

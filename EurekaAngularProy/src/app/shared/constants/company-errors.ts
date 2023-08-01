@@ -66,6 +66,7 @@ export const errorRegisterAuth: IErrorMessages = {
     minlength: 'La contraseña no es válida',
     sequence: 'La contraseña no es válida',
     symbol: 'La contraseña no es válida',
+    notEqual: 'La contraseña debe ser distinta a la actual',
   },
   passwordConfirm: {
     required: 'Debes repetir la contraseña',
