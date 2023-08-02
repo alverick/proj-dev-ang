@@ -28,7 +28,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     private login: LoginService,
     private storage: StorageService,
     private gaService: GoogleAnalytics
-  ) {}
+  ) { }
 
   intercept(
     req: HttpRequest<any>,
@@ -65,19 +65,6 @@ export class AuthInterceptorService implements HttpInterceptor {
             this.snackBar.dismiss();
             void swalAlert.fire({
               title: 'Su sesión ha sido cerrada por inactividad',
-              showCloseButton: true,
-              showConfirmButton: true,
-              confirmButtonText: 'CERRAR',
-              allowOutsideClick: false,
-              willClose: () => {
-                location.href = authFullRoutingNames.LOGIN;
-              },
-            });
-          } else if (err.status !== 400) {
-            this.storage.removeCurrentSession();
-            this.snackBar.dismiss();
-            void swalAlert.fire({
-              title: 'Ha ocurrido un error en el servidor',
               showCloseButton: true,
               showConfirmButton: true,
               confirmButtonText: 'CERRAR',
