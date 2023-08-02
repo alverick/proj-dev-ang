@@ -42,6 +42,7 @@ import { DialogComponent } from './components/dialog';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { Popover } from './components/popover/popover.service';
 import { TableMovementsComponent } from './components/table-movements/table-movements.component';
+import * as DOMPurify from 'dompurify';
 
 @Component({
   selector: 'cs-home',
@@ -508,9 +509,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   validateOnboarding(hasRecords: boolean) {
-    const localStorage = window.localStorage;
-    const username = window.sessionStorage.getItem('username');
-    let settings = JSON.parse(localStorage.getItem('settings'));
+    const username = DOMPurify.sanitize(window.sessionStorage.getItem('username'));
+    let settings = DOMPurify(JSON.parse(window.localStorage.getItem('settings')));
     const saved = pathEq([username, 'ob', 'mov'], 1, settings);
     if (!saved) {
       if (isNil(settings)) {

@@ -50,6 +50,7 @@
     "bootstrap": "^4.6.1",
     "chart.js": "^4.2.1",
     "core-js": "^2.6.11",
+    "dompurify": "^3.0.5",
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
     "include-media": "^1.4.10",
