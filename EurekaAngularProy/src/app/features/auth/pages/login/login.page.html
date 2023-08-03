@@ -183,15 +183,6 @@
                     </div>
                   </div>
 
-                  <div class="reCaptach" *ngIf="isTrue">
-                    <re-captcha
-                      #recaptchaRef="reCaptcha"
-                      (resolved)="resolved($event)"
-                      siteKey="6Lf_I8wUAAAAAKbBj6Ukb9mDD434RU8UBuhSaeLl"
-                      secretKey="6Lf_I8wUAAAAAL420IJXIn5Wp3MXa5ItYWJ8C3qW"
-                    ></re-captcha>
-                  </div>
-
                   <div class="mb-3" style="text-align: left">
                     <small id="text-olv" [routerLink]="[linkRecoverPassword]"
                       >¿La olvidaste?
