@@ -123,6 +123,7 @@ export class CompanyConfigurationService {
             showCloseButton: true,
             confirmButtonText: 'ACEPTAR',
           });
+          this.passwordForm.reset();
         }
         if (enterpriseUpdate.success === false) {
           void swalAlert.fire({
