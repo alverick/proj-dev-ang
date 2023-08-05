@@ -37,7 +37,7 @@ export class CompanyConfigurationPage implements OnInit {
   constructor(
     public companyConfiguration: CompanyConfigurationService,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({ company, entries }: any) => {
@@ -56,6 +56,7 @@ export class CompanyConfigurationPage implements OnInit {
     });
   }
   onShowPanel() {
+    this.passwordForm.reset();
     this.showSidebar = true;
   }
 
