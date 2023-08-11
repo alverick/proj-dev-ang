@@ -10,6 +10,7 @@ import {
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import { ShepherdService } from 'angular-shepherd';
+import * as DOMPurify from 'dompurify';
 import * as saveAs from 'file-saver';
 import { LazyLoadEvent } from 'primeng/api';
 import { all, equals, isNil, pathEq, pathOr, prop } from 'ramda';
@@ -42,7 +43,6 @@ import { DialogComponent } from './components/dialog';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { Popover } from './components/popover/popover.service';
 import { TableMovementsComponent } from './components/table-movements/table-movements.component';
-import * as DOMPurify from 'dompurify';
 
 @Component({
   selector: 'cs-home',

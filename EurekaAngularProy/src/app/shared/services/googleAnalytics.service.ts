@@ -11,7 +11,7 @@ declare var gtag: (...any) => void;
 export class GoogleAnalytics {
   public static Afiliacion = 'Afiliación';
   public static Dashboard = 'Dashboard';
-s
+
   public sendEvent(name: string, args: any = null) {
     if (environment.production) {
       gtag('event', name, args);
