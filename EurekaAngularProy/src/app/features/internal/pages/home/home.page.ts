@@ -10,6 +10,7 @@ import {
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import { ShepherdService } from 'angular-shepherd';
+import * as DOMPurify from 'dompurify';
 import * as saveAs from 'file-saver';
 import { LazyLoadEvent } from 'primeng/api';
 import { all, equals, isNil, pathEq, pathOr, prop } from 'ramda';
