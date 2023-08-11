@@ -12,6 +12,7 @@ import {
   authFullRoutingNames,
 } from './features/auth/auth-routing.names';
 import { primeng } from './shared/lang/es';
+import { AdobeAnalyticsService } from './shared/services/adobe-analytics.service';
 import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
 
 declare let fbq: (...args: any[]) => void;
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit {
     matIconRegistry: MatIconRegistry,
     domSanitizer: DomSanitizer,
     private gaService: GoogleAnalytics,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private adobeAnalytics: AdobeAnalyticsService
   ) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -85,6 +87,7 @@ export class AppComponent implements OnInit {
       domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
       { viewBox: '0 0 24 24' }
     );
+    void this.adobeAnalytics.injectAdobeLaunchScript();
   }
 
   ngOnInit() {
