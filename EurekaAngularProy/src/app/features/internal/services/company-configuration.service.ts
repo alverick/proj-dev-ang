@@ -32,6 +32,7 @@ export class CompanyConfigurationService {
   passwordForm: ModelFormGroup<ChangePasswordForm>;
   entryOptions: IEntryModel[] = [];
   entryOptionsAdd: IEntryModel[] = [];
+
   constructor(
     private fb: UntypedFormBuilder,
     private companyService: CompanyService,
@@ -116,19 +117,18 @@ export class CompanyConfigurationService {
       ...companyDataUpdated,
     };
     return this.companyService.updateCompany(enterprise).pipe(
-      tap((enterpriseUpdate) => {
-        if (enterpriseUpdate.success === true) {
+      tap(({ success, message }) => {
+        if (success === true) {
           void swalAlert.fire({
             text: 'Los datos de la empresa han sido actualizados',
             showCloseButton: true,
             confirmButtonText: 'ACEPTAR',
           });
           this.passwordForm.reset();
-        }
-        if (enterpriseUpdate.success === false) {
+        } else {
           void swalAlert.fire({
             icon: 'warning',
-            text: 'La contraseña no coincide con la contraseña actual',
+            text: message || 'Ha ocurrido un error en el servidor',
             showCloseButton: true,
             confirmButtonText: 'ACEPTAR',
           });
