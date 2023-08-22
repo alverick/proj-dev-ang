@@ -13,7 +13,7 @@
           'pi-times': control.hasError(rule.key) || control.value === '',
           'tw-text-extended-grey-3':
             control.hasError(rule.key) || control.value === '',
-          'pi-check': !control.hasError(rule.key) || control.value === '',
+          'pi-check': !control.hasError(rule.key) && control.value === '',
           'tw-text-primary-green-1':
             !control.hasError(rule.key) && control.value !== ''
         }"
