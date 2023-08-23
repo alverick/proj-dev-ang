@@ -12,7 +12,7 @@ export class ControlRulesPoliciesComponent {
   @Input() control: UntypedFormControl;
   @Input() rules: PasswordRulesMessage[] = [];
 
-  ruleTrackBy(index, rule: PasswordRulesMessage) {
-    rule.key;
+  ruleTrackBy(_index: number, rule: PasswordRulesMessage) {
+    return rule.key;
   }
 }
