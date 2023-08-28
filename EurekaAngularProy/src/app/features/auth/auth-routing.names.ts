@@ -1,4 +1,5 @@
 import { appRoutingNames } from 'src/app/app-routing.names';
+
 import { IRouteItem, IRouteNames } from '../../shared/models/router';
 import {
   generateFullRoutes,
