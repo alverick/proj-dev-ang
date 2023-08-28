@@ -1,19 +1,19 @@
-<div
-  class="tw-bg-primary-green-1 tw-text-center tw-py-4 tw-flex tw-flex-col tw-items-center"
->
-  <div class="tw-text-white tw-text-3xl tw-font-medium">
-    Configura los servicios de tu empresa
-  </div>
-  <div class="tw-w-40 tw-py-4">
-    <p-steps [model]="steps" [activeIndex]="position"></p-steps>
-  </div>
-</div>
 <div class="tw-max-w-8xl tw-m-auto md:tw-flex tw-relative">
   <cs-sidebar-service
-    *ngIf="position!==2"
+    *ngIf="position !== 2"
     class="info tw-relative"
     [position]="position"
     [existServices]="affiliation.servicesList.length > 0"
   ></cs-sidebar-service>
-  <router-outlet></router-outlet>
+  <div class="content">
+    <div
+      *ngIf="position !== 2"
+      class="tw-w-40 tw-px-5 md:tw-px-10 xl:tw-pr-0 xl:tw-pl-20 tw-py-12 tw-pb-0 md:tw-w-48 lg:tw-w-auto"
+    >
+      <div class="tw-w-40 tw-mx-auto">
+        <p-steps [model]="steps" [activeIndex]="position"></p-steps>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
 </div>
