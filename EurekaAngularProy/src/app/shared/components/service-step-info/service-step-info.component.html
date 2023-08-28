@@ -108,18 +108,20 @@
     }"
   >
     <button
+      pButton
+      pRipple
+      class="tw-w-full md:tw-w-56"
       *ngIf="showCancel"
       type="button"
       (click)="onCancel()"
-      class="button-outline-green tw-w-56 tw-text-center"
-    >
-      CANCELAR
-    </button>
+      label="Cancelar"
+    ></button>
     <button
+      pButton
+      pRipple
+      class="tw-w-full md:tw-w-56"
       type="submit"
-      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
-    >
-      SIGUIENTE
-    </button>
+      label="Siguiente"
+    ></button>
   </div>
 </form>

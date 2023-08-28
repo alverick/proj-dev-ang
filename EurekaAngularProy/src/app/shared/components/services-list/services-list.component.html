@@ -5,19 +5,23 @@
     </div>
     <div class="actions tw-flex tw-justify-center tw-gap-2">
       <button
+        pButton
+        pRipple
+        class="tw-w-full md:tw-w-56"
+        type="button"
         *ngIf="!onlyEdit"
         (click)="add.emit()"
-        class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
-      >
-        Agregar otro servicio
-      </button>
+        label="Agregar otro servicio"
+      ></button>
       <button
+        pButton
+        pRipple
+        class="tw-w-full md:tw-w-56"
+        type="button"
         *ngIf="additionalButtons && showSaveAll"
         (click)="finish.emit()"
-        class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
-      >
-        FINALIZAR
-      </button>
+        label="Finalizar"
+      ></button>
     </div>
   </div>
   <div
@@ -36,18 +40,22 @@
     class="tw-text-center sm:tw-text-right tw-justify-end tw-mt-10 tw-flex tw-gap-2"
   >
     <button
+      pButton
+      pRipple
+      class="tw-w-full md:tw-w-56"
+      type="button"
       *ngIf="additionalButtons && !onlyEdit"
       (click)="add.emit()"
-      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
-    >
-      Agregar otro servicio
-    </button>
+      label="Agregar otro servicio"
+    ></button>
     <button
+      pButton
+      pRipple
+      class="tw-w-full md:tw-w-56"
+      type="button"
       *ngIf="showSaveAll"
       (click)="finish.emit()"
-      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
-    >
-      FINALIZAR
-    </button>
+      label="Finalizar"
+    ></button>
   </div>
 </div>
