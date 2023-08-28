@@ -4,10 +4,9 @@
     <div class="tw-relative">
       <div class="md:tw-max-w-2xl">
         <h2
-          class="tw-pt-2 tw-text-2xl lg:tw-text-3xl tw-text-center md:tw-text-left xl:tw-text-5xl tw-font-medium tw-text-secondary-blue-1"
+          class="tw-pt-2 tw-text-2xl lg:tw-text-3xl tw-text-center md:tw-text-left xl:tw-text-4xl tw-font-medium tw-text-secondary-blue-1"
         >
-          Gestiona tus cobranzas 100% digital con <br />
-          Cobro Simple
+          Gestiona tus cobranzas 100% digital con Cobro Simple
         </h2>
         <div
           class="tw-pt-6 tw-text-center md:tw-text-left xl:tw-text-xl tw-text-secondary-blue-1 md:tw-max-w-[440px]"
@@ -57,88 +56,27 @@
 <div class="tw-bg-white tw-pt-14 tw-pb-14 tw-px-6 xl:tw-px-0">
   <div class="tw-max-w-6xl tw-mx-auto">
     <h2
-      class="tw-text-2xl lg:tw-text-3xl tw-text-center xl:tw-text-5xl tw-font-medium tw-text-secondary-blue-1 tw-mb-10 lg:tw-mb-0"
+      class="tw-text-2xl lg:tw-text-3xl tw-text-center xl:tw-text-4xl tw-font-medium tw-text-secondary-blue-1 tw-mb-10 lg:tw-mb-0"
     >
       ¡No pierdas ni una venta!
     </h2>
-    <cs-landing-carousel
-      [items]="benefits"
-      styleIndicator="extended-grey-3"
-    ></cs-landing-carousel>
-    <div class="tw-flex lg:tw-pt-20 tw-gap-14">
-      <div
-        class="tw-hidden lg:tw-flex tw-flex-col tw-justify-between tw-w-56 tw-shrink-0"
-      >
-        <div class="tw-text-center" *ngFor="let groupInt of benefits[0]">
-          <div class="tw-text-xl tw-font-medium tw-leading-6">
-            {{ groupInt.title }}
-          </div>
-          <div class="tw-min-h-[110px]">{{ groupInt.content }}</div>
-        </div>
-      </div>
 
-      <div class="tw-grow">
+    <div class="lg:tw-flex lg:tw-pt-16 tw-gap-14">
+      <div
+        class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-gap-6"
+      >
         <div
-          class="tw-w-60 lg:tw-w-auto sm:tw-w-[440px] xl:tw-w-[440px] tw-mx-auto"
+          class="tw-text-center lg:tw-w-1/4 tw-border tw-border-extended-grey-3 tw-rounded-tl-3xl tw-rounded-br-3xl tw-p-10 hover:tw-border-primary-green-1 tw-will-change-auto tw-transition-all tw-duration-200 hover:tw-scale-[1.02]"
+          *ngFor="let groupInt of benefits"
         >
-          <img alt="Beneficios" src="assets/images/beneficios.svg" />
-        </div>
-      </div>
-
-      <div
-        class="tw-hidden lg:tw-flex tw-flex-col tw-justify-between tw-w-56 tw-shrink-0"
-      >
-        <div class="tw-text-center" *ngFor="let groupInt of benefits[1]">
-          <div class="tw-text-xl tw-font-medium tw-leading-6">
+          <div
+            class="tw-text-xl tw-leading-6 tw-mb-3 tw-h-[57px] tw-flex tw-items-center tw-justify-center"
+          >
             {{ groupInt.title }}
           </div>
-          <div class="tw-min-h-[110px]">{{ groupInt.content }}</div>
+          <div class="tw-text-sm">{{ groupInt.content }}</div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-<div class="tw-bg-white tw-py-14 tw-px-6 2xl:tw-px-0">
-  <div
-    class="tw-max-w-8xl tw-mx-auto tw-border tw-border-extended-grey-3 tw-rounded-lg tw-p-4 tw-pt-10 lg:tw-p-8 lg:tw-pr-12 tw-flex tw-flex-col lg:tw-flex-row tw-gap-6 tw-relative"
-  >
-    <div class="tw-flex-shrink-0 tw-mx-auto">
-      <img
-        ngSrc="assets/images/laptop.png"
-        alt="Resumen"
-        height="222"
-        width="382"
-      />
-    </div>
-    <div class="tw-py-2 tw-flex tw-flex-col tw-justify-between tw-gap-4">
-      <div
-        class="tw-font-medium tw-text-xl lg:tw-text-4xl 2xl:tw-pr-20 tw-mb-4 lg:tw-mb-0"
-      >
-        Conoce los indicadores de tus cobros en el dashboard Mi Resumen
-      </div>
-      <div class="tw-flex tw-text-base tw-flex-col sm:tw-flex-row tw-gap-6">
-        <div class="lg:tw-w-1/3">
-          <div class="tw-font-medium">Indicadores</div>
-          <div class="text">
-            Conoce el 360º de tus cobros con indicador de cobro total.
-          </div>
-        </div>
-        <div class="lg:tw-w-1/3">
-          <div class="tw-font-medium">Gráfico</div>
-          <div class="text">
-            Te permite ver el histórico de recaudación de tus servicios.
-          </div>
-        </div>
-        <div class="lg:tw-w-1/3">
-          <div class="tw-font-medium">Clientes top</div>
-          <div class="text">Conoce a los clientes que más contribuyen.</div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="tw-absolute tw-top-0 tw-right-0 tw-p-2 tw-px-4 tw-text-white tw-bg-extended-watermelon-1 tw-rounded-bl-lg tw-rounded-tr-lg"
-    >
-      PRÓXIMAMENTE
     </div>
   </div>
 </div>
@@ -146,7 +84,7 @@
   <div class="tw-max-w-8xl tw-mx-auto lg:tw-px-20">
     <div class="tw-text-white tw-flex lg:tw-gap-24 tw-flex-col lg:tw-flex-row">
       <div class="tw-mb-5 lg:tw-mb-0">
-        <div class="tw-text-2xl lg:tw-text-3xl lg:tw-text-4xl tw-font-medium">
+        <div class="tw-text-2xl lg:tw-text-4xl tw-font-medium">
           ¿Qué necesito?
         </div>
       </div>
@@ -171,55 +109,37 @@
     </div>
   </div>
 </div>
-<div class="tw-bg-extended-bleached-silk tw-pt-14 tw-px-6 xl:tw-px-0">
+<div class="tw-bg-extended-bleached-silk tw-py-14 tw-px-6 xl:tw-px-0">
   <div class="tw-max-w-6xl tw-mx-auto">
     <h2
-      class="tw-text-2xl lg:tw-text-3xl tw-text-center xl:tw-text-5xl tw-font-medium tw-text-secondary-blue-1 tw-mb-10 lg:tw-mb-0"
+      class="tw-text-2xl lg:tw-text-3xl tw-text-center xl:tw-text-4xl tw-font-medium tw-text-secondary-blue-1 tw-mb-10 lg:tw-mb-0"
     >
       ¿Cómo Funciona?
     </h2>
-    <cs-landing-carousel
-      [items]="howWorks"
-      styleIndicator="extended-grey-3"
-    ></cs-landing-carousel>
-    <div class="tw-flex lg:tw-pt-20 tw-gap-14">
-      <div
-        class="tw-hidden lg:tw-flex tw-flex-col tw-mb-28 tw-justify-between tw-gap-6 tw-w-72 tw-shrink-0"
-      >
-        <div class="tw-text-center" *ngFor="let groupInt of howWorks[0]">
-          <div class="tw-text-xl tw-font-medium tw-leading-6">
-            {{ groupInt.title }}
+    <div
+      class="tw-flex tw-flex-col lg:tw-flex-row lg:tw-pt-16 tw-justify-center tw-gap-6 tw-w-full"
+    >
+      <ng-container *ngFor="let howWorksGroup of howWorks">
+        <div
+          class="tw-text-left lg:tw-w-1/4 tw-border tw-border-extended-grey-3 tw-rounded-tl-3xl tw-rounded-br-3xl tw-p-8"
+          *ngFor="let groupInt of howWorksGroup"
+        >
+          <div class="tw-flex tw-gap-4 tw-items-center">
+            <div class="tw-text-4xl tw-text-primary-green-1">
+              {{ groupInt.position }}
+            </div>
+            <div
+              class="tw-text-lg tw-font-medium tw-leading-6 tw-text-secondary-blue-1 tw-border-b tw-border-secondary-blue-1 tw-pb-2 tw-mb-3 tw-h-[107px] tw-flex tw-items-center"
+            >
+              {{ groupInt.title }}
+            </div>
           </div>
           <div
             class="tw-pt-1 tw-leading-5"
             [innerHtml]="groupInt.content"
           ></div>
         </div>
-      </div>
-      <div class="tw-grow">
-        <div class="lg:tw-max-w-[440px] tw-mx-auto">
-          <img
-            alt="¿Cómo Funciona?"
-            class="md:tw-w-80 tw-pt-8 tw-mx-auto -tw-mb-[11px] md:-tw-mb-[18px]"
-            height="451"
-            src="assets/images/ilustracion-boy.svg"
-          />
-        </div>
-      </div>
-
-      <div
-        class="tw-hidden lg:tw-flex tw-flex-col tw-mb-32 tw-justify-between tw-gap-6 tw-w-72 tw-shrink-0"
-      >
-        <div class="tw-text-center" *ngFor="let groupInt of howWorks[1]">
-          <div class="tw-text-xl tw-font-medium tw-leading-6">
-            {{ groupInt.title }}
-          </div>
-          <div
-            class="tw-pt-1 tw-leading-5"
-            [innerHtml]="groupInt.content"
-          ></div>
-        </div>
-      </div>
+      </ng-container>
     </div>
   </div>
 </div>
@@ -228,19 +148,11 @@
     <div
       class="tw-flex tw-flex-col-reverse lg:tw-flex-row tw-gap-10 lg:tw-gap-28"
     >
-      <div class="tw-grow">
-        <div
-          class="tw-w-40 tw-max-w-[280px] lg:tw-max-w-none lg:tw-w-80 tw-mx-auto"
-        >
-          <img alt="Pagos" class="-tw-mt-[26px]" src="assets/images/pago.svg" />
-        </div>
-      </div>
-
       <div
-        class="tw-text-white tw-flex tw-flex-col tw-justify-evenly tw-shrink tw-py-12 tw-text-center lg:tw-text-left"
+        class="tw-text-white tw-flex tw-flex-col tw-justify-evenly tw-shrink tw-py-14 tw-text-center"
       >
         <h2
-          class="tw-text-2xl lg:tw-text-3xl xl:tw-text-5xl tw-font-medium tw-mb-10 lg:tw-mb-0"
+          class="tw-text-2xl lg:tw-text-3xl xl:tw-text-4xl tw-font-medium tw-mb-10 lg:tw-mb-0"
         >
           Podrás configurar tus cobros según tu modelo de negocio
         </h2>
@@ -255,21 +167,29 @@
           indicatorStyleClass="secondary-blue-1"
         >
           <ng-template let-payment pTemplate="item">
-            <div class="item tw-px-4 sm:tw-px-12">
-              <div class="tw-text-xl tw-font-bold tw-leading-6">
+            <div
+              class="tw-rounded-tl-3xl tw-rounded-br-3xl tw-p-8 tw-bg-primary-green-2"
+            >
+              <div
+                class="tw-text-xl tw-font-bold tw-leading-6 tw-mb-3 tw-flex tw-items-center"
+              >
                 {{ payment.title }}
               </div>
-              <div
-                class="tw-pt-2 tw-leading-5 tw-max-w-[230px] tw-mx-auto"
-                [innerHtml]="payment.content"
-              ></div>
+              <div class="tw-text-left">{{ payment.content }}</div>
             </div>
           </ng-template>
         </p-carousel>
         <div class="tw-hidden sm:tw-flex tw-gap-8 tw-py-9 tw-relative">
-          <div class="tw-w-1/3" *ngFor="let groupInt of payments">
-            <div class="tw-font-bold">{{ groupInt.title }}</div>
-            <div class="">{{ groupInt.content }}</div>
+          <div
+            class="tw-w-1/3 tw-rounded-tl-3xl tw-rounded-br-3xl tw-p-8 tw-bg-primary-green-2"
+            *ngFor="let groupInt of payments"
+          >
+            <div
+              class="tw-text-xl tw-font-bold tw-leading-6 tw-mb-3 tw-flex tw-items-center"
+            >
+              {{ groupInt.title }}
+            </div>
+            <div class="tw-text-left">{{ groupInt.content }}</div>
           </div>
         </div>
         <div class="mb-2">
@@ -287,48 +207,50 @@
   </div>
 </div>
 <div class="tw-bg-white tw-pt-10 tw-pb-12 tw-px-6 xl:tw-px-0">
-  <div class="tw-max-w-6xl tw-mx-auto">
-    <h2 class="tw-text-2xl lg:tw-text-3xl">Contáctanos</h2>
-    <div class="tw-text-lg">
-      <div class="tw-pt-5">
-        <a
-          href="https://api.whatsapp.com/send?phone=51993119001&text=Hola%20Interbank!"
-          (click)="clickWa()"
-          target="_blank"
-          ><i class="pi pi-whatsapp tw-text-primary-green-1"></i> 993 119 001</a
-        >
+  <div
+    class="tw-max-w-6xl tw-mx-auto tw-flex tw-flex-col lg:tw-flex-row tw-justify-evenly tw-gap-10"
+  >
+    <div class="tw-text-left">
+      <h2 class="tw-text-xl">Legales</h2>
+      <div class="tw-text-base">
+        <div class="tw-pt-5">
+          <a (click)="showModalTerms()" class=""> Términos y condiciones </a>
+        </div>
       </div>
+    </div>
+    <div class="tw-text-left">
+      <h2 class="tw-text-xl">Contáctanos</h2>
+      <div class="tw-text-base">
+        <div class="tw-pt-5">
+          <a
+            href="https://api.whatsapp.com/send?phone=51993119001&text=Hola%20Interbank!"
+            (click)="clickWa()"
+            target="_blank"
+            class="tw-text-extended-ibk-black"
+            ><i class="pi pi-whatsapp tw-text-primary-green-1"></i> 993 119
+            001</a
+          >
+        </div>
 
-      <div class="tw-pt-4">
-        Horario de atención <br />
-        Lunes a viernes 8:30am a 6:00pm
+        <div class="tw-pt-4">
+          Horario de atención <br />
+          Lunes a viernes 8:30am a 6:00pm
+        </div>
       </div>
     </div>
   </div>
 </div>
-<footer class="tw-bg-primary-green-1 tw-py-6 tw-px-6 xl:tw-px-0">
-  <div class="tw-max-w-6xl tw-mx-auto tw-text-white tw-px-6">
-    <div class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-gap-2">
-      <div class="tw-w-32">
-        <img
-          alt="Interbank"
-          class="logo-footer"
-          src="assets/images/blanco.svg"
-        />
-      </div>
+<footer
+  class="tw-bg-white tw-border-extended-grey-3 tw-border-t tw-py-6 tw-px-6 xl:tw-px-0"
+>
+  <div class="tw-max-w-6xl tw-mx-auto tw-text-extended-ibk-black tw-px-6">
+    <div class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-center tw-gap-2">
       <div
         class="tw-flex tw-flex-col lg:tw-flex-row lg:tw-text-lg tw-gap-1 tw-text-center tw-text-xs"
       >
         <p>© Copyright 2023</p>
         <p class="tw-hidden lg:tw-block">-</p>
         <p>Todos los derechos reservados</p>
-        <p class="tw-hidden lg:tw-block">-</p>
-        <p
-          (click)="showModalTerms()"
-          class="tw-underline tw-underline-offset-4 tw-cursor-pointer"
-        >
-          Términos y condiciones
-        </p>
       </div>
     </div>
   </div>
