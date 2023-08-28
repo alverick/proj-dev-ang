@@ -261,10 +261,12 @@ body {
       }
     }
 
-    &:enabled:hover {
-      background-color: var(--primary-green-2);
-      color: #ffffff;
-      border-color: var(--primary-green-2);
+    &:enabled {
+      &:hover, &:active {
+        background-color: var(--primary-green-2);
+        color: #ffffff;
+        border-color: var(--primary-green-2);
+      }
     }
 
     &.p-button-secondary,
