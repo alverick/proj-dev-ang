@@ -170,9 +170,13 @@ body {
         margin-top: auto;
       }
 
-      &.p-highlight .p-steps-number {
-        background-color: var(--primary-green-1);
-        color: #fff;
+      &.p-highlight {
+        .p-menuitem-link {
+          .p-steps-number {
+            background-color: var(--primary-green-1);
+            color: #fff;
+          }
+        }
       }
 
       .p-menuitem-link {
@@ -185,11 +189,12 @@ body {
         }
 
         .p-steps-number {
-          color: #fff;
-          background-color: var(--primary-green-1);
-          border: 1px solid #fff;
+          color: var(--primary-green-1);
+          background-color: #fff;
+          border: 1px solid var(--primary-green-1);
           top: 0;
           margin-bottom: 0;
+          transition: all 0.5s;
         }
       }
 
