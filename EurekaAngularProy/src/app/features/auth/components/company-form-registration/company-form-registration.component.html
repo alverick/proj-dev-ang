@@ -6,13 +6,13 @@
   class="tw-max-w-2xl"
 >
   <div
-    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-20 tw-py-14"
+    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-16 tw-py-14"
   >
     <h2 class="tw-font-medium tw-text-2xl tw-mb-7">Ingresa tus datos</h2>
     <div class="form-controls tw-max-w-xl">
       <div class="form-elm lg:tw-flex lg:tw-gap-4">
         <cs-label-control
-          class="tw-w-full"
+          class="tw-w-1/2 tw-shrink-0"
           formControlName="documentType"
           [errorMessages]="errorMessages.documentType"
           >Tipo de documento<p-dropdown
@@ -24,7 +24,7 @@
           ></p-dropdown>
         </cs-label-control>
         <cs-label-control
-          class="tw-w-full"
+          class="tw-w-1/2 tw-shrink-0"
           formControlName="documentNumber"
           [errorMessages]="errorMessages.documentNumber"
           >Número de documento<input
