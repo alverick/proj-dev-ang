@@ -31,8 +31,7 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   @Input() inReview = false;
   @Input() nameInReview = '';
   @Output() showPanel = new EventEmitter<any>();
-  @ViewChild('formElm')
-  htmlForm: NgForm;
+  @ViewChild('formElm') htmlForm: NgForm;
   showDocumentFields = false;
 
   ngOnInit() {
