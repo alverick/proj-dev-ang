@@ -6,6 +6,12 @@ import { ModalTermsComponent } from '../../../../shared/components/modal-terms/m
 import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 
+interface ItemLanding {
+  title: string;
+  content: string;
+  position?: string;
+}
+
 @Component({
   selector: 'cs-landing',
   templateUrl: './landing.page.html',
@@ -15,58 +21,58 @@ import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 export class LandingPage implements OnInit, OnDestroy {
   ref: DynamicDialogRef;
   linkLogin = authFullRoutingNames.LOGIN;
-  benefits = [
-    [
-      {
-        title: 'Sin compartir número de cuenta',
-        content:
-          'Tus clientes podrán pagarte a través de "Pago de Servicios" en los canales digitales de Interbank y en más de 4,500 agentes.',
-      },
-      {
-        title: 'Configura tus cobros',
-        content:
-          'Elige el orden de pago de las deudas, si recibirás pagos por partes o incluirás el cobro de moras.',
-      },
-    ],
-    [
-      {
-        title: 'Cobranzas al instante',
-        content:
-          'Podrás identificar los pagos de cada cliente y ver el estado de pago en tiempo real.',
-      },
-      {
-        title: 'Descarga reportes',
-        content:
-          'Para facilitar tu proceso de conciliación y seguimiento de cobranzas.',
-      },
-    ],
+  benefits: ItemLanding[] = [
+    {
+      title: 'Sin compartir número de cuenta',
+      content:
+        'Tus clientes podrán pagarte a través de "Pago de Servicios" en los canales digitales de Interbank y en más de 4,500 agentes.',
+    },
+    {
+      title: 'Configura tus cobros',
+      content:
+        'Elige el orden de pago de las deudas, si recibirás pagos por partes o incluirás el cobro de moras.',
+    },
+    {
+      title: 'Cobranzas al instante',
+      content:
+        'Podrás identificar los pagos de cada cliente y ver el estado de pago en tiempo real.',
+    },
+    {
+      title: 'Descarga reportes',
+      content:
+        'Para facilitar tu proceso de conciliación y seguimiento de cobranzas.',
+    },
   ];
-  howWorks = [
+  howWorks: ItemLanding[][] = [
     [
       {
-        title: '1. Regístrate',
+        title: 'Regístrate',
+        position: '01',
         content: 'Crea tu contraseña y configura los cobros de tu empresa.',
       },
       {
-        title: '2. Ingresa y carga* tu lista de clientes por cobrar',
+        title: 'Ingresa y carga* tu lista de clientes por cobrar',
+        position: '02',
         content:
           'Ingresa a la plataforma con tu RUC y contraseña, luego carga tu lista de clientes en la sección “agregar cobros”. <br /><br />*Sólo si eliges la opción de ingresar datos de tus clientes.',
       },
     ],
     [
       {
-        title: '3. Empieza a recibir los pagos de tus clientes',
+        title: 'Empieza a recibir los pagos de tus clientes',
+        position: '03',
         content:
           'Ellos podrán pagarte buscando el nombre de tu empresa en el APP o Web de Interbank.',
       },
       {
-        title: '4. Identifica y concilia los pagos recibidos',
+        title: 'Identifica y concilia los pagos recibidos',
+        position: '04',
         content:
           'Puedes ver en tiempo real desde la plataforma, quién te pagó y exportar reportes para analizar tus cobranzas.',
       },
     ],
   ];
-  payments = [
+  payments: ItemLanding[] = [
     {
       title: 'Pagos parciales',
       content:
