@@ -1,235 +1,135 @@
-<body>
-  <!-- Navigation -->
-  <div class="container-style">
-    <div class="container pt-4 cont-logo">
-      <a class="pl-4 navbar-brand" href="#">
-        <img
-          class="img-login"
-          width="220"
-          src="../../../../../assets/images/ibkempresas-logo-negativo.svg"
-          alt=""
-        />
-      </a>
+<cs-layout-form>
+  <div class="tw-bg-white lg:tw-min-w-[450px] tw-p-8">
+    <div
+      class="tw-text-secondary-blue-1 tw-text-2xl lg:tw-text-3xl tw-font-medium tw-text-center mb-4"
+    >
+      Inicia sesión
     </div>
-    <div class="container">
-      <div class="row">
-        <!--/////// L E F T ////////-->
-
-        <div class="col-sm-12 col-md-12 col-lg-6">
-          <!-- <div class="prueba"></div> -->
-          <div class="title-login">
-            Gestiona tus <br class="br-none-escritorio" />
-            cobranzas <br class="br-none-escritorio" />
-            <br class="br-none-mobil" />
-            <br class="br-none-tablet" />
-            fácil y rápido
+    <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+      <div class="d-flex r-1 pb-3" style="text-align: left">
+        <div class="flex-fill mt-2">
+          <label class="d-block texto-negro h6">
+            <img
+              class="tw-inline icon-gb"
+              src="../../../../../assets/images/user.svg"
+              alt=""
+            />
+            RUC</label
+          >
+          <mat-form-field style="height: 1.9px !important; width: 100%">
+            <input
+              matInput
+              class="input-text"
+              type="text"
+              name="ruc"
+              csOnlynumbers
+              (focus)="focusFunctionRuc()"
+              autocomplete="on"
+              minlength="11"
+              maxlength="11"
+              required
+              formControlName="ruc"
+              [class.is-invalid]="submitted && f.ruc.errors"
+            />
+            <mat-error *ngIf="inputUsuaValid" class="messsage-error">
+              Debe ingresar el RUC
+            </mat-error>
+            <mat-error *ngIf="validarCantRuc" class="messsage-error">
+              Ingrese un RUC válido de 11 dígitos
+            </mat-error>
+          </mat-form-field>
+          <div class="mt-4">
+            <mat-checkbox
+              type="checkbox"
+              [(ngModel)]="rememberMe"
+              autocomplete="on"
+              formControlName="rememberme"
+            >
+              <label class="text-check">Recordar</label>
+            </mat-checkbox>
           </div>
-          <!-- <div class="pt-2 subtitle-login">¡Regístrate en nuestra plataforma en menos de 3 minutos!</div> -->
-          <!-- <div class="media pt-4 content-landing">
-                            <img src="assets/images/favorito_01.png" width="35" height="35" alt="">
-                            <div class="media-body">
-                                <p class="pl-4 al"> Usa La plataforma completamente gratis</p>
-                            </div>
-                        </div>
-                        <div class="media pt-3 content-landing">
-                            <img src="assets/images/laptop_01.png" width="35" height="35" alt="">
-                            <p class="pl-4"> Visualiza quiénes y cuánto te pagan en tiempo real, en cualquier momento</p>
-                        </div>
-                        <div class="media pt-2 content-landing">
-                            <img src="assets/images/cel_01.png" width="35" height="35" alt="">
-                            <p class="pl-4">Tu clientes te podrán pagar en nuestros más de 4000 agentes, APP, BPI y tiendas Interbank
-                            </p>
-                        </div> -->
-          <br class="br-none-escritorio" />
-          <br class="br-none-escritorio" />
-          <br class="br-none-escritorio" />
         </div>
+      </div>
 
-        <!--/////// R I G H T ////////-->
-        <div class="col-sm-12 col-md-12 col-lg-6">
-          <div class="pb-3">
-            <div class="d-flex justify-content-end" id="justify-reponsive">
-              <div class="cuadro-form pb-2 cont-login">
-                <!--/////// F O R M ////////-->
-                <div class="texto-azul pt-4 pb-3 mb-4 repn-ini">
-                  Inicia Sesión
-                </div>
-                <form
-                  id="login-form"
-                  [formGroup]="loginForm"
-                  (ngSubmit)="submitLogin()"
-                >
-                  <div class="d-flex r-1 pb-3" style="text-align: left">
-                    <!-- <div class="mr-2">
-                                                          <img src="assets/images/user.svg" alt="">
-                                                      </div> -->
-                    <!-- ////////////// R U C /////////////////// -->
-                    <div class="flex-fill mt-2">
-                      <label class="d-block texto-negro h6">
-                        <img
-                          class="tw-inline icon-gb"
-                          src="../../../../../assets/images/user.svg"
-                          alt=""
-                        />
-                        RUC</label
-                      >
-                      <mat-form-field
-                        style="height: 1.9px !important; width: 100%"
-                      >
-                        <input
-                          matInput
-                          class="input-text"
-                          type="text"
-                          name="ruc"
-                          csOnlynumbers
-                          (focus)="focusFunctionRuc()"
-                          autocomplete="on"
-                          minlength="11"
-                          maxlength="11"
-                          required
-                          formControlName="ruc"
-                          [class.is-invalid]="submitted && f.ruc.errors"
-                        />
-                        <mat-error
-                          *ngIf="inputUsuaValid"
-                          class="messsage-error"
-                        >
-                          Debe ingresar el RUC
-                        </mat-error>
-                        <mat-error
-                          *ngIf="validarCantRuc"
-                          class="messsage-error"
-                        >
-                          Ingrese un RUC válido de 11 dígitos
-                        </mat-error>
-                      </mat-form-field>
-                      <div class="mt-4">
-                        <mat-checkbox
-                          type="checkbox"
-                          [(ngModel)]="rememberMe"
-                          autocomplete="on"
-                          formControlName="rememberme"
-                        >
-                          <label class="text-check">Recordar</label>
-                        </mat-checkbox>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="d-flex mr-1" style="text-align: left">
-                    <!-- <div class="mr-2">
-                                                          <img src="assets/images/password.svg" alt="">
-                                                      </div> -->
-
-                    <!-- ////////////// P A S S W O R D /////////////////// -->
-                    <div class="flex-fill mt-2">
-                      <label class="d-block texto-negro h6">
-                        <img
-                          class="tw-inline icon-gb"
-                          src="../../../../../assets/images/password.svg"
-                          alt=""
-                        />
-                        Contraseña</label
-                      >
-                      <mat-form-field
-                        style="height: 1.9px !important; width: 100%"
-                      >
-                        <input
-                          matInput
-                          class="input-text"
-                          [type]="hide ? 'password' : 'text'"
-                          (Keydown.space)="$event.preventDefault()"
-                          (focus)="focusFunctionPass()"
-                          minlength="6"
-                          maxlength="25"
-                          formControlName="psw"
-                          [ngClass]="{
-                            'is-invalid': submitted && f.psw.errors
-                          }"
-                          csBlockCopyPaste
-                        />
-                        <i
-                          matSuffix
-                          (click)="hide = !hide"
-                          class="pi"
-                          [ngClass]="{
-                            'pi-eye': hide,
-                            'pi-eye-slash': !hide
-                          }"
-                        ></i>
-                        <mat-error
-                          *ngIf="inputPassValid"
-                          class="messsage-error"
-                        >
-                          Debe ingresar el password
-                        </mat-error>
-                        <mat-error
-                          *ngIf="validarCantPass"
-                          class="messsage-error"
-                        >
-                          Debes ingresar una contraseña entre 6 y 20 caracteres
-                        </mat-error>
-                      </mat-form-field>
-                      <br /><br />
-                      <mat-error *ngIf="codigo2" class="messsage-error">
-                        RUC o Contraseña Incorrecta
-                      </mat-error>
-                    </div>
-                  </div>
-
-                  <div class="reCaptach" *ngIf="isTrue">
-                    <re-captcha
-                      #recaptchaRef="reCaptcha"
-                      (resolved)="resolved($event)"
-                      siteKey="6Lf_I8wUAAAAAKbBj6Ukb9mDD434RU8UBuhSaeLl"
-                      secretKey="6Lf_I8wUAAAAAL420IJXIn5Wp3MXa5ItYWJ8C3qW"
-                    ></re-captcha>
-                  </div>
-
-                  <div class="mb-3" style="text-align: left">
-                    <small id="text-olv" [routerLink]="[linkRecoverPassword]"
-                      >¿La olvidaste?
-                    </small>
-                  </div>
-                  <br class="br-none-mobil" />
-                  <div style="text-align: center">
-                    <button
-                      type="submit"
-                      class="focus-elements btn-eureca-green btn-login-ingresar"
-                      form="login-form"
-                    >
-                      INGRESAR
-                    </button>
-                  </div>
-                </form>
-                <div class="mb-2">
-                  <div class="mb-3 dpt" style="text-align: center">
-                    <label class="text-rg"> ¿No tienes una cuenta?</label>
-                    <br />
-                    <small (click)="clickRegistrarse()">Regístrate aquí</small>
-                    <!-- <small [routerLink]="['/afiliacion']">Regístrate aquí</small> -->
-                  </div>
-
-                  <div class="mb-3 dpt1" style="text-align: center">
-                    <label class="text-rg"> ¿No tienes una cuenta?</label>
-                    <small (click)="clickRegistrarse()">Regístrate aquí</small>
-                    <!-- <small [routerLink]="['/afiliacion']">Regístrate aquí</small> -->
-                  </div>
-                  <div class="mb-3 regt" style="text-align: center">
-                    <label class="text-rg"> ¿No tienes una cuenta?</label>
-                    <small (click)="clickRegistrarse()">Regístrate</small>
-                    <!-- <small [routerLink]="['/afiliacion']">Regístrate</small> -->
-                  </div>
-                  <!-- <button type="button" class="mano focus-elements btn-eureca-green-register" [routerLink]="['/afiliacion']" (click)="clickRegistrarse()">
-                                                REGÍSTRATE
-                                            </button> -->
-                </div>
-              </div>
-            </div>
-          </div>
-
+      <div class="d-flex mr-1" style="text-align: left">
+        <div class="flex-fill mt-2">
+          <label class="d-block texto-negro h6">
+            <img
+              class="tw-inline icon-gb"
+              src="../../../../../assets/images/password.svg"
+              alt=""
+            />
+            Contraseña</label
+          >
+          <mat-form-field style="height: 1.9px !important; width: 100%">
+            <input
+              matInput
+              class="input-text"
+              [type]="hide ? 'password' : 'text'"
+              (Keydown.space)="$event.preventDefault()"
+              (focus)="focusFunctionPass()"
+              minlength="6"
+              maxlength="25"
+              formControlName="psw"
+              [ngClass]="{
+                'is-invalid': submitted && f.psw.errors
+              }"
+              csBlockCopyPaste
+            />
+            <i
+              matSuffix
+              (click)="hide = !hide"
+              class="pi"
+              [ngClass]="{
+                'pi-eye': hide,
+                'pi-eye-slash': !hide
+              }"
+            ></i>
+            <mat-error *ngIf="inputPassValid" class="messsage-error">
+              Debe ingresar el password
+            </mat-error>
+            <mat-error *ngIf="validarCantPass" class="messsage-error">
+              Debes ingresar una contraseña entre 6 y 20 caracteres
+            </mat-error>
+          </mat-form-field>
+          <br /><br />
+          <mat-error *ngIf="codigo2" class="messsage-error">
+            RUC o Contraseña Incorrecta
+          </mat-error>
         </div>
+      </div>
+
+      <div class="mb-3" style="text-align: left">
+        <small id="text-olv" [routerLink]="[linkRecoverPassword]"
+          >¿La olvidaste?
+        </small>
+      </div>
+      <br class="br-none-mobil" />
+      <div style="text-align: center">
+        <button
+          type="submit"
+          class="focus-elements btn-eureca-green btn-login-ingresar"
+          form="login-form"
+        >
+          Ingresar
+        </button>
+      </div>
+    </form>
+    <div class="mb-2">
+      <div class="mb-3 dpt" style="text-align: center">
+        <label class="text-rg"> ¿No tienes una cuenta?</label>
+        <br />
+        <small (click)="clickRegistrarse()">Regístrate aquí</small>
+      </div>
+
+      <div class="mb-3 dpt1" style="text-align: center">
+        <label class="text-rg"> ¿No tienes una cuenta?</label>
+        <small (click)="clickRegistrarse()">Regístrate aquí</small>
+      </div>
+      <div class="mb-3 regt" style="text-align: center">
+        <label class="text-rg"> ¿No tienes una cuenta?</label>
+        <small (click)="clickRegistrarse()">Regístrate</small>
       </div>
     </div>
   </div>
-</body>
+</cs-layout-form>
