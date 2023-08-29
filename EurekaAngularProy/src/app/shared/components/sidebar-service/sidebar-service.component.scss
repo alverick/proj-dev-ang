@@ -6,15 +6,4 @@
   @include media('>=lg') {
     width: 536px;
   }
-
-  &::before {
-    content: '';
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: -100vw;
-    right: 0;
-    background-color: var(--grises-grey-5);
-    z-index: -1;
-  }
 }
