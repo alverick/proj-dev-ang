@@ -267,7 +267,8 @@ body {
     }
 
     &:enabled {
-      &:hover, &:active {
+      &:hover,
+      &:active {
         background-color: var(--primary-green-2);
         color: #ffffff;
         border-color: var(--primary-green-2);

@@ -30,13 +30,8 @@ export class LoginPage implements OnInit {
   public loginForm: UntypedFormGroup;
   public submitted = false;
   public error: { ruc: string; message: string } = null;
-  public respuestaHttp: number;
   public formData: any = {};
   public rememberMe = false;
-
-  public inputUsuario = false;
-  // @ViewChild('inputUsua') inputUsua: ElementRef;
-  // @ViewChild('inputPass') inputPass: ElementRef;
   inputUsuaValid = false;
   inputPassValid = false;
   validarCantRuc = false;
@@ -346,11 +341,7 @@ export class LoginPage implements OnInit {
   }
 
   clickRegistrarse() {
-    this.gaService.sendEvent('Registrarme', {
-      event_category: GoogleAnalytics.Afiliacion,
-      event_label: 'registrarme',
-    });
-    this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
+    void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
       state: { initNew: true },
     });
   }
