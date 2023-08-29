@@ -285,6 +285,11 @@ body {
       color: var(--grises-grey-2);
       border-color: var(--grises-grey-2);
     }
+
+    &.input-button {
+      font-size: 10px;
+      padding: 0.2rem;
+    }
   }
 
   .p-button-label {
