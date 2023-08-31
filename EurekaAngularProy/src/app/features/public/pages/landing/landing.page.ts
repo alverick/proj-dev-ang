@@ -1,9 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
-import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../shared/services/adobe-analytics.service';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 
 @Component({
@@ -12,7 +16,7 @@ import { authFullRoutingNames } from '../../../auth/auth-routing.names';
   styleUrls: ['./landing.page.scss'],
   providers: [DialogService],
 })
-export class LandingPage implements OnInit, OnDestroy {
+export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;
   linkLogin = authFullRoutingNames.LOGIN;
   benefits = [
@@ -85,9 +89,9 @@ export class LandingPage implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private gaService: GoogleAnalytics,
     public router: Router,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    private adobeAnalytics: AdobeAnalyticsService
   ) {}
 
   ngOnDestroy(): void {
@@ -96,28 +100,24 @@ export class LandingPage implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
-    this.gaService.sendEvent('Landing', {
-      event_category: 'Landing',
-      event_label: 'ingreso_landing',
-    });
-  }
-
   clickRegistrarse() {
-    this.gaService.sendEvent('Registrarme', {
-      event_category: GoogleAnalytics.Afiliacion,
-      event_label: 'registrarme',
-    });
     void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
       state: { initNew: true },
     });
+    this.sendAdobeTrack({
+      category: 'Regístrate - hero',
+      action: 'Click',
+      label: 'Regístrate',
+      detail: 'Regístra tu empresa',
+      typeElement: 'Botón',
+      module: 'Home',
+      location: 'hero',
+      step: 'step0',
+    });
   }
 
-  clickLogin() {
-    this.gaService.sendEvent('Registrarme', {
-      event_category: GoogleAnalytics.Afiliacion,
-      event_label: 'registrarme',
-    });
+  sendAdobeTrack(action: Partial<ActionEventProperties>) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, action);
   }
 
   showModalTerms() {
