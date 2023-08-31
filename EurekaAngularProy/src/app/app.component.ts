@@ -36,23 +36,8 @@ export class AppComponent implements OnInit {
   ) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-        this.showButton = val.url.indexOf(appFullRoutingNames.ADMIN) !== 0;
-        if (environment.production) {
-          this.gaService.sendUrl(
-            val.urlAfterRedirects.substr(1),
-            val.urlAfterRedirects
-          );
-
-          /*
-          gtag('config', 'UA-148142629-1', {
-            'page_title': e.urlAfterRedirects.substr(1),
-            'page_path': e.urlAfterRedirects
-          });
-          */
-          // Pixel Facebook
-          this.sendTrackPageViewPixel(val.urlAfterRedirects);
-        }
-        // gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
+        this.showButton = !val.url.startsWith(appFullRoutingNames.ADMIN);
+        adobeAnalytics.pageTrack(val.urlAfterRedirects);
       }
     });
 
