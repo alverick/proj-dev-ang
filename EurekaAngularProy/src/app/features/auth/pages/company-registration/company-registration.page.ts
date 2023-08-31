@@ -37,12 +37,8 @@ export class CompanyRegistrationPage implements OnInit {
   onSubmit() {
     this.affiliation.validateCompany().subscribe(({ success }) => {
       if (success) {
-        this.router.navigate([authFullRoutingNames.COMPANY_FILL_DATA]);
+        void this.router.navigate([authFullRoutingNames.COMPANY_FILL_DATA]);
       }
     });
-  }
-
-  goBack() {
-    this.router.navigate([authFullRoutingNames.LOGIN]);
   }
 }
