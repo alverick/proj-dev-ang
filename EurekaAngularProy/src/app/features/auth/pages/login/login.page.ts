@@ -1,9 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
 import { RecaptchaComponent } from 'ng-recaptcha';
@@ -13,7 +9,12 @@ import Swal from 'sweetalert2';
 
 import { environment } from '../../../../../environments/environment';
 import { internalFullRoutingNames } from '../../../../app-routing.collection';
-import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
+import { ModelFormGroup } from '../../../../shared/models/forms';
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../shared/services/adobe-analytics.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { drawPopup } from '../../../../shared/utils/helpers/popups';
@@ -21,13 +22,19 @@ import { authFullRoutingNames } from '../../auth-routing.names';
 
 const userData = environment.credentials[0];
 
+interface LoginForm {
+  ruc: string;
+  psw: string;
+  rememberme: boolean;
+}
+
 @Component({
   selector: 'cs-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public loginForm: UntypedFormGroup;
+  public loginForm: ModelFormGroup<LoginForm>;
   public submitted = false;
   public error: { ruc: string; message: string } = null;
   public respuestaHttp: number;
@@ -80,18 +87,18 @@ export class LoginPage implements OnInit {
   linkRegisterCompany = authFullRoutingNames.COMPANY_REGISTER;
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private loginService: LoginService,
     private router: Router,
     private cookieService: CookieService,
     private storageService: StorageService,
     public snackBar: MatSnackBar,
-    private gaService: GoogleAnalytics
+    private adobeAnalytics: AdobeAnalyticsService
   ) {}
 
   ngOnInit() {
     this.snackBar.dismiss();
-    const rucStr = this.cookieService.check('ruc')
+    const rucStr = this.cookieService.check('ruc1')
       ? this.cookieService.get('ruc')
       : userData[0];
 
@@ -126,7 +133,7 @@ export class LoginPage implements OnInit {
   }
 
   mensaje(tipo: any, titulo: string, text: string) {
-    Swal.fire({
+    void Swal.fire({
       // type: tipo ,
       title: titulo,
       text,
@@ -180,19 +187,38 @@ export class LoginPage implements OnInit {
 
     this.cookieService.delete('ruc');
 
+    const actionParams = {
+      category: 'Login',
+      action: 'Click',
+      label: 'Ingresar',
+      state: 'Envío exitoso',
+      metadata: [
+        {
+          key: 'TipoDocumento',
+          value: 'RUC',
+        },
+        {
+          key: 'NumeroDocumento',
+          value: this.f.ruc.value,
+        },
+      ],
+    };
+
+    this.adobeAnalytics.setRuc(this.f.ruc.value);
+
     if (this.loginForm.valid && this.isCaptchaValidate) {
       this.loginService
         .login(this.f.ruc.value, this.f.psw.value)
         .pipe(first())
-        .subscribe(
-          (value) => {
+        .subscribe({
+          next: (value) => {
             this.storageService.setIntentos(value.paramNum);
             this.intentos = this.storageService.getIntentos();
 
             this.intentosRestantes = 6 - this.intentos;
             this.codRespuesta = value.codRespuesta;
             if (value.paramStr === 'Un session ya se encuentra activa') {
-              Swal.fire({
+              void Swal.fire({
                 // imageUrl: '/assets/images/complain.svg',
                 imageHeight: 100,
                 title: 'Existe una Sesión Activa',
@@ -206,6 +232,11 @@ export class LoginPage implements OnInit {
                 confirmButtonText: 'CERRAR',
                 onOpen: drawPopup,
               });
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: value.paramStr,
+              });
             } else if (value.estado === true && this.intentos <= 6) {
               if (this.rememberMe === true) {
                 const expire = new Date();
@@ -214,7 +245,9 @@ export class LoginPage implements OnInit {
               }
 
               window.sessionStorage.setItem('username', this.f.ruc.value);
-              this.router.navigate([internalFullRoutingNames.HOME]);
+              void this.router.navigate([internalFullRoutingNames.HOME]);
+              this.sendAdobeTrack(actionParams);
+              this.adobeAnalytics.trackEvent(AdobeEvent.successLogin);
             } else if (this.intentos < 4 && this.codRespuesta === 2) {
               this.codigo2 = true;
             } else if (this.intentos < 4 && this.codRespuesta === 3) {
@@ -222,15 +255,18 @@ export class LoginPage implements OnInit {
 
               this.mensaje(
                 'error',
-                'Contraseña Incorrecta',
-                'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ' +
-                  this.intentosRestantes +
-                  ' intentos restantes'
+                'Contraseña incorrecta',
+                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Contraseña incorrecta',
+              });
             } else if (this.intentos < 4 && this.codRespuesta === 5) {
               this.codigo2 = false;
 
-              Swal.fire({
+              void Swal.fire({
                 // type: tipo ,
                 title: 'Tu cuenta está siendo procesada',
                 html:
@@ -245,6 +281,11 @@ export class LoginPage implements OnInit {
                 confirmButtonText: 'ENTENDIDO',
                 onOpen: drawPopup,
               });
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Tu cuenta está siendo procesada',
+              });
             } else if (this.intentos === 4 && this.codRespuesta === 2) {
               this.loginService.errores = value.codRespuesta;
               this.isCaptchaValidate = false;
@@ -258,10 +299,8 @@ export class LoginPage implements OnInit {
 
               this.mensaje(
                 'error',
-                'Contraseña Incorrecta',
-                'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ' +
-                  this.intentosRestantes +
-                  ' intentos restantes'
+                'Contraseña incorrecta',
+                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
 
               this.isCaptchaValidate = false;
@@ -269,12 +308,17 @@ export class LoginPage implements OnInit {
                 ? this.recaptchaRef.reset()
                 : null;
               this.isTrue = true;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Contraseña incorrecta',
+              });
             } else if (this.intentos == 4 && this.codRespuesta == 5) {
               this.codigo2 = false;
 
               this.mensaje(
                 'error',
-                'Cuenta Inactiva',
+                'Cuenta inactiva',
                 'Su cuenta se encuentra inactiva'
               );
 
@@ -283,6 +327,11 @@ export class LoginPage implements OnInit {
                 ? this.recaptchaRef.reset()
                 : null;
               this.isTrue = true;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Cuenta inactiva',
+              });
             } else if (this.intentos == 5 && this.codRespuesta == 2) {
               this.isTrue = true;
               this.codigo2 = true;
@@ -291,10 +340,8 @@ export class LoginPage implements OnInit {
 
               this.mensaje(
                 'error',
-                'Contraseña Incorrecta',
-                'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ' +
-                  this.intentosRestantes +
-                  ' intentos restantes'
+                'Contraseña incorrecta',
+                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
               this.recaptchaRef !== undefined
                 ? this.recaptchaRef.reset()
@@ -302,6 +349,11 @@ export class LoginPage implements OnInit {
               this.isCaptchaValidate = false;
               this.isTrue = true;
               this.codigo2 = false;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Contraseña incorrecta',
+              });
             } else if (this.intentos == 5 && this.codRespuesta == 5) {
               this.codigo2 = false;
 
@@ -316,6 +368,11 @@ export class LoginPage implements OnInit {
               this.isCaptchaValidate = false;
               this.isTrue = true;
               this.codigo2 = false;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Cuenta inactiva',
+              });
             } else if (
               this.intentos >= 6 ||
               value.paramStr === 'Vuelva a intentarlo mas tarde' ||
@@ -330,28 +387,38 @@ export class LoginPage implements OnInit {
               );
               this.intento6 = true;
               this.isTrue = false;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: value.paramStr,
+              });
             }
           },
-          (error) => {
+          error: (error) => {
             if (error.status === 500) {
               this.mensaje(
                 'error',
                 'Error',
-                'Error del Servidor comuníquese con el administrador'
+                'Error del servidor comuníquese con el administrador'
               );
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Error del servidor',
+              });
             }
-          }
-        );
+          },
+        });
     }
   }
 
   clickRegistrarse() {
-    this.gaService.sendEvent('Registrarme', {
-      event_category: GoogleAnalytics.Afiliacion,
-      event_label: 'registrarme',
-    });
-    this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
+    void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
       state: { initNew: true },
     });
+  }
+
+  sendAdobeTrack(action?: Partial<ActionEventProperties>) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.login, action);
   }
 }
