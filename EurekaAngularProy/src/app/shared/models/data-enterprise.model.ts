@@ -3,7 +3,7 @@ export interface IDataEnterpriseModel {
   name: string;
   entry: string;
   email: string;
-  movilNumber: number;
+  movilNumber: number | string;
   movilOperator: string;
   documentType?: string;
   documentNumber?: string;
