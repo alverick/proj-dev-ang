@@ -50,7 +50,8 @@ export interface ActionEventProperties {
 interface TrackEventProperties {
   general: { version: string; platform: string };
   user: {
-    codruc: string;
+    codRuc: string;
+    userId: string;
     digitalId: string;
     codEmpresa: string;
     codGrupo: string;
@@ -62,7 +63,6 @@ interface TrackEventProperties {
 
 interface TrackEvent {
   userId: string;
-  path?: string;
   properties: TrackProperties;
   eventProperties: TrackEventProperties;
 }
@@ -70,7 +70,7 @@ interface TrackEvent {
 interface Satellite {
   pageBottom(): void;
 
-  track(event: string, payload: Partial<TrackEvent>): void;
+  track(event: string, payload: Partial<TrackEventProperties>): void;
 }
 
 declare const _satellite: Satellite;
@@ -79,25 +79,17 @@ declare const _satellite: Satellite;
   providedIn: 'root',
 })
 export class AdobeAnalyticsService {
-  payload: Partial<TrackEvent> = {
-    userId: 'Not available',
-    properties: {
+  payload: Partial<TrackEventProperties> = {
+    general: {
+      version: 'CSX',
+      platform: 'Web',
+    },
+    user: {
       userId: 'Not available',
+      digitalId: 'Not available',
       codEmpresa: 'Not available',
       codGrupo: 'Not available',
-      codruc: 'Not available',
-    },
-    eventProperties: {
-      general: {
-        version: 'CSX',
-        platform: 'Web',
-      },
-      user: {
-        digitalId: 'Not available',
-        codEmpresa: 'Not available',
-        codGrupo: 'Not available',
-        codruc: 'Not available',
-      },
+      codRuc: 'Not available',
     },
   };
 
@@ -118,8 +110,7 @@ export class AdobeAnalyticsService {
 
   setRuc(ruc: string) {
     if ('undefined' !== typeof ruc && ruc) {
-      this.payload.properties.codruc = ruc;
-      this.payload.eventProperties.user.codruc = ruc;
+      this.payload.user.codRuc = ruc;
     }
   }
 
@@ -133,10 +124,10 @@ export class AdobeAnalyticsService {
         event === AdobeEvent.trackFormSubmit ||
         event === AdobeEvent.trackAction
       ) {
-        payload.eventProperties.action = eventProperties;
+        payload.action = eventProperties;
       }
       if (event === AdobeEvent.trackView) {
-        payload.eventProperties.view = eventProperties;
+        payload.view = eventProperties;
       }
     }
 
@@ -148,7 +139,7 @@ export class AdobeAnalyticsService {
 
   pageTrack(path: string) {
     const pathParsed = `cs${path.replace(/\//g, ':')}`;
-    this.payload.eventProperties.page = {
+    this.payload.page = {
       name: pathParsed,
       channel: pathParsed,
       url: location.href,
