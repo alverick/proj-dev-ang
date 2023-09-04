@@ -132,19 +132,23 @@ export class LoginPage implements OnInit {
     return true;
   }
 
-  mensaje(tipo: any, titulo: string, text: string) {
+  showModal(title: string, text: string, confirmText = '') {
     void Swal.fire({
-      // type: tipo ,
-      title: titulo,
+      title,
       text,
       showCloseButton: true,
-      showCancelButton: false,
       showConfirmButton: true,
-      cancelButtonColor: '#d33',
-      // cancelButtonText:  'CERRAR',
       allowOutsideClick: false,
-      confirmButtonText: 'CERRAR',
+      confirmButtonText: confirmText || 'CERRAR',
       onOpen: drawPopup,
+    });
+
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: title,
+      action: 'modal-view',
+      detail: text,
+      module: 'Home',
+      location: 'Modal',
     });
   }
 
@@ -218,20 +222,7 @@ export class LoginPage implements OnInit {
             this.intentosRestantes = 6 - this.intentos;
             this.codRespuesta = value.codRespuesta;
             if (value.paramStr === 'Un session ya se encuentra activa') {
-              void Swal.fire({
-                // imageUrl: '/assets/images/complain.svg',
-                imageHeight: 100,
-                title: 'Existe una Sesión Activa',
-                // cancelButtonText: 'CERRAR',
-                showCloseButton: true,
-                showCancelButton: false,
-                showConfirmButton: true,
-                cancelButtonColor: '#d33',
-                // cancelButtonText:  'CERRAR',
-                allowOutsideClick: false,
-                confirmButtonText: 'CERRAR',
-                onOpen: drawPopup,
-              });
+              this.showModal('Existe una Sesión Activa', '');
               this.sendAdobeTrack({
                 ...actionParams,
                 state: 'Intención de envío',
@@ -253,8 +244,7 @@ export class LoginPage implements OnInit {
             } else if (this.intentos < 4 && this.codRespuesta === 3) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Contraseña incorrecta',
                 `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
@@ -266,21 +256,12 @@ export class LoginPage implements OnInit {
             } else if (this.intentos < 4 && this.codRespuesta === 5) {
               this.codigo2 = false;
 
-              void Swal.fire({
-                // type: tipo ,
-                title: 'Tu cuenta está siendo procesada',
-                html:
-                  'Estamos procesando la información de tu registro,' +
+              this.showModal(
+                'Tu cuenta está siendo procesada',
+                'Estamos procesando la información de tu registro,' +
                   ' esto puede tomar un máximo 24 horas hábiles. Cuando esté lista te enviaremos un mail de Bienvenida.',
-                showCloseButton: true,
-                showCancelButton: false,
-                showConfirmButton: true,
-                cancelButtonColor: '#d33',
-                // cancelButtonText:  'CERRAR',
-                allowOutsideClick: false,
-                confirmButtonText: 'ENTENDIDO',
-                onOpen: drawPopup,
-              });
+                'ENTENDIDO'
+              );
               this.sendAdobeTrack({
                 ...actionParams,
                 state: 'Intención de envío',
@@ -297,8 +278,7 @@ export class LoginPage implements OnInit {
             } else if (this.intentos == 4 && this.codRespuesta == 3) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Contraseña incorrecta',
                 `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
@@ -316,8 +296,7 @@ export class LoginPage implements OnInit {
             } else if (this.intentos == 4 && this.codRespuesta == 5) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Cuenta inactiva',
                 'Su cuenta se encuentra inactiva'
               );
@@ -338,8 +317,7 @@ export class LoginPage implements OnInit {
             } else if (this.intentos == 5 && this.codRespuesta == 3) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Contraseña incorrecta',
                 `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
@@ -357,8 +335,7 @@ export class LoginPage implements OnInit {
             } else if (this.intentos == 5 && this.codRespuesta == 5) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Cuenta Inactiva',
                 'Su cuenta se encuentra inactiva'
               );
@@ -380,8 +357,7 @@ export class LoginPage implements OnInit {
             ) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Contraseña Incorrecta',
                 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos por whatsapp al 993 119 001'
               );
@@ -396,8 +372,7 @@ export class LoginPage implements OnInit {
           },
           error: (error) => {
             if (error.status === 500) {
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Error',
                 'Error del servidor comuníquese con el administrador'
               );
