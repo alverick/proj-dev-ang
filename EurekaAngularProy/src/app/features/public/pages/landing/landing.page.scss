@@ -1,0 +1,37 @@
+.payment {
+  .sprite {
+    opacity: 0;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+
+    &.over {
+      animation-delay: 0.75s;
+    }
+  }
+
+  &:hover {
+    .shape {
+      @apply hover:tw-scale-[1.02];
+    }
+
+    .sprite {
+      opacity: 1;
+      animation-name: starsAppear;
+    }
+  }
+}
+
+@keyframes starsAppear {
+  0% {
+    opacity: 0;
+  }
+
+  33.33% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

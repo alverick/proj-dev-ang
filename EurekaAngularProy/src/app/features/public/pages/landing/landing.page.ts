@@ -9,6 +9,7 @@ import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 interface ItemLanding {
   title: string;
   content: string;
+  image?: string;
   position?: string;
 }
 
@@ -24,21 +25,25 @@ export class LandingPage implements OnInit, OnDestroy {
   benefits: ItemLanding[] = [
     {
       title: 'Sin compartir número de cuenta',
+      image: 'icon-person-smile.svg',
       content:
         'Tus clientes podrán pagarte a través de "Pago de Servicios" en los canales digitales de Interbank y en más de 4,500 agentes.',
     },
     {
       title: 'Configura tus cobros',
+      image: 'icon-laptop-configuration.svg',
       content:
         'Elige el orden de pago de las deudas, si recibirás pagos por partes o incluirás el cobro de moras.',
     },
     {
       title: 'Cobranzas al instante',
+      image: 'icon-money-hand.svg',
       content:
         'Podrás identificar los pagos de cada cliente y ver el estado de pago en tiempo real.',
     },
     {
       title: 'Descarga reportes',
+      image: 'icon-laptop-report.svg',
       content:
         'Para facilitar tu proceso de conciliación y seguimiento de cobranzas.',
     },
@@ -75,16 +80,19 @@ export class LandingPage implements OnInit, OnDestroy {
   payments: ItemLanding[] = [
     {
       title: 'Pagos parciales',
+      image: 'icon-money-cards.svg',
       content:
         'Configura si permitirás a tus clientes pagar su deuda total por partes',
     },
     {
       title: 'Pagos sucesivos',
+      image: 'icon-calendar.svg',
       content:
         'Podrás hacer que tus clientes paguen la deuda más antigua primero o la que ellos deseen',
     },
     {
       title: 'Cobro de mora',
+      image: 'icon-percent-more.svg',
       content:
         'Configura si deseas que tus clientes paguen una mora y define el importe de esta',
     },
@@ -124,6 +132,10 @@ export class LandingPage implements OnInit, OnDestroy {
       event_category: GoogleAnalytics.Afiliacion,
       event_label: 'registrarme',
     });
+  }
+
+  trackByiItems(index: number) {
+    return index;
   }
 
   showModalTerms() {
