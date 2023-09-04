@@ -1,6 +1,7 @@
-import { Component, HostListener } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent, Scroll } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { Component, HostListener, OnDestroy } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
+import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import { AffiliationService } from '../../services';
@@ -10,14 +11,22 @@ import { AffiliationService } from '../../services';
   templateUrl: './service-add.page.html',
   styleUrls: ['./service-add.page.scss'],
 })
-export class ServiceAddPage {
+export class ServiceAddPage implements OnDestroy {
+  destroy$ = new Subject();
   position = 0;
   steps = [{ title: 'Step 1' }, { title: 'Step 2' }];
 
-  constructor(private router: Router, public affiliation: AffiliationService) {
+  constructor(
+    protected router: Router,
+    route: ActivatedRoute,
+    public affiliation: AffiliationService
+  ) {
     router.events
-      .pipe(map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)))
-      .subscribe((val: RouterEvent) => {
+      .pipe(
+        map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((val) => {
         if (val instanceof NavigationEnd) {
           switch (val.url) {
             case authFullRoutingChildNames.SERVICES_ADD_CONFIGURATION:
@@ -33,6 +42,11 @@ export class ServiceAddPage {
           }
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   @HostListener('window:beforeunload', ['$event'])

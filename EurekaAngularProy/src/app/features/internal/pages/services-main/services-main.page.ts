@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent, Scroll } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 
 import {
   internalFullRoutingChildNames,
@@ -12,11 +13,15 @@ import {
   templateUrl: './services-main.page.html',
   styleUrls: ['./services-main.page.scss'],
 })
-export class ServicesMainPage {
+export class ServicesMainPage implements OnDestroy {
+  destroy$ = new Subject();
   position = 2;
   constructor(protected router: Router) {
     router.events
-      .pipe(map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)))
+      .pipe(
+        map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)),
+        takeUntil(this.destroy$)
+      )
       .subscribe((val: RouterEvent) => {
         if (val instanceof NavigationEnd) {
           switch (val.url) {
@@ -33,5 +38,10 @@ export class ServicesMainPage {
           }
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }
