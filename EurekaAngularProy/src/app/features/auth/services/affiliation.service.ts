@@ -665,6 +665,15 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
       })
       .then(({ value }) => {
         if (value) {
+          this.sendAdobeTrack(AdobeEvent.trackAction, {
+            category: '¡Abre tu Cuenta Negocios!',
+            action: 'Click',
+            detail: 'Enlace a creación de cuenta Negocios',
+            label: '¡Vamos ahora!',
+            typeElement: 'Botón',
+            module: 'Home',
+            location: 'Modal',
+          });
           window.open('https://interbank.pe/cuenta-negocios');
           void this.router.navigate([authFullRoutingNames.LOGIN]);
         }
