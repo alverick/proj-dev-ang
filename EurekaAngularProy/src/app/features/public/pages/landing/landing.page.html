@@ -85,30 +85,50 @@
     </div>
   </div>
 </div>
-<div class="tw-bg-primary-green-1 tw-py-10 tw-px-6 xl:tw-px-0">
+<div class="tw-bg-secondary-blue-1 tw-py-14 tw-px-6 xl:tw-px-0">
   <div class="tw-max-w-8xl tw-mx-auto lg:tw-px-20">
-    <div class="tw-text-white tw-flex lg:tw-gap-24 tw-flex-col lg:tw-flex-row">
+    <div class="tw-text-white lg:tw-gap-24 tw-flex-col tw-text-center">
       <div class="tw-mb-5 lg:tw-mb-0">
-        <div class="tw-text-2xl lg:tw-text-4xl tw-font-medium">
+        <div class="tw-text-2xl lg:tw-text-3xl tw-font-medium">
           ¿Qué necesito?
         </div>
       </div>
-      <div class="">
-        <div class="lg:tw-text-2xl tw-text-base">
-          Sólo necesitas tener una cuenta en Interbank:
-          <ul class="tw-list-disc tw-ml-6">
-            <li class="tw-mb-1">
-              <a
-                href="https://bancacomercial.interbank.pe/cuenta-negocios/solicitud/verificacion-datos?utm_source=interbank.pe&utm_medium=web&utm_campaign=landing_producto_apertura_cuenta_negocios"
-                class="tw-text-white hover:tw-text-white tw-underline tw-underline-offset-4"
-                target="_blank"
-                >Cuenta Negocio (ábrela 100% online haciendo clic aquí).</a
-              >
-            </li>
-            <li class="tw-mb-1">
+      <div class="lg:tw-text-2xl tw-text-base tw-mt-4">
+        Sólo necesitas tener una cuenta en Interbank:
+        <div class="tw-flex tw-gap-10 tw-mt-4 tw-text-xl">
+          <a
+            href="https://bancacomercial.interbank.pe/cuenta-negocios/solicitud/verificacion-datos?utm_source=interbank.pe&utm_medium=web&utm_campaign=landing_producto_apertura_cuenta_negocios"
+            class="tw-w-1/2 tw-mb-1 tw-relative tw-p-8 tw-py-20 hover:tw-no-underline"
+          >
+            <div
+              class="shape tw-rounded-tl-3xl tw-rounded-br-3xl tw-bg-secondary-blue-2 tw-overflow-hidden tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-will-change-auto tw-transition-all tw-duration-200"
+            >
+              <img
+                alt=""
+                class="tw-mx-auto tw-h-32 tw-absolute tw-right-2 tw-bottom-0 -tw-mb-1"
+                src="/assets/images/img-account-2.svg"
+              />
+            </div>
+            <div
+              class="content tw-relative tw-text-left tw-pr-24 tw-text-white"
+            >
+              Cuenta Negocio (ábrela 100% online haciendo clic aquí).
+            </div>
+          </a>
+          <div class="tw-w-1/2 tw-mb-1 tw-relative tw-p-8 tw-py-20">
+            <div
+              class="shape tw-rounded-tl-3xl tw-rounded-br-3xl tw-bg-secondary-blue-2 tw-overflow-hidden tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-will-change-auto tw-transition-all tw-duration-200"
+            >
+              <img
+                alt=""
+                class="tw-mx-auto tw-h-32 tw-absolute tw-right-2 tw-bottom-0 -tw-mb-1"
+                src="/assets/images/img-account-1.svg"
+              />
+            </div>
+            <div class="content tw-relative tw-text-left tw-pr-24">
               Cuenta Corriente o Ahorros Persona Jurídica.
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -119,7 +139,7 @@
     <h2
       class="tw-text-2xl lg:tw-text-3xl tw-text-center xl:tw-text-4xl tw-font-medium tw-text-secondary-blue-1 tw-mb-10 lg:tw-mb-0"
     >
-      ¿Cómo Funciona?
+      ¿Cómo funciona?
     </h2>
     <div
       class="tw-grid tw-grid-cols-2 lg:tw-pt-16 tw-justify-center tw-gap-6 tw-w-full"
@@ -236,7 +256,10 @@
       <h2 class="tw-text-xl">Legales</h2>
       <div class="tw-text-base">
         <div class="tw-pt-5">
-          <a (click)="showModalTerms()" class="tw-pointer">
+          <a
+            (click)="showModalTerms()"
+            class="tw-cursor-pointer tw-text-extended-ibk-black hover:tw-no-underline tw-transition-colors tw-duration-300"
+          >
             Términos y condiciones
           </a>
         </div>
