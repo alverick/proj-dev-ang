@@ -122,6 +122,7 @@ export class AdobeAnalyticsService {
     if (isNotNil(eventProperties)) {
       if (
         event === AdobeEvent.trackFormSubmit ||
+        event === AdobeEvent.login ||
         event === AdobeEvent.trackAction
       ) {
         payload.action = eventProperties;
