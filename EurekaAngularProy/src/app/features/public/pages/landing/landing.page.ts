@@ -110,7 +110,7 @@ export class LandingPage implements OnDestroy {
       label: 'Regístrate',
       detail: 'Regístra tu empresa',
       typeElement: 'Botón',
-      module: 'Home',
+      module: 'Landing',
       location,
       step: 'step0',
     });
@@ -126,7 +126,7 @@ export class LandingPage implements OnDestroy {
       label: 'Inicia sesión',
       detail: 'Login',
       typeElement: 'Botón',
-      module: 'Home',
+      module: 'Landing',
       location: 'hero',
       step: 'step0',
     });
@@ -149,7 +149,7 @@ export class LandingPage implements OnDestroy {
       detail: 'Términos y condiciones',
       label: 'Términos y condiciones',
       typeElement: 'Link',
-      module: 'Home',
+      module: 'Landing',
       location: 'Footer',
     });
 
@@ -157,7 +157,7 @@ export class LandingPage implements OnDestroy {
       category: 'Términos y condiciones',
       action: 'modal-view',
       detail: 'Términos y condiciones',
-      module: 'Home',
+      module: 'Landing',
       location: 'Modal',
     });
   }
@@ -169,7 +169,7 @@ export class LandingPage implements OnDestroy {
       detail: 'Enlace a whatsapp',
       label: '993 119 001',
       typeElement: 'Link',
-      module: 'Home',
+      module: 'Landing',
       location: 'Footer',
     });
   }
