@@ -52,34 +52,30 @@ export class LandingPage implements OnDestroy {
         'Para facilitar tu proceso de conciliación y seguimiento de cobranzas.',
     },
   ];
-  howWorks: ItemLanding[][] = [
-    [
-      {
-        title: 'Regístrate',
-        position: '01',
-        content: 'Crea tu contraseña y configura los cobros de tu empresa.',
-      },
-      {
-        title: 'Ingresa y carga* tu lista de clientes por cobrar',
-        position: '02',
-        content:
-          'Ingresa a la plataforma con tu RUC y contraseña, luego carga tu lista de clientes en la sección “agregar cobros”. <br /><br />*Sólo si eliges la opción de ingresar datos de tus clientes.',
-      },
-    ],
-    [
-      {
-        title: 'Empieza a recibir los pagos de tus clientes',
-        position: '03',
-        content:
-          'Ellos podrán pagarte buscando el nombre de tu empresa en el Interbank APP o Banca por Internet.',
-      },
-      {
-        title: 'Identifica y concilia los pagos recibidos',
-        position: '04',
-        content:
-          'Puedes ver en tiempo real desde la plataforma, quién te pagó y exportar reportes para analizar tus cobranzas.',
-      },
-    ],
+  howWorks: ItemLanding[] = [
+    {
+      title: 'Regístrate',
+      position: '01',
+      content: 'Crea tu contraseña y configura los cobros de tu empresa.',
+    },
+    {
+      title: 'Ingresa y carga* tu lista de clientes por cobrar',
+      position: '02',
+      content:
+        'Ingresa a la plataforma con tu RUC y contraseña, luego carga tu lista de clientes en la sección “agregar cobros”. <br /><br />*Sólo si eliges la opción de ingresar datos de tus clientes.',
+    },
+    {
+      title: 'Empieza a recibir los pagos de tus clientes',
+      position: '03',
+      content:
+        'Ellos podrán pagarte buscando el nombre de tu empresa en Interbank APP o Banca por Internet.',
+    },
+    {
+      title: 'Identifica y concilia los pagos recibidos',
+      position: '04',
+      content:
+        'Puedes ver en tiempo real desde la plataforma, quién te pagó y exportar reportes para analizar tus cobranzas.',
+    },
   ];
   payments: ItemLanding[] = [
     {
@@ -148,8 +144,8 @@ export class LandingPage implements OnDestroy {
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, action);
   }
 
-  trackByiItems(index: number) {
-    return index;
+  trackByiItems(_index: number, item: ItemLanding): string {
+    return item.title;
   }
 
   showModalTerms() {
