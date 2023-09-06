@@ -42,7 +42,6 @@ export class FabWhatsappComponent implements OnChanges {
       detail: 'Comunícate con nosotros whatsapp',
       label: 'Comunícate con nosotros',
       typeElement: 'Botón',
-      module: this.adobeAnalytics.parseModule(this.url),
       location: 'Floating',
     });
   }
