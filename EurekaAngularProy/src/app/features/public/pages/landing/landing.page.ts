@@ -100,15 +100,31 @@ export class LandingPage implements OnDestroy {
     }
   }
 
-  clickRegistrarse() {
+  clickRegistration(category: string, location: string) {
     void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
       state: { initNew: true },
     });
     this.sendAdobeTrack({
-      category: 'Regístrate - hero',
+      category,
       action: 'Click',
       label: 'Regístrate',
       detail: 'Regístra tu empresa',
+      typeElement: 'Botón',
+      module: 'Home',
+      location,
+      step: 'step0',
+    });
+  }
+
+  clickLogin() {
+    void this.router.navigateByUrl(authFullRoutingNames.LOGIN, {
+      state: { initNew: true },
+    });
+    this.sendAdobeTrack({
+      category: 'Login = hero',
+      action: 'Click',
+      label: 'Inicia sesión',
+      detail: 'Login',
       typeElement: 'Botón',
       module: 'Home',
       location: 'hero',
@@ -125,6 +141,36 @@ export class LandingPage implements OnDestroy {
       width: '810px',
       header: 'Términos y condiciones',
       styleClass: 'modal-custom-cs',
+    });
+
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Términos y condiciones',
+      action: 'Click',
+      detail: 'Términos y condiciones',
+      label: 'Términos y condiciones',
+      typeElement: 'Link',
+      module: 'Home',
+      location: 'Footer',
+    });
+
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: 'Términos y condiciones',
+      action: 'modal-view',
+      detail: 'Términos y condiciones',
+      module: 'Home',
+      location: 'Modal',
+    });
+  }
+
+  clickWa() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Contáctanos',
+      action: 'Click',
+      detail: 'Enlace a whatsapp',
+      label: '993 119 001',
+      typeElement: 'Link',
+      module: 'Home',
+      location: 'Footer',
     });
   }
 }
