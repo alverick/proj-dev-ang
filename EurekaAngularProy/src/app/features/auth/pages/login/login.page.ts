@@ -147,7 +147,6 @@ export class LoginPage implements OnInit {
       category: title,
       action: 'modal-view',
       detail: text,
-      module: 'Login',
       location: 'Modal',
     });
   }

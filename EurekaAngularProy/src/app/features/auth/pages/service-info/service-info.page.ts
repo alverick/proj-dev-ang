@@ -36,7 +36,6 @@ export class ServiceInfoPage implements OnInit {
       category: 'Registrate – Información de servicio',
       action: 'Click',
       label: 'Siguiente',
-      module: 'Afiliación',
       location: 'Registrate',
       step: 'Step3',
       state: 'Envío exitoso',

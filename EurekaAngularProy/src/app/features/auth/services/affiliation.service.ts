@@ -175,7 +175,6 @@ export class AffiliationService {
       category: 'Registrate – Ingresa tus datos',
       action: 'Click',
       label: 'Siguiente',
-      module: 'Afiliación',
       location: 'Registrate',
       step: 'Step1',
       state: 'Envío exitoso',
@@ -262,7 +261,6 @@ export class AffiliationService {
       category: titleError,
       action: 'modal-view',
       detail: typeError,
-      module: 'Afiliación',
       location: 'Modal',
     });
   }
@@ -284,7 +282,6 @@ export class AffiliationService {
       category: 'Registrate – Datos de empresa',
       action: 'Click',
       label: 'Siguiente',
-      module: 'Afiliación',
       location: 'Registrate',
       step: 'Step2',
       state: 'Envío exitoso',
@@ -428,7 +425,6 @@ export class AffiliationService {
       category: 'Registrate – Configuración de servicio',
       action: 'Click',
       label: 'Siguiente',
-      module: 'Afiliación',
       location: 'Registrate',
       step: 'Step4',
       state: 'Envío exitoso',
@@ -671,7 +667,6 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
             detail: 'Enlace a creación de cuenta Negocios',
             label: '¡Vamos ahora!',
             typeElement: 'Botón',
-            module: 'Afiliación',
             location: 'Modal',
           });
           window.open('https://interbank.pe/cuenta-negocios');
