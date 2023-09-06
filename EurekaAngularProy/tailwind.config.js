@@ -30,6 +30,7 @@ module.exports = {
         'beige-4': '#f9f9f1',
         'beige-5': '#fcfcf8',
         'ibk-black': '#0f191e',
+        'fucsia': '#ea0044',
         'darkblue-1': '#001e5f',
         'darkblue-2': '#334b7f',
         'darkblue-3': '#66789f',
