@@ -1,9 +1,6 @@
 <cs-header></cs-header>
 <div
-  class="tw-pt-6 tw-px-6 xl:tw-px-0 tw-bg-contain tw-bg-center tw-bg-no-repeat tw-bg-secondary-blue-1"
-  style="
-    background-image: url(https://content-us-2.content-cms.com/9b3f67ef-5a9f-4acc-8ce8-bcc27fa681c7/dxdam/1a/1a4a25fa-3577-4e5c-b33b-a7b6946d0b82/Desktop_2x.png);
-  "
+  class="tw-pt-6 tw-px-6 xl:tw-px-0 tw-bg-contain tw-bg-center tw-bg-secondary-blue-1 tw-bg-[url('/assets/images/bg-hero.png')]"
 >
   <div class="tw-max-w-6xl tw-mx-auto">
     <div class="tw-relative">
@@ -40,14 +37,22 @@
             pRipple
             type="button"
             label="Inicia sesión"
-            class="p-button-outlined tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
+            class="p-button-white tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
             (click)="clickLogin()"
           ></button>
         </div>
       </div>
 
       <div class="md:tw-absolute tw-bottom-0 tw-right-0">
-        <div class=""></div>
+        <div class="">
+          <img
+            alt=""
+            class="tw-mx-auto sm:tw-h-[400px] lg:tw-h-[410px]"
+            ngSrc="/assets/images/img-laptop-home.png"
+            height="440"
+            width="454"
+          />
+        </div>
       </div>
     </div>
   </div>
