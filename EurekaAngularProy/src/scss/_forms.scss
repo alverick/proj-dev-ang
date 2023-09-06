@@ -279,6 +279,21 @@ body {
     &.p-button-secondary > .p-button {
       color: #fff;
       background: var(--secondary-blue-1);
+      border: 1px solid var(--secondary-blue-1);
+    }
+
+    &.p-button-third,
+    &.p-button-third > .p-button {
+      color: #fff;
+      background: var(--ibk-fucsia);
+      border: 1px solid var(--ibk-fucsia);
+    }
+
+    &.p-button-white,
+    &.p-button-white > .p-button {
+      color: var(--primary-green-1);
+      background: var(--grises-ibk-white);
+      border: 1px solid var(--grises-ibk-white);
     }
 
     &:disabled {
