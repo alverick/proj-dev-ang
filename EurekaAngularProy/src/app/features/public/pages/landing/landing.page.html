@@ -99,18 +99,20 @@
       </div>
       <div class="lg:tw-text-2xl tw-text-base tw-mt-4">
         Sólo necesitas tener una cuenta en Interbank:
-        <div class="tw-flex tw-gap-10 tw-mt-4 tw-text-xl">
+        <div
+          class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-10 tw-mt-4 tw-text-xl"
+        >
           <a
             href="https://bancacomercial.interbank.pe/cuenta-negocios/solicitud/verificacion-datos?utm_source=interbank.pe&utm_medium=web&utm_campaign=landing_producto_apertura_cuenta_negocios"
-            class="tw-w-1/2 tw-mb-1 tw-relative tw-p-8 tw-py-20 hover:tw-no-underline"
+            class="lg:tw-w-1/2 tw-mb-1 tw-relative tw-p-8 tw-py-20 hover:tw-no-underline"
           >
             <div
               class="shape tw-rounded-tl-3xl tw-rounded-br-3xl tw-bg-secondary-blue-2 tw-overflow-hidden tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-will-change-auto tw-transition-all tw-duration-200"
             >
               <img
                 alt=""
-                class="tw-mx-auto tw-h-32 tw-absolute tw-right-2 tw-bottom-0 -tw-mb-1"
-                src="/assets/images/img-account-2.svg"
+                class="tw-mx-auto tw-w-48 tw-absolute tw-right-2 tw-bottom-0"
+                src="/assets/images/img-account-1.svg"
               />
             </div>
             <div
@@ -119,14 +121,14 @@
               Cuenta Negocio (ábrela 100% online haciendo clic aquí).
             </div>
           </a>
-          <div class="tw-w-1/2 tw-mb-1 tw-relative tw-p-8 tw-py-20">
+          <div class="lg:tw-w-1/2 tw-mb-1 tw-relative tw-p-8 tw-py-20">
             <div
               class="shape tw-rounded-tl-3xl tw-rounded-br-3xl tw-bg-secondary-blue-2 tw-overflow-hidden tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-will-change-auto tw-transition-all tw-duration-200"
             >
               <img
                 alt=""
-                class="tw-mx-auto tw-h-32 tw-absolute tw-right-2 tw-bottom-0 -tw-mb-1"
-                src="/assets/images/img-account-1.svg"
+                class="tw-mx-auto tw-w-44 tw-absolute tw-right-2 tw-bottom-0"
+                src="/assets/images/img-account-2.svg"
               />
             </div>
             <div class="content tw-relative tw-text-left tw-pr-24">
@@ -146,29 +148,24 @@
       ¿Cómo funciona?
     </h2>
     <div
-      class="tw-grid tw-grid-cols-2 lg:tw-pt-16 tw-justify-center tw-gap-6 tw-w-full"
+      class="lg:tw-grid tw-flex tw-flex-col tw-grid-cols-2 lg:tw-pt-16 tw-justify-center tw-gap-6 tw-w-full"
     >
-      <ng-container *ngFor="let howWorksGroup of howWorks">
-        <div
-          class="tw-text-left tw-border tw-border-extended-grey-3 tw-rounded-tl-3xl tw-rounded-br-3xl tw-p-8 tw-bg-extended-bleached-silk"
-          *ngFor="let groupInt of howWorksGroup"
-        >
-          <div class="tw-flex tw-gap-4 tw-items-center">
-            <div class="tw-text-4xl tw-text-primary-green-1">
-              {{ groupInt.position }}
-            </div>
-            <div
-              class="tw-text-lg tw-font-medium tw-leading-6 tw-text-secondary-blue-1 tw-border-b tw-border-secondary-blue-1 tw-pb-2 tw-mb-3 tw-flex tw-items-center"
-            >
-              {{ groupInt.title }}
-            </div>
+      <div
+        class="tw-text-left tw-border tw-border-extended-grey-3 tw-rounded-tl-3xl tw-rounded-br-3xl tw-p-8 tw-bg-extended-grey-5"
+        *ngFor="let groupInt of howWorks"
+      >
+        <div class="tw-flex tw-gap-4 tw-items-center">
+          <div class="tw-text-4xl tw-text-primary-green-1">
+            {{ groupInt.position }}
           </div>
           <div
-            class="tw-pt-1 tw-leading-5"
-            [innerHtml]="groupInt.content"
-          ></div>
+            class="tw-text-lg tw-font-medium tw-leading-6 tw-text-secondary-blue-1 tw-border-b tw-border-secondary-blue-1 tw-pb-2 tw-mb-3 tw-flex tw-items-center"
+          >
+            {{ groupInt.title }}
+          </div>
         </div>
-      </ng-container>
+        <div class="tw-pt-1 tw-leading-5" [innerHtml]="groupInt.content"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -244,7 +241,7 @@
             pRipple
             type="button"
             label="Regístrate"
-            class="p-button-secondary tw-w-48 tw-h-12"
+            class="p-button-third tw-w-48 tw-h-12 bg-"
             (click)="clickRegistrarse()"
           ></button>
         </div>
@@ -256,7 +253,7 @@
   <div
     class="tw-max-w-6xl tw-mx-auto tw-flex tw-flex-col lg:tw-flex-row tw-justify-evenly tw-gap-10"
   >
-    <div class="tw-w-1/4 tw-text-left">
+    <div class="lg:tw-w-1/4 tw-text-left">
       <h2 class="tw-text-xl">Legales</h2>
       <div class="tw-text-base">
         <div class="tw-pt-5">
@@ -269,7 +266,7 @@
         </div>
       </div>
     </div>
-    <div class="tw-w-1/4 tw-text-left">
+    <div class="lg:tw-w-1/4 tw-text-left">
       <h2 class="tw-text-xl">Contáctanos</h2>
       <div class="tw-text-base">
         <div class="tw-pt-5">
