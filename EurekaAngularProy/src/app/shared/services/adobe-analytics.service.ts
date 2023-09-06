@@ -143,7 +143,7 @@ export class AdobeAnalyticsService {
 
   parseModule(url: string) {
     const routes: Record<string, string> = {
-      '/landing': 'Home',
+      '/landing': 'Landing',
       '/auth/login': 'Login',
       '/auth/agregar-servicio': 'Afiliación',
       '/auth/empresa-registro': 'Afiliación',
