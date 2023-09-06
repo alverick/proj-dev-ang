@@ -15,13 +15,6 @@ export const AdobeEvent = {
 
 export type AdobeEventType = (typeof AdobeEvent)[keyof typeof AdobeEvent];
 
-interface TrackProperties {
-  codruc: string;
-  codEmpresa: string;
-  codGrupo: string;
-  userId: string;
-}
-
 export interface Metadata {
   key: string;
   value: string;
@@ -59,12 +52,6 @@ interface TrackEventProperties {
   page?: PageEventProperties;
   action?: Partial<ActionEventProperties>;
   view?: Partial<ActionEventProperties>;
-}
-
-interface TrackEvent {
-  userId: string;
-  properties: TrackProperties;
-  eventProperties: TrackEventProperties;
 }
 
 interface Satellite {
@@ -152,5 +139,22 @@ export class AdobeAnalyticsService {
     if ('undefined' !== typeof _satellite && _satellite) {
       _satellite.track('pageTrack', payload);
     }
+  }
+
+  parseModule(url: string) {
+    const routes: Record<string, string> = {
+      '/landing': 'Home',
+      '/auth/login': 'Login',
+      '/auth/agregar-servicio': 'Afiliación',
+      '/auth/empresa-registro': 'Afiliación',
+      '/auth/registro-finalizado': 'Afiliación',
+    };
+    let moduleParsed = '';
+    for (const routesKey in routes) {
+      if (url.startsWith(routesKey)) {
+        moduleParsed = routes[routesKey];
+      }
+    }
+    return moduleParsed;
   }
 }
