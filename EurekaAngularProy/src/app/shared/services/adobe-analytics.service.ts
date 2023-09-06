@@ -23,6 +23,7 @@ export interface Metadata {
 interface PageEventProperties {
   name: string;
   channel: string;
+  module: string;
   url: string;
 }
 
@@ -32,7 +33,6 @@ export interface ActionEventProperties {
   label: string;
   detail: string;
   typeElement: string;
-  module: string;
   location: string;
   step: string;
   state: string;
@@ -130,6 +130,7 @@ export class AdobeAnalyticsService {
     this.payload.page = {
       name: pathParsed,
       channel: pathParsed,
+      module: this.parseModule(path),
       url: location.href,
     };
 
@@ -143,6 +144,10 @@ export class AdobeAnalyticsService {
 
   parseModule(url: string) {
     const routes: Record<string, string> = {
+      '/ayuda': 'Ayuda',
+      '/home': 'Home',
+      '/configuracion-empresa': 'ConfiguracionEmpresa',
+      '/servicios': 'Servicios',
       '/landing': 'Landing',
       '/auth/login': 'Login',
       '/auth/agregar-servicio': 'Afiliación',
