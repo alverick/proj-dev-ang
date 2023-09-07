@@ -11,9 +11,9 @@
 }
 
 .p-autocomplete
-  .p-autocomplete-multiple-container
-  .p-autocomplete-input-token
-  input {
+.p-autocomplete-multiple-container
+.p-autocomplete-input-token
+input {
   font-family: 'Geometria', 'Helvetica Neue', sans-serif;
 }
 
@@ -231,7 +231,7 @@ body {
   .p-button {
     border-radius: 4px;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s,
-      box-shadow 0.2s, color 0.2s;
+    box-shadow 0.2s, color 0.2s;
     color: #fff;
     background: var(--primary-green-1);
     border: 1px solid var(--primary-green-1);
@@ -285,8 +285,17 @@ body {
     &.p-button-third,
     &.p-button-third > .p-button {
       color: #fff;
-      background: var(--ibk-fucsia);
-      border: 1px solid var(--ibk-fucsia);
+      background: var(--extended-palette-watermelon-1);
+      border: 1px solid var(--extended-palette-watermelon-1);
+
+      &:enabled {
+        &:hover,
+        &:active {
+          background-color: var(--extended-palette-watermelon-2);
+          color: #ffffff;
+          border-color: var(--extended-palette-watermelon-2);
+        }
+      }
     }
 
     &.p-button-white,
@@ -294,6 +303,15 @@ body {
       color: var(--primary-green-1);
       background: var(--grises-ibk-white);
       border: 1px solid var(--grises-ibk-white);
+
+      &:enabled {
+        &:hover,
+        &:active {
+          color: var(--primary-green-1);
+          background-color: var(--grises-grey-4);
+          border-color: var(--grises-grey-4);
+        }
+      }
     }
 
     &:disabled {
