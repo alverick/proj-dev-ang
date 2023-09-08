@@ -24,15 +24,6 @@ interface IInternalRoutingChildNames extends IRouteNames {
   SERVICES_ADD_CONFIGURATION: string;
 }
 
-interface IInternalAuthRoutingNames {
-  CHARGES_AFFILIATION: string;
-  CHARGES_AFFILIATION_EDIT: string;
-  CHARGES_AFFILIATION_ADD_STEP_1: string;
-  CHARGES_AFFILIATION_ADD_STEP_2: string;
-  CHARGES_AFFILIATION_ADD_STEP_3: string;
-  CHARGES_AFFILIATION_ADD_STEP_4: string;
-}
-
 export const internalRoutingNames: IInternalRoutingNames = {
   AUTH: 'auth',
   DASHBOARD: 'resumen',
@@ -40,7 +31,7 @@ export const internalRoutingNames: IInternalRoutingNames = {
   HOME: 'home',
   COMPANY: 'configuracion-empresa',
   SERVICES: 'servicios',
-};
+} as const;
 
 export const internalRoutingChildNames: IInternalRoutingChildNames = {
   SERVICES_LIST: 'list',
@@ -73,25 +64,13 @@ export const internalRoutingChildNamesTree: IRouteItem = {
   ],
 };
 
-export const internalAuthModuleRoutingNames = `/${internalRoutingNames.AUTH}/`;
-
-export const internalAuthRoutingNames: IInternalAuthRoutingNames = {
-  CHARGES_AFFILIATION: 'cobros-afiliacion',
-  CHARGES_AFFILIATION_EDIT: 'cobros-afiliacion-editar',
-  CHARGES_AFFILIATION_ADD_STEP_1: 'cobros-agregar-paso-1',
-  CHARGES_AFFILIATION_ADD_STEP_2: 'cobros-agregar-paso-2',
-  CHARGES_AFFILIATION_ADD_STEP_3: 'cobros-agregar-paso-3',
-  CHARGES_AFFILIATION_ADD_STEP_4: 'cobros-agregar-paso-4',
-};
-
-export const internalFullRoutingNames: IInternalRoutingNames =
-  generateFullRoutes(internalRoutingNames, appModuleRoutingNames);
+export const internalFullRoutingNames: IInternalRoutingNames = generateFullRoutes(
+  internalRoutingNames,
+  appModuleRoutingNames
+);
 
 export const internalFullRoutingChildNames: IInternalRoutingChildNames =
   generateFullRoutesTree(
     internalRoutingChildNames,
     internalRoutingChildNamesTree
   );
-
-export const internalAuthFullRoutingNames: IInternalAuthRoutingNames =
-  generateFullRoutes(internalAuthRoutingNames, internalAuthModuleRoutingNames);
