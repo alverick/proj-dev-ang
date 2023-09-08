@@ -217,7 +217,7 @@ export class DebtComponent implements OnInit {
             html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',
             showCancelButton: true,
             showCloseButton: true,
-            confirmButtonText: 'AGREGRA OTRO',
+            confirmButtonText: 'AGREGA OTRO',
             cancelButtonText: 'CERRAR',
             onOpen: drawPopup,
           }).then((result) => {
