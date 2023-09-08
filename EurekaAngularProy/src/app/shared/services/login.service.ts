@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
 
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
 import { RespuestaLogin } from '../models/respuestaLogin.model';
-import { GoogleAnalytics } from './googleAnalytics.service';
 import { NotifyService } from './notify.service';
 import { StorageService } from './storage.service';
 
@@ -19,8 +18,7 @@ export class LoginService {
     public http: HttpClient,
     private storage: StorageService,
     private router: Router,
-    private notify: NotifyService,
-    private gaService: GoogleAnalytics
+    private notify: NotifyService
   ) {}
 
   private URI_API: string = environment.END_POINT;
@@ -52,22 +50,15 @@ export class LoginService {
               refresh: r.rfs,
               prfl: r.prfl,
             });
-            this.gaService.sendEvent('login', { method: 'OAUTH' });
             if (this.storage.isValidSession()) {
               this.notify.iniciar();
             }
-          } else {
-            this.gaService.sendEvent('exception', {
-              description: 'No Login',
-              fatal: false,
-            });
           }
           return r;
         })
       )
       .pipe(
         catchError((err) => {
-          this.gaService.sendException(err);
           return throwError(err);
         })
       );

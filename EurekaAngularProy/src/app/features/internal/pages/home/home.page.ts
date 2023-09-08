@@ -25,7 +25,6 @@ import { DebstFilter } from '../../../../shared/models/debts-filter.model';
 import { User } from '../../../../shared/models/user.model';
 import { WayPay } from '../../../../shared/models/way-pay';
 import { ExcelService } from '../../../../shared/services/excel.service';
-import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
 import { HomeService } from '../../../../shared/services/home.service';
 import { LoadBarService } from '../../../../shared/services/load-bar.service';
 import {
@@ -57,8 +56,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private excelService: ExcelService,
     public dialog: MatDialog,
     private loginService: LoginService,
-    private popover: Popover,
-    private gaService: GoogleAnalytics,
     private fileLoad: LoadFileService,
     private barLoad: LoadBarService,
     private movementsService: MovementsService,
@@ -455,10 +452,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.resetControlsGrid();
     this.consultaDeuda();
 
-    this.gaService.sendEvent('Buscar', {
-      event_category: 'Dashboard',
-      event_label: 'buscar',
-    });
     if (all(isNilOrEmpty, [inputSearch, service, status, dateForFilter])) {
       this.messageTable = 'Para empezar, agrega la lista de los cobros';
       this.showArrow = true;
@@ -509,9 +502,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   validateOnboarding(hasRecords: boolean) {
-    const localStorage = window.localStorage;
-    const username = window.sessionStorage.getItem('username');
-    let settings = JSON.parse(localStorage.getItem('settings'));
+    const username = DOMPurify.sanitize(
+      window.sessionStorage.getItem('username')
+    );
+    let settings = DOMPurify(
+      JSON.parse(window.localStorage.getItem('settings'))
+    );
     const saved = pathEq([username, 'ob', 'mov'], 1, settings);
     if (!saved) {
       if (isNil(settings)) {
@@ -556,10 +552,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             .editDeuda(item.id, debts)
             .subscribe((debtsUpdate) => {
               if (debtsUpdate.success) {
-                this.gaService.sendEvent('EditarDeuda', {
-                  event_category: 'Dashboard',
-                  event_label: 'editar_deuda',
-                });
                 void Swal.fire({
                   titleText: 'Editado',
                   text: 'Su registro ha sido editado',
@@ -648,10 +640,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         if (result.value) {
           const ids = this.selectedRows.map((items) => items.id);
           this.movementsService.deleteMovements(ids).subscribe(() => {
-            this.gaService.sendEvent('EliminarDeudas', {
-              event_category: 'Dashboard',
-              event_label: 'eliminar_deudas',
-            });
             this.consultaDeuda(() => {
               if (totalForDelete === 1) {
                 finalMessage = `Se han eliminado ${totalForDelete} registro`;
@@ -764,10 +752,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.barLoad.show(this.fileLoadContainer);
         this.transactionService.report(this.currentFilter).subscribe(
           (r: Blob) => {
-            this.gaService.sendEvent('DescargaReporte', {
-              event_category: 'Dashboard',
-              event_label: 'descargar_reporte',
-            });
             this.barLoad.close();
             this.enDescarga = false;
             saveAs(r, 'Reporte - Interbank_MisCobros.xlsx');

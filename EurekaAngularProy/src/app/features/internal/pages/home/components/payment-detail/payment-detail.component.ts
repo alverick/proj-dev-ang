@@ -5,7 +5,6 @@ import {
 } from '@angular/material/legacy-dialog';
 import { isNil } from 'ramda';
 
-import { GoogleAnalytics } from '../../../../../../shared/services/googleAnalytics.service';
 import { TransactionService } from '../../../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
 
@@ -25,7 +24,6 @@ export class PaymentDetailComponent implements OnInit {
 
   constructor(
     private transaction: TransactionService,
-    private gaService: GoogleAnalytics,
     public dialogRef: MatDialogRef<PaymentDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -125,17 +123,6 @@ export class PaymentDetailComponent implements OnInit {
             : this.transaction.addPayment(this.debtId, payment);
           response.subscribe((r) => {
             if (r.success) {
-              if (itm.id) {
-                this.gaService.sendEvent('EditaPago', {
-                  event_category: 'Dashboard',
-                  event_label: 'edita_pago',
-                });
-              } else {
-                this.gaService.sendEvent('AgregaPago', {
-                  event_category: 'Dashboard',
-                  event_label: 'agrega_pago',
-                });
-              }
               this.status = r.status;
               this.loadData();
               void swalAlert.fire({
@@ -202,10 +189,6 @@ export class PaymentDetailComponent implements OnInit {
         if (result.value) {
           this.transaction.deletePayment(this.debtId, itm.id).subscribe((r) => {
             if (r.success) {
-              this.gaService.sendEvent('EliminarPagos', {
-                event_category: 'Dashboard',
-                event_label: 'eliminar_pagos',
-              });
               this.status = r.status;
               this.loadData();
             } else {
