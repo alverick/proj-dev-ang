@@ -12,7 +12,6 @@ import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import { ModelFormGroup } from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
-import { GoogleAnalytics } from '../../../shared/services/googleAnalytics.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
@@ -35,8 +34,7 @@ export class CompanyConfigurationService {
   constructor(
     private fb: UntypedFormBuilder,
     private companyService: CompanyService,
-    private router: Router,
-    private gaService: GoogleAnalytics
+    private router: Router
   ) {
     this.initForms();
   }
@@ -71,10 +69,6 @@ export class CompanyConfigurationService {
       .updateCompany(enterprise)
       .subscribe((enterpriseUpdate) => {
         if (enterpriseUpdate.success === true) {
-          this.gaService.sendEvent('ActualizaDatosEmpresa', {
-            event_category: GoogleAnalytics.Dashboard,
-            event_label: 'actualiza_datos_empresa',
-          });
           void swalAlert
             .fire({
               text: 'Los datos de la empresa han sido actualizados',

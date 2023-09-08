@@ -7,12 +7,12 @@ import {
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import * as saveAs from 'file-saver';
 import { Observable } from 'rxjs';
+
 import {
   ExcelService,
   ProcessStatus,
-} from 'src/app/shared/services/excel.service';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { swalAlert } from 'src/app/shared/utils/helpers/popups';
+} from '../../../../../shared/services/excel.service';
+import { swalAlert } from '../../../../../shared/utils/helpers/popups';
 
 @Component({
   selector: 'cs-dialog',
@@ -23,8 +23,7 @@ export class DialogComponent implements OnInit {
   constructor(
     public excelService: ExcelService,
     public formBuilder: UntypedFormBuilder,
-    public dialogRef: MatDialogRef<DialogComponent>,
-    private gaService: GoogleAnalytics
+    public dialogRef: MatDialogRef<DialogComponent>
   ) {}
 
   public inputXlsForm: UntypedFormGroup;
@@ -130,11 +129,6 @@ export class DialogComponent implements OnInit {
         this.excelService.statusUpload = false;
         this.dialogRef.close(obsClose);
       } else if (value.status === 'COMPLETED') {
-        this.gaService.sendEvent('CargarExcel', {
-          event_category: 'CargaExcel',
-          event_label: 'cargar_excel',
-        });
-        this.gaService.sendUrl('loteCargado', '/loteCargado');
         this.excelService.statusUpload = false;
         this.excelService.errores = [];
         const obsClose = new Observable((observer) => {
@@ -196,10 +190,6 @@ export class DialogComponent implements OnInit {
 
   descargarPlantilla() {
     this.excelService.GetTemplate().subscribe((r: Blob) => {
-      this.gaService.sendEvent('DescargaPlantilla', {
-        event_category: 'CargaExcel',
-        event_label: 'descarga_plantilla',
-      });
       saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
     });
   }
