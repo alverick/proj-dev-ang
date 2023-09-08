@@ -12,8 +12,8 @@
     </h3>
     <div class="lists">
       <p-accordion
-        expandIcon="tw-hidden"
-        collapseIcon="tw-hidden"
+        expandIcon="pi pi-plus-circle tw-text-primary-green-1 tw-text-3xl"
+        collapseIcon="pi pi-minus-circle tw-text-primary-green-1 tw-text-3xl"
         [(activeIndex)]="activeIndex"
       >
         <p-accordionTab
@@ -22,13 +22,6 @@
           headerStyleClass="lg:tw-text-2xl"
           contentStyleClass="tw-text-sm lg:tw-text-base"
         >
-          <ng-template pTemplate="header">
-            <cs-help-header-icon
-              class="p-accordion-toggle-icon-end tw-shrink-0"
-              [position]="0"
-              [activeIndex]="activeIndex"
-            ></cs-help-header-icon>
-          </ng-template>
           <p class="tw-mb-2">
             Si tienes un servicio de modalidad Data completa o Data parcial,
             debes cargar tu lista de cobros pendientes con la información de tus
@@ -51,13 +44,6 @@
           headerStyleClass="lg:tw-text-2xl"
           contentStyleClass="tw-text-sm lg:tw-text-base"
         >
-          <ng-template pTemplate="header">
-            <cs-help-header-icon
-              class="p-accordion-toggle-icon-end tw-shrink-0"
-              [position]="1"
-              [activeIndex]="activeIndex"
-            ></cs-help-header-icon>
-          </ng-template>
           <p class="tw-mb-2">Para hacerlo sigue estos pasos:</p>
           <ol class="tw-pl-6 tw-list-decimal">
             <li class="tw-mb-1">
@@ -87,15 +73,7 @@
           iconPos="end"
           headerStyleClass="lg:tw-text-2xl"
           contentStyleClass="tw-text-sm lg:tw-text-base"
-        >
-          <ng-template pTemplate="header">
-            <cs-help-header-icon
-              class="p-accordion-toggle-icon-end tw-shrink-0"
-              [position]="2"
-              [activeIndex]="activeIndex"
-            ></cs-help-header-icon>
-          </ng-template>
-          <p class="tw-mb-2">
+          ><p class="tw-mb-2">
             El servicio es el concepto por el cual te pagarán tus clientes. Por
             ejemplo, si eres una Institución educativa, el nombre del servicio
             podría ser “Mensualidad”.
@@ -138,13 +116,6 @@
           headerStyleClass="lg:tw-text-2xl"
           contentStyleClass="tw-text-sm lg:tw-text-base"
         >
-          <ng-template pTemplate="header">
-            <cs-help-header-icon
-              class="p-accordion-toggle-icon-end tw-shrink-0"
-              [position]="3"
-              [activeIndex]="activeIndex"
-            ></cs-help-header-icon>
-          </ng-template>
           <p class="tw-mb-2">
             Tus clientes podrán pagarte de manera digital en su Interbank APP o
             Banca por Internet con la opción “Pago de Servicios”. Te enseñamos
@@ -172,13 +143,6 @@
           headerStyleClass="lg:tw-text-2xl"
           contentStyleClass="tw-text-sm lg:tw-text-base"
         >
-          <ng-template pTemplate="header">
-            <cs-help-header-icon
-              class="p-accordion-toggle-icon-end tw-shrink-0"
-              [position]="4"
-              [activeIndex]="activeIndex"
-            ></cs-help-header-icon>
-          </ng-template>
           <p class="tw-mb-2">
             En la sección “Mis Movimientos” podrás visualizar el detalle de tus
             cobranzas en tiempo real.
@@ -206,13 +170,6 @@
           headerStyleClass="lg:tw-text-2xl"
           contentStyleClass="tw-text-sm lg:tw-text-base"
         >
-          <ng-template pTemplate="header">
-            <cs-help-header-icon
-              class="p-accordion-toggle-icon-end tw-shrink-0"
-              [position]="5"
-              [activeIndex]="activeIndex"
-            ></cs-help-header-icon>
-          </ng-template>
           <p class="tw-mb-2">
             Si tu cliente no tiene una cuenta en Interbank, podrá realizar su
             pago a través de un agente Interbank brindando el código del
