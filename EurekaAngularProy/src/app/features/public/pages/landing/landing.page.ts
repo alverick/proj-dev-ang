@@ -64,7 +64,7 @@ export class LandingPage implements OnInit, OnDestroy {
       title: 'Empieza a recibir los pagos de tus clientes',
       position: '03',
       content:
-        'Ellos podrán pagarte buscando el nombre de tu empresa en Interbank APP o Banca por Internet.',
+        'Ellos podrán pagarte buscando el nombre de tu empresa en el módulo de servicios de APP Interbank Empresas, Interbank APP o Banca por internet (empresas o personas).',
     },
     {
       title: 'Identifica y concilia los pagos recibidos',
