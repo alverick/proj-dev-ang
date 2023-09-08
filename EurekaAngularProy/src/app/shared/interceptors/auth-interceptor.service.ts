@@ -25,9 +25,8 @@ export class AuthInterceptorService implements HttpInterceptor {
     private router: Router,
     public snackBar: MatSnackBar,
     private login: LoginService,
-    private storage: StorageService,
-    private gaService: GoogleAnalytics
-  ) { }
+    private storage: StorageService
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
