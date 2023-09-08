@@ -11,9 +11,9 @@
 }
 
 .p-autocomplete
-.p-autocomplete-multiple-container
-.p-autocomplete-input-token
-input {
+  .p-autocomplete-multiple-container
+  .p-autocomplete-input-token
+  input {
   font-family: 'Geometria', 'Helvetica Neue', sans-serif;
 }
 
@@ -231,7 +231,7 @@ body {
   .p-button {
     border-radius: 4px;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s,
-    box-shadow 0.2s, color 0.2s;
+      box-shadow 0.2s, color 0.2s;
     color: #fff;
     background: var(--primary-green-1);
     border: 1px solid var(--primary-green-1);
@@ -613,6 +613,43 @@ body {
     .p-accordion-content {
       border-color: transparent;
       @apply tw-px-6 tw-py-4;
+    }
+
+    &.p-accordion-transparent {
+      p-accordiontab {
+        .p-accordion-tab {
+          box-shadow: none;
+        }
+      }
+      .p-accordion-header {
+        .p-accordion-header-link {
+          background-color: transparent;
+          border-color: transparent;
+          transition: none;
+        }
+        &:not(.p-highlight) {
+          &:not(.p-disabled) {
+            &:hover {
+              .p-accordion-header-link {
+                background-color: transparent;
+              }
+            }
+          }
+        }
+        &:not(.p-disabled).p-highlight {
+          &:hover {
+            .p-accordion-header-link {
+              background-color: transparent;
+            }
+          }
+          .p-accordion-header-link {
+            background-color: transparent;
+          }
+        }
+      }
+      .p-accordion-content {
+        background-color: transparent;
+      }
     }
   }
 
