@@ -11,6 +11,7 @@ export const AdobeEvent = {
   login: 'Login',
   successLogin: 'successLogin',
   trackAction: 'trackAction',
+  pageTrack: 'pageTrack',
 } as const;
 
 export type AdobeEventType = (typeof AdobeEvent)[keyof typeof AdobeEvent];
@@ -57,7 +58,7 @@ interface TrackEventProperties {
 interface Satellite {
   pageBottom(): void;
 
-  track(event: string, payload: Partial<TrackEventProperties>): void;
+  track(event: AdobeEventType, payload: Partial<TrackEventProperties>): void;
 }
 
 declare const _satellite: Satellite;
@@ -119,10 +120,7 @@ export class AdobeAnalyticsService {
       }
     }
 
-    console.log('trackEvent', event, payload);
-    if ('undefined' !== typeof _satellite && _satellite) {
-      _satellite.track(event, payload);
-    }
+    this.runSatelliteEvent(event, payload);
   }
 
   pageTrack(path: string) {
@@ -136,10 +134,7 @@ export class AdobeAnalyticsService {
 
     const payload = clone(this.payload);
 
-    console.log('pageTrack', payload);
-    if ('undefined' !== typeof _satellite && _satellite) {
-      _satellite.track('pageTrack', payload);
-    }
+    this.runSatelliteEvent(AdobeEvent.pageTrack, payload);
   }
 
   parseModule(url: string) {
@@ -161,5 +156,19 @@ export class AdobeAnalyticsService {
       }
     }
     return moduleParsed;
+  }
+
+  runSatelliteEvent(
+    event: AdobeEventType,
+    payload: Partial<TrackEventProperties>
+  ) {
+    try {
+      console.log(event, payload);
+      if ('undefined' !== typeof _satellite && _satellite) {
+        _satellite.track(event, payload);
+      }
+    } catch (error) {
+      console.error('Adobe Launch not loaded', error);
+    }
   }
 }
