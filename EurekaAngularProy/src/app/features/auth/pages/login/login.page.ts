@@ -41,9 +41,6 @@ export class LoginPage implements OnInit {
   public formData: any = {};
   public rememberMe = false;
 
-  public inputUsuario = false;
-  // @ViewChild('inputUsua') inputUsua: ElementRef;
-  // @ViewChild('inputPass') inputPass: ElementRef;
   inputUsuaValid = false;
   inputPassValid = false;
   validarCantRuc = false;
@@ -53,7 +50,6 @@ export class LoginPage implements OnInit {
   intentosRestantes = 6;
   codRespuesta: number;
   err: boolean;
-  numero2: number;
   intento6 = false;
   ruc = 0;
 
@@ -61,8 +57,6 @@ export class LoginPage implements OnInit {
   codigo2 = false;
   isCaptchaValidate = true;
   hide = true;
-
-  storeRuc: any;
 
   @ViewChild('recaptchaRef', { static: true })
   recaptchaRef: RecaptchaComponent;
