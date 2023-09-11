@@ -3,6 +3,11 @@ import { clone, isEmpty } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 
 import { environment } from '../../../environments/environment';
+import {
+  appFullRoutingNames,
+  authFullRoutingNames,
+  internalFullRoutingNames,
+} from '../../app-routing.collection';
 import { ScriptInjectorService } from './script-injector.service';
 
 export const AdobeEvent = {
@@ -139,15 +144,15 @@ export class AdobeAnalyticsService {
 
   parseModule(url: string) {
     const routes: Record<string, string> = {
-      '/ayuda': 'Ayuda',
-      '/home': 'Home',
-      '/configuracion-empresa': 'ConfiguracionEmpresa',
-      '/servicios': 'Servicios',
-      '/landing': 'Landing',
-      '/auth/login': 'Login',
-      '/auth/agregar-servicio': 'Afiliación',
-      '/auth/empresa-registro': 'Afiliación',
-      '/auth/registro-finalizado': 'Afiliación',
+      [internalFullRoutingNames.HELP]: 'Ayuda',
+      [internalFullRoutingNames.HOME]: 'Home',
+      [internalFullRoutingNames.COMPANY]: 'ConfiguracionEmpresa',
+      [internalFullRoutingNames.SERVICES]: 'Servicios',
+      [appFullRoutingNames.LANDING]: 'Landing',
+      [authFullRoutingNames.LOGIN]: 'Login',
+      [authFullRoutingNames.SERVICES_ADD]: 'Afiliación',
+      [authFullRoutingNames.COMPANY_REGISTER]: 'Afiliación',
+      [authFullRoutingNames.REGISTRATION_FINISHED]: 'Afiliación',
     };
     let moduleParsed = '';
     for (const routesKey in routes) {
