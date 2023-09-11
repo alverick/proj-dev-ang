@@ -22,6 +22,13 @@ import { CompanyServices } from '../../../../shared/models/company';
 import { DateList } from '../../../../shared/models/dateList';
 import { Debts } from '../../../../shared/models/debts';
 import { DebstFilter } from '../../../../shared/models/debts-filter.model';
+import {
+  Sections,
+  SettingOptions,
+  Settings,
+  Status,
+  StorageSettings,
+} from '../../../../shared/models/settings';
 import { User } from '../../../../shared/models/user.model';
 import { WayPay } from '../../../../shared/models/way-pay';
 import { ExcelService } from '../../../../shared/services/excel.service';
@@ -504,13 +511,22 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     const username = DOMPurify.sanitize(
       window.sessionStorage.getItem('username')
     );
-    let settings = window.localStorage.getItem('settings')
-      ? JSON.parse(DOMPurify.sanitize(window.localStorage.getItem('settings')))
+
+    const settings: Settings = window.localStorage.getItem(StorageSettings)
+      ? (JSON.parse(
+          DOMPurify.sanitize(window.localStorage.getItem(StorageSettings))
+        ) as Settings)
       : {};
-    const saved = pathEq([username, 'ob', 'mov'], 1, settings);
+    const saved = pathEq(
+      [username, SettingOptions.onBoarding, Sections.movements],
+      Status.saved,
+      settings
+    );
     if (!saved) {
-      settings[username] = { ob: { mov: 1 } };
-      localStorage.setItem('settings', JSON.stringify(settings));
+      settings[username] = {
+        [SettingOptions.onBoarding]: { [Sections.movements]: Status.saved },
+      };
+      localStorage.setItem(StorageSettings, JSON.stringify(settings));
     }
     if (!hasRecords && !saved) {
       this.shepherdService.start();
