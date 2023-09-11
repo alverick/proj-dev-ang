@@ -26,7 +26,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="position === 1">
-      <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20">
+      <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20 tw-font-medium">
         ¿Qué modalidad elegir?
       </div>
       <p-accordion
@@ -41,7 +41,9 @@
           [selected]="false"
         >
           <ng-template pTemplate="header">
-            <div class="tw-text-white">Sin data</div></ng-template
+            <div class="tw-text-white tw-font-medium">
+              Sin data
+            </div></ng-template
           >
           <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
             <li class="tw-mb-3">
@@ -55,9 +57,14 @@
             </li>
           </ul>
         </p-accordionTab>
-        <p-accordionTab iconPos="end" headerStyleClass="tw-text-xl">
+        <p-accordionTab
+          iconPos="end"
+          headerStyleClass="tw-text-xl tw-font-medium"
+        >
           <ng-template pTemplate="header">
-            <div class="tw-text-white">Data parcial</div></ng-template
+            <div class="tw-text-white tw-font-medium">
+              Data parcial
+            </div></ng-template
           >
           <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
             <li class="tw-mb-3">
@@ -72,9 +79,14 @@
             </li>
           </ul>
         </p-accordionTab>
-        <p-accordionTab iconPos="end" headerStyleClass="tw-text-xl">
+        <p-accordionTab
+          iconPos="end"
+          headerStyleClass="tw-text-xl tw-font-medium"
+        >
           <ng-template pTemplate="header">
-            <div class="tw-text-white">Data completa</div></ng-template
+            <div class="tw-text-white tw-font-medium">
+              Data completa
+            </div></ng-template
           >
           <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
             <li class="tw-mb-3">
