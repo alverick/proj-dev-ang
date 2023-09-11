@@ -505,14 +505,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     const username = DOMPurify.sanitize(
       window.sessionStorage.getItem('username')
     );
-    let settings = DOMPurify(
-      JSON.parse(window.localStorage.getItem('settings'))
-    );
+    let settings = window.localStorage.getItem('settings')
+      ? JSON.parse(DOMPurify.sanitize(window.localStorage.getItem('settings')))
+      : {};
     const saved = pathEq([username, 'ob', 'mov'], 1, settings);
     if (!saved) {
-      if (isNil(settings)) {
-        settings = {};
-      }
       settings[username] = { ob: { mov: 1 } };
       localStorage.setItem('settings', JSON.stringify(settings));
     }
