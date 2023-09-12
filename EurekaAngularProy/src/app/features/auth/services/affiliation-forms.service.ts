@@ -1,20 +1,40 @@
 import { Injectable } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { isNil } from 'ramda';
 
+import { IEntryModel } from '../../../shared/models';
+import {
+  ModelFormGroup,
+  SimpleModelFormGroup,
+} from '../../../shared/models/forms';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { nameInvalid } from '../../../shared/validators/name-invalid.validator';
 import { passwordValidators } from '../../../shared/validators/password-validators';
 
+export interface RegisterForm {
+  documentType: string;
+  documentNumber: string;
+  ruc: string;
+  email: string;
+  emailConfirm: string;
+  movilNumber: string;
+  movilOperator: string;
+}
+
+export interface AuthForm {
+  ruc: string;
+  name: string;
+  entry: string;
+  entrySelect: IEntryModel;
+  password: string;
+  passwordConfirm: string;
+  acceptTerms: boolean;
+}
+
 @Injectable()
 export class AffiliationFormsService {
-  registerForm: UntypedFormGroup;
-  authForm: UntypedFormGroup;
+  registerForm: ModelFormGroup<RegisterForm>;
+  authForm: SimpleModelFormGroup<AuthForm>;
 
   authNameValidators = [
     Validators.required,
@@ -23,7 +43,7 @@ export class AffiliationFormsService {
     notBlankSpaces,
   ];
 
-  constructor(private formBuilder: UntypedFormBuilder) {
+  constructor(private formBuilder: FormBuilder) {
     const emailValidators = [
       Validators.required,
       Validators.pattern(
@@ -58,7 +78,7 @@ export class AffiliationFormsService {
         movilOperator: ['', [Validators.required]],
       },
       {
-        validator: MustMatch('email', 'emailConfirm', true),
+        validators: MustMatch('email', 'emailConfirm', true),
       }
     );
 
@@ -74,13 +94,13 @@ export class AffiliationFormsService {
         ],
         name: ['', this.authNameValidators],
         entry: ['', [Validators.required]],
-        entrySelect: ['', [Validators.required]],
+        entrySelect: [null as IEntryModel, [Validators.required]],
         password: ['', passwordValidators],
         passwordConfirm: ['', passwordValidators],
-        acceptTerms: ['', Validators.requiredTrue],
+        acceptTerms: [false, Validators.requiredTrue],
       },
       {
-        validator: MustMatch('password', 'passwordConfirm'),
+        validators: MustMatch('password', 'passwordConfirm'),
       }
     );
   }
@@ -97,7 +117,7 @@ export class AffiliationFormsService {
   }
 }
 
-function notBlankSpaces(control: UntypedFormControl) {
+function notBlankSpaces(control: FormControl<string>) {
   if (isNil(control.value)) {
     return null;
   }

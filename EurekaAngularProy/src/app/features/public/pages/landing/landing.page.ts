@@ -1,9 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
-import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../shared/services/adobe-analytics.service';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 
 @Component({
@@ -12,7 +16,7 @@ import { authFullRoutingNames } from '../../../auth/auth-routing.names';
   styleUrls: ['./landing.page.scss'],
   providers: [DialogService],
 })
-export class LandingPage implements OnInit, OnDestroy {
+export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;
   linkLogin = authFullRoutingNames.LOGIN;
   benefits = [
@@ -85,9 +89,9 @@ export class LandingPage implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private gaService: GoogleAnalytics,
     public router: Router,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    private adobeAnalytics: AdobeAnalyticsService
   ) {}
 
   ngOnDestroy(): void {
@@ -96,28 +100,38 @@ export class LandingPage implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {
-    this.gaService.sendEvent('Landing', {
-      event_category: 'Landing',
-      event_label: 'ingreso_landing',
-    });
-  }
-
-  clickRegistrarse() {
-    this.gaService.sendEvent('Registrarme', {
-      event_category: GoogleAnalytics.Afiliacion,
-      event_label: 'registrarme',
-    });
+  clickRegistration(category: string, location: string) {
     void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
       state: { initNew: true },
+    });
+    this.sendAdobeTrack({
+      category,
+      action: 'Click',
+      label: 'Regístrate',
+      detail: 'Regístra tu empresa',
+      typeElement: 'Botón',
+      location,
+      step: 'step0',
     });
   }
 
   clickLogin() {
-    this.gaService.sendEvent('Registrarme', {
-      event_category: GoogleAnalytics.Afiliacion,
-      event_label: 'registrarme',
+    void this.router.navigateByUrl(authFullRoutingNames.LOGIN, {
+      state: { initNew: true },
     });
+    this.sendAdobeTrack({
+      category: 'Login = hero',
+      action: 'Click',
+      label: 'Inicia sesión',
+      detail: 'Login',
+      typeElement: 'Botón',
+      location: 'hero',
+      step: 'step0',
+    });
+  }
+
+  sendAdobeTrack(action: Partial<ActionEventProperties>) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, action);
   }
 
   showModalTerms() {
@@ -125,6 +139,33 @@ export class LandingPage implements OnInit, OnDestroy {
       width: '810px',
       header: 'Términos y condiciones',
       styleClass: 'modal-custom-cs',
+    });
+
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Términos y condiciones',
+      action: 'Click',
+      detail: 'Términos y condiciones',
+      label: 'Términos y condiciones',
+      typeElement: 'Link',
+      location: 'Footer',
+    });
+
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: 'Términos y condiciones',
+      action: 'modal-view',
+      detail: 'Términos y condiciones',
+      location: 'Modal',
+    });
+  }
+
+  clickWa() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Contáctanos',
+      action: 'Click',
+      detail: 'Enlace a whatsapp',
+      label: '993 119 001',
+      typeElement: 'Link',
+      location: 'Footer',
     });
   }
 }

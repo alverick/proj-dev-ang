@@ -10,4 +10,6 @@ export const environment: IEnvironment = {
   END_POINT: serverUrl.uat,
   logLevel: NgxLoggerLevel.OFF,
   serverLogLevel: NgxLoggerLevel.ERROR,
+  adobe:
+    'https://assets.adobedtm.com/df637a308f4c/ec7ac20e39e1/launch-1a12f3644aa0-staging.min.js',
 };

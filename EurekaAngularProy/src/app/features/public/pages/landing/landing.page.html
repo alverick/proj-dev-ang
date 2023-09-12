@@ -28,7 +28,7 @@
             type="button"
             label="Regístrate"
             class="tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
-            (click)="clickRegistrarse()"
+            (click)="clickRegistration('Regístrate - hero', 'hero')"
           ></button>
 
           <button
@@ -37,7 +37,7 @@
             type="button"
             label="Inicia sesión"
             class="p-button-outlined tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
-            [routerLink]="[linkLogin]"
+            (click)="clickLogin()"
           ></button>
         </div>
       </div>
@@ -279,7 +279,7 @@
             type="button"
             label="Regístrate"
             class="p-button-secondary tw-w-48 tw-h-12"
-            (click)="clickRegistrarse()"
+            (click)="clickRegistration('Regístrate - bottom', 'bottom')"
           ></button>
         </div>
       </div>
@@ -293,6 +293,7 @@
       <div class="tw-pt-5">
         <a
           href="https://api.whatsapp.com/send?phone=51993119001&text=Hola%20Interbank!"
+          (click)="clickWa()"
           target="_blank"
           ><i class="pi pi-whatsapp tw-text-primary-green-1"></i> 993 119 001</a
         >

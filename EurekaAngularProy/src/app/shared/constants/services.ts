@@ -1,5 +1,6 @@
 import { isEmpty, isNil } from 'ramda';
 import { isNotNil, isString } from 'ramda-adjunct';
+
 import { IServiceRemoteModel, IServiceRemoteModelForms } from '../models';
 import { ISelectOptions } from './company';
 
@@ -89,7 +90,6 @@ export function parseParams(
   }: Partial<IServiceRemoteModelForms>,
   compareData: Partial<IServiceRemoteModel> = null
 ): Partial<IServiceRemoteModel> {
-  let parsedNewNameCode;
   const parsedDebtorCode =
     debtorCodeCustom === debtorCodeCustomEmpty ? debtorCode : debtorCodeCustom;
 
@@ -105,7 +105,7 @@ export function parseParams(
       : chargeType;
   }
 
-  parsedNewNameCode =
+  const parsedNewNameCode =
     isNotNil(compareData) && parsedDebtorCode === compareData.debtorCode
       ? ''
       : parsedDebtorCode;

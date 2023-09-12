@@ -6,12 +6,11 @@ import {
 } from '@angular/material/core';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-
-import { ExcelService } from 'src/app/shared/services/excel.service';
-import { GoogleAnalytics } from 'src/app/shared/services/googleAnalytics.service';
-import { HomeService } from 'src/app/shared/services/home.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
+
+import { ExcelService } from '../../../../../shared/services/excel.service';
+import { HomeService } from '../../../../../shared/services/home.service';
+import { drawPopup } from '../../../../../shared/utils/helpers/popups';
 
 const MY_FORMATS = {
   parse: {
@@ -44,8 +43,7 @@ export class DebtComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<DebtComponent>,
     private homeService: HomeService,
-    public excelService: ExcelService,
-    private gaService: GoogleAnalytics
+    public excelService: ExcelService
   ) {}
 
   public grabado = false;
@@ -214,17 +212,12 @@ export class DebtComponent implements OnInit {
       .subscribe((r) => {
         if (r.success) {
           this.grabado = true;
-          this.gaService.sendEvent('AgregaDeuda', {
-            event_category: 'Dashboard',
-            event_label: 'agrega_deuda',
-          });
-          this.gaService.sendUrl('deudaCargada', '/deudaCargada');
           Swal.fire({
             title: 'Agregar Cobro',
             html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',
             showCancelButton: true,
             showCloseButton: true,
-            confirmButtonText: 'AGREGRA OTRO',
+            confirmButtonText: 'AGREGA OTRO',
             cancelButtonText: 'CERRAR',
             onOpen: drawPopup,
           }).then((result) => {

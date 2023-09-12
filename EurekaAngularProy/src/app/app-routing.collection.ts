@@ -11,7 +11,4 @@ export {
   authFullRoutingNames,
 } from './features/auth/auth-routing.names';
 
-export {
-  internalAuthFullRoutingNames,
-  internalFullRoutingNames,
-} from './features/internal/internal-routing.names';
+export { internalFullRoutingNames } from './features/internal/internal-routing.names';

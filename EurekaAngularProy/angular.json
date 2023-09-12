@@ -61,7 +61,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "index": "src/environments/production/index.html",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
