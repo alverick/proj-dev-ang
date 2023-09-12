@@ -440,6 +440,14 @@ export class AffiliationService {
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
       });
+
+      this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+        category: 'warning - icon',
+        action: 'modal-view',
+        detail: 'Debes contar con al menos un servicio para continuar',
+        location: 'Modal',
+      });
+
       return throwError('No services');
     }
 
