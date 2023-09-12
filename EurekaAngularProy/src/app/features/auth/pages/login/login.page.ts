@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { first } from 'rxjs/operators';
-import Swal from 'sweetalert2';
 
 import { environment } from '../../../../../environments/environment';
 import { internalFullRoutingNames } from '../../../../app-routing.collection';
@@ -17,7 +16,7 @@ import {
 } from '../../../../shared/services/adobe-analytics.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
-import { drawPopup } from '../../../../shared/utils/helpers/popups';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
 const userData = environment.credentials[0];
@@ -127,14 +126,13 @@ export class LoginPage implements OnInit {
   }
 
   showModal(title: string, text: string, confirmText = '') {
-    void Swal.fire({
+    void swalAlert.fire({
       title,
       text,
       showCloseButton: true,
       showConfirmButton: true,
       allowOutsideClick: false,
       confirmButtonText: confirmText || 'CERRAR',
-      onOpen: drawPopup,
     });
 
     this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
