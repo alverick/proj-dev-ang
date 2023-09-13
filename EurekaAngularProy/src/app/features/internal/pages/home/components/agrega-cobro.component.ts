@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { ExcelService } from 'src/app/shared/services/excel.service';
 
@@ -7,13 +7,11 @@ import { ExcelService } from 'src/app/shared/services/excel.service';
   templateUrl: './agrega-cobro.component.html',
   styleUrls: ['./agrega-cobro.component.scss'],
 })
-export class AgregaCobroComponent implements OnInit {
+export class AgregaCobroComponent {
   constructor(
     public excelService: ExcelService,
     public dialogRef: MatDialogRef<AgregaCobroComponent>
   ) {}
-
-  ngOnInit(): void {}
 
   close() {
     this.dialogRef.close();
