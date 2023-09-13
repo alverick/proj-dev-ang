@@ -1,15 +1,18 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { AffiliationFinishedGuard } from './affiliation-finished.guard';
 
 describe('AffiliationFinishedGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AffiliationFinishedGuard]
+      providers: [AffiliationFinishedGuard],
     });
   });
 
-  it('should ...', inject([AffiliationFinishedGuard], (guard: AffiliationFinishedGuard) => {
-    expect(guard).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [AffiliationFinishedGuard],
+    (guard: AffiliationFinishedGuard) => {
+      void expect(guard).toBeTruthy();
+    }
+  ));
 });

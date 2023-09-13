@@ -1,4 +1,4 @@
-import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { AffiliationRucGuard } from './affiliation-ruc.guard';
 
@@ -12,7 +12,7 @@ describe('AffiliationRucGuard', () => {
   it('should ...', inject(
     [AffiliationRucGuard],
     (guard: AffiliationRucGuard) => {
-      expect(guard).toBeTruthy();
+      void expect(guard).toBeTruthy();
     }
   ));
 });
