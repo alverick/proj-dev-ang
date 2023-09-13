@@ -33,6 +33,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
 import { AccordionModule } from 'primeng/accordion';
+import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
@@ -56,8 +57,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { ControlRulesPoliciesComponent } from './components/control-rules-policies/control-rules-policies.component';
 
+import { ControlRulesPoliciesComponent } from './components/control-rules-policies/control-rules-policies.component';
 import { FabWhatsappComponent } from './components/fab-whatsapp/fab-whatsapp.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -105,6 +106,7 @@ const FORM_MODULES = [
 ];
 const PRIMENG_MODULES = [
   AccordionModule,
+  BadgeModule,
   ButtonModule,
   CalendarModule,
   CarouselModule,
