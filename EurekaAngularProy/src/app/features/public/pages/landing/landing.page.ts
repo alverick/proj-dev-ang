@@ -58,7 +58,7 @@ export class LandingPage implements OnInit, OnDestroy {
       title: 'Ingresa y carga* tu lista de clientes por cobrar',
       position: '02',
       content:
-        'Ingresa a la plataforma con tu RUC y contraseña, luego carga tu lista de clientes en la sección “agregar cobros”. <br /><br />*Sólo si eliges la opción de ingresar datos de tus clientes.',
+        'Ingresa a la plataforma con tu RUC y contraseña, luego carga tu lista de clientes en la sección “Agregar cobros”. <br /><br />*Sólo si eliges la opción de ingresar datos de tus clientes.',
     },
     {
       title: 'Empieza a recibir los pagos de tus clientes',
@@ -78,19 +78,19 @@ export class LandingPage implements OnInit, OnDestroy {
       title: 'Pagos parciales',
       image: 'icon-money-cards.svg',
       content:
-        'Configura si permitirás a tus clientes pagar su deuda total por partes',
+        'Configura si permitirás a tus clientes pagar su deuda total por partes.',
     },
     {
       title: 'Pagos sucesivos',
       image: 'icon-calendar.svg',
       content:
-        'Podrás hacer que tus clientes paguen la deuda más antigua primero o la que ellos deseen',
+        'Podrás hacer que tus clientes paguen la deuda más antigua primero o la que ellos deseen.',
     },
     {
       title: 'Cobro de mora',
       image: 'icon-percent-more.svg',
       content:
-        'Configura si deseas que tus clientes paguen una mora y define el importe de esta',
+        'Configura si deseas que tus clientes paguen una mora y define el importe de esta.',
     },
   ];
 
