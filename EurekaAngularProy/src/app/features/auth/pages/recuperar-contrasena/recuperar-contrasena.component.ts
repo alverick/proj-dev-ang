@@ -25,7 +25,6 @@ export class RecuperarContrasenaComponent implements OnInit {
   public formulario = true;
   recupera: UntypedFormGroup;
   public submitted = false;
-  isCaptchaValidate = false;
   submittedRequired = false;
 
   @HostListener('window:beforeunload', ['$event'])
@@ -50,7 +49,6 @@ export class RecuperarContrasenaComponent implements OnInit {
         Validators.minLength(10),
         Validators.maxLength(100),
       ]),
-      // captcha: new FormControl( '',  [Validators.required])
     });
   }
 
@@ -58,14 +56,9 @@ export class RecuperarContrasenaComponent implements OnInit {
     return this.recupera.controls;
   }
 
-  resolved(captchaResponse: string): boolean {
-    this.isCaptchaValidate = true;
-    return true;
-  }
-
   SubmitRecupera() {
     this.submittedRequired = true;
-    if (this.recupera.valid && this.isCaptchaValidate == true) {
+    if (this.recupera.valid) {
       this.recuperaService
         .RecoverPassword({
           RUC: this.recupera.value.ruc,
