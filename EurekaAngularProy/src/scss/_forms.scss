@@ -615,12 +615,14 @@ body {
           box-shadow: none;
         }
       }
+
       .p-accordion-header {
         .p-accordion-header-link {
           background-color: transparent;
           border-color: transparent;
           transition: none;
         }
+
         &:not(.p-highlight) {
           &:not(.p-disabled) {
             &:hover {
@@ -630,17 +632,20 @@ body {
             }
           }
         }
+
         &:not(.p-disabled).p-highlight {
           &:hover {
             .p-accordion-header-link {
               background-color: transparent;
             }
           }
+
           .p-accordion-header-link {
             background-color: transparent;
           }
         }
       }
+
       .p-accordion-content {
         background-color: transparent;
       }
@@ -677,5 +682,24 @@ body {
     font-size: 12px;
     border-radius: 20px;
     padding-left: 10px;
+  }
+
+  .p-overlay-badge {
+    .p-badge {
+      min-width: 1.2rem;
+      height: 1.2rem;
+      line-height: 1.2rem;
+      font-size: 0.6rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 0.2rem;
+      right: 0.2rem;
+      padding: 0;
+    }
+  }
+
+  .p-badge.p-badge-danger {
+    @apply tw-bg-extended-watermelon-1;
   }
 }
