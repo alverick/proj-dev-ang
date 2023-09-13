@@ -1,7 +1,7 @@
 <cs-layout-form>
   <!---LISTO-->
 
-  <div *ngIf="formulario" class="cuadro-form-Listo">
+  <div *ngIf="!formulario" class="cuadro-form-Listo">
     <div class="texto-azul mb-4">¡Listo!</div>
     <div class="texto-azul-text pb-4">
       Hemos enviado las instrucciones a tu <br />correo electrónico
@@ -20,7 +20,7 @@
     </div>
   </div>
   <!---FORMULARIO-->
-  <div *ngIf="!formulario" class="cuadro-form pb-2 cont-login">
+  <div *ngIf="formulario" class="cuadro-form pb-2 cont-login">
     <div class="texto-azul mb-4">Recuperar contraseña</div>
     <div class="texto-azul-text pb-4">
       ¡Está bien! Todos nos olvidamos de <br />
