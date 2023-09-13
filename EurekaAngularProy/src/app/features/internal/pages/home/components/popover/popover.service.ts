@@ -9,13 +9,13 @@ import { PortalInjector, ComponentPortal } from '@angular/cdk/portal';
 import { PopoverRef, PopoverContent } from './popover-ref';
 import { PopoverComponent } from './popover.component';
 
-export type PopoverParams<T> = {
+export interface PopoverParams<T> {
   width?: string | number;
   height?: string | number;
   origin: HTMLElement;
   content: PopoverContent;
   data?: T;
-};
+}
 
 @Injectable({
   providedIn: 'root',
