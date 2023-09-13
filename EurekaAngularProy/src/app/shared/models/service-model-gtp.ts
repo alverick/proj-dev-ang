@@ -20,7 +20,7 @@ export interface ServiceModelGTP {
   porcentaje?: number;
   inReview?: boolean;
   pagoPartes?: string;
-  status: String;
-  newNameCod: String;
-  newName: String;
+  status: string;
+  newNameCod: string;
+  newName: string;
 }
