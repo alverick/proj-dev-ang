@@ -1,4 +1,4 @@
-import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { AffiliationExitGuard } from './affiliation-exit.guard';
 
@@ -12,7 +12,7 @@ describe('AffiliationExitGuard', () => {
   it('should ...', inject(
     [AffiliationExitGuard],
     (guard: AffiliationExitGuard) => {
-      expect(guard).toBeTruthy();
+      void expect(guard).toBeTruthy();
     }
   ));
 });
