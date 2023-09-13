@@ -159,3 +159,7 @@
 .shepherd-target-click-disabled.shepherd-enabled.shepherd-target.movements.highlight.movements {
   pointer-events: auto;
 }
+
+main.general {
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
