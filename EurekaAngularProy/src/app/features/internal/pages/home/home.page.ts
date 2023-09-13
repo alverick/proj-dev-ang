@@ -40,7 +40,6 @@ import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
-import { Popover } from './components/popover/popover.service';
 import { TableMovementsComponent } from './components/table-movements/table-movements.component';
 
 @Component({

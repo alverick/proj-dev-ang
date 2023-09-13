@@ -6,7 +6,6 @@ import {
 } from '@ng-stack/api-mock';
 
 import { environment } from '../environments/environment';
-import { updateCompanyMock } from './shared/mocks/affiliation';
 
 @Injectable({
   providedIn: 'root',
