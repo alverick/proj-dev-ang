@@ -574,8 +574,7 @@ body {
         background: white;
         color: #000;
         font-weight: 400;
-        border-color: transparent;
-        @apply tw-px-6;
+        @apply tw-px-6 tw-border-extended-grey-4;
 
         &:hover {
           text-decoration: none;
@@ -589,15 +588,11 @@ body {
 
         &.p-highlight {
           .p-accordion-header-link {
-            background: white;
-            color: var(--secondary-blue-1);
-            border-color: transparent;
+            @apply tw-border-extended-grey-4 tw-text-secondary-blue-1 tw-bg-white tw-border-b-0;
           }
 
           &:hover .p-accordion-header-link {
-            background: white;
-            color: var(--secondary-blue-1);
-            border-color: transparent;
+            @apply tw-border-extended-grey-4 tw-text-secondary-blue-1 tw-bg-white tw-border-b-0;
           }
         }
       }
@@ -611,8 +606,7 @@ body {
     }
 
     .p-accordion-content {
-      border-color: transparent;
-      @apply tw-px-6 tw-py-4;
+      @apply tw-px-6 tw-py-4 tw-border-extended-grey-4 tw-border-b-0;
     }
 
     &.p-accordion-transparent {
