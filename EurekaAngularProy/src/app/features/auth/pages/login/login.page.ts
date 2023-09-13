@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
-import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { first } from 'rxjs/operators';
 
@@ -54,9 +53,6 @@ export class LoginPage implements OnInit {
   codigo2 = false;
   isCaptchaValidate = true;
   hide = true;
-
-  @ViewChild('recaptchaRef', { static: true })
-  recaptchaRef: RecaptchaComponent;
 
   account_validation_messages = {
     ruc: [
@@ -116,11 +112,6 @@ export class LoginPage implements OnInit {
 
   get f() {
     return this.loginForm.controls;
-  }
-
-  resolved(captchaResponse: string): boolean {
-    this.isCaptchaValidate = true;
-    return true;
   }
 
   showModal(title: string, text: string, confirmText = '') {
@@ -199,7 +190,7 @@ export class LoginPage implements OnInit {
 
     this.adobeAnalytics.setRuc(this.f.ruc.value);
 
-    if (this.loginForm.valid && this.isCaptchaValidate) {
+    if (this.loginForm.valid) {
       this.loginService
         .login(this.f.ruc.value, this.f.psw.value)
         .pipe(first())
@@ -258,10 +249,6 @@ export class LoginPage implements OnInit {
               });
             } else if (this.intentos === 4 && this.codRespuesta === 2) {
               this.loginService.errores = value.codRespuesta;
-              this.isCaptchaValidate = false;
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
               this.isTrue = true;
               this.codigo2 = true;
             } else if (this.intentos == 4 && this.codRespuesta == 3) {
@@ -272,10 +259,6 @@ export class LoginPage implements OnInit {
                 `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
 
-              this.isCaptchaValidate = false;
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
               this.isTrue = true;
               this.sendAdobeTrack({
                 ...actionParams,
@@ -290,10 +273,6 @@ export class LoginPage implements OnInit {
                 'Su cuenta se encuentra inactiva'
               );
 
-              this.isCaptchaValidate = false;
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
               this.isTrue = true;
               this.sendAdobeTrack({
                 ...actionParams,
@@ -310,10 +289,6 @@ export class LoginPage implements OnInit {
                 'Contraseña incorrecta',
                 `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
-              this.isCaptchaValidate = false;
               this.isTrue = true;
               this.codigo2 = false;
               this.sendAdobeTrack({
@@ -328,10 +303,6 @@ export class LoginPage implements OnInit {
                 'Cuenta Inactiva',
                 'Su cuenta se encuentra inactiva'
               );
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
-              this.isCaptchaValidate = false;
               this.isTrue = true;
               this.codigo2 = false;
               this.sendAdobeTrack({
