@@ -70,6 +70,18 @@ export class AuthInterceptorService implements HttpInterceptor {
                 location.href = authFullRoutingNames.LOGIN;
               },
             });
+          } else if (err.status !== 400) {
+            this.snackBar.dismiss();
+            void swalAlert.fire({
+              title: 'Ha ocurrido un error en el servidor',
+              showCloseButton: true,
+              showConfirmButton: true,
+              confirmButtonText: 'CERRAR',
+              allowOutsideClick: false,
+              willClose: () => {
+                location.href = authFullRoutingNames.LOGIN;
+              },
+            });
           }
         }
         return throwError(err);
