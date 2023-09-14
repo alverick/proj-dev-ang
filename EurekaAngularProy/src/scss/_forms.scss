@@ -606,10 +606,10 @@ body {
     }
 
     .p-accordion-content {
-      @apply tw-px-6 tw-py-4 tw-border-extended-grey-4 tw-border-b-0;
+      @apply tw-px-6 tw-py-4 tw-border-extended-grey-4 tw-border-t-0;
     }
 
-    &.p-accordion-transparent {
+    &.p-accordion-outline {
       p-accordiontab {
         .p-accordion-tab {
           box-shadow: none;
@@ -618,16 +618,14 @@ body {
 
       .p-accordion-header {
         .p-accordion-header-link {
-          background-color: transparent;
-          border-color: transparent;
-          transition: none;
+          @apply tw-border-white tw-bg-transparent;
         }
 
         &:not(.p-highlight) {
           &:not(.p-disabled) {
             &:hover {
               .p-accordion-header-link {
-                background-color: transparent;
+                @apply tw-border-white tw-bg-transparent;
               }
             }
           }
@@ -636,18 +634,18 @@ body {
         &:not(.p-disabled).p-highlight {
           &:hover {
             .p-accordion-header-link {
-              background-color: transparent;
+              @apply tw-border-white tw-bg-transparent;
             }
           }
 
           .p-accordion-header-link {
-            background-color: transparent;
+            @apply tw-border-white tw-bg-transparent;
           }
         }
       }
 
       .p-accordion-content {
-        background-color: transparent;
+        @apply tw-border-white tw-bg-transparent;
       }
     }
   }
