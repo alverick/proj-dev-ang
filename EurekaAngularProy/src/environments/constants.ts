@@ -16,6 +16,7 @@ export interface IEnvironment {
   logLevel: number;
   serverLogLevel: number;
   credentials: string[][];
+  adobe: string;
 }
 
 export const environmentDefault: IEnvironment = {
@@ -24,6 +25,7 @@ export const environmentDefault: IEnvironment = {
   hmr: false,
   END_POINT: serverUrl.local,
   OCP_KEY: '',
+  adobe: '',
   logLevel: NgxLoggerLevel.WARN,
   serverLogLevel: NgxLoggerLevel.OFF,
   credentials: [['', '', '']],

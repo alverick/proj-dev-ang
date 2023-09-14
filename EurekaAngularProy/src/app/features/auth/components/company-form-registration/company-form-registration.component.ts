@@ -20,7 +20,6 @@ export class CompanyFormRegistrationComponent implements OnInit {
   @Input() operators = [];
   @Input() documentTypes = [];
   @Input() errorMessages: IErrorMessages;
-  constructor() {}
 
   ngOnInit() {
     this.setDocumentNumberProps();

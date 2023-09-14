@@ -17,7 +17,6 @@ import {
 import {
   CompanyConfigurationPage,
   CompanyServicesPage,
-  DashboardPage,
   HelpPage,
   HomePage,
   ServiceAddPage,

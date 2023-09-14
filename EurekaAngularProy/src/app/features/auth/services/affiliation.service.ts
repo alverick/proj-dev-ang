@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
@@ -11,7 +10,13 @@ import {
 } from 'src/app/shared/models/company';
 import { SweetAlertOptions } from 'sweetalert2';
 
-import { parseParams } from '../../../shared/constants/services';
+import {
+  chargeTypeOptions,
+  dataTypeOptions,
+  interestTypeOptions,
+  parseParams,
+  paymentTypeOptions,
+} from '../../../shared/constants/services';
 import {
   IEntryModel,
   IServiceRemoteModel,
@@ -19,17 +24,36 @@ import {
 } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
+  ModelFormGroup,
+  SimpleModelFormGroup,
+} from '../../../shared/models/forms';
+import {
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../shared/services';
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+  AdobeEventType,
+} from '../../../shared/services/adobe-analytics.service';
 import {
   CompanyService,
   ICompanyResult,
 } from '../../../shared/services/company.service';
 import { LoginService } from '../../../shared/services/login.service';
+import {
+  ServiceConfigurationForm,
+  ServiceEditForm,
+  ServiceFormValue,
+} from '../../../shared/services/services-forms.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
-import { AffiliationFormsService } from './affiliation-forms.service';
+import {
+  AffiliationFormsService,
+  AuthForm,
+  RegisterForm,
+} from './affiliation-forms.service';
 
 @Injectable()
 export class AffiliationService {
@@ -38,23 +62,23 @@ export class AffiliationService {
   servicesList: Partial<IServiceRemoteModelForms>[] = [];
 
   entryOptions: IEntryModel[] = [];
-  registerForm: UntypedFormGroup;
-  authForm: UntypedFormGroup;
-  serviceForm: UntypedFormGroup;
-  serviceConfigForm: UntypedFormGroup;
-  editServiceForm: UntypedFormGroup;
+  registerForm: ModelFormGroup<RegisterForm>;
+  authForm: SimpleModelFormGroup<AuthForm>;
+  serviceForm: ModelFormGroup<ServiceFormValue>;
+  serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
+  editServiceForm: ModelFormGroup<ServiceEditForm>;
   updateData: ICompanyUpdate;
   tokenUpdate;
 
   constructor(
     private router: Router,
-    private formBuilder: UntypedFormBuilder,
     private companyService: CompanyService,
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
     private affiliationForms: AffiliationFormsService,
     private serviceForms: ServicesFormsService,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    protected adobeAnalytics: AdobeAnalyticsService
   ) {
     this.setRegisterForm();
   }
@@ -146,6 +170,26 @@ export class AffiliationService {
       movilOperator,
       ruc,
     } = this.registerForm.value;
+
+    const actionStep: Partial<ActionEventProperties> = {
+      category: 'Registrate – Ingresa tus datos',
+      action: 'Click',
+      label: 'Siguiente',
+      location: 'Registrate',
+      step: 'Step1',
+      state: 'Envío exitoso',
+      metadata: [
+        {
+          key: 'TipoDocumento',
+          value: documentType,
+        },
+        {
+          key: 'Operador',
+          value: movilOperator,
+        },
+      ],
+    };
+
     return this.companyService
       .validateCompany({
         ruc,
@@ -159,33 +203,66 @@ export class AffiliationService {
         tap(({ code, message, success }) => {
           if (success) {
             this.authForm.get('ruc').setValue(ruc);
+            this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
           } else {
-            this.processResultCode(code, message);
+            this.processResultCode(code, message, {
+              ...actionStep,
+              state: 'Intención de envío',
+            });
           }
         }),
         catchError((err) => {
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: 'Intención de envío',
+            typeError: 'Ha ocurrido un error con el servidor',
+          });
           this.showErrorServer();
           return throwError(err);
         })
       );
   }
 
-  processResultCode(code: number, message = '') {
+  processResultCode(
+    code: number,
+    message: string,
+    action: Partial<ActionEventProperties>
+  ) {
+    let typeError = '';
+    let titleError = '';
     switch (code) {
       case 1: {
         this.showMessageExistsCustomer();
+        typeError =
+          'El RUC ingresado ya se encuentra registrado en Cobro Simple';
         break;
       }
       case 2:
       case 3: {
         this.showMessageNoExistsAccounts();
+        titleError = '¡Abre tu Cuenta Negocios!';
+        typeError =
+          'Debes tener una cuenta corriente o ahorros persona jurídica';
         break;
       }
       default: {
-        this.showErrorServer(message);
+        this.showErrorServer(message || '');
+        titleError = 'Regístrame';
+        typeError = message || 'Ha ocurrido un error con el servidor';
         break;
       }
     }
+    this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+      ...action,
+      typeError,
+    });
+
+    this.sendAdobeTrack(AdobeEvent.trackView, {
+      category: titleError,
+      action: 'modal-view',
+      detail: typeError,
+      location: 'Modal',
+    });
   }
 
   public saveCompany(): Observable<ICompanyResult> {
@@ -197,7 +274,24 @@ export class AffiliationService {
       movilOperator,
       ruc,
     } = this.registerForm.value;
-    const { acceptTerms, entry, password, name } = this.authForm.value;
+
+    const { acceptTerms, entry, password, name, entrySelect } =
+      this.authForm.value;
+
+    const actionStep: Partial<ActionEventProperties> = {
+      category: 'Registrate – Datos de empresa',
+      action: 'Click',
+      label: 'Siguiente',
+      location: 'Registrate',
+      step: 'Step2',
+      state: 'Envío exitoso',
+      metadata: [
+        {
+          key: 'Rubro Empresa',
+          value: entrySelect.name,
+        },
+      ],
+    };
     const companyData: IDataEnterpriseModel = {
       documentType,
       documentNumber,
@@ -214,11 +308,20 @@ export class AffiliationService {
       tap(({ code, success, id, message }) => {
         if (success) {
           this.companyId = id;
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
         } else {
-          this.processResultCode(code, message);
+          this.processResultCode(code, message, {
+            ...actionStep,
+            state: 'Intención de envío',
+          });
         }
       }),
       catchError((err) => {
+        this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+          ...actionStep,
+          state: 'Intención de envío',
+          typeError: 'Ha ocurrido un error con el servidor',
+        });
         this.showErrorServer();
         return throwError(err);
       })
@@ -274,6 +377,59 @@ export class AffiliationService {
       ...serviceValues,
     });
     this.serviceForms.resetServicesForms();
+
+    const metadata = [
+      {
+        key: 'Tipo de servicio',
+        value: dataTypeOptions.find((item) => dataType === item.value).label,
+      },
+      {
+        key: 'Codigo cliente',
+        value: serviceValues.debtorCode,
+      },
+      {
+        key: 'Orden a pagar',
+        value: paymentTypeOptions.find((item) => paymentType === item.value)
+          .label,
+      },
+      {
+        key: 'Pago parcial',
+        value: (partialPayment === 'S').toString(),
+      },
+      {
+        key: 'Pago mora',
+        value: (chargeInterest === 'S').toString(),
+      },
+    ];
+
+    if (chargeInterest === 'S') {
+      metadata.push(
+        {
+          key: 'Tipo cobro',
+          value: chargeTypeOptions.find((item) => chargeType === item.value)
+            .label,
+        },
+        {
+          key: 'Tipo calculo',
+          value: interestTypeOptions.find((item) => interestType === item.value)
+            .label,
+        },
+        {
+          key: 'Monto',
+          value: amount,
+        }
+      );
+    }
+
+    this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+      category: 'Registrate – Configuración de servicio',
+      action: 'Click',
+      label: 'Siguiente',
+      location: 'Registrate',
+      step: 'Step4',
+      state: 'Envío exitoso',
+      metadata,
+    });
   }
 
   saveAllServices() {
@@ -284,8 +440,27 @@ export class AffiliationService {
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
       });
+
+      this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+        category: 'warning - icon',
+        action: 'modal-view',
+        detail: 'Debes contar con al menos un servicio para continuar',
+        location: 'Modal',
+      });
+
       return throwError('No services');
     }
+
+    const actionStep = {
+      category: 'Registrate – Resumen de servicios',
+      action: 'Click',
+      label: 'Siguiente',
+      module: 'Home',
+      location: 'Registrate',
+      step: 'Step5',
+      state: 'Envío exitoso',
+    };
+
     return this.companyService
       .saveServices({
         clientId: this.companyId,
@@ -294,7 +469,16 @@ export class AffiliationService {
       })
       .pipe(
         tap(() => {
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
           this.resetRegistration();
+        }),
+        catchError((err) => {
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: 'Intención de envío',
+            typeError: 'Ha ocurrido un error con el servidor',
+          });
+          throw new Error(err);
         })
       );
   }
@@ -485,6 +669,14 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
       })
       .then(({ value }) => {
         if (value) {
+          this.sendAdobeTrack(AdobeEvent.trackAction, {
+            category: '¡Abre tu Cuenta Negocios!',
+            action: 'Click',
+            detail: 'Enlace a creación de cuenta Negocios',
+            label: '¡Vamos ahora!',
+            typeElement: 'Botón',
+            location: 'Modal',
+          });
           window.open('https://interbank.pe/cuenta-negocios');
           void this.router.navigate([authFullRoutingNames.LOGIN]);
         }
@@ -551,5 +743,12 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
           }
         })
       );
+  }
+
+  sendAdobeTrack(
+    event: AdobeEventType,
+    eventProperties: Partial<ActionEventProperties>
+  ) {
+    this.adobeAnalytics.trackEvent(event, eventProperties);
   }
 }

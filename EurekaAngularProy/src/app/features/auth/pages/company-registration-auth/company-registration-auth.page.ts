@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IEntryModel } from 'src/app/shared/models';
+
 import {
   authFullRoutingChildNames,
   authFullRoutingNames,

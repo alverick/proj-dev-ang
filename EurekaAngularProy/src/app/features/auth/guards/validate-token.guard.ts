@@ -9,6 +9,7 @@ import {
 import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import {
   authFullRoutingChildNames,

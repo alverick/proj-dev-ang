@@ -1,25 +1,30 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
-import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { first } from 'rxjs/operators';
-import Swal from 'sweetalert2';
 
 import { environment } from '../../../../../environments/environment';
 import { internalFullRoutingNames } from '../../../../app-routing.collection';
-import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
+import { ModelFormGroup } from '../../../../shared/models/forms';
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../shared/services/adobe-analytics.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
-import { drawPopup } from '../../../../shared/utils/helpers/popups';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
 const userData = environment.credentials[0];
+
+interface LoginForm {
+  ruc: string;
+  psw: string;
+  rememberme: boolean;
+}
 
 @Component({
   selector: 'cs-login',
@@ -27,7 +32,7 @@ const userData = environment.credentials[0];
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public loginForm: UntypedFormGroup;
+  public loginForm: ModelFormGroup<LoginForm>;
   public submitted = false;
   public error: { ruc: string; message: string } = null;
   public formData: any = {};
@@ -41,7 +46,6 @@ export class LoginPage implements OnInit {
   intentosRestantes = 6;
   codRespuesta: number;
   err: boolean;
-  numero2: number;
   intento6 = false;
   ruc = 0;
 
@@ -49,11 +53,6 @@ export class LoginPage implements OnInit {
   codigo2 = false;
   isCaptchaValidate = true;
   hide = true;
-
-  storeRuc: any;
-
-  @ViewChild('recaptchaRef', { static: true })
-  recaptchaRef: RecaptchaComponent;
 
   account_validation_messages = {
     ruc: [
@@ -75,13 +74,13 @@ export class LoginPage implements OnInit {
   linkRegisterCompany = authFullRoutingNames.COMPANY_REGISTER;
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
     private loginService: LoginService,
     private router: Router,
     private cookieService: CookieService,
     private storageService: StorageService,
     public snackBar: MatSnackBar,
-    private gaService: GoogleAnalytics
+    private adobeAnalytics: AdobeAnalyticsService
   ) {}
 
   ngOnInit() {
@@ -115,24 +114,21 @@ export class LoginPage implements OnInit {
     return this.loginForm.controls;
   }
 
-  resolved(captchaResponse: string): boolean {
-    this.isCaptchaValidate = true;
-    return true;
-  }
-
-  mensaje(tipo: any, titulo: string, text: string) {
-    Swal.fire({
-      // type: tipo ,
-      title: titulo,
+  showModal(title: string, text: string, confirmText = '') {
+    void swalAlert.fire({
+      title,
       text,
       showCloseButton: true,
-      showCancelButton: false,
       showConfirmButton: true,
-      cancelButtonColor: '#d33',
-      // cancelButtonText:  'CERRAR',
       allowOutsideClick: false,
-      confirmButtonText: 'CERRAR',
-      onOpen: drawPopup,
+      confirmButtonText: confirmText || 'CERRAR',
+    });
+
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: title,
+      action: 'modal-view',
+      detail: text,
+      location: 'Modal',
     });
   }
 
@@ -175,31 +171,42 @@ export class LoginPage implements OnInit {
 
     this.cookieService.delete('ruc');
 
-    if (this.loginForm.valid && this.isCaptchaValidate) {
+    const actionParams = {
+      category: 'Login',
+      action: 'Click',
+      label: 'Ingresar',
+      state: 'Envío exitoso',
+      metadata: [
+        {
+          key: 'TipoDocumento',
+          value: 'RUC',
+        },
+        {
+          key: 'NumeroDocumento',
+          value: this.f.ruc.value,
+        },
+      ],
+    };
+
+    this.adobeAnalytics.setRuc(this.f.ruc.value);
+
+    if (this.loginForm.valid) {
       this.loginService
         .login(this.f.ruc.value, this.f.psw.value)
         .pipe(first())
-        .subscribe(
-          (value) => {
+        .subscribe({
+          next: (value) => {
             this.storageService.setIntentos(value.paramNum);
             this.intentos = this.storageService.getIntentos();
 
             this.intentosRestantes = 6 - this.intentos;
             this.codRespuesta = value.codRespuesta;
             if (value.paramStr === 'Un session ya se encuentra activa') {
-              Swal.fire({
-                // imageUrl: '/assets/images/complain.svg',
-                imageHeight: 100,
-                title: 'Existe una Sesión Activa',
-                // cancelButtonText: 'CERRAR',
-                showCloseButton: true,
-                showCancelButton: false,
-                showConfirmButton: true,
-                cancelButtonColor: '#d33',
-                // cancelButtonText:  'CERRAR',
-                allowOutsideClick: false,
-                confirmButtonText: 'CERRAR',
-                onOpen: drawPopup,
+              this.showModal('Existe una Sesión Activa', '');
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: value.paramStr,
               });
             } else if (value.estado === true && this.intentos <= 6) {
               if (this.rememberMe === true) {
@@ -209,108 +216,100 @@ export class LoginPage implements OnInit {
               }
 
               window.sessionStorage.setItem('username', this.f.ruc.value);
-              this.router.navigate([internalFullRoutingNames.HOME]);
+              void this.router.navigate([internalFullRoutingNames.HOME]);
+              this.sendAdobeTrack(actionParams);
+              this.adobeAnalytics.trackEvent(AdobeEvent.successLogin);
             } else if (this.intentos < 4 && this.codRespuesta === 2) {
               this.codigo2 = true;
             } else if (this.intentos < 4 && this.codRespuesta === 3) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
-                'Contraseña Incorrecta',
-                'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ' +
-                  this.intentosRestantes +
-                  ' intentos restantes'
+              this.showModal(
+                'Contraseña incorrecta',
+                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Contraseña incorrecta',
+              });
             } else if (this.intentos < 4 && this.codRespuesta === 5) {
               this.codigo2 = false;
 
-              Swal.fire({
-                // type: tipo ,
-                title: 'Tu cuenta está siendo procesada',
-                html:
-                  'Estamos procesando la información de tu registro,' +
+              this.showModal(
+                'Tu cuenta está siendo procesada',
+                'Estamos procesando la información de tu registro,' +
                   ' esto puede tomar un máximo 24 horas hábiles. Cuando esté lista te enviaremos un mail de Bienvenida.',
-                showCloseButton: true,
-                showCancelButton: false,
-                showConfirmButton: true,
-                cancelButtonColor: '#d33',
-                // cancelButtonText:  'CERRAR',
-                allowOutsideClick: false,
-                confirmButtonText: 'ENTENDIDO',
-                onOpen: drawPopup,
+                'ENTENDIDO'
+              );
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Tu cuenta está siendo procesada',
               });
             } else if (this.intentos === 4 && this.codRespuesta === 2) {
               this.loginService.errores = value.codRespuesta;
-              this.isCaptchaValidate = false;
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
               this.isTrue = true;
               this.codigo2 = true;
             } else if (this.intentos == 4 && this.codRespuesta == 3) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
-                'Contraseña Incorrecta',
-                'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ' +
-                  this.intentosRestantes +
-                  ' intentos restantes'
+              this.showModal(
+                'Contraseña incorrecta',
+                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
 
-              this.isCaptchaValidate = false;
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
               this.isTrue = true;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Contraseña incorrecta',
+              });
             } else if (this.intentos == 4 && this.codRespuesta == 5) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
-                'Cuenta Inactiva',
+              this.showModal(
+                'Cuenta inactiva',
                 'Su cuenta se encuentra inactiva'
               );
 
-              this.isCaptchaValidate = false;
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
               this.isTrue = true;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Cuenta inactiva',
+              });
             } else if (this.intentos == 5 && this.codRespuesta == 2) {
               this.isTrue = true;
               this.codigo2 = true;
             } else if (this.intentos == 5 && this.codRespuesta == 3) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
-                'Contraseña Incorrecta',
-                'Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ' +
-                  this.intentosRestantes +
-                  ' intentos restantes'
+              this.showModal(
+                'Contraseña incorrecta',
+                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
-              this.isCaptchaValidate = false;
               this.isTrue = true;
               this.codigo2 = false;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Contraseña incorrecta',
+              });
             } else if (this.intentos == 5 && this.codRespuesta == 5) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Cuenta Inactiva',
                 'Su cuenta se encuentra inactiva'
               );
-              this.recaptchaRef !== undefined
-                ? this.recaptchaRef.reset()
-                : null;
-              this.isCaptchaValidate = false;
               this.isTrue = true;
               this.codigo2 = false;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Cuenta inactiva',
+              });
             } else if (
               this.intentos >= 6 ||
               value.paramStr === 'Vuelva a intentarlo mas tarde' ||
@@ -318,25 +317,33 @@ export class LoginPage implements OnInit {
             ) {
               this.codigo2 = false;
 
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Contraseña Incorrecta',
                 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos por whatsapp al 993 119 001'
               );
               this.intento6 = true;
               this.isTrue = false;
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: value.paramStr,
+              });
             }
           },
-          (error) => {
+          error: (error) => {
             if (error.status === 500) {
-              this.mensaje(
-                'error',
+              this.showModal(
                 'Error',
-                'Error del Servidor comuníquese con el administrador'
+                'Error del servidor comuníquese con el administrador'
               );
+              this.sendAdobeTrack({
+                ...actionParams,
+                state: 'Intención de envío',
+                typeError: 'Error del servidor',
+              });
             }
-          }
-        );
+          },
+        });
     }
   }
 
@@ -344,5 +351,9 @@ export class LoginPage implements OnInit {
     void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
       state: { initNew: true },
     });
+  }
+
+  sendAdobeTrack(action?: Partial<ActionEventProperties>) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.login, action);
   }
 }

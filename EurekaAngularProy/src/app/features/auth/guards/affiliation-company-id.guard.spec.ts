@@ -1,4 +1,4 @@
-import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { AffiliationCompanyIdGuard } from './affiliation-company-id.guard';
 
@@ -12,7 +12,7 @@ describe('AffiliationCompanyIdGuard', () => {
   it('should ...', inject(
     [AffiliationCompanyIdGuard],
     (guard: AffiliationCompanyIdGuard) => {
-      expect(guard).toBeTruthy();
+      void expect(guard).toBeTruthy();
     }
   ));
 });

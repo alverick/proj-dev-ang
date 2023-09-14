@@ -8,7 +8,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MessageAlertComponent implements OnInit {
   @Input() mode: string;
   bgClass = '';
-  constructor() {}
 
   ngOnInit() {
     this.setBgClass();

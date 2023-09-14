@@ -13,7 +13,6 @@ import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
-import { GoogleAnalytics } from '../services/googleAnalytics.service';
 import { LoginService } from '../services/login.service';
 import { StorageService } from '../services/storage.service';
 import { swalAlert } from '../utils/helpers/popups';
@@ -26,9 +25,8 @@ export class AuthInterceptorService implements HttpInterceptor {
     private router: Router,
     public snackBar: MatSnackBar,
     private login: LoginService,
-    private storage: StorageService,
-    private gaService: GoogleAnalytics
-  ) { }
+    private storage: StorageService
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
@@ -58,7 +56,6 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
-        this.gaService.sendException(err);
         if (!request.url.includes('notification')) {
           if (err.status === 401) {
             this.storage.removeCurrentSession();

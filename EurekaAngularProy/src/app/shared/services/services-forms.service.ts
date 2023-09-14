@@ -1,19 +1,52 @@
 import { Injectable } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { isNil } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
+
+import { ModelFormGroup } from '../models/forms';
 import { nameInvalid } from '../validators/name-invalid.validator';
+
+export interface ServiceFormValue {
+  name: string;
+  account: string;
+  idAccount: string;
+  currency: string;
+  accountNumber: string;
+  useAppWeb: boolean;
+  useAgent: boolean;
+}
+
+export interface ServiceConfigurationForm {
+  dataType: string;
+  debtorCode: string;
+  debtorCodeCustom: string;
+  debt: ServiceDebt;
+}
+
+export interface ServiceEditForm {
+  name: string;
+  currency: string;
+  useAppWeb: boolean;
+  useAgent: boolean;
+  debtorCode: string;
+  debtorCodeCustom: string;
+  debt: ServiceDebt;
+}
+
+export interface ServiceDebt {
+  paymentType: string;
+  partialPayment: string;
+  chargeInterest: string;
+  chargeType: string;
+  interestType: string;
+  amount: string;
+}
 
 @Injectable()
 export class ServicesFormsService {
-  serviceForm: FormGroup;
-  serviceConfigForm: FormGroup;
-  editServiceForm: FormGroup;
+  serviceForm: ModelFormGroup<ServiceFormValue>;
+  serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
+  editServiceForm: ModelFormGroup<ServiceEditForm>;
 
   editNameValidators = [
     Validators.required,
@@ -46,14 +79,16 @@ export class ServicesFormsService {
       useAgent: [false],
     });
 
-    const serviceDebtForm = this.formBuilder.group({
-      paymentType: ['', [Validators.required]],
-      partialPayment: ['S', [Validators.required]],
-      chargeInterest: ['N', [Validators.required]],
-      chargeType: ['', [Validators.required]],
-      interestType: ['', [Validators.required]],
-      amount: ['', [Validators.required]],
-    });
+    const serviceDebtForm: ModelFormGroup<ServiceDebt> = this.formBuilder.group(
+      {
+        paymentType: ['', [Validators.required]],
+        partialPayment: ['S', [Validators.required]],
+        chargeInterest: ['N', [Validators.required]],
+        chargeType: ['', [Validators.required]],
+        interestType: ['', [Validators.required]],
+        amount: ['', [Validators.required]],
+      }
+    );
 
     serviceDebtForm.get('interestType').valueChanges.subscribe((val) => {
       serviceDebtForm.get('amount').setValue('');

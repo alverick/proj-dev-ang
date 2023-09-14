@@ -14,6 +14,7 @@
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "allowedCommonJsDependencies": [
+              "dompurify",
               "file-saver",
               "moment",
               "sweetalert2",
@@ -61,7 +62,6 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "index": "src/environments/production/index.html",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,

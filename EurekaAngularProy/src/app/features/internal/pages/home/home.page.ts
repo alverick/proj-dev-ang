@@ -10,6 +10,7 @@ import {
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import { ShepherdService } from 'angular-shepherd';
+import * as DOMPurify from 'dompurify';
 import * as saveAs from 'file-saver';
 import { LazyLoadEvent } from 'primeng/api';
 import { all, equals, isNil, pathEq, pathOr, prop } from 'ramda';
@@ -21,10 +22,16 @@ import { CompanyServices } from '../../../../shared/models/company';
 import { DateList } from '../../../../shared/models/dateList';
 import { Debts } from '../../../../shared/models/debts';
 import { DebstFilter } from '../../../../shared/models/debts-filter.model';
+import {
+  Sections,
+  SettingOptions,
+  Settings,
+  Status,
+  StorageSettings,
+} from '../../../../shared/models/settings';
 import { User } from '../../../../shared/models/user.model';
 import { WayPay } from '../../../../shared/models/way-pay';
 import { ExcelService } from '../../../../shared/services/excel.service';
-import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
 import { HomeService } from '../../../../shared/services/home.service';
 import { LoadBarService } from '../../../../shared/services/load-bar.service';
 import {
@@ -40,9 +47,7 @@ import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
-import { Popover } from './components/popover/popover.service';
 import { TableMovementsComponent } from './components/table-movements/table-movements.component';
-import * as DOMPurify from 'dompurify';
 
 @Component({
   selector: 'cs-home',
@@ -57,8 +62,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private excelService: ExcelService,
     public dialog: MatDialog,
     private loginService: LoginService,
-    private popover: Popover,
-    private gaService: GoogleAnalytics,
     private fileLoad: LoadFileService,
     private barLoad: LoadBarService,
     private movementsService: MovementsService,
@@ -455,10 +458,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.resetControlsGrid();
     this.consultaDeuda();
 
-    this.gaService.sendEvent('Buscar', {
-      event_category: 'Dashboard',
-      event_label: 'buscar',
-    });
     if (all(isNilOrEmpty, [inputSearch, service, status, dateForFilter])) {
       this.messageTable = 'Para empezar, agrega la lista de los cobros';
       this.showArrow = true;
@@ -509,15 +508,25 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   validateOnboarding(hasRecords: boolean) {
-    const username = DOMPurify.sanitize(window.sessionStorage.getItem('username'));
-    let settings = DOMPurify(JSON.parse(window.localStorage.getItem('settings')));
-    const saved = pathEq([username, 'ob', 'mov'], 1, settings);
+    const username = DOMPurify.sanitize(
+      window.sessionStorage.getItem('username')
+    );
+
+    const settings: Settings = window.localStorage.getItem(StorageSettings)
+      ? (JSON.parse(
+          DOMPurify.sanitize(window.localStorage.getItem(StorageSettings))
+        ) as Settings)
+      : {};
+    const saved = pathEq(
+      [username, SettingOptions.onBoarding, Sections.movements],
+      Status.saved,
+      settings
+    );
     if (!saved) {
-      if (isNil(settings)) {
-        settings = {};
-      }
-      settings[username] = { ob: { mov: 1 } };
-      localStorage.setItem('settings', JSON.stringify(settings));
+      settings[username] = {
+        [SettingOptions.onBoarding]: { [Sections.movements]: Status.saved },
+      };
+      localStorage.setItem(StorageSettings, JSON.stringify(settings));
     }
     if (!hasRecords && !saved) {
       this.shepherdService.start();
@@ -555,10 +564,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             .editDeuda(item.id, debts)
             .subscribe((debtsUpdate) => {
               if (debtsUpdate.success) {
-                this.gaService.sendEvent('EditarDeuda', {
-                  event_category: 'Dashboard',
-                  event_label: 'editar_deuda',
-                });
                 void Swal.fire({
                   titleText: 'Editado',
                   text: 'Su registro ha sido editado',
@@ -647,10 +652,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         if (result.value) {
           const ids = this.selectedRows.map((items) => items.id);
           this.movementsService.deleteMovements(ids).subscribe(() => {
-            this.gaService.sendEvent('EliminarDeudas', {
-              event_category: 'Dashboard',
-              event_label: 'eliminar_deudas',
-            });
             this.consultaDeuda(() => {
               if (totalForDelete === 1) {
                 finalMessage = `Se han eliminado ${totalForDelete} registro`;
@@ -763,10 +764,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.barLoad.show(this.fileLoadContainer);
         this.transactionService.report(this.currentFilter).subscribe(
           (r: Blob) => {
-            this.gaService.sendEvent('DescargaReporte', {
-              event_category: 'Dashboard',
-              event_label: 'descargar_reporte',
-            });
             this.barLoad.close();
             this.enDescarga = false;
             saveAs(r, 'Reporte - Interbank_MisCobros.xlsx');

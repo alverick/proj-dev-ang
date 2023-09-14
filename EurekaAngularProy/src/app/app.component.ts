@@ -4,17 +4,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
 import { LoginService } from 'src/app/shared/services/login.service';
-import { environment } from 'src/environments/environment';
 
 import { appFullRoutingNames } from './app-routing.names';
-import {
-  authFullRoutingChildNames,
-  authFullRoutingNames,
-} from './features/auth/auth-routing.names';
 import { primeng } from './shared/lang/es';
-import { GoogleAnalytics } from './shared/services/googleAnalytics.service';
+import { AdobeAnalyticsService } from './shared/services/adobe-analytics.service';
 
-declare let fbq: (...args: any[]) => void;
 @Component({
   selector: 'cs-root',
   templateUrl: './app.component.html',
@@ -29,28 +23,13 @@ export class AppComponent implements OnInit {
     private router: Router,
     matIconRegistry: MatIconRegistry,
     domSanitizer: DomSanitizer,
-    private gaService: GoogleAnalytics,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private adobeAnalytics: AdobeAnalyticsService
   ) {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
-        this.showButton = val.url.indexOf(appFullRoutingNames.ADMIN) !== 0;
-        if (environment.production) {
-          this.gaService.sendUrl(
-            val.urlAfterRedirects.substr(1),
-            val.urlAfterRedirects
-          );
-
-          /*
-          gtag('config', 'UA-148142629-1', {
-            'page_title': e.urlAfterRedirects.substr(1),
-            'page_path': e.urlAfterRedirects
-          });
-          */
-          // Pixel Facebook
-          this.sendTrackPageViewPixel(val.urlAfterRedirects);
-        }
-        // gaService.sendEvent('screen_view', { 'app_name': 'Eureca', 'screen_name': e.urlAfterRedirects.substr(1) });
+        this.showButton = !val.url.startsWith(appFullRoutingNames.ADMIN);
+        adobeAnalytics.pageTrack(val.urlAfterRedirects);
       }
     });
 
@@ -85,44 +64,11 @@ export class AppComponent implements OnInit {
       domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
       { viewBox: '0 0 24 24' }
     );
+    void this.adobeAnalytics.injectAdobeLaunchScript();
   }
 
   ngOnInit() {
     this.primengConfig.ripple = true;
     this.primengConfig.setTranslation(primeng);
-  }
-
-  private sendTrackPageViewPixel(pathComponent: string): void {
-    switch (pathComponent) {
-      case appFullRoutingNames.LANDING:
-        fbq('track', 'PageView');
-        break;
-      case authFullRoutingNames.COMPANY_REGISTER:
-        fbq('track', 'PageView');
-        break;
-      case authFullRoutingNames.COMPANY_FILL_DATA:
-        fbq('track', 'PageView');
-        break;
-      case authFullRoutingNames.COMPANY_FINISHED:
-        fbq('track', 'PageView');
-        break;
-      case authFullRoutingChildNames.SERVICES_ADD_INFO:
-        fbq('track', 'PageView');
-        break;
-      case authFullRoutingChildNames.SERVICES_ADD_CONFIGURATION:
-        fbq('track', 'PageView');
-        break;
-      case authFullRoutingChildNames.SERVICES_ADD_LIST:
-        fbq('track', 'PageView');
-        break;
-      case authFullRoutingNames.REGISTRATION_FINISHED:
-        fbq('track', 'Contact', {
-          content_name: 'cobro-simple-5',
-        });
-        break;
-      /*default:
-        fbq('track', 'PageView');
-        break;*/
-    }
   }
 }

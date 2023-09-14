@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
+
 import {
   errorServiceConfiguration,
   errorServiceInformation,
@@ -13,7 +14,6 @@ import {
   paymentTypeOptions,
 } from '../../../../shared/constants/services';
 import { ServicesFormsService } from '../../../../shared/services';
-import { GoogleAnalytics } from '../../../../shared/services/googleAnalytics.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { internalFullRoutingChildNames } from '../../internal-routing.names';
 import { CompanyServicesService } from '../../services';
@@ -24,7 +24,7 @@ import { CompanyServicesService } from '../../services';
   templateUrl: './company-services.page.html',
   styleUrls: ['./company-services.page.scss'],
 })
-export class CompanyServicesPage implements OnInit {
+export class CompanyServicesPage {
   showSidebar = false;
   position: number;
   errorMessages = {
@@ -43,7 +43,6 @@ export class CompanyServicesPage implements OnInit {
     public companyServices: CompanyServicesService,
     private serviceForms: ServicesFormsService,
     private activatedRoute: ActivatedRoute,
-    private gaService: GoogleAnalytics,
     private router: Router,
     private logger: NGXLogger
   ) {
@@ -55,8 +54,6 @@ export class CompanyServicesPage implements OnInit {
       this.companyServices.services = value.services;
     });
   }
-
-  ngOnInit() {}
 
   actionDelete(position: number) {
     this.companyServices.canDelete(position).subscribe((result) => {
@@ -79,10 +76,6 @@ export class CompanyServicesPage implements OnInit {
         })
         .then((confirm) => {
           if (confirm.value) {
-            this.gaService.sendEvent('ServicioEliminado', {
-              event_category: GoogleAnalytics.Afiliacion,
-              event_label: 'servicio_eliminado',
-            });
             this.companyServices.deleteService(position);
           }
         });
@@ -103,7 +96,9 @@ export class CompanyServicesPage implements OnInit {
 
   createService() {
     this.serviceForms.resetServicesForms();
-    this.router.navigate([internalFullRoutingChildNames.SERVICES_ADD_INFO]);
+    void this.router.navigate([
+      internalFullRoutingChildNames.SERVICES_ADD_INFO,
+    ]);
   }
 
   updateService() {
