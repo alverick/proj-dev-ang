@@ -684,16 +684,7 @@ body {
 
   .p-overlay-badge {
     .p-badge {
-      min-width: 1.2rem;
-      height: 1.2rem;
-      line-height: 1.2rem;
-      font-size: 0.6rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      top: 0.2rem;
-      right: 0.2rem;
-      padding: 0;
+      @apply tw-min-w-[1.2rem] tw-h-[1.2rem] tw-text-[0.6rem] tw-leading-[1.2rem] tw-flex tw-justify-center tw-items-center tw-p-0 tw-top-[0.2rem] tw-right-[0.2rem];
     }
   }
 
