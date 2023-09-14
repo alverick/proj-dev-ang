@@ -130,7 +130,7 @@ export class LandingPage implements OnDestroy {
       state: { initNew: true },
     });
     this.sendAdobeTrack({
-      category: 'Login = hero',
+      category: 'Login - hero',
       action: 'Click',
       label: 'Inicia sesión',
       detail: 'Login',
