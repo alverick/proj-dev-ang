@@ -10,6 +10,4 @@ export class LoadBarComponent {
     mode: 'indeterminate',
     value: 0,
   };
-
-  constructor() {}
 }

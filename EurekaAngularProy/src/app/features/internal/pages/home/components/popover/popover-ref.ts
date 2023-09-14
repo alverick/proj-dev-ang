@@ -1,6 +1,6 @@
 import { OverlayRef } from '@angular/cdk/overlay';
+import { TemplateRef, Type } from '@angular/core';
 import { Subject } from 'rxjs';
-import { TemplateRef, Type, EventEmitter } from '@angular/core';
 
 export type PopoverCloseEvent<T = any> = {
   type: 'backdropClick' | 'close';

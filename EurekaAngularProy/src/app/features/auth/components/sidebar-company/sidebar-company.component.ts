@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './sidebar-company.component.html',
   styleUrls: ['./sidebar-company.component.scss'],
 })
-export class SidebarCompanyComponent {
-  constructor() {}
-}
+export class SidebarCompanyComponent {}

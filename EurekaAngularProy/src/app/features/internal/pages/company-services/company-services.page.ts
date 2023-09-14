@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 
@@ -24,7 +24,7 @@ import { CompanyServicesService } from '../../services';
   templateUrl: './company-services.page.html',
   styleUrls: ['./company-services.page.scss'],
 })
-export class CompanyServicesPage implements OnInit {
+export class CompanyServicesPage {
   showSidebar = false;
   position: number;
   errorMessages = {
@@ -54,8 +54,6 @@ export class CompanyServicesPage implements OnInit {
       this.companyServices.services = value.services;
     });
   }
-
-  ngOnInit() {}
 
   actionDelete(position: number) {
     this.companyServices.canDelete(position).subscribe((result) => {

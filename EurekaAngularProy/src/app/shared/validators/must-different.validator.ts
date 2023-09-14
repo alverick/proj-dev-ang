@@ -1,4 +1,4 @@
-import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { FormControl, ValidationErrors } from '@angular/forms';
 import { isNil } from 'ramda';
 
 import { ChangePasswordForm } from '../../features/internal/services/company-configuration.service';

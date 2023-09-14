@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   Input,
-  OnInit,
   Optional,
   Self,
   ViewChild,
@@ -17,7 +16,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   styleUrls: ['./label-control.component.scss'],
 })
 export class LabelControlComponent
-  implements OnInit, AfterViewInit, AfterContentInit, ControlValueAccessor
+  implements AfterViewInit, AfterContentInit, ControlValueAccessor
 {
   static labelCounter = 0;
   useDefaultContent = false;
@@ -42,8 +41,6 @@ export class LabelControlComponent
     }
     LabelControlComponent.labelCounter++;
   }
-
-  ngOnInit() {}
 
   ngAfterViewInit() {
     if (this.wrapper) {
