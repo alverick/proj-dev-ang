@@ -71,7 +71,6 @@ export class AuthInterceptorService implements HttpInterceptor {
               },
             });
           } else if (err.status !== 400) {
-            this.storage.removeCurrentSession();
             this.snackBar.dismiss();
             void swalAlert.fire({
               title: 'Ha ocurrido un error en el servidor',
