@@ -1,4 +1,3 @@
-/* ......table Fin ... */
 @media screen and (min-width: 2000px) {
   #btn-regresar {
     display: none !important;
@@ -6,209 +5,36 @@
 }
 
 @media screen and (max-width: 2000px) {
-  body {
-    //font-size: 0.9em !important;
-  }
-
-  .img-como-funciona {
-    width: 316px !important;
-    height: 572px !important;
-    margin: auto !important;
-    position: relative !important;
-    margin-bottom: -93px !important;
-  }
-
   #btn-regresar {
     display: none !important;
-  }
-
-  .cuadro-form {
-    width: 480px !important;
-    //  padding: 0em 5em !important;
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  .img-beneficios {
-    width: 490px !important;
-    height: 370px !important;
-    position: absolute !important;
-    bottom: 0;
-  }
-
-  .img-como-funciona {
-    width: 315px !important;
-    height: 571px !important;
-    margin: auto !important;
-    position: relative !important;
-    margin-bottom: -93px !important;
-  }
-
-  .container-beneficios {
-    padding: 0em 0em 0em !important;
-  }
-  .img-cobro-simple {
-    width: 409px !important;
-    height: 232px !important;
-  }
-  .reponsive-img-login {
-    margin-left: 0px !important;
   }
 }
 
 @media screen and (max-width: 1024px) {
-  //  .reponsive-img-pago {
-  //      display: block !important;
-  //  }
-  //  .reponsive-img-pago1 {
-  //      display: none !important;
-  //  }
-  .img-pagos {
-    width: 170px !important;
-    height: 300px !important;
-    right: 2em;
-  }
-
-  .img-como-funciona {
-    width: 170px !important;
-    height: 300px !important;
-    margin: auto !important;
-    position: relative !important;
-    margin-bottom: -46px !important;
-  }
-
-  .title-login {
-    font-size: 38px !important;
-    text-align: center;
-  }
-  .dpt {
-    display: none !important;
-  }
-  .dpt1 {
-    margin-top: 2em !important;
-    display: block !important;
-  }
-  //  .cuadro-canales {
-  //      //   width  : 145px !important;
-  //     //  padding  : .5em;
-  //     //  height   : 200px !important;
-  //  }
-  .texto-azul {
-    padding-bottom: 1em;
-    text-align: center !important;
-  }
-  .cuadro-comisiones {
-    width: 100% !important;
-  }
-  .cuadro-descripcion {
-    width: 100% !important;
-  }
-  //  .cuadro-form {
-  //      margin : auto !important;
-  //      padding: 0em 10em !important;
-  //      width  : 100% !important;
-  //  }
-
-  .card-servicios {
-    width: 100% !important;
-  }
   .btn-outline-green {
     width: 100% !important;
   }
   .btn-col-1 {
-    padding-left: 0px !important;
+    padding-left: 0 !important;
     width: 100%;
     text-align: center;
-  }
-  /*.btn-eureca-green {
-        margin: auto !important;
-    }*/
-  .card-medio-pago {
-    padding: 0.5em;
-    width: 116px !important;
-    height: 170px !important;
-  }
-  .formulario-reponsive {
-    padding: 2em 4.5em !important;
   }
   .input-text {
     margin-top: 0.3em !important;
   }
-  .btn-rg {
-    margin-bottom: 2em !important;
-  }
   .formulario {
     width: 100% !important;
   }
-  .btn-emp {
-    margin: 0.5em !important;
-  }
-  .reponsive-img-pago {
-    display: block !important;
-  }
-  .reponsive-img-pago1 {
-    display: none !important;
-  }
-  .reponsive-tex1 {
-    display: block !important;
-  }
-  .reponsive-tex2 {
-    display: none !important;
-  }
-  .br-none-tablet {
-    display: block !important;
-  }
-  .title-simple-pago {
-    font-size: 32px !important;
-  }
-  .title-sub-simple-pago {
-    font-size: 30px !important;
-  }
-  .img-beneficios {
-    width: 431px !important;
-    height: 360px !important;
-    position: initial !important;
-  }
-  .img-cobro-simple {
-    height: 228px !important;
-    width: 457px !important;
-  }
-  .cont-txt-beneficio {
-    padding: 0em 0.5em !important;
-  }
-  .btn-landigs-registro {
-    padding: 2em 0em 1em !important;
-  }
   .cont-login {
     width: 450px !important;
-    padding: 0em 4em !important;
+    padding: 0 4em !important;
     margin: auto !important;
   }
   .btn-login-ingresar {
     width: 100% !important;
   }
-  .title-beneficio {
-    font-size: 32px !important;
-  }
-  .title-beneficio-sub {
-    font-size: 20px !important;
-  }
-  .text-beneficio {
-    font-size: 16px !important;
-  }
-  .text-simple-pago {
-    font-size: 18px !important;
-  }
   .title-pago {
     font-size: 32px !important;
-  }
-  .title-pago-sub {
-    font-size: 16px !important;
-    -webkit-text-stroke: 1.5px #ffffff !important;
-    font-weight: normal !important;
-  }
-  .title-contacto {
-    font-size: 24px !important;
   }
   .text-footer {
     font-size: 12px !important;
@@ -216,236 +42,52 @@
   #cont-password {
     justify-content: center !important;
   }
-  .title-afilacion {
-    font-size: 28px !important;
-    text-align: center !important;
-  }
-  .text-afilacion1 {
-    font-size: 18px !important;
-  }
-  .text-afilacion2 {
-    font-size: 18px !important;
-    text-align: center !important;
-  }
-  .text-afilacion4 {
-    font-size: 16 !important;
-  }
-  .bnt-cont-reg {
-    text-align: center !important;
-    //  max-width: 280px !important;
-    //margin: auto !important;
-  }
-  .title-rp-emp {
-    text-align: left !important;
-    font-size: 28px !important;
-  }
-  .title-conf-ser {
-    text-align: left !important;
-    font-size: 28px !important;
-    padding: 0em !important;
-  }
-  .seleccionado-card {
-    border: 0px !important;
-  }
   #cont-empresa-editar {
     width: 100% !important;
     padding: 2em 9em !important;
     padding-left: 9rem !important;
   }
-  .img-login-ing {
-    width: 475px !important;
-    height: 361px !important;
-    position: absolute;
-    bottom: 0;
-  }
-  .reponsive-img-login {
-    margin-left: 0px !important;
-  }
-  .btn-agreagr-s {
-    width: 100% !important;
-  }
-  .btn-finalizar-s {
-    text-align: center;
-    width: 100% !important;
-    max-width: initial !important;
-  }
-  .br-none-escritorio {
-    display: none !important;
-  }
-  .container-beneficios {
-    padding: 0em 0em 0em !important;
-  }
-  .cont-logo {
-    padding-bottom: 2em !important;
-  }
   .btn-rp-password {
     margin-bottom: 1.5em !important;
-  }
-  .reponsive-landig {
-    display: block !important;
-  }
-  .reponsive-landig1 {
-    display: none !important;
   }
 }
 
 @media screen and (max-width: 1000px) {
-  .title-text-pago-sub {
-    font-size: 14px;
-  }
   .title-login {
-    //  font-size : 30px !important;
     padding-bottom: 1em;
-    margin-left: 0px !important;
+    margin-left: 0 !important;
   }
-  //  .img-simple {
-  //      width : 100% !important;
-  //      height: auto !important;
-  //  }
   .btn-fn {
     display: none !important;
-  }
-  .btn-fn1 {
-    display: block !important;
   }
 }
 
 @media screen and (max-width: 991px) {
-  .reponsive-afilacion {
-    margin: 0em 2em !important;
-  }
-  .img-cobro-simple {
-    height: 200px !important;
-    width: 368px !important;
-  }
-  .card-medio-pago {
-    padding: 0px !important;
-    width: 116px !important;
-    height: 161px !important;
-  }
-  .formulario-reponsive {
-    padding: 2.5em 11em !important;
-  }
-  .reponsive-img-login {
-    display: none !important;
-  }
-  .reponsive-img-login1 {
-    display: block !important;
-  }
-  .img-login-ing {
-    position: initial !important;
-    bottom: 0;
-  }
   #btn-regresar {
     display: none !important;
   }
 }
 
-@media screen and (max-width: 860px) {
-  .img-pagos {
-    width: 170px !important;
-    height: 300px !important;
-    left: -15px;
-  }
-
-  .img-como-funciona {
-    width: 170px !important;
-    height: 300px !important;
-    margin: auto !important;
-    position: relative !important;
-    margin-bottom: -46px !important;
-  }
-}
-
 @media screen and (max-width: 800px) {
-  body {
-    //font-size: 0.8em !important;
-  }
   #justify-reponsive {
     justify-content: center !important;
   }
-  .content-landing {
-    margin-left: 0px !important;
-  }
   .title-landing {
-    margin-left: 0px !important;
-  }
-  .subtitle-landing {
-    margin-left: 0px !important;
-  }
-  .title-simple-pago {
-    font-size: 32px !important;
-    line-height: 0.94 !important;
+    margin-left: 0 !important;
   }
   .btn-eureca-green {
     width: 192px !important;
     height: 48px !important;
   }
-  .btn-eureca-green-register {
-    width: 192px !important;
-    height: 48px !important;
-  }
-  .text-simple-pago {
-    font-size: 18px !important;
-    line-height: 1.11 !important;
-  }
-  .title-sub-simple-pago {
-    font-size: 20px !important;
-    line-height: 0.95 !important;
-  }
-  .content-img-simple {
-    padding-top: 0rem !important;
-  }
-  .title-beneficio {
-    font-size: 30px !important;
-  }
-  .landings-footer {
-    height: auto !important;
-  }
-  .img-beneficios-repn {
-    width: 80%;
-    margin-bottom: 3em !important;
-  }
-  .btn-landigs-container {
-    // margin-left: 80px;
-    padding: 3em 0em 1.5em !important;
-    //text-align: center;
-  }
-  .btn-landigs-registro {
-    padding: 2em 0em 0em !important;
-    text-align: center !important;
-  }
-  .cuadro-form {
-    width: 100% !important;
-    //  padding: 0em 5em !important;
-  }
-  .cuadro-ruc {
-    width: 100% !important;
-  }
   .cont-login {
-    padding: 0em 2em !important;
+    padding: 0 2em !important;
     width: 60% !important;
-  }
-
-  .terminos-title {
-    font-size: 16px !important;
-  }
-  .terminos-body {
-    font-size: 14px !important;
-    padding: 1.5rem !important;
   }
   .ppt-5 {
     padding-top: 1.5rem !important;
   }
   .pp-5 {
     padding: 1.5rem !important;
-  }
-  .ppl-5 .ppx-5 {
-    padding-left: 1.5rem !important;
-    padding-top: 1.5rem !important;
-  }
-  .ps-content {
-    padding: 0em !important;
   }
   .formulario {
     width: 100% !important;
@@ -457,57 +99,13 @@
   .ppr-5 {
     padding-right: 1.5rem !important;
   }
-  .btn-emp {
-    margin: 0.5em !important;
-  }
-  .cont-txt-beneficio {
-    padding: 0em 0.5em !important;
-  }
   .text-footer {
     font-size: 12px !important;
     text-align: center !important;
   }
-  //  .cuadro-canales {
-  //      width  : 146px !important;
-  //      height : 193px !important;
-  //      padding: .5em !important;
-  //  }
-  //   .formulario-reponsive {
-  //       padding: 2em 8em !important;
-  //   }
   #cont-empresa-editar {
     padding: 2em 2em !important;
     padding-left: 2rem !important;
-  }
-  .img-pagos {
-    width: 142px !important;
-    height: 250px !important;
-    left: -18px !important;
-    margin: auto !important;
-    //  position: initial !important;
-  }
-
-  .img-como-funciona {
-    width: 142px !important;
-    height: 250px !important;
-    left: -18px !important;
-    margin: auto !important;
-    position: relative !important;
-    margin-bottom: -38px !important;
-  }
-  //  .reponsive-afilacion {
-  //      margin: 0em 5em !important;
-  //  }
-  .img-cobro-simple {
-    height: 224px !important;
-    width: 403px !important;
-    padding-top: 45px !important;
-  }
-  .formulario-reponsive {
-    padding: 2.5em 11em !important;
-  }
-  .btn-rg {
-    margin-bottom: 16px !important;
   }
   .cuadro {
     width: 656px !important;
@@ -515,379 +113,64 @@
     padding-right: 52px !important;
     padding-left: 52px !important;
   }
-  .label-title-parte {
-    font-size: 18px !important;
-    line-height: 1.33 !important;
-    margin-bottom: 34px !important;
-  }
   .block-right {
     margin-left: 10px !important;
-  }
-  .label-title-sub-parte {
-    font-size: 18px !important;
-    line-height: 0.94 !important;
-    margin-bottom: 16px !important;
-  }
-  .img-completed-successful {
-    width: 192px !important;
-    height: 231px !important;
   }
 }
 
 @media screen and (max-width: 780px) {
-  .formulario-reponsive {
-    padding: 2em 2em !important;
-  }
   .cont-login {
     width: 70% !important;
-  }
-  .formulario-reponsive {
-    padding: 2.5em 10em !important;
-  }
-
-  .text-regresar {
-    display: none !important;
-  }
-  .title-rp-emp {
-    text-align: center !important;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .reponsive-afilacion {
-    margin: 0em 0em !important;
-  }
-  .cuadro-canales {
-    width: 135px !important;
-    height: 165px !important;
-    padding: 1em !important;
-  }
-  .title-contacto-sub-right-correo {
-    text-align: left !important;
-  }
-  .title-contacto-sub-right-numero {
-    text-align: left !important;
-  }
-  .title-contacto-sub-right-contacto {
-    text-align: left !important;
-  }
-  .img-pagos {
-    width: 170px !important;
-    height: 250px !important;
-    left: 0 !important;
-    margin: auto !important;
-    position: initial !important;
-  }
-  .img-como-funciona {
-    width: 170px !important;
-    height: 250px !important;
-    left: 0 !important;
-    margin: auto !important;
-    //position: initial !important;
-    position: relative !important;
-    margin-bottom: -21px !important;
-  }
-  .img-cobro-simple {
-    width: 256px !important;
-    height: 141px !important;
-    right: 0em !important;
-    padding-top: 0px !important;
-    //  position: initial !important;
-  }
-  .formulario-reponsive {
-    padding: 2.5em 5em !important;
   }
 }
 
 @media screen and (max-width: 700px) {
-  body {
-    //font-size: 0.8em !important;
-  }
-  //  .img-pagos {
-  //      width : 150px !important;
-  //      height: 250px !important;
-  //      left  : 0px !important;
-  //  }
-  .reponsive-emp {
-    display: none !important;
-  }
-  .reponsive-emp1 {
-    display: flex !important;
-  }
-  .cuadro-form {
-    width: 100% !important;
-    //  padding: 0em .5em !important;
-  }
-
   .cont-login {
     width: 80% !important;
     padding: 1.5em 2em !important;
   }
-  .formulario-reponsive {
-    padding: 2em 4.5em !important;
-  }
 }
 
 @media screen and (max-width: 650px) {
-  .landings-footer {
-    height: auto !important;
-    text-align: center;
-    padding: 1.4em 0em !important;
-  }
-  .logo-footer {
-    margin: 0em 0em 0.8em;
-  }
-  .margen {
-    padding: 0.5em !important;
-    //  padding-left : 36px;
-    //  padding-right: 56px;
-  }
-  .cont-txt-beneficio {
-    padding: 0em 0.5em !important;
-  }
-  .cuadro-canales {
-    width: 138px !important;
-    padding: 1em !important;
-  }
-  .reponsive-afilacion {
-    padding: 0em !important;
-  }
   .none-footer {
     display: none !important;
-  }
-  .none-footer1 {
-    display: block !important;
   }
 }
 
 @media screen and (max-width: 600px) {
-  body {
-    //font-size: 0.8em !important;
-  }
-  .reponsive-tex-pago {
-    display: block !important;
-  }
-  .reponsive-tex-pago1 {
-    display: none !important;
-  }
   .title-pago {
     font-size: 22px !important;
     line-height: 1 !important;
     text-align: center !important;
-    -webkit-text-stroke: 0px #ffffff !important;
-    //padding: 0em 0em !important;
-    //padding: 0px !important;
-  }
-  .title-text-pago-sub {
-    font-size: 14px !important;
-    line-height: normal !important;
-  }
-  .title-text-sub-que-necesito {
-    font-size: 15px !important;
-    line-height: 1.13 !important;
+    -webkit-text-stroke: 0 #ffffff !important;
   }
   .container {
-    //padding: 0em 2em !important;
-    padding: 0em 2em !important;
-  }
-  .img-pagos {
-    margin: auto;
-    width: 135px !important;
-    height: 200px !important;
-    position: relative !important;
-    // left: auto !important;
-  }
-  .img-como-funciona {
-    width: 135px !important;
-    height: 200px !important;
-    margin: auto !important;
-    position: relative !important;
-    margin-bottom: -18px !important;
-    //bottom: -10px !important;
-    //margin-bottom: -150px;
+    padding: 0 2em !important;
   }
   .title-login {
     font-size: 22px !important;
   }
-  .swal2-title {
-    font-size: 16px !important;
-  }
-  .text-titulo-pro {
-    font-size: 22px !important;
-  }
-  .cuadro-canales {
-    width: 130px !important;
-    height: 180px !important;
-  }
-  .formulario-reponsive {
-    padding: 2em 4em !important;
-  }
 }
 
 @media screen and (max-width: 570px) {
-  .title-simple-pago {
-    font-size: 22px !important;
-    text-align: center !important;
-    line-height: 1 !important;
-    margin-top: 15px !important;
-  }
-  .title-sub-simple-pago {
-    font-size: 16px !important;
-    text-align: center !important;
-    line-height: 1.19 !important;
-  }
-  .text-simple-pago {
-    font-size: 16px !important;
-    text-align: center !important;
-  }
-  .title-beneficio {
-    font-size: 22px !important;
-    margin: 0 !important;
-  }
-  .title-beneficio-sub {
-    font-size: 16px !important;
-    line-height: 1 !important;
-  }
-  .text-beneficio {
-    font-size: 14px !important;
-    line-height: 1 !important;
-  }
-  .img-beneficios-repn {
-    width: 100% !important;
-  }
-  .title-contacto {
-    font-size: 22px !important;
-    margin: 0px !important;
-  }
-  .title-contacto-sub {
-    font-size: 14px !important;
-    font-weight: normal !important;
-  }
-  .title-contacto-sub-right-correo {
-    font-size: 14px !important;
-    text-align: left !important;
-  }
-  .title-contacto-sub-right-numero {
-    font-size: 14px !important;
-    text-align: left !important;
-  }
-  .title-contacto-sub-right-contacto {
-    font-size: 14px !important;
-    text-align: left !important;
-  }
-  .texto-azul {
-    font-size: 22px !important;
-    padding-bottom: 1em;
-    text-align: center !important;
-  }
   .descripcion {
     font-size: 12px !important;
     text-align: center !important;
   }
-  // .btn-eureca-green {
-  //     width: 220px !important;
-  // }
-  .ps-content {
-    padding: 0em 0.1em !important;
-  }
-  //  .ppr-5 {
-  //      padding-right: 1rem !important;
-  //  }
-  .img-beneficios {
-    width: 256px !important;
-    height: 214px !important;
-  }
-  .img-cobro-simple {
-    width: 256px !important;
-    height: 141px !important;
-    right: 0em !important;
-    position: initial !important;
-    padding-top: 0px !important;
-  }
-  .content-img-simple {
-    margin-top: 10px !important;
-    width: 256px !important;
-    height: 141px !important;
-  }
-  .cont-txt-beneficio {
-    padding: 0em 0.5em !important;
-  }
-  .dpt1 {
-    display: none !important;
-  }
-  .regt {
-    margin-top: 2em !important;
-    display: block !important;
-  }
-  .title-afilacion {
-    font-size: 22px !important;
-  }
-  .text-afilacion1 {
-    font-size: 14px !important;
-    text-align: center !important;
-  }
-  .text-afilacion2 {
-    font-size: 14px !important;
-  }
-  .text-afilacion4 {
-    font-size: 16px !important;
-  }
-  .repnsive-nbt-af {
-    display: none !important;
-  }
-  .repnsive-nbt-af1 {
-    display: block !important;
-    margin: 2em 2em 4em 2em !important;
-  }
-  .title-rp-emp {
-    text-align: center !important;
-    font-size: 20px !important;
-    margin-top: 15px;
-  }
   .label-text-ruc {
     font-size: 16px !important;
   }
-  .title-completa-datos {
-    text-align: left !important;
-  }
-  .title-conf-ser {
-    text-align: center !important;
-    font-size: 22px !important;
-  }
-  .acepto {
-    font-size: 12px !important;
-  }
-  .cont-logo {
-    text-align: center !important;
-  }
   .img-login {
-    margin-left: 0px !important;
+    margin-left: 0 !important;
     width: 134px !important;
     height: 40px !important;
-    padding: 0em 0 0em 0 !important;
-  }
-  .repn-ini {
-    display: none !important;
+    padding: 0 0 0 0 !important;
   }
   #text-olv {
-    padding: 0em !important;
+    padding: 0 !important;
   }
   #idCerrar {
     position: absolute;
-  }
-  .img-logo-menu {
-    width: 110px !important;
-    height: 40px !important;
-  }
-  .img-login-ing {
-    width: 273px !important;
-    height: 208px !important;
-  }
-  .subtitle-servicio {
-    font-size: 16px !important;
-  }
-  .btn-agreagr-s {
-    width: 100% !important;
   }
   .sub-el {
     text-align: center;
@@ -895,80 +178,14 @@
   .cont-login {
     width: 100% !important;
   }
-  .reponsive-afilacion {
-    display: none !important;
-  }
-  .reponsive-afilacion1 {
-    display: block !important;
-  }
-  .cuadro-canales {
-    margin: auto !important;
-    padding-bottom: 0.8em !important;
-    height: auto !important;
-    margin-bottom: 0.8em !important;
-    width: 176px !important;
-    //  height    : 130px !important;
-  }
-  .mat-select-panel {
-    min-width: 220px !important;
-    max-width: 100% !important;
-    //  transform: rotateY(45deg) !important;
-  }
-  .mat-option-text {
-    font-size: 12px !important;
-  }
-  .btn-landigs-registro {
-    padding: 0em 0em 0em !important;
-  }
-  .text-afilacion3 {
-    font-size: 12px !important;
-  }
-  .btn-rg {
-    margin-bottom: 1em !important;
-  }
-  .btn-widt {
-    width: 192px !important;
-  }
-  .btn-landigs-container {
-    //padding: 3em 0em 1.5em !important;
-    //justify-content: center !important;
-    align-items: center !important;
-    //margin-top: 40px;
-    //margin: 0px auto !important;
-    padding: 2.5em 0em 0em 0em !important;
-  }
-  .btn-reg {
-    margin-bottom: 12px !important;
-  }
   .text-titulo {
     font-size: 16px !important;
   }
   .text-green-d {
     font-size: 16px !important;
   }
-  .reponsive-servicio-pago {
-    display: none !important;
-  }
-  .reponsive-servicio-pago1 {
-    display: block !important;
-  }
-  .card-medio-pago {
-    margin: auto;
-    padding: 0em;
-    padding-bottom: 0.8em !important;
-    height: auto !important;
-    margin-bottom: 0.8em;
-    width: 176px !important;
-    // height: 170px !important;
-  }
   .br-none-mobil {
     display: block !important;
-  }
-  .br-none-tablet {
-    display: none !important;
-  }
-  .formulario-reponsive {
-    padding: 2em 2em !important;
   }
   .img-information {
     margin: 10px 4px auto 2px !important;
@@ -976,10 +193,7 @@
   .text-message-name {
     font-size: 12px !important;
     line-height: 1.25 !important;
-    margin: 7px 1px auto 0px !important;
-  }
-  .cuadro-form {
-    //height: 545px !important;
+    margin: 7px 1px auto 0 !important;
   }
   small {
     font-size: 12px !important;
@@ -990,29 +204,9 @@
   .cuadro {
     width: 272px !important;
     height: 440px !important;
-    padding-right: 0px !important;
-    padding-left: 0px !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
     margin-top: 18px !important;
     flex-direction: column !important;
-  }
-  .img-completed-successful {
-    width: 104px !important;
-    height: 125px !important;
-  }
-  .label-title-parte {
-    font-size: 16px !important;
-    line-height: 1.19 !important;
-    margin-bottom: 25px !important;
-  }
-  .label-title-sub-parte {
-    font-size: 16px !important;
-    line-height: 1.06 !important;
-    margin-bottom: 5px !important;
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  body {
-    //font-size: 0.75em !important;
   }
 }
