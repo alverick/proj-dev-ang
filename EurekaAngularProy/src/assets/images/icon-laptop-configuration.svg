@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #0039a6;
+      }
+
+      .cls-3 {
+        fill: #001e5f;
+      }
+
+      .cls-4 {
+        fill: #fff;
+      }
+
+      .cls-5 {
+        fill: #83c3eb;
+      }
+
+      .cls-6 {
+        fill: none;
+        stroke: #0039a6;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 1.21px;
+      }
+
+      .cls-7 {
+        fill: #05be50;
+      }
+
+      .cls-7, .cls-2 {
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <g id="Capa_1" data-name="Capa 1">
+    <g>
+      <circle class="cls-5" cx="96" cy="96" r="96"/>
+      <g>
+        <g>
+          <path class="cls-2" d="m158.26,138.52H34.45c-4.19,0-7.59-2.02-7.59-5.75v-1.25h139v1.25c0,3.73-3.4,5.75-7.59,5.75"/>
+          <polygon class="cls-7" points="33.85 124.52 123.85 124.52 123.85 60.52 33.85 60.52 33.85 124.52"/>
+          <path class="cls-2" d="m38.01,60.52h81.69c2.29,0,4.15,1.91,4.15,4.26v59.74H33.85v-59.74c0-2.35,1.86-4.26,4.15-4.26m85.65-7H34.05c-3.98,0-7.2,3.17-7.2,7.09v70.91h104V60.61c0-3.92-3.22-7.09-7.2-7.09"/>
+        </g>
+        <g>
+          <rect class="cls-4" x="42.09" y="68.54" width="42.76" height="38.19" rx="2.87" ry="2.87"/>
+          <path class="cls-3" d="m82.79,106.73h-38.65c-1.13,0-2.06-.93-2.06-2.06v-4.38h42.76v4.38c0,1.13-.93,2.06-2.06,2.06Z"/>
+          <rect class="cls-1" x="50.58" y="90.94" width="25.77" height="5.71" rx="1.21" ry="1.21"/>
+          <line class="cls-6" x1="54.9" y1="78.64" x2="45.99" y2="78.63"/>
+          <line class="cls-6" x1="81.03" y1="73.42" x2="45.99" y2="73.37"/>
+          <line class="cls-6" x1="71.32" y1="83.9" x2="45.99" y2="83.85"/>
+          <line class="cls-6" x1="71.32" y1="78.66" x2="58.22" y2="78.63"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

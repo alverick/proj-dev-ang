@@ -7,12 +7,7 @@
       nueva contraseña
     </div>
 
-    <form
-      id="login-form"
-      [formGroup]="Cambia"
-      (ngSubmit)="SubmitCambia()"
-      autocomplete="off"
-    >
+    <form [formGroup]="Cambia" (ngSubmit)="SubmitCambia()" autocomplete="off">
       <div class="tw-pb-4">
         <cs-label-control
           class="tw-w-full"

@@ -88,8 +88,8 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
       title: 'Eliminar',
       showCancelButton: true,
       showConfirmButton: true,
-      confirmButtonText: 'CONFIRMAR',
-      cancelButtonText: 'CANCELAR',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
       onOpen: drawPopup,
     }).then((r) => {
       if (r.value) {

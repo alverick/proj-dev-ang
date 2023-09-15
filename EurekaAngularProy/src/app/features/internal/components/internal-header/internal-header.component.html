@@ -21,25 +21,24 @@
       <li class="nav-item dropdown ml-4">
         <a
           href="#"
-          class="dropdown-toggle no-caret tw-px-2 tw-h-full tw-flex tw-items-center"
+          class="dropdown-toggle no-caret tw-px-2 tw-h-full tw-flex tw-items-center hover:tw-no-underline"
           id="lnkMessages"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <div *ngIf="notify.total > 0" class="badge">
-            <img
-              class="badge-bg"
-              src="../../../../assets/images/badge-bg.svg"
-              alt="badge"
-            />
-            <span class="badge-icon">{{ notify.total }}</span>
-          </div>
-          <img
-            class="bell"
-            src="../../../../assets/images/bell.svg"
-            alt="bell"
-          />
+          <i
+            *ngIf="notify.total <= 0"
+            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
+          ></i
+          ><i
+            *ngIf="notify.total > 0"
+            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
+            pBadge
+            iconPos="left"
+            [value]="notify.total.toString(10)"
+            severity="danger"
+          ></i>
         </a>
         <div
           class="dropdown-menu scroll-menu dropdown-menu-right"
@@ -132,11 +131,7 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <img
-            class="perfil"
-            src="../../../../assets/images/person.svg"
-            alt="Perfil"
-          />
+          <img class="perfil" src="assets/images/person.svg" alt="Perfil" />
         </a>
         <div
           class="dropdown-menu dropdown-menu-right"
@@ -151,24 +146,23 @@
       <li class="nav-item dropdown mr-3">
         <a
           href="#"
-          class="nav-link dropdown-toggle no-caret"
+          class="nav-link dropdown-toggle no-caret hover:tw-no-underline"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <div *ngIf="notify.total > 0" class="badge">
-            <img
-              class="badge-bg"
-              src="../../../../assets/images/badge-bg.svg"
-              alt="badge"
-            />
-            <span class="badge-icon">{{ notify.total }}</span>
-          </div>
-          <img
-            class="bell"
-            src="../../../../assets/images/bell.svg"
-            alt="bell"
-          />
+          <i
+            *ngIf="notify.total <= 0"
+            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
+          ></i
+          ><i
+            *ngIf="notify.total > 0"
+            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
+            pBadge
+            iconPos="left"
+            [value]="notify.total.toString(10)"
+            severity="danger"
+          ></i>
         </a>
         <div
           class="dropdown-menu scroll-menu dropdown-menu-right"

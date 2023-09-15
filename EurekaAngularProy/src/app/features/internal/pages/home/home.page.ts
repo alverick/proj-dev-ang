@@ -480,7 +480,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
-      confirmButtonText: 'CANCELAR',
+      confirmButtonText: 'Cancelar',
       onOpen: drawPopup,
     });
   }
@@ -645,8 +645,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         text: message,
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: 'CONFIRMAR',
-        cancelButtonText: 'CANCELAR',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
       })
       .then((result) => {
         if (result.value) {
