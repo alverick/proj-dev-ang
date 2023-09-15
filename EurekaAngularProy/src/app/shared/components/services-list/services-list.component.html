@@ -25,12 +25,11 @@
     </div>
   </div>
   <div
-    class="tw-py-8 tw-my-6 tw-w-full tw-px-10 box-shadow sm:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-3"
-    [ngClass]="{ 'tw-grid': !empty }"
+    class="tw-py-8 tw-my-6 tw-w-full tw-px-10 box-shadow sm:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-3 tw-grid"
   >
     <div
       *ngIf="empty"
-      class="empty tw-text-extended-grey-2 tw-text-3xl tw-text-center tw-flex tw-items-center tw-justify-center"
+      class="empty tw-text-extended-grey-2 tw-text-3xl tw-text-center tw-flex tw-items-center tw-justify-center tw-col-span-3"
     >
       {{ message }}
     </div>
