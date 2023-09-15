@@ -6,11 +6,9 @@
   class="tw-max-w-2xl"
 >
   <div
-    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-20 tw-py-14"
+    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-16 tw-py-14"
   >
-    <h2 class="tw-font-medium tw-text-2xl tw-mb-7">
-      Configuración de tu servicio
-    </h2>
+    <h2 class="tw-font-medium tw-text-2xl tw-mb-7">Configura tu servicio</h2>
     <div class="form-controls tw-max-w-xl">
       <div class="form-elm tw-mb-5">
         <div class="tw-font-medium">
@@ -80,7 +78,7 @@
               pRipple
               type="button"
               icon="pi pi-times"
-              class="p-button-outlined"
+              class="tw-bg-extended-grey-1 p-button-text input-button"
               (click)="showDropdown()"
             ></button>
           </div>
@@ -113,18 +111,20 @@
     }"
   >
     <button
+      pButton
+      pRipple
+      class="tw-w-full md:tw-w-56 p-button-outlined"
       *ngIf="showCancel"
       type="button"
       (click)="onCancel()"
-      class="button-outline-green tw-w-56 tw-text-center"
-    >
-      CANCELAR
-    </button>
+      label="Cancelar"
+    ></button>
     <button
+      pButton
+      pRipple
+      class="tw-w-full md:tw-w-56"
       type="submit"
-      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
-    >
-      SIGUIENTE
-    </button>
+      label="Siguiente"
+    ></button>
   </div>
 </form>

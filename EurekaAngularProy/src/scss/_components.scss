@@ -15,6 +15,10 @@
     }
   }
 
+  .box-shadow {
+    @apply tw-bg-white tw-rounded-md tw-shadow tw-border-extended-grey-4 tw-border;
+  }
+
   .onboarding-step {
     &.shepherd-has-title .shepherd-content .shepherd-header {
       @apply tw-bg-transparent tw-text-xs tw-pb-1;

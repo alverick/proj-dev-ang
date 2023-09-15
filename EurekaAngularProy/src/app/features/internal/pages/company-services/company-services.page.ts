@@ -71,8 +71,8 @@ export class CompanyServicesPage {
           title,
           showCancelButton: true,
           showConfirmButton: true,
-          confirmButtonText: 'CONFIRMAR',
-          cancelButtonText: 'CANCELAR',
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Cancelar',
         })
         .then((confirm) => {
           if (confirm.value) {

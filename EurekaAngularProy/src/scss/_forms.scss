@@ -170,9 +170,13 @@ body {
         margin-top: auto;
       }
 
-      &.p-highlight .p-steps-number {
-        background-color: var(--primary-green-1);
-        color: #fff;
+      &.p-highlight {
+        .p-menuitem-link {
+          .p-steps-number {
+            background-color: var(--primary-green-1);
+            color: #fff;
+          }
+        }
       }
 
       .p-menuitem-link {
@@ -185,11 +189,12 @@ body {
         }
 
         .p-steps-number {
-          color: #fff;
-          background-color: var(--primary-green-1);
-          border: 1px solid #fff;
+          color: var(--primary-green-1);
+          background-color: #fff;
+          border: 1px solid var(--primary-green-1);
           top: 0;
           margin-bottom: 0;
+          transition: all 0.5s;
         }
       }
 
@@ -261,22 +266,63 @@ body {
       }
     }
 
-    &:enabled:hover {
-      background-color: var(--primary-green-2);
-      color: #ffffff;
-      border-color: var(--primary-green-2);
+    &:enabled {
+      &:hover,
+      &:active {
+        background-color: var(--primary-green-2);
+        color: #ffffff;
+        border-color: var(--primary-green-2);
+      }
     }
 
     &.p-button-secondary,
     &.p-button-secondary > .p-button {
       color: #fff;
       background: var(--secondary-blue-1);
+      border: 1px solid var(--secondary-blue-1);
+    }
+
+    &.p-button-third,
+    &.p-button-third > .p-button {
+      color: #fff;
+      background: var(--extended-palette-watermelon-1);
+      border: 1px solid var(--extended-palette-watermelon-1);
+
+      &:enabled {
+        &:hover,
+        &:active {
+          background-color: var(--extended-palette-watermelon-2);
+          color: #ffffff;
+          border-color: var(--extended-palette-watermelon-2);
+        }
+      }
+    }
+
+    &.p-button-white,
+    &.p-button-white > .p-button {
+      color: var(--primary-green-1);
+      background: var(--grises-ibk-white);
+      border: 1px solid var(--grises-ibk-white);
+
+      &:enabled {
+        &:hover,
+        &:active {
+          color: var(--primary-green-1);
+          background-color: var(--grises-grey-4);
+          border-color: var(--grises-grey-4);
+        }
+      }
     }
 
     &:disabled {
       opacity: 1;
       color: var(--grises-grey-2);
       border-color: var(--grises-grey-2);
+    }
+
+    &.input-button {
+      font-size: 10px;
+      padding: 0.2rem;
     }
   }
 
@@ -528,8 +574,7 @@ body {
         background: white;
         color: #000;
         font-weight: 400;
-        border-color: transparent;
-        @apply tw-px-6;
+        @apply tw-px-6 tw-border-extended-grey-4;
 
         &:hover {
           text-decoration: none;
@@ -543,15 +588,11 @@ body {
 
         &.p-highlight {
           .p-accordion-header-link {
-            background: white;
-            color: var(--secondary-blue-1);
-            border-color: transparent;
+            @apply tw-border-extended-grey-4 tw-text-secondary-blue-1 tw-bg-white tw-border-b-0;
           }
 
           &:hover .p-accordion-header-link {
-            background: white;
-            color: var(--secondary-blue-1);
-            border-color: transparent;
+            @apply tw-border-extended-grey-4 tw-text-secondary-blue-1 tw-bg-white tw-border-b-0;
           }
         }
       }
@@ -565,8 +606,47 @@ body {
     }
 
     .p-accordion-content {
-      border-color: transparent;
-      @apply tw-px-6 tw-py-4;
+      @apply tw-px-6 tw-py-4 tw-border-extended-grey-4 tw-border-t-0;
+    }
+
+    &.p-accordion-outline {
+      p-accordiontab {
+        .p-accordion-tab {
+          box-shadow: none;
+        }
+      }
+
+      .p-accordion-header {
+        .p-accordion-header-link {
+          @apply tw-border-white tw-bg-transparent;
+        }
+
+        &:not(.p-highlight) {
+          &:not(.p-disabled) {
+            &:hover {
+              .p-accordion-header-link {
+                @apply tw-border-white tw-bg-transparent;
+              }
+            }
+          }
+        }
+
+        &:not(.p-disabled).p-highlight {
+          &:hover {
+            .p-accordion-header-link {
+              @apply tw-border-white tw-bg-transparent;
+            }
+          }
+
+          .p-accordion-header-link {
+            @apply tw-border-white tw-bg-transparent;
+          }
+        }
+      }
+
+      .p-accordion-content {
+        @apply tw-border-white tw-bg-transparent;
+      }
     }
   }
 
@@ -600,5 +680,15 @@ body {
     font-size: 12px;
     border-radius: 20px;
     padding-left: 10px;
+  }
+
+  .p-overlay-badge {
+    .p-badge {
+      @apply tw-min-w-[1.2rem] tw-h-[1.2rem] tw-text-[0.6rem] tw-leading-[1.2rem] tw-flex tw-justify-center tw-items-center tw-p-0 tw-top-[0.2rem] tw-right-[0.2rem];
+    }
+  }
+
+  .p-badge.p-badge-danger {
+    @apply tw-bg-extended-watermelon-1;
   }
 }

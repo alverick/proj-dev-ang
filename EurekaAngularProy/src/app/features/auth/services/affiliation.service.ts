@@ -660,7 +660,7 @@ export class AffiliationService {
   showMessageNoExistsAccounts(): void {
     void swalAlert
       .fire({
-        title: '¡Abre tu Cuenta Negocios!',
+        title: 'Abre tu Cuenta Negocios',
         html: `Debes tener una cuenta corriente o ahorros persona jurídica para registrarte en Cobro Simple. <br>
 Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
         showConfirmButton: true,

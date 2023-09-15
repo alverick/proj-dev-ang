@@ -18,7 +18,6 @@ import { ShearDirective } from './directives/shear.directive';
 import { InternalComponent } from './internal.component';
 import { InternalRoutingModule } from './internal-routing.module';
 import { PAGES } from './pages';
-import { HelpHeaderIconComponent } from './pages/help/help-header-icon/help-header-icon.component';
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
 import { DebtComponent } from './pages/home/components/debt.component';
 import { PaymentDetailComponent } from './pages/home/components/payment-detail/payment-detail.component';
@@ -46,7 +45,6 @@ import { SERVICES } from './services';
     DashboardFilterComponent,
     DashboardTableComponent,
     DashboardGraphComponent,
-    HelpHeaderIconComponent,
   ],
   imports: [
     CommonModule,

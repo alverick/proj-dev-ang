@@ -6,10 +6,10 @@
   class="tw-max-w-3xl"
 >
   <div
-    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-20 tw-py-14"
+    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-16 tw-py-14"
   >
     <h2 class="tw-font-medium tw-text-2xl tw-mb-7">
-      Información de tu servicio
+      Completa la información de tu servicio
     </h2>
     <div class="form-controls tw-max-w-xl">
       <div class="form-elm">
@@ -46,7 +46,8 @@
     </div>
     <div class="form-controls tw-max-w-xl">
       <div class="tw-font-medium tw-text-extended-grey-1">
-        Selecciona los canales de pago que tendrán disponible tus clientes
+        Selecciona los canales de pago por los cuales tus clientes podrán
+        pagarte.
       </div>
       <div class="form-elm">
         <cs-label-control
@@ -92,8 +93,8 @@
       <div class="form-elm tw-pt-6">
         <cs-message-alert class="" mode="info"
           ><div class="tw-text-xs">
-            En el caso del canal Agentes, tu cliente tendrá que pagar S/ 1.50 de
-            comisión por operación.
+            En caso selecciones el canal Agentes, tu cliente tendrá que pagar S/
+            1.50 de comisión por operación.
           </div></cs-message-alert
         >
       </div>
@@ -107,18 +108,20 @@
     }"
   >
     <button
+      pButton
+      pRipple
+      class="tw-w-full md:tw-w-56 p-button-outlined"
       *ngIf="showCancel"
       type="button"
       (click)="onCancel()"
-      class="button-outline-green tw-w-56 tw-text-center"
-    >
-      CANCELAR
-    </button>
+      label="Cancelar"
+    ></button>
     <button
+      pButton
+      pRipple
+      class="tw-w-full md:tw-w-56"
       type="submit"
-      class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
-    >
-      SIGUIENTE
-    </button>
+      label="Siguiente"
+    ></button>
   </div>
 </form>

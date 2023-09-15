@@ -35,10 +35,8 @@ export class LoginPage implements OnInit {
   public loginForm: ModelFormGroup<LoginForm>;
   public submitted = false;
   public error: { ruc: string; message: string } = null;
-  public respuestaHttp: number;
   public formData: any = {};
   public rememberMe = false;
-
   inputUsuaValid = false;
   inputPassValid = false;
   validarCantRuc = false;
