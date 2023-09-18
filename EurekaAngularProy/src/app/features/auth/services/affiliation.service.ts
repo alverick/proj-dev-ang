@@ -677,7 +677,12 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
             typeElement: 'Botón',
             location: 'Modal',
           });
-          window.open('https://interbank.pe/cuenta-negocios');
+          const newWindow = window.open(
+            'https://interbank.pe/cuenta-negocios',
+            '_blank',
+            'noopener,noreferrer'
+          );
+          if (newWindow) newWindow.opener = null;
           void this.router.navigate([authFullRoutingNames.LOGIN]);
         }
       });
