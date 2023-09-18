@@ -240,7 +240,7 @@ export class LoginPage implements OnInit {
                 'Tu cuenta está siendo procesada',
                 'Estamos procesando la información de tu registro,' +
                   ' esto puede tomar un máximo 24 horas hábiles. Cuando esté lista te enviaremos un mail de Bienvenida.',
-                'ENTENDIDO'
+                'Entendido'
               );
               this.sendAdobeTrack({
                 ...actionParams,
