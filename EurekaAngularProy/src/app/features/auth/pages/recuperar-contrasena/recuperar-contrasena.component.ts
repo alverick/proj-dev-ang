@@ -68,7 +68,7 @@ export class RecuperarContrasenaComponent implements OnInit {
           if (d === true) {
             this.mensaje(
               'Hemos recibido tus datos',
-              'Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta'
+              'Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta.'
             );
             this.formulario = false;
             this.f.ruc.reset();
@@ -80,7 +80,7 @@ export class RecuperarContrasenaComponent implements OnInit {
           } else {
             this.mensaje(
               'Los datos ingresados son inválidos',
-              'Por favor, ingrese datos válidos'
+              'Por favor, verifique e ingréselos nuevamente.'
             );
           }
         });
@@ -97,13 +97,13 @@ export class RecuperarContrasenaComponent implements OnInit {
         if (d === true) {
           this.mensaje(
             'Hemos recibido tus datos',
-            'Se ha reenviado un correo electrónico con indicaciones para acceder a tu cuenta'
+            'Se ha reenviado un correo electrónico con indicaciones para acceder a tu cuenta.'
           );
           this.formulario = false;
         } else {
           this.mensaje(
             'Los datos ingresados son inválidos',
-            'Por favor, ingrese datos válidos'
+            'Por favor, verifique e ingréselos nuevamente.'
           );
         }
       });

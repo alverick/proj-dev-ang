@@ -1,12 +1,12 @@
 <cs-services-list
   class="tw-w-full"
-  [empty]="affiliation.servicesList.length == 0"
-  [message]="'Debes contar con al menos un servicio para continuar'"
+  [empty]="affiliation.servicesList.length === 0"
+  [message]="'Debes contar con al menos un servicio para continuar.'"
   (add)="createService()"
   (finish)="finalize()"
 >
   <cs-service-card
-    *ngFor="let service of affiliation.servicesList;let position=index"
+    *ngFor="let service of affiliation.servicesList; let position = index"
     [serviceData]="service"
     [position]="position"
     (delete)="actionDelete($event)"

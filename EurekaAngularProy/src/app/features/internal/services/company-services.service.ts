@@ -112,9 +112,9 @@ export class CompanyServicesService {
 
   saveAllServices() {
     if (this.services.length < 1) {
-      swalAlert.fire({
+      void swalAlert.fire({
         icon: 'warning',
-        text: `Debes contar con al menos un servicio para continuar`,
+        text: `Debes contar con al menos un servicio para continuar.`,
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
       });
