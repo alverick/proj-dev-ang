@@ -12,7 +12,7 @@ export interface Debts {
   amount: number;
   amountPayed?: number;
   interestAmount?: number;
-  totalAmount?: number | string;
+  totalAmount?: number;
   totalAmountPayed?: number;
   status: string;
   payDate: Date;
