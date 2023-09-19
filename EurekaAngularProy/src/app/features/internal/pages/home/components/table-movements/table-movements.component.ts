@@ -71,7 +71,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     { field: 'totalAmountPayed', header: 'Monto pagado' },
     { field: 'status', header: 'Estado' },
   ];
-  @Input() data = [];
+  @Input() data: Partial<Debts>[] = [];
   @Input() totalRecords: number;
   @Input() sortField = '';
   @Input() selectedRows: Debts[] = [];
@@ -188,7 +188,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     }
     if (
       rowData.status != 'PAGADO' &&
-      (rowData.totalAmount === '0' || !rowData.hasIBKPayments)
+      (rowData.totalAmount === 0 || !rowData.hasIBKPayments)
     ) {
       this.selectedRows = [...this.selectedRows, rowData];
     } else {
