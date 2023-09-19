@@ -224,7 +224,7 @@ export class LoginPage implements OnInit {
 
               this.showModal(
                 'Contraseña incorrecta',
-                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
+                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes.`
               );
               this.sendAdobeTrack({
                 ...actionParams,
@@ -252,7 +252,7 @@ export class LoginPage implements OnInit {
               this.codigo2 = false;
               this.showModal(
                 'Contraseña incorrecta',
-                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
+                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes.`
               );
 
               this.sendAdobeTrack({
@@ -280,7 +280,7 @@ export class LoginPage implements OnInit {
 
               this.showModal(
                 'Contraseña incorrecta',
-                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
+                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes.`
               );
               this.codigo2 = false;
               this.sendAdobeTrack({
@@ -310,7 +310,7 @@ export class LoginPage implements OnInit {
 
               this.showModal(
                 'Contraseña Incorrecta',
-                'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos por whatsapp al 993 119 001'
+                'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos por whatsapp al 993 119 001.'
               );
               this.intento6 = true;
               this.sendAdobeTrack({
