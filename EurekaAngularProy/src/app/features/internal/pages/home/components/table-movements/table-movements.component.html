@@ -56,8 +56,8 @@
         <td>
           <p-tableCheckbox
             *ngIf="
-              rowData.status != 'PAGADO' &&
-              (rowData.totalAmount === '0' || !rowData.hasIBKPayments)
+              rowData.status !== 'PAGADO' &&
+              (rowData.totalAmount === 0 || !rowData.hasIBKPayments)
             "
             [value]="rowData"
           ></p-tableCheckbox>
