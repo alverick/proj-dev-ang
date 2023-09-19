@@ -234,7 +234,7 @@ export class AffiliationService {
       case 1: {
         this.showMessageExistsCustomer();
         typeError =
-          'El RUC ingresado ya se encuentra registrado en Cobro Simple';
+          'El RUC ingresado ya se encuentra registrado en Cobro Simple.';
         break;
       }
       case 2:
@@ -242,7 +242,7 @@ export class AffiliationService {
         this.showMessageNoExistsAccounts();
         titleError = '¡Abre tu Cuenta Negocios!';
         typeError =
-          'Debes tener una cuenta corriente o ahorros persona jurídica';
+          'Debes tener una cuenta corriente o ahorros persona jurídica.';
         break;
       }
       default: {
@@ -436,7 +436,7 @@ export class AffiliationService {
     if (this.servicesList.length < 1) {
       void swalAlert.fire({
         icon: 'warning',
-        text: `Debes contar con al menos un servicio para continuar`,
+        text: `Debes contar con al menos un servicio para continuar.`,
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
       });
@@ -444,7 +444,7 @@ export class AffiliationService {
       this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
         category: 'warning - icon',
         action: 'modal-view',
-        detail: 'Debes contar con al menos un servicio para continuar',
+        detail: 'Debes contar con al menos un servicio para continuar.',
         location: 'Modal',
       });
 
@@ -651,7 +651,7 @@ export class AffiliationService {
   showMessageExistsCustomer(): void {
     void swalAlert.fire({
       icon: 'warning',
-      text: `El RUC ingresado ya se encuentra registrado en Cobro Simple`,
+      text: `El RUC ingresado ya se encuentra registrado en Cobro Simple.`,
       showConfirmButton: true,
       confirmButtonText: 'Entendido',
     });
