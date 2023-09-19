@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Table, TableHeaderCheckbox } from 'primeng/table';
 
+import { Debts } from '../../../shared/models/debts';
+
 @Injectable()
 export class SelectAllTableService {
   overridePrimeNGTableMethods() {
@@ -15,8 +17,8 @@ export class SelectAllTableService {
           this.isAllFilteredValuesChecked()
         );
       } else {
-        const val = this.dt.value;
-        const enabledRows = this.dt.value.filter(
+        const val: Partial<Debts>[] = this.dt.value as Partial<Debts>[];
+        const enabledRows = (this.dt.value as Partial<Debts>[]).filter(
           (rowData) =>
             rowData.status !== 'PAGADO' &&
             (rowData.totalAmount === 0 || !rowData.hasIBKPayments)

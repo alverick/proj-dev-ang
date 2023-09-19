@@ -78,7 +78,10 @@ export class RecuperarContrasenaComponent implements OnInit {
             // al ocultar la pantalla se mostrara en la parte de arriba la pagina
             this.router.navigate([authFullRoutingNames.LOGIN]);
           } else {
-            this.mensaje('Hemos recibido tus datos', 'Ingrese datos validos');
+            this.mensaje(
+              'Los datos ingresados son inválidos',
+              'Por favor, ingrese datos válidos'
+            );
           }
         });
     }
@@ -98,7 +101,10 @@ export class RecuperarContrasenaComponent implements OnInit {
           );
           this.formulario = false;
         } else {
-          this.mensaje('Hemos recibido tus datos', 'Ingrese datos validos');
+          this.mensaje(
+            'Los datos ingresados son inválidos',
+            'Por favor, ingrese datos válidos'
+          );
         }
       });
   }
@@ -112,7 +118,7 @@ export class RecuperarContrasenaComponent implements OnInit {
       showCancelButton: false,
       showConfirmButton: true,
       cancelButtonColor: '#d33',
-      confirmButtonText: 'ENTENDIDO',
+      confirmButtonText: 'Entendido',
       onOpen: drawPopup,
     });
   }

@@ -48,8 +48,6 @@ export class LoginPage implements OnInit {
   err: boolean;
   intento6 = false;
   ruc = 0;
-
-  isTrue = false;
   codigo2 = false;
   isCaptchaValidate = true;
   hide = true;
@@ -240,7 +238,7 @@ export class LoginPage implements OnInit {
                 'Tu cuenta está siendo procesada',
                 'Estamos procesando la información de tu registro,' +
                   ' esto puede tomar un máximo 24 horas hábiles. Cuando esté lista te enviaremos un mail de Bienvenida.',
-                'ENTENDIDO'
+                'Entendido'
               );
               this.sendAdobeTrack({
                 ...actionParams,
@@ -249,17 +247,14 @@ export class LoginPage implements OnInit {
               });
             } else if (this.intentos === 4 && this.codRespuesta === 2) {
               this.loginService.errores = value.codRespuesta;
-              this.isTrue = true;
               this.codigo2 = true;
             } else if (this.intentos == 4 && this.codRespuesta == 3) {
               this.codigo2 = false;
-
               this.showModal(
                 'Contraseña incorrecta',
                 `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
 
-              this.isTrue = true;
               this.sendAdobeTrack({
                 ...actionParams,
                 state: 'Intención de envío',
@@ -273,14 +268,12 @@ export class LoginPage implements OnInit {
                 'Su cuenta se encuentra inactiva'
               );
 
-              this.isTrue = true;
               this.sendAdobeTrack({
                 ...actionParams,
                 state: 'Intención de envío',
                 typeError: 'Cuenta inactiva',
               });
             } else if (this.intentos == 5 && this.codRespuesta == 2) {
-              this.isTrue = true;
               this.codigo2 = true;
             } else if (this.intentos == 5 && this.codRespuesta == 3) {
               this.codigo2 = false;
@@ -289,7 +282,6 @@ export class LoginPage implements OnInit {
                 'Contraseña incorrecta',
                 `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes`
               );
-              this.isTrue = true;
               this.codigo2 = false;
               this.sendAdobeTrack({
                 ...actionParams,
@@ -303,7 +295,6 @@ export class LoginPage implements OnInit {
                 'Cuenta Inactiva',
                 'Su cuenta se encuentra inactiva'
               );
-              this.isTrue = true;
               this.codigo2 = false;
               this.sendAdobeTrack({
                 ...actionParams,
@@ -322,7 +313,6 @@ export class LoginPage implements OnInit {
                 'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos por whatsapp al 993 119 001'
               );
               this.intento6 = true;
-              this.isTrue = false;
               this.sendAdobeTrack({
                 ...actionParams,
                 state: 'Intención de envío',
