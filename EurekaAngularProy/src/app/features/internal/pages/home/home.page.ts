@@ -13,10 +13,18 @@ import { ShepherdService } from 'angular-shepherd';
 import * as DOMPurify from 'dompurify';
 import * as saveAs from 'file-saver';
 import { LazyLoadEvent } from 'primeng/api';
-import { all, equals, isNil, pathEq, pathOr, prop } from 'ramda';
+import {
+  all,
+  equals,
+  forEachObjIndexed,
+  isNil,
+  omit,
+  pathEq,
+  pathOr,
+  prop,
+} from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable, Subject } from 'rxjs';
-import Swal from 'sweetalert2';
 
 import { CompanyServices } from '../../../../shared/models/company';
 import { DateList } from '../../../../shared/models/dateList';
@@ -31,6 +39,12 @@ import {
 } from '../../../../shared/models/settings';
 import { User } from '../../../../shared/models/user.model';
 import { WayPay } from '../../../../shared/models/way-pay';
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+  Metadata,
+} from '../../../../shared/services/adobe-analytics.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { HomeService } from '../../../../shared/services/home.service';
 import { LoadBarService } from '../../../../shared/services/load-bar.service';
@@ -41,7 +55,7 @@ import {
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
-import { drawPopup, swalAlert } from '../../../../shared/utils/helpers/popups';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
@@ -66,7 +80,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private barLoad: LoadBarService,
     private movementsService: MovementsService,
     private router: Router,
-    private shepherdService: ShepherdService
+    private shepherdService: ShepherdService,
+    protected adobeAnalytics: AdobeAnalyticsService
   ) {
     transactionService.itemsForDelete = [];
     const navigation = this.router.getCurrentNavigation();
@@ -194,7 +209,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           title: msg,
           text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
           showCloseButton: true,
-          confirmButtonText: 'CERRAR',
+          confirmButtonText: 'Cerrar',
           didClose: () => {
             this.validateResetForm();
           },
@@ -233,17 +248,58 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     const buttonSkip = {
       text: 'Omitir',
       classes: 'btn-outline-primary',
-      type: 'cancel',
+      action: () => {
+        const position = this.getOnboardingPosition();
+        const intro = this.shepherdService.tourObject.getById('intro');
+        this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+          category: 'Home onboarding',
+          action: 'Click',
+          detail:
+            isNotNil(intro) && position === 0
+              ? `Omitir onboarding`
+              : `Cerrar onboarding`,
+          label: isNotNil(intro) && position === 0 ? `Omitir` : `Cerrar`,
+          typeElement: 'Botón',
+          location: 'Home onboarding',
+        });
+        this.shepherdService.cancel();
+      },
     };
     const buttonBack = {
       text: 'Atrás',
       classes: 'btn-outline-primary',
-      type: 'back',
+      action: () => {
+        this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+          category: 'Home onboarding',
+          action: 'Click',
+          detail: `Atrás en onboarding`,
+          label: 'Atrás',
+          typeElement: 'Botón',
+          location: 'Home onboarding',
+        });
+        this.shepherdService.back();
+      },
     };
     const buttonNext = {
       text: 'Siguiente',
       classes: 'btn-primary',
-      type: 'next',
+      action: () => {
+        const position = this.getOnboardingPosition();
+        const intro = this.shepherdService.tourObject.getById('intro');
+        const isFinal =
+          position ===
+          this.shepherdService.tourObject.steps.length - (isNil(intro) ? 0 : 1);
+
+        this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+          category: 'Home onboarding',
+          action: 'Click',
+          detail: isFinal ? 'Finalizar onboarding' : `Siguiente en onboarding`,
+          label: isFinal ? 'Finalizar' : 'Siguiente',
+          typeElement: 'Botón',
+          location: 'Home onboarding',
+        });
+        this.shepherdService.next();
+      },
     };
     this.shepherdService.defaultStepOptions = {
       classes: 'onboarding-step',
@@ -364,6 +420,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     ]);
   }
 
+  private getOnboardingPosition() {
+    const intro = this.shepherdService.tourObject.getById('intro');
+    const current = this.shepherdService.tourObject.getCurrentStep();
+    return (
+      this.shepherdService.tourObject.steps.indexOf(current) +
+      (isNil(intro) ? 1 : 0)
+    );
+  }
+
   ngOnDestroy(): void {
     this.shepherdService.complete();
   }
@@ -371,8 +436,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   getStepPositionTitle() {
     const tourObject = this.shepherdService.tourObject;
     const intro = tourObject.getById('intro');
-    const current = tourObject.getCurrentStep();
-    const position = tourObject.steps.indexOf(current) + (isNil(intro) ? 1 : 0);
+    const position = this.getOnboardingPosition();
     const steps = isNil(intro)
       ? tourObject.steps.length
       : tourObject.steps.length - 1;
@@ -382,6 +446,25 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   showOnboarding() {
     this.shepherdService.tourObject.removeStep('intro');
     this.shepherdService.start();
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home filtro',
+      action: 'Click',
+      detail: 'Abrir Onboarding',
+      label: '¿Cómo usar Cobro Simple?',
+      typeElement: 'Link',
+      location: 'Filtro',
+    });
+  }
+
+  showHelp() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home filtro',
+      action: 'Click',
+      detail: 'Abrir tutorial en Youtube',
+      label: 'Ver vídeo tutorial',
+      typeElement: 'Link',
+      location: 'Filtro',
+    });
   }
 
   updatePositionModal() {
@@ -413,6 +496,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.initialFilter;
       this.submitSearch(inputSearch, service, status, dateForFilter);
     }
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home filtro',
+      action: 'Click',
+      detail: 'Limpiar filtros',
+      label: 'Limpiar filtros',
+      typeElement: 'Botón',
+      location: 'Filtro',
+    });
   }
 
   validateResetForm() {
@@ -450,6 +541,26 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       };
       this.tableSortField = '';
       this.submitSearch(inputSearch, service, status, dateForFilter);
+
+      const formValue = omit(['asc'], this.currentFilter);
+      const metadata: Metadata[] = [];
+      forEachObjIndexed((value, key) => {
+        metadata.push({
+          key,
+          value: value as string,
+        });
+      }, formValue);
+      const actionStep: Partial<ActionEventProperties> = {
+        category: 'Home filtro',
+        action: 'Click',
+        label: 'Buscar',
+        location: 'Filtro',
+        step: 'Not available',
+        state: 'Envío exitoso',
+        metadata,
+      };
+
+      this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
     }
   }
 
@@ -473,21 +584,24 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  mesageeError(_tipo: any, titulo: string, text: string) {
-    void Swal.fire({
-      title: titulo,
+  mesageeError(_tipo: any, title: string, text: string) {
+    void swalAlert.fire({
+      title: title,
       html: text,
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
       confirmButtonText: 'Cancelar',
-      onOpen: drawPopup,
+    });
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: title,
+      action: 'modal-view',
+      detail: text,
+      location: 'Modal',
     });
   }
 
   consultaDeuda(cb: () => void = null) {
-    // eslint-disable-next-line prefer-const
-
     this.transactionService
       .getDeuda(this.currentFilter, this.selectedUniverse)
       .subscribe(() => {
@@ -540,80 +654,138 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveDebt(item: Debts) {
-    void Swal.fire({
-      title: '¿Deseas actualizar?',
-      text: '¡No podrás revertir esto!',
-      showCancelButton: true,
-      showCloseButton: true,
-      confirmButtonText: 'SI, ACTUALIZAR',
-      cancelButtonText: 'CERRAR',
-      onOpen: drawPopup,
-    }).then((result) => {
-      if (result.value) {
-        //  item.edit = false;
-        const debts = {
-          emissionDate: item.emissionDate,
-          dueDate: item.dueDate,
-          concept: item.concept,
-          amount: item.amount,
-          firstName: item.firstName,
-        };
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: '¿Deseas actualizar?',
+      action: 'modal-view',
+      detail: '¡No podrás revertir esto!',
+      location: 'Modal',
+    });
+    void swalAlert
+      .fire({
+        title: '¿Deseas actualizar?',
+        text: '¡No podrás revertir esto!',
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonText: 'Si, actualizar',
+        cancelButtonText: 'Cerrar',
+      })
+      .then((result) => {
+        if (result.value) {
+          const debts = {
+            emissionDate: item.emissionDate,
+            dueDate: item.dueDate,
+            concept: item.concept,
+            amount: item.amount,
+            firstName: item.firstName,
+          };
 
-        if (item.newStatus === '1') {
-          this.transactionService
-            .editDeuda(item.id, debts)
-            .subscribe((debtsUpdate) => {
-              if (debtsUpdate.success) {
-                void Swal.fire({
+          let title = 'Editado';
+          let text = 'Su registro ha sido editado';
+
+          const metadata: Metadata[] = [];
+          forEachObjIndexed((value, key) => {
+            metadata.push({
+              key,
+              value: value as string,
+            });
+          }, debts);
+          const actionStep: Partial<ActionEventProperties> = {
+            category: 'Home movimientos',
+            action: 'Click',
+            label: 'Guardar',
+            location: 'Movimientos',
+            step: 'Not available',
+            state: 'Envío exitoso',
+            metadata,
+          };
+
+          if (item.newStatus === '1') {
+            this.transactionService
+              .editDeuda(item.id, debts)
+              .subscribe((debtsUpdate) => {
+                if (debtsUpdate.success) {
+                  void swalAlert.fire({
+                    titleText: 'Editado',
+                    text: 'Su registro ha sido editado',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    didClose: () => {
+                      this.consultaDeuda();
+                    },
+                  });
+                } else {
+                  void swalAlert.fire({
+                    titleText: 'ERROR',
+                    text: debtsUpdate.message as string,
+                    showCloseButton: true,
+                    showCancelButton: false,
+                  });
+                  this.transactionService.resetDebts();
+                  title = 'ERROR';
+                  text = debtsUpdate.message;
+                  actionStep.state = 'Intención de envío';
+                  actionStep.typeError = debtsUpdate.message as string;
+                }
+
+                this.adobeAnalytics.trackEvent(
+                  AdobeEvent.trackFormSubmit,
+                  actionStep
+                );
+
+                this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+                  category: title,
+                  action: 'modal-view',
+                  detail: text,
+                  location: 'Modal',
+                });
+              });
+          } else if (item.newStatus === '2') {
+            this.transactionService
+              .updateDeuda(item.id, true)
+              .subscribe((statusUpdate) => {
+                this.adobeAnalytics.trackEvent(
+                  AdobeEvent.trackFormSubmit,
+                  actionStep
+                );
+
+                this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+                  category: title,
+                  action: 'modal-view',
+                  detail: text,
+                  location: 'Modal',
+                });
+
+                void swalAlert.fire({
                   titleText: 'Editado',
-                  text: 'Su registro ha sido editado',
+                  text: 'Su registro a sido editado',
                   showCloseButton: true,
                   showCancelButton: false,
-                  onOpen: drawPopup,
-                  onAfterClose: () => {
-                    this.consultaDeuda();
+                  didClose: () => {
+                    item.status = 'PAGADO';
+                    item.amountPayed = statusUpdate.payed;
+                    item.payDate = new Date();
+                    item.channel = 'Efectivo';
+                    this.showEdit = true;
+                    item.newStatus = null;
+                    item.editInput = false;
+                    item.editButton = false;
+                    item.editPending = false;
                   },
                 });
-              } else {
-                void Swal.fire({
-                  titleText: 'ERROR',
-                  text: debtsUpdate.message,
-                  showCloseButton: true,
-                  showCancelButton: false,
-                  onOpen: drawPopup,
-                });
-                this.transactionService.resetDebts();
-              }
-            });
-        } else if (item.newStatus === '2') {
-          this.transactionService
-            .updateDeuda(item.id, true)
-            .subscribe((statusUpdate) => {
-              void Swal.fire({
-                titleText: 'Editado',
-                text: 'Su registro a sido editado',
-                showCloseButton: true,
-                showCancelButton: false,
-                onOpen: drawPopup,
-                onAfterClose: () => {
-                  item.status = 'PAGADO';
-                  item.amountPayed = statusUpdate.payed;
-                  item.payDate = new Date();
-                  item.channel = 'Efectivo';
-                  this.showEdit = true;
-                  // item.edit = false;
-                  item.newStatus = null;
-                  item.editInput = false;
-                  item.editButton = false;
-                  item.editPending = false;
-                },
               });
-            });
+          }
+        } else {
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+            category: 'Home movimientos',
+            action: 'Click',
+            detail: 'Cancelar editar movimiento',
+            label: 'Cerrar',
+            typeElement: 'Botón',
+            location: 'Movimientos modal',
+          });
+          this.transactionService.resetDebts();
         }
-      } else {
-        this.transactionService.resetDebts();
-      }
-    });
+      });
   }
 
   changePage(nro: number) {
@@ -639,6 +811,22 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       message = `Esta acción va a eliminar ${totalForDelete} deudas`;
     }
 
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Eliminar movimientos seleccionados',
+      label: 'Eliminar',
+      typeElement: 'Link',
+      location: 'Movimientos',
+    });
+
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: '¿Seguro que deseas continuar?',
+      action: 'modal-view',
+      detail: message,
+      location: 'Modal',
+    });
+
     void swalAlert
       .fire({
         title: '¿Seguro que deseas continuar?',
@@ -660,12 +848,19 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 finalMessage = `Se han eliminado ${totalForDelete} registros`;
               }
 
+              this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+                category: 'Eliminado',
+                action: 'modal-view',
+                detail: finalMessage,
+                location: 'Modal',
+              });
+
               void swalAlert.fire({
                 title: 'Eliminado',
                 text: finalMessage,
                 showCloseButton: true,
                 showCancelButton: false,
-                confirmButtonText: 'CERRAR',
+                confirmButtonText: 'Cerrar',
               });
             });
             this.selectedAll = false;
@@ -677,29 +872,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           });
         }
       });
-  }
-
-  Eliminar(item: Debts) {
-    void Swal.fire({
-      title: '¿Esta Seguro de Eliminar el Registro? ',
-      showCancelButton: true,
-      showCloseButton: true,
-      confirmButtonText: 'SI, BORRALO',
-      cancelButtonText: 'CERRAR',
-      onOpen: drawPopup,
-    }).then((result) => {
-      if (result.value) {
-        this.transactionService.deleteDeuda(item.id).subscribe(() =>
-          this.consultaDeuda(() => {
-            void Swal.fire(
-              'Eliminado',
-              'Tu registro ha sido eliminado',
-              'success'
-            );
-          })
-        );
-      }
-    });
   }
 
   openDialog(service: Partial<CompanyServices>) {
@@ -723,6 +895,22 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     } else {
+      this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+        category: 'Home movimientos',
+        action: 'Click',
+        detail: 'Agregar cobros',
+        label: 'Agregar cobros',
+        typeElement: 'Link',
+        location: 'Movimientos',
+      });
+
+      this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+        category: 'Agrega cobros del servicio',
+        action: 'modal-view',
+        detail: 'Agrega cobros del servicio',
+        location: 'Modal',
+      });
+
       this.dialog
         .open(AgregaCobroComponent, { width: '899px' })
         .afterClosed()
@@ -736,6 +924,20 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 if (result && result.grabado) {
                   this.validateResetForm();
                 }
+              });
+              this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+                category: 'Home movimientos',
+                action: 'Click',
+                detail: 'Agregar cobros via web',
+                label: 'Agregar en la web',
+                typeElement: 'Botón',
+                location: 'Movimientos',
+              });
+              this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+                category: 'Agregar cobro del servicio',
+                action: 'modal-view',
+                detail: 'Formulario para agregar cobro del servicio',
+                location: 'Modal',
               });
             } else {
               const dialogRef = this.dialog.open(DialogComponent, {
@@ -751,7 +953,24 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                   });
                 }
               });
+              this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+                category: 'Home movimientos',
+                action: 'Click',
+                detail: 'Agregar cobros via excel',
+                label: 'Carga excel',
+                typeElement: 'Botón',
+                location: 'Movimientos',
+              });
             }
+          } else {
+            this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+              category: 'Home movimientos',
+              action: 'Click',
+              detail: 'Cerrar modal agregar cobros del servicio',
+              label: 'Cerrar',
+              typeElement: 'Botón',
+              location: 'Movimientos',
+            });
           }
         });
     }
@@ -759,6 +978,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   DescargarReporte() {
     if (this.enDescarga === false) {
+      this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+        category: 'Home movimientos',
+        action: 'Click',
+        detail: 'Descargar movimientos',
+        label: 'Descargar movimientos',
+        typeElement: 'Link',
+        location: 'Movimientos',
+      });
       if (this.transactionService.debtItems.data.length > 0) {
         this.enDescarga = true;
         this.barLoad.show(this.fileLoadContainer);
@@ -789,6 +1016,20 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showDetails(itm: Debts) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Ver detalle de movimiento',
+      label: 'Ver detalle',
+      typeElement: 'Link',
+      location: 'Movimientos',
+    });
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: 'Detalle de pago',
+      action: 'modal-view',
+      detail: 'Información de pago',
+      location: 'Modal',
+    });
     const dialogRef = this.dialog.open(PaymentDetailComponent, {
       width: '810px',
       disableClose: true,
@@ -817,5 +1058,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.currentFilter.asc = args.sortOrder === 1;
     }
     this.changePage(pageSelected);
+    if (pageSelected !== 1) {
+      this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+        category: 'Home movimientos',
+        action: 'Click',
+        detail: 'Cambiar pagina',
+        label: `Pagina ${pageSelected}`,
+        typeElement: 'Link',
+        location: 'Movimientos',
+      });
+    }
   }
 }

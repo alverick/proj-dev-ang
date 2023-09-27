@@ -3,8 +3,14 @@ import {
   MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
   MatLegacyDialogRef as MatDialogRef,
 } from '@angular/material/legacy-dialog';
-import { isNil } from 'ramda';
+import { forEachObjIndexed, isNil } from 'ramda';
 
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+  Metadata,
+} from '../../../../../../shared/services/adobe-analytics.service';
 import { TransactionService } from '../../../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
 
@@ -25,6 +31,7 @@ export class PaymentDetailComponent implements OnInit {
   constructor(
     private transaction: TransactionService,
     public dialogRef: MatDialogRef<PaymentDetailComponent>,
+    protected adobeAnalytics: AdobeAnalyticsService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.debtId = data.debtId;
@@ -46,6 +53,14 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   editItm(itm) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Editar pago',
+      label: 'Editar',
+      typeElement: 'Botón',
+      location: 'Movimientos - Detalle de pago',
+    });
     this.cancelItm(this.getItemEditing());
     this.isEditingRow = true;
     itm.editing = true;
@@ -64,6 +79,14 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   cancelItem() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Cancelar agregar un pago',
+      label: 'Cancelar',
+      typeElement: 'Botón',
+      location: 'Movimientos - Detalle de pago',
+    });
     this.cancelItm(this.getItemEditing());
   }
 
@@ -102,6 +125,13 @@ export class PaymentDetailComponent implements OnInit {
       }
     }
 
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: '¿Deseas Actualizar?',
+      action: 'modal-view',
+      detail: '¡No podrás revertir esto!',
+      location: 'Modal - Agregar pago',
+    });
+
     void swalAlert
       .fire({
         title: '¿Deseas Actualizar?',
@@ -118,6 +148,23 @@ export class PaymentDetailComponent implements OnInit {
             channel: itm.newChannel,
             amount: parseFloat(itm.newAmount.toString()),
           };
+          const metadata: Metadata[] = [];
+          forEachObjIndexed((value, key) => {
+            metadata.push({
+              key,
+              value: value as string,
+            });
+          }, payment);
+          const actionStep: Partial<ActionEventProperties> = {
+            category: 'Home movimientos',
+            action: 'Click',
+            label: 'Guardar',
+            location: 'Modal - Detalle de pago ',
+            step: 'Not available',
+            state: 'Envío exitoso',
+            metadata,
+          };
+
           const response = itm.id
             ? this.transaction.editPayment(this.debtId, itm.id, payment)
             : this.transaction.addPayment(this.debtId, payment);
@@ -125,6 +172,17 @@ export class PaymentDetailComponent implements OnInit {
             if (r.success) {
               this.status = r.status;
               this.loadData();
+              this.adobeAnalytics.trackEvent(
+                AdobeEvent.trackFormSubmit,
+                actionStep
+              );
+
+              this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+                category: 'Editado!',
+                action: 'modal-view',
+                detail: 'El pago ha sido editado',
+                location: 'Modal - Agregar pago',
+              });
               void swalAlert.fire({
                 titleText: 'Editado!',
                 text: 'El pago ha sido editado',
@@ -139,6 +197,17 @@ export class PaymentDetailComponent implements OnInit {
                 },
               });
             } else {
+              this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+                ...actionStep,
+                state: 'Intención de envío',
+                typeError: r.message as string,
+              });
+              this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+                category: 'ERROR',
+                action: 'modal-view',
+                detail: r.message,
+                location: 'Modal - Agregar pago',
+              });
               void swalAlert.fire({
                 titleText: 'ERROR',
                 text: r.message,
@@ -164,6 +233,14 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   addItem() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Agregar un pago',
+      label: 'Agregar un pago',
+      typeElement: 'Botón',
+      location: 'Movimientos - Detalle de pago',
+    });
     this.isEditingRow = true;
     this.items.push({
       currency: this.currency,
@@ -177,6 +254,12 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   delItm(itm) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: '¿Estás seguro que deseas eliminar el pago?',
+      action: 'modal-view',
+      detail: 'Eliminar pago',
+      location: 'Modal - Agregar pago',
+    });
     void swalAlert
       .fire({
         title: '¿Estás seguro que deseas eliminar el pago?',
@@ -187,6 +270,14 @@ export class PaymentDetailComponent implements OnInit {
       })
       .then((result) => {
         if (result.value) {
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+            category: 'Home movimientos',
+            action: 'Click',
+            detail: 'Eliminar pago',
+            label: 'Eliminar',
+            typeElement: 'Botón',
+            location: 'Movimientos - Detalle de pago',
+          });
           this.transaction.deletePayment(this.debtId, itm.id).subscribe((r) => {
             if (r.success) {
               this.status = r.status;
@@ -212,6 +303,14 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   close() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Cerrar agregar un pago',
+      label: 'Cerrar',
+      typeElement: 'Botón',
+      location: 'Movimientos - Detalle de pago',
+    });
     this.dialogRef.close({ status: this.status });
   }
 }

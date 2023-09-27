@@ -208,7 +208,7 @@
                 class="tw-cursor-pointer tw-text-primary-green-1 tw-text-xxs"
                 (click)="actionShowDetails(rowData)"
               >
-                Ver Detalle
+                Ver detalle
               </div>
             </ng-container>
             <ng-container *ngSwitchCase="'status'">
@@ -345,6 +345,7 @@
   [(visible)]="displayDialog"
   [modal]="true"
   [style]="{ width: '300px' }"
+  (onHide)="onCancel('Cerrar')"
   class="modal-edit"
 >
   <div class="tw-text-sm" *ngIf="editRowData">
@@ -430,7 +431,7 @@
     </button>
     <button
       type="button"
-      (click)="onCancel()"
+      (click)="onCancel('Cancelar')"
       class="tw-text-primary-green-1 tw-border tw-border-green-1 tw-w-44 tw-h-9 tw-text-center tw-rounded-md tw-mb-3"
     >
       Cancelar
