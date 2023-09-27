@@ -11,6 +11,10 @@ import {
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
 import { ModelFormGroup } from '../../../../shared/models/forms';
+import {
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../shared/services/adobe-analytics.service';
 import { CompanyConfigurationService } from '../../services';
 import { ChangePasswordForm } from '../../services/company-configuration.service';
 
@@ -36,8 +40,9 @@ export class CompanyConfigurationPage implements OnInit {
 
   constructor(
     public companyConfiguration: CompanyConfigurationService,
-    private activatedRoute: ActivatedRoute
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    protected adobeAnalytics: AdobeAnalyticsService
+  ) {}
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({ company, entries }: any) => {
@@ -56,11 +61,27 @@ export class CompanyConfigurationPage implements OnInit {
     });
   }
   onShowPanel() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Empresa',
+      action: 'Click',
+      detail: 'Cambiar contraseña abrir panel',
+      label: 'Cambiar contraseña',
+      typeElement: 'Link',
+      location: 'Empresa',
+    });
     this.passwordForm.reset();
     this.showSidebar = true;
   }
 
   closePanel() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Empresa',
+      action: 'Click',
+      detail: 'Cambiar contraseña cerrar panel',
+      label: 'Cerrar panel',
+      typeElement: 'Botón',
+      location: 'Empresa',
+    });
     this.passwordForm.reset();
   }
 
