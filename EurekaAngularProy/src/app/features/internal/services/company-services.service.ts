@@ -1,33 +1,50 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { isNil, pathEq } from 'ramda';
+import { forEachObjIndexed, isNil, omit, pathEq } from 'ramda';
 import { throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { parseParams, statusCodes } from '../../../shared/constants/services';
+import {
+  chargeTypeOptions,
+  dataTypeOptions,
+  interestTypeOptions,
+  parseParams,
+  paymentTypeOptions,
+  statusCodes,
+} from '../../../shared/constants/services';
 import { IServiceRemoteModel } from '../../../shared/models';
+import { ModelFormGroup } from '../../../shared/models/forms';
 import {
   CompanyService,
   ServiceService,
   ServicesFormsService,
 } from '../../../shared/services';
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+  Metadata,
+} from '../../../shared/services/adobe-analytics.service';
+import {
+  ServiceConfigurationForm,
+  ServiceEditForm,
+  ServiceFormValue,
+} from '../../../shared/services/services-forms.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 
 @Injectable()
 export class CompanyServicesService {
   services: Partial<IServiceRemoteModel>[] = [];
-  serviceForm: FormGroup;
-  serviceConfigForm: FormGroup;
-  editServiceForm: FormGroup;
+  serviceForm: ModelFormGroup<ServiceFormValue>;
+  serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
+  editServiceForm: ModelFormGroup<ServiceEditForm>;
 
   constructor(
     private companyService: CompanyService,
     private serviceForms: ServicesFormsService,
     private serviceService: ServiceService,
-    public activatedRoute: ActivatedRoute,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    protected adobeAnalytics: AdobeAnalyticsService
   ) {
     this.serviceForm = this.serviceForms.serviceForm;
     this.serviceConfigForm = this.serviceForms.serviceConfigForm;
@@ -107,11 +124,70 @@ export class CompanyServicesService {
       ...serviceValues,
     });
 
+    const metadata = [
+      {
+        key: 'Tipo de servicio',
+        value: dataTypeOptions.find((item) => dataType === item.value).label,
+      },
+      {
+        key: 'Codigo cliente',
+        value: serviceValues.debtorCode,
+      },
+      {
+        key: 'Orden a pagar',
+        value: paymentTypeOptions.find((item) => paymentType === item.value)
+          .label,
+      },
+      {
+        key: 'Pago parcial',
+        value: (partialPayment === 'S').toString(),
+      },
+      {
+        key: 'Pago mora',
+        value: (chargeInterest === 'S').toString(),
+      },
+    ];
+
+    if (chargeInterest === 'S') {
+      metadata.push(
+        {
+          key: 'Tipo cobro',
+          value: chargeTypeOptions.find((item) => chargeType === item.value)
+            .label,
+        },
+        {
+          key: 'Tipo calculo',
+          value: interestTypeOptions.find((item) => interestType === item.value)
+            .label,
+        },
+        {
+          key: 'Monto',
+          value: amount,
+        }
+      );
+    }
+
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+      category: 'Servicios agregar nuevo servicio',
+      action: 'Click',
+      label: 'Siguiente',
+      location: 'Servicios agregar',
+      step: 'Step2',
+      state: 'Envío exitoso',
+      metadata,
+    });
+
     return this.saveAllServices();
   }
 
   saveAllServices() {
     if (this.services.length < 1) {
+      this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+        category: 'warning - icon',
+        action: 'modal-view',
+        detail: 'Debes contar con al menos un servicio para continuar.',
+        location: 'Modal',
+      });
       void swalAlert.fire({
         icon: 'warning',
         text: `Debes contar con al menos un servicio para continuar.`,
@@ -207,6 +283,29 @@ export class CompanyServicesService {
       },
     } = this.editServiceForm.value;
 
+    const formValue = omit(['debt'], this.editServiceForm.value);
+    const metadata: Metadata[] = [];
+    forEachObjIndexed(
+      (value, key) => {
+        metadata.push({
+          key,
+          value: value as string,
+        });
+      },
+      { ...formValue, ...this.editServiceForm.value.debt }
+    );
+    const actionStep: Partial<ActionEventProperties> = {
+      category: 'Servicios',
+      action: 'Click',
+      label: 'Guardar',
+      location: 'Panel',
+      step: 'Not available',
+      state: 'Envío exitoso',
+      metadata,
+    };
+
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
+
     const serviceValues = parseParams(
       {
         debtorCodeCustom,
@@ -218,18 +317,18 @@ export class CompanyServicesService {
       this.services[position]
     );
 
-    let parsedName: any;
+    let parsedName: string;
     if (pathEq(['services', position, 'name'], name, this)) {
       if (
-        pathEq(
+        !pathEq(
           ['services', position, 'newNameGTPStatus'],
           statusCodes.REJECTED,
           this
         )
       ) {
-        parsedName = name;
-      } else {
         parsedName = '';
+      } else {
+        parsedName = name;
       }
     } else {
       parsedName = name;
@@ -251,7 +350,7 @@ export class CompanyServicesService {
   private saveServices() {
     const services = this.services
       .filter(
-        ({ id, name, debtorCode, newNameGTPStatus, newNameCodeGTPStatus }) => {
+        ({ name, debtorCode, newNameGTPStatus, newNameCodeGTPStatus }) => {
           if (newNameGTPStatus === statusCodes.REJECTED && isNil(name)) {
             return false;
           }
