@@ -20,6 +20,8 @@
               <a
                 class="tw-flex tw-items-center"
                 href="https://www.youtube.com/watch?v=oI4gEpfYwLQ"
+                (click)="showHelp()"
+                rel="noopener noreferrer"
                 target="_blank"
                 ><img
                   class="tw-pr-1"
@@ -30,7 +32,7 @@
               >
             </div>
           </div>
-          <div class="content">
+          <div class="content tw-py-6 lg:tw-py-4 tw-px-8 box-shadow">
             <cs-payments-filter
               [services]="services"
               [stateList]="waypayList"
@@ -49,7 +51,7 @@
             <div class="tw-text-lg">Movimientos</div>
           </div>
           <div
-            class="content"
+            class="tw-py-6 lg:tw-py-4 box-shadow content"
             [ngClass]="{ 'tw-pointer-events-none': tableMovementsInactive }"
           >
             <section class="actions tw-flex tw-items-center tw-justify-between">
@@ -74,7 +76,7 @@
                   class="download tw-cursor-pointer tw-h-full tw-flex tw-items-center tw-px-2"
                 >
                   <div
-                    class="lnk-label tw-px-4"
+                    class="lnk-label tw-px-4 tw-flex tw-items-center tw-gap-1"
                     [class.disabled]="enDescarga"
                     (click)="DescargarReporte()"
                   >
@@ -93,7 +95,7 @@
                   </div>
                 </div>
                 <div
-                  class="addDeuda tw-cursor-pointer tw-h-full tw-flex tw-items-center"
+                  class="addDeuda tw-cursor-pointer tw-h-full tw-flex tw-items-center tw-gap-1"
                 >
                   <div class="tw-px-4" data-toggle="dropdown">
                     <img

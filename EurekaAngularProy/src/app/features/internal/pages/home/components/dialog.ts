@@ -9,6 +9,11 @@ import * as saveAs from 'file-saver';
 import { Observable } from 'rxjs';
 
 import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../../shared/services/adobe-analytics.service';
+import {
   ExcelService,
   ProcessStatus,
 } from '../../../../../shared/services/excel.service';
@@ -23,7 +28,8 @@ export class DialogComponent implements OnInit {
   constructor(
     public excelService: ExcelService,
     public formBuilder: UntypedFormBuilder,
-    public dialogRef: MatDialogRef<DialogComponent>
+    public dialogRef: MatDialogRef<DialogComponent>,
+    private adobeAnalytics: AdobeAnalyticsService
   ) {}
 
   public inputXlsForm: UntypedFormGroup;
@@ -69,6 +75,16 @@ export class DialogComponent implements OnInit {
 
   openSnackBar() {
     if (!this.excelService.statusUpload) {
+      const actionStep: Partial<ActionEventProperties> = {
+        category: 'Home filtro',
+        action: 'Click',
+        label: 'Buscar',
+        location: 'Filtro',
+        step: 'Not available',
+        state: 'Envío exitoso',
+        metadata: [{ key: 'fileName', value: this.fileName }],
+      };
+
       this.progress.status = 'Subiendo';
       this.progress.mode = 'indeterminate';
       this.progress.value = 0;
@@ -78,31 +94,56 @@ export class DialogComponent implements OnInit {
           this.excelService.service.name,
           this.changestatus
         )
-        .subscribe(
-          (value) => {
+        .subscribe({
+          next: (value) => {
             this.excelService.idProcess = value.id;
             this.verifyStatus();
           },
-          (err) => {
+          error: (err) => {
+            console.log(err);
             this.excelService.statusUpload = false;
+            let message = err.message || 'Ha ocurrido un error';
             if (err.status === 400) {
+              message = 'El nombre del archivo no es correcto';
               this.excelService.errores = [
                 { description: 'El nombre del archivo no es correcto', row: 0 },
               ];
             }
-          }
-        );
+            this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+              ...actionStep,
+              state: 'Intento de envio',
+              typeError: message as string,
+            });
+          },
+        });
     } else {
       this.messageUploadExcel = this.excelService.statusUpload;
     }
   }
 
   close() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Cerrar agrega cobros del servicio',
+      label: 'Cerrar',
+      typeElement: 'Botón',
+      location: 'Modal agregar cobro excel',
+    });
     this.dialogRef.close();
   }
 
   private verifyStatus() {
     this.ready = true;
+    const actionStep: Partial<ActionEventProperties> = {
+      category: 'Home filtro',
+      action: 'Click',
+      label: 'Buscar',
+      location: 'Filtro',
+      step: 'Not available',
+      state: 'Envío exitoso',
+      metadata: [{ key: 'fileName', value: this.fileName }],
+    };
     const recursiveFunc = (value: ProcessStatus) => {
       if (!this.ready) {
         return;
@@ -113,8 +154,18 @@ export class DialogComponent implements OnInit {
         this.rowsRejected = value.rowsRejected;
         this.excelService.errores = value.errors;
         this.cuadro_errores = true;
+        this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+          ...actionStep,
+          state: 'Intento de envio',
+          typeError: 'REJECTED',
+        });
       } else if (value.status === 'FAILED') {
         const obsClose = new Observable((observer) => {
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: 'Intento de envio',
+            typeError: 'FAILED',
+          });
           void swalAlert.fire({
             title: 'Lo sentimos, no se pudo finalizar la carga de cobros',
             text: 'Por favor, revisa si algunos cobros se cargaron correctamente y luego inténtalo nuevamente.',
@@ -129,6 +180,7 @@ export class DialogComponent implements OnInit {
         this.excelService.statusUpload = false;
         this.dialogRef.close(obsClose);
       } else if (value.status === 'COMPLETED') {
+        this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
         this.excelService.statusUpload = false;
         this.excelService.errores = [];
         const obsClose = new Observable((observer) => {
@@ -138,11 +190,18 @@ export class DialogComponent implements OnInit {
           } else {
             msg = `¡Listo! Se agregaron nuevos clientes`;
           }
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+            category: msg,
+            action: 'modal-view',
+            detail:
+              'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
+            location: 'Modal',
+          });
           void swalAlert.fire({
             title: msg,
             text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
             showCloseButton: true,
-            confirmButtonText: 'CERRAR',
+            confirmButtonText: 'Cerrar',
             didClose: () => {
               observer.next();
               observer.complete();
@@ -188,7 +247,27 @@ export class DialogComponent implements OnInit {
     this.ready = false;
   }
 
-  descargarPlantilla() {
+  gotoUploadTemplate() {
+    this.ready = true;
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Ya tengo la plantilla excel',
+      label: 'Ya tengo la plantilla',
+      typeElement: 'Botón',
+      location: 'Modal agregar cobro excel',
+    });
+  }
+
+  downloadXlsTemplate() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Descargar la plantilla excel',
+      label: 'Descargar la plantilla',
+      typeElement: 'Botón',
+      location: 'Modal agregar cobro excel',
+    });
     this.excelService.GetTemplate().subscribe((r: Blob) => {
       saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
     });
