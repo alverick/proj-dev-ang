@@ -67,7 +67,7 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
         showCloseButton: true,
         showCancelButton: false,
         showConfirmButton: true,
-        confirmButtonText: 'CERRAR',
+        confirmButtonText: 'Cerrar',
         onOpen: drawPopup,
       });
     });
