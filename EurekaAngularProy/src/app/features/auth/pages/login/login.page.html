@@ -100,7 +100,10 @@
       </div>
 
       <div class="mb-3" style="text-align: left">
-        <small id="text-olv" [routerLink]="[linkRecoverPassword]"
+        <small
+          id="text-olv"
+          [routerLink]="[linkRecoverPassword]"
+          (click)="clickRecoverPassword()"
           >Recuperar contraseña
         </small>
       </div>
