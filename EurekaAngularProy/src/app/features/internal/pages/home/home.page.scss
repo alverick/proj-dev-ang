@@ -1,6 +1,7 @@
 .select-all {
   &.tw-text-extended-grey-2 {
-    filter: brightness(0) saturate(100%) invert(82%) sepia(0%) saturate(468%) hue-rotate(266deg) brightness(87%) contrast(110%);
+    filter: brightness(0) saturate(100%) invert(82%) sepia(0%) saturate(468%)
+      hue-rotate(266deg) brightness(87%) contrast(110%);
   }
 }
 
@@ -53,101 +54,6 @@
   @include font-text(12px !important, normal);
 
   color: #0d131d !important;
-}
-
-.ngx-pagination .current {
-  padding: 0.1875rem 0.625rem;
-  background: #2199e8;
-  color: #fefefe;
-  cursor: default;
-}
-
-//:host ::ng-deep .mat-form-field .mat-form-field-label {
-//  @include font-text(14px, normal !important);
-//
-//  // color: #0d131d !important;
-//  color: #0d131d !important;
-//}
-
-.ngx-pagination .disabled {
-  padding: 0.1875rem 0.625rem;
-  color: #cacaca;
-  cursor: default;
-}
-
-.ngx-pagination .disabled:hover {
-  background: transparent;
-}
-
-.ngx-pagination .pagination-next a::after,
-.ngx-pagination .pagination-next.disabled::after {
-  content: '»';
-  display: inline-block;
-  margin-left: 0.5rem;
-}
-
-.ngx-pagination .pagination-previous a::before,
-.ngx-pagination .pagination-previous.disabled::before {
-  content: '«';
-  display: inline-block;
-  margin-right: 0.5rem;
-}
-
-.ngx-pagination .show-for-sr {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-}
-
-.ngx-pagination .small-screen {
-  display: none;
-}
-
-.ngx-pagination a,
-.ngx-pagination button {
-  color: #0a0a0a;
-  display: block;
-  padding: 0.1875rem 0.625rem;
-  border-radius: 0;
-}
-
-.ngx-pagination a,
-.ngx-pagination button {
-  cursor: pointer;
-}
-
-.ngx-pagination a:hover,
-.ngx-pagination button:hover {
-  background: #e6e6e6;
-}
-
-.ngx-pagination li {
-  display: inline-block;
-}
-
-.ngx-pagination li {
-  user-select: none;
-  user-select: none;
-  user-select: none;
-  margin-right: 0.0625rem;
-  border-radius: 0;
-}
-
-.ngx-pagination {
-  margin-left: 0;
-  margin-bottom: 1rem;
-}
-
-.ngx-pagination::after {
-  clear: both;
-}
-
-.ngx-pagination::before,
-.ngx-pagination::after {
-  content: ' ';
-  display: table;
 }
 
 .numpag {
@@ -233,7 +139,6 @@
   color: #ff8900 !important;
 }
 
-
 .widget {
   width: 100%;
 
@@ -241,21 +146,11 @@
     width: 100%;
     min-height: 15px;
     @include border-radius(5px);
-
-    background-color: #fff;
-    @include box-shadows(4px, 10px, 0, rgba(0, 0, 0, 0.1), 0);
-    padding: 25px 32px;
-    @include media('>lg') {
-      padding: 15px 32px;
-    }
   }
 }
 
 .widget.lista {
   .content {
-    padding-left: 0;
-    padding-right: 0;
-
     .actions {
       height: 51px;
       padding-left: 15px;
