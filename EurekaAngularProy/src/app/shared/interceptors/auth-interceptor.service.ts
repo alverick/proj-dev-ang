@@ -64,7 +64,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               title: 'Su sesión ha sido cerrada por inactividad',
               showCloseButton: true,
               showConfirmButton: true,
-              confirmButtonText: 'CERRAR',
+              confirmButtonText: 'Cerrar',
               allowOutsideClick: false,
               willClose: () => {
                 location.href = authFullRoutingNames.LOGIN;
@@ -76,7 +76,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               title: 'Ha ocurrido un error en el servidor',
               showCloseButton: true,
               showConfirmButton: true,
-              confirmButtonText: 'CERRAR',
+              confirmButtonText: 'Cerrar',
               allowOutsideClick: false,
               willClose: () => {
                 location.href = authFullRoutingNames.LOGIN;

@@ -545,8 +545,8 @@ export class AprobacionesPage implements OnInit {
         showConfirmButton: true,
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: 'DESCARTAR',
-        cancelButtonText: 'REGRESAR',
+        confirmButtonText: 'Descartar',
+        cancelButtonText: 'Regresar',
         onOpen: drawPopup,
       }).then((r) => {
         if (r.value) {
@@ -571,8 +571,8 @@ export class AprobacionesPage implements OnInit {
         showConfirmButton: true,
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: 'DESCARTAR',
-        cancelButtonText: 'REGRESAR',
+        confirmButtonText: 'Descartar',
+        cancelButtonText: 'Regresar',
         onOpen: drawPopup,
       }).then((r) => {
         if (r.value) {
@@ -597,7 +597,7 @@ export class AprobacionesPage implements OnInit {
       cancelButtonColor: '#d33',
       // cancelButtonText:  'CERRAR',
       allowOutsideClick: false,
-      confirmButtonText: 'CERRAR',
+      confirmButtonText: 'Cerrar',
       onOpen: drawPopup,
     });
   }
