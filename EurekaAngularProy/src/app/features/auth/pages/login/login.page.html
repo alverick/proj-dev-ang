@@ -73,7 +73,7 @@
               formControlName="psw"
               [ngClass]="{
                 'is-invalid': submitted && f.psw.errors
-                }"
+              }"
               csBlockCopyPaste
             />
             <i
@@ -81,9 +81,9 @@
               (click)="hide = !hide"
               class="pi"
               [ngClass]="{
-                            'pi-eye': hide,
-                            'pi-eye-slash': !hide
-                          }"
+                'pi-eye': hide,
+                'pi-eye-slash': !hide
+              }"
             ></i>
             <mat-error *ngIf="inputPassValid" class="messsage-error">
               Debe ingresar el password
@@ -100,7 +100,10 @@
       </div>
 
       <div class="mb-3" style="text-align: left">
-        <small id="text-olv" [routerLink]="[linkRecoverPassword]"
+        <small
+          id="text-olv"
+          [routerLink]="[linkRecoverPassword]"
+          (click)="clickRecoverPassword()"
           >Recuperar contraseña
         </small>
       </div>

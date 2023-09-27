@@ -6,10 +6,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forEachObjIndexed } from 'ramda';
 import { authFullRoutingNames } from 'src/app/app-routing.collection';
 import { RecuperaService } from 'src/app/shared/services/recupera.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
-import Swal from 'sweetalert2';
+import { swalAlert } from 'src/app/shared/utils/helpers/popups';
+
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+  Metadata,
+} from '../../../../shared/services/adobe-analytics.service';
 
 @Component({
   selector: 'cs-recuperar-contrasena',
@@ -20,7 +27,8 @@ export class RecuperarContrasenaComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private recuperaService: RecuperaService,
-    private router: Router
+    private router: Router,
+    protected adobeAnalytics: AdobeAnalyticsService
   ) {}
   public formulario = true;
   recupera: UntypedFormGroup;
@@ -59,6 +67,23 @@ export class RecuperarContrasenaComponent implements OnInit {
   SubmitRecupera() {
     this.submittedRequired = true;
     if (this.recupera.valid) {
+      const metadata: Metadata[] = [];
+      forEachObjIndexed((value, key) => {
+        metadata.push({
+          key: key as string,
+          value: value as string,
+        });
+      }, this.recupera.value);
+      const actionStep: Partial<ActionEventProperties> = {
+        category: 'Recuperar contraseña',
+        action: 'Click',
+        label: 'Enviar',
+        location: 'Recuperar contraseña',
+        step: 'Not available',
+        state: 'Envío exitoso',
+        metadata,
+      };
+
       this.recuperaService
         .RecoverPassword({
           RUC: this.recupera.value.ruc,
@@ -66,6 +91,10 @@ export class RecuperarContrasenaComponent implements OnInit {
         })
         .subscribe((d) => {
           if (d === true) {
+            this.adobeAnalytics.trackEvent(
+              AdobeEvent.trackFormSubmit,
+              actionStep
+            );
             this.mensaje(
               'Hemos recibido tus datos',
               'Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta.'
@@ -78,6 +107,11 @@ export class RecuperarContrasenaComponent implements OnInit {
             // al ocultar la pantalla se mostrara en la parte de arriba la pagina
             this.router.navigate([authFullRoutingNames.LOGIN]);
           } else {
+            this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+              ...actionStep,
+              state: 'Intención de envío',
+              typeError: 'Los datos ingresados son inválidos',
+            });
             this.mensaje(
               'Los datos ingresados son inválidos',
               'Por favor, verifique e ingréselos nuevamente.'
@@ -110,7 +144,13 @@ export class RecuperarContrasenaComponent implements OnInit {
   }
 
   mensaje(titulo: string, text: string) {
-    Swal.fire({
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: titulo,
+      action: 'modal-view',
+      detail: text,
+      location: 'Modal',
+    });
+    void swalAlert.fire({
       // type: tipo ,
       title: titulo,
       html: text,
@@ -119,7 +159,6 @@ export class RecuperarContrasenaComponent implements OnInit {
       showConfirmButton: true,
       cancelButtonColor: '#d33',
       confirmButtonText: 'Entendido',
-      onOpen: drawPopup,
     });
   }
 }

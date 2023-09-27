@@ -119,7 +119,7 @@ export class LoginPage implements OnInit {
       showCloseButton: true,
       showConfirmButton: true,
       allowOutsideClick: false,
-      confirmButtonText: confirmText || 'CERRAR',
+      confirmButtonText: confirmText || 'Cerrar',
     });
 
     this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
@@ -337,7 +337,27 @@ export class LoginPage implements OnInit {
     }
   }
 
+  clickRecoverPassword() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Login',
+      action: 'Click',
+      label: 'Recuperar contraseña',
+      detail: 'Recuperar contraseña',
+      typeElement: 'Botón',
+      location: 'Login',
+    });
+  }
+
   clickRegistrarse() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Login',
+      action: 'Click',
+      label: 'Regístrate aquí',
+      detail: 'Regístra tu empresa',
+      typeElement: 'Botón',
+      location: 'Login',
+      step: 'step0',
+    });
     void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
       state: { initNew: true },
     });
