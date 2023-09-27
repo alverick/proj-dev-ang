@@ -129,12 +129,15 @@ export class AdobeAnalyticsService {
   }
 
   pageTrack(path: string) {
-    const pathParsed = `cs${path.replace(/\//g, ':')}`;
+    const pathComp = path.startsWith(authFullRoutingNames.CHANGE_PASSWORD)
+      ? authFullRoutingNames.CHANGE_PASSWORD
+      : path;
+    const pathParsed = `cs${pathComp.replace(/\//g, ':')}`;
     this.payload.page = {
       name: pathParsed,
       channel: pathParsed,
       module: this.parseModule(path),
-      url: location.href,
+      url: `${location.protocol}//${location.host}${pathComp}`,
     };
 
     const payload = clone(this.payload);
@@ -150,6 +153,8 @@ export class AdobeAnalyticsService {
       [internalFullRoutingNames.SERVICES]: 'Servicios',
       [appFullRoutingNames.LANDING]: 'Landing',
       [authFullRoutingNames.LOGIN]: 'Login',
+      [authFullRoutingNames.CHANGE_PASSWORD]: 'CambiarContrasena',
+      [authFullRoutingNames.RECOVER_PASSWORD]: 'RecuperarContrasena',
       [authFullRoutingNames.SERVICES_ADD]: 'Afiliación',
       [authFullRoutingNames.COMPANY_REGISTER]: 'Afiliación',
       [authFullRoutingNames.REGISTRATION_FINISHED]: 'Afiliación',
