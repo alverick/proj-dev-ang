@@ -23,7 +23,7 @@ export type AdobeEventType = (typeof AdobeEvent)[keyof typeof AdobeEvent];
 
 export interface Metadata {
   key: string;
-  value: string;
+  value: string | boolean;
 }
 
 interface PageEventProperties {
