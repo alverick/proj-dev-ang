@@ -183,6 +183,10 @@ export class LoginPage implements OnInit {
           key: 'NumeroDocumento',
           value: this.f.ruc.value,
         },
+        {
+          key: 'MostrarPassword',
+          value: !this.hide,
+        },
       ],
     };
 
