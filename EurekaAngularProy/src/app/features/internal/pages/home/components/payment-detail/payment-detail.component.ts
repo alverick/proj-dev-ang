@@ -254,6 +254,14 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   delItm(itm) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Eliminar pago',
+      label: 'Eliminar',
+      typeElement: 'Botón',
+      location: 'Movimientos - Detalle de pago',
+    });
     this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
       category: '¿Estás seguro que deseas eliminar el pago?',
       action: 'modal-view',
@@ -273,8 +281,8 @@ export class PaymentDetailComponent implements OnInit {
           this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
             category: 'Home movimientos',
             action: 'Click',
-            detail: 'Eliminar pago',
-            label: 'Eliminar',
+            detail: 'Confirmar eliminación de pago',
+            label: 'Sí, eliminar',
             typeElement: 'Botón',
             location: 'Movimientos - Detalle de pago',
           });
@@ -290,6 +298,15 @@ export class PaymentDetailComponent implements OnInit {
                 showCancelButton: false,
               });
             }
+          });
+        } else {
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+            category: 'Home movimientos',
+            action: 'Click',
+            detail: 'Cancelar eliminación de pago',
+            label: 'Cancelar',
+            typeElement: 'Botón',
+            location: 'Movimientos - Detalle de pago',
           });
         }
       });
