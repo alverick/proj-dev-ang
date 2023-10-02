@@ -814,10 +814,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
-      detail: 'Eliminar movimientos seleccionados',
+      detail: 'Eliminar movimientos seleccionados mostrar modal',
       label: 'Eliminar',
       typeElement: 'Link',
-      location: 'Movimientos',
+      location: 'Movimientos modal',
     });
 
     this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
@@ -838,6 +838,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       })
       .then((result) => {
         if (result.value) {
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+            category: 'Home movimientos',
+            action: 'Click',
+            detail: 'Confirmar movimientos seleccionados modal',
+            label: 'Confirmar',
+            typeElement: 'Link',
+            location: 'Movimientos modal',
+          });
           const ids = this.selectedRows.map((items) => items.id);
           this.movementsService.deleteMovements(ids).subscribe(() => {
             this.consultaDeuda(() => {
@@ -869,6 +877,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             this.transactionService.debtItems.data = [];
             this.transactionService.itemsForDelete = [];
             this.selectedRows = [];
+          });
+        } else {
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+            category: 'Home movimientos',
+            action: 'Click',
+            detail: 'Cancelar movimientos seleccionados modal',
+            label: 'Cancelar',
+            typeElement: 'Link',
+            location: 'Movimientos modal',
           });
         }
       });
