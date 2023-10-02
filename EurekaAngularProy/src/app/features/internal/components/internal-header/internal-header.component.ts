@@ -133,7 +133,7 @@ export class InternalHeaderComponent implements OnInit {
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
-      detail: 'Enlace a ' + this.helpLink,
+      detail: 'Enlace a ' + this.helpText,
       label: this.helpText,
       typeElement: 'Link',
       location: 'Header',
