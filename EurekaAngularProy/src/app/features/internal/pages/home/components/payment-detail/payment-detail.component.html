@@ -124,7 +124,7 @@
               <div *ngIf="itm.canEdit" class="d-flex">
                 <div
                   *ngIf="!itm.editing"
-                  class="btn-edit"
+                  class="btn-edit tw-shrink-0"
                   (click)="editItm(itm); $event.stopPropagation()"
                 >
                   <img
@@ -136,12 +136,12 @@
                 </div>
                 <div
                   *ngIf="!itm.editing"
-                  class="btn-delete ml-1"
+                  class="btn-delete ml-1 tw-shrink-0"
                   (click)="delItm(itm); $event.stopPropagation()"
                 >
                   <img
                     class="tw-inline"
-                    src="../../../../../../../assets/images/trash.svg"
+                    src="assets/images/trash.svg"
                     alt="eliminar"
                     width="20"
                   />
