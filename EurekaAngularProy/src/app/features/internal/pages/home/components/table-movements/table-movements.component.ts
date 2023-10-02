@@ -85,6 +85,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Output() saveRow = new EventEmitter<any>();
   @Output() loadData = new EventEmitter<LazyLoadEvent>();
   displayDialog = false;
+  willCloseModal = false;
   editRowData: any = {};
   dataSet = {};
   @ViewChild('table') table: Table;
@@ -252,6 +253,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
 
   openDialog(data: any) {
     this.displayDialog = true;
+    this.willCloseModal = false;
     this.dataSet[data.id] = { ...data };
     this.editRowData = clone(data);
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
@@ -287,6 +289,10 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   }
 
   onCancel(text: string) {
+    if (this.willCloseModal) {
+      this.willCloseModal = false;
+      return;
+    }
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
@@ -295,6 +301,9 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       typeElement: 'Botón',
       location: 'Movimientos',
     });
+    if (text === 'Cancelar') {
+      this.willCloseModal = true;
+    }
     this.displayDialog = false;
   }
 
