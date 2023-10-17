@@ -15,6 +15,12 @@ export interface ICompanyResult {
   id?: number;
 }
 
+export interface CompanyAccounts {
+  currency: string;
+  number: string;
+  id: string;
+}
+
 @Injectable()
 export class CompanyService {
   constructor(private http: HttpClient) {}
@@ -55,7 +61,9 @@ export class CompanyService {
   }
 
   getCompanyAccounts() {
-    return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
+    return this.http.get<CompanyAccounts[]>(
+      `${environment.END_POINT}/company/cards`
+    );
   }
 
   sendUpdateCompanyData(data) {

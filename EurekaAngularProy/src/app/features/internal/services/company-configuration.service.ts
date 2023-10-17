@@ -5,6 +5,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forEachObjIndexed, pick } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
 
@@ -13,6 +14,12 @@ import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import { ModelFormGroup } from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+  Metadata,
+} from '../../../shared/services/adobe-analytics.service';
 import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
@@ -38,7 +45,8 @@ export class CompanyConfigurationService {
     private fb: UntypedFormBuilder,
     private companyService: CompanyService,
     private router: Router,
-    protected loginService: LoginService
+    protected loginService: LoginService,
+    protected adobeAnalytics: AdobeAnalyticsService
   ) {
     this.initForms();
   }
@@ -69,15 +77,47 @@ export class CompanyConfigurationService {
       confirmNewPassword: '',
       ...companyDataUpdated,
     };
+
+    const formValue = pick(
+      ['email', 'movilNumber', ' movilOperator', 'name'],
+      this.companyForm.value
+    );
+    const metadata: Metadata[] = [];
+    forEachObjIndexed((value, key) => {
+      metadata.push({
+        key,
+        value,
+      });
+    }, formValue);
+    const actionStep: Partial<ActionEventProperties> = {
+      category: 'Empresa',
+      action: 'Click',
+      label: 'Buscar',
+      location: 'Empresa',
+      step: 'Not available',
+      state: 'Envío exitoso',
+      metadata,
+    };
+
     this.companyService
       .updateCompany(enterprise)
       .subscribe((enterpriseUpdate) => {
         if (enterpriseUpdate.success === true) {
+          this.adobeAnalytics.trackEvent(
+            AdobeEvent.trackFormSubmit,
+            actionStep
+          );
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+            category: 'warning - icon',
+            action: 'modal-view',
+            detail: 'Los datos de la empresa han sido actualizados',
+            location: 'Modal',
+          });
           void swalAlert
             .fire({
               text: 'Los datos de la empresa han sido actualizados',
               showCloseButton: true,
-              confirmButtonText: 'ACEPTAR',
+              confirmButtonText: 'Aceptar',
             })
             .then((result) => {
               if (result.value) {
@@ -86,11 +126,22 @@ export class CompanyConfigurationService {
             });
         }
         if (enterpriseUpdate.success === false) {
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: 'Intención de envío',
+            typeError: 'Ha ocurrido un error con el servidor',
+          });
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+            category: 'error - icon',
+            action: 'modal-view',
+            detail: 'Ha ocurrido un error',
+            location: 'Modal',
+          });
           void swalAlert.fire({
             icon: 'error',
             text: 'Ha ocurrido un error',
             showCloseButton: true,
-            confirmButtonText: 'ACEPTAR',
+            confirmButtonText: 'Aceptar',
           });
         }
       });
@@ -113,10 +164,29 @@ export class CompanyConfigurationService {
       confirmNewPassword,
       ...companyDataUpdated,
     };
+
+    const actionStep: Partial<ActionEventProperties> = {
+      category: 'Empresa',
+      action: 'Click',
+      label: 'Guardar',
+      location: 'Empresa panel',
+      step: 'Not available',
+      state: 'Envío exitoso',
+    };
     return this.companyService.updateCompany(enterprise).pipe(
       tap(({ success, message }) => {
         if (success === true) {
+          this.adobeAnalytics.trackEvent(
+            AdobeEvent.trackFormSubmit,
+            actionStep
+          );
           this.loginService.logout().subscribe(() => {
+            this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+              category: 'warning - icon',
+              action: 'modal-view',
+              detail: 'Los datos de la empresa han sido actualizados',
+              location: 'Modal',
+            });
             void swalAlert
               .fire({
                 title: 'Contraseña actualizada ',
@@ -130,11 +200,22 @@ export class CompanyConfigurationService {
           });
           this.passwordForm.reset();
         } else {
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: 'Intención de envío',
+            typeError: 'Ha ocurrido un error con el servidor',
+          });
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+            category: 'error - icon',
+            action: 'modal-view',
+            detail: message || 'Ha ocurrido un error en el servidor',
+            location: 'Modal',
+          });
           void swalAlert.fire({
             icon: 'warning',
             text: message || 'Ha ocurrido un error en el servidor',
             showCloseButton: true,
-            confirmButtonText: 'ACEPTAR',
+            confirmButtonText: 'Aceptar',
           });
         }
       })

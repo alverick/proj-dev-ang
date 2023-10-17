@@ -20,6 +20,7 @@
               <a
                 class="tw-flex tw-items-center"
                 href="https://www.youtube.com/watch?v=oI4gEpfYwLQ"
+                (click)="showHelp()"
                 rel="noopener noreferrer"
                 target="_blank"
                 ><img
@@ -31,7 +32,7 @@
               >
             </div>
           </div>
-          <div class="content">
+          <div class="content tw-py-6 lg:tw-py-4 tw-px-8 box-shadow">
             <cs-payments-filter
               [services]="services"
               [stateList]="waypayList"
@@ -50,10 +51,12 @@
             <div class="tw-text-lg">Movimientos</div>
           </div>
           <div
-            class="content"
+            class="tw-py-6 lg:tw-py-4 box-shadow content"
             [ngClass]="{ 'tw-pointer-events-none': tableMovementsInactive }"
           >
-            <section class="actions tw-flex tw-items-center tw-justify-between">
+            <section
+              class="tw-flex sm:tw-h-12 tw-border-b tw-border-extended-grey-4 tw-flex-col-reverse sm:tw-flex-row sm:tw-items-center tw-justify-between tw-gap-4 tw-px-4 tw-pb-2 sm:tw-pb-0"
+            >
               <div class="rows-actions">
                 <div
                   class="select-all tw-flex tw-items-center tw-text-sm"
@@ -69,13 +72,13 @@
                 </div>
               </div>
               <div
-                class="movements-actions tw-h-full tw-flex tw-items-center tw-text-primary-green-1 tw-text-sm"
+                class="movements-actions tw-h-full tw-flex tw-items-center tw-text-primary-green-1 tw-text-sm tw-gap-6"
               >
                 <div
-                  class="download tw-cursor-pointer tw-h-full tw-flex tw-items-center tw-px-2"
+                  class="download tw-cursor-pointer tw-h-full tw-flex tw-items-center"
                 >
                   <div
-                    class="lnk-label tw-px-4"
+                    class="lnk-label tw-flex tw-items-center tw-gap-1"
                     [class.disabled]="enDescarga"
                     (click)="DescargarReporte()"
                   >
@@ -94,9 +97,12 @@
                   </div>
                 </div>
                 <div
-                  class="addDeuda tw-cursor-pointer tw-h-full tw-flex tw-items-center"
+                  class="addDeuda tw-cursor-pointer tw-h-full tw-flex tw-items-center tw-gap-1"
                 >
-                  <div class="tw-px-4" data-toggle="dropdown">
+                  <div
+                    class="tw-flex tw-items-center tw-gap-1"
+                    data-toggle="dropdown"
+                  >
                     <img
                       class="tw-inline"
                       src="../../../../../assets/images/plus_circle.svg"

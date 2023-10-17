@@ -15,6 +15,7 @@
         expandIcon="pi pi-plus-circle tw-text-primary-green-1 tw-text-3xl"
         collapseIcon="pi pi-minus-circle tw-text-primary-green-1 tw-text-3xl"
         [(activeIndex)]="activeIndex"
+        (onOpen)="openedTab($event)"
       >
         <p-accordionTab
           header="¿Cómo empezar a usar Cobro Simple?"

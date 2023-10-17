@@ -6,11 +6,17 @@ import {
 } from '@angular/material/core';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import Swal from 'sweetalert2';
+import { forEachObjIndexed } from 'ramda';
 
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+  Metadata,
+} from '../../../../../shared/services/adobe-analytics.service';
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
-import { drawPopup } from '../../../../../shared/utils/helpers/popups';
+import { swalAlert } from '../../../../../shared/utils/helpers/popups';
 
 const MY_FORMATS = {
   parse: {
@@ -43,7 +49,8 @@ export class DebtComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<DebtComponent>,
     private homeService: HomeService,
-    public excelService: ExcelService
+    public excelService: ExcelService,
+    private adobeAnalytics: AdobeAnalyticsService
   ) {}
 
   public grabado = false;
@@ -184,7 +191,7 @@ export class DebtComponent implements OnInit {
       this.nuevaDeuda.errores.firstName = 'Debe ingresar un valor';
     }
 
-    for (var s in this.nuevaDeuda.errores) {
+    for (const s in this.nuevaDeuda.errores) {
       if (this.nuevaDeuda.errores[s]) {
         return;
       }
@@ -207,44 +214,88 @@ export class DebtComponent implements OnInit {
         amount: this.nuevaDeuda.amount,
       };
     }
+
     this.homeService
       .postNewDebt(this.nuevaDeuda.service, debt)
       .subscribe((r) => {
-        if (r.success) {
-          this.grabado = true;
-          Swal.fire({
-            title: 'Agregar Cobro',
-            html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',
-            showCancelButton: true,
-            showCloseButton: true,
-            confirmButtonText: 'AGREGA OTRO',
-            cancelButtonText: 'CERRAR',
-            onOpen: drawPopup,
-          }).then((result) => {
-            if (result.value) {
-              this.nuevaDeuda = {
-                service: this.excelService.service.name,
-                errores: {},
-              };
-            } else {
-              this.dialogRef.close({ grabado: this.grabado });
-            }
+        const metadata: Metadata[] = [];
+        forEachObjIndexed((value, key) => {
+          metadata.push({
+            key: key as string,
+            value: value as string,
           });
+        }, debt);
+        const actionStep: Partial<ActionEventProperties> = {
+          category: 'Home movimientos',
+          action: 'Click',
+          label: 'Grabar',
+          location: 'Modal agregar cobro',
+          step: 'Not available',
+          state: 'Envío exitoso',
+          metadata,
+        };
+
+        if (r.success) {
+          this.adobeAnalytics.trackEvent(
+            AdobeEvent.trackFormSubmit,
+            actionStep
+          );
+          this.grabado = true;
+          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+            category: 'Agregar Cobro',
+            action: 'modal-view',
+            detail: 'Se ha agregado el cobro. ¿Que desea hacer?',
+            location: 'Modal',
+          });
+          void swalAlert
+            .fire({
+              title: 'Agregar Cobro',
+              html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',
+              showCancelButton: true,
+              showCloseButton: true,
+              confirmButtonText: 'Agrega otro',
+              cancelButtonText: 'Cerrar',
+            })
+            .then((result) => {
+              this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+                category: 'Home movimientos',
+                action: 'Click',
+                detail: result.value ? 'Agregar otro cobro' : 'Cerrar modal',
+                label: result.value ? 'Agrega otro' : 'Cerrar',
+                typeElement: 'Botón',
+                location: 'Modal agregar cobro',
+              });
+              if (result.value) {
+                this.nuevaDeuda = {
+                  service: this.excelService.service.name,
+                  errores: {},
+                };
+              } else {
+                this.dialogRef.close({ grabado: this.grabado });
+              }
+            });
         } else {
-          Swal.fire({
+          void swalAlert.fire({
             title: 'Agregar Cobro',
             html: r.message,
             showCloseButton: true,
             showCancelButton: false,
             showConfirmButton: true,
-            confirmButtonText: 'CERRAR',
-            onOpen: drawPopup,
+            confirmButtonText: 'Cerrar',
           });
         }
       });
   }
 
   cerrarDialog() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Cerrar modal',
+      label: 'Cerrar',
+      typeElement: 'Botón',
+      location: 'Modal agregar cobro',
+    });
     this.dialogRef.close({ grabado: this.grabado });
   }
 }

@@ -9,6 +9,10 @@ import {
   paymentTypeOptions,
 } from '../../../../shared/constants/services';
 import { ServicesFormsService } from '../../../../shared/services';
+import {
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../shared/services/adobe-analytics.service';
 import { errorServiceConfiguration } from '../../constants';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 import { CompanyServicesService } from '../../services';
@@ -29,18 +33,27 @@ export class ServiceConfigurationPage {
     private router: Router,
     private companyServices: CompanyServicesService,
     public serviceForms: ServicesFormsService,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    protected adobeAnalytics: AdobeAnalyticsService
   ) {}
 
   onSubmit() {
     this.companyServices.saveService().subscribe((result) => {
       this.logger.debug('-> result', result);
-      this.router.navigate([internalFullRoutingNames.SERVICES]);
+      void this.router.navigate([internalFullRoutingNames.SERVICES]);
     });
   }
 
   onCancel() {
-    this.router.navigate([internalFullRoutingNames.SERVICES]);
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Servicios agregar nuevo servicio',
+      action: 'Click',
+      detail: 'Cancelar agregar otro servicio',
+      label: 'Cancelar',
+      typeElement: 'Botón',
+      location: 'Servicios agregar',
+    });
+    void this.router.navigate([internalFullRoutingNames.SERVICES]);
     this.serviceForms.resetServicesForms();
   }
 }
