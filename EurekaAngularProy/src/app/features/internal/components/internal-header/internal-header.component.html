@@ -2,21 +2,34 @@
   <div *ngIf="showMenu" class="tw-flex">
     <ul class="navigation-menu">
       <li class="tw-h-full" routerLinkActive="active">
-        <a class="link" [routerLink]="[homeLink]">{{ homeText }}</a>
+        <a class="link" [routerLink]="[homeLink]" (click)="gotoHomePage()">{{
+          homeText
+        }}</a>
       </li>
       <li *ngIf="false" class="tw-h-full" routerLinkActive="active">
         <a class="link" [routerLink]="[dashboardLink]">{{ dashboardText }}</a>
       </li>
       <li class="tw-h-full" routerLinkActive="active">
-        <a class="link" [routerLink]="[servicesLink]">
+        <a
+          class="link"
+          [routerLink]="[servicesLink]"
+          (click)="gotoChargesPage()"
+        >
           {{ chargesText }}
         </a>
       </li>
       <li class="tw-h-full" routerLinkActive="active">
-        <a class="link" [routerLink]="[companyLink]">{{ companyText }}</a>
+        <a
+          class="link"
+          [routerLink]="[companyLink]"
+          (click)="gotoCompanyPage()"
+          >{{ companyText }}</a
+        >
       </li>
       <li class="tw-h-full" routerLinkActive="active">
-        <a class="link" [routerLink]="[helpLink]">{{ helpText }}</a>
+        <a class="link" [routerLink]="[helpLink]" (click)="gotoHelpPage()">{{
+          helpText
+        }}</a>
       </li>
       <li class="nav-item dropdown ml-4">
         <a
@@ -26,6 +39,7 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          (click)="openNotifyList()"
         >
           <i
             *ngIf="notify.total <= 0"
@@ -46,8 +60,8 @@
         >
           <div class="title">
             <div class="text al-left">Notificaciones</div>
-            <div class="mark-all al-right" (click)="notify.markAll()">
-              Marcar todas como leidas
+            <div class="mark-all al-right" (click)="markAllNotifications()">
+              Marcar todas como leídas
             </div>
             <div class="clear-float"></div>
           </div>
@@ -73,7 +87,7 @@
                   <div
                     class="notiificacion"
                     title="{{ msg.title }}"
-                    (click)="notify.changeRead(msg); $event.stopPropagation()"
+                    (click)="markNotification(msg, $event)"
                   >
                     <img
                       class="item-icono"
@@ -90,7 +104,7 @@
                   <div
                     class="notiificacion"
                     title="{{ msg.title }}"
-                    (click)="notify.changeRead(msg); $event.stopPropagation()"
+                    (click)="markNotification(msg, $event)"
                   >
                     <img
                       class="item-icono"
@@ -150,6 +164,7 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          (click)="openNotifyList()"
         >
           <i
             *ngIf="notify.total <= 0"
@@ -170,7 +185,7 @@
         >
           <div class="title">
             <div class="text al-left">Notificaciones</div>
-            <div class="mark-all al-right" (click)="notify.markAll()">
+            <div class="mark-all al-right" (click)="markAllNotifications()">
               Marcar todas como leidas
             </div>
             <div class="clear-float"></div>
@@ -197,7 +212,7 @@
                   <div
                     class="notiificacion"
                     title="{{ msg.title }}"
-                    (click)="notify.changeRead(msg); $event.stopPropagation()"
+                    (click)="markNotification(msg, $event)"
                   >
                     <img
                       class="item-icono"
@@ -214,7 +229,7 @@
                   <div
                     class="notiificacion"
                     title="{{ msg.title }}"
-                    (click)="notify.changeRead(msg); $event.stopPropagation()"
+                    (click)="markNotification(msg, $event)"
                   >
                     <img
                       class="item-icono"
@@ -259,7 +274,7 @@
           <a
             class="mano nav-link mb-3"
             [routerLink]="[homeLink]"
-            (click)="toggle()"
+            (click)="toggle(homeText)"
             >{{ homeText }}</a
           >
         </li>
@@ -267,7 +282,7 @@
           <a
             class="mano nav-link mb-3"
             [routerLink]="[dashboardLink]"
-            (click)="toggle()"
+            (click)="toggle(dashboardText)"
             >{{ dashboardText }}</a
           >
         </li>
@@ -275,7 +290,7 @@
           <a
             class="mano nav-link mb-3"
             [routerLink]="[servicesLink]"
-            (click)="toggle()"
+            (click)="toggle(chargesText)"
             >{{ chargesText }}</a
           >
         </li>
@@ -283,7 +298,7 @@
           <a
             class="mano nav-link mb-3"
             [routerLink]="[companyLink]"
-            (click)="toggle()"
+            (click)="toggle(companyText)"
             >{{ companyText }}</a
           >
         </li>
@@ -291,7 +306,7 @@
           <a
             class="mano nav-link mb-3"
             [routerLink]="[helpLink]"
-            (click)="toggle()"
+            (click)="toggle(helpText)"
             >{{ helpText }}</a
           >
         </li>

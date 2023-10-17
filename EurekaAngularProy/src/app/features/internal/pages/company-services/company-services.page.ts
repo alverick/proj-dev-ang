@@ -14,6 +14,10 @@ import {
   paymentTypeOptions,
 } from '../../../../shared/constants/services';
 import { ServicesFormsService } from '../../../../shared/services';
+import {
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../shared/services/adobe-analytics.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { internalFullRoutingChildNames } from '../../internal-routing.names';
 import { CompanyServicesService } from '../../services';
@@ -44,7 +48,8 @@ export class CompanyServicesPage {
     private serviceForms: ServicesFormsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private logger: NGXLogger
+    private logger: NGXLogger,
+    protected adobeAnalytics: AdobeAnalyticsService
   ) {
     this.logger.debug(
       '-> this.companyServicesService.services',
@@ -56,6 +61,14 @@ export class CompanyServicesPage {
   }
 
   actionDelete(position: number) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Servicios',
+      action: 'Click',
+      detail: 'Eliminar servicio',
+      label: 'Eliminar',
+      typeElement: 'Botón',
+      location: 'Service card',
+    });
     this.companyServices.canDelete(position).subscribe((result) => {
       const title = '¿Estás seguro que deseas eliminar este servicio?';
       let text =
@@ -65,7 +78,13 @@ export class CompanyServicesPage {
           'Ya existe un historial de pagos realizados con este servicio, solo se eliminarán las ' +
           'deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
       }
-      swalAlert
+      this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+        category: title,
+        action: 'modal-view',
+        detail: text,
+        location: 'Modal',
+      });
+      void swalAlert
         .fire({
           text,
           title,
@@ -76,7 +95,24 @@ export class CompanyServicesPage {
         })
         .then((confirm) => {
           if (confirm.value) {
+            this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+              category: 'Servicios',
+              action: 'Click',
+              detail: 'Confirmar eliminación de servicio',
+              label: 'Confirmar',
+              typeElement: 'Botón',
+              location: 'Modal',
+            });
             this.companyServices.deleteService(position);
+          } else {
+            this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+              category: 'Servicios',
+              action: 'Click',
+              detail: 'Cancelar eliminación de servicio',
+              label: 'Cancelar',
+              typeElement: 'Botón',
+              location: 'Modal',
+            });
           }
         });
     });
@@ -88,14 +124,38 @@ export class CompanyServicesPage {
     setTimeout(() => {
       this.showSidebar = true;
     }, 200);
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Servicios',
+      action: 'Click',
+      detail: 'Editar servicio',
+      label: 'Editar',
+      typeElement: 'Botón',
+      location: 'Service card',
+    });
   }
 
   onClosePanel() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Servicios',
+      action: 'Click',
+      detail: 'Cerrar panel editar servicio',
+      label: 'Cerrar',
+      typeElement: 'Botón',
+      location: 'Panel',
+    });
     this.loadFormEdit = false;
   }
 
   createService() {
     this.serviceForms.resetServicesForms();
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Servicios',
+      action: 'Click',
+      detail: 'Agregar otro servicio',
+      label: 'Agregar otro servicio',
+      typeElement: 'Botón',
+      location: 'Servicios',
+    });
     void this.router.navigate([
       internalFullRoutingChildNames.SERVICES_ADD_INFO,
     ]);

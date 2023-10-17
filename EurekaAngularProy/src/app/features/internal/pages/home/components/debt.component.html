@@ -126,11 +126,9 @@
     </mat-form-field>
   </div>
 </div>
-<div mat-dialog-actions>
-  <button mat-button class="btn btn-eureca-green" (click)="grabarNuevo()">
-    Grabar
-  </button>
-  <button mat-button class="btn btn-outline-green" (click)="cerrarDialog()">
+<div class="tw-flex tw-gap-2">
+  <button pButton pRipple (click)="grabarNuevo()">Grabar</button>
+  <button pButton pRipple class="p-button-text" (click)="cerrarDialog()">
     Cerrar
   </button>
 </div>

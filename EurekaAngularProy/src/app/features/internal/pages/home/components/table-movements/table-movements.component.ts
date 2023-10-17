@@ -15,6 +15,10 @@ import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
 import { Debts } from '../../../../../../shared/models/debts';
+import {
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../../../shared/services/adobe-analytics.service';
 import { SelectAllTableService } from '../../../../services';
 
 enum StatusRowType {
@@ -81,6 +85,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Output() saveRow = new EventEmitter<any>();
   @Output() loadData = new EventEmitter<LazyLoadEvent>();
   displayDialog = false;
+  willCloseModal = false;
   editRowData: any = {};
   dataSet = {};
   @ViewChild('table') table: Table;
@@ -88,7 +93,8 @@ export class TableMovementsComponent implements OnInit, OnChanges {
 
   constructor(
     private logger: NGXLogger,
-    private selectAllTable: SelectAllTableService
+    private selectAllTable: SelectAllTableService,
+    private adobeAnalytics: AdobeAnalyticsService
   ) {}
 
   ngOnInit() {
@@ -201,6 +207,14 @@ export class TableMovementsComponent implements OnInit, OnChanges {
 
   onRowEditInit(data: any) {
     this.dataSet[data.id] = { ...data };
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Editar movimiento',
+      label: 'Editar',
+      typeElement: 'Botón',
+      location: 'Movimientos',
+    });
   }
 
   onRowEditSave(data: any) {
@@ -227,12 +241,29 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   onRowEditCancel(data: any, pos) {
     this.data[pos] = this.dataSet[data.id];
     delete this.dataSet[data.id];
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Cancelar edición de movimientos seleccionado',
+      label: 'Cancelar',
+      typeElement: 'Link',
+      location: 'Movimientos',
+    });
   }
 
   openDialog(data: any) {
     this.displayDialog = true;
+    this.willCloseModal = false;
     this.dataSet[data.id] = { ...data };
     this.editRowData = clone(data);
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: 'Editar movimiento móvil',
+      label: 'Editar',
+      typeElement: 'Botón',
+      location: 'Movimientos',
+    });
   }
 
   onSave() {
@@ -257,7 +288,22 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     }
   }
 
-  onCancel() {
+  onCancel(text: string) {
+    if (this.willCloseModal) {
+      this.willCloseModal = false;
+      return;
+    }
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Home movimientos',
+      action: 'Click',
+      detail: `${text} editar movimiento móvil`,
+      label: text,
+      typeElement: 'Botón',
+      location: 'Movimientos',
+    });
+    if (text === 'Cancelar') {
+      this.willCloseModal = true;
+    }
     this.displayDialog = false;
   }
 

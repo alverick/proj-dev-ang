@@ -10,6 +10,11 @@ import { StorageService } from 'src/app/shared/services/storage.service';
 import { swalAlert } from 'src/app/shared/utils/helpers/popups';
 
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
+import {
+  ActionEventProperties,
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../shared/services/adobe-analytics.service';
 import { MustMatch } from '../../../../shared/validators/must-match.validator';
 import {
   messageErrorNewPasswords,
@@ -33,7 +38,8 @@ export class CambiaContrasenaComponent implements OnInit {
     private rutaActiva: ActivatedRoute,
     private router: Router,
     private recuperaService: RecuperaService,
-    public storage: StorageService
+    public storage: StorageService,
+    protected adobeAnalytics: AdobeAnalyticsService
   ) {}
   public Cambia: UntypedFormGroup;
   ngOnInit() {
@@ -73,6 +79,15 @@ export class CambiaContrasenaComponent implements OnInit {
 
   SubmitCambia() {
     if (this.Cambia.valid) {
+      const actionStep: Partial<ActionEventProperties> = {
+        category: 'Cambio contraseña',
+        action: 'Click',
+        label: 'Guardar',
+        location: 'Cambio contraseña',
+        step: 'Not available',
+        state: 'Envío exitoso',
+      };
+
       this.recuperaService
         .ChangePassword({
           NewPassword: this.Cambia.value.contrasena,
@@ -80,11 +95,20 @@ export class CambiaContrasenaComponent implements OnInit {
         })
         .subscribe((d) => {
           if (d == false) {
+            this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+              ...actionStep,
+              state: 'Intención de envío',
+              typeError: 'Error al actualizar contraseña',
+            });
             this.mensaje(
               'Actualizar Contraseña',
               'Error al actualizar contraseña'
             );
           } else if (d == true) {
+            this.adobeAnalytics.trackEvent(
+              AdobeEvent.trackFormSubmit,
+              actionStep
+            );
             this.PopUpWithOneButon(
               'Contraseña actualizada',
               'Tu contraseña ha sido actualizada',
@@ -96,6 +120,12 @@ export class CambiaContrasenaComponent implements OnInit {
   }
 
   mensaje(titulo: string, text: string) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: titulo,
+      action: 'modal-view',
+      detail: text,
+      location: 'Modal',
+    });
     void swalAlert.fire({
       // type: tipo ,
       title: titulo,
@@ -103,11 +133,17 @@ export class CambiaContrasenaComponent implements OnInit {
       showCloseButton: false,
       showCancelButton: false,
       showConfirmButton: true,
-      confirmButtonText: 'ENTIENDO',
+      confirmButtonText: 'Entiendo',
     });
   }
 
   PopUpWithOneButon(titulo: string, text: string, firstButton: string) {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      category: titulo,
+      action: 'modal-view',
+      detail: text,
+      location: 'Modal',
+    });
     void swalAlert
       .fire({
         // type: tipo ,

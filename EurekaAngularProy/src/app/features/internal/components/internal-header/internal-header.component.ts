@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
+import {
+  AdobeAnalyticsService,
+  AdobeEvent,
+} from '../../../../shared/services/adobe-analytics.service';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
@@ -37,11 +41,20 @@ export class InternalHeaderComponent implements OnInit {
     private loginService: LoginService,
     private excelser: ExcelService,
     public afiliacionService: AfiliacionService,
-    private storage: StorageService
+    private storage: StorageService,
+    private adobeAnalytics: AdobeAnalyticsService
   ) {}
 
-  toggle() {
+  toggle(text: string) {
     this.isExpanded = !this.isExpanded;
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Navigation',
+      action: 'Click',
+      detail: `Enlace a ${text}`,
+      label: text,
+      typeElement: 'Link',
+      location: 'Header',
+    });
   }
 
   ngOnInit() {
@@ -69,9 +82,97 @@ export class InternalHeaderComponent implements OnInit {
     this.loginService.logout();
     this.excelser.statusUpload = false;
     this.isExpanded = false;
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Navigation',
+      action: 'Click',
+      detail: 'Cerrar Sesión',
+      label: 'Cerrar Sesión',
+      typeElement: 'Link',
+      location: 'Header',
+    });
   }
 
   clearServices() {
     this.afiliacionService.services = [];
+  }
+
+  gotoChargesPage() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Navigation',
+      action: 'Click',
+      detail: 'Enlace a ' + this.chargesText,
+      label: this.chargesText,
+      typeElement: 'Link',
+      location: 'Header',
+    });
+  }
+
+  gotoHomePage() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Navigation',
+      action: 'Click',
+      detail: 'Enlace a ' + this.homeText,
+      label: this.homeText,
+      typeElement: 'Link',
+      location: 'Header',
+    });
+  }
+
+  gotoCompanyPage() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Navigation',
+      action: 'Click',
+      detail: 'Enlace a ' + this.companyText,
+      label: this.companyText,
+      typeElement: 'Link',
+      location: 'Header',
+    });
+  }
+
+  gotoHelpPage() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Navigation',
+      action: 'Click',
+      detail: 'Enlace a ' + this.helpText,
+      label: this.helpText,
+      typeElement: 'Link',
+      location: 'Header',
+    });
+  }
+
+  openNotifyList() {
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Navigation',
+      action: 'Click',
+      detail: 'Mostrar notificaciones',
+      label: 'Notificaciones',
+      typeElement: 'Link',
+      location: 'Header',
+    });
+  }
+
+  markAllNotifications() {
+    this.notify.markAll();
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Navigation',
+      action: 'Click',
+      detail: 'Marcar todas como leídas',
+      label: 'Marcar todas como leídas',
+      typeElement: 'Link',
+      location: 'Header',
+    });
+  }
+
+  markNotification(msg, $event) {
+    this.notify.changeRead(msg);
+    $event.stopPropagation();
+    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      category: 'Navigation',
+      action: 'Click',
+      detail: 'Marcar notificación como leída',
+      label: 'Marcar notificación como leída',
+      typeElement: 'Link',
+      location: 'Header',
+    });
   }
 }
