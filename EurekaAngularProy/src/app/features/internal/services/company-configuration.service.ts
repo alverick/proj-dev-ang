@@ -9,6 +9,7 @@ import { forEachObjIndexed, pick } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
 
+import { authFullRoutingNames } from '../../auth/auth-routing.names';
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import { ModelFormGroup } from '../../../shared/models/forms';
@@ -19,6 +20,7 @@ import {
   AdobeEvent,
   Metadata,
 } from '../../../shared/services/adobe-analytics.service';
+import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
@@ -43,7 +45,8 @@ export class CompanyConfigurationService {
     private fb: UntypedFormBuilder,
     private companyService: CompanyService,
     private router: Router,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected adobeAnalytics: AdobeAnalyticsService,
+    protected loginService: LoginService
   ) {
     this.initForms();
   }
@@ -177,16 +180,23 @@ export class CompanyConfigurationService {
             AdobeEvent.trackFormSubmit,
             actionStep
           );
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
-            category: 'warning - icon',
-            action: 'modal-view',
-            detail: 'Los datos de la empresa han sido actualizados',
-            location: 'Modal',
-          });
-          void swalAlert.fire({
-            text: 'Los datos de la empresa han sido actualizados',
-            showCloseButton: true,
-            confirmButtonText: 'Aceptar',
+          this.loginService.logout().subscribe(() => {
+            this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+              category: 'Contraseña actualizada',
+              action: 'modal-view',
+              detail: 'Inicie sesión con su nueva contraseña.',
+              location: 'Modal',
+            });
+            void swalAlert
+              .fire({
+                title: 'Contraseña actualizada',
+                text: 'Inicie sesión con su nueva contraseña.',
+                showCloseButton: true,
+                confirmButtonText: 'Entendido',
+              })
+              .then(() => {
+                void this.router.navigate([authFullRoutingNames.LOGIN]);
+              });
           });
           this.passwordForm.reset();
         } else {
