@@ -182,7 +182,6 @@ export class AdobeAnalyticsService {
     payload: Partial<TrackEventProperties>
   ) {
     try {
-      console.log(event, payload);
       if ('undefined' !== typeof _satellite && _satellite) {
         _satellite.track(event, payload);
       }
