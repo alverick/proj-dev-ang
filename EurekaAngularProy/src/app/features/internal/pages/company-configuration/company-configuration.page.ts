@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import {
   documentTypes,
@@ -10,6 +11,8 @@ import {
   errorRegisterAuth,
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
+import { IEntryModel } from '../../../../shared/models';
+import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { ModelFormGroup } from '../../../../shared/models/forms';
 import {
   AdobeAnalyticsService,
@@ -37,6 +40,7 @@ export class CompanyConfigurationPage implements OnInit {
     confirmNewPassword: errorRegisterAuth.passwordConfirm,
   };
   showSidebar = false;
+  blurContent = false;
 
   constructor(
     public companyConfiguration: CompanyConfigurationService,
@@ -45,7 +49,12 @@ export class CompanyConfigurationPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe(({ company, entries }: any) => {
+    (
+      this.activatedRoute.data as Observable<{
+        company: IDataEnterpriseModel;
+        entries: IEntryModel[];
+      }>
+    ).subscribe(({ company, entries }) => {
       this.companyConfiguration.entryOptions = entries;
       this.companyConfiguration.companyData = company;
       this.isInReview =
@@ -58,6 +67,7 @@ export class CompanyConfigurationPage implements OnInit {
   onSendForm() {
     this.companyConfiguration.savePassword().subscribe(() => {
       this.showSidebar = false;
+      this.blurContent = true;
     });
   }
   onShowPanel() {
