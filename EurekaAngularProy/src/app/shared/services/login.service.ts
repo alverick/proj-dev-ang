@@ -1,11 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
-import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
 import { RespuestaLogin } from '../models/respuestaLogin.model';
 import { NotifyService } from './notify.service';
 import { StorageService } from './storage.service';
@@ -17,7 +15,6 @@ export class LoginService {
   constructor(
     public http: HttpClient,
     private storage: StorageService,
-    private router: Router,
     private notify: NotifyService
   ) {}
 
@@ -64,12 +61,13 @@ export class LoginService {
       );
   }
 
-  logout(): void {
+  logout() {
     const url = `${this.URI_API}/login/out`;
-    this.http.post(url, {}).subscribe(() => {
-      this.storage.removeCurrentSession();
-      void this.router.navigate([authFullRoutingNames.LOGIN]);
-    });
+    return this.http.post(url, {}).pipe(
+      tap(() => {
+        this.storage.removeCurrentSession();
+      })
+    );
   }
 
   refresh(): void {
