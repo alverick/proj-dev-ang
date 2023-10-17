@@ -8,10 +8,12 @@ import { Router } from '@angular/router';
 import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
 
+import { authFullRoutingNames } from '../../auth/auth-routing.names';
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import { ModelFormGroup } from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
+import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
@@ -35,7 +37,8 @@ export class CompanyConfigurationService {
   constructor(
     private fb: UntypedFormBuilder,
     private companyService: CompanyService,
-    private router: Router
+    private router: Router,
+    protected loginService: LoginService
   ) {
     this.initForms();
   }
@@ -113,10 +116,17 @@ export class CompanyConfigurationService {
     return this.companyService.updateCompany(enterprise).pipe(
       tap(({ success, message }) => {
         if (success === true) {
-          void swalAlert.fire({
-            text: 'Los datos de la empresa han sido actualizados',
-            showCloseButton: true,
-            confirmButtonText: 'ACEPTAR',
+          this.loginService.logout().subscribe(() => {
+            void swalAlert
+              .fire({
+                title: 'Contraseña actualizada ',
+                text: 'Inicie sesión con su nueva contraseña.',
+                showCloseButton: true,
+                confirmButtonText: 'Entendido',
+              })
+              .then(() => {
+                void this.router.navigate([authFullRoutingNames.LOGIN]);
+              });
           });
           this.passwordForm.reset();
         } else {
