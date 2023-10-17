@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { authFullRoutingNames } from '../../../../app-routing.collection';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { adminFullRoutingNames } from '../../admin-routing.names';
@@ -12,11 +15,14 @@ export class AdminHeaderComponent {
   linkSetupEmail = adminFullRoutingNames.SETUP_EMAIL;
   constructor(
     private loginService: LoginService,
-    private excelser: ExcelService
+    private excelser: ExcelService,
+    private router: Router
   ) {}
 
   public logout(): void {
-    this.loginService.logout();
+    this.loginService.logout().subscribe(() => {
+      void this.router.navigate([authFullRoutingNames.LOGIN]);
+    });
     this.excelser.statusUpload = false;
   }
 }

@@ -7,6 +7,7 @@ import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
 import { StorageService } from '../../../../shared/services/storage.service';
+import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
 @Component({
@@ -66,7 +67,9 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   public logout(): void {
-    this.loginService.logout();
+    this.loginService.logout().subscribe(() => {
+      void this.router.navigate([authFullRoutingNames.LOGIN]);
+    });
     this.excelser.statusUpload = false;
     this.isExpanded = false;
   }
