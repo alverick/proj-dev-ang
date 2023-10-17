@@ -9,6 +9,7 @@ import {
   internalFullRoutingNames,
 } from '../../app-routing.collection';
 import { ScriptInjectorService } from './script-injector.service';
+import { StorageService } from './storage.service';
 
 export const AdobeEvent = {
   trackFormSubmit: 'trackFormSubmit',
@@ -86,7 +87,15 @@ export class AdobeAnalyticsService {
     },
   };
 
-  constructor(private scriptInjectorService: ScriptInjectorService) {}
+  constructor(
+    private scriptInjectorService: ScriptInjectorService,
+    private storageService: StorageService
+  ) {
+    const session = this.storageService.getCurrentSession();
+    if (session && session.isAuthenticate) {
+      this.setRuc(window.sessionStorage.getItem('username'));
+    }
+  }
 
   async injectAdobeLaunchScript() {
     if (isEmpty(environment.adobe)) {
