@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forEachObjIndexed, pick } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
@@ -11,7 +7,10 @@ import { tap } from 'rxjs/operators';
 
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
-import { ModelFormGroup } from '../../../shared/models/forms';
+import {
+  ModelFormGroup,
+  SimpleModelFormGroup,
+} from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
 import {
   ActionEventProperties,
@@ -19,10 +18,12 @@ import {
   AdobeEvent,
   Metadata,
 } from '../../../shared/services/adobe-analytics.service';
+import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { passwordValidators } from '../../../shared/validators/password-validators';
+import { authFullRoutingNames } from '../../auth/auth-routing.names';
 import { internalFullRoutingNames } from '../internal-routing.names';
 
 export interface ChangePasswordForm {
@@ -31,18 +32,31 @@ export interface ChangePasswordForm {
   confirmNewPassword: string;
 }
 
+export interface CompanyForm {
+  ruc: string;
+  name: string;
+  entry: string;
+  entrySelect: IEntryModel;
+  email: string;
+  movilNumber: string;
+  movilOperator: string;
+  documentType: string;
+  documentNumber: string;
+}
+
 @Injectable()
 export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
-  companyForm: UntypedFormGroup;
+  companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<ChangePasswordForm>;
   entryOptions: IEntryModel[] = [];
   entryOptionsAdd: IEntryModel[] = [];
 
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private companyService: CompanyService,
     private router: Router,
+    protected loginService: LoginService,
     protected adobeAnalytics: AdobeAnalyticsService
   ) {
     this.initForms();
@@ -107,12 +121,12 @@ export class CompanyConfigurationService {
           this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
             category: 'warning - icon',
             action: 'modal-view',
-            detail: 'Los datos de la empresa han sido actualizados',
+            detail: 'Los datos de la empresa han sido actualizados.',
             location: 'Modal',
           });
           void swalAlert
             .fire({
-              text: 'Los datos de la empresa han sido actualizados',
+              text: 'Los datos de la empresa han sido actualizados.',
               showCloseButton: true,
               confirmButtonText: 'Aceptar',
             })
@@ -177,33 +191,40 @@ export class CompanyConfigurationService {
             AdobeEvent.trackFormSubmit,
             actionStep
           );
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
-            category: 'warning - icon',
-            action: 'modal-view',
-            detail: 'Los datos de la empresa han sido actualizados',
-            location: 'Modal',
-          });
-          void swalAlert.fire({
-            text: 'Los datos de la empresa han sido actualizados',
-            showCloseButton: true,
-            confirmButtonText: 'Aceptar',
+          this.loginService.logout().subscribe(() => {
+            this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+              category: 'warning - icon',
+              action: 'modal-view',
+              detail: 'Los datos de la empresa han sido actualizados',
+              location: 'Modal',
+            });
+            void swalAlert
+              .fire({
+                title: 'Contraseña actualizada ',
+                text: 'Inicie sesión con su nueva contraseña.',
+                showCloseButton: true,
+                confirmButtonText: 'Entendido',
+              })
+              .then(() => {
+                void this.router.navigate([authFullRoutingNames.LOGIN]);
+              });
           });
           this.passwordForm.reset();
         } else {
           this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: 'Intención de envío',
-            typeError: 'Ha ocurrido un error con el servidor',
+            typeError: 'Ha ocurrido un error con el servidor.',
           });
           this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
             category: 'error - icon',
             action: 'modal-view',
-            detail: message || 'Ha ocurrido un error en el servidor',
+            detail: message || 'Ha ocurrido un error en el servidor.',
             location: 'Modal',
           });
           void swalAlert.fire({
             icon: 'warning',
-            text: message || 'Ha ocurrido un error en el servidor',
+            text: message || 'Ha ocurrido un error en el servidor.',
             showCloseButton: true,
             confirmButtonText: 'Aceptar',
           });
@@ -234,7 +255,7 @@ export class CompanyConfigurationService {
       ],
       ruc: [{ value: '', disabled: true }],
       entry: [{ value: '', disabled: true }],
-      entrySelect: [{ value: '', disabled: true }],
+      entrySelect: [{ value: null as IEntryModel, disabled: true }],
       documentType: [{ value: '', disabled: true }],
       documentNumber: [{ value: '', disabled: true }],
       email: [

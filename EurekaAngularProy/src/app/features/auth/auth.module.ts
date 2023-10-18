@@ -14,11 +14,11 @@ import { AuthComponent } from './auth.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { CompanyFormAuthComponent } from './components/company-form-auth/company-form-auth.component';
 import { CompanyFormRegistrationComponent } from './components/company-form-registration/company-form-registration.component';
+import { LayoutFormComponent } from './components/layout-form/layout-form.component';
 import { SidebarCompanyComponent } from './components/sidebar-company/sidebar-company.component';
 import { GUARDS } from './guards';
 import { PAGES } from './pages';
 import { SERVICES } from './services';
-import { LayoutFormComponent } from './components/layout-form/layout-form.component';
 
 @NgModule({
   imports: [
