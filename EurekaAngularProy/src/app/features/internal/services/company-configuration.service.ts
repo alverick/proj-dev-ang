@@ -110,12 +110,12 @@ export class CompanyConfigurationService {
           this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
             category: 'warning - icon',
             action: 'modal-view',
-            detail: 'Los datos de la empresa han sido actualizados',
+            detail: 'Los datos de la empresa han sido actualizados.',
             location: 'Modal',
           });
           void swalAlert
             .fire({
-              text: 'Los datos de la empresa han sido actualizados',
+              text: 'Los datos de la empresa han sido actualizados.',
               showCloseButton: true,
               confirmButtonText: 'Aceptar',
             })
@@ -203,17 +203,17 @@ export class CompanyConfigurationService {
           this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: 'Intención de envío',
-            typeError: 'Ha ocurrido un error con el servidor',
+            typeError: 'Ha ocurrido un error con el servidor.',
           });
           this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
             category: 'error - icon',
             action: 'modal-view',
-            detail: message || 'Ha ocurrido un error en el servidor',
+            detail: message || 'Ha ocurrido un error en el servidor.',
             location: 'Modal',
           });
           void swalAlert.fire({
             icon: 'warning',
-            text: message || 'Ha ocurrido un error en el servidor',
+            text: message || 'Ha ocurrido un error en el servidor.',
             showCloseButton: true,
             confirmButtonText: 'Aceptar',
           });
