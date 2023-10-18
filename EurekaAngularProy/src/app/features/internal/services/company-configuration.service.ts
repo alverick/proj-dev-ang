@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forEachObjIndexed, pick } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
 
-import { authFullRoutingNames } from '../../auth/auth-routing.names';
 import { IEntryModel } from '../../../shared/models';
 import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
-import { ModelFormGroup } from '../../../shared/models/forms';
+import {
+  ModelFormGroup,
+  SimpleModelFormGroup,
+} from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
 import {
   ActionEventProperties,
@@ -25,6 +23,7 @@ import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { passwordValidators } from '../../../shared/validators/password-validators';
+import { authFullRoutingNames } from '../../auth/auth-routing.names';
 import { internalFullRoutingNames } from '../internal-routing.names';
 
 export interface ChangePasswordForm {
@@ -33,16 +32,28 @@ export interface ChangePasswordForm {
   confirmNewPassword: string;
 }
 
+export interface CompanyForm {
+  ruc: string;
+  name: string;
+  entry: string;
+  entrySelect: IEntryModel;
+  email: string;
+  movilNumber: string;
+  movilOperator: string;
+  documentType: string;
+  documentNumber: string;
+}
+
 @Injectable()
 export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
-  companyForm: UntypedFormGroup;
+  companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<ChangePasswordForm>;
   entryOptions: IEntryModel[] = [];
   entryOptionsAdd: IEntryModel[] = [];
 
   constructor(
-    private fb: UntypedFormBuilder,
+    private fb: FormBuilder,
     private companyService: CompanyService,
     private router: Router,
     protected adobeAnalytics: AdobeAnalyticsService,
@@ -244,7 +255,7 @@ export class CompanyConfigurationService {
       ],
       ruc: [{ value: '', disabled: true }],
       entry: [{ value: '', disabled: true }],
-      entrySelect: [{ value: '', disabled: true }],
+      entrySelect: [{ value: null as IEntryModel, disabled: true }],
       documentType: [{ value: '', disabled: true }],
       documentNumber: [{ value: '', disabled: true }],
       email: [
