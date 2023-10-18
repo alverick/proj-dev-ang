@@ -65,9 +65,11 @@ export class CompanyConfigurationPage implements OnInit {
     this.passwordForm = this.companyConfiguration.passwordForm;
   }
   onSendForm() {
-    this.companyConfiguration.savePassword().subscribe(() => {
+    this.companyConfiguration.savePassword().subscribe(({ success }) => {
       this.showSidebar = false;
-      this.blurContent = true;
+      if (success) {
+        this.blurContent = true;
+      }
     });
   }
   onShowPanel() {
