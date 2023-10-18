@@ -1,9 +1,9 @@
 export interface IDataEnterpriseModel {
-  ruc: number | string;
+  ruc: string;
   name: string;
   entry: string;
   email: string;
-  movilNumber: number | string;
+  movilNumber: string;
   movilOperator: string;
   documentType?: string;
   documentNumber?: string;
