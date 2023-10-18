@@ -5,16 +5,18 @@
     <a class="navbar-brand" [routerLink]="'/'">
       <ng-template [ngIf]="isBlank" [ngIfElse]="isNotBlank">
         <img
-          style="max-width: 250px"
-          src="../../../../assets/images/ibkempresas-logo-negativo.svg"
-          alt=""
+          ngSrc="/assets/images/cs-logo-alternative.svg"
+          alt="Cobro Simple"
+          height="36"
+          width="127"
         />
       </ng-template>
       <ng-template #isNotBlank>
         <img
-          style="max-width: 250px"
-          src="../../../../assets/images/ibkempresas-logo-positivo.svg"
-          alt=""
+          ngSrc="/assets/images/cs-logo.svg"
+          alt="Cobro Simple"
+          height="36"
+          width="127"
         />
       </ng-template>
     </a>

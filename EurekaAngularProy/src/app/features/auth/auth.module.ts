@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { RecaptchaModule } from 'ng-recaptcha';
@@ -28,6 +28,7 @@ import { LayoutFormComponent } from './components/layout-form/layout-form.compon
     DigitOnlyModule,
     SharedModule,
     PerfectScrollbarModule,
+    NgOptimizedImage,
   ],
   providers: [
     ...GUARDS,
