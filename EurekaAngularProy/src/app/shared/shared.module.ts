@@ -1,5 +1,5 @@
 import { OverlayModule } from '@angular/cdk/overlay';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -150,6 +150,7 @@ const UI_MODULES = [
     ...FORM_MODULES,
     ...PRIMENG_MODULES,
     ValdemortModule,
+    NgOptimizedImage,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
