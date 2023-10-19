@@ -130,10 +130,8 @@ export class CompanyConfigurationService {
               showCloseButton: true,
               confirmButtonText: 'Aceptar',
             })
-            .then((result) => {
-              if (result.value) {
-                void this.router.navigate([internalFullRoutingNames.HOME]);
-              }
+            .then(() => {
+              void this.router.navigate([internalFullRoutingNames.HOME]);
             });
         }
         if (enterpriseUpdate.success === false) {
