@@ -75,7 +75,7 @@
               *ngFor="let msg of notify.messages"
               class="dropdown-item"
               (click)="$event.stopPropagation()"
-              [class.dropdown-item-readed]="!msg.IsNew"
+              [class.dropdown-item-readed]="!msg.isNew"
             >
               <div
                 *ngIf="msg.isNew"
@@ -200,7 +200,7 @@
               *ngFor="let msg of notify.messages"
               class="dropdown-item"
               (click)="$event.stopPropagation()"
-              [class.dropdown-item-readed]="!msg.IsNew"
+              [class.dropdown-item-readed]="!msg.isNew"
             >
               <div
                 *ngIf="msg.isNew"

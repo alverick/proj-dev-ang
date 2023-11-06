@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {
   faBell as farBell,
   faCircle as farCircle,
+  IconDefinition,
 } from '@fortawesome/free-regular-svg-icons';
 import { faCircle as fasCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subject, timer } from 'rxjs';
@@ -15,6 +16,18 @@ const timeCallNotify = 60000;
 
 const markAsRead = 'Marcar como leído';
 const markAsNotRead = 'Marcar como no leído';
+
+interface MessagesResponse {
+  create: string;
+  id: number;
+  isNew: boolean;
+  message: string;
+}
+
+export interface MessagesType extends MessagesResponse {
+  icono: IconDefinition;
+  title: string;
+}
 
 @Injectable()
 export class NotifyService {
@@ -36,7 +49,7 @@ export class NotifyService {
   loadingMsg = false;
 
   existMore = true;
-  messages: any[] = [];
+  messages: MessagesType[] = [];
   private _total = -1;
   totalLabel = '';
 
@@ -61,7 +74,7 @@ export class NotifyService {
             this.total = total;
             this.messages = [];
             this.existMore = true;
-            this.loadMsgs();
+            this.loadMessages();
           }
         },
         (error) => {
@@ -78,33 +91,35 @@ export class NotifyService {
     this.total = -1;
   }
 
-  public loadMsgs() {
+  public loadMessages() {
     if (this.existMore && !this.loadingMsg) {
       this.loadingMsg = true;
       this.http
-        .get<any>(
+        .get<MessagesResponse[]>(
           `${environment.END_POINT}/notification?skip=${this.messages.length}`
         )
-        .subscribe(
-          (d) => {
+        .subscribe({
+          next: (d) => {
             this.loadingMsg = false;
             if (d.length < 15) {
               this.existMore = false;
             }
             d.forEach((s) => {
-              s.icono = s.isNew ? farCircle : fasCircle;
-              s.title = s.isNew ? markAsRead : markAsNotRead;
-              this.messages.push(s);
+              this.messages.push({
+                ...s,
+                icono: s.isNew ? farCircle : fasCircle,
+                title: s.isNew ? markAsRead : markAsNotRead,
+              });
             });
           },
-          () => {
+          error: () => {
             this.loadingMsg = false;
-          }
-        );
+          },
+        });
     }
   }
 
-  public changeRead(msg: any) {
+  public changeRead(msg: MessagesType) {
     this.http.post(`${environment.END_POINT}/notification/mark/${msg.id}`, {});
     msg.isNew = !msg.isNew;
     if (msg.isNew) {
