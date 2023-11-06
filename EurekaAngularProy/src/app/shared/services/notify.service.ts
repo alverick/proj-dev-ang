@@ -18,6 +18,17 @@ const markAsNotRead = 'Marcar como no leído';
 
 @Injectable()
 export class NotifyService {
+  set total(value: number) {
+    this._total = value;
+    if (value >= 100) {
+      this.totalLabel = '99+';
+    } else {
+      this.totalLabel = value.toString(10);
+    }
+  }
+  get total() {
+    return this._total;
+  }
   constructor(private http: HttpClient, private storage: StorageService) {}
 
   inExecution = false;
@@ -26,7 +37,8 @@ export class NotifyService {
 
   existMore = true;
   messages: any[] = [];
-  total = -1;
+  private _total = -1;
+  totalLabel = '';
 
   public iniciar() {
     this.storage.getCurrentSession();
