@@ -1,79 +1,52 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
-import { moduleMetadata } from '@storybook/angular';
-import { Button } from 'primeng/button';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  argsToTemplate,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';
 import { MessageAlertComponent } from './message-alert.component';
 
-export default {
+type MessageAlertAndMessage = MessageAlertComponent & { content: string };
+
+const meta: Meta<MessageAlertAndMessage> = {
   title: 'UI/Message alert',
+  component: MessageAlertComponent,
   decorators: [
+    applicationConfig({
+      providers: [provideAnimations()],
+    }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [CommonModule, SharedModule],
     }),
   ],
-};
-
-export const DefaultStory = () => ({
-  template: `<cs-message-alert class="tw-m-5" mode="info">Nombre con el que tus clientes te buscarán en los canales Interbank al
-        momento de pagarte.</cs-message-alert>`,
-  props: {
-    text: 'Button with custom styles',
-  },
-  styles: [
-    `
-      cs-text-input {
-        margin: 25px;
-      }
-    `,
-  ],
-});
-
-DefaultStory.story = {
-  name: 'Default',
-};
-
-export const normal = () => ({
-  component: MessageAlertComponent,
-  props: {
-    gtpMode: false,
-  },
-  argTypes: { sendForm: { action: 'clicked' } },
-});
-
-export const ActionOnly = () => ({
-  component: Button,
-  props: {
-    text: 'Action only',
-    onClick: action('log 1'),
-  },
-});
-
-ActionOnly.story = {
-  name: 'Action only',
-};
-
-export const ActionAndMethod = () => ({
-  component: Button,
-  props: {
-    text: 'Action and Method',
-    onClick: (e) => {
-      console.log(e);
-      e.preventDefault();
-      action('log2')(e.target);
+  tags: ['autodocs'],
+  argTypes: {
+    mode: {
+      options: ['info'],
+      control: { type: 'select' },
     },
   },
-});
+  render: ({ content, ...args }) => ({
+    props: args,
+    template: `<cs-message-alert ${argsToTemplate(
+      args
+    )}>${content}</cs-message-alert>`,
+  }),
+};
 
-ActionAndMethod.story = {
-  name: 'Action and method',
+export default meta;
+type Story = StoryObj<MessageAlertAndMessage>;
+
+export const Params: Story = {
+  args: {
+    mode: 'info',
+    content:
+      'Nombre con el que tus clientes te buscarán en los canales Interbank al momento de pagarte.',
+  },
 };
