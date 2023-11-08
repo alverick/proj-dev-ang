@@ -1,8 +1,8 @@
 <div
-  class="tw-bg-no-repeat tw-bg-cover lg:tw-h-screen lg:tw-min-h-[764px] container-style"
+  class="tw-bg-no-repeat tw-bg-cover tw-min-h-screen lg:tw-h-screen lg:tw-min-h-[764px] container-style tw-flex tw-flex-col"
 >
   <div
-    class="tw-max-w-6xl tw-m-auto tw-flex tw-justify-center lg:tw-justify-start tw-relative tw-pt-6 lg:tw-pb-10 2xl:tw-pb-20 tw-pb-6"
+    class="tw-max-w-6xl tw-w-full tw-m-auto tw-flex tw-justify-center lg:tw-justify-start tw-relative tw-pt-6 lg:tw-pb-10 2xl:tw-pb-20 tw-pb-6 tw-h-24 tw-shrink"
   >
     <a class="lg:tw-pl-24 tw-py-1" [routerLink]="'/'">
       <img
@@ -14,8 +14,10 @@
     </a>
   </div>
 
-  <div class="tw-max-w-6xl tw-m-auto md:tw-flex tw-relative">
-    <div class="lg:tw-flex">
+  <div
+    class="tw-max-w-6xl tw-m-auto md:tw-flex tw-relative tw-items-center tw-grow"
+  >
+    <div class="lg:tw-flex tw-items-center">
       <div class="sm:tw-w-full tw-pr-4 tw-pl-4 lg:tw-w-1/2">
         <div class="lg:tw-ml-20 lg:tw-mb-32 lg:tw-pr-8 tw-mb-6">
           <h2
