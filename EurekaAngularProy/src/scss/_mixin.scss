@@ -80,17 +80,17 @@
 
 @mixin btn-eureca {
   @include font-text(14px, 500);
-  color: $blanco;
-  background-color: $green;
+  color: var(--ibk-white);
+  background-color: var(--primary-green-1);
   border-radius: 4px;
-  border: solid 1px $green;
+  border: solid 1px var(--primary-green-1);
   @include box-shadows(0, 1px, 4px, 0, rgba(252, 154, 0, 0.2));
   &:hover {
-    background-color: $green;
+    background-color: var(--primary-green-1);
     border-radius: 4px;
   }
   /*  &:focus {
-        background-color: $greenclaro;
+        background-color: var(--primary-green-2);
         border-radius: 4px;
     } */
 }
