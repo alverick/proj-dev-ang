@@ -99,7 +99,10 @@
                   <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
                 </div>
               </div>
-              <div *ngIf="!msg.isNew" style="background-color: #ffffff">
+              <div
+                *ngIf="!msg.isNew"
+                style="background-color: var(--ibk-white)"
+              >
                 <div class="espacio">
                   <div
                     class="notiificacion"
@@ -224,7 +227,10 @@
                   <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
                 </div>
               </div>
-              <div *ngIf="!msg.isNew" style="background-color: #ffffff">
+              <div
+                *ngIf="!msg.isNew"
+                style="background-color: var(--ibk-white)"
+              >
                 <div class="espacio">
                   <div
                     class="notiificacion"

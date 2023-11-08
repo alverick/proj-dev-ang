@@ -6,7 +6,7 @@
 }
 
 // #html-color {
-//     background: #05be50 !important;
+//     background: var(--primary-green-1) !important;
 // }
 
 label {
@@ -39,7 +39,7 @@ label {
 }
 
 .bg-blanco {
-  background-color: #fff;
+  background-color: var(--ibk-white);
 }
 
 .input-line-bottom {
@@ -47,10 +47,6 @@ label {
   width: 120px;
   border-bottom: 1px solid #bebebe;
   padding: 5px 0;
-}
-
-.input-line-bottom:focus {
-  border-bottom: 1px solid #fc9a00;
 }
 
 /*.box-login{right:15px;width:380px;padding:65px 65px 22px}}*/
@@ -71,11 +67,6 @@ label {
 
 .flex-fill {
   flex: 1 1 auto !important;
-}
-
-.icon-usuario:before {
-  content: '\e908';
-  color: #2626bf;
 }
 
 .d-initial,
@@ -108,10 +99,6 @@ label {
   }
 }
 
-.color-lleyow {
-  color: #fc9a00;
-}
-
 div.mat-form-field-infix {
   padding: 0em 0 !important;
 }
@@ -134,24 +121,24 @@ div.mat-form-field-infix {
 // boton Rgistrate
 .btn-eureca-green-register {
   @include font-text(14px !important);
-  background-color: $blanco;
+  background-color: var(--ibk-white);
   border-radius: 4px;
-  color: $green;
-  border: solid 1px $green;
+  color: var(--primary-green-1);
+  border: solid 1px var(--primary-green-1);
   width: 232px;
   height: 48px;
   float: center;
   // @include box-shadows(0,1px,4px, 0,rgba(252, 154, 0, 0.2));
   &:hover {
-    background-color: $green;
+    background-color: var(--primary-green-1);
     border-radius: 4px;
-    border: solid 1px $greenclaro;
-    color: $blanco;
+    border: solid 1px var(--primary-green-2);
+    color: var(--ibk-white);
   }
   &:active {
-    background-color: $blanco;
-    color: $green;
-    border: solid 1px $green;
+    background-color: var(--ibk-white);
+    color: var(--primary-green-1);
+    border: solid 1px var(--primary-green-1);
   }
 }
 
@@ -164,7 +151,7 @@ div.mat-form-field-infix {
 
 .texto-azul {
   @include font-text(28px, 500);
-  color: $azul;
+  color: var(--secondary-blue-1);
   text-align: center;
 }
 
@@ -199,7 +186,7 @@ div.mat-form-field-infix {
 
 .texto-login {
   @include font-text(48px, 500);
-  color: #ffffff;
+  color: var(--ibk-white);
 }
 
 .mujer-position {
@@ -221,11 +208,11 @@ div.mat-form-field-infix {
 }
 
 :host ::ng-deep .mat-form-field .mat-form-field-ripple {
-  background-color: $textgreen !important;
+  background-color: var(--primary-green-1) !important;
 }
 
 :host ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
-  background-color: $textgreen !important;
+  background-color: var(--primary-green-1) !important;
 }
 
 .reCaptach {
@@ -237,25 +224,25 @@ div.mat-form-field-infix {
 
 .text-check {
   @include font-text(14px, $weight: normal);
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 .texto-negro {
   @include font-text(16px, 500);
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 /*
 small {
     @include font-text(14px!important,
     normal!important);
-    color: #0d131d;
+    color: var(--ibk-black);
 }
 */
 
 .cuadro-form {
   @include cuadro(381px, auto);
-  background-color: #ffffff;
+  background-color: var(--ibk-white);
   box-sizing: border-box;
   padding: 26px 37px;
   // margin: auto;
@@ -265,20 +252,20 @@ small {
 
 small {
   @include font-text(14px, $weight: 500 !important);
-  color: $green;
+  color: var(--primary-green-1);
   text-decoration: underline;
   cursor: pointer;
 }
 
 :host ::ng-deep .mat-form-field .mat-form-field-underline {
-  background-color: #cfd0d2;
+  background-color: var(--grises-grey-3);
   // height       : 0.10vw !important;
   height: 1px !important;
 }
 
 .title-login {
   @include font-text(55px, 500);
-  color: #ffffff;
+  color: var(--ibk-white);
   font-family: $primary-font-family;
   margin-left: 80px;
   line-height: 1 !important;
@@ -286,13 +273,13 @@ small {
 
 .subtitle-login {
   @include font-text(16px, 500);
-  color: #ffffff;
+  color: var(--ibk-white);
   margin-left: 80px;
 }
 
 .content-landing {
   @include font-text(15px, 500);
-  color: #ffffff;
+  color: var(--ibk-white);
   margin-left: 80px;
 }
 
@@ -439,5 +426,5 @@ html {
   ::ng-deep
   .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
   .mat-form-field-label {
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
 }

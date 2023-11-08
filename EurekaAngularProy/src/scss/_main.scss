@@ -1,13 +1,13 @@
 body {
   font-family: $primary-font-family;
-  color: var(--grises-ibk-black);
+  color: var(--ibk-black);
 }
 
 a {
-  color: $green;
+  color: var(--primary-green-1);
 
   &:hover {
-    color: $green;
+    color: var(--primary-green-1);
   }
 }
 
@@ -28,12 +28,12 @@ a {
 }
 
 .scroll-div::-webkit-scrollbar-thumb {
-  background-color: #333333;
+  background-color: var(--ibk-black);
   border-radius: 4px;
 }
 
 .scroll-div::-webkit-scrollbar-track {
-  background-color: #f3f3f3;
+  background-color: var(--grises-grey-4);
   border-radius: 4px;
 }
 
@@ -44,8 +44,7 @@ button:focus {
 
 .messsage-error {
   @include font-text(12px, 500);
-  color: #f23a24 !important;
-  //color: #ea0044 !important;
+  color: var(--extended-palette-watermelon-1) !important;
 }
 
 .w-35 {
@@ -65,23 +64,23 @@ button:focus {
 
 .texto-azul {
   @include font-text(32px, $weight: 500);
-  color: #0032a0;
+  color: var(--secondary-blue-1);
 }
 
 .font-black {
   @include font-text(18px, $weight: 600);
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 .swal2-content {
   @include font-text(16px, $weight: 500);
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
   text-align: center;
 }
 
 .input-text {
   @include font-text(16px !important, normal !important);
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
 }
 
 .swal2-styled {
@@ -173,5 +172,5 @@ button:focus {
 }
 
 .backdrop-background-opaque {
-  background-color: #f3f3f3;
+  background-color: var(--grises-grey-4);
 }

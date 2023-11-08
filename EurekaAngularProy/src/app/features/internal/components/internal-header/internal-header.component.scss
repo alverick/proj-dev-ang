@@ -28,14 +28,14 @@ li.nav-item {
 
   &.active {
     a.nav-link {
-      color: var(--grises-ibk-black);
+      color: var(--ibk-black);
     }
   }
 }
 
 .active {
   a.link {
-    color: var(--grises-ibk-black);
+    color: var(--ibk-black);
   }
 }
 
@@ -60,7 +60,7 @@ img.bell {
     display: block;
     width: 16px;
     position: absolute;
-    color: #ffffff;
+    color: var(--ibk-white);
     left: 22px;
     top: -9px;
     text-align: center;
@@ -94,7 +94,7 @@ img.bell {
 
 .lnk-regresar {
   @include font-text(18px, 500);
-  color: #9ea1a5 !important;
+  color: var(--grises-grey-1) !important;
   margin-bottom: auto;
   cursor: pointer;
 }
@@ -105,12 +105,12 @@ img.bell {
   padding: 0 !important;
   border: 0 !important;
   @include box-shadows(4px, 10px, 0, rgba(0, 0, 0, 0.1), 0);
-  background-color: #ffffff;
+  background-color: var(--ibk-white);
 
   .dropdown-item {
     @include font-text(14px);
     padding: 20px 19px;
-    color: $textblack;
+    color: var(--ibk-black);
     cursor: pointer;
     border-bottom: $separador;
   }
@@ -129,12 +129,12 @@ img.bell {
 
     .text {
       @include font-text(12px, 500);
-      color: $textblack;
+      color: var(--ibk-black);
     }
 
     .mark-all {
       @include font-text(12px);
-      color: $textgreen;
+      color: var(--primary-green-1);
       cursor: pointer;
     }
   }
@@ -161,20 +161,20 @@ img.bell {
 
         .texto {
           @include font-text(14px);
-          color: $textblack;
+          color: var(--ibk-black);
           margin-left: 15px;
         }
 
         .tiempo {
           @include font-text(14px, 300);
-          color: $textblack;
+          color: var(--ibk-black);
           margin-left: 15px;
         }
       }
     }
 
     .dropdown-item:active {
-      background-color: $textgray;
+      background-color: var(--grises-grey-4);
     }
 
     .loading {
@@ -185,7 +185,7 @@ img.bell {
   .more {
     @include font-text(14px, normal);
     padding: 6px 12px;
-    color: $textblack;
+    color: var(--ibk-black);
     text-align: center;
 
     .text {
@@ -206,14 +206,14 @@ img.bell {
 
 .text-notifications {
   @include font-text(12px, 500);
-  color: $textblack;
+  color: var(--ibk-black);
   text-align: center;
 }
 
 :host ::ng-deep .dropdown-item:active {
-  color: #05be50 !important;
+  color: var(--primary-green-1) !important;
   text-decoration: none;
-  background-color: #ffffff;
+  background-color: var(--ibk-white);
 }
 
 .notiificacion {

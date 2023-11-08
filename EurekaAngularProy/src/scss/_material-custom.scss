@@ -16,20 +16,20 @@
 
 .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
 .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: #b0b0b0;
+  background-color: var(--grises-grey-2);
 }
 
 .mat-progress-bar-buffer {
-  background-color: #a1dbc2;
+  background-color: var(--primary-green-4);
 }
 
 .mat-progress-bar-fill::after {
-  background-color: $green;
+  background-color: var(--primary-green-1);
 }
 
 .mat-progress-spinner circle,
 .mat-spinner circle {
-  stroke: $textblack;
+  stroke: var(--ibk-black);
 }
 
 .mat-form-field {
@@ -44,18 +44,18 @@
   }
 
   .mat-form-field-ripple {
-    background-color: $textblack;
+    background-color: var(--ibk-black);
   }
 
   &.mat-form-field-invalid {
     .mat-form-field-ripple,
     .mat-form-field-ripple.mat-accent {
-      /// background-color: $textblack;
+      /// background-color: var(--ibk-black);
     }
   }
 
   .mat-select-arrow {
-    //color: $textgreen;
+    //color: var(--primary-green-1);
     //border-left: 8px solid transparent;
     //border-right: 8px solid transparent;
     //border-top: 8px solid;
@@ -70,17 +70,17 @@
   .mat-datepicker-toggle {
     .mdc-icon-button {
       font-size: 15px;
-      color: $textgreen;
+      color: var(--primary-green-1);
     }
   }
 
   &.mat-focused {
     .mat-form-field-label {
-      color: $textblack !important;
+      color: var(--ibk-black) !important;
     }
 
     .mat-form-field-ripple {
-      background-color: $green !important;
+      background-color: var(--primary-green-1) !important;
     }
 
     .mat-select-arrow {
@@ -108,12 +108,12 @@
 
   .mat-form-field-label-wrapper {
     .mat-form-field-label {
-      color: #b7babc;
+      color: var(--grises-grey-2);
     }
   }
 
   .mat-form-field-underline {
-    background-color: #d9dadb;
+    background-color: var(--grises-grey-3);
   }
 
   &.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
@@ -121,15 +121,15 @@
       translateZ(0.001px);
     font-weight: 500;
     font-size: 10px !important;
-    // color: #0d131d !important;
-    color: #0d131d;
+    // color: var(--ibk-black) !important;
+    color: var(--ibk-black);
   }
 
   .msg-error {
     @include font-text(10px, 500);
 
     position: absolute;
-    color: #ea0044;
+    color: var(--extended-palette-watermelon-1);
     margin-top: 10px;
     width: 200px;
 
@@ -140,16 +140,16 @@
     @include font-text(10px, 500);
 
     position: absolute;
-    color: #ea0044;
+    color: var(--extended-palette-watermelon-1);
     margin-top: 10px;
     width: 200px;
-    background-color: #fff;
+    background-color: var(--ibk-white);
   }
 }
 
 .mat-calendar-body-selected {
-  background-color: $green;
-  color: #fff;
+  background-color: var(--primary-green-1);
+  color: var(--ibk-white);
 }
 
 mat-icon.svg-custom {
@@ -164,43 +164,29 @@ mat-icon.svg-custom {
 }
 
 .mat-checkbox-frame {
-  border-color: #9ea1a5;
+  border-color: var(--grises-grey-1);
 }
 
 .mat-radio-outer-circle {
-  border-color: #9ea1a5;
+  border-color: var(--grises-grey-1);
 }
 
 .mat-select-value {
-  color: #0d131d;
-  // color: #0d131d !important;
+  color: var(--ibk-black);
+  // color: var(--ibk-black) !important;
 }
 
-//.mat-select-placeholder {
-//  // color: #0d131d !important;
-//  color: red !important;
-//  background-color: red;
-//}
-//
-//.mat-focused .placeholder {
-//  color: #00d318 !important;
-//}
-//
-//.mat-input-element::placeholder {
-//  color: red !important;
-//}
-
 .mat-input-element {
-  // caret-color: #0d131d !important;
-  caret-color: #0d131d;
+  // caret-color: var(--ibk-black) !important;
+  caret-color: var(--ibk-black);
 }
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: $green;
+  border-color: var(--primary-green-1);
 }
 
 .mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: $green;
+  background-color: var(--primary-green-1);
 }
 
 .chk-vertical {
@@ -240,117 +226,71 @@ mat-icon.svg-custom {
 
 .btn-eureca-green {
   @include font-text(14px !important, 500 !important);
-  color: #ffffff !important;
-  background-color: $green !important;
+  color: var(--ibk-white) !important;
+  background-color: var(--primary-green-1) !important;
   @include border-radius(4px !important);
-  border: solid 1px $green !important;
+  border: solid 1px var(--primary-green-1) !important;
 
   &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: $green-oscuro !important;
+    //  background-color: var(--primary-green-2) !important;
+    background-color: var(--primary-green-2) !important;
   }
 
   &:active {
-    background-color: $green !important;
+    background-color: var(--primary-green-1) !important;
     background-image: none !important;
   }
 
   &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
-  }
-}
-
-.btn-eureca-grey-3 {
-  @include font-text(14px !important, 500 !important);
-  color: #ffffff !important;
-  background-color: $grey-3 !important;
-  @include border-radius(4px !important);
-  border: solid 1px $grey-3 !important;
-
-  &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: $grey-3-oscuro !important;
-  }
-
-  &:active {
-    background-color: $grey-3 !important;
-    background-image: none !important;
-  }
-
-  &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
-  }
-}
-
-.btn-eureca-blue {
-  @include font-text(14px !important, 500 !important);
-  color: #ffffff !important;
-  background-color: $textblue !important;
-  @include border-radius(4px !important);
-  border: solid 1px $textblue !important;
-
-  &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: $textblue-oscuro !important;
-  }
-
-  &:active {
-    background-color: $textblue !important;
-    background-image: none !important;
-  }
-
-  &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
+    background-color: var(--grises-grey-1) !important;
+    border: solid 1px var(--grises-grey-1) !important;
   }
 }
 
 .btn-eureca-yellow {
   @include font-text(14px !important, 500 !important);
-  // color: #ffffff !important;
-  color: #212529 !important;
-  background-color: yellow !important;
+  // color: var(--ibk-white) !important;
+  color: var(--ibk-black) !important;
+  background-color: var(--extended-palette-yellow-3) !important;
   @include border-radius(4px !important);
-  border: solid 1px yellow !important;
+  border: solid 1px var(--extended-palette-yellow-3) !important;
 
   &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: #e4e415ed !important;
+    //  background-color: var(--primary-green-2) !important;
+    background-color: var(--extended-palette-yellow-4) !important;
   }
 
   &:active {
-    background-color: yellow !important;
+    background-color: var(--extended-palette-yellow-3) !important;
     background-image: none !important;
   }
 
   &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
+    background-color: var(--grises-grey-1) !important;
+    border: solid 1px var(--grises-grey-1) !important;
   }
 }
 
 .btn-outline-green {
   @include font-text(16px !important, 500 !important);
   @include border-radius(4px !important);
-  background-color: $blanco !important;
-  border: solid 1px $blanco !important;
-  color: $green !important;
+  background-color: var(--ibk-white) !important;
+  border: solid 1px var(--ibk-white) !important;
+  color: var(--primary-green-1) !important;
 
   &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: #e5e5e5 !important;
+    //  background-color: var(--primary-green-2) !important;
+    background-color: var(--grises-grey-4) !important;
   }
 
   &:active {
-    background-color: $blanco !important;
+    background-color: var(--ibk-white) !important;
     background-image: none !important;
   }
 
   &.btn-disabled {
-    color: #9b9b9b !important;
-    background-color: $blanco !important;
+    color: var(--grises-grey-1) !important;
+    background-color: var(--ibk-white) !important;
   }
 }
 
@@ -358,24 +298,24 @@ mat-icon.svg-custom {
   height: 48px;
   width: 207px;
   @include font-text(14px !important, normal !important);
-  color: #ffffff !important;
-  background-color: $green !important;
+  color: var(--ibk-white) !important;
+  background-color: var(--primary-green-1) !important;
   @include border-radius(4px !important);
-  border: solid 1px $green !important;
+  border: solid 1px var(--primary-green-1) !important;
 
   &:hover {
-    //  background-color: $greenclaro !important;
-    background-color: $green-oscuro !important;
+    //  background-color: var(--primary-green-2) !important;
+    background-color:var(--primary-green-2) !important;
   }
 
   &:active {
-    background-color: $green !important;
+    background-color: var(--primary-green-1) !important;
     background-image: none !important;
   }
 
   &.btn-disabled {
-    background-color: #9b9b9b !important;
-    border: solid 1px #9b9b9b !important;
+    background-color: var(--grises-grey-1) !important;
+    border: solid 1px var(--grises-grey-1) !important;
   }
 }
 
@@ -384,25 +324,25 @@ mat-icon.svg-custom {
   width: 207px;
   @include font-text(14px !important, normal !important);
   @include border-radius(4px !important);
-  background-color: $blanco !important;
-  border: solid 1px $blanco !important;
-  color: $green !important;
+  background-color: var(--ibk-white) !important;
+  border: solid 1px var(--ibk-white) !important;
+  color: var(--primary-green-1) !important;
 
   &:hover {
-    background-color: #ffffff !important;
-    color: $green;
+    background-color: var(--ibk-white) !important;
+    color: var(--primary-green-1);
     text-decoration: underline;
     cursor: pointer;
   }
 
   &:active {
-    background-color: $blanco !important;
+    background-color: var(--ibk-white) !important;
     background-image: none !important;
   }
 
   &.btn-disabled {
-    // color       : #9b9b9b !important;
-    color: $green;
+    // color       : var(--grises-grey-1) !important;
+    color: var(--primary-green-1);
     text-decoration: underline;
     cursor: pointer;
   }
