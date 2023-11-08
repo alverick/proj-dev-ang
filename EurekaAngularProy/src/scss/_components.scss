@@ -19,6 +19,14 @@
     @apply tw-bg-white tw-rounded-md tw-shadow-md tw-border-extended-grey-4 tw-border;
   }
 
+  .ibk-box-rounded {
+    @apply tw-rounded-tl-3xl tw-rounded-br-3xl;
+  }
+
+  .ibk-badge-menu {
+    @apply tw-font-normal tw-text-[0.5rem] tw-w-12;
+  }
+
   .onboarding-step {
     &.shepherd-has-title .shepherd-content .shepherd-header {
       @apply tw-bg-transparent tw-text-xs tw-pb-1;
