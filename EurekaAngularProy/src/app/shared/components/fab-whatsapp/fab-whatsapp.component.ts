@@ -14,6 +14,7 @@ import {
 })
 export class FabWhatsappComponent implements OnChanges {
   @Input() showButton = true;
+  @Input() expand = true;
   showText = true;
   url = '';
   timeToHide = 10000;
