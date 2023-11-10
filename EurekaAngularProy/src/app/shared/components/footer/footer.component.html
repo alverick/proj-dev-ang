@@ -1,12 +1,52 @@
-<div class="tw-max-w-8xl tw-mx-auto footer-general">
-  <div class="text-foot tw-text-extended-ibk-black">
-    Para cualquier duda comunícate con nosotros escribiendo por whatsapp al
-    <a
-      href="https://api.whatsapp.com/send?phone=51993119001&text=Hola%20Interbank!"
-      (click)="clickWa()"
-      rel="noopener noreferrer"
-      target="_blank"
-      ><strong>993119001</strong></a
-    >
+<div class="tw-bg-white tw-pt-10 tw-pb-6 tw-px-6 xl:tw-px-0">
+  <div
+    class="tw-max-w-6xl tw-mx-auto tw-flex tw-flex-col lg:tw-flex-row tw-justify-evenly tw-gap-10"
+  >
+    <div class="lg:tw-w-1/4 tw-text-left">
+      <h2 class="tw-text-lg">Legales</h2>
+      <div class="tw-text-sm">
+        <div class="tw-pt-5">
+          <a
+            (click)="showModalTerms()"
+            class="tw-cursor-pointer tw-text-extended-ibk-black hover:tw-no-underline tw-transition-colors tw-duration-300"
+          >
+            Términos y condiciones
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="lg:tw-w-1/4 tw-text-left">
+      <h2 class="tw-text-lg">Contáctanos</h2>
+      <div class="tw-text-sm">
+        <div class="tw-pt-5">
+          <a
+            href="https://api.whatsapp.com/send?phone=51993119001&text=Hola%20Interbank!"
+            (click)="clickWa()"
+            rel="noopener noreferrer"
+            target="_blank"
+            class="tw-text-extended-ibk-black hover:tw-no-underline"
+            ><i class="pi pi-whatsapp tw-text-primary-green-1"></i> 993 119
+            001</a
+          >
+        </div>
+
+        <div class="tw-pt-2">De lunes a viernes 8:30am a 6:00pm</div>
+      </div>
+    </div>
   </div>
 </div>
+<footer
+  class="tw-bg-white tw-border-extended-grey-3 tw-border-t tw-pt-4 tw-pb-6 tw-px-6 xl:tw-px-0"
+>
+  <div class="tw-max-w-6xl tw-mx-auto tw-text-extended-ibk-black tw-px-6">
+    <div class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-center tw-gap-2">
+      <div
+        class="tw-flex tw-flex-col lg:tw-flex-row lg:tw-text-sm tw-gap-1 tw-text-center tw-text-xs"
+      >
+        <p>© Copyright 2023</p>
+        <p class="tw-hidden lg:tw-block">-</p>
+        <p>Todos los derechos reservados</p>
+      </div>
+    </div>
+  </div>
+</footer>
