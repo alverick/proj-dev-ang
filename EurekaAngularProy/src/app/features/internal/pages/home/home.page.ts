@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { ShepherdService } from 'angular-shepherd';
 import * as DOMPurify from 'dompurify';
 import * as saveAs from 'file-saver';
-import { LazyLoadEvent } from 'primeng/api';
+import { LazyLoadEvent, MenuItem } from 'primeng/api';
 import {
   all,
   equals,
@@ -148,6 +148,19 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   tableMovementsInactive = false;
   @ViewChild('tableMovements') tableMovements: TableMovementsComponent;
   resetFilterEvt: Subject<boolean> = new Subject();
+  items: MenuItem[] = [];
+  editRowData: any = {
+    canEditFirstName: true,
+    canEditEmissionDate: true,
+    canEditDueDate: true,
+    canEditAmount: true,
+    firstName: '',
+    emissionDate: '',
+    dueDate: '',
+    currency: 'S/',
+    amount: '',
+  };
+  displayDialog = false;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -164,6 +177,16 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.serviceSelected = value[0];
     });
     this.homeService.getServicesActive(false).subscribe((value) => {
+      this.items = value.map<MenuItem>((item) => ({
+        label: `<span class="name">${item.name}</span><span class="type">${
+          item.dataType === 'C' ? 'Data completa' : 'Data parcial'
+        }</span>`,
+        styleClass: 'menu-item-categories',
+        escape: false,
+        command: () => {
+          this.openDialog(item);
+        },
+      }));
       this.typeList = value;
     });
     this.homeService.getWayPay().subscribe((value) => {
