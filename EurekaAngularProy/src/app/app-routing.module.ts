@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { appRoutingNames } from './app-routing.names';
 import {
   authFullDynamicRoutingNames,
@@ -11,14 +12,14 @@ const routes: Routes = [
   {
     path: appRoutingNames.EMPTY,
     loadChildren: () =>
+      import('./features/public/public.module').then((m) => m.PublicModule),
+  },
+  {
+    path: appRoutingNames.INTERNAL,
+    loadChildren: () =>
       import('./features/internal/internal.module').then(
         (m) => m.InternalModule
       ),
-  },
-  {
-    path: appRoutingNames.LANDING,
-    loadChildren: () =>
-      import('./features/public/public.module').then((m) => m.PublicModule),
   },
   {
     path: appRoutingNames.ADMIN,
@@ -26,7 +27,7 @@ const routes: Routes = [
       import('./features/admin/admin.module').then((m) => m.AdminModule),
   },
   {
-    path: appRoutingNames.AUTH,
+    path: appRoutingNames.EMPTY,
     loadChildren: () =>
       import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
@@ -64,7 +65,7 @@ const routes: Routes = [
   },
   { path: 'ApGTP', redirectTo: authFullRoutingNames.COMPANY_CONFIGURATION },
 
-  { path: '**', redirectTo: 'landing' },
+  { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({

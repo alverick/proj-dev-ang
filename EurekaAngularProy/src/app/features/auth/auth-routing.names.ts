@@ -6,8 +6,6 @@ import {
   generateFullRoutesTree,
 } from '../../shared/utils/helpers/router';
 
-const authModuleRoutingPath = `/${appRoutingNames.AUTH}/`;
-
 interface IAuthRoutingNames extends IRouteNames {
   CHANGE_PASSWORD: string;
   COMPANY_CONFIGURATION: string;
@@ -35,6 +33,8 @@ interface IAuthRoutingChildNames extends IRouteNames {
   UPDATE_COMPANY: string;
   UPDATE_SERVICES: string;
 }
+
+const authModuleRoutingPath = `/${appRoutingNames.AUTH}/`;
 
 export const authRoutingNames: IAuthRoutingNames = {
   CHANGE_PASSWORD: 'cambiar-contrasena',
