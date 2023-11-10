@@ -65,6 +65,34 @@ export class MockService implements ApiMockService {
         path: 'Login/dencrypt',
         responseCallback: () => true,
       },
+      {
+        host: environment.END_POINT,
+        path: 'debt/load/DATA%20COMPLETA',
+        responseCallback: () => ({
+          id: 314,
+        }),
+      },
+      {
+        host: environment.END_POINT,
+        path: 'debt/process/314/status',
+        responseCallback: () => ({
+          status: 'REJECTED',
+          errors: [
+            {
+              code: 0,
+              row: 2,
+              description:
+                'Ha realizado un cambio en el nombre de deudor de un código ya existente se actualizarán las deudas no pagadas con este nuevo nombre.',
+              field: 'Name Service',
+              value: null,
+            },
+          ],
+          rowsUploaded: -4,
+          rowsRejected: 2,
+          advance: 0,
+          phase: 3,
+        }),
+      },
     ];
   }
   private validate(): ApiMockResponseCallback {
