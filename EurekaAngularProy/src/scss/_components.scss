@@ -27,6 +27,18 @@
     @apply tw-font-normal tw-text-[0.5rem] tw-w-12;
   }
 
+  .menu-item-categories {
+    .p-menuitem-text {
+      @apply tw-flex tw-flex-col;
+      .name {
+        @apply tw-line-clamp-1;
+      }
+      .type {
+        @apply tw-text-secondary-blue-3 tw-text-xxs tw-mt-2;
+      }
+    }
+  }
+
   .onboarding-step {
     &.shepherd-has-title .shepherd-content .shepherd-header {
       @apply tw-bg-transparent tw-text-xs tw-pb-1;
