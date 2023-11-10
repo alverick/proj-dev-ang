@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
+import { isNil } from 'ramda';
 import { LoginService } from 'src/app/shared/services/login.service';
 
 import { appFullRoutingNames } from './app-routing.names';
@@ -15,9 +16,10 @@ import { AdobeAnalyticsService } from './shared/services/adobe-analytics.service
   styleUrls: ['./app.component.scss'],
   providers: [LoginService],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked {
   title = 'Cobro Simple – Interbank';
   showButton = false;
+  expand = false;
 
   constructor(
     private router: Router,
@@ -70,5 +72,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.primengConfig.ripple = true;
     this.primengConfig.setTranslation(primeng);
+  }
+  ngAfterViewChecked() {
+    this.expand = isNil(document.querySelector('cs-layout-form'));
   }
 }
