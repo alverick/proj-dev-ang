@@ -33,6 +33,11 @@
 body {
   a {
     color: var(--primary-green-1);
+    transition: color 0.4s;
+
+    &:hover {
+      color: var(--primary-green-2);
+    }
   }
 
   .p-component {
@@ -46,7 +51,7 @@ body {
 
   .p-dropdown {
     .p-dropdown-trigger {
-      color: var(--primary-green-1);
+      color: var(--grises-grey-1);
 
       .p-dropdown-trigger-icon {
         font-size: 0.5rem;
@@ -64,9 +69,14 @@ body {
       &:hover {
         border-color: var(--primary-green-1);
       }
+
       &.p-focus {
         border-color: var(--primary-green-1);
         box-shadow: 0 0 0 0.2rem var(--primary-green-5);
+      }
+
+      .p-dropdown-trigger {
+        color: var(--primary-green-1);
       }
     }
   }
@@ -166,15 +176,18 @@ body {
       &:hover {
         border-color: var(--primary-green-1);
       }
+
       &:focus {
         border-color: var(--primary-green-1);
         box-shadow: 0 0 0 0.2rem var(--primary-green-5);
+
         &:not(.p-state-error) {
           border-color: var(--primary-green-1);
           box-shadow: 0 0 0 0.2rem var(--primary-green-5);
         }
       }
     }
+
     &.ng-dirty.ng-invalid {
       border-color: var(--extended-palette-watermelon-1);
     }
@@ -711,7 +724,7 @@ body {
 
   .p-overlay-badge {
     .p-badge {
-      @apply tw-min-w-[1.2rem] tw-h-[1.2rem] tw-text-[0.6rem] tw-leading-[1.2rem] tw-flex tw-justify-center tw-items-center tw-p-0 tw-top-[0.2rem] tw-right-[0.2rem];
+      @apply tw-min-w-[1.2rem] tw-h-[1.2rem] tw-text-[0.55rem] tw-leading-[1.2rem] tw-flex tw-justify-center tw-items-center tw-p-0 tw-top-[0.2rem] tw-right-[0.2rem];
     }
   }
 
