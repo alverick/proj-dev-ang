@@ -138,7 +138,7 @@ export class PaymentDetailComponent implements OnInit {
         text: '¡No podrás revertir esto!',
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: 'Sí, actualizar!',
+        confirmButtonText: 'Sí, actualizar',
         cancelButtonText: 'Cancelar',
       })
       .then((result) => {
@@ -180,12 +180,12 @@ export class PaymentDetailComponent implements OnInit {
               this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
                 category: 'Editado!',
                 action: 'modal-view',
-                detail: 'El pago ha sido editado',
+                detail: 'El pago ha sido editado.',
                 location: 'Modal - Agregar pago',
               });
               void swalAlert.fire({
                 titleText: 'Editado!',
-                text: 'El pago ha sido editado',
+                text: 'El pago ha sido editado.',
                 showCloseButton: true,
                 showCancelButton: false,
                 didClose: () => {

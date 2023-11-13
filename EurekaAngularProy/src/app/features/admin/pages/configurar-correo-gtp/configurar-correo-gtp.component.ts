@@ -84,7 +84,7 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
 
   onEliminar(index: number) {
     Swal.fire({
-      text: 'Se va a eliminar el e-mail',
+      text: 'Se va a eliminar el e-mail.',
       title: 'Eliminar',
       showCancelButton: true,
       showConfirmButton: true,
