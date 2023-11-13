@@ -194,12 +194,12 @@ export class DialogComponent implements OnInit {
             category: msg,
             action: 'modal-view',
             detail:
-              'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
+              'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos.',
             location: 'Modal',
           });
           void swalAlert.fire({
             title: msg,
-            text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
+            text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos.',
             showCloseButton: true,
             confirmButtonText: 'Cerrar',
             didClose: () => {

@@ -230,7 +230,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         }
         void swalAlert.fire({
           title: msg,
-          text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos',
+          text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos.',
           showCloseButton: true,
           confirmButtonText: 'Cerrar',
           didClose: () => {
@@ -703,7 +703,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           };
 
           let title = 'Editado';
-          let text = 'Su registro ha sido editado';
+          let text = 'Su registro ha sido editado.';
 
           const metadata: Metadata[] = [];
           forEachObjIndexed((value, key) => {
@@ -729,7 +729,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 if (debtsUpdate.success) {
                   void swalAlert.fire({
                     titleText: 'Editado',
-                    text: 'Su registro ha sido editado',
+                    text: 'Su registro ha sido editado.',
                     showCloseButton: true,
                     showCancelButton: false,
                     didClose: () => {
@@ -780,7 +780,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
                 void swalAlert.fire({
                   titleText: 'Editado',
-                  text: 'Su registro a sido editado',
+                  text: 'Su registro a sido editado.',
                   showCloseButton: true,
                   showCancelButton: false,
                   didClose: () => {
@@ -828,10 +828,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     let message = '';
     let finalMessage = '';
     if (totalForDelete === 1) {
-      message = `Esta acción va a eliminar ${totalForDelete} deuda`;
+      message = `Esta acción va a eliminar ${totalForDelete} deuda.`;
     }
     if (totalForDelete > 1) {
-      message = `Esta acción va a eliminar ${totalForDelete} deudas`;
+      message = `Esta acción va a eliminar ${totalForDelete} deudas.`;
     }
 
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
@@ -873,10 +873,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           this.movementsService.deleteMovements(ids).subscribe(() => {
             this.consultaDeuda(() => {
               if (totalForDelete === 1) {
-                finalMessage = `Se han eliminado ${totalForDelete} registro`;
+                finalMessage = `Se han eliminado ${totalForDelete} registro.`;
               }
               if (totalForDelete > 1) {
-                finalMessage = `Se han eliminado ${totalForDelete} registros`;
+                finalMessage = `Se han eliminado ${totalForDelete} registros.`;
               }
 
               this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
