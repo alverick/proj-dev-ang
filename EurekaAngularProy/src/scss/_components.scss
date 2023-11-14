@@ -31,7 +31,7 @@
     .p-menuitem-text {
       @apply tw-flex tw-flex-col;
       .name {
-        @apply tw-line-clamp-1;
+        @apply tw-break-all tw-line-clamp-1;
       }
       .type {
         @apply tw-text-secondary-blue-3 tw-text-xxs tw-mt-2;
