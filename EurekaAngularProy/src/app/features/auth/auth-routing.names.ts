@@ -34,7 +34,7 @@ interface IAuthRoutingChildNames extends IRouteNames {
   UPDATE_SERVICES: string;
 }
 
-const authModuleRoutingPath = `/${appRoutingNames.AUTH}/`;
+const authModuleRoutingPath = `/`;
 
 export const authRoutingNames: IAuthRoutingNames = {
   CHANGE_PASSWORD: 'cambiar-contrasena',
