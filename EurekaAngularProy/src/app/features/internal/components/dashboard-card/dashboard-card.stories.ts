@@ -30,7 +30,7 @@ const Template: Story<DashboardCardComponent> = (
   props: args,
 });
 
-export const Normal = Template.bind({});
+export const Normal = Template.bind({}) as Story<DashboardCardComponent>;
 Normal.args = {
   title: 'Cobro total',
   currency: 'S/',
@@ -38,7 +38,7 @@ Normal.args = {
   peopleQuantity: 1,
 };
 
-export const Empty = Template.bind({});
+export const Empty = Template.bind({}) as Story<DashboardCardComponent>;
 Empty.args = {
   title: 'Cobro total',
   currency: 'S/',
@@ -46,7 +46,7 @@ Empty.args = {
   peopleQuantity: 0,
 };
 
-export const skeleton = Template.bind({});
+export const skeleton = Template.bind({}) as Story<DashboardCardComponent>;
 skeleton.args = {
   title: 'Cobro total',
   currency: 'S/',

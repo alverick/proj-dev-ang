@@ -11,14 +11,15 @@ import {
   UntypedFormControl,
   UntypedFormGroup,
   ValidationErrors,
-  Validators,
   ValidatorFn,
+  Validators,
 } from '@angular/forms';
 import * as moment from 'moment';
 import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
 import { combineLatest, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+
 import { DateList } from '../../models/dateList';
 import { StatesGtp } from '../../models/states-gtp';
 import { WayPay } from '../../models/way-pay';
