@@ -689,8 +689,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         text: '¡No podrás revertir esto!',
         showCancelButton: true,
         showCloseButton: true,
-        confirmButtonText: 'Si, actualizar',
-        cancelButtonText: 'Cerrar',
+        confirmButtonText: 'Sí, actualizar',
+        cancelButtonText: 'Cancelar',
       })
       .then((result) => {
         if (result.value) {
