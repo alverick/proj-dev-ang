@@ -76,7 +76,7 @@ export class CompanyServicesPage {
       if (result.hasPayed) {
         text =
           'Ya existe un historial de pagos realizados con este servicio, solo se eliminarán las ' +
-          'deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
+          'deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank.';
       }
       this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
         category: title,
