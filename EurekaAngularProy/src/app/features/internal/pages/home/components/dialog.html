@@ -106,12 +106,11 @@
     </div>
     <br />
   </div>
-  <div
-    style="margin-left: 160px"
-    *ngIf="!excelService.statusUpload && ready"
-    class="text-center pt-1"
-  >
-    <div class="input-file" (click)="uploadFile.click()">
+  <div *ngIf="!excelService.statusUpload && ready" class="text-center pt-1">
+    <div
+      class="input-file tw-max-w-[517px] tw-mx-auto"
+      (click)="uploadFile.click()"
+    >
       <span class="text-input-file">
         <div class="name-file pl-4 pt-2 pr-4">{{ fileName }}</div>
         <div *ngIf="!fileName" class="name-file pl-4 pr-4">
