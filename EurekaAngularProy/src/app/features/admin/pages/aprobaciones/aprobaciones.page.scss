@@ -170,20 +170,22 @@ body {
 ///TAGS
 :host ::ng-deep .badge-primary {
   color: var(--ibk-white);
-  //background-color: var(--extended-palette-watermelon-1);
   font-size: 14px;
+  font-weight: normal;
 }
 
 :host ::ng-deep .badge-info {
   color: var(--ibk-white);
   background-color: var(--extended-palette-watermelon-1);
   font-size: 14px;
+  font-weight: normal;
 }
 
 :host ::ng-deep .badge-warning {
-  color: var(--ibk-black);
+  color: var(--ibk-white);
   background-color: var(--extended-palette-yellow-1);
   font-size: 14px;
+  font-weight: normal;
 }
 
 .seleccionado {
