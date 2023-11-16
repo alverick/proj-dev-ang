@@ -181,7 +181,8 @@ body {
 }
 
 :host ::ng-deep .badge-warning {
-  color: var(--ibk-white);
+  color: var(--ibk-black);
+  background-color: var(--extended-palette-yellow-1);
   font-size: 14px;
 }
 
