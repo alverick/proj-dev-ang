@@ -79,25 +79,37 @@ export class HomeService {
   }
 
   getServicesActive(
-    serviceWithoutData: boolean = true
+    serviceWithoutData = true
   ): Observable<Partial<CompanyServices>[]> {
-    const url = `${environment.END_POINT}/company/service/active/${serviceWithoutData}`;
+    const url = `${
+      environment.END_POINT
+    }/company/service/active/${serviceWithoutData.toString()}`;
     return this.http
       .get<CompanyServices[]>(url)
       .pipe(
         map((r) => {
           const data: Partial<CompanyServices>[] = [];
-          r.forEach((s) => {
-            if (
-              s.newNameGTPStatus !== statusCodes.NEW &&
-              s.newNameCodeGTPStatus !== statusCodes.NEW
-            )
-              data.push({
-                id: s.id,
-                name: s.name,
-                dataType: s.dataType,
-              });
-          });
+          r.forEach(
+            ({
+              dataType,
+              id,
+              name,
+              newNameCodeGTPStatus,
+              newNameGTPStatus,
+            }) => {
+              if (
+                newNameGTPStatus !== statusCodes.NEW &&
+                newNameCodeGTPStatus !== statusCodes.NEW &&
+                (newNameGTPStatus !== statusCodes.REJECTED || name !== '')
+              ) {
+                data.push({
+                  id,
+                  name,
+                  dataType,
+                });
+              }
+            }
+          );
           return data;
         })
       )
