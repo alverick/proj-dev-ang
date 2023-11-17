@@ -89,27 +89,15 @@ export class HomeService {
       .pipe(
         map((r) => {
           const data: Partial<CompanyServices>[] = [];
-          r.forEach(
-            ({
-              dataType,
-              id,
-              name,
-              newNameCodeGTPStatus,
-              newNameGTPStatus,
-            }) => {
-              if (
-                newNameGTPStatus !== statusCodes.NEW &&
-                newNameCodeGTPStatus !== statusCodes.NEW &&
-                (newNameGTPStatus !== statusCodes.REJECTED || name !== '')
-              ) {
-                data.push({
-                  id,
-                  name,
-                  dataType,
-                });
-              }
+          r.forEach(({ dataType, id, name }) => {
+            if (name !== '') {
+              data.push({
+                id,
+                name,
+                dataType,
+              });
             }
-          );
+          });
           return data;
         })
       )
