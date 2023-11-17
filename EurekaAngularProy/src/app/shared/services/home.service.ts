@@ -89,10 +89,8 @@ export class HomeService {
           const data: Partial<CompanyServices>[] = [];
           r.forEach((s) => {
             if (
-              (s.newNameGTPStatus === statusCodes.APPROVED ||
-                s.newNameGTPStatus === statusCodes.EDITED) &&
-              (s.newNameCodeGTPStatus === statusCodes.APPROVED ||
-                s.newNameCodeGTPStatus === statusCodes.EDITED)
+              s.newNameGTPStatus !== statusCodes.NEW &&
+              s.newNameCodeGTPStatus !== statusCodes.NEW
             )
               data.push({
                 id: s.id,
