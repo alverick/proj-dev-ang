@@ -1,22 +1,42 @@
 const R = require('ramda');
+const defaultRootUrl = 'https://cobrosimple.dev.interbank.pe';
 const settings = {
   default: {
-    newRelic: '',
-    hotjar: '',
+    scripts: {
+      newRelic: '',
+      hotjar: '',
+    },
+    url: defaultRootUrl,
   },
   dev: {
-    newRelic: 'assets/scripts/new-relic-dev.js',
-    hotjar: '',
+    scripts: {
+      newRelic: 'assets/scripts/new-relic-dev.js',
+      hotjar: '',
+    },
+    url: defaultRootUrl,
   },
   uat: {
-    newRelic: 'assets/scripts/new-relic-dev.js',
-    hotjar: 'assets/scripts/hotjar.js',
+    scripts: {
+      newRelic: 'assets/scripts/new-relic-dev.js',
+      hotjar: 'assets/scripts/hotjar.js',
+    },
+    url: 'https://cobrosimple.uat.interbank.pe',
   },
   production: {
-    newRelic: 'assets/scripts/new-relic.js',
-    hotjar: 'assets/scripts/hotjar.js',
+    scripts: {
+      newRelic: 'assets/scripts/new-relic.js',
+      hotjar: 'assets/scripts/hotjar.js',
+    },
+    url: 'https://cobrosimple.interbank.pe',
   },
 };
+
+function changeOgImage(configuration, indexHtml) {
+  if (settings[configuration].url !== defaultRootUrl) {
+    return indexHtml.replaceAll(defaultRootUrl, settings[configuration].url);
+  }
+  return indexHtml;
+}
 
 function includeScripts(configuration, indexHtml) {
   let scripts = '';
@@ -24,7 +44,7 @@ function includeScripts(configuration, indexHtml) {
     if (!R.isEmpty(value)) {
       scripts += `<script src="${value}"></script>`;
     }
-  }, settings[configuration]);
+  }, settings[configuration].scripts);
   if (!R.isEmpty(scripts)) {
     const enHeadPosition = indexHtml.indexOf('</head>');
     return `${indexHtml.slice(0, enHeadPosition)}
@@ -36,8 +56,12 @@ function includeScripts(configuration, indexHtml) {
 
 module.exports = ({ configuration }, indexHtml) => {
   const sameAsDefault = ['', 'hmr', 'local'];
-  return includeScripts(
-    sameAsDefault.includes(configuration) ? 'default' : configuration,
-    indexHtml
-  );
+  let parsedHtml = '';
+  [includeScripts, changeOgImage].forEach((process) => {
+    parsedHtml = process(
+      sameAsDefault.includes(configuration) ? 'default' : configuration,
+      R.isEmpty(parsedHtml) ? indexHtml : parsedHtml
+    );
+  });
+  return parsedHtml;
 };
