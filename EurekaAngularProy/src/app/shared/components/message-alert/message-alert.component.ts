@@ -1,12 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+/**
+ * Message alert component for disclaimers
+ */
 @Component({
   selector: 'cs-message-alert',
   templateUrl: './message-alert.component.html',
   styleUrls: ['./message-alert.component.scss'],
 })
 export class MessageAlertComponent implements OnInit {
-  @Input() mode: string;
+  /**
+   * Mode for disclaimer
+   */
+  @Input() mode = '';
   bgClass = '';
 
   ngOnInit() {

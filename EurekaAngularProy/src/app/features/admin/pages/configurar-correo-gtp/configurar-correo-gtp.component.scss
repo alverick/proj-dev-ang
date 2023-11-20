@@ -1,5 +1,5 @@
 body {
-  background: #f4f5f7 !important;
+  background: var(--ibk-white) !important;
 }
 
 .super-full-width {
@@ -8,13 +8,13 @@ body {
 
 .acepto {
   @include font-text(14px, $weight: normal !important);
-  color: #0d131d;
-  padding-top: 0px;
+  color: var(--ibk-black);
+  padding-top: 0;
 }
 
 small {
   @include font-text(14px, $weight: 500 !important);
-  color: $green;
+  color: var(--primary-green-1);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -27,12 +27,12 @@ small {
 
 .terminos-title {
   @include font-text(24px, $weight: 500);
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 .terminos-body {
   @include font-text(16px, $weight: 300);
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 .ps-body {
@@ -56,7 +56,7 @@ small {
   .mat-form-field
   .mat-select.mat-select-invalid
   .mat-select-arrow {
-  color: #05be50;
+  color: var(--primary-green-1);
 }
 
 .swal2-close {
@@ -64,15 +64,15 @@ small {
 }
 
 :host ::ng-deep .mat-select-value {
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
 }
 
 :host ::ng-deep .mat-select-placeholder {
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
 }
 
 :host ::ng-deep .mat-input-element {
-  caret-color: #0d131d !important;
+  caret-color: var(--ibk-black) !important;
 }
 
 :host ::ng-deep .mat-checkbox-inner-container-no-side-margin {
@@ -105,7 +105,7 @@ small {
   ::ng-deep
   .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
   .mat-form-field-label {
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
 }
 
 // ========= table  ====
@@ -129,13 +129,13 @@ small {
   .title {
     @include font-text(18px, 500);
     padding: 20px 15px 10px 15px;
-    color: $negro;
+    color: var(--ibk-black);
   }
   .content {
     width: 100%;
     min-height: 15px;
     @include border-radius(5px);
-    background-color: #fff;
+    background-color: var(--ibk-white);
     padding: 5px 15px;
     @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, 0.1), 0);
   }
@@ -158,7 +158,7 @@ small {
         border-bottom: solid 1px #f0f0f0;
         th {
           @include font-text(12px, 500);
-          color: $textblue;
+          color: var(--secondary-blue-1);
           padding: 2px;
           .text {
             display: inline-block;
@@ -177,9 +177,9 @@ small {
               height: 0;
               border-left: 5px solid transparent;
               border-right: 5px solid transparent;
-              border-bottom: 5px solid $textblue;
+              border-bottom: 5px solid var(--secondary-blue-1);
               &.seleccionado {
-                border-bottom: 5px solid #9b9b9b;
+                border-bottom: 5px solid var(--grises-grey-1);
               }
             }
             .down {
@@ -190,9 +190,9 @@ small {
               height: 0;
               border-left: 5px solid transparent;
               border-right: 5px solid transparent;
-              border-top: 5px solid $textblue;
+              border-top: 5px solid var(--secondary-blue-1);
               &.seleccionado {
-                border-top: 5px solid #9b9b9b;
+                border-top: 5px solid var(--grises-grey-1);
               }
             }
           }
@@ -205,7 +205,7 @@ small {
         &.seleccionado {
           background-color: rgba(0, 169, 79, 0.05);
           td {
-            color: #333333 !important;
+            color: var(--ibk-black) !important;
           }
         }
         &.edit-pago {
@@ -213,14 +213,14 @@ small {
         }
         td {
           @include font-text(12px);
-          color: $textblack;
+          color: var(--ibk-black);
           padding: 8px 3px;
           text-overflow: ellipsis;
           &.texto-after {
             @include font-text(28px, 500);
             text-align: center;
             height: 300px;
-            color: #0d131d !important;
+            color: var(--ibk-black) !important;
             img {
               position: absolute;
               top: 15px;
@@ -367,7 +367,7 @@ small {
   margin: 0.2em;
   border: transparent;
   /* cursor: pointer; */
-  background: #fff;
+  background: var(--ibk-white);
 }
 
 .texto-azul {
@@ -383,12 +383,12 @@ small {
 }
 
 :host ::ng-deep .btn-eureca-green.btn-disabled {
-  background-color: #9ea1a5 !important;
-  border: solid 1px #9ea1a5 !important;
+  background-color: var(--grises-grey-1) !important;
+  border: solid 1px var(--grises-grey-1) !important;
 }
 
 :host ::ng-deep .btn-outline-green.btn-disabled {
-  color: #9ea1a5 !important;
+  color: var(--grises-grey-1) !important;
 }
 
 .btn-eureca-green {
@@ -402,12 +402,12 @@ small {
 }
 
 :host ::ng-deep .btn-outline-green.btn-disabled {
-  color: #9ea1a5 !important;
+  color: var(--grises-grey-1) !important;
 }
 
 .font-cerrar {
   @include font-text(10px, $weight: 500);
-  color: #9ea1a5;
+  color: var(--grises-grey-1);
   text-align: center;
   cursor: pointer;
 }
@@ -415,9 +415,9 @@ small {
 .border-item {
   border: solid 1px #f0f0f0;
   &.actual {
-    background-color: rgba($color: #05be50, $alpha: 0.1);
+    background-color: var(--primary-green-6);
     .icons-correo {
-      background-color: rgba($color: #05be50, $alpha: 0.1);
+      background-color: var(--primary-green-6);
     }
   }
 }

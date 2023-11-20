@@ -111,7 +111,7 @@ export class CambiaContrasenaComponent implements OnInit {
             );
             this.PopUpWithOneButon(
               'Contraseña actualizada',
-              'Tu contraseña ha sido actualizada',
+              'Tu contraseña ha sido actualizada.',
               'Iniciar sesión'
             );
           }

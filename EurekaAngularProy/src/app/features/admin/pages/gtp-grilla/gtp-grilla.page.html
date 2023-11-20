@@ -106,7 +106,8 @@
                           *ngFor="let request of items?.requestTypeList"
                         >
                           <div *ngIf="request.type == 0">
-                            <span class="badge badge-primary"
+                            <span
+                              class="badge tw-bg-primary-green-1"
                               >{{ request.texto }}</span
                             >
                           </div>
@@ -116,12 +117,13 @@
                           *ngFor="let request of items?.requestTypeList"
                         >
                           <div *ngIf="request.type == 1">
-                            <span class="badge badge-warning"
+                            <span class="badge tw-bg-extended-yellow-1"
                               >{{ request.texto }}</span
                             >
                           </div>
                           <div *ngIf="request.type == 2">
-                            <span class="badge badge-success"
+                            <span
+                              class="badge tw-bg-primary-green-1"
                               >{{ request.texto }}</span
                             >
                           </div>
@@ -129,7 +131,7 @@
                             *ngIf="request.type == 3"
                             tooltip="{{ request.detalles }}"
                           >
-                            <span class="badge badge-warning"
+                            <span class="badge tw-bg-extended-yellow-1"
                               >{{ request.texto }}</span
                             >
                           </div>

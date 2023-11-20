@@ -214,13 +214,13 @@
             <ng-container *ngSwitchCase="'status'">
               <div class="tw-flex">
                 <div
-                  class="tw-whitespace-nowrap tw-w-32 tw-flex-shrink-0 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
+                  class="tw-whitespace-nowrap tw-w-28 tw-h-6 tw-flex-shrink-0 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
                   [ngClass]="[setStatusRow(rowData).color]"
                 >
                   <i class="pi pi-circle-on icon tw-pr-1 tw-align-middle"></i>
                   {{ setStatusRow(rowData).text }}
                 </div>
-                <ng-container *ngIf="setStatusRow(rowData).canEdit">
+                <div *ngIf="setStatusRow(rowData).canEdit">
                   <img
                     *ngIf="!editing"
                     pInitEditableRow
@@ -245,7 +245,7 @@
                       <i class="pi pi-times tw-text-extended-watermelon-1"></i>
                     </div>
                   </div>
-                </ng-container>
+                </div>
               </div>
             </ng-container>
             <ng-container *ngSwitchDefault>{{
@@ -375,6 +375,7 @@
           dateFormat="dd/mm/y"
           [touchUI]="true"
           [showIcon]="true"
+          appendTo="body"
           required
         ></p-calendar>
       </div>
@@ -394,6 +395,7 @@
           dateFormat="dd/mm/y"
           [touchUI]="true"
           [showIcon]="true"
+          appendTo="body"
           required
         ></p-calendar>
       </div>

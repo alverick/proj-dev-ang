@@ -1,5 +1,5 @@
 body {
-  background: #f4f5f7 !important;
+  background: var(--ibk-white) !important;
 }
 
 .btn-eureca-green {
@@ -22,7 +22,7 @@ body {
 
 .texto-editar-empresa {
   @include font-text(32px, 500);
-  color: #0032a0;
+  color: var(--secondary-blue-1);
 }
 
 :host
@@ -30,7 +30,7 @@ body {
   .mat-form-field
   .mat-select.mat-select-disabled
   .mat-select-arrow {
-  color: #ffffff;
+  color: var(--ibk-white);
 }
 
 :host
@@ -49,7 +49,7 @@ body {
 
 :host ::ng-deep .mat-select-disabled .mat-select-value {
   @include font-text(16px !important, normal !important);
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 .w-60 {
@@ -68,5 +68,5 @@ body {
   ::ng-deep
   .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
   .mat-form-field-label {
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
 }

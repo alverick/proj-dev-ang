@@ -11,14 +11,14 @@
   .title {
     @include font-text(18px, 500);
     padding: 20px 15px 10px 15px;
-    color: $negro;
+    color: var(--ibk-black);
   }
 
   .content {
     width: 100%;
     min-height: 15px;
     @include border-radius(5px);
-    background-color: #fff;
+    background-color: var(--ibk-white);
     padding: 5px 15px;
     @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, 0.1), 0);
   }
@@ -60,7 +60,7 @@
 
             th {
               @include font-text(12px, 500);
-              color: $textblue;
+              color: var(--secondary-blue-1);
               padding: 2px;
 
               .text {
@@ -82,10 +82,10 @@
                   height: 0;
                   border-left: 5px solid transparent;
                   border-right: 5px solid transparent;
-                  border-bottom: 5px solid $textblue;
+                  border-bottom: 5px solid var(--secondary-blue-1);
 
                   &.seleccionado {
-                    border-bottom: 5px solid #9b9b9b;
+                    border-bottom: 5px solid var(--grises-grey-1);
                   }
                 }
 
@@ -97,10 +97,10 @@
                   height: 0;
                   border-left: 5px solid transparent;
                   border-right: 5px solid transparent;
-                  border-top: 5px solid $textblue;
+                  border-top: 5px solid var(--secondary-blue-1);
 
                   &.seleccionado {
-                    border-top: 5px solid #9b9b9b;
+                    border-top: 5px solid var(--grises-grey-1);
                   }
                 }
               }
@@ -116,7 +116,7 @@
               background-color: rgba(0, 169, 79, 0.05);
 
               td {
-                color: #333333 !important;
+                color: var(--ibk-black) !important;
               }
             }
 
@@ -126,7 +126,7 @@
 
             td {
               @include font-text(12px);
-              color: $textblack;
+              color: var(--ibk-black);
               padding: 8px 3px;
               text-overflow: ellipsis;
 
@@ -134,7 +134,7 @@
                 @include font-text(28px, 500);
                 text-align: center;
                 height: 300px;
-                color: #0d131d !important;
+                color: var(--ibk-black) !important;
 
                 img {
                   position: absolute;
@@ -301,7 +301,7 @@
 
       .text {
         float: right;
-        color: #9ea1a5;
+        color: var(--grises-grey-1);
         @include font-text(14px, 500);
       }
 
@@ -314,7 +314,7 @@
 
 :host ::ng-deep .ngx-pagination {
   @include font-text(14px, 500);
-  color: #9b9b9b;
+  color: var(--grises-grey-1);
 
   &::before,
   &::after {
@@ -337,7 +337,7 @@
 
   .current {
     background: transparent !important;
-    color: $textgreen !important;
+    color: var(--primary-green-1) !important;
     text-decoration: underline !important;
     font-weight: 500;
     font-size: 14px;
@@ -348,7 +348,7 @@
   .msg-error {
     @include font-text(10px, 500);
     position: absolute;
-    color: #ea0044;
+    color: var(--extended-palette-watermelon-1);
     margin-top: 10px;
     width: 200px;
     // background-color: rgba(0, 169, 79, 0.05);
@@ -357,10 +357,10 @@
   .msg-error-filtro {
     @include font-text(10px, 500);
     position: absolute;
-    color: #ea0044;
+    color: var(--extended-palette-watermelon-1);
     margin-top: 10px;
     width: 200px;
-    background-color: #ffffff;
+    background-color: var(--ibk-white);
   }
 }
 
@@ -374,22 +374,17 @@
 
 .text-danger {
   @include font-text(12px, 500);
-  color: #ea0044 !important;
-}
-
-.text-partial {
-  @include font-text(12px, 500);
-  color: #ff8900 !important;
+  color: var(--extended-palette-watermelon-1) !important;
 }
 
 .input-text {
   @include font-text(14px !important, normal);
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
 }
 
 .input-text-dash {
   @include font-text(12px !important, normal);
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
 }
 
 .content-container {
@@ -426,7 +421,7 @@
 
 .ngx-pagination a,
 .ngx-pagination button {
-  color: #0a0a0a;
+  color: var(--ibk-black);
   display: block;
   padding: 0.1875rem 0.625rem;
   border-radius: 0;
@@ -440,13 +435,13 @@
 .ngx-pagination .current {
   padding: 0.1875rem 0.625rem;
   background: #2199e8;
-  color: #fefefe;
+  color: var(--grises-grey-5);
   cursor: default;
 }
 
 .ngx-pagination .disabled {
   padding: 0.1875rem 0.625rem;
-  color: #cacaca;
+  color: var(--grises-grey-3);
   cursor: default;
 }
 
@@ -496,17 +491,17 @@
 }
 
 // :host ::ng-deep .mat-form-field-hide-placeholder .mat-select-placeholder {
-//     color: #0d131d !important;
+//     color: var(--ibk-black) !important;
 // }
 
 .btn {
   @include font-text(14px, 500 !important);
   font-weight: 400;
-  color: #05be50;
+  color: var(--primary-green-1);
 }
 
 .dropdown-toggle::after {
-  color: #ffffff;
+  color: var(--ibk-white);
 }
 
 .addDeuda {
@@ -517,13 +512,13 @@
 
 .selecciona-servicio {
   @include font-text(10px !important, 500 !important);
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
   padding: 8px 2px;
 }
 
 .servicio-Opern {
   @include font-text(14px !important, normal !important);
-  color: #0d131d !important;
+  color: var(--ibk-black) !important;
   padding-bottom: 10px;
   // padding: 6px 2px;
 }
@@ -533,7 +528,7 @@
 }
 
 .numpag {
-  color: #9ea1a5 !important;
+  color: var(--grises-grey-1) !important;
 }
 
 .chk-vertical {
@@ -546,8 +541,8 @@
 
 ///TAGS
 :host ::ng-deep .badge-primary {
-  color: #fff;
-  background-color: #8024b9;
+  color: var(--ibk-white);
+  background-color: var(--primary-green-1);
 }
 
 :host ::ng-deep .ps--active-x > .ps__rail-x,

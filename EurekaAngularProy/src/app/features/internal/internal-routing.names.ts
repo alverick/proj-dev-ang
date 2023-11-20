@@ -24,6 +24,8 @@ interface IInternalRoutingChildNames extends IRouteNames {
   SERVICES_ADD_CONFIGURATION: string;
 }
 
+const internalModuleRoutingPath = `/${appRoutingNames.INTERNAL}/`;
+
 export const internalRoutingNames: IInternalRoutingNames = {
   AUTH: 'auth',
   DASHBOARD: 'resumen',
@@ -41,7 +43,7 @@ export const internalRoutingChildNames: IInternalRoutingChildNames = {
 };
 
 export const internalRoutingChildNamesTree: IRouteItem = {
-  link: appRoutingNames.EMPTY,
+  link: appRoutingNames.INTERNAL,
   children: [
     {
       link: internalRoutingNames.SERVICES,
@@ -64,10 +66,8 @@ export const internalRoutingChildNamesTree: IRouteItem = {
   ],
 };
 
-export const internalFullRoutingNames: IInternalRoutingNames = generateFullRoutes(
-  internalRoutingNames,
-  appModuleRoutingNames
-);
+export const internalFullRoutingNames: IInternalRoutingNames =
+  generateFullRoutes(internalRoutingNames, internalModuleRoutingPath);
 
 export const internalFullRoutingChildNames: IInternalRoutingChildNames =
   generateFullRoutesTree(

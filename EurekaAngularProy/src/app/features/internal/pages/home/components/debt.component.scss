@@ -11,7 +11,7 @@ mat-form-field {
   .msg-error {
     @include font-text(10px, 500);
     position: absolute;
-    color: #ea0044;
+    color: var(--extended-palette-watermelon-1);
     margin-top: 10px;
     width: 200px;
     &.inline {

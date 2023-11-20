@@ -67,7 +67,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               confirmButtonText: 'Cerrar',
               allowOutsideClick: false,
               willClose: () => {
-                location.href = authFullRoutingNames.LOGIN;
+                void this.router.navigate([authFullRoutingNames.LOGIN]);
               },
             });
           } else if (err.status !== 400) {
@@ -79,7 +79,7 @@ export class AuthInterceptorService implements HttpInterceptor {
               confirmButtonText: 'Cerrar',
               allowOutsideClick: false,
               willClose: () => {
-                location.href = authFullRoutingNames.LOGIN;
+                void this.router.navigate([authFullRoutingNames.LOGIN]);
               },
             });
           }

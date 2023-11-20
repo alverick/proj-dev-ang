@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
     if (session && session.isAuthenticate) {
       return true;
     } else {
-      location.href = authFullRoutingNames.LOGIN;
+      void this.router.navigate([authFullRoutingNames.LOGIN]);
       return false;
     }
   }

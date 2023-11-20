@@ -3,7 +3,7 @@
   bottom: 0;
   width: 350px;
   @include border-radius(5px);
-  background-color: #fff;
+  background-color: var(--ibk-white);
   padding: 5px 15px;
   @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, 0.432), 0);
 }

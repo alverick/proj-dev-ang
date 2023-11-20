@@ -1,5 +1,5 @@
 body {
-  background: #f4f5f7 !important;
+  background: var(--ibk-white) !important;
 }
 
 .btn.btn-lg {
@@ -38,29 +38,29 @@ body {
 }
 
 .seleccionado {
-  border: 1px $green solid;
+  border: 1px var(--primary-green-1) solid;
 }
 
 //// look and feel
 .font-text-services {
   @include font-text(18px, $weight: 500);
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 .font-black-servicios-list {
   @include font-text(11px, $weight: 500);
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 .font-black-servicios-des-list {
   @include font-text(14px, $weight: normal);
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 .card-servicios {
   width: 350px;
   @include box-shadows();
-  background-color: #ffffff;
+  background-color: var(--ibk-white);
   .table-sm {
     width: 100%;
     th,
@@ -73,12 +73,12 @@ body {
 .card-aprobaciones {
   @include cuadro(350px, auto);
   @include box-shadows();
-  background-color: #ffffff;
+  background-color: var(--ibk-white);
 }
 
 .font-cerrar {
   @include font-text(10px, $weight: 500);
-  color: #9ea1a5;
+  color: var(--grises-grey-1);
   text-align: center;
 }
 
@@ -100,7 +100,7 @@ body {
   object-fit: contain;
   border-radius: 5px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
+  background-color: var(--ibk-white);
 }
 
 .mano {
@@ -110,7 +110,7 @@ body {
 .content-container {
   overflow-y: auto;
   max-height: 500px;
-  background-color: #f4f5f7;
+  background-color: var(--ibk-white);
 }
 
 .btn-col-1 {
@@ -125,12 +125,12 @@ body {
 }
 
 :host ::ng-deep .btn-eureca-green.btn-disabled {
-  background-color: #9ea1a5 !important;
-  border: solid 1px #9ea1a5 !important;
+  background-color: var(--grises-grey-1) !important;
+  border: solid 1px var(--grises-grey-1) !important;
 }
 
 :host ::ng-deep .btn-outline-green.btn-disabled {
-  color: #9ea1a5 !important;
+  color: var(--grises-grey-1) !important;
 }
 
 .btn-eureca-green {
@@ -142,7 +142,7 @@ body {
   .mat-form-field
   .mat-select.mat-select-disabled
   .mat-select-arrow {
-  color: #ffffff;
+  color: var(--ibk-white);
 }
 
 :host
@@ -164,29 +164,29 @@ body {
   object-fit: contain;
   border-radius: 5px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
+  background-color: var(--ibk-white);
 }
 
 ///TAGS
 :host ::ng-deep .badge-primary {
-  color: #fff;
-  //background-color: #8024b9;
+  color: var(--ibk-white);
   font-size: 14px;
 }
 
 :host ::ng-deep .badge-info {
-  color: #fff;
-  background-color: #8024b9;
+  color: var(--ibk-white);
+  background-color: var(--extended-palette-watermelon-1);
   font-size: 14px;
 }
 
 :host ::ng-deep .badge-warning {
-  color: #fff;
+  color: var(--ibk-white);
+  background-color: var(--extended-palette-yellow-1);
   font-size: 14px;
 }
 
 .seleccionado {
-  border: 1px $green solid;
+  border: 1px var(--primary-green-1) solid;
 }
 
 :host ::ng-deep .ps--active-x > .ps__rail-x,

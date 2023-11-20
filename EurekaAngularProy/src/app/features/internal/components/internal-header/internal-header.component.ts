@@ -9,7 +9,10 @@ import {
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
-import { NotifyService } from '../../../../shared/services/notify.service';
+import {
+  MessagesType,
+  NotifyService,
+} from '../../../../shared/services/notify.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 import { internalFullRoutingNames } from '../../internal-routing.names';
@@ -71,7 +74,7 @@ export class InternalHeaderComponent implements OnInit {
 
   onScroll() {
     if (this.notify.messages.length > 0) {
-      this.notify.loadMsgs();
+      this.notify.loadMessages();
     }
   }
 
@@ -166,7 +169,7 @@ export class InternalHeaderComponent implements OnInit {
     });
   }
 
-  markNotification(msg, $event) {
+  markNotification(msg: MessagesType, $event: MouseEvent) {
     this.notify.changeRead(msg);
     $event.stopPropagation();
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {

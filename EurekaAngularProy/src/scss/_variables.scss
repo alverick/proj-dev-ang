@@ -1,40 +1,3 @@
-/*--- Colores ---*/
-
-$colores: #0b0044 #0036aa #0d131d #ffffff #f4f5f7 #bebebe #9b9b9b #fc9a00
-  #ffad2d #ea0044 #30abc2 #ffad2d #e68c00 #1b2afa #0e119a transparent;
-$nombrecolores: 'azulbase' 'azul' 'negro' 'blanco' 'grisbajo' 'gris' 'grismedio'
-  'amarillo' 'amarillo-claro' 'rojo' 'turquesa' 'amarillolight' 'amarillobold'
-  'azullight' 'azulbold' 'transparent';
-$azulbase: nth($colores, 1);
-$azul: nth($colores, 2);
-$negro: nth($colores, 3);
-$blanco: nth($colores, 4);
-$grisbajo: nth($colores, 5);
-$gris: nth($colores, 6);
-$grismedio: nth($colores, 7);
-$amarillo: nth($colores, 8);
-$amarillclaro: nth($colores, 9);
-$rojo: nth($colores, 10);
-$turquesa: nth($colores, 11);
-$amarillolight: nth($colores, 12);
-$amarillobold: nth($colores, 13);
-$azullight: nth($colores, 14);
-$azulbold: nth($colores, 15);
-$transparent: nth($colores, 16);
-
-$green-oscuro: #049840;
-$textgreen: #05be50;
-$textblack: #0d131d;
-$textgray: #f0f0f0;
-$textblue: #0032a0;
-$textblue-oscuro: #03256d;
-$separador: solid 1px #f0f0f0;
-$green: #05be50;
-$greenclaro: #33c95a;
-$black: #0d131d;
-$grey-3: #9ea1a5;
-$grey-3-oscuro: #9b9b9b;
-
 $primary-font-family: 'Geometria', Arial, sans-serif;
 
 :root {
@@ -54,9 +17,8 @@ $primary-font-family: 'Geometria', Arial, sans-serif;
   --grises-grey-3: #d9dadb;
   --grises-grey-4: #eceded;
   --grises-grey-5: #fbfbfb;
-  --grises-ibk-black: #0f191e;
-  --grises-ibk-white: #fff;
-  --ibk-fucsia: #ea0044;
+  --ibk-black: #0f191e;
+  --ibk-white: #fff;
   --extended-palette-beige-1: #f0f0dc;
   --extended-palette-beige-2: #f3f3e3;
   --extended-palette-beige-3: #f6f6ea;
@@ -88,8 +50,10 @@ $primary-font-family: 'Geometria', Arial, sans-serif;
   --extended-bleached-silk: #f3f3f3;
   --transition-duration: 0.5s;
   --header-height: 72px;
-  --footer-height: 70px;
+  --footer-height: 222px;
 }
+
+$separador: solid 1px var(--grises-grey-4);
 
 $breakpoints: (
   sm: 640px,

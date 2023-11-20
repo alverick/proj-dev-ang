@@ -50,7 +50,7 @@
             class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
             pBadge
             iconPos="left"
-            [value]="notify.total.toString(10)"
+            [value]="notify.totalLabel"
             severity="danger"
           ></i>
         </a>
@@ -75,7 +75,7 @@
               *ngFor="let msg of notify.messages"
               class="dropdown-item"
               (click)="$event.stopPropagation()"
-              [class.dropdown-item-readed]="!msg.IsNew"
+              [class.dropdown-item-readed]="!msg.isNew"
             >
               <div
                 *ngIf="msg.isNew"
@@ -99,7 +99,10 @@
                   <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
                 </div>
               </div>
-              <div *ngIf="!msg.isNew" style="background-color: #ffffff">
+              <div
+                *ngIf="!msg.isNew"
+                style="background-color: var(--ibk-white)"
+              >
                 <div class="espacio">
                   <div
                     class="notiificacion"
@@ -156,7 +159,7 @@
       </li>
     </ul>
 
-    <ul class="navbar-nav tw-flex-row lg:tw-hidden">
+    <ul class="navigation-mobile tw-flex tw-flex-row lg:tw-hidden">
       <li class="nav-item dropdown mr-3">
         <a
           href="#"
@@ -175,7 +178,7 @@
             class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
             pBadge
             iconPos="left"
-            [value]="notify.total.toString(10)"
+            [value]="notify.totalLabel"
             severity="danger"
           ></i>
         </a>
@@ -200,7 +203,7 @@
               *ngFor="let msg of notify.messages"
               class="dropdown-item"
               (click)="$event.stopPropagation()"
-              [class.dropdown-item-readed]="!msg.IsNew"
+              [class.dropdown-item-readed]="!msg.isNew"
             >
               <div
                 *ngIf="msg.isNew"
@@ -224,7 +227,10 @@
                   <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
                 </div>
               </div>
-              <div *ngIf="!msg.isNew" style="background-color: #ffffff">
+              <div
+                *ngIf="!msg.isNew"
+                style="background-color: var(--ibk-white)"
+              >
                 <div class="espacio">
                   <div
                     class="notiificacion"

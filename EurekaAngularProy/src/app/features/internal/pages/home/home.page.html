@@ -4,12 +4,14 @@
       <div class="col-sm-12 col-md-12">
         <div class="widget filtros">
           <div
-            class="tw-flex tw-justify-between tw-items-center tw-pt-10 tw-pb-4"
+            class="sm:tw-flex tw-justify-between tw-items-center tw-pt-10 tw-pb-4"
           >
-            <div class="tw-text-lg">
+            <div class="tw-text-lg tw-pb-4 sm:tw-pb-0">
               ¡Bienvenido a <span class="tw-font-medium">Cobro Simple</span>!
             </div>
-            <div class="tw-text-sm tw-flex tw-gap-5">
+            <div
+              class="tw-text-sm tw-flex tw-flex-col tw-items-end sm:tw-flex-row tw-gap-5"
+            >
               <a
                 href="javascript:void(0)"
                 class="tw-flex tw-items-center hover:tw-no-underline"
@@ -55,77 +57,44 @@
             [ngClass]="{ 'tw-pointer-events-none': tableMovementsInactive }"
           >
             <section
-              class="tw-flex sm:tw-h-12 tw-border-b tw-border-extended-grey-4 tw-flex-col-reverse sm:tw-flex-row sm:tw-items-center tw-justify-between tw-gap-4 tw-px-4 tw-pb-2 sm:tw-pb-0"
+              class="tw-flex tw-border-b tw-border-extended-grey-4 tw-flex-col-reverse sm:tw-flex-row sm:tw-items-center tw-justify-between tw-gap-4 tw-px-4 tw-pb-4"
             >
-              <div class="rows-actions">
-                <div
-                  class="select-all tw-flex tw-items-center tw-text-sm"
-                  [ngClass]="{
-                    'tw-cursor-pointer': selectedRows.length > 0,
-                    'tw-text-primary-green-1': selectedRows.length > 0,
-                    'tw-text-extended-grey-2': selectedRows.length === 0
-                  }"
+              <div class="rows-actions tw-flex">
+                <button
+                  pButton
+                  pRipple
                   (click)="EliminarSeleccionados()"
-                >
-                  <mat-icon class="svg-custom" svgIcon="eurc_trash"></mat-icon>
-                  <label class="tw-block tw-m-0">Eliminar</label>
-                </div>
+                  type="button"
+                  icon="pi pi-trash"
+                  label="Eliminar"
+                  class="p-button-text p-button-sm p-button-outlined tw-h-11"
+                  [disabled]="selectedRows.length === 0"
+                ></button>
               </div>
               <div
-                class="movements-actions tw-h-full tw-flex tw-items-center tw-text-primary-green-1 tw-text-sm tw-gap-6"
+                class="movements-actions tw-h-full tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-text-primary-green-1 tw-text-sm tw-gap-6"
               >
-                <div
-                  class="download tw-cursor-pointer tw-h-full tw-flex tw-items-center"
-                >
-                  <div
-                    class="lnk-label tw-flex tw-items-center tw-gap-1"
-                    [class.disabled]="enDescarga"
+                <div class="tw-flex">
+                  <button
+                    pButton
+                    pRipple
                     (click)="DescargarReporte()"
-                  >
-                    <img
-                      *ngIf="!enDescarga"
-                      class="tw-inline"
-                      src="assets/images/download.svg"
-                      alt="download"
-                    /><img
-                      *ngIf="enDescarga"
-                      class="tw-inline"
-                      src="../../../../../assets/images/download-d.svg"
-                      alt="download"
-                    />
-                    Descargar movimientos
-                  </div>
+                    type="button"
+                    icon="pi pi-download"
+                    label="Descargar movimientos"
+                    class="p-button-text p-button-sm p-button-outlined tw-h-11"
+                    [disabled]="enDescarga"
+                  ></button>
                 </div>
-                <div
-                  class="addDeuda tw-cursor-pointer tw-h-full tw-flex tw-items-center tw-gap-1"
-                >
-                  <div
-                    class="tw-flex tw-items-center tw-gap-1"
-                    data-toggle="dropdown"
-                  >
-                    <img
-                      class="tw-inline"
-                      src="../../../../../assets/images/plus_circle.svg"
-                      alt="plus_circle"
-                    />
-                    Agregar cobros
-                  </div>
-                  <div class="dropdown-menu lnk-label" role="menu">
-                    <div class="pl-4">
-                      <div class="selecciona-servicio">
-                        Selecciona el servicio
-                      </div>
-                      <perfect-scrollbar class="content-container">
-                        <div
-                          *ngFor="let service of typeList"
-                          class="option-item"
-                          (click)="openDialog(service)"
-                        >
-                          <div class="servicio-Opern">{{ service.name }}</div>
-                        </div>
-                      </perfect-scrollbar>
-                    </div>
-                  </div>
+                <div class="tw-flex">
+                  <p-splitButton
+                    #ua
+                    label="Agregar cobros"
+                    icon="pi pi-plus"
+                    [model]="this.items"
+                    (onClick)="ua.onDropdownButtonClick($event)"
+                    styleClass="p-button-outlined p-button-sm p-button-success"
+                  ></p-splitButton>
                 </div>
               </div>
             </section>

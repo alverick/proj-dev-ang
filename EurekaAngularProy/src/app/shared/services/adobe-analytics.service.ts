@@ -4,7 +4,7 @@ import { isNotNil } from 'ramda-adjunct';
 
 import { environment } from '../../../environments/environment';
 import {
-  appFullRoutingNames,
+  appModuleRoutingNames,
   authFullRoutingNames,
   internalFullRoutingNames,
 } from '../../app-routing.collection';
@@ -160,7 +160,7 @@ export class AdobeAnalyticsService {
       [internalFullRoutingNames.HOME]: 'Home',
       [internalFullRoutingNames.COMPANY]: 'ConfiguracionEmpresa',
       [internalFullRoutingNames.SERVICES]: 'Servicios',
-      [appFullRoutingNames.LANDING]: 'Landing',
+      [appModuleRoutingNames]: 'Landing',
       [authFullRoutingNames.LOGIN]: 'Login',
       [authFullRoutingNames.CHANGE_PASSWORD]: 'CambiarContrasena',
       [authFullRoutingNames.RECOVER_PASSWORD]: 'RecuperarContrasena',

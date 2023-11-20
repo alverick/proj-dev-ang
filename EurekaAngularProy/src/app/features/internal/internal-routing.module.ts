@@ -85,11 +85,6 @@ const routes: Routes = [
         component: HelpPage,
         canActivate: [AuthGuard],
       },
-      {
-        path: appRoutingNames.EMPTY,
-        redirectTo: appFullRoutingNames.LANDING,
-        pathMatch: 'full',
-      },
     ],
   },
 ];

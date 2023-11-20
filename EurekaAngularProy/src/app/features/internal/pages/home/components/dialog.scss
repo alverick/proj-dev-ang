@@ -5,12 +5,12 @@
     text-align: center;
     @include font-text(16px);
 
-    color: $textblack;
+    color: var(--ibk-black);
 
     .text {
       .link {
         font-weight: 500;
-        color: #00a94f;
+        color: var(--primary-green-1);
         cursor: pointer;
         text-decoration: underline;
       }
@@ -29,7 +29,7 @@
 
       .texto {
         float: left;
-        color: #0d131d !important;
+        color: var(--ibk-black) !important;
       }
 
       .resumen {
@@ -40,18 +40,18 @@
         }
 
         .bien {
-          color: #05be50;
+          color: var(--primary-green-1);
         }
 
         .mal {
-          color: #ea0044;
+          color: var(--extended-palette-watermelon-1);
         }
       }
     }
 
     .list {
       display: block;
-      border: solid 1px #ea0044;
+      border: solid 1px var(--extended-palette-watermelon-1);
       height: 144px;
       width: 517px;
       overflow-y: auto;
@@ -61,14 +61,14 @@
       .err-item {
         @include font-text(14px);
 
-        color: $textblack;
+        color: var(--ibk-black);
       }
     }
 
     .footer {
       @include font-text(14px, 500);
 
-      color: #0d131d !important;
+      color: var(--ibk-black) !important;
     }
   }
 }
@@ -76,7 +76,7 @@
 .title {
   @include font-text(24px, normal);
 
-  color: $textblack;
+  color: var(--ibk-black);
   text-align: center;
 
   .resaltado {
@@ -86,7 +86,7 @@
 
 .paso {
   @include font-text(24px, 500);
-  color: #64b1e7;
+  color: var(--secondary-blue-3);
   text-align: center;
 }
 
@@ -94,11 +94,10 @@
   text-align: center;
 
   .input-file {
-    width: 517px;
     height: 40px;
     @include border-radius(23.5px);
 
-    border: solid 1px #9ea1a5;
+    border: solid 1px var(--grises-grey-1);
     text-align: left;
     margin-bottom: 15px;
     text-overflow: ellipsis;
@@ -107,7 +106,7 @@
       //  padding-top: 10px;
       @include font-text(14px, 500);
 
-      color: $textblack !important;
+      color: var(--ibk-black) !important;
       text-overflow: ellipsis;
     }
   }
@@ -142,13 +141,13 @@ b {
   @include font-text(14px, 500);
 
   float: left;
-  color: #0d131d;
+  color: var(--ibk-black);
 }
 
 small {
   @include font-text(14px, 500);
 
-  color: #0d131d;
+  color: var(--ibk-black);
   text-align: center !important;
   margin-left: 160px;
 }
@@ -158,13 +157,13 @@ small {
   height: 23px !important;
   @include font-text(18px !important, 500 !important);
 
-  color: #9ea1a5;
+  color: var(--grises-grey-1);
 }
 
 .text-input-file {
   @include font-text(16px, normal);
 
-  color: #0d131d;
+  color: var(--ibk-black);
   text-align: left;
 }
 
@@ -184,7 +183,7 @@ small {
   object-fit: contain;
   border-radius: 4px !important;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1) !important;
-  background-color: #ffffff !important;
+  background-color: var(--ibk-white) !important;
   padding: 0px !important;
   // color: rgba(255, 255, 255, 0.87);
 }
@@ -194,7 +193,7 @@ small {
 }
 
 .svg_custom {
-  color: #9ea1a5;
+  color: var(--grises-grey-1);
 }
 
 .btn-eureka-block {
@@ -202,10 +201,10 @@ small {
   height: 48px;
   margin-left: auto;
   margin-right: auto;
-  color: #fff !important;
-  background-color: #9ea1a5 !important;
+  color: var(--ibk-white) !important;
+  background-color: var(--grises-grey-1);
   border-radius: 4px !important;
   background-clip: padding-box;
-  border: solid 1px #9ea1a5 !important;
+  border: solid 1px var(--grises-grey-1);
   display: block;
 }

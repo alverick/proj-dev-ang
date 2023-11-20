@@ -72,11 +72,11 @@ export class CompanyServicesPage {
     this.companyServices.canDelete(position).subscribe((result) => {
       const title = '¿Estás seguro que deseas eliminar este servicio?';
       let text =
-        'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio';
+        'Se eliminará el servicio de los canales Interbank y las deudas cargadas a este servicio.';
       if (result.hasPayed) {
         text =
           'Ya existe un historial de pagos realizados con este servicio, solo se eliminarán las ' +
-          'deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank';
+          'deudas pendientes. Ya no se podrá pagar más este servicio por los canales de Interbank.';
       }
       this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
         category: title,
