@@ -60,7 +60,6 @@ export class AffiliationService {
   companyId: number;
   email: string;
   servicesList: Partial<IServiceRemoteModelForms>[] = [];
-
   entryOptions: IEntryModel[] = [];
   registerForm: ModelFormGroup<RegisterForm>;
   authForm: SimpleModelFormGroup<AuthForm>;
@@ -68,7 +67,7 @@ export class AffiliationService {
   serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
   editServiceForm: ModelFormGroup<ServiceEditForm>;
   updateData: ICompanyUpdate;
-  tokenUpdate;
+  tokenUpdate: string;
 
   constructor(
     private router: Router,
@@ -200,9 +199,13 @@ export class AffiliationService {
         documentNumber,
       })
       .pipe(
-        tap(({ code, message, success }) => {
+        tap(({ code, message, success, tradename }) => {
           if (success) {
             this.authForm.get('ruc').setValue(ruc);
+            if (isNotNilOrEmpty(tradename)) {
+              this.authForm.get('name').setValue(tradename);
+              this.authForm.get('name').disable({ emitEvent: false });
+            }
             this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
           } else {
             this.processResultCode(code, message, {
@@ -682,7 +685,9 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
             '_blank',
             'noopener,noreferrer'
           );
-          if (newWindow) newWindow.opener = null;
+          if (newWindow) {
+            newWindow.opener = null;
+          }
           void this.router.navigate([authFullRoutingNames.LOGIN]);
         }
       });
