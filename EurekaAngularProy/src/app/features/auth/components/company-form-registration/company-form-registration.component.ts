@@ -15,7 +15,7 @@ export class CompanyFormRegistrationComponent implements OnInit {
   text = '';
   documentNumberMax = '8';
   documentNumberFilter: string | RegExp = 'int';
-  blockSpecial: RegExp = /^[a-z0-9]+$/i;
+  blockSpecial = /^[a-z0-9]+$/i;
   @Input() registerForm: UntypedFormGroup;
   @Input() operators = [];
   @Input() documentTypes = [];
@@ -23,7 +23,7 @@ export class CompanyFormRegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.setDocumentNumberProps();
-    this.registerForm.get('documentType').valueChanges.subscribe((value) => {
+    this.registerForm.get('documentType').valueChanges.subscribe(() => {
       this.registerForm.get('documentNumber').setValue('');
       this.setDocumentNumberProps();
     });

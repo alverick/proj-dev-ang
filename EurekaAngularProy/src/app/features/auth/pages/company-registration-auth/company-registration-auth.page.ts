@@ -27,13 +27,15 @@ export class CompanyRegistrationAuthPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate([authFullRoutingNames.COMPANY_REGISTER]);
+    void this.router.navigate([authFullRoutingNames.COMPANY_REGISTER]);
   }
 
   onSubmit() {
     this.affiliation.saveCompany().subscribe(({ success }) => {
       if (success) {
-        this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_INFO]);
+        void this.router.navigate([
+          authFullRoutingChildNames.SERVICES_ADD_INFO,
+        ]);
       }
     });
   }

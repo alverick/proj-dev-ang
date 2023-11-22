@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { ServicesFormsService } from '../../../../shared/services';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import {
@@ -32,11 +33,11 @@ export class ServiceConfigurationPage {
 
   onSubmit() {
     this.affiliation.saveService();
-    this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]);
+    void this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]);
   }
 
   onCancel() {
     this.serviceForms.resetServicesForms();
-    this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]);
+    void this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]);
   }
 }
