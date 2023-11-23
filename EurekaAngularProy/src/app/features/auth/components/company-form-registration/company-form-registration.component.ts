@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormGroup, Validators } from '@angular/forms';
 
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';
+import { RegisterForm } from '../../services/affiliation-forms.service';
 
 @Component({
   selector: 'cs-company-form-registration',
@@ -10,7 +10,7 @@ import { IErrorMessages } from '../../../../shared/models/forms';
   styleUrls: ['./company-form-registration.component.scss'],
 })
 export class CompanyFormRegistrationComponent implements OnInit {
-  @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
+  @Output() sendForm = new EventEmitter<RegisterForm>();
 
   text = '';
   documentNumberMax = '8';
