@@ -278,8 +278,8 @@ export class AffiliationService {
       ruc,
     } = this.registerForm.value;
 
-    const { acceptTerms, entry, password, name, entrySelect } =
-      this.authForm.value;
+    const name = this.authForm.get('name').value as string;
+    const { acceptTerms, entry, password, entrySelect } = this.authForm.value;
 
     const actionStep: Partial<ActionEventProperties> = {
       category: 'Registrate – Datos de empresa',
