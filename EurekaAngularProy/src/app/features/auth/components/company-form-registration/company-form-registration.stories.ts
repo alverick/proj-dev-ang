@@ -14,10 +14,10 @@ import {
   mobileOperators,
 } from '../../../../shared/constants/company';
 import { errorsRegisterForm } from '../../../../shared/constants/company-errors';
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { AffiliationFormsService } from '../../services';
+import { RegisterForm } from '../../services/affiliation-forms.service';
 import { CompanyFormRegistrationComponent } from './company-form-registration.component';
 
 @Component({
@@ -33,7 +33,7 @@ import { CompanyFormRegistrationComponent } from './company-form-registration.co
 })
 class FormDemoComponent {
   @Input() operators: ISelectOptions[] = [];
-  @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
+  @Output() sendForm = new EventEmitter<RegisterForm>();
   registerForm: FormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() documentTypes: ISelectOptions[] = [];
@@ -49,7 +49,7 @@ class FormDemoComponent {
       movilOperator: 'M',
     });
   }
-  onSubmit($event) {
+  onSubmit($event: RegisterForm) {
     this.sendForm.emit($event);
   }
 }
