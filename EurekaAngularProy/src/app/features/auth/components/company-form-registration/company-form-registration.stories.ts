@@ -1,40 +1,42 @@
-import {
-  APP_INITIALIZER,
-  Component,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
-import { moduleMetadata } from '@storybook/angular';
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
-import { SharedModule } from '../../../../shared/shared.module';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular';
+
 import {
   documentTypes,
-  errorsRegisterForm,
+  ISelectOptions,
   mobileOperators,
-} from '../../constants';
+} from '../../../../shared/constants/company';
+import { errorsRegisterForm } from '../../../../shared/constants/company-errors';
+import { IErrorMessages } from '../../../../shared/models/forms';
+import { SharedModule } from '../../../../shared/shared.module';
 import { AffiliationFormsService } from '../../services';
+import { RegisterForm } from '../../services/affiliation-forms.service';
 import { CompanyFormRegistrationComponent } from './company-form-registration.component';
 
 @Component({
   selector: 'cs-form-demo',
-  template: `<cs-company-form-registration
+  template: ` <cs-company-form-registration
     class="tw-max-w-2xl tw-pl-20"
     [registerForm]="registerForm"
-    [errorMessages]="errors"
+    [errorMessages]="errorMessages"
     [operators]="operators"
     [documentTypes]="documentTypes"
     (sendForm)="onSubmit($event)"
   ></cs-company-form-registration>`,
 })
 class FormDemoComponent {
-  @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
+  @Input() operators: ISelectOptions[] = [];
+  @Output() sendForm = new EventEmitter<RegisterForm>();
   registerForm: FormGroup;
-  errors = errorsRegisterForm;
-  operators = mobileOperators;
-  documentTypes = documentTypes;
+  @Input() errorMessages: IErrorMessages;
+  @Input() documentTypes: ISelectOptions[] = [];
   constructor(affiliationForms: AffiliationFormsService) {
     this.registerForm = affiliationForms.registerForm;
     this.registerForm.setValue({
@@ -47,48 +49,34 @@ class FormDemoComponent {
       movilOperator: 'M',
     });
   }
-  onSubmit($event) {
+  onSubmit($event: RegisterForm) {
     this.sendForm.emit($event);
   }
 }
 
-const initAppComponentFactory =
-  (affiliationForms: AffiliationFormsService) => async () =>
-    affiliationForms;
-
-export default {
+const meta: Meta<FormDemoComponent> = {
   title: 'Auth/Module/Company Form Registration',
-  component: CompanyFormRegistrationComponent,
+  component: FormDemoComponent,
   decorators: [
+    applicationConfig({
+      providers: [provideAnimations()],
+    }),
     moduleMetadata({
-      imports: [BrowserAnimationsModule, SharedModule],
-      providers: [
-        AffiliationFormsService,
-        {
-          provide: APP_INITIALIZER,
-          useFactory: initAppComponentFactory,
-          multi: true,
-          deps: [AffiliationFormsService],
-        },
-      ],
+      declarations: [FormDemoComponent, CompanyFormRegistrationComponent],
+      imports: [SharedModule],
+      providers: [AffiliationFormsService],
     }),
   ],
+  tags: ['autodocs'],
 };
 
-export const normal = () => {
-  return {
-    component: CompanyFormRegistrationComponent,
-    moduleMetadata: {
-      declarations: [FormDemoComponent, CompanyFormRegistrationComponent],
-      providers: [],
-    },
-    template: `<cs-validation-defaults></cs-validation-defaults>
-<cs-form-demo (sendForm)="onSubmit($event)"></cs-form-demo>`,
-    props: {
-      onSubmit: (e) => {
-        console.log(e);
-        action('form data')(e);
-      },
-    },
-  };
+export default meta;
+type Story = StoryObj<FormDemoComponent>;
+
+export const Normal: Story = {
+  args: {
+    operators: mobileOperators,
+    errorMessages: errorsRegisterForm,
+    documentTypes: documentTypes,
+  },
 };

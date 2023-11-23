@@ -21,7 +21,13 @@ export class MockService implements ApiMockService {
       {
         host: environment.END_POINT,
         path: 'company/validate',
-        responseCallback: this.validate(),
+        responseCallback: () => ({
+          id: 3000,
+          success: true,
+          code: 1,
+          message: 'El Ruc ya se encuentra registrado',
+          tradename: 'Nombre empresa',
+        }),
       },
       {
         host: environment.END_POINT,

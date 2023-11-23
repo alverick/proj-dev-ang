@@ -13,6 +13,7 @@ export interface ICompanyResult {
   code?: number;
   message?: string;
   id?: number;
+  tradename?: string;
 }
 
 export interface CompanyAccounts {
@@ -27,13 +28,13 @@ export class CompanyService {
 
   public validateCompany(data: any): Observable<ICompanyResult> {
     return this.http
-      .post<any>(`${environment.END_POINT}/company/validate`, data)
+      .post<ICompanyResult>(`${environment.END_POINT}/company/validate`, data)
       .pipe(catchError((err) => throwError(err)));
   }
 
   public saveCompany(data: any): Observable<ICompanyResult> {
     return this.http
-      .post<any>(`${environment.END_POINT}/company`, data)
+      .post<ICompanyResult>(`${environment.END_POINT}/company`, data)
       .pipe(catchError((err) => throwError(err)));
   }
 

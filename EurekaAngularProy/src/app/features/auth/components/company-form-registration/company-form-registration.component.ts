@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormGroup, Validators } from '@angular/forms';
 
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';
+import { RegisterForm } from '../../services/affiliation-forms.service';
 
 @Component({
   selector: 'cs-company-form-registration',
@@ -10,12 +10,12 @@ import { IErrorMessages } from '../../../../shared/models/forms';
   styleUrls: ['./company-form-registration.component.scss'],
 })
 export class CompanyFormRegistrationComponent implements OnInit {
-  @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
+  @Output() sendForm = new EventEmitter<RegisterForm>();
 
   text = '';
   documentNumberMax = '8';
   documentNumberFilter: string | RegExp = 'int';
-  blockSpecial: RegExp = /^[a-z0-9]+$/i;
+  blockSpecial = /^[a-z0-9]+$/i;
   @Input() registerForm: UntypedFormGroup;
   @Input() operators = [];
   @Input() documentTypes = [];
@@ -23,7 +23,7 @@ export class CompanyFormRegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.setDocumentNumberProps();
-    this.registerForm.get('documentType').valueChanges.subscribe((value) => {
+    this.registerForm.get('documentType').valueChanges.subscribe(() => {
       this.registerForm.get('documentNumber').setValue('');
       this.setDocumentNumberProps();
     });
