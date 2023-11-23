@@ -14,14 +14,14 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular';
-import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNotNilOrEmpty } from 'ramda-adjunct';
 
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import { IEntryModel } from '../../../../shared/models';
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { AffiliationFormsService } from '../../services';
+import { AuthForm } from '../../services/affiliation-forms.service';
 import { CompanyFormAuthComponent } from './company-form-auth.component';
 
 @Component({
@@ -35,7 +35,7 @@ import { CompanyFormAuthComponent } from './company-form-auth.component';
   ></cs-company-form-auth>`,
 })
 class FormDemoComponent implements OnChanges {
-  @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
+  @Output() sendForm = new EventEmitter<AuthForm>();
   form: FormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() companyName = '';
@@ -81,6 +81,7 @@ class FormDemoComponent implements OnChanges {
       name: 'VARIOS II',
     },
   ];
+
   constructor(affiliationForms: AffiliationFormsService) {
     this.form = affiliationForms.authForm;
     this.form.patchValue(
@@ -101,6 +102,7 @@ class FormDemoComponent implements OnChanges {
       this.form.get('name').disable({ emitEvent: false });
     }
   }
+
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);
     if (changes.companyName) {
@@ -115,7 +117,8 @@ class FormDemoComponent implements OnChanges {
       }
     }
   }
-  onSubmit($event) {
+
+  onSubmit($event: AuthForm) {
     this.sendForm.emit($event);
   }
 }
@@ -134,21 +137,6 @@ const meta: Meta<FormDemoComponent> = {
 };
 
 export default meta;
-
-// export default {
-//   title: 'Auth/Module/Company Form Auth',
-//   decorators: [
-//     moduleMetadata({
-//       declarations: [CompanyFormAuthComponent],
-//       imports: [
-//         BrowserAnimationsModule,
-//         HttpClientModule,
-//         CommonModule,
-//         SharedModule,
-//       ],
-//     }),
-//   ],
-// };
 
 type Story = StoryObj<FormDemoComponent>;
 
