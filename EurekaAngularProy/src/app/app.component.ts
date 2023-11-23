@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { AdobeAnalyticsService } from './shared/services/adobe-analytics.service
   styleUrls: ['./app.component.scss'],
   providers: [LoginService],
 })
-export class AppComponent implements OnInit, AfterViewChecked {
+export class AppComponent implements OnInit, AfterContentChecked {
   title = 'Cobro Simple – Interbank';
   showButton = false;
   expand = false;
@@ -73,7 +73,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.primengConfig.ripple = true;
     this.primengConfig.setTranslation(primeng);
   }
-  ngAfterViewChecked() {
+  ngAfterContentChecked() {
     this.expand = isNil(document.querySelector('cs-layout-form'));
   }
 }
