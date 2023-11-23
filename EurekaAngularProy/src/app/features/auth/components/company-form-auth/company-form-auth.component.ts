@@ -20,6 +20,7 @@ import { IEntryModel } from '../../../../shared/models';
 import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { IErrorMessages } from '../../../../shared/models/forms';
 import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
+import { AuthForm } from '../../services/affiliation-forms.service';
 
 @Component({
   selector: 'cs-company-form-auth',
@@ -30,7 +31,7 @@ import { messageErrorNewPasswords } from '../../../../shared/validators/password
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   $destroy = new Subject();
   ref: DynamicDialogRef;
-  @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
+  @Output() sendForm = new EventEmitter<AuthForm>();
   @Input() categories: IEntryModel[] = [];
   @Input() companyForm: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
