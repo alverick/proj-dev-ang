@@ -97,14 +97,12 @@ class FormDemoComponent implements OnChanges {
       },
       { emitEvent: false }
     );
-    console.log('companyName', this.companyName);
     if (isNotNilOrEmpty(this.companyName)) {
       this.form.get('name').disable({ emitEvent: false });
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
     if (changes.companyName) {
       this.form.patchValue(
         {
