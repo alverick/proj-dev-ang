@@ -69,6 +69,8 @@ export class CompanyConfigurationService {
       this.companyData.newNameGTPStatus === 2
     ) {
       this.companyForm.get('name').disable();
+    } else {
+      this.companyForm.get('name').enable();
     }
     this.setCategory();
   }
