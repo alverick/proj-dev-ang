@@ -6,6 +6,7 @@
     <cs-company-form-auth
       [categories]="entryOptions"
       [companyForm]="affiliation.authForm"
+      [nameOptions]="affiliation.companyNames"
       [errorMessages]="errors"
       (sendForm)="onSubmit()"
     ></cs-company-form-auth>
