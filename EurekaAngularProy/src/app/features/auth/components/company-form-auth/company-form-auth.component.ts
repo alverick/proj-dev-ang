@@ -8,7 +8,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
@@ -17,10 +16,15 @@ import { filter, takeUntil } from 'rxjs/operators';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import { IEntryModel } from '../../../../shared/models';
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
-import { IErrorMessages } from '../../../../shared/models/forms';
+import {
+  IErrorMessages,
+  SimpleModelFormGroup,
+} from '../../../../shared/models/forms';
 import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
-import { AuthForm } from '../../services/affiliation-forms.service';
+import {
+  AuthForm,
+  CompanyName,
+} from '../../services/affiliation-forms.service';
 
 @Component({
   selector: 'cs-company-form-auth',
@@ -31,9 +35,10 @@ import { AuthForm } from '../../services/affiliation-forms.service';
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   $destroy = new Subject();
   ref: DynamicDialogRef;
-  @Output() sendForm = new EventEmitter<AuthForm>();
+  @Output() sendForm = new EventEmitter<Partial<AuthForm>>();
   @Input() categories: IEntryModel[] = [];
-  @Input() companyForm: UntypedFormGroup;
+  @Input() companyForm: SimpleModelFormGroup<AuthForm>;
+  @Input() nameOptions: CompanyName[];
   @Input() errorMessages: IErrorMessages;
   @Input() edit = false;
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
@@ -91,7 +96,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
 
   onSubmit() {
     if (this.companyForm.valid) {
-      const name = this.companyForm.get('name').value as string;
+      const name = this.companyForm.get('name').value;
       const {
         passwordConfirm,
         entrySelect: { code },
