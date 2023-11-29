@@ -26,7 +26,8 @@ export class MockService implements ApiMockService {
           success: true,
           code: 1,
           message: 'El Ruc ya se encuentra registrado',
-          tradename: 'Nombre empresa',
+          tradeName: 'Nombre empresa trade',
+          fullName: 'Nombre empresa full',
         }),
       },
       {
