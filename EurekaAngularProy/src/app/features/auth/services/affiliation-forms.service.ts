@@ -42,12 +42,7 @@ export class AffiliationFormsService {
   registerForm: ModelFormGroup<RegisterForm>;
   authForm: SimpleModelFormGroup<AuthForm>;
 
-  authNameValidators = [
-    Validators.required,
-    Validators.minLength(3),
-    Validators.maxLength(80),
-    notBlankSpaces,
-  ];
+  authNameValidators = [Validators.required];
 
   constructor(private formBuilder: FormBuilder) {
     const emailValidators = [
@@ -122,14 +117,4 @@ export class AffiliationFormsService {
       .get('name')
       .setValidators([...this.authNameValidators, nameInvalid(name)]);
   }
-}
-
-function notBlankSpaces(control: FormControl<string>) {
-  if (isNil(control.value)) {
-    return null;
-  }
-  if (control.value.trim() === '') {
-    return { blankSpaces: true };
-  }
-  return null;
 }
