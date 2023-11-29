@@ -52,12 +52,14 @@ import { authFullRoutingNames } from '../auth-routing.names';
 import {
   AffiliationFormsService,
   AuthForm,
+  CompanyName,
   RegisterForm,
 } from './affiliation-forms.service';
 
 @Injectable()
 export class AffiliationService {
   companyId: number;
+  companyNames: CompanyName[];
   email: string;
   servicesList: Partial<IServiceRemoteModelForms>[] = [];
   entryOptions: IEntryModel[] = [];
@@ -199,13 +201,10 @@ export class AffiliationService {
         documentNumber,
       })
       .pipe(
-        tap(({ code, message, success, tradename }) => {
+        tap(({ code, message, success, tradeName, fullName }) => {
           if (success) {
             this.authForm.get('ruc').setValue(ruc);
-            if (isNotNilOrEmpty(tradename)) {
-              this.authForm.get('name').setValue(tradename);
-              this.authForm.get('name').disable({ emitEvent: false });
-            }
+            this.validateName(tradeName, fullName);
             this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
           } else {
             this.processResultCode(code, message, {
@@ -224,6 +223,31 @@ export class AffiliationService {
           return throwError(err);
         })
       );
+  }
+
+  validateName(tradeName: string, fullName: string) {
+    this.companyNames = [];
+    if (isNotNilOrEmpty(tradeName)) {
+      this.companyNames.push({
+        label: tradeName,
+        value: 'tradeName',
+        description: 'Nombre comercial',
+      });
+    }
+    if (isNotNilOrEmpty(fullName)) {
+      this.companyNames.push({
+        label: fullName,
+        value: 'fullName',
+        description: 'Razón social',
+      });
+    }
+
+    const defaultValue =
+      this.companyNames.find((item) => item.value === 'tradeName') ||
+      this.companyNames[0];
+
+    this.authForm.get('name').setValue(defaultValue.label);
+    this.authForm.get('nameSelect').setValue(defaultValue);
   }
 
   processResultCode(
@@ -278,7 +302,7 @@ export class AffiliationService {
       ruc,
     } = this.registerForm.value;
 
-    const name = this.authForm.get('name').value as string;
+    const name = this.authForm.get('nameSelect').value;
     const { acceptTerms, entry, password, entrySelect } = this.authForm.value;
 
     const actionStep: Partial<ActionEventProperties> = {
@@ -299,7 +323,7 @@ export class AffiliationService {
       documentType,
       documentNumber,
       ruc,
-      name,
+      name: name.value,
       entry,
       email,
       movilNumber,

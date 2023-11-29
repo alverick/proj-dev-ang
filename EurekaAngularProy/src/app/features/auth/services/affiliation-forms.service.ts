@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { isNil } from 'ramda';
+import { FormBuilder, Validators } from '@angular/forms';
 
 import { IEntryModel } from '../../../shared/models';
 import {
@@ -10,6 +9,12 @@ import {
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { nameInvalid } from '../../../shared/validators/name-invalid.validator';
 import { passwordValidators } from '../../../shared/validators/password-validators';
+
+export interface CompanyName {
+  label: string;
+  value: string;
+  description: string;
+}
 
 export interface RegisterForm {
   documentType: string;
@@ -24,6 +29,7 @@ export interface RegisterForm {
 export interface AuthForm {
   ruc: string;
   name: string;
+  nameSelect: CompanyName;
   entry: string;
   entrySelect: IEntryModel;
   password: string;
@@ -92,7 +98,8 @@ export class AffiliationFormsService {
             Validators.minLength(11),
           ],
         ],
-        name: ['', this.authNameValidators],
+        name: [{ value: '', disabled: true }, this.authNameValidators],
+        nameSelect: [null as CompanyName, this.authNameValidators],
         entry: ['', [Validators.required]],
         entrySelect: [null as IEntryModel, [Validators.required]],
         password: ['', passwordValidators],
