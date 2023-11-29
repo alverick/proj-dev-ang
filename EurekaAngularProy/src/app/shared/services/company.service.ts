@@ -12,8 +12,10 @@ export interface ICompanyResult {
   success: boolean;
   code?: number;
   message?: string;
+  details?: string;
   id?: number;
-  tradename?: string;
+  tradeName?: string;
+  fullName?: string;
 }
 
 export interface CompanyAccounts {
