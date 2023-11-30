@@ -31,6 +31,7 @@ import { CompanyFormAuthComponent } from './company-form-auth.component';
   selector: 'cs-form-demo',
   template: ` <cs-company-form-auth
     class="tw-max-w-2xl tw-pl-20"
+    [edit]="edit"
     [categories]="entryOptions"
     [companyForm]="form"
     [errorMessages]="errorMessages"
@@ -43,6 +44,7 @@ class FormDemoComponent implements OnChanges {
   form: FormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() companyName: CompanyName[];
+  @Input() edit = false;
   entryOptions: IEntryModel[] = [
     {
       code: '33',
@@ -92,6 +94,15 @@ class FormDemoComponent implements OnChanges {
       {
         name: this.companyName,
         ruc: '20413425183',
+        acceptTerms: true,
+        entry: '39',
+        nameSelect: {
+          description: 'Razón social',
+          label: 'Nombre de compañia',
+          value: 'fullName',
+        },
+        password: 'aas@3W233',
+        passwordConfirm: 'aas@3W233',
       },
       { emitEvent: false }
     );
@@ -141,10 +152,11 @@ export const normal: Story = {
 
 export const Simple: Story = {
   args: {
-    errorMessages: errorRegisterAuth,
+    ...normal.args,
     companyName: [
       {
-        label: 'Nombre de compañia',
+        label:
+          'Nombre de compañia tradeName Nombre de compañia tradeName Nombre de compañia tradeName fin',
         value: 'fullName',
         description: 'Razón social',
       },
@@ -154,7 +166,7 @@ export const Simple: Story = {
 
 export const Full: Story = {
   args: {
-    errorMessages: errorRegisterAuth,
+    ...normal.args,
     companyName: [
       {
         label:
@@ -168,5 +180,12 @@ export const Full: Story = {
         description: 'Razón social',
       },
     ],
+  },
+};
+
+export const Rejected: Story = {
+  args: {
+    ...normal.args,
+    edit: true,
   },
 };
