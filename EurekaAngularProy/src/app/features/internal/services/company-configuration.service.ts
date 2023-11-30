@@ -66,7 +66,8 @@ export class CompanyConfigurationService {
     this.companyForm.patchValue(this.companyData);
     if (
       this.companyData.newNameGTPStatus === 0 ||
-      this.companyData.newNameGTPStatus === 2
+      this.companyData.newNameGTPStatus === 2 ||
+      this.companyData.isNewFlow
     ) {
       this.companyForm.get('name').disable();
     } else {
