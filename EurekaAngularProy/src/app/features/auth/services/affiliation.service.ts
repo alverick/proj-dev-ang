@@ -754,6 +754,7 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
       name: parsedName,
       entry: data.entry,
     });
+    this.authForm.get('nameSelect').disable();
     this.authForm.get('entrySelect').disable();
     this.servicesList = data.arrayServices.map((service) => {
       return {
