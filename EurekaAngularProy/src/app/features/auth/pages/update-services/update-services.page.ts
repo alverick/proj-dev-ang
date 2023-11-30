@@ -37,7 +37,7 @@ export class UpdateServicesPage {
   constructor(private router: Router, public affiliation: AffiliationService) {}
 
   actionDelete(position: number) {
-    swalAlert
+    void swalAlert
       .fire({
         text: '¿Estás seguro que deseas eliminar este servicio?',
         showCancelButton: true,
