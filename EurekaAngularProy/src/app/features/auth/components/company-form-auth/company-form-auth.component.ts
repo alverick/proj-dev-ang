@@ -97,12 +97,15 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   onSubmit() {
     if (this.companyForm.valid) {
       const name = this.companyForm.get('name').value;
-      const {
-        passwordConfirm,
-        entrySelect: { code },
-        ...formValue
-      } = this.companyForm.value;
-      this.sendForm.emit({ entry: code, name, ...formValue });
+      const { passwordConfirm, ...formValue } = this.companyForm.value;
+      let companyData = { name, ...formValue };
+      if (!this.edit) {
+        const {
+          entrySelect: { code },
+        } = this.companyForm.value;
+        companyData = { ...companyData, entry: code };
+      }
+      this.sendForm.emit(companyData);
     }
   }
   ngOnDestroy() {

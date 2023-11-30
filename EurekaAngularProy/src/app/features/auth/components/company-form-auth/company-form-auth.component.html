@@ -29,7 +29,7 @@
           [errorMessages]="errorMessages.name"
           >Nombre de tu empresa
           <input
-            *ngIf="nameOptions.length < 2"
+            *ngIf="nameOptions?.length < 2"
             type="text"
             class="tw-w-full"
             pInputText
@@ -39,7 +39,7 @@
             formControlName="name"
           />
           <p-dropdown
-            *ngIf="nameOptions.length >= 2"
+            *ngIf="nameOptions?.length >= 2"
             [options]="nameOptions"
             optionLabel="label"
             optionValue="value"
