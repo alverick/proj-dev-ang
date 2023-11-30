@@ -9,6 +9,7 @@ export interface IDataEnterpriseModel {
   documentNumber?: string;
   newName?: string;
   newNameGTPStatus?: number;
+  isNewFlow?: number;
   status?: string;
   requestDate?: Date;
   password?: string;
