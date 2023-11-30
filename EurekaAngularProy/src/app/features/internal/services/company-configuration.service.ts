@@ -78,8 +78,11 @@ export class CompanyConfigurationService {
 
   saveCompanyData() {
     const { email, movilNumber, movilOperator, name } = this.companyForm.value;
+    const parsedName: string = this.companyData.isNewFlow
+      ? this.companyData.name
+      : name || this.companyData.name;
     const companyDataUpdated = {
-      newName: name || this.companyData.name,
+      newName: parsedName,
       email,
       movilNumber,
       movilOperator,
