@@ -748,6 +748,7 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
     if (data.newNameGTPStatus === 3) {
       parsedName = data.newName;
       this.affiliationForms.setAuthFormNameValidator(parsedName);
+      this.authForm.get('name').enable();
     }
     this.authForm.patchValue({
       ruc: data.ruc,
