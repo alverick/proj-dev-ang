@@ -29,7 +29,7 @@ export interface RegisterForm {
 export interface AuthForm {
   ruc: string;
   name: string;
-  nameSelect: CompanyName;
+  nameSelect: string;
   entry: string;
   entrySelect: IEntryModel;
   password: string;
@@ -98,7 +98,7 @@ export class AffiliationFormsService {
           ],
         ],
         name: [{ value: '', disabled: true }, this.authNameValidators],
-        nameSelect: [null as CompanyName, [Validators.required]],
+        nameSelect: ['', [Validators.required]],
         entry: ['', [Validators.required]],
         entrySelect: [null as IEntryModel, [Validators.required]],
         password: ['', passwordValidators],

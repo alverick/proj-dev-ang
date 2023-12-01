@@ -247,7 +247,7 @@ export class AffiliationService {
       this.companyNames[0];
 
     this.authForm.get('name').setValue(defaultValue.label);
-    this.authForm.get('nameSelect').setValue(defaultValue);
+    this.authForm.get('nameSelect').setValue(defaultValue.value);
   }
 
   processResultCode(
@@ -323,7 +323,7 @@ export class AffiliationService {
       documentType,
       documentNumber,
       ruc,
-      name: name.value,
+      name,
       entry,
       email,
       movilNumber,
