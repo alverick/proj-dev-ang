@@ -42,7 +42,11 @@ export class AffiliationFormsService {
   registerForm: ModelFormGroup<RegisterForm>;
   authForm: SimpleModelFormGroup<AuthForm>;
 
-  authNameValidators = [Validators.required];
+  authNameValidators = [
+    Validators.required,
+    Validators.minLength(3),
+    Validators.maxLength(80),
+  ];
 
   constructor(private formBuilder: FormBuilder) {
     const emailValidators = [
@@ -94,7 +98,7 @@ export class AffiliationFormsService {
           ],
         ],
         name: [{ value: '', disabled: true }, this.authNameValidators],
-        nameSelect: [null as CompanyName, this.authNameValidators],
+        nameSelect: [null as CompanyName, [Validators.required]],
         entry: ['', [Validators.required]],
         entrySelect: [null as IEntryModel, [Validators.required]],
         password: ['', passwordValidators],
