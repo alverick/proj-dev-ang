@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AffiliationService } from '../../services/affiliation.service';
+
+import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-registration-finished',
