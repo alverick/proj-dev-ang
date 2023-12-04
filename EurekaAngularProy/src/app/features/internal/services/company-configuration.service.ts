@@ -66,7 +66,8 @@ export class CompanyConfigurationService {
     this.companyForm.patchValue(this.companyData);
     if (
       this.companyData.newNameGTPStatus === 0 ||
-      this.companyData.newNameGTPStatus === 2
+      this.companyData.newNameGTPStatus === 2 ||
+      this.companyData.isNewFlow
     ) {
       this.companyForm.get('name').disable();
     } else {
@@ -77,8 +78,11 @@ export class CompanyConfigurationService {
 
   saveCompanyData() {
     const { email, movilNumber, movilOperator, name } = this.companyForm.value;
+    const parsedName: string = this.companyData.isNewFlow
+      ? this.companyData.name
+      : name || this.companyData.name;
     const companyDataUpdated = {
-      newName: name || this.companyData.name,
+      newName: parsedName,
       email,
       movilNumber,
       movilOperator,

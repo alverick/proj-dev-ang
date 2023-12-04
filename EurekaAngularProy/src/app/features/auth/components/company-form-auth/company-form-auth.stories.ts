@@ -21,16 +21,21 @@ import { IEntryModel } from '../../../../shared/models';
 import { IErrorMessages } from '../../../../shared/models/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { AffiliationFormsService } from '../../services';
-import { AuthForm } from '../../services/affiliation-forms.service';
+import {
+  AuthForm,
+  CompanyName,
+} from '../../services/affiliation-forms.service';
 import { CompanyFormAuthComponent } from './company-form-auth.component';
 
 @Component({
   selector: 'cs-form-demo',
   template: ` <cs-company-form-auth
     class="tw-max-w-2xl tw-pl-20"
+    [edit]="edit"
     [categories]="entryOptions"
     [companyForm]="form"
     [errorMessages]="errorMessages"
+    [nameOptions]="companyName"
     (sendForm)="onSubmit($event)"
   ></cs-company-form-auth>`,
 })
@@ -38,7 +43,8 @@ class FormDemoComponent implements OnChanges {
   @Output() sendForm = new EventEmitter<AuthForm>();
   form: FormGroup;
   @Input() errorMessages: IErrorMessages;
-  @Input() companyName = '';
+  @Input() companyName: CompanyName[];
+  @Input() edit = false;
   entryOptions: IEntryModel[] = [
     {
       code: '33',
@@ -87,32 +93,32 @@ class FormDemoComponent implements OnChanges {
     this.form.patchValue(
       {
         name: this.companyName,
-        // documentType: 'DNI',
-        // documentNumber: '93883333',
         ruc: '20413425183',
-        // email: 'sdfs@fsf.com',
-        // emailConfirm: 'sdfs@fsf.com',
-        // movilNumber: '982222222',
-        // movilOperator: 'M',
+        acceptTerms: true,
+        entry: '39',
+        nameSelect: {
+          description: 'Razón social',
+          label: 'Nombre de compañia',
+          value: 'fullName',
+        },
+        password: 'aas@3W233',
+        passwordConfirm: 'aas@3W233',
       },
       { emitEvent: false }
     );
-    if (isNotNilOrEmpty(this.companyName)) {
-      this.form.get('name').disable({ emitEvent: false });
-    }
+    console.log(this.companyName);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.companyName) {
-      this.form.patchValue(
-        {
-          name: this.companyName,
-        },
-        { emitEvent: false }
-      );
-      if (isNotNilOrEmpty(this.companyName)) {
-        this.form.get('name').disable({ emitEvent: false });
-      }
+      const defaultValue =
+        this.companyName.find((item) => item.value === 'tradeName') ||
+        this.companyName[0];
+
+      this.form.patchValue({
+        name: defaultValue.label,
+      });
+      this.form.get('nameSelect').setValue(defaultValue);
     }
   }
 
@@ -144,9 +150,42 @@ export const normal: Story = {
   },
 };
 
-export const Named: Story = {
+export const Simple: Story = {
   args: {
-    errorMessages: errorRegisterAuth,
-    companyName: 'Nombre de compañia',
+    ...normal.args,
+    companyName: [
+      {
+        label:
+          'Nombre de compañia tradeName Nombre de compañia tradeName Nombre de compañia tradeName fin',
+        value: 'fullName',
+        description: 'Razón social',
+      },
+    ],
+  },
+};
+
+export const Full: Story = {
+  args: {
+    ...normal.args,
+    companyName: [
+      {
+        label:
+          'Nombre de compañia tradeName Nombre de compañia tradeName Nombre de compañia tradeName',
+        value: 'tradeName',
+        description: 'Nombre comercial',
+      },
+      {
+        label: 'Nombre de compañia fullName',
+        value: 'fullName',
+        description: 'Razón social',
+      },
+    ],
+  },
+};
+
+export const Rejected: Story = {
+  args: {
+    ...normal.args,
+    edit: true,
   },
 };
