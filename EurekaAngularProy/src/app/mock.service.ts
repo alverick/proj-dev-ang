@@ -52,7 +52,7 @@ export class MockService implements ApiMockService {
           requestDate: '2023-03-16T16:48:07.6533333',
           documentType: 'DNI',
           documentNumber: '43111232',
-          isNewFlow: 1,
+          isNewFlow: true,
         }),
       },
       {
