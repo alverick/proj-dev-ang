@@ -1,11 +1,12 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { moduleMetadata, Story } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';
 import { SidebarServiceComponent } from './sidebar-service.component';
 
-export default {
+const meta: Meta<SidebarServiceComponent> = {
   title: 'Shared/Service/Sidebar',
+  component: SidebarServiceComponent,
   decorators: [
     moduleMetadata({
       imports: [BrowserAnimationsModule, SharedModule],
@@ -13,26 +14,11 @@ export default {
   ],
 };
 
-const Template: Story<SidebarServiceComponent> = (
-  args: SidebarServiceComponent
-) => ({
-  props: args,
-});
+export default meta;
 
-export const Normal = Template.bind({});
-Normal.args = {};
+type Story = StoryObj<SidebarServiceComponent>;
 
-export const normal = () => ({
-  moduleMetadata: {
-    declarations: [],
-    providers: [],
-  },
-  template: `  <cs-sidebar-service
-    class="info tw-relative"
-    [position]="position"
-    [existServices]="true"
-  ></cs-sidebar-service>`,
-  props: {
-    position: 1,
-  },
-});
+export const First: Story = { args: { position: 0, existServices: false } };
+export const Second: Story = { args: { position: 1, existServices: false } };
+export const Third: Story = { args: { position: 0, existServices: true } };
+export const Four: Story = { args: { position: 1, existServices: true } };
