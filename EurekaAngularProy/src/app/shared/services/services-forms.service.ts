@@ -112,7 +112,7 @@ export class ServicesFormsService {
     });
 
     this.serviceConfigForm = this.formBuilder.group({
-      dataType: ['S', [Validators.required]],
+      dataType: ['C', [Validators.required]],
       debtorCode: ['', [Validators.required]],
       debtorCodeCustom: ['', [Validators.required, notBlankSpaces]],
       debt: serviceDebtForm,
@@ -142,7 +142,7 @@ export class ServicesFormsService {
     });
     this.serviceConfigForm.reset();
     this.serviceConfigForm.setValue({
-      dataType: 'S',
+      dataType: 'C',
       debtorCode: '',
       debtorCodeCustom: '',
       debt: {
@@ -180,7 +180,7 @@ export class ServicesFormsService {
   }
 }
 
-function notBlankSpaces(control: FormControl) {
+function notBlankSpaces(control: FormControl<string>) {
   if (isNil(control.value)) {
     return null;
   }
@@ -190,7 +190,7 @@ function notBlankSpaces(control: FormControl) {
   return null;
 }
 
-function onlyAlphaNumber(control: FormControl) {
+function onlyAlphaNumber(control: FormControl<string>) {
   const regex = /[0-9a-zA-Z]-?/g;
   if (isNil(control.value)) {
     return null;
