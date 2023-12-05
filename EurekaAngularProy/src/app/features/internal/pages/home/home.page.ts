@@ -1076,6 +1076,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       data: {
         debtId: itm.id,
         status: itm.status,
+        serviceType: itm.serviceType,
         currency: itm.currency,
         customer: {
           name: itm.firstName,

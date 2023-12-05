@@ -23,6 +23,7 @@ export class PaymentDetailComponent implements OnInit {
   items: any[] = [];
   loading = false;
   isEditingRow = false;
+  serviceType = '';
   customer: any = {};
   debtId: number;
   status: string;
@@ -37,6 +38,7 @@ export class PaymentDetailComponent implements OnInit {
     this.debtId = data.debtId;
     this.customer = data.customer;
     this.currency = data.currency;
+    this.serviceType = data.serviceType;
   }
 
   ngOnInit(): void {

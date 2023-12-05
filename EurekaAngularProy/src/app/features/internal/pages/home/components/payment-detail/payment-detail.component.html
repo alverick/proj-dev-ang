@@ -121,7 +121,7 @@
             </td>
             <td class="text-center">{{ itm.number }}</td>
             <td>
-              <div *ngIf="itm.canEdit" class="d-flex">
+              <div *ngIf="itm.canEdit && serviceType !== 'P'" class="d-flex">
                 <div
                   *ngIf="!itm.editing"
                   class="btn-edit tw-shrink-0"
@@ -151,7 +151,12 @@
           </tr>
         </tbody>
       </table>
-      <div *ngIf="items.length == 0 || status !== 'PAGADO' || isEditingRow">
+      <div
+        *ngIf="
+          serviceType !== 'P' &&
+          (items.length == 0 || status !== 'PAGADO' || isEditingRow)
+        "
+      >
         <div class="action d-flex flex-column">
           <ng-container *ngIf="!isEditingRow">
             <button
