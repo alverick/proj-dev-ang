@@ -10,6 +10,7 @@
     [chargeTypeOptions]="chargeTypeOptions"
     [interestTypeOptions]="interestTypeOptions"
     [showCancel]="true"
+    [showAllTypes]="companyServices.allowAllServiceType"
     (sendForm)="onSubmit()"
     (cancel)="onCancel()"
   ></cs-service-step-configuration>
