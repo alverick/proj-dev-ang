@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  appFullRoutingNames,
-  appRoutingNames,
-} from 'src/app/app-routing.names';
+import { appRoutingNames } from 'src/app/app-routing.names';
 
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
@@ -52,6 +49,9 @@ const routes: Routes = [
       {
         path: internalRoutingNames.SERVICES,
         component: ServicesMainPage,
+        resolve: {
+          company: CompanyDataResolver,
+        },
         children: [
           {
             path: appRoutingNames.EMPTY,
