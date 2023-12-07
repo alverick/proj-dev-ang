@@ -27,9 +27,10 @@
     </ng-container>
     <ng-container *ngIf="position === 1">
       <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20 tw-font-medium">
-        ¿Qué modalidad elegir?
+        <ng-container *ngIf="showAllTypes">¿Qué modalidad elegir?</ng-container>
       </div>
       <p-accordion
+        *ngIf="showAllTypes"
         expandIcon="pi pi-plus-circle tw-text-white tw-text-2xl"
         collapseIcon="pi pi-minus-circle tw-text-white tw-text-2xl"
         styleClass="p-accordion-outline"
@@ -102,6 +103,21 @@
           </ul>
         </p-accordionTab>
       </p-accordion>
+      <ul
+        *ngIf="!showAllTypes"
+        class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white"
+      >
+        <li class="tw-mb-3">
+          Agrega tu
+          <strong>lista de clientes</strong>, su
+          <strong>código de identificación</strong> y el monto de la
+          <strong>deuda a pagar</strong> de cada uno.
+        </li>
+        <li class="tw-mb-3">
+          Podrás configurar el orden de pago de las deudas, si aceptarás pago
+          por partes o incluir el cobro de mora.
+        </li>
+      </ul>
     </ng-container>
   </div>
 </div>
