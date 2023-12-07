@@ -22,6 +22,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
   @Input() interestTypeOptions: any[];
   @Input() showCancel = false;
   debtForm: UntypedFormGroup;
+  @Input() showAllTypes = false;
   showDebtFields = false;
   debtorCodeEditable = false;
   submittedForm = false;
