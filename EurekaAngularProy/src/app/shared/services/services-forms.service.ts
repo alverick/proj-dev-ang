@@ -168,11 +168,7 @@ export class ServicesFormsService {
   setServiceEditDebtorCodeValidate(isCustom: boolean, name = '') {
     const validators = [Validators.required];
     if (isNotEmpty(name)) {
-      if (isCustom) {
-        validators.push(nameInvalid(name));
-      } else {
-        validators.push(nameInvalid(name));
-      }
+      validators.push(nameInvalid(name));
     }
     this.editServiceForm
       .get('debtorCodeCustom')
