@@ -61,6 +61,7 @@ export class DebtComponent implements OnInit {
   public nuevaDeuda: any = {
     errores: {},
   };
+  limitAmountMax = 4000;
 
   ngOnInit(): void {
     this.nuevaDeuda.service = this.excelService.service.name;
@@ -68,9 +69,9 @@ export class DebtComponent implements OnInit {
     this.homeService.getServicesActive().subscribe((d) => (this.services = d));
   }
 
-  MontoBlur(e) {
-    let initalValue = parseFloat(e.amount);
-    if (!isNaN(initalValue)) e.amount = initalValue.toFixed(2);
+  MontoBlur(e: any) {
+    const initialValue = parseFloat(e.amount);
+    if (!isNaN(initialValue)) e.amount = initialValue.toFixed(2);
   }
 
   cmbNewService() {
@@ -155,8 +156,8 @@ export class DebtComponent implements OnInit {
         this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
       } else if (amount < 0) {
         this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
-      } else if (amount > 999999999.99) {
-        this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
+      } else if (amount > this.limitAmountMax) {
+        this.nuevaDeuda.errores.amount = `Monto máximo S/${this.limitAmountMax}`;
       } else {
         delete this.nuevaDeuda.errores.amount;
       }
