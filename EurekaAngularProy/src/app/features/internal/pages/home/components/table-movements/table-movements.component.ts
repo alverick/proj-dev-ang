@@ -79,6 +79,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Input() totalRecords: number;
   @Input() sortField = '';
   @Input() selectedRows: Debts[] = [];
+  @Input() limitAmountMax = 0;
   @Output() sortFieldChange = new EventEmitter<string>();
   @Output() selectedRowsChange = new EventEmitter<Debts[]>();
   @Output() showDetails = new EventEmitter<any>();
@@ -219,11 +220,20 @@ export class TableMovementsComponent implements OnInit, OnChanges {
 
   onRowEditSave(data: any) {
     const changed = {};
+    let isValid = true;
+
     forEachObjIndexed((val, key) => {
       if (this.dataSet[data.id][key] !== val) {
         changed[key] = val;
       }
+      if (isEmpty(val)) {
+        isValid = false;
+      }
     }, data);
+
+    if (!isValid) {
+      return;
+    }
     delete this.dataSet[data.id];
     if (!isEmpty(changed)) {
       this.saveRow.emit({
