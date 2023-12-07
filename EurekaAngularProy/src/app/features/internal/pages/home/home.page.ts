@@ -359,7 +359,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         classes: 'tw-translate-y-2',
         highlightClass: 'highlight',
         title: () => this.getStepPositionTitle(),
-        text: '<h4 class="tw-font-medium tw-pb-2">Agrega cobros</h4><p class="tw-text-sm">Si tienes un servicio con data completa o parcial, el primer paso es agregar cobros. Puedes hacerlo de manera individual o masiva con nuestra plantilla de Excel.</p>',
+        text: '<h4 class="tw-font-medium tw-pb-2">Agrega cobros</h4><p class="tw-text-sm">El primer paso es agregar cobros. Puedes hacerlo de manera individual o masiva con nuestra plantilla de Excel.</p>',
         when: {
           show: () => {
             setTimeout(() => {

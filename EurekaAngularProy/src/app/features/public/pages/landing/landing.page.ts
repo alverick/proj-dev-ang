@@ -59,10 +59,10 @@ export class LandingPage implements OnDestroy {
       content: 'Crea tu contraseña y configura los cobros de tu empresa.',
     },
     {
-      title: 'Ingresa y carga* tu lista de clientes por cobrar',
+      title: 'Ingresa y carga tu lista de clientes por cobrar',
       position: '02',
       content:
-        'Ingresa a la plataforma con tu RUC y contraseña, luego carga tu lista de clientes en la sección “Agregar cobros”. <br /><br />*Sólo si eliges la opción de ingresar datos de tus clientes.',
+        'Ingresa a la plataforma con tu RUC y contraseña, luego carga tu lista de clientes en la sección “Agregar cobros”.',
     },
     {
       title: 'Empieza a recibir los pagos de tus clientes',
