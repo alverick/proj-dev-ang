@@ -181,11 +181,25 @@
                       csInputMoney
                       placeholder="1.00"
                       locale="es-PE"
+                      #amount="ngModel"
                       [prefix]="rowData.currency + ' '"
                       [(ngModel)]="rowData.amount"
                       [minFractionDigits]="2"
                       [maxFractionDigits]="2"
+                      required
                     ></p-inputNumber>
+                    <div
+                      *ngIf="amount.dirty || amount.touched"
+                      class="tw-text-extended-watermelon-1 tw-text-xxs"
+                    >
+                      <div *ngIf="amount.value > limitAmountMax">
+                        Limite máximo
+                        {{ rowData.currency + ' ' + limitAmountMax }}
+                      </div>
+                      <div *ngIf="amount.invalid && amount.errors?.required">
+                        Cuota es requerida.
+                      </div>
+                    </div>
                   </ng-template>
                   <ng-template pTemplate="output">
                     <div *ngIf="rowData.amount > 0" class="tw-text-xxs">
