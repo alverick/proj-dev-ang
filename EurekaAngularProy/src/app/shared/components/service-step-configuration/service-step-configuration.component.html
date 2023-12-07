@@ -10,7 +10,7 @@
   >
     <h2 class="tw-font-medium tw-text-2xl tw-mb-7">Configura tu servicio</h2>
     <div class="form-controls tw-max-w-xl">
-      <div class="form-elm tw-mb-5">
+      <div *ngIf="showAllTypes" class="form-elm tw-mb-5">
         <div class="tw-font-medium">
           Selecciona la modalidad del servicio : <br />
           ¿Qué datos ingresarás para identificar a tus clientes?
