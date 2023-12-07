@@ -23,13 +23,24 @@
   >
     <div class="opcion sm:tw-w-[250px]">
       <img class="tw-inline" alt="excel" src="assets/images/movil.svg" />
+    </div>
+    <div class="opcion sm:tw-w-[250px]">
+      <img class="tw-inline" alt="excel" src="assets/images/excel.svg" />
+    </div>
+  </div>
+  <cs-message-alert mode="info" class="tw-mx-auto tw-block tw-w-96 tw-my-6"
+    >Monto máximo permitido por cobro S/4000</cs-message-alert
+  >
+  <div
+    class="opciones tw-flex tw-gap-2 tw-flex-col sm:tw-flex-row sm:tw-justify-center"
+  >
+    <div class="opcion sm:tw-w-[250px]">
       <button type="button" class="btn-eureca-green" (click)="chooseWeb()">
         Agregar en la web
       </button>
       <div class="btn-subtext">Puedes cargar 1 cobro a la vez.</div>
     </div>
     <div class="opcion sm:tw-w-[250px]">
-      <img class="tw-inline" alt="excel" src="assets/images/excel.svg" />
       <button type="button" class="btn-eureca-green" (click)="chooseExcel()">
         Carga excel
       </button>
