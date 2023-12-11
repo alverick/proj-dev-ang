@@ -1,9 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { ISelectOptions } from '../../constants/company';
 import { debtorCodeCustomEmpty } from '../../constants/services';
-import { IErrorMessages } from '../../models/forms';
+import { IErrorMessages, ModelFormGroup } from '../../models/forms';
+import {
+  ServiceConfigurationForm,
+  ServiceDebt,
+  ServiceTypes,
+  ServiceTypeType,
+} from '../../services/services-forms.service';
 
 @Component({
   selector: 'cs-service-step-configuration',
@@ -13,23 +20,25 @@ import { IErrorMessages } from '../../models/forms';
 export class ServiceStepConfigurationComponent implements OnInit {
   @Output() sendForm = new EventEmitter<object>();
   @Output() cancel = new EventEmitter();
-  @Input() form: UntypedFormGroup;
+  @Input() form: ModelFormGroup<ServiceConfigurationForm>;
   @Input() errorMessages: IErrorMessages;
-  @Input() debtorCodeOptions: any[];
-  @Input() paymentTypeOptions: any[];
-  @Input() currencyOptions: any[];
-  @Input() chargeTypeOptions: any[];
-  @Input() interestTypeOptions: any[];
+  @Input() debtorCodeOptions: ISelectOptions[];
+  @Input() paymentTypeOptions: ISelectOptions[];
+  @Input() currencyOptions: ISelectOptions[];
+  @Input() chargeTypeOptions: ISelectOptions[];
+  @Input() interestTypeOptions: ISelectOptions[];
   @Input() showCancel = false;
-  debtForm: UntypedFormGroup;
+  @Input() showAllTypes = false;
+  debtForm: ModelFormGroup<ServiceDebt>;
   showDebtFields = false;
   debtorCodeEditable = false;
   submittedForm = false;
   $destroy = new Subject();
+  protected readonly serviceTypes = ServiceTypes;
 
   ngOnInit() {
     this.listenForms();
-    this.debtForm = this.form.get('debt') as UntypedFormGroup;
+    this.debtForm = this.form.get('debt') as ModelFormGroup<ServiceDebt>;
     this.setDebtForm(this.form.value.dataType);
     this.setDebtorCodeCustomField(
       this.form.value.debtorCode,
@@ -51,7 +60,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
       });
   }
 
-  private setDebtorCodeCustomField(debtorVal, debtorCustom = '') {
+  private setDebtorCodeCustomField(debtorVal: string, debtorCustom = '') {
     this.debtorCodeEditable = debtorVal === 'Otro';
     if (debtorVal === 'Otro') {
       this.form.get('debtorCodeCustom').setValue(debtorCustom);
@@ -65,9 +74,9 @@ export class ServiceStepConfigurationComponent implements OnInit {
     this.debtorCodeEditable = false;
   }
 
-  private setDebtForm(val) {
-    this.showDebtFields = val === 'C';
-    if ('C' === val) {
+  private setDebtForm(val: ServiceTypeType) {
+    this.showDebtFields = val === ServiceTypes.complete;
+    if (this.showDebtFields) {
       this.debtForm.enable();
       this.debtForm.valueChanges.subscribe(() => {
         setTimeout(() => {

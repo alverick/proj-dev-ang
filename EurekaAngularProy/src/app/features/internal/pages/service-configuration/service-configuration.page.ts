@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
+
 import {
   chargeTypeOptions,
   currencyOptions,
@@ -31,7 +32,7 @@ export class ServiceConfigurationPage {
   interestTypeOptions = interestTypeOptions;
   constructor(
     private router: Router,
-    private companyServices: CompanyServicesService,
+    protected companyServices: CompanyServicesService,
     public serviceForms: ServicesFormsService,
     private logger: NGXLogger,
     protected adobeAnalytics: AdobeAnalyticsService
