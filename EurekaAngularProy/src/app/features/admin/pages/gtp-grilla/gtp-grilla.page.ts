@@ -223,7 +223,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     void swalAlert
       .fire({
         title: 'Sincronización masiva de cargas de cobros',
-        text: `Todas las cargas de excel de todas las empresas registradas pasarán del estado SAVING a FAILED, luego el cliente podrá realizar una nueva carga`,
+        text: `Todas las cargas de excel de todas las empresas registradas pasarán del estado SAVING o VALIDATING a FAILED, luego el cliente podrá realizar una nueva carga`,
         showConfirmButton: true,
         showCancelButton: true,
         confirmButtonText: 'Sí, sincronizar',
@@ -239,7 +239,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
               html:
                 result.rows === 0
                   ? result.message
-                  : `Se actualizó <strong>${result.rows} registro(s)</strong> de carga de cobros, del estado SAVING a FAILED.`,
+                  : `Se actualizó <strong>${result.rows} registro(s)</strong> de carga de cobros, del estado SAVING o VALIDATING a FAILED.`,
               showConfirmButton: true,
               confirmButtonText: 'Entendido',
             });
