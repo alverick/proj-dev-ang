@@ -55,7 +55,10 @@
                             (click)="bajarExcel(itm)"
                           ></p-button>
                           <p-button
-                            *ngIf="itm.status === 'SAVING'"
+                            *ngIf="
+                              itm.status === 'SAVING' ||
+                              itm.status === 'VALIDATING'
+                            "
                             (click)="fixProcess(itm.id)"
                             pTooltip="Te permite actualizar la carga del excel que se quedó en estado SAVING a FAILED."
                             icon="pi pi-sync"
