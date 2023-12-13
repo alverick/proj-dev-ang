@@ -6,6 +6,7 @@ import {
 } from '@ng-stack/api-mock';
 
 import { environment } from '../environments/environment';
+import { IDataEnterpriseModel } from './shared/models/data-enterprise.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,7 +39,7 @@ export class MockService implements ApiMockService {
       {
         host: environment.END_POINT,
         path: 'company/getafiliate',
-        responseCallback: () => ({
+        responseCallback: (): IDataEnterpriseModel => ({
           ruc: '20524801117',
           name: 'PRUEBA DASHBOARD',
           entry: '11',
@@ -53,6 +54,10 @@ export class MockService implements ApiMockService {
           documentType: 'DNI',
           documentNumber: '43111232',
           isNewFlow: true,
+          amountLimits: [
+            { currency: '001', amountMax: 4000 },
+            { currency: '002', amountMax: 4000 },
+          ],
         }),
       },
       {
@@ -94,7 +99,7 @@ export class MockService implements ApiMockService {
           id: 0,
           ruc: '202023482328',
           name: 'Nombre Empresa',
-          newNameGTPStatus: 3,
+          newNameGTPStatus: 1,
           entry: '31',
           email: 'correo@correo.com',
           movilNumber: '98333333',
@@ -147,19 +152,20 @@ export class MockService implements ApiMockService {
       },
       {
         host: environment.END_POINT,
-        path: 'debt/process/314/status',
+        path: 'debt/process/last1',
         responseCallback: () => ({
-          status: 'REJECTED',
-          errors: [
-            {
-              code: 0,
-              row: 2,
-              description:
-                'Ha realizado un cambio en el nombre de deudor de un código ya existente se actualizarán las deudas no pagadas con este nuevo nombre.',
-              field: 'Name Service',
-              value: null,
-            },
-          ],
+          id: 325,
+          status: 'VALIDATING',
+          phase: 2,
+          advance: 0.0,
+        }),
+      },
+      {
+        host: environment.END_POINT,
+        path: 'debt/process/325/status1',
+        responseCallback: () => ({
+          status: 'VALIDATING',
+          errors: [],
           rowsUploaded: -4,
           rowsRejected: 2,
           advance: 0,
