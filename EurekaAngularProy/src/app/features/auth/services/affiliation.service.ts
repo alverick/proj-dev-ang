@@ -319,7 +319,7 @@ export class AffiliationService {
         },
       ],
     };
-    const companyData: IDataEnterpriseModel = {
+    const companyData: Partial<IDataEnterpriseModel> = {
       documentType,
       documentNumber,
       ruc,
