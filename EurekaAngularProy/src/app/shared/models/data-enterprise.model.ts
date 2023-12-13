@@ -1,3 +1,8 @@
+interface AmountLimit {
+  amountMax: number;
+  currency: string;
+}
+
 export interface IDataEnterpriseModel {
   ruc: string;
   name: string;
@@ -11,10 +16,11 @@ export interface IDataEnterpriseModel {
   newNameGTPStatus?: number;
   isNewFlow?: boolean;
   status?: string;
-  requestDate?: Date;
+  requestDate?: Date | string;
   password?: string;
   newPassword?: string;
   confirmNewPassword?: string;
   inReview?: boolean;
   acceptTerms?: boolean;
+  amountLimits: AmountLimit[];
 }
