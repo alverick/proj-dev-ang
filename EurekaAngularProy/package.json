@@ -95,6 +95,7 @@
     "@babel/core": "^7.17.10",
     "@compodoc/compodoc": "^1.1.22",
     "@ng-stack/api-mock": "^1.4.1",
+    "@ngrx/schematics": "^15.4.0",
     "@storybook/addon-actions": "^7.5.3",
     "@storybook/addon-essentials": "^7.5.3",
     "@storybook/addon-interactions": "^7.5.3",
