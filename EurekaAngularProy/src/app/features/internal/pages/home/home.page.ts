@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { ShepherdService } from 'angular-shepherd';
 import * as DOMPurify from 'dompurify';
 import * as saveAs from 'file-saver';
@@ -25,6 +26,8 @@ import {
 } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { CurrencyWithLimit } from '../../../../shared/constants/currencies';
 
 import { CompanyServices } from '../../../../shared/models/company';
 import { DateList } from '../../../../shared/models/dateList';
@@ -56,6 +59,8 @@ import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
+import { loadCompany } from '../../../../store/actions/company.actions';
+import { companyFeature } from '../../../../store/reducers/company.reducer';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { DebtComponent } from './components/debt.component';
@@ -81,7 +86,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private movementsService: MovementsService,
     private router: Router,
     private shepherdService: ShepherdService,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected adobeAnalytics: AdobeAnalyticsService,
+    private store: Store
   ) {
     transactionService.itemsForDelete = [];
     const navigation = this.router.getCurrentNavigation();
@@ -161,6 +167,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     amount: '',
   };
   displayDialog = false;
+  amountLimits: CurrencyWithLimit[] = [];
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -216,6 +223,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.styleTag.className = 'onboarding-style';
       document.getElementsByTagName('head')[0].appendChild(this.styleTag);
     }
+    this.store.dispatch(loadCompany());
+    this.store
+      .select(companyFeature.selectCurrencyLimits)
+      .pipe(filter((data) => isNotNilOrEmpty(data)))
+      .subscribe((data) => {
+        this.amountLimits = data;
+      });
   }
 
   private onClose() {
