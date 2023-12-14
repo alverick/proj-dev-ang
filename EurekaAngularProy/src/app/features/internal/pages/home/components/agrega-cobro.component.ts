@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { Store } from '@ngrx/store';
+import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { filter } from 'rxjs/operators';
 import { ExcelService } from 'src/app/shared/services/excel.service';
+
+import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
 @Component({
   selector: 'cs-agrega-cobro',
@@ -8,10 +13,21 @@ import { ExcelService } from 'src/app/shared/services/excel.service';
   styleUrls: ['./agrega-cobro.component.scss'],
 })
 export class AgregaCobroComponent {
+  limitAmountMax: number;
   constructor(
     public excelService: ExcelService,
-    public dialogRef: MatDialogRef<AgregaCobroComponent>
-  ) {}
+    public dialogRef: MatDialogRef<AgregaCobroComponent>,
+    private store: Store
+  ) {
+    this.store
+      .select(companyFeature.selectCurrencyLimits)
+      .pipe(filter((data) => isNotNilOrEmpty(data)))
+      .subscribe((limits) => {
+        this.limitAmountMax = limits.find(
+          (limit) => limit.symbol === this.excelService.service.currencySymbol
+        ).limitMax;
+      });
+  }
 
   close() {
     this.dialogRef.close();

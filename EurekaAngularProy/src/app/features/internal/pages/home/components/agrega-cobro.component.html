@@ -29,7 +29,8 @@
     </div>
   </div>
   <cs-message-alert mode="info" class="tw-mx-auto tw-block tw-w-96 tw-my-6"
-    >Monto máximo permitido por cobro S/4000</cs-message-alert
+    >Monto máximo permitido por cobro {{ excelService.service.currencySymbol
+    }}{{ limitAmountMax }}</cs-message-alert
   >
   <div
     class="opciones tw-flex tw-gap-2 tw-flex-col sm:tw-flex-row sm:tw-justify-center"
