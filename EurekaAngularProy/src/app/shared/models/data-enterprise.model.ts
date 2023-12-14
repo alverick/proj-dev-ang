@@ -1,4 +1,4 @@
-interface AmountLimit {
+export interface AmountLimit {
   amountMax: number;
   currency: string;
 }
