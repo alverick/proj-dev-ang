@@ -192,9 +192,11 @@
                       *ngIf="amount.dirty || amount.touched"
                       class="tw-text-extended-watermelon-1 tw-text-xxs"
                     >
-                      <div *ngIf="amount.value > limitAmountMax">
+                      <div *ngIf="amount.value > getLimit(rowData.currency)">
                         Limite máximo
-                        {{ rowData.currency + ' ' + limitAmountMax }}
+                        {{
+                          rowData.currency + ' ' + getLimit(rowData.currency)
+                        }}
                       </div>
                       <div *ngIf="amount.invalid && amount.errors?.required">
                         Cuota es requerida.
