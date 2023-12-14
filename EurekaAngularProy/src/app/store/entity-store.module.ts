@@ -12,6 +12,8 @@ import {
   TopClientDataService,
 } from './dataservices';
 import { entityConfig } from './entity-metadata';
+import { CompanyEffects } from './effects/company.effects';
+import { companyFeature } from './reducers/company.reducer';
 
 @NgModule({
   imports: [
@@ -26,12 +28,14 @@ import { entityConfig } from './entity-metadata';
         },
       }
     ),
+    StoreModule.forFeature(companyFeature),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
     EntityDataModule.forRoot(entityConfig),
+    EffectsModule.forFeature([CompanyEffects]),
   ],
   providers: [...DATA_SERVICES],
 })
