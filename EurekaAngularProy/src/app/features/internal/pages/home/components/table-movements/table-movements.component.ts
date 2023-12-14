@@ -13,6 +13,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Table, TableHeaderCheckbox } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 
 import { Debts } from '../../../../../../shared/models/debts';
 import {
@@ -79,7 +80,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Input() totalRecords: number;
   @Input() sortField = '';
   @Input() selectedRows: Debts[] = [];
-  @Input() limitAmountMax = 0;
+  @Input() maxAmountLimits: CurrencyWithLimit[] = [];
   @Output() sortFieldChange = new EventEmitter<string>();
   @Output() selectedRowsChange = new EventEmitter<Debts[]>();
   @Output() showDetails = new EventEmitter<any>();
@@ -231,8 +232,8 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       }
     }, data);
 
-    if (!isValid) {
-      return;
+    if (!isValid || data.amount > this.getLimit(data.currency)) {
+      return false;
     }
     delete this.dataSet[data.id];
     if (!isEmpty(changed)) {
@@ -315,6 +316,12 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       this.willCloseModal = true;
     }
     this.displayDialog = false;
+  }
+
+  getLimit(currencySel: string) {
+    return this.maxAmountLimits.find(
+      (currency) => currency.symbol === currencySel
+    ).limitMax;
   }
 
   loadDataLazy(event: LazyLoadEvent) {
