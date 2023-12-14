@@ -5,8 +5,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { Store } from '@ngrx/store';
 import * as saveAs from 'file-saver';
+import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import {
   ActionEventProperties,
@@ -18,6 +21,7 @@ import {
   ProcessStatus,
 } from '../../../../../shared/services/excel.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
+import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
 @Component({
   selector: 'cs-dialog',
@@ -29,7 +33,8 @@ export class DialogComponent implements OnInit {
     public excelService: ExcelService,
     public formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<DialogComponent>,
-    private adobeAnalytics: AdobeAnalyticsService
+    private adobeAnalytics: AdobeAnalyticsService,
+    private store: Store
   ) {}
 
   public inputXlsForm: UntypedFormGroup;
@@ -39,7 +44,7 @@ export class DialogComponent implements OnInit {
   public fileName: string;
   public cuadro_errores = true;
   private files: any;
-
+  limitAmountMax: number;
   changestatus = true;
 
   public rowsAccepted = 0;
@@ -59,6 +64,14 @@ export class DialogComponent implements OnInit {
         this.excelService.errores = [];
       }
     });
+    this.store
+      .select(companyFeature.selectCurrencyLimits)
+      .pipe(filter((data) => isNotNilOrEmpty(data)))
+      .subscribe((limits) => {
+        this.limitAmountMax = limits.find(
+          (limit) => limit.symbol === this.excelService.service.currencySymbol
+        ).limitMax;
+      });
   }
 
   onChangeFile(event) {
