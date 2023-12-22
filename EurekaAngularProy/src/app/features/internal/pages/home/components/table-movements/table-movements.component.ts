@@ -8,18 +8,21 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { NGXLogger } from 'ngx-logger';
 import { LazyLoadEvent } from 'primeng/api';
 import { Table, TableHeaderCheckbox } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
-import { isNilOrEmpty } from 'ramda-adjunct';
-import { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
+import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import { filter } from 'rxjs/operators';
 
+import { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 import { Debts } from '../../../../../../shared/models/debts';
 import {
   AdobeAnalyticsService,
   AdobeEvent,
 } from '../../../../../../shared/services/adobe-analytics.service';
+import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 import { SelectAllTableService } from '../../../../services';
 
 enum StatusRowType {
@@ -88,6 +91,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<LazyLoadEvent>();
   displayDialog = false;
   willCloseModal = false;
+  isNewFlow = false;
   editRowData: any = {};
   dataSet = {};
   @ViewChild('table') table: Table;
@@ -96,11 +100,18 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   constructor(
     private logger: NGXLogger,
     private selectAllTable: SelectAllTableService,
-    private adobeAnalytics: AdobeAnalyticsService
+    private adobeAnalytics: AdobeAnalyticsService,
+    private store: Store
   ) {}
 
   ngOnInit() {
     this.selectAllTable.overridePrimeNGTableMethods();
+    this.store
+      .select(companyFeature.selectDetails)
+      .pipe(filter((data) => isNotNilOrEmpty(data)))
+      .subscribe((details) => {
+        this.isNewFlow = details.isNewFlow;
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -220,6 +231,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   }
 
   onRowEditSave(data: any) {
+    console.log('onRowEditSave', data);
     const changed = {};
     let isValid = true;
 
@@ -229,7 +241,10 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       }
     }, data);
 
-    if (!isValid || data.amount > this.getLimit(data.currency)) {
+    if (
+      !isValid ||
+      (data.amount > this.getLimit(data.currency) && this.isNewFlow)
+    ) {
       return false;
     }
     delete this.dataSet[data.id];
