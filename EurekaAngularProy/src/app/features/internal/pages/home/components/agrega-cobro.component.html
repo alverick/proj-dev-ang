@@ -28,7 +28,10 @@
       <img class="tw-inline" alt="excel" src="assets/images/excel.svg" />
     </div>
   </div>
-  <cs-message-alert mode="info" class="tw-mx-auto tw-block tw-w-96 tw-my-6"
+  <cs-message-alert
+    *ngIf="isNewFlow"
+    mode="info"
+    class="tw-mx-auto tw-block tw-w-96 tw-my-6"
     >Monto máximo permitido por cobro {{ excelService.service.currencySymbol
     }}{{ limitAmountMax }}</cs-message-alert
   >
