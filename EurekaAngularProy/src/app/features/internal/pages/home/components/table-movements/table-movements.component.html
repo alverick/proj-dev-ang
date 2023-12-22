@@ -192,7 +192,11 @@
                       *ngIf="amount.dirty || amount.touched"
                       class="tw-text-extended-watermelon-1 tw-text-xxs"
                     >
-                      <div *ngIf="amount.value > getLimit(rowData.currency)">
+                      <div
+                        *ngIf="
+                          amount.value > getLimit(rowData.currency) && isNewFlow
+                        "
+                      >
                         Limite máximo
                         {{
                           rowData.currency + ' ' + getLimit(rowData.currency)
