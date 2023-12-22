@@ -29,6 +29,7 @@ import { companyFeature } from '../../../../../store/reducers/company.reducer';
   styleUrls: ['dialog.scss'],
 })
 export class DialogComponent implements OnInit {
+  isNewFlow = false;
   constructor(
     public excelService: ExcelService,
     public formBuilder: UntypedFormBuilder,
@@ -71,6 +72,12 @@ export class DialogComponent implements OnInit {
         this.limitAmountMax = limits.find(
           (limit) => limit.symbol === this.excelService.service.currencySymbol
         ).limitMax;
+      });
+    this.store
+      .select(companyFeature.selectDetails)
+      .pipe(filter((data) => isNotNilOrEmpty(data)))
+      .subscribe((details) => {
+        this.isNewFlow = details.isNewFlow;
       });
   }
 
