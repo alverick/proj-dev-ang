@@ -227,9 +227,6 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       if (this.dataSet[data.id][key] !== val) {
         changed[key] = val;
       }
-      if (isEmpty(val)) {
-        isValid = false;
-      }
     }, data);
 
     if (!isValid || data.amount > this.getLimit(data.currency)) {
