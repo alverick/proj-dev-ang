@@ -50,6 +50,7 @@ const MY_FORMATS = {
 
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class DebtComponent implements OnInit {
+  isNewFlow = false;
   constructor(
     private dialogRef: MatDialogRef<DebtComponent>,
     private homeService: HomeService,
@@ -79,6 +80,12 @@ export class DebtComponent implements OnInit {
         this.limitAmountMax = limits.find(
           (limit) => limit.symbol === this.excelService.service.currencySymbol
         ).limitMax;
+      });
+    this.store
+      .select(companyFeature.selectDetails)
+      .pipe(filter((data) => isNotNilOrEmpty(data)))
+      .subscribe((details) => {
+        this.isNewFlow = details.isNewFlow;
       });
   }
 
@@ -169,7 +176,7 @@ export class DebtComponent implements OnInit {
         this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
       } else if (amount < 0) {
         this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
-      } else if (amount > this.limitAmountMax) {
+      } else if (amount > this.limitAmountMax && this.isNewFlow) {
         this.nuevaDeuda.errores.amount = `Monto máximo ${this.excelService.service.currencySymbol}${this.limitAmountMax}`;
       } else {
         delete this.nuevaDeuda.errores.amount;
