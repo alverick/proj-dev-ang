@@ -179,6 +179,7 @@
                       class="tw-w-full tw-block"
                       mode="decimal"
                       csInputMoney
+                      csAmountMaxValidate
                       placeholder="1.00"
                       locale="es-PE"
                       #amount="ngModel"
@@ -186,6 +187,9 @@
                       [(ngModel)]="rowData.amount"
                       [minFractionDigits]="2"
                       [maxFractionDigits]="2"
+                      [maxAmountLimits]="maxAmountLimits"
+                      [currencySymbol]="rowData.currency"
+                      [isNewFlow]="isNewFlow"
                       required
                     ></p-inputNumber>
                     <div
