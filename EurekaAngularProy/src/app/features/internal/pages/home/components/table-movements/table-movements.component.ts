@@ -286,6 +286,9 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   }
 
   onSave() {
+    if (!this.validateRow(this.editRowData)) {
+      return;
+    }
     this.displayDialog = false;
     const changed = {};
     forEachObjIndexed((val, key) => {
