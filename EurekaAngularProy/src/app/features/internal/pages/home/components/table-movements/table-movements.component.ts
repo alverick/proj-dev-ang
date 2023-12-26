@@ -13,7 +13,7 @@ import { NGXLogger } from 'ngx-logger';
 import { LazyLoadEvent } from 'primeng/api';
 import { Table, TableHeaderCheckbox } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
-import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
 
 import { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
@@ -231,9 +231,11 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   }
 
   onRowEditSave(data: any) {
-    console.log('onRowEditSave', data);
+    if (!this.validateRow(data)) {
+      return;
+    }
+
     const changed = {};
-    let isValid = true;
 
     forEachObjIndexed((val, key) => {
       if (this.dataSet[data.id][key] !== val) {
@@ -241,12 +243,6 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       }
     }, data);
 
-    if (
-      !isValid ||
-      (data.amount > this.getLimit(data.currency) && this.isNewFlow)
-    ) {
-      return false;
-    }
     delete this.dataSet[data.id];
     if (!isEmpty(changed)) {
       this.saveRow.emit({
@@ -340,5 +336,24 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     this.loadData.emit(event);
     this.sortField = event.sortField || '';
     this.sortFieldChange.emit(event.sortField || '');
+  }
+
+  validateRow(data) {
+    const fields = this.cols.filter((field) =>
+      isNotNil(field.checkEditableField)
+    );
+    for (const field of fields) {
+      if (
+        field.checkEditableField === 'canEditAmount' &&
+        data.amount > this.getLimit(data.currency) &&
+        this.isNewFlow
+      ) {
+        return false;
+      }
+      if (isNilOrEmpty(data[field.field])) {
+        return false;
+      }
+    }
+    return true;
   }
 }
