@@ -350,12 +350,14 @@
                   }}
                 </td>
               </tr>
-              <tr
-                colspan="2"
-                class="tw-text-primary-green-1"
-                (click)="openDialog(rowData)"
-              >
-                <td>Editar</td>
+              <tr class="tw-text-primary-green-1">
+                <td (click)="openDialog(rowData)">Editar</td>
+                <td
+                  class="tw-cursor-pointer tw-text-primary-green-1"
+                  (click)="actionShowDetails(rowData)"
+                >
+                  Ver detalle
+                </td>
               </tr>
             </table>
           </div>
