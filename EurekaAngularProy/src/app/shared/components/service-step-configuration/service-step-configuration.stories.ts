@@ -6,9 +6,13 @@ import {
   Output,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
-import { moduleMetadata } from '@storybook/angular';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  Meta,
+  moduleMetadata,
+  StoryObj,
+} from '@storybook/angular';
 
 import { AffiliationFormsService } from '../../../features/auth/services';
 import { errorServiceConfiguration } from '../../constants/company-errors';
@@ -34,6 +38,7 @@ import { SharedModule } from '../../shared.module';
     [chargeTypeOptions]="chargeTypeOptions"
     [interestTypeOptions]="interestTypeOptions"
     [showCancel]="showCancel"
+    [showAllTypes]="showAllTypes"
     (cancel)="onCancel()"
     (sendForm)="onSubmit($event)"
   ></cs-service-step-configuration>`,
@@ -42,6 +47,7 @@ class FormDemoComponent {
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
   @Output() cancel = new EventEmitter();
   @Input() showCancel = false;
+  @Input() showAllTypes = false;
   form: FormGroup;
   errors = errorServiceConfiguration;
   debtorCodeOptions = debtorCodeOptions;
@@ -64,11 +70,15 @@ const initAppComponentFactory =
   (affiliationForms: AffiliationFormsService) => async () =>
     affiliationForms;
 
-export default {
+const meta: Meta<FormDemoComponent> = {
   title: 'Auth/Module/Service Form Configuration',
+  component: FormDemoComponent,
   decorators: [
+    applicationConfig({
+      providers: [provideAnimations()],
+    }),
     moduleMetadata({
-      imports: [BrowserAnimationsModule, SharedModule],
+      imports: [SharedModule],
       providers: [
         AffiliationFormsService,
         {
@@ -82,19 +92,17 @@ export default {
   ],
 };
 
-export const normal = () => ({
-  moduleMetadata: {
-    declarations: [FormDemoComponent],
-    providers: [],
+export default meta;
+
+type Story = StoryObj<FormDemoComponent>;
+
+export const Normal: Story = {
+  args: {
+    showAllTypes: false,
   },
-  template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
-<cs-form-demo [showCancel]="edit" (sendForm)="onSubmit($event)" (cancel)="onCancel()"></cs-form-demo>`,
-  props: {
-    edit: false,
-    onCancel: action('form cancel'),
-    onSubmit: (e) => {
-      console.log(e);
-      action('form data')(e);
-    },
+};
+export const ShowAll: Story = {
+  args: {
+    showAllTypes: true,
   },
-});
+};

@@ -17,7 +17,7 @@ export interface ServiceFormValue {
 }
 
 export interface ServiceConfigurationForm {
-  dataType: string;
+  dataType: ServiceTypeType;
   debtorCode: string;
   debtorCodeCustom: string;
   debt: ServiceDebt;
@@ -42,11 +42,20 @@ export interface ServiceDebt {
   amount: string;
 }
 
+export const ServiceTypes = {
+  withoutData: 'S',
+  partial: 'P',
+  complete: 'C',
+} as const;
+
+export type ServiceTypeType = (typeof ServiceTypes)[keyof typeof ServiceTypes];
+
 @Injectable()
 export class ServicesFormsService {
   serviceForm: ModelFormGroup<ServiceFormValue>;
   serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
   editServiceForm: ModelFormGroup<ServiceEditForm>;
+  defaultServiceType: ServiceTypeType = ServiceTypes.complete;
 
   editNameValidators = [
     Validators.required,
@@ -112,7 +121,7 @@ export class ServicesFormsService {
     });
 
     this.serviceConfigForm = this.formBuilder.group({
-      dataType: ['C', [Validators.required]],
+      dataType: [this.defaultServiceType, [Validators.required]],
       debtorCode: ['', [Validators.required]],
       debtorCodeCustom: ['', [Validators.required, notBlankSpaces]],
       debt: serviceDebtForm,
@@ -142,7 +151,7 @@ export class ServicesFormsService {
     });
     this.serviceConfigForm.reset();
     this.serviceConfigForm.setValue({
-      dataType: 'C',
+      dataType: this.defaultServiceType,
       debtorCode: '',
       debtorCodeCustom: '',
       debt: {
@@ -159,11 +168,7 @@ export class ServicesFormsService {
   setServiceEditDebtorCodeValidate(isCustom: boolean, name = '') {
     const validators = [Validators.required];
     if (isNotEmpty(name)) {
-      if (isCustom) {
-        validators.push(nameInvalid(name));
-      } else {
-        validators.push(nameInvalid(name));
-      }
+      validators.push(nameInvalid(name));
     }
     this.editServiceForm
       .get('debtorCodeCustom')

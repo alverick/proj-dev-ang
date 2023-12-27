@@ -29,15 +29,25 @@ import {
   ServiceConfigurationForm,
   ServiceEditForm,
   ServiceFormValue,
+  ServiceTypeType,
 } from '../../../shared/services/services-forms.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 
 @Injectable()
 export class CompanyServicesService {
+  get allowAllServiceType(): boolean {
+    return this._allowAllServiceType;
+  }
+
+  set allowAllServiceType(value: boolean) {
+    this._allowAllServiceType = value;
+    this.serviceForms.defaultServiceType = value ? 'S' : 'C';
+  }
   services: Partial<IServiceRemoteModel>[] = [];
   serviceForm: ModelFormGroup<ServiceFormValue>;
   serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
   editServiceForm: ModelFormGroup<ServiceEditForm>;
+  private _allowAllServiceType = false;
 
   constructor(
     private companyService: CompanyService,
@@ -73,6 +83,10 @@ export class CompanyServicesService {
           this.services = value;
         });
       });
+  }
+
+  setDefaultType(value: ServiceTypeType) {
+    this.serviceConfigForm.patchValue({ dataType: value });
   }
 
   public saveService() {

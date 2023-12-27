@@ -115,7 +115,9 @@ export class CompanyService {
   ): Observable<IServiceRemoteModel[]> {
     return this.http
       .get<IServiceRemoteModel[]>(
-        `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`
+        `${
+          environment.END_POINT
+        }/company/service?incDeactivates=${incDeactivates.toString()}`
       )
       .pipe(
         catchError((err) => {
