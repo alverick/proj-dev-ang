@@ -1,6 +1,6 @@
 {
   "name": "eureka-angular-proy",
-  "version": "2.6.0-dev.5",
+  "version": "2.7.0-uat.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
