@@ -84,7 +84,6 @@ import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
-import { AmountMaxValidateDirective } from './directives/amount-max-validate.directive';
 
 const FORM_MODULES = [
   FormsModule,
@@ -190,7 +189,6 @@ const UI_MODULES = [
     ...PIPES,
     FabWhatsappComponent,
     ControlRulesPoliciesComponent,
-    AmountMaxValidateDirective,
   ],
   exports: [
     OnlyNumbersFormDirective,
@@ -219,7 +217,6 @@ const UI_MODULES = [
     ...PIPES,
     FabWhatsappComponent,
     ControlRulesPoliciesComponent,
-    AmountMaxValidateDirective,
   ],
 })
 export class SharedModule {}
