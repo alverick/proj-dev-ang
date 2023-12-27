@@ -103,6 +103,7 @@
                 #tableMovements
                 [data]="transactionService.debtItems.data"
                 [totalRecords]="transactionService.debtItems.count"
+                [maxAmountLimits]="amountLimits"
                 [(sortField)]="tableSortField"
                 [(selectedRows)]="selectedRows"
                 (loadData)="loadData($event)"

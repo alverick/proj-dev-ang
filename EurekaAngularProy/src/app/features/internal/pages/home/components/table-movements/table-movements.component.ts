@@ -8,17 +8,21 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { NGXLogger } from 'ngx-logger';
 import { LazyLoadEvent } from 'primeng/api';
 import { Table, TableHeaderCheckbox } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
-import { isNilOrEmpty } from 'ramda-adjunct';
+import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
+import { filter } from 'rxjs/operators';
 
+import { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 import { Debts } from '../../../../../../shared/models/debts';
 import {
   AdobeAnalyticsService,
   AdobeEvent,
 } from '../../../../../../shared/services/adobe-analytics.service';
+import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 import { SelectAllTableService } from '../../../../services';
 
 enum StatusRowType {
@@ -79,6 +83,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Input() totalRecords: number;
   @Input() sortField = '';
   @Input() selectedRows: Debts[] = [];
+  @Input() maxAmountLimits: CurrencyWithLimit[] = [];
   @Output() sortFieldChange = new EventEmitter<string>();
   @Output() selectedRowsChange = new EventEmitter<Debts[]>();
   @Output() showDetails = new EventEmitter<any>();
@@ -86,6 +91,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<LazyLoadEvent>();
   displayDialog = false;
   willCloseModal = false;
+  isNewFlow = false;
   editRowData: any = {};
   dataSet = {};
   @ViewChild('table') table: Table;
@@ -94,11 +100,18 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   constructor(
     private logger: NGXLogger,
     private selectAllTable: SelectAllTableService,
-    private adobeAnalytics: AdobeAnalyticsService
+    private adobeAnalytics: AdobeAnalyticsService,
+    private store: Store
   ) {}
 
   ngOnInit() {
     this.selectAllTable.overridePrimeNGTableMethods();
+    this.store
+      .select(companyFeature.selectDetails)
+      .pipe(filter((data) => isNotNilOrEmpty(data)))
+      .subscribe((details) => {
+        this.isNewFlow = details.isNewFlow;
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -218,12 +231,18 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   }
 
   onRowEditSave(data: any) {
+    if (!this.validateRow(data)) {
+      return;
+    }
+
     const changed = {};
+
     forEachObjIndexed((val, key) => {
       if (this.dataSet[data.id][key] !== val) {
         changed[key] = val;
       }
     }, data);
+
     delete this.dataSet[data.id];
     if (!isEmpty(changed)) {
       this.saveRow.emit({
@@ -267,6 +286,9 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   }
 
   onSave() {
+    if (!this.validateRow(this.editRowData)) {
+      return;
+    }
     this.displayDialog = false;
     const changed = {};
     forEachObjIndexed((val, key) => {
@@ -307,9 +329,34 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     this.displayDialog = false;
   }
 
+  getLimit(currencySel: string) {
+    return this.maxAmountLimits.find(
+      (currency) => currency.symbol === currencySel
+    ).limitMax;
+  }
+
   loadDataLazy(event: LazyLoadEvent) {
     this.loadData.emit(event);
     this.sortField = event.sortField || '';
     this.sortFieldChange.emit(event.sortField || '');
+  }
+
+  validateRow(data) {
+    const fields = this.cols.filter((field) =>
+      isNotNil(field.checkEditableField)
+    );
+    for (const field of fields) {
+      if (
+        field.checkEditableField === 'canEditAmount' &&
+        data.amount > this.getLimit(data.currency) &&
+        this.isNewFlow
+      ) {
+        return false;
+      }
+      if (isNilOrEmpty(data[field.field])) {
+        return false;
+      }
+    }
+    return true;
   }
 }

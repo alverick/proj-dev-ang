@@ -6,6 +6,8 @@ export interface Currency {
   locale: string;
 }
 
+export type CurrencyWithLimit = Currency & { limitMax: number };
+
 export const currencies: Currency[] = [
   {
     label: 'Soles',

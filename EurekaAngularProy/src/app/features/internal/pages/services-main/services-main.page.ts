@@ -6,11 +6,22 @@ import {
   RouterEvent,
   Scroll,
 } from '@angular/router';
+import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
-import { ServiceTypes } from '../../../../shared/services/services-forms.service';
+import {
+  currencies,
+  CurrencyWithLimit,
+} from '../../../../shared/constants/currencies';
+import {
+  AmountLimit,
+  IDataEnterpriseModel,
+} from '../../../../shared/models/data-enterprise.model';
+import {
+  ServicesFormsService,
+  ServiceTypes,
+} from '../../../../shared/services/services-forms.service';
 import {
   internalFullRoutingChildNames,
   internalFullRoutingNames,
@@ -25,10 +36,13 @@ import { CompanyServicesService } from '../../services';
 export class ServicesMainPage implements OnInit, OnDestroy {
   destroy$ = new Subject();
   position = 2;
+  limitsAmountMax: AmountLimit[] = null;
+  currency: CurrencyWithLimit = null;
   constructor(
     protected router: Router,
     public companyServices: CompanyServicesService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private servicesFormsService: ServicesFormsService
   ) {
     router.events
       .pipe(
@@ -60,10 +74,26 @@ export class ServicesMainPage implements OnInit, OnDestroy {
       }>
     ).subscribe(({ company }) => {
       this.companyServices.allowAllServiceType = !company.isNewFlow;
+      this.limitsAmountMax = company.amountLimits;
       this.companyServices.setDefaultType(
         company.isNewFlow ? ServiceTypes.complete : ServiceTypes.withoutData
       );
     });
+    this.servicesFormsService.serviceForm
+      .get('account')
+      .valueChanges.pipe(
+        takeUntil(this.destroy$),
+        filter((data) => isNotNilOrEmpty(data))
+      )
+      .subscribe((val: any) => {
+        const limitSel = this.limitsAmountMax.find(
+          (limit) => limit.currency === val.currency
+        ).amountMax;
+        const currencySel = currencies.find(
+          (limit) => limit.code === val.currency
+        );
+        this.currency = { ...currencySel, limitMax: limitSel };
+      });
   }
 
   ngOnDestroy(): void {

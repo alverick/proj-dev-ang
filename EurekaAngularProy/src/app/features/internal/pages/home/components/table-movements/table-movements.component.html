@@ -179,13 +179,37 @@
                       class="tw-w-full tw-block"
                       mode="decimal"
                       csInputMoney
+                      csAmountMaxValidate
                       placeholder="1.00"
                       locale="es-PE"
+                      #amount="ngModel"
                       [prefix]="rowData.currency + ' '"
                       [(ngModel)]="rowData.amount"
                       [minFractionDigits]="2"
                       [maxFractionDigits]="2"
+                      [maxAmountLimits]="maxAmountLimits"
+                      [currencySymbol]="rowData.currency"
+                      [isNewFlow]="isNewFlow"
+                      required
                     ></p-inputNumber>
+                    <div
+                      *ngIf="amount.dirty || amount.touched"
+                      class="tw-text-extended-watermelon-1 tw-text-xxs"
+                    >
+                      <div
+                        *ngIf="
+                          amount.value > getLimit(rowData.currency) && isNewFlow
+                        "
+                      >
+                        Limite máximo
+                        {{
+                          rowData.currency + ' ' + getLimit(rowData.currency)
+                        }}
+                      </div>
+                      <div *ngIf="amount.invalid && amount.errors?.required">
+                        Cuota es requerida.
+                      </div>
+                    </div>
                   </ng-template>
                   <ng-template pTemplate="output">
                     <div *ngIf="rowData.amount > 0" class="tw-text-xxs">
@@ -357,7 +381,12 @@
         <label for="vin" class="tw-m-0">Nombre</label>
       </div>
       <div class="field">
-        <input pInputText id="vin" [(ngModel)]="editRowData.firstName" />
+        <input
+          pInputText
+          id="vin"
+          [(ngModel)]="editRowData.firstName"
+          required
+        />
       </div>
     </div>
     <div
@@ -413,13 +442,35 @@
           class="tw-w-full tw-block"
           mode="decimal"
           csInputMoney
+          csAmountMaxValidate
           placeholder="1.00"
           locale="es-PE"
           [prefix]="editRowData.currency + ' '"
           [(ngModel)]="editRowData.amount"
           [minFractionDigits]="2"
           [maxFractionDigits]="2"
+          [maxAmountLimits]="maxAmountLimits"
+          [currencySymbol]="editRowData.currency"
+          [isNewFlow]="isNewFlow"
+          #amountForm="ngModel"
+          required
         ></p-inputNumber>
+        <div
+          *ngIf="amountForm.dirty || amountForm.touched"
+          class="tw-text-extended-watermelon-1 tw-text-xxs"
+        >
+          <div
+            *ngIf="
+              amountForm.value > getLimit(editRowData.currency) && isNewFlow
+            "
+          >
+            Limite máximo
+            {{ editRowData.currency + ' ' + getLimit(editRowData.currency) }}
+          </div>
+          <div *ngIf="amountForm.invalid && amountForm.errors?.required">
+            Cuota es requerida.
+          </div>
+        </div>
       </div>
     </div>
   </div>

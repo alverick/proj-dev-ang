@@ -86,9 +86,9 @@ export class CompanyService {
       .pipe(catchError((err) => throwError(err)));
   }
 
-  getAccountStateDetails(idCompany): Observable<IAccountStateDetails> {
+  getAccountStateDetails(idCompany: string): Observable<IAccountStateDetails> {
     return this.http
-      .get<any>(
+      .get<IAccountStateDetails>(
         `${environment.END_POINT}/company/GTP/accountStateDetails/${idCompany}`
       )
       .pipe(

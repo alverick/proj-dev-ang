@@ -6,6 +6,7 @@ import { DateList } from 'src/app/shared/models/dateList';
 import { environment } from 'src/environments/environment';
 
 import { statusCodes } from '../constants/services';
+import { IServiceRemoteModel } from '../models';
 import { CompanyServices } from '../models/company';
 import { Debts } from '../models/debts';
 import { Type } from '../models/type';
@@ -61,10 +62,10 @@ export class HomeService {
   getServices(incDeactivates: boolean = false): Observable<any[]> {
     const url = `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`;
     return this.http
-      .get<any[]>(url)
+      .get<IServiceRemoteModel[]>(url)
       .pipe(
         map((r) => {
-          const data: any[] = [];
+          const data: Partial<IServiceRemoteModel>[] = [];
           r.forEach((s) =>
             data.push({
               id: s.id,
@@ -89,12 +90,13 @@ export class HomeService {
       .pipe(
         map((r) => {
           const data: Partial<CompanyServices>[] = [];
-          r.forEach(({ dataType, id, name }) => {
+          r.forEach(({ dataType, id, name, currencySymbol }) => {
             if (name !== '') {
               data.push({
                 id,
                 name,
                 dataType,
+                currencySymbol,
               });
             }
           });

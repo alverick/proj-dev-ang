@@ -6,7 +6,10 @@ import {
 } from '@angular/material/core';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { Store } from '@ngrx/store';
 import { forEachObjIndexed } from 'ramda';
+import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { filter } from 'rxjs/operators';
 
 import {
   ActionEventProperties,
@@ -17,6 +20,7 @@ import {
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
+import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
 const MY_FORMATS = {
   parse: {
@@ -46,11 +50,13 @@ const MY_FORMATS = {
 
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class DebtComponent implements OnInit {
+  isNewFlow = false;
   constructor(
     private dialogRef: MatDialogRef<DebtComponent>,
     private homeService: HomeService,
     public excelService: ExcelService,
-    private adobeAnalytics: AdobeAnalyticsService
+    private adobeAnalytics: AdobeAnalyticsService,
+    private store: Store
   ) {}
 
   public grabado = false;
@@ -61,16 +67,31 @@ export class DebtComponent implements OnInit {
   public nuevaDeuda: any = {
     errores: {},
   };
+  limitAmountMax = 0;
 
   ngOnInit(): void {
     this.nuevaDeuda.service = this.excelService.service.name;
     this.isPartial = this.excelService.service.dataType === 'P';
     this.homeService.getServicesActive().subscribe((d) => (this.services = d));
+    this.store
+      .select(companyFeature.selectCurrencyLimits)
+      .pipe(filter((data) => isNotNilOrEmpty(data)))
+      .subscribe((limits) => {
+        this.limitAmountMax = limits.find(
+          (limit) => limit.symbol === this.excelService.service.currencySymbol
+        ).limitMax;
+      });
+    this.store
+      .select(companyFeature.selectDetails)
+      .pipe(filter((data) => isNotNilOrEmpty(data)))
+      .subscribe((details) => {
+        this.isNewFlow = details.isNewFlow;
+      });
   }
 
-  MontoBlur(e) {
-    let initalValue = parseFloat(e.amount);
-    if (!isNaN(initalValue)) e.amount = initalValue.toFixed(2);
+  MontoBlur(e: any) {
+    const initialValue = parseFloat(e.amount);
+    if (!isNaN(initialValue)) e.amount = initialValue.toFixed(2);
   }
 
   cmbNewService() {
@@ -155,8 +176,8 @@ export class DebtComponent implements OnInit {
         this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
       } else if (amount < 0) {
         this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
-      } else if (amount > 999999999.99) {
-        this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
+      } else if (amount > this.limitAmountMax && this.isNewFlow) {
+        this.nuevaDeuda.errores.amount = `Monto máximo ${this.excelService.service.currencySymbol}${this.limitAmountMax}`;
       } else {
         delete this.nuevaDeuda.errores.amount;
       }

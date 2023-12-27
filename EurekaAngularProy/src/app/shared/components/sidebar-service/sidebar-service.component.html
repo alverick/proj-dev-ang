@@ -113,6 +113,10 @@
           <strong>código de identificación</strong> y el monto de la
           <strong>deuda a pagar</strong> de cada uno.
         </li>
+        <li *ngIf="currency" class="tw-mb-3">
+          Monto máximo permitido por cobro {{ currency.symbol
+          }}{{ currency.limitMax }}
+        </li>
         <li class="tw-mb-3">
           Podrás configurar el orden de pago de las deudas, si aceptarás pago
           por partes o incluir el cobro de mora.
