@@ -37,7 +37,7 @@
                   pButton
                   pRipple
                   (click)="fixAccounts()"
-                  pTooltip="Te permite actualizar las cargas de excel que se quedaron en estado SAVING a FAILED. Realiza la sincronización masiva de Lunes a Domingo de 8:00 p.m. a 10:00pm"
+                  pTooltip="Te permite actualizar las cargas de excel que se quedaron en estado SAVING o VALIDATING a FAILED. Realiza la sincronización masiva de Lunes a Domingo de 8:00 p.m. a 10:00 p.m."
                   tooltipPosition="top"
                   type="button"
                   icon="pi pi-sync"
@@ -106,8 +106,7 @@
                           *ngFor="let request of items?.requestTypeList"
                         >
                           <div *ngIf="request.type == 0">
-                            <span
-                              class="badge tw-bg-primary-green-1"
+                            <span class="badge tw-bg-primary-green-1"
                               >{{ request.texto }}</span
                             >
                           </div>
@@ -122,8 +121,7 @@
                             >
                           </div>
                           <div *ngIf="request.type == 2">
-                            <span
-                              class="badge tw-bg-primary-green-1"
+                            <span class="badge tw-bg-primary-green-1"
                               >{{ request.texto }}</span
                             >
                           </div>
