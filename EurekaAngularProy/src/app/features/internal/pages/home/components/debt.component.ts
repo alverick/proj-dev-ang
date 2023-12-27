@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   DateAdapter,
@@ -45,6 +46,7 @@ const MY_FORMATS = {
       deps: [MAT_DATE_LOCALE],
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    CurrencyPipe,
   ],
 })
 
@@ -56,7 +58,8 @@ export class DebtComponent implements OnInit {
     private homeService: HomeService,
     public excelService: ExcelService,
     private adobeAnalytics: AdobeAnalyticsService,
-    private store: Store
+    private store: Store,
+    private currencyPipe: CurrencyPipe
   ) {}
 
   public grabado = false;
@@ -177,7 +180,11 @@ export class DebtComponent implements OnInit {
       } else if (amount < 0) {
         this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
       } else if (amount > this.limitAmountMax && this.isNewFlow) {
-        this.nuevaDeuda.errores.amount = `Monto máximo ${this.excelService.service.currencySymbol}${this.limitAmountMax}`;
+        const amountWithSymbol = this.currencyPipe.transform(
+          this.limitAmountMax,
+          this.excelService.service.currencySymbol
+        );
+        this.nuevaDeuda.errores.amount = `Monto máximo ${amountWithSymbol}`;
       } else {
         delete this.nuevaDeuda.errores.amount;
       }
