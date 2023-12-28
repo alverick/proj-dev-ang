@@ -2,15 +2,9 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "types": [
-      "node"
-    ],
-    "allowSyntheticDefaultImports": true
+    "types": ["node"]
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts",
-    "**/*.stories.ts",
-    "**/*.stories.*"
-  ]
+  "files": ["./main.ts"],
+  "include": ["./**/*.d.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.stories.ts", "**/*.stories.*"]
 }
