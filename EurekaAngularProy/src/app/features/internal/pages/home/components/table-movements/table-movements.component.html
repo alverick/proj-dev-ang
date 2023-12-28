@@ -198,12 +198,18 @@
                     >
                       <div
                         *ngIf="
-                          amount.value > getLimit(rowData.currency) && isNewFlow
+                          amount.value
+                            | validateLimitCurrency
+                              : maxAmountLimits
+                              : rowData.currency
+                              : isNewFlow
                         "
                       >
-                        Limite máximo
+                        Monto máximo
                         {{
-                          rowData.currency + ' ' + getLimit(rowData.currency)
+                          rowData.currency
+                            | getLimitCurrency : maxAmountLimits
+                            | currency : rowData.currency
                         }}
                       </div>
                       <div *ngIf="amount.invalid && amount.errors?.required">
@@ -344,12 +350,14 @@
                   }}
                 </td>
               </tr>
-              <tr
-                colspan="2"
-                class="tw-text-primary-green-1"
-                (click)="openDialog(rowData)"
-              >
-                <td>Editar</td>
+              <tr class="tw-text-primary-green-1">
+                <td (click)="openDialog(rowData)">Editar</td>
+                <td
+                  class="tw-cursor-pointer tw-text-primary-green-1"
+                  (click)="actionShowDetails(rowData)"
+                >
+                  Ver detalle
+                </td>
               </tr>
             </table>
           </div>
@@ -461,11 +469,19 @@
         >
           <div
             *ngIf="
-              amountForm.value > getLimit(editRowData.currency) && isNewFlow
+              amountForm.value
+                | validateLimitCurrency
+                  : maxAmountLimits
+                  : editRowData.currency
+                  : isNewFlow
             "
           >
-            Limite máximo
-            {{ editRowData.currency + ' ' + getLimit(editRowData.currency) }}
+            Monto máximo
+            {{
+              editRowData.currency
+                | getLimitCurrency : maxAmountLimits
+                | currency : editRowData.currency
+            }}
           </div>
           <div *ngIf="amountForm.invalid && amountForm.errors?.required">
             Cuota es requerida.

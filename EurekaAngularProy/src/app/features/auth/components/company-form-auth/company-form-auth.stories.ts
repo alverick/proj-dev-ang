@@ -14,7 +14,6 @@ import {
   moduleMetadata,
   StoryObj,
 } from '@storybook/angular';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
 
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import { IEntryModel } from '../../../../shared/models';

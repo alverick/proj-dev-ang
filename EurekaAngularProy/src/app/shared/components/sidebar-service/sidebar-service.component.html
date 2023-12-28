@@ -114,8 +114,8 @@
           <strong>deuda a pagar</strong> de cada uno.
         </li>
         <li *ngIf="currency" class="tw-mb-3">
-          Monto máximo permitido por cobro {{ currency.symbol
-          }}{{ currency.limitMax }}
+          Monto máximo permitido por cobro
+          {{ currency.limitMax | currency : currency.symbol }}
         </li>
         <li class="tw-mb-3">
           Podrás configurar el orden de pago de las deudas, si aceptarás pago
