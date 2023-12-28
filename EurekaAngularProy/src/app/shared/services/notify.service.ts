@@ -8,7 +8,7 @@ import {
 import { faCircle as fasCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subject, timer } from 'rxjs';
 import { delayWhen, repeat, takeUntil } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { StorageService } from './storage.service';
 
