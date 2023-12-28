@@ -121,7 +121,13 @@
             </td>
             <td class="text-center">{{ itm.number }}</td>
             <td>
-              <div *ngIf="itm.canEdit && serviceType === 'C'" class="d-flex">
+              <div
+                *ngIf="
+                  itm.canEdit &&
+                  (!(companyDetails$ | async).isNewFlow || serviceType === 'C')
+                "
+                class="d-flex"
+              >
                 <div
                   *ngIf="!itm.editing"
                   class="btn-edit tw-shrink-0"
@@ -153,7 +159,7 @@
       </table>
       <div
         *ngIf="
-          serviceType === 'C' &&
+          (!(companyDetails$ | async).isNewFlow || serviceType === 'C') &&
           (items.length == 0 || status !== 'PAGADO' || isEditingRow)
         "
       >
