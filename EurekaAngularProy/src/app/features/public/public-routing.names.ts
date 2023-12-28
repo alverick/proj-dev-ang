@@ -1,5 +1,5 @@
-import { appModuleRoutingNames } from 'src/app/app-routing.names';
-import { generateFullRoutes } from 'src/app/shared/utils/helpers/router';
+import { appModuleRoutingNames } from '../../app-routing.names';
+import { generateFullRoutes } from '../../shared/utils/helpers/router';
 
 interface IPublicRoutingNames {
   AFFILIATION?: string;
