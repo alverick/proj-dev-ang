@@ -1,6 +1,9 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 
-import { currencies, CurrencyWithLimit } from '../../shared/constants/currencies';
+import {
+  currencies,
+  CurrencyWithLimit,
+} from '../../shared/constants/currencies';
 import { IDataEnterpriseModel } from '../../shared/models/data-enterprise.model';
 import * as CompanyActions from '../actions/company.actions';
 
@@ -24,7 +27,6 @@ export const reducerCompany = createReducer(
     (state, action): State => ({ ...state, details: action.data })
   ),
   on(CompanyActions.setCurrencyLimits, (state): State => {
-    console.log('setCurrencyLimits', state);
     const currencyLimits = state.details.amountLimits.map((item) => {
       const currencyElm = currencies.find(
         (currency) => currency.code === item.currency
