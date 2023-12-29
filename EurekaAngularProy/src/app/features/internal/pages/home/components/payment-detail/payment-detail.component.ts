@@ -3,6 +3,7 @@ import {
   MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA,
   MatLegacyDialogRef as MatDialogRef,
 } from '@angular/material/legacy-dialog';
+import { Store } from '@ngrx/store';
 import { forEachObjIndexed, isNil } from 'ramda';
 
 import {
@@ -13,6 +14,7 @@ import {
 } from '../../../../../../shared/services/adobe-analytics.service';
 import { TransactionService } from '../../../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
+import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 
 @Component({
   selector: 'cs-payment-detail',
@@ -23,20 +25,24 @@ export class PaymentDetailComponent implements OnInit {
   items: any[] = [];
   loading = false;
   isEditingRow = false;
+  serviceType = '';
   customer: any = {};
   debtId: number;
   status: string;
   currency: string;
+  companyDetails$ = this.store.select(companyFeature.selectDetails);
 
   constructor(
     private transaction: TransactionService,
     public dialogRef: MatDialogRef<PaymentDetailComponent>,
     protected adobeAnalytics: AdobeAnalyticsService,
+    private readonly store: Store,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.debtId = data.debtId;
     this.customer = data.customer;
     this.currency = data.currency;
+    this.serviceType = data.serviceType;
   }
 
   ngOnInit(): void {
