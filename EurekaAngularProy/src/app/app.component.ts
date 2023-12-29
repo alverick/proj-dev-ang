@@ -4,11 +4,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
 import { isNil } from 'ramda';
-import { LoginService } from 'src/app/shared/services/login.service';
 
 import { appFullRoutingNames } from './app-routing.names';
 import { primeng } from './shared/lang/es';
 import { AdobeAnalyticsService } from './shared/services/adobe-analytics.service';
+import { LoginService } from './shared/services/login.service';
 
 @Component({
   selector: 'cs-root',

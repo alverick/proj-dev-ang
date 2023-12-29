@@ -31,9 +31,11 @@
   <cs-message-alert
     *ngIf="isNewFlow"
     mode="info"
-    class="tw-mx-auto tw-block tw-w-96 tw-my-6"
-    >Monto máximo permitido por cobro {{ excelService.service.currencySymbol
-    }}{{ limitAmountMax }}</cs-message-alert
+    class="tw-mx-auto tw-block md:tw-w-96 tw-my-6"
+    >Monto máximo permitido por cobro
+    {{
+      limitAmountMax | currency : excelService.service.currencySymbol
+    }}</cs-message-alert
   >
   <div
     class="opciones tw-flex tw-gap-2 tw-flex-col sm:tw-flex-row sm:tw-justify-center"
