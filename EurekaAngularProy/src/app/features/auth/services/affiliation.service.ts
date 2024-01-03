@@ -4,10 +4,6 @@ import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
 import { type Observable, of, switchMap, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import {
-  type ICompanySendUpdate,
-  type ICompanyUpdate,
-} from 'src/app/shared/models/company';
 import { type SweetAlertOptions } from 'sweetalert2';
 
 import {
@@ -22,7 +18,10 @@ import {
   type IServiceRemoteModel,
   type IServiceRemoteModelForms,
 } from '../../../shared/models';
-import { type IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
+import {
+  type ICompanySendUpdate,
+  type ICompanyUpdate,
+} from '../../../shared/models/company';
 import {
   type ModelFormGroup,
   type SimpleModelFormGroup,
@@ -38,11 +37,7 @@ import {
   AdobeAnalyticsService,
   AdobeEvent,
 } from '../../../shared/services/adobe-analytics.service';
-import {
-  type ICompanyResult,
-  CompanyService,
-} from '../../../shared/services/company.service';
-import { type FingerPrintData } from '../../../shared/services/digital-data.service';
+import { CompanyService } from '../../../shared/services/company.service';
 import { LoginService } from '../../../shared/services/login.service';
 import {
   type ServiceConfigurationForm,
@@ -300,7 +295,7 @@ export class AffiliationService {
     });
   }
 
-  public saveCompany(): Observable<ICompanyResult> {
+  public saveCompany() {
     const {
       movilNumber,
       documentType,
