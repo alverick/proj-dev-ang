@@ -26,14 +26,19 @@
         <div
           class="tw-py-10 tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-items-center"
         >
-          <button
-            pButton
-            pRipple
-            type="button"
-            label="Regístrate"
-            class="tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
-            (click)="clickRegistration('Regístrate - hero', 'hero')"
-          ></button>
+          <ng-container *ngrxLet="disabledAffiliation$ as disabled">
+            <button
+              pButton
+              pRipple
+              pTooltip="Pronto podrás registrarte en Cobro Simple. Estamos trabajando en una nueva experiencia para ti."
+              tooltipEvent="focus"
+              [tooltipDisabled]="!disabled"
+              type="button"
+              label="Regístrate"
+              class="tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
+              (click)="clickRegistration('Regístrate - hero', 'hero', disabled)"
+            ></button>
+          </ng-container>
 
           <button
             pButton
@@ -254,14 +259,21 @@
           </div>
         </div>
         <div class="mb-2">
-          <button
-            pButton
-            pRipple
-            type="button"
-            label="Regístrate"
-            class="p-button-third tw-w-48 tw-h-12 bg-"
-            (click)="clickRegistration('Regístrate - bottom', 'bottom')"
-          ></button>
+          <ng-container *ngrxLet="disabledAffiliation$ as disabled">
+            <button
+              pButton
+              pRipple
+              pTooltip="Pronto podrás registrarte en Cobro Simple. Estamos trabajando en una nueva experiencia para ti."
+              tooltipEvent="focus"
+              [tooltipDisabled]="!disabled"
+              type="button"
+              label="Regístrate"
+              class="p-button-third tw-w-48 tw-h-12 bg-"
+              (click)="
+                clickRegistration('Regístrate - bottom', 'bottom', disabled)
+              "
+            ></button>
+          </ng-container>
         </div>
       </div>
     </div>
