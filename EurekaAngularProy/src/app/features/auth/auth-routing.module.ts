@@ -18,6 +18,7 @@ import {
   AffiliationCompanyIdGuard,
   AffiliationExitGuard,
   AffiliationFinishedGuard,
+  AffiliationLoadGuard,
   AffiliationResumeExitGuard,
   AffiliationRucGuard,
   AffiliationServiceValidGuard,
@@ -41,6 +42,84 @@ import {
   UpdateServicesPage,
 } from './pages';
 
+const affiliationRoutes: Routes = [
+  {
+    path: authRoutingNames.COMPANY_REGISTER,
+    component: CompanyRegistrationPage,
+    canMatch: [AffiliationLoadGuard],
+  },
+  {
+    path: authRoutingNames.COMPANY_FILL_DATA,
+    component: CompanyRegistrationAuthPage,
+    canMatch: [AffiliationLoadGuard],
+    canActivate: [AffiliationRucGuard],
+  },
+  {
+    path: authRoutingNames.SERVICES_ADD,
+    component: ServiceAddPage,
+    canMatch: [AffiliationLoadGuard],
+    canDeactivate: [AffiliationExitGuard],
+    canActivateChild: [AffiliationCompanyIdGuard],
+    children: [
+      {
+        path: appRoutingNames.EMPTY,
+        redirectTo: authFullRoutingChildNames.SERVICES_ADD_INFO,
+        pathMatch: 'full',
+      },
+      {
+        path: authRoutingChildNames.SERVICES_ADD_INFO,
+        component: ServiceInfoPage,
+      },
+      {
+        path: authRoutingChildNames.SERVICES_ADD_CONFIGURATION,
+        component: ServiceConfigurationPage,
+        canActivate: [AffiliationServiceValidGuard],
+      },
+      {
+        path: authRoutingChildNames.SERVICES_ADD_LIST,
+        component: ServiceResumePage,
+        canDeactivate: [AffiliationResumeExitGuard],
+      },
+    ],
+  },
+  {
+    path: authRoutingNames.REGISTRATION_FINISHED,
+    component: RegistrationFinishedPage,
+    canMatch: [AffiliationLoadGuard],
+    canActivate: [AffiliationFinishedGuard],
+  },
+  {
+    path: authDynamicRoutingNames.REGISTER_UPDATING_VALIDATION,
+    component: RegistrationUpdatePage,
+    canMatch: [AffiliationLoadGuard],
+    canActivate: [ValidateTokenGuard],
+  },
+  {
+    path: authRoutingNames.REGISTER_UPDATING,
+    canMatch: [AffiliationLoadGuard],
+    component: RegistrationUpdatePage,
+    canActivateChild: [AffiliationUpdatingGuard],
+    children: [
+      {
+        path: appRoutingNames.EMPTY,
+        redirectTo: authFullRoutingChildNames.UPDATE_COMPANY,
+        pathMatch: 'full',
+      },
+      {
+        path: authRoutingChildNames.UPDATE_COMPANY,
+        component: UpdateCompanyPage,
+        resolve: {
+          entries: CompanyEntriesResolver,
+        },
+      },
+      {
+        path: authRoutingChildNames.UPDATE_SERVICES,
+        component: UpdateServicesPage,
+      },
+    ],
+  },
+];
+
 const routes: Routes = [
   {
     path: appRoutingNames.EMPTY,
@@ -56,75 +135,7 @@ const routes: Routes = [
         component: ProcessingUpdatePage,
         canActivate: [LogoutGuard],
       },
-      {
-        path: authRoutingNames.COMPANY_REGISTER,
-        component: CompanyRegistrationPage,
-      },
-      {
-        path: authRoutingNames.COMPANY_FILL_DATA,
-        component: CompanyRegistrationAuthPage,
-        canActivate: [AffiliationRucGuard],
-      },
-      {
-        path: authRoutingNames.SERVICES_ADD,
-        component: ServiceAddPage,
-        canDeactivate: [AffiliationExitGuard],
-        canActivateChild: [AffiliationCompanyIdGuard],
-        children: [
-          {
-            path: appRoutingNames.EMPTY,
-            redirectTo: authFullRoutingChildNames.SERVICES_ADD_INFO,
-            pathMatch: 'full',
-          },
-          {
-            path: authRoutingChildNames.SERVICES_ADD_INFO,
-            component: ServiceInfoPage,
-          },
-          {
-            path: authRoutingChildNames.SERVICES_ADD_CONFIGURATION,
-            component: ServiceConfigurationPage,
-            canActivate: [AffiliationServiceValidGuard],
-          },
-          {
-            path: authRoutingChildNames.SERVICES_ADD_LIST,
-            component: ServiceResumePage,
-            canDeactivate: [AffiliationResumeExitGuard],
-          },
-        ],
-      },
-      {
-        path: authRoutingNames.REGISTRATION_FINISHED,
-        component: RegistrationFinishedPage,
-        canActivate: [AffiliationFinishedGuard],
-      },
-      {
-        path: authDynamicRoutingNames.REGISTER_UPDATING_VALIDATION,
-        component: RegistrationUpdatePage,
-        canActivate: [ValidateTokenGuard],
-      },
-      {
-        path: authRoutingNames.REGISTER_UPDATING,
-        component: RegistrationUpdatePage,
-        canActivateChild: [AffiliationUpdatingGuard],
-        children: [
-          {
-            path: appRoutingNames.EMPTY,
-            redirectTo: authFullRoutingChildNames.UPDATE_COMPANY,
-            pathMatch: 'full',
-          },
-          {
-            path: authRoutingChildNames.UPDATE_COMPANY,
-            component: UpdateCompanyPage,
-            resolve: {
-              entries: CompanyEntriesResolver,
-            },
-          },
-          {
-            path: authRoutingChildNames.UPDATE_SERVICES,
-            component: UpdateServicesPage,
-          },
-        ],
-      },
+      ...affiliationRoutes,
     ],
   },
   {
