@@ -27,6 +27,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LetModule, PushModule } from '@ngrx/component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { TooltipModule as TooltipModuleNgx } from 'ngx-bootstrap/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -215,6 +216,8 @@ const UI_MODULES = [
     SidebarServiceComponent,
     ServiceCardComponent,
     ...PIPES,
+    PushModule,
+    LetModule,
     FabWhatsappComponent,
     ControlRulesPoliciesComponent,
   ],
