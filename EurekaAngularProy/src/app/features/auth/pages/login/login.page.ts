@@ -17,6 +17,8 @@ import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
+import { Store } from '@ngrx/store';
+import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 
 const userData = environment.credentials[0];
 
@@ -70,6 +72,9 @@ export class LoginPage implements OnInit {
   };
   linkRecoverPassword = authFullRoutingNames.RECOVER_PASSWORD;
   linkRegisterCompany = authFullRoutingNames.COMPANY_REGISTER;
+  disabledAffiliation$ = this.store.select(
+    appConfigFeature.selectDisabledAffiliation
+  );
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,7 +83,8 @@ export class LoginPage implements OnInit {
     private cookieService: CookieService,
     private storageService: StorageService,
     public snackBar: MatSnackBar,
-    private adobeAnalytics: AdobeAnalyticsService
+    private adobeAnalytics: AdobeAnalyticsService,
+    private store: Store
   ) {}
 
   ngOnInit() {
@@ -352,7 +358,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  clickRegistrarse() {
+  clickRegistrarse(disabled = false) {
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
       category: 'Login',
       action: 'Click',
@@ -362,9 +368,11 @@ export class LoginPage implements OnInit {
       location: 'Login',
       step: 'step0',
     });
-    void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
-      state: { initNew: true },
-    });
+    if (!disabled) {
+      void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
+        state: { initNew: true },
+      });
+    }
   }
 
   sendAdobeTrack(action?: Partial<ActionEventProperties>) {
