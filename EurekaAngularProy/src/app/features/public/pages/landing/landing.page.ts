@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
@@ -8,6 +9,7 @@ import {
   AdobeAnalyticsService,
   AdobeEvent,
 } from '../../../../shared/services/adobe-analytics.service';
+import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 
 interface ItemLanding {
@@ -25,7 +27,6 @@ interface ItemLanding {
 })
 export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;
-  linkLogin = authFullRoutingNames.LOGIN;
   benefits: ItemLanding[] = [
     {
       title: 'Sin compartir número de cuenta',
@@ -56,7 +57,8 @@ export class LandingPage implements OnDestroy {
     {
       title: 'Regístrate',
       position: '01',
-      content: 'Crea tu contraseña y configura los cobros de tu empresa.',
+      content:
+        'Crea tu contraseña y configura los cobros de tu empresa.<br /><br /><span class="tw-text-sm">*Pronto podrás registrarte en Cobro Simple. Estamos trabajando en una nueva experiencia para ti.</span>',
     },
     {
       title: 'Ingresa y carga tu lista de clientes por cobrar',
@@ -97,11 +99,15 @@ export class LandingPage implements OnDestroy {
         'Configura si deseas que tus clientes paguen una mora y define el importe de esta.',
     },
   ];
+  disabledAffiliation$ = this.store.select(
+    appConfigFeature.selectDisabledAffiliation
+  );
 
   constructor(
     public router: Router,
     public dialogService: DialogService,
-    private adobeAnalytics: AdobeAnalyticsService
+    private adobeAnalytics: AdobeAnalyticsService,
+    private store: Store
   ) {}
 
   ngOnDestroy(): void {
@@ -110,10 +116,12 @@ export class LandingPage implements OnDestroy {
     }
   }
 
-  clickRegistration(category: string, location: string) {
-    void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
-      state: { initNew: true },
-    });
+  clickRegistration(category: string, location: string, disabled = false) {
+    if (!disabled) {
+      void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
+        state: { initNew: true },
+      });
+    }
     this.sendAdobeTrack({
       category,
       action: 'Click',
