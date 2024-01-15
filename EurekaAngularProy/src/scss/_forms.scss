@@ -272,6 +272,11 @@ body {
 
     &.p-button-text {
       color: var(--primary-green-1);
+
+      &:enabled:hover {
+        background-color: transparent;
+        color: var(--primary-green-2);
+      }
     }
 
     &.p-button-xs {
