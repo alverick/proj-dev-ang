@@ -85,6 +85,7 @@ import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
+import { ToastModule } from 'primeng/toast';
 
 const FORM_MODULES = [
   FormsModule,
@@ -133,6 +134,7 @@ const PRIMENG_MODULES = [
   SplitButtonModule,
   StepsModule,
   TableModule,
+  ToastModule,
   TooltipModule,
 ];
 const UI_MODULES = [
