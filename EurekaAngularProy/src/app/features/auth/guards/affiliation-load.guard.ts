@@ -13,10 +13,7 @@ export class AffiliationLoadGuard implements CanMatch {
     return new Promise((resolve) => {
       this.store
         .select(appConfigFeature.selectDisabledAffiliation)
-        .subscribe((disabledAffiliation) => {
-          console.log('disabledAffiliation', disabledAffiliation);
-          resolve(!disabledAffiliation);
-        });
+        .subscribe((disabledAffiliation) => resolve(!disabledAffiliation));
     });
   }
 }
