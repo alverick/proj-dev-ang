@@ -9,6 +9,7 @@ import { first } from 'rxjs/operators';
 
 import { environment } from '../../../../../environments/environment';
 import { internalFullRoutingNames } from '../../../../app-routing.collection';
+import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
 import { ModelFormGroup } from '../../../../shared/models/forms';
 import {
   ActionEventProperties,
@@ -375,8 +376,7 @@ export class LoginPage implements OnInit {
       this.messageService.add({
         key: 'tc',
         severity: 'success',
-        detail:
-          'Pronto podrás registrarte en Cobro Simple. Estamos trabajando en una nueva experiencia para ti.',
+        detail: AFFILIATION_SUSPENDED,
       });
     } else {
       void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
