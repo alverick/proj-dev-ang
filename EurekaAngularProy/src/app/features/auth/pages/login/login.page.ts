@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
+import { MessageService } from 'primeng/api';
 import { first } from 'rxjs/operators';
 
 import { environment } from '../../../../../environments/environment';
@@ -16,9 +18,8 @@ import {
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
-import { authFullRoutingNames } from '../../auth-routing.names';
-import { Store } from '@ngrx/store';
 import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
+import { authFullRoutingNames } from '../../auth-routing.names';
 
 const userData = environment.credentials[0];
 
@@ -32,6 +33,7 @@ interface LoginForm {
   selector: 'cs-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  providers: [MessageService],
 })
 export class LoginPage implements OnInit {
   public loginForm: ModelFormGroup<LoginForm>;
@@ -84,7 +86,8 @@ export class LoginPage implements OnInit {
     private storageService: StorageService,
     public snackBar: MatSnackBar,
     private adobeAnalytics: AdobeAnalyticsService,
-    private store: Store
+    private store: Store,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -368,7 +371,14 @@ export class LoginPage implements OnInit {
       location: 'Login',
       step: 'step0',
     });
-    if (!disabled) {
+    if (disabled) {
+      this.messageService.add({
+        key: 'tc',
+        severity: 'success',
+        detail:
+          'Pronto podrás registrarte en Cobro Simple. Estamos trabajando en una nueva experiencia para ti.',
+      });
+    } else {
       void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
         state: { initNew: true },
       });
