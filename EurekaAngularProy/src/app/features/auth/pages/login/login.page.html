@@ -131,9 +131,6 @@
             pButton
             pRipple
             class="p-button-text p-button-sm tw-text-sm tw-underline"
-            pTooltip="Pronto podrás registrarte en Cobro Simple. Estamos trabajando en una nueva experiencia para ti."
-            tooltipEvent="focus"
-            [tooltipDisabled]="!disabled"
             (click)="clickRegistrarse(disabled)"
           >
             Regístrate aquí
@@ -141,5 +138,10 @@
         </ng-container>
       </div>
     </div>
+    <p-toast
+      position="top-center"
+      key="tc"
+      preventOpenDuplicates="true"
+    ></p-toast>
   </div>
 </cs-layout-form>

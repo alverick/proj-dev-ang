@@ -11,6 +11,7 @@ import {
 } from '../../../../shared/services/adobe-analytics.service';
 import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
+import { MessageService } from 'primeng/api';
 
 interface ItemLanding {
   title: string;
@@ -23,7 +24,7 @@ interface ItemLanding {
   selector: 'cs-landing',
   templateUrl: './landing.page.html',
   styleUrls: ['./landing.page.scss'],
-  providers: [DialogService],
+  providers: [DialogService, MessageService],
 })
 export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;
@@ -107,7 +108,8 @@ export class LandingPage implements OnDestroy {
     public router: Router,
     public dialogService: DialogService,
     private adobeAnalytics: AdobeAnalyticsService,
-    private store: Store
+    private store: Store,
+    private messageService: MessageService
   ) {}
 
   ngOnDestroy(): void {
@@ -117,7 +119,14 @@ export class LandingPage implements OnDestroy {
   }
 
   clickRegistration(category: string, location: string, disabled = false) {
-    if (!disabled) {
+    if (disabled) {
+      this.messageService.add({
+        key: 'tc',
+        severity: 'success',
+        detail:
+          'Pronto podrás registrarte en Cobro Simple. Estamos trabajando en una nueva experiencia para ti.',
+      });
+    } else {
       void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
         state: { initNew: true },
       });
