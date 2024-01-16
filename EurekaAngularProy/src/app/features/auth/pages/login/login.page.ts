@@ -362,7 +362,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  clickRegistrarse(disabled = false) {
+  clickRegistration(disabled = false) {
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
       category: 'Login',
       action: 'Click',
