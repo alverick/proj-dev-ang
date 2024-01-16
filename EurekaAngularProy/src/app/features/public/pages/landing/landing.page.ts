@@ -1,9 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
+import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
 import {
   ActionEventProperties,
   AdobeAnalyticsService,
@@ -11,7 +13,6 @@ import {
 } from '../../../../shared/services/adobe-analytics.service';
 import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
-import { MessageService } from 'primeng/api';
 
 interface ItemLanding {
   title: string;
@@ -123,8 +124,7 @@ export class LandingPage implements OnDestroy {
       this.messageService.add({
         key: 'tc',
         severity: 'success',
-        detail:
-          'Pronto podrás registrarte en Cobro Simple. Estamos trabajando en una nueva experiencia para ti.',
+        detail: AFFILIATION_SUSPENDED,
       });
     } else {
       void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
