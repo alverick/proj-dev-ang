@@ -11,7 +11,7 @@ export interface State {
 
 export const initialState: State = {
   loaded: false,
-  disabledAffiliation: false,
+  disabledAffiliation: true,
 };
 
 export const reducer = createReducer(
