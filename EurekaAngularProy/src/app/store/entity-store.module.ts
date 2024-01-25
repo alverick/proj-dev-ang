@@ -11,8 +11,10 @@ import {
   HistoricalCollectDataService,
   TopClientDataService,
 } from './dataservices';
-import { entityConfig } from './entity-metadata';
+import { AppConfigEffects } from './effects/app-config.effects';
 import { CompanyEffects } from './effects/company.effects';
+import { entityConfig } from './entity-metadata';
+import { appConfigFeature } from './reducers/app-config.reducer';
 import { companyFeature } from './reducers/company.reducer';
 
 @NgModule({
@@ -29,13 +31,14 @@ import { companyFeature } from './reducers/company.reducer';
       }
     ),
     StoreModule.forFeature(companyFeature),
+    StoreModule.forFeature(appConfigFeature),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
     EntityDataModule.forRoot(entityConfig),
-    EffectsModule.forFeature([CompanyEffects]),
+    EffectsModule.forFeature([CompanyEffects, AppConfigEffects]),
   ],
   providers: [...DATA_SERVICES],
 })

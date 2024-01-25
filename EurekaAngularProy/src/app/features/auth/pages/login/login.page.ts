@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
+import { MessageService } from 'primeng/api';
 import { first } from 'rxjs/operators';
 
 import { environment } from '../../../../../environments/environment';
 import { internalFullRoutingNames } from '../../../../app-routing.collection';
+import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
 import { ModelFormGroup } from '../../../../shared/models/forms';
 import {
   ActionEventProperties,
@@ -16,6 +19,7 @@ import {
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
+import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
 const userData = environment.credentials[0];
@@ -30,6 +34,7 @@ interface LoginForm {
   selector: 'cs-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  providers: [MessageService],
 })
 export class LoginPage implements OnInit {
   public loginForm: ModelFormGroup<LoginForm>;
@@ -70,6 +75,9 @@ export class LoginPage implements OnInit {
   };
   linkRecoverPassword = authFullRoutingNames.RECOVER_PASSWORD;
   linkRegisterCompany = authFullRoutingNames.COMPANY_REGISTER;
+  disabledAffiliation$ = this.store.select(
+    appConfigFeature.selectDisabledAffiliation
+  );
 
   constructor(
     private formBuilder: FormBuilder,
@@ -78,7 +86,9 @@ export class LoginPage implements OnInit {
     private cookieService: CookieService,
     private storageService: StorageService,
     public snackBar: MatSnackBar,
-    private adobeAnalytics: AdobeAnalyticsService
+    private adobeAnalytics: AdobeAnalyticsService,
+    private store: Store,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -352,7 +362,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  clickRegistrarse() {
+  clickRegistration(disabled = false) {
     this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
       category: 'Login',
       action: 'Click',
@@ -362,9 +372,17 @@ export class LoginPage implements OnInit {
       location: 'Login',
       step: 'step0',
     });
-    void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
-      state: { initNew: true },
-    });
+    if (disabled) {
+      this.messageService.add({
+        key: 'tc',
+        severity: 'success',
+        detail: AFFILIATION_SUSPENDED,
+      });
+    } else {
+      void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
+        state: { initNew: true },
+      });
+    }
   }
 
   sendAdobeTrack(action?: Partial<ActionEventProperties>) {
