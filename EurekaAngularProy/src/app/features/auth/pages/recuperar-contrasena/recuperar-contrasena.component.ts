@@ -1,8 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { type OnInit, Component, HostListener } from '@angular/core';
 import {
+  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';

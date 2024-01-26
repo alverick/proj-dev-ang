@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import {
+  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
-  UntypedFormGroup,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecuperaService } from 'src/app/shared/services/recupera.service';

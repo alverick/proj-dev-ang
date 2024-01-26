@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { type OnDestroy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import {

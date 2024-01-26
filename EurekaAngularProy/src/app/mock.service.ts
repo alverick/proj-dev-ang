@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
-  ApiMockResponseCallback,
-  ApiMockRootRoute,
-  ApiMockService,
+  type ApiMockResponseCallback,
+  type ApiMockRootRoute,
+  type ApiMockService,
 } from '@ng-stack/api-mock';
 
 import { environment } from '../environments/environment';
-import { IDataEnterpriseModel } from './shared/models/data-enterprise.model';
+import { type IDataEnterpriseModel } from './shared/models/data-enterprise.model';
 
 @Injectable({
   providedIn: 'root',

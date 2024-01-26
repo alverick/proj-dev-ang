@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
@@ -10,7 +11,7 @@ import { AfiliacionService } from '../../../../shared/services/afiliacion.servic
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import {
-  MessagesType,
+  type MessagesType,
   NotifyService,
 } from '../../../../shared/services/notify.service';
 import { StorageService } from '../../../../shared/services/storage.service';

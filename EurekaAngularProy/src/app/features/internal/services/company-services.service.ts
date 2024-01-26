@@ -12,16 +12,22 @@ import {
   paymentTypeOptions,
   statusCodes,
 } from '../../../shared/constants/services';
-import { IServiceRemoteModel } from '../../../shared/models';
-import { ModelFormGroup } from '../../../shared/models/forms';
+import { type IServiceRemoteModel } from '../../../shared/models';
+import { type ModelFormGroup } from '../../../shared/models/forms';
 import {
   CompanyService,
   ServiceService,
   ServicesFormsService,
 } from '../../../shared/services';
 import {
-  ActionEventProperties,
-  AdobeAnalyticsService,
+  type ServiceConfigurationForm,
+  type ServiceEditForm,
+  type ServiceFormValue,
+  type ServiceTypeType,
+} from '../../../shared/services/services-forms.service';
+import {
+  type ActionEventProperties,
+  type Metadata,
   AdobeEvent,
   Metadata,
 } from '../../../shared/services/adobe-analytics.service';

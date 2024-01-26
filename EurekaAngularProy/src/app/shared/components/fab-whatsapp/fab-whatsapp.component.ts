@@ -1,4 +1,9 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  type OnChanges,
+  type SimpleChanges,
+  Component,
+  Input,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { pathEq } from 'ramda';
 

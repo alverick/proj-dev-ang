@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IDataEnterpriseModel } from '../../shared/models/data-enterprise.model';
+import { type IDataEnterpriseModel } from '../../shared/models/data-enterprise.model';
 
 export const loadCompany = createAction('[Company] Load Company');
 
