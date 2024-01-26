@@ -29,14 +29,8 @@ import {
   type ActionEventProperties,
   type Metadata,
   AdobeEvent,
-  Metadata,
-} from '../../../shared/services/adobe-analytics.service';
-import {
-  ServiceConfigurationForm,
-  ServiceEditForm,
-  ServiceFormValue,
-  ServiceTypeType,
-} from '../../../shared/services/services-forms.service';
+  TrackingService,
+} from '../../../shared/services/tracking.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 
 @Injectable()
@@ -60,7 +54,7 @@ export class CompanyServicesService {
     private serviceForms: ServicesFormsService,
     private serviceService: ServiceService,
     private logger: NGXLogger,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {
     this.serviceForm = this.serviceForms.serviceForm;
     this.serviceConfigForm = this.serviceForms.serviceConfigForm;
@@ -187,7 +181,7 @@ export class CompanyServicesService {
       );
     }
 
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+    this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
       category: 'Servicios agregar nuevo servicio',
       action: 'Click',
       label: 'Siguiente',
@@ -202,7 +196,7 @@ export class CompanyServicesService {
 
   saveAllServices() {
     if (this.services.length < 1) {
-      this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      this.tracking.trackEvent(AdobeEvent.trackView, {
         category: 'warning - icon',
         action: 'modal-view',
         detail: 'Debes contar con al menos un servicio para continuar.',
@@ -324,7 +318,7 @@ export class CompanyServicesService {
       metadata,
     };
 
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
+    this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
 
     const serviceValues = parseParams(
       {

@@ -15,9 +15,9 @@ import { type IEntryModel } from '../../../../shared/models';
 import { type IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { type ModelFormGroup } from '../../../../shared/models/forms';
 import {
-  AdobeAnalyticsService,
   AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { CompanyConfigurationService } from '../../services';
 import { type ChangePasswordForm } from '../../services/company-configuration.service';
 
@@ -45,7 +45,7 @@ export class CompanyConfigurationPage implements OnInit {
   constructor(
     public companyConfiguration: CompanyConfigurationService,
     private activatedRoute: ActivatedRoute,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {}
 
   ngOnInit() {
@@ -73,7 +73,7 @@ export class CompanyConfigurationPage implements OnInit {
     });
   }
   onShowPanel() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Empresa',
       action: 'Click',
       detail: 'Cambiar contraseña abrir panel',
@@ -86,7 +86,7 @@ export class CompanyConfigurationPage implements OnInit {
   }
 
   closePanel() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Empresa',
       action: 'Click',
       detail: 'Cambiar contraseña cerrar panel',

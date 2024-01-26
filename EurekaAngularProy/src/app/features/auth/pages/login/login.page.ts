@@ -7,14 +7,14 @@ import { first } from 'rxjs/operators';
 
 import { environment } from '../../../../../environments/environment';
 import { internalFullRoutingNames } from '../../../../app-routing.collection';
-import { ModelFormGroup } from '../../../../shared/models/forms';
-import {
-  ActionEventProperties,
-  AdobeAnalyticsService,
-  AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
+import { type ModelFormGroup } from '../../../../shared/models/forms';
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
+import {
+  type ActionEventProperties,
+  AdobeEvent,
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
@@ -78,7 +78,7 @@ export class LoginPage implements OnInit {
     private cookieService: CookieService,
     private storageService: StorageService,
     public snackBar: MatSnackBar,
-    private adobeAnalytics: AdobeAnalyticsService
+    private tracking: TrackingService
   ) {}
 
   ngOnInit() {
@@ -122,7 +122,7 @@ export class LoginPage implements OnInit {
       confirmButtonText: confirmText || 'Cerrar',
     });
 
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: title,
       action: 'modal-view',
       detail: text,
@@ -190,7 +190,7 @@ export class LoginPage implements OnInit {
       ],
     };
 
-    this.adobeAnalytics.setRuc(this.f.ruc.value);
+    this.tracking.setRuc(this.f.ruc.value);
 
     if (this.loginForm.valid) {
       this.loginService
@@ -220,7 +220,7 @@ export class LoginPage implements OnInit {
               window.sessionStorage.setItem('username', this.f.ruc.value);
               void this.router.navigate([internalFullRoutingNames.HOME]);
               this.sendAdobeTrack(actionParams);
-              this.adobeAnalytics.trackEvent(AdobeEvent.successLogin);
+              this.tracking.trackEvent(AdobeEvent.successLogin);
             } else if (this.intentos < 4 && this.codRespuesta === 2) {
               this.codigo2 = true;
             } else if (this.intentos < 4 && this.codRespuesta === 3) {
@@ -342,7 +342,7 @@ export class LoginPage implements OnInit {
   }
 
   clickRecoverPassword() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Login',
       action: 'Click',
       label: 'Recuperar contraseña',
@@ -353,7 +353,7 @@ export class LoginPage implements OnInit {
   }
 
   clickRegistrarse() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Login',
       action: 'Click',
       label: 'Regístrate aquí',
@@ -368,6 +368,6 @@ export class LoginPage implements OnInit {
   }
 
   sendAdobeTrack(action?: Partial<ActionEventProperties>) {
-    this.adobeAnalytics.trackEvent(AdobeEvent.login, action);
+    this.tracking.trackEvent(AdobeEvent.login, action);
   }
 }

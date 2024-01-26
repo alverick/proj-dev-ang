@@ -7,10 +7,7 @@ import {
 import { NavigationEnd, Router } from '@angular/router';
 import { pathEq } from 'ramda';
 
-import {
-  AdobeAnalyticsService,
-  AdobeEvent,
-} from '../../services/adobe-analytics.service';
+import { AdobeEvent, TrackingService } from '../../services/tracking.service';
 
 @Component({
   selector: 'cs-fab-whatsapp',
@@ -23,10 +20,7 @@ export class FabWhatsappComponent implements OnChanges {
   showText = true;
   url = '';
   timeToHide = 10000;
-  constructor(
-    private adobeAnalytics: AdobeAnalyticsService,
-    protected router: Router
-  ) {
+  constructor(private tracking: TrackingService, protected router: Router) {
     setTimeout(() => (this.showText = false), this.timeToHide);
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
@@ -42,7 +36,7 @@ export class FabWhatsappComponent implements OnChanges {
     }
   }
   clickWa() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Comunícate',
       action: 'Click',
       detail: 'Comunícate con nosotros whatsapp',

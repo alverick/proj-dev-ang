@@ -32,14 +32,8 @@ import {
   ServicesFormsService,
 } from '../../../shared/services';
 import {
-  ActionEventProperties,
-  AdobeAnalyticsService,
-  AdobeEvent,
-  AdobeEventType,
-} from '../../../shared/services/adobe-analytics.service';
-import {
+  type ICompanyResult,
   CompanyService,
-  ICompanyResult,
 } from '../../../shared/services/company.service';
 import { LoginService } from '../../../shared/services/login.service';
 import {
@@ -47,6 +41,12 @@ import {
   type ServiceEditForm,
   type ServiceFormValue,
 } from '../../../shared/services/services-forms.service';
+import {
+  type ActionEventProperties,
+  type AdobeEventType,
+  AdobeEvent,
+  TrackingService,
+} from '../../../shared/services/tracking.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
 import {
@@ -79,7 +79,7 @@ export class AffiliationService {
     private affiliationForms: AffiliationFormsService,
     private serviceForms: ServicesFormsService,
     private logger: NGXLogger,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {
     this.setRegisterForm();
   }
@@ -468,7 +468,7 @@ export class AffiliationService {
         confirmButtonText: 'Entendido',
       });
 
-      this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      this.tracking.trackEvent(AdobeEvent.trackView, {
         category: 'warning - icon',
         action: 'modal-view',
         detail: 'Debes contar con al menos un servicio para continuar.',
@@ -785,6 +785,6 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
     event: AdobeEventType,
     eventProperties: Partial<ActionEventProperties>
   ) {
-    this.adobeAnalytics.trackEvent(event, eventProperties);
+    this.tracking.trackEvent(event, eventProperties);
   }
 }

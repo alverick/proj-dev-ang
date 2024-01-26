@@ -14,12 +14,11 @@ import {
 import { CompanyService } from '../../../shared/services';
 import { LoginService } from '../../../shared/services/login.service';
 import {
-  ActionEventProperties,
-  AdobeAnalyticsService,
+  type ActionEventProperties,
+  type Metadata,
   AdobeEvent,
-  Metadata,
-} from '../../../shared/services/adobe-analytics.service';
-import { LoginService } from '../../../shared/services/login.service';
+  TrackingService,
+} from '../../../shared/services/tracking.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
@@ -58,7 +57,7 @@ export class CompanyConfigurationService {
     private companyService: CompanyService,
     private router: Router,
     protected loginService: LoginService,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {
     this.initForms();
   }
@@ -121,11 +120,8 @@ export class CompanyConfigurationService {
       .updateCompany(enterprise)
       .subscribe((enterpriseUpdate) => {
         if (enterpriseUpdate.success === true) {
-          this.adobeAnalytics.trackEvent(
-            AdobeEvent.trackFormSubmit,
-            actionStep
-          );
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
+          this.tracking.trackEvent(AdobeEvent.trackView, {
             category: 'warning - icon',
             action: 'modal-view',
             detail: 'Los datos de la empresa han sido actualizados.',
@@ -142,12 +138,12 @@ export class CompanyConfigurationService {
             });
         }
         if (enterpriseUpdate.success === false) {
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: 'Intención de envío',
             typeError: 'Ha ocurrido un error con el servidor',
           });
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+          this.tracking.trackEvent(AdobeEvent.trackView, {
             category: 'error - icon',
             action: 'modal-view',
             detail: 'Ha ocurrido un error',
@@ -192,12 +188,9 @@ export class CompanyConfigurationService {
     return this.companyService.updateCompany(enterprise).pipe(
       tap(({ success, message }) => {
         if (success === true) {
-          this.adobeAnalytics.trackEvent(
-            AdobeEvent.trackFormSubmit,
-            actionStep
-          );
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
           this.loginService.logout().subscribe(() => {
-            this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+            this.tracking.trackEvent(AdobeEvent.trackView, {
               category: 'warning - icon',
               action: 'modal-view',
               detail: 'Los datos de la empresa han sido actualizados',
@@ -216,12 +209,12 @@ export class CompanyConfigurationService {
           });
           this.passwordForm.reset();
         } else {
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: 'Intención de envío',
             typeError: 'Ha ocurrido un error con el servidor.',
           });
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+          this.tracking.trackEvent(AdobeEvent.trackView, {
             category: 'error - icon',
             action: 'modal-view',
             detail: message || 'Ha ocurrido un error en el servidor.',

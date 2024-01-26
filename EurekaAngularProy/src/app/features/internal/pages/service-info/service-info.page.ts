@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ServicesFormsService } from '../../../../shared/services';
+import { type CompanyAccounts } from '../../../../shared/services/company.service';
 import {
-  AdobeAnalyticsService,
   AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
-import { CompanyAccounts } from '../../../../shared/services/company.service';
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { errorServiceInformation } from '../../constants';
 import {
   internalFullRoutingChildNames,
@@ -25,7 +25,7 @@ export class ServiceInfoPage {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     public serviceForms: ServicesFormsService,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {
     this.activatedRoute.data.subscribe((value: any) => {
       this.accounts = value.accounts as CompanyAccounts[];
@@ -34,7 +34,7 @@ export class ServiceInfoPage {
 
   onSubmit() {
     const { useAgent } = this.serviceForms.serviceForm.value;
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+    this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
       category: 'Servicios agregar nuevo servicio',
       action: 'Click',
       label: 'Siguiente',
@@ -58,7 +58,7 @@ export class ServiceInfoPage {
   }
 
   onCancel() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Servicios agregar nuevo servicio',
       action: 'Click',
       detail: 'Cancelar agregar otro servicio',

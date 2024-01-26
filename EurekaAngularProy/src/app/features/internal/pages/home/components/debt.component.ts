@@ -12,14 +12,14 @@ import { forEachObjIndexed } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
 
-import {
-  ActionEventProperties,
-  AdobeAnalyticsService,
-  AdobeEvent,
-  Metadata,
-} from '../../../../../shared/services/adobe-analytics.service';
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
+import {
+  type ActionEventProperties,
+  type Metadata,
+  AdobeEvent,
+  TrackingService,
+} from '../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
 import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
@@ -57,7 +57,7 @@ export class DebtComponent implements OnInit {
     private dialogRef: MatDialogRef<DebtComponent>,
     private homeService: HomeService,
     public excelService: ExcelService,
-    private adobeAnalytics: AdobeAnalyticsService,
+    private tracking: TrackingService,
     private store: Store,
     private currencyPipe: CurrencyPipe
   ) {}
@@ -99,7 +99,7 @@ export class DebtComponent implements OnInit {
 
   cmbNewService() {
     delete this.nuevaDeuda.errores.service;
-    let svc = this.services.find((s) => s.name === this.nuevaDeuda.service);
+    const svc = this.services.find((s) => s.name === this.nuevaDeuda.service);
     this.isPartial = svc.dataType === 'P';
   }
 
@@ -132,7 +132,7 @@ export class DebtComponent implements OnInit {
     if (!this.nuevaDeuda.emissionDate) {
       this.nuevaDeuda.errores.emissionDate = 'Fecha Inválida';
     } else {
-      let emidate = new Date(this.nuevaDeuda.emissionDate).getFullYear();
+      const emidate = new Date(this.nuevaDeuda.emissionDate).getFullYear();
       if (emidate < 2000 || emidate > 2050) {
         this.nuevaDeuda.errores.emissionDate = 'Fecha Inválida';
       } else {
@@ -144,7 +144,7 @@ export class DebtComponent implements OnInit {
       if (!this.nuevaDeuda.dueDate) {
         this.nuevaDeuda.errores.dueDate = 'Fecha Inválida';
       } else {
-        let dueyear = new Date(this.nuevaDeuda.dueDate).getFullYear();
+        const dueyear = new Date(this.nuevaDeuda.dueDate).getFullYear();
         if (dueyear < 2000 || dueyear > 2050) {
           this.nuevaDeuda.errores.dueDate = 'Fecha Inválida';
         } else if (
@@ -174,7 +174,7 @@ export class DebtComponent implements OnInit {
         delete this.nuevaDeuda.errores.concept;
       }
 
-      let amount = parseFloat(this.nuevaDeuda.amount);
+      const amount = parseFloat(this.nuevaDeuda.amount);
       if (!amount) {
         this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
       } else if (amount < 0) {
@@ -264,12 +264,9 @@ export class DebtComponent implements OnInit {
         };
 
         if (r.success) {
-          this.adobeAnalytics.trackEvent(
-            AdobeEvent.trackFormSubmit,
-            actionStep
-          );
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
           this.grabado = true;
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+          this.tracking.trackEvent(AdobeEvent.trackView, {
             category: 'Agregar Cobro',
             action: 'modal-view',
             detail: 'Se ha agregado el cobro. ¿Que desea hacer?',
@@ -285,7 +282,7 @@ export class DebtComponent implements OnInit {
               cancelButtonText: 'Cerrar',
             })
             .then((result) => {
-              this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+              this.tracking.trackEvent(AdobeEvent.trackAction, {
                 category: 'Home movimientos',
                 action: 'Click',
                 detail: result.value ? 'Agregar otro cobro' : 'Cerrar modal',
@@ -316,7 +313,7 @@ export class DebtComponent implements OnInit {
   }
 
   cerrarDialog() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: 'Cerrar modal',

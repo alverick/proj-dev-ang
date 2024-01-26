@@ -4,10 +4,10 @@ import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import {
-  ActionEventProperties,
-  AdobeAnalyticsService,
+  type ActionEventProperties,
   AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 
 interface ItemLanding {
@@ -101,7 +101,7 @@ export class LandingPage implements OnDestroy {
   constructor(
     public router: Router,
     public dialogService: DialogService,
-    private adobeAnalytics: AdobeAnalyticsService
+    private tracking: TrackingService
   ) {}
 
   ngOnDestroy(): void {
@@ -141,7 +141,7 @@ export class LandingPage implements OnDestroy {
   }
 
   sendAdobeTrack(action: Partial<ActionEventProperties>) {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, action);
+    this.tracking.trackEvent(AdobeEvent.trackAction, action);
   }
 
   trackByiItems(_index: number, item: ItemLanding): string {
@@ -155,7 +155,7 @@ export class LandingPage implements OnDestroy {
       styleClass: 'modal-custom-cs',
     });
 
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Términos y condiciones',
       action: 'Click',
       detail: 'Términos y condiciones',
@@ -164,7 +164,7 @@ export class LandingPage implements OnDestroy {
       location: 'Footer',
     });
 
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: 'Términos y condiciones',
       action: 'modal-view',
       detail: 'Términos y condiciones',
@@ -173,7 +173,7 @@ export class LandingPage implements OnDestroy {
   }
 
   clickWa() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Contáctanos',
       action: 'Click',
       detail: 'Enlace a whatsapp',
