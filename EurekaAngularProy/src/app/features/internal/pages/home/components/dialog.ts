@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import {
+  type UntypedFormGroup,
   UntypedFormBuilder,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';

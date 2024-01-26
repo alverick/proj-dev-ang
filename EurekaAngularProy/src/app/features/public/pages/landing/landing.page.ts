@@ -1,13 +1,13 @@
-import { Component, OnDestroy } from '@angular/core';
+import { type OnDestroy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
 import {
-  ActionEventProperties,
+  type ActionEventProperties,
   AdobeAnalyticsService,
   AdobeEvent,
 } from '../../../../shared/services/adobe-analytics.service';

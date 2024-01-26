@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,

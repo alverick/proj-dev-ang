@@ -1,8 +1,5 @@
-import {
-  appModuleRoutingNames,
-  appRoutingNames,
-} from '../../app-routing.names';
-import { IRouteItem, IRouteNames } from '../../shared/models/router';
+import { appRoutingNames } from '../../app-routing.names';
+import { type IRouteItem, type IRouteNames } from '../../shared/models/router';
 import {
   generateFullRoutes,
   generateFullRoutesTree,
