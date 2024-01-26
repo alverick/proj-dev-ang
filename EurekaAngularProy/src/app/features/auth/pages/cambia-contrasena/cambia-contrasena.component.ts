@@ -11,10 +11,10 @@ import { swalAlert } from 'src/app/shared/utils/helpers/popups';
 
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import {
-  ActionEventProperties,
-  AdobeAnalyticsService,
+  type ActionEventProperties,
   AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { MustMatch } from '../../../../shared/validators/must-match.validator';
 import {
   messageErrorNewPasswords,
@@ -39,7 +39,7 @@ export class CambiaContrasenaComponent implements OnInit {
     private router: Router,
     private recuperaService: RecuperaService,
     public storage: StorageService,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {}
   public Cambia: UntypedFormGroup;
   ngOnInit() {
@@ -95,7 +95,7 @@ export class CambiaContrasenaComponent implements OnInit {
         })
         .subscribe((d) => {
           if (d == false) {
-            this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+            this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
               ...actionStep,
               state: 'Intención de envío',
               typeError: 'Error al actualizar contraseña',
@@ -105,10 +105,7 @@ export class CambiaContrasenaComponent implements OnInit {
               'Error al actualizar contraseña'
             );
           } else if (d == true) {
-            this.adobeAnalytics.trackEvent(
-              AdobeEvent.trackFormSubmit,
-              actionStep
-            );
+            this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
             this.PopUpWithOneButon(
               'Contraseña actualizada',
               'Tu contraseña ha sido actualizada.',
@@ -120,7 +117,7 @@ export class CambiaContrasenaComponent implements OnInit {
   }
 
   mensaje(titulo: string, text: string) {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: titulo,
       action: 'modal-view',
       detail: text,
@@ -138,7 +135,7 @@ export class CambiaContrasenaComponent implements OnInit {
   }
 
   PopUpWithOneButon(titulo: string, text: string, firstButton: string) {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: titulo,
       action: 'modal-view',
       detail: text,

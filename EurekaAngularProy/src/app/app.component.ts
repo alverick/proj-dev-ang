@@ -5,14 +5,12 @@ import {
 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
 import { isNil } from 'ramda';
 
-import { appFullRoutingNames } from './app-routing.names';
 import { primeng } from './shared/lang/es';
-import { AdobeAnalyticsService } from './shared/services/adobe-analytics.service';
 import { LoginService } from './shared/services/login.service';
+import { TrackingService } from './shared/services/tracking.service';
 
 @Component({
   selector: 'cs-root',
@@ -26,18 +24,12 @@ export class AppComponent implements OnInit, AfterContentChecked {
   expand = false;
 
   constructor(
-    private router: Router,
     matIconRegistry: MatIconRegistry,
     domSanitizer: DomSanitizer,
     private primengConfig: PrimeNGConfig,
-    private adobeAnalytics: AdobeAnalyticsService
+    private tracking: TrackingService
   ) {
-    this.router.events.subscribe((val) => {
-      if (val instanceof NavigationEnd) {
-        this.showButton = !val.url.startsWith(appFullRoutingNames.ADMIN);
-        adobeAnalytics.pageTrack(val.urlAfterRedirects);
-      }
-    });
+    this.tracking.startRouterPageTracking();
 
     matIconRegistry.addSvgIcon(
       'eurc_calendar',
@@ -70,7 +62,6 @@ export class AppComponent implements OnInit, AfterContentChecked {
       domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
       { viewBox: '0 0 24 24' }
     );
-    void this.adobeAnalytics.injectAdobeLaunchScript();
   }
 
   ngOnInit() {

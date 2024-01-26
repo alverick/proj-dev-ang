@@ -42,12 +42,6 @@ import {
 } from '../../../../shared/models/settings';
 import { type User } from '../../../../shared/models/user.model';
 import { type WayPay } from '../../../../shared/models/way-pay';
-import {
-  type ActionEventProperties,
-  type Metadata,
-  AdobeAnalyticsService,
-  AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { HomeService } from '../../../../shared/services/home.service';
 import { LoadBarService } from '../../../../shared/services/load-bar.service';
@@ -57,6 +51,12 @@ import {
 } from '../../../../shared/services/load-file.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
+import {
+  type ActionEventProperties,
+  type Metadata,
+  AdobeEvent,
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { CompanyActions } from '../../../../store/actions/company.actions';
@@ -86,7 +86,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private movementsService: MovementsService,
     private router: Router,
     private shepherdService: ShepherdService,
-    protected adobeAnalytics: AdobeAnalyticsService,
+    protected tracking: TrackingService,
     private store: Store
   ) {
     transactionService.itemsForDelete = [];
@@ -288,7 +288,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       action: () => {
         const position = this.getOnboardingPosition();
         const intro = this.shepherdService.tourObject.getById('intro');
-        this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+        this.tracking.trackEvent(AdobeEvent.trackAction, {
           category: 'Home onboarding',
           action: 'Click',
           detail:
@@ -306,7 +306,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       text: 'Atrás',
       classes: 'btn-outline-primary',
       action: () => {
-        this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+        this.tracking.trackEvent(AdobeEvent.trackAction, {
           category: 'Home onboarding',
           action: 'Click',
           detail: `Atrás en onboarding`,
@@ -327,7 +327,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           position ===
           this.shepherdService.tourObject.steps.length - (isNil(intro) ? 0 : 1);
 
-        this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+        this.tracking.trackEvent(AdobeEvent.trackAction, {
           category: 'Home onboarding',
           action: 'Click',
           detail: isFinal ? 'Finalizar onboarding' : `Siguiente en onboarding`,
@@ -483,7 +483,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   showOnboarding() {
     this.shepherdService.tourObject.removeStep('intro');
     this.shepherdService.start();
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home filtro',
       action: 'Click',
       detail: 'Abrir Onboarding',
@@ -494,7 +494,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showHelp() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home filtro',
       action: 'Click',
       detail: 'Abrir tutorial en Youtube',
@@ -533,7 +533,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.initialFilter;
       this.submitSearch(inputSearch, service, status, dateForFilter);
     }
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home filtro',
       action: 'Click',
       detail: 'Limpiar filtros',
@@ -597,7 +597,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         metadata,
       };
 
-      this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
+      this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
     }
   }
 
@@ -630,7 +630,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       showConfirmButton: true,
       confirmButtonText: 'Cancelar',
     });
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: title,
       action: 'modal-view',
       detail: text,
@@ -691,7 +691,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   saveDebt(item: Debts) {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: '¿Deseas actualizar?',
       action: 'modal-view',
       detail: '¡No podrás revertir esto!',
@@ -764,12 +764,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                   actionStep.typeError = debtsUpdate.message as string;
                 }
 
-                this.adobeAnalytics.trackEvent(
+                this.tracking.trackEvent(
                   AdobeEvent.trackFormSubmit,
                   actionStep
                 );
 
-                this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+                this.tracking.trackEvent(AdobeEvent.trackView, {
                   category: title,
                   action: 'modal-view',
                   detail: text,
@@ -780,12 +780,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             this.transactionService
               .updateDeuda(item.id, true)
               .subscribe((statusUpdate) => {
-                this.adobeAnalytics.trackEvent(
+                this.tracking.trackEvent(
                   AdobeEvent.trackFormSubmit,
                   actionStep
                 );
 
-                this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+                this.tracking.trackEvent(AdobeEvent.trackView, {
                   category: title,
                   action: 'modal-view',
                   detail: text,
@@ -812,7 +812,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
               });
           }
         } else {
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+          this.tracking.trackEvent(AdobeEvent.trackAction, {
             category: 'Home movimientos',
             action: 'Click',
             detail: 'Cancelar editar movimiento',
@@ -848,7 +848,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       message = `Esta acción va a eliminar ${totalForDelete} deudas.`;
     }
 
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: 'Eliminar movimientos seleccionados mostrar modal',
@@ -857,7 +857,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       location: 'Movimientos modal',
     });
 
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: '¿Seguro que deseas continuar?',
       action: 'modal-view',
       detail: message,
@@ -875,7 +875,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       })
       .then((result) => {
         if (result.value) {
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+          this.tracking.trackEvent(AdobeEvent.trackAction, {
             category: 'Home movimientos',
             action: 'Click',
             detail: 'Confirmar movimientos seleccionados modal',
@@ -893,7 +893,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 finalMessage = `Se han eliminado ${totalForDelete} registros.`;
               }
 
-              this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+              this.tracking.trackEvent(AdobeEvent.trackView, {
                 category: 'Eliminado',
                 action: 'modal-view',
                 detail: finalMessage,
@@ -916,7 +916,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             this.selectedRows = [];
           });
         } else {
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+          this.tracking.trackEvent(AdobeEvent.trackAction, {
             category: 'Home movimientos',
             action: 'Click',
             detail: 'Cancelar movimientos seleccionados modal',
@@ -949,7 +949,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     } else {
-      this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      this.tracking.trackEvent(AdobeEvent.trackAction, {
         category: 'Home movimientos',
         action: 'Click',
         detail: 'Agregar cobros',
@@ -958,7 +958,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         location: 'Movimientos',
       });
 
-      this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      this.tracking.trackEvent(AdobeEvent.trackView, {
         category: 'Agrega cobros del servicio',
         action: 'modal-view',
         detail: 'Agrega cobros del servicio',
@@ -979,7 +979,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                   this.validateResetForm();
                 }
               });
-              this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+              this.tracking.trackEvent(AdobeEvent.trackAction, {
                 category: 'Home movimientos',
                 action: 'Click',
                 detail: 'Agregar cobros via web',
@@ -987,7 +987,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 typeElement: 'Botón',
                 location: 'Movimientos',
               });
-              this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+              this.tracking.trackEvent(AdobeEvent.trackView, {
                 category: 'Agregar cobro del servicio',
                 action: 'modal-view',
                 detail: 'Formulario para agregar cobro del servicio',
@@ -1007,7 +1007,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                   });
                 }
               });
-              this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+              this.tracking.trackEvent(AdobeEvent.trackAction, {
                 category: 'Home movimientos',
                 action: 'Click',
                 detail: 'Agregar cobros via excel',
@@ -1017,7 +1017,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
               });
             }
           } else {
-            this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+            this.tracking.trackEvent(AdobeEvent.trackAction, {
               category: 'Home movimientos',
               action: 'Click',
               detail: 'Cerrar modal agregar cobros del servicio',
@@ -1032,7 +1032,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   DescargarReporte() {
     if (this.enDescarga === false) {
-      this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      this.tracking.trackEvent(AdobeEvent.trackAction, {
         category: 'Home movimientos',
         action: 'Click',
         detail: 'Descargar movimientos',
@@ -1070,7 +1070,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showDetails(itm: Debts) {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: 'Ver detalle de movimiento',
@@ -1078,7 +1078,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       typeElement: 'Link',
       location: 'Movimientos',
     });
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: 'Detalle de pago',
       action: 'modal-view',
       detail: 'Información de pago',
@@ -1114,7 +1114,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     }
     this.changePage(pageSelected);
     if (pageSelected !== 1) {
-      this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+      this.tracking.trackEvent(AdobeEvent.trackAction, {
         category: 'Home movimientos',
         action: 'Click',
         detail: 'Cambiar pagina',

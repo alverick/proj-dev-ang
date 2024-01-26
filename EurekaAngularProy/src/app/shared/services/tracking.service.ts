@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { clone, isEmpty } from 'ramda';
-import { isNotNil } from 'ramda-adjunct';
+import { NavigationEnd, Router } from '@angular/router';
+import { clone } from 'ramda';
+import { ReplaySubject } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
 import {
   appModuleRoutingNames,
   authFullRoutingNames,
   internalFullRoutingNames,
 } from '../../app-routing.collection';
-import { ScriptInjectorService } from './script-injector.service';
 import { StorageService } from './storage.service';
 
 export const AdobeEvent = {
@@ -47,7 +46,7 @@ export interface ActionEventProperties {
   metadata: Metadata[];
 }
 
-interface TrackEventProperties {
+export interface TrackEventProperties {
   general: { version: string; platform: string };
   user: {
     codRuc: string;
@@ -61,18 +60,16 @@ interface TrackEventProperties {
   view?: Partial<ActionEventProperties>;
 }
 
-interface Satellite {
-  pageBottom(): void;
-
-  track(event: AdobeEventType, payload: Partial<TrackEventProperties>): void;
-}
-
-declare const _satellite: Satellite;
+export type EventTrackType = {
+  event: AdobeEventType;
+  eventProperties?: Partial<ActionEventProperties>;
+  payload: Partial<TrackEventProperties>;
+};
 
 @Injectable({
   providedIn: 'root',
 })
-export class AdobeAnalyticsService {
+export class TrackingService {
   payload: Partial<TrackEventProperties> = {
     general: {
       version: 'CSX',
@@ -86,27 +83,13 @@ export class AdobeAnalyticsService {
       codRuc: 'Not available',
     },
   };
+  pageSubject$ = new ReplaySubject<Partial<TrackEventProperties>>(10);
+  eventSubject$ = new ReplaySubject<EventTrackType>(10);
 
-  constructor(
-    private scriptInjectorService: ScriptInjectorService,
-    private storageService: StorageService
-  ) {
+  constructor(private storageService: StorageService, private router: Router) {
     const session = this.storageService.getCurrentSession();
-    if (session && session.isAuthenticate) {
+    if (session?.isAuthenticate) {
       this.setRuc(window.sessionStorage.getItem('username'));
-    }
-  }
-
-  async injectAdobeLaunchScript() {
-    if (isEmpty(environment.adobe)) {
-      return;
-    }
-    try {
-      console.log('loaded adobe');
-      await this.scriptInjectorService.load('Launch', environment.adobe);
-      _satellite.pageBottom();
-    } catch (e) {
-      console.error('Error while loading Adobe Launch script', e);
     }
   }
 
@@ -116,28 +99,23 @@ export class AdobeAnalyticsService {
     }
   }
 
+  startRouterPageTracking() {
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.trackPage(val.urlAfterRedirects);
+      }
+    });
+  }
+
   trackEvent(
     event: AdobeEventType,
     eventProperties?: Partial<ActionEventProperties>
   ) {
     const payload = clone(this.payload);
-    if (isNotNil(eventProperties)) {
-      if (
-        event === AdobeEvent.trackFormSubmit ||
-        event === AdobeEvent.login ||
-        event === AdobeEvent.trackAction
-      ) {
-        payload.action = eventProperties;
-      }
-      if (event === AdobeEvent.trackView) {
-        payload.view = eventProperties;
-      }
-    }
-
-    this.runSatelliteEvent(event, payload);
+    this.eventSubject$.next({ event, eventProperties, payload });
   }
 
-  pageTrack(path: string) {
+  trackPage(path: string) {
     const pathComp = path.startsWith(authFullRoutingNames.CHANGE_PASSWORD)
       ? authFullRoutingNames.CHANGE_PASSWORD
       : path;
@@ -150,11 +128,10 @@ export class AdobeAnalyticsService {
     };
 
     const payload = clone(this.payload);
-
-    this.runSatelliteEvent(AdobeEvent.pageTrack, payload);
+    this.pageSubject$.next(payload);
   }
 
-  parseModule(url: string) {
+  private parseModule(url: string) {
     const routes: Record<string, string> = {
       [internalFullRoutingNames.HELP]: 'Ayuda',
       [internalFullRoutingNames.HOME]: 'Home',
@@ -175,18 +152,5 @@ export class AdobeAnalyticsService {
       }
     }
     return moduleParsed;
-  }
-
-  runSatelliteEvent(
-    event: AdobeEventType,
-    payload: Partial<TrackEventProperties>
-  ) {
-    try {
-      if ('undefined' !== typeof _satellite && _satellite) {
-        _satellite.track(event, payload);
-      }
-    } catch (error) {
-      console.error('Adobe Launch not loaded', error);
-    }
   }
 }
