@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
 
 import { CompanyService } from '../../shared/services';
-import * as CompanyActions from '../actions/company.actions';
+import { CompanyActions } from '../actions/company.actions';
 
 @Injectable()
 export class CompanyEffects {

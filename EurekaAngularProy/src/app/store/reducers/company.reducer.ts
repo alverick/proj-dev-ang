@@ -1,11 +1,11 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 
 import {
+  type CurrencyWithLimit,
   currencies,
-  CurrencyWithLimit,
 } from '../../shared/constants/currencies';
-import { IDataEnterpriseModel } from '../../shared/models/data-enterprise.model';
-import * as CompanyActions from '../actions/company.actions';
+import { type IDataEnterpriseModel } from '../../shared/models/data-enterprise.model';
+import { CompanyActions } from '../actions/company.actions';
 
 export const companyFeatureKey = 'company';
 
