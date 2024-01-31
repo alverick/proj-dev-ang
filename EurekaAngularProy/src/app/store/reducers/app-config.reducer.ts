@@ -11,14 +11,14 @@ export interface State {
 
 export const initialState: State = {
   loaded: false,
-  disabledAffiliation: true,
+  disabledAffiliation: false,
 };
 
 export const reducer = createReducer(
   initialState,
-  on(AppConfigActions.configAppConfigs, (state) => state),
-  on(AppConfigActions.configAppConfigsSuccess, (state, action) => state),
-  on(AppConfigActions.configAppConfigsFailure, (state, action) => state)
+  on(AppConfigActions.configAppConfigs, (state): State => state),
+  on(AppConfigActions.configAppConfigsSuccess, (state, action): State => state),
+  on(AppConfigActions.configAppConfigsFailure, (state, action): State => state)
 );
 
 export const appConfigFeature = createFeature({
