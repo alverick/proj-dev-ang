@@ -28,6 +28,7 @@ import {
   type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import {
+  DigitalDataService,
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../shared/services';
@@ -41,6 +42,7 @@ import {
   type ICompanyResult,
   CompanyService,
 } from '../../../shared/services/company.service';
+import { type FingerPrintData } from '../../../shared/services/digital-data.service';
 import { LoginService } from '../../../shared/services/login.service';
 import {
   type ServiceConfigurationForm,
@@ -70,6 +72,7 @@ export class AffiliationService {
   editServiceForm: ModelFormGroup<ServiceEditForm>;
   updateData: ICompanyUpdate;
   tokenUpdate: string;
+  digitalDataElm: FingerPrintData;
 
   constructor(
     private router: Router,
@@ -79,9 +82,13 @@ export class AffiliationService {
     private affiliationForms: AffiliationFormsService,
     private serviceForms: ServicesFormsService,
     private logger: NGXLogger,
+    private digitalData: DigitalDataService,
     protected adobeAnalytics: AdobeAnalyticsService
   ) {
     this.setRegisterForm();
+    void this.digitalData.getData().then((data) => {
+      this.digitalDataElm = data;
+    });
   }
 
   public setRegisterForm() {
@@ -162,7 +169,7 @@ export class AffiliationService {
     };
   }
 
-  public validateCompany(): Observable<ICompanyResult> {
+  public validateCompany() {
     const {
       movilNumber,
       documentType,
@@ -199,6 +206,7 @@ export class AffiliationService {
         movilOperator,
         documentType,
         documentNumber,
+        sdk: this.digitalDataElm,
       })
       .pipe(
         tap(({ code, message, success, tradeName, fullName }) => {
@@ -225,7 +233,7 @@ export class AffiliationService {
       );
   }
 
-  validateName(tradeName: string, fullName: string) {
+  private validateName(tradeName: string, fullName: string) {
     this.companyNames = [];
     if (isNotNilOrEmpty(tradeName)) {
       this.companyNames.push({
@@ -250,7 +258,7 @@ export class AffiliationService {
     this.authForm.get('nameSelect').setValue(defaultValue.value);
   }
 
-  processResultCode(
+  private processResultCode(
     code: number,
     message: string,
     action: Partial<ActionEventProperties>
