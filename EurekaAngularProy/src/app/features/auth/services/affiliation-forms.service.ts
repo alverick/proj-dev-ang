@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { IEntryModel } from '../../../shared/models';
+import { type IEntryModel } from '../../../shared/models';
 import {
-  ModelFormGroup,
-  SimpleModelFormGroup,
+  type ModelFormGroup,
+  type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
 import { nameInvalid } from '../../../shared/validators/name-invalid.validator';

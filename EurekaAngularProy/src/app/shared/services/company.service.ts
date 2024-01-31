@@ -4,9 +4,9 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { IServicePostData, IServiceRemoteModel } from '../models';
-import { IAccountStateDetails } from '../models/company';
-import { IDataEnterpriseModel } from '../models/data-enterprise.model';
+import { type IServiceRemoteModel } from '../models';
+import { type IAccountStateDetails } from '../models/company';
+import { type IDataEnterpriseModel } from '../models/data-enterprise.model';
 
 export interface ICompanyResult {
   success: boolean;

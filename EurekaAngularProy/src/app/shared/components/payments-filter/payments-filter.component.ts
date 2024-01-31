@@ -1,28 +1,28 @@
 import {
+  type OnDestroy,
+  type OnInit,
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
-  OnInit,
   Output,
 } from '@angular/core';
 import {
-  AbstractControl,
+  type AbstractControl,
+  type ValidationErrors,
+  type ValidatorFn,
   UntypedFormControl,
   UntypedFormGroup,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import * as moment from 'moment';
+import type * as moment from 'moment';
 import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
 import { combineLatest, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { DateList } from '../../models/dateList';
-import { StatesGtp } from '../../models/states-gtp';
-import { WayPay } from '../../models/way-pay';
+import { type DateList } from '../../models/dateList';
+import { type StatesGtp } from '../../models/states-gtp';
+import { type WayPay } from '../../models/way-pay';
 
 const errorMessageDates = {
   required: 'Ingrese una fecha',

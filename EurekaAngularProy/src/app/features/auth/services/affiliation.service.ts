@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
-import { Observable, of, throwError } from 'rxjs';
+import { type Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
-  ICompanySendUpdate,
-  ICompanyUpdate,
+  type ICompanySendUpdate,
+  type ICompanyUpdate,
 } from 'src/app/shared/models/company';
-import { SweetAlertOptions } from 'sweetalert2';
+import { type SweetAlertOptions } from 'sweetalert2';
 
 import {
   chargeTypeOptions,
@@ -18,42 +18,42 @@ import {
   paymentTypeOptions,
 } from '../../../shared/constants/services';
 import {
-  IEntryModel,
-  IServiceRemoteModel,
-  IServiceRemoteModelForms,
+  type IEntryModel,
+  type IServiceRemoteModel,
+  type IServiceRemoteModelForms,
 } from '../../../shared/models';
-import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
+import { type IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
-  ModelFormGroup,
-  SimpleModelFormGroup,
+  type ModelFormGroup,
+  type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import {
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../shared/services';
 import {
-  ActionEventProperties,
+  type ActionEventProperties,
+  type AdobeEventType,
   AdobeAnalyticsService,
   AdobeEvent,
-  AdobeEventType,
 } from '../../../shared/services/adobe-analytics.service';
 import {
+  type ICompanyResult,
   CompanyService,
-  ICompanyResult,
 } from '../../../shared/services/company.service';
 import { LoginService } from '../../../shared/services/login.service';
 import {
-  ServiceConfigurationForm,
-  ServiceEditForm,
-  ServiceFormValue,
+  type ServiceConfigurationForm,
+  type ServiceEditForm,
+  type ServiceFormValue,
 } from '../../../shared/services/services-forms.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
 import {
+  type AuthForm,
+  type CompanyName,
+  type RegisterForm,
   AffiliationFormsService,
-  AuthForm,
-  CompanyName,
-  RegisterForm,
 } from './affiliation-forms.service';
 
 @Injectable()
