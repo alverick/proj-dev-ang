@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { mergeMap } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { IpInfo, IpInfoDataService } from '../data/ip-info-data.service';
+import { type IpInfo, IpInfoDataService } from '../data/ip-info-data.service';
 
 export type FingerPrintData = {
   Browser: Browser;
