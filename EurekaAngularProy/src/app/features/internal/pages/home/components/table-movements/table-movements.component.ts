@@ -1,23 +1,23 @@
 import {
+  type OnChanges,
+  type OnInit,
+  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NGXLogger } from 'ngx-logger';
-import { LazyLoadEvent } from 'primeng/api';
+import { type LazyLoadEvent } from 'primeng/api';
 import { Table, TableHeaderCheckbox } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
 
-import { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
-import { Debts } from '../../../../../../shared/models/debts';
+import { type CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
+import { type Debts } from '../../../../../../shared/models/debts';
 import {
   AdobeAnalyticsService,
   AdobeEvent,
