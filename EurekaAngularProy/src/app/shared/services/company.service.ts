@@ -9,6 +9,7 @@ import {
 import { type IServicePostData, type IServiceRemoteModel } from '../models';
 import { type IAccountStateDetails } from '../models/company';
 import { type IDataEnterpriseModel } from '../models/data-enterprise.model';
+import { type FingerPrintData } from './digital-data.service';
 
 export interface ICompanyResult {
   success: boolean;
@@ -26,7 +27,7 @@ export interface CompanyAccounts {
   id: string;
 }
 
-type ValidateCompanyData = Partial<RegisterForm>;
+type ValidateCompanyData = Partial<RegisterForm> & { sdk: FingerPrintData };
 type SaveCompanyData = Partial<RegisterForm> &
   Partial<AuthForm> & { entryName: string };
 type UpdateCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
