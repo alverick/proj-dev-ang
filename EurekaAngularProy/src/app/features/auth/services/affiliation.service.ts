@@ -503,31 +503,26 @@ export class AffiliationService {
       state: 'Envío exitoso',
     };
 
-    return this.digitalData.getData$().pipe(
-      switchMap((sdk) => {
-        return this.companyService
-          .saveServices({
-            clientId: this.companyId,
-            deleted: [],
-            services: this.servicesList,
-            sdk,
-          })
-          .pipe(
-            tap(() => {
-              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-              this.resetRegistration();
-            }),
-            catchError((err) => {
-              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-                ...actionStep,
-                state: 'Intención de envío',
-                typeError: 'Ha ocurrido un error con el servidor',
-              });
-              throw new Error(err);
-            })
-          );
+    return this.companyService
+      .saveServices({
+        clientId: this.companyId,
+        deleted: [],
+        services: this.servicesList,
       })
-    );
+      .pipe(
+        tap(() => {
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+          this.resetRegistration();
+        }),
+        catchError((err) => {
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: 'Intención de envío',
+            typeError: 'Ha ocurrido un error con el servidor',
+          });
+          throw new Error(err);
+        })
+      );
   }
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {
