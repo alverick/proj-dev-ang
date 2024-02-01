@@ -27,16 +27,14 @@ export interface CompanyAccounts {
 export class CompanyService {
   constructor(private http: HttpClient) {}
 
-  public validateCompany(data: any): Observable<ICompanyResult> {
+  public validateCompany(data): Observable<ICompanyResult> {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company/validate`,
       data
     );
   }
 
-  public saveCompany(
-    data: Partial<IDataEnterpriseModel>
-  ): Observable<ICompanyResult> {
+  public saveCompany(data): Observable<ICompanyResult> {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company`,
       data
