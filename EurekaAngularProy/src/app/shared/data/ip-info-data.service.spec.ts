@@ -9,6 +9,7 @@ describe('QueryDataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
+      providers: [IpInfoDataService],
     });
     service = TestBed.inject(IpInfoDataService);
   });
@@ -17,7 +18,10 @@ describe('QueryDataService', () => {
     void expect(service).toBeTruthy();
   });
 
-  it('get data', () => {
-    void expect(service).toBeTruthy();
+  it('get ip info', (done) => {
+    service.getIpInfo().subscribe((value) => {
+      expect(value).toBeTruthy();
+      done();
+    });
   });
 });
