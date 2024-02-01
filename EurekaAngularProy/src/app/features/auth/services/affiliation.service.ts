@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
-import { type Observable, of, throwError } from 'rxjs';
+import { type Observable, of, switchMap, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import {
   type ICompanySendUpdate,
@@ -72,7 +72,6 @@ export class AffiliationService {
   editServiceForm: ModelFormGroup<ServiceEditForm>;
   updateData: ICompanyUpdate;
   tokenUpdate: string;
-  digitalDataElm: FingerPrintData;
 
   constructor(
     private router: Router,
@@ -86,9 +85,6 @@ export class AffiliationService {
     protected adobeAnalytics: AdobeAnalyticsService
   ) {
     this.setRegisterForm();
-    void this.digitalData.getData().then((data) => {
-      this.digitalDataElm = data;
-    });
   }
 
   public setRegisterForm() {
@@ -198,39 +194,43 @@ export class AffiliationService {
       ],
     };
 
-    return this.companyService
-      .validateCompany({
-        ruc,
-        email,
-        movilNumber,
-        movilOperator,
-        documentType,
-        documentNumber,
-        sdk: this.digitalDataElm,
+    return this.digitalData.getData$().pipe(
+      switchMap((sdk) => {
+        return this.companyService
+          .validateCompany({
+            ruc,
+            email,
+            movilNumber,
+            movilOperator,
+            documentType,
+            documentNumber,
+            sdk,
+          })
+          .pipe(
+            tap(({ code, message, success, tradeName, fullName }) => {
+              if (success) {
+                this.authForm.get('ruc').setValue(ruc);
+                this.validateName(tradeName, fullName);
+                this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+              } else {
+                this.processResultCode(code, message, {
+                  ...actionStep,
+                  state: 'Intención de envío',
+                });
+              }
+            }),
+            catchError((err) => {
+              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+                ...actionStep,
+                state: 'Intención de envío',
+                typeError: 'Ha ocurrido un error con el servidor',
+              });
+              this.showErrorServer();
+              return throwError(err);
+            })
+          );
       })
-      .pipe(
-        tap(({ code, message, success, tradeName, fullName }) => {
-          if (success) {
-            this.authForm.get('ruc').setValue(ruc);
-            this.validateName(tradeName, fullName);
-            this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-          } else {
-            this.processResultCode(code, message, {
-              ...actionStep,
-              state: 'Intención de envío',
-            });
-          }
-        }),
-        catchError((err) => {
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-            ...actionStep,
-            state: 'Intención de envío',
-            typeError: 'Ha ocurrido un error con el servidor',
-          });
-          this.showErrorServer();
-          return throwError(err);
-        })
-      );
+    );
   }
 
   private validateName(tradeName: string, fullName: string) {
