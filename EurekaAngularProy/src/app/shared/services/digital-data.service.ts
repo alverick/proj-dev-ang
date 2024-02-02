@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { from, mergeMap } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { type Observable, from, mergeMap, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { type IpInfo, IpInfoDataService } from '../data/ip-info-data.service';
 
@@ -111,22 +111,21 @@ declare const window: {
 @Injectable()
 export class DigitalDataService {
   private digital: FingerPrintType;
+  private fingerPrintData: Observable<FingerPrintData>;
 
   constructor(private readonly ipInfoService: IpInfoDataService) {
     this.digital = window.MPFingerprint;
+    this.fingerPrintData = from(this.digital.getData(true, true));
   }
 
   getData$() {
-    return from(
-      this.digital.getData(true, true).then((data: FingerPrintData) => {
-        return this.ipInfoService
-          .getIpInfo()
-          .pipe(
-            mergeMap((ip) => Promise.resolve({ ...data, Geoip: ip })),
-            catchError(() => Promise.resolve(data))
-          )
-          .toPromise();
-      })
+    return this.fingerPrintData.pipe(
+      mergeMap((data) =>
+        this.ipInfoService.getIpInfo().pipe(
+          map((Geoip) => ({ ...data, Geoip })),
+          catchError(() => of(data))
+        )
+      )
     );
   }
 }
