@@ -36,23 +36,21 @@ type SaveCompanyData = Partial<RegisterForm> &
 export class CompanyService {
   constructor(private http: HttpClient) {}
 
-  public validateCompany(
-    data: ValidateCompanyData
-  ): Observable<ICompanyResult> {
+  public validateCompany(data: ValidateCompanyData) {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company/validate`,
       data
     );
   }
 
-  public saveCompany(data: SaveCompanyData): Observable<ICompanyResult> {
+  public saveCompany(data: SaveCompanyData) {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company`,
       data
     );
   }
 
-  updateCompany(data: any): Observable<ICompanyResult> {
+  updateCompany(data: any) {
     const url = `${environment.END_POINT}/company`;
     return this.http.put<ICompanyResult>(url, data);
   }
@@ -83,7 +81,7 @@ export class CompanyService {
     );
   }
 
-  getCompanyData(): Observable<IDataEnterpriseModel> {
+  getCompanyData() {
     const url = `${environment.END_POINT}/company/getafiliate`;
     return this.http.get<IDataEnterpriseModel>(url);
   }
@@ -94,7 +92,7 @@ export class CompanyService {
     );
   }
 
-  getAccountStateDetailsList(): Observable<Blob> {
+  getAccountStateDetailsList() {
     return this.http.get(
       `${environment.END_POINT}/company/GTP/AccountStateDetailsList`,
       {
@@ -103,9 +101,7 @@ export class CompanyService {
     );
   }
 
-  getCompanyServices(
-    incDeactivates: boolean = false
-  ): Observable<IServiceRemoteModel[]> {
+  getCompanyServices(incDeactivates: boolean = false) {
     return this.http.get<IServiceRemoteModel[]>(
       `${
         environment.END_POINT
