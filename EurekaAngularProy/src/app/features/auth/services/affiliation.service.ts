@@ -675,7 +675,7 @@ export class AffiliationService {
     };
   }
 
-  public getEntryOptions(): Observable<IEntryModel[]> {
+  public getEntryOptions() {
     if (isNotNilOrEmpty(this.entryOptions)) {
       return of(this.entryOptions);
     }
@@ -738,7 +738,7 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
     });
   }
 
-  public getAccountsCompany(): Observable<any[]> {
+  public getAccountsCompany() {
     if (this.companyId) {
       return this.companyService.getCompanyAccountsById(this.companyId);
     }
