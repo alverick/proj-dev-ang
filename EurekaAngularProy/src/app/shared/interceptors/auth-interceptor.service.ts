@@ -58,9 +58,9 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
-        const urlNotAllowed = stringNotAllowed.filter((str) => {
-          return request.url.includes(str);
-        });
+        const urlNotAllowed = stringNotAllowed.filter((str) =>
+          request.url.includes(str)
+        );
 
         if (urlNotAllowed.length < 1) {
           if (err.status === 401) {
