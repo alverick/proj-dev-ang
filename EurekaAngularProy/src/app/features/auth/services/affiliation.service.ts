@@ -7,6 +7,11 @@ import { catchError, tap } from 'rxjs/operators';
 import { type SweetAlertOptions } from 'sweetalert2';
 
 import {
+  stateIntent,
+  stateSuccessful,
+  typeErrorServer,
+} from '../../../shared/constants/analytics-messages';
+import {
   chargeTypeOptions,
   dataTypeOptions,
   interestTypeOptions,
@@ -176,7 +181,7 @@ export class AffiliationService {
       label: 'Siguiente',
       location: 'Registrate',
       step: 'Step1',
-      state: 'Envío exitoso',
+      state: stateSuccessful,
       metadata: [
         {
           key: 'TipoDocumento',
@@ -210,15 +215,15 @@ export class AffiliationService {
               } else {
                 this.processResultCode(code, message, {
                   ...actionStep,
-                  state: 'Intención de envío',
+                  state: stateIntent,
                 });
               }
             }),
             catchError((err) => {
               this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
                 ...actionStep,
-                state: 'Intención de envío',
-                typeError: 'Ha ocurrido un error con el servidor',
+                state: stateIntent,
+                typeError: typeErrorServer,
               });
               this.showErrorServer();
               return throwError(err);
@@ -278,7 +283,7 @@ export class AffiliationService {
       default: {
         this.showErrorServer(message || '');
         titleError = 'Regístrame';
-        typeError = message || 'Ha ocurrido un error con el servidor';
+        typeError = message || typeError;
         break;
       }
     }
@@ -314,7 +319,7 @@ export class AffiliationService {
       label: 'Siguiente',
       location: 'Registrate',
       step: 'Step2',
-      state: 'Envío exitoso',
+      state: stateSuccessful,
       metadata: [
         {
           key: 'Rubro Empresa',
@@ -347,15 +352,15 @@ export class AffiliationService {
               } else {
                 this.processResultCode(code, message, {
                   ...actionStep,
-                  state: 'Intención de envío',
+                  state: stateIntent,
                 });
               }
             }),
             catchError((err) => {
               this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
                 ...actionStep,
-                state: 'Intención de envío',
-                typeError: 'Ha ocurrido un error con el servidor',
+                state: stateIntent,
+                typeError: typeErrorServer,
               });
               this.showErrorServer();
               return throwError(err);
@@ -464,7 +469,7 @@ export class AffiliationService {
       label: 'Siguiente',
       location: 'Registrate',
       step: 'Step4',
-      state: 'Envío exitoso',
+      state: stateSuccessful,
       metadata,
     });
   }
@@ -495,7 +500,7 @@ export class AffiliationService {
       module: 'Home',
       location: 'Registrate',
       step: 'Step5',
-      state: 'Envío exitoso',
+      state: stateSuccessful,
     };
 
     return this.companyService
@@ -512,8 +517,8 @@ export class AffiliationService {
         catchError((err) => {
           this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
             ...actionStep,
-            state: 'Intención de envío',
-            typeError: 'Ha ocurrido un error con el servidor',
+            state: stateIntent,
+            typeError: typeErrorServer,
           });
           throw new Error(err);
         })
