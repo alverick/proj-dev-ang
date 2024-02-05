@@ -31,6 +31,7 @@ export interface CompanyAccounts {
 type ValidateCompanyData = Partial<RegisterForm> & { sdk: FingerPrintData };
 type SaveCompanyData = Partial<RegisterForm> &
   Partial<AuthForm> & { sdk: FingerPrintData };
+type UpdateCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
 
 @Injectable()
 export class CompanyService {
@@ -50,20 +51,20 @@ export class CompanyService {
     );
   }
 
-  updateCompany(data: any) {
+  updateCompany(data: UpdateCompanyData) {
     const url = `${environment.END_POINT}/company`;
     return this.http.put<ICompanyResult>(url, data);
   }
 
   saveServices(data: IServicePostData) {
-    return this.http.post<any>(
+    return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company/service`,
       data
     );
   }
 
-  getCompanyAccountsById(idCompany) {
-    return this.http.get<any[]>(
+  getCompanyAccountsById(idCompany: number) {
+    return this.http.get<CompanyAccounts[]>(
       `${environment.END_POINT}/company/${idCompany}/cards`
     );
   }
@@ -75,7 +76,7 @@ export class CompanyService {
   }
 
   sendUpdateCompanyData(data) {
-    return this.http.post<any>(
+    return this.http.post<boolean>(
       `${environment.END_POINT}/company/gtp/client/update`,
       data
     );
@@ -86,7 +87,7 @@ export class CompanyService {
     return this.http.get<IDataEnterpriseModel>(url);
   }
 
-  getAccountStateDetails(idCompany: string): Observable<IAccountStateDetails> {
+  getAccountStateDetails(idCompany: string) {
     return this.http.get<IAccountStateDetails>(
       `${environment.END_POINT}/company/GTP/accountStateDetails/${idCompany}`
     );
