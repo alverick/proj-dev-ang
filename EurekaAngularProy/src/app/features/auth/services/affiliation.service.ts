@@ -27,26 +27,16 @@ import {
   type ICompanySendUpdate,
   type ICompanyUpdate,
 } from '../../../shared/models/company';
-import { type IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
   type ModelFormGroup,
   type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import {
+  CompanyService,
   DigitalDataService,
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../shared/services';
-import {
-  type ActionEventProperties,
-  type AdobeEventType,
-  AdobeAnalyticsService,
-  AdobeEvent,
-} from '../../../shared/services/adobe-analytics.service';
-import {
-  type ICompanyResult,
-  CompanyService,
-} from '../../../shared/services/company.service';
 import { LoginService } from '../../../shared/services/login.service';
 import {
   type ServiceConfigurationForm,
