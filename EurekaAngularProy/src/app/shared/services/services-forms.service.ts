@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { type FormControl, FormBuilder, Validators } from '@angular/forms';
 import { isNil } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 
-import { ModelFormGroup } from '../models/forms';
+import { type ModelFormGroup } from '../models/forms';
 import { nameInvalid } from '../validators/name-invalid.validator';
 
 export interface ServiceFormValue {
