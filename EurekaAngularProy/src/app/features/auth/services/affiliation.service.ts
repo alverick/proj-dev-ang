@@ -32,11 +32,11 @@ import {
   type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import {
+  CompanyService,
   DigitalDataService,
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../shared/services';
-import { CompanyService } from '../../../shared/services';
 import { LoginService } from '../../../shared/services/login.service';
 import {
   type ServiceConfigurationForm,
