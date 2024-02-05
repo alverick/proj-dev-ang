@@ -27,6 +27,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LetModule, PushModule } from '@ngrx/component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { TooltipModule as TooltipModuleNgx } from 'ngx-bootstrap/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -84,6 +85,7 @@ import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
+import { ToastModule } from 'primeng/toast';
 
 const FORM_MODULES = [
   FormsModule,
@@ -132,6 +134,7 @@ const PRIMENG_MODULES = [
   SplitButtonModule,
   StepsModule,
   TableModule,
+  ToastModule,
   TooltipModule,
 ];
 const UI_MODULES = [
@@ -215,6 +218,8 @@ const UI_MODULES = [
     SidebarServiceComponent,
     ServiceCardComponent,
     ...PIPES,
+    PushModule,
+    LetModule,
     FabWhatsappComponent,
     ControlRulesPoliciesComponent,
   ],

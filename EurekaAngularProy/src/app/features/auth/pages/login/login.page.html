@@ -110,10 +110,12 @@
         </small>
       </div>
       <br class="br-none-mobil" />
-      <div style="text-align: center">
+      <div>
         <button
+          pButton
+          pRipple
           type="submit"
-          class="focus-elements btn-eureca-green btn-login-ingresar"
+          class="tw-mb-6 p-button-sm tw-w-72 tw-flex tw-mx-auto tw-justify-center"
           form="login-form"
         >
           Ingresar
@@ -124,17 +126,22 @@
       <div class="mb-3 dpt" style="text-align: center">
         <label class="text-rg"> ¿No tienes una cuenta?</label>
         <br />
-        <small (click)="clickRegistrarse()">Regístrate aquí</small>
-      </div>
-
-      <div class="mb-3 dpt1" style="text-align: center">
-        <label class="text-rg"> ¿No tienes una cuenta?</label>
-        <small (click)="clickRegistrarse()">Regístrate aquí</small>
-      </div>
-      <div class="mb-3 regt" style="text-align: center">
-        <label class="text-rg"> ¿No tienes una cuenta?</label>
-        <small (click)="clickRegistrarse()">Regístrate</small>
+        <ng-container *ngrxLet="disabledAffiliation$ as disabled">
+          <button
+            pButton
+            pRipple
+            class="p-button-text p-button-sm tw-text-sm tw-underline"
+            (click)="clickRegistration(disabled)"
+          >
+            Regístrate aquí
+          </button>
+        </ng-container>
       </div>
     </div>
+    <p-toast
+      position="top-center"
+      key="tc"
+      preventOpenDuplicates="true"
+    ></p-toast>
   </div>
 </cs-layout-form>

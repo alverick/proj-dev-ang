@@ -1,6 +1,6 @@
 {
   "name": "eureka-angular-proy",
-  "version": "2.7.0",
+  "version": "2.8.1-uat.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -38,6 +38,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.12.0",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@newrelic/browser-agent": "^1.251.0",
+    "@ngrx/component": "^15.4.0",
     "@ngrx/data": "^15.4.0",
     "@ngrx/effects": "^15.4.0",
     "@ngrx/entity": "^15.4.0",

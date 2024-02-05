@@ -1,13 +1,17 @@
 import { type OnDestroy, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { MessageService } from 'primeng/api';
 import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
+import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
 import {
   type ActionEventProperties,
   AdobeEvent,
   TrackingService,
 } from '../../../../shared/services/tracking.service';
+import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 
 interface ItemLanding {
@@ -21,11 +25,10 @@ interface ItemLanding {
   selector: 'cs-landing',
   templateUrl: './landing.page.html',
   styleUrls: ['./landing.page.scss'],
-  providers: [DialogService],
+  providers: [DialogService, MessageService],
 })
 export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;
-  linkLogin = authFullRoutingNames.LOGIN;
   benefits: ItemLanding[] = [
     {
       title: 'Sin compartir número de cuenta',
@@ -56,7 +59,8 @@ export class LandingPage implements OnDestroy {
     {
       title: 'Regístrate',
       position: '01',
-      content: 'Crea tu contraseña y configura los cobros de tu empresa.',
+      content:
+        'Crea tu contraseña y configura los cobros de tu empresa.<br /><br /><span class="tw-text-sm">*Pronto podrás registrarte en Cobro Simple. Estamos trabajando en una nueva experiencia para ti.</span>',
     },
     {
       title: 'Ingresa y carga tu lista de clientes por cobrar',
@@ -97,11 +101,16 @@ export class LandingPage implements OnDestroy {
         'Configura si deseas que tus clientes paguen una mora y define el importe de esta.',
     },
   ];
+  disabledAffiliation$ = this.store.select(
+    appConfigFeature.selectDisabledAffiliation
+  );
 
   constructor(
     public router: Router,
     public dialogService: DialogService,
-    private tracking: TrackingService
+    private tracking: TrackingService,
+    private store: Store,
+    private messageService: MessageService
   ) {}
 
   ngOnDestroy(): void {
@@ -110,10 +119,18 @@ export class LandingPage implements OnDestroy {
     }
   }
 
-  clickRegistration(category: string, location: string) {
-    void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
-      state: { initNew: true },
-    });
+  clickRegistration(category: string, location: string, disabled = false) {
+    if (disabled) {
+      this.messageService.add({
+        key: 'tc',
+        severity: 'success',
+        detail: AFFILIATION_SUSPENDED,
+      });
+    } else {
+      void this.router.navigateByUrl(authFullRoutingNames.COMPANY_REGISTER, {
+        state: { initNew: true },
+      });
+    }
     this.sendAdobeTrack({
       category,
       action: 'Click',

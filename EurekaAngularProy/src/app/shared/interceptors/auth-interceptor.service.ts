@@ -54,9 +54,15 @@ export class AuthInterceptorService implements HttpInterceptor {
       setHeaders: headers,
     });
 
+    const stringNotAllowed = ['notification', 'https://pro.ip-api.com'];
+
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
-        if (!request.url.includes('notification')) {
+        const urlNotAllowed = stringNotAllowed.filter((str) =>
+          request.url.includes(str)
+        );
+
+        if (urlNotAllowed.length < 1) {
           if (err.status === 401) {
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();

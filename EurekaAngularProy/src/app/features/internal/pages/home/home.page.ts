@@ -59,7 +59,7 @@ import {
 } from '../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
-import { loadCompany } from '../../../../store/actions/company.actions';
+import { CompanyActions } from '../../../../store/actions/company.actions';
 import { companyFeature } from '../../../../store/reducers/company.reducer';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
@@ -223,7 +223,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.styleTag.className = 'onboarding-style';
       document.getElementsByTagName('head')[0].appendChild(this.styleTag);
     }
-    this.store.dispatch(loadCompany());
+    this.store.dispatch(CompanyActions.loadCompany());
     this.store
       .select(companyFeature.selectCurrencyLimits)
       .pipe(filter((data) => isNotNilOrEmpty(data)))
