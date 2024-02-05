@@ -1,9 +1,9 @@
 import {
-  AfterViewInit,
+  type AfterViewInit,
+  type OnDestroy,
+  type OnInit,
   Component,
   HostListener,
-  OnDestroy,
-  OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { ShepherdService } from 'angular-shepherd';
 import * as DOMPurify from 'dompurify';
 import * as saveAs from 'file-saver';
-import { LazyLoadEvent, MenuItem } from 'primeng/api';
+import { type LazyLoadEvent, type MenuItem } from 'primeng/api';
 import {
   all,
   equals,
@@ -25,41 +25,41 @@ import {
   prop,
 } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
-import { Observable, Subject } from 'rxjs';
+import { type Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { CurrencyWithLimit } from '../../../../shared/constants/currencies';
 
-import { CompanyServices } from '../../../../shared/models/company';
-import { DateList } from '../../../../shared/models/dateList';
-import { Debts } from '../../../../shared/models/debts';
-import { DebstFilter } from '../../../../shared/models/debts-filter.model';
+import { type CurrencyWithLimit } from '../../../../shared/constants/currencies';
+import { type CompanyServices } from '../../../../shared/models/company';
+import { type DateList } from '../../../../shared/models/dateList';
+import { type Debts } from '../../../../shared/models/debts';
+import { type DebstFilter } from '../../../../shared/models/debts-filter.model';
 import {
+  type Settings,
   Sections,
   SettingOptions,
-  Settings,
   Status,
   StorageSettings,
 } from '../../../../shared/models/settings';
-import { User } from '../../../../shared/models/user.model';
-import { WayPay } from '../../../../shared/models/way-pay';
+import { type User } from '../../../../shared/models/user.model';
+import { type WayPay } from '../../../../shared/models/way-pay';
 import {
-  ActionEventProperties,
+  type ActionEventProperties,
+  type Metadata,
   AdobeAnalyticsService,
   AdobeEvent,
-  Metadata,
 } from '../../../../shared/services/adobe-analytics.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { HomeService } from '../../../../shared/services/home.service';
 import { LoadBarService } from '../../../../shared/services/load-bar.service';
 import {
+  type ModalCloseData,
   LoadFileService,
-  ModalCloseData,
 } from '../../../../shared/services/load-file.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
-import { loadCompany } from '../../../../store/actions/company.actions';
+import { CompanyActions } from '../../../../store/actions/company.actions';
 import { companyFeature } from '../../../../store/reducers/company.reducer';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
@@ -223,7 +223,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.styleTag.className = 'onboarding-style';
       document.getElementsByTagName('head')[0].appendChild(this.styleTag);
     }
-    this.store.dispatch(loadCompany());
+    this.store.dispatch(CompanyActions.loadCompany());
     this.store
       .select(companyFeature.selectCurrencyLimits)
       .pipe(filter((data) => isNotNilOrEmpty(data)))

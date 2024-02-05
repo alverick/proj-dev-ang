@@ -1,12 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { type Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { IServicePostData, IServiceRemoteModel } from '../models';
-import { IAccountStateDetails } from '../models/company';
-import { IDataEnterpriseModel } from '../models/data-enterprise.model';
+import {
+  type AuthForm,
+  type RegisterForm,
+} from '../../features/auth/services/affiliation-forms.service';
+import { type IServicePostData, type IServiceRemoteModel } from '../models';
+import { type IAccountStateDetails } from '../models/company';
+import { type IDataEnterpriseModel } from '../models/data-enterprise.model';
+import { type FingerPrintData } from './digital-data.service';
 
 export interface ICompanyResult {
   success: boolean;
@@ -24,41 +28,43 @@ export interface CompanyAccounts {
   id: string;
 }
 
+type ValidateCompanyData = Partial<RegisterForm> & { sdk: FingerPrintData };
+type SaveCompanyData = Partial<RegisterForm> &
+  Partial<AuthForm> & { sdk: FingerPrintData };
+type UpdateCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
+
 @Injectable()
 export class CompanyService {
   constructor(private http: HttpClient) {}
 
-  public validateCompany(data: any): Observable<ICompanyResult> {
-    return this.http
-      .post<ICompanyResult>(`${environment.END_POINT}/company/validate`, data)
-      .pipe(catchError((err) => throwError(err)));
+  public validateCompany(data: ValidateCompanyData) {
+    return this.http.post<ICompanyResult>(
+      `${environment.END_POINT}/company/validate`,
+      data
+    );
   }
 
-  public saveCompany(data: any): Observable<ICompanyResult> {
-    return this.http
-      .post<ICompanyResult>(`${environment.END_POINT}/company`, data)
-      .pipe(catchError((err) => throwError(err)));
+  public saveCompany(data: SaveCompanyData) {
+    return this.http.post<ICompanyResult>(
+      `${environment.END_POINT}/company`,
+      data
+    );
   }
 
-  updateCompany(data: any): Observable<ICompanyResult> {
+  updateCompany(data: UpdateCompanyData) {
     const url = `${environment.END_POINT}/company`;
-    return this.http
-      .put<ICompanyResult>(url, data)
-      .pipe(catchError((err) => throwError(err)));
+    return this.http.put<ICompanyResult>(url, data);
   }
 
   saveServices(data: IServicePostData) {
-    return this.http
-      .post<any>(`${environment.END_POINT}/company/service`, data)
-      .pipe(
-        catchError((err) => {
-          throw throwError(err);
-        })
-      );
+    return this.http.post<ICompanyResult>(
+      `${environment.END_POINT}/company/service`,
+      data
+    );
   }
 
-  getCompanyAccountsById(idCompany) {
-    return this.http.get<any[]>(
+  getCompanyAccountsById(idCompany: number) {
+    return this.http.get<CompanyAccounts[]>(
       `${environment.END_POINT}/company/${idCompany}/cards`
     );
   }
@@ -70,59 +76,37 @@ export class CompanyService {
   }
 
   sendUpdateCompanyData(data) {
-    return this.http
-      .post<any>(`${environment.END_POINT}/company/gtp/client/update`, data)
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
+    return this.http.post<boolean>(
+      `${environment.END_POINT}/company/gtp/client/update`,
+      data
+    );
   }
 
-  getCompanyData(): Observable<IDataEnterpriseModel> {
+  getCompanyData() {
     const url = `${environment.END_POINT}/company/getafiliate`;
-    return this.http
-      .get<IDataEnterpriseModel>(url)
-      .pipe(catchError((err) => throwError(err)));
+    return this.http.get<IDataEnterpriseModel>(url);
   }
 
-  getAccountStateDetails(idCompany: string): Observable<IAccountStateDetails> {
-    return this.http
-      .get<IAccountStateDetails>(
-        `${environment.END_POINT}/company/GTP/accountStateDetails/${idCompany}`
-      )
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
+  getAccountStateDetails(idCompany: string) {
+    return this.http.get<IAccountStateDetails>(
+      `${environment.END_POINT}/company/GTP/accountStateDetails/${idCompany}`
+    );
   }
 
-  getAccountStateDetailsList(): Observable<Blob> {
-    return this.http
-      .get(`${environment.END_POINT}/company/GTP/AccountStateDetailsList`, {
+  getAccountStateDetailsList() {
+    return this.http.get(
+      `${environment.END_POINT}/company/GTP/AccountStateDetailsList`,
+      {
         responseType: 'blob',
-      })
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
+      }
+    );
   }
 
-  getCompanyServices(
-    incDeactivates: boolean = false
-  ): Observable<IServiceRemoteModel[]> {
-    return this.http
-      .get<IServiceRemoteModel[]>(
-        `${
-          environment.END_POINT
-        }/company/service?incDeactivates=${incDeactivates.toString()}`
-      )
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
+  getCompanyServices(incDeactivates: boolean = false) {
+    return this.http.get<IServiceRemoteModel[]>(
+      `${
+        environment.END_POINT
+      }/company/service?incDeactivates=${incDeactivates.toString()}`
+    );
   }
 }

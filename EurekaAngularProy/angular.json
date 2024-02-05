@@ -48,7 +48,8 @@
               "node_modules/popper.js/dist/umd/popper.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/core-js/client/shim.min.js",
-              "node_modules/chart.js/dist/chart.umd.js"
+              "node_modules/chart.js/dist/chart.umd.js",
+              "libs/fingerprint.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/scss", "node_modules"]

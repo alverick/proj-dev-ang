@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { isNotNil, isNotNilOrEmpty, isString } from 'ramda-adjunct';
-import { Observable, of, throwError } from 'rxjs';
+import { type Observable, of, switchMap, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import {
-  ICompanySendUpdate,
-  ICompanyUpdate,
-} from 'src/app/shared/models/company';
-import { SweetAlertOptions } from 'sweetalert2';
+import { type SweetAlertOptions } from 'sweetalert2';
 
+import {
+  stateIntent,
+  stateSuccessful,
+  typeErrorServer,
+} from '../../../shared/constants/analytics-messages';
 import {
   chargeTypeOptions,
   dataTypeOptions,
@@ -18,42 +19,43 @@ import {
   paymentTypeOptions,
 } from '../../../shared/constants/services';
 import {
-  IEntryModel,
-  IServiceRemoteModel,
-  IServiceRemoteModelForms,
+  type IEntryModel,
+  type IServiceRemoteModel,
+  type IServiceRemoteModelForms,
 } from '../../../shared/models';
-import { IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
-  ModelFormGroup,
-  SimpleModelFormGroup,
+  type ICompanySendUpdate,
+  type ICompanyUpdate,
+} from '../../../shared/models/company';
+import {
+  type ModelFormGroup,
+  type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import {
+  DigitalDataService,
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../shared/services';
 import {
-  ActionEventProperties,
+  type ActionEventProperties,
+  type AdobeEventType,
   AdobeAnalyticsService,
   AdobeEvent,
-  AdobeEventType,
 } from '../../../shared/services/adobe-analytics.service';
-import {
-  CompanyService,
-  ICompanyResult,
-} from '../../../shared/services/company.service';
+import { CompanyService } from '../../../shared/services/company.service';
 import { LoginService } from '../../../shared/services/login.service';
 import {
-  ServiceConfigurationForm,
-  ServiceEditForm,
-  ServiceFormValue,
+  type ServiceConfigurationForm,
+  type ServiceEditForm,
+  type ServiceFormValue,
 } from '../../../shared/services/services-forms.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
 import {
+  type AuthForm,
+  type CompanyName,
+  type RegisterForm,
   AffiliationFormsService,
-  AuthForm,
-  CompanyName,
-  RegisterForm,
 } from './affiliation-forms.service';
 
 @Injectable()
@@ -79,6 +81,7 @@ export class AffiliationService {
     private affiliationForms: AffiliationFormsService,
     private serviceForms: ServicesFormsService,
     private logger: NGXLogger,
+    private digitalData: DigitalDataService,
     protected adobeAnalytics: AdobeAnalyticsService
   ) {
     this.setRegisterForm();
@@ -162,7 +165,7 @@ export class AffiliationService {
     };
   }
 
-  public validateCompany(): Observable<ICompanyResult> {
+  public validateCompany() {
     const {
       movilNumber,
       documentType,
@@ -178,7 +181,7 @@ export class AffiliationService {
       label: 'Siguiente',
       location: 'Registrate',
       step: 'Step1',
-      state: 'Envío exitoso',
+      state: stateSuccessful,
       metadata: [
         {
           key: 'TipoDocumento',
@@ -191,41 +194,46 @@ export class AffiliationService {
       ],
     };
 
-    return this.companyService
-      .validateCompany({
-        ruc,
-        email,
-        movilNumber,
-        movilOperator,
-        documentType,
-        documentNumber,
+    return this.digitalData.getData$().pipe(
+      switchMap((sdk) => {
+        return this.companyService
+          .validateCompany({
+            ruc,
+            email,
+            movilNumber,
+            movilOperator,
+            documentType,
+            documentNumber,
+            sdk,
+          })
+          .pipe(
+            tap(({ code, message, success, tradeName, fullName }) => {
+              if (success) {
+                this.authForm.get('ruc').setValue(ruc);
+                this.validateName(tradeName, fullName);
+                this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+              } else {
+                this.processResultCode(code, message, {
+                  ...actionStep,
+                  state: stateIntent,
+                });
+              }
+            }),
+            catchError((err) => {
+              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+                ...actionStep,
+                state: stateIntent,
+                typeError: typeErrorServer,
+              });
+              this.showErrorServer();
+              return throwError(err);
+            })
+          );
       })
-      .pipe(
-        tap(({ code, message, success, tradeName, fullName }) => {
-          if (success) {
-            this.authForm.get('ruc').setValue(ruc);
-            this.validateName(tradeName, fullName);
-            this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-          } else {
-            this.processResultCode(code, message, {
-              ...actionStep,
-              state: 'Intención de envío',
-            });
-          }
-        }),
-        catchError((err) => {
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-            ...actionStep,
-            state: 'Intención de envío',
-            typeError: 'Ha ocurrido un error con el servidor',
-          });
-          this.showErrorServer();
-          return throwError(err);
-        })
-      );
+    );
   }
 
-  validateName(tradeName: string, fullName: string) {
+  private validateName(tradeName: string, fullName: string) {
     this.companyNames = [];
     if (isNotNilOrEmpty(tradeName)) {
       this.companyNames.push({
@@ -250,7 +258,7 @@ export class AffiliationService {
     this.authForm.get('nameSelect').setValue(defaultValue.value);
   }
 
-  processResultCode(
+  private processResultCode(
     code: number,
     message: string,
     action: Partial<ActionEventProperties>
@@ -275,7 +283,7 @@ export class AffiliationService {
       default: {
         this.showErrorServer(message || '');
         titleError = 'Regístrame';
-        typeError = message || 'Ha ocurrido un error con el servidor';
+        typeError = message || typeError;
         break;
       }
     }
@@ -292,7 +300,7 @@ export class AffiliationService {
     });
   }
 
-  public saveCompany(): Observable<ICompanyResult> {
+  public saveCompany() {
     const {
       movilNumber,
       documentType,
@@ -311,7 +319,7 @@ export class AffiliationService {
       label: 'Siguiente',
       location: 'Registrate',
       step: 'Step2',
-      state: 'Envío exitoso',
+      state: stateSuccessful,
       metadata: [
         {
           key: 'Rubro Empresa',
@@ -319,39 +327,46 @@ export class AffiliationService {
         },
       ],
     };
-    const companyData: Partial<IDataEnterpriseModel> = {
-      documentType,
-      documentNumber,
-      ruc,
-      name,
-      entry,
-      email,
-      movilNumber,
-      movilOperator,
-      password,
-      acceptTerms,
-    };
-    return this.companyService.saveCompany(companyData).pipe(
-      tap(({ code, success, id, message }) => {
-        if (success) {
-          this.companyId = id;
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-        } else {
-          this.processResultCode(code, message, {
-            ...actionStep,
-            state: 'Intención de envío',
-          });
-        }
-      }),
-      catchError((err) => {
-        this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-          ...actionStep,
-          state: 'Intención de envío',
-          typeError: 'Ha ocurrido un error con el servidor',
-        });
-        this.showErrorServer();
-        return throwError(err);
-      })
+
+    return this.digitalData.getData$().pipe(
+      switchMap((sdk) =>
+        this.companyService
+          .saveCompany({
+            documentType,
+            documentNumber,
+            ruc,
+            name,
+            entry,
+            email,
+            movilNumber,
+            movilOperator,
+            password,
+            acceptTerms,
+            sdk,
+          })
+          .pipe(
+            tap(({ code, success, id, message }) => {
+              if (success) {
+                this.companyId = id;
+                this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+              } else {
+                this.processResultCode(code, message, {
+                  ...actionStep,
+                  state: stateIntent,
+                });
+              }
+            }),
+            catchError((err) => {
+              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+                ...actionStep,
+                state: stateIntent,
+                typeError: typeErrorServer,
+              });
+              this.showErrorServer();
+              return throwError(err);
+            })
+          )
+      )
     );
   }
 
@@ -454,7 +469,7 @@ export class AffiliationService {
       label: 'Siguiente',
       location: 'Registrate',
       step: 'Step4',
-      state: 'Envío exitoso',
+      state: stateSuccessful,
       metadata,
     });
   }
@@ -485,7 +500,7 @@ export class AffiliationService {
       module: 'Home',
       location: 'Registrate',
       step: 'Step5',
-      state: 'Envío exitoso',
+      state: stateSuccessful,
     };
 
     return this.companyService
@@ -502,8 +517,8 @@ export class AffiliationService {
         catchError((err) => {
           this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
             ...actionStep,
-            state: 'Intención de envío',
-            typeError: 'Ha ocurrido un error con el servidor',
+            state: stateIntent,
+            typeError: typeErrorServer,
           });
           throw new Error(err);
         })
@@ -664,7 +679,7 @@ export class AffiliationService {
     };
   }
 
-  public getEntryOptions(): Observable<IEntryModel[]> {
+  public getEntryOptions() {
     if (isNotNilOrEmpty(this.entryOptions)) {
       return of(this.entryOptions);
     }
@@ -727,7 +742,7 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
     });
   }
 
-  public getAccountsCompany(): Observable<any[]> {
+  public getAccountsCompany() {
     if (this.companyId) {
       return this.companyService.getCompanyAccountsById(this.companyId);
     }
