@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ServicesFormsService } from '../../../../shared/services';

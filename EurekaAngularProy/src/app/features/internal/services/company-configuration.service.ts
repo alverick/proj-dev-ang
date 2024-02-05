@@ -6,15 +6,15 @@ import { tap } from 'rxjs/operators';
 
 import { type IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
-  ModelFormGroup,
-  SimpleModelFormGroup,
+  type ModelFormGroup,
+  type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
 import {
-  ActionEventProperties,
+  type ActionEventProperties,
+  type Metadata,
   AdobeAnalyticsService,
   AdobeEvent,
-  Metadata,
 } from '../../../shared/services/adobe-analytics.service';
 import { LoginService } from '../../../shared/services/login.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
