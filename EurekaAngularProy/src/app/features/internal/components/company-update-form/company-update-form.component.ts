@@ -24,7 +24,6 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   documentNumberFilter: string | RegExp = 'int';
   @Input() operators = [];
   @Input() documentTypes = [];
-  @Input() categories: IEntryModel[] = [];
   @Input() errorMessages: IErrorMessages;
   @Input() form: UntypedFormGroup;
   @Input() submitted = false;
