@@ -1,4 +1,4 @@
-import { DataServiceGTP } from './data-service-gtp';
+import { type DataServiceGTP } from './data-service-gtp';
 
 export interface ICompanyData {
   cu?: string;
