@@ -319,40 +319,43 @@ export class AffiliationService {
         },
       ],
     };
-    const companyData: Partial<IDataEnterpriseModel> = {
-      documentType,
-      documentNumber,
-      ruc,
-      name,
-      entry,
-      email,
-      movilNumber,
-      movilOperator,
-      password,
-      acceptTerms,
-    };
-    return this.companyService.saveCompany(companyData).pipe(
-      tap(({ code, success, id, message }) => {
-        if (success) {
-          this.companyId = id;
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-        } else {
-          this.processResultCode(code, message, {
+
+    return this.companyService
+      .saveCompany({
+        documentType,
+        documentNumber,
+        ruc,
+        name,
+        entry,
+        entryName: entrySelect.name,
+        email,
+        movilNumber,
+        movilOperator,
+        password,
+        acceptTerms,
+      })
+      .pipe(
+        tap(({ code, success, id, message }) => {
+          if (success) {
+            this.companyId = id;
+            this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+          } else {
+            this.processResultCode(code, message, {
+              ...actionStep,
+              state: 'Intención de envío',
+            });
+          }
+        }),
+        catchError((err) => {
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: 'Intención de envío',
+            typeError: 'Ha ocurrido un error con el servidor',
           });
-        }
-      }),
-      catchError((err) => {
-        this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-          ...actionStep,
-          state: 'Intención de envío',
-          typeError: 'Ha ocurrido un error con el servidor',
-        });
-        this.showErrorServer();
-        return throwError(err);
-      })
-    );
+          this.showErrorServer();
+          return throwError(err);
+        })
+      );
   }
 
   public saveService() {
