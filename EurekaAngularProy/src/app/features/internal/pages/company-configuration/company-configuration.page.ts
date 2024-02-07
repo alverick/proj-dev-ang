@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { type OnInit, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
 
 import {
   documentTypes,
@@ -11,15 +10,20 @@ import {
   errorRegisterAuth,
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
-import { IEntryModel } from '../../../../shared/models';
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
-import { ModelFormGroup } from '../../../../shared/models/forms';
+import { type IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
+import {
+  type ModelFormGroup,
+  type SimpleModelFormGroup,
+} from '../../../../shared/models/forms';
 import {
   AdobeAnalyticsService,
   AdobeEvent,
 } from '../../../../shared/services/adobe-analytics.service';
 import { CompanyConfigurationService } from '../../services';
-import { ChangePasswordForm } from '../../services/company-configuration.service';
+import {
+  type ChangePasswordForm,
+  type CompanyForm,
+} from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-configuration',
@@ -27,7 +31,7 @@ import { ChangePasswordForm } from '../../services/company-configuration.service
   styleUrls: ['./company-configuration.page.scss'],
 })
 export class CompanyConfigurationPage implements OnInit {
-  companyForm: UntypedFormGroup;
+  companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<ChangePasswordForm>;
   errors = { ...errorsRegisterForm, ...errorRegisterAuth };
   operators = mobileOperators;
