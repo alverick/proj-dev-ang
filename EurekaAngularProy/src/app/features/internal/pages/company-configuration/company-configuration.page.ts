@@ -52,10 +52,8 @@ export class CompanyConfigurationPage implements OnInit {
     (
       this.activatedRoute.data as Observable<{
         company: IDataEnterpriseModel;
-        entries: IEntryModel[];
       }>
-    ).subscribe(({ company, entries }) => {
-      this.companyConfiguration.entryOptions = entries;
+    ).subscribe(({ company }) => {
       this.companyConfiguration.companyData = company;
       this.isInReview =
         company.newNameGTPStatus === 0 || company.newNameGTPStatus === 2;
