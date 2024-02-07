@@ -43,6 +43,7 @@ export class MockService implements ApiMockService {
           ruc: '20524801117',
           name: 'PRUEBA DASHBOARD',
           entry: '11',
+          entryName: 'Nombre de rubro 1',
           email: 'angelirivera1226@gmail.com',
           movilNumber: '931123502',
           movilOperator: 'B',
