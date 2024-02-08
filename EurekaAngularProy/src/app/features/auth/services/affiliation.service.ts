@@ -328,46 +328,41 @@ export class AffiliationService {
       ],
     };
 
-    return this.digitalData.getData$().pipe(
-      switchMap((sdk) =>
-        this.companyService
-          .saveCompany({
-            documentType,
-            documentNumber,
-            ruc,
-            name,
-            entry,
-            email,
-            movilNumber,
-            movilOperator,
-            password,
-            acceptTerms,
-            sdk,
-          })
-          .pipe(
-            tap(({ code, success, id, message }) => {
-              if (success) {
-                this.companyId = id;
-                this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-              } else {
-                this.processResultCode(code, message, {
-                  ...actionStep,
-                  state: stateIntent,
-                });
-              }
-            }),
-            catchError((err) => {
-              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-                ...actionStep,
-                state: stateIntent,
-                typeError: typeErrorServer,
-              });
-              this.showErrorServer();
-              return throwError(err);
-            })
-          )
-      )
-    );
+    return this.companyService
+      .saveCompany({
+        documentType,
+        documentNumber,
+        ruc,
+        name,
+        entry,
+        email,
+        movilNumber,
+        movilOperator,
+        password,
+        acceptTerms,
+      })
+      .pipe(
+        tap(({ code, success, id, message }) => {
+          if (success) {
+            this.companyId = id;
+            this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+          } else {
+            this.processResultCode(code, message, {
+              ...actionStep,
+              state: stateIntent,
+            });
+          }
+        }),
+        catchError((err) => {
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: stateIntent,
+            typeError: typeErrorServer,
+          });
+          this.showErrorServer();
+          return throwError(err);
+        })
+      );
   }
 
   public saveService() {
