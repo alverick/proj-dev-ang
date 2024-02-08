@@ -498,27 +498,31 @@ export class AffiliationService {
       step: 'Step5',
       state: stateSuccessful,
     };
-
-    return this.companyService
-      .saveServices({
-        clientId: this.companyId,
-        deleted: [],
-        services: this.servicesList,
+    return this.digitalData.getData$().pipe(
+      switchMap((sdk) => {
+        return this.companyService
+          .saveServices({
+            clientId: this.companyId,
+            deleted: [],
+            services: this.servicesList,
+            sdk,
+          })
+          .pipe(
+            tap(() => {
+              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+              this.resetRegistration();
+            }),
+            catchError((err) => {
+              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+                ...actionStep,
+                state: stateIntent,
+                typeError: typeErrorServer,
+              });
+              throw new Error(err);
+            })
+          );
       })
-      .pipe(
-        tap(() => {
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-          this.resetRegistration();
-        }),
-        catchError((err) => {
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-            ...actionStep,
-            state: stateIntent,
-            typeError: typeErrorServer,
-          });
-          throw new Error(err);
-        })
-      );
+    );
   }
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {

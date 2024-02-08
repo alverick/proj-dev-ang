@@ -6,7 +6,7 @@ import {
   type AuthForm,
   type RegisterForm,
 } from '../../features/auth/services/affiliation-forms.service';
-import { type IServicePostData, type IServiceRemoteModel } from '../models';
+import { type IServiceRemoteModel, type ServicePostData } from '../models';
 import { type IAccountStateDetails } from '../models/company';
 import { type IDataEnterpriseModel } from '../models/data-enterprise.model';
 import { type FingerPrintData } from './digital-data.service';
@@ -31,6 +31,7 @@ type ValidateCompanyData = Partial<RegisterForm> & { sdk: FingerPrintData };
 type SaveCompanyData = Partial<RegisterForm> &
   Partial<AuthForm> & { entryName: string };
 type UpdateCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
+type CompanyServicesData = ServicePostData & { sdk: FingerPrintData };
 
 @Injectable()
 export class CompanyService {
@@ -55,7 +56,7 @@ export class CompanyService {
     return this.http.put<ICompanyResult>(url, data);
   }
 
-  saveServices(data: IServicePostData) {
+  saveServices(data: CompanyServicesData) {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company/service`,
       data
