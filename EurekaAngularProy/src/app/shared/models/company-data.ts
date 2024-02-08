@@ -7,13 +7,13 @@ export interface ICompanyData {
   entry: string;
   entryName: string;
   email: string;
-  movilNumber: number;
+  movilNumber: string | number;
   movilOperator: string;
   newName: string;
   newNameGTPStatus?: any;
   status: string;
   uniqueCodeIBK: string;
-  requestDate?: Date;
+  requestDate?: Date | string;
   inReview?: boolean;
   arrayServices?: DataServiceGTP[];
   NombreApproved?: boolean;
