@@ -70,10 +70,7 @@ export class AprobacionesPage implements OnInit {
     });
     this.llave = this.activatedRoute.snapshot.params.llave;
     /// TRAE LOS SERVICIOS
-    this.afiliacionService.GetRubrosAll().subscribe((d) => {
-      this.rubros = d;
-      this.loadEnterpriseData();
-    });
+    this.loadEnterpriseData();
   }
 
   loadEnterpriseData() {
@@ -86,9 +83,7 @@ export class AprobacionesPage implements OnInit {
   getInfoEmpresa() {
     this.gtpService.GetEnterpriseGtp(this.llave).subscribe((dataEnterprise) => {
       this.Enterprise = dataEnterprise;
-      this.rubro = this.rubros.find(
-        (v) => v.code === this.Enterprise.entry
-      ).name;
+      this.rubro = dataEnterprise.entryName;
     });
   }
 
