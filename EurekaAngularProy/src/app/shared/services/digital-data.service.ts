@@ -122,7 +122,18 @@ export class DigitalDataService {
     return this.fingerPrintData.pipe(
       mergeMap((data) =>
         this.ipInfoService.getIpInfo().pipe(
-          map((Geoip) => ({ ...data, Geoip })),
+          map((Geoip) => {
+            return {
+              ...data,
+              Geoip,
+              Site: {
+                ...data.Site,
+                href: location.href,
+                pathname: location.pathname,
+                origin: location.origin,
+              },
+            };
+          }),
           catchError(() => of(data))
         )
       )
