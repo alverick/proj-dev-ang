@@ -1,18 +1,21 @@
 import {
+  type OnChanges,
+  type OnInit,
+  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { NgForm, UntypedFormGroup } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { isNil, pathEq } from 'ramda';
-import { IErrorMessages } from 'src/app/shared/models/forms';
 
-import { IEntryModel } from '../../../../shared/models';
+import {
+  type SimpleModelFormGroup,
+  IErrorMessages,
+} from '../../../../shared/models/forms';
+import { type CompanyForm } from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-update-form',
@@ -24,9 +27,8 @@ export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   documentNumberFilter: string | RegExp = 'int';
   @Input() operators = [];
   @Input() documentTypes = [];
-  @Input() categories: IEntryModel[] = [];
   @Input() errorMessages: IErrorMessages;
-  @Input() form: UntypedFormGroup;
+  @Input() form: SimpleModelFormGroup<CompanyForm>;
   @Input() submitted = false;
   @Input() inReview = false;
   @Input() nameInReview = '';

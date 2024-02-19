@@ -45,6 +45,9 @@ export const errorRegisterAuth: IErrorMessages = {
   entrySelect: {
     required: 'Elige una opción',
   },
+  entryName: {
+    required: 'Rubro es obligatorio',
+  },
   password: {
     required: 'La contraseña es obligatoria',
     length: 'La contraseña no es válida',
