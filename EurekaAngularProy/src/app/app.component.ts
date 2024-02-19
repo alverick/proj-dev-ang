@@ -9,8 +9,11 @@ import { PrimeNGConfig } from 'primeng/api';
 import { isNil } from 'ramda';
 
 import { primeng } from './shared/lang/es';
+import {
+  AdobeLaunchProviderService,
+  NewRelicProviderService,
+} from './shared/services';
 import { LoginService } from './shared/services/login.service';
-import { TrackingService } from './shared/services/tracking.service';
 
 @Component({
   selector: 'cs-root',
@@ -27,9 +30,11 @@ export class AppComponent implements OnInit, AfterContentChecked {
     matIconRegistry: MatIconRegistry,
     domSanitizer: DomSanitizer,
     private primengConfig: PrimeNGConfig,
-    private tracking: TrackingService
+    adobeLaunch: AdobeLaunchProviderService,
+    newrelic: NewRelicProviderService
   ) {
-    this.tracking.startRouterPageTracking();
+    adobeLaunch.startTracking();
+    newrelic.startTracking();
 
     matIconRegistry.addSvgIcon(
       'eurc_calendar',
