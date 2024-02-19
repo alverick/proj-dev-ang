@@ -57,6 +57,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { ControlRulesPoliciesComponent } from './components/control-rules-policies/control-rules-policies.component';
@@ -85,7 +86,6 @@ import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
-import { ToastModule } from 'primeng/toast';
 
 const FORM_MODULES = [
   FormsModule,
