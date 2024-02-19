@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { clone } from 'ramda';
+import { isNotNil } from 'ramda-adjunct';
 import { ReplaySubject } from 'rxjs';
 
 import {
@@ -62,7 +63,6 @@ export interface TrackEventProperties {
 
 export type EventTrackType = {
   event: AdobeEventType;
-  eventProperties?: Partial<ActionEventProperties>;
   payload: Partial<TrackEventProperties>;
 };
 
@@ -91,10 +91,11 @@ export class TrackingService {
     if (session?.isAuthenticate) {
       this.setRuc(window.sessionStorage.getItem('username'));
     }
+    this.startRouterPageTracking();
   }
 
   setRuc(ruc: string) {
-    if ('undefined' !== typeof ruc && ruc) {
+    if (isNotNil(ruc)) {
       this.payload.user.codRuc = ruc;
     }
   }
@@ -112,7 +113,19 @@ export class TrackingService {
     eventProperties?: Partial<ActionEventProperties>
   ) {
     const payload = clone(this.payload);
-    this.eventSubject$.next({ event, eventProperties, payload });
+    if (isNotNil(eventProperties)) {
+      if (
+        event === AdobeEvent.trackFormSubmit ||
+        event === AdobeEvent.login ||
+        event === AdobeEvent.trackAction
+      ) {
+        payload.action = eventProperties;
+      }
+      if (event === AdobeEvent.trackView) {
+        payload.view = eventProperties;
+      }
+    }
+    this.eventSubject$.next({ event, payload });
   }
 
   trackPage(path: string) {
@@ -127,8 +140,7 @@ export class TrackingService {
       url: `${location.protocol}//${location.host}${pathComp}`,
     };
 
-    const payload = clone(this.payload);
-    this.pageSubject$.next(payload);
+    this.pageSubject$.next(this.payload);
   }
 
   private parseModule(url: string) {
