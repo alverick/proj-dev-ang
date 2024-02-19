@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { clone, isEmpty } from 'ramda';
-import { isNotNil } from 'ramda-adjunct';
+import { isEmpty } from 'ramda';
 
 import { environment } from '../../../environments/environment';
+import { type ProviderService } from './provider.service';
 import { ScriptInjectorService } from './script-injector.service';
 import {
-  type ActionEventProperties,
   type AdobeEventType,
   type TrackEventProperties,
   AdobeEvent,
@@ -20,22 +19,13 @@ interface Satellite {
 
 export declare const _satellite: Satellite;
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AdobeLaunchProviderService {
+@Injectable()
+export class AdobeLaunchProviderService implements ProviderService {
   constructor(
     private scriptInjectorService: ScriptInjectorService,
-    protected trackingService: TrackingService
+    public trackingService: TrackingService
   ) {
     void this.injectAdobeLaunchScript();
-    trackingService.eventSubject$.subscribe(
-      ({ event, eventProperties, payload }) =>
-        this.trackEvent(event, eventProperties, payload)
-    );
-    trackingService.pageSubject$.subscribe((payload) =>
-      this.trackPage(payload)
-    );
   }
 
   async injectAdobeLaunchScript() {
@@ -43,7 +33,6 @@ export class AdobeLaunchProviderService {
       return;
     }
     try {
-      console.log('loaded adobe');
       await this.scriptInjectorService.load('Launch', environment.adobe);
       _satellite.pageBottom();
     } catch (e) {
@@ -55,52 +44,8 @@ export class AdobeLaunchProviderService {
     this.runSatelliteEvent(AdobeEvent.pageTrack, payload);
   }
 
-  trackEvent(
-    event: AdobeEventType,
-    eventProperties: Partial<ActionEventProperties>,
-    payloadInit: Partial<TrackEventProperties>
-  ) {
-    const payload = clone(payloadInit);
-    if (isNotNil(eventProperties)) {
-      if (
-        event === AdobeEvent.trackFormSubmit ||
-        event === AdobeEvent.login ||
-        event === AdobeEvent.trackAction
-      ) {
-        payload.action = eventProperties;
-      }
-      if (event === AdobeEvent.trackView) {
-        payload.view = eventProperties;
-      }
-    }
+  trackEvent(event: AdobeEventType, payload: Partial<TrackEventProperties>) {
     this.runSatelliteEvent(event, payload);
-    // if (payload.page.module === 'Afiliación') {
-    //   const isObject = (x) => Object(x) === x;
-    //   // flatten object
-    //   const oflatten = (data) => {
-    //     const loop = (
-    //       namespace,
-    //       acc: Record<string, string | boolean | number>,
-    //       data
-    //     ): Record<string, string | boolean | number> => {
-    //       if (Array.isArray(data))
-    //         data.forEach((v, k) => loop(namespace.concat([k]), acc, v));
-    //       else if (isObject(data))
-    //         Object.keys(data).forEach((k) =>
-    //           loop(namespace.concat([k]), acc, data[k])
-    //         );
-    //       else Object.assign(acc, { [namespace.join('.')]: data });
-    //       return acc;
-    //     };
-    //     return loop([], {}, data);
-    //   };
-    //   console.log('flujo Afiliación', event, oflatten(payload));
-    //   // BrowserAgent.addPageAction
-    //   newrelic.addPageAction(
-    //     event,
-    //     oflatten(payload) as Record<string, string>
-    //   );
-    // }
   }
 
   private runSatelliteEvent(
@@ -114,5 +59,14 @@ export class AdobeLaunchProviderService {
     } catch (error) {
       console.error('Adobe Launch not loaded', error);
     }
+  }
+
+  startTracking(): void {
+    this.trackingService.eventSubject$.subscribe(({ event, payload }) => {
+      this.trackEvent(event, payload);
+    });
+    this.trackingService.pageSubject$.subscribe((payload) =>
+      this.trackPage(payload)
+    );
   }
 }
