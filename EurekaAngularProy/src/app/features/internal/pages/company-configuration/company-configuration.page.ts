@@ -1,5 +1,4 @@
 import { type OnInit, Component } from '@angular/core';
-import { type UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { type Observable } from 'rxjs';
 
@@ -11,7 +10,6 @@ import {
   errorRegisterAuth,
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
-import { type IEntryModel } from '../../../../shared/models';
 import { type IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import { type ModelFormGroup } from '../../../../shared/models/forms';
 import {
@@ -19,7 +17,10 @@ import {
   TrackingService,
 } from '../../../../shared/services/tracking.service';
 import { CompanyConfigurationService } from '../../services';
-import { type ChangePasswordForm } from '../../services/company-configuration.service';
+import {
+  type ChangePasswordForm,
+  type CompanyForm,
+} from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-configuration',
@@ -27,7 +28,7 @@ import { type ChangePasswordForm } from '../../services/company-configuration.se
   styleUrls: ['./company-configuration.page.scss'],
 })
 export class CompanyConfigurationPage implements OnInit {
-  companyForm: UntypedFormGroup;
+  companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<ChangePasswordForm>;
   errors = { ...errorsRegisterForm, ...errorRegisterAuth };
   operators = mobileOperators;
@@ -52,10 +53,8 @@ export class CompanyConfigurationPage implements OnInit {
     (
       this.activatedRoute.data as Observable<{
         company: IDataEnterpriseModel;
-        entries: IEntryModel[];
       }>
-    ).subscribe(({ company, entries }) => {
-      this.companyConfiguration.entryOptions = entries;
+    ).subscribe(({ company }) => {
       this.companyConfiguration.companyData = company;
       this.isInReview =
         company.newNameGTPStatus === 0 || company.newNameGTPStatus === 2;

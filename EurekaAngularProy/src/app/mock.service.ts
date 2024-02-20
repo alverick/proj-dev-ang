@@ -6,6 +6,7 @@ import {
 } from '@ng-stack/api-mock';
 
 import { environment } from '../environments/environment';
+import { type ICompanyData } from './shared/models/company-data';
 import { type IDataEnterpriseModel } from './shared/models/data-enterprise.model';
 
 @Injectable({
@@ -43,6 +44,7 @@ export class MockService implements ApiMockService {
           ruc: '20524801117',
           name: 'PRUEBA DASHBOARD',
           entry: '11',
+          entryName: 'Nombre de rubro 1',
           email: 'angelirivera1226@gmail.com',
           movilNumber: '931123502',
           movilOperator: 'B',
@@ -58,6 +60,27 @@ export class MockService implements ApiMockService {
             { currency: '001', amountMax: 4000 },
             { currency: '002', amountMax: 4000 },
           ],
+        }),
+      },
+      {
+        host: environment.END_POINT,
+        path: 'company/GTP/client/3581',
+        responseCallback: (): Partial<ICompanyData> => ({
+          ruc: '20393206498',
+          name: 'EMPR ANGULAR150',
+          entry: '14',
+          entryName: 'Rubro de prueba',
+          email: 'CORREOPRUEBAQA2@outlook.es',
+          movilNumber: '945580923',
+          movilOperator: 'M',
+          newName: 'EMPR ANGULAR150',
+          newNameGTPStatus: 1,
+          uniqueCodeIBK: '00000060611123',
+          requestDate: '2024-02-07T17:43:14.5366667',
+          inReview: false,
+          enabled: false,
+          isNewEnterprise: false,
+          useAgencyChannel: false,
         }),
       },
       {

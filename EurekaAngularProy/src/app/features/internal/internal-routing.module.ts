@@ -41,7 +41,6 @@ const routes: Routes = [
         path: internalRoutingNames.COMPANY,
         component: CompanyConfigurationPage,
         resolve: {
-          entries: CompanyEntriesResolver,
           company: CompanyDataResolver,
         },
         canActivate: [AuthGuard, GtpOutputGuard],

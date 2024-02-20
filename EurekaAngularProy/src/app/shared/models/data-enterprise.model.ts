@@ -7,6 +7,7 @@ export interface IDataEnterpriseModel {
   ruc: string;
   name: string;
   entry: string;
+  entryName: string;
   email: string;
   movilNumber: string;
   movilOperator: string;

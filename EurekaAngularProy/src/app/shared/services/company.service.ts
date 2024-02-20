@@ -30,7 +30,7 @@ export interface CompanyAccounts {
 
 type ValidateCompanyData = Partial<RegisterForm> & { sdk: FingerPrintData };
 type SaveCompanyData = Partial<RegisterForm> &
-  Partial<AuthForm> & { sdk: FingerPrintData };
+  Partial<AuthForm> & { sdk: FingerPrintData; entryName: string };
 type UpdateCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
 
 @Injectable()

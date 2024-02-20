@@ -381,6 +381,7 @@ export class AffiliationService {
             ruc,
             name,
             entry,
+            entryName: entrySelect.name,
             email,
             movilNumber,
             movilOperator,

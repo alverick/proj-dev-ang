@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forEachObjIndexed, pick } from 'ramda';
-import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
 
-import { type IEntryModel } from '../../../shared/models';
 import { type IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
   type ModelFormGroup,
@@ -36,7 +34,7 @@ export interface CompanyForm {
   ruc: string;
   name: string;
   entry: string;
-  entrySelect: IEntryModel;
+  entryName: string;
   email: string;
   movilNumber: string;
   movilOperator: string;
@@ -49,8 +47,6 @@ export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
   companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<ChangePasswordForm>;
-  entryOptions: IEntryModel[] = [];
-  entryOptionsAdd: IEntryModel[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -73,7 +69,6 @@ export class CompanyConfigurationService {
     } else {
       this.companyForm.get('name').enable();
     }
-    this.setCategory();
   }
 
   saveCompanyData() {
@@ -231,16 +226,6 @@ export class CompanyConfigurationService {
     );
   }
 
-  setCategory() {
-    const entryControl = this.companyForm.get('entry');
-    if (isNotEmpty(this.entryOptions) && isNotEmpty(entryControl.value)) {
-      const entrySel = this.entryOptions.find(
-        (entry) => entry.code === entryControl.value
-      );
-      this.companyForm.get('entrySelect').setValue(entrySel);
-    }
-  }
-
   private initForms() {
     this.companyForm = this.fb.group({
       name: [
@@ -253,7 +238,7 @@ export class CompanyConfigurationService {
       ],
       ruc: [{ value: '', disabled: true }],
       entry: [{ value: '', disabled: true }],
-      entrySelect: [{ value: null as IEntryModel, disabled: true }],
+      entryName: [{ value: '', disabled: true }],
       documentType: [{ value: '', disabled: true }],
       documentNumber: [{ value: '', disabled: true }],
       email: [
