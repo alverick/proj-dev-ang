@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { type BrowserAgent } from '@newrelic/browser-agent/loaders/browser-agent';
 import dot from 'dot-object';
-import { pathOr } from 'ramda';
+import { hasPath, path, pathOr } from 'ramda';
 import { filter } from 'rxjs/operators';
 
 import { type ProviderService } from './provider.service';
@@ -31,10 +31,14 @@ export class NewRelicProviderService implements ProviderService {
   }
 
   trackEvent(event: AdobeEventType, payload: Partial<TrackEventProperties>) {
-    const metadata = pathOr<Metadata[]>([], ['action', 'metadata'], payload);
-    const data = Object.fromEntries(
-      metadata.map((meta) => [meta.key, meta.value])
-    );
+    let data: Record<string, unknown>;
+    const rawdataPath = ['action', 'rawMetadata', 'newrelic'];
+    if (hasPath(rawdataPath, payload)) {
+      data = path(rawdataPath, payload);
+    } else {
+      const metadata = pathOr<Metadata[]>([], ['action', 'metadata'], payload);
+      data = Object.fromEntries(metadata.map((meta) => [meta.key, meta.value]));
+    }
     window.newrelic.addPageAction(event, {
       ...data,
       state: payload.action.state,
