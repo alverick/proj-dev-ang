@@ -11,7 +11,10 @@ import {
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
 import { type IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
-import { type ModelFormGroup } from '../../../../shared/models/forms';
+import {
+  type ModelFormGroup,
+  type SimpleModelFormGroup,
+} from '../../../../shared/models/forms';
 import {
   AdobeEvent,
   TrackingService,
