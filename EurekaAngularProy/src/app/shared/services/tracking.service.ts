@@ -39,12 +39,14 @@ export interface ActionEventProperties {
   action: string;
   label: string;
   detail: string;
+  module: string;
   typeElement: string;
   location: string;
   step: string;
   state: string;
   typeError: string;
   metadata: Metadata[];
+  rawMetadata: Record<string, Record<string, unknown>>;
 }
 
 export interface TrackEventProperties {
