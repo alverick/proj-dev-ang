@@ -155,6 +155,7 @@ export class TrackingService {
       [authFullRoutingNames.RECOVER_PASSWORD]: 'RecuperarContrasena',
       [authFullRoutingNames.SERVICES_ADD]: 'Afiliación',
       [authFullRoutingNames.COMPANY_REGISTER]: 'Afiliación',
+      [authFullRoutingNames.COMPANY_FILL_DATA]: 'Afiliación',
       [authFullRoutingNames.REGISTRATION_FINISHED]: 'Afiliación',
     };
     let moduleParsed = '';
