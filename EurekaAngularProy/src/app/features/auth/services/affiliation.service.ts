@@ -188,8 +188,24 @@ export class AffiliationService {
           value: documentType,
         },
         {
+          key: 'NúmeroDocumento',
+          value: documentNumber,
+        },
+        {
+          key: 'RucEmpresa',
+          value: ruc,
+        },
+        {
+          key: 'Email',
+          value: email,
+        },
+        {
           key: 'Operador',
           value: movilOperator,
+        },
+        {
+          key: 'Celular',
+          value: movilNumber,
         },
       ],
     };
@@ -321,6 +337,34 @@ export class AffiliationService {
       step: 'Step2',
       state: stateSuccessful,
       metadata: [
+        {
+          key: 'TipoDocumento',
+          value: documentType,
+        },
+        {
+          key: 'NúmeroDocumento',
+          value: documentNumber,
+        },
+        {
+          key: 'RucEmpresa',
+          value: ruc,
+        },
+        {
+          key: 'Email',
+          value: email,
+        },
+        {
+          key: 'Operador',
+          value: movilOperator,
+        },
+        {
+          key: 'Celular',
+          value: movilNumber,
+        },
+        {
+          key: 'Nombre Empresa',
+          value: name,
+        },
         {
           key: 'Rubro Empresa',
           value: entrySelect.name,
@@ -490,8 +534,20 @@ export class AffiliationService {
         location: 'Modal',
       });
 
-      return throwError('No services');
+      return throwError(() => 'No services');
     }
+
+    const metadata = [];
+    this.servicesList
+      .map(({ id, newName, newNameCode, ...service }) => service)
+      .forEach((service, idx) => {
+        for (const serviceElement in service) {
+          metadata.push({
+            key: `${serviceElement}.${idx}`,
+            value: service[serviceElement] as string | number | boolean,
+          });
+        }
+      });
 
     const actionStep = {
       category: 'Registrate – Resumen de servicios',
@@ -501,6 +557,7 @@ export class AffiliationService {
       location: 'Registrate',
       step: 'Step5',
       state: stateSuccessful,
+      metadata,
     };
 
     return this.companyService
