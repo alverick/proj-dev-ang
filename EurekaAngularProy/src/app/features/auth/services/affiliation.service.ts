@@ -540,7 +540,7 @@ export class AffiliationService {
         }
       });
 
-    const actionStep = {
+    const actionStep: Partial<ActionEventProperties> = {
       category: 'Registrate – Resumen de servicios',
       action: 'Click',
       label: 'Siguiente',
@@ -549,6 +549,13 @@ export class AffiliationService {
       step: 'Step5',
       state: stateSuccessful,
       metadata,
+      rawMetadata: {
+        newrelic: {
+          services: this.servicesList.map(
+            ({ id, newName, newNameCode, ...service }) => service
+          ),
+        },
+      },
     };
     return this.digitalData.getData$().pipe(
       switchMap((sdk) => {
