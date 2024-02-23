@@ -9,6 +9,7 @@ import {
   authFullRoutingNames,
   internalFullRoutingNames,
 } from '../../app-routing.collection';
+import { notAvailable } from '../constants/analytics-messages';
 import { StorageService } from './storage.service';
 
 export const AdobeEvent = {
@@ -78,11 +79,11 @@ export class TrackingService {
       platform: 'Web',
     },
     user: {
-      userId: 'Not available',
-      digitalId: 'Not available',
-      codEmpresa: 'Not available',
-      codGrupo: 'Not available',
-      codRuc: 'Not available',
+      userId: notAvailable,
+      digitalId: notAvailable,
+      codEmpresa: notAvailable,
+      codGrupo: notAvailable,
+      codRuc: notAvailable,
     },
   };
   pageSubject$ = new ReplaySubject<Partial<TrackEventProperties>>(10);
