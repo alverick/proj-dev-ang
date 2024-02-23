@@ -19,6 +19,10 @@ export interface Satellite {
 
 export declare const _satellite: Satellite;
 
+declare const window: {
+  _satellite: Satellite;
+} & Window;
+
 @Injectable()
 export class AdobeLaunchProviderService implements ProviderService {
   constructor(
@@ -34,7 +38,7 @@ export class AdobeLaunchProviderService implements ProviderService {
     }
     try {
       await this.scriptInjectorService.load('Launch', environment.adobe);
-      _satellite.pageBottom();
+      window._satellite.pageBottom();
     } catch (e) {
       console.error('Error while loading Adobe Launch script', e);
     }
@@ -53,8 +57,8 @@ export class AdobeLaunchProviderService implements ProviderService {
     payload: Partial<TrackEventProperties>
   ) {
     try {
-      if ('undefined' !== typeof _satellite && _satellite) {
-        _satellite.track(event, payload);
+      if ('undefined' !== typeof window._satellite && window._satellite) {
+        window._satellite.track(event, payload);
       }
     } catch (error) {
       console.error('Adobe Launch not loaded', error);
