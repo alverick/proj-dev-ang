@@ -11,7 +11,7 @@ import {
   TrackingService,
 } from './tracking.service';
 
-interface Satellite {
+export interface Satellite {
   pageBottom(): void;
 
   track(event: AdobeEventType, payload: Partial<TrackEventProperties>): void;
