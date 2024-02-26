@@ -14,14 +14,14 @@ describe('AdobeLaunchProviderService', () => {
   let service: AdobeLaunchProviderService;
   const _satellite: Partial<Satellite> = {
     track: () => {
-      console.log('addPageAction');
+      console.log('track');
     },
   };
 
   window._satellite = _satellite;
 
   const mockedTrackPage = jest.fn();
-  const newRelicActionOrig = _satellite.track;
+  const adobeActionOrig = _satellite.track;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ providers: [AdobeLaunchProviderService] });
@@ -30,7 +30,7 @@ describe('AdobeLaunchProviderService', () => {
   });
 
   afterEach(() => {
-    _satellite.track = newRelicActionOrig;
+    _satellite.track = adobeActionOrig;
   });
 
   it('should be created', () => {
