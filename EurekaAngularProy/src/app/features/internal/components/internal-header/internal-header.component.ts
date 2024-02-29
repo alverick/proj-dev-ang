@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 
-import {
-  AdobeAnalyticsService,
-  AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import {
-  MessagesType,
+  type MessagesType,
   NotifyService,
 } from '../../../../shared/services/notify.service';
 import { StorageService } from '../../../../shared/services/storage.service';
+import {
+  AdobeEvent,
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
@@ -46,12 +47,12 @@ export class InternalHeaderComponent implements OnInit {
     private excelser: ExcelService,
     public afiliacionService: AfiliacionService,
     private storage: StorageService,
-    private adobeAnalytics: AdobeAnalyticsService
+    private tracking: TrackingService
   ) {}
 
   toggle(text: string) {
     this.isExpanded = !this.isExpanded;
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
       detail: `Enlace a ${text}`,
@@ -88,7 +89,7 @@ export class InternalHeaderComponent implements OnInit {
     });
     this.excelser.statusUpload = false;
     this.isExpanded = false;
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
       detail: 'Cerrar Sesión',
@@ -103,7 +104,7 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   gotoChargesPage() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
       detail: 'Enlace a ' + this.chargesText,
@@ -114,7 +115,7 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   gotoHomePage() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
       detail: 'Enlace a ' + this.homeText,
@@ -125,7 +126,7 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   gotoCompanyPage() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
       detail: 'Enlace a ' + this.companyText,
@@ -136,7 +137,7 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   gotoHelpPage() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
       detail: 'Enlace a ' + this.helpText,
@@ -147,7 +148,7 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   openNotifyList() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
       detail: 'Mostrar notificaciones',
@@ -159,7 +160,7 @@ export class InternalHeaderComponent implements OnInit {
 
   markAllNotifications() {
     this.notify.markAll();
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
       detail: 'Marcar todas como leídas',
@@ -172,7 +173,7 @@ export class InternalHeaderComponent implements OnInit {
   markNotification(msg: MessagesType, $event: MouseEvent) {
     this.notify.changeRead(msg);
     $event.stopPropagation();
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
       detail: 'Marcar notificación como leída',

@@ -19,9 +19,9 @@ import { filter } from 'rxjs/operators';
 import { type CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 import { type Debts } from '../../../../../../shared/models/debts';
 import {
-  AdobeAnalyticsService,
   AdobeEvent,
-} from '../../../../../../shared/services/adobe-analytics.service';
+  TrackingService,
+} from '../../../../../../shared/services/tracking.service';
 import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 import { SelectAllTableService } from '../../../../services';
 
@@ -100,7 +100,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   constructor(
     private logger: NGXLogger,
     private selectAllTable: SelectAllTableService,
-    private adobeAnalytics: AdobeAnalyticsService,
+    private tracking: TrackingService,
     private store: Store
   ) {}
 
@@ -220,7 +220,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
 
   onRowEditInit(data: any) {
     this.dataSet[data.id] = { ...data };
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: 'Editar movimiento',
@@ -260,7 +260,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   onRowEditCancel(data: any, pos) {
     this.data[pos] = this.dataSet[data.id];
     delete this.dataSet[data.id];
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: 'Cancelar edición de movimientos seleccionado',
@@ -275,7 +275,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     this.willCloseModal = false;
     this.dataSet[data.id] = { ...data };
     this.editRowData = clone(data);
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: 'Editar movimiento móvil',
@@ -315,7 +315,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       this.willCloseModal = false;
       return;
     }
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: `${text} editar movimiento móvil`,

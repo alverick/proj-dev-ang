@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { type Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 
-import { RespuestaLogin } from '../models/respuestaLogin.model';
+import { environment } from '../../../environments/environment';
+import { type RespuestaLogin } from '../models/respuestaLogin.model';
 import { NotifyService } from './notify.service';
 import { StorageService } from './storage.service';
 

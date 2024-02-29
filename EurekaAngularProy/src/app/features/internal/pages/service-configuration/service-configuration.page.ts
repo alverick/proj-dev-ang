@@ -11,9 +11,9 @@ import {
 } from '../../../../shared/constants/services';
 import { ServicesFormsService } from '../../../../shared/services';
 import {
-  AdobeAnalyticsService,
   AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { errorServiceConfiguration } from '../../constants';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 import { CompanyServicesService } from '../../services';
@@ -35,7 +35,7 @@ export class ServiceConfigurationPage {
     protected companyServices: CompanyServicesService,
     public serviceForms: ServicesFormsService,
     private logger: NGXLogger,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {}
 
   onSubmit() {
@@ -46,7 +46,7 @@ export class ServiceConfigurationPage {
   }
 
   onCancel() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Servicios agregar nuevo servicio',
       action: 'Click',
       detail: 'Cancelar agregar otro servicio',

@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 
-import {
-  AdobeAnalyticsService,
-  AdobeEvent,
-} from '../../services/adobe-analytics.service';
+import { AdobeEvent, TrackingService } from '../../services/tracking.service';
 import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
 
 @Component({
@@ -16,7 +13,7 @@ import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
 export class FooterComponent {
   constructor(
     public dialogService: DialogService,
-    private adobeAnalytics: AdobeAnalyticsService
+    private tracking: TrackingService
   ) {}
 
   showModalTerms() {
@@ -26,7 +23,7 @@ export class FooterComponent {
       styleClass: 'modal-custom-cs',
     });
 
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Términos y condiciones',
       action: 'Click',
       detail: 'Términos y condiciones',
@@ -35,7 +32,7 @@ export class FooterComponent {
       location: 'Footer',
     });
 
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: 'Términos y condiciones',
       action: 'modal-view',
       detail: 'Términos y condiciones',
@@ -44,7 +41,7 @@ export class FooterComponent {
   }
 
   clickWa() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Contáctanos',
       action: 'Click',
       detail: 'Enlace a whatsapp',

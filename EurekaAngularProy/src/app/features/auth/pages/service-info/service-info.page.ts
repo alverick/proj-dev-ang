@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 
 import { ServicesFormsService } from '../../../../shared/services';
 import {
-  AdobeAnalyticsService,
   AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import { errorServiceInformation } from '../../constants';
 import { AffiliationService } from '../../services';
@@ -22,7 +22,7 @@ export class ServiceInfoPage implements OnInit {
     private router: Router,
     public affiliation: AffiliationService,
     private serviceForms: ServicesFormsService,
-    private adobeAnalytics: AdobeAnalyticsService
+    private tracking: TrackingService
   ) {}
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class ServiceInfoPage implements OnInit {
   }
   onSubmit() {
     const { useAgent } = this.affiliation.serviceForm.value;
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+    this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
       category: 'Registrate – Información de servicio',
       action: 'Click',
       label: 'Siguiente',

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { type Routes, RouterModule } from '@angular/router';
 
 import { appRoutingNames } from './app-routing.names';
 import {
