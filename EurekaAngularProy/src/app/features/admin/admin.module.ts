@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { AdminRoutingModule } from './admin-routing.module';
+
+import { SharedModule } from '../../shared/shared.module';
 import { AdminComponent } from './admin.component';
+import { AdminRoutingModule } from './admin-routing.module';
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
 import { EmpresaGTPComponent } from './components/empresa-gtp/empresa-gtp.component';
 import { ServicesGTPComponent } from './components/services-gtp/services-gtp.component';

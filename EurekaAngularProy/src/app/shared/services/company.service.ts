@@ -28,7 +28,8 @@ export interface CompanyAccounts {
 }
 
 type ValidateCompanyData = Partial<RegisterForm> & { sdk: FingerPrintData };
-type SaveCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
+type SaveCompanyData = Partial<RegisterForm> &
+  Partial<AuthForm> & { entryName: string };
 type UpdateCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
 type CompanyServicesData = ServicePostData & { sdk: FingerPrintData };
 

@@ -1,6 +1,16 @@
-const R = require('ramda');
+import { type TargetOptions } from '@angular-builders/custom-webpack';
+import { forEachObjIndexed, isEmpty } from 'ramda';
+
 const defaultRootUrl = 'https://cobrosimple.dev.interbank.pe';
-const settings = {
+
+type EnvironmentType = 'default' | 'dev' | 'production' | 'uat';
+
+type EnvironmentConfig = {
+  scripts: { hotjar: string; newRelic: string };
+  url: string;
+};
+
+const settings: Record<EnvironmentType, EnvironmentConfig> = {
   default: {
     scripts: {
       newRelic: '',
@@ -31,21 +41,21 @@ const settings = {
   },
 };
 
-function changeOgImage(configuration, indexHtml) {
+function changeOgImage(configuration: EnvironmentType, indexHtml: string) {
   if (settings[configuration].url !== defaultRootUrl) {
     return indexHtml.replaceAll(defaultRootUrl, settings[configuration].url);
   }
   return indexHtml;
 }
 
-function includeScripts(configuration, indexHtml) {
+function includeScripts(configuration: EnvironmentType, indexHtml: string) {
   let scripts = '';
-  R.forEachObjIndexed(function (value) {
-    if (!R.isEmpty(value)) {
+  forEachObjIndexed(function (value) {
+    if (!isEmpty(value)) {
       scripts += `<script src="${value}"></script>`;
     }
   }, settings[configuration].scripts);
-  if (!R.isEmpty(scripts)) {
+  if (!isEmpty(scripts)) {
     const enHeadPosition = indexHtml.indexOf('</head>');
     return `${indexHtml.slice(0, enHeadPosition)}
             ${scripts}
@@ -54,13 +64,15 @@ function includeScripts(configuration, indexHtml) {
   return indexHtml;
 }
 
-module.exports = ({ configuration }, indexHtml) => {
+export default ({ configuration }: TargetOptions, indexHtml: string) => {
   const sameAsDefault = ['', 'hmr', 'local'];
   let parsedHtml = '';
   [includeScripts, changeOgImage].forEach((process) => {
     parsedHtml = process(
-      sameAsDefault.includes(configuration) ? 'default' : configuration,
-      R.isEmpty(parsedHtml) ? indexHtml : parsedHtml
+      (sameAsDefault.includes(configuration)
+        ? 'default'
+        : configuration) as EnvironmentType,
+      isEmpty(parsedHtml) ? indexHtml : parsedHtml
     );
   });
   return parsedHtml;

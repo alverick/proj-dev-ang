@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { type OnInit, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
 
 import {
   documentTypes,
@@ -11,15 +10,20 @@ import {
   errorRegisterAuth,
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
-import { IEntryModel } from '../../../../shared/models';
-import { IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
-import { ModelFormGroup } from '../../../../shared/models/forms';
+import { type IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import {
-  AdobeAnalyticsService,
+  type ModelFormGroup,
+  type SimpleModelFormGroup,
+} from '../../../../shared/models/forms';
+import {
   AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { CompanyConfigurationService } from '../../services';
-import { ChangePasswordForm } from '../../services/company-configuration.service';
+import {
+  type ChangePasswordForm,
+  type CompanyForm,
+} from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-configuration',
@@ -27,7 +31,7 @@ import { ChangePasswordForm } from '../../services/company-configuration.service
   styleUrls: ['./company-configuration.page.scss'],
 })
 export class CompanyConfigurationPage implements OnInit {
-  companyForm: UntypedFormGroup;
+  companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<ChangePasswordForm>;
   errors = { ...errorsRegisterForm, ...errorRegisterAuth };
   operators = mobileOperators;
@@ -45,17 +49,15 @@ export class CompanyConfigurationPage implements OnInit {
   constructor(
     public companyConfiguration: CompanyConfigurationService,
     private activatedRoute: ActivatedRoute,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {}
 
   ngOnInit() {
     (
       this.activatedRoute.data as Observable<{
         company: IDataEnterpriseModel;
-        entries: IEntryModel[];
       }>
-    ).subscribe(({ company, entries }) => {
-      this.companyConfiguration.entryOptions = entries;
+    ).subscribe(({ company }) => {
       this.companyConfiguration.companyData = company;
       this.isInReview =
         company.newNameGTPStatus === 0 || company.newNameGTPStatus === 2;
@@ -73,7 +75,7 @@ export class CompanyConfigurationPage implements OnInit {
     });
   }
   onShowPanel() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Empresa',
       action: 'Click',
       detail: 'Cambiar contraseña abrir panel',
@@ -86,7 +88,7 @@ export class CompanyConfigurationPage implements OnInit {
   }
 
   closePanel() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Empresa',
       action: 'Click',
       detail: 'Cambiar contraseña cerrar panel',

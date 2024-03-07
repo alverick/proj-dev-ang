@@ -1,8 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { type OnInit, Component, HostListener } from '@angular/core';
 import {
+  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,11 +12,11 @@ import { RecuperaService } from 'src/app/shared/services/recupera.service';
 import { swalAlert } from 'src/app/shared/utils/helpers/popups';
 
 import {
-  ActionEventProperties,
-  AdobeAnalyticsService,
+  type ActionEventProperties,
+  type Metadata,
   AdobeEvent,
-  Metadata,
-} from '../../../../shared/services/adobe-analytics.service';
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 
 @Component({
   selector: 'cs-recuperar-contrasena',
@@ -28,7 +28,7 @@ export class RecuperarContrasenaComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private recuperaService: RecuperaService,
     private router: Router,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {}
   public formulario = true;
   recupera: UntypedFormGroup;
@@ -91,10 +91,7 @@ export class RecuperarContrasenaComponent implements OnInit {
         })
         .subscribe((d) => {
           if (d === true) {
-            this.adobeAnalytics.trackEvent(
-              AdobeEvent.trackFormSubmit,
-              actionStep
-            );
+            this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
             this.mensaje(
               'Hemos recibido tus datos',
               'Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta.'
@@ -107,7 +104,7 @@ export class RecuperarContrasenaComponent implements OnInit {
             // al ocultar la pantalla se mostrara en la parte de arriba la pagina
             this.router.navigate([authFullRoutingNames.LOGIN]);
           } else {
-            this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+            this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
               ...actionStep,
               state: 'Intención de envío',
               typeError: 'Los datos ingresados son inválidos',
@@ -144,7 +141,7 @@ export class RecuperarContrasenaComponent implements OnInit {
   }
 
   mensaje(titulo: string, text: string) {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+    this.tracking.trackEvent(AdobeEvent.trackView, {
       category: titulo,
       action: 'modal-view',
       detail: text,

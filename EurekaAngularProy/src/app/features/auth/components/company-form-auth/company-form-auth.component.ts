@@ -1,29 +1,29 @@
 import {
+  type OnChanges,
+  type OnDestroy,
+  type OnInit,
+  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
-import { IEntryModel } from '../../../../shared/models';
+import { type IEntryModel } from '../../../../shared/models';
 import {
   IErrorMessages,
   SimpleModelFormGroup,
 } from '../../../../shared/models/forms';
 import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
 import {
-  AuthForm,
-  CompanyName,
+  type AuthForm,
+  type CompanyName,
 } from '../../services/affiliation-forms.service';
 
 @Component({

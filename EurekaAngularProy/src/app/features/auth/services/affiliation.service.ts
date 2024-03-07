@@ -32,23 +32,23 @@ import {
   type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import {
+  CompanyService,
   DigitalDataService,
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../shared/services';
-import {
-  type ActionEventProperties,
-  type AdobeEventType,
-  AdobeAnalyticsService,
-  AdobeEvent,
-} from '../../../shared/services/adobe-analytics.service';
-import { CompanyService } from '../../../shared/services/company.service';
 import { LoginService } from '../../../shared/services/login.service';
 import {
   type ServiceConfigurationForm,
   type ServiceEditForm,
   type ServiceFormValue,
 } from '../../../shared/services/services-forms.service';
+import {
+  type ActionEventProperties,
+  type AdobeEventType,
+  AdobeEvent,
+  TrackingService,
+} from '../../../shared/services/tracking.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
 import {
@@ -82,7 +82,7 @@ export class AffiliationService {
     private serviceForms: ServicesFormsService,
     private logger: NGXLogger,
     private digitalData: DigitalDataService,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {
     this.setRegisterForm();
   }
@@ -188,8 +188,24 @@ export class AffiliationService {
           value: documentType,
         },
         {
+          key: 'NúmeroDocumento',
+          value: documentNumber,
+        },
+        {
+          key: 'RucEmpresa',
+          value: ruc,
+        },
+        {
+          key: 'Email',
+          value: email,
+        },
+        {
           key: 'Operador',
           value: movilOperator,
+        },
+        {
+          key: 'Celular',
+          value: movilNumber,
         },
       ],
     };
@@ -322,6 +338,34 @@ export class AffiliationService {
       state: stateSuccessful,
       metadata: [
         {
+          key: 'TipoDocumento',
+          value: documentType,
+        },
+        {
+          key: 'NúmeroDocumento',
+          value: documentNumber,
+        },
+        {
+          key: 'RucEmpresa',
+          value: ruc,
+        },
+        {
+          key: 'Email',
+          value: email,
+        },
+        {
+          key: 'Operador',
+          value: movilOperator,
+        },
+        {
+          key: 'Celular',
+          value: movilNumber,
+        },
+        {
+          key: 'Nombre Empresa',
+          value: name,
+        },
+        {
           key: 'Rubro Empresa',
           value: entrySelect.name,
         },
@@ -335,6 +379,7 @@ export class AffiliationService {
         ruc,
         name,
         entry,
+        entryName: entrySelect.name,
         email,
         movilNumber,
         movilOperator,
@@ -478,17 +523,29 @@ export class AffiliationService {
         confirmButtonText: 'Entendido',
       });
 
-      this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+      this.tracking.trackEvent(AdobeEvent.trackView, {
         category: 'warning - icon',
         action: 'modal-view',
         detail: 'Debes contar con al menos un servicio para continuar.',
         location: 'Modal',
       });
 
-      return throwError('No services');
+      return throwError(() => 'No services');
     }
 
-    const actionStep = {
+    const metadata = [];
+    this.servicesList
+      .map(({ id, newName, newNameCode, ...service }) => service)
+      .forEach((service, idx) => {
+        for (const serviceElement in service) {
+          metadata.push({
+            key: `${serviceElement}.${idx}`,
+            value: service[serviceElement] as string | number | boolean,
+          });
+        }
+      });
+
+    const actionStep: Partial<ActionEventProperties> = {
       category: 'Registrate – Resumen de servicios',
       action: 'Click',
       label: 'Siguiente',
@@ -496,6 +553,14 @@ export class AffiliationService {
       location: 'Registrate',
       step: 'Step5',
       state: stateSuccessful,
+      metadata,
+      rawMetadata: {
+        newrelic: {
+          services: this.servicesList.map(
+            ({ id, newName, newNameCode, ...service }) => service
+          ),
+        },
+      },
     };
     return this.digitalData.getData$().pipe(
       switchMap((sdk) => {
@@ -799,6 +864,6 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
     event: AdobeEventType,
     eventProperties: Partial<ActionEventProperties>
   ) {
-    this.adobeAnalytics.trackEvent(event, eventProperties);
+    this.tracking.trackEvent(event, eventProperties);
   }
 }

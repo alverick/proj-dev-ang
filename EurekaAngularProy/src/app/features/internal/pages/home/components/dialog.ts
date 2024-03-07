@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import {
+  type UntypedFormGroup,
   UntypedFormBuilder,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
@@ -12,14 +12,14 @@ import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import {
-  ActionEventProperties,
-  AdobeAnalyticsService,
-  AdobeEvent,
-} from '../../../../../shared/services/adobe-analytics.service';
-import {
+  type ProcessStatus,
   ExcelService,
-  ProcessStatus,
 } from '../../../../../shared/services/excel.service';
+import {
+  type ActionEventProperties,
+  AdobeEvent,
+  TrackingService,
+} from '../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
 import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
@@ -34,7 +34,7 @@ export class DialogComponent implements OnInit {
     public excelService: ExcelService,
     public formBuilder: UntypedFormBuilder,
     public dialogRef: MatDialogRef<DialogComponent>,
-    private adobeAnalytics: AdobeAnalyticsService,
+    private tracking: TrackingService,
     private store: Store
   ) {}
 
@@ -129,7 +129,7 @@ export class DialogComponent implements OnInit {
                 { description: 'El nombre del archivo no es correcto', row: 0 },
               ];
             }
-            this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+            this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
               ...actionStep,
               state: 'Intento de envio',
               typeError: message as string,
@@ -142,7 +142,7 @@ export class DialogComponent implements OnInit {
   }
 
   close() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: 'Cerrar agrega cobros del servicio',
@@ -174,14 +174,14 @@ export class DialogComponent implements OnInit {
         this.rowsRejected = value.rowsRejected;
         this.excelService.errores = value.errors;
         this.cuadro_errores = true;
-        this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+        this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
           ...actionStep,
           state: 'Intento de envio',
           typeError: 'REJECTED',
         });
       } else if (value.status === 'FAILED') {
         const obsClose = new Observable((observer) => {
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: 'Intento de envio',
             typeError: 'FAILED',
@@ -200,7 +200,7 @@ export class DialogComponent implements OnInit {
         this.excelService.statusUpload = false;
         this.dialogRef.close(obsClose);
       } else if (value.status === 'COMPLETED') {
-        this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
+        this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
         this.excelService.statusUpload = false;
         this.excelService.errores = [];
         const obsClose = new Observable((observer) => {
@@ -210,7 +210,7 @@ export class DialogComponent implements OnInit {
           } else {
             msg = `¡Listo! Se agregaron nuevos clientes`;
           }
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+          this.tracking.trackEvent(AdobeEvent.trackView, {
             category: msg,
             action: 'modal-view',
             detail:
@@ -269,7 +269,7 @@ export class DialogComponent implements OnInit {
 
   gotoUploadTemplate() {
     this.ready = true;
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: 'Ya tengo la plantilla excel',
@@ -280,7 +280,7 @@ export class DialogComponent implements OnInit {
   }
 
   downloadXlsTemplate() {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
       action: 'Click',
       detail: 'Descargar la plantilla excel',

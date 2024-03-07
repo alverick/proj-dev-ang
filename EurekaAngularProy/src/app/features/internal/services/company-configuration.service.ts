@@ -2,23 +2,21 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forEachObjIndexed, pick } from 'ramda';
-import { isNotEmpty } from 'ramda-adjunct';
 import { tap } from 'rxjs/operators';
 
-import { type IEntryModel } from '../../../shared/models';
 import { type IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
   type ModelFormGroup,
   type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
+import { LoginService } from '../../../shared/services/login.service';
 import {
   type ActionEventProperties,
   type Metadata,
-  AdobeAnalyticsService,
   AdobeEvent,
-} from '../../../shared/services/adobe-analytics.service';
-import { LoginService } from '../../../shared/services/login.service';
+  TrackingService,
+} from '../../../shared/services/tracking.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { MustDifferent } from '../../../shared/validators/must-different.validator';
 import { MustMatch } from '../../../shared/validators/must-match.validator';
@@ -36,7 +34,7 @@ export interface CompanyForm {
   ruc: string;
   name: string;
   entry: string;
-  entrySelect: IEntryModel;
+  entryName: string;
   email: string;
   movilNumber: string;
   movilOperator: string;
@@ -49,15 +47,13 @@ export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
   companyForm: SimpleModelFormGroup<CompanyForm>;
   passwordForm: ModelFormGroup<ChangePasswordForm>;
-  entryOptions: IEntryModel[] = [];
-  entryOptionsAdd: IEntryModel[] = [];
 
   constructor(
     private fb: FormBuilder,
     private companyService: CompanyService,
     private router: Router,
     protected loginService: LoginService,
-    protected adobeAnalytics: AdobeAnalyticsService
+    protected tracking: TrackingService
   ) {
     this.initForms();
   }
@@ -73,7 +69,6 @@ export class CompanyConfigurationService {
     } else {
       this.companyForm.get('name').enable();
     }
-    this.setCategory();
   }
 
   saveCompanyData() {
@@ -120,11 +115,8 @@ export class CompanyConfigurationService {
       .updateCompany(enterprise)
       .subscribe((enterpriseUpdate) => {
         if (enterpriseUpdate.success === true) {
-          this.adobeAnalytics.trackEvent(
-            AdobeEvent.trackFormSubmit,
-            actionStep
-          );
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
+          this.tracking.trackEvent(AdobeEvent.trackView, {
             category: 'warning - icon',
             action: 'modal-view',
             detail: 'Los datos de la empresa han sido actualizados.',
@@ -141,12 +133,12 @@ export class CompanyConfigurationService {
             });
         }
         if (enterpriseUpdate.success === false) {
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: 'Intención de envío',
             typeError: 'Ha ocurrido un error con el servidor',
           });
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+          this.tracking.trackEvent(AdobeEvent.trackView, {
             category: 'error - icon',
             action: 'modal-view',
             detail: 'Ha ocurrido un error',
@@ -191,12 +183,9 @@ export class CompanyConfigurationService {
     return this.companyService.updateCompany(enterprise).pipe(
       tap(({ success, message }) => {
         if (success === true) {
-          this.adobeAnalytics.trackEvent(
-            AdobeEvent.trackFormSubmit,
-            actionStep
-          );
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
           this.loginService.logout().subscribe(() => {
-            this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+            this.tracking.trackEvent(AdobeEvent.trackView, {
               category: 'warning - icon',
               action: 'modal-view',
               detail: 'Los datos de la empresa han sido actualizados',
@@ -215,12 +204,12 @@ export class CompanyConfigurationService {
           });
           this.passwordForm.reset();
         } else {
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackFormSubmit, {
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: 'Intención de envío',
             typeError: 'Ha ocurrido un error con el servidor.',
           });
-          this.adobeAnalytics.trackEvent(AdobeEvent.trackView, {
+          this.tracking.trackEvent(AdobeEvent.trackView, {
             category: 'error - icon',
             action: 'modal-view',
             detail: message || 'Ha ocurrido un error en el servidor.',
@@ -237,16 +226,6 @@ export class CompanyConfigurationService {
     );
   }
 
-  setCategory() {
-    const entryControl = this.companyForm.get('entry');
-    if (isNotEmpty(this.entryOptions) && isNotEmpty(entryControl.value)) {
-      const entrySel = this.entryOptions.find(
-        (entry) => entry.code === entryControl.value
-      );
-      this.companyForm.get('entrySelect').setValue(entrySel);
-    }
-  }
-
   private initForms() {
     this.companyForm = this.fb.group({
       name: [
@@ -259,7 +238,7 @@ export class CompanyConfigurationService {
       ],
       ruc: [{ value: '', disabled: true }],
       entry: [{ value: '', disabled: true }],
-      entrySelect: [{ value: null as IEntryModel, disabled: true }],
+      entryName: [{ value: '', disabled: true }],
       documentType: [{ value: '', disabled: true }],
       documentNumber: [{ value: '', disabled: true }],
       email: [

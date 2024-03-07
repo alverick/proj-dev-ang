@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
-  AdobeAnalyticsService,
   AdobeEvent,
-} from '../../../../shared/services/adobe-analytics.service';
+  TrackingService,
+} from '../../../../shared/services/tracking.service';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
 /**
@@ -20,10 +20,7 @@ export class HelpPage {
    * Accordion active index
    */
   activeIndex: number;
-  constructor(
-    private router: Router,
-    protected adobeAnalytics: AdobeAnalyticsService
-  ) {}
+  constructor(private router: Router, protected tracking: TrackingService) {}
 
   /**
    * Go home link
@@ -38,7 +35,7 @@ export class HelpPage {
    * @param evt.index
    */
   openedTab({ index }) {
-    this.adobeAnalytics.trackEvent(AdobeEvent.trackAction, {
+    this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Ayuda',
       action: 'Click',
       detail: `Abrir panel ${index + 1}`,
