@@ -1,16 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { DateList } from 'src/app/shared/models/dateList';
-import { environment } from 'src/environments/environment';
 
-import { statusCodes } from '../constants/services';
-import { IServiceRemoteModel } from '../models';
-import { CompanyServices } from '../models/company';
-import { Debts } from '../models/debts';
-import { Type } from '../models/type';
-import { WayPay } from '../models/way-pay';
+import { type IServiceRemoteModel } from '../models';
+import { type CompanyServices } from '../models/company';
+import { type Debts } from '../models/debts';
+import { type Type } from '../models/type';
+import { type WayPay } from '../models/way-pay';
 
 @Injectable({
   providedIn: 'root',

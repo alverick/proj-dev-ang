@@ -1,4 +1,4 @@
-import { ICompanyUpdate } from '../models/company';
+import { type ICompanyUpdate } from '../models/company';
 
 export const updateCompanyMock: ICompanyUpdate = {
   id: 1174,

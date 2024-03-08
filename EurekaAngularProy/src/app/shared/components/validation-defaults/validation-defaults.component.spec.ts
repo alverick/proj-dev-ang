@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
 
 import { ValidationDefaultsComponent } from './validation-defaults.component';
 
@@ -6,11 +7,11 @@ describe('ValidationDefaultsComponent', () => {
   let component: ValidationDefaultsComponent;
   let fixture: ComponentFixture<ValidationDefaultsComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ValidationDefaultsComponent],
+  beforeEach(() => {
+    void TestBed.configureTestingModule({
+      declarations: [MockComponent(ValidationDefaultsComponent)],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ValidationDefaultsComponent);

@@ -1,7 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { MockProvider } from 'ng-mocks';
 
-import { IpInfoDataService } from '../data';
 import { DigitalDataService } from './digital-data.service';
 
 describe('DigitalDataService', () => {
@@ -9,8 +8,7 @@ describe('DigitalDataService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-      providers: [IpInfoDataService, DigitalDataService],
+      providers: [MockProvider(DigitalDataService)],
     });
     service = TestBed.inject(DigitalDataService);
   });

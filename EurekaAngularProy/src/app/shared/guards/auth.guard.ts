@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanActivate,
+  type ActivatedRouteSnapshot,
+  type CanActivate,
+  type RouterStateSnapshot,
   Router,
-  RouterStateSnapshot,
 } from '@angular/router';
-import { StorageService } from 'src/app/shared/services/storage.service';
 
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
+import { StorageService } from '../services/storage.service';
 
 /*The auth guard is used to prevent unauthenticated users from accessing restricted routes */
 @Injectable({

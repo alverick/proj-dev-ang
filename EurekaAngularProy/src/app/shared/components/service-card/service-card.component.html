@@ -40,7 +40,7 @@
   <div *ngIf="!hasWarnings" class="tw-h-8"></div>
   <div class="tw-grid tw-grid-cols-2 tw-gap-2">
     <div class="tw-text-extended-grey-2">Código de servicio:</div>
-    <div class="val">{{ serviceData.res | notEmpty : '-' }}</div>
+    <div class="val">{{ serviceData?.res | notEmpty : '-' }}</div>
     <div class="tw-text-extended-grey-2">Canales de pago:</div>
     <div class="val">{{ paymentChannels }}</div>
     <div class="tw-text-extended-grey-2">Código de cliente:</div>
@@ -50,6 +50,6 @@
     <div class="tw-text-extended-grey-2">Modalidad:</div>
     <div class="val">{{ dataType }}</div>
     <div class="tw-text-extended-grey-2">Nº Cta. depósito:</div>
-    <div class="val">{{ serviceData.accountNumber }}</div>
+    <div class="val">{{ serviceData?.accountNumber }}</div>
   </div>
 </div>
