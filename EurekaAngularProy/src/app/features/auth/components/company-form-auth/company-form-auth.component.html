@@ -26,7 +26,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="name"
-          [errorMessages]="errorMessages.name"
+          [errorMessages]="errorMessages?.name"
           >Nombre de tu empresa
           <input
             *ngIf="nameOptions?.length < 2"
@@ -68,7 +68,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="entrySelect"
-          [errorMessages]="errorMessages.entrySelect"
+          [errorMessages]="errorMessages?.entrySelect"
           >Rubro de tu empresa
           <p-dropdown
             [options]="categories"
@@ -80,12 +80,12 @@
           ></p-dropdown>
         </cs-label-control>
       </div>
-      <ng-template [ngIf]="!edit">
+      <ng-template [ngIf]="!passwordNoEditable">
         <div class="form-elm">
           <cs-label-control
             class="tw-w-full"
             formControlName="password"
-            [errorMessages]="errorMessages.password"
+            [errorMessages]="errorMessages?.password"
             >Crea tu contraseña
             <p-password
               class="tw-w-full"
@@ -112,7 +112,7 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="passwordConfirm"
-            [errorMessages]="errorMessages.passwordConfirm"
+            [errorMessages]="errorMessages?.passwordConfirm"
             >Confirma tu contraseña
             <p-password
               class="tw-w-full"
@@ -131,7 +131,7 @@
           <cs-label-control
             class="tw-w-full"
             formControlName="acceptTerms"
-            [errorMessages]="errorMessages.acceptTerms"
+            [errorMessages]="errorMessages?.acceptTerms"
           >
             <p-checkbox
               class="tw-mr-1"

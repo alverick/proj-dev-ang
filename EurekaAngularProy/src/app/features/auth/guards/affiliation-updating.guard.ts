@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanActivateChild, Router, UrlTree } from '@angular/router';
+import { type CanActivateChild, type UrlTree, Router } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
 
 import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';

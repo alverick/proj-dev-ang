@@ -1,5 +1,5 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
+import { type OnDestroy, Component, HostListener } from '@angular/core';
+import { NavigationEnd, Router, Scroll } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
@@ -18,11 +18,10 @@ export class ServiceAddPage implements OnDestroy {
 
   constructor(
     protected router: Router,
-    route: ActivatedRoute,
     public affiliation: AffiliationService
   ) {
     router.events
-      .pipe(
+      ?.pipe(
         map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)),
         takeUntil(this.destroy$)
       )

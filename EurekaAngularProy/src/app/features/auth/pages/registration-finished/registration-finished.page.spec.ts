@@ -1,24 +1,15 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MockBuilder, MockRender } from 'ng-mocks';
 
+import { AffiliationService } from '../../services';
 import { RegistrationFinishedPage } from './registration-finished.page';
 
 describe('RegistrationFinishedPage', () => {
-  let component: RegistrationFinishedPage;
-  let fixture: ComponentFixture<RegistrationFinishedPage>;
-
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [RegistrationFinishedPage],
-    }).compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RegistrationFinishedPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() =>
+    MockBuilder(RegistrationFinishedPage).mock(AffiliationService)
+  );
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(RegistrationFinishedPage);
+    expect(fixture).toBeTruthy();
   });
 });

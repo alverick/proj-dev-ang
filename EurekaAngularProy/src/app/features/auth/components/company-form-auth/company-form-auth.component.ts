@@ -40,14 +40,14 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   @Input() companyForm: SimpleModelFormGroup<AuthForm>;
   @Input() nameOptions: CompanyName[];
   @Input() errorMessages: IErrorMessages;
-  @Input() edit = false;
+  @Input() passwordNoEditable = false;
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
 
   constructor(public dialogService: DialogService) {}
 
   ngOnInit() {
     this.companyForm
-      .get('entrySelect')
+      ?.get('entrySelect')
       .valueChanges.pipe(
         takeUntil(this.$destroy),
         filter((value) => isNotNil(value))
@@ -60,7 +60,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     if (
       has('categories', changes) &&
-      isNotNilOrEmpty(this.companyForm.get('entry').value)
+      isNotNilOrEmpty(this.companyForm?.get('entry').value)
     ) {
       this.setCategorySelected();
     }
@@ -86,10 +86,10 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
 
   private setForm() {
     ['password', 'passwordConfirm', 'acceptTerms'].forEach((field) => {
-      if (!this.edit) {
-        this.companyForm.get(field).enable();
+      if (!this.passwordNoEditable) {
+        this.companyForm?.get(field).enable();
       } else {
-        this.companyForm.get(field).disable();
+        this.companyForm?.get(field).disable();
       }
     });
   }
@@ -99,7 +99,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
       const name = this.companyForm.get('name').value;
       const { passwordConfirm, ...formValue } = this.companyForm.value;
       let companyData = { name, ...formValue };
-      if (!this.edit) {
+      if (!this.passwordNoEditable) {
         const {
           entrySelect: { code },
         } = this.companyForm.value;

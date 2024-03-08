@@ -26,7 +26,7 @@ export class ServiceInfoPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.affiliation.getAccountsCompany().subscribe((accounts) => {
+    this.affiliation?.getAccountsCompany()?.subscribe((accounts) => {
       this.accounts = accounts;
     });
   }
