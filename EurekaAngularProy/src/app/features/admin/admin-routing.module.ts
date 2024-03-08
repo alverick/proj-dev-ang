@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { appRoutingNames } from 'src/app/app-routing.collection';
+import { type Routes, RouterModule } from '@angular/router';
 
+import { appRoutingNames } from '../../app-routing.names';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpInputGuard } from '../../shared/guards/gtp-input.guard';
 import { AdminComponent } from './admin.component';
