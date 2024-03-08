@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ValdemortModule } from 'ngx-valdemort';
@@ -6,9 +6,13 @@ import { ValdemortModule } from 'ngx-valdemort';
 import { AppComponent } from './app.component';
 import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
 import { ValidationDefaultsComponent } from './shared/components/validation-defaults/validation-defaults.component';
+import {
+  AdobeLaunchProviderService,
+  NewRelicProviderService,
+} from './shared/services';
 
 describe('AppComponent', () => {
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     void TestBed.configureTestingModule({
       declarations: [
         AppComponent,
@@ -16,8 +20,9 @@ describe('AppComponent', () => {
         FabWhatsappComponent,
       ],
       imports: [RouterTestingModule, ValdemortModule, NgxSpinnerModule],
+      providers: [AdobeLaunchProviderService, NewRelicProviderService],
     }).compileComponents();
-  }));
+  });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -35,8 +40,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome to Mis Cobros – Interbank!'
-    );
+    expect(compiled?.textContent).toContain('Comunícate con nosotros');
   });
 });
