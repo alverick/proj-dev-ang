@@ -3,8 +3,8 @@ import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dia
 import { Store } from '@ngrx/store';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
-import { ExcelService } from 'src/app/shared/services/excel.service';
 
+import { ExcelService } from '../../../../../shared/services/excel.service';
 import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
 @Component({

@@ -1,12 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { type OnInit, Component, ElementRef, ViewChild } from '@angular/core';
 import {
+  type FormControl,
+  type FormGroup,
   FormBuilder,
-  FormControl,
-  FormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QueryParams } from '@ngrx/data';
+import { type QueryParams } from '@ngrx/data';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import { clone, flatten, pipe, pluck, uniq, values } from 'ramda';
@@ -18,8 +18,8 @@ import { currencies } from '../../../../shared/constants/currencies';
 import { CollectAmountService } from '../../../../store/collections/collect-amount.service';
 import { HistoricalCollectService } from '../../../../store/collections/historical-collect.service';
 import { TopClientService } from '../../../../store/collections/top-client.service';
-import { CollectAmount, TopClient } from '../../../../store/entities';
-import { GraphData } from '../../components/dashboard-graph/dashboard-graph.component';
+import { type CollectAmount, type TopClient } from '../../../../store/entities';
+import { type GraphData } from '../../components/dashboard-graph/dashboard-graph.component';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 import { DashboardService } from '../../services';
 
@@ -85,14 +85,14 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.emailForm = this.fb.group({
-      email: this.fb.nonNullable.control('', Validators.required),
-      subject: this.fb.control(''),
+      email: this.fb?.nonNullable?.control('', Validators.required),
+      subject: this.fb?.control(''),
     });
     this.loadingTable = true;
     this.loadingChart = true;
     this.dashboard
-      .getServices()
-      .pipe(filter((value) => isNotNilOrEmpty(value)))
+      ?.getServices()
+      ?.pipe(filter((value) => isNotNilOrEmpty(value)))
       .subscribe((value) => {
         const servicesList = value.map(({ currency, id, name, dataType }) => ({
           id,
@@ -126,7 +126,7 @@ export class DashboardPage implements OnInit {
   }
 
   private setCollectAmount() {
-    this.collectAmountService.collection$.subscribe((value) => {
+    this.collectAmountService?.collection$?.subscribe((value) => {
       this.collectAmounts = value.entities[1];
     });
     combineLatest([
@@ -140,7 +140,7 @@ export class DashboardPage implements OnInit {
   }
 
   private setHistoricalCollect() {
-    this.historicalCollectService.collection$.subscribe((value) => {
+    this.historicalCollectService?.collection$?.subscribe((value) => {
       const dataList = values(value.entities);
       const dates: string[] = pipe(
         pluck('date'),
@@ -187,7 +187,7 @@ export class DashboardPage implements OnInit {
   }
 
   private setTopClient() {
-    this.topClientService.collection$.subscribe((value) => {
+    this.topClientService?.collection$?.subscribe((value) => {
       this.clients = values(value.entities);
     });
     combineLatest([
