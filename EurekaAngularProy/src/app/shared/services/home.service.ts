@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
 import { type IServiceRemoteModel } from '../models';
 import { type CompanyServices } from '../models/company';
+import { type DateList } from '../models/dateList';
 import { type Debts } from '../models/debts';
 import { type Type } from '../models/type';
 import { type WayPay } from '../models/way-pay';
@@ -57,7 +59,9 @@ export class HomeService {
   }
 
   getServices(incDeactivates: boolean = false): Observable<any[]> {
-    const url = `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`;
+    const url = `${
+      environment.END_POINT
+    }/company/service?incDeactivates=${incDeactivates.toString()}`;
     return this.http
       .get<IServiceRemoteModel[]>(url)
       .pipe(
