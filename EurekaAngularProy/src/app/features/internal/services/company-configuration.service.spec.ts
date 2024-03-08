@@ -1,14 +1,18 @@
 import { TestBed } from '@angular/core/testing';
+import { MockProvider } from 'ng-mocks';
 
 import { CompanyConfigurationService } from './company-configuration.service';
 
 describe('CompanyConfigurationService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: CompanyConfigurationService;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [MockProvider(CompanyConfigurationService)],
+    });
+    service = TestBed.inject(CompanyConfigurationService);
+  });
 
   it('should be created', () => {
-    const service: CompanyConfigurationService = TestBed.get(
-      CompanyConfigurationService
-    );
     expect(service).toBeTruthy();
   });
 });

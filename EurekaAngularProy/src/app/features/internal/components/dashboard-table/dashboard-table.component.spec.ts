@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardTableComponent } from './dashboard-table.component';
 
@@ -6,8 +6,8 @@ describe('DashboardTableComponent', () => {
   let component: DashboardTableComponent;
   let fixture: ComponentFixture<DashboardTableComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    void TestBed.configureTestingModule({
       declarations: [DashboardTableComponent],
     }).compileComponents();
 

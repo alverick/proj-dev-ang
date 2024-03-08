@@ -1,12 +1,18 @@
 import { TestBed } from '@angular/core/testing';
+import { MockProvider } from 'ng-mocks';
 
 import { MovementsService } from './movements.service';
 
 describe('MovementsService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: MovementsService;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [MockProvider(MovementsService)],
+    });
+    service = TestBed.inject(MovementsService);
+  });
 
   it('should be created', () => {
-    const service: MovementsService = TestBed.get(MovementsService);
     expect(service).toBeTruthy();
   });
 });
