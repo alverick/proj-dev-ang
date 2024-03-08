@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { type Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import {
   type AuthForm,
   type RegisterForm,
 } from '../../features/auth/services/affiliation-forms.service';
-import { type IServicePostData, type IServiceRemoteModel } from '../models';
+import { type IServiceRemoteModel, type ServicePostData } from '../models';
 import { type IAccountStateDetails } from '../models/company';
 import { type IDataEnterpriseModel } from '../models/data-enterprise.model';
 import { type FingerPrintData } from './digital-data.service';
@@ -30,8 +29,9 @@ export interface CompanyAccounts {
 
 type ValidateCompanyData = Partial<RegisterForm> & { sdk: FingerPrintData };
 type SaveCompanyData = Partial<RegisterForm> &
-  Partial<AuthForm> & { sdk: FingerPrintData; entryName: string };
+  Partial<AuthForm> & { entryName: string };
 type UpdateCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
+type CompanyServicesData = ServicePostData & { sdk: FingerPrintData };
 
 @Injectable()
 export class CompanyService {
@@ -56,7 +56,7 @@ export class CompanyService {
     return this.http.put<ICompanyResult>(url, data);
   }
 
-  saveServices(data: IServicePostData) {
+  saveServices(data: CompanyServicesData) {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company/service`,
       data

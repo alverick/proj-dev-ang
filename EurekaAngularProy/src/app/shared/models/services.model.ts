@@ -74,8 +74,8 @@ export interface IServiceRemoteModelForms extends IServiceRemoteModel {
   debtorCodeOriginal: string;
 }
 
-export interface IServicePostData {
+export interface ServicePostData {
   clientId?: number;
   deleted: any[];
-  services: Array<Partial<IServiceRemoteModel>>;
+  services: Partial<IServiceRemoteModel>[];
 }
