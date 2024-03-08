@@ -21,7 +21,8 @@
               "raf",
               "core-js",
               "html2canvas",
-              "rgbcolor"
+              "rgbcolor",
+              "dot-object"
             ],
             "customWebpackConfig": {
               "path": "./config/extra-webpack.config.js"
