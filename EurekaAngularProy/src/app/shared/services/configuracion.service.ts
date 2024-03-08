@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError, Observable } from 'rxjs';
+import { type Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { IDataEnterpriseModel } from '../models/data-enterprise.model';
+
+import { environment } from '../../../environments/environment';
+import { type IDataEnterpriseModel } from '../models/data-enterprise.model';
 
 @Injectable()
 export class ConfiguracionService {

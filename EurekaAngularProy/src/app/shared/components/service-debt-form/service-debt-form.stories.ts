@@ -4,7 +4,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { type UntypedFormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
@@ -17,7 +17,7 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../constants/services';
-import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
+import { type IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
 

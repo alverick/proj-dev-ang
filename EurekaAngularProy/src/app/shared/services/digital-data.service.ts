@@ -115,7 +115,7 @@ export class DigitalDataService {
 
   constructor(private readonly ipInfoService: IpInfoDataService) {
     this.digital = window.MPFingerprint;
-    this.fingerPrintData = from(this.digital.getData(true, true));
+    this.fingerPrintData = from(this.digital?.getData(true, true));
   }
 
   getData$() {

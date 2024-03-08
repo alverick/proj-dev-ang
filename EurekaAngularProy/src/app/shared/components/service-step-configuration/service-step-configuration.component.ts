@@ -38,7 +38,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
 
   ngOnInit() {
     this.listenForms();
-    this.debtForm = this.form.get('debt') as ModelFormGroup<ServiceDebt>;
+    this.debtForm = this.form?.get('debt') as ModelFormGroup<ServiceDebt>;
     this.setDebtForm(this.form.value.dataType);
     this.setDebtorCodeCustomField(
       this.form.value.debtorCode,

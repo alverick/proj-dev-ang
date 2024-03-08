@@ -2,18 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { isEmpty, isNil } from 'ramda';
-import { Observable, of, throwError } from 'rxjs';
+import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
+import { environment } from '../../../environments/environment';
 import {
-  IEntryModel,
-  IServiceModel,
-  IServiceRemoteModel,
-  MonedaModel,
+  type IEntryModel,
+  type IServiceModel,
+  type IServiceRemoteModel,
+  type MonedaModel,
 } from '../models';
-import { IDataEnterpriseModel } from '../models/data-enterprise.model';
+import { type IDataEnterpriseModel } from '../models/data-enterprise.model';
 import { drawPopup } from '../utils/helpers/popups';
 import { StorageService } from './storage.service';
 

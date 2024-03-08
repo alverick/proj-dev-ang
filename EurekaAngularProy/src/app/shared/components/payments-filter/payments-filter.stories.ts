@@ -13,10 +13,10 @@ import {
 } from '@angular/material-moment-adapter';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { type Meta, type Story, moduleMetadata } from '@storybook/angular';
 
-import { DateList } from '../../models/dateList';
-import { WayPay } from '../../models/way-pay';
+import { type DateList } from '../../models/dateList';
+import { type WayPay } from '../../models/way-pay';
 import { SharedModule } from '../../shared.module';
 import { PaymentsFilterComponent } from './payments-filter.component';
 
