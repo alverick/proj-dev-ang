@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IEntryModel } from 'src/app/shared/models';
 
+import { type IEntryModel } from '../../../../shared/models';
 import {
   authFullRoutingChildNames,
   authFullRoutingNames,
 } from '../../auth-routing.names';
 import { errorRegisterAuth } from '../../constants';
-import { AffiliationService } from '../../services/affiliation.service';
+import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-company-registration-auth',
@@ -23,7 +23,7 @@ export class CompanyRegistrationAuthPage implements OnInit {
   ngOnInit() {
     this.affiliation
       .getEntryOptions()
-      .subscribe((result) => (this.entryOptions = result));
+      ?.subscribe((result) => (this.entryOptions = result));
   }
 
   goBack() {

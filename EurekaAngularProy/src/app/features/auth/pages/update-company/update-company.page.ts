@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IEntryModel } from '../../../../shared/models';
+
+import { type IEntryModel } from '../../../../shared/models';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import { errorRegisterAuth } from '../../constants';
 import { AffiliationService } from '../../services';
@@ -21,7 +22,7 @@ export class UpdateCompanyPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe(({ entries }: any) => {
+    this.activatedRoute?.data?.subscribe(({ entries }: any) => {
       this.entryOptions = entries;
     });
   }

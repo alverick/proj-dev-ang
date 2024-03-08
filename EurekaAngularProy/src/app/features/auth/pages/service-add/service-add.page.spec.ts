@@ -1,24 +1,22 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MockBuilder, MockRender } from 'ng-mocks';
+import { StepsModule } from 'primeng/steps';
 
+import { SidebarServiceComponent } from '../../../../shared/components/sidebar-service/sidebar-service.component';
+import { AffiliationService } from '../../services';
 import { ServiceAddPage } from './service-add.page';
 
 describe('ServiceAddPage', () => {
-  let component: ServiceAddPage;
-  let fixture: ComponentFixture<ServiceAddPage>;
-
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ServiceAddPage],
-    }).compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ServiceAddPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() =>
+    MockBuilder(ServiceAddPage)
+      .mock(AffiliationService)
+      .mock(SidebarServiceComponent)
+      .mock(RouterTestingModule)
+      .mock(StepsModule)
+  );
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(ServiceAddPage);
+    expect(fixture).toBeTruthy();
   });
 });

@@ -3,12 +3,13 @@ import { TestBed } from '@angular/core/testing';
 import { AffiliationFormsService } from './affiliation-forms.service';
 
 describe('AffiliationFormsService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let service: AffiliationFormsService;
+  beforeEach(() =>
+    TestBed.configureTestingModule({ providers: [AffiliationFormsService] })
+  );
 
   it('should be created', () => {
-    const service: AffiliationFormsService = TestBed.get(
-      AffiliationFormsService
-    );
+    service = TestBed.inject(AffiliationFormsService);
     expect(service).toBeTruthy();
   });
 });

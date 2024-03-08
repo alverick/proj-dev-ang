@@ -37,6 +37,7 @@ export class ServiceResumePage {
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
   formData;
+  form = this.affiliation.editServiceForm;
 
   constructor(
     private router: Router,

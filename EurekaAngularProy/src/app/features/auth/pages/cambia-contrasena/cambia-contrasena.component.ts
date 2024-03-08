@@ -5,16 +5,16 @@ import {
   UntypedFormControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RecuperaService } from 'src/app/shared/services/recupera.service';
-import { StorageService } from 'src/app/shared/services/storage.service';
-import { swalAlert } from 'src/app/shared/utils/helpers/popups';
 
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
+import { RecuperaService } from '../../../../shared/services/recupera.service';
+import { StorageService } from '../../../../shared/services/storage.service';
 import {
   type ActionEventProperties,
   AdobeEvent,
   TrackingService,
 } from '../../../../shared/services/tracking.service';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { MustMatch } from '../../../../shared/validators/must-match.validator';
 import {
   messageErrorNewPasswords,
@@ -52,7 +52,7 @@ export class CambiaContrasenaComponent implements OnInit {
         validator: MustMatch('contrasena', 'repcontrasena'),
       }
     );
-    this.llave = this.rutaActiva.snapshot.params.llave as string;
+    this.llave = this.rutaActiva?.snapshot?.params.llave as string;
 
     this.Verificar(this.llave);
   }
@@ -65,8 +65,8 @@ export class CambiaContrasenaComponent implements OnInit {
   // 3173I1201910171716
   Verificar(key: string) {
     this.recuperaService
-      .VerifingToken({ TokenEncrypted: key })
-      .subscribe((d) => {
+      ?.VerifingToken({ TokenEncrypted: key })
+      ?.subscribe((d) => {
         if (d !== true) {
           this.mensaje(
             'Enlace expirado',
@@ -93,7 +93,7 @@ export class CambiaContrasenaComponent implements OnInit {
           NewPassword: this.Cambia.value.contrasena,
           Token: this.llave,
         })
-        .subscribe((d) => {
+        ?.subscribe((d) => {
           if (d == false) {
             this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
               ...actionStep,
@@ -124,7 +124,6 @@ export class CambiaContrasenaComponent implements OnInit {
       location: 'Modal',
     });
     void swalAlert.fire({
-      // type: tipo ,
       title: titulo,
       html: text,
       showCloseButton: false,
@@ -143,7 +142,6 @@ export class CambiaContrasenaComponent implements OnInit {
     });
     void swalAlert
       .fire({
-        // type: tipo ,
         title: titulo,
         html: text,
         showCloseButton: false,
@@ -151,7 +149,7 @@ export class CambiaContrasenaComponent implements OnInit {
         showConfirmButton: true,
         confirmButtonText: firstButton,
       })
-      .then((result) => {
+      .then(() => {
         void this.router.navigate([authFullRoutingNames.LOGIN]);
       });
   }

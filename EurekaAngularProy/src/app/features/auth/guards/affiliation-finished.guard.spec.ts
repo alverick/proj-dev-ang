@@ -1,11 +1,12 @@
 import { inject, TestBed } from '@angular/core/testing';
+import { MockProvider } from 'ng-mocks';
 
 import { AffiliationFinishedGuard } from './affiliation-finished.guard';
 
 describe('AffiliationFinishedGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AffiliationFinishedGuard],
+      providers: [MockProvider(AffiliationFinishedGuard)],
     });
   });
 

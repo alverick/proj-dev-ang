@@ -1,6 +1,6 @@
 <cs-services-list
   class="tw-w-full"
-  [empty]="affiliation.servicesList.length === 0"
+  [empty]="affiliation?.servicesList?.length === 0"
   [message]="'Debes contar con al menos un servicio para continuar.'"
   (add)="createService()"
   (finish)="finalize()"
@@ -24,7 +24,7 @@
   styleClass="p-sidebar-md edit-form lg:tw-h-screen tw-overflow-auto"
 >
   <cs-service-edit-form
-    [form]="affiliation.editServiceForm"
+    [form]="form"
     [errorMessages]="errorMessages"
     [debtorCodeOptions]="debtorCodeOptions"
     [paymentTypeOptions]="paymentTypeOptions"
