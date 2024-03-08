@@ -1,16 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { type OnDestroy, type OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import * as saveAs from 'file-saver';
 import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { Subscription, timer } from 'rxjs';
-import { IEntryModel } from 'src/app/shared/models';
-import { GtpFilter } from 'src/app/shared/models/gtp-filter';
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
+import { type Subscription, timer } from 'rxjs';
 
 import { QueryDataService } from '../../../../shared/data';
-import { StatesGtp } from '../../../../shared/models/states-gtp';
+import { type IEntryModel } from '../../../../shared/models';
+import { type GtpFilter } from '../../../../shared/models/gtp-filter';
+import { type StatesGtp } from '../../../../shared/models/states-gtp';
 import { CompanyService } from '../../../../shared/services';
+import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { GtpService } from '../../../../shared/services/gtp.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { adminFullRoutingNames } from '../../admin-routing.names';
