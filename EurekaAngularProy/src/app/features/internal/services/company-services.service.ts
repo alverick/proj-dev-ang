@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
 import { forEachObjIndexed, isNil, omit, pathEq } from 'ramda';
-import { throwError } from 'rxjs';
+import { switchMap, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import {
@@ -16,6 +16,7 @@ import { type IServiceRemoteModel } from '../../../shared/models';
 import { type ModelFormGroup } from '../../../shared/models/forms';
 import {
   CompanyService,
+  DigitalDataService,
   ServiceService,
   ServicesFormsService,
 } from '../../../shared/services';
@@ -54,6 +55,7 @@ export class CompanyServicesService {
     private serviceForms: ServicesFormsService,
     private serviceService: ServiceService,
     private logger: NGXLogger,
+    private digitalData: DigitalDataService,
     protected tracking: TrackingService
   ) {
     this.serviceForm = this.serviceForms.serviceForm;
@@ -425,9 +427,14 @@ export class CompanyServicesService {
           };
         }
       );
-    return this.companyService.saveServices({
-      deleted: [],
-      services,
-    });
+    return this.digitalData.getData$().pipe(
+      switchMap((sdk) => {
+        return this.companyService.saveServices({
+          deleted: [],
+          services,
+          sdk,
+        });
+      })
+    );
   }
 }
