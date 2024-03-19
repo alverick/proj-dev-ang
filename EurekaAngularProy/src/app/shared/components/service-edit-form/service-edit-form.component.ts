@@ -1,13 +1,13 @@
 import {
+  type OnChanges,
+  type OnInit,
+  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { type UntypedFormGroup } from '@angular/forms';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
@@ -17,8 +17,9 @@ import {
   debtorCodeOptions,
 } from '../../constants/services';
 import { IServiceRemoteModelForms } from '../../models';
-import { IErrorMessages } from '../../models/forms';
+import { type ModelFormGroup, IErrorMessages } from '../../models/forms';
 import { ServicesFormsService } from '../../services';
+import type { ServiceEditForm } from '../../services/services-forms.service';
 
 @Component({
   selector: 'cs-service-edit-form',
@@ -140,14 +141,14 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
 
   listenForChanges() {
     this.debtForm
-      .get('chargeType')
+      ?.get('chargeType')
       .statusChanges.pipe(throttleTime(1000))
       .subscribe(() => {
         if (!this.formLoaded) {
           this.setFormData();
         }
       });
-    this.form.get('debtorCode').valueChanges.subscribe((val) => {
+    this.form?.get('debtorCode').valueChanges.subscribe((val) => {
       this.debtorCodeEditable = val === 'Otro';
       if (val === 'Otro') {
         this.form.get('debtorCodeCustom').setValue('');

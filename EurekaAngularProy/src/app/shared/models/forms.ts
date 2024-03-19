@@ -1,4 +1,4 @@
-import { FormControl, FormGroup } from '@angular/forms';
+import { type FormControl, type FormGroup } from '@angular/forms';
 
 export interface IErrorMessages {
   [key: string]: { [key: string]: string };

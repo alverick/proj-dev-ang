@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { type CanActivate, type UrlTree, Router } from '@angular/router';
 import { isEmpty } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
+
 import {
   authFullRoutingChildNames,
   authFullRoutingNames,
@@ -21,10 +16,7 @@ export class AffiliationServiceValidGuard implements CanActivate {
     private affiliation: AffiliationService,
     private router: Router
   ) {}
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
+  canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean

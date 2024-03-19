@@ -1,4 +1,4 @@
-import { appFullRoutingNames } from 'src/app/app-routing.names';
+import { appFullRoutingNames } from '../../app-routing.names';
 
 export const adminRoutingNames = {
   APPROVE: 'aprobacion',

@@ -1,17 +1,21 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { type OnInit, Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { clone, equals, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
-import { appFullRoutingNames } from 'src/app/app-routing.names';
-import { IEntryModel } from 'src/app/shared/models';
-import { ICompanyData } from 'src/app/shared/models/company-data';
-import { GtpEmpresa, GtpServcegtp } from 'src/app/shared/models/gtp-post';
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { GtpService } from 'src/app/shared/services/gtp.service';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { IAccountStateDetails } from '../../../../shared/models/company';
-import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
+
+import { appFullRoutingNames } from '../../../../app-routing.names';
+import { type IEntryModel } from '../../../../shared/models';
+import { type IAccountStateDetails } from '../../../../shared/models/company';
+import { type ICompanyData } from '../../../../shared/models/company-data';
+import { type DataServiceGTP } from '../../../../shared/models/data-service-gtp';
+import {
+  type GtpEmpresa,
+  type GtpServcegtp,
+} from '../../../../shared/models/gtp-post';
+import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
+import { GtpService } from '../../../../shared/services/gtp.service';
+import { drawPopup } from '../../../../shared/utils/helpers/popups';
 
 @Component({
   selector: 'cs-aprobaciones',

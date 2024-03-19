@@ -1,24 +1,22 @@
-import { RouterTestingModule } from '@angular/router/testing';
 import { MockBuilder, MockRender } from 'ng-mocks';
-import { SidebarModule } from 'primeng/sidebar';
 
+import { SidebarServiceComponent } from '../../../../shared/components/sidebar-service/sidebar-service.component';
 import { CompanyFormAuthComponent } from '../../components/company-form-auth/company-form-auth.component';
 import { SidebarCompanyComponent } from '../../components/sidebar-company/sidebar-company.component';
 import { AffiliationService } from '../../services';
-import { UpdateCompanyPage } from './update-company.page';
+import { CompanyRegistrationAuthPage } from './company-registration-auth.page';
 
-describe('UpdateCompanyComponent', () => {
+describe('CompanyRegistrationPage', () => {
   beforeEach(() =>
-    MockBuilder(UpdateCompanyPage)
+    MockBuilder(CompanyRegistrationAuthPage)
       .mock(AffiliationService)
-      .mock(RouterTestingModule)
-      .mock(SidebarModule)
+      .mock(SidebarServiceComponent)
       .mock(SidebarCompanyComponent)
       .mock(CompanyFormAuthComponent)
   );
 
   it('should create', () => {
-    const fixture = MockRender(UpdateCompanyPage);
+    const fixture = MockRender(CompanyRegistrationAuthPage);
     expect(fixture).toBeTruthy();
   });
 });

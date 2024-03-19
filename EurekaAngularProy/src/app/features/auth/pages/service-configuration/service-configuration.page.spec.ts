@@ -1,24 +1,20 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MockBuilder, MockRender } from 'ng-mocks';
 
+import { ServiceStepConfigurationComponent } from '../../../../shared/components/service-step-configuration/service-step-configuration.component';
+import { ServicesFormsService } from '../../../../shared/services';
+import { AffiliationService } from '../../services';
 import { ServiceConfigurationPage } from './service-configuration.page';
 
 describe('ServiceConfigurationPage', () => {
-  let component: ServiceConfigurationPage;
-  let fixture: ComponentFixture<ServiceConfigurationPage>;
-
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ServiceConfigurationPage],
-    }).compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ServiceConfigurationPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() =>
+    MockBuilder(ServiceConfigurationPage)
+      .mock(AffiliationService)
+      .mock(ServicesFormsService)
+      .mock(ServiceStepConfigurationComponent)
+  );
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(ServiceConfigurationPage);
+    expect(fixture).toBeTruthy();
   });
 });

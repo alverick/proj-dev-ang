@@ -1,17 +1,24 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  AbstractControl,
+  type OnInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import {
+  type AbstractControl,
+  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
-import { IEntryModel } from 'src/app/shared/models';
-import { ICompanyData } from 'src/app/shared/models/company-data';
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { GtpService } from 'src/app/shared/services/gtp.service';
+
+import { type IEntryModel } from '../../../../shared/models';
+import { ICompanyData } from '../../../../shared/models/company-data';
+import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
+import { GtpService } from '../../../../shared/services/gtp.service';
 
 @Component({
   selector: 'cs-empresa-gtp',

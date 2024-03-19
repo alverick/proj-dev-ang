@@ -78,7 +78,7 @@ export class AffiliationService {
     private companyService: CompanyService,
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
-    private affiliationForms: AffiliationFormsService,
+    public affiliationForms: AffiliationFormsService,
     private serviceForms: ServicesFormsService,
     private logger: NGXLogger,
     private digitalData: DigitalDataService,
@@ -209,7 +209,6 @@ export class AffiliationService {
         },
       ],
     };
-
     return this.digitalData.getData$().pipe(
       switchMap((sdk) => {
         return this.companyService

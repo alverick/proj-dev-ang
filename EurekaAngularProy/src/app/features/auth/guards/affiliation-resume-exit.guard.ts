@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanDeactivate,
+  type ActivatedRouteSnapshot,
+  type CanDeactivate,
+  type RouterStateSnapshot,
+  type UrlTree,
   Router,
-  RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
 import { pathEq } from 'ramda';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
 
 import {
   authFullRoutingChildNames,
   authFullRoutingNames,
 } from '../auth-routing.names';
 import { swalMesssageExit } from '../constants';
-import { ServiceResumePage } from '../pages/service-resume/service-resume.page';
+import { type ServiceResumePage } from '../pages/service-resume/service-resume.page';
 
 @Injectable()
 export class AffiliationResumeExitGuard
