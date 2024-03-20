@@ -74,6 +74,7 @@ export class DebtComponent implements OnInit {
   };
   limitAmountMax = 0;
   debtorCodeChanged = new Subject<boolean>();
+  loaderDebtorCode = false;
 
   ngOnInit(): void {
     this.nuevaDeuda.service = this.excelService.service.name;
@@ -124,9 +125,18 @@ export class DebtComponent implements OnInit {
       return;
     }
 
+    const initTime = new Date();
+
+    this.loaderDebtorCode = true;
+
     this.homeService
       .getDebtorCode(this.nuevaDeuda.service, this.nuevaDeuda.code)
       .subscribe((d) => {
+        const endTime = new Date();
+        const delay = 900 - (endTime.getTime() - initTime.getTime());
+        setTimeout(() => {
+          this.loaderDebtorCode = false;
+        }, delay);
         if (d.id) {
           this.nuevaDeuda.firstName = d.firstName;
           delete this.nuevaDeuda.errores.firstName;
