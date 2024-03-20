@@ -102,7 +102,9 @@ export class DebtComponent implements OnInit {
 
   MontoBlur(e: any) {
     const initialValue = parseFloat(e.amount);
-    if (!isNaN(initialValue)) e.amount = initialValue.toFixed(2);
+    if (!isNaN(initialValue)) {
+      e.amount = initialValue.toFixed(2);
+    }
   }
 
   cmbNewService() {
