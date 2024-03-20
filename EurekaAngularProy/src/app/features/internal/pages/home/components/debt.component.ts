@@ -9,7 +9,7 @@ import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Store } from '@ngrx/store';
 import { forEachObjIndexed } from 'ramda';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
 
 import { ExcelService } from '../../../../../shared/services/excel.service';
@@ -112,6 +112,11 @@ export class DebtComponent implements OnInit {
       delete this.nuevaDeuda.code;
       return;
     }
+
+    if (isNilOrEmpty(this.nuevaDeuda.code)) {
+      return;
+    }
+
     this.homeService
       .getDebtorCode(this.nuevaDeuda.service, this.nuevaDeuda.code)
       .subscribe((d) => {
