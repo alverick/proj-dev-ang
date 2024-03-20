@@ -59,10 +59,9 @@
         [(ngModel)]="nuevaDeuda.code"
         maxlength="14"
         autocomplete="off"
-        (blur)="buscarNewCode()"
         minlength="1"
         type="text"
-        (ngModelChange)="nuevaDeuda.errores.code = null"
+        (ngModelChange)="debtorCodeChanged.next(true)"
       />
       <div class="msg-error" *ngIf="nuevaDeuda.errores.code">
         {{ nuevaDeuda.errores.code }}

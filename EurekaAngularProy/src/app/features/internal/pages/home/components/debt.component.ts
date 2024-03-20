@@ -10,7 +10,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Store } from '@ngrx/store';
 import { forEachObjIndexed } from 'ramda';
 import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
-import { filter } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
@@ -53,6 +54,7 @@ const MY_FORMATS = {
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class DebtComponent implements OnInit {
   isNewFlow = false;
+
   constructor(
     private dialogRef: MatDialogRef<DebtComponent>,
     private homeService: HomeService,
@@ -71,6 +73,7 @@ export class DebtComponent implements OnInit {
     errores: {},
   };
   limitAmountMax = 0;
+  debtorCodeChanged = new Subject<boolean>();
 
   ngOnInit(): void {
     this.nuevaDeuda.service = this.excelService.service.name;
@@ -90,6 +93,10 @@ export class DebtComponent implements OnInit {
       .subscribe((details) => {
         this.isNewFlow = details.isNewFlow;
       });
+
+    this.debtorCodeChanged.pipe(debounceTime(600)).subscribe(() => {
+      this.buscarNewCode();
+    });
   }
 
   MontoBlur(e: any) {
