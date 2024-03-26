@@ -17,9 +17,8 @@ import {
   debtorCodeOptions,
 } from '../../constants/services';
 import { IServiceRemoteModelForms } from '../../models';
-import { type ModelFormGroup, IErrorMessages } from '../../models/forms';
+import { IErrorMessages } from '../../models/forms';
 import { ServicesFormsService } from '../../services';
-import type { ServiceEditForm } from '../../services/services-forms.service';
 
 @Component({
   selector: 'cs-service-edit-form',
