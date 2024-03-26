@@ -50,7 +50,8 @@ stages:
     - task: SonarCloudPrepare@1
       condition: and(succeeded(), eq( '${{ parameters.runSonarTask}}' , true))
       inputs:
-        SonarCloud: 'SCSonarCloudBie'
+        azureSubscription: 'SCSonarCloudCS'
+        SonarCloud: 'SCSonarCloudCS'
         organization: 'interbank'
         scannerMode: 'CLI'
         configMode: 'manual'
@@ -63,7 +64,7 @@ stages:
           sonar.exclusions = */node_modules/, */src/assets/*, */src/environments/*, */src/jest.config.ts, */src/main.ts
           sonar.tests=$(System.DefaultWorkingDirectory)/src
           sonar.test.inclusions=**/*.spec.ts
-          sonar.typescript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/coverage/lcov.info
+          sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/coverage/lcov.info
           sonar.c.file.suffixes=-
           sonar.cpp.file.suffixes=-
           sonar.objc.file.suffixes=-
