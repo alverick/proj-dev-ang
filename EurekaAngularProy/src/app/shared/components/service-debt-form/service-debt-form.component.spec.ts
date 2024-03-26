@@ -1,16 +1,20 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MockComponent } from 'ng-mocks';
+import { MockProvider } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
 import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
-import { environment } from '../../../../environments/environment';
 
+import { environment } from '../../../../environments/environment';
 import { CompanyServicesService } from '../../../features/internal/services';
 import { errorServiceConfiguration } from '../../constants/company-errors';
 import { type ModelFormGroup } from '../../models/forms';
-import { CompanyService, ServicesFormsService } from '../../services';
+import {
+  CompanyService,
+  DigitalDataService,
+  ServicesFormsService,
+} from '../../services';
 import type { ServiceDebt } from '../../services/services-forms.service';
 import { LabelControlComponent } from '../label-control/label-control.component';
 import { ServiceDebtFormComponent } from './service-debt-form.component';
@@ -36,7 +40,12 @@ describe('ServiceDebtFormComponent', () => {
         ReactiveFormsModule,
         FormsModule,
       ],
-      providers: [CompanyServicesService, CompanyService, ServicesFormsService],
+      providers: [
+        CompanyServicesService,
+        CompanyService,
+        MockProvider(DigitalDataService),
+        ServicesFormsService,
+      ],
     }).compileComponents();
   });
 
