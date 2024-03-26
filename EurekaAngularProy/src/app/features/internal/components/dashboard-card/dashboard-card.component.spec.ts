@@ -1,14 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { NotEmptyPipe } from '../../../../shared/pipes/not-empty.pipe';
 import { DashboardCardComponent } from './dashboard-card.component';
 
 describe('DashboardCardComponent', () => {
   let component: DashboardCardComponent;
   let fixture: ComponentFixture<DashboardCardComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [DashboardCardComponent],
+  beforeEach(() => {
+    void TestBed.configureTestingModule({
+      declarations: [DashboardCardComponent, NotEmptyPipe],
+      imports: [],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardCardComponent);

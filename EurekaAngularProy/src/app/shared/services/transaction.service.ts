@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { clone, isNil } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { Observable, throwError } from 'rxjs';
+import { type Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
-import { Debts, DebtsPagedList } from '../models/debts';
-import { DebtEdit } from '../models/debts-edit.model';
-import { DebstFilter } from '../models/debts-filter.model';
+import { environment } from '../../../environments/environment';
+import { type Debts, type DebtsPagedList } from '../models/debts';
+import { type DebtEdit } from '../models/debts-edit.model';
+import { type DebstFilter } from '../models/debts-filter.model';
 
 @Injectable({
   providedIn: 'root',

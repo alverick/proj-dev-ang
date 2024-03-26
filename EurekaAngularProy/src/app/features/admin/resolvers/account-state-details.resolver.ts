@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { type ActivatedRouteSnapshot, type Resolve } from '@angular/router';
+import { type Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { IAccountStateDetails } from 'src/app/shared/models/company';
 
+import { type IAccountStateDetails } from '../../../shared/models/company';
 import { CompanyService } from '../../../shared/services';
 
 @Injectable()

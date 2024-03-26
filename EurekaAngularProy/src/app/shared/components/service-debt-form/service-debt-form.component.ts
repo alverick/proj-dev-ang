@@ -1,21 +1,21 @@
 import {
-  AfterViewInit,
+  type AfterViewInit,
+  type OnChanges,
+  type OnInit,
+  type SimpleChanges,
   Component,
   Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
-  ControlValueAccessor,
+  type ControlValueAccessor,
   NG_VALUE_ACCESSOR,
   NgForm,
-  UntypedFormGroup,
 } from '@angular/forms';
 import { pathEq } from 'ramda';
 
-import { IErrorMessages } from '../../models/forms';
+import { IErrorMessages, ModelFormGroup } from '../../models/forms';
+import { type ServiceDebt } from '../../services/services-forms.service';
 
 @Component({
   selector: 'cs-service-debt-form',
@@ -32,7 +32,7 @@ import { IErrorMessages } from '../../models/forms';
 export class ServiceDebtFormComponent
   implements OnInit, OnChanges, AfterViewInit, ControlValueAccessor
 {
-  @Input() form: UntypedFormGroup;
+  @Input() form: ModelFormGroup<ServiceDebt>;
   @Input() errorMessages: IErrorMessages;
   @Input() paymentTypeOptions: any[];
   @Input() currencyOptions: any[];
@@ -47,7 +47,7 @@ export class ServiceDebtFormComponent
   onTouched: any;
 
   ngOnInit() {
-    const { chargeInterest, interestType } = this.form.value;
+    const { chargeInterest, interestType } = this.form?.value;
     this.processArrearsMode(chargeInterest === 'S');
     this.setAmountProps(interestType);
     this.listenForms();
@@ -84,7 +84,7 @@ export class ServiceDebtFormComponent
     });
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn): void {
     this.form.valueChanges.subscribe((value) => {
       fn(value);
     });

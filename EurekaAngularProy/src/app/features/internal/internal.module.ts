@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { SharedModule } from 'src/app/shared/shared.module';
 
+import { SharedModule } from '../../shared/shared.module';
 import { CompanyPasswordFormComponent } from './components/company-password-form/company-password-form.component';
 import { CompanyUpdateFormComponent } from './components/company-update-form/company-update-form.component';
 import { DashboardCardComponent } from './components/dashboard-card/dashboard-card.component';

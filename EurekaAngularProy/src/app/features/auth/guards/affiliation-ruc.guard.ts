@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanActivate,
+  type ActivatedRouteSnapshot,
+  type CanActivate,
+  type RouterStateSnapshot,
+  type UrlTree,
   Router,
-  RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
 
 import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';

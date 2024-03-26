@@ -6,6 +6,7 @@ import {
 } from '@ng-stack/api-mock';
 
 import { environment } from '../environments/environment';
+import { getAffiliate } from './shared/mocks/company';
 import { type ICompanyData } from './shared/models/company-data';
 import { type IDataEnterpriseModel } from './shared/models/data-enterprise.model';
 
@@ -40,27 +41,7 @@ export class MockService implements ApiMockService {
       {
         host: environment.END_POINT,
         path: 'company/getafiliate',
-        responseCallback: (): IDataEnterpriseModel => ({
-          ruc: '20524801117',
-          name: 'PRUEBA DASHBOARD',
-          entry: '11',
-          entryName: 'Nombre de rubro 1',
-          email: 'angelirivera1226@gmail.com',
-          movilNumber: '931123502',
-          movilOperator: 'B',
-          newName: 'PRUEBA DASHBOARD',
-          newNameGTPStatus: 1,
-          status: 'Atendido',
-          inReview: false,
-          requestDate: '2023-03-16T16:48:07.6533333',
-          documentType: 'DNI',
-          documentNumber: '43111232',
-          isNewFlow: true,
-          amountLimits: [
-            { currency: '001', amountMax: 4000 },
-            { currency: '002', amountMax: 4000 },
-          ],
-        }),
+        responseCallback: () => getAffiliate,
       },
       {
         host: environment.END_POINT,

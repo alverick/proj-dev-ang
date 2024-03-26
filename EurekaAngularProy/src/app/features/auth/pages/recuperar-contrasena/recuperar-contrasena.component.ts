@@ -7,16 +7,16 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forEachObjIndexed } from 'ramda';
-import { authFullRoutingNames } from 'src/app/app-routing.collection';
-import { RecuperaService } from 'src/app/shared/services/recupera.service';
-import { swalAlert } from 'src/app/shared/utils/helpers/popups';
 
+import { RecuperaService } from '../../../../shared/services/recupera.service';
 import {
   type ActionEventProperties,
   type Metadata,
   AdobeEvent,
   TrackingService,
 } from '../../../../shared/services/tracking.service';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
+import { authFullRoutingNames } from '../../auth-routing.names';
 
 @Component({
   selector: 'cs-recuperar-contrasena',

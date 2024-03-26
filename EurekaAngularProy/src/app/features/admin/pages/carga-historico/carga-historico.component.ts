@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as saveAs from 'file-saver';
-import { ProcessService } from 'src/app/shared/services/process.service';
 
 import { QueryDataService } from '../../../../shared/data';
+import { ProcessService } from '../../../../shared/services/process.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 
 @Component({

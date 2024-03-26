@@ -1,22 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { type OnDestroy, type OnInit, Component } from '@angular/core';
 import {
+  type RouterEvent,
   ActivatedRoute,
   NavigationEnd,
   Router,
-  RouterEvent,
   Scroll,
 } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { Observable, Subject } from 'rxjs';
+import { type Observable, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
 import {
+  type CurrencyWithLimit,
   currencies,
-  CurrencyWithLimit,
 } from '../../../../shared/constants/currencies';
 import {
-  AmountLimit,
-  IDataEnterpriseModel,
+  type AmountLimit,
+  type IDataEnterpriseModel,
 } from '../../../../shared/models/data-enterprise.model';
 import {
   ServicesFormsService,

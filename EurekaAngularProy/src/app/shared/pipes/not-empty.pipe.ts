@@ -1,11 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { type PipeTransform, Pipe } from '@angular/core';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
 @Pipe({
   name: 'notEmpty',
 })
 export class NotEmptyPipe implements PipeTransform {
-  transform(value: any, replacement: string = ''): any {
+  transform<T>(value: T, replacement: string = ''): T | string {
     return isNilOrEmpty(value) ? replacement : value;
   }
 }

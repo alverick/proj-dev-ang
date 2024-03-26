@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { moduleMetadata, Story } from '@storybook/angular';
+import { type Story, moduleMetadata } from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';
-import { ServiceCardComponent } from './service-card.component';
+import { type ServiceCardComponent } from './service-card.component';
 
 export default {
   title: 'Shared/Molecules/Service card',

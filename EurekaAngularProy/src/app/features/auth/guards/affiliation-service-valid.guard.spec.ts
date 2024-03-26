@@ -1,11 +1,12 @@
 import { inject, TestBed } from '@angular/core/testing';
+import { MockProvider } from 'ng-mocks';
 
 import { AffiliationServiceValidGuard } from './affiliation-service-valid.guard';
 
 describe('AffiliationServiceValidGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AffiliationServiceValidGuard],
+      providers: [MockProvider(AffiliationServiceValidGuard)],
     });
   });
 

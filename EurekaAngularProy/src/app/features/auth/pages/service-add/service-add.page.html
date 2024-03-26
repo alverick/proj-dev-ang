@@ -3,7 +3,7 @@
     *ngIf="position !== 2"
     class="info tw-relative"
     [position]="position"
-    [existServices]="affiliation.servicesList.length > 0"
+    [existServices]="affiliation?.servicesList?.length > 0"
   ></cs-sidebar-service>
   <div class="content" [ngClass]="{ 'tw-w-full': position === 2 }">
     <div

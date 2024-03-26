@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanActivate,
+  type ActivatedRouteSnapshot,
+  type CanActivate,
+  type UrlTree,
   Router,
-  RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
-import { NGXLogger } from 'ngx-logger';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { swalAlert } from '../../../shared/utils/helpers/popups';
@@ -23,12 +21,10 @@ import { AffiliationService } from '../services';
 export class ValidateTokenGuard implements CanActivate {
   constructor(
     private router: Router,
-    private logger: NGXLogger,
     private affiliation: AffiliationService
   ) {}
   canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    next: ActivatedRouteSnapshot
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanMatch, Router } from '@angular/router';
+import { type CanMatch, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
 
 import { appConfigFeature } from '../../../store/reducers/app-config.reducer';
 

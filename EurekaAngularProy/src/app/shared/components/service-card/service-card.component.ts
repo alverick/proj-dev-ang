@@ -1,16 +1,17 @@
 import {
+  type OnChanges,
+  type OnInit,
+  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
+import { propOr } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
 import { dataTypeOptions } from '../../constants/services';
-import { IServiceRemoteModelForms } from '../../models';
+import { type IServiceRemoteModelForms } from '../../models';
 
 @Component({
   selector: 'cs-service-card',
@@ -66,15 +67,15 @@ export class ServiceCardComponent implements OnInit, OnChanges {
   }
 
   isInReview() {
-    this.name = this.serviceData.name;
-    this.debtorCode = this.serviceData.debtorCode;
+    this.name = this.serviceData?.name;
+    this.debtorCode = this.serviceData?.debtorCode;
     if (this.lockedMode) {
-      this.updateEditable = this.serviceData.inReview;
-      if (isNilOrEmpty(this.serviceData.name)) {
-        this.name = this.serviceData.newName;
+      this.updateEditable = this.serviceData?.inReview;
+      if (isNilOrEmpty(this.serviceData?.name)) {
+        this.name = this.serviceData?.newName;
       }
-      if (isNilOrEmpty(this.serviceData.debtorCode)) {
-        this.debtorCode = this.serviceData.newNameCode;
+      if (isNilOrEmpty(this.serviceData?.debtorCode)) {
+        this.debtorCode = this.serviceData?.newNameCode;
       }
     }
   }
@@ -124,8 +125,8 @@ export class ServiceCardComponent implements OnInit, OnChanges {
 
   setDataType() {
     this.dataType =
-      dataTypeOptions.find(({ value }) => value === this.serviceData.dataType)
-        .label || '';
+      dataTypeOptions.find(({ value }) => value === this.serviceData?.dataType)
+        ?.label || '';
   }
 
   setPaymentChannels() {
@@ -134,7 +135,7 @@ export class ServiceCardComponent implements OnInit, OnChanges {
       { key: 'useAgent', label: 'Agentes' },
     ];
     this.paymentChannels = channels
-      .filter(({ key }) => this.serviceData[key])
+      .filter(({ key }) => propOr('', key, this.serviceData))
       .map(({ label }) => label)
       .join(', ');
   }
