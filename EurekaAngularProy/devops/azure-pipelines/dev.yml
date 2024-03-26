@@ -60,11 +60,11 @@ stages:
         cliSources: '.'
         extraProperties: |
           sonar.sourceEncoding=UTF-8
-          sonar.sources=$(System.DefaultWorkingDirectory)/src
+          sonar.sources=$(System.DefaultWorkingDirectory)/EurekaAngularProy/src
           sonar.exclusions = */node_modules/, */src/assets/*, */src/environments/*, */src/jest.config.ts, */src/main.ts
-          sonar.tests=$(System.DefaultWorkingDirectory)/src
+          sonar.tests=$(System.DefaultWorkingDirectory)/EurekaAngularProy/src
           sonar.test.inclusions=**/*.spec.ts
-          sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/coverage/lcov.info
+          sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/EurekaAngularProy/coverage/lcov.info
           sonar.c.file.suffixes=-
           sonar.cpp.file.suffixes=-
           sonar.objc.file.suffixes=-
