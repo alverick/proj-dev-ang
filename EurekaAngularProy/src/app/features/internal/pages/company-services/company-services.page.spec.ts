@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockProvider } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
 import { SidebarModule } from 'primeng/sidebar';
 
@@ -8,6 +9,7 @@ import { environment } from '../../../../../environments/environment';
 import { ServicesListComponent } from '../../../../shared/components/services-list/services-list.component';
 import {
   CompanyService,
+  DigitalDataService,
   ServicesFormsService,
 } from '../../../../shared/services';
 import { CompanyServicesService } from '../../services';
@@ -31,7 +33,12 @@ describe('CompanyServicesPage', () => {
         SidebarModule,
         RouterTestingModule,
       ],
-      providers: [CompanyService, CompanyServicesService, ServicesFormsService],
+      providers: [
+        CompanyService,
+        CompanyServicesService,
+        MockProvider(DigitalDataService),
+        ServicesFormsService,
+      ],
     }).compileComponents();
   });
 
