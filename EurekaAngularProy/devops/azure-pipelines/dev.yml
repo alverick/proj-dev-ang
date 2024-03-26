@@ -41,6 +41,8 @@ stages:
 
     - task: Npm@1
       displayName: 'Run test '
+      env:
+        NODE_OPTIONS: --max_old_space_size=16384
       inputs:
         command: custom
         workingDir: EurekaAngularProy
