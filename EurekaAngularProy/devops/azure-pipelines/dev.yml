@@ -40,7 +40,7 @@ stages:
         verbose: false
 
     - task: Npm@1
-      displayName: 'Run build '
+      displayName: 'Run test '
       inputs:
         command: custom
         workingDir: EurekaAngularProy
