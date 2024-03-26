@@ -27,7 +27,6 @@ export interface CompanyAccounts {
   id: string;
 }
 
-type ValidateCompanyData = Partial<RegisterForm> & { sdk: FingerPrintData };
 type SaveCompanyData = Partial<RegisterForm> &
   Partial<AuthForm> & { entryName: string };
 type UpdateCompanyData = Partial<RegisterForm> & Partial<AuthForm>;
@@ -37,7 +36,7 @@ type CompanyServicesData = ServicePostData & { sdk: FingerPrintData };
 export class CompanyService {
   constructor(private http: HttpClient) {}
 
-  public validateCompany(data: ValidateCompanyData) {
+  public validateCompany(data: Partial<RegisterForm>) {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company/validate`,
       data
