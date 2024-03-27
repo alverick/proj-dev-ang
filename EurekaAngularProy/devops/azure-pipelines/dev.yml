@@ -47,7 +47,7 @@ stages:
         command: custom
         workingDir: EurekaAngularProy
         verbose: false
-        customCommand: 'run test --coverage --max_old_space_size=16384'
+        customCommand: 'run test --coverage'
 
     - task: SonarCloudPrepare@1
       condition: and(succeeded(), eq( '${{ parameters.runSonarTask}}' , true))
