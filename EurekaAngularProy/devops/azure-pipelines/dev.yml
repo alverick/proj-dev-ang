@@ -82,6 +82,25 @@ stages:
         pollingTimeoutSec: '300'
       displayName: 'Publish Quality Gate Result'
 
+    - powershell: |
+        $token = [System.Text.Encoding]::UTF8.GetBytes($env:SonarToken + ":")
+        $base64 = [System.Convert]::ToBase64String($token)
+
+        $basicAuth = [string]::Format("Basic {0}", $base64)
+        $headers = @{ Authorization = $basicAuth }
+
+        $result = Invoke-RestMethod -Method Get -Uri https://sonarcloud.io/api/qualitygates/project_status?projectKey=bie-pe.interbank.bie.cs-frontend:bie-cs-frontend -Headers $headers
+        $result | ConvertTo-Json | Write-Host
+
+        if ($result.projectStatus.status -eq "OK") {
+          Write-Host "Quality Gate Succeeded"
+        }else{
+          throw "Quality gate failed"
+        }
+      displayName: 'Check Sonar Quality Gate'
+      env:
+       SonarToken: $(SonarToken)
+
 #    - script: |
 #        echo Creating Directory
 #        mkdir -p Deploy/ClientApp/dist
