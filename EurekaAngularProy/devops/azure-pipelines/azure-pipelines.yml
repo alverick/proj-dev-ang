@@ -83,7 +83,6 @@ stages:
                 customCommand: 'run test --coverage'
 
             - task: SonarCloudPrepare@1
-              condition: and(succeeded(), eq( '${{ parameters.runSonarTask}}' , true))
               inputs:
                 azureSubscription: 'SCSonarCloudCS'
                 SonarCloud: 'SCSonarCloudCS'
@@ -106,11 +105,9 @@ stages:
               displayName: 'Prepare analysis on SonarCloud'
 
             - task: SonarCloudAnalyze@1
-              condition: and(succeeded(), eq( '${{ parameters.runSonarTask}}' , true))
               displayName: 'Run Code Analysis'
 
             - task: SonarCloudPublish@1
-              condition: and(succeeded(), eq( '${{ parameters.runSonarTask}}' , true))
               inputs:
                 pollingTimeoutSec: '300'
               displayName: 'Publish Quality Gate Result'
@@ -161,6 +158,7 @@ stages:
               rootFolderOrFile: EurekaAngularProy/Deploy
               includeRootFolder: false
               archiveFile: '$(Build.ArtifactStagingDirectory)/ClientApp.zip'
+
           - ${{ if eq( '${{ parameters.deployment}}' , true) }}:
               - task: AzureCLI@2
                 displayName: 'Webapp deployment'
