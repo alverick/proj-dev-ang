@@ -77,7 +77,7 @@ stages:
           - ${{ if eq(parameters.deployment, true) }}:
               - script: echo "Run deployment"
 
-          - ${{ if eq( '${{ parameters.runSonarTask}}' , true) }}:
+          - ${{ if eq(parameters.runSonarTask, true) }}:
             - task: Npm@1
               displayName: 'Run test '
               env:
@@ -165,7 +165,7 @@ stages:
               includeRootFolder: false
               archiveFile: '$(Build.ArtifactStagingDirectory)/ClientApp.zip'
 
-          - ${{ if eq( '${{ parameters.deployment}}' , true) }}:
+          - ${{ if eq(parameters.deployment, true) }}:
               - task: AzureCLI@2
                 displayName: 'Webapp deployment'
                 inputs:
