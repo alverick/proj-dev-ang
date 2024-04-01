@@ -71,6 +71,12 @@ stages:
               workingDir: EurekaAngularProy
               verbose: false
 
+          - ${{ if eq(parameters.runSonarTask, true) }}:
+              - script: echo "Run sonar"
+
+          - ${{ if eq(parameters.deployment, true) }}:
+              - script: echo "Run deployment"
+
           - ${{ if eq( '${{ parameters.runSonarTask}}' , true) }}:
             - task: Npm@1
               displayName: 'Run test '
