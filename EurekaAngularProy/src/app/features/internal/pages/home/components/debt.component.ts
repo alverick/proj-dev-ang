@@ -115,6 +115,8 @@ export class DebtComponent implements OnInit {
   }
 
   buscarNewCode() {
+    this.nuevaDeuda.errores.code = '';
+
     if (
       this.nuevaDeuda.service === null ||
       this.nuevaDeuda.service === undefined
