@@ -24,25 +24,26 @@ parameters:
     type: boolean
 
 variables:
-  vmImageName: 'ubuntu-20.04'
+  - group: sonar
+    vmImageName: 'ubuntu-20.04'
 
-  ${{ if or(contains(variables['Build.SourceBranchName'], 'dev'),eq(parameters.destiny,'dev')) }}:
-    mode: 'dev'
-    appServiceConnection: 'gr2c003eurcdev01'
-    groupName: 'RG_EU2_C003_EURC_DEV_01'
-    appServiceName: 'wappeu2c003eurcdev01'
+    ${{ if or(contains(variables['Build.SourceBranchName'], 'dev'),eq(parameters.destiny,'dev')) }}:
+      mode: 'dev'
+      appServiceConnection: 'gr2c003eurcdev01'
+      groupName: 'RG_EU2_C003_EURC_DEV_01'
+      appServiceName: 'wappeu2c003eurcdev01'
 
-  ${{ elseif or(contains(variables['Build.SourceBranchName'], 'uat'),eq(parameters.destiny,'uat')) }}:
-    mode: 'uat'
-    appServiceConnection: 'RG_EU2_C003_EURC_UAT_01'
-    groupName: 'rg_eu2_c003_eurc_uat_01'
-    appServiceName: 'wappeu2c003eurcuat01'
+    ${{ elseif or(contains(variables['Build.SourceBranchName'], 'uat'),eq(parameters.destiny,'uat')) }}:
+      mode: 'uat'
+      appServiceConnection: 'RG_EU2_C003_EURC_UAT_01'
+      groupName: 'rg_eu2_c003_eurc_uat_01'
+      appServiceName: 'wappeu2c003eurcuat01'
 
-  ${{ else }}:
-    mode: 'production'
-    appServiceConnection: 'RG_EU2_C003_EURC_PRD_01'
-    groupName: 'rg_eu2_c003_eurc_prd_01'
-    appServiceName: 'wappeu2c003eurcprd01'
+    ${{ else }}:
+      mode: 'production'
+      appServiceConnection: 'RG_EU2_C003_EURC_PRD_01'
+      groupName: 'rg_eu2_c003_eurc_prd_01'
+      appServiceName: 'wappeu2c003eurcprd01'
 
 stages:
   - stage: Build
