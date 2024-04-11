@@ -135,7 +135,7 @@ stages:
                 }
               displayName: 'Check Sonar Quality Gate'
               env:
-                SonarToken: $(SonarToken)
+                SonarToken: $(sonarcloud.token)
 
           - task: Npm@1
             displayName: 'Run build '
