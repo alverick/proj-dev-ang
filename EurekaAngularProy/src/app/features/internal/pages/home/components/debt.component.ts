@@ -75,6 +75,7 @@ export class DebtComponent implements OnInit {
   limitAmountMax = 0;
   debtorCodeChanged = new Subject<boolean>();
   loaderDebtorCode = false;
+  notAlphanumericRegex = new RegExp('^[0-9a-zA-Z]+$');
 
   ngOnInit(): void {
     this.nuevaDeuda.service = this.excelService.service.name;
@@ -123,7 +124,10 @@ export class DebtComponent implements OnInit {
       return;
     }
 
-    if (isNilOrEmpty(this.nuevaDeuda.code)) {
+    if (
+      isNilOrEmpty(this.nuevaDeuda.code) ||
+      !this.notAlphanumericRegex.test(this.nuevaDeuda.code)
+    ) {
       return;
     }
 
@@ -215,10 +219,9 @@ export class DebtComponent implements OnInit {
     }
 
     if (this.nuevaDeuda.code) {
-      const re = new RegExp('^[0-9a-zA-Z]+$');
       if (this.nuevaDeuda.code.length < 1) {
         this.nuevaDeuda.errores.code = 'Debe tener 1 carácter como mínimo';
-      } else if (!re.test(this.nuevaDeuda.code)) {
+      } else if (!this.notAlphanumericRegex.test(this.nuevaDeuda.code)) {
         this.nuevaDeuda.errores.code = 'No cumple con el formato';
       } else {
         delete this.nuevaDeuda.errores.code;
