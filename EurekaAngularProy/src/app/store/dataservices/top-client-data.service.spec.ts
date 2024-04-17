@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { MockProvider } from 'ng-mocks';
 
 import { TopClientDataService } from './top-client-data.service';
 
@@ -6,7 +7,9 @@ describe('TopClientDataService', () => {
   let service: TopClientDataService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [MockProvider(TopClientDataService)],
+    });
     service = TestBed.inject(TopClientDataService);
   });
 

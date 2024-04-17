@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { type Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+
+import { environment } from '../../../environments/environment';
 
 interface TokenChangePassword {
   TokenEncrypted: string;
@@ -34,7 +35,7 @@ export class RecuperaService {
       );
   }
 
-  public VerifingToken(data: TokenChangePassword): Observable<boolean> {
+  public VerifingToken(data: TokenChangePassword) {
     return this.http
       .post<boolean>(`${environment.END_POINT}/Login/dencrypt`, data)
       .pipe(
@@ -50,6 +51,7 @@ export class RecuperaService {
   }
 
   public ChangePassword(data: any): Observable<any> {
+    console.log('ChangePassword', data);
     return this.http
       .post<any>(`${environment.END_POINT}/Login/changepassword`, data)
       .pipe(

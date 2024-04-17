@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { type OnInit, ChangeDetectorRef, Component } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { MatLegacySnackBarRef as MatSnackBarRef } from '@angular/material/legacy-snack-bar';
-import { ExcelService } from 'src/app/shared/services/excel.service';
-import { TransactionService } from 'src/app/shared/services/transaction.service';
 import Swal from 'sweetalert2';
 
+import { ExcelService } from '../../../../../shared/services/excel.service';
+import { TransactionService } from '../../../../../shared/services/transaction.service';
 import { ValidationComponent } from './validation';
 
 @Component({
@@ -24,8 +24,8 @@ export class UploadProgressComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    var th = this;
-    var fnc = () => {
+    const th = this;
+    const fnc = () => {
       if (th.excelService.idProcess > 0) {
         th.verifyStatus();
       } else {
@@ -76,7 +76,7 @@ export class UploadProgressComponent implements OnInit {
           });
         }
       } else {
-        var th = this;
+        const th = this;
         setTimeout(() => {
           th.excelService
             .StatusExcel(th.excelService.idProcess)

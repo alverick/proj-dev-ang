@@ -1,16 +1,30 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent, MockProvider, MockProviders } from 'ng-mocks';
+import { LoggerModule } from 'ngx-logger';
+import { environment } from '../../../../../environments/environment';
+import { ServicesFormsService } from '../../../../shared/services';
 
+import { CompanyServicesService } from '../../services';
 import { ServiceConfigurationPage } from './service-configuration.page';
 
 describe('ServiceConfigurationPage', () => {
   let component: ServiceConfigurationPage;
   let fixture: ComponentFixture<ServiceConfigurationPage>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ServiceConfigurationPage],
+  beforeEach(() => {
+    void TestBed.configureTestingModule({
+      declarations: [MockComponent(ServiceConfigurationPage)],
+      imports: [
+        LoggerModule.forRoot({
+          level: environment.logLevel,
+          serverLogLevel: environment.serverLogLevel,
+          disableConsoleLogging: false,
+          enableSourceMaps: true,
+        }),
+      ],
+      providers: [MockProviders(CompanyServicesService, ServicesFormsService)],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ServiceConfigurationPage);

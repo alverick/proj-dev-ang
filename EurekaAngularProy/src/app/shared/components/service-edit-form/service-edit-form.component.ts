@@ -1,13 +1,13 @@
 import {
+  type OnChanges,
+  type OnInit,
+  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
+import { type UntypedFormGroup } from '@angular/forms';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
@@ -140,14 +140,14 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
 
   listenForChanges() {
     this.debtForm
-      .get('chargeType')
+      ?.get('chargeType')
       .statusChanges.pipe(throttleTime(1000))
       .subscribe(() => {
         if (!this.formLoaded) {
           this.setFormData();
         }
       });
-    this.form.get('debtorCode').valueChanges.subscribe((val) => {
+    this.form?.get('debtorCode').valueChanges.subscribe((val) => {
       this.debtorCodeEditable = val === 'Otro';
       if (val === 'Otro') {
         this.form.get('debtorCodeCustom').setValue('');

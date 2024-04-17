@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { appRoutingNames } from 'src/app/app-routing.names';
+import { type Routes, RouterModule } from '@angular/router';
 
+import { appRoutingNames } from '../../app-routing.names';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
-import { CompanyEntriesResolver } from '../../shared/resolvers';
 import { InternalComponent } from './internal.component';
 import {
   internalFullRoutingChildNames,

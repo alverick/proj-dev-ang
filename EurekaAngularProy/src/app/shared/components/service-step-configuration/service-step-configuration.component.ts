@@ -1,15 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  type OnInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { ISelectOptions } from '../../constants/company';
+import { type ISelectOptions } from '../../constants/company';
 import { debtorCodeCustomEmpty } from '../../constants/services';
 import { IErrorMessages, ModelFormGroup } from '../../models/forms';
 import {
-  ServiceConfigurationForm,
-  ServiceDebt,
+  type ServiceConfigurationForm,
+  type ServiceDebt,
+  type ServiceTypeType,
   ServiceTypes,
-  ServiceTypeType,
 } from '../../services/services-forms.service';
 
 @Component({
@@ -38,7 +44,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
 
   ngOnInit() {
     this.listenForms();
-    this.debtForm = this.form.get('debt') as ModelFormGroup<ServiceDebt>;
+    this.debtForm = this.form?.get('debt') as ModelFormGroup<ServiceDebt>;
     this.setDebtForm(this.form.value.dataType);
     this.setDebtorCodeCustomField(
       this.form.value.debtorCode,

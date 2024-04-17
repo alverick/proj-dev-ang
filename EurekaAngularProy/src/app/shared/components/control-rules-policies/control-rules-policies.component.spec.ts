@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ControlRulesPoliciesComponent } from './control-rules-policies.component';
 
@@ -6,8 +6,8 @@ describe('ControlRulesPoliciesComponent', () => {
   let component: ControlRulesPoliciesComponent;
   let fixture: ComponentFixture<ControlRulesPoliciesComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    void TestBed.configureTestingModule({
       declarations: [ControlRulesPoliciesComponent],
     }).compileComponents();
 

@@ -4,7 +4,7 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { type FormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
 import { moduleMetadata } from '@storybook/angular';
@@ -18,7 +18,7 @@ import {
   paymentTypeOptions,
 } from '../../../features/auth/constants';
 import { AffiliationFormsService } from '../../../features/auth/services';
-import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
+import { type IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
 

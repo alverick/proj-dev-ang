@@ -1,14 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  type OnInit,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import {
+  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { MonedaModel } from 'src/app/shared/models';
-import { DataServiceGTP } from 'src/app/shared/models/data-service-gtp';
-import { AfiliacionService } from 'src/app/shared/services/afiliacion.service';
-import { GtpService } from 'src/app/shared/services/gtp.service';
+
+import { type MonedaModel } from '../../../../shared/models';
+import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
+import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
+import { GtpService } from '../../../../shared/services/gtp.service';
 
 @Component({
   selector: 'cs-services-gtp',
@@ -80,16 +87,16 @@ export class ServicesGTPComponent implements OnInit {
       ResValue = [Validators.minLength(7)];
     }
     this.inReview = this._service.inReview;
-    var montod =
+    const montod =
       this._service.amount !== null && this._service.amount !== undefined
         ? this._service.amount
         : '1.00';
-    var porcentajed =
+    const porcentajed =
       this._service.porcentage !== null &&
       this._service.porcentage !== undefined
         ? this._service.porcentage
         : '1.00';
-    var nameCode =
+    let nameCode =
       this._service.codDeudor === 'Otro'
         ? this._service.nameCod
         : this._service.codDeudor;
@@ -696,15 +703,15 @@ export class ServicesGTPComponent implements OnInit {
   }
 
   MoraMontoBlur(e) {
-    let initalValue = parseFloat(this.f.monto.value);
+    const initalValue = parseFloat(this.f.monto.value);
     if (!isNaN(initalValue)) this.f.monto.setValue(initalValue.toFixed(2));
   }
   MoraPorcenBlur(e) {
-    let initalValue = parseFloat(this.f.porcentaje.value);
+    const initalValue = parseFloat(this.f.porcentaje.value);
     if (!isNaN(initalValue)) this.f.porcentaje.setValue(initalValue.toFixed(2));
   }
   nameCodBlur(e) {
-    let initalValue = this.f.nameCod.value;
+    const initalValue = this.f.nameCod.value;
     this.f.nameCod.setValue(initalValue.trim());
   }
   nameSerInput(e) {
@@ -718,7 +725,7 @@ export class ServicesGTPComponent implements OnInit {
   }
   // ^[0-9a-zA-ZÑñ]{3,30}$
   nameSerBlur(e) {
-    let initalValue = this.f.nombre.value;
+    const initalValue = this.f.nombre.value;
     this.f.nombre.setValue(initalValue.trim());
   }
 
@@ -729,7 +736,7 @@ export class ServicesGTPComponent implements OnInit {
 
 function Maximo(max: number) {
   return (c: UntypedFormControl) => {
-    let nro = parseFloat(c.value);
+    const nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro > max) {
         return { maximo: true };
@@ -741,7 +748,7 @@ function Maximo(max: number) {
 
 function Minimo(min: number) {
   return (c: UntypedFormControl) => {
-    let nro = parseFloat(c.value);
+    const nro = parseFloat(c.value);
     if (!isNaN(nro)) {
       if (nro < min) {
         return { minimo: true };
@@ -752,7 +759,7 @@ function Minimo(min: number) {
 }
 
 function Alfanumerico(c: UntypedFormControl) {
-  let regex = /[0-9a-zA-Z]-?/g;
+  const regex = /[0-9a-zA-Z]-?/g;
   if (c.value && !regex.test(c.value)) {
     return { alfa: true };
   }
@@ -760,9 +767,9 @@ function Alfanumerico(c: UntypedFormControl) {
 }
 
 function Alfabetico(c: UntypedFormControl) {
-  let regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
-  let numero = /[0-9]/g;
-  let raro = /[-{1,}]-?/g;
+  const regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
+  const numero = /[0-9]/g;
+  const raro = /[-{1,}]-?/g;
   if (c.value && !raro.test(c.value)) {
     return { alfabetico: true };
   }

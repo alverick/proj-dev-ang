@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
-  CanDeactivate,
-  RouterStateSnapshot,
-  UrlTree,
+  type ActivatedRouteSnapshot,
+  type CanDeactivate,
+  type RouterStateSnapshot,
+  type UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
+
 import { authFullRoutingNames } from '../auth-routing.names';
 import { swalMesssageExit } from '../constants';
-import { ServiceAddPage } from '../pages/service-add/service-add.page';
+import { type ServiceAddPage } from '../pages/service-add/service-add.page';
 
 @Injectable()
 export class AffiliationExitGuard implements CanDeactivate<ServiceAddPage> {

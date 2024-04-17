@@ -1,16 +1,52 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ValdemortModule } from 'ngx-valdemort';
+import { DropdownModule } from 'primeng/dropdown';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { SidebarModule } from 'primeng/sidebar';
 
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
+import { CompanyService } from '../../../../shared/services';
+import { NotifyService } from '../../../../shared/services/notify.service';
+import { TrackingService } from '../../../../shared/services/tracking.service';
+import { CompanyPasswordFormComponent } from '../../components/company-password-form/company-password-form.component';
+import { CompanyUpdateFormComponent } from '../../components/company-update-form/company-update-form.component';
+import { CompanyConfigurationService } from '../../services';
 import { CompanyConfigurationPage } from './company-configuration.page';
 
 describe('CompanyConfigurationPage', () => {
   let component: CompanyConfigurationPage;
   let fixture: ComponentFixture<CompanyConfigurationPage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [CompanyConfigurationPage],
+  beforeEach(() => {
+    void TestBed.configureTestingModule({
+      declarations: [
+        CompanyConfigurationPage,
+        CompanyPasswordFormComponent,
+        CompanyUpdateFormComponent,
+        LabelControlComponent,
+      ],
+      imports: [
+        CommonModule,
+        DropdownModule,
+        KeyFilterModule,
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        SidebarModule,
+        ValdemortModule,
+      ],
+      providers: [
+        CompanyService,
+        CompanyConfigurationService,
+        NotifyService,
+        TrackingService,
+      ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CompanyConfigurationPage);

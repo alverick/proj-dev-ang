@@ -1,28 +1,28 @@
 import {
+  type OnChanges,
+  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { type FormGroup } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
+  type Meta,
+  type StoryObj,
   applicationConfig,
-  Meta,
   moduleMetadata,
-  StoryObj,
 } from '@storybook/angular';
 
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
-import { IEntryModel } from '../../../../shared/models';
+import { type IEntryModel } from '../../../../shared/models';
 import { IErrorMessages } from '../../../../shared/models/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { AffiliationFormsService } from '../../services';
 import {
-  AuthForm,
-  CompanyName,
+  type AuthForm,
+  type CompanyName,
 } from '../../services/affiliation-forms.service';
 import { CompanyFormAuthComponent } from './company-form-auth.component';
 
@@ -30,7 +30,7 @@ import { CompanyFormAuthComponent } from './company-form-auth.component';
   selector: 'cs-form-demo',
   template: ` <cs-company-form-auth
     class="tw-max-w-2xl tw-pl-20"
-    [edit]="edit"
+    [passwordNoEditable]="edit"
     [categories]="entryOptions"
     [companyForm]="form"
     [errorMessages]="errorMessages"

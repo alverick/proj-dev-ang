@@ -1,16 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { DateList } from 'src/app/shared/models/dateList';
-import { environment } from 'src/environments/environment';
 
-import { statusCodes } from '../constants/services';
-import { IServiceRemoteModel } from '../models';
-import { CompanyServices } from '../models/company';
-import { Debts } from '../models/debts';
-import { Type } from '../models/type';
-import { WayPay } from '../models/way-pay';
+import { environment } from '../../../environments/environment';
+import { type IServiceRemoteModel } from '../models';
+import { type CompanyServices } from '../models/company';
+import { type DateList } from '../models/dateList';
+import { type Debts } from '../models/debts';
+import { type Type } from '../models/type';
+import { type WayPay } from '../models/way-pay';
 
 @Injectable({
   providedIn: 'root',
@@ -60,7 +59,9 @@ export class HomeService {
   }
 
   getServices(incDeactivates: boolean = false): Observable<any[]> {
-    const url = `${environment.END_POINT}/company/service?incDeactivates=${incDeactivates}`;
+    const url = `${
+      environment.END_POINT
+    }/company/service?incDeactivates=${incDeactivates.toString()}`;
     return this.http
       .get<IServiceRemoteModel[]>(url)
       .pipe(

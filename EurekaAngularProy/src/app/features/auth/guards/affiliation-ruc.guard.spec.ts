@@ -1,11 +1,12 @@
 import { inject, TestBed } from '@angular/core/testing';
+import { MockProvider } from 'ng-mocks';
 
 import { AffiliationRucGuard } from './affiliation-ruc.guard';
 
 describe('AffiliationRucGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AffiliationRucGuard],
+      providers: [MockProvider(AffiliationRucGuard)],
     });
   });
 
