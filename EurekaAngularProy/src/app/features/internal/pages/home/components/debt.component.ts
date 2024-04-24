@@ -9,8 +9,9 @@ import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Store } from '@ngrx/store';
 import { forEachObjIndexed } from 'ramda';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { filter } from 'rxjs/operators';
+import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import { Subject } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
@@ -53,6 +54,7 @@ const MY_FORMATS = {
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class DebtComponent implements OnInit {
   isNewFlow = false;
+
   constructor(
     private dialogRef: MatDialogRef<DebtComponent>,
     private homeService: HomeService,
@@ -71,6 +73,9 @@ export class DebtComponent implements OnInit {
     errores: {},
   };
   limitAmountMax = 0;
+  debtorCodeChanged = new Subject<boolean>();
+  loaderDebtorCode = false;
+  notAlphanumericRegex = new RegExp('^[0-9a-zA-Z]+$');
 
   ngOnInit(): void {
     this.nuevaDeuda.service = this.excelService.service.name;
@@ -90,11 +95,17 @@ export class DebtComponent implements OnInit {
       .subscribe((details) => {
         this.isNewFlow = details.isNewFlow;
       });
+
+    this.debtorCodeChanged.pipe(debounceTime(600)).subscribe(() => {
+      this.buscarNewCode();
+    });
   }
 
   MontoBlur(e: any) {
     const initialValue = parseFloat(e.amount);
-    if (!isNaN(initialValue)) e.amount = initialValue.toFixed(2);
+    if (!isNaN(initialValue)) {
+      e.amount = initialValue.toFixed(2);
+    }
   }
 
   cmbNewService() {
@@ -104,6 +115,8 @@ export class DebtComponent implements OnInit {
   }
 
   buscarNewCode() {
+    this.nuevaDeuda.errores.code = '';
+
     if (
       this.nuevaDeuda.service === null ||
       this.nuevaDeuda.service === undefined
@@ -112,9 +125,26 @@ export class DebtComponent implements OnInit {
       delete this.nuevaDeuda.code;
       return;
     }
+
+    if (
+      isNilOrEmpty(this.nuevaDeuda.code) ||
+      !this.notAlphanumericRegex.test(this.nuevaDeuda.code)
+    ) {
+      return;
+    }
+
+    const initTime = new Date();
+
+    this.loaderDebtorCode = true;
+
     this.homeService
       .getDebtorCode(this.nuevaDeuda.service, this.nuevaDeuda.code)
       .subscribe((d) => {
+        const endTime = new Date();
+        const delay = 900 - (endTime.getTime() - initTime.getTime());
+        setTimeout(() => {
+          this.loaderDebtorCode = false;
+        }, delay);
         if (d.id) {
           this.nuevaDeuda.firstName = d.firstName;
           delete this.nuevaDeuda.errores.firstName;
@@ -191,10 +221,9 @@ export class DebtComponent implements OnInit {
     }
 
     if (this.nuevaDeuda.code) {
-      const re = new RegExp('^[0-9a-zA-Z]+$');
       if (this.nuevaDeuda.code.length < 1) {
         this.nuevaDeuda.errores.code = 'Debe tener 1 carácter como mínimo';
-      } else if (!re.test(this.nuevaDeuda.code)) {
+      } else if (!this.notAlphanumericRegex.test(this.nuevaDeuda.code)) {
         this.nuevaDeuda.errores.code = 'No cumple con el formato';
       } else {
         delete this.nuevaDeuda.errores.code;

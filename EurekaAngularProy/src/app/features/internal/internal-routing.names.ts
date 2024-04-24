@@ -21,7 +21,7 @@ interface IInternalRoutingChildNames extends IRouteNames {
   SERVICES_ADD_CONFIGURATION: string;
 }
 
-const internalModuleRoutingPath = `/${appRoutingNames.INTERNAL}/`;
+const internalModuleRoutingPath = `/`;
 
 export const internalRoutingNames: IInternalRoutingNames = {
   AUTH: 'auth',
