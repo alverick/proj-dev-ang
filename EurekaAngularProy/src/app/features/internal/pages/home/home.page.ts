@@ -11,9 +11,9 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ShepherdService } from 'angular-shepherd';
-import * as DOMPurify from 'dompurify';
 import * as saveAs from 'file-saver';
 import { type LazyLoadEvent, type MenuItem } from 'primeng/api';
+import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 import {
   all,
   equals,
@@ -33,15 +33,10 @@ import { type CompanyServices } from '../../../../shared/models/company';
 import { type DateList } from '../../../../shared/models/dateList';
 import { type Debts } from '../../../../shared/models/debts';
 import { type DebstFilter } from '../../../../shared/models/debts-filter.model';
-import {
-  type Settings,
-  Sections,
-  SettingOptions,
-  Status,
-  StorageSettings,
-} from '../../../../shared/models/settings';
+import { Sections, SettingOptions } from '../../../../shared/models/settings';
 import { type User } from '../../../../shared/models/user.model';
 import { type WayPay } from '../../../../shared/models/way-pay';
+import { SettingsStorageService } from '../../../../shared/services';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { HomeService } from '../../../../shared/services/home.service';
 import { LoadBarService } from '../../../../shared/services/load-bar.service';
@@ -59,10 +54,14 @@ import {
 } from '../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
+import { AppConfigActions } from '../../../../store/actions/app-config.actions';
 import { CompanyActions } from '../../../../store/actions/company.actions';
+import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { companyFeature } from '../../../../store/reducers/company.reducer';
+import { internalFullRoutingNames } from '../../internal-routing.names';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
+import { CommissionsInfoComponent } from './components/comissions-info/commissions-info.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
@@ -72,32 +71,10 @@ import { TableMovementsComponent } from './components/table-movements/table-move
   selector: 'cs-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
+  providers: [DialogService],
 })
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
-  constructor(
-    private storageService: StorageService,
-    private homeService: HomeService,
-    public transactionService: TransactionService,
-    private excelService: ExcelService,
-    public dialog: MatDialog,
-    private loginService: LoginService,
-    private fileLoad: LoadFileService,
-    private barLoad: LoadBarService,
-    private movementsService: MovementsService,
-    private router: Router,
-    private shepherdService: ShepherdService,
-    protected tracking: TrackingService,
-    private store: Store
-  ) {
-    transactionService.itemsForDelete = [];
-    const navigation = this.router.getCurrentNavigation();
-    let form = pathOr(null, ['extras', 'state', 'filter'], navigation);
-    if (isNotNil(form)) {
-      form = { ...form, payment: form.payment.code };
-    }
-    this.formValues = form;
-  }
-
+  ref: DynamicDialogRef;
   numeroPagina: number;
   orderBy = -1;
   @ViewChild('cargaExcel', { static: true }) cargaExcel;
@@ -168,10 +145,37 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   };
   displayDialog = false;
   amountLimits: CurrencyWithLimit[] = [];
+  private showedCommissions: boolean;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.updatePositionModal();
+  }
+
+  constructor(
+    private storageService: StorageService,
+    private homeService: HomeService,
+    public transactionService: TransactionService,
+    private excelService: ExcelService,
+    public dialog: MatDialog,
+    private loginService: LoginService,
+    private fileLoad: LoadFileService,
+    private barLoad: LoadBarService,
+    private movementsService: MovementsService,
+    private router: Router,
+    private shepherdService: ShepherdService,
+    protected tracking: TrackingService,
+    private store: Store,
+    public dialogService: DialogService,
+    public settings: SettingsStorageService
+  ) {
+    transactionService.itemsForDelete = [];
+    const navigation = this.router.getCurrentNavigation();
+    let form = pathOr(null, ['extras', 'state', 'filter'], navigation);
+    if (isNotNil(form)) {
+      form = { ...form, payment: form.payment.code };
+    }
+    this.formValues = form;
   }
 
   ngOnInit() {
@@ -230,6 +234,49 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((data) => {
         this.amountLimits = data;
       });
+    this.store
+      .select(appConfigFeature.selectShowedCommission)
+      .subscribe((data) => {
+        this.showedCommissions = data;
+      });
+  }
+
+  showModalCommissions(auto = true) {
+    const showed = this.settings.getSetting(
+      SettingOptions.commissions,
+      Sections.movements
+    );
+
+    if (this.showedCommissions && auto) return;
+
+    if (showed && auto) return;
+
+    if (!this.showedCommissions) {
+      this.store.dispatch(
+        AppConfigActions.setModalCommissions({ showed: true })
+      );
+    }
+
+    this.ref = this.dialogService.open(CommissionsInfoComponent, {
+      header: 'Conoce las nuevas comisiones por cobranza en canales digitales',
+      styleClass: 'tw-w-[54rem]',
+      data: { showed: showed || !auto },
+      baseZIndex: 10000,
+    });
+
+    this.ref.onClose.subscribe((action: string) => {
+      if (action === 'more') {
+        void this.router.navigate([internalFullRoutingNames.HELP], {
+          state: { section: 'commissions' },
+        });
+      }
+      if (action === 'hide') {
+        this.settings.getSettingAndSave(
+          SettingOptions.commissions,
+          Sections.movements
+        );
+      }
+    });
   }
 
   private onClose() {
@@ -300,6 +347,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           location: 'Home onboarding',
         });
         this.shepherdService.cancel();
+        if (isNotNil(intro)) {
+          this.showModalCommissions();
+        }
       },
     };
     const buttonBack = {
@@ -660,28 +710,17 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   validateOnboarding(hasRecords: boolean) {
-    const username = DOMPurify.sanitize(
-      window.sessionStorage.getItem('username')
+    const saved = this.settings.getSettingAndSave(
+      SettingOptions.onBoarding,
+      Sections.movements
     );
 
-    const settings: Settings = window.localStorage.getItem(StorageSettings)
-      ? (JSON.parse(
-          DOMPurify.sanitize(window.localStorage.getItem(StorageSettings))
-        ) as Settings)
-      : {};
-    const saved = pathEq(
-      [username, SettingOptions.onBoarding, Sections.movements],
-      Status.saved,
-      settings
-    );
-    if (!saved) {
-      settings[username] = {
-        [SettingOptions.onBoarding]: { [Sections.movements]: Status.saved },
-      };
-      localStorage.setItem(StorageSettings, JSON.stringify(settings));
-    }
+    console.log(hasRecords, saved);
+
     if (!hasRecords && !saved) {
       this.shepherdService.start();
+    } else {
+      this.showModalCommissions();
     }
   }
 
