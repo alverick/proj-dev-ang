@@ -1,24 +1,30 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 
-import * as AppConfigActions from '../actions/app-config.actions';
+import { AppConfigActions } from '../actions/app-config.actions';
 
 export const appConfigFeatureKey = 'appConfig';
 
 export interface State {
   loaded: boolean;
   disabledAffiliation: boolean;
+  showedCommission: boolean;
 }
 
 export const initialState: State = {
   loaded: false,
   disabledAffiliation: true,
+  showedCommission: false,
 };
 
 export const reducer = createReducer(
   initialState,
-  on(AppConfigActions.configAppConfigs, (state) => state),
-  on(AppConfigActions.configAppConfigsSuccess, (state, action) => state),
-  on(AppConfigActions.configAppConfigsFailure, (state, action) => state)
+  on(AppConfigActions.loadConfig, (state) => state),
+  on(AppConfigActions.loadConfigSuccess, (state, action) => state),
+  on(AppConfigActions.loadConfigFailure, (state, action) => state),
+  on(
+    AppConfigActions.setModalCommissions,
+    (state, action): State => ({ ...state, showedCommission: action.showed })
+  )
 );
 
 export const appConfigFeature = createFeature({

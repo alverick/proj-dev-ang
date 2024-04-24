@@ -1,13 +1,11 @@
-import { createAction, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-export const configAppConfigs = createAction('[AppConfig] Config AppConfigs');
-
-export const configAppConfigsSuccess = createAction(
-  '[AppConfig] Config AppConfigs Success',
-  props<{ data: any }>()
-);
-
-export const configAppConfigsFailure = createAction(
-  '[AppConfig] Config AppConfigs Failure',
-  props<{ error: any }>()
-);
+export const AppConfigActions = createActionGroup({
+  source: 'AppConfig',
+  events: {
+    'Load Config': emptyProps(),
+    'Load Config Success': props<{ data: boolean }>(),
+    'Load Config Failure': props<{ error: any }>(),
+    'Set Modal Commissions': props<{ showed: boolean }>(),
+  },
+});
