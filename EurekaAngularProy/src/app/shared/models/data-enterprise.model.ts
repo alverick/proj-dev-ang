@@ -15,8 +15,9 @@ export interface IDataEnterpriseModel {
   documentNumber?: string;
   newName?: string;
   newNameGTPStatus?: number;
-  isNewFlow?: boolean;
+  isNewFlow: boolean;
   status?: string;
+  collectionRestriction: string;
   requestDate?: Date | string;
   password?: string;
   newPassword?: string;
