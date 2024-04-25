@@ -540,6 +540,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.shepherdService.complete();
     this.dialog.closeAll();
+    if (isNotNil(this.ref)) this.ref.destroy();
   }
 
   getStepPositionTitle() {
