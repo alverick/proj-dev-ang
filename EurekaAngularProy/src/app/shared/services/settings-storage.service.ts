@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as DOMPurify from 'dompurify';
 import { isNil, pathEq } from 'ramda';
+import { isObj } from 'ramda-adjunct';
 
 import {
   type SectionsType,
@@ -20,11 +21,12 @@ export class SettingsStorageService {
       window.sessionStorage.getItem('username')
     );
 
-    this.settings = window.localStorage.getItem(StorageSettings)
-      ? (JSON.parse(
-          DOMPurify.sanitize(window.localStorage.getItem(StorageSettings))
-        ) as Settings)
-      : {};
+    const localSettings = window.localStorage.getItem(StorageSettings);
+
+    this.settings =
+      localSettings === 'undefined' || isNil(localSettings)
+        ? {}
+        : (JSON.parse(DOMPurify.sanitize(localSettings)) as Settings);
   }
 
   getSetting(keySettings: SettingOptionsType, keyPage: SectionsType) {
@@ -45,7 +47,10 @@ export class SettingsStorageService {
         ...this.settings[this.username],
         [keySettings]: { [keyPage]: Status.saved },
       };
-      localStorage.setItem(StorageSettings, JSON.stringify(this.settings));
+
+      if (isObj(this.settings)) {
+        localStorage.setItem(StorageSettings, JSON.stringify(this.settings));
+      }
     }
     return saved;
   }
