@@ -94,4 +94,28 @@ describe('SettingsService', () => {
       ).toBeFalsy();
     });
   });
+
+  describe('error in settings', () => {
+    const rucTest = '9287376888888';
+    let service: SettingsStorageService;
+
+    beforeEach(() => {
+      window.sessionStorage.setItem('username', rucTest);
+      window.localStorage.setItem(StorageSettings, undefined);
+      TestBed.configureTestingModule({ providers: [SettingsStorageService] });
+      service = TestBed.inject(SettingsStorageService);
+    });
+
+    it('check settings', () => {
+      expect(
+        service.getSettingAndSave(SettingOptions.onBoarding, Sections.movements)
+      ).toBeFalsy();
+      expect(
+        service.getSettingAndSave(
+          SettingOptions.commissions,
+          Sections.movements
+        )
+      ).toBeFalsy();
+    });
+  });
 });
