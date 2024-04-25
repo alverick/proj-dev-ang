@@ -20,7 +20,6 @@ import {
   forEachObjIndexed,
   isNil,
   omit,
-  pathEq,
   pathOr,
   prop,
 } from 'ramda';
