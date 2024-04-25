@@ -146,6 +146,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   displayDialog = false;
   amountLimits: CurrencyWithLimit[] = [];
   private showedCommissions: boolean;
+  private readonly onboardingIntro = 'intro';
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -334,7 +335,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       classes: 'btn-outline-primary',
       action: () => {
         const position = this.getOnboardingPosition();
-        const intro = this.shepherdService.tourObject.getById('intro');
+        const intro = this.shepherdService.tourObject.getById(
+          this.onboardingIntro
+        );
         this.tracking.trackEvent(AdobeEvent.trackAction, {
           category: 'Home onboarding',
           action: 'Click',
@@ -347,6 +350,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           location: 'Home onboarding',
         });
         this.shepherdService.cancel();
+
         if (isNotNil(intro)) {
           this.showModalCommissions();
         }
@@ -372,7 +376,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       classes: 'btn-primary',
       action: () => {
         const position = this.getOnboardingPosition();
-        const intro = this.shepherdService.tourObject.getById('intro');
+        const intro = this.shepherdService.tourObject.getById(
+          this.onboardingIntro
+        );
         const isFinal =
           position ===
           this.shepherdService.tourObject.steps.length - (isNil(intro) ? 0 : 1);
@@ -398,11 +404,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         enabled: true,
       },
     };
+
     this.shepherdService.modal = true;
     this.shepherdService.confirmCancel = false;
     this.shepherdService.addSteps([
       {
-        id: 'intro',
+        id: this.onboardingIntro,
         buttons: [buttonSkip, { ...buttonNext, text: 'Empezar' }],
         cancelIcon: {
           enabled: false,
@@ -505,10 +512,24 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         text: '<h4 class="tw-font-medium tw-pb-2">Siempre actualizado</h4><p class="tw-text-sm">Cada vez que un cliente realice un pago, recibirás una notificación.</p>',
       },
     ]);
+
+    this.shepherdService.tourObject.on('cancel', () => {
+      this.validateModalAfterOnboarding();
+    });
+    this.shepherdService.tourObject.on('complete', () => {
+      this.validateModalAfterOnboarding();
+    });
+  }
+
+  validateModalAfterOnboarding() {
+    const intro = this.shepherdService.tourObject.getById(this.onboardingIntro);
+    if (isNotNil(intro)) {
+      this.showModalCommissions();
+    }
   }
 
   private getOnboardingPosition() {
-    const intro = this.shepherdService.tourObject.getById('intro');
+    const intro = this.shepherdService.tourObject.getById(this.onboardingIntro);
     const current = this.shepherdService.tourObject.getCurrentStep();
     return (
       this.shepherdService.tourObject.steps.indexOf(current) +
@@ -523,7 +544,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   getStepPositionTitle() {
     const tourObject = this.shepherdService.tourObject;
-    const intro = tourObject.getById('intro');
+    const intro = tourObject.getById(this.onboardingIntro);
     const position = this.getOnboardingPosition();
     const steps = isNil(intro)
       ? tourObject.steps.length
@@ -532,7 +553,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showOnboarding() {
-    this.shepherdService.tourObject.removeStep('intro');
+    this.shepherdService.tourObject.removeStep(this.onboardingIntro);
     this.shepherdService.start();
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home filtro',
@@ -714,8 +735,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       SettingOptions.onBoarding,
       Sections.movements
     );
-
-    console.log(hasRecords, saved);
 
     if (!hasRecords && !saved) {
       this.shepherdService.start();
