@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { type AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { pathOr } from 'ramda';
+import { isNotNil } from 'ramda-adjunct';
 
 import {
   AdobeEvent,
@@ -16,7 +17,7 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
   templateUrl: './help.page.html',
   styleUrls: ['./help.page.scss'],
 })
-export class HelpPage {
+export class HelpPage implements AfterViewInit {
   /**
    * Accordion active index
    */
@@ -31,6 +32,23 @@ export class HelpPage {
     );
     if (section === 'commissions') {
       this.activeIndex = 6;
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (isNotNil(this.activeIndex)) {
+      const accordion = document.querySelector(
+        `.p-accordion.p-component p-accordiontab:nth-child(${this.activeIndex})`
+      );
+
+      if (isNotNil(accordion)) {
+        setTimeout(() => {
+          window.scrollTo({
+            top: 1000,
+            behavior: 'smooth',
+          });
+        }, 500);
+      }
     }
   }
 
