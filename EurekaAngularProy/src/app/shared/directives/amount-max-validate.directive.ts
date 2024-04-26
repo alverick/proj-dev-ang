@@ -1,12 +1,12 @@
 import { Directive, Input } from '@angular/core';
 import {
-  AbstractControl,
+  type AbstractControl,
+  type ValidationErrors,
   NG_VALIDATORS,
-  ValidationErrors,
 } from '@angular/forms';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
-import { CurrencyWithLimit } from '../constants/currencies';
+import { type CurrencyWithLimit } from '../constants/currencies';
 
 @Directive({
   selector: '[csAmountMaxValidate]',
