@@ -16,7 +16,7 @@ export const getAffiliate: IDataEnterpriseModel = {
   documentType: 'DNI',
   documentNumber: '43111232',
   isNewFlow: true,
-  collectionRestriction: '1',
+  collectionRestriction: '0',
   amountLimits: [
     { currency: '001', amountMax: 4000 },
     { currency: '002', amountMax: 4000 },
