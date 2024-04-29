@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { ShepherdService } from 'angular-shepherd';
 import * as saveAs from 'file-saver';
 import { type LazyLoadEvent, type MenuItem } from 'primeng/api';
-import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
+import { type DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   all,
   equals,
@@ -35,7 +35,11 @@ import { type DebstFilter } from '../../../../shared/models/debts-filter.model';
 import { Sections, SettingOptions } from '../../../../shared/models/settings';
 import { type User } from '../../../../shared/models/user.model';
 import { type WayPay } from '../../../../shared/models/way-pay';
-import { SettingsStorageService } from '../../../../shared/services';
+import {
+  SettingsStorageService,
+  TrackingService,
+} from '../../../../shared/services';
+import { DynamicDialogService } from '../../../../shared/services/dynamic-dialog.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { HomeService } from '../../../../shared/services/home.service';
 import { LoadBarService } from '../../../../shared/services/load-bar.service';
@@ -49,7 +53,6 @@ import {
   type ActionEventProperties,
   type Metadata,
   AdobeEvent,
-  TrackingService,
 } from '../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
@@ -70,7 +73,7 @@ import { TableMovementsComponent } from './components/table-movements/table-move
   selector: 'cs-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  providers: [DialogService],
+  providers: [DynamicDialogService],
 })
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   ref: DynamicDialogRef;
@@ -166,7 +169,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private shepherdService: ShepherdService,
     protected tracking: TrackingService,
     private store: Store,
-    public dialogService: DialogService,
+    public dynamicDialogService: DynamicDialogService,
     public settings: SettingsStorageService
   ) {
     transactionService.itemsForDelete = [];
@@ -257,10 +260,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       );
     }
 
-    this.ref = this.dialogService.open(CommissionsInfoComponent, {
+    this.ref = this.dynamicDialogService.open(CommissionsInfoComponent, {
       header: 'Conoce las nuevas comisiones por cobranza en canales digitales',
       styleClass: 'tw-w-[54rem]',
-      data: { showed: showed || !auto },
+      data: {
+        showed: showed || !auto,
+        detail:
+          'Modal informativo sobre las nuevas comisiones de cobranza en canales digitales',
+      },
       baseZIndex: 10000,
     });
 
