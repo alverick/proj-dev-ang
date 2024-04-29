@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { propOr } from 'ramda';
+import { pathOr } from 'ramda';
 
-import { TrackingService } from '../../../../../../shared/services/tracking.service';
+import { TrackingService } from '../../../../../../shared/services';
 
 @Component({
   selector: 'cs-commissions-info',
@@ -17,7 +17,7 @@ export class CommissionsInfoComponent {
     public dialogRef: DynamicDialogRef,
     public config: DynamicDialogConfig
   ) {
-    this.showed = propOr(false, 'showed', config.data);
+    this.showed = pathOr(false, ['data', 'showed'], config);
   }
 
   close(action = '') {
