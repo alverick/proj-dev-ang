@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DialogService } from 'primeng/dynamicdialog';
 
 import { headerModalTerms, modalTermsConfig } from '../../constants/modal-data';
+import { DynamicDialogService } from '../../services/dynamic-dialog.service';
 import { AdobeEvent, TrackingService } from '../../services/tracking.service';
 import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
 
@@ -9,17 +9,15 @@ import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
   selector: 'cs-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
-  providers: [DialogService],
+  providers: [DynamicDialogService],
 })
 export class FooterComponent {
   constructor(
-    public dialogService: DialogService,
+    public dialogService: DynamicDialogService,
     private tracking: TrackingService
   ) {}
 
   showModalTerms() {
-    this.dialogService.open(ModalTermsComponent, modalTermsConfig);
-
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: headerModalTerms,
       action: 'Click',
@@ -29,12 +27,7 @@ export class FooterComponent {
       location: 'Footer',
     });
 
-    this.tracking.trackEvent(AdobeEvent.trackView, {
-      category: headerModalTerms,
-      action: 'modal-view',
-      detail: headerModalTerms,
-      location: 'Modal',
-    });
+    this.dialogService.open(ModalTermsComponent, modalTermsConfig);
   }
 
   clickWa() {
