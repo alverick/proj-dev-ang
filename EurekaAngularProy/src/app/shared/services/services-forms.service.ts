@@ -48,7 +48,7 @@ export class ServicesFormsService {
   serviceForm: ModelFormGroup<ServiceFormValue>;
   serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
   editServiceForm: ModelFormGroup<ServiceEditForm>;
-  defaultServiceType: ServiceTypeType = ServiceTypes.complete;
+  defaultServiceType: ServiceTypeType = ServiceTypes.withoutData;
 
   editNameValidators = [
     Validators.required,
