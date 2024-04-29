@@ -121,85 +121,89 @@
             </td>
             <td class="text-center">{{ itm.number }}</td>
             <td>
-              <div
-                *ngIf="
-                  itm.canEdit &&
-                  (!(companyDetails$ | async).isNewFlow || serviceType === 'C')
-                "
-                class="d-flex"
-              >
+              <ng-container *ngrxLet="companyDetails$ as companyDetails">
                 <div
-                  *ngIf="!itm.editing"
-                  class="btn-edit tw-shrink-0"
-                  (click)="editItm(itm); $event.stopPropagation()"
+                  *ngIf="
+                    itm.canEdit &&
+                    (!companyDetails.isNewFlow === '1' || serviceType === 'C')
+                  "
+                  class="d-flex"
                 >
-                  <img
-                    class="tw-inline"
-                    src="../../../../../../../assets/images/pencil.svg"
-                    alt="editar"
-                    width="20"
-                  />
+                  <div
+                    *ngIf="!itm.editing"
+                    class="btn-edit tw-shrink-0"
+                    (click)="editItm(itm); $event.stopPropagation()"
+                  >
+                    <img
+                      class="tw-inline"
+                      src="../../../../../../../assets/images/pencil.svg"
+                      alt="editar"
+                      width="20"
+                    />
+                  </div>
+                  <div
+                    *ngIf="!itm.editing"
+                    class="btn-delete ml-1 tw-shrink-0"
+                    (click)="delItm(itm); $event.stopPropagation()"
+                  >
+                    <img
+                      class="tw-inline"
+                      src="assets/images/trash.svg"
+                      alt="eliminar"
+                      width="20"
+                    />
+                  </div>
                 </div>
-                <div
-                  *ngIf="!itm.editing"
-                  class="btn-delete ml-1 tw-shrink-0"
-                  (click)="delItm(itm); $event.stopPropagation()"
-                >
-                  <img
-                    class="tw-inline"
-                    src="assets/images/trash.svg"
-                    alt="eliminar"
-                    width="20"
-                  />
-                </div>
-              </div>
+              </ng-container>
             </td>
           </tr>
         </tbody>
       </table>
-      <div
-        *ngIf="
-          (!(companyDetails$ | async).isNewFlow || serviceType === 'C') &&
-          (items.length == 0 || status !== 'PAGADO' || isEditingRow)
-        "
-      >
-        <div class="action d-flex flex-column">
-          <ng-container *ngIf="!isEditingRow">
-            <button
-              type="button"
-              mat-button
-              class="btn-outline-green mx-auto"
-              (click)="addItem()"
-            >
-              <img
-                class="tw-inline"
-                src="assets/images/plus_circle.svg"
-                alt="agregar"
-              />
-              Agregar un pago
-            </button>
-          </ng-container>
-          <ng-container *ngIf="isEditingRow">
-            <button
-              type="button"
-              mat-button
-              mat-raised-button
-              color="primary"
-              class="mx-auto"
-              (click)="saveItem()"
-            >
-              Guardar
-            </button>
-            <button
-              type="button"
-              class="btn-outline-green mx-auto"
-              (click)="cancelItem()"
-            >
-              Cancelar
-            </button>
-          </ng-container>
+      <ng-container *ngrxLet="companyDetails$ as companyDetails">
+        <div
+          *ngIf="
+            (!companyDetails.isNewFlow || serviceType === 'C') &&
+            (items.length == 0 || status !== 'PAGADO' || isEditingRow)
+          "
+        >
+          <div class="action d-flex flex-column">
+            <ng-container *ngIf="!isEditingRow">
+              <button
+                type="button"
+                mat-button
+                class="btn-outline-green mx-auto"
+                (click)="addItem()"
+              >
+                <img
+                  class="tw-inline"
+                  src="assets/images/plus_circle.svg"
+                  alt="agregar"
+                />
+                Agregar un pago
+              </button>
+            </ng-container>
+            <ng-container *ngIf="isEditingRow">
+              <button
+                type="button"
+                mat-button
+                mat-raised-button
+                color="primary"
+                class="mx-auto"
+                (click)="saveItem()"
+              >
+                Guardar
+              </button>
+              <button
+                type="button"
+                class="btn-outline-green mx-auto"
+                (click)="cancelItem()"
+              >
+                Cancelar
+              </button>
+            </ng-container>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </div>
   <div class="close" (click)="close()">
