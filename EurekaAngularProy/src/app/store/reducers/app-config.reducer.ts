@@ -19,6 +19,7 @@ export const initialState: State = {
 export const reducer = createReducer(
   initialState,
   on(AppConfigActions.loadConfig, (state): State => state),
+  on(AppConfigActions.resetConfig, (): State => initialState),
   on(AppConfigActions.loadConfigSuccess, (state, action): State => state),
   on(AppConfigActions.loadConfigFailure, (state, action): State => state),
   on(
