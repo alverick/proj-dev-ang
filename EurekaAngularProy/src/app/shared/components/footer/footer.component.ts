@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DialogService } from 'primeng/dynamicdialog';
 
+import { headerModalTerms, modalTermsConfig } from '../../constants/modal-data';
 import { AdobeEvent, TrackingService } from '../../services/tracking.service';
 import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
 
@@ -17,25 +18,21 @@ export class FooterComponent {
   ) {}
 
   showModalTerms() {
-    this.dialogService.open(ModalTermsComponent, {
-      width: '810px',
-      header: 'Términos y condiciones',
-      styleClass: 'modal-custom-cs',
-    });
+    this.dialogService.open(ModalTermsComponent, modalTermsConfig);
 
     this.tracking.trackEvent(AdobeEvent.trackAction, {
-      category: 'Términos y condiciones',
+      category: headerModalTerms,
       action: 'Click',
-      detail: 'Términos y condiciones',
-      label: 'Términos y condiciones',
+      detail: headerModalTerms,
+      label: headerModalTerms,
       typeElement: 'Link',
       location: 'Footer',
     });
 
     this.tracking.trackEvent(AdobeEvent.trackView, {
-      category: 'Términos y condiciones',
+      category: headerModalTerms,
       action: 'modal-view',
-      detail: 'Términos y condiciones',
+      detail: headerModalTerms,
       location: 'Modal',
     });
   }
