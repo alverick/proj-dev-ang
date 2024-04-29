@@ -6,6 +6,7 @@ import { NewRelicProviderService } from './new-relic-provider.service';
 import { ServiceService } from './service.service';
 import { ServicesFormsService } from './services-forms.service';
 import { SettingsStorageService } from './settings-storage.service';
+import { TrackingService } from './tracking.service';
 
 export const SERVICES = [
   AdobeLaunchProviderService,
@@ -16,6 +17,7 @@ export const SERVICES = [
   ServiceService,
   ServicesFormsService,
   SettingsStorageService,
+  TrackingService,
 ];
 
 export { AdobeLaunchProviderService } from './adobe-launch-provider.service';
@@ -26,3 +28,4 @@ export { NewRelicProviderService } from './new-relic-provider.service';
 export { ServiceService } from './service.service';
 export { ServicesFormsService } from './services-forms.service';
 export { SettingsStorageService } from './settings-storage.service';
+export { TrackingService } from './tracking.service';
