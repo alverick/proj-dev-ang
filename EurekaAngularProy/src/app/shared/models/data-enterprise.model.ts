@@ -1,3 +1,11 @@
+export const collectionRestrictionTypes = {
+  notRestricted: '0',
+  restricted: '1',
+} as const;
+
+export type CollectionRestrictionTypes =
+  (typeof collectionRestrictionTypes)[keyof typeof collectionRestrictionTypes];
+
 export interface AmountLimit {
   amountMax: number;
   currency: string;
@@ -17,7 +25,7 @@ export interface IDataEnterpriseModel {
   newNameGTPStatus?: number;
   isNewFlow: boolean;
   status?: string;
-  collectionRestriction: string;
+  collectionRestriction: CollectionRestrictionTypes;
   requestDate?: Date | string;
   password?: string;
   newPassword?: string;

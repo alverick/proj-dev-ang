@@ -16,6 +16,7 @@ import {
 } from '../../../../shared/constants/currencies';
 import {
   type AmountLimit,
+  collectionRestrictionTypes,
   type IDataEnterpriseModel,
 } from '../../../../shared/models/data-enterprise.model';
 import {
@@ -73,10 +74,15 @@ export class ServicesMainPage implements OnInit, OnDestroy {
         company: IDataEnterpriseModel;
       }>
     ).subscribe(({ company }) => {
-      this.companyServices.allowAllServiceType = !company.isNewFlow;
+      this.companyServices.allowAllServiceType =
+        company.collectionRestriction ===
+        collectionRestrictionTypes.notRestricted;
       this.limitsAmountMax = company.amountLimits;
       this.companyServices.setDefaultType(
-        company.isNewFlow ? ServiceTypes.complete : ServiceTypes.withoutData
+        company.collectionRestriction ===
+          collectionRestrictionTypes.notRestricted
+          ? ServiceTypes.withoutData
+          : ServiceTypes.complete
       );
     });
     this.servicesFormsService.serviceForm
