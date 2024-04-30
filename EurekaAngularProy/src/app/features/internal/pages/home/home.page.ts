@@ -60,6 +60,7 @@ import { AppConfigActions } from '../../../../store/actions/app-config.actions';
 import { CompanyActions } from '../../../../store/actions/company.actions';
 import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { companyFeature } from '../../../../store/reducers/company.reducer';
+import { sectionCommissions } from '../../constants';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
@@ -274,7 +275,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.ref.onClose.subscribe((action: string) => {
       if (action === 'more') {
         void this.router.navigate([internalFullRoutingNames.HELP], {
-          state: { section: 'commissions' },
+          state: { section: sectionCommissions },
         });
       }
       if (action === 'hide') {

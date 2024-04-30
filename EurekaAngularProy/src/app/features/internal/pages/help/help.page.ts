@@ -7,6 +7,7 @@ import {
   AdobeEvent,
   TrackingService,
 } from '../../../../shared/services/tracking.service';
+import { sectionCommissions } from '../../constants';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
 /**
@@ -30,7 +31,7 @@ export class HelpPage implements AfterViewInit {
       ['extras', 'state', 'section'],
       navigation
     );
-    if (section === 'commissions') {
+    if (section === sectionCommissions) {
       this.activeIndex = 6;
     }
   }
@@ -64,7 +65,7 @@ export class HelpPage implements AfterViewInit {
    * @param evt
    * @param evt.index
    */
-  openedTab({ index }) {
+  openedTab({ index }: { index: number }) {
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Ayuda',
       action: 'Click',
