@@ -1,0 +1,40 @@
+<div class="" style="flex: 1">
+  <div class="tw-text-sm tw-pb-6">
+    <p class="tw-mb-2">
+      A partir de Junio, aplicaremos una comisión de S/2 por cada pago recaudado
+      a través de nuestros canales digitales. Para calcular la comisión total,
+      multiplica el número total de pagos recibidos por S/2. Por ejemplo, si has
+      recaudado 50 pagos a través de canales digitales, la comisión total será
+      de S/100.
+    </p>
+
+    <p>
+      Queremos mantenerte informado sobre esta actualización. Si tienes alguna
+      consulta o necesitas asistencia, no dudes en contactarnos o visitar
+      nuestro módulo de ayuda.
+    </p>
+  </div>
+  <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center tw-justify-center">
+    <div class="tw-flex tw-gap-4 tw-items-center tw-justify-center">
+      <p-button
+        class="p-button-sm"
+        label="Entendido"
+        styleClass="p-button-sm"
+        (click)="close()"
+      ></p-button>
+      <p-button
+        class="p-button-sm p-button-outlined"
+        label="Conoce mas"
+        styleClass="p-button-sm p-button-outlined"
+        (click)="close('more')"
+      ></p-button>
+    </div>
+    <a
+      *ngIf="!showed"
+      href="javascript:void(0)"
+      class="tw-text-sm"
+      (click)="close('hide')"
+      >Cerrar y no volver a mostrar</a
+    >
+  </div>
+</div>

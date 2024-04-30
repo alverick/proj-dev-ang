@@ -11,16 +11,15 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ShepherdService } from 'angular-shepherd';
-import * as DOMPurify from 'dompurify';
 import * as saveAs from 'file-saver';
 import { type LazyLoadEvent, type MenuItem } from 'primeng/api';
+import { type DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   all,
   equals,
   forEachObjIndexed,
   isNil,
   omit,
-  pathEq,
   pathOr,
   prop,
 } from 'ramda';
@@ -33,15 +32,14 @@ import { type CompanyServices } from '../../../../shared/models/company';
 import { type DateList } from '../../../../shared/models/dateList';
 import { type Debts } from '../../../../shared/models/debts';
 import { type DebstFilter } from '../../../../shared/models/debts-filter.model';
-import {
-  type Settings,
-  Sections,
-  SettingOptions,
-  Status,
-  StorageSettings,
-} from '../../../../shared/models/settings';
+import { Sections, SettingOptions } from '../../../../shared/models/settings';
 import { type User } from '../../../../shared/models/user.model';
 import { type WayPay } from '../../../../shared/models/way-pay';
+import {
+  SettingsStorageService,
+  TrackingService,
+} from '../../../../shared/services';
+import { DynamicDialogService } from '../../../../shared/services/dynamic-dialog.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { HomeService } from '../../../../shared/services/home.service';
 import { LoadBarService } from '../../../../shared/services/load-bar.service';
@@ -55,14 +53,18 @@ import {
   type ActionEventProperties,
   type Metadata,
   AdobeEvent,
-  TrackingService,
 } from '../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
+import { AppConfigActions } from '../../../../store/actions/app-config.actions';
 import { CompanyActions } from '../../../../store/actions/company.actions';
+import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { companyFeature } from '../../../../store/reducers/company.reducer';
+import { sectionCommissions } from '../../constants';
+import { internalFullRoutingNames } from '../../internal-routing.names';
 import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
+import { CommissionsInfoComponent } from './components/comissions-info/commissions-info.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
@@ -72,32 +74,10 @@ import { TableMovementsComponent } from './components/table-movements/table-move
   selector: 'cs-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
+  providers: [DynamicDialogService],
 })
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
-  constructor(
-    private storageService: StorageService,
-    private homeService: HomeService,
-    public transactionService: TransactionService,
-    private excelService: ExcelService,
-    public dialog: MatDialog,
-    private loginService: LoginService,
-    private fileLoad: LoadFileService,
-    private barLoad: LoadBarService,
-    private movementsService: MovementsService,
-    private router: Router,
-    private shepherdService: ShepherdService,
-    protected tracking: TrackingService,
-    private store: Store
-  ) {
-    transactionService.itemsForDelete = [];
-    const navigation = this.router.getCurrentNavigation();
-    let form = pathOr(null, ['extras', 'state', 'filter'], navigation);
-    if (isNotNil(form)) {
-      form = { ...form, payment: form.payment.code };
-    }
-    this.formValues = form;
-  }
-
+  ref: DynamicDialogRef;
   numeroPagina: number;
   orderBy = -1;
   @ViewChild('cargaExcel', { static: true }) cargaExcel;
@@ -168,10 +148,38 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   };
   displayDialog = false;
   amountLimits: CurrencyWithLimit[] = [];
+  private showedCommissions: boolean;
+  private readonly onboardingIntro = 'intro';
 
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.updatePositionModal();
+  }
+
+  constructor(
+    private storageService: StorageService,
+    private homeService: HomeService,
+    public transactionService: TransactionService,
+    private excelService: ExcelService,
+    public dialog: MatDialog,
+    private loginService: LoginService,
+    private fileLoad: LoadFileService,
+    private barLoad: LoadBarService,
+    private movementsService: MovementsService,
+    private router: Router,
+    private shepherdService: ShepherdService,
+    protected tracking: TrackingService,
+    private store: Store,
+    public dynamicDialogService: DynamicDialogService,
+    public settings: SettingsStorageService
+  ) {
+    transactionService.itemsForDelete = [];
+    const navigation = this.router.getCurrentNavigation();
+    let form = pathOr(null, ['extras', 'state', 'filter'], navigation);
+    if (isNotNil(form)) {
+      form = { ...form, payment: form.payment.code };
+    }
+    this.formValues = form;
   }
 
   ngOnInit() {
@@ -230,6 +238,53 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((data) => {
         this.amountLimits = data;
       });
+    this.store
+      .select(appConfigFeature.selectShowedCommission)
+      .subscribe((data) => {
+        this.showedCommissions = data;
+      });
+  }
+
+  showModalCommissions(auto = true) {
+    const showed = this.settings.getSetting(
+      SettingOptions.commissions,
+      Sections.movements
+    );
+
+    if (this.showedCommissions && auto) return;
+
+    if (showed && auto) return;
+
+    if (!this.showedCommissions) {
+      this.store.dispatch(
+        AppConfigActions.setModalCommissions({ showed: true })
+      );
+    }
+
+    this.ref = this.dynamicDialogService.open(CommissionsInfoComponent, {
+      header: 'Conoce las nuevas comisiones por cobranza en canales digitales',
+      styleClass: 'tw-w-[54rem]',
+      data: {
+        showed: showed || !auto,
+        detail:
+          'Modal informativo sobre las nuevas comisiones de cobranza en canales digitales',
+      },
+      baseZIndex: 10000,
+    });
+
+    this.ref.onClose.subscribe((action: string) => {
+      if (action === 'more') {
+        void this.router.navigate([internalFullRoutingNames.HELP], {
+          state: { section: sectionCommissions },
+        });
+      }
+      if (action === 'hide') {
+        this.settings.getSettingAndSave(
+          SettingOptions.commissions,
+          Sections.movements
+        );
+      }
+    });
   }
 
   private onClose() {
@@ -287,7 +342,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       classes: 'btn-outline-primary',
       action: () => {
         const position = this.getOnboardingPosition();
-        const intro = this.shepherdService.tourObject.getById('intro');
+        const intro = this.shepherdService.tourObject.getById(
+          this.onboardingIntro
+        );
         this.tracking.trackEvent(AdobeEvent.trackAction, {
           category: 'Home onboarding',
           action: 'Click',
@@ -300,6 +357,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           location: 'Home onboarding',
         });
         this.shepherdService.cancel();
+
+        if (isNotNil(intro)) {
+          this.showModalCommissions();
+        }
       },
     };
     const buttonBack = {
@@ -322,7 +383,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       classes: 'btn-primary',
       action: () => {
         const position = this.getOnboardingPosition();
-        const intro = this.shepherdService.tourObject.getById('intro');
+        const intro = this.shepherdService.tourObject.getById(
+          this.onboardingIntro
+        );
         const isFinal =
           position ===
           this.shepherdService.tourObject.steps.length - (isNil(intro) ? 0 : 1);
@@ -348,11 +411,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         enabled: true,
       },
     };
+
     this.shepherdService.modal = true;
     this.shepherdService.confirmCancel = false;
     this.shepherdService.addSteps([
       {
-        id: 'intro',
+        id: this.onboardingIntro,
         buttons: [buttonSkip, { ...buttonNext, text: 'Empezar' }],
         cancelIcon: {
           enabled: false,
@@ -455,10 +519,24 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         text: '<h4 class="tw-font-medium tw-pb-2">Siempre actualizado</h4><p class="tw-text-sm">Cada vez que un cliente realice un pago, recibirás una notificación.</p>',
       },
     ]);
+
+    this.shepherdService.tourObject.on('cancel', () => {
+      this.validateModalAfterOnboarding();
+    });
+    this.shepherdService.tourObject.on('complete', () => {
+      this.validateModalAfterOnboarding();
+    });
+  }
+
+  validateModalAfterOnboarding() {
+    const intro = this.shepherdService.tourObject.getById(this.onboardingIntro);
+    if (isNotNil(intro)) {
+      this.showModalCommissions();
+    }
   }
 
   private getOnboardingPosition() {
-    const intro = this.shepherdService.tourObject.getById('intro');
+    const intro = this.shepherdService.tourObject.getById(this.onboardingIntro);
     const current = this.shepherdService.tourObject.getCurrentStep();
     return (
       this.shepherdService.tourObject.steps.indexOf(current) +
@@ -469,11 +547,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.shepherdService.complete();
     this.dialog.closeAll();
+    if (isNotNil(this.ref)) this.ref.destroy();
   }
 
   getStepPositionTitle() {
     const tourObject = this.shepherdService.tourObject;
-    const intro = tourObject.getById('intro');
+    const intro = tourObject.getById(this.onboardingIntro);
     const position = this.getOnboardingPosition();
     const steps = isNil(intro)
       ? tourObject.steps.length
@@ -482,7 +561,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   showOnboarding() {
-    this.shepherdService.tourObject.removeStep('intro');
+    this.shepherdService.tourObject.removeStep(this.onboardingIntro);
     this.shepherdService.start();
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home filtro',
@@ -660,28 +739,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   validateOnboarding(hasRecords: boolean) {
-    const username = DOMPurify.sanitize(
-      window.sessionStorage.getItem('username')
+    const saved = this.settings.getSettingAndSave(
+      SettingOptions.onBoarding,
+      Sections.movements
     );
 
-    const settings: Settings = window.localStorage.getItem(StorageSettings)
-      ? (JSON.parse(
-          DOMPurify.sanitize(window.localStorage.getItem(StorageSettings))
-        ) as Settings)
-      : {};
-    const saved = pathEq(
-      [username, SettingOptions.onBoarding, Sections.movements],
-      Status.saved,
-      settings
-    );
-    if (!saved) {
-      settings[username] = {
-        [SettingOptions.onBoarding]: { [Sections.movements]: Status.saved },
-      };
-      localStorage.setItem(StorageSettings, JSON.stringify(settings));
-    }
     if (!hasRecords && !saved) {
       this.shepherdService.start();
+    } else {
+      this.showModalCommissions();
     }
   }
 

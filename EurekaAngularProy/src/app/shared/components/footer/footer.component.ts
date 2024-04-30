@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { DialogService } from 'primeng/dynamicdialog';
 
+import { headerModalTerms, modalTermsConfig } from '../../constants/modal-data';
+import { DynamicDialogService } from '../../services/dynamic-dialog.service';
 import { AdobeEvent, TrackingService } from '../../services/tracking.service';
 import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
 
@@ -8,36 +9,25 @@ import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
   selector: 'cs-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
-  providers: [DialogService],
+  providers: [DynamicDialogService],
 })
 export class FooterComponent {
   constructor(
-    public dialogService: DialogService,
+    public dialogService: DynamicDialogService,
     private tracking: TrackingService
   ) {}
 
   showModalTerms() {
-    this.dialogService.open(ModalTermsComponent, {
-      width: '810px',
-      header: 'Términos y condiciones',
-      styleClass: 'modal-custom-cs',
-    });
-
     this.tracking.trackEvent(AdobeEvent.trackAction, {
-      category: 'Términos y condiciones',
+      category: headerModalTerms,
       action: 'Click',
-      detail: 'Términos y condiciones',
-      label: 'Términos y condiciones',
+      detail: headerModalTerms,
+      label: headerModalTerms,
       typeElement: 'Link',
       location: 'Footer',
     });
 
-    this.tracking.trackEvent(AdobeEvent.trackView, {
-      category: 'Términos y condiciones',
-      action: 'modal-view',
-      detail: 'Términos y condiciones',
-      location: 'Modal',
-    });
+    this.dialogService.open(ModalTermsComponent, modalTermsConfig);
   }
 
   clickWa() {
