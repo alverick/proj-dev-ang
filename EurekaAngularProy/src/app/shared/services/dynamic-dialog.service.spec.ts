@@ -6,7 +6,7 @@ describe('DynamicDialogService', () => {
   let service: DynamicDialogService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({ providers: [DynamicDialogService] });
     service = TestBed.inject(DynamicDialogService);
   });
 
