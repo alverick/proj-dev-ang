@@ -47,7 +47,6 @@ import { ICompanyData } from '../../../../shared/models/company-data';
   ],
 })
 export class EmpresaGTPComponent implements OnInit {
-  public _enterprise: ICompanyData;
   formGroup: UntypedFormGroup;
   submitted = false;
   statusCodes: Record<string, number> = statusCodes;
@@ -64,10 +63,12 @@ export class EmpresaGTPComponent implements OnInit {
       minlength: 'El teléfono o celular debe tener mínimo 9 dígitos',
     },
   };
-  @Input() set enterprise(value: ICompanyData) {
-    this._enterprise = value;
+
+  get f() {
+    return this.formGroup.controls;
   }
-  @Output() grabar = new EventEmitter<any>();
+  @Input() enterprise: ICompanyData;
+  @Output() grabar = new EventEmitter<ICompanyData>();
 
   constructor(private formBuilder: UntypedFormBuilder) {}
 
@@ -75,13 +76,13 @@ export class EmpresaGTPComponent implements OnInit {
     const {
       NombreApproved,
       ruc,
-      entry,
       movilOperator,
       email,
       newName,
       movilNumber,
       newNameGTPStatus,
-    } = this._enterprise;
+      entryName,
+    } = this.enterprise;
 
     const isNotEditable = newNameGTPStatus !== statusCodes.APPROVED;
 
@@ -113,7 +114,7 @@ export class EmpresaGTPComponent implements OnInit {
         Validators.required,
       ],
       entry: new UntypedFormControl({
-        value: entry,
+        value: entryName,
         disabled: true,
       }),
       email: new UntypedFormControl(
@@ -147,10 +148,6 @@ export class EmpresaGTPComponent implements OnInit {
     });
   }
 
-  get f(): any {
-    return this.formGroup.controls;
-  }
-
   getErrorMessage(
     controlName: UntypedFormControl | AbstractControl,
     errors: {
@@ -170,15 +167,15 @@ export class EmpresaGTPComponent implements OnInit {
     this.submitted = true;
     const { valid, value } = this.formGroup;
     if (valid) {
-      const isNotEditable = this._enterprise.newNameGTPStatus !== 1;
+      const isNotEditable = this.enterprise.newNameGTPStatus !== 1;
       let dataEnterprise: ICompanyData;
       if (isNotEditable) {
         dataEnterprise = {
-          ...this._enterprise,
+          ...this.enterprise,
           NombreApproved: value.NewNameApproved === 'S',
         };
       } else {
-        dataEnterprise = { ...this._enterprise, ...value };
+        dataEnterprise = { ...this.enterprise, ...value };
       }
       this.grabar.emit(dataEnterprise);
     }
