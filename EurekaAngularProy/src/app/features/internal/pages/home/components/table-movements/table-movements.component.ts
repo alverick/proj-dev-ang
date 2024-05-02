@@ -91,7 +91,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<LazyLoadEvent>();
   displayDialog = false;
   willCloseModal = false;
-  isNewFlow = false;
+  useAmountLimits = false;
   editRowData: any = {};
   dataSet = {};
   @ViewChild('table') table: Table;
@@ -107,10 +107,9 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.selectAllTable.overridePrimeNGTableMethods();
     this.store
-      .select(companyFeature.selectDetails)
-      .pipe(filter((data) => isNotNilOrEmpty(data)))
-      .subscribe((details) => {
-        this.isNewFlow = details.isNewFlow;
+      .select(companyFeature.selectUseAmountLimits)
+      .subscribe((useLimits) => {
+        this.useAmountLimits = useLimits;
       });
   }
 
@@ -349,7 +348,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       if (
         field.checkEditableField === 'canEditAmount' &&
         data.amount > this.getLimit(data.currency) &&
-        this.isNewFlow
+        this.useAmountLimits
       ) {
         return false;
       }

@@ -21,9 +21,9 @@ import { type CurrencyWithLimit } from '../constants/currencies';
 export class AmountMaxValidateDirective {
   @Input() maxAmountLimits: CurrencyWithLimit[] = [];
   @Input() currencySymbol = '';
-  @Input() isNewFlow = false;
+  @Input() useLimits = false;
   validate(control: AbstractControl<string>): ValidationErrors {
-    if (!this.isNewFlow || isNilOrEmpty(control.value)) {
+    if (!this.useLimits || isNilOrEmpty(control.value)) {
       return null;
     }
     const amount = parseFloat(control.value);

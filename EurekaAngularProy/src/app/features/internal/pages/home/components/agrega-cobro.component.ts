@@ -14,7 +14,7 @@ import { companyFeature } from '../../../../../store/reducers/company.reducer';
 })
 export class AgregaCobroComponent {
   limitAmountMax: number;
-  isNewFlow = false;
+  useAmountLimits = false;
   constructor(
     public excelService: ExcelService,
     public dialogRef: MatDialogRef<AgregaCobroComponent>,
@@ -29,10 +29,9 @@ export class AgregaCobroComponent {
         ).limitMax;
       });
     this.store
-      .select(companyFeature.selectDetails)
-      .pipe(filter((data) => isNotNilOrEmpty(data)))
-      .subscribe((details) => {
-        this.isNewFlow = details.isNewFlow;
+      .select(companyFeature.selectUseAmountLimits)
+      .subscribe((useLimits) => {
+        this.useAmountLimits = useLimits;
       });
   }
 

@@ -189,7 +189,7 @@
                       [maxFractionDigits]="2"
                       [maxAmountLimits]="maxAmountLimits"
                       [currencySymbol]="rowData.currency"
-                      [isNewFlow]="isNewFlow"
+                      [useLimits]="useAmountLimits"
                       required
                     ></p-inputNumber>
                     <div
@@ -202,7 +202,7 @@
                             | validateLimitCurrency
                               : maxAmountLimits
                               : rowData.currency
-                              : isNewFlow
+                              : useAmountLimits
                         "
                       >
                         Monto máximo
@@ -459,7 +459,7 @@
           [maxFractionDigits]="2"
           [maxAmountLimits]="maxAmountLimits"
           [currencySymbol]="editRowData.currency"
-          [isNewFlow]="isNewFlow"
+          [useLimits]="useAmountLimits"
           #amountForm="ngModel"
           required
         ></p-inputNumber>
@@ -473,7 +473,7 @@
                 | validateLimitCurrency
                   : maxAmountLimits
                   : editRowData.currency
-                  : isNewFlow
+                  : useAmountLimits
             "
           >
             Monto máximo

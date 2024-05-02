@@ -121,11 +121,10 @@
             </td>
             <td class="text-center">{{ itm.number }}</td>
             <td>
-              <ng-container *ngrxLet="companyDetails$ as companyDetails">
+              <ng-container *ngrxLet="useAmountLimits$ as useAmountLimits">
                 <div
                   *ngIf="
-                    itm.canEdit &&
-                    (!companyDetails.isNewFlow === '1' || serviceType === 'C')
+                    itm.canEdit && (!useAmountLimits || serviceType === 'C')
                   "
                   class="d-flex"
                 >
@@ -159,10 +158,10 @@
           </tr>
         </tbody>
       </table>
-      <ng-container *ngrxLet="companyDetails$ as companyDetails">
+      <ng-container *ngrxLet="useAmountLimits$ as useAmountLimits">
         <div
           *ngIf="
-            (!companyDetails.isNewFlow || serviceType === 'C') &&
+            (!useAmountLimits || serviceType === 'C') &&
             (items.length == 0 || status !== 'PAGADO' || isEditingRow)
           "
         >
