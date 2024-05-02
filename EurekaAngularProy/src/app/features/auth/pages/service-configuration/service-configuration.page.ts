@@ -24,6 +24,8 @@ export class ServiceConfigurationPage {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
+  blockAction = false;
+
   constructor(
     private router: Router,
     public affiliation: AffiliationService,
@@ -31,8 +33,12 @@ export class ServiceConfigurationPage {
   ) {}
 
   onSubmit() {
-    this.affiliation.saveService();
-    this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]);
+    if (!this.blockAction) {
+      this.affiliation.saveService();
+      this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_LIST]).then(() => {
+          this.blockAction = true;
+        });
+    }
   }
 
   onCancel() {

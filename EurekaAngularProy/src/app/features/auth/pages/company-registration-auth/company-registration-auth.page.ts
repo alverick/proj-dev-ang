@@ -17,6 +17,7 @@ import { AffiliationService } from '../../services';
 export class CompanyRegistrationAuthPage implements OnInit {
   entryOptions: IEntryModel[] = [];
   errors = errorRegisterAuth;
+  blockAction = false;
 
   constructor(public affiliation: AffiliationService, private router: Router) {}
 
@@ -31,10 +32,24 @@ export class CompanyRegistrationAuthPage implements OnInit {
   }
 
   onSubmit() {
-    this.affiliation.saveCompany().subscribe(({ success }) => {
-      if (success) {
-        this.router.navigate([authFullRoutingChildNames.SERVICES_ADD_INFO]);
-      }
-    });
+    if (!this.blockAction) {
+      this.blockAction = true;
+      this.affiliation.saveCompany().subscribe({
+        next: ({ success }) => {
+          this.blockAction = false;
+          if (success) {
+            void this.router.navigate([
+              authFullRoutingChildNames.SERVICES_ADD_INFO,
+            ]);
+          }
+        },
+        error: () => {
+          this.blockAction = false;
+        },
+        complete: () => {
+          this.blockAction = false;
+        },
+      });
+    }
   }
 }
