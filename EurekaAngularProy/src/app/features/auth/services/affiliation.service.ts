@@ -12,6 +12,11 @@ import {
   typeErrorServer,
 } from '../../../shared/constants/analytics-messages';
 import {
+  affiliationModalMessageNotAvailable,
+  affiliationModalTitleError,
+  affiliationModalTitleNotAvailable,
+} from '../../../shared/constants/modal-data';
+import {
   chargeTypeOptions,
   dataTypeOptions,
   interestTypeOptions,
@@ -291,9 +296,18 @@ export class AffiliationService {
           'Debes tener una cuenta corriente o ahorros persona jurídica.';
         break;
       }
+      case 5: {
+        this.showErrorServer(
+          affiliationModalMessageNotAvailable,
+          affiliationModalTitleNotAvailable
+        );
+        titleError = affiliationModalTitleNotAvailable;
+        typeError = affiliationModalMessageNotAvailable;
+        break;
+      }
       default: {
         this.showErrorServer(message || '');
-        titleError = 'Regístrame';
+        titleError = affiliationModalTitleError;
         typeError = message || typeError;
         break;
       }
@@ -791,9 +805,9 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
       });
   }
 
-  showErrorServer(message: string = '') {
+  showErrorServer(message = '', title = affiliationModalTitleError) {
     void swalAlert.fire({
-      title: 'Regístrame',
+      title,
       html:
         message || 'Ha ocurrido un error con el servidor<br />Intente de nuevo',
       showCloseButton: true,
