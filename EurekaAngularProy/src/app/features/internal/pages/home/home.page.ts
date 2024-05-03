@@ -265,7 +265,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       header: 'Conoce las nuevas comisiones por cobranza en canales digitales',
       styleClass: 'tw-w-[54rem]',
       data: {
-        showed: showed || !auto,
+        showed: (showed || !auto) as boolean,
         detail:
           'Modal informativo sobre las nuevas comisiones de cobranza en canales digitales',
       },
