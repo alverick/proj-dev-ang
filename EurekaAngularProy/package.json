@@ -58,6 +58,7 @@
     "include-media": "^1.4.10",
     "jquery": "^3.6.2",
     "jspdf": "^2.5.1",
+    "karma": "^6.4.3",
     "moment": "^2.29.4",
     "ng-recaptcha": "^11.0.0",
     "ngx-bootstrap": "^10.2.0",
