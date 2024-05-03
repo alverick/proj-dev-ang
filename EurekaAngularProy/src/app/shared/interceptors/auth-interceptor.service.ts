@@ -8,13 +8,11 @@ import {
 import { Injectable } from '@angular/core';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
-import { AppConfigActions } from '../../store/actions/app-config.actions';
 import { LoginService } from '../services/login.service';
 import { StorageService } from '../services/storage.service';
 import { swalAlert } from '../utils/helpers/popups';
@@ -27,8 +25,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     private router: Router,
     public snackBar: MatSnackBar,
     private login: LoginService,
-    private storage: StorageService,
-    private store: Store
+    private storage: StorageService
   ) {}
 
   intercept(
@@ -69,7 +66,6 @@ export class AuthInterceptorService implements HttpInterceptor {
           if (err.status === 401) {
             this.storage.removeCurrentSession();
             this.snackBar.dismiss();
-            this.store.dispatch(AppConfigActions.resetConfig());
             void swalAlert.fire({
               title: 'Su sesión ha sido cerrada por inactividad',
               showCloseButton: true,
