@@ -1,8 +1,11 @@
 import { isEmpty, isNil } from 'ramda';
 import { isNotNil, isString } from 'ramda-adjunct';
 
-import { IServiceRemoteModel, IServiceRemoteModelForms } from '../models';
-import { ISelectOptions } from './company';
+import {
+  type IServiceRemoteModel,
+  type IServiceRemoteModelForms,
+} from '../models';
+import { type ISelectOptions } from './company';
 
 export const debtorCodeOptions: ISelectOptions[] = [
   {
