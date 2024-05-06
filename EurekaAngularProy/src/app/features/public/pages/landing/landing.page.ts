@@ -105,6 +105,12 @@ export class LandingPage implements OnDestroy {
       content:
         'Configura si deseas que tus clientes paguen una mora y define el importe de esta.',
     },
+    {
+      title: 'Cobro de comisiones',
+      image: 'img-commissions.svg',
+      content:
+        'La comisión que se aplicará a tu cuenta es de S/2.00 por cada cobro recaudado a través de nuestros canales digitales. Para más información revisa nuestros Términos y condiciones.',
+    },
   ];
   disabledAffiliation$ = this.store.select(
     appConfigFeature.selectDisabledAffiliation
