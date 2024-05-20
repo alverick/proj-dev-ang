@@ -1,7 +1,7 @@
 import {
-  AbstractControl,
-  ValidationErrors,
-  ValidatorFn,
+  type AbstractControl,
+  type ValidationErrors,
+  type ValidatorFn,
   Validators,
 } from '@angular/forms';
 
@@ -57,12 +57,12 @@ const sequenceValidator =
 export const passwordValidators = [
   Validators.required,
   regexValidator(/^.{8,25}$/, { length: true }),
-  regexValidator(/(?=.*[A-Z])/, { uppercase: true }),
-  regexValidator(/(?=.*[a-z])/, { lowercase: true }),
+  regexValidator(/^(?=.*[A-Z])/, { uppercase: true }),
+  regexValidator(/^(?=.*[a-z])/, { lowercase: true }),
   regexValidator(/\d+/, { numeric: true }),
   Validators.compose([
     regexValidator(/[^\w@!#$%&/()=?+*\-,.]+/, { symbol: true }, true),
-    regexValidator(/(?=.*[@!#$%&/()=?+*\-,_.])/, { symbol: true }),
+    regexValidator(/^(?=.*[@!#$%&/()=?+*\-,_.])/, { symbol: true }),
   ]),
   sequenceValidator(/\d+/g, {
     sequence: true,
