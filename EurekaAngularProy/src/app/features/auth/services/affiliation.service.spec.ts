@@ -180,7 +180,7 @@ describe('AffiliationService', () => {
         EnterpriseHeadingService,
         FormBuilder,
         IpInfoDataService,
-        LoginService,
+        MockProvider(LoginService),
         NotifyService,
         ServicesFormsService,
       ],
