@@ -100,8 +100,8 @@ class FormDemoComponent implements OnChanges {
           label: 'Nombre de compañia',
           value: 'fullName',
         },
-        password: 'aas@3W233',
-        passwordConfirm: 'aas@3W233',
+        password: '',
+        passwordConfirm: '',
       },
       { emitEvent: false }
     );
