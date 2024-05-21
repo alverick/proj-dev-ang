@@ -6,12 +6,18 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { IErrorMessages } from '../../models/forms';
+import { type ModelFormGroup, IErrorMessages } from '../../models/forms';
+import { type CompanyAccounts } from '../../services/company.service';
+import { type ServiceFormValue } from '../../services/services-forms.service';
+
+export type ServiceFormValueAccount = ServiceFormValue & {
+  account: CompanyAccounts;
+};
 
 @Component({
   selector: 'cs-service-step-info',
@@ -22,9 +28,9 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   $destroy = new Subject();
   @Output() sendForm = new EventEmitter<object>();
   @Output() cancel = new EventEmitter();
-  @Input() form: UntypedFormGroup;
+  @Input() form: ModelFormGroup<ServiceFormValueAccount>;
   @Input() errorMessages: IErrorMessages;
-  @Input() accounts: any[];
+  @Input() accounts: CompanyAccounts[];
   @Input() showCancel = false;
 
   ngOnInit() {
