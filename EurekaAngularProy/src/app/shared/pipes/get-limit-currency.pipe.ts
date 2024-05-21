@@ -1,6 +1,6 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { type PipeTransform, Pipe } from '@angular/core';
 
-import { CurrencyWithLimit } from '../constants/currencies';
+import { type CurrencyWithLimit } from '../constants/currencies';
 
 @Pipe({
   name: 'getLimitCurrency',

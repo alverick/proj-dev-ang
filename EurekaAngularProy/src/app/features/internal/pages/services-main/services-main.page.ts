@@ -16,8 +16,8 @@ import {
 } from '../../../../shared/constants/currencies';
 import {
   type AmountLimit,
-  collectionRestrictionTypes,
   type IDataEnterpriseModel,
+  collectionRestrictionTypes,
 } from '../../../../shared/models/data-enterprise.model';
 import {
   ServicesFormsService,
@@ -39,6 +39,7 @@ export class ServicesMainPage implements OnInit, OnDestroy {
   position = 2;
   limitsAmountMax: AmountLimit[] = null;
   currency: CurrencyWithLimit = null;
+
   constructor(
     protected router: Router,
     public companyServices: CompanyServicesService,
