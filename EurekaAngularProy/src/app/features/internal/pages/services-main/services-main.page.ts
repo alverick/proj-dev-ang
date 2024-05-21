@@ -86,18 +86,19 @@ export class ServicesMainPage implements OnInit, OnDestroy {
       );
     });
     this.servicesFormsService.serviceForm
-      .get('account')
+      .get('currency')
       .valueChanges.pipe(
         takeUntil(this.destroy$),
         filter((data) => isNotNilOrEmpty(data))
       )
-      .subscribe((val: any) => {
-        const limitSel = this.limitsAmountMax.find(
-          (limit) => limit.currency === val.currency
-        ).amountMax;
-        const currencySel = currencies.find(
-          (limit) => limit.code === val.currency
-        );
+      .subscribe((val) => {
+        const currencySel = currencies.find((limit) => limit.code === val);
+
+        const limitSel =
+          this.limitsAmountMax.find(
+            (limit) => limit.currency === currencySel.code
+          )?.amountMax || null;
+
         this.currency = { ...currencySel, limitMax: limitSel };
       });
   }
