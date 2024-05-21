@@ -26,7 +26,7 @@ export class AgregaCobroComponent {
       .subscribe((limits) => {
         this.limitAmountMax = limits.find(
           (limit) => limit.symbol === this.excelService.service.currencySymbol
-        ).limitMax;
+        )?.limitMax;
       });
     this.store
       .select(companyFeature.selectUseAmountLimits)
