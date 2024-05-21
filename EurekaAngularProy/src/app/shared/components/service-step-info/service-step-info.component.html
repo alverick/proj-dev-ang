@@ -116,6 +116,14 @@
           </div></cs-message-alert
         >
       </div>
+      <div *ngIf="disclaimerCommissionDollars" class="form-elm tw-pt-6">
+        <cs-message-alert class="" mode="info"
+          ><div class="tw-text-xs">
+            Para el caso de cuentas en dólares, se aplicará la comisión según el
+            tipo de cambio vigente.
+          </div></cs-message-alert
+        >
+      </div>
     </div>
   </div>
   <div
