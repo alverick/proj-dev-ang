@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isEmpty } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
-import { type Observable } from 'rxjs';
+import { type Observable, combineLatest } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -66,11 +66,22 @@ export class AdobeLaunchProviderService implements ProviderService {
   }
 
   startTracking(): void {
-    this.trackingService.eventSubject$.subscribe(({ event, payload }) => {
+    if (isEmpty(environment.adobe)) {
+      return;
+    }
+
+    combineLatest({
+      satellite: this.launchLibrary,
+      payload: this.trackingService.eventSubject$,
+    }).subscribe(({ payload: { event, payload } }) => {
       this.trackEvent(event, payload);
     });
-    this.trackingService.pageSubject$.subscribe((payload) =>
-      this.trackPage(payload)
-    );
+
+    combineLatest({
+      satellite: this.launchLibrary,
+      payload: this.trackingService.pageSubject$,
+    }).subscribe(({ payload }) => {
+      this.trackPage(payload);
+    });
   }
 }
