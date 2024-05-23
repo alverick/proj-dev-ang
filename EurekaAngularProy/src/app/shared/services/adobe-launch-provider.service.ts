@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { isEmpty } from 'ramda';
+import { isNotEmpty } from 'ramda-adjunct';
+import { type Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { type ProviderService } from './provider.service';
@@ -25,22 +28,19 @@ declare const window: {
 
 @Injectable()
 export class AdobeLaunchProviderService implements ProviderService {
+  launchLibrary: Observable<boolean>;
   constructor(
     private scriptInjectorService: ScriptInjectorService,
     public trackingService: TrackingService
   ) {
-    void this.injectAdobeLaunchScript();
-  }
-
-  async injectAdobeLaunchScript() {
-    if (isEmpty(environment.adobe)) {
-      return;
-    }
-    try {
-      await this.scriptInjectorService.load('Launch', environment.adobe);
-      window._satellite.pageBottom();
-    } catch (e) {
-      console.error('Error while loading Adobe Launch script', e);
+    if (isNotEmpty(environment.adobe)) {
+      this.launchLibrary = this.scriptInjectorService
+        .loadScript('Launch', environment.adobe)
+        .pipe(
+          tap(() => {
+            window._satellite.pageBottom();
+          })
+        );
     }
   }
 
