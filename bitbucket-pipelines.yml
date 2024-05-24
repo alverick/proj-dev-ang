@@ -13,8 +13,8 @@ pipelines:
           name: 'Push on fluidAttacks ️‍🔥'
           script:
             - cd eureca-frontend
-            - git config user.name "Bie Dev"
-            - git config user.email ${BIEDEV}
+            - git config user.name "${BIE_USER}"
+            - git config user.email "${BIE_EMAIL}"
             - git checkout develop
             - git pull origin develop
             - git fetch origin develop fluidattacks-security-scan
