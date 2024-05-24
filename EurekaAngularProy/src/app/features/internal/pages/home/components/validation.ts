@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
-import { ExcelService } from 'src/app/shared/services/excel.service';
+
+import { ExcelService } from '../../../../../shared/services/excel.service';
 
 @Component({
   selector: 'cs-validation',
@@ -13,7 +14,7 @@ export class ValidationComponent {
   ) {
     // dialog.disableClose = true;
   }
-  ocultar: boolean = true;
+  ocultar = true;
 
   verFila(err): boolean {
     return err.row > 0;

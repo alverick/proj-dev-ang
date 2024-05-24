@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from './modal-terms.component';
 
@@ -6,11 +7,12 @@ describe('ModalTermsComponent', () => {
   let component: ModalTermsComponent;
   let fixture: ComponentFixture<ModalTermsComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(() => {
+    void TestBed.configureTestingModule({
       declarations: [ModalTermsComponent],
+      providers: [DynamicDialogRef],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ModalTermsComponent);

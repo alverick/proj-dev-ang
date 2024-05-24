@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import {
+  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
-  UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { drawPopup } from 'src/app/shared/utils/helpers/popups';
 import Swal from 'sweetalert2';
-import { CorreoGtpModel } from '../../../../shared/models/data-correoGtp';
+
+import { type CorreoGtpModel } from '../../../../shared/models/data-correoGtp';
 import { GtpService } from '../../../../shared/services/gtp.service';
+import { drawPopup } from '../../../../shared/utils/helpers/popups';
 
 @Component({
   selector: 'cs-configurar-correo-gtp',

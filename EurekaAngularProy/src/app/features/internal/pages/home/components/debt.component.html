@@ -59,11 +59,16 @@
         [(ngModel)]="nuevaDeuda.code"
         maxlength="14"
         autocomplete="off"
-        (blur)="buscarNewCode()"
         minlength="1"
         type="text"
-        (ngModelChange)="nuevaDeuda.errores.code = null"
+        (ngModelChange)="debtorCodeChanged.next(true)"
       />
+      <span
+        *ngIf="loaderDebtorCode"
+        class="tw-text-extended-grey-2 tw-text-xs tw-flex tw-items-center tw-gap-2"
+        matSuffix
+        >Buscando...<i class="pi pi-spin pi-spinner tw-text-primary-green-1"></i
+      ></span>
       <div class="msg-error" *ngIf="nuevaDeuda.errores.code">
         {{ nuevaDeuda.errores.code }}
       </div>

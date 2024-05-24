@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { authFullRoutingNames } from '../../../../app-routing.collection';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
+import { authFullRoutingNames } from '../../../auth/auth-routing.names';
 import { adminFullRoutingNames } from '../../admin-routing.names';
 
 @Component({

@@ -8,18 +8,20 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
+import { type DynamicDialogRef } from 'primeng/dynamicdialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
+import { modalTermsConfig } from '../../../../shared/constants/modal-data';
 import { type IEntryModel } from '../../../../shared/models';
 import {
   IErrorMessages,
   SimpleModelFormGroup,
 } from '../../../../shared/models/forms';
+import { DynamicDialogService } from '../../../../shared/services/dynamic-dialog.service';
 import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
 import {
   type AuthForm,
@@ -30,7 +32,7 @@ import {
   selector: 'cs-company-form-auth',
   templateUrl: './company-form-auth.component.html',
   styleUrls: ['./company-form-auth.component.scss'],
-  providers: [DialogService],
+  providers: [DynamicDialogService],
 })
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   $destroy = new Subject();
@@ -40,14 +42,14 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   @Input() companyForm: SimpleModelFormGroup<AuthForm>;
   @Input() nameOptions: CompanyName[];
   @Input() errorMessages: IErrorMessages;
-  @Input() edit = false;
+  @Input() passwordNoEditable = false;
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
 
-  constructor(public dialogService: DialogService) {}
+  constructor(public dialogService: DynamicDialogService) {}
 
   ngOnInit() {
     this.companyForm
-      .get('entrySelect')
+      ?.get('entrySelect')
       .valueChanges.pipe(
         takeUntil(this.$destroy),
         filter((value) => isNotNil(value))
@@ -60,7 +62,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     if (
       has('categories', changes) &&
-      isNotNilOrEmpty(this.companyForm.get('entry').value)
+      isNotNilOrEmpty(this.companyForm?.get('entry').value)
     ) {
       this.setCategorySelected();
     }
@@ -70,11 +72,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   showModalTerms() {
-    this.ref = this.dialogService.open(ModalTermsComponent, {
-      width: '810px',
-      header: 'Términos y condiciones',
-      styleClass: 'modal-custom-cs',
-    });
+    this.ref = this.dialogService.open(ModalTermsComponent, modalTermsConfig);
   }
 
   setCategorySelected() {
@@ -86,10 +84,10 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
 
   private setForm() {
     ['password', 'passwordConfirm', 'acceptTerms'].forEach((field) => {
-      if (!this.edit) {
-        this.companyForm.get(field).enable();
+      if (!this.passwordNoEditable) {
+        this.companyForm?.get(field).enable();
       } else {
-        this.companyForm.get(field).disable();
+        this.companyForm?.get(field).disable();
       }
     });
   }
@@ -99,7 +97,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
       const name = this.companyForm.get('name').value;
       const { passwordConfirm, ...formValue } = this.companyForm.value;
       let companyData = { name, ...formValue };
-      if (!this.edit) {
+      if (!this.passwordNoEditable) {
         const {
           entrySelect: { code },
         } = this.companyForm.value;

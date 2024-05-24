@@ -57,6 +57,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
+import { TieredMenuModule } from 'primeng/tieredmenu';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
@@ -121,16 +122,14 @@ const PRIMENG_MODULES = [
   InputNumberModule,
   InputTextModule,
   KeyFilterModule,
-  KeyFilterModule,
   MessageModule,
-  MessageModule,
-  MessagesModule,
   MessagesModule,
   MultiSelectModule,
   PasswordModule,
   RadioButtonModule,
   RippleModule,
   SidebarModule,
+  TieredMenuModule,
   SplitButtonModule,
   StepsModule,
   TableModule,

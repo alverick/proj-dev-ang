@@ -1,15 +1,16 @@
 import {
+  type OnDestroy,
+  type OnInit,
   Component,
   EventEmitter,
   Input,
-  OnDestroy,
-  OnInit,
   Output,
 } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+
 import { IErrorMessages } from '../../models/forms';
 
 @Component({
@@ -28,7 +29,7 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form
-      .get('account')
+      ?.get('account')
       .valueChanges.pipe(
         takeUntil(this.$destroy),
         filter((value) => isNotNil(value))

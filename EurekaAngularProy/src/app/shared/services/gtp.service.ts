@@ -2,17 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { of, throwError, Observable } from 'rxjs';
+import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { IServiceModel } from '../models';
-import { ICompanyData } from '../models/company-data';
-import { CorreoGtpModel } from '../models/data-correoGtp';
-import { DataGTPChange } from '../models/data-gtpchange';
-import { DataServiceGTP } from '../models/data-service-gtp';
-import { EnterprisesPagedList } from '../models/enterprises-gtp';
-import { GtpFilter } from '../models/gtp-filter';
-import { StatesGtp } from '../models/states-gtp';
+
+import { environment } from '../../../environments/environment';
+import { type IServiceModel } from '../models';
+import { type ICompanyData } from '../models/company-data';
+import { type CorreoGtpModel } from '../models/data-correoGtp';
+import { type DataGTPChange } from '../models/data-gtpchange';
+import { type DataServiceGTP } from '../models/data-service-gtp';
+import { type EnterprisesPagedList } from '../models/enterprises-gtp';
+import { type GtpFilter } from '../models/gtp-filter';
+import { type StatesGtp } from '../models/states-gtp';
 
 @Injectable({
   providedIn: 'root',

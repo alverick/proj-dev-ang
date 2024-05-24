@@ -78,7 +78,7 @@ export class AffiliationService {
     private companyService: CompanyService,
     private loginService: LoginService,
     private enterpriseHeading: EnterpriseHeadingService,
-    private affiliationForms: AffiliationFormsService,
+    public affiliationForms: AffiliationFormsService,
     private serviceForms: ServicesFormsService,
     private logger: NGXLogger,
     private digitalData: DigitalDataService,
@@ -210,43 +210,38 @@ export class AffiliationService {
       ],
     };
 
-    return this.digitalData.getData$().pipe(
-      switchMap((sdk) => {
-        return this.companyService
-          .validateCompany({
-            ruc,
-            email,
-            movilNumber,
-            movilOperator,
-            documentType,
-            documentNumber,
-            sdk,
-          })
-          .pipe(
-            tap(({ code, message, success, tradeName, fullName }) => {
-              if (success) {
-                this.authForm.get('ruc').setValue(ruc);
-                this.validateName(tradeName, fullName);
-                this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-              } else {
-                this.processResultCode(code, message, {
-                  ...actionStep,
-                  state: stateIntent,
-                });
-              }
-            }),
-            catchError((err) => {
-              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-                ...actionStep,
-                state: stateIntent,
-                typeError: typeErrorServer,
-              });
-              this.showErrorServer();
-              return throwError(err);
-            })
-          );
+    return this.companyService
+      .validateCompany({
+        ruc,
+        email,
+        movilNumber,
+        movilOperator,
+        documentType,
+        documentNumber,
       })
-    );
+      .pipe(
+        tap(({ code, message, success, tradeName, fullName }) => {
+          if (success) {
+            this.authForm.get('ruc').setValue(ruc);
+            this.validateName(tradeName, fullName);
+            this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+          } else {
+            this.processResultCode(code, message, {
+              ...actionStep,
+              state: stateIntent,
+            });
+          }
+        }),
+        catchError((err) => {
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: stateIntent,
+            typeError: typeErrorServer,
+          });
+          this.showErrorServer();
+          return throwError(err);
+        })
+      );
   }
 
   private validateName(tradeName: string, fullName: string) {
@@ -372,47 +367,42 @@ export class AffiliationService {
       ],
     };
 
-    return this.digitalData.getData$().pipe(
-      switchMap((sdk) =>
-        this.companyService
-          .saveCompany({
-            documentType,
-            documentNumber,
-            ruc,
-            name,
-            entry,
-            entryName: entrySelect.name,
-            email,
-            movilNumber,
-            movilOperator,
-            password,
-            acceptTerms,
-            sdk,
-          })
-          .pipe(
-            tap(({ code, success, id, message }) => {
-              if (success) {
-                this.companyId = id;
-                this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-              } else {
-                this.processResultCode(code, message, {
-                  ...actionStep,
-                  state: stateIntent,
-                });
-              }
-            }),
-            catchError((err) => {
-              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-                ...actionStep,
-                state: stateIntent,
-                typeError: typeErrorServer,
-              });
-              this.showErrorServer();
-              return throwError(err);
-            })
-          )
-      )
-    );
+    return this.companyService
+      .saveCompany({
+        documentType,
+        documentNumber,
+        ruc,
+        name,
+        entry,
+        entryName: entrySelect.name,
+        email,
+        movilNumber,
+        movilOperator,
+        password,
+        acceptTerms,
+      })
+      .pipe(
+        tap(({ code, success, id, message }) => {
+          if (success) {
+            this.companyId = id;
+            this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+          } else {
+            this.processResultCode(code, message, {
+              ...actionStep,
+              state: stateIntent,
+            });
+          }
+        }),
+        catchError((err) => {
+          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: stateIntent,
+            typeError: typeErrorServer,
+          });
+          this.showErrorServer();
+          return throwError(err);
+        })
+      );
   }
 
   public saveService() {
@@ -567,27 +557,31 @@ export class AffiliationService {
         },
       },
     };
-
-    return this.companyService
-      .saveServices({
-        clientId: this.companyId,
-        deleted: [],
-        services: this.servicesList,
+    return this.digitalData.getData$().pipe(
+      switchMap((sdk) => {
+        return this.companyService
+          .saveServices({
+            clientId: this.companyId,
+            deleted: [],
+            services: this.servicesList,
+            sdk,
+          })
+          .pipe(
+            tap(() => {
+              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+              this.resetRegistration();
+            }),
+            catchError((err) => {
+              this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
+                ...actionStep,
+                state: stateIntent,
+                typeError: typeErrorServer,
+              });
+              throw new Error(err);
+            })
+          );
       })
-      .pipe(
-        tap(() => {
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-          this.resetRegistration();
-        }),
-        catchError((err) => {
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-            ...actionStep,
-            state: stateIntent,
-            typeError: typeErrorServer,
-          });
-          throw new Error(err);
-        })
-      );
+    );
   }
 
   saveUpdateInformation(): Observable<boolean> | Observable<never> {
