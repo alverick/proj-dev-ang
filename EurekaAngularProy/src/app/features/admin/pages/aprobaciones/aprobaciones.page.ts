@@ -198,10 +198,8 @@ export class AprobacionesPage implements OnInit {
       this.Enterprise.newName.toUpperCase()
     ) {
       this.Enterprise.NombreApproved = true;
-    } else {
-      if (isNil(this.Enterprise.NombreApproved)) {
-        Empcant = 1;
-      }
+    } else if (isNil(this.Enterprise.NombreApproved)) {
+      Empcant = 1;
     }
 
     const totalObservations =
@@ -329,47 +327,44 @@ export class AprobacionesPage implements OnInit {
         cancelButtonText: 'No, Cancelar',
         onOpen: drawPopup,
       }).then(async (result) => {
-        if (result.value) {
-          if (name === newName) {
-            if (inReview === false && this.scv.length === 0) {
+        if (!result.value) {
+          return;
+        }
+        if (name === newName) {
+          if (inReview === false) {
+            if (this.scv.length === 0) {
               this.router.navigate([appFullRoutingNames.ADMIN]);
-              return;
-            }
-            if (inReview && this.scv.length > 0) {
-              this.saveApprovedData({
-                EnterpriseObj: this.emp,
+            } else if (this.enterpriseChanged) {
+              await this.saveCompanyData({
+                EnterpriseObj: null,
                 ListServiceObj: this.scv,
               });
-              return;
+            } else {
+              this.saveApprovedData({
+                EnterpriseObj: null,
+                ListServiceObj: this.scv,
+              });
             }
-            if (inReview === false) {
-              if (this.enterpriseChanged) {
-                await this.saveCompanyData({
-                  EnterpriseObj: null,
-                  ListServiceObj: this.scv,
-                });
-              } else {
-                this.saveApprovedData({
-                  EnterpriseObj: null,
-                  ListServiceObj: this.scv,
-                });
-              }
-              return;
-            }
-          }
-          if (this.scv.length === 0) {
-            this.saveApprovedData({
-              EnterpriseObj: this.emp,
-              ListServiceObj: null,
-            });
             return;
-          } else {
+          }
+          if (inReview && this.scv.length > 0) {
             this.saveApprovedData({
               EnterpriseObj: this.emp,
               ListServiceObj: this.scv,
             });
             return;
           }
+        }
+        if (this.scv.length === 0) {
+          this.saveApprovedData({
+            EnterpriseObj: this.emp,
+            ListServiceObj: null,
+          });
+        } else {
+          this.saveApprovedData({
+            EnterpriseObj: this.emp,
+            ListServiceObj: this.scv,
+          });
         }
       });
     }
@@ -498,7 +493,7 @@ export class AprobacionesPage implements OnInit {
     if (svc.newNameGTPStatus === 0 && svc.newNameCodeGTPStatus === 0) {
       return svc.newName;
     } else {
-      return svc.name === null ? svc.newName : svc.name;
+      return svc.name ?? svc.newName;
     }
   }
 
