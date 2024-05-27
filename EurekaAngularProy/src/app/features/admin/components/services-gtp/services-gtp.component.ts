@@ -11,7 +11,9 @@ import {
   UntypedFormControl,
   Validators,
 } from '@angular/forms';
+import { isNil } from 'ramda';
 
+import { statusCodes } from '../../../../shared/constants/services';
 import { type MonedaModel } from '../../../../shared/models';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
@@ -70,48 +72,49 @@ export class ServicesGTPComponent implements OnInit {
 
   frm: UntypedFormGroup;
   ngOnInit() {
-    let ResValue = [];
-    this._service.res =
-      this._service.res == '' || this._service.res == null
-        ? ''
-        : this._service.res;
-
-    if (this._service.res != '') {
-      ResValue = [
-        Validators.required,
-        Validators.maxLength(7),
-        Validators.minLength(7),
-        Validators.pattern('^[0-9]*$'),
-      ];
-    } else {
-      ResValue = [Validators.minLength(7)];
+    if (isNil(this._service.res)) {
+      this._service.res = '';
     }
+
+    const ResValue =
+      this._service.res !== ''
+        ? [
+            Validators.required,
+            Validators.maxLength(7),
+            Validators.minLength(7),
+            Validators.pattern('^[0-9]*$'),
+          ]
+        : [Validators.minLength(7)];
     this.inReview = this._service.inReview;
-    const montod =
-      this._service.amount !== null && this._service.amount !== undefined
-        ? this._service.amount
-        : '1.00';
-    const porcentajed =
-      this._service.porcentage !== null &&
-      this._service.porcentage !== undefined
-        ? this._service.porcentage
-        : '1.00';
+    const montod = this._service.amount ?? '1.00';
+
+    const porcentajed = this._service.porcentage ?? '1.00';
     let nameCode =
       this._service.codDeudor === 'Otro'
         ? this._service.nameCod
         : this._service.codDeudor;
     if (
-      this._service.newNameCodeGTPStatus === 0 ||
-      this._service.newNameCodeGTPStatus === 2
-    )
+      this._service.newNameCodeGTPStatus === statusCodes.NEW ||
+      this._service.newNameCodeGTPStatus === statusCodes.EDITED
+    ) {
       nameCode = this._service.newNameCode;
+    }
+
+    const processValue = function (value) {
+      if (value === null) {
+        return '';
+      } else if (value === true) {
+        return 'S';
+      } else {
+        return 'N';
+      }
+    };
+
     this.frm = this.fb.group({
       nombre: new UntypedFormControl(
         {
           value:
-            this._service.newNameGTPStatus === 0 ||
-            this._service.newNameGTPStatus === 2 ||
-            this._service.newNameGTPStatus === 3
+            this._service.newNameGTPStatus !== statusCodes.APPROVED
               ? this._service.newName
               : this._service.name,
           disabled: true,
@@ -124,11 +127,6 @@ export class ServicesGTPComponent implements OnInit {
           ),
         ]
       ),
-      /*  nombre: new FormControl({ value:  (this._service.name === '?') ?
-        ( ((this._service.newName.substring(0, 3) === '???')?
-        (this._service.newName.substring(3, this._service.newName.length)):this._service.newName)):((this._service.name === this._service.newName)? this._service.name : this._service.newName ) , disabled: true },
-          [Validators.required, Validators.minLength(3),
-          Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
 
       res: new UntypedFormControl(
         { value: this._service.res, disabled: false },
@@ -146,13 +144,6 @@ export class ServicesGTPComponent implements OnInit {
         },
         [Validators.required]
       ),
-
-      // eslint-disable-next-line max-len
-      // nameCods: new FormControl ({ value: ( this._service.newNameCodeGtpStatus === 0  || this._service.newNameCodeGtpStatus === 2 })? this._service.newNameCode : this._service.debtorCode     , disabled: true}),
-
-      /*  nameCod: new FormControl({ value: (this._service.debtorCode === '?')?
-        (( (this._service.newNameCode.substring(0,3) === '???')?
-        (this._service.newNameCode.substring(3, this._service.newNameCode.length)): this._service.newNameCode)) : (this._service.debtorCode === this._service.newNameCode)? this._service.debtorCode :this._service.newNameCode , disabled: true}), */
       nameCod: new UntypedFormControl({ value: nameCode, disabled: true }),
       tipoDato: new UntypedFormControl(
         { value: this._service.dataType, disabled: true },
@@ -188,7 +179,6 @@ export class ServicesGTPComponent implements OnInit {
         [Validators.required]
       ),
       tipoMora: { value: this._service.interestType, disabled: true },
-      // montoRadioButton: new FormControl({ value: montod, disabled: true }),
       monto: new UntypedFormControl({ value: montod, disabled: true }),
 
       porcentaje: new UntypedFormControl({
@@ -199,22 +189,12 @@ export class ServicesGTPComponent implements OnInit {
         value: this._service.partialPayment,
         disabled: true,
       }),
-      // eslint-disable-next-line max-len
       NewNameCod: [
-        this._service.acceptednewNameCode === null
-          ? ''
-          : this._service.acceptednewNameCode === true
-          ? 'S'
-          : 'N',
+        processValue(this._service.acceptednewNameCode),
         Validators.required,
       ],
-      // eslint-disable-next-line max-len
       NewName: [
-        this._service.acceptednewName === null
-          ? ''
-          : this._service.acceptednewName === true
-          ? 'S'
-          : 'N',
+        processValue(this._service.acceptednewName),
         Validators.required,
       ],
     });
@@ -243,16 +223,9 @@ export class ServicesGTPComponent implements OnInit {
     }
 
     // combo para ocultar si es data parcial
-    if (
-      this.frm.get('tipoDato').value === 'P' ||
-      this.frm.get('tipoDato').value === 'S'
-    ) {
-      /* this.frm.get('tipoPago').setValue('C');
-      this.tiposPago.pop();*/
-      this.Dataparcial = false;
-    } else {
-      this.Dataparcial = true;
-    }
+    this.Dataparcial =
+      this.frm.get('tipoDato').value !== 'P' &&
+      this.frm.get('tipoDato').value !== 'S';
 
     this.showAgencyChannel(this._service.useAgencyChannel);
   }
