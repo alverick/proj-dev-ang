@@ -29,6 +29,7 @@ declare const window: {
 @Injectable()
 export class AdobeLaunchProviderService implements ProviderService {
   launchLibrary: Observable<boolean>;
+  loaded = false;
   constructor(
     private scriptInjectorService: ScriptInjectorService,
     public trackingService: TrackingService
@@ -38,7 +39,11 @@ export class AdobeLaunchProviderService implements ProviderService {
         .loadScript('Launch', environment.adobe)
         .pipe(
           tap(() => {
-            window._satellite.pageBottom();
+            if (!this.loaded) {
+              this.loaded = true;
+              window._satellite.pageBottom();
+              this.runSatelliteEvent(AdobeEvent.appInit, {});
+            }
           })
         );
     }
@@ -57,6 +62,7 @@ export class AdobeLaunchProviderService implements ProviderService {
     payload: Partial<TrackEventProperties>
   ) {
     try {
+      console.log('runSatelliteEvent', event, payload);
       if ('undefined' !== typeof window._satellite && window._satellite) {
         window._satellite.track(event, payload);
       }
