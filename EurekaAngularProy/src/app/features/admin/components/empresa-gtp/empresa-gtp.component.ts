@@ -15,6 +15,7 @@ import {
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 
+import { statusCodes } from '../../../../shared/constants/services';
 import { ICompanyData } from '../../../../shared/models/company-data';
 import { GtpService } from '../../../../shared/services/gtp.service';
 
@@ -26,6 +27,7 @@ import { GtpService } from '../../../../shared/services/gtp.service';
 export class EmpresaGTPComponent implements OnInit {
   formGroup: UntypedFormGroup;
   submitted = false;
+  statusCodes: Record<string, number> = statusCodes;
   errorMessages = {
     email: {
       required: 'El correo electrónico  es obligatorio',
@@ -62,7 +64,7 @@ export class EmpresaGTPComponent implements OnInit {
       entryName,
     } = this.enterprise;
 
-    const isNotEditable = newNameGTPStatus !== 1;
+    const isNotEditable = newNameGTPStatus !== statusCodes.APPROVED;
 
     let newNombreApprovedValue: string;
     switch (NombreApproved) {
@@ -144,7 +146,8 @@ export class EmpresaGTPComponent implements OnInit {
     this.submitted = true;
     const { valid, value } = this.formGroup;
     if (valid) {
-      const isNotEditable = this.enterprise.newNameGTPStatus !== 1;
+      const isNotEditable =
+        this.enterprise.newNameGTPStatus !== statusCodes.APPROVED;
       let dataEnterprise: ICompanyData;
       if (isNotEditable) {
         dataEnterprise = {
