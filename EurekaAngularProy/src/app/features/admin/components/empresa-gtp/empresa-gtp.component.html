@@ -47,8 +47,8 @@
     <mat-error
       class="messsage-error"
       *ngIf="
-        f.NewNameApproved.invalid &&
-        f.NewNameApproved.hasError('required') &&
+        formGroup.get('NewNameApproved').invalid &&
+        formGroup.get('NewNameApproved').hasError('required') &&
         (enterprise.newNameGTPStatus === statusCodes.NEW ||
           enterprise.newNameGTPStatus === statusCodes.EDITED)
       "

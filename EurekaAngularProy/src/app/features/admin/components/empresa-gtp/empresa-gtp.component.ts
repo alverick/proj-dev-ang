@@ -41,9 +41,6 @@ export class EmpresaGTPComponent implements OnInit {
     },
   };
 
-  get f() {
-    return this.formGroup.controls;
-  }
   @Input() enterprise: ICompanyData;
   @Output() grabar = new EventEmitter<ICompanyData>();
 
