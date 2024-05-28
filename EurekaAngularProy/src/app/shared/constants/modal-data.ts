@@ -9,3 +9,9 @@ export const modalTermsConfig: DynamicDialogConfig = {
   styleClass: 'modal-custom-cs',
   maximizable: true,
 };
+
+export const affiliationModalTitleError = 'Regístrame';
+
+export const affiliationModalTitleNotAvailable = 'Afiliación no disponible';
+export const affiliationModalMessageNotAvailable =
+  'No puedes afiliarte en este momento porque aún no se ha completado la validación de poderes de tu empresa o no eres el representante legal. Por favor, verifica tu información y vuelve a intentarlo una vez que se haya finalizado este proceso.';
