@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
+import { type Meta, type Story, moduleMetadata } from '@storybook/angular';
 import { userEvent, within } from '@storybook/testing-library';
 
 import Button from './button.component';
@@ -31,6 +31,6 @@ export const LoggedOut = Template.bind({});
 export const LoggedIn = Template.bind({});
 LoggedIn.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const loginButton = await canvas.getByRole('button', { name: /Log in/i });
+  const loginButton = canvas.getByRole('button', { name: /Log in/i });
   await userEvent.click(loginButton);
 };
