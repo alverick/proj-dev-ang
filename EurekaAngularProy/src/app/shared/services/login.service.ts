@@ -53,6 +53,7 @@ export class LoginService {
             if (this.storage.isValidSession()) {
               this.notify.iniciar();
             }
+            this.store.dispatch(AppConfigActions.resetConfig());
           }
           return r;
         })
@@ -69,9 +70,6 @@ export class LoginService {
     return this.http.post(url, {}).pipe(
       tap(() => {
         this.storage.removeCurrentSession();
-        this.store.dispatch(
-          AppConfigActions.setModalCommissions({ showed: false })
-        );
       })
     );
   }
