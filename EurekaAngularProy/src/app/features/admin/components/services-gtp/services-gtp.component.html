@@ -13,9 +13,6 @@
         style="overflow: hidden"
       >
       </textarea>
-      <!--
-              <input class="input-text" matInput type="text" maxlength="30" formControlName="nombre" name="nombre" placeholder="Nombre del servicio">
-            -->
       <mat-error>
         <mat-error
           class="messsage-error"
@@ -50,7 +47,6 @@
           "
           >El nombre debe tener por lo menos una letra o un numero</mat-error
         >
-        <!--  <mat-error class="messsage-error" *ngIf="f.nombre.invalid && !f.nombre.hasError('minlength') && !f.nombre.hasError('alfa') && f.nombre.hasError('alfabetico')">El nombre debe tener por lo menos una letra </mat-error>   -->
       </mat-error>
     </mat-form-field>
 
@@ -117,13 +113,6 @@
   <div class="form-group">
     <mat-form-field class="w-70">
       <mat-label class="label">Código deudor</mat-label>
-      <!-- <mat-select   class="input-text" *ngIf="f.codDeudor.value !== 'Otro'" disableOptionCentering
-              panelClass="pts30" formControlName="codDeudor" name="codDeudor" >
-                <mat-option class="input-text">Código Deudor</mat-option>
-                <mat-option class="input-text" *ngFor="let c of codDeudor" [value]="c.code">
-                    {{c.name}}
-                </mat-option>
-            </mat-select> -->
       <input
         class="input-text"
         matInput
@@ -298,7 +287,6 @@
       >
     </mat-form-field>
   </div>
-  <!-- <span class="texto-medios ">  Elige los medios por los cuales tus <br class="br-none-mobil"> clientes te pagarán  </span> -->
   <div class="sub-el">
     <span class="texto-medios">
       Elige los medios por los cuales tus <br class="br-none-mobil" />
@@ -314,15 +302,12 @@
           </mat-checkbox>
         </div>
         <div class="card-title texto-black">Web / App</div>
-        <!-- <div class="pt-4"> -->
         <div class="texto-d-medios pt-1">
-          <!-- Banca por internet, Interbank APP  -->
           Interbank APP <br />
           y Banca por <br />
           internet
         </div>
         <div class="pt-1 texto-green">GRATIS</div>
-        <!-- </div> -->
       </div>
     </div>
     <div class="card-medio-pago">
@@ -332,14 +317,12 @@
           </mat-checkbox>
         </div>
         <div class="card-title texto-black">Agentes</div>
-        <!-- <div class="pt-4"> -->
         <div class="texto-d-medios" style="padding-top: 1em !important">
           Lima y <br />
           provincias
         </div>
         <div class="pt-2 texto-green">{{ simboloMoneda }} {{ comAgente }}</div>
         <div class="pt-1 texto-p-medios">por transacción</div>
-        <!-- </div> -->
       </div>
     </div>
     <div class="card-medio-pago" *ngIf="useAgencyChannel">
@@ -352,14 +335,12 @@
           Tiendas <br />
           <div class="ventanilla">(Ventanilla)</div>
         </div>
-        <!-- <div class="pt-2"> -->
         <div class="texto-d-medios">
           Lima y <br />
           provincias
         </div>
         <div class="pt-2 texto-green">{{ simboloMoneda }} {{ comTienda }}</div>
         <div class="pt-1 texto-p-medios">por transacción</div>
-        <!-- </div> -->
       </div>
     </div>
   </div>
@@ -559,8 +540,6 @@
       </mat-radio-group>
     </div>
   </div>
-
-  <!-- <button *ngIf="update==true && _service.res != ''" type="submit" class="btn-eureca-green"> GUARDAR X</button> -->
   <button
     *ngIf="Button() || update == true"
     type="submit"
