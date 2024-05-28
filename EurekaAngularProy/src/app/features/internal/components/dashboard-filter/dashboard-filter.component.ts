@@ -1,18 +1,18 @@
 import {
+  type OnChanges,
+  type OnDestroy,
+  type OnInit,
+  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
+  type FormControl,
+  type FormGroup,
   FormBuilder,
-  FormControl,
-  FormGroup,
   Validators,
 } from '@angular/forms';
 import { has, path, pipe, pluck, uniq } from 'ramda';
@@ -20,7 +20,10 @@ import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { currencies, Currency } from '../../../../shared/constants/currencies';
+import {
+  type Currency,
+  currencies,
+} from '../../../../shared/constants/currencies';
 
 export interface OptionList {
   name: string;
@@ -158,7 +161,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
       ? 'Todos los servicios'
       : value
           .map((item) => item.name)
-          .sort()
+          .sort((a, b) => a.localeCompare(b))
           .join(', ');
   }
 
