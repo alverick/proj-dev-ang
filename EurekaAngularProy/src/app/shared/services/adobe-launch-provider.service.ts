@@ -62,7 +62,7 @@ export class AdobeLaunchProviderService implements ProviderService {
     payload: Partial<TrackEventProperties>
   ) {
     try {
-      console.log('runSatelliteEvent', event, payload);
+      console.log('runSatelliteEvent', event, payload, Date.now());
       if ('undefined' !== typeof window._satellite && window._satellite) {
         window._satellite.track(event, payload);
       }
