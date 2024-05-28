@@ -8,18 +8,20 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
+import { type DynamicDialogRef } from 'primeng/dynamicdialog';
 import { has } from 'ramda';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
+import { modalTermsConfig } from '../../../../shared/constants/modal-data';
 import { type IEntryModel } from '../../../../shared/models';
 import {
   IErrorMessages,
   SimpleModelFormGroup,
 } from '../../../../shared/models/forms';
+import { DynamicDialogService } from '../../../../shared/services/dynamic-dialog.service';
 import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
 import {
   type AuthForm,
@@ -30,7 +32,7 @@ import {
   selector: 'cs-company-form-auth',
   templateUrl: './company-form-auth.component.html',
   styleUrls: ['./company-form-auth.component.scss'],
-  providers: [DialogService],
+  providers: [DynamicDialogService],
 })
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   $destroy = new Subject();
@@ -43,7 +45,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   @Input() passwordNoEditable = false;
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
 
-  constructor(public dialogService: DialogService) {}
+  constructor(public dialogService: DynamicDialogService) {}
 
   ngOnInit() {
     this.companyForm
@@ -70,11 +72,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   showModalTerms() {
-    this.ref = this.dialogService.open(ModalTermsComponent, {
-      width: '810px',
-      header: 'Términos y condiciones',
-      styleClass: 'modal-custom-cs',
-    });
+    this.ref = this.dialogService.open(ModalTermsComponent, modalTermsConfig);
   }
 
   setCategorySelected() {

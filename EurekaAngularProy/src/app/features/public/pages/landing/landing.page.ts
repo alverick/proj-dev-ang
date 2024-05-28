@@ -2,10 +2,15 @@ import { type OnDestroy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
-import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
+import { type DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
+import {
+  headerModalTerms,
+  modalTermsConfig,
+} from '../../../../shared/constants/modal-data';
+import { DynamicDialogService } from '../../../../shared/services/dynamic-dialog.service';
 import {
   type ActionEventProperties,
   AdobeEvent,
@@ -25,7 +30,7 @@ interface ItemLanding {
   selector: 'cs-landing',
   templateUrl: './landing.page.html',
   styleUrls: ['./landing.page.scss'],
-  providers: [DialogService, MessageService],
+  providers: [DynamicDialogService, MessageService],
 })
 export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;
@@ -107,7 +112,7 @@ export class LandingPage implements OnDestroy {
 
   constructor(
     public router: Router,
-    public dialogService: DialogService,
+    public dialogService: DynamicDialogService,
     private tracking: TrackingService,
     private store: Store,
     private messageService: MessageService
@@ -166,27 +171,16 @@ export class LandingPage implements OnDestroy {
   }
 
   showModalTerms() {
-    this.ref = this.dialogService.open(ModalTermsComponent, {
-      width: '810px',
-      header: 'Términos y condiciones',
-      styleClass: 'modal-custom-cs',
-    });
-
     this.tracking.trackEvent(AdobeEvent.trackAction, {
-      category: 'Términos y condiciones',
+      category: headerModalTerms,
       action: 'Click',
-      detail: 'Términos y condiciones',
-      label: 'Términos y condiciones',
+      detail: headerModalTerms,
+      label: headerModalTerms,
       typeElement: 'Link',
       location: 'Footer',
     });
 
-    this.tracking.trackEvent(AdobeEvent.trackView, {
-      category: 'Términos y condiciones',
-      action: 'modal-view',
-      detail: 'Términos y condiciones',
-      location: 'Modal',
-    });
+    this.ref = this.dialogService.open(ModalTermsComponent, modalTermsConfig);
   }
 
   clickWa() {

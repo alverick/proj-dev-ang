@@ -30,14 +30,6 @@ import { companyFeature } from '../../../../../store/reducers/company.reducer';
 })
 export class DialogComponent implements OnInit {
   useAmountLimits = false;
-  constructor(
-    public excelService: ExcelService,
-    public formBuilder: UntypedFormBuilder,
-    public dialogRef: MatDialogRef<DialogComponent>,
-    private tracking: TrackingService,
-    private store: Store
-  ) {}
-
   public inputXlsForm: UntypedFormGroup;
   public messageUploadExcel = false;
   public errores: any[] = [];
@@ -55,6 +47,14 @@ export class DialogComponent implements OnInit {
     mode: 'indeterminate',
     value: 0,
   };
+
+  constructor(
+    public excelService: ExcelService,
+    public formBuilder: UntypedFormBuilder,
+    public dialogRef: MatDialogRef<DialogComponent>,
+    private tracking: TrackingService,
+    private store: Store
+  ) {}
 
   ngOnInit() {
     this.inputXlsForm = this.formBuilder.group({

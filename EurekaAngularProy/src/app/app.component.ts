@@ -5,9 +5,11 @@ import {
 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NavigationEnd, Router } from '@angular/router';
 import { PrimeNGConfig } from 'primeng/api';
 import { isNil } from 'ramda';
 
+import { appFullRoutingNames } from './app-routing.names';
 import { primeng } from './shared/lang/es';
 import {
   AdobeLaunchProviderService,
@@ -31,10 +33,17 @@ export class AppComponent implements OnInit, AfterContentChecked {
     domSanitizer: DomSanitizer,
     private primengConfig: PrimeNGConfig,
     adobeLaunch: AdobeLaunchProviderService,
-    newrelic: NewRelicProviderService
+    newrelic: NewRelicProviderService,
+    private router: Router
   ) {
     adobeLaunch.startTracking();
     newrelic.startTracking();
+
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.showButton = !val.url.startsWith(appFullRoutingNames.ADMIN);
+      }
+    });
 
     matIconRegistry.addSvgIcon(
       'eurc_calendar',

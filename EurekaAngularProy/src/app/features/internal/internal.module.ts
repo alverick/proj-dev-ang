@@ -24,6 +24,7 @@ import { PaymentDetailComponent } from './pages/home/components/payment-detail/p
 import { TableMovementsComponent } from './pages/home/components/table-movements/table-movements.component';
 import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
+import { CommissionsInfoComponent } from './pages/home/components/comissions-info/commissions-info.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { SERVICES } from './services';
     DashboardFilterComponent,
     DashboardTableComponent,
     DashboardGraphComponent,
+    CommissionsInfoComponent,
   ],
   imports: [
     CommonModule,

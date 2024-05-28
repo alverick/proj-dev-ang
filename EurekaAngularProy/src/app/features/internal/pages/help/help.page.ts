@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { type AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { pathOr } from 'ramda';
+import { isNotNil } from 'ramda-adjunct';
 
 import {
   AdobeEvent,
   TrackingService,
 } from '../../../../shared/services/tracking.service';
+import { sectionCommissions } from '../../constants';
 import { internalFullRoutingNames } from '../../internal-routing.names';
 
 /**
@@ -15,12 +18,40 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
   templateUrl: './help.page.html',
   styleUrls: ['./help.page.scss'],
 })
-export class HelpPage {
+export class HelpPage implements AfterViewInit {
   /**
    * Accordion active index
    */
   activeIndex: number;
-  constructor(private router: Router, protected tracking: TrackingService) {}
+
+  constructor(private router: Router, protected tracking: TrackingService) {
+    const navigation = this.router.getCurrentNavigation();
+    const section = pathOr<string>(
+      null,
+      ['extras', 'state', 'section'],
+      navigation
+    );
+    if (section === sectionCommissions) {
+      this.activeIndex = 6;
+    }
+  }
+
+  ngAfterViewInit(): void {
+    if (isNotNil(this.activeIndex)) {
+      const accordion = document.querySelector(
+        `.p-accordion.p-component p-accordiontab:nth-child(${this.activeIndex})`
+      );
+
+      if (isNotNil(accordion)) {
+        setTimeout(() => {
+          window.scrollTo({
+            top: 1000,
+            behavior: 'smooth',
+          });
+        }, 500);
+      }
+    }
+  }
 
   /**
    * Go home link
@@ -34,7 +65,7 @@ export class HelpPage {
    * @param evt
    * @param evt.index
    */
-  openedTab({ index }) {
+  openedTab({ index }: { index: number }) {
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Ayuda',
       action: 'Click',
