@@ -1,6 +1,6 @@
 import {
-  AfterContentInit,
-  AfterViewInit,
+  type AfterContentInit,
+  type AfterViewInit,
   Component,
   ElementRef,
   Input,
@@ -8,7 +8,7 @@ import {
   Self,
   ViewChild,
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { type ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'cs-label-control',
@@ -63,9 +63,15 @@ export class LabelControlComponent
     this.useGap = labelInline.hasChildNodes();
   }
 
-  registerOnChange(fn: any): void {}
+  registerOnChange(): void {
+    //evaluate
+  }
 
-  registerOnTouched(fn: any): void {}
+  registerOnTouched(): void {
+    //evaluate
+  }
 
-  writeValue(obj: any): void {}
+  writeValue(): void {
+    //evaluate
+  }
 }
