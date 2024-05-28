@@ -26,9 +26,9 @@ import { isNotNil } from 'ramda-adjunct';
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { mobileOperators } from '../../../../shared/constants/company';
 import { emailRegex } from '../../../../shared/constants/patterns';
+import { statusCodes } from '../../../../shared/constants/services';
 import { type IEntryModel } from '../../../../shared/models';
 import { ICompanyData } from '../../../../shared/models/company-data';
-import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 
 @Component({
   selector: 'cs-empresa-gtp',
@@ -50,6 +50,7 @@ export class EmpresaGTPComponent implements OnInit {
   public _enterprise: ICompanyData;
   formGroup: UntypedFormGroup;
   submitted = false;
+  statusCodes: Record<string, number> = statusCodes;
   rubros: IEntryModel[] = [];
   errorMessages = {
     email: {
@@ -68,16 +69,9 @@ export class EmpresaGTPComponent implements OnInit {
   }
   @Output() grabar = new EventEmitter<any>();
 
-  constructor(
-    public afiliacionService: AfiliacionService,
-    private formBuilder: UntypedFormBuilder
-  ) {}
+  constructor(private formBuilder: UntypedFormBuilder) {}
 
   ngOnInit() {
-    this.afiliacionService.GetRubrosAll().subscribe((d) => {
-      this.rubros = d;
-    });
-
     const {
       NombreApproved,
       ruc,
@@ -89,7 +83,7 @@ export class EmpresaGTPComponent implements OnInit {
       newNameGTPStatus,
     } = this._enterprise;
 
-    const isNotEditable = newNameGTPStatus !== 1;
+    const isNotEditable = newNameGTPStatus !== statusCodes.APPROVED;
 
     const operator = mobileOperators.find(
       (operator) => operator.value === movilOperator,
