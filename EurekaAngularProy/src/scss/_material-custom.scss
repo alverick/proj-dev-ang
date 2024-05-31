@@ -47,18 +47,7 @@
     background-color: var(--ibk-black);
   }
 
-  &.mat-form-field-invalid {
-    .mat-form-field-ripple,
-    .mat-form-field-ripple.mat-accent {
-      /// background-color: var(--ibk-black);
-    }
-  }
-
   .mat-select-arrow {
-    //color: var(--primary-green-1);
-    //border-left: 8px solid transparent;
-    //border-right: 8px solid transparent;
-    //border-top: 8px solid;
     width: 16px;
     height: 16px;
     border: 0;
@@ -121,7 +110,6 @@
       translateZ(0.001px);
     font-weight: 500;
     font-size: 10px !important;
-    // color: var(--ibk-black) !important;
     color: var(--ibk-black);
   }
 
@@ -132,8 +120,6 @@
     color: var(--extended-palette-watermelon-1);
     margin-top: 10px;
     width: 200px;
-
-    // background-color: rgba(0, 169, 79, 0.05);
   }
 
   .msg-error-filtro {
@@ -173,11 +159,9 @@ mat-icon.svg-custom {
 
 .mat-select-value {
   color: var(--ibk-black);
-  // color: var(--ibk-black) !important;
 }
 
 .mat-input-element {
-  // caret-color: var(--ibk-black) !important;
   caret-color: var(--ibk-black);
 }
 
@@ -220,7 +204,6 @@ mat-icon.svg-custom {
 }
 
 :-ms-input-placeholder.mat-input-element {
-  // color: rgba(0, 0, 0, 0.42) !important;
   color: rgba(0, 0, 0, 0.42);
 }
 
@@ -232,7 +215,6 @@ mat-icon.svg-custom {
   border: solid 1px var(--primary-green-1) !important;
 
   &:hover {
-    //  background-color: var(--primary-green-2) !important;
     background-color: var(--primary-green-2) !important;
   }
 
@@ -249,14 +231,12 @@ mat-icon.svg-custom {
 
 .btn-eureca-yellow {
   @include font-text(14px !important, 500 !important);
-  // color: var(--ibk-white) !important;
   color: var(--ibk-black) !important;
   background-color: var(--extended-palette-yellow-3) !important;
   @include border-radius(4px !important);
   border: solid 1px var(--extended-palette-yellow-3) !important;
 
   &:hover {
-    //  background-color: var(--primary-green-2) !important;
     background-color: var(--extended-palette-yellow-4) !important;
   }
 
@@ -279,7 +259,6 @@ mat-icon.svg-custom {
   color: var(--primary-green-1) !important;
 
   &:hover {
-    //  background-color: var(--primary-green-2) !important;
     background-color: var(--grises-grey-4) !important;
   }
 
@@ -304,7 +283,6 @@ mat-icon.svg-custom {
   border: solid 1px var(--primary-green-1) !important;
 
   &:hover {
-    //  background-color: var(--primary-green-2) !important;
     background-color:var(--primary-green-2) !important;
   }
 
@@ -341,7 +319,6 @@ mat-icon.svg-custom {
   }
 
   &.btn-disabled {
-    // color       : var(--grises-grey-1) !important;
     color: var(--primary-green-1);
     text-decoration: underline;
     cursor: pointer;
