@@ -243,12 +243,10 @@ export class TransactionService {
           markAll = markAll && v.selected;
           mustBeChecked = true;
         }
-      } else {
-        if (!v.hasIBKPayments && v.status !== 'PAGADO') {
-          const idx = this.itemsForDelete.indexOf(v.id);
-          markAll = markAll && idx >= 0;
-          mustBeChecked = true;
-        }
+      } else if (!v.hasIBKPayments && v.status !== 'PAGADO') {
+        const idx = this.itemsForDelete.indexOf(v.id);
+        markAll = markAll && idx >= 0;
+        mustBeChecked = true;
       }
     });
     return markAll && mustBeChecked;
