@@ -1,10 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-  UntypedFormBuilder,
-} from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockBuilder, MockRender } from 'ng-mocks';
 import { PasswordModule } from 'primeng/password';
@@ -29,7 +25,7 @@ describe('RegistrationFinishedPage', () => {
       .mock(PasswordModule)
       .mock(FormsModule)
       .mock(ReactiveFormsModule)
-      .keep(UntypedFormBuilder)
+      .keep(FormBuilder)
       .mock(RecuperaService, {
         ChangePassword: () => changePasswordSubject,
         VerifingToken: () => verifingTokenSubject,
