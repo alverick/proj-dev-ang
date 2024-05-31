@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { type CanActivate, type UrlTree, Router } from '@angular/router';
+import { type UrlTree, Router } from '@angular/router';
 import { isEmpty } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 import { type Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import {
 import { AffiliationService } from '../services';
 
 @Injectable()
-export class AffiliationServiceValidGuard implements CanActivate {
+export class AffiliationServiceValidGuard {
   constructor(
     private affiliation: AffiliationService,
     private router: Router
@@ -29,7 +29,7 @@ export class AffiliationServiceValidGuard implements CanActivate {
       }
     }
     if (isNotEmpty(redirect)) {
-      this.router.navigate([redirect], {
+      void this.router.navigate([redirect], {
         skipLocationChange: this.router.url === redirect,
       });
     }

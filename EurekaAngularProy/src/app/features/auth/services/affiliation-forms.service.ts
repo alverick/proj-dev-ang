@@ -27,7 +27,7 @@ export interface RegisterForm {
   movilOperator: string;
 }
 
-export interface AuthForm {
+export type AuthForm = {
   ruc: string;
   name: string;
   nameSelect: string;
@@ -36,7 +36,7 @@ export interface AuthForm {
   password: string;
   passwordConfirm: string;
   acceptTerms: boolean;
-}
+};
 
 @Injectable()
 export class AffiliationFormsService {

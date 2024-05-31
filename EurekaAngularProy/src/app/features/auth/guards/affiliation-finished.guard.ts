@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { type CanActivate, type UrlTree, Router } from '@angular/router';
+import { type UrlTree, Router } from '@angular/router';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { type Observable } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { AffiliationService } from '../services';
 @Injectable({
   providedIn: 'root',
 })
-export class AffiliationFinishedGuard implements CanActivate {
+export class AffiliationFinishedGuard {
   constructor(
     private affiliation: AffiliationService,
     private router: Router

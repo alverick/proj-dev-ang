@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  type ActivatedRouteSnapshot,
-  type CanActivate,
-  type RouterStateSnapshot,
-  type UrlTree,
-  Router,
-} from '@angular/router';
+import { type UrlTree, Router } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { type Observable } from 'rxjs';
 
@@ -13,15 +7,12 @@ import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';
 
 @Injectable()
-export class AffiliationRucGuard implements CanActivate {
+export class AffiliationRucGuard {
   constructor(
     private affiliation: AffiliationService,
     private router: Router
   ) {}
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
+  canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean

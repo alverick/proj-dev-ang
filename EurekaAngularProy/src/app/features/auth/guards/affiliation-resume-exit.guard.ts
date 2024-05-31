@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  type ActivatedRouteSnapshot,
-  type CanDeactivate,
   type RouterStateSnapshot,
   type UrlTree,
   Router,
@@ -14,17 +12,11 @@ import {
   authFullRoutingNames,
 } from '../auth-routing.names';
 import { swalMesssageExit } from '../constants';
-import { type ServiceResumePage } from '../pages/service-resume/service-resume.page';
 
 @Injectable()
-export class AffiliationResumeExitGuard
-  implements CanDeactivate<ServiceResumePage>
-{
+export class AffiliationResumeExitGuard {
   constructor(private router: Router) {}
   canDeactivate(
-    component: ServiceResumePage,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot
   ):
     | Observable<boolean | UrlTree>
