@@ -4,7 +4,6 @@ import { DisplayMode, ValdemortConfig } from 'ngx-valdemort';
 @Component({
   selector: 'cs-validation-defaults',
   templateUrl: './validation-defaults.component.html',
-  styleUrls: ['./validation-defaults.component.scss'],
 })
 export class ValidationDefaultsComponent {
   constructor(config: ValdemortConfig) {
