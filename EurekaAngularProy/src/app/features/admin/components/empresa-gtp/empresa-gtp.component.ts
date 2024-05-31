@@ -14,8 +14,8 @@ import {
 } from '@angular/forms';
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
-import { emailRegex } from '../../../../shared/constants/patterns';
 
+import { emailRegex } from '../../../../shared/constants/patterns';
 import { type IEntryModel } from '../../../../shared/models';
 import { ICompanyData } from '../../../../shared/models/company-data';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';

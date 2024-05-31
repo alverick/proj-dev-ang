@@ -7,8 +7,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forEachObjIndexed } from 'ramda';
-import { emailRegex } from '../../../../shared/constants/patterns';
 
+import { emailRegex } from '../../../../shared/constants/patterns';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
 import {
   type ActionEventProperties,
@@ -37,7 +37,7 @@ export class RecuperarContrasenaComponent implements OnInit {
   submittedRequired = false;
 
   @HostListener('window:beforeunload', ['$event'])
-  public closeWindow($event: any) {
+  public closeWindow($event: BeforeUnloadEvent) {
     if (!this.formulario) {
       $event.returnValue = 'Se van a perder los cambios.';
     }
@@ -59,7 +59,7 @@ export class RecuperarContrasenaComponent implements OnInit {
     });
   }
 
-  get f(): any {
+  get f() {
     return this.recupera.controls;
   }
 
