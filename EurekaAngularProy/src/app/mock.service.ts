@@ -14,11 +14,12 @@ import { type IDataEnterpriseModel } from './shared/models/data-enterprise.model
   providedIn: 'root',
 })
 export class MockService implements ApiMockService {
+  counter = 1;
   getRoutes(): ApiMockRootRoute[] {
     return [
       {
         host: environment.END_POINT,
-        path: 'company',
+        path: 'company1',
         responseCallback: this.validate(),
       },
       {
@@ -35,34 +36,120 @@ export class MockService implements ApiMockService {
       },
       {
         host: environment.END_POINT,
-        path: 'company/service',
+        path: 'company/service1',
         responseCallback: this.validate(),
       },
       {
         host: environment.END_POINT,
-        path: 'company/getafiliate',
+        path: 'company/getafiliate1',
         responseCallback: () => getAffiliate,
       },
       {
         host: environment.END_POINT,
-        path: 'company/GTP/client/3581',
+        path: 'company/GTP/client/1891',
         responseCallback: (): Partial<ICompanyData> => ({
-          ruc: '20393206498',
-          name: 'EMPR ANGULAR150',
-          entry: '14',
-          entryName: 'Rubro de prueba',
-          email: 'CORREOPRUEBAQA2@outlook.es',
-          movilNumber: '945580923',
-          movilOperator: 'M',
-          newName: 'EMPR ANGULAR150',
-          newNameGTPStatus: 1,
-          uniqueCodeIBK: '00000060611123',
-          requestDate: '2024-02-07T17:43:14.5366667',
+          ruc: '10715816526',
+          name: 'INVERSIONES ARIFER',
+          entry: '12',
+          entryName: 'SEGURO U OTRO',
+          email: 'correocontrol5@gmail.com',
+          movilNumber: '997170800',
+          movilOperator: 'C',
+          newName: 'INVERSIONES ADRIFER',
+          newNameGTPStatus: 3,
+          uniqueCodeIBK: '00000013302133',
+          requestDate: '2024-02-02T19:36:34.0166667',
           inReview: false,
           enabled: false,
           isNewEnterprise: false,
           useAgencyChannel: false,
         }),
+      },
+      {
+        host: environment.END_POINT,
+        path: 'company/GTP/accountStateDetails/1891',
+        responseCallback: () => ({
+          accountStateDetailsResponse: {
+            requestDate: '02/02/2024 07:36 PM',
+            approbationDate: '02/02/2024 07:36 PM',
+            lastAccess: '14/03/2024 12:37 PM',
+          },
+        }),
+      },
+      {
+        host: environment.END_POINT,
+        path: 'company/1891/cards',
+        responseCallback: () => [
+          {
+            id: '0927',
+            number: '*********0927 ( CTA.NEGOCIOS PNN - Soles)',
+            currency: '001',
+          },
+        ],
+      },
+      {
+        host: environment.END_POINT,
+        path: 'company/GTP/services/1891/false',
+        responseCallback: () => [
+          {
+            id: 17923,
+            res: '',
+            name: null,
+            debtorCode: null,
+            dataType: 'S',
+            paymentType: 'C',
+            idAccount: '0927',
+            accountNumber: '*********0927 (Soles)',
+            currency: '001',
+            useAppWeb: true,
+            useAgent: false,
+            useStore: false,
+            partialPayment: 'N',
+            chargeInterest: 'N',
+            chargeType: 1,
+            interestType: 'M',
+            amount: 1,
+            percentage: null,
+            currencySymbol: 'S/',
+            inReview: true,
+            newNameCode: 'CODIGO',
+            newNameCodeGTPStatus: 0,
+            newName: 'SERVICIOS GENERALES',
+            newNameGTPStatus: 0,
+            status: 'EnRevision',
+            debtorCodeType: 0,
+            useAgencyChannel: false,
+          },
+          {
+            id: 18028,
+            res: '',
+            name: null,
+            debtorCode: null,
+            dataType: 'P',
+            paymentType: 'C',
+            idAccount: '0927',
+            accountNumber: '*********0927 (Soles)',
+            currency: '001',
+            useAppWeb: true,
+            useAgent: false,
+            useStore: false,
+            partialPayment: 'N',
+            chargeInterest: 'N',
+            chargeType: 1,
+            interestType: 'M',
+            amount: 1,
+            percentage: null,
+            currencySymbol: 'S/',
+            inReview: true,
+            newNameCode: 'CODIGO',
+            newNameCodeGTPStatus: 0,
+            newName: 'ASESORA FINANCIERA',
+            newNameGTPStatus: 0,
+            status: 'EnRevision',
+            debtorCodeType: 0,
+            useAgencyChannel: false,
+          },
+        ],
       },
       {
         host: environment.END_POINT,
@@ -82,7 +169,7 @@ export class MockService implements ApiMockService {
       },
       {
         host: environment.END_POINT,
-        path: 'company/cards',
+        path: 'company/cards1',
         responseCallback: () => [
           {
             id: '8180',
@@ -95,6 +182,20 @@ export class MockService implements ApiMockService {
         host: environment.END_POINT,
         path: 'company/gtp/client/update',
         responseCallback: () => true,
+      },
+      {
+        host: environment.END_POINT,
+        path: 'login1',
+        responseCallback: () => ({
+          respuestaHttp: 204,
+          codRespuesta: 4,
+          estado: false,
+          paramStr: 'Credenciales inválidas',
+          rfs: null,
+          exp: null,
+          paramNum: 3,
+          prfl: null,
+        }),
       },
       {
         host: environment.END_POINT,
@@ -167,14 +268,36 @@ export class MockService implements ApiMockService {
       {
         host: environment.END_POINT,
         path: 'debt/process/325/status1',
-        responseCallback: () => ({
-          status: 'VALIDATING',
-          errors: [],
-          rowsUploaded: -4,
-          rowsRejected: 2,
-          advance: 0,
-          phase: 3,
-        }),
+        responseCallback: () => {
+          console.log(this.counter++);
+          if (this.counter === 10) {
+            return {
+              status: 'REJECTED',
+              errors: [
+                {
+                  code: 0,
+                  row: 2,
+                  description:
+                    'El nombre del Servicio no es el que corresponde, debe ser Servicio usuario nuevo',
+                  field: 'Name Service',
+                  value: null,
+                },
+              ],
+              rowsUploaded: 0,
+              rowsRejected: 1,
+              advance: 0.0,
+              phase: 3,
+            };
+          }
+          return {
+            status: 'VALIDATING',
+            errors: [],
+            rowsUploaded: -4,
+            rowsRejected: 2,
+            advance: 0,
+            phase: 3,
+          };
+        },
       },
     ];
   }

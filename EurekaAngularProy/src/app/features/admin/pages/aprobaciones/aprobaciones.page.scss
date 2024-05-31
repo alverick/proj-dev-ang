@@ -1,3 +1,4 @@
+$width-container: 380px;
 body {
   background: var(--ibk-white) !important;
 }
@@ -50,7 +51,7 @@ body {
 }
 
 .card-servicios {
-  width: 330px;
+  width: $width-container;
   @include box-shadows();
   background-color: var(--ibk-white);
   .table-sm {
@@ -63,7 +64,7 @@ body {
 }
 
 .card-aprobaciones {
-  @include cuadro(330px, auto);
+  @include cuadro($width-container, auto);
   @include box-shadows();
   background-color: var(--ibk-white);
 }
@@ -114,6 +115,7 @@ body {
 
 :host ::ng-deep .ps-content {
   background-color: transparent;
+  @apply tw-p-3;
 }
 
 :host ::ng-deep .btn-eureca-green.btn-disabled {

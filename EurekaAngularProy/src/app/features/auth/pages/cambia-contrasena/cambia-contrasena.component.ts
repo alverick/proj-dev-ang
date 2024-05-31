@@ -1,12 +1,9 @@
 import { type OnInit, Component } from '@angular/core';
-import {
-  type UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
-} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
+import { type ModelFormGroup } from '../../../../shared/models/forms';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import {
@@ -22,6 +19,11 @@ import {
 } from '../../../../shared/validators/password-validators';
 import { authFullRoutingNames } from '../../auth-routing.names';
 
+export type FormChangePassword = {
+  contrasena: string;
+  repcontrasena: string;
+};
+
 @Component({
   selector: 'cs-cambia-contrasena',
   templateUrl: './cambia-contrasena.component.html',
@@ -31,21 +33,20 @@ export class CambiaContrasenaComponent implements OnInit {
   public formulario: boolean;
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
   errorMessages = errorRegisterAuth;
-
+  public Cambia: ModelFormGroup<FormChangePassword>;
   constructor(
-    public formBuilder: UntypedFormBuilder,
+    public formBuilder: FormBuilder,
     private rutaActiva: ActivatedRoute,
     private router: Router,
     private recuperaService: RecuperaService,
     public storage: StorageService,
     protected tracking: TrackingService
   ) {}
-  public Cambia: UntypedFormGroup;
   ngOnInit() {
     this.Cambia = this.formBuilder.group(
       {
-        contrasena: new UntypedFormControl('', passwordValidators),
-        repcontrasena: new UntypedFormControl('', passwordValidators),
+        contrasena: ['', passwordValidators],
+        repcontrasena: ['', passwordValidators],
       },
       {
         validator: MustMatch('contrasena', 'repcontrasena'),
@@ -56,12 +57,6 @@ export class CambiaContrasenaComponent implements OnInit {
     this.Verificar(this.llave);
   }
 
-  get f(): any {
-    return this.Cambia.controls;
-  }
-
-  //  los 6 primeros de adelante
-  // 3173I1201910171716
   Verificar(key: string) {
     this.recuperaService
       ?.VerifingToken({ TokenEncrypted: key })
@@ -93,7 +88,7 @@ export class CambiaContrasenaComponent implements OnInit {
           Token: this.llave,
         })
         ?.subscribe((d) => {
-          if (d == false) {
+          if (!d) {
             this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
               ...actionStep,
               state: 'Intención de envío',
@@ -103,7 +98,7 @@ export class CambiaContrasenaComponent implements OnInit {
               'Actualizar Contraseña',
               'Error al actualizar contraseña'
             );
-          } else if (d == true) {
+          } else if (d) {
             this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
             this.PopUpWithOneButon(
               'Contraseña actualizada',
