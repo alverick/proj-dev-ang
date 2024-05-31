@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { type CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
 import { StorageService } from '../services/storage.service';
@@ -7,7 +7,7 @@ import { StorageService } from '../services/storage.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard {
   constructor(private router: Router, private storageService: StorageService) {}
 
   canActivate(): boolean {
