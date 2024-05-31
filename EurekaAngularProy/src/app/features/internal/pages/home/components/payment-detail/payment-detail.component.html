@@ -128,21 +128,21 @@
                 "
                 class="d-flex"
               >
-                <div
+                <a
                   *ngIf="!itm.editing"
-                  class="btn-edit tw-shrink-0"
+                  class="btn-edit tw-shrink-0 tw-cursor-pointer"
                   (click)="editItm(itm); $event.stopPropagation()"
                 >
                   <img
                     class="tw-inline"
-                    src="../../../../../../../assets/images/pencil.svg"
+                    src="assets/images/pencil.svg"
                     alt="editar"
                     width="20"
                   />
-                </div>
-                <div
+                </a>
+                <a
                   *ngIf="!itm.editing"
-                  class="btn-delete ml-1 tw-shrink-0"
+                  class="btn-delete ml-1 tw-shrink-0 tw-cursor-pointer"
                   (click)="delItm(itm); $event.stopPropagation()"
                 >
                   <img
@@ -151,7 +151,7 @@
                     alt="eliminar"
                     width="20"
                   />
-                </div>
+                </a>
               </div>
             </td>
           </tr>
@@ -202,7 +202,7 @@
       </div>
     </div>
   </div>
-  <div class="close" (click)="close()">
+  <a class="close" (click)="close()">
     <img src="assets/images/cerrar.svg" alt="Cerrar" />
-  </div>
+  </a>
 </div>
