@@ -24,7 +24,7 @@ export class NewRelicProviderService implements ProviderService {
   constructor(public trackingService: TrackingService) {}
 
   trackPage(payload: Partial<TrackEventProperties>) {
-    window.newrelic.addPageAction(
+    this.runNewrelic(
       AdobeEvent.pageTrack,
       dot.dot(payload) as Record<string, string>
     );
@@ -39,7 +39,7 @@ export class NewRelicProviderService implements ProviderService {
       const metadata = pathOr<Metadata[]>([], ['action', 'metadata'], payload);
       data = Object.fromEntries(metadata.map((meta) => [meta.key, meta.value]));
     }
-    window.newrelic.addPageAction(event, {
+    this.runNewrelic(event, {
       ...data,
       state: payload.action.state,
       typeError: payload.action.typeError,
@@ -64,5 +64,15 @@ export class NewRelicProviderService implements ProviderService {
     this.trackingService.pageSubject$
       .pipe(filter(() => this.enabledPageRouting))
       .subscribe((payload) => this.trackPage(payload));
+  }
+
+  private runNewrelic(event: string, payload: object) {
+    try {
+      if ('undefined' !== typeof window.newrelic && window.newrelic) {
+        window.newrelic.addPageAction(event, payload);
+      }
+    } catch (error) {
+      console.error('New Relic not loaded', error);
+    }
   }
 }

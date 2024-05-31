@@ -71,12 +71,12 @@
       alt="excel"
     />
     <cs-message-alert
-      *ngIf="isNewFlow"
+      *ngIf="useAmountLimits"
       mode="info"
       class="tw-mx-auto tw-block md:tw-w-96 tw-my-6"
       >Monto máximo permitido por cobro {{ limitAmountMax | currency :
-      excelService.service.currencySymbol }}</cs-message-alert
-    >
+      excelService.service.currencySymbol }}
+    </cs-message-alert>
     <div class="text-center">
       <button
         class="btn-eureca-green"
@@ -209,8 +209,9 @@
         form="input-form"
         (click)="uploadFile.click()"
       >
-        Seleccionar plantilla</button
-      ><strong> </strong>
+        Seleccionar plantilla
+      </button>
+      <strong> </strong>
     </div>
   </div>
 </div>

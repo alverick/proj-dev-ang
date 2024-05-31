@@ -1,4 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
+import { isNotEmpty } from 'ramda-adjunct';
 
 import {
   type CurrencyWithLimit,
@@ -12,11 +13,13 @@ export const companyFeatureKey = 'company';
 export interface State {
   details: IDataEnterpriseModel;
   currencyLimits: CurrencyWithLimit[];
+  useAmountLimits: boolean;
 }
 
 export const initialState: State = {
   details: null,
   currencyLimits: null,
+  useAmountLimits: false,
 };
 
 export const reducerCompany = createReducer(
@@ -33,7 +36,11 @@ export const reducerCompany = createReducer(
       );
       return { ...currencyElm, limitMax: item.amountMax };
     });
-    return { ...state, currencyLimits: currencyLimits };
+    return {
+      ...state,
+      currencyLimits: currencyLimits,
+      useAmountLimits: isNotEmpty(currencyLimits),
+    };
   }),
   on(CompanyActions.loadCompanyFailure, (state, action): State => state)
 );

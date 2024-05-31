@@ -113,7 +113,7 @@
           <strong>código de identificación</strong> y el monto de la
           <strong>deuda a pagar</strong> de cada uno.
         </li>
-        <li *ngIf="currency" class="tw-mb-3">
+        <li *ngIf="currency?.limitMax" class="tw-mb-3">
           Monto máximo permitido por cobro
           {{ currency.limitMax | currency : currency.symbol }}
         </li>

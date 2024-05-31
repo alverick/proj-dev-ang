@@ -27,7 +27,7 @@ export class ServiceInfoPage {
     public serviceForms: ServicesFormsService,
     protected tracking: TrackingService
   ) {
-    this.activatedRoute.data.subscribe((value: any) => {
+    this.activatedRoute.data.subscribe((value) => {
       this.accounts = value.accounts as CompanyAccounts[];
     });
   }
