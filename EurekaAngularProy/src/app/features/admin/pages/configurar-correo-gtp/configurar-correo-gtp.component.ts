@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import Swal from 'sweetalert2';
 
+import { emailRegex } from '../../../../shared/constants/patterns';
 import { type CorreoGtpModel } from '../../../../shared/models/data-correoGtp';
 import { GtpService } from '../../../../shared/services/gtp.service';
 import { drawPopup } from '../../../../shared/utils/helpers/popups';
@@ -36,9 +37,7 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
     this.frmCorreoGtp = this.formBuilder.group({
       correo: new UntypedFormControl('', [
         Validators.required,
-        Validators.pattern(
-          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        ),
+        Validators.pattern(emailRegex),
         Validators.minLength(10),
         Validators.maxLength(100),
       ]),
