@@ -82,7 +82,7 @@ import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
-import { OnlynumbersDirective } from './directives/onlynumbers.directive';
+import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
@@ -170,7 +170,7 @@ const UI_MODULES = [
   ],
   declarations: [
     OnlyNumbersFormDirective,
-    OnlynumbersDirective,
+    OnlyNumbersDirective,
     SearchDirective,
     NameEnterpiseDirective,
     HeaderComponent,
@@ -194,7 +194,7 @@ const UI_MODULES = [
   ],
   exports: [
     OnlyNumbersFormDirective,
-    OnlynumbersDirective,
+    OnlyNumbersDirective,
     SearchDirective,
     NameEnterpiseDirective,
     ...DIRECTIVES,
