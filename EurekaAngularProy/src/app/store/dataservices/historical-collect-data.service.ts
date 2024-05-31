@@ -6,7 +6,7 @@ import {
   HttpUrlGenerator,
 } from '@ngrx/data';
 import { Store } from '@ngrx/store';
-import { type Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { DashboardDataService } from '../../shared/data';
@@ -23,7 +23,7 @@ export class HistoricalCollectDataService extends DefaultDataService<HistoricalC
     super('CollectAmount', httpClient, httpUrlGenerator);
   }
 
-  getWithQuery(params: QueryParams): Observable<HistoricalCollect[] | any> {
+  getWithQuery(params: QueryParams) {
     return this.dashboardDataService.getHistorical(params).pipe(
       catchError(
         // TODO: Use action factory

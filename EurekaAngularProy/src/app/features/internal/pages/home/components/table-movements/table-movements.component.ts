@@ -11,7 +11,7 @@ import {
 import { Store } from '@ngrx/store';
 import { NGXLogger } from 'ngx-logger';
 import { type LazyLoadEvent } from 'primeng/api';
-import { Table, TableHeaderCheckbox } from 'primeng/table';
+import { Table } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
@@ -94,8 +94,8 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   isNewFlow = false;
   editRowData: any = {};
   dataSet = {};
+  selectedAll = false;
   @ViewChild('table') table: Table;
-  @ViewChild('selectAll') selectAll: TableHeaderCheckbox;
 
   constructor(
     private logger: NGXLogger,
@@ -197,12 +197,16 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       canEdit: isEditable && isEditableRow,
     };
   }
-  onRowSelect() {
+  onRowSelect(evt) {
+    if (has('checked', evt)) {
+      this.selectedAll = evt.checked as boolean;
+    }
     this.selectedRowsChange.emit(this.selectedRows);
+    console.log(this.selectedRows);
   }
 
   updateSelected(rowData: Debts) {
-    if (!this.selectAll.checked) {
+    if (!this.selectedAll) {
       return;
     }
     if (

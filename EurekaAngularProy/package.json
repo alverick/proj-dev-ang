@@ -106,6 +106,7 @@
     "@storybook/addon-links": "^7.5.3",
     "@storybook/addon-mdx-gfm": "^7.5.3",
     "@storybook/angular": "^7.5.3",
+    "@storybook/test": "^8.1.9",
     "@storybook/testing-library": "0.2.2",
     "@types/dompurify": "^3.0.2",
     "@types/dot-object": "^2.1.6",

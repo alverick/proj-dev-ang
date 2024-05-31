@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -12,6 +12,6 @@ export class EnterpriseHeadingService {
   public getEntryOptions(): Observable<IEntryModel[]> {
     return this.http
       .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading`)
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 }

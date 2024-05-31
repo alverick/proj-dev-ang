@@ -1,10 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { Debts, DebtsPagedList } from '../models/debts';
+import { type Debts, type DebtsPagedList } from '../models/debts';
 
 @Injectable()
 export class DebtDataService {
@@ -14,13 +14,13 @@ export class DebtDataService {
     const url = `${environment.END_POINT}/debt/deleteAll`;
     return this.http
       .post<Debts>(url, { ids })
-      .pipe(catchError((error) => throwError(error)));
+      .pipe(catchError((error: HttpErrorResponse) => throwError(() => error)));
   }
 
   getAll(params: any): Observable<DebtsPagedList> {
     const url = `${environment.END_POINT}/debt`;
     return this.http
       .get<DebtsPagedList>(url, { params })
-      .pipe(catchError((error) => throwError(error)));
+      .pipe(catchError((error: HttpErrorResponse) => throwError(() => error)));
   }
 }

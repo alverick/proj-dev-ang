@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { clone, isNil } from 'ramda';
@@ -135,14 +135,14 @@ export class TransactionService {
           return response;
         })
       )
-      .pipe(catchError((error) => throwError(error)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   editDeuda(id: number, debts: DebtEdit): Observable<any> {
     const url = `${this.URI_API}/debt/put/${id}`;
     return this.http
       .post(url, debts)
-      .pipe(catchError((error) => throwError(error)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   report({
@@ -175,7 +175,7 @@ export class TransactionService {
       .post(url, filterRequest, {
         responseType: 'blob',
       })
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   updateDeuda(id: number, paid: boolean): Observable<any> {
@@ -186,7 +186,7 @@ export class TransactionService {
     };
     return this.http
       .post<any>(url, data)
-      .pipe(catchError((error) => throwError(error)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   getPayments(debtId: number): Observable<any[]> {
@@ -202,7 +202,7 @@ export class TransactionService {
           return p;
         })
       )
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   addPayment(debtId: number, payment: any): Observable<any> {
@@ -210,7 +210,7 @@ export class TransactionService {
     payment.debtId = debtId;
     return this.http
       .post<any>(url, payment)
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   editPayment(
@@ -222,12 +222,14 @@ export class TransactionService {
     payment.debtId = debtId;
     return this.http
       .post(url, payment)
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   deletePayment(debtId: number, paymentId: number): Observable<any> {
     const url = `${this.URI_API}/payment/${paymentId}/ofDebt/${debtId}`;
-    return this.http.post(url, null).pipe(catchError((err) => throwError(err)));
+    return this.http
+      .post(url, null)
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   clearMarksForDeletes() {
