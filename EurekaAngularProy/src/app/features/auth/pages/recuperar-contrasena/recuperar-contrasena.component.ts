@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forEachObjIndexed } from 'ramda';
+import { emailRegex } from '../../../../shared/constants/patterns';
 
 import { RecuperaService } from '../../../../shared/services/recupera.service';
 import {
@@ -51,9 +52,7 @@ export class RecuperarContrasenaComponent implements OnInit {
       ]),
       email: new UntypedFormControl('', [
         Validators.required,
-        Validators.pattern(
-          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        ),
+        Validators.pattern(emailRegex),
         Validators.minLength(10),
         Validators.maxLength(100),
       ]),

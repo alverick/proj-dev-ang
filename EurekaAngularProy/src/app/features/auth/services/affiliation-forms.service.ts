@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
+import { emailRegex } from '../../../shared/constants/patterns';
 import { type IEntryModel } from '../../../shared/models';
 import {
   type ModelFormGroup,
@@ -52,9 +53,7 @@ export class AffiliationFormsService {
     // console.log('constructor', this.authForm, formBuilder);
     const emailValidators = [
       Validators.required,
-      Validators.pattern(
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      ),
+      Validators.pattern(emailRegex),
       Validators.minLength(10),
       Validators.maxLength(100),
     ];
