@@ -1,36 +1,32 @@
-import { CommonModule } from '@angular/common';
-import { type Meta, type Story, moduleMetadata } from '@storybook/angular';
-import { userEvent, within } from '@storybook/testing-library';
+import { type Meta, type StoryObj } from '@storybook/angular';
+import { expect, userEvent, within } from '@storybook/test';
 
-import Button from './button.component';
-import Header from './header.component';
-import Page from './page.component';
+import PageComponent from './page.component';
 
-export default {
+const meta: Meta<PageComponent> = {
   title: 'Example/Page',
-  component: Page,
+  component: PageComponent,
   parameters: {
-    // More on Story layout: https://storybook.js.org/docs/angular/configure/story-layout
+    // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
   },
-  decorators: [
-    moduleMetadata({
-      declarations: [Button, Header],
-      imports: [CommonModule],
-    }),
-  ],
-} as Meta;
+};
 
-const Template: Story<Page> = (args: Page) => ({
-  props: args,
-});
+export default meta;
+type Story = StoryObj<PageComponent>;
 
-export const LoggedOut = Template.bind({});
+export const LoggedOut: Story = {};
 
-// More on interaction testing: https://storybook.js.org/docs/angular/writing-tests/interaction-testing
-export const LoggedIn = Template.bind({});
-LoggedIn.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-  const loginButton = canvas.getByRole('button', { name: /Log in/i });
-  await userEvent.click(loginButton);
+// More on interaction testing: https://storybook.js.org/docs/writing-tests/interaction-testing
+export const LoggedIn: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const loginButton = canvas.getByRole('button', { name: /Log in/i });
+    await expect(loginButton).toBeInTheDocument();
+    await userEvent.click(loginButton);
+    await expect(loginButton).not.toBeInTheDocument();
+
+    const logoutButton = canvas.getByRole('button', { name: /Log out/i });
+    await expect(logoutButton).toBeInTheDocument();
+  },
 };

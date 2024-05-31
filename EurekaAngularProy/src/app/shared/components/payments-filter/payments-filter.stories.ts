@@ -13,7 +13,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, type Story, moduleMetadata } from '@storybook/angular';
+import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
 
 import { type DateList } from '../../models/dateList';
 import { type WayPay } from '../../models/way-pay';
@@ -24,7 +24,7 @@ function initAppComponentFactory(
   matIconRegistry: MatIconRegistry,
   domSanitizer: DomSanitizer
 ) {
-  return async () => {
+  return () => {
     matIconRegistry.addSvgIcon(
       'eurc_calendar',
       domSanitizer.bypassSecurityTrustResourceUrl(
@@ -35,7 +35,7 @@ function initAppComponentFactory(
   };
 }
 
-export default {
+const meta: Meta<PaymentsFilterComponent> = {
   title: 'Shared/Molecules/Payments Filter',
   component: PaymentsFilterComponent,
   decorators: [
@@ -65,8 +65,9 @@ export default {
       ],
     }),
   ],
-  argTypes: { sendForm: { action: 'clicked' } },
-} as Meta;
+};
+
+export default meta;
 
 const listStates: WayPay[] = [
   { idWayPay: 'da', descripcion: 'Domiciliaciones' },
@@ -271,25 +272,22 @@ const initial = {
   ...initialOrig,
   payment: initialOrig.payment.code,
 };
-console.log('initial', initial);
 
-const Template: Story<PaymentsFilterComponent> = (
-  args: PaymentsFilterComponent
-) => ({
-  props: args,
-});
+type Story = StoryObj<PaymentsFilterComponent>;
 
-export const Normal = Template.bind({});
-Normal.args = {
-  stateList: listStates,
-  dateList: listDates,
-  gtpMode: false,
-  services,
-  initial,
+export const Normal: Story = {
+  args: {
+    stateList: listStates,
+    dateList: listDates,
+    gtpMode: false,
+    services,
+    initial,
+  },
 };
 
-export const Gtp = Template.bind({});
-Gtp.args = {
-  stateList: listStates,
-  gtpMode: true,
+export const Gtp: Story = {
+  args: {
+    stateList: listStates,
+    gtpMode: true,
+  },
 };
