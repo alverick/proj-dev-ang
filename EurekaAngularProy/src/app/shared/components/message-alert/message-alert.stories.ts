@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
+  type Meta,
+  type StoryObj,
   applicationConfig,
   argsToTemplate,
-  Meta,
   moduleMetadata,
-  StoryObj,
 } from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';

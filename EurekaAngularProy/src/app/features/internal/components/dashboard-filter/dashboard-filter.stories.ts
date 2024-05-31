@@ -187,7 +187,7 @@ const optionsDates = [
   { name: 'Vencimiento', code: 'due' },
 ];
 
-const dateTo = new Date();
+const dateTo = new Date().toDateString();
 const dateFrom = new Date();
 dateFrom.setMonth(dateFrom.getMonth() - 1);
 
@@ -199,8 +199,8 @@ export const Normal: Story = {
     optionsDates,
     initialValue: {
       services,
-      payment: optionsDates[0],
-      dateFrom,
+      payment: optionsDates[0].code,
+      dateFrom: dateFrom.toDateString(),
       dateTo,
     },
   },
