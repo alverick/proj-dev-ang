@@ -80,6 +80,19 @@
               </table>
               <perfect-scrollbar class="content-container">
                 <table>
+                  <thead class="tw-hidden">
+                    <tr>
+                      <th class="c0" scope="col"></th>
+                      <th
+                        class="{{ items.class }}"
+                        *ngFor="let items of herderTable; let i = index"
+                        scope="col"
+                      >
+                        {{ items.name }}
+                      </th>
+                      <th class="c7" scope="col"></th>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr
                       *ngFor="
