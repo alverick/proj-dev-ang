@@ -12,9 +12,6 @@
   }
 
   &:nth-child(even) {
-    @include media('>md') {
-      //margin-left: 10px;
-    }
     @include media('>lg') {
       margin-left: 0;
     }

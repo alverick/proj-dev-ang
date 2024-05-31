@@ -103,7 +103,6 @@
     text-overflow: ellipsis;
 
     .text {
-      //  padding-top: 10px;
       @include font-text(14px, 500);
 
       color: var(--ibk-black) !important;
@@ -129,6 +128,9 @@
   display: block;
   margin-top: -25px;
   margin-bottom: 1px;
+  position: absolute;
+  right: calc(50% - 430px);
+  top: 30px;
 }
 
 .img-excel {
@@ -173,19 +175,12 @@ small {
   overflow: hidden;
 }
 
-.mat-dialog-actions {
-  position: absolute;
-  right: calc(50% - 430px);
-  top: 30px;
-}
-
 :host ::ng-deep .mat-dialog-container {
   object-fit: contain;
   border-radius: 4px !important;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1) !important;
   background-color: var(--ibk-white) !important;
   padding: 0px !important;
-  // color: rgba(255, 255, 255, 0.87);
 }
 
 .resaltado {
