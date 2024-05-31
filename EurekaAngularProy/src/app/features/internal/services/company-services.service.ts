@@ -210,7 +210,7 @@ export class CompanyServicesService {
         showConfirmButton: true,
         confirmButtonText: 'Entendido',
       });
-      return throwError('No services');
+      return throwError(() => 'No services');
     }
     return this.saveServices();
   }

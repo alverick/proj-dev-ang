@@ -132,26 +132,26 @@
           >Elija una opcion</mat-error
         >
         <mat-error
-          class="messsage-error"
           *ngIf="
             f.nameCod.invalid &&
             f.nameCod.hasError('required') &&
             submittedRequired
           "
+          class="messsage-error"
           >Escriba una opcion</mat-error
         >
         <mat-error
-          class="messsage-error"
           *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')"
+          class="messsage-error"
           >Ingrese un codigo correcto</mat-error
         >
         <mat-error
-          class="messsage-error"
           *ngIf="
             f.nameCod.invalid &&
             !f.nameCod.hasError('pattern') &&
             f.nameCod.hasError('minlength')
           "
+          class="messsage-error"
           >El codigo no puede tener menos de 3 caracteres</mat-error
         >
       </mat-error>

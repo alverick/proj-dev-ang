@@ -34,8 +34,9 @@ export class CambiaContrasenaComponent implements OnInit {
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
   errorMessages = errorRegisterAuth;
   public Cambia: ModelFormGroup<FormChangePassword>;
+
   constructor(
-    public formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private rutaActiva: ActivatedRoute,
     private router: Router,
     private recuperaService: RecuperaService,
@@ -49,11 +50,10 @@ export class CambiaContrasenaComponent implements OnInit {
         repcontrasena: ['', passwordValidators],
       },
       {
-        validator: MustMatch('contrasena', 'repcontrasena'),
+        validators: MustMatch('contrasena', 'repcontrasena'),
       }
     );
     this.llave = this.rutaActiva?.snapshot?.params.llave as string;
-
     this.Verificar(this.llave);
   }
 

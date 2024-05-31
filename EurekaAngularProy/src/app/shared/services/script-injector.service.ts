@@ -14,12 +14,12 @@ export class ScriptInjectorService {
     scriptElement.id = id;
     scriptElement.src = src;
     scriptElement.async = false;
-    const promise = new Promise<void>((resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       scriptElement.addEventListener('load', () => {
         setTimeout(resolve, 10);
       });
-      scriptElement.addEventListener('error', (err) => {
-        reject(err);
+      scriptElement.addEventListener('error', () => {
+        reject(new Error('failed to load script'));
       });
     });
 

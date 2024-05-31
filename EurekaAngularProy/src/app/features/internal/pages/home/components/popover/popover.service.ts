@@ -1,13 +1,14 @@
-import { Injectable, Injector } from '@angular/core';
 import {
+  type ConnectionPositionPair,
+  type PositionStrategy,
   Overlay,
-  ConnectionPositionPair,
-  PositionStrategy,
   OverlayConfig,
 } from '@angular/cdk/overlay';
-import { PortalInjector, ComponentPortal } from '@angular/cdk/portal';
-import { PopoverRef, PopoverContent } from './popover-ref';
+import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
+import { Injectable, Injector } from '@angular/core';
+
 import { PopoverComponent } from './popover.component';
+import { type PopoverContent, PopoverRef } from './popover-ref';
 
 export interface PopoverParams<T> {
   width?: string | number;

@@ -19,7 +19,6 @@ import { emailRegex } from '../../../../shared/constants/patterns';
 import { type IEntryModel } from '../../../../shared/models';
 import { ICompanyData } from '../../../../shared/models/company-data';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
-import { GtpService } from '../../../../shared/services/gtp.service';
 
 @Component({
   selector: 'cs-empresa-gtp',
@@ -50,8 +49,7 @@ export class EmpresaGTPComponent implements OnInit {
 
   constructor(
     public afiliacionService: AfiliacionService,
-    private formBuilder: UntypedFormBuilder,
-    public gtpService: GtpService
+    private formBuilder: UntypedFormBuilder
   ) {}
 
   ngOnInit() {

@@ -15,9 +15,8 @@ import { type ControlValueAccessor, NgControl } from '@angular/forms';
   templateUrl: './label-control.component.html',
 })
 export class LabelControlComponent
-  implements AfterViewInit, AfterContentInit, ControlValueAccessor
-{
-  static labelCounter = 0;
+  implements AfterViewInit, AfterContentInit, ControlValueAccessor {
+  private static labelCounter = 0;
   useDefaultContent = false;
   useGap = false;
 

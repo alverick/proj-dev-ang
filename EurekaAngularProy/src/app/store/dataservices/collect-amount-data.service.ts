@@ -6,7 +6,7 @@ import {
   HttpUrlGenerator,
 } from '@ngrx/data';
 import { Store } from '@ngrx/store';
-import { type Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { DashboardDataService } from '../../shared/data';
@@ -15,15 +15,15 @@ import { type CollectAmount } from '../entities';
 @Injectable()
 export class CollectAmountDataService extends DefaultDataService<CollectAmount> {
   constructor(
-    private httpClient: HttpClient,
+    private _httpClient: HttpClient,
     private store: Store<any>,
     httpUrlGenerator: HttpUrlGenerator,
     private dashboardDataService: DashboardDataService
   ) {
-    super('CollectAmount', httpClient, httpUrlGenerator);
+    super('CollectAmount', _httpClient, httpUrlGenerator);
   }
 
-  getWithQuery(params: QueryParams): Observable<CollectAmount[] | any> {
+  getWithQuery(params: QueryParams) {
     return this.dashboardDataService.getAmounts(params).pipe(
       map((result) => {
         const parsedObject = { ...result[0], id: 1 };

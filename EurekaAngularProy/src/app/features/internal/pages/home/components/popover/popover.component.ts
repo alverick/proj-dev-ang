@@ -1,5 +1,6 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { PopoverContent, PopoverRef } from './popover-ref';
+import { type OnInit, Component, TemplateRef } from '@angular/core';
+
+import { type PopoverContent, PopoverRef } from './popover-ref';
 
 @Component({
   templateUrl: './popover.component.html',
