@@ -6,7 +6,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { AuthGuard } from '../../shared/guards/auth.guard';
-import { CloseViewGuard } from '../../shared/guards/close-view.guard';
 import { LogoutGuard } from '../../shared/guards/logout.guard';
 import { StorageService } from '../../shared/services/storage.service';
 import { SharedModule } from '../../shared/shared.module';
@@ -37,7 +36,6 @@ import { SERVICES } from './services';
     AuthGuard,
     CookieService,
     LogoutGuard,
-    CloseViewGuard,
   ],
   declarations: [
     AuthComponent,

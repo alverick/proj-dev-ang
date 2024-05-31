@@ -80,7 +80,6 @@ import { SidebarServiceComponent } from './components/sidebar-service/sidebar-se
 import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
 import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
-import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { OnlynumbersDirective } from './directives/onlynumbers.directive';
@@ -173,7 +172,6 @@ const UI_MODULES = [
     OnlyNumbersFormDirective,
     OnlynumbersDirective,
     SearchDirective,
-    CorreoDirective,
     NameEnterpiseDirective,
     HeaderComponent,
     PaymentsFilterComponent,
@@ -198,7 +196,6 @@ const UI_MODULES = [
     OnlyNumbersFormDirective,
     OnlynumbersDirective,
     SearchDirective,
-    CorreoDirective,
     NameEnterpiseDirective,
     ...DIRECTIVES,
     FooterComponent,
