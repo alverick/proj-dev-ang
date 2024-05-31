@@ -139,23 +139,21 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
           this.correos[this.indiceActual].correo =
             this.frmCorreoGtp.value.correo;
         }
+      } else if (
+        this.correos.find(
+          (s, i) =>
+            s.correo.toUpperCase() ===
+              this.frmCorreoGtp.value.correo.toUpperCase() &&
+            i !== this.indiceActual
+        )
+      ) {
+        Swal.fire({
+          text: 'Ya existe un E-mail con este nombre',
+          onOpen: drawPopup,
+        });
+        return;
       } else {
-        if (
-          this.correos.find(
-            (s, i) =>
-              s.correo.toUpperCase() ===
-                this.frmCorreoGtp.value.correo.toUpperCase() &&
-              i !== this.indiceActual
-          )
-        ) {
-          Swal.fire({
-            text: 'Ya existe un E-mail con este nombre',
-            onOpen: drawPopup,
-          });
-          return;
-        } else {
-          this.correos.push({ correo: this.frmCorreoGtp.value.correo });
-        }
+        this.correos.push({ correo: this.frmCorreoGtp.value.correo });
       }
       this.indiceActual = -1;
       this.Formulario = false;
