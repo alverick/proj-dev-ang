@@ -75,7 +75,6 @@ export class LoginPage implements OnInit {
     ],
   };
   linkRecoverPassword = authFullRoutingNames.RECOVER_PASSWORD;
-  linkRegisterCompany = authFullRoutingNames.COMPANY_REGISTER;
   disabledAffiliation$ = this.store.select(
     appConfigFeature.selectDisabledAffiliation
   );

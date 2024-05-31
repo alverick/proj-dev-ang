@@ -56,23 +56,23 @@
                       class="{{ items.class }}"
                       *ngFor="let items of herderTable; let i = index"
                     >
-                      <div
-                        class="text"
+                      <button
+                        class="text tw-flex tw-items-center"
                         style="cursor: pointer"
                         (click)="orderList(items)"
                       >
                         {{ items.name }}
-                      </div>
-                      <div class="ord" style="margin-bottom: 0.1em">
-                        <div
-                          *ngIf="items.asc == true && items.orderBy == i"
-                          class="up"
-                        ></div>
-                        <div
-                          *ngIf="items.asc == false && items.orderBy == i"
-                          class="down"
-                        ></div>
-                      </div>
+                        <div class="ord">
+                          <div
+                            *ngIf="items.asc == true && items.orderBy == i"
+                            class="up"
+                          ></div>
+                          <div
+                            *ngIf="items.asc == false && items.orderBy == i"
+                            class="down"
+                          ></div>
+                        </div>
+                      </button>
                     </th>
                     <th class="c7"></th>
                   </tr>
@@ -164,8 +164,7 @@
                         <button
                           *ngIf="items.status === 'PendientePAG'"
                           type="button"
-                          style="margin: 0em 0.5em"
-                          class="f3 btn-eureca-yellow"
+                          class="f3 btn-eureca-yellow tw-mt-1 tw-mx-2"
                           (click)="onUpdateEAG(items.clientId)"
                         >
                           <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -173,8 +172,7 @@
 
                         <button
                           type="button"
-                          style="margin: 0em 0.5em"
-                          class="f3 btn-outline-green"
+                          class="f3 btn-outline-green tw-mt-1 tw-mx-2"
                           title="Ver Cargas de Datos"
                           [routerLink]="[linkHistory, items.clientId]"
                         >
@@ -201,7 +199,7 @@
                   [maxSize]="5"
                   (pageChange)="changePage($event)"
                 >
-                  <ul class="ngx-pagination" role="navigation">
+                  <ul class="ngx-pagination">
                     <li
                       class="pagination-previous"
                       [class.disabled]="p.isFirstPage()"
