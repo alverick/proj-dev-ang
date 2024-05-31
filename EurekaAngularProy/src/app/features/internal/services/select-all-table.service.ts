@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Table, TableHeaderCheckbox } from 'primeng/table';
 
-import { Debts } from '../../../shared/models/debts';
+import { type Debts } from '../../../shared/models/debts';
 
 @Injectable()
 export class SelectAllTableService {
@@ -33,11 +33,12 @@ export class SelectAllTableService {
       }
     };
     Table.prototype.toggleRowsWithCheckbox = function (event, check) {
-      this._selection = check
-        ? this.filteredValue
-          ? this.filteredValue.slice()
-          : this.value.slice()
-        : [];
+      if (check) {
+        this._selection = this.filteredValue?.slice() ?? this.value.slice();
+      } else {
+        this._selection = [];
+      }
+
       this._selection = check
         ? this._selection.filter(
             (rowData) =>
