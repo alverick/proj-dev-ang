@@ -1,12 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DefaultDataService, HttpUrlGenerator, QueryParams } from '@ngrx/data';
+import {
+  type QueryParams,
+  DefaultDataService,
+  HttpUrlGenerator,
+} from '@ngrx/data';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { type Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { DashboardDataService } from '../../shared/data';
-import { CollectAmount } from '../entities';
+import { type CollectAmount } from '../entities';
 
 @Injectable()
 export class CollectAmountDataService extends DefaultDataService<CollectAmount> {

@@ -17,7 +17,7 @@ import { statusCodes } from '../../../../shared/constants/services';
 import { type MonedaModel } from '../../../../shared/models';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
-import { GtpService } from '../../../../shared/services/gtp.service';
+import { type CompanyAccounts } from '../../../../shared/services/company.service';
 
 @Component({
   selector: 'cs-services-gtp',
@@ -48,29 +48,22 @@ export class ServicesGTPComponent implements OnInit {
   useAgencyChannel = false;
 
   @Input() public idCompany: number;
+
   @Input() set service(value: DataServiceGTP) {
     this._service = value;
   }
 
-  /*
-    @Input() set service(value: ServiceModel) {
-         this._service = value;
-         this.simboloMoneda = value.simboloMoneda;
-         this._service.simboloMoneda = this.simboloMoneda;
-     }
-   */
-
   @Output() grabar = new EventEmitter<any>();
   submittedRequired = false;
+  frm: UntypedFormGroup;
+
   constructor(
     private fb: UntypedFormBuilder,
-    private afiliacionService: AfiliacionService,
-    public gtpService: GtpService
+    private afiliacionService: AfiliacionService
   ) {
     afiliacionService.GetTipoCambio().subscribe((t) => (this._tc = t));
   }
 
-  frm: UntypedFormGroup;
   ngOnInit() {
     if (isNil(this._service.res)) {
       this._service.res = '';
@@ -234,32 +227,6 @@ export class ServicesGTPComponent implements OnInit {
     return this.frm.controls;
   }
 
-  RadioAprovveName2() {
-    if (this._service.name === this._service.newName) {
-      return false;
-    }
-    if (
-      this._service.name === '?' &&
-      this._service.newName.substring(0, 3) === '???'
-    ) {
-      return false;
-    }
-    if (this._service.name === '?') {
-      return true;
-    }
-
-    if (this._service.name !== this._service.newName) {
-      return true;
-    }
-    if (
-      this._service.inReview &&
-      this._service.name === '?' &&
-      this._service.newName.substring(0, 3) !== '???'
-    ) {
-      return true;
-    }
-  }
-
   RadioAprovveName() {
     if (this._service.newNameGTPStatus === 1) {
       return false;
@@ -275,31 +242,6 @@ export class ServicesGTPComponent implements OnInit {
     }
   }
 
-  RadioAprovveNameCod2() {
-    if (this._service.debtorCode === this._service.newNameCode) {
-      return false;
-    }
-    if (
-      this._service.debtorCode === '?' &&
-      this._service.newNameCode.substring(0, 3) === '???'
-    ) {
-      return false;
-    }
-    if (this._service.debtorCode === '?') {
-      return true;
-    }
-    if (this._service.debtorCode !== this._service.newNameCode) {
-      return true;
-    }
-    if (
-      this._service.inReview &&
-      this._service.debtorCode === '?' &&
-      this._service.newNameCode.substring(0, 3) !== '???'
-    ) {
-      return true;
-    }
-  }
-
   RadioAprovveNameCod() {
     if (this._service.newNameCodeGTPStatus === 1) {
       return false;
@@ -311,41 +253,6 @@ export class ServicesGTPComponent implements OnInit {
       return true;
     }
     if (this._service.newNameCodeGTPStatus === 2) {
-      return true;
-    }
-  }
-  Button2() {
-    if (
-      this._service.name === this._service.newName &&
-      this._service.debtorCode === this._service.newNameCode
-    ) {
-      return false;
-    }
-    if (
-      (this._service.name === '?' &&
-        this._service.newName.substring(0, 3) === '???') ||
-      (this._service.debtorCode === '?' &&
-        this._service.newNameCode.substring(0, 3) === '???')
-    ) {
-      return false;
-    }
-    if (this._service.name === '?' || this._service.debtorCode === '?') {
-      return true;
-    }
-    if (
-      this._service.name !== this._service.newName ||
-      this._service.debtorCode !== this._service.newNameCode
-    ) {
-      return true;
-    }
-    if (
-      (this._service.inReview &&
-        this._service.name === '?' &&
-        this._service.newName.substring(0, 3) !== '???') ||
-      (this._service.inReview &&
-        this._service.debtorCode === '?' &&
-        this._service.newNameCode.substring(0, 3) !== '???')
-    ) {
       return true;
     }
   }
@@ -419,76 +326,17 @@ export class ServicesGTPComponent implements OnInit {
           this._service.name !== '' &&
           this._service.newName !== '')
           ? true
-          : this.frm.value.NewName === 'S'
-          ? true
-          : false;
-      // eslint-disable-next-line max-len
-      //  value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
-      // eslint-disable-next-line max-len
+          : this.frm.value.NewName === 'S';
       value.acceptednewNameCode =
         this._service.newNameCodeGTPStatus === 1 ||
         (this._service.newNameCodeGTPStatus === 3 &&
           this._service.debtorCode !== '' &&
           this._service.newNameCode !== '')
           ? true
-          : this.frm.value.NewNameCod === 'S'
-          ? true
-          : false;
+          : this.frm.value.NewNameCod === 'S';
 
       this.grabar.emit(value);
       this.update = false;
-    }
-  }
-
-  /*
-      newName         name
-    minimarket         ''       NUEVO     0  -
-      ''            minimarket  APROBADO  1
-      sm            minimarket  EDITADO   2  -
-      sm            minimarket  RECHAZADO 3
-      ''               sm       APROBADO  1
-  */
-  onSubmitServicio2() {
-    // NOMBRE DE SERVICIO
-    if (this._service.newNameGTPStatus === 1) {
-      this.f.NewName.clearValidators();
-      this.f.NewName.reset();
-    }
-    if (this._service.newNameGTPStatus === 3) {
-      this.f.NewName.clearValidators();
-      this.f.NewName.reset();
-    }
-    // CODIGO DEUDOR
-    if (this._service.newNameCodeGTPStatus === 1) {
-      this.f.NewNameCod.clearValidators();
-      this.f.NewNameCod.reset();
-    }
-    if (this._service.newNameCodeGTPStatus === 3) {
-      this.f.NewNameCod.clearValidators();
-      this.f.NewNameCod.reset();
-    }
-
-    if (this.frm.valid) {
-      let value: DataServiceGTP;
-      value = this._service;
-
-      // value.acceptednewName = (this.frm.value.NewName === 'S');
-      // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
-      // eslint-disable-next-line max-len
-      value.acceptednewName =
-        this._service.name !== this._service.newName
-          ? this.frm.value.NewName === 'S'
-            ? true
-            : false
-          : true;
-      // eslint-disable-next-line max-len
-      value.acceptednewNameCode =
-        this._service.debtorCode !== this._service.newNameCode
-          ? this.frm.value.NewNameCod === 'S'
-            ? true
-            : false
-          : true;
-      this.grabar.emit(value);
     }
   }
 
@@ -553,6 +401,7 @@ export class ServicesGTPComponent implements OnInit {
       this.cmoraporce = false;
     }
   }
+
   Codigo(event) {
     if (event === 'Otro') {
       this.f.nameCod.setValidators([
@@ -634,29 +483,16 @@ export class ServicesGTPComponent implements OnInit {
 
   MoraMontoBlur(e) {
     const initalValue = parseFloat(this.f.monto.value);
-    if (!isNaN(initalValue)) this.f.monto.setValue(initalValue.toFixed(2));
+    if (!isNaN(initalValue)) {
+      this.f.monto.setValue(initalValue.toFixed(2));
+    }
   }
-  MoraPorcenBlur(e) {
+
+  MoraPorcenBlur() {
     const initalValue = parseFloat(this.f.porcentaje.value);
-    if (!isNaN(initalValue)) this.f.porcentaje.setValue(initalValue.toFixed(2));
-  }
-  nameCodBlur(e) {
-    const initalValue = this.f.nameCod.value;
-    this.f.nameCod.setValue(initalValue.trim());
-  }
-  nameSerInput(e) {
-    let initalValue = this.f.nombre.value;
-    /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
-     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
-    initalValue = initalValue.replace(/\s{2,}/g, ' ');
-    this.f.nombre.setValue(
-      initalValue.replace(/[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]*/g, '')
-    );
-  }
-  // ^[0-9a-zA-ZÑñ]{3,30}$
-  nameSerBlur(e) {
-    const initalValue = this.f.nombre.value;
-    this.f.nombre.setValue(initalValue.trim());
+    if (!isNaN(initalValue)) {
+      this.f.porcentaje.setValue(initalValue.toFixed(2));
+    }
   }
 
   showAgencyChannel(show: boolean) {
