@@ -1,26 +1,42 @@
 export interface Currency {
   symbol: string;
-  code: string;
+  code: CurrencyCodeType;
   iso: string;
-  label: string;
+  label: CurrencyLabelType;
   locale: string;
 }
 
 export type CurrencyWithLimit = Currency & { limitMax: number };
 
+export const CurrenciesLabels = {
+  soles: 'Soles',
+  dollars: 'Dólares',
+} as const;
+
+export const CurrenciesCodes = {
+  soles: '001',
+  dollars: '002',
+} as const;
+
+export type CurrencyLabelType =
+  (typeof CurrenciesLabels)[keyof typeof CurrenciesLabels];
+
+export type CurrencyCodeType =
+  (typeof CurrenciesCodes)[keyof typeof CurrenciesCodes];
+
 export const currencies: Currency[] = [
   {
-    label: 'Soles',
+    label: CurrenciesLabels.soles,
     symbol: 'S/',
     iso: 'PEN',
     locale: 'es-PE',
-    code: '001',
+    code: CurrenciesCodes.soles,
   },
   {
-    label: 'Dólares',
+    label: CurrenciesLabels.dollars,
     symbol: '$',
     iso: 'USD',
     locale: 'en-US',
-    code: '002',
+    code: CurrenciesCodes.dollars,
   },
 ];

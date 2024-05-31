@@ -2,6 +2,7 @@ import { type OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ServicesFormsService } from '../../../../shared/services';
+import { type CompanyAccounts } from '../../../../shared/services/company.service';
 import {
   AdobeEvent,
   TrackingService,
@@ -16,7 +17,7 @@ import { AffiliationService } from '../../services';
   styleUrls: ['./service-info.page.scss'],
 })
 export class ServiceInfoPage implements OnInit {
-  accounts;
+  accounts: CompanyAccounts[];
   errors = errorServiceInformation;
   constructor(
     private router: Router,

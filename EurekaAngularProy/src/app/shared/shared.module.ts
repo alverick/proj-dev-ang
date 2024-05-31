@@ -40,6 +40,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
 import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
@@ -115,6 +116,7 @@ const PRIMENG_MODULES = [
   CarouselModule,
   ChartModule,
   CheckboxModule,
+  ChipModule,
   DialogModule,
   DropdownModule,
   DynamicDialogModule,

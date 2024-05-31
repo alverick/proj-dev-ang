@@ -10,7 +10,8 @@ import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { IErrorMessages, ModelFormGroup } from '../../models/forms';
+import { CurrenciesCodes, CurrenciesLabels } from '../../constants/currencies';
+import { type ModelFormGroup, IErrorMessages } from '../../models/forms';
 import { type CompanyAccounts } from '../../services/company.service';
 import { type ServiceFormValue } from '../../services/services-forms.service';
 
@@ -21,6 +22,7 @@ import { type ServiceFormValue } from '../../services/services-forms.service';
 })
 export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   $destroy = new Subject();
+  disclaimerCommissionDollars = false;
   @Output() sendForm = new EventEmitter<object>();
   @Output() cancel = new EventEmitter();
   @Input() form: ModelFormGroup<ServiceFormValue>;
@@ -41,9 +43,13 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
             (account) => account.id === accountID
           );
           const accountNumber = `${selectedAccount.number.substring(0, 13)} (${
-            selectedAccount.currency === '001' ? 'Soles' : 'Dólares'
+            selectedAccount.currency === CurrenciesCodes.soles
+              ? CurrenciesLabels.soles
+              : CurrenciesLabels.dollars
           })`;
 
+          this.disclaimerCommissionDollars =
+            selectedAccount.currency !== CurrenciesCodes.soles;
           this.form.get('accountNumber').setValue(accountNumber);
           this.form.get('currency').setValue(selectedAccount.currency);
           this.form.get('idAccount').setValue(accountID);

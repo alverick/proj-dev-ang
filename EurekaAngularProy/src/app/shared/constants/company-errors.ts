@@ -1,4 +1,4 @@
-import { IErrorMessages } from '../models/forms';
+import { type IErrorMessages } from '../models/forms';
 
 export const errorsRegisterForm: IErrorMessages = {
   documentType: {
