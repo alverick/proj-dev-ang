@@ -20,11 +20,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { EmailDirective } from './features/internal/directives/email.directive';
 import { DialogComponent } from './features/internal/pages/home/components/dialog';
 import { PopoverComponent } from './features/internal/pages/home/components/popover/popover.component';
-import { UploadProgressComponent } from './features/internal/pages/home/components/upload-progress';
-import { ValidationComponent } from './features/internal/pages/home/components/validation';
 import { MockService } from './mock.service';
 import { LoadBarComponent } from './shared/components/load-bar/load-bar.component';
 import { LoadFileComponent } from './shared/components/load-file/load-file.component';
@@ -51,10 +48,7 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
   declarations: [
     AppComponent,
     BlockCopyPasteDirective,
-    EmailDirective,
     DialogComponent,
-    UploadProgressComponent,
-    ValidationComponent,
     PopoverComponent,
     LoadFileComponent,
     LoadBarComponent,
