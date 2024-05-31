@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { type CanActivate, type UrlTree, Router } from '@angular/router';
+import { type UrlTree, Router } from '@angular/router';
 import { type Observable } from 'rxjs';
 
 import { appFullRoutingNames } from '../../app-routing.names';
@@ -8,7 +8,7 @@ import { StorageService } from '../services/storage.service';
 @Injectable({
   providedIn: 'root',
 })
-export class GtpOutputGuard implements CanActivate {
+export class GtpOutputGuard {
   constructor(private router: Router, private storageService: StorageService) {}
 
   canActivate():
@@ -17,7 +17,7 @@ export class GtpOutputGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (parseInt(sessionStorage.getItem('prfl'), 10) !== 0) {
-      this.router.navigate([appFullRoutingNames.ADMIN]);
+      void this.router.navigate([appFullRoutingNames.ADMIN]);
     }
     return true;
   }
