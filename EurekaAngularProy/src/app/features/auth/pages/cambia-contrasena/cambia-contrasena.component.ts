@@ -25,7 +25,6 @@ import { authFullRoutingNames } from '../../auth-routing.names';
 @Component({
   selector: 'cs-cambia-contrasena',
   templateUrl: './cambia-contrasena.component.html',
-  styleUrls: ['./cambia-contrasena.component.scss'],
 })
 export class CambiaContrasenaComponent implements OnInit {
   public llave: string;

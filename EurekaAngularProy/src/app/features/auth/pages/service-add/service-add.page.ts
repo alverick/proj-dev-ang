@@ -9,7 +9,6 @@ import { AffiliationService } from '../../services';
 @Component({
   selector: 'cs-service-add',
   templateUrl: './service-add.page.html',
-  styleUrls: ['./service-add.page.scss'],
 })
 export class ServiceAddPage implements OnDestroy {
   destroy$ = new Subject();

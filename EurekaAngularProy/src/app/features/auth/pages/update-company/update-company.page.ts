@@ -9,7 +9,6 @@ import { AffiliationService } from '../../services';
 @Component({
   selector: 'cs-update-company',
   templateUrl: './update-company.page.html',
-  styleUrls: ['./update-company.page.scss'],
 })
 export class UpdateCompanyPage implements OnInit {
   entryOptions: IEntryModel[] = [];

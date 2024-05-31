@@ -12,11 +12,11 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { IErrorMessages } from '../../models/forms';
+import { type CompanyAccounts } from '../../services/company.service';
 
 @Component({
   selector: 'cs-service-step-info',
   templateUrl: './service-step-info.component.html',
-  styleUrls: ['./service-step-info.component.scss'],
 })
 export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   $destroy = new Subject();
@@ -24,7 +24,7 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   @Output() cancel = new EventEmitter();
   @Input() form: UntypedFormGroup;
   @Input() errorMessages: IErrorMessages;
-  @Input() accounts: any[];
+  @Input() accounts: CompanyAccounts[];
   @Input() showCancel = false;
 
   ngOnInit() {

@@ -31,7 +31,6 @@ import { CompanyServicesService } from '../../services';
 @Component({
   selector: 'cs-internal-services-main',
   templateUrl: './services-main.page.html',
-  styleUrls: ['./services-main.page.scss'],
 })
 export class ServicesMainPage implements OnInit, OnDestroy {
   destroy$ = new Subject();

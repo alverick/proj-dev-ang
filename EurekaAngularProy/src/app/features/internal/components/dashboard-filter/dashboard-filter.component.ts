@@ -60,7 +60,6 @@ interface FilterForm {
 @Component({
   selector: 'cs-dashboard-filter',
   templateUrl: './dashboard-filter.component.html',
-  styleUrls: ['./dashboard-filter.component.scss'],
 })
 export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
   /**

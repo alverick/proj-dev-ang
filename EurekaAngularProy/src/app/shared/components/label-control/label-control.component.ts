@@ -13,7 +13,6 @@ import { type ControlValueAccessor, NgControl } from '@angular/forms';
 @Component({
   selector: 'cs-label-control',
   templateUrl: './label-control.component.html',
-  styleUrls: ['./label-control.component.scss'],
 })
 export class LabelControlComponent
   implements AfterViewInit, AfterContentInit, ControlValueAccessor

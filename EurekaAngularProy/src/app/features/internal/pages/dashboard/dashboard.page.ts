@@ -44,7 +44,6 @@ interface EmailForm {
 @Component({
   selector: 'cs-dashboard',
   templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
   optionsDates = [
