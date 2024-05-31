@@ -33,21 +33,6 @@ export class TransactionService {
   };
   public itemsForDelete: number[] = [];
 
-  getDateFormat(date: Date): string {
-    if (date) {
-      const day = date.getDate();
-      const month = date.getMonth() + 1;
-      const year = date.getFullYear();
-      let str = day > 9 ? day.toString() : '0' + day.toString();
-      str += '%2F' + (month > 9 ? month.toString() : '0' + month.toString());
-      str += '%2F' + year.toString();
-      return str;
-    }
-    return '';
-  }
-
-  // opcional
-
   private mustBeSelected(d: Debts, selectedUniverse: boolean = false): boolean {
     if (d.hasIBKPayments || d.status === 'PAGADO') {
       return false;
@@ -59,11 +44,9 @@ export class TransactionService {
     filtro: DebstFilter = null,
     selectedUniverse: boolean = false
   ): Observable<any> {
-    // ultimo filtro aplicado
     if (filtro === null) {
       filtro = this.lastFilter;
     } else {
-      // el nuevo filtro
       this.lastFilter = filtro;
     }
     const processDate = (value: string | Date) => {
@@ -155,51 +138,7 @@ export class TransactionService {
       .pipe(catchError((error) => throwError(error)));
   }
 
-  deleteDeuda(idDebt: number): Observable<Debts> {
-    // cambia link
-    const url = `${this.URI_API}/debt/${idDebt}`;
-    return this.http
-      .post<Debts>(url, null)
-      .pipe(catchError((error) => throwError(error)));
-  }
-
-  deleteAll(): Observable<any> {
-    const url = `${this.URI_API}/debt/deleteAll`;
-    return this.http
-      .post<Debts>(url, { ids: this.itemsForDelete })
-      .pipe(catchError((error) => throwError(error)));
-  }
-
-  deleteFiltered(filtro: DebstFilter = null) {
-    if (filtro === null) {
-      filtro = this.lastFilter;
-    }
-    const strDateFrom = isNilOrEmpty(filtro.dateFrom)
-      ? ''
-      : encodeURI(moment(filtro.dateFrom).format('YYYY/MM/DD'));
-    const strDateTo = isNilOrEmpty(filtro.dateTo)
-      ? ''
-      : encodeURI(moment(filtro.dateTo).format('YYYY/MM/DD'));
-
-    if (isNilOrEmpty(filtro.service)) {
-      filtro.service = '';
-    }
-    if (isNilOrEmpty(filtro.status)) {
-      filtro.status = '';
-    }
-    if (isNilOrEmpty(filtro.dateForFilter)) {
-      filtro.dateForFilter = '';
-    }
-
-    const url = `${this.URI_API}/debt/deleteFiltered?InputSearch=${filtro.inputSearch}&Service=${filtro.service}&Status=${filtro.status}&DateForFilter=${filtro.dateForFilter}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
-    return this.http
-      .post<Debts>(url, {})
-      .pipe(catchError((error) => throwError(error)));
-  }
-
-  // ESITAR LA DEUDA
   editDeuda(id: number, debts: DebtEdit): Observable<any> {
-    // cambia link
     const url = `${this.URI_API}/debt/put/${id}`;
     return this.http
       .post(url, debts)
@@ -291,25 +230,8 @@ export class TransactionService {
     return this.http.post(url, null).pipe(catchError((err) => throwError(err)));
   }
 
-  deleteDebt(id: number, forDelete: boolean) {
-    const index = this.itemsForDelete.indexOf(id);
-    if (forDelete) {
-      if (index < 0) {
-        this.itemsForDelete.push(id);
-      }
-    } else {
-      if (index >= 0) {
-        this.itemsForDelete.splice(index, 1);
-      }
-    }
-  }
-
   clearMarksForDeletes() {
     this.itemsForDelete = [];
-  }
-
-  countMarksForDelete() {
-    return this.itemsForDelete.length;
   }
 
   isMarkedAll(selectedUniverse: boolean = false) {

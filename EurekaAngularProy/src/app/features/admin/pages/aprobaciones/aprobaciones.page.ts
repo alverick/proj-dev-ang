@@ -13,7 +13,6 @@ import {
   type GtpEmpresa,
   type GtpServcegtp,
 } from '../../../../shared/models/gtp-post';
-import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { GtpService } from '../../../../shared/services/gtp.service';
 import { drawPopup } from '../../../../shared/utils/helpers/popups';
 
@@ -57,7 +56,6 @@ export class AprobacionesPage implements OnInit {
   constructor(
     public gtpService: GtpService,
     private activatedRoute: ActivatedRoute,
-    public afiliacionService: AfiliacionService,
     public router: Router
   ) {}
 
