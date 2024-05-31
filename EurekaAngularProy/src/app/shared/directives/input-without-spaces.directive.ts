@@ -8,7 +8,7 @@ export class InputWithoutSpacesDirective {
   onInputChange(event) {
     event.target.value = event.target.value
       .replace(/\s{2,}/g, ' ')
-      .replace(/[^ 0-9-A-Z-a-z]*/g, '');
+      .replace(/[^- \dA-Za-z]*/g, '');
   }
 
   @HostListener('blur', ['$event'])

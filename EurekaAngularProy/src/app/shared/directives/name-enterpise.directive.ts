@@ -10,7 +10,7 @@ export class NameEnterpiseDirective {
     let initalValue = this.el.nativeElement.value;
     initalValue = initalValue.replace(/( ){2}/g, ' ');
     this.el.nativeElement.value = initalValue.replace(
-      /[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-.]*/g,
+      /[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ&-'.]*/g,
       ''
     );
     if (initalValue !== this.el.nativeElement.value) {
