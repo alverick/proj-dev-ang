@@ -16,18 +16,20 @@
   </div>
   <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center tw-justify-center">
     <div class="tw-flex tw-gap-4 tw-items-center tw-justify-center">
-      <p-button
+      <button
+        pButton
+        pRipple
         class="p-button-sm"
         label="Entendido"
-        styleClass="p-button-sm"
         (click)="close()"
-      ></p-button>
-      <p-button
+      ></button>
+      <button
+        pButton
+        pRipple
         class="p-button-sm p-button-outlined"
         label="Conoce mas"
-        styleClass="p-button-sm p-button-outlined"
         (click)="close('more')"
-      ></p-button>
+      ></button>
     </div>
     <a
       *ngIf="!showed"

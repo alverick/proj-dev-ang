@@ -15,16 +15,16 @@
       {{ name }}
     </div>
     <div class="tw-flex tw-gap-2 tw-flex-shrink-0">
-      <div *ngIf="canEdit" (click)="actionEdit()" class="tw-cursor-pointer">
+      <button *ngIf="canEdit" (click)="actionEdit()" class="tw-cursor-pointer">
         <img alt="Editar" src="assets/images/card-icon-edit.svg" />
-      </div>
-      <div
+      </button>
+      <button
         *ngIf="!reviewMode"
         (click)="actionDelete()"
         class="tw-cursor-pointer"
       >
         <img alt="Eliminar" src="assets/images/card-icon-delete.svg" />
-      </div>
+      </button>
     </div>
   </div>
   <ng-template [ngIf]="messageStatus !== ''">
