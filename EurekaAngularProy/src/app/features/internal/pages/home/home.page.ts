@@ -219,7 +219,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     if (isNil(this.formValues)) {
       this.consultaDeuda();
     }
-    this.recortarNombres();
     this.cargaExcel = false;
 
     this.selectedAll = false;
@@ -751,12 +750,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.showModalCommissions();
     }
-  }
-
-  recortarNombres() {
-    this.transactionService.debtItems.data.forEach((element) => {
-      element.firstName;
-    });
   }
 
   saveDebt(item: Debts) {
