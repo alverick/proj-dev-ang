@@ -1,24 +1,17 @@
 a {
   @apply tw-right-4 tw-bottom-5;
-  @screen hoversupport {
-    &:hover {
-      @apply tw-pl-4;
-      .text {
-        @apply tw-block;
-      }
-    }
-  }
-
-  @screen 2xl {
-    @apply tw-pl-4;
+  &:hover {
+    @apply hoversupport:tw-pl-4;
     .text {
-      @apply tw-block;
+      @apply hoversupport:tw-block;
     }
   }
 
-  @screen 2xl-greater {
-    @apply tw-right-8 tw-bottom-10;
+  @apply 2xl:tw-pl-4 2xl-greater:tw-right-8 2xl-greater:tw-bottom-10;
+  .text {
+    @apply 2xl:tw-block;
   }
+
   &.hide {
     @apply -tw-right-72;
   }

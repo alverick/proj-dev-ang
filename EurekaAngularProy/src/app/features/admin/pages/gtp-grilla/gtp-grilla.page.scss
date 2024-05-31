@@ -26,11 +26,7 @@
 
 .widget.filtros {
   .content {
-    padding: 25px 32px;
-
-    @screen lg-greater {
-      padding: 15px 32px;
-    }
+    @apply tw-py-8 tw-px-6 lg-greater:tw-py-4;
   }
 }
 
