@@ -5,12 +5,8 @@
   margin-left: -15px;
 }
 
-// #html-color {
-//     background: var(--primary-green-1) !important;
-// }
-
 label {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .border {
@@ -35,7 +31,9 @@ label {
 .bg-image-landing {
   background-image: url('/assets/images/fondo-landing.png');
   width: 98vw;
-  /* margin-top   : 10vw !important;*/
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: bottom center;
 }
 
 .bg-blanco {
@@ -94,8 +92,8 @@ label {
 
 :host ::ng-deep .mat-form-field {
   .mat-form-field-underline {
-    background-color: slategray;
-    height: 0.18vw !important;
+    background-color: var(--grises-grey-3);
+    height: 1px !important;
   }
 }
 
@@ -128,7 +126,6 @@ div.mat-form-field-infix {
   width: 232px;
   height: 48px;
   float: center;
-  // @include box-shadows(0,1px,4px, 0,rgba(252, 154, 0, 0.2));
   &:hover {
     background-color: var(--primary-green-1);
     border-radius: 4px;
@@ -158,30 +155,18 @@ div.mat-form-field-infix {
 .img-login-ing {
   width: 570px;
   height: 428px;
-  // position: fixed;
-  // bottom: 0;
 }
 
 .title-login-login {
   font-size: 53px;
   font-weight: 500;
   &:after {
-    /*@extend .position-absolute;
-    @include translate(0, 100%);*/
     left: 166px;
     bottom: 20px;
     content: '';
     width: 42px;
     height: 33px;
-    /* background: url("../images/bg-titulo.png") no-repeat;*/
   }
-}
-
-.bg-image-landing {
-  height: 400px;
-  /*background-image : url("../images/fondo-landing.png");*/
-  background-repeat: no-repeat;
-  background-position: bottom center;
 }
 
 .texto-login {
@@ -232,22 +217,12 @@ div.mat-form-field-infix {
   color: var(--ibk-black);
 }
 
-/*
-small {
-    @include font-text(14px!important,
-    normal!important);
-    color: var(--ibk-black);
-}
-*/
-
 .cuadro-form {
   @include cuadro(381px, auto);
   background-color: var(--ibk-white);
   box-sizing: border-box;
   padding: 26px 37px;
-  // margin: auto;
   margin-top: 12px !important;
-  /*margin-top    : 5vw !important;*/
 }
 
 small {
@@ -255,12 +230,6 @@ small {
   color: var(--primary-green-1);
   text-decoration: underline;
   cursor: pointer;
-}
-
-:host ::ng-deep .mat-form-field .mat-form-field-underline {
-  background-color: var(--grises-grey-3);
-  // height       : 0.10vw !important;
-  height: 1px !important;
 }
 
 .title-login {
@@ -289,7 +258,6 @@ small {
 
 .reponsive-img-login {
   display: block;
-  // margin-top: calc(100% - 422px);
 }
 
 .reponsive-img-login1 {
@@ -328,45 +296,6 @@ html {
   background: #049840 !important;
 }
 
-// @media (min-width: 1536px) {
-//     .img-login-ing {
-//         width: 700px;
-//         height: 519px;
-//         position: fixed;
-//         bottom: 0;
-//     }
-//     .reponsive-img-login {
-// display: initial;
-// margin-top: calc(100% - 513px);
-// margin-left: -40px;
-//     }
-// }
-// @media (min-width: 1024px and min-height 889px) {
-//     .img-login-ing {
-//         // width: 700px;
-//         // height: 519px;
-//         position: fixed;
-//         bottom: 0;
-//     }
-// }
-// }
-// @media (min-width: 1736px) {
-//     .img-login-ing {
-//         width: 700px;
-//         height: 519px;
-//         position: fixed;
-//         bottom: 0;
-//     }
-// }
-// @media only screen and (min-device-width: 1024px) and (min-device-height: 768px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1) {
-//     .img-login-ing {
-//         position: fixed !important;
-//         bottom: 0;
-//     }
-//     body {
-//         height: 100vh !important;
-//     }
-// }
 @media screen and (max-width: 1024px) {
   body {
     min-height: auto !important;
