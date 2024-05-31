@@ -30,7 +30,7 @@ export class ServicesGTPComponent implements OnInit {
   tiposPago: any[] = [];
   monedas: MonedaModel[] = [];
   tiposMora: any[] = [];
-  cuentas: any[] = [];
+  cuentas: CompanyAccounts[] = [];
   simboloMoneda = 'S/';
   cobraMora = false;
   cobraMonto = true;
@@ -410,14 +410,9 @@ export class ServicesGTPComponent implements OnInit {
       this.f.NewNameCod.reset();
     }
     if (this.frm.valid) {
-      let value: DataServiceGTP;
-      value = this._service;
+      const value: DataServiceGTP = this._service;
       value.res = this.frm.value.res;
-      // value.acceptednewName = (this.frm.value.NewName === 'S');
-      // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
-      // eslint-disable-next-line max-len
-      //  value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
-      // eslint-disable-next-line max-len
+
       value.acceptednewName =
         this._service.newNameGTPStatus === 1 ||
         (this._service.newNameGTPStatus === 3 &&
@@ -499,8 +494,6 @@ export class ServicesGTPComponent implements OnInit {
 
   onChangeTipoDato() {
     if (this.frm.get('tipoDato').value === 'P') {
-      /* this.frm.get('tipoPago').setValue('C');
-       this.tiposPago.pop();*/
       this.Dataparcial = false;
       // cobraMora
       this.frm.get('cobraMora').setValue('N');
@@ -513,12 +506,6 @@ export class ServicesGTPComponent implements OnInit {
     } else {
       this.Dataparcial = true;
     }
-    /* else if (this.tiposPago.length === 1) {
-       this.tiposPago.push({
-         code: 'P',
-         name: "Siempre la deuda que vence primero"
-       });
-     }  */
   }
 
   changeCuenta(val) {
@@ -645,36 +632,6 @@ export class ServicesGTPComponent implements OnInit {
     }
   }
 
-  selectCodigo(event) {
-    if (event === 'Otro') {
-      //  this.f.codDeudor.reset();
-      this.f.nameCod.setValidators([
-        Validators.required,
-        Validators.minLength(3),
-      ]);
-    } else {
-      this.f.nameCod.clearValidators();
-      this.f.nameCod.reset();
-    }
-  }
-
-  formAction(action: string) {
-    if (action === 'save') {
-      Object.keys(this.frm.controls).forEach((c) => {
-        this.frm.controls[c].markAsDirty();
-      });
-      this.onSubmitServicio();
-    }
-  }
-
-  nameCodInput(e) {
-    let initalValue = this.f.nameCod.value;
-    /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
-     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
-    initalValue = initalValue.replace(/\s{2,}/g, ' ');
-    this.f.nameCod.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
-  }
-
   MoraMontoBlur(e) {
     const initalValue = parseFloat(this.f.monto.value);
     if (!isNaN(initalValue)) this.f.monto.setValue(initalValue.toFixed(2));
@@ -729,29 +686,4 @@ function Minimo(min: number) {
     }
     return null;
   };
-}
-
-function Alfanumerico(c: UntypedFormControl) {
-  const regex = /[0-9a-zA-Z]-?/g;
-  if (c.value && !regex.test(c.value)) {
-    return { alfa: true };
-  }
-  return null;
-}
-
-function Alfabetico(c: UntypedFormControl) {
-  const regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
-  const numero = /[0-9]/g;
-  const raro = /[-{1,}]-?/g;
-  if (c.value && !raro.test(c.value)) {
-    return { alfabetico: true };
-  }
-  if (c.value && !regex.test(c.value)) {
-    return { alfabetico: true };
-  }
-
-  /* if(c.value && numero.test(c.value)){
-     return { alfabetico: true };
-   } */
-  return null;
 }
