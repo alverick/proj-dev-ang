@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import {
@@ -16,7 +17,6 @@ import { AffiliationService } from '../../services';
 @Component({
   selector: 'cs-update-services',
   templateUrl: './update-services.page.html',
-  styleUrls: ['./update-services.page.scss'],
 })
 export class UpdateServicesPage {
   position = 0;

@@ -21,7 +21,6 @@ import {
 @Component({
   selector: 'cs-service-step-configuration',
   templateUrl: './service-step-configuration.component.html',
-  styleUrls: ['./service-step-configuration.component.scss'],
 })
 export class ServiceStepConfigurationComponent implements OnInit {
   @Output() sendForm = new EventEmitter<object>();

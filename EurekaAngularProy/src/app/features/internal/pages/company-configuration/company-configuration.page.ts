@@ -28,7 +28,6 @@ import {
 @Component({
   selector: 'cs-company-configuration',
   templateUrl: './company-configuration.page.html',
-  styleUrls: ['./company-configuration.page.scss'],
 })
 export class CompanyConfigurationPage implements OnInit {
   companyForm: SimpleModelFormGroup<CompanyForm>;

@@ -20,7 +20,6 @@ import { type CompanyForm } from '../../services/company-configuration.service';
 @Component({
   selector: 'cs-company-update-form',
   templateUrl: './company-update-form.component.html',
-  styleUrls: ['./company-update-form.component.scss'],
 })
 export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   documentNumberMax = '8';
