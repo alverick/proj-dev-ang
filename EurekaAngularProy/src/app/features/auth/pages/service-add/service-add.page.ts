@@ -52,6 +52,6 @@ export class ServiceAddPage implements OnDestroy {
     confirm(
       'El registro de tu empresa no ha concluido, si sales ahora los cambios se perderán.'
     );
-    event.returnValue = false;
+    event.preventDefault();
   }
 }

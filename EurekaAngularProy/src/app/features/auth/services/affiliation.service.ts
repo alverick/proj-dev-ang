@@ -1,3 +1,4 @@
+import { type HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
@@ -232,14 +233,14 @@ export class AffiliationService {
             });
           }
         }),
-        catchError((err) => {
+        catchError((err: HttpErrorResponse) => {
           this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: stateIntent,
             typeError: typeErrorServer,
           });
           this.showErrorServer();
-          return throwError(err);
+          return throwError(() => err);
         })
       );
   }
@@ -393,14 +394,14 @@ export class AffiliationService {
             });
           }
         }),
-        catchError((err) => {
+        catchError((err: HttpErrorResponse) => {
           this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
             ...actionStep,
             state: stateIntent,
             typeError: typeErrorServer,
           });
           this.showErrorServer();
-          return throwError(err);
+          return throwError(() => err);
         })
       );
   }
@@ -622,7 +623,7 @@ export class AffiliationService {
 
     if (isNotNil(modalSettings)) {
       void swalAlert.fire(modalSettings);
-      return throwError('Incomplete data');
+      return throwError(() => 'Incomplete data');
     }
 
     return this.companyService
