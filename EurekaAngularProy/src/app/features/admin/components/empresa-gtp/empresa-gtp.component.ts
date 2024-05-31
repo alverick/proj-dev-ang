@@ -139,12 +139,11 @@ export class EmpresaGTPComponent implements OnInit {
     errors: {
       [key: string]: string;
     }
-  ): string {
+  ) {
     let result = '';
-    forEachObjIndexed((value, key) => {
+    forEachObjIndexed((_value, key) => {
       if (isNotNil(errors[key])) {
         result = errors[key];
-        return;
       }
     }, controlName.errors);
     return result;

@@ -70,16 +70,16 @@ export class StorageService {
 
   getCurrentUser(): User {
     const session: Session = this.getCurrentSession();
-    return session && session.user ? session.user : null;
+    return session?.user ?? null;
   }
 
   isAuthenticated(): boolean {
-    return this.currentSession && this.currentSession.isAuthenticate;
+    return this.currentSession?.isAuthenticate;
   }
 
   getCurrentToken(): string {
     const session = this.getCurrentSession();
-    return session && session.token ? session.token : null;
+    return session?.token ?? null;
   }
 
   setIntentos(intentos: number): void {

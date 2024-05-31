@@ -264,7 +264,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       header: 'Conoce las nuevas comisiones por cobranza en canales digitales',
       styleClass: 'tw-w-[54rem]',
       data: {
-        showed: (showed || !auto) as boolean,
+        showed: showed || !auto,
         detail:
           'Modal informativo sobre las nuevas comisiones de cobranza en canales digitales',
       },
@@ -1037,7 +1037,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 width: '330px',
               });
               dlg.afterClosed().subscribe((result) => {
-                if (result && result.grabado) {
+                if (result?.grabado) {
                   this.validateResetForm();
                 }
               });
