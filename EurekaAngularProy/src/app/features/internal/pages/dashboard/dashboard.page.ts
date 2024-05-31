@@ -238,18 +238,18 @@ export class DashboardPage implements OnInit {
       );
       const report = doc.output('blob');
       formData.append('filename', report);
-      this.dashboard.sendEmail(formData).subscribe(
-        (value) => {
+      this.dashboard.sendEmail(formData).subscribe({
+        next: (value) => {
           console.log('sendEmail', value);
           this.emailForm.reset();
           this.showModal = false;
         },
-        (error) => {
+        error: (error) => {
           console.log('error', error);
           this.emailForm.reset();
           this.showModal = false;
-        }
-      );
+        },
+      });
     });
   }
 
