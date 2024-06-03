@@ -12,7 +12,7 @@ export interface State {
 
 export const initialState: State = {
   loaded: false,
-  disabledAffiliation: true,
+  disabledAffiliation: false,
   showedCommission: false,
 };
 
