@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { isEmpty, pathOr } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 import { type Observable, combineLatest } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
+import { AppConfigActions } from '../../store/actions/app-config.actions';
 import { type ProviderService } from './provider.service';
 import { ScriptInjectorService } from './script-injector.service';
 import {
@@ -33,7 +35,8 @@ export class AdobeLaunchProviderService implements ProviderService {
 
   constructor(
     private scriptInjectorService: ScriptInjectorService,
-    public trackingService: TrackingService
+    public trackingService: TrackingService,
+    private store: Store
   ) {
     if (isNotEmpty(environment.adobe)) {
       this.launchLibrary = this.scriptInjectorService
@@ -48,20 +51,19 @@ export class AdobeLaunchProviderService implements ProviderService {
           })
         );
     }
-    document.addEventListener('at-library-loaded', function (event) {
+    document.addEventListener('at-library-loaded', (event) => {
       console.log('Event', event);
     });
-    document.addEventListener('at-request-succeeded', function (event) {
+    document.addEventListener('at-request-succeeded', (event) => {
       console.log('Event at-request-succeeded', event);
     });
-    document.addEventListener(
-      'at-content-rendering-succeeded',
-      function (event) {
-        console.log('Event at-content-rendering-succeeded', event);
-      }
-    );
-    document.addEventListener('at-content-rendering-start', function (event) {
+    document.addEventListener('at-content-rendering-succeeded', (event) => {
+      console.log('Event at-content-rendering-succeeded', event);
+      this.store.dispatch(AppConfigActions.setLoader({ show: false }));
+    });
+    document.addEventListener('at-content-rendering-start', (event) => {
       console.log('Event at-content-rendering-start', event);
+      this.store.dispatch(AppConfigActions.setLoader({ show: true }));
     });
   }
 
