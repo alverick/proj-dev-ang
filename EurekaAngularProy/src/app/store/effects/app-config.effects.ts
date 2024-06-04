@@ -31,9 +31,12 @@ export class AppConfigEffects {
         concatLatestFrom(() =>
           this.store.select(appConfigFeature.selectShowLoader)
         ),
-        debounce(([{ show }]) => (show ? timer(0) : timer(1000))),
+        debounce(([{ show }]) => {
+          console.log('debounce', show, Date.now());
+          return show ? timer(0) : timer(3000);
+        }),
         tap(([{ show }]) => {
-          console.log('effectLoader', show);
+          console.log('effectLoader', show, Date.now());
           if (show) {
             void this.spinner.show();
           } else {
