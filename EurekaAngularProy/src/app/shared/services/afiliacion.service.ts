@@ -1,4 +1,4 @@
-import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -16,10 +16,10 @@ export class AfiliacionService {
 
   public idCompany = 0;
   public email: string;
-  public Guardado = false;
 
   public services: IServiceModel[] = [];
   private _rubros: IEntryModel[] = null;
+  private _rubrosAll: IEntryModel[] = null;
 
   public GetRubros(): Observable<IEntryModel[]> {
     if (this._rubros !== null) {
@@ -33,17 +33,23 @@ export class AfiliacionService {
           return r;
         })
       )
-      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
+      .pipe(catchError((err) => throwError(err)));
   }
 
   public GetRubrosAll(): Observable<IEntryModel[]> {
     return this.http
       .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading/all`)
-      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
+      .pipe(
+        map((r) => {
+          this._rubrosAll = r;
+          return r;
+        })
+      )
+      .pipe(catchError((err) => throwError(err)));
   }
 
   public GetCodDeudor(): Observable<any[]> {
-    return of<any[]>([
+    return of<Record<string, string>[]>([
       {
         code: 'DNI',
         name: 'DNI',
@@ -128,21 +134,6 @@ export class AfiliacionService {
       );
     }
     return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
-  }
-
-  Descartar(indice: number, isNew: boolean) {
-    this.Guardado = false;
-    if (
-      isNew &&
-      this.services.length > 1 &&
-      indice >= 0 &&
-      indice === this.services.length - 1
-    ) {
-      const svc = this.services[this.services.length - 1];
-      if (svc.id === null || svc.id === undefined || svc.id < 0) {
-        this.services.pop();
-      }
-    }
   }
 
   GetTipoCambio(): Observable<number> {
