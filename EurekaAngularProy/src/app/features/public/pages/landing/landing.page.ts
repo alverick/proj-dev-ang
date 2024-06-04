@@ -1,4 +1,8 @@
-import { type OnDestroy, Component } from '@angular/core';
+import {
+  type AfterContentInit,
+  type OnDestroy,
+  Component,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MessageService } from 'primeng/api';
@@ -32,7 +36,7 @@ interface ItemLanding {
   styleUrls: ['./landing.page.scss'],
   providers: [DynamicDialogService, MessageService],
 })
-export class LandingPage implements OnDestroy {
+export class LandingPage implements OnDestroy, AfterContentInit {
   ref: DynamicDialogRef;
   benefits: ItemLanding[] = [
     {
@@ -192,5 +196,9 @@ export class LandingPage implements OnDestroy {
       typeElement: 'Link',
       location: 'Footer',
     });
+  }
+
+  ngAfterContentInit(): void {
+    console.log('ngAfterContentInit', document.querySelector('h2')?.innerHTML);
   }
 }
