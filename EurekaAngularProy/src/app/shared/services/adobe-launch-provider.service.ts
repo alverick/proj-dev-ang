@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { isEmpty } from 'ramda';
+import { isEmpty, pathOr } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 import { type Observable, combineLatest } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -30,6 +30,7 @@ declare const window: {
 export class AdobeLaunchProviderService implements ProviderService {
   launchLibrary: Observable<boolean>;
   loaded = false;
+
   constructor(
     private scriptInjectorService: ScriptInjectorService,
     public trackingService: TrackingService
@@ -47,6 +48,21 @@ export class AdobeLaunchProviderService implements ProviderService {
           })
         );
     }
+    document.addEventListener('at-library-loaded', function (event) {
+      console.log('Event', event);
+    });
+    document.addEventListener('at-request-succeeded', function (event) {
+      console.log('Event at-request-succeeded', event);
+    });
+    document.addEventListener(
+      'at-content-rendering-succeeded',
+      function (event) {
+        console.log('Event at-content-rendering-succeeded', event);
+      }
+    );
+    document.addEventListener('at-content-rendering-start', function (event) {
+      console.log('Event at-content-rendering-start', event);
+    });
   }
 
   trackPage(payload: Partial<TrackEventProperties>) {
@@ -62,7 +78,13 @@ export class AdobeLaunchProviderService implements ProviderService {
     payload: Partial<TrackEventProperties>
   ) {
     try {
-      console.log('runSatelliteEvent', event, payload, Date.now());
+      console.log(
+        'runSatelliteEvent',
+        event,
+        payload,
+        Date.now(),
+        pathOr('nulled', ['adobe', 'target'], window)
+      );
       if ('undefined' !== typeof window._satellite && window._satellite) {
         window._satellite.track(event, payload);
       }
