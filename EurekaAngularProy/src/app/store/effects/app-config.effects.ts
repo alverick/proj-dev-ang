@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, of } from 'rxjs';
-import { catchError, concatMap, map } from 'rxjs/operators';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { debounce, EMPTY, of, timer } from 'rxjs';
+import { catchError, concatMap, map, tap } from 'rxjs/operators';
 
 import { AppConfigActions } from '../actions/app-config.actions';
+import { appConfigFeature } from '../reducers/app-config.reducer';
 
 @Injectable()
 export class AppConfigEffects {
@@ -21,6 +24,29 @@ export class AppConfigEffects {
       )
     );
   });
+  setLoaderAppConfigs$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AppConfigActions.setLoader),
+        concatLatestFrom(() =>
+          this.store.select(appConfigFeature.selectShowLoader)
+        ),
+        debounce(([{ show }]) => (show ? timer(0) : timer(1000))),
+        tap(([{ show }]) => {
+          console.log('effectLoader', show);
+          if (show) {
+            void this.spinner.show();
+          } else {
+            void this.spinner.hide();
+          }
+        })
+      ),
+    { dispatch: false }
+  );
 
-  constructor(private actions$: Actions) {}
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private spinner: NgxSpinnerService
+  ) {}
 }

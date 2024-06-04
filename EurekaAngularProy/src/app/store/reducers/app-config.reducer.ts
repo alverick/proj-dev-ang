@@ -8,12 +8,14 @@ export interface State {
   loaded: boolean;
   disabledAffiliation: boolean;
   showedCommission: boolean;
+  showLoader: boolean;
 }
 
 export const initialState: State = {
   loaded: false,
   disabledAffiliation: true,
   showedCommission: false,
+  showLoader: true,
 };
 
 export const reducer = createReducer(
@@ -25,6 +27,10 @@ export const reducer = createReducer(
   on(
     AppConfigActions.setModalCommissions,
     (state, action): State => ({ ...state, showedCommission: action.showed })
+  ),
+  on(
+    AppConfigActions.setLoader,
+    (state, action): State => ({ ...state, showLoader: action.show })
   )
 );
 

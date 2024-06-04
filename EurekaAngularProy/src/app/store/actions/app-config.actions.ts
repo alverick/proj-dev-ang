@@ -8,5 +8,6 @@ export const AppConfigActions = createActionGroup({
     'Load Config Success': props<{ data: boolean }>(),
     'Load Config Failure': props<{ error: any }>(),
     'Set Modal Commissions': props<{ showed: boolean }>(),
+    'Set Loader': props<{ show: boolean }>(),
   },
 });
