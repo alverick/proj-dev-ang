@@ -68,6 +68,7 @@ export class AdobeLaunchProviderService implements ProviderService {
   }
 
   trackPage(payload: Partial<TrackEventProperties>) {
+    this.store.dispatch(AppConfigActions.setLoader({ show: true }));
     this.runSatelliteEvent(AdobeEvent.pageTrack, payload);
   }
 
