@@ -33,7 +33,7 @@ export class AppConfigEffects {
         ),
         debounce(([{ show }]) => {
           console.log('debounce', show, Date.now());
-          return show ? timer(0) : timer(3000);
+          return show ? timer(0) : timer(1000);
         }),
         tap(([{ show }]) => {
           console.log('effectLoader', show, Date.now());
