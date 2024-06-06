@@ -38,9 +38,9 @@ export class AppConfigEffects {
         tap(([{ show }]) => {
           console.log('effectLoader', show, Date.now());
           if (show) {
-            void this.spinner.show();
+            // void this.spinner.show();
           } else {
-            void this.spinner.hide();
+            // void this.spinner.hide();
           }
         })
       ),
