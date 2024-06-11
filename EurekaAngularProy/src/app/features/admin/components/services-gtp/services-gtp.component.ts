@@ -37,8 +37,6 @@ export class ServicesGTPComponent implements OnInit {
   Dataparcial = true;
   inReview: boolean;
   private _service: DataServiceGTP;
-  configEmpresaService: any;
-  private _tc = 3.37;
 
   update = false;
   public comAgente = 1.5;
@@ -64,9 +62,7 @@ export class ServicesGTPComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private afiliacionService: AfiliacionService,
     public gtpService: GtpService
-  ) {
-    afiliacionService.GetTipoCambio().subscribe((t) => (this._tc = t));
-  }
+  ) {}
 
   frm: UntypedFormGroup;
   ngOnInit() {
@@ -546,19 +542,6 @@ export class ServicesGTPComponent implements OnInit {
          name: "Siempre la deuda que vence primero"
        });
      }  */
-  }
-
-  changeCuenta(val) {
-    const cta = this.cuentas.find((c) => c.id === val);
-    this.simboloMoneda = cta.currency === '001' ? 'S/' : '$';
-    this.f.moneda.setValue(cta.currency);
-    if (this.f.moneda.value !== '001') {
-      this.comAgente = Math.round((1.5 / this._tc) * 100) / 100;
-      this.comTienda = Math.round((7 / this._tc) * 100) / 100;
-    } else {
-      this.comAgente = 1.5;
-      this.comTienda = 7;
-    }
   }
 
   TipoCobro() {

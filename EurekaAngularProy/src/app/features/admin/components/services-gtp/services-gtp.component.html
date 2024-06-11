@@ -265,7 +265,6 @@
         name="idCuenta"
         disableOptionCentering
         panelClass="pts30"
-        (ngModelChange)="changeCuenta($event)"
       >
         <mat-option class="input-text">Nº de cuenta Interbank</mat-option>
         <mat-option
@@ -321,7 +320,8 @@
           y Banca por <br />
           internet
         </div>
-        <div class="pt-1 texto-green">GRATIS</div>
+        <div class="pt-2 texto-green">S/2.00</div>
+        <div class="pt-1 texto-p-medios">por transacción</div>
         <!-- </div> -->
       </div>
     </div>
@@ -337,7 +337,7 @@
           Lima y <br />
           provincias
         </div>
-        <div class="pt-2 texto-green">{{ simboloMoneda }} {{ comAgente }}</div>
+        <div class="pt-2 texto-green">S/1.50</div>
         <div class="pt-1 texto-p-medios">por transacción</div>
         <!-- </div> -->
       </div>
