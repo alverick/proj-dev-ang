@@ -97,7 +97,7 @@ stages:
                 extraProperties: |
                   sonar.sourceEncoding=UTF-8
                   sonar.sources=$(System.DefaultWorkingDirectory)/EurekaAngularProy/src
-                  sonar.exclusions = */node_modules/, */src/assets/*, */src/environments/*, */src/jest.config.ts, */src/main.ts, *src/assets/scripts/*
+                  sonar.exclusions = */node_modules/, */src/assets/*, */src/environments/*, */src/jest.config.ts, */src/main.ts, */src/assets/scripts/*
                   sonar.tests=$(System.DefaultWorkingDirectory)/EurekaAngularProy/src
                   sonar.test.inclusions=**/*.spec.ts
                   sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/EurekaAngularProy/coverage/lcov.info
