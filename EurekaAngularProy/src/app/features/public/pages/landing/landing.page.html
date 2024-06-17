@@ -1,7 +1,14 @@
 <cs-header></cs-header>
 <div
-  class="tw-pt-6 tw-px-6 xl:tw-px-0 tw-bg-contain tw-bg-center tw-bg-secondary-blue-1 tw-bg-[url('/assets/images/bg-hero.png')]"
+  class="tw-relative tw-pt-6 tw-px-6 xl:tw-px-0 tw-bg-contain tw-bg-center tw-bg-secondary-blue-1 tw-overflow-hidden"
 >
+  <img
+    ngSrc="/assets/images/bg-hero.webp"
+    class="tw-object-cover"
+    alt="background"
+    fill
+    priority
+  />
   <div class="tw-max-w-6xl tw-mx-auto">
     <div
       class="tw-relative tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-gap-6"
@@ -47,9 +54,10 @@
         <img
           alt=""
           class="tw-mx-auto sm:tw-min-w-[400px] sm:tw-h-[400px] md:tw-h-[380px] lg:tw-h-[410px] tw-w-auto tw-object-contain tw-object-bottom"
-          ngSrc="/assets/images/img-laptop-home.png"
+          ngSrc="/assets/images/img-laptop-home.webp"
           height="440"
           width="454"
+          priority
         />
       </div>
     </div>
