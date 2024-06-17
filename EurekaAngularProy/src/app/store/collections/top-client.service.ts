@@ -4,11 +4,9 @@ import {
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 
-import { TopClient } from '../entities';
+import { type TopClient } from '../entities';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TopClientService extends EntityCollectionServiceBase<TopClient> {
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
     super('TopClient', serviceElementsFactory);

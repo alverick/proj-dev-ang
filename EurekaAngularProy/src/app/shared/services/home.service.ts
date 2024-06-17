@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -11,9 +11,7 @@ import { type Debts } from '../models/debts';
 import { type Type } from '../models/type';
 import { type WayPay } from '../models/way-pay';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class HomeService {
   constructor(private http: HttpClient) {}
 

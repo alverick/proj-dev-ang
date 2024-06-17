@@ -5,9 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { internalFullRoutingNames } from '../../features/internal/internal-routing.names';
 import { StorageService } from '../services/storage.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LogoutGuard {
   constructor(
     private router: Router,

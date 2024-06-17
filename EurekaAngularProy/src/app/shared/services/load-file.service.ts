@@ -1,8 +1,8 @@
 import {
-  ComponentRef,
+  type ComponentRef,
+  type ViewContainerRef,
   EventEmitter,
   Injectable,
-  ViewContainerRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -10,8 +10,7 @@ import { repeat, takeUntil } from 'rxjs/operators';
 
 import { internalFullRoutingNames } from '../../app-routing.collection';
 import { LoadFileComponent } from '../components/load-file/load-file.component';
-import { ExcelService, ProcessStatus } from './excel.service';
-import { StorageService } from './storage.service';
+import { type ProcessStatus, ExcelService } from './excel.service';
 
 export interface ModalCloseData {
   status: string;
@@ -20,15 +19,9 @@ export interface ModalCloseData {
   dataType: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LoadFileService {
-  constructor(
-    private excelService: ExcelService,
-    private storageService: StorageService,
-    private router: Router
-  ) {}
+  constructor(private excelService: ExcelService, private router: Router) {}
 
   private componentRef: ComponentRef<LoadFileComponent> = null;
   private cancel = true;

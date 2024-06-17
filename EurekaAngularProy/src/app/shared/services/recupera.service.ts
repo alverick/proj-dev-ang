@@ -9,9 +9,7 @@ interface TokenChangePassword {
   TokenEncrypted: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class RecuperaService {
   constructor(private http: HttpClient) {}
 
