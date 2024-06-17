@@ -1,12 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  type Meta,
-  type StoryObj,
-  argsToTemplate,
-  moduleMetadata,
-} from '@storybook/angular';
+import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';
 import { type ServiceCardComponent } from './service-card.component';
@@ -33,11 +28,6 @@ const meta: Meta<ServiceCardComponent> = {
 export default meta;
 
 type Story = StoryObj<ServiceCardComponent>;
-
-// const Template: Story<ServiceCardComponent> = (args: ServiceCardComponent) => ({
-//   props: args,
-//   template: `<div class="tw-p-5"><cs-service-card class="tw-m-10" [serviceData]="serviceData" [canEdit]="canEdit" [lockedMode]="lockedMode" [position]="position" [reviewMode]="reviewMode"></cs-service-card></div>`,
-// });
 
 export const Normal: Story = {
   args: {
