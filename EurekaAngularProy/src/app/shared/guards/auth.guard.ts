@@ -4,9 +4,7 @@ import { Router } from '@angular/router';
 import { authFullRoutingNames } from '../../features/auth/auth-routing.names';
 import { StorageService } from '../services/storage.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthGuard {
   constructor(private router: Router, private storageService: StorageService) {}
 

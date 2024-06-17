@@ -7,9 +7,7 @@ import {
 
 import { LoadBarComponent } from '../components/load-bar/load-bar.component';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LoadBarService {
   constructor(private resolver: ComponentFactoryResolver) {}
 

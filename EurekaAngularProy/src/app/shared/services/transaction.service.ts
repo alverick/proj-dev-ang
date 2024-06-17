@@ -11,9 +11,7 @@ import { type Debts, type DebtsPagedList } from '../models/debts';
 import { type DebtEdit } from '../models/debts-edit.model';
 import { type DebstFilter } from '../models/debts-filter.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TransactionService {
   private URI_API: string = environment.END_POINT;
   private lastFilter: DebstFilter = null;

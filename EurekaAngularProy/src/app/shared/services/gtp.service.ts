@@ -14,9 +14,7 @@ import { type EnterprisesPagedList } from '../models/enterprises-gtp';
 import { type GtpFilter } from '../models/gtp-filter';
 import { type StatesGtp } from '../models/states-gtp';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class GtpService {
   private lastFilter: GtpFilter = null;
   private URI_API: string = environment.END_POINT;

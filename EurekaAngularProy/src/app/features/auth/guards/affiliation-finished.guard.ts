@@ -6,9 +6,7 @@ import { type Observable } from 'rxjs';
 import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AffiliationFinishedGuard {
   constructor(
     private affiliation: AffiliationService,
