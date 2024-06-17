@@ -20,7 +20,6 @@
               "sweetalert2",
               "raf",
               "core-js",
-              "html2canvas",
               "rgbcolor",
               "dot-object"
             ],
@@ -35,8 +34,6 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/faviconIbk.ico", "src/assets"],
             "styles": [
-              "node_modules/ngx-spinner/animations/square-jelly-box.css",
-              "node_modules/ngx-spinner/animations/ball-scale-pulse.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/primeicons/primeicons.css",
@@ -49,8 +46,6 @@
               "node_modules/jquery/dist/jquery.js",
               "node_modules/popper.js/dist/umd/popper.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
-              "node_modules/core-js/client/shim.min.js",
-              "node_modules/chart.js/dist/chart.umd.js",
               "libs/fingerprint.js"
             ],
             "stylePreprocessorOptions": {
