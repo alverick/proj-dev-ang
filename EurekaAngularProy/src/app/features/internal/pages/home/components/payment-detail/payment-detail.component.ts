@@ -30,7 +30,7 @@ export class PaymentDetailComponent implements OnInit {
   debtId: number;
   status: string;
   currency: string;
-  companyDetails$ = this.store.select(companyFeature.selectDetails);
+  useAmountLimits$ = this.store.select(companyFeature.selectUseAmountLimits);
 
   constructor(
     private transaction: TransactionService,

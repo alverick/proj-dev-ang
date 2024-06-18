@@ -65,7 +65,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       this.setCategorySelected();
     }
-    if (has('edit', changes)) {
+    if (has('passwordNoEditable', changes)) {
       this.setForm();
     }
   }

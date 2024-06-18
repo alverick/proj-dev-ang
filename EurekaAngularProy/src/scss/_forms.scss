@@ -42,7 +42,6 @@ body {
 
   .p-component {
     font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-    font-size: 16px;
   }
 
   .p-dropdown {
@@ -731,5 +730,11 @@ body {
 
   .p-badge.p-badge-danger {
     @apply tw-bg-extended-watermelon-1;
+  }
+
+  .p-chip {
+    &.p-chip-primary {
+      @apply tw-bg-primary-green-1 tw-text-white;
+    }
   }
 }

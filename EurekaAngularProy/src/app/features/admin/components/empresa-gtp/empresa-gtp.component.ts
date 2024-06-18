@@ -16,9 +16,8 @@ import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 
 import { emailRegex } from '../../../../shared/constants/patterns';
-import { type IEntryModel } from '../../../../shared/models';
+import { statusCodes } from '../../../../shared/constants/services';
 import { ICompanyData } from '../../../../shared/models/company-data';
-import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 
 @Component({
   selector: 'cs-empresa-gtp',
@@ -26,10 +25,9 @@ import { AfiliacionService } from '../../../../shared/services/afiliacion.servic
   styleUrls: ['./empresa-gtp.component.scss'],
 })
 export class EmpresaGTPComponent implements OnInit {
-  public _enterprise: ICompanyData;
   formGroup: UntypedFormGroup;
   submitted = false;
-  rubros: IEntryModel[] = [];
+  statusCodes: Record<string, number> = statusCodes;
   errorMessages = {
     email: {
       required: 'El correo electrónico  es obligatorio',
@@ -42,33 +40,25 @@ export class EmpresaGTPComponent implements OnInit {
       minlength: 'El teléfono o celular debe tener mínimo 9 dígitos',
     },
   };
-  @Input() set enterprise(value: ICompanyData) {
-    this._enterprise = value;
-  }
-  @Output() grabar = new EventEmitter<any>();
 
-  constructor(
-    public afiliacionService: AfiliacionService,
-    private formBuilder: UntypedFormBuilder
-  ) {}
+  @Input() enterprise: ICompanyData;
+  @Output() grabar = new EventEmitter<ICompanyData>();
+
+  constructor(private formBuilder: UntypedFormBuilder) {}
 
   ngOnInit() {
-    this.afiliacionService.GetRubrosAll().subscribe((d) => {
-      this.rubros = d;
-    });
-
     const {
       NombreApproved,
       ruc,
-      entry,
       movilOperator,
       email,
       newName,
       movilNumber,
       newNameGTPStatus,
-    } = this._enterprise;
+      entryName,
+    } = this.enterprise;
 
-    const isNotEditable = newNameGTPStatus !== 1;
+    const isNotEditable = newNameGTPStatus !== statusCodes.APPROVED;
 
     let newNombreApprovedValue: string;
     switch (NombreApproved) {
@@ -94,7 +84,7 @@ export class EmpresaGTPComponent implements OnInit {
         Validators.required,
       ],
       entry: new UntypedFormControl({
-        value: entry,
+        value: entryName,
         disabled: true,
       }),
       email: new UntypedFormControl(
@@ -128,10 +118,6 @@ export class EmpresaGTPComponent implements OnInit {
     });
   }
 
-  get f(): any {
-    return this.formGroup.controls;
-  }
-
   getErrorMessage(
     controlName: UntypedFormControl | AbstractControl,
     errors: {
@@ -151,15 +137,16 @@ export class EmpresaGTPComponent implements OnInit {
     this.submitted = true;
     const { valid, value } = this.formGroup;
     if (valid) {
-      const isNotEditable = this._enterprise.newNameGTPStatus !== 1;
+      const isNotEditable =
+        this.enterprise.newNameGTPStatus !== statusCodes.APPROVED;
       let dataEnterprise: ICompanyData;
       if (isNotEditable) {
         dataEnterprise = {
-          ...this._enterprise,
+          ...this.enterprise,
           NombreApproved: value.NewNameApproved === 'S',
         };
       } else {
-        dataEnterprise = { ...this._enterprise, ...value };
+        dataEnterprise = { ...this.enterprise, ...value };
       }
       this.grabar.emit(dataEnterprise);
     }

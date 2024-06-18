@@ -6,13 +6,14 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { UntypedFormGroup } from '@angular/forms';
 import { isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-import { IErrorMessages } from '../../models/forms';
+import { CurrenciesCodes, CurrenciesLabels } from '../../constants/currencies';
+import { type ModelFormGroup, IErrorMessages } from '../../models/forms';
 import { type CompanyAccounts } from '../../services/company.service';
+import { type ServiceFormValue } from '../../services/services-forms.service';
 
 @Component({
   selector: 'cs-service-step-info',
@@ -20,9 +21,10 @@ import { type CompanyAccounts } from '../../services/company.service';
 })
 export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   $destroy = new Subject();
+  disclaimerCommissionDollars = false;
   @Output() sendForm = new EventEmitter<object>();
   @Output() cancel = new EventEmitter();
-  @Input() form: UntypedFormGroup;
+  @Input() form: ModelFormGroup<ServiceFormValue>;
   @Input() errorMessages: IErrorMessages;
   @Input() accounts: CompanyAccounts[];
   @Input() showCancel = false;
@@ -34,14 +36,22 @@ export class ServiceStepInfoComponent implements OnInit, OnDestroy {
         takeUntil(this.$destroy),
         filter((value) => isNotNil(value))
       )
-      .subscribe(({ currency = '', id = '', number = '' }) => {
-        if (isNotNilOrEmpty(number)) {
-          const accountNumber = `${number.substr(0, 13)} (${
-            currency === '001' ? 'Soles' : 'Dólares'
+      .subscribe((accountID) => {
+        if (isNotNilOrEmpty(accountID)) {
+          const selectedAccount = this.accounts.find(
+            (account) => account.id === accountID
+          );
+          const accountNumber = `${selectedAccount.number.substring(0, 13)} (${
+            selectedAccount.currency === CurrenciesCodes.soles
+              ? CurrenciesLabels.soles
+              : CurrenciesLabels.dollars
           })`;
+
+          this.disclaimerCommissionDollars =
+            selectedAccount.currency !== CurrenciesCodes.soles;
           this.form.get('accountNumber').setValue(accountNumber);
-          this.form.get('currency').setValue(currency);
-          this.form.get('idAccount').setValue(id);
+          this.form.get('currency').setValue(selectedAccount.currency);
+          this.form.get('idAccount').setValue(accountID);
         }
       });
   }

@@ -31,7 +31,8 @@
     </mat-form-field>
     <mat-radio-group
       *ngIf="
-        _enterprise.newNameGTPStatus === 0 || _enterprise.newNameGTPStatus === 2
+        enterprise.newNameGTPStatus === statusCodes.NEW ||
+        enterprise.newNameGTPStatus === statusCodes.EDITED
       "
       formControlName="NewNameApproved"
       aria-label="Select an option"
@@ -46,22 +47,24 @@
     <mat-error
       class="messsage-error"
       *ngIf="
-        f.NewNameApproved.invalid &&
-        f.NewNameApproved.hasError('required') &&
-        (_enterprise.newNameGTPStatus === 0 ||
-          _enterprise.newNameGTPStatus === 2)
+        formGroup.get('NewNameApproved').invalid &&
+        formGroup.get('NewNameApproved').hasError('required') &&
+        (enterprise.newNameGTPStatus === statusCodes.NEW ||
+          enterprise.newNameGTPStatus === statusCodes.EDITED)
       "
       >Debe seleccionar una opción</mat-error
     >
   </div>
   <div class="input-text form-group">
     <mat-form-field class="w-100">
-      <mat-label>Rubro</mat-label>
-      <mat-select formControlName="entry">
-        <mat-option *ngFor="let r of rubros" [value]="r.code">
-          {{ r.name }}
-        </mat-option>
-      </mat-select>
+      <input
+        class="input-text"
+        matInput
+        [readonly]="true"
+        type="text"
+        formControlName="entry"
+        placeholder="Rubro"
+      />
     </mat-form-field>
   </div>
   <div class="form-group">
@@ -112,9 +115,9 @@
   </div>
   <div
     *ngIf="
-      _enterprise.newNameGTPStatus === 0 ||
-      _enterprise.newNameGTPStatus === 1 ||
-      _enterprise.newNameGTPStatus === 2
+      enterprise.newNameGTPStatus === statusCodes.NEW ||
+      enterprise.newNameGTPStatus === statusCodes.APPROVED ||
+      enterprise.newNameGTPStatus === statusCodes.EDITED
     "
     class="mt-4 pb-4"
   >
