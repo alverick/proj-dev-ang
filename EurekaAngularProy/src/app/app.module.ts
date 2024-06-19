@@ -23,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { DialogComponent } from './features/internal/pages/home/components/dialog';
 import { PopoverComponent } from './features/internal/pages/home/components/popover/popover.component';
 import { MockService } from './mock.service';
+import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
 import { LoadBarComponent } from './shared/components/load-bar/load-bar.component';
 import { LoadFileComponent } from './shared/components/load-file/load-file.component';
 import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
@@ -47,6 +48,7 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
     AppComponent,
     BlockCopyPasteDirective,
     DialogComponent,
+    FabWhatsappComponent,
     PopoverComponent,
     LoadFileComponent,
     LoadBarComponent,
