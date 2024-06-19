@@ -30,6 +30,7 @@ export class ServiceConfigurationPage {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
+  blockAction = false;
   constructor(
     private router: Router,
     protected companyServices: CompanyServicesService,
@@ -39,10 +40,19 @@ export class ServiceConfigurationPage {
   ) {}
 
   onSubmit() {
-    this.companyServices.saveService().subscribe((result) => {
-      this.logger.debug('-> result', result);
-      void this.router.navigate([internalFullRoutingNames.SERVICES]);
-    });
+    if (!this.blockAction) {
+      this.blockAction = true;
+      this.companyServices.saveService().subscribe({
+        next: (result) => {
+          this.logger.debug('-> result', result);
+          this.blockAction = false;
+          void this.router.navigate([internalFullRoutingNames.SERVICES]);
+        },
+        error: () => {
+          this.blockAction = false;
+        },
+      });
+    }
   }
 
   onCancel() {

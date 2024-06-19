@@ -37,6 +37,7 @@
         >Selecciona la cuenta que se asociará al servicio<p-dropdown
           [options]="accounts"
           optionLabel="number"
+          optionValue="id"
           class="tw-w-full"
           styleClass="tw-w-full"
           formControlName="account"
@@ -62,11 +63,19 @@
           >
           </p-checkbox>
           <ng-container label-inline
-            ><div class="description tw-flex tw-justify-between">
-              <div class="tw-text-base">Canales Digitales</div>
-              <div class="tw-text-primary-green-1 tw-text-xs">Gratis</div>
+            ><div
+              class="description tw-flex tw-flex-col md:tw-flex-row tw-gap-2 tw-justify-between tw-w-72 md:tw-w-96"
+            >
+              <div>
+                <div class="tw-text-base">Canales Digitales</div>
+                <div class="sub">Interbank APP y Banca por Internet</div>
+              </div>
+              <p-chip
+                icon="pi pi-money-bill"
+                label="S/ 2.00"
+                styleClass="p-chip-primary tw-text-primary-green-1 tw-text-sm tw-whitespace-nowrap"
+              ></p-chip>
             </div>
-            <div class="sub">Interbank APP y Banca por Internet</div>
           </ng-container>
         </cs-label-control>
       </div>
@@ -83,18 +92,36 @@
           >
           </p-checkbox>
           <ng-container label-inline
-            ><div class="description tw-flex tw-justify-between">
-              <div class="tw-text-base">Agentes</div>
+            ><div
+              class="description tw-flex tw-flex-col md:tw-flex-row tw-gap-2 tw-justify-between tw-w-72 md:tw-w-96"
+            >
+              <div>
+                <div class="tw-text-base">Agentes</div>
+                <div class="sub">Lima y provincia</div>
+              </div>
+              <p-chip
+                icon="pi pi-money-bill"
+                label="S/ 1.50"
+                styleClass="p-chip-primary tw-text-primary-green-1 tw-text-sm tw-whitespace-nowrap"
+              ></p-chip>
             </div>
-            <div class="sub">Lima y provincia</div>
           </ng-container>
         </cs-label-control>
       </div>
       <div class="form-elm tw-pt-6">
         <cs-message-alert class="" mode="info"
           ><div class="tw-text-xs">
-            En caso selecciones el canal Agentes, tu cliente tendrá que pagar S/
-            1.50 de comisión por operación.
+            En el caso de canales digitales, se aplicará una comisión de S/2.00
+            por operación en tu cuenta. Para obtener más información, consulta
+            nuestros Términos y Condiciones.
+          </div></cs-message-alert
+        >
+      </div>
+      <div *ngIf="disclaimerCommissionDollars" class="form-elm tw-pt-6">
+        <cs-message-alert class="" mode="info"
+          ><div class="tw-text-xs">
+            Para el caso de cuentas en dólares, se aplicará la comisión según el
+            tipo de cambio vigente.
           </div></cs-message-alert
         >
       </div>

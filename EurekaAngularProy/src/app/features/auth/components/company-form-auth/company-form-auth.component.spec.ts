@@ -1,6 +1,5 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockBuilder } from 'ng-mocks';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
@@ -10,6 +9,7 @@ import { LabelControlComponent } from '../../../../shared/components/label-contr
 import { MessageAlertComponent } from '../../../../shared/components/message-alert/message-alert.component';
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import type { IEntryModel } from '../../../../shared/models';
+import { TrackingService } from '../../../../shared/services';
 import { AffiliationFormsService } from '../../services';
 import type { AuthForm } from '../../services/affiliation-forms.service';
 import { CompanyFormAuthComponent } from './company-form-auth.component';
@@ -66,6 +66,7 @@ describe('CompanyFormAuthComponent', () => {
       .keep(AffiliationFormsService)
       .mock(LabelControlComponent)
       .mock(MessageAlertComponent)
+      .mock(TrackingService)
       .mock(DropdownModule)
       .mock(PasswordModule)
       .keep(FormsModule)

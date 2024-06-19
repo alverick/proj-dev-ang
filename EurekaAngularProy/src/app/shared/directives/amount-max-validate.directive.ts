@@ -1,12 +1,12 @@
 import { Directive, Input } from '@angular/core';
 import {
-  AbstractControl,
+  type AbstractControl,
+  type ValidationErrors,
   NG_VALIDATORS,
-  ValidationErrors,
 } from '@angular/forms';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
-import { CurrencyWithLimit } from '../constants/currencies';
+import { type CurrencyWithLimit } from '../constants/currencies';
 
 @Directive({
   selector: '[csAmountMaxValidate]',
@@ -21,9 +21,9 @@ import { CurrencyWithLimit } from '../constants/currencies';
 export class AmountMaxValidateDirective {
   @Input() maxAmountLimits: CurrencyWithLimit[] = [];
   @Input() currencySymbol = '';
-  @Input() isNewFlow = false;
+  @Input() useLimits = false;
   validate(control: AbstractControl<string>): ValidationErrors {
-    if (!this.isNewFlow || isNilOrEmpty(control.value)) {
+    if (!this.useLimits || isNilOrEmpty(control.value)) {
       return null;
     }
     const amount = parseFloat(control.value);

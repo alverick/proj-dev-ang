@@ -6,7 +6,7 @@ import { isNotEmpty } from 'ramda-adjunct';
 import { type ModelFormGroup } from '../models/forms';
 import { nameInvalid } from '../validators/name-invalid.validator';
 
-export interface ServiceFormValue {
+export type ServiceFormValue = {
   name: string;
   account: string;
   idAccount: string;
@@ -14,7 +14,7 @@ export interface ServiceFormValue {
   accountNumber: string;
   useAppWeb: boolean;
   useAgent: boolean;
-}
+};
 
 export interface ServiceConfigurationForm {
   dataType: ServiceTypeType;
@@ -55,7 +55,7 @@ export class ServicesFormsService {
   serviceForm: ModelFormGroup<ServiceFormValue>;
   serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
   editServiceForm: ModelFormGroup<ServiceEditForm>;
-  defaultServiceType: ServiceTypeType = ServiceTypes.complete;
+  defaultServiceType: ServiceTypeType = ServiceTypes.withoutData;
 
   editNameValidators = [
     Validators.required,

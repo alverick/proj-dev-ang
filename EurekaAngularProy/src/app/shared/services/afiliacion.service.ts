@@ -144,8 +144,4 @@ export class AfiliacionService {
       }
     }
   }
-
-  GetTipoCambio(): Observable<number> {
-    return of(3.37);
-  }
 }
