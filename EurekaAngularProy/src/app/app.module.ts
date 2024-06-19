@@ -26,6 +26,7 @@ import { PopoverComponent } from './features/internal/pages/home/components/popo
 import { UploadProgressComponent } from './features/internal/pages/home/components/upload-progress';
 import { ValidationComponent } from './features/internal/pages/home/components/validation';
 import { MockService } from './mock.service';
+import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
 import { LoadBarComponent } from './shared/components/load-bar/load-bar.component';
 import { LoadFileComponent } from './shared/components/load-file/load-file.component';
 import { BlockCopyPasteDirective } from './shared/directives/block-copy-paste.directive';
@@ -53,6 +54,7 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
     BlockCopyPasteDirective,
     EmailDirective,
     DialogComponent,
+    FabWhatsappComponent,
     UploadProgressComponent,
     ValidationComponent,
     PopoverComponent,

@@ -62,7 +62,6 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { ControlRulesPoliciesComponent } from './components/control-rules-policies/control-rules-policies.component';
-import { FabWhatsappComponent } from './components/fab-whatsapp/fab-whatsapp.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LabelControlComponent } from './components/label-control/label-control.component';
@@ -189,7 +188,6 @@ const UI_MODULES = [
     SidebarServiceComponent,
     ...DIRECTIVES,
     ...PIPES,
-    FabWhatsappComponent,
     ControlRulesPoliciesComponent,
   ],
   exports: [
@@ -219,7 +217,6 @@ const UI_MODULES = [
     ...PIPES,
     PushModule,
     LetModule,
-    FabWhatsappComponent,
     ControlRulesPoliciesComponent,
   ],
 })
