@@ -1,10 +1,3 @@
-import {
-  animate,
-  query,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { type OnInit, Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -14,56 +7,13 @@ import { isNil } from 'ramda';
 import { delay } from 'rxjs';
 
 import { appFullRoutingNames } from './app-routing.names';
+import { fadeAnimation } from './shared/animations/page-transitions';
 import { primeng } from './shared/lang/es';
 import {
   AdobeLaunchProviderService,
   NewRelicProviderService,
 } from './shared/services';
 import { LoginService } from './shared/services/login.service';
-
-export const fadeAnimation = trigger('fadeAnimation', [
-  transition('* => *', [
-    query(
-      ':enter',
-      [
-        style({
-          opacity: 0,
-          position: 'absolute',
-          height: '100%',
-          width: '100%',
-        }),
-      ],
-      { optional: true }
-    ),
-    query(
-      ':leave',
-      // here we apply a style and use the animate function to apply the style over 0.3 seconds
-      [
-        style({
-          opacity: 1,
-          position: 'absolute',
-          height: '100%',
-          width: '100%',
-        }),
-        animate('0.4s', style({ opacity: 0 })),
-      ],
-      { optional: true }
-    ),
-    query(
-      ':enter',
-      [
-        style({
-          opacity: 0,
-          position: 'relative',
-          height: '100%',
-          width: '100%',
-        }),
-        animate('0.4s', style({ opacity: 1 })),
-      ],
-      { optional: true }
-    ),
-  ]),
-]);
 
 @Component({
   selector: 'cs-root',
