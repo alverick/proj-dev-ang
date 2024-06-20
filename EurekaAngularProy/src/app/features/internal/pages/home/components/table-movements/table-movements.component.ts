@@ -13,10 +13,11 @@ import { NGXLogger } from 'ngx-logger';
 import { type LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
-import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
-import { filter } from 'rxjs/operators';
+import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
 
 import { type CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
+import { ServiceTypes } from '../../../../../../shared/constants/services';
+import { type ServiceTypeType } from '../../../../../../shared/models';
 import { type Debts } from '../../../../../../shared/models/debts';
 import {
   AdobeEvent,
@@ -43,17 +44,30 @@ interface IStatusRow {
   text: string;
 }
 
+type TableCol = {
+  field: string;
+  header: string;
+  editable: boolean;
+  serviceType: ServiceTypeType[];
+  checkEditableField: string;
+};
+
 @Component({
   selector: 'cs-table-movements',
   templateUrl: './table-movements.component.html',
   styleUrls: ['./table-movements.component.scss'],
 })
 export class TableMovementsComponent implements OnInit, OnChanges {
-  cols = [
+  cols: Partial<TableCol>[] = [
     {
       field: 'firstName',
       header: 'Cliente',
       editable: true,
+      serviceType: [
+        ServiceTypes.complete,
+        ServiceTypes.partial,
+        ServiceTypes.withoutData,
+      ],
       checkEditableField: 'canEditFirstName',
     },
     { field: 'service', header: 'Servicio' },
@@ -61,18 +75,25 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     {
       field: 'emissionDate',
       header: 'F. emisión',
+      serviceType: [
+        ServiceTypes.complete,
+        ServiceTypes.partial,
+        ServiceTypes.withoutData,
+      ],
       editable: true,
       checkEditableField: 'canEditEmissionDate',
     },
     {
       field: 'dueDate',
       header: 'F. vcto.',
+      serviceType: [ServiceTypes.complete],
       editable: true,
       checkEditableField: 'canEditDueDate',
     },
     {
       field: 'totalAmount',
       header: 'Total',
+      serviceType: [ServiceTypes.complete],
       editable: true,
       checkEditableField: 'canEditAmount',
     },
@@ -345,8 +366,10 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   }
 
   validateRow(data) {
-    const fields = this.cols.filter((field) =>
-      isNotNil(field.checkEditableField)
+    const fields = this.cols.filter(
+      (field) =>
+        isNotNil(field.checkEditableField) &&
+        field.serviceType.includes(data.serviceType)
     );
 
     for (const field of fields) {
