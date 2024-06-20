@@ -128,3 +128,8 @@ export const statusCodes = {
   EDITED: 2,
   REJECTED: 3,
 };
+export const ServiceTypes = {
+  withoutData: 'S',
+  partial: 'P',
+  complete: 'C',
+} as const;

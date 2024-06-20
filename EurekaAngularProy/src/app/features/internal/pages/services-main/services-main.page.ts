@@ -14,15 +14,13 @@ import {
   type CurrencyWithLimit,
   currencies,
 } from '../../../../shared/constants/currencies';
+import { ServiceTypes } from '../../../../shared/constants/services';
 import {
   type AmountLimit,
   type IDataEnterpriseModel,
   collectionRestrictionTypes,
 } from '../../../../shared/models/data-enterprise.model';
-import {
-  ServicesFormsService,
-  ServiceTypes,
-} from '../../../../shared/services/services-forms.service';
+import { ServicesFormsService } from '../../../../shared/services';
 import {
   internalFullRoutingChildNames,
   internalFullRoutingNames,

@@ -9,13 +9,12 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { type ISelectOptions } from '../../constants/company';
-import { debtorCodeCustomEmpty } from '../../constants/services';
+import { debtorCodeCustomEmpty, ServiceTypes } from '../../constants/services';
+import { type ServiceTypeType } from '../../models';
 import { IErrorMessages, ModelFormGroup } from '../../models/forms';
 import {
   type ServiceConfigurationForm,
   type ServiceDebt,
-  type ServiceTypeType,
-  ServiceTypes,
 } from '../../services/services-forms.service';
 
 @Component({
