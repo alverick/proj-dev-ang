@@ -12,7 +12,10 @@ import {
   paymentTypeOptions,
   statusCodes,
 } from '../../../shared/constants/services';
-import { type IServiceRemoteModel } from '../../../shared/models';
+import {
+  type IServiceRemoteModel,
+  type ServiceTypeType,
+} from '../../../shared/models';
 import { type ModelFormGroup } from '../../../shared/models/forms';
 import {
   CompanyService,
@@ -24,7 +27,6 @@ import {
   type ServiceConfigurationForm,
   type ServiceEditForm,
   type ServiceFormValue,
-  type ServiceTypeType,
 } from '../../../shared/services/services-forms.service';
 import {
   type ActionEventProperties,

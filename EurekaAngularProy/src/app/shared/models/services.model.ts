@@ -1,3 +1,5 @@
+import { type ServiceTypes } from '../constants/services';
+
 export interface IServiceModel {
   res?: string;
   id?: number;
@@ -81,3 +83,5 @@ export interface ServicePostData {
   deleted: any[];
   services: Partial<IServiceRemoteModel>[];
 }
+
+export type ServiceTypeType = (typeof ServiceTypes)[keyof typeof ServiceTypes];
