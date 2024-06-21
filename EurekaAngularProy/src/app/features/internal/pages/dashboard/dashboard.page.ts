@@ -211,7 +211,6 @@ export class DashboardPage implements OnInit {
   }
 
   sendEmail() {
-    console.log('sendEmail');
     this.showModal = true;
   }
 

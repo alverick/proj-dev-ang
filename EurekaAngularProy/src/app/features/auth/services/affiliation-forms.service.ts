@@ -49,7 +49,6 @@ export class AffiliationFormsService {
   ];
 
   constructor(private formBuilder: FormBuilder) {
-    // console.log('constructor', this.authForm, formBuilder);
     const emailValidators = [
       Validators.required,
       Validators.pattern(
@@ -110,7 +109,6 @@ export class AffiliationFormsService {
         validators: MustMatch('password', 'passwordConfirm'),
       }
     );
-    // console.log('constructor 2', this.authForm);
   }
 
   resetCompanyForms() {

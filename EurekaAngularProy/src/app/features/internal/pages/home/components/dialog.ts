@@ -120,7 +120,6 @@ export class DialogComponent implements OnInit {
             this.verifyStatus();
           },
           error: (err) => {
-            console.log(err);
             this.excelService.statusUpload = false;
             let message = err.message || 'Ha ocurrido un error';
             if (err.status === 400) {
