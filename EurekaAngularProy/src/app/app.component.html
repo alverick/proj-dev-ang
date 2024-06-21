@@ -1,4 +1,8 @@
-<div [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''">
+<div
+  [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''"
+  (@fadeAnimation.start)="onAnimationEvent($event)"
+  (@fadeAnimation.done)="onAnimationEvent($event)"
+>
   <router-outlet #o="outlet"></router-outlet>
   <cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
   <ngx-spinner

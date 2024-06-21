@@ -1,19 +1,25 @@
+import { type AnimationEvent } from '@angular/animations';
 import { type OnInit, Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
 import { isNil } from 'ramda';
 import { delay } from 'rxjs';
 
 import { appFullRoutingNames } from './app-routing.names';
-import { fadeAnimation } from './shared/animations/page-transitions';
+import {
+  fadeAnimation,
+  phasesStateName,
+} from './shared/animations/page-transitions';
 import { primeng } from './shared/lang/es';
 import {
   AdobeLaunchProviderService,
   NewRelicProviderService,
 } from './shared/services';
 import { LoginService } from './shared/services/login.service';
+import { AppConfigActions } from './store/actions/app-config.actions';
 
 @Component({
   selector: 'cs-root',
@@ -26,6 +32,7 @@ export class AppComponent implements OnInit {
   title = 'Cobro Simple – Interbank';
   showButton = false;
   expand = false;
+  appLoaded = false;
 
   constructor(
     matIconRegistry: MatIconRegistry,
@@ -33,7 +40,8 @@ export class AppComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     adobeLaunch: AdobeLaunchProviderService,
     newrelic: NewRelicProviderService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {
     adobeLaunch.startTracking();
     newrelic.startTracking();
@@ -77,6 +85,15 @@ export class AppComponent implements OnInit {
       domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
       { viewBox: '0 0 24 24' }
     );
+  }
+
+  onAnimationEvent(event: AnimationEvent) {
+    if (event.phaseName === phasesStateName.start && !this.appLoaded) {
+      this.store.dispatch(AppConfigActions.setLoader({ show: true }));
+    }
+    if (event.phaseName === phasesStateName.done) {
+      this.appLoaded = true;
+    }
   }
 
   detectLayoutForm() {

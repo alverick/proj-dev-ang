@@ -6,6 +6,11 @@ import {
   trigger,
 } from '@angular/animations';
 
+export const phasesStateName = {
+  start: 'start',
+  done: 'done',
+} as const;
+
 export const fadeAnimation = trigger('fadeAnimation', [
   transition('* => *', [
     query(
@@ -22,7 +27,6 @@ export const fadeAnimation = trigger('fadeAnimation', [
     ),
     query(
       ':leave',
-      // here we apply a style and use the animate function to apply the style over 0.3 seconds
       [
         style({
           opacity: 1,
@@ -30,7 +34,7 @@ export const fadeAnimation = trigger('fadeAnimation', [
           height: '100%',
           width: '100%',
         }),
-        animate('0.7s', style({ opacity: 0 })),
+        animate('0.3s', style({ opacity: 0 })),
       ],
       { optional: true }
     ),
@@ -43,7 +47,7 @@ export const fadeAnimation = trigger('fadeAnimation', [
           height: '100%',
           width: '100%',
         }),
-        animate('0.7s', style({ opacity: 1 })),
+        animate('0.3s', style({ opacity: 1 })),
       ],
       { optional: true }
     ),
