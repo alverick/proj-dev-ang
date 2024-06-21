@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { isEmpty, pathOr } from 'ramda';
+import { isEmpty } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 import { type Observable, combineLatest } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -51,24 +51,16 @@ export class AdobeLaunchProviderService implements ProviderService {
           })
         );
     }
-    document.addEventListener('at-library-loaded', (event) => {
-      console.log('Event', event);
-    });
-    document.addEventListener('at-request-succeeded', (event) => {
-      console.log('Event at-request-succeeded', event);
-    });
-    document.addEventListener('at-content-rendering-succeeded', (event) => {
-      console.log('Event at-content-rendering-succeeded', event);
+    document.addEventListener('at-content-rendering-succeeded', () => {
       this.store.dispatch(AppConfigActions.setLoader({ show: false }));
     });
-    document.addEventListener('at-content-rendering-start', (event) => {
-      console.log('Event at-content-rendering-start', event);
-      this.store.dispatch(AppConfigActions.setLoader({ show: true }));
+
+    document.addEventListener('at-content-rendering-failed', () => {
+      this.store.dispatch(AppConfigActions.setLoader({ show: false }));
     });
   }
 
   trackPage(payload: Partial<TrackEventProperties>) {
-    this.store.dispatch(AppConfigActions.setLoader({ show: true }));
     this.runSatelliteEvent(AdobeEvent.pageTrack, payload);
   }
 
@@ -81,13 +73,6 @@ export class AdobeLaunchProviderService implements ProviderService {
     payload: Partial<TrackEventProperties>
   ) {
     try {
-      console.log(
-        'runSatelliteEvent',
-        event,
-        payload,
-        Date.now(),
-        pathOr('nulled', ['adobe', 'target'], window)
-      );
       if ('undefined' !== typeof window._satellite && window._satellite) {
         window._satellite.track(event, payload);
       }
