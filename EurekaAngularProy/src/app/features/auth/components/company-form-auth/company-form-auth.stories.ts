@@ -105,7 +105,6 @@ class FormDemoComponent implements OnChanges {
       },
       { emitEvent: false }
     );
-    console.log(this.companyName);
   }
 
   ngOnChanges(changes: SimpleChanges) {
