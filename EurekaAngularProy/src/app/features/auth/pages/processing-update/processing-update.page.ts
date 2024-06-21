@@ -7,7 +7,6 @@ import { AffiliationService } from '../../services';
 @Component({
   selector: 'cs-processing-update',
   templateUrl: './processing-update.page.html',
-  styleUrls: ['./processing-update.page.scss'],
 })
 export class ProcessingUpdatePage implements OnInit {
   public email: string;

@@ -22,6 +22,12 @@
                 </table>
                 <perfect-scrollbar class="ps-body">
                   <table class="table">
+                    <thead class="tw-hidden">
+                      <tr>
+                        <th class="c1" scope="col">Correo</th>
+                        <th class="c2" scope="col">Editar</th>
+                      </tr>
+                    </thead>
                     <tbody>
                       <tr
                         *ngFor="let cor of correos; let i = index"
@@ -74,10 +80,12 @@
                 ><img
                   *ngIf="!Formulario"
                   class="tw-inline"
-                  src="../../../../../assets/images/plus.svg" /><img
+                  src="assets/images/plus.svg"
+                  alt="Agregar" /><img
                   *ngIf="Formulario"
                   class="tw-inline"
-                  src="../../../../../assets/images/plus-gray.svg"
+                  src="assets/images/plus-gray.svg"
+                  alt="Agregar"
               /></span>
               Agregar otro Mail
             </button>
@@ -102,18 +110,19 @@
             <div class="cuadro-form ppr-5 ppl-5 pt-4 pb-3 bg-white">
               <div class="texto-azul mb-2">
                 {{ titleCorreo }}
-                <div
+                <button
                   style="float: right"
                   (click)="Formulario = false; indiceActual = -1"
                   class="mano font-cerrar"
                 >
                   <img
                     class="tw-inline"
-                    src="../../../../../assets/images/cerrar.svg"
+                    src="assets/images/cerrar.svg"
+                    alt="Cerrar"
                   />
                   <br />
                   Cerrar
-                </div>
+                </button>
               </div>
 
               <br />

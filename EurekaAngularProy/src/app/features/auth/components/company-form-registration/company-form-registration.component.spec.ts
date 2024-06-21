@@ -17,6 +17,7 @@ import {
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../../shared/services';
+import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
 import { AffiliationFormsService, AffiliationService } from '../../services';
 import { CompanyFormRegistrationComponent } from './company-form-registration.component';
@@ -46,6 +47,7 @@ describe('CompanyFormRegistrationComponent', () => {
       providers: [
         AffiliationFormsService,
         AffiliationService,
+        MockProvider(LoginService),
         CompanyService,
         MockProvider(DigitalDataService),
         EnterpriseHeadingService,

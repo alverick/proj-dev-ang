@@ -1,10 +1,12 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockProvider } from 'ng-mocks';
 
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
+import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
 import { InternalHeaderComponent } from './internal-header.component';
 
@@ -16,7 +18,12 @@ describe('InternalHeaderComponent', () => {
     void TestBed.configureTestingModule({
       declarations: [HeaderComponent, InternalHeaderComponent],
       imports: [HttpClientTestingModule, RouterTestingModule],
-      providers: [AfiliacionService, ExcelService, NotifyService],
+      providers: [
+        AfiliacionService,
+        ExcelService,
+        NotifyService,
+        MockProvider(LoginService),
+      ],
     }).compileComponents();
   });
 

@@ -95,4 +95,3 @@ $cs-app-theme: mat.define-light-theme((
 @include mat.all-legacy-component-themes($cs-app-theme);
 
 @import '@angular/cdk/overlay-prebuilt.css';
-//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';

@@ -9,7 +9,7 @@ import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Store } from '@ngrx/store';
 import { forEachObjIndexed } from 'ramda';
-import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNilOrEmpty, isNotEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
@@ -75,7 +75,7 @@ export class DebtComponent implements OnInit {
   limitAmountMax = 0;
   debtorCodeChanged = new Subject<boolean>();
   loaderDebtorCode = false;
-  notAlphanumericRegex = new RegExp('^[0-9a-zA-Z]+$');
+  notAlphanumericRegex = /^[0-9a-zA-Z]+$/;
 
   ngOnInit(): void {
     this.nuevaDeuda.service = this.excelService.service.name;
@@ -152,125 +152,53 @@ export class DebtComponent implements OnInit {
   }
 
   grabarNuevo() {
+    console.log(this.nuevaDeuda.errores);
+    this.nuevaDeuda.errores = {};
     if (!this.nuevaDeuda.service) {
       this.nuevaDeuda.errores.service = 'Debe escoger un servicio';
-    } else {
-      delete this.nuevaDeuda.errores.emissionDate;
     }
 
-    if (!this.nuevaDeuda.emissionDate) {
+    const emidate = new Date(this.nuevaDeuda.emissionDate).getFullYear();
+    if (!this.nuevaDeuda.emissionDate || emidate < 2000 || emidate > 2050) {
       this.nuevaDeuda.errores.emissionDate = 'Fecha Inválida';
-    } else {
-      const emidate = new Date(this.nuevaDeuda.emissionDate).getFullYear();
-      if (emidate < 2000 || emidate > 2050) {
-        this.nuevaDeuda.errores.emissionDate = 'Fecha Inválida';
-      } else {
-        delete this.nuevaDeuda.errores.emissionDate;
-      }
     }
 
     if (!this.isPartial) {
-      if (!this.nuevaDeuda.dueDate) {
-        this.nuevaDeuda.errores.dueDate = 'Fecha Inválida';
-      } else {
-        const dueyear = new Date(this.nuevaDeuda.dueDate).getFullYear();
-        if (dueyear < 2000 || dueyear > 2050) {
-          this.nuevaDeuda.errores.dueDate = 'Fecha Inválida';
-        } else if (
-          this.nuevaDeuda.emissionDate &&
-          this.nuevaDeuda.dueDate < this.nuevaDeuda.emissionDate
-        ) {
-          this.nuevaDeuda.errores.dueDate =
-            'No debe ser menor a la fecha de emisión';
-        } else {
-          delete this.nuevaDeuda.errores.dueDate;
-        }
-      }
-
-      if (this.nuevaDeuda.concept) {
-        const re = new RegExp('^[ 0-9a-zA-Z]+$');
-        if (this.nuevaDeuda.concept.length < 2) {
-          this.nuevaDeuda.errores.concept =
-            'Debe tener 2 carácteres como mínimo';
-        } else if (!re.test(this.nuevaDeuda.concept)) {
-          this.nuevaDeuda.errores.concept = 'No cumple con el formato';
-        } else {
-          delete this.nuevaDeuda.errores.concept;
-        }
-      } else if (!this.nuevaDeuda.concept) {
-        this.nuevaDeuda.errores.concept = 'Debe ingresar un valor';
-      } else {
-        delete this.nuevaDeuda.errores.concept;
-      }
-
-      const amount = parseFloat(this.nuevaDeuda.amount);
-      if (!amount) {
-        this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
-      } else if (amount < 0) {
-        this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
-      } else if (amount > this.limitAmountMax && this.useAmountLimits) {
-        const amountWithSymbol = this.currencyPipe.transform(
-          this.limitAmountMax,
-          this.excelService.service.currencySymbol
-        );
-        this.nuevaDeuda.errores.amount = `Monto máximo ${amountWithSymbol}`;
-      } else {
-        delete this.nuevaDeuda.errores.amount;
-      }
+      this.validateCompleteData();
     }
 
-    if (this.nuevaDeuda.code) {
-      if (this.nuevaDeuda.code.length < 1) {
-        this.nuevaDeuda.errores.code = 'Debe tener 1 carácter como mínimo';
-      } else if (!this.notAlphanumericRegex.test(this.nuevaDeuda.code)) {
-        this.nuevaDeuda.errores.code = 'No cumple con el formato';
-      } else {
-        delete this.nuevaDeuda.errores.code;
-      }
-    } else if (!this.nuevaDeuda.code) {
-      this.nuevaDeuda.errores.code = 'Debe ingresar un valor';
-    } else {
-      delete this.nuevaDeuda.errores.code;
-    }
+    this.validateCode();
 
     if (this.nuevaDeuda.firstName) {
-      const re = new RegExp("^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$");
+      const re = /^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$/;
       if (this.nuevaDeuda.firstName.length < 3) {
         this.nuevaDeuda.errores.firstName =
           'Debe tener 3 carácteres como mínimo';
       } else if (!re.test(this.nuevaDeuda.firstName)) {
         this.nuevaDeuda.errores.firstName = 'No cumple con el formato';
-      } else {
-        delete this.nuevaDeuda.errores.firstName;
       }
     } else {
       this.nuevaDeuda.errores.firstName = 'Debe ingresar un valor';
     }
 
-    for (const s in this.nuevaDeuda.errores) {
-      if (this.nuevaDeuda.errores[s]) {
-        return;
-      }
+    if (isNotEmpty(this.nuevaDeuda.errores)) {
+      return;
     }
 
-    let debt: any;
-    if (this.isPartial) {
-      debt = {
-        emissionDate: this.nuevaDeuda.emissionDate,
-        code: this.nuevaDeuda.code,
-        firstName: this.nuevaDeuda.firstName,
-      };
-    } else {
-      debt = {
-        emissionDate: this.nuevaDeuda.emissionDate,
-        dueDate: this.nuevaDeuda.dueDate,
-        code: this.nuevaDeuda.code,
-        firstName: this.nuevaDeuda.firstName,
-        concept: this.nuevaDeuda.concept,
-        amount: this.nuevaDeuda.amount,
-      };
-    }
-
+    const debt = this.isPartial
+      ? {
+          emissionDate: this.nuevaDeuda.emissionDate,
+          code: this.nuevaDeuda.code,
+          firstName: this.nuevaDeuda.firstName,
+        }
+      : {
+          emissionDate: this.nuevaDeuda.emissionDate,
+          dueDate: this.nuevaDeuda.dueDate,
+          code: this.nuevaDeuda.code,
+          firstName: this.nuevaDeuda.firstName,
+          concept: this.nuevaDeuda.concept,
+          amount: this.nuevaDeuda.amount,
+        };
     this.homeService
       .postNewDebt(this.nuevaDeuda.service, debt)
       .subscribe((r) => {
@@ -338,6 +266,55 @@ export class DebtComponent implements OnInit {
           });
         }
       });
+  }
+
+  private validateCode() {
+    if (this.nuevaDeuda.code) {
+      if (this.nuevaDeuda.code.length < 1) {
+        this.nuevaDeuda.errores.code = 'Debe tener 1 carácter como mínimo';
+      } else if (!this.notAlphanumericRegex.test(this.nuevaDeuda.code)) {
+        this.nuevaDeuda.errores.code = 'No cumple con el formato';
+      }
+    } else if (!this.nuevaDeuda.code) {
+      this.nuevaDeuda.errores.code = 'Debe ingresar un valor';
+    }
+  }
+
+  private validateCompleteData() {
+    const dueyear = new Date(this.nuevaDeuda.dueDate).getFullYear();
+    if (!this.nuevaDeuda.dueDate || dueyear < 2000 || dueyear > 2050) {
+      this.nuevaDeuda.errores.dueDate = 'Fecha Inválida';
+    } else if (
+      this.nuevaDeuda.emissionDate &&
+      this.nuevaDeuda.dueDate < this.nuevaDeuda.emissionDate
+    ) {
+      this.nuevaDeuda.errores.dueDate =
+        'No debe ser menor a la fecha de emisión';
+    }
+
+    if (this.nuevaDeuda.concept) {
+      const re = /^[ 0-9a-zA-Z]+$/;
+      if (this.nuevaDeuda.concept.length < 2) {
+        this.nuevaDeuda.errores.concept = 'Debe tener 2 carácteres como mínimo';
+      } else if (!re.test(this.nuevaDeuda.concept)) {
+        this.nuevaDeuda.errores.concept = 'No cumple con el formato';
+      }
+    } else if (!this.nuevaDeuda.concept) {
+      this.nuevaDeuda.errores.concept = 'Debe ingresar un valor';
+    }
+
+    const amount = parseFloat(this.nuevaDeuda.amount);
+    if (!amount) {
+      this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
+    } else if (amount < 0) {
+      this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
+    } else if (amount > this.limitAmountMax && this.useAmountLimits) {
+      const amountWithSymbol = this.currencyPipe.transform(
+        this.limitAmountMax,
+        this.excelService.service.currencySymbol
+      );
+      this.nuevaDeuda.errores.amount = `Monto máximo ${amountWithSymbol}`;
+    }
   }
 
   cerrarDialog() {

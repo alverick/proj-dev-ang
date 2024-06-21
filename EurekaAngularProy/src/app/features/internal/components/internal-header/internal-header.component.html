@@ -60,9 +60,9 @@
         >
           <div class="title">
             <div class="text al-left">Notificaciones</div>
-            <div class="mark-all al-right" (click)="markAllNotifications()">
+            <a class="mark-all al-right" (click)="markAllNotifications()">
               Marcar todas como leídas
-            </div>
+            </a>
             <div class="clear-float"></div>
           </div>
 
@@ -74,7 +74,6 @@
             <div
               *ngFor="let msg of notify.messages"
               class="dropdown-item"
-              (click)="$event.stopPropagation()"
               [class.dropdown-item-readed]="!msg.isNew"
             >
               <div
@@ -84,7 +83,7 @@
                 "
               >
                 <div class="espacio">
-                  <div
+                  <a
                     class="notiificacion"
                     title="{{ msg.title }}"
                     (click)="markNotification(msg, $event)"
@@ -94,7 +93,7 @@
                       src="assets/images/badge-bg.svg"
                       alt="Notificación"
                     />
-                  </div>
+                  </a>
                   <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
                   <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
                 </div>
@@ -104,7 +103,7 @@
                 style="background-color: var(--ibk-white)"
               >
                 <div class="espacio">
-                  <div
+                  <a
                     class="notiificacion"
                     title="{{ msg.title }}"
                     (click)="markNotification(msg, $event)"
@@ -114,7 +113,7 @@
                       src="assets/images/ok.svg"
                       alt="ok"
                     />
-                  </div>
+                  </a>
                   <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
                   <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
                 </div>
@@ -130,13 +129,13 @@
           </perfect-scrollbar>
 
           <div class="more">
-            <div
+            <a
               class="text-notifications"
               style="cursor: pointer"
               (click)="onScroll(); $event.stopPropagation()"
             >
               Ver más
-            </div>
+            </a>
           </div>
         </div>
       </li>
@@ -188,9 +187,9 @@
         >
           <div class="title">
             <div class="text al-left">Notificaciones</div>
-            <div class="mark-all al-right" (click)="markAllNotifications()">
+            <a class="mark-all al-right" (click)="markAllNotifications()">
               Marcar todas como leidas
-            </div>
+            </a>
             <div class="clear-float"></div>
           </div>
 
@@ -199,7 +198,7 @@
             [config]="scrollConfig"
             (psYReachEnd)="onScroll()"
           >
-            <div
+            <a
               *ngFor="let msg of notify.messages"
               class="dropdown-item"
               (click)="$event.stopPropagation()"
@@ -212,7 +211,7 @@
                 "
               >
                 <div class="espacio">
-                  <div
+                  <a
                     class="notiificacion"
                     title="{{ msg.title }}"
                     (click)="markNotification(msg, $event)"
@@ -222,7 +221,7 @@
                       src="assets/images/badge-bg.svg"
                       alt="Notificación"
                     />
-                  </div>
+                  </a>
                   <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
                   <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
                 </div>
@@ -232,7 +231,7 @@
                 style="background-color: var(--ibk-white)"
               >
                 <div class="espacio">
-                  <div
+                  <a
                     class="notiificacion"
                     title="{{ msg.title }}"
                     (click)="markNotification(msg, $event)"
@@ -242,12 +241,12 @@
                       src="assets/images/ok.svg"
                       alt="ok"
                     />
-                  </div>
+                  </a>
                   <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
                   <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
                 </div>
               </div>
-            </div>
+            </a>
 
             <div class="text-notifications" *ngIf="notify.messages.length == 0">
               No tienes notificaciones
@@ -258,13 +257,13 @@
           </perfect-scrollbar>
 
           <div class="more">
-            <div
+            <a
               class="text-notifications"
               style="cursor: pointer"
               (click)="onScroll(); $event.stopPropagation()"
             >
               Ver más
-            </div>
+            </a>
           </div>
         </div>
       </li>

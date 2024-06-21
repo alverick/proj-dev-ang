@@ -9,7 +9,6 @@ import { AffiliationService } from '../../services';
 @Component({
   selector: 'cs-service-add',
   templateUrl: './service-add.page.html',
-  styleUrls: ['./service-add.page.scss'],
 })
 export class ServiceAddPage implements OnDestroy {
   destroy$ = new Subject();
@@ -53,6 +52,6 @@ export class ServiceAddPage implements OnDestroy {
     confirm(
       'El registro de tu empresa no ha concluido, si sales ahora los cambios se perderán.'
     );
-    event.returnValue = false;
+    event.preventDefault();
   }
 }

@@ -111,13 +111,9 @@ export class PaymentDetailComponent implements OnInit {
       itm.errores.amount = 'Ingrese un monto válido';
     }
 
-    const lenghted = new Date(itm.newDate).toDateString().length;
-    const newdate = parseInt(
-      new Date(itm.newDate).toDateString().substr(lenghted - 4, lenghted),
-      10
-    );
+    const newDateYear = new Date(itm.newDate).getFullYear();
 
-    if (newdate < 2000 || newdate > 2050) {
+    if (newDateYear < 2000 || newDateYear > 2050) {
       itm.errores.date = 'Ingrese una fecha válida';
     }
 

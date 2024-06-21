@@ -1,12 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DefaultDataService, HttpUrlGenerator, QueryParams } from '@ngrx/data';
+import {
+  type QueryParams,
+  DefaultDataService,
+  HttpUrlGenerator,
+} from '@ngrx/data';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { DashboardDataService } from '../../shared/data';
-import { HistoricalCollect } from '../entities';
+import { type HistoricalCollect } from '../entities';
 
 @Injectable()
 export class HistoricalCollectDataService extends DefaultDataService<HistoricalCollect> {
@@ -19,7 +23,7 @@ export class HistoricalCollectDataService extends DefaultDataService<HistoricalC
     super('CollectAmount', httpClient, httpUrlGenerator);
   }
 
-  getWithQuery(params: QueryParams): Observable<HistoricalCollect[] | any> {
+  getWithQuery(params: QueryParams) {
     return this.dashboardDataService.getHistorical(params).pipe(
       catchError(
         // TODO: Use action factory

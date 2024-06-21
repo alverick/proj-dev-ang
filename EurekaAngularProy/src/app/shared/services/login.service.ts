@@ -1,4 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { type Observable, throwError } from 'rxjs';
@@ -58,11 +62,7 @@ export class LoginService {
           return r;
         })
       )
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   logout() {
@@ -107,10 +107,6 @@ export class LoginService {
   public getCompanyDataUpdate(data: any): Observable<any> {
     return this.http
       .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 }

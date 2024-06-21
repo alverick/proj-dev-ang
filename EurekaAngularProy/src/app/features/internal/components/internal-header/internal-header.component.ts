@@ -171,6 +171,7 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   markNotification(msg: MessagesType, $event: MouseEvent) {
+    console.log('markNotification');
     this.notify.changeRead(msg);
     $event.stopPropagation();
     this.tracking.trackEvent(AdobeEvent.trackAction, {

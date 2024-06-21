@@ -20,7 +20,6 @@ import { type ServiceDebt } from '../../services/services-forms.service';
 @Component({
   selector: 'cs-service-debt-form',
   templateUrl: './service-debt-form.component.html',
-  styleUrls: ['./service-debt-form.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -47,7 +46,7 @@ export class ServiceDebtFormComponent
   onTouched: any;
 
   ngOnInit() {
-    const { chargeInterest, interestType } = this.form?.value;
+    const { chargeInterest, interestType } = this.form.value;
     this.processArrearsMode(chargeInterest === 'S');
     this.setAmountProps(interestType);
     this.listenForms();

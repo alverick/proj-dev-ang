@@ -6,7 +6,7 @@ import { LoggerModule } from 'ngx-logger';
 import { of } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
-import { parseParams } from '../../../shared/constants/services';
+import { parseParams, ServiceTypes } from '../../../shared/constants/services';
 import { IpInfoDataService } from '../../../shared/data';
 import {
   CompanyService,
@@ -21,7 +21,6 @@ import { NotifyService } from '../../../shared/services/notify.service';
 import {
   type ServiceDebt,
   type ServiceFormValue,
-  ServiceTypes,
 } from '../../../shared/services/services-forms.service';
 import { AffiliationService } from './affiliation.service';
 import { AffiliationFormsService } from './affiliation-forms.service';
@@ -180,7 +179,7 @@ describe('AffiliationService', () => {
         EnterpriseHeadingService,
         FormBuilder,
         IpInfoDataService,
-        LoginService,
+        MockProvider(LoginService),
         NotifyService,
         ServicesFormsService,
       ],

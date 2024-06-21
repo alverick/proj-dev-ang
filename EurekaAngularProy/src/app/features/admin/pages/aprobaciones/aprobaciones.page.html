@@ -6,9 +6,9 @@
           <div class="col-sm-11">
             <br />
             <div class="d-flex justify-content-start">
-              <div class="card-servicios mb-2 tw-pb-2">
-                <div class="px-2">
-                  <div class="pl-1 row pb-1">
+              <div class="card-servicios mb-2 tw-pb-2 tw-mx-3">
+                <div class="tw-px-4">
+                  <div class="row pb-1">
                     <div class="col-sm-12 pt-1">
                       <div class="font-text-services">
                         Datos actuales de la empresa
@@ -17,9 +17,9 @@
                   </div>
                   <table class="table table-sm table-borderless">
                     <tr>
-                      <td class="font-black-servicios-list">
+                      <th class="font-black-servicios-list" scope="row">
                         Nombre de la Empresa
-                      </td>
+                      </th>
                     </tr>
                     <tr>
                       <td class="font-black-servicios-des-list">
@@ -27,14 +27,16 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="font-black-servicios-list">Rubro</td>
+                      <th class="font-black-servicios-list" scope="row">
+                        Rubro
+                      </th>
                     </tr>
                     <tr>
                       <td class="font-black-servicios-des-list">{{ rubro }}</td>
                     </tr>
                     <tr>
-                      <td class="font-black-servicios-list">CU</td>
-                      <td class="font-black-servicios-list">RUC</td>
+                      <th class="font-black-servicios-list" scope="col">CU</th>
+                      <th class="font-black-servicios-list" scope="col">RUC</th>
                     </tr>
                     <tr>
                       <td class="font-black-servicios-des-list">
@@ -45,10 +47,12 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="font-black-servicios-list">
+                      <th class="font-black-servicios-list" scope="col">
                         Última actualización
-                      </td>
-                      <td class="font-black-servicios-list">Último log in</td>
+                      </th>
+                      <th class="font-black-servicios-list" scope="col">
+                        Último log in
+                      </th>
                     </tr>
                     <tr>
                       <td class="font-black-servicios-des-list">
@@ -70,68 +74,59 @@
               </div>
             </div>
 
-            <div class="font-text-services">Revisiones Pendientes</div>
+            <div class="font-text-services tw-mt-5 tw-mx-3">
+              Revisiones Pendientes
+            </div>
             <div class="d-flex justify-content-start">
-              <perfect-scrollbar class="content-container mt-5 mb-3">
+              <perfect-scrollbar class="content-container mt-2 mb-3">
                 <div
-                  class="card-aprobaciones mb-2"
+                  class="card-aprobaciones tw-mb-4"
                   [class.seleccionado]="Formulario"
                 >
-                  <div class="pl-4">
+                  <div class="tw-px-4">
                     <div class="pl-1 row pb-0">
                       <div class="col-sm-12 pt-3">
                         <div class="font-text-services">Datos de Empresa</div>
                       </div>
                     </div>
-                    <table class="table table-sm table-borderless">
-                      <tr>
-                        <td
-                          class="font-black-servicios-des-list"
+                    <div class="tw-pt-4 tw-pb-4">
+                      <div class="font-black-servicios-des-list">
+                        <span
                           *ngIf="
                             getStateEnterprise(Enterprise) === 'Nueva Empresa'
                           "
+                          class="badge tw-bg-primary-green-1 tw-text-sm tw-text-white tw-leading-[1]"
+                          >Nueva Empresa</span
                         >
-                          <span
-                            class="badge tw-bg-primary-green-1 tw-text-sm tw-text-white tw-leading-[1]"
-                            >Nueva Empresa</span
-                          >
-                        </td>
-                        <td
-                          class="font-black-servicios-des-list"
+                        <span
                           *ngIf="
                             getStateEnterprise(Enterprise) ===
                             'Empresa Habilitada'
                           "
+                          class="badge badge-primary"
+                          >Empresa Habilitada</span
                         >
-                          <span class="badge badge-primary"
-                            >Empresa Habilitada</span
-                          >
-                        </td>
-                        <td
-                          class="font-black-servicios-des-list"
+                        <span
                           *ngIf="
                             getStateEnterprise(Enterprise) ===
                             'Empresa Rechazada'
                           "
+                          class="badge tw-bg-primary-green-1 tw-text-sm tw-text-white tw-leading-[1]"
+                          >Empresa Rechazada</span
                         >
-                          <span
-                            class="badge tw-bg-primary-green-1 tw-text-sm tw-text-white tw-leading-[1]"
-                            >Empresa Rechazada</span
-                          >
-                        </td>
-                        <td
-                          class="font-black-servicios-des-list"
+                        <span
                           *ngIf="
                             getStateEnterprise(Enterprise) === 'Empresa Editada'
                           "
+                          class="badge badge-warning"
+                          >Empresa Editada</span
                         >
-                          <span class="badge badge-warning"
-                            >Empresa Editada</span
-                          >
-                        </td>
-                      </tr>
-                      <tr *ngIf="!Enterprise.inReview">
-                        <td *ngIf="Enterprise.newNameGTPStatus >= 0">
+                      </div>
+                      <ng-container *ngIf="!Enterprise.inReview">
+                        <div
+                          *ngIf="Enterprise.newNameGTPStatus >= 0"
+                          class="tw-mt-2"
+                        >
                           <button
                             type="button"
                             (click)="VerCamposEnterprise(Enterprise)"
@@ -139,17 +134,20 @@
                           >
                             Ver
                           </button>
-                        </td>
-                      </tr>
+                        </div>
+                      </ng-container>
 
-                      <tr *ngIf="Enterprise.inReview">
-                        <td
+                      <div
+                        *ngIf="Enterprise.inReview"
+                        class="tw-flex tw-items-center tw-justify-between"
+                      >
+                        <div
                           class="font-black-servicios-des-list"
                           *ngIf="Enterprise.NombreApproved == null"
                         >
                           por Revisar
-                        </td>
-                        <td
+                        </div>
+                        <div
                           class="font-black-servicios-des-list"
                           *ngIf="
                             Enterprise.NombreApproved == true ||
@@ -157,8 +155,8 @@
                           "
                         >
                           Revisado
-                        </td>
-                        <td *ngIf="Enterprise.newNameGTPStatus >= 0">
+                        </div>
+                        <div *ngIf="Enterprise.newNameGTPStatus >= 0">
                           <button
                             type="button"
                             (click)="VerCamposEnterprise(Enterprise)"
@@ -166,25 +164,23 @@
                           >
                             Ver
                           </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                          class="font-black-servicios-des-list"
-                          *ngIf="Enterprise.NombreApproved == false"
-                        >
-                          1 Error encontrado
-                        </td>
-                      </tr>
-                    </table>
+                        </div>
+                      </div>
+                      <div
+                        class="font-black-servicios-des-list"
+                        *ngIf="Enterprise.NombreApproved == false"
+                      >
+                        1 Error encontrado
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div
-                  class="card-aprobaciones mb-2"
+                  class="card-aprobaciones tw-mb-4"
                   *ngFor="let svc of gtpService.services; let i = index"
                   [class.seleccionado]="indiceActual === i"
                 >
-                  <div class="pl-4">
+                  <div class="tw-px-4 tw-pb-4">
                     <div class="pl-1 row pb-0">
                       <div class="col-sm-12 pt-3">
                         <div class="font-black-servicios-des-list tw-truncate">
@@ -192,15 +188,14 @@
                         </div>
                       </div>
                     </div>
-                    <table class="table table-sm table-borderless">
+                    <table class="table-sm table-borderless">
                       <tr>
-                        <td class="font-black-servicios-des-list">
+                        <th class="font-black-servicios-des-list" scope="col">
                           {{ svc.res }}
-                        </td>
+                        </th>
                       </tr>
                       <tr>
                         <td class="font-black-servicios-des-list">
-                          <!-- <span style="margin: .5em;"> {{svc.res}}</span> -->
                           <span
                             class="badge tw-bg-primary-green-1 tw-text-sm tw-text-white tw-leading-[1]"
                             *ngIf="getState(svc) === 'Nuevo servicio'"
@@ -223,11 +218,6 @@
                           >
                         </td>
                       </tr>
-                      <!-- <tr>
-                                                <td class="font-black-servicios-des-list">
-                                                    {{svc.res}}
-                                                </td>
-                                            </tr> -->
                       <tr *ngIf="svc.inReview == false">
                         <td>
                           <button
@@ -332,18 +322,19 @@
                 <div class="font-black"></div>
               </div>
               <div class="form-group col-md-2">
-                <div
+                <button
                   style="float: right"
                   (click)="OcultarFormulario()"
                   class="mano font-cerrar"
                 >
                   <img
                     class="tw-inline"
-                    src="../../../../../assets/images/cerrar.svg"
+                    src="assets/images/cerrar.svg"
+                    alt="Cerrar"
                   />
                   <br />
                   Cerrar
-                </div>
+                </button>
               </div>
             </div>
             <div class="form-row">
@@ -371,18 +362,19 @@
                 <div class="font-black"></div>
               </div>
               <div class="form-group col-md-2">
-                <div
+                <button
                   style="float: right"
                   (click)="OcultarFormularioSer()"
                   class="mano font-cerrar"
                 >
                   <img
                     class="tw-inline"
-                    src="../../../../../assets/images/cerrar.svg"
+                    src="assets/images/cerrar.svg"
+                    alt="Cerrar"
                   />
                   <br />
                   Cerrar
-                </div>
+                </button>
               </div>
             </div>
             <div class="form-row">

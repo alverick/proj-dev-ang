@@ -16,7 +16,6 @@ import { type RegisterForm } from '../../services/affiliation-forms.service';
 @Component({
   selector: 'cs-company-form-registration',
   templateUrl: './company-form-registration.component.html',
-  styleUrls: ['./company-form-registration.component.scss'],
 })
 export class CompanyFormRegistrationComponent implements OnInit {
   @Output() sendForm = new EventEmitter<Partial<RegisterForm>>();

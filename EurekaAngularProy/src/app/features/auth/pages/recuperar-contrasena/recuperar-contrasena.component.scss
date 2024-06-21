@@ -8,7 +8,6 @@
   background-color: var(--ibk-white);
   box-sizing: border-box;
   border-style: solid !important;
-  //  border-width: 3.5vw 0!important;
   border-color: white !important;
   margin-top: 1vw !important;
 }
@@ -62,7 +61,6 @@
   background-color: var(--ibk-white);
   box-sizing: border-box;
   border-style: solid !important;
-  //  border-width: 3.5vw 0!important;
   border-color: white !important;
   margin-top: 5vw !important;
 }
@@ -85,7 +83,6 @@
   width: 258px;
   height: 48px;
   float: right;
-  // @include box-shadows(0,1px,4px, 0,rgba(252, 154, 0, 0.2));
   &:hover {
     background-color: var(--primary-green-1);
     border-radius: 4px;

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/angular';
+import { type Meta, type StoryObj } from '@storybook/angular';
 
 import Button from './button.component';
 

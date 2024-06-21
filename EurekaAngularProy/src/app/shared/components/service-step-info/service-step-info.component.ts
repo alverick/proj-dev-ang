@@ -18,7 +18,6 @@ import { type ServiceFormValue } from '../../services/services-forms.service';
 @Component({
   selector: 'cs-service-step-info',
   templateUrl: './service-step-info.component.html',
-  styleUrls: ['./service-step-info.component.scss'],
 })
 export class ServiceStepInfoComponent implements OnInit, OnDestroy {
   $destroy = new Subject();
