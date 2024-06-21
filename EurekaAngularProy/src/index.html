@@ -86,7 +86,7 @@
     <cs-root>
       <div class="app-loading">
         <div
-          class="ngx-spinner-overlay ng-trigger-fadeIn"
+          class="ngx-spinner-overlay"
           style="
             background-color: rgb(255, 255, 255);
             z-index: 99999;
@@ -98,31 +98,8 @@
             height: 100%;
           "
         >
-          <div
-            class="la-3x la-square-jelly-box"
-            style="
-              color: rgb(5, 190, 80);
-              top: 50%;
-              left: 50%;
-              margin: 0;
-              position: absolute;
-              transform: translate(-50%, -50%);
-            "
-          >
-            <div></div>
-            <div></div>
-          </div>
-          <div
-            class="loading-text"
-            style="
-              z-index: 99999;
-              position: absolute;
-              top: 60%;
-              left: 50%;
-              transform: translate(-50%, -60%);
-            "
-          >
-            <p style="color: #05be50" class="">Cargando . . .</p>
+          <div class="a-loader__spinner">
+            <div class="a-loader__logo"></div>
           </div>
         </div>
       </div>
