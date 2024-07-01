@@ -1,5 +1,7 @@
 <cs-internal-header></cs-internal-header>
 <main class="general">
-  <router-outlet></router-outlet>
+  <div [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''">
+    <router-outlet #o="outlet"></router-outlet>
+  </div>
 </main>
 <cs-footer></cs-footer>
