@@ -50,8 +50,6 @@ const MY_FORMATS = {
     CurrencyPipe,
   ],
 })
-
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class DebtComponent implements OnInit {
   isNewFlow = false;
 
@@ -65,7 +63,6 @@ export class DebtComponent implements OnInit {
   ) {}
 
   public grabado = false;
-  public services: any[];
   public minDate = new Date(2000, 0, 1);
   public maxDate = new Date(2050, 0, 1);
   public isPartial = false;
@@ -80,7 +77,6 @@ export class DebtComponent implements OnInit {
   ngOnInit(): void {
     this.nuevaDeuda.service = this.excelService.service.name;
     this.isPartial = this.excelService.service.dataType === 'P';
-    this.homeService.getServicesActive().subscribe((d) => (this.services = d));
     this.store
       .select(companyFeature.selectCurrencyLimits)
       .pipe(filter((data) => isNotNilOrEmpty(data)))
@@ -106,12 +102,6 @@ export class DebtComponent implements OnInit {
     if (!isNaN(initialValue)) {
       e.amount = initialValue.toFixed(2);
     }
-  }
-
-  cmbNewService() {
-    delete this.nuevaDeuda.errores.service;
-    const svc = this.services.find((s) => s.name === this.nuevaDeuda.service);
-    this.isPartial = svc.dataType === 'P';
   }
 
   buscarNewCode() {
@@ -301,7 +291,7 @@ export class DebtComponent implements OnInit {
             detail: 'Se ha agregado el cobro. ¿Que desea hacer?',
             location: 'Modal',
           });
-          void swalAlert
+          swalAlert
             .fire({
               title: 'Agregar Cobro',
               html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',
