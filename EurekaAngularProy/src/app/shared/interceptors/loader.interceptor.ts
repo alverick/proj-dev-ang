@@ -19,6 +19,7 @@ export class LoaderInterceptor implements HttpInterceptor {
     'notification?skip',
     'notification/total',
     'debt/process/[\\d]+/status',
+    'debt/service/Servicio usuario nuevo/debtor/[\\w]+',
   ];
 
   constructor(private store: Store) {}
