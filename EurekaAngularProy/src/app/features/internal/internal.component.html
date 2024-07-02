@@ -1,7 +1,14 @@
 <cs-internal-header></cs-internal-header>
-<main class="general">
-  <div [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''">
+<main
+  class="general tw-transition-all tw-duration-75"
+  [ngClass]="{ 'tw-min-h-dvh': isAnimating, animating: isAnimating }"
+>
+  <div
+    [@fadeAnimation]="o.isActivated ? o.activatedRoute : ''"
+    (@fadeAnimation.start)="onAnimationEvent($event)"
+    (@fadeAnimation.done)="onAnimationEvent($event)"
+  >
     <router-outlet #o="outlet"></router-outlet>
   </div>
 </main>
-<cs-footer></cs-footer>
+<cs-footer class="tw-border-2"></cs-footer>
