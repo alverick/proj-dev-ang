@@ -63,6 +63,7 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { ControlRulesPoliciesComponent } from './components/control-rules-policies/control-rules-policies.component';
+import { FabWhatsappComponent } from './components/fab-whatsapp/fab-whatsapp.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LabelControlComponent } from './components/label-control/label-control.component';
@@ -80,8 +81,8 @@ import { ValidationDefaultsComponent } from './components/validation-defaults/va
 import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
-import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
+import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
@@ -188,6 +189,7 @@ const UI_MODULES = [
     SidebarServiceComponent,
     ...DIRECTIVES,
     ...PIPES,
+    FabWhatsappComponent,
     ControlRulesPoliciesComponent,
   ],
   exports: [
@@ -216,6 +218,7 @@ const UI_MODULES = [
     ...PIPES,
     PushModule,
     LetModule,
+    FabWhatsappComponent,
     ControlRulesPoliciesComponent,
   ],
 })
