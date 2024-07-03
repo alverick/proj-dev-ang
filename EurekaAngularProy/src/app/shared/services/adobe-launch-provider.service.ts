@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { isEmpty } from 'ramda';
+import { hasPath, isEmpty } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 import { type Observable, combineLatest } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -39,6 +39,13 @@ export class AdobeLaunchProviderService implements ProviderService {
     private store: Store
   ) {
     if (isNotEmpty(environment.adobe)) {
+      document.addEventListener('at-content-rendering-succeeded', () => {
+        this.store.dispatch(AppConfigActions.setLoader({ show: false }));
+      });
+
+      document.addEventListener('at-content-rendering-failed', () => {
+        this.store.dispatch(AppConfigActions.setLoader({ show: false }));
+      });
       this.launchLibrary = this.scriptInjectorService
         .loadScript('Launch', environment.adobe)
         .pipe(
@@ -47,17 +54,17 @@ export class AdobeLaunchProviderService implements ProviderService {
               this.loaded = true;
               window._satellite.pageBottom();
               this.runSatelliteEvent(AdobeEvent.appInit, {});
+              setTimeout(() => {
+                if (!hasPath(['adobe', 'target'], window)) {
+                  this.store.dispatch(
+                    AppConfigActions.setLoader({ show: false })
+                  );
+                }
+              }, 1100);
             }
           })
         );
     }
-    document.addEventListener('at-content-rendering-succeeded', () => {
-      this.store.dispatch(AppConfigActions.setLoader({ show: false }));
-    });
-
-    document.addEventListener('at-content-rendering-failed', () => {
-      this.store.dispatch(AppConfigActions.setLoader({ show: false }));
-    });
   }
 
   trackPage(payload: Partial<TrackEventProperties>) {
