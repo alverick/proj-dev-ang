@@ -5,12 +5,11 @@ import {
   ModelFormGroup,
 } from '../../../../shared/models/forms';
 import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
-import { ChangePasswordForm } from '../../services/company-configuration.service';
+import { type ChangePasswordForm } from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-password-form',
   templateUrl: './company-password-form.component.html',
-  styleUrls: ['./company-password-form.component.scss'],
 })
 export class CompanyPasswordFormComponent {
   @Input() form: ModelFormGroup<ChangePasswordForm>;

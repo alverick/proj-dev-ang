@@ -1,15 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
+  type IconDefinition,
   faBell as farBell,
   faCircle as farCircle,
-  IconDefinition,
 } from '@fortawesome/free-regular-svg-icons';
 import { faCircle as fasCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subject, timer } from 'rxjs';
 import { delayWhen, repeat, takeUntil } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 
+import { environment } from '../../../environments/environment';
 import { StorageService } from './storage.service';
 
 const timeCallNotify = 60000;
@@ -17,7 +17,7 @@ const timeCallNotify = 60000;
 const markAsRead = 'Marcar como leído';
 const markAsNotRead = 'Marcar como no leído';
 
-interface MessagesResponse {
+export interface MessagesResponse {
   create: string;
   id: number;
   isNew: boolean;
@@ -67,8 +67,8 @@ export class NotifyService {
     this.http
       .get(`${environment.END_POINT}/notification/total`)
       .pipe(delayWhen(setDelay), repeat(), takeUntil(stop))
-      .subscribe(
-        ({ total }: { total: number }) => {
+      .subscribe({
+        next: ({ total }: { total: number }) => {
           this.inExecution = true;
           if (total !== this.total) {
             this.total = total;
@@ -77,13 +77,13 @@ export class NotifyService {
             this.loadMessages();
           }
         },
-        (error) => {
+        error: (error: HttpErrorResponse) => {
           this.inExecution = true;
           if (error.status === 401) {
             stop.next(true);
           }
-        }
-      );
+        },
+      });
   }
 
   public clear() {

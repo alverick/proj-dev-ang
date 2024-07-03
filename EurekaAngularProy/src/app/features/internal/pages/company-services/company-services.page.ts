@@ -26,7 +26,6 @@ import { CompanyServicesService } from '../../services';
   host: { class: 'tw-w-full' },
   selector: 'cs-company-services',
   templateUrl: './company-services.page.html',
-  styleUrls: ['./company-services.page.scss'],
 })
 export class CompanyServicesPage {
   showSidebar = false;

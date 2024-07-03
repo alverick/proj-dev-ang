@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -55,14 +55,14 @@ export class ExcelService {
     formData.append('file', files[0], files[0].name);
     return this.http
       .post<any>(url, formData)
-      .pipe(catchError((error) => throwError(error)));
+      .pipe(catchError((error: HttpErrorResponse) => throwError(() => error)));
   }
 
   StatusExcel(id: number): Observable<ProcessStatus> {
     const url = `${this.URI_API}/debt/process/${id}/status`;
     return this.http
       .get<ProcessStatus>(url)
-      .pipe(catchError((error) => throwError(error)));
+      .pipe(catchError((error: HttpErrorResponse) => throwError(() => error)));
   }
 
   GetTemplate(): Observable<Blob> {

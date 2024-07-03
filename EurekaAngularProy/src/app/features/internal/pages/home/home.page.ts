@@ -28,6 +28,7 @@ import { type Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { type CurrencyWithLimit } from '../../../../shared/constants/currencies';
+import type { IServiceRemoteModel } from '../../../../shared/models';
 import { type CompanyServices } from '../../../../shared/models/company';
 import { type DateList } from '../../../../shared/models/dateList';
 import { type Debts } from '../../../../shared/models/debts';
@@ -89,8 +90,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   DateList: DateList[];
   type: string[];
   date: string[];
-  serviceSelected: string;
-  services: any[];
+  serviceSelected: Partial<IServiceRemoteModel>;
+  services: Partial<IServiceRemoteModel>[];
   selectedAll = true;
   selectedUniverse = false;
   showEdit = false;
@@ -219,7 +220,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     if (isNil(this.formValues)) {
       this.consultaDeuda();
     }
-    this.recortarNombres();
     this.cargaExcel = false;
 
     this.selectedAll = false;
@@ -265,7 +265,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       header: 'Conoce las nuevas comisiones por cobranza en canales digitales',
       styleClass: 'tw-w-[54rem]',
       data: {
-        showed: (showed || !auto) as boolean,
+        showed: showed || !auto,
         detail:
           'Modal informativo sobre las nuevas comisiones de cobranza en canales digitales',
       },
@@ -753,12 +753,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  recortarNombres() {
-    this.transactionService.debtItems.data.forEach((element) => {
-      element.firstName;
-    });
-  }
-
   saveDebt(item: Debts) {
     this.tracking.trackEvent(AdobeEvent.trackView, {
       category: '¿Deseas actualizar?',
@@ -1044,7 +1038,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 width: '330px',
               });
               dlg.afterClosed().subscribe((result) => {
-                if (result && result.grabado) {
+                if (result?.grabado) {
                   this.validateResetForm();
                 }
               });
@@ -1112,13 +1106,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       if (this.transactionService.debtItems.data.length > 0) {
         this.enDescarga = true;
         this.barLoad.show(this.fileLoadContainer);
-        this.transactionService.report(this.currentFilter).subscribe(
-          (r: Blob) => {
+        this.transactionService.report(this.currentFilter).subscribe({
+          next: (r: Blob) => {
             this.barLoad.close();
             this.enDescarga = false;
             saveAs(r, 'Reporte - Interbank_MisCobros.xlsx');
           },
-          () => {
+          error: () => {
             this.barLoad.close();
             this.enDescarga = false;
             this.mensaje(
@@ -1126,8 +1120,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
               'Descarga',
               'No se pudo descargar el reporte'
             );
-          }
-        );
+          },
+        });
       } else {
         this.mensaje(
           'warning',
@@ -1168,6 +1162,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       },
     });
     dialogRef.afterClosed().subscribe((result: { status: string }) => {
+      console.log('afterClose', result);
       if (isNotNil(prop('status', result))) {
         itm.status = result.status;
         this.consultaDeuda(() => this.tableMovements.updateSelected(itm));

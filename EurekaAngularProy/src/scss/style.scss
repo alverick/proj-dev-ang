@@ -1,10 +1,7 @@
-@import 'normalize';
 @tailwind base;
 @tailwind components;
 @import 'components';
 @tailwind utilities;
-
-/* Reset Styles */
 
 @import 'configuration';
 @import 'node_modules/include-media/dist/_include-media.scss';
@@ -14,12 +11,5 @@
 @import 'forms';
 @import 'main';
 @import 'global';
-
-/* @import "~bootstrap/dist/css/bootstrap.css";
-@import "~font-awesome/css/font-awesome.css"; */
-
-/*@import '_landing.scss';*/
-
-/*@import "@angular/material/prebuilt-themes/indigo-pink.css";*/
 
 @import 'reponsive';

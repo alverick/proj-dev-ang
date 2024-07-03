@@ -30,6 +30,26 @@
               </table>
               <perfect-scrollbar class="content-container">
                 <table>
+                  <thead class="tw-hidden">
+                    <tr>
+                      <th class="c0" scope="col">
+                        <div class="text">Fecha</div>
+                      </th>
+                      <th class="c1" scope="col">
+                        <div class="text">Hora</div>
+                      </th>
+                      <th class="c2" scope="col">
+                        <div class="text">Servicio</div>
+                      </th>
+                      <th class="c3" scope="col">
+                        <div class="text">Registros</div>
+                      </th>
+                      <th class="c4" scope="col">
+                        <div class="text">Resultado</div>
+                      </th>
+                      <th class="c5" scope="col"></th>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr
                       *ngFor="
@@ -49,21 +69,25 @@
                       <td class="c4">{{ itm.status }}</td>
                       <td class="c5">
                         <div class="tw-flex tw-gap-2">
-                          <p-button
+                          <button
+                            pButton
+                            pRipple
                             icon="pi pi-download"
-                            styleClass="p-button-xs"
+                            class="p-button-xs"
                             (click)="bajarExcel(itm)"
-                          ></p-button>
-                          <p-button
+                          ></button>
+                          <button
                             *ngIf="
                               itm.status === 'SAVING' ||
                               itm.status === 'VALIDATING'
                             "
+                            pButton
+                            pRipple
                             (click)="fixProcess(itm.id)"
                             pTooltip="Te permite actualizar la carga del excel que se quedó en estado SAVING o VALIDATING a FAILED."
                             icon="pi pi-sync"
-                            styleClass="p-button-xs"
-                          ></p-button>
+                            class="p-button-xs"
+                          ></button>
                         </div>
                       </td>
                     </tr>
@@ -78,7 +102,7 @@
                   [maxSize]="5"
                   (pageChange)="changePage($event)"
                 >
-                  <ul class="ngx-pagination" role="navigation">
+                  <ul class="ngx-pagination">
                     <li
                       class="pagination-previous"
                       [class.disabled]="p.isFirstPage()"

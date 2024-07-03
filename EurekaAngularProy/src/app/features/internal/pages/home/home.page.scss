@@ -30,9 +30,6 @@
   padding-left: 2em;
   margin-right: auto;
   margin-left: auto;
-
-  // width: 1375px;
-  // max-width: 1325px;
 }
 
 .content-container {
@@ -61,7 +58,6 @@
 }
 
 .scroll-table {
-  // height: 219px;
   height: 507px;
   overflow: scroll;
   width: 100%;
@@ -80,8 +76,6 @@
   color: var(--ibk-black) !important;
   padding-bottom: 10px;
   padding-right: 20px;
-
-  // padding: 6px 2px;
 }
 
 .table th,
@@ -89,20 +83,10 @@
   border-top: 0 solid #dee2e6 !important;
 }
 
-// :host ::ng-deep .mat-form-field-hide-placeholder .mat-select-placeholder {
-//     // color: var(--ibk-black);
-//     // color: var(--ibk-black) !important;
-// }
 .table thead th {
   border-bottom: 0 solid #dee2e6 !important;
 }
 
-// .mat-form-field-hide-placeholder .mat-select-placeholder {
-//     color: transparent;
-// }
-// .mat-form-field-hide-placeholder :-ms-input-placeholder.mat-input-element {
-//     color: transparent;
-// }
 .table {
   margin-bottom: 0 !important;
 }
@@ -278,7 +262,6 @@
     }
 
     .lista {
-      // padding-top: 8px;
       .head-fixed {
         position: fixed;
         top: 0;

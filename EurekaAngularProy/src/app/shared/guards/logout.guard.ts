@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { type CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { internalFullRoutingNames } from '../../features/internal/internal-routing.names';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LogoutGuard implements CanActivate {
+export class LogoutGuard {
   constructor(private router: Router) {}
   canActivate(): boolean {
     if (

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Meta, moduleMetadata, Story } from '@storybook/angular';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
+import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 
 import { SharedModule } from '../../shared.module';
 import { ModalTermsComponent } from './modal-terms.component';
@@ -13,6 +13,7 @@ import { ModalTermsComponent } from './modal-terms.component';
 })
 class LaunchComponent {
   ref: DynamicDialogRef;
+
   constructor(public dialogService: DialogService) {}
 
   public launch(): void {
@@ -24,7 +25,7 @@ class LaunchComponent {
   }
 }
 
-export default {
+const meta: Meta<LaunchComponent> = {
   title: 'UI/Modal terms',
   component: LaunchComponent,
   decorators: [
@@ -39,12 +40,12 @@ export default {
       providers: [DialogService],
     }),
   ],
-  argTypes: { sendForm: { action: 'clicked' } },
-} as Meta;
+};
 
-const Template: Story<LaunchComponent> = (args: LaunchComponent) => ({
-  props: args,
-});
+export default meta;
 
-export const Normal = Template.bind({});
-Normal.args = {};
+type Story = StoryObj<LaunchComponent>;
+
+export const Normal: Story = {
+  args: {},
+};

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -19,7 +19,6 @@ export class AfiliacionService {
 
   public services: IServiceModel[] = [];
   private _rubros: IEntryModel[] = null;
-  private _rubrosAll: IEntryModel[] = null;
 
   public GetRubros(): Observable<IEntryModel[]> {
     if (this._rubros !== null) {
@@ -33,19 +32,13 @@ export class AfiliacionService {
           return r;
         })
       )
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   public GetRubrosAll(): Observable<IEntryModel[]> {
     return this.http
       .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading/all`)
-      .pipe(
-        map((r) => {
-          this._rubrosAll = r;
-          return r;
-        })
-      )
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   public GetCodDeudor(): Observable<any[]> {
@@ -134,9 +127,5 @@ export class AfiliacionService {
       );
     }
     return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
-  }
-
-  GetTipoCambio(): Observable<number> {
-    return of(3.37);
   }
 }

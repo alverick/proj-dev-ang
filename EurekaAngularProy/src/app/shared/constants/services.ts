@@ -1,8 +1,11 @@
 import { isEmpty, isNil } from 'ramda';
 import { isNotNil, isString } from 'ramda-adjunct';
 
-import { IServiceRemoteModel, IServiceRemoteModelForms } from '../models';
-import { ISelectOptions } from './company';
+import {
+  type IServiceRemoteModel,
+  type IServiceRemoteModelForms,
+} from '../models';
+import { type ISelectOptions } from './company';
 
 export const debtorCodeOptions: ISelectOptions[] = [
   {
@@ -125,3 +128,8 @@ export const statusCodes = {
   EDITED: 2,
   REJECTED: 3,
 };
+export const ServiceTypes = {
+  withoutData: 'S',
+  partial: 'P',
+  complete: 'C',
+} as const;

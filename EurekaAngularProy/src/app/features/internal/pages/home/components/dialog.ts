@@ -29,7 +29,7 @@ import { companyFeature } from '../../../../../store/reducers/company.reducer';
   styleUrls: ['dialog.scss'],
 })
 export class DialogComponent implements OnInit {
-  isNewFlow = false;
+  useAmountLimits = false;
   public inputXlsForm: UntypedFormGroup;
   public messageUploadExcel = false;
   public errores: any[] = [];
@@ -74,10 +74,9 @@ export class DialogComponent implements OnInit {
         ).limitMax;
       });
     this.store
-      .select(companyFeature.selectDetails)
-      .pipe(filter((data) => isNotNilOrEmpty(data)))
-      .subscribe((details) => {
-        this.isNewFlow = details.isNewFlow;
+      .select(companyFeature.selectUseAmountLimits)
+      .subscribe((useLimits) => {
+        this.useAmountLimits = useLimits;
       });
   }
 

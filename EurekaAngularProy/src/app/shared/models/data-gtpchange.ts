@@ -1,11 +1,10 @@
 export interface DataGTPChange {
-  token?: String;
-  NewName?: String;
-  //  ArrayService?: ServicesGTPChange [];
+  token?: string;
+  NewName?: string;
 }
 
 export interface ServicesGTPChange {
   ServiceId: number;
-  NewName: String;
-  NewNameCod: String;
+  NewName: string;
+  NewNameCod: string;
 }

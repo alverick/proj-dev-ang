@@ -11,11 +11,13 @@ import {
   UntypedFormControl,
   Validators,
 } from '@angular/forms';
+import { isNil } from 'ramda';
 
+import { statusCodes } from '../../../../shared/constants/services';
 import { type MonedaModel } from '../../../../shared/models';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
-import { GtpService } from '../../../../shared/services/gtp.service';
+import { type CompanyAccounts } from '../../../../shared/services/company.service';
 
 @Component({
   selector: 'cs-services-gtp',
@@ -28,7 +30,7 @@ export class ServicesGTPComponent implements OnInit {
   tiposPago: any[] = [];
   monedas: MonedaModel[] = [];
   tiposMora: any[] = [];
-  cuentas: any[] = [];
+  cuentas: CompanyAccounts[] = [];
   simboloMoneda = 'S/';
   cobraMora = false;
   cobraMonto = true;
@@ -37,8 +39,6 @@ export class ServicesGTPComponent implements OnInit {
   Dataparcial = true;
   inReview: boolean;
   private _service: DataServiceGTP;
-  configEmpresaService: any;
-  private _tc = 3.37;
 
   update = false;
   public comAgente = 1.5;
@@ -46,72 +46,64 @@ export class ServicesGTPComponent implements OnInit {
   useAgencyChannel = false;
 
   @Input() public idCompany: number;
+
   @Input() set service(value: DataServiceGTP) {
     this._service = value;
   }
 
-  /*
-    @Input() set service(value: ServiceModel) {
-         this._service = value;
-         this.simboloMoneda = value.simboloMoneda;
-         this._service.simboloMoneda = this.simboloMoneda;
-     }
-   */
-
   @Output() grabar = new EventEmitter<any>();
   submittedRequired = false;
+  frm: UntypedFormGroup;
+
   constructor(
     private fb: UntypedFormBuilder,
-    private afiliacionService: AfiliacionService,
-    public gtpService: GtpService
-  ) {
-    afiliacionService.GetTipoCambio().subscribe((t) => (this._tc = t));
-  }
+    private afiliacionService: AfiliacionService
+  ) {}
 
-  frm: UntypedFormGroup;
   ngOnInit() {
-    let ResValue = [];
-    this._service.res =
-      this._service.res == '' || this._service.res == null
-        ? ''
-        : this._service.res;
-
-    if (this._service.res != '') {
-      ResValue = [
-        Validators.required,
-        Validators.maxLength(7),
-        Validators.minLength(7),
-        Validators.pattern('^[0-9]*$'),
-      ];
-    } else {
-      ResValue = [Validators.minLength(7)];
+    if (isNil(this._service.res)) {
+      this._service.res = '';
     }
+
+    const ResValue =
+      this._service.res !== ''
+        ? [
+            Validators.required,
+            Validators.maxLength(7),
+            Validators.minLength(7),
+            Validators.pattern('^[0-9]*$'),
+          ]
+        : [Validators.minLength(7)];
     this.inReview = this._service.inReview;
-    const montod =
-      this._service.amount !== null && this._service.amount !== undefined
-        ? this._service.amount
-        : '1.00';
-    const porcentajed =
-      this._service.porcentage !== null &&
-      this._service.porcentage !== undefined
-        ? this._service.porcentage
-        : '1.00';
+    const montod = this._service.amount ?? '1.00';
+
+    const porcentajed = this._service.porcentage ?? '1.00';
     let nameCode =
       this._service.codDeudor === 'Otro'
         ? this._service.nameCod
         : this._service.codDeudor;
     if (
-      this._service.newNameCodeGTPStatus === 0 ||
-      this._service.newNameCodeGTPStatus === 2
-    )
+      this._service.newNameCodeGTPStatus === statusCodes.NEW ||
+      this._service.newNameCodeGTPStatus === statusCodes.EDITED
+    ) {
       nameCode = this._service.newNameCode;
+    }
+
+    const processValue = function (value) {
+      if (value === null) {
+        return '';
+      } else if (value === true) {
+        return 'S';
+      } else {
+        return 'N';
+      }
+    };
+
     this.frm = this.fb.group({
       nombre: new UntypedFormControl(
         {
           value:
-            this._service.newNameGTPStatus === 0 ||
-            this._service.newNameGTPStatus === 2 ||
-            this._service.newNameGTPStatus === 3
+            this._service.newNameGTPStatus !== statusCodes.APPROVED
               ? this._service.newName
               : this._service.name,
           disabled: true,
@@ -124,11 +116,6 @@ export class ServicesGTPComponent implements OnInit {
           ),
         ]
       ),
-      /*  nombre: new FormControl({ value:  (this._service.name === '?') ?
-        ( ((this._service.newName.substring(0, 3) === '???')?
-        (this._service.newName.substring(3, this._service.newName.length)):this._service.newName)):((this._service.name === this._service.newName)? this._service.name : this._service.newName ) , disabled: true },
-          [Validators.required, Validators.minLength(3),
-          Validators.pattern('^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$')]), */
 
       res: new UntypedFormControl(
         { value: this._service.res, disabled: false },
@@ -146,13 +133,6 @@ export class ServicesGTPComponent implements OnInit {
         },
         [Validators.required]
       ),
-
-      // eslint-disable-next-line max-len
-      // nameCods: new FormControl ({ value: ( this._service.newNameCodeGtpStatus === 0  || this._service.newNameCodeGtpStatus === 2 })? this._service.newNameCode : this._service.debtorCode     , disabled: true}),
-
-      /*  nameCod: new FormControl({ value: (this._service.debtorCode === '?')?
-        (( (this._service.newNameCode.substring(0,3) === '???')?
-        (this._service.newNameCode.substring(3, this._service.newNameCode.length)): this._service.newNameCode)) : (this._service.debtorCode === this._service.newNameCode)? this._service.debtorCode :this._service.newNameCode , disabled: true}), */
       nameCod: new UntypedFormControl({ value: nameCode, disabled: true }),
       tipoDato: new UntypedFormControl(
         { value: this._service.dataType, disabled: true },
@@ -188,7 +168,6 @@ export class ServicesGTPComponent implements OnInit {
         [Validators.required]
       ),
       tipoMora: { value: this._service.interestType, disabled: true },
-      // montoRadioButton: new FormControl({ value: montod, disabled: true }),
       monto: new UntypedFormControl({ value: montod, disabled: true }),
 
       porcentaje: new UntypedFormControl({
@@ -199,22 +178,12 @@ export class ServicesGTPComponent implements OnInit {
         value: this._service.partialPayment,
         disabled: true,
       }),
-      // eslint-disable-next-line max-len
       NewNameCod: [
-        this._service.acceptednewNameCode === null
-          ? ''
-          : this._service.acceptednewNameCode === true
-          ? 'S'
-          : 'N',
+        processValue(this._service.acceptednewNameCode),
         Validators.required,
       ],
-      // eslint-disable-next-line max-len
       NewName: [
-        this._service.acceptednewName === null
-          ? ''
-          : this._service.acceptednewName === true
-          ? 'S'
-          : 'N',
+        processValue(this._service.acceptednewName),
         Validators.required,
       ],
     });
@@ -243,48 +212,15 @@ export class ServicesGTPComponent implements OnInit {
     }
 
     // combo para ocultar si es data parcial
-    if (
-      this.frm.get('tipoDato').value === 'P' ||
-      this.frm.get('tipoDato').value === 'S'
-    ) {
-      /* this.frm.get('tipoPago').setValue('C');
-      this.tiposPago.pop();*/
-      this.Dataparcial = false;
-    } else {
-      this.Dataparcial = true;
-    }
+    this.Dataparcial =
+      this.frm.get('tipoDato').value !== 'P' &&
+      this.frm.get('tipoDato').value !== 'S';
 
     this.showAgencyChannel(this._service.useAgencyChannel);
   }
 
   get f(): any {
     return this.frm.controls;
-  }
-
-  RadioAprovveName2() {
-    if (this._service.name === this._service.newName) {
-      return false;
-    }
-    if (
-      this._service.name === '?' &&
-      this._service.newName.substring(0, 3) === '???'
-    ) {
-      return false;
-    }
-    if (this._service.name === '?') {
-      return true;
-    }
-
-    if (this._service.name !== this._service.newName) {
-      return true;
-    }
-    if (
-      this._service.inReview &&
-      this._service.name === '?' &&
-      this._service.newName.substring(0, 3) !== '???'
-    ) {
-      return true;
-    }
   }
 
   RadioAprovveName() {
@@ -302,31 +238,6 @@ export class ServicesGTPComponent implements OnInit {
     }
   }
 
-  RadioAprovveNameCod2() {
-    if (this._service.debtorCode === this._service.newNameCode) {
-      return false;
-    }
-    if (
-      this._service.debtorCode === '?' &&
-      this._service.newNameCode.substring(0, 3) === '???'
-    ) {
-      return false;
-    }
-    if (this._service.debtorCode === '?') {
-      return true;
-    }
-    if (this._service.debtorCode !== this._service.newNameCode) {
-      return true;
-    }
-    if (
-      this._service.inReview &&
-      this._service.debtorCode === '?' &&
-      this._service.newNameCode.substring(0, 3) !== '???'
-    ) {
-      return true;
-    }
-  }
-
   RadioAprovveNameCod() {
     if (this._service.newNameCodeGTPStatus === 1) {
       return false;
@@ -338,41 +249,6 @@ export class ServicesGTPComponent implements OnInit {
       return true;
     }
     if (this._service.newNameCodeGTPStatus === 2) {
-      return true;
-    }
-  }
-  Button2() {
-    if (
-      this._service.name === this._service.newName &&
-      this._service.debtorCode === this._service.newNameCode
-    ) {
-      return false;
-    }
-    if (
-      (this._service.name === '?' &&
-        this._service.newName.substring(0, 3) === '???') ||
-      (this._service.debtorCode === '?' &&
-        this._service.newNameCode.substring(0, 3) === '???')
-    ) {
-      return false;
-    }
-    if (this._service.name === '?' || this._service.debtorCode === '?') {
-      return true;
-    }
-    if (
-      this._service.name !== this._service.newName ||
-      this._service.debtorCode !== this._service.newNameCode
-    ) {
-      return true;
-    }
-    if (
-      (this._service.inReview &&
-        this._service.name === '?' &&
-        this._service.newName.substring(0, 3) !== '???') ||
-      (this._service.inReview &&
-        this._service.debtorCode === '?' &&
-        this._service.newNameCode.substring(0, 3) !== '???')
-    ) {
       return true;
     }
   }
@@ -437,97 +313,31 @@ export class ServicesGTPComponent implements OnInit {
       this.f.NewNameCod.reset();
     }
     if (this.frm.valid) {
-      let value: DataServiceGTP;
-      value = this._service;
+      const value: DataServiceGTP = this._service;
       value.res = this.frm.value.res;
-      // value.acceptednewName = (this.frm.value.NewName === 'S');
-      // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
-      // eslint-disable-next-line max-len
-      //  value.acceptednewName = (this._service.name  !== this._service.newName) ? ((this.frm.value.NewName === 'S') ? true : false) : true;
-      // eslint-disable-next-line max-len
+
       value.acceptednewName =
         this._service.newNameGTPStatus === 1 ||
         (this._service.newNameGTPStatus === 3 &&
           this._service.name !== '' &&
           this._service.newName !== '')
           ? true
-          : this.frm.value.NewName === 'S'
-          ? true
-          : false;
-      // eslint-disable-next-line max-len
-      //  value.acceptednewNameCode = (this._service.debtorCode !== this._service.newNameCode ) ? ( (this.frm.value.NewNameCod === 'S') ? true : false) : true ;
-      // eslint-disable-next-line max-len
+          : this.frm.value.NewName === 'S';
       value.acceptednewNameCode =
         this._service.newNameCodeGTPStatus === 1 ||
         (this._service.newNameCodeGTPStatus === 3 &&
           this._service.debtorCode !== '' &&
           this._service.newNameCode !== '')
           ? true
-          : this.frm.value.NewNameCod === 'S'
-          ? true
-          : false;
+          : this.frm.value.NewNameCod === 'S';
 
       this.grabar.emit(value);
       this.update = false;
     }
   }
 
-  /*
-      newName         name
-    minimarket         ''       NUEVO     0  -
-      ''            minimarket  APROBADO  1
-      sm            minimarket  EDITADO   2  -
-      sm            minimarket  RECHAZADO 3
-      ''               sm       APROBADO  1
-  */
-  onSubmitServicio2() {
-    // NOMBRE DE SERVICIO
-    if (this._service.newNameGTPStatus === 1) {
-      this.f.NewName.clearValidators();
-      this.f.NewName.reset();
-    }
-    if (this._service.newNameGTPStatus === 3) {
-      this.f.NewName.clearValidators();
-      this.f.NewName.reset();
-    }
-    // CODIGO DEUDOR
-    if (this._service.newNameCodeGTPStatus === 1) {
-      this.f.NewNameCod.clearValidators();
-      this.f.NewNameCod.reset();
-    }
-    if (this._service.newNameCodeGTPStatus === 3) {
-      this.f.NewNameCod.clearValidators();
-      this.f.NewNameCod.reset();
-    }
-
-    if (this.frm.valid) {
-      let value: DataServiceGTP;
-      value = this._service;
-
-      // value.acceptednewName = (this.frm.value.NewName === 'S');
-      // value.acceptednewNameCode = (this.frm.value.NewNameCod === 'S') ;
-      // eslint-disable-next-line max-len
-      value.acceptednewName =
-        this._service.name !== this._service.newName
-          ? this.frm.value.NewName === 'S'
-            ? true
-            : false
-          : true;
-      // eslint-disable-next-line max-len
-      value.acceptednewNameCode =
-        this._service.debtorCode !== this._service.newNameCode
-          ? this.frm.value.NewNameCod === 'S'
-            ? true
-            : false
-          : true;
-      this.grabar.emit(value);
-    }
-  }
-
   onChangeTipoDato() {
     if (this.frm.get('tipoDato').value === 'P') {
-      /* this.frm.get('tipoPago').setValue('C');
-       this.tiposPago.pop();*/
       this.Dataparcial = false;
       // cobraMora
       this.frm.get('cobraMora').setValue('N');
@@ -539,25 +349,6 @@ export class ServicesGTPComponent implements OnInit {
       this.cobraMora = false;
     } else {
       this.Dataparcial = true;
-    }
-    /* else if (this.tiposPago.length === 1) {
-       this.tiposPago.push({
-         code: 'P',
-         name: "Siempre la deuda que vence primero"
-       });
-     }  */
-  }
-
-  changeCuenta(val) {
-    const cta = this.cuentas.find((c) => c.id === val);
-    this.simboloMoneda = cta.currency === '001' ? 'S/' : '$';
-    this.f.moneda.setValue(cta.currency);
-    if (this.f.moneda.value !== '001') {
-      this.comAgente = Math.round((1.5 / this._tc) * 100) / 100;
-      this.comTienda = Math.round((7 / this._tc) * 100) / 100;
-    } else {
-      this.comAgente = 1.5;
-      this.comTienda = 7;
     }
   }
 
@@ -593,6 +384,7 @@ export class ServicesGTPComponent implements OnInit {
       this.cmoraporce = false;
     }
   }
+
   Codigo(event) {
     if (event === 'Otro') {
       this.f.nameCod.setValidators([
@@ -672,61 +464,18 @@ export class ServicesGTPComponent implements OnInit {
     }
   }
 
-  selectCodigo(event) {
-    if (event === 'Otro') {
-      //  this.f.codDeudor.reset();
-      this.f.nameCod.setValidators([
-        Validators.required,
-        Validators.minLength(3),
-      ]);
-    } else {
-      this.f.nameCod.clearValidators();
-      this.f.nameCod.reset();
-    }
-  }
-
-  formAction(action: string) {
-    if (action === 'save') {
-      Object.keys(this.frm.controls).forEach((c) => {
-        this.frm.controls[c].markAsDirty();
-      });
-      this.onSubmitServicio();
-    }
-  }
-
-  nameCodInput(e) {
-    let initalValue = this.f.nameCod.value;
-    /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
-     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
-    initalValue = initalValue.replace(/\s{2,}/g, ' ');
-    this.f.nameCod.setValue(initalValue.replace(/[^ 0-9-A-Z-a-z]*/g, ''));
-  }
-
   MoraMontoBlur(e) {
     const initalValue = parseFloat(this.f.monto.value);
-    if (!isNaN(initalValue)) this.f.monto.setValue(initalValue.toFixed(2));
+    if (!isNaN(initalValue)) {
+      this.f.monto.setValue(initalValue.toFixed(2));
+    }
   }
-  MoraPorcenBlur(e) {
+
+  MoraPorcenBlur() {
     const initalValue = parseFloat(this.f.porcentaje.value);
-    if (!isNaN(initalValue)) this.f.porcentaje.setValue(initalValue.toFixed(2));
-  }
-  nameCodBlur(e) {
-    const initalValue = this.f.nameCod.value;
-    this.f.nameCod.setValue(initalValue.trim());
-  }
-  nameSerInput(e) {
-    let initalValue = this.f.nombre.value;
-    /* initalValue = initalValue.replace(/[ ]{2}/g, ' ');
-     initalValue = initalValue.replace(/[ ]{2}$/g, '');  */
-    initalValue = initalValue.replace(/\s{2,}/g, ' ');
-    this.f.nombre.setValue(
-      initalValue.replace(/[^ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]*/g, '')
-    );
-  }
-  // ^[0-9a-zA-ZÑñ]{3,30}$
-  nameSerBlur(e) {
-    const initalValue = this.f.nombre.value;
-    this.f.nombre.setValue(initalValue.trim());
+    if (!isNaN(initalValue)) {
+      this.f.porcentaje.setValue(initalValue.toFixed(2));
+    }
   }
 
   showAgencyChannel(show: boolean) {
@@ -756,29 +505,4 @@ function Minimo(min: number) {
     }
     return null;
   };
-}
-
-function Alfanumerico(c: UntypedFormControl) {
-  const regex = /[0-9a-zA-Z]-?/g;
-  if (c.value && !regex.test(c.value)) {
-    return { alfa: true };
-  }
-  return null;
-}
-
-function Alfabetico(c: UntypedFormControl) {
-  const regex = /[0-9]{1,29}-?[a-zA-Z]-?/g;
-  const numero = /[0-9]/g;
-  const raro = /[-{1,}]-?/g;
-  if (c.value && !raro.test(c.value)) {
-    return { alfabetico: true };
-  }
-  if (c.value && !regex.test(c.value)) {
-    return { alfabetico: true };
-  }
-
-  /* if(c.value && numero.test(c.value)){
-     return { alfabetico: true };
-   } */
-  return null;
 }

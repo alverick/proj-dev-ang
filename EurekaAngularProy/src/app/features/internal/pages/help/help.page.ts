@@ -16,7 +16,6 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
 @Component({
   selector: 'cs-help',
   templateUrl: './help.page.html',
-  styleUrls: ['./help.page.scss'],
 })
 export class HelpPage implements AfterViewInit {
   /**

@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockComponent } from 'ng-mocks';
 
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { ExcelService } from '../../shared/services/excel.service';
@@ -14,7 +15,11 @@ describe('AdminComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [AdminComponent, AdminHeaderComponent, HeaderComponent],
+      declarations: [
+        AdminComponent,
+        MockComponent(AdminHeaderComponent),
+        HeaderComponent,
+      ],
       imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [ExcelService, NotifyService],
     }).compileComponents();

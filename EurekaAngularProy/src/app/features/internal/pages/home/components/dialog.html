@@ -1,8 +1,8 @@
 <mat-dialog-actions align="end">
-  <div
+  <a
     *ngIf="!excelService.statusUpload"
     style="cursor: pointer"
-    class="pt-2"
+    class="pt-2 hover:tw-no-underline"
     (click)="close()"
   >
     <span class="pr-2 pt-1"
@@ -16,40 +16,42 @@
       src="/assets/images/cerrar.svg"
       alt="Close"
     />
-  </div>
-  <div
+  </a>
+  <a
     *ngIf="excelService.statusUpload"
     style="cursor: pointer"
-    class="pt-2"
+    class="pt-2 hover:tw-no-underline"
     (click)="close()"
   >
     <span class="pr-2 pt-1"
       ><span style="cursor: pointer" class="cancelar">Minimizar</span>
     </span>
     <mat-icon class="svg_custom" svgIcon="eurc_minimize"></mat-icon>
-  </div>
+  </a>
 </mat-dialog-actions>
 
 <div class="content p-0">
   <div *ngIf="!excelService.statusUpload && !ready" class="paso">
     PASO 1 DE 2
-    <img
-      class="pl-3 tw-inline"
-      style="cursor: pointer"
-      (click)="right()"
-      src="/assets/images/arrow-right.svg"
-      alt="Right"
-    />
+    <button (click)="right()">
+      <img
+        class="pl-3 tw-inline"
+        style="cursor: pointer"
+        src="/assets/images/arrow-right.svg"
+        alt="Right"
+      />
+    </button>
   </div>
   <div *ngIf="!excelService.statusUpload && ready" class="paso">
     PASO 2 DE 2
-    <img
-      class="pl-3 tw-inline"
-      style="cursor: pointer"
-      (click)="left()"
-      src="/assets/images/arrow-left.svg"
-      alt="Left"
-    />
+    <button (click)="left()">
+      <img
+        class="pl-3 tw-inline"
+        style="cursor: pointer"
+        src="/assets/images/arrow-left.svg"
+        alt="Left"
+      />
+    </button>
   </div>
 
   <div class="title pt-2">
@@ -71,12 +73,12 @@
       alt="excel"
     />
     <cs-message-alert
-      *ngIf="isNewFlow"
+      *ngIf="useAmountLimits"
       mode="info"
       class="tw-mx-auto tw-block md:tw-w-96 tw-my-6"
       >Monto máximo permitido por cobro {{ limitAmountMax | currency :
-      excelService.service.currencySymbol }}</cs-message-alert
-    >
+      excelService.service.currencySymbol }}
+    </cs-message-alert>
     <div class="text-center">
       <button
         class="btn-eureca-green"
@@ -88,7 +90,7 @@
       </button>
       <br />
       <button
-        class="pt-3 btn-outline-green"
+        class="tw-mt-2 btn-outline-green"
         type="button"
         form="input-form"
         (click)="gotoUploadTemplate()"
@@ -114,8 +116,8 @@
     <br />
   </div>
   <div *ngIf="!excelService.statusUpload && ready" class="text-center pt-1">
-    <div
-      class="input-file tw-max-w-[517px] tw-mx-auto"
+    <a
+      class="input-file tw-max-w-[517px] tw-mx-auto tw-block hover:tw-no-underline"
       (click)="uploadFile.click()"
     >
       <span class="text-input-file">
@@ -124,7 +126,7 @@
           Seleccione el archivo aquí
         </div>
       </span>
-    </div>
+    </a>
     <br />
   </div>
 
@@ -209,8 +211,9 @@
         form="input-form"
         (click)="uploadFile.click()"
       >
-        Seleccionar plantilla</button
-      ><strong> </strong>
+        Seleccionar plantilla
+      </button>
+      <strong> </strong>
     </div>
   </div>
 </div>

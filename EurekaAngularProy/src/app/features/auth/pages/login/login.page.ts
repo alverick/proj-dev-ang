@@ -10,6 +10,7 @@ import { first } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
 import { internalFullRoutingNames } from '../../../../app-routing.collection';
 import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
+import { loginResultStatus } from '../../../../shared/constants/session';
 import { type ModelFormGroup } from '../../../../shared/models/forms';
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
@@ -74,10 +75,10 @@ export class LoginPage implements OnInit {
     ],
   };
   linkRecoverPassword = authFullRoutingNames.RECOVER_PASSWORD;
-  linkRegisterCompany = authFullRoutingNames.COMPANY_REGISTER;
   disabledAffiliation$ = this.store.select(
     appConfigFeature.selectDisabledAffiliation
   );
+  attemptsLimit = 6;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -209,9 +210,9 @@ export class LoginPage implements OnInit {
         .subscribe({
           next: (value) => {
             this.storageService.setIntentos(value.paramNum);
-            this.intentos = this.storageService.getIntentos();
+            this.intentos = value.paramNum;
 
-            this.intentosRestantes = 6 - this.intentos;
+            this.intentosRestantes = this.attemptsLimit - this.intentos;
             this.codRespuesta = value.codRespuesta;
             if (value.paramStr === 'Un session ya se encuentra activa') {
               this.showModal('Existe una Sesión Activa', '');
@@ -220,7 +221,10 @@ export class LoginPage implements OnInit {
                 state: 'Intención de envío',
                 typeError: value.paramStr,
               });
-            } else if (value.estado === true && this.intentos <= 6) {
+            } else if (
+              value.estado === true &&
+              this.intentos <= this.attemptsLimit
+            ) {
               if (this.rememberMe === true) {
                 const expire = new Date();
                 expire.setDate(expire.getDate() + 25);
@@ -231,92 +235,8 @@ export class LoginPage implements OnInit {
               void this.router.navigate([internalFullRoutingNames.HOME]);
               this.sendAdobeTrack(actionParams);
               this.tracking.trackEvent(AdobeEvent.successLogin);
-            } else if (this.intentos < 4 && this.codRespuesta === 2) {
-              this.codigo2 = true;
-            } else if (this.intentos < 4 && this.codRespuesta === 3) {
-              this.codigo2 = false;
-
-              this.showModal(
-                'Contraseña incorrecta',
-                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes.`
-              );
-              this.sendAdobeTrack({
-                ...actionParams,
-                state: 'Intención de envío',
-                typeError: 'Contraseña incorrecta',
-              });
-            } else if (this.intentos < 4 && this.codRespuesta === 5) {
-              this.codigo2 = false;
-
-              this.showModal(
-                'Tu cuenta está siendo procesada',
-                'Estamos procesando la información de tu registro,' +
-                  ' esto puede tomar un máximo 24 horas hábiles. Cuando esté lista te enviaremos un mail de Bienvenida.',
-                'Entendido'
-              );
-              this.sendAdobeTrack({
-                ...actionParams,
-                state: 'Intención de envío',
-                typeError: 'Tu cuenta está siendo procesada',
-              });
-            } else if (this.intentos === 4 && this.codRespuesta === 2) {
-              this.loginService.errores = value.codRespuesta;
-              this.codigo2 = true;
-            } else if (this.intentos == 4 && this.codRespuesta == 3) {
-              this.codigo2 = false;
-              this.showModal(
-                'Contraseña incorrecta',
-                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes.`
-              );
-
-              this.sendAdobeTrack({
-                ...actionParams,
-                state: 'Intención de envío',
-                typeError: 'Contraseña incorrecta',
-              });
-            } else if (this.intentos == 4 && this.codRespuesta == 5) {
-              this.codigo2 = false;
-
-              this.showModal(
-                'Cuenta inactiva',
-                'Su cuenta se encuentra inactiva'
-              );
-
-              this.sendAdobeTrack({
-                ...actionParams,
-                state: 'Intención de envío',
-                typeError: 'Cuenta inactiva',
-              });
-            } else if (this.intentos == 5 && this.codRespuesta == 2) {
-              this.codigo2 = true;
-            } else if (this.intentos == 5 && this.codRespuesta == 3) {
-              this.codigo2 = false;
-
-              this.showModal(
-                'Contraseña incorrecta',
-                `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes.`
-              );
-              this.codigo2 = false;
-              this.sendAdobeTrack({
-                ...actionParams,
-                state: 'Intención de envío',
-                typeError: 'Contraseña incorrecta',
-              });
-            } else if (this.intentos == 5 && this.codRespuesta == 5) {
-              this.codigo2 = false;
-
-              this.showModal(
-                'Cuenta Inactiva',
-                'Su cuenta se encuentra inactiva'
-              );
-              this.codigo2 = false;
-              this.sendAdobeTrack({
-                ...actionParams,
-                state: 'Intención de envío',
-                typeError: 'Cuenta inactiva',
-              });
             } else if (
-              this.intentos >= 6 ||
+              this.intentos >= this.attemptsLimit ||
               value.paramStr === 'Vuelva a intentarlo mas tarde' ||
               value.paramStr === 'El usuario esta bloqueado'
             ) {
@@ -332,6 +252,38 @@ export class LoginPage implements OnInit {
                 state: 'Intención de envío',
                 typeError: value.paramStr,
               });
+            } else if (this.intentos < this.attemptsLimit) {
+              if (this.codRespuesta === loginResultStatus.notRegistered) {
+                this.codigo2 = true;
+              } else if (
+                this.codRespuesta === loginResultStatus.errorCredentials
+              ) {
+                this.codigo2 = false;
+
+                this.showModal(
+                  'Contraseña incorrecta',
+                  `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes.`
+                );
+                this.sendAdobeTrack({
+                  ...actionParams,
+                  state: 'Intención de envío',
+                  typeError: 'Contraseña incorrecta',
+                });
+              } else if (this.codRespuesta === loginResultStatus.userInactive) {
+                this.codigo2 = false;
+
+                this.showModal(
+                  'Tu cuenta está siendo procesada',
+                  'Estamos procesando la información de tu registro,' +
+                    ' esto puede tomar un máximo 24 horas hábiles. Cuando esté lista te enviaremos un mail de Bienvenida.',
+                  'Entendido'
+                );
+                this.sendAdobeTrack({
+                  ...actionParams,
+                  state: 'Intención de envío',
+                  typeError: 'Tu cuenta está siendo procesada',
+                });
+              }
             }
           },
           error: (error) => {

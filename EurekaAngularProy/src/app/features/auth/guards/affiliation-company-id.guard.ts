@@ -1,31 +1,17 @@
 import { Injectable } from '@angular/core';
-import {
-  type ActivatedRouteSnapshot,
-  type CanActivateChild,
-  type RouterStateSnapshot,
-  type UrlTree,
-  Router,
-} from '@angular/router';
+import { Router } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { type Observable } from 'rxjs';
 
 import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';
 
 @Injectable()
-export class AffiliationCompanyIdGuard implements CanActivateChild {
+export class AffiliationCompanyIdGuard {
   constructor(
     private affiliation: AffiliationService,
     private router: Router
   ) {}
-  canActivateChild(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
+  canActivateChild() {
     if (!isNotNilOrEmpty(this.affiliation.companyId)) {
       void this.router.navigate([authFullRoutingNames.COMPANY_REGISTER]);
     }

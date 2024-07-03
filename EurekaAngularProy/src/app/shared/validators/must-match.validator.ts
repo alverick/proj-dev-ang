@@ -1,8 +1,12 @@
-import { FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {
+  type FormControl,
+  type ValidationErrors,
+  type ValidatorFn,
+} from '@angular/forms';
 import { isNil } from 'ramda';
 
-import { ChangePasswordForm } from '../../features/internal/services/company-configuration.service';
-import { ModelFormGroup } from '../models/forms';
+import { type ChangePasswordForm } from '../../features/internal/services/company-configuration.service';
+import { type ModelFormGroup } from '../models/forms';
 
 export function MustMatch(
   controlName: string,

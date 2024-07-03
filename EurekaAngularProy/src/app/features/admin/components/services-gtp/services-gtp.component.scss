@@ -76,65 +76,61 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
 
-/* hide the browser's default radio button */
+  /* hide the browser's default radio button */
 
-.radio input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-}
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
 
-/* create custom radio */
+  /* create custom radio */
 
-.radio .check {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: var(--grises-grey-4);
-  border: 1px solid #ccc;
-  border-radius: 50%;
-}
+  .check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: var(--grises-grey-4);
+    border: 1px solid #ccc;
+    border-radius: 50%;
+  }
 
-/* on mouse-over, add border color */
+  /* on mouse-over, add border color */
 
-.radio:hover input ~ .check {
-  border: 2px solid var(--secondary-blue-1);
-}
+  .radio:hover input ~ .check {
+    border: 2px solid var(--secondary-blue-1);
+  }
 
-/* add background color when the radio is checked */
+  /* add background color when the radio is checked */
 
-.radio input:checked ~ .check {
-  background-color: var(--secondary-blue-1);
-  border: none;
-}
+  input:checked ~ .check {
+    background-color: var(--secondary-blue-1);
+    border: none;
+  }
 
-/* create the radio and hide when not checked */
+  /* show the radio when checked */
 
-.radio .check:after {
-  content: '';
-  position: absolute;
-  display: none;
-}
+  input:checked ~ .check:after {
+    display: block;
+  }
 
-/* show the radio when checked */
+  /* create the radio and hide when not checked */
+  /* radio style */
 
-.radio input:checked ~ .check:after {
-  display: block;
-}
-
-/* radio style */
-
-.radio .check:after {
-  top: 9px;
-  left: 9px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: white;
+  .check:after {
+    content: '';
+    position: absolute;
+    display: none;
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+  }
 }
 
 .seleccionado {
@@ -165,6 +161,7 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  @include font-text(14px !important, 500 !important);
 }
 
 .texto-green {
@@ -202,7 +199,6 @@ body {
 }
 
 .seleccionado-card {
-  // border: var(--primary-green-1) 1px solid;
   border: 0px !important;
   background-color: rgba(0, 169, 79, 0.05);
   border-radius: 4px;
@@ -246,20 +242,6 @@ body {
 .ventanilla {
   @include font-text(10px, $weight: normal);
   color: var(--ibk-black);
-}
-
-/*
-.mat-form-field .mat-form-field-label {
-    font-size: 10px;
-}
-
-:host ::ng-deep .mat-radio-label  {
-   // font-size: 10px;
-}
-*/
-
-.btn-eureca-green {
-  @include font-text(14px !important, 500 !important);
 }
 
 :host

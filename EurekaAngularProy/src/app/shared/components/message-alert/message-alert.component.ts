@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { type OnInit, Component, Input } from '@angular/core';
 
 /**
  * Message alert component for disclaimers
@@ -6,7 +6,6 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'cs-message-alert',
   templateUrl: './message-alert.component.html',
-  styleUrls: ['./message-alert.component.scss'],
 })
 export class MessageAlertComponent implements OnInit {
   /**
@@ -19,10 +18,8 @@ export class MessageAlertComponent implements OnInit {
     this.setBgClass();
   }
   setBgClass() {
-    switch (this.mode) {
-      case 'info':
-        this.bgClass = 'tw-bg-info';
-        break;
+    if (this.mode === 'info') {
+      this.bgClass = 'tw-bg-info';
     }
   }
 }

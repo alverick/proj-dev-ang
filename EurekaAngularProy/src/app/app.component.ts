@@ -24,7 +24,6 @@ import { AppConfigActions } from './store/actions/app-config.actions';
 @Component({
   selector: 'cs-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   providers: [LoginService],
   animations: [fadeAnimation],
 })

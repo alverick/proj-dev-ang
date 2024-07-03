@@ -40,6 +40,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CarouselModule } from 'primeng/carousel';
 import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
@@ -78,10 +79,9 @@ import { SidebarServiceComponent } from './components/sidebar-service/sidebar-se
 import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
 import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
-import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
-import { OnlynumbersDirective } from './directives/onlynumbers.directive';
+import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
@@ -114,6 +114,7 @@ const PRIMENG_MODULES = [
   CarouselModule,
   ChartModule,
   CheckboxModule,
+  ChipModule,
   DialogModule,
   DropdownModule,
   DynamicDialogModule,
@@ -168,9 +169,8 @@ const UI_MODULES = [
   ],
   declarations: [
     OnlyNumbersFormDirective,
-    OnlynumbersDirective,
+    OnlyNumbersDirective,
     SearchDirective,
-    CorreoDirective,
     NameEnterpiseDirective,
     HeaderComponent,
     PaymentsFilterComponent,
@@ -192,9 +192,8 @@ const UI_MODULES = [
   ],
   exports: [
     OnlyNumbersFormDirective,
-    OnlynumbersDirective,
+    OnlyNumbersDirective,
     SearchDirective,
-    CorreoDirective,
     NameEnterpiseDirective,
     ...DIRECTIVES,
     FooterComponent,

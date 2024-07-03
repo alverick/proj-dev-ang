@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -58,7 +58,7 @@ export class HomeService {
     return of(this.date);
   }
 
-  getServices(incDeactivates: boolean = false): Observable<any[]> {
+  getServices(incDeactivates: boolean = false) {
     const url = `${
       environment.END_POINT
     }/company/service?incDeactivates=${incDeactivates.toString()}`;
@@ -77,12 +77,10 @@ export class HomeService {
           return data;
         })
       )
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
-  getServicesActive(
-    serviceWithoutData = true
-  ): Observable<Partial<CompanyServices>[]> {
+  getServicesActive(serviceWithoutData = true) {
     const url = `${
       environment.END_POINT
     }/company/service/active/${serviceWithoutData.toString()}`;
@@ -104,18 +102,20 @@ export class HomeService {
           return data;
         })
       )
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
-  getDebtorCode(service: string, code: string): Observable<any> {
+  getDebtorCode(service: string, code: string) {
     const url = `${environment.END_POINT}/debt/service/${service}/debtor/${code}`;
-    return this.http.get<any>(url).pipe(catchError((err) => throwError(err)));
+    return this.http
+      .get<any>(url)
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
-  postNewDebt(service: string, data: any): Observable<any> {
+  postNewDebt(service: string, data: any) {
     const url = `${environment.END_POINT}/debt/service/${service}/debtor`;
     return this.http
       .post<any>(url, data)
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 }
