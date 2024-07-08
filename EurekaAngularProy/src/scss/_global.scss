@@ -353,3 +353,10 @@ main.general:not(.animating) {
   background-size: cover;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgMzIwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMjAgMzIwIj48cGF0aCBkPSJNNTAuNCAxMC45MWMtMjEuOTkgMC0zOS43OCAxNy45MS0zOS43OCA0MC4wMVYzMDloMjU4LjMxYzIyIDAgMzkuODMtMTcuOTEgMzkuODMtNDBsLjA0LTI1OC4xSDUwLjR6IiBzdHlsZT0iZmlsbDojMDBhOTRmIi8+PHBhdGggc3R5bGU9ImZpbGw6I2ZmZiIgZD0iTTIzOS4xMyAyMjYuMDZMODAuMjIgMjU0Ljc4Vjk0LjRsMTU4LjkxLTI4LjcxeiIvPjwvc3ZnPg==);
 }
+
+.overlay-app {
+  @apply tw-fixed tw-w-full tw-h-screen tw-bg-white tw-top-0 tw-transition-opacity tw-ease-in tw-duration-700;
+  &.showed {
+    @apply tw-pointer-events-none tw-opacity-0;
+  }
+}

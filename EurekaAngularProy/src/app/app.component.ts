@@ -92,6 +92,10 @@ export class AppComponent implements OnInit {
     }
     if (event.phaseName === phasesStateName.done) {
       this.appLoaded = true;
+      setTimeout(() => {
+        const overlay = document.querySelector('.overlay-app');
+        overlay?.classList.add('showed');
+      }, 200);
     }
   }
 
