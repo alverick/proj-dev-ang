@@ -1,5 +1,6 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { StorageService } from '../../services/storage.service';
 import { FabWhatsappComponent } from './fab-whatsapp.component';
 
 describe('FabWhatsappComponent', () => {
@@ -9,6 +10,7 @@ describe('FabWhatsappComponent', () => {
   beforeEach(() => {
     void TestBed.configureTestingModule({
       declarations: [FabWhatsappComponent],
+      providers: [StorageService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FabWhatsappComponent);

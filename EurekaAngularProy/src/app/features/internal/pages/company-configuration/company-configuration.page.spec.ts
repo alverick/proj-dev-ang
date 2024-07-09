@@ -10,10 +10,11 @@ import { KeyFilterModule } from 'primeng/keyfilter';
 import { SidebarModule } from 'primeng/sidebar';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
-import { CompanyService } from '../../../../shared/services';
+import { CompanyService, ServiceService } from '../../../../shared/services';
 import { TrackingService } from '../../../../shared/services';
 import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { CompanyPasswordFormComponent } from '../../components/company-password-form/company-password-form.component';
 import { CompanyUpdateFormComponent } from '../../components/company-update-form/company-update-form.component';
 import { CompanyConfigurationService } from '../../services';
@@ -47,6 +48,8 @@ describe('CompanyConfigurationPage', () => {
         MockProvider(LoginService),
         NotifyService,
         TrackingService,
+        ServiceService,
+        StorageService,
       ],
     }).compileComponents();
   });

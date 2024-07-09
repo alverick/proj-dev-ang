@@ -10,8 +10,10 @@ import { ServicesListComponent } from '../../../../shared/components/services-li
 import {
   CompanyService,
   DigitalDataService,
+  ServiceService,
   ServicesFormsService,
 } from '../../../../shared/services';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { CompanyServicesService } from '../../services';
 import { CompanyServicesPage } from './company-services.page';
 
@@ -38,6 +40,8 @@ describe('CompanyServicesPage', () => {
         CompanyServicesService,
         MockProvider(DigitalDataService),
         ServicesFormsService,
+        ServiceService,
+        StorageService,
       ],
     }).compileComponents();
   });

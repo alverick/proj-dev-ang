@@ -1,9 +1,10 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent, MockProvider, MockProviders } from 'ng-mocks';
+import { MockComponent, MockProviders } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
+
 import { environment } from '../../../../../environments/environment';
 import { ServicesFormsService } from '../../../../shared/services';
-
+import { StorageService } from '../../../../shared/services/storage.service';
 import { CompanyServicesService } from '../../services';
 import { ServiceConfigurationPage } from './service-configuration.page';
 
@@ -22,7 +23,10 @@ describe('ServiceConfigurationPage', () => {
           enableSourceMaps: true,
         }),
       ],
-      providers: [MockProviders(CompanyServicesService, ServicesFormsService)],
+      providers: [
+        MockProviders(CompanyServicesService, ServicesFormsService),
+        StorageService,
+      ],
     }).compileComponents();
   });
 

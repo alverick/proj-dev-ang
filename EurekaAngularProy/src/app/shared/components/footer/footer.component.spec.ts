@@ -1,5 +1,6 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { StorageService } from '../../services/storage.service';
 import { FooterComponent } from './footer.component';
 
 describe('FooterComponent', () => {
@@ -9,6 +10,7 @@ describe('FooterComponent', () => {
   beforeEach(() => {
     void TestBed.configureTestingModule({
       declarations: [FooterComponent],
+      providers: [StorageService],
     }).compileComponents();
   });
 
