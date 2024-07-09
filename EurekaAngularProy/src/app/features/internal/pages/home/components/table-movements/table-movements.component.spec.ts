@@ -9,6 +9,7 @@ import { DialogModule } from 'primeng/dialog';
 
 import { environment } from '../../../../../../../environments/environment';
 import { CompanyService } from '../../../../../../shared/services';
+import { StorageService } from '../../../../../../shared/services/storage.service';
 import { AppConfigEffects } from '../../../../../../store/effects/app-config.effects';
 import { CompanyEffects } from '../../../../../../store/effects/company.effects';
 import { entityConfig } from '../../../../../../store/entity-metadata';
@@ -54,7 +55,7 @@ describe('TableMovementsComponent', () => {
         HttpClientTestingModule,
         DialogModule,
       ],
-      providers: [CompanyService, SelectAllTableService],
+      providers: [CompanyService, SelectAllTableService, StorageService],
     }).compileComponents();
   });
 

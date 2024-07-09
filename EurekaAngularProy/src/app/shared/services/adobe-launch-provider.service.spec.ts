@@ -4,6 +4,7 @@ import {
   type Satellite,
   AdobeLaunchProviderService,
 } from './adobe-launch-provider.service';
+import { StorageService } from './storage.service';
 import { AdobeEvent } from './tracking.service';
 
 declare const window: {
@@ -24,7 +25,9 @@ describe('AdobeLaunchProviderService', () => {
   const adobeActionOrig = _satellite.track;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [AdobeLaunchProviderService] });
+    TestBed.configureTestingModule({
+      providers: [AdobeLaunchProviderService, StorageService],
+    });
     service = TestBed.inject(AdobeLaunchProviderService);
     _satellite.track = mockedTrackPage;
   });

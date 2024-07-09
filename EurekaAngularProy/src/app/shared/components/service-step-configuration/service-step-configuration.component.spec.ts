@@ -12,8 +12,10 @@ import { errorServiceConfiguration } from '../../constants/company-errors';
 import {
   CompanyService,
   DigitalDataService,
+  ServiceService,
   ServicesFormsService,
 } from '../../services';
+import { StorageService } from '../../services/storage.service';
 import { LabelControlComponent } from '../label-control/label-control.component';
 import { MessageAlertComponent } from '../message-alert/message-alert.component';
 import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
@@ -50,6 +52,8 @@ describe('ServiceStepConfigurationComponent', () => {
         CompanyService,
         MockProvider(DigitalDataService),
         ServicesFormsService,
+        ServiceService,
+        StorageService,
       ],
     }).compileComponents();
   });

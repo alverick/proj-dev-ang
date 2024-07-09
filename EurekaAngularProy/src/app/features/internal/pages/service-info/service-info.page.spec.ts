@@ -1,8 +1,9 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
-import { ServicesFormsService } from '../../../../shared/services';
 
+import { ServicesFormsService } from '../../../../shared/services';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { ServiceInfoPage } from './service-info.page';
 
 describe('ServiceInfoPage', () => {
@@ -13,7 +14,7 @@ describe('ServiceInfoPage', () => {
     void TestBed.configureTestingModule({
       declarations: [MockComponent(ServiceInfoPage)],
       imports: [RouterTestingModule],
-      providers: [ServicesFormsService],
+      providers: [ServicesFormsService, StorageService],
     }).compileComponents();
   });
 

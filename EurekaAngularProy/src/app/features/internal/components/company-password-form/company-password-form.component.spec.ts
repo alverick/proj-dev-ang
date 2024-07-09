@@ -9,6 +9,7 @@ import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import { CompanyService } from '../../../../shared/services';
 import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { CompanyConfigurationService } from '../../services';
 import { CompanyPasswordFormComponent } from './company-password-form.component';
 
@@ -31,6 +32,7 @@ describe('CompanyPasswordFormComponent', () => {
         CompanyConfigurationService,
         MockProvider(LoginService),
         NotifyService,
+        StorageService,
       ],
     }).compileComponents();
   });

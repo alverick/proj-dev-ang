@@ -13,9 +13,11 @@ import { type ModelFormGroup } from '../../models/forms';
 import {
   CompanyService,
   DigitalDataService,
+  ServiceService,
   ServicesFormsService,
 } from '../../services';
 import type { ServiceDebt } from '../../services/services-forms.service';
+import { StorageService } from '../../services/storage.service';
 import { LabelControlComponent } from '../label-control/label-control.component';
 import { ServiceDebtFormComponent } from './service-debt-form.component';
 
@@ -45,6 +47,8 @@ describe('ServiceDebtFormComponent', () => {
         CompanyService,
         MockProvider(DigitalDataService),
         ServicesFormsService,
+        ServiceService,
+        StorageService,
       ],
     }).compileComponents();
   });

@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
+import { StorageService } from './storage.service';
 import { AdobeEvent, TrackingService } from './tracking.service';
 
 describe('TrackingService', () => {
   let service: TrackingService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({ providers: [StorageService] });
     service = TestBed.inject(TrackingService);
   });
 
