@@ -10,8 +10,7 @@ import { companyFeature } from './reducers/company.reducer';
 @NgModule({
   imports: [
     StoreModule.forFeature(companyFeature),
-    StoreModule.forFeature(appConfigFeature),
-    EffectsModule.forFeature([CompanyEffects, AppConfigEffects]),
+    EffectsModule.forFeature([CompanyEffects]),
   ],
 })
 export class EntityStoreModule {}

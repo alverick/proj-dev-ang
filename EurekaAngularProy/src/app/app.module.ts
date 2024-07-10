@@ -24,6 +24,8 @@ import {
 } from './shared/services';
 import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
+import { AppConfigEffects } from './store/effects/app-config.effects';
+import { appConfigFeature } from './store/reducers/app-config.reducer';
 
 const apiMockModule = ApiMockModule.forRoot(MockService, {
   passThruUnknownUrl: true,
@@ -61,7 +63,9 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
         },
       }
     ),
+    StoreModule.forFeature(appConfigFeature),
     EffectsModule.forRoot([]),
+    EffectsModule.forFeature([AppConfigEffects]),
     MatSnackBarModule,
   ],
   providers: [
