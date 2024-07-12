@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApiMockModule } from '@ng-stack/api-mock';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { LoggerModule } from 'ngx-logger';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ValdemortModule } from 'ngx-valdemort';
@@ -66,6 +67,10 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
     StoreModule.forFeature(appConfigFeature),
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([AppConfigEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
     MatSnackBarModule,
   ],
   providers: [
