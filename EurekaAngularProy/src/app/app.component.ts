@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   showButton = false;
   expand = false;
   appLoaded = false;
+  spinnerBackground = 'rgba(255, 255, 255, 1)';
 
   constructor(
     matIconRegistry: MatIconRegistry,
@@ -110,5 +111,16 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.primengConfig.ripple = true;
     this.primengConfig.setTranslation(primeng);
+    document.addEventListener('at-content-rendering-succeeded', () => {
+      setTimeout(() => {
+        this.spinnerBackground = 'rgba(0, 0, 0, 0.7)';
+      }, 500);
+    });
+
+    document.addEventListener('at-content-rendering-failed', () => {
+      setTimeout(() => {
+        this.spinnerBackground = 'rgba(0, 0, 0, 0.7)';
+      }, 500);
+    });
   }
 }
