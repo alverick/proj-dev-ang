@@ -5,6 +5,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { LoadBarComponent } from '../../shared/components/load-bar/load-bar.component';
+import { LoadFileComponent } from '../../shared/components/load-file/load-file.component';
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
 import { AfiliacionService } from '../../shared/services/afiliacion.service';
@@ -50,6 +51,7 @@ import { SERVICES } from './services';
     ...PAGES,
     TableMovementsComponent,
     CommissionsInfoComponent,
+    LoadFileComponent,
   ],
   imports: [
     CommonModule,
