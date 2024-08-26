@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 import { internalFullRoutingNames } from '../../features/internal/internal-routing.names';
-import { StorageService } from '../services/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LogoutGuard {
-  constructor(
-    private router: Router,
-    private storageService: StorageService,
-    private spinner: NgxSpinnerService
-  ) {}
+  constructor(private router: Router) {}
   canActivate(): boolean {
     if (
       sessionStorage.getItem('tk') == null ||

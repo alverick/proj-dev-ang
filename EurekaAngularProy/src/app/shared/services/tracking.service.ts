@@ -19,6 +19,7 @@ export const AdobeEvent = {
   successLogin: 'successLogin',
   trackAction: 'trackAction',
   pageTrack: 'pageTrack',
+  appInit: 'appInit',
 } as const;
 
 export type AdobeEventType = (typeof AdobeEvent)[keyof typeof AdobeEvent];

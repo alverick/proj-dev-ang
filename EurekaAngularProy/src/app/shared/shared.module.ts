@@ -81,8 +81,8 @@ import { ValidationDefaultsComponent } from './components/validation-defaults/va
 import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
-import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
+import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
 import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
