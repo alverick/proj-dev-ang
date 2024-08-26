@@ -1,31 +1,33 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, NgZone } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { type Observable, ReplaySubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class ScriptInjectorService {
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private zone: NgZone
-  ) {}
-  load(id: string, src: string) {
-    const scriptElement: HTMLScriptElement =
-      this.document.createElement('script');
-    scriptElement.id = id;
-    scriptElement.src = src;
-    scriptElement.async = false;
-    const promise = new Promise((resolve, reject) => {
-      scriptElement.addEventListener('load', () => {
-        setTimeout(resolve, 10);
-      });
-      scriptElement.addEventListener('error', () => {
-        reject(new Error('failed to load script'));
-      });
-    });
+  private loadedLibraries: Record<string, ReplaySubject<boolean>> = {};
 
-    this.zone.runOutsideAngular(() => {
-      this.document.head.appendChild(scriptElement);
-    });
-    return promise;
+  constructor(@Inject(DOCUMENT) private document: Document) {}
+
+  loadScript(id: string, src: string): Observable<boolean> {
+    if (this.loadedLibraries[src]) {
+      return this.loadedLibraries[src].asObservable();
+    }
+
+    this.loadedLibraries[src] = new ReplaySubject();
+
+    const script = this.document.createElement('script');
+    script.id = id;
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = src;
+    script.onload = () => {
+      this.loadedLibraries[src].next(true);
+      this.loadedLibraries[src].complete();
+    };
+
+    this.document.head.appendChild(script);
+
+    return this.loadedLibraries[src].asObservable();
   }
 }

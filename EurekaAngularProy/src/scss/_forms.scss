@@ -607,6 +607,12 @@ body {
   .p-accordion {
     p-accordiontab .p-accordion-tab {
       @apply tw-mb-4 tw-shadow-md;
+
+      &:not(.p-accordion-tab-active) {
+        .p-toggleable-content {
+          height: 0;
+        }
+      }
     }
 
     .p-accordion-header {

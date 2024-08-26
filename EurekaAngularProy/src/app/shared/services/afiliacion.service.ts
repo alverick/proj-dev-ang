@@ -16,7 +16,6 @@ export class AfiliacionService {
 
   public idCompany = 0;
   public email: string;
-  public Guardado = false;
 
   public services: IServiceModel[] = [];
   private _rubros: IEntryModel[] = null;
@@ -43,7 +42,7 @@ export class AfiliacionService {
   }
 
   public GetCodDeudor(): Observable<any[]> {
-    return of<any[]>([
+    return of<Record<string, string>[]>([
       {
         code: 'DNI',
         name: 'DNI',
@@ -128,20 +127,5 @@ export class AfiliacionService {
       );
     }
     return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
-  }
-
-  Descartar(indice: number, isNew: boolean) {
-    this.Guardado = false;
-    if (
-      isNew &&
-      this.services.length > 1 &&
-      indice >= 0 &&
-      indice === this.services.length - 1
-    ) {
-      const svc = this.services[this.services.length - 1];
-      if (svc.id === null || svc.id === undefined || svc.id < 0) {
-        this.services.pop();
-      }
-    }
   }
 }

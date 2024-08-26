@@ -16,9 +16,7 @@ describe('ScriptInjectorService', () => {
   });
 
   it('load script', (done) => {
-    void service.load('Launch', environment.adobe).then(() => {
-      done();
-    });
+    service.loadScript('Launch', environment.adobe);
     setTimeout(() => {
       done();
     }, 4000);
