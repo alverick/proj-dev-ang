@@ -22,6 +22,7 @@ import {
   type ServiceDebt,
   type ServiceFormValue,
 } from '../../../shared/services/services-forms.service';
+import { StorageService } from '../../../shared/services/storage.service';
 import { AffiliationService } from './affiliation.service';
 import { AffiliationFormsService } from './affiliation-forms.service';
 
@@ -182,6 +183,7 @@ describe('AffiliationService', () => {
         MockProvider(LoginService),
         NotifyService,
         ServicesFormsService,
+        StorageService,
       ],
     });
     service = TestBed.inject(AffiliationService);

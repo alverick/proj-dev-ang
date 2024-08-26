@@ -49,7 +49,6 @@
     "ajv": "^8.12.0",
     "angular-shepherd": "^15.0.0",
     "bootstrap": "^4.6.1",
-    "chart.js": "^4.2.1",
     "core-js": "^2.6.11",
     "dompurify": "^3.0.5",
     "dot-object": "^2.1.4",

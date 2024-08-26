@@ -5,9 +5,7 @@ import { type Observable } from 'rxjs';
 import { internalFullRoutingNames } from '../../features/internal/internal-routing.names';
 import { StorageService } from '../services/storage.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class GtpInputGuard {
   constructor(private router: Router, private storageService: StorageService) {}
 

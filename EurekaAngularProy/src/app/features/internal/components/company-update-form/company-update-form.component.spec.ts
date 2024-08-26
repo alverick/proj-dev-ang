@@ -14,6 +14,7 @@ import {
 import { CompanyService } from '../../../../shared/services';
 import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { CompanyConfigurationService } from '../../services';
 import { CompanyUpdateFormComponent } from './company-update-form.component';
 
@@ -38,6 +39,7 @@ describe('CompanyUpdateFormComponent', () => {
         CompanyConfigurationService,
         MockProvider(LoginService),
         NotifyService,
+        StorageService,
       ],
     }).compileComponents();
   });

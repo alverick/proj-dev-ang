@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 
 import { internalFullRoutingNames } from '../../features/internal/internal-routing.names';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LogoutGuard {
   constructor(private router: Router) {}
   canActivate(): boolean {

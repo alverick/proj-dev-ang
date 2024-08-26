@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
 import { CambiaContrasenaComponent } from './cambia-contrasena.component';
@@ -26,6 +27,7 @@ describe('RegistrationFinishedPage', () => {
       .mock(FormsModule)
       .mock(ReactiveFormsModule)
       .keep(FormBuilder)
+      .keep(StorageService)
       .mock(RecuperaService, {
         ChangePassword: () => changePasswordSubject,
         VerifingToken: () => verifingTokenSubject,

@@ -6,9 +6,7 @@ import {
 
 import { type HistoricalCollect } from '../entities';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class HistoricalCollectService extends EntityCollectionServiceBase<HistoricalCollect> {
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
     super('HistoricalCollect', serviceElementsFactory);

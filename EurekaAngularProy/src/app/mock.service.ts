@@ -10,9 +10,7 @@ import { getAffiliate } from './shared/mocks/company';
 import { type ICompanyData } from './shared/models/company-data';
 import { type IDataEnterpriseModel } from './shared/models/data-enterprise.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class MockService implements ApiMockService {
   getRoutes(): ApiMockRootRoute[] {
     return [

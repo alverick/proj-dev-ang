@@ -3,6 +3,7 @@ import type { BrowserAgent } from '@newrelic/browser-agent/loaders/browser-agent
 import dot from 'dot-object';
 
 import { NewRelicProviderService } from './new-relic-provider.service';
+import { StorageService } from './storage.service';
 import { AdobeEvent } from './tracking.service';
 
 declare const window: {
@@ -22,7 +23,7 @@ describe('NewRelicProviderService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NewRelicProviderService],
+      providers: [NewRelicProviderService, StorageService],
     });
     service = TestBed.inject(NewRelicProviderService);
     window.newrelic.addPageAction = mockedTrackPage;

@@ -4,9 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { type Session } from '../models/session.model';
 import { type User } from '../models/user.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class StorageService {
   private localStorageService;
   private currentSession: Session = null;

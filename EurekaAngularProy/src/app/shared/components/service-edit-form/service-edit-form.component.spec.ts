@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockProvider } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChipModule } from "primeng/chip";
 import { DropdownModule } from 'primeng/dropdown';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
@@ -14,8 +15,10 @@ import { errorServiceConfiguration } from '../../constants/company-errors';
 import {
   CompanyService,
   DigitalDataService,
+  ServiceService,
   ServicesFormsService,
 } from '../../services';
+import { StorageService } from '../../services/storage.service';
 import { LabelControlComponent } from '../label-control/label-control.component';
 import { ServiceEditFormComponent } from './service-edit-form.component';
 
@@ -30,6 +33,7 @@ describe('ServiceEditFormComponent', () => {
       imports: [
         CheckboxModule,
         DropdownModule,
+        ChipModule,
         MessagesModule,
         MessageModule,
         LoggerModule.forRoot({
@@ -47,6 +51,8 @@ describe('ServiceEditFormComponent', () => {
         CompanyServicesService,
         MockProvider(DigitalDataService),
         ServicesFormsService,
+        ServiceService,
+        StorageService,
       ],
     }).compileComponents();
   });
