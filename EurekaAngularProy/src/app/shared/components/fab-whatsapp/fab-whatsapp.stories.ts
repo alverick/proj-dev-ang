@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import type { Meta } from '@storybook/angular';
-import { moduleMetadata, Story } from '@storybook/angular';
+import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';
 import { FabWhatsappComponent } from './fab-whatsapp.component';
 
-export default {
+const meta: Meta<FabWhatsappComponent> = {
   title: 'Shared/UI/Button Whatsapp',
   component: FabWhatsappComponent,
   decorators: [
@@ -21,17 +20,15 @@ export default {
       ],
     }),
   ],
-  argTypes: { link: { action: 'clicked' } },
-} as Meta;
+};
 
-const Template: Story<FabWhatsappComponent> = (args: FabWhatsappComponent) => ({
-  props: args,
-});
+export default meta;
 
-export const Normal = Template.bind({});
-Normal.args = {
-  title: 'Cobro total',
-  currency: 'S/',
-  amount: -50,
-  peopleQuantity: 1,
+type Story = StoryObj<FabWhatsappComponent>;
+
+export const Normal: Story = {
+  args: {
+    showButton: true,
+    expand: true,
+  },
 };

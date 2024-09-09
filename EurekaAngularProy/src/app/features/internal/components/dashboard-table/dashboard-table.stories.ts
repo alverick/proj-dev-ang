@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import type { Meta } from '@storybook/angular';
-import { moduleMetadata, Story } from '@storybook/angular';
+import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
 import { SharedModule } from '../../../../shared/shared.module';
-import { TopClient } from '../../../../store/entities';
+import { type TopClient } from '../../../../store/entities';
 import { DashboardTableComponent } from './dashboard-table.component';
 
-export default {
+const meta: Meta<DashboardTableComponent> = {
   title: 'Internal/Dashboard/Dashboard Table',
   component: DashboardTableComponent,
   decorators: [
@@ -22,13 +21,11 @@ export default {
       ],
     }),
   ],
-} as Meta;
+};
 
-const Template: Story<DashboardTableComponent> = (
-  args: DashboardTableComponent
-) => ({
-  props: args,
-});
+export default meta;
+
+type Story = StoryObj<DashboardTableComponent>;
 
 const customers: TopClient[] = [
   {
@@ -69,12 +66,14 @@ const customers: TopClient[] = [
   },
 ];
 
-export const Normal = Template.bind({});
-Normal.args = {
-  customers,
+export const Normal: Story = {
+  args: {
+    customers,
+  },
 };
 
-export const Empty = Template.bind({});
-Empty.args = {
-  customers: [],
+export const Empty: Story = {
+  args: {
+    customers: [],
+  },
 };

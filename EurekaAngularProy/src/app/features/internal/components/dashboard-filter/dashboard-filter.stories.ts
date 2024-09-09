@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import type { Meta } from '@storybook/angular';
-import { moduleMetadata, Story } from '@storybook/angular';
+import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
 
 import { SharedModule } from '../../../../shared/shared.module';
 import { DashboardFilterComponent } from './dashboard-filter.component';
@@ -155,7 +154,7 @@ const serviceList = [
   },
 ];
 
-export default {
+const meta: Meta<DashboardFilterComponent> = {
   title: 'Internal/Dashboard/Dashboard Filter',
   component: DashboardFilterComponent,
   decorators: [
@@ -170,13 +169,11 @@ export default {
     }),
   ],
   argTypes: { sendForm: { action: 'clicked' } },
-} as Meta;
+};
 
-const Template: Story<DashboardFilterComponent> = (
-  args: DashboardFilterComponent
-) => ({
-  props: args,
-});
+export default meta;
+
+type Story = StoryObj<DashboardFilterComponent>;
 
 const services = serviceList.map(
   ({ currency, currencySymbol, id, name, dataType }) => ({
@@ -197,14 +194,15 @@ const dateTo = new Date();
 const dateFrom = new Date();
 dateFrom.setMonth(dateFrom.getMonth() - 1);
 
-export const normal = Template.bind({});
-normal.args = {
-  services,
-  optionsDates,
-  initialValue: {
+export const normal: Story = {
+  args: {
     services,
-    payment: optionsDates[0],
-    dateFrom,
-    dateTo,
+    optionsDates,
+    // initialValue: {
+    //   services,
+    // payment: optionsDates[0],
+    // dateFrom,
+    // dateTo,
+    // },
   },
 };

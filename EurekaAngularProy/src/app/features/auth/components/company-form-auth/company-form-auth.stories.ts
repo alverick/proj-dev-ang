@@ -37,6 +37,7 @@ import { CompanyFormAuthComponent } from './company-form-auth.component';
     [nameOptions]="companyName"
     (sendForm)="onSubmit($event)"
   ></cs-company-form-auth>`,
+  standalone: true,
 })
 class FormDemoComponent implements OnChanges {
   @Output() sendForm = new EventEmitter<AuthForm>();
@@ -132,8 +133,8 @@ const meta: Meta<FormDemoComponent> = {
   decorators: [
     applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
-      declarations: [FormDemoComponent, CompanyFormAuthComponent],
-      imports: [SharedModule],
+      declarations: [CompanyFormAuthComponent],
+      imports: [SharedModule, FormDemoComponent],
       providers: [AffiliationFormsService],
     }),
   ],
