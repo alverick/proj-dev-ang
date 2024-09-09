@@ -174,3 +174,9 @@ button:focus {
 .backdrop-background-opaque {
   background-color: var(--grises-grey-4);
 }
+
+.upload-files-dialog .mat-dialog-actions {
+  position: absolute;
+  right: calc(50% - 430px);
+  top: 5px;
+}
