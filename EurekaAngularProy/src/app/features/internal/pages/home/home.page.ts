@@ -151,6 +151,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private showedCommissions: boolean;
   private readonly onboardingIntro = 'intro';
 
+  protected dialogConfig = {
+    width: '899px',
+    backdropClass: 'backdrop-background-opaque',
+    panelClass: 'upload-files-dialog',
+  };
+
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.updatePositionModal();
@@ -265,7 +271,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       header: 'Conoce las nuevas comisiones por cobranza en canales digitales',
       styleClass: 'tw-w-[54rem]',
       data: {
-        showed: (showed || !auto) as boolean,
+        showed: showed || !auto,
         detail:
           'Modal informativo sobre las nuevas comisiones de cobranza en canales digitales',
       },
@@ -320,10 +326,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       } else if (m.status === 'rejected') {
         this.fileLoad.close();
         this.excelService.statusUpload = false;
-        const dialogRef = this.dialog.open(DialogComponent, {
-          width: '899px',
-          backdropClass: 'backdrop-background-opaque',
-        });
+        const dialogRef = this.dialog.open(DialogComponent, this.dialogConfig);
         dialogRef.componentInstance.ready = true;
         dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
         dialogRef.componentInstance.rowsRejected = m.rowsRejected;
@@ -1002,12 +1005,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.cargaExcel = false;
     this.excelService.service = service;
     if (this.fileLoad.isRunning()) {
-      const dialogRef = this.dialog.open(DialogComponent, {
-        width: '899px',
-        backdropClass: 'backdrop-background-opaque',
-        // height: '377px',
-        // disableClose: true
-      });
+      const dialogRef = this.dialog.open(DialogComponent, this.dialogConfig);
       dialogRef.afterClosed().subscribe((result: Observable<any>) => {
         dialogRef.componentInstance.ready = false;
         this.fileLoad.verify(this.fileLoadContainer);
@@ -1063,10 +1061,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 location: 'Modal',
               });
             } else {
-              const dialogRef = this.dialog.open(DialogComponent, {
-                width: '899px',
-                backdropClass: 'backdrop-background-opaque',
-              });
+              const dialogRef = this.dialog.open(
+                DialogComponent,
+                this.dialogConfig
+              );
               dialogRef.afterClosed().subscribe((result: Observable<any>) => {
                 dialogRef.componentInstance.ready = false;
                 this.fileLoad.verify(this.fileLoadContainer);
