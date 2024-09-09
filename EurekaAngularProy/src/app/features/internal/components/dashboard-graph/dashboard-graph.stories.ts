@@ -21,6 +21,7 @@ const meta: Meta<DashboardGraphComponent> = {
     }),
   ],
 };
+
 export default meta;
 
 type Story = StoryObj<DashboardGraphComponent>;

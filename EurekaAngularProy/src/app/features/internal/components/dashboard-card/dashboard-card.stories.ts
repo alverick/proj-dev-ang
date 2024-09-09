@@ -20,6 +20,7 @@ const meta: Meta<DashboardCardComponent> = {
       ],
     }),
   ],
+  argTypes: { link: { action: 'clicked' } },
 };
 
 export default meta;

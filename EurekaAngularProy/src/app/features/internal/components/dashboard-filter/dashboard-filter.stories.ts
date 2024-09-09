@@ -168,9 +168,12 @@ const meta: Meta<DashboardFilterComponent> = {
       ],
     }),
   ],
+  argTypes: { sendForm: { action: 'clicked' } },
 };
 
 export default meta;
+
+type Story = StoryObj<DashboardFilterComponent>;
 
 const services = serviceList.map(
   ({ currency, currencySymbol, id, name, dataType }) => ({
@@ -187,21 +190,19 @@ const optionsDates = [
   { name: 'Vencimiento', code: 'due' },
 ];
 
-const dateTo = new Date().toDateString();
+const dateTo = new Date();
 const dateFrom = new Date();
 dateFrom.setMonth(dateFrom.getMonth() - 1);
 
-type Story = StoryObj<DashboardFilterComponent>;
-
-export const Normal: Story = {
+export const normal: Story = {
   args: {
     services,
     optionsDates,
-    initialValue: {
-      services,
-      payment: optionsDates[0].code,
-      dateFrom: dateFrom.toDateString(),
-      dateTo,
-    },
+    // initialValue: {
+    //   services,
+    // payment: optionsDates[0],
+    // dateFrom,
+    // dateTo,
+    // },
   },
 };

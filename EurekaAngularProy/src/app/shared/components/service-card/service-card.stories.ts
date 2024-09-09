@@ -19,17 +19,13 @@ const meta: Meta<ServiceCardComponent> = {
       ],
     }),
   ],
-  render: ({ ...args }) => ({
-    props: args,
-    template: `<div class="tw-p-5"><cs-service-card class="tw-m-10" [serviceData]="serviceData" [canEdit]="canEdit" [lockedMode]="lockedMode" [position]="position" [reviewMode]="reviewMode"></cs-service-card></div>`,
-  }),
 };
 
 export default meta;
 
 type Story = StoryObj<ServiceCardComponent>;
 
-export const Normal: Story = {
+export const normal: Story = {
   args: {
     serviceData: {
       id: 2560,
@@ -67,7 +63,7 @@ export const Normal: Story = {
   },
 };
 
-export const Pendant: Story = {
+export const pendant: Story = {
   args: {
     serviceData: {
       id: 2428,
@@ -105,7 +101,7 @@ export const Pendant: Story = {
   },
 };
 
-export const UserReview: Story = {
+export const userReview: Story = {
   args: {
     serviceData: {
       id: 2428,
@@ -143,7 +139,7 @@ export const UserReview: Story = {
   },
 };
 
-export const Registration: Story = {
+export const registration: Story = {
   args: {
     canEdit: true,
     lockedMode: false,
@@ -173,7 +169,7 @@ export const Registration: Story = {
   },
 };
 
-export const Update: Story = {
+export const update: Story = {
   args: {
     canEdit: true,
     lockedMode: false,
