@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'storybook-button',
+  standalone: true,
+  imports: [CommonModule],
   template: ` <button
     type="button"
     (click)="onClick.emit($event)"
@@ -12,7 +15,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   </button>`,
   styleUrls: ['./button.css'],
 })
-export default class ButtonComponent {
+export class ButtonComponent {
   /**
    * Is this the principal call to action on the page?
    */
@@ -46,9 +49,7 @@ export default class ButtonComponent {
   onClick = new EventEmitter<Event>();
 
   public get classes(): string[] {
-    const mode = this.primary
-      ? 'storybook-button--primary'
-      : 'storybook-button--secondary';
+    const mode = this.primary ? 'storybook-button--primary' : 'storybook-button--secondary';
 
     return ['storybook-button', `storybook-button--${this.size}`, mode];
   }

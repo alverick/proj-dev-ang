@@ -3,6 +3,7 @@ import path from 'path';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  staticDirs: [{ from: '../src/assets', to: '/assets' }],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -33,9 +34,7 @@ const config: StorybookConfig = {
     });
     return config;
   },
-  docs: {
-    autodocs: true,
-  },
+  docs: {},
 };
 
 export default config;

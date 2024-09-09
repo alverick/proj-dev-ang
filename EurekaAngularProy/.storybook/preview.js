@@ -7,3 +7,4 @@ export const parameters = {
   layout: 'centered',
 };
 setCompodocJson(docJson);
+export const tags = ['autodocs'];
