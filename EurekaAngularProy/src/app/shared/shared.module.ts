@@ -44,6 +44,7 @@ import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FileUploadModule } from 'primeng/fileupload';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -128,6 +129,7 @@ const PRIMENG_MODULES = [
   MessagesModule,
   MultiSelectModule,
   PasswordModule,
+  FileUploadModule,
   RadioButtonModule,
   RippleModule,
   SidebarModule,

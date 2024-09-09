@@ -6,15 +6,18 @@ import {
 } from '@angular/forms';
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Store } from '@ngrx/store';
+import ExcelJS from 'exceljs';
 import * as saveAs from 'file-saver';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNilOrEmpty, isNotEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import type { IErrorObj } from '../../../../../shared/models/error.model';
 import {
   type ProcessStatus,
   ExcelService,
 } from '../../../../../shared/services/excel.service';
+import { ServiceTypes } from '../../../../../shared/services/services-forms.service';
 import {
   type ActionEventProperties,
   AdobeEvent,
@@ -39,6 +42,7 @@ export class DialogComponent implements OnInit {
   private files: any;
   limitAmountMax: number;
   changestatus = true;
+  uploaderFiles: File[] = [];
 
   public rowsAccepted = 0;
   public rowsRejected = 0;
@@ -81,8 +85,9 @@ export class DialogComponent implements OnInit {
       });
   }
 
-  onChangeFile(event) {
-    const el = event.target;
+  onChangeFile(event: Event) {
+    console.log(event);
+    const el = event.target as HTMLInputElement;
     let names: string[] = el.value.split('/');
     if (names.length <= 1) {
       names = el.value.split('\\');
@@ -93,7 +98,124 @@ export class DialogComponent implements OnInit {
     this.ready = true;
   }
 
-  openSnackBar() {
+  private readonly rowStart = 14;
+
+  validateFile() {
+    return new Promise<IErrorObj[]>((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const arrayBuffer = reader.result as ArrayBuffer;
+
+        const workbook = new ExcelJS.Workbook();
+        void workbook.xlsx
+          .load(arrayBuffer)
+          .then((workbook: ExcelJS.Workbook) => {
+            const errors: IErrorObj[] = [];
+            const limit = workbook.getWorksheet(1).rowCount;
+
+            if (limit > 5000) {
+              errors.push({
+                description:
+                  'Se ha superado el límite de 5000 registros por archivo excel',
+                row: 0,
+              } as IErrorObj);
+            }
+            if (limit < 14) {
+              errors.push({
+                description: 'El archivo no contiene registros válidos',
+                row: 0,
+              } as IErrorObj);
+            }
+
+            const title = workbook.getWorksheet(1).getRow(2).getCell('B')
+              .value as string;
+            if (title.trim() !== this.excelService.service.name) {
+              errors.push({
+                description: 'El nombre del servicio no es correcto',
+                row: 0,
+              } as IErrorObj);
+            }
+            workbook
+              .getWorksheet(1)
+              .getRows(this.rowStart, limit - this.rowStart + 1)
+              .forEach((row) => {
+                errors.push(...this.validateRow(row));
+              });
+            resolve(errors);
+          });
+      };
+      reader.readAsArrayBuffer(this.uploaderFiles[0]);
+    });
+  }
+
+  validateRow(row: ExcelJS.Row) {
+    const errors: IErrorObj[] = [];
+    const fieldLabels = {
+      [ServiceTypes.partial]: ['Código de cliente', 'Nombres', 'Servicio'],
+      [ServiceTypes.complete]: [
+        'Fecha de emisión',
+        'Fecha de vencimiento',
+        'Código de cliente',
+        'Nombre del cliente',
+        'Descripción',
+        'Monto',
+      ],
+    };
+
+    if (row.number === 14) {
+      const cellTemplateText = row.getCell('G').value ?? '';
+      if (
+        cellTemplateText ===
+        'Esto es un ejemplo, no olvides eliminar esta fila antes de subir tu archivo'
+      ) {
+        errors.push({
+          description:
+            'El archivo no contiene registros válidos, eliminar la fila de ejemplo',
+          row: 0,
+        } as IErrorObj);
+      }
+    }
+
+    if (this.excelService.service.dataType === ServiceTypes.complete) {
+      for (let idx = 1; idx <= 2; idx++) {
+        if (!(row.getCell(idx).value instanceof Date)) {
+          errors.push({
+            description: `${
+              fieldLabels[this.excelService.service.dataType][idx - 1]
+            } no es una fecha válida`,
+            row: row.number,
+          } as IErrorObj);
+        }
+      }
+    }
+
+    if (row.actualCellCount < 6) {
+      fieldLabels[this.excelService.service.dataType].forEach((col, index) => {
+        if (isNilOrEmpty(row.getCell(index + 1).value)) {
+          errors.push({
+            description: `${col} debe tener un valor`,
+            row: row.number,
+          } as IErrorObj);
+        }
+      });
+    }
+
+    return errors;
+  }
+
+  public removeFiled() {
+    // console.log($event);
+    this.uploaderFiles = [];
+    this.excelService.errores = [];
+  }
+
+  public selectFiled({ currentFiles }: { currentFiles: File[] }) {
+    // console.log($event);
+    this.uploaderFiles = currentFiles;
+    this.excelService.errores = [];
+  }
+
+  async openSnackBar() {
     if (!this.excelService.statusUpload) {
       const actionStep: Partial<ActionEventProperties> = {
         category: 'Home filtro',
@@ -104,6 +226,13 @@ export class DialogComponent implements OnInit {
         state: 'Envío exitoso',
         metadata: [{ key: 'fileName', value: this.fileName }],
       };
+      console.time();
+      const validation = await this.validateFile();
+      console.timeEnd();
+      if (isNotEmpty(validation)) {
+        this.excelService.errores = validation;
+        return;
+      }
 
       this.progress.status = 'Subiendo';
       this.progress.mode = 'indeterminate';
@@ -120,7 +249,6 @@ export class DialogComponent implements OnInit {
             this.verifyStatus();
           },
           error: (err) => {
-            console.log(err);
             this.excelService.statusUpload = false;
             let message = err.message || 'Ha ocurrido un error';
             if (err.status === 400) {

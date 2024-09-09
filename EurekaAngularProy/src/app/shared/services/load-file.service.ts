@@ -1,8 +1,8 @@
 import {
-  ComponentRef,
+  type ComponentRef,
+  type ViewContainerRef,
   EventEmitter,
   Injectable,
-  ViewContainerRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -10,7 +10,7 @@ import { repeat, takeUntil } from 'rxjs/operators';
 
 import { internalFullRoutingNames } from '../../app-routing.collection';
 import { LoadFileComponent } from '../components/load-file/load-file.component';
-import { ExcelService, ProcessStatus } from './excel.service';
+import { type ProcessStatus, ExcelService } from './excel.service';
 import { StorageService } from './storage.service';
 
 export interface ModalCloseData {
