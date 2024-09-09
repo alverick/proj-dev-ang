@@ -52,6 +52,7 @@
     "core-js": "^2.6.11",
     "dompurify": "^3.0.5",
     "dot-object": "^2.1.4",
+    "exceljs": "^4.4.0",
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
     "include-media": "^1.4.10",
