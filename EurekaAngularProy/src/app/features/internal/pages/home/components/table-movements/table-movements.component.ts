@@ -13,7 +13,8 @@ import { NGXLogger } from 'ngx-logger';
 import { type LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
-import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
+import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
+import { filter } from 'rxjs/operators';
 
 import { type CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
