@@ -22,6 +22,7 @@
               "core-js",
               "html2canvas",
               "rgbcolor",
+              "exceljs",
               "dot-object"
             ],
             "customWebpackConfig": {
