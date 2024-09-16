@@ -21,6 +21,7 @@
               "raf",
               "core-js",
               "rgbcolor",
+              "exceljs",
               "dot-object"
             ],
             "customWebpackConfig": {
