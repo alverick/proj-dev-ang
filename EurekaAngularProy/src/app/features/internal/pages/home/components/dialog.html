@@ -98,14 +98,15 @@
     <div class="text">
       Selecciona el archivo y sube la plantilla con la información de los
       <br />cobros de tus clientes.
+      {{ 'upload-excel' + (uploaderFiles.length > 0 ? ' with-files' : '') }}
     </div>
     <br />
     <div *ngIf="!excelService.statusUpload && ready" class="text-center pt-1">
       <p-fileUpload
-        name="myfile[]"
-        url="https://www.primefaces.org/cdn/api/upload.php"
         chooseLabel="Seleccionar archivo"
-        [styleClass]="'upload-excel'"
+        [styleClass]="
+          'upload-excel' + (uploaderFiles.length > 0 ? ' with-files' : '')
+        "
         [multiple]="false"
         [customUpload]="true"
         [previewWidth]="1"
@@ -162,15 +163,16 @@
         Corrige los errores y vuelve a subir la plantilla
       </div>
     </div>
-    <div class="text-center">
+    <div
+      *ngIf="uploaderFiles.length > 0 && excelService.errores.length === 0"
+      class="text-center"
+    >
       <button
         pButton
         pRipple
+        icon="pi pi-upload"
         class="tw-transition-colors"
         type="button"
-        [disabled]="
-          uploaderFiles.length === 0 || excelService.errores.length > 0
-        "
         (click)="openSnackBar()"
       >
         Subir plantilla
