@@ -362,6 +362,10 @@ body {
       font-size: 10px;
       padding: 0.2rem;
     }
+
+    .p-button-icon{
+      margin-right: 0.5rem;
+    }
   }
 
   .p-button-label {
@@ -745,12 +749,17 @@ body {
   .p-fileupload {
     &.upload-excel {
       .p-fileupload-row div:first-child {
-        background: red;
         display: none;
       }
 
       .p-fileupload-row > div {
         width: auto;
+      }
+    }
+
+    &.with-files {
+      .p-fileupload-buttonbar {
+        display: none;
       }
     }
 
