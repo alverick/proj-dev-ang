@@ -17,7 +17,10 @@ import {
   type ProcessStatus,
   ExcelService,
 } from '../../../../../shared/services/excel.service';
-import { ServiceTypes } from '../../../../../shared/services/services-forms.service';
+import {
+  type ServiceTypeType,
+  ServiceTypes,
+} from '../../../../../shared/services/services-forms.service';
 import {
   type ActionEventProperties,
   AdobeEvent,
@@ -150,7 +153,11 @@ export class DialogComponent implements OnInit {
 
   validateRow(row: ExcelJS.Row) {
     const errors: IErrorObj[] = [];
-    const fieldLabels = {
+    type withoutData = 'S';
+    const fieldLabels: Record<
+      Exclude<ServiceTypeType, withoutData>,
+      string[]
+    > = {
       [ServiceTypes.partial]: ['Código de cliente', 'Nombres', 'Servicio'],
       [ServiceTypes.complete]: [
         'Fecha de emisión',
@@ -190,14 +197,16 @@ export class DialogComponent implements OnInit {
     }
 
     if (row.actualCellCount < 6) {
-      fieldLabels[this.excelService.service.dataType].forEach((col, index) => {
-        if (isNilOrEmpty(row.getCell(index + 1).value)) {
-          errors.push({
-            description: `${col} debe tener un valor`,
-            row: row.number,
-          } as IErrorObj);
+      (fieldLabels[this.excelService.service.dataType] as string[]).forEach(
+        (col, index) => {
+          if (isNilOrEmpty(row.getCell(index + 1).value)) {
+            errors.push({
+              description: `${col} debe tener un valor`,
+              row: row.number,
+            } as IErrorObj);
+          }
         }
-      });
+      );
     }
 
     return errors;
