@@ -17,15 +17,13 @@ import {
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { ServiceTypes } from '../../../../../../shared/constants/services';
+import { type ServiceTypeType } from '../../../../../../shared/models';
 import type { IErrorObj } from '../../../../../../shared/models/error.model';
 import {
   type ProcessStatus,
   ExcelService,
 } from '../../../../../../shared/services/excel.service';
-import {
-  type ServiceTypeType,
-  ServiceTypes,
-} from '../../../../../../shared/services/services-forms.service';
 import {
   type ActionEventProperties,
   AdobeEvent,
