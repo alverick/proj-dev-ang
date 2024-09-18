@@ -14,6 +14,7 @@ import { ModalTermsComponent } from './modal-terms.component';
 })
 class LaunchComponent {
   ref: DynamicDialogRef;
+
   constructor(public dialogService: DialogService) {}
 
   public launch(): void {

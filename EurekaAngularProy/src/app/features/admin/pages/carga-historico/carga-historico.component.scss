@@ -337,7 +337,6 @@ body {
     color: var(--extended-palette-watermelon-1);
     margin-top: 10px;
     width: 200px;
-    // background-color: rgba(0, 169, 79, 0.05);
   }
   .msg-error-filtro {
     @include font-text(10px, 500);
@@ -382,7 +381,6 @@ body {
 
 :host ::ng-deep .mat-form-field .mat-form-field-label {
   @include font-text(14px, normal !important);
-  // color: var(--ibk-black) !important;
   color: var(--ibk-black);
 }
 
@@ -427,9 +425,6 @@ body {
   -ms-user-select: none;
   margin-right: 0.0625rem;
   border-radius: 0;
-}
-
-.ngx-pagination li {
   display: inline-block;
 }
 
@@ -439,6 +434,7 @@ body {
   display: block;
   padding: 0.1875rem 0.625rem;
   border-radius: 0;
+  cursor: pointer;
 }
 
 .ngx-pagination a:hover,
@@ -461,11 +457,6 @@ body {
 
 .ngx-pagination .disabled:hover {
   background: transparent;
-}
-
-.ngx-pagination a,
-.ngx-pagination button {
-  cursor: pointer;
 }
 
 .ngx-pagination .pagination-previous a::before,
@@ -504,9 +495,6 @@ body {
   }
 }
 
-// :host ::ng-deep .mat-form-field-hide-placeholder .mat-select-placeholder {
-//     color: var(--ibk-black) !important;
-// }
 :host ::ng-deep .mat-select-value {
   color: var(--ibk-black) !important;
 }
@@ -537,7 +525,6 @@ body {
   @include font-text(14px!important, normal!important);
   color: var(--ibk-black) !important;
   padding-bottom: 10px;
-  // padding: 6px 2px;
 }
 
 .btn-calendar {

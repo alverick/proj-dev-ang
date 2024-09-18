@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { isEmpty } from 'ramda';
+import { Store } from '@ngrx/store';
+import { hasPath, isEmpty } from 'ramda';
+import { isNotEmpty } from 'ramda-adjunct';
+import { type Observable, combineLatest } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
+import { AppConfigActions } from '../../store/actions/app-config.actions';
 import { type ProviderService } from './provider.service';
 import { ScriptInjectorService } from './script-injector.service';
 import {
@@ -25,22 +30,40 @@ declare const window: {
 
 @Injectable()
 export class AdobeLaunchProviderService implements ProviderService {
+  launchLibrary: Observable<boolean>;
+  loaded = false;
+
   constructor(
     private scriptInjectorService: ScriptInjectorService,
-    public trackingService: TrackingService
+    public trackingService: TrackingService,
+    private store: Store
   ) {
-    void this.injectAdobeLaunchScript();
-  }
+    if (isNotEmpty(environment.adobe)) {
+      document.addEventListener('at-content-rendering-succeeded', () => {
+        this.store.dispatch(AppConfigActions.setLoader({ show: false }));
+      });
 
-  async injectAdobeLaunchScript() {
-    if (isEmpty(environment.adobe)) {
-      return;
-    }
-    try {
-      await this.scriptInjectorService.load('Launch', environment.adobe);
-      window._satellite.pageBottom();
-    } catch (e) {
-      console.error('Error while loading Adobe Launch script', e);
+      document.addEventListener('at-content-rendering-failed', () => {
+        this.store.dispatch(AppConfigActions.setLoader({ show: false }));
+      });
+      this.launchLibrary = this.scriptInjectorService
+        .loadScript('Launch', environment.adobe)
+        .pipe(
+          tap(() => {
+            if (!this.loaded) {
+              this.loaded = true;
+              window._satellite.pageBottom();
+              this.runSatelliteEvent(AdobeEvent.appInit, {});
+              setTimeout(() => {
+                if (!hasPath(['adobe', 'target'], window)) {
+                  this.store.dispatch(
+                    AppConfigActions.setLoader({ show: false })
+                  );
+                }
+              }, 1100);
+            }
+          })
+        );
     }
   }
 
@@ -66,11 +89,22 @@ export class AdobeLaunchProviderService implements ProviderService {
   }
 
   startTracking(): void {
-    this.trackingService.eventSubject$.subscribe(({ event, payload }) => {
+    if (isEmpty(environment.adobe)) {
+      return;
+    }
+
+    combineLatest({
+      satellite: this.launchLibrary,
+      payload: this.trackingService.eventSubject$,
+    }).subscribe(({ payload: { event, payload } }) => {
       this.trackEvent(event, payload);
     });
-    this.trackingService.pageSubject$.subscribe((payload) =>
-      this.trackPage(payload)
-    );
+
+    combineLatest({
+      satellite: this.launchLibrary,
+      payload: this.trackingService.pageSubject$,
+    }).subscribe(({ payload }) => {
+      this.trackPage(payload);
+    });
   }
 }

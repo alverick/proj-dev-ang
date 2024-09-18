@@ -2,13 +2,14 @@ import { StorybookConfig } from '@storybook/angular';
 import path from 'path';
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   staticDirs: [{ from: '../src/assets', to: '/assets' }],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     '@storybook/addon-mdx-gfm',
+    '@chromatic-com/storybook',
   ],
   framework: {
     name: '@storybook/angular',

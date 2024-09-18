@@ -85,6 +85,7 @@ button:focus {
 
 .swal2-styled {
   border-style: none;
+  margin: 0.5em 10vh !important;
 }
 
 .pts16 {
@@ -106,15 +107,9 @@ button:focus {
 .custom-container {
   width: 100%;
   max-width: 1320px !important;
-  // min-width   : 650px;
   margin: 0 auto;
 }
 
-.swal2-styled {
-  margin: 0.5em 10vh !important;
-}
-
-// --------- paginas para arreglar ---------
 .pp-5 {
   padding: 3rem !important;
 }

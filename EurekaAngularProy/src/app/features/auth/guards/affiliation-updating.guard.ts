@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { type CanActivateChild, type UrlTree, Router } from '@angular/router';
+import { type UrlTree, Router } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { type Observable } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { authFullRoutingNames } from '../auth-routing.names';
 import { AffiliationService } from '../services';
 
 @Injectable()
-export class AffiliationUpdatingGuard implements CanActivateChild {
+export class AffiliationUpdatingGuard {
   constructor(
     private affiliation: AffiliationService,
     private router: Router

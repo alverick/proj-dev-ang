@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
 import { isNilOrEmpty } from 'ramda-adjunct';
@@ -6,7 +6,6 @@ import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { type IServiceModel } from '../models';
 import { type ICompanyData } from '../models/company-data';
 import { type CorreoGtpModel } from '../models/data-correoGtp';
 import { type DataGTPChange } from '../models/data-gtpchange';
@@ -15,9 +14,7 @@ import { type EnterprisesPagedList } from '../models/enterprises-gtp';
 import { type GtpFilter } from '../models/gtp-filter';
 import { type StatesGtp } from '../models/states-gtp';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class GtpService {
   private lastFilter: GtpFilter = null;
   private URI_API: string = environment.END_POINT;
@@ -109,7 +106,7 @@ export class GtpService {
           return r;
         })
       )
-      .pipe(catchError((error) => throwError(error)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   GetEnterpriseGtp(id: any): Observable<ICompanyData> {
@@ -121,19 +118,7 @@ export class GtpService {
           return r;
         })
       )
-      .pipe(catchError((err) => throwError(err)));
-  }
-
-  GetEnterpriseGtp2(id: any): Observable<any> {
-    const url = `${environment.END_POINT}/company/GTP/client/${id}`;
-    return this.http
-      .get<any>(url)
-      .pipe(
-        map((r) => {
-          return r;
-        })
-      )
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   GetServicesGtp(enterpriseId: any) {
@@ -189,7 +174,7 @@ export class GtpService {
             useStore,
             partialPayment,
             chargeInterest,
-            chargeType: chargeType.toString(),
+            chargeType: chargeType?.toString(),
             interestType,
             amount,
             porcentage: percentage,
@@ -234,94 +219,7 @@ export class GtpService {
           return r;
         })
       )
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
-  }
-
-  /*ESTO ME TRAE EN LA CORRECION*/
-
-  public GetEnterpriseServices(data: any): Observable<any> {
-    return this.http
-      .post<any>(`${environment.END_POINT}/Login/dencrypt`, data)
-      .pipe(
-        map((r) => {
-          return r;
-        })
-      )
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
-  }
-
-  public EditChangeGTP(data: any) {
-    return this.http
-      .post<any>(`${environment.END_POINT}/company/gtp/client/update`, data)
-      .pipe(
-        map((r) => {
-          return r;
-        })
-      )
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
-  }
-
-  public CrearSevice(): IServiceModel {
-    let nombre = 'Mensualidad';
-    let nro = 1;
-    this.services.forEach((s) => {
-      // El startsWith()método determina si una cadena comienza con los caracteres de una cadena especificada.
-      if (s.nombre.toUpperCase().startsWith(nombre.toUpperCase())) {
-        if (
-          !isNaN(parseInt(s.nombre.substr(nombre.length), 10)) ||
-          s.nombre.substr(nombre.length) === ''
-        ) {
-          const aux = parseInt(s.nombre.substr(nombre.length), 10);
-          if (isNaN(aux)) {
-            nro = 2;
-          } else if (aux >= nro) {
-            nro = aux + 1;
-          }
-        }
-      }
-    });
-    if (nro > 1) {
-      nombre += nro.toString();
-    }
-    const svc: any = {
-      id: null,
-      nombre,
-      newName: nombre,
-      codDeudor: 'DNI',
-      // newNameCode: '',
-      tipoDato: 'C',
-      tipoPago: 'C',
-      idCuenta: 0,
-      nroCuenta: '',
-      moneda: '001',
-      simboloMoneda: 'S/',
-      usaWebApp: true,
-      usaAgente: false,
-      usaTienda: false,
-      cobraMora: 'N',
-      periodoMora: '',
-      tipoMora: 'M',
-      pagoPartes: 'N',
-      acceptednewName: null,
-      acceptednewNameCode: null,
-      inReview: true,
-      name: '?',
-      debtorCode: '?',
-    };
-    this.services.push(svc);
-    return svc;
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   Descartar(indice: number, isNew: boolean) {
@@ -338,65 +236,6 @@ export class GtpService {
     }
   }
 
-  public DelService(index: number) {
-    this.services.splice(index, 1);
-  }
-
-  public SendDelService(index: number) {
-    const url = `${environment.END_POINT}/service/${this.services[index].id}`;
-    return this.http.delete(url).pipe(
-      map((r) => {
-        this.services.splice(index, 1);
-        return r;
-      })
-    );
-  }
-
-  public CanDeleteService(index: number) {
-    const url = `${environment.END_POINT}/service/${this.services[index].id}/canDelete`;
-    return this.http.get<any>(url);
-  }
-
-  public GrabarServicios(id: number, emp: ICompanyData): Observable<any> {
-    const data = { clientId: id, company: emp, services: [], deleted: [] };
-    this.services.forEach((s) => {
-      data.services.push({
-        id: s.id,
-        res: s.res,
-        name: s.nombre,
-        newName: s.newName,
-        entry: s.rubro,
-        debtorCode: s.codDeudor === 'Otro' ? s.nameCod : s.codDeudor,
-        newNameCode: s.newNameCode,
-        dataType: s.tipoDato,
-        paymentType: s.tipoPago,
-        accountNumber: s.nroCuenta,
-        currency: s.moneda,
-        useAppWeb: s.usaWebApp,
-        useAgent: s.usaAgente,
-        useStore: s.usaTienda,
-        chargeInterest: s.cobraMora,
-        chargeType: s.periodoMora,
-        interestType: s.tipoMora,
-        amount: s.monto,
-        percentage: s.porcentaje,
-        partialPayment: s.pagoPartes,
-      });
-    });
-    return this.http
-      .post<any>(`${environment.END_POINT}/company/GTP/company/update`, data)
-      .pipe(
-        map((r) => {
-          return r;
-        })
-      )
-      .pipe(
-        catchError((err) => {
-          throw throwError(err);
-        })
-      );
-  }
-
   public ReenviarPAG(clientId: number): Observable<any> {
     return this.http
       .post<any>(
@@ -408,14 +247,10 @@ export class GtpService {
           return r;
         })
       )
-      .pipe(
-        catchError((err) => {
-          throw throwError(err);
-        })
-      );
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
-  public clientsUnregistered(filtro: GtpFilter): Observable<any> {
+  public clientsUnregistered(filtro: GtpFilter) {
     const url = `${environment.END_POINT}/company/GTP/client/unregistered`;
     const strDateFrom =
       filtro.dateFrom === null
@@ -431,26 +266,28 @@ export class GtpService {
           responseType: 'blob',
         }
       )
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
-  public GetCorreoGtp(): Observable<CorreoGtpModel[]> {
+  public GetCorreoGtp() {
     const url = `${environment.END_POINT}/company/GTP/emailgtp`;
-    return this.http
-      .get<any>(url)
-      .pipe<CorreoGtpModel[]>(map((r) => r.emails))
-      .pipe(catchError((err) => throwError(err)));
+    return this.http.get<{ emails: CorreoGtpModel[] }>(url).pipe(
+      map((r) => r.emails),
+      catchError((err: HttpErrorResponse) => throwError(() => err))
+    );
   }
 
-  public PostConfigurarCorreoGtp(correos: CorreoGtpModel[]): Observable<any> {
+  public PostConfigurarCorreoGtp(correos: CorreoGtpModel[]) {
     const url = `${environment.END_POINT}/company/GTP/emailgtp`;
     return this.http
       .post(url, { emails: correos })
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
-  saveDatosEmpresa(data: any): Observable<any> {
+  saveDatosEmpresa(data: any) {
     const url = `${environment.END_POINT}/company/GTP/company/data`;
-    return this.http.post(url, data).pipe(catchError((err) => throwError(err)));
+    return this.http
+      .post(url, data)
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 }

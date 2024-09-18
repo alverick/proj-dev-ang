@@ -22,7 +22,6 @@ import { AffiliationService } from '../../services';
   host: { class: 'tw-w-full' },
   selector: 'cs-service-resume',
   templateUrl: './service-resume.page.html',
-  styleUrls: ['./service-resume.page.scss'],
 })
 export class ServiceResumePage {
   showSidebar = false;

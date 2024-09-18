@@ -9,7 +9,7 @@
     <title>Cobro Simple – Interbank</title>
     <meta
       name="description"
-      content="Gestiona las cobranzas de tu negocio de manera 100% digital con Cobro Simple. Recibe el pago de tus clientes en nuestros canales Interbank. ¡Es gratis para tu empresa!"
+      content="Gestiona las cobranzas de tu negocio de manera 100% digital con Cobro Simple. Recibe el pago de tus clientes en nuestros canales Interbank."
     />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Cobro Simple – Interbank" />
@@ -20,7 +20,7 @@
     />
     <meta
       property="og:description"
-      content="Gestiona las cobranzas de tu negocio de manera 100% digital con Cobro Simple. Recibe el pago de tus clientes en nuestros canales Interbank. ¡Es gratis para tu empresa!"
+      content="Gestiona las cobranzas de tu negocio de manera 100% digital con Cobro Simple. Recibe el pago de tus clientes en nuestros canales Interbank."
     />
     <base href="/" />
     <meta
@@ -29,13 +29,19 @@
     />
 
     <link rel="icon" type="image/x-icon" href="faviconIbk.ico" />
+    <link
+      rel="preload"
+      href="https://cobrosimple.dev.interbank.pe/assets/images/bg-hero.webp"
+      as="image"
+    />
+    <link
+      rel="preload"
+      href="https://cobrosimple.dev.interbank.pe/assets/images/img-laptop-home.webp"
+      as="image"
+    />
     <style type="text/css">
       .app-loading {
         position: absolute;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         top: 0;
         left: 0;
         bottom: 0;
@@ -89,20 +95,25 @@
   <body>
     <cs-root>
       <div class="app-loading">
-        <div class="logo"></div>
-        <svg class="spinner" viewBox="25 25 50 50">
-          <circle
-            class="path"
-            cx="50"
-            cy="50"
-            r="20"
-            fill="none"
-            stroke-width="2"
-            stroke-miterlimit="10"
-          />
-        </svg>
-        <div class="text">C A R G A N D O . . .</div>
+        <div
+          class="ngx-spinner-overlay"
+          style="
+            background-color: rgb(255, 255, 255);
+            z-index: 99999;
+            position: fixed;
+            opacity: 1;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          "
+        >
+          <div class="a-loader__spinner">
+            <div class="a-loader__logo"></div>
+          </div>
+        </div>
       </div>
     </cs-root>
+    <div class="overlay-app"></div>
   </body>
 </html>

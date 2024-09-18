@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import * as saveAs from 'file-saver';
 import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { type Subscription, timer } from 'rxjs';
+import { type Subscription, lastValueFrom, timer } from 'rxjs';
 
 import { QueryDataService } from '../../../../shared/data';
 import { type IEntryModel } from '../../../../shared/models';
@@ -197,7 +197,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
   }
 
   async consultaGtp() {
-    await this.gtpService.getEmpresas(this.currentFilter).toPromise();
+    await lastValueFrom(this.gtpService.getEmpresas(this.currentFilter));
   }
 
   ceroRegistros(): boolean {

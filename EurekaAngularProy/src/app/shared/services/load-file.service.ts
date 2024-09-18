@@ -11,7 +11,6 @@ import { repeat, takeUntil } from 'rxjs/operators';
 import { internalFullRoutingNames } from '../../app-routing.collection';
 import { LoadFileComponent } from '../components/load-file/load-file.component';
 import { type ProcessStatus, ExcelService } from './excel.service';
-import { StorageService } from './storage.service';
 
 export interface ModalCloseData {
   status: string;
@@ -20,15 +19,9 @@ export interface ModalCloseData {
   dataType: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LoadFileService {
-  constructor(
-    private excelService: ExcelService,
-    private storageService: StorageService,
-    private router: Router
-  ) {}
+  constructor(private excelService: ExcelService, private router: Router) {}
 
   private componentRef: ComponentRef<LoadFileComponent> = null;
   private cancel = true;

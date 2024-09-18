@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { type Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -9,16 +9,14 @@ interface TokenChangePassword {
   TokenEncrypted: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class RecuperaService {
   constructor(private http: HttpClient) {}
 
   public ruc: number;
   public email: number;
 
-  public RecoverPassword(data: any): Observable<any> {
+  public RecoverPassword(data: any) {
     return this.http
       .post<any>(`${environment.END_POINT}/Login/Verifying`, data)
       .pipe(
@@ -28,11 +26,7 @@ export class RecuperaService {
           return r;
         })
       )
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   public VerifingToken(data: TokenChangePassword) {
@@ -43,14 +37,10 @@ export class RecuperaService {
           return r;
         })
       )
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
-  public ChangePassword(data: any): Observable<any> {
+  public ChangePassword(data: any) {
     console.log('ChangePassword', data);
     return this.http
       .post<any>(`${environment.END_POINT}/Login/changepassword`, data)
@@ -59,10 +49,6 @@ export class RecuperaService {
           return r;
         })
       )
-      .pipe(
-        catchError((err) => {
-          return throwError(err);
-        })
-      );
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 }

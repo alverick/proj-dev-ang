@@ -14,14 +14,13 @@ import {
   type CurrencyWithLimit,
   currencies,
 } from '../../../../shared/constants/currencies';
+import { ServiceTypes } from '../../../../shared/constants/services';
 import {
   type AmountLimit,
   type IDataEnterpriseModel,
+  collectionRestrictionTypes,
 } from '../../../../shared/models/data-enterprise.model';
-import {
-  ServicesFormsService,
-  ServiceTypes,
-} from '../../../../shared/services/services-forms.service';
+import { ServicesFormsService } from '../../../../shared/services';
 import {
   internalFullRoutingChildNames,
   internalFullRoutingNames,
@@ -31,13 +30,13 @@ import { CompanyServicesService } from '../../services';
 @Component({
   selector: 'cs-internal-services-main',
   templateUrl: './services-main.page.html',
-  styleUrls: ['./services-main.page.scss'],
 })
 export class ServicesMainPage implements OnInit, OnDestroy {
   destroy$ = new Subject();
   position = 2;
   limitsAmountMax: AmountLimit[] = null;
   currency: CurrencyWithLimit = null;
+
   constructor(
     protected router: Router,
     public companyServices: CompanyServicesService,
@@ -73,25 +72,31 @@ export class ServicesMainPage implements OnInit, OnDestroy {
         company: IDataEnterpriseModel;
       }>
     ).subscribe(({ company }) => {
-      this.companyServices.allowAllServiceType = !company.isNewFlow;
+      this.companyServices.allowAllServiceType =
+        company.collectionRestriction ===
+        collectionRestrictionTypes.notRestricted;
       this.limitsAmountMax = company.amountLimits;
       this.companyServices.setDefaultType(
-        company.isNewFlow ? ServiceTypes.complete : ServiceTypes.withoutData
+        company.collectionRestriction ===
+          collectionRestrictionTypes.notRestricted
+          ? ServiceTypes.withoutData
+          : ServiceTypes.complete
       );
     });
     this.servicesFormsService.serviceForm
-      .get('account')
+      .get('currency')
       .valueChanges.pipe(
         takeUntil(this.destroy$),
         filter((data) => isNotNilOrEmpty(data))
       )
-      .subscribe((val: any) => {
-        const limitSel = this.limitsAmountMax.find(
-          (limit) => limit.currency === val.currency
-        ).amountMax;
-        const currencySel = currencies.find(
-          (limit) => limit.code === val.currency
-        );
+      .subscribe((val) => {
+        const currencySel = currencies.find((limit) => limit.code === val);
+
+        const limitSel =
+          this.limitsAmountMax.find(
+            (limit) => limit.currency === currencySel.code
+          )?.amountMax || null;
+
         this.currency = { ...currencySel, limitMax: limitSel };
       });
   }

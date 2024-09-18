@@ -100,7 +100,6 @@
     text-overflow: ellipsis;
 
     .text {
-      //  padding-top: 10px;
       @include font-text(14px, 500);
 
       color: var(--ibk-black) !important;
@@ -120,13 +119,6 @@
   height: 48px;
   @include font-text(14px !important, 500 !important);
 }
-
-//.mat-dialog-actions {
-//  padding: 0;
-//  display: block;
-//  margin-top: -25px;
-//  margin-bottom: 1px;
-//}
 
 .img-excel {
   display: flex;
@@ -176,7 +168,6 @@ small {
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1) !important;
   background-color: var(--ibk-white) !important;
   padding: 0px !important;
-  // color: rgba(255, 255, 255, 0.87);
 }
 
 .resaltado {

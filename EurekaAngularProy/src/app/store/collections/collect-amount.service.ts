@@ -4,11 +4,9 @@ import {
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
 
-import { CollectAmount } from '../entities';
+import { type CollectAmount } from '../entities';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CollectAmountService extends EntityCollectionServiceBase<CollectAmount> {
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
     super('CollectAmount', serviceElementsFactory);

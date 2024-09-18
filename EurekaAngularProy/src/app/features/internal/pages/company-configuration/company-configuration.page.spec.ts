@@ -3,15 +3,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockProvider } from 'ng-mocks';
 import { ValdemortModule } from 'ngx-valdemort';
 import { DropdownModule } from 'primeng/dropdown';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { SidebarModule } from 'primeng/sidebar';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
-import { CompanyService } from '../../../../shared/services';
+import { CompanyService, ServiceService } from '../../../../shared/services';
+import { TrackingService } from '../../../../shared/services';
+import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
-import { TrackingService } from '../../../../shared/services/tracking.service';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { CompanyPasswordFormComponent } from '../../components/company-password-form/company-password-form.component';
 import { CompanyUpdateFormComponent } from '../../components/company-update-form/company-update-form.component';
 import { CompanyConfigurationService } from '../../services';
@@ -42,8 +45,11 @@ describe('CompanyConfigurationPage', () => {
       providers: [
         CompanyService,
         CompanyConfigurationService,
+        MockProvider(LoginService),
         NotifyService,
         TrackingService,
+        ServiceService,
+        StorageService,
       ],
     }).compileComponents();
   });

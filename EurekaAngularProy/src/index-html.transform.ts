@@ -41,7 +41,7 @@ const settings: Record<EnvironmentType, EnvironmentConfig> = {
   },
 };
 
-function changeOgImage(configuration: EnvironmentType, indexHtml: string) {
+function replaceDomainUrl(configuration: EnvironmentType, indexHtml: string) {
   if (settings[configuration].url !== defaultRootUrl) {
     return indexHtml.replaceAll(defaultRootUrl, settings[configuration].url);
   }
@@ -67,7 +67,7 @@ function includeScripts(configuration: EnvironmentType, indexHtml: string) {
 export default ({ configuration }: TargetOptions, indexHtml: string) => {
   const sameAsDefault = ['', 'hmr', 'local'];
   let parsedHtml = '';
-  [includeScripts, changeOgImage].forEach((process) => {
+  [includeScripts, replaceDomainUrl].forEach((process) => {
     parsedHtml = process(
       (sameAsDefault.includes(configuration)
         ? 'default'

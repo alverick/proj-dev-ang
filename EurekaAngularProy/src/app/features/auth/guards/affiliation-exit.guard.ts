@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
   type ActivatedRouteSnapshot,
-  type CanDeactivate,
   type RouterStateSnapshot,
   type UrlTree,
 } from '@angular/router';
@@ -9,14 +8,14 @@ import { type Observable } from 'rxjs';
 
 import { authFullRoutingNames } from '../auth-routing.names';
 import { swalMesssageExit } from '../constants';
-import { type ServiceAddPage } from '../pages/service-add/service-add.page';
+import { type ServiceAddPage } from '../pages';
 
 @Injectable()
-export class AffiliationExitGuard implements CanDeactivate<ServiceAddPage> {
+export class AffiliationExitGuard {
   canDeactivate(
-    component: ServiceAddPage,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
+    _component: ServiceAddPage,
+    _currentRoute: ActivatedRouteSnapshot,
+    _currentState: RouterStateSnapshot,
     nextState: RouterStateSnapshot
   ):
     | Observable<boolean | UrlTree>
@@ -26,7 +25,7 @@ export class AffiliationExitGuard implements CanDeactivate<ServiceAddPage> {
     if (nextState.url === authFullRoutingNames.REGISTRATION_FINISHED) {
       return true;
     }
-    swalMesssageExit.fire();
+    void swalMesssageExit.fire();
     return false;
   }
 }

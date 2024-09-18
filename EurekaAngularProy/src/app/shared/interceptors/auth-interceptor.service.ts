@@ -17,9 +17,7 @@ import { LoginService } from '../services/login.service';
 import { StorageService } from '../services/storage.service';
 import { swalAlert } from '../utils/helpers/popups';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
   constructor(
     private router: Router,
@@ -90,7 +88,7 @@ export class AuthInterceptorService implements HttpInterceptor {
             });
           }
         }
-        return throwError(err);
+        return throwError(() => err);
       })
     );
   }

@@ -1,13 +1,15 @@
 import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
+  type HttpEvent,
+  type HttpHandler,
+  type HttpInterceptor,
+  type HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { type Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+
+import { AppConfigActions } from '../../store/actions/app-config.actions';
 
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
@@ -17,9 +19,10 @@ export class LoaderInterceptor implements HttpInterceptor {
     'notification?skip',
     'notification/total',
     'debt/process/[\\d]+/status',
+    'debt/service/[^\\/]+/debtor/[\\w]+',
   ];
 
-  constructor(private spinner: NgxSpinnerService) {}
+  constructor(private store: Store) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -36,7 +39,7 @@ export class LoaderInterceptor implements HttpInterceptor {
       return isValid;
     };
     if (validUrl()) {
-      void this.spinner.show();
+      this.store.dispatch(AppConfigActions.setLoader({ show: true }));
       this.totalRequests++;
     }
 
@@ -47,7 +50,7 @@ export class LoaderInterceptor implements HttpInterceptor {
         }
 
         if (this.requestsCompleted === this.totalRequests) {
-          void this.spinner.hide();
+          this.store.dispatch(AppConfigActions.setLoader({ show: false }));
           this.totalRequests = 0;
           this.requestsCompleted = 0;
         }

@@ -24,7 +24,7 @@ function initAppComponentFactory(
   matIconRegistry: MatIconRegistry,
   domSanitizer: DomSanitizer
 ) {
-  return async () => {
+  return () => {
     matIconRegistry.addSvgIcon(
       'eurc_calendar',
       domSanitizer.bypassSecurityTrustResourceUrl(
@@ -65,7 +65,6 @@ const meta: Meta<PaymentsFilterComponent> = {
       ],
     }),
   ],
-  argTypes: { sendForm: { action: 'clicked' } },
 };
 
 export default meta;
@@ -273,7 +272,6 @@ const initial = {
   ...initialOrig,
   payment: initialOrig.payment.code,
 };
-console.log('initial', initial);
 
 type Story = StoryObj<PaymentsFilterComponent>;
 

@@ -1,3 +1,5 @@
+import { type ServiceTypes } from '../constants/services';
+
 export interface IServiceModel {
   res?: string;
   id?: number;
@@ -36,11 +38,13 @@ export interface IServiceModel {
   useAgencyChannel?: boolean;
 }
 
+type QuantityType = string | number | null;
+
 export interface IServiceRemoteModel {
   accountNumber?: string;
-  amount?: string | number | null;
+  amount?: QuantityType;
   chargeInterest?: string;
-  chargeType?: string | number | null;
+  chargeType?: QuantityType;
   currency: string;
   currencySymbol?: string;
   dataType: string;
@@ -58,7 +62,7 @@ export interface IServiceRemoteModel {
   newNameGTPStatus?: number;
   partialPayment?: string;
   paymentType: string;
-  percentage?: string | number | null;
+  percentage?: QuantityType;
   res?: string;
   status?: string;
   useAgencyChannel?: boolean;
@@ -79,3 +83,5 @@ export interface ServicePostData {
   deleted: any[];
   services: Partial<IServiceRemoteModel>[];
 }
+
+export type ServiceTypeType = (typeof ServiceTypes)[keyof typeof ServiceTypes];

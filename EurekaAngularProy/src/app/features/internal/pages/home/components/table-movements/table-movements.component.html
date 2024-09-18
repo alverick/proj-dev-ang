@@ -9,10 +9,11 @@
     [totalRecords]="totalRecords"
     [showCurrentPageReport]="true"
     [lazy]="true"
-    (onLazyLoad)="loadDataLazy($event)"
-    (onRowSelect)="onRowSelect()"
-    (onRowUnselect)="onRowSelect()"
     [editMode]="'row'"
+    (onLazyLoad)="loadDataLazy($event)"
+    (onRowSelect)="onRowSelect($event)"
+    (onRowUnselect)="onRowSelect($event)"
+    (onHeaderCheckboxToggle)="onRowSelect($event)"
     dataKey="id"
     currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} elementos"
     class="table"
@@ -21,10 +22,7 @@
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th scope="col" style="width: 3em">
-          <p-tableHeaderCheckbox
-            #selectAll
-            (click)="onRowSelect()"
-          ></p-tableHeaderCheckbox>
+          <p-tableHeaderCheckbox #selectAll></p-tableHeaderCheckbox>
         </th>
         <th scope="col" class="md:tw-hidden"></th>
         <th
@@ -189,7 +187,7 @@
                       [maxFractionDigits]="2"
                       [maxAmountLimits]="maxAmountLimits"
                       [currencySymbol]="rowData.currency"
-                      [isNewFlow]="isNewFlow"
+                      [useLimits]="useAmountLimits"
                       required
                     ></p-inputNumber>
                     <div
@@ -202,7 +200,7 @@
                             | validateLimitCurrency
                               : maxAmountLimits
                               : rowData.currency
-                              : isNewFlow
+                              : useAmountLimits
                         "
                       >
                         Monto máximo
@@ -234,12 +232,12 @@
                 rowData[col.field] | currency : rowData.currency
               }}</ng-container>
               <ng-container *ngIf="rowData[col.field] <= 0">-</ng-container>
-              <div
-                class="tw-cursor-pointer tw-text-primary-green-1 tw-text-xxs"
+              <button
+                class="tw-block tw-cursor-pointer tw-text-primary-green-1 tw-text-xxs"
                 (click)="actionShowDetails(rowData)"
               >
                 Ver detalle
-              </div>
+              </button>
             </ng-container>
             <ng-container *ngSwitchCase="'status'">
               <div class="tw-flex">
@@ -251,29 +249,32 @@
                   {{ setStatusRow(rowData).text }}
                 </div>
                 <div *ngIf="setStatusRow(rowData).canEdit">
-                  <img
-                    *ngIf="!editing"
+                  <button
                     pInitEditableRow
+                    *ngIf="!editing"
                     (click)="onRowEditInit(rowData)"
-                    class="tw-inline tw-w-6 tw-pl-2 tw-cursor-pointer"
-                    src="../../../../../assets/images/pencil.svg"
-                    alt="editar"
-                  />
+                  >
+                    <img
+                      class="tw-inline tw-w-6 tw-pl-2 tw-cursor-pointer"
+                      src="assets/images/pencil.svg"
+                      alt="Editar"
+                    />
+                  </button>
                   <div *ngIf="editing" class="actions-items">
-                    <div
+                    <button
                       class="action tw-w-6 tw-h-6 tw-shadow-lg tw-rounded-3xl tw-flex tw-justify-center tw-items-center"
                       pSaveEditableRow
                       (click)="onRowEditSave(rowData)"
                     >
                       <i class="pi pi-check tw-text-primary-green-1"></i>
-                    </div>
-                    <div
+                    </button>
+                    <button
                       class="action tw-w-6 tw-h-6 tw-shadow-lg tw-rounded-3xl tw-flex tw-justify-center tw-items-center"
                       pCancelEditableRow
                       (click)="onRowEditCancel(rowData, ri)"
                     >
                       <i class="pi pi-times tw-text-extended-watermelon-1"></i>
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -351,12 +352,25 @@
                 </td>
               </tr>
               <tr class="tw-text-primary-green-1">
-                <td (click)="openDialog(rowData)">Editar</td>
-                <td
-                  class="tw-cursor-pointer tw-text-primary-green-1"
-                  (click)="actionShowDetails(rowData)"
-                >
-                  Ver detalle
+                <td>
+                  <button
+                    pButton
+                    pRipple
+                    class="p-button-text"
+                    (click)="openDialog(rowData)"
+                  >
+                    Editar
+                  </button>
+                </td>
+                <td class="tw-cursor-pointer tw-text-primary-green-1">
+                  <button
+                    pButton
+                    pRipple
+                    class="p-button-text"
+                    (click)="actionShowDetails(rowData)"
+                  >
+                    Ver detalle
+                  </button>
                 </td>
               </tr>
             </table>
@@ -459,7 +473,7 @@
           [maxFractionDigits]="2"
           [maxAmountLimits]="maxAmountLimits"
           [currencySymbol]="editRowData.currency"
-          [isNewFlow]="isNewFlow"
+          [useLimits]="useAmountLimits"
           #amountForm="ngModel"
           required
         ></p-inputNumber>
@@ -473,7 +487,7 @@
                 | validateLimitCurrency
                   : maxAmountLimits
                   : editRowData.currency
-                  : isNewFlow
+                  : useAmountLimits
             "
           >
             Monto máximo

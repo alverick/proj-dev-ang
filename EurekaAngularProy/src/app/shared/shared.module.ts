@@ -27,9 +27,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LetModule, PushModule } from '@ngrx/component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { TooltipModule as TooltipModuleNgx } from 'ngx-bootstrap/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
@@ -37,8 +35,6 @@ import { AccordionModule } from 'primeng/accordion';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
-import { CarouselModule } from 'primeng/carousel';
-import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
 import { DialogModule } from 'primeng/dialog';
@@ -64,9 +60,7 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 
 import { ControlRulesPoliciesComponent } from './components/control-rules-policies/control-rules-policies.component';
-import { FabWhatsappComponent } from './components/fab-whatsapp/fab-whatsapp.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HeaderComponent } from './components/header/header.component';
 import { LabelControlComponent } from './components/label-control/label-control.component';
 import { MessageAlertComponent } from './components/message-alert/message-alert.component';
 import { ModalTermsComponent } from './components/modal-terms/modal-terms.component';
@@ -78,13 +72,11 @@ import { ServiceStepConfigurationComponent } from './components/service-step-con
 import { ServiceStepInfoComponent } from './components/service-step-info/service-step-info.component';
 import { ServicesListComponent } from './components/services-list/services-list.component';
 import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
-import { ValidationDefaultsComponent } from './components/validation-defaults/validation-defaults.component';
 import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
-import { CorreoDirective } from './directives/correo.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
+import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
-import { OnlynumbersDirective } from './directives/onlynumbers.directive';
 import { SearchDirective } from './directives/search.directive';
 import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
@@ -114,8 +106,6 @@ const PRIMENG_MODULES = [
   BadgeModule,
   ButtonModule,
   CalendarModule,
-  CarouselModule,
-  ChartModule,
   CheckboxModule,
   ChipModule,
   DialogModule,
@@ -140,12 +130,7 @@ const PRIMENG_MODULES = [
   ToastModule,
   TooltipModule,
 ];
-const UI_MODULES = [
-  FontAwesomeModule,
-  OverlayModule,
-  PerfectScrollbarModule,
-  TooltipModuleNgx.forRoot(),
-];
+const UI_MODULES = [FontAwesomeModule, OverlayModule, PerfectScrollbarModule];
 
 @NgModule({
   imports: [
@@ -173,15 +158,12 @@ const UI_MODULES = [
   ],
   declarations: [
     OnlyNumbersFormDirective,
-    OnlynumbersDirective,
+    OnlyNumbersDirective,
     SearchDirective,
-    CorreoDirective,
     NameEnterpiseDirective,
-    HeaderComponent,
     PaymentsFilterComponent,
     FooterComponent,
     LabelControlComponent,
-    ValidationDefaultsComponent,
     MessageAlertComponent,
     ModalTermsComponent,
     ServiceCardComponent,
@@ -193,26 +175,21 @@ const UI_MODULES = [
     SidebarServiceComponent,
     ...DIRECTIVES,
     ...PIPES,
-    FabWhatsappComponent,
     ControlRulesPoliciesComponent,
   ],
   exports: [
     OnlyNumbersFormDirective,
-    OnlynumbersDirective,
+    OnlyNumbersDirective,
     SearchDirective,
-    CorreoDirective,
     NameEnterpiseDirective,
     ...DIRECTIVES,
     FooterComponent,
     ...FORM_MODULES,
     ...PRIMENG_MODULES,
-    HeaderComponent,
     PaymentsFilterComponent,
-    TooltipModuleNgx,
     ValdemortModule,
     LabelControlComponent,
     MessageAlertComponent,
-    ValidationDefaultsComponent,
     ServiceStepInfoComponent,
     ServiceStepConfigurationComponent,
     ServiceDebtFormComponent,
@@ -221,9 +198,6 @@ const UI_MODULES = [
     SidebarServiceComponent,
     ServiceCardComponent,
     ...PIPES,
-    PushModule,
-    LetModule,
-    FabWhatsappComponent,
     ControlRulesPoliciesComponent,
   ],
 })

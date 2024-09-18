@@ -31,7 +31,6 @@ import {
 @Component({
   selector: 'cs-company-form-auth',
   templateUrl: './company-form-auth.component.html',
-  styleUrls: ['./company-form-auth.component.scss'],
   providers: [DynamicDialogService],
 })
 export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
@@ -66,7 +65,7 @@ export class CompanyFormAuthComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       this.setCategorySelected();
     }
-    if (has('edit', changes)) {
+    if (has('passwordNoEditable', changes)) {
       this.setForm();
     }
   }

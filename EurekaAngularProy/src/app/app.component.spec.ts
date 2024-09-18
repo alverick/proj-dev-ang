@@ -10,6 +10,7 @@ import {
   AdobeLaunchProviderService,
   NewRelicProviderService,
 } from './shared/services';
+import { StorageService } from './shared/services/storage.service';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -20,7 +21,11 @@ describe('AppComponent', () => {
         FabWhatsappComponent,
       ],
       imports: [RouterTestingModule, ValdemortModule, NgxSpinnerModule],
-      providers: [AdobeLaunchProviderService, NewRelicProviderService],
+      providers: [
+        AdobeLaunchProviderService,
+        NewRelicProviderService,
+        StorageService,
+      ],
     }).compileComponents();
   });
 

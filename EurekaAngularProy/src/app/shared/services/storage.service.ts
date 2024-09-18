@@ -4,9 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { type Session } from '../models/session.model';
 import { type User } from '../models/user.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class StorageService {
   private localStorageService;
   private currentSession: Session = null;
@@ -70,16 +68,16 @@ export class StorageService {
 
   getCurrentUser(): User {
     const session: Session = this.getCurrentSession();
-    return session && session.user ? session.user : null;
+    return session?.user ?? null;
   }
 
   isAuthenticated(): boolean {
-    return this.currentSession && this.currentSession.isAuthenticate;
+    return this.currentSession?.isAuthenticate;
   }
 
   getCurrentToken(): string {
     const session = this.getCurrentSession();
-    return session && session.token ? session.token : null;
+    return session?.token ?? null;
   }
 
   setIntentos(intentos: number): void {

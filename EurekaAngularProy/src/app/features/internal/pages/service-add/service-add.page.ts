@@ -3,7 +3,6 @@ import { Component, HostListener } from '@angular/core';
 @Component({
   selector: 'cs-internal-service-add',
   templateUrl: './service-add.page.html',
-  styleUrls: ['./service-add.page.scss'],
 })
 export class ServiceAddPage {
   @HostListener('window:beforeunload', ['$event'])

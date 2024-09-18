@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { type Routes, RouterModule } from '@angular/router';
 
-import { appRoutingNames } from '../../app-routing.collection';
+import { appRoutingNames } from '../../app-routing.names';
 import { LogoutGuard } from '../../shared/guards/logout.guard';
 import { LandingPage } from './pages/landing/landing.page';
 

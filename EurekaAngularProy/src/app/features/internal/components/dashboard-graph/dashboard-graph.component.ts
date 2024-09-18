@@ -16,7 +16,6 @@ export interface GraphData {
 @Component({
   selector: 'cs-dashboard-graph',
   templateUrl: './dashboard-graph.component.html',
-  styleUrls: ['./dashboard-graph.component.scss'],
 })
 export class DashboardGraphComponent implements OnChanges {
   @Input() serviceData: GraphData;

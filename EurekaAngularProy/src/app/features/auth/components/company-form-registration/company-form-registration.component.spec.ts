@@ -1,4 +1,3 @@
-import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -7,8 +6,8 @@ import { LoggerModule } from 'ngx-logger';
 import { ValdemortModule } from 'ngx-valdemort';
 import { DropdownModule } from 'primeng/dropdown';
 import { KeyFilterModule } from 'primeng/keyfilter';
-import { environment } from '../../../../../environments/environment';
 
+import { environment } from '../../../../../environments/environment';
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { errorsRegisterForm } from '../../../../shared/constants/company-errors';
 import { IpInfoDataService } from '../../../../shared/data';
@@ -18,7 +17,9 @@ import {
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../../shared/services';
+import { LoginService } from '../../../../shared/services/login.service';
 import { NotifyService } from '../../../../shared/services/notify.service';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { AffiliationFormsService, AffiliationService } from '../../services';
 import { CompanyFormRegistrationComponent } from './company-form-registration.component';
 
@@ -47,12 +48,14 @@ describe('CompanyFormRegistrationComponent', () => {
       providers: [
         AffiliationFormsService,
         AffiliationService,
+        MockProvider(LoginService),
         CompanyService,
         MockProvider(DigitalDataService),
         EnterpriseHeadingService,
         IpInfoDataService,
         NotifyService,
         ServicesFormsService,
+        StorageService,
       ],
     }).compileComponents();
   });

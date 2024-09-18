@@ -44,10 +44,6 @@ body {
     font-family: 'Geometria', 'Helvetica Neue', sans-serif;
   }
 
-  .p-inputtext {
-    font-size: 16px;
-  }
-
   .p-dropdown {
     .p-dropdown-trigger {
       color: var(--grises-grey-1);
@@ -615,6 +611,12 @@ body {
   .p-accordion {
     p-accordiontab .p-accordion-tab {
       @apply tw-mb-4 tw-shadow-md;
+
+      &:not(.p-accordion-tab-active) {
+        .p-toggleable-content {
+          height: 0;
+        }
+      }
     }
 
     .p-accordion-header {

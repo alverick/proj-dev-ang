@@ -3,6 +3,8 @@ import { type FormControl, FormBuilder, Validators } from '@angular/forms';
 import { isNil } from 'ramda';
 import { isNotEmpty } from 'ramda-adjunct';
 
+import { ServiceTypes } from '../constants/services';
+import { type ServiceTypeType } from '../models';
 import { type ModelFormGroup } from '../models/forms';
 import { nameInvalid } from '../validators/name-invalid.validator';
 
@@ -42,20 +44,12 @@ export interface ServiceDebt {
   amount: string;
 }
 
-export const ServiceTypes = {
-  withoutData: 'S',
-  partial: 'P',
-  complete: 'C',
-} as const;
-
-export type ServiceTypeType = (typeof ServiceTypes)[keyof typeof ServiceTypes];
-
 @Injectable()
 export class ServicesFormsService {
   serviceForm: ModelFormGroup<ServiceFormValue>;
   serviceConfigForm: ModelFormGroup<ServiceConfigurationForm>;
   editServiceForm: ModelFormGroup<ServiceEditForm>;
-  defaultServiceType: ServiceTypeType = ServiceTypes.complete;
+  defaultServiceType: ServiceTypeType = ServiceTypes.withoutData;
 
   editNameValidators = [
     Validators.required,
