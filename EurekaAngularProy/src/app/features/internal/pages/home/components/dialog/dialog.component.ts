@@ -188,12 +188,24 @@ export class DialogComponent implements OnInit {
     if (this.excelService.service.dataType === ServiceTypes.complete) {
       for (let idx = 1; idx <= 2; idx++) {
         if (!(row.getCell(idx).value instanceof Date)) {
-          errors.push({
-            description: `${
-              fieldLabels[this.excelService.service.dataType][idx - 1]
-            } no es una fecha válida`,
-            row: row.number,
-          } as IErrorObj);
+          let isNotValidDate = true;
+          if (typeof row.getCell(idx).value === 'string') {
+            const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
+            const dt = new Date(
+              (row.getCell(idx).value as string).replace(pattern, '$3-$2-$1')
+            );
+            if (dt instanceof Date) {
+              isNotValidDate = false;
+            }
+          }
+          if (isNotValidDate) {
+            errors.push({
+              description: `${
+                fieldLabels[this.excelService.service.dataType][idx - 1]
+              } no es una fecha válida`,
+              row: row.number,
+            } as IErrorObj);
+          }
         }
       }
       if (row.getCell(6).value <= 0 && isNotNil(row.getCell(6).value)) {
