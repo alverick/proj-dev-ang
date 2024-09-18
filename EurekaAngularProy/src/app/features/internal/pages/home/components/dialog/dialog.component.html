@@ -68,7 +68,7 @@
       alt="excel"
     />
     <cs-message-alert
-      *ngIf="isNewFlow"
+      *ngIf="useAmountLimits"
       mode="info"
       class="tw-mx-auto tw-block md:tw-w-96 tw-my-6"
       >Monto máximo permitido por cobro
@@ -94,6 +94,15 @@
       </button>
     </div>
   </div>
+  <div *ngIf="excelService.statusUpload" class="progress-text">
+    {{ progress.status }}
+  </div>
+  <mat-progress-bar
+    *ngIf="excelService.statusUpload"
+    [mode]="progress.mode"
+    [value]="progress.value"
+    [bufferValue]="100"
+  ></mat-progress-bar>
   <div *ngIf="!excelService.statusUpload && ready" class="landing">
     <div class="text">
       Selecciona el archivo y sube la plantilla con la información de los
@@ -120,16 +129,6 @@
       </p-fileUpload>
       <br />
     </div>
-
-    <div *ngIf="excelService.statusUpload" class="progress-text">
-      {{ progress.status }}
-    </div>
-    <mat-progress-bar
-      *ngIf="excelService.statusUpload"
-      [mode]="progress.mode"
-      [value]="progress.value"
-      [bufferValue]="100"
-    ></mat-progress-bar>
     <div
       *ngIf="excelService.errores.length > 0 && cuadro_errores === true"
       class="errores"
