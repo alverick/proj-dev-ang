@@ -223,13 +223,11 @@ export class DialogComponent implements OnInit {
   }
 
   public removeFiled() {
-    // console.log($event);
     this.uploaderFiles = [];
     this.excelService.errores = [];
   }
 
   public selectFiled({ currentFiles }: { currentFiles: File[] }) {
-    // console.log($event);
     this.uploaderFiles = currentFiles;
     this.excelService.errores = [];
   }
@@ -256,7 +254,7 @@ export class DialogComponent implements OnInit {
       this.progress.value = 0;
       this.excelService
         .UploadExcel(
-          this.files,
+          this.uploaderFiles,
           this.excelService.service.name,
           this.changestatus
         )
