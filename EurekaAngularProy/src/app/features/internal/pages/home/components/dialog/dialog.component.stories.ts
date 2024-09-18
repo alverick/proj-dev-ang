@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
 
-import { ExcelService } from '../../../../../shared/services/excel.service';
-import { SharedModule } from '../../../../../shared/shared.module';
-import { DialogComponent } from './dialog';
+import { ExcelService } from '../../../../../../shared/services/excel.service';
+import { SharedModule } from '../../../../../../shared/shared.module';
+import { DialogComponent } from './dialog.component';
 
 const initialState = {
   company: {
