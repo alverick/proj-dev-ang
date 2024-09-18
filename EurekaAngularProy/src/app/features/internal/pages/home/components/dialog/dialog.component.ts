@@ -161,7 +161,7 @@ export class DialogComponent implements OnInit {
       Exclude<ServiceTypeType, withoutData>,
       string[]
     > = {
-      [ServiceTypes.partial]: ['Código de cliente', 'Nombres', 'Servicio'],
+      [ServiceTypes.partial]: ['Código de cliente', 'Nombre del cliente'],
       [ServiceTypes.complete]: [
         'Fecha de emisión',
         'Fecha de vencimiento',
@@ -207,7 +207,16 @@ export class DialogComponent implements OnInit {
       }
     }
 
-    if (row.actualCellCount < 6) {
+    const checkAllCols =
+      this.excelService.service.dataType === ServiceTypes.complete ? 6 : 2;
+
+    console.log(
+      this.excelService.service.dataType,
+      checkAllCols,
+      row.actualCellCount
+    );
+
+    if (row.actualCellCount < checkAllCols) {
       (fieldLabels[this.excelService.service.dataType] as string[]).forEach(
         (col, index) => {
           if (isNilOrEmpty(row.getCell(index + 1).value)) {
