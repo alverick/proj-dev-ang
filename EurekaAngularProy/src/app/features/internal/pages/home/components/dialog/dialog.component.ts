@@ -116,14 +116,14 @@ export class DialogComponent implements OnInit {
             const errors: IErrorObj[] = [];
             const limit = workbook.getWorksheet(1).rowCount;
 
-            if (limit > 5000) {
+            if (limit >= 5000 + this.rowStart) {
               errors.push({
                 description:
                   'Se ha superado el límite de 5000 registros por archivo excel',
                 row: 0,
               } as IErrorObj);
             }
-            if (limit < 14) {
+            if (limit < this.rowStart) {
               errors.push({
                 description: 'El archivo no contiene registros válidos',
                 row: 0,
@@ -193,6 +193,14 @@ export class DialogComponent implements OnInit {
             row: row.number,
           } as IErrorObj);
         }
+      }
+      if (row.getCell(6).value <= 0 && isNotNil(row.getCell(6).value)) {
+        errors.push({
+          description: `${
+            fieldLabels[this.excelService.service.dataType][5]
+          } no es un monto válido`,
+          row: row.number,
+        } as IErrorObj);
       }
     }
 
