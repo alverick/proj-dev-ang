@@ -21,7 +21,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EmailDirective } from './features/internal/directives/email.directive';
-import { DialogComponent } from './features/internal/pages/home/components/dialog';
+import { DialogComponent } from './features/internal/pages/home/components/dialog/dialog.component';
 import { PopoverComponent } from './features/internal/pages/home/components/popover/popover.component';
 import { UploadProgressComponent } from './features/internal/pages/home/components/upload-progress';
 import { ValidationComponent } from './features/internal/pages/home/components/validation';

@@ -66,7 +66,7 @@ import { MovementsService } from '../../services';
 import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { CommissionsInfoComponent } from './components/comissions-info/commissions-info.component';
 import { DebtComponent } from './components/debt.component';
-import { DialogComponent } from './components/dialog';
+import { DialogComponent } from './components/dialog/dialog.component';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { TableMovementsComponent } from './components/table-movements/table-movements.component';
 

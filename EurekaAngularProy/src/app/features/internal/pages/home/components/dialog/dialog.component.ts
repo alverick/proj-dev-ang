@@ -8,31 +8,36 @@ import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dia
 import { Store } from '@ngrx/store';
 import ExcelJS from 'exceljs';
 import * as saveAs from 'file-saver';
-import { isNilOrEmpty, isNotEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import {
+  isNilOrEmpty,
+  isNotEmpty,
+  isNotNil,
+  isNotNilOrEmpty,
+} from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import type { IErrorObj } from '../../../../../shared/models/error.model';
+import type { IErrorObj } from '../../../../../../shared/models/error.model';
 import {
   type ProcessStatus,
   ExcelService,
-} from '../../../../../shared/services/excel.service';
+} from '../../../../../../shared/services/excel.service';
 import {
   type ServiceTypeType,
   ServiceTypes,
-} from '../../../../../shared/services/services-forms.service';
+} from '../../../../../../shared/services/services-forms.service';
 import {
   type ActionEventProperties,
   AdobeEvent,
   TrackingService,
-} from '../../../../../shared/services/tracking.service';
-import { swalAlert } from '../../../../../shared/utils/helpers/popups';
-import { companyFeature } from '../../../../../store/reducers/company.reducer';
+} from '../../../../../../shared/services/tracking.service';
+import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
+import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 
 @Component({
   selector: 'cs-dialog',
-  templateUrl: 'dialog.html',
-  styleUrls: ['dialog.scss'],
+  templateUrl: 'dialog.component.html',
+  styleUrls: ['dialog.component.scss'],
 })
 export class DialogComponent implements OnInit {
   isNewFlow = false;
@@ -243,9 +248,7 @@ export class DialogComponent implements OnInit {
         state: 'Envío exitoso',
         metadata: [{ key: 'fileName', value: this.fileName }],
       };
-      console.time();
       const validation = await this.validateFile();
-      console.timeEnd();
       if (isNotEmpty(validation)) {
         this.excelService.errores = validation;
         return;
