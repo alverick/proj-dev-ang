@@ -1,6 +1,6 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { LetModule, PushModule } from '@ngrx/component';
+import { LetDirective, PushPipe } from '@ngrx/component';
 import { StoreModule } from '@ngrx/store';
 import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
@@ -26,8 +26,8 @@ import { PublicRoutingModule } from './public-routing.module';
     ToastModule,
     HeaderComponent,
     StoreModule.forFeature(appConfigFeature),
-    PushModule,
-    LetModule,
+    PushPipe,
+    LetDirective,
   ],
   providers: [CompanyService, LogoutGuard],
 })
