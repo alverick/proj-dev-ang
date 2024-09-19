@@ -10,12 +10,7 @@ import ExcelJS from 'exceljs';
 import * as saveAs from 'file-saver';
 import { type FileUpload } from 'primeng/fileupload';
 import { isNil } from 'ramda';
-import {
-  isNilOrEmpty,
-  isNotEmpty,
-  isNotNil,
-  isNotNilOrEmpty,
-} from 'ramda-adjunct';
+import { isNilOrEmpty, isNotEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -105,16 +100,19 @@ export class DialogComponent implements OnInit {
             const errors: IErrorObj[] = [];
             const limit = workbook.getWorksheet(1).rowCount;
 
+            if (limit < this.rowStart) {
+              errors.push({
+                description: 'El archivo no contiene registros válidos',
+                row: 0,
+              } as IErrorObj);
+              resolve(errors);
+              return;
+            }
+
             if (limit >= 5000 + this.rowStart) {
               errors.push({
                 description:
                   'Se ha superado el límite de 5000 registros por archivo excel',
-                row: 0,
-              } as IErrorObj);
-            }
-            if (limit < this.rowStart) {
-              errors.push({
-                description: 'El archivo no contiene registros válidos',
                 row: 0,
               } as IErrorObj);
             }
