@@ -8,6 +8,7 @@ import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dia
 import { Store } from '@ngrx/store';
 import ExcelJS from 'exceljs';
 import * as saveAs from 'file-saver';
+import { type FileUpload } from 'primeng/fileupload';
 import {
   isNilOrEmpty,
   isNotEmpty,
@@ -41,13 +42,11 @@ export class DialogComponent implements OnInit {
   useAmountLimits = false;
   public inputXlsForm: UntypedFormGroup;
   public messageUploadExcel = false;
-  public errores: any[] = [];
   public ready = false;
   public fileName: string;
   public cuadro_errores = true;
-  private files: any;
   limitAmountMax: number;
-  changestatus = true;
+  changeStatus = true;
   uploaderFiles: File[] = [];
 
   public rowsAccepted = 0;
@@ -57,6 +56,7 @@ export class DialogComponent implements OnInit {
     mode: 'indeterminate',
     value: 0,
   };
+  private readonly rowStart = 14;
 
   constructor(
     public excelService: ExcelService,
@@ -89,21 +89,6 @@ export class DialogComponent implements OnInit {
         this.useAmountLimits = useLimits;
       });
   }
-
-  onChangeFile(event: Event) {
-    console.log(event);
-    const el = event.target as HTMLInputElement;
-    let names: string[] = el.value.split('/');
-    if (names.length <= 1) {
-      names = el.value.split('\\');
-    }
-    this.fileName = names[names.length - 1];
-    this.files = el.files;
-    this.excelService.errores = [];
-    this.ready = true;
-  }
-
-  private readonly rowStart = 14;
 
   validateFile() {
     return new Promise<IErrorObj[]>((resolve) => {
@@ -221,12 +206,6 @@ export class DialogComponent implements OnInit {
     const checkAllCols =
       this.excelService.service.dataType === ServiceTypes.complete ? 6 : 2;
 
-    console.log(
-      this.excelService.service.dataType,
-      checkAllCols,
-      row.actualCellCount
-    );
-
     if (row.actualCellCount < checkAllCols) {
       (fieldLabels[this.excelService.service.dataType] as string[]).forEach(
         (col, index) => {
@@ -277,7 +256,7 @@ export class DialogComponent implements OnInit {
         .UploadExcel(
           this.uploaderFiles,
           this.excelService.service.name,
-          this.changestatus
+          this.changeStatus
         )
         .subscribe({
           next: (value) => {
@@ -455,5 +434,13 @@ export class DialogComponent implements OnInit {
     this.excelService.GetTemplate().subscribe((r: Blob) => {
       saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
     });
+  }
+  getSizeInMegaBytes(file: File) {
+    return file ? file.size / 1000000 : 0;
+  }
+
+  removeFile(file: File, uploader: FileUpload) {
+    const index = uploader.files.indexOf(file);
+    uploader.remove(null, index);
   }
 }
