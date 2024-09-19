@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import ExcelJS from 'exceljs';
 import * as saveAs from 'file-saver';
 import { type FileUpload } from 'primeng/fileupload';
+import { isNil } from 'ramda';
 import {
   isNilOrEmpty,
   isNotEmpty,
@@ -194,7 +195,7 @@ export class DialogComponent implements OnInit {
           }
         }
       }
-      if (row.getCell(6).value <= 0 && isNotNil(row.getCell(6).value)) {
+      if (this.validateAmountZero(row)) {
         errors.push({
           description: `${
             fieldLabels[this.excelService.service.dataType][5]
@@ -221,6 +222,22 @@ export class DialogComponent implements OnInit {
     }
 
     return errors;
+  }
+
+  private validateAmountZero(row: ExcelJS.Row) {
+    let value = row.getCell(6).value;
+
+    if (isNil(value)) {
+      return false;
+    }
+
+    if (typeof value === 'string') {
+      value = parseFloat(value);
+    }
+    if (typeof value !== 'number') {
+      return true;
+    }
+    return value <= 0;
   }
 
   public removeFiled() {
@@ -436,6 +453,7 @@ export class DialogComponent implements OnInit {
       saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
     });
   }
+
   getSizeInMegaBytes(file: File) {
     return file ? file.size / 1000000 : 0;
   }
