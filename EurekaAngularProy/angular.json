@@ -160,7 +160,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "EurekaAngularProy:build"
+            "buildTarget": "EurekaAngularProy:build"
           }
         },
         "lint": {
