@@ -66,8 +66,8 @@
             <div class="clear-float"></div>
           </div>
 
-          <perfect-scrollbar
-            class="notifies"
+          <div
+            class="notifies tw-overflow-auto"
             [config]="scrollConfig"
             (psYReachEnd)="onScroll()"
           >
@@ -126,7 +126,7 @@
             <div *ngIf="notify.loadingMsg" class="loading">
               <mat-spinner [diameter]="20"></mat-spinner>
             </div>
-          </perfect-scrollbar>
+          </div>
 
           <div class="more">
             <a
@@ -193,8 +193,8 @@
             <div class="clear-float"></div>
           </div>
 
-          <perfect-scrollbar
-            class="notifies"
+          <div
+            class="notifies tw-overflow-auto"
             [config]="scrollConfig"
             (psYReachEnd)="onScroll()"
           >
@@ -254,7 +254,7 @@
             <div *ngIf="notify.loadingMsg" class="loading">
               <mat-spinner [diameter]="20"></mat-spinner>
             </div>
-          </perfect-scrollbar>
+          </div>
 
           <div class="more">
             <a

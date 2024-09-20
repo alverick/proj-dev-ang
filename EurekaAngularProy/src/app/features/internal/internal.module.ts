@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { LoadBarComponent } from '../../shared/components/load-bar/load-bar.component';
@@ -56,7 +55,6 @@ import { SERVICES } from './services';
   imports: [
     CommonModule,
     InternalRoutingModule,
-    PerfectScrollbarModule,
     HeaderComponent,
     EntityStoreModule,
     SharedModule,

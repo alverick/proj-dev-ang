@@ -29,7 +29,6 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
 import { AccordionModule } from 'primeng/accordion';
 import { BadgeModule } from 'primeng/badge';
@@ -130,7 +129,7 @@ const PRIMENG_MODULES = [
   ToastModule,
   TooltipModule,
 ];
-const UI_MODULES = [FontAwesomeModule, OverlayModule, PerfectScrollbarModule];
+const UI_MODULES = [FontAwesomeModule, OverlayModule];
 
 @NgModule({
   imports: [
