@@ -151,13 +151,13 @@
         </div>
         <div class="clear-float"></div>
       </div>
-      <perfect-scrollbar class="list tw-text-left">
+      <div class="list tw-text-left tw-overflow-auto">
         <div class="err-item" *ngFor="let err of excelService.errores">
           <span *ngIf="err.row > 0"
             ><strong class="resaltado">Fila {{ err.row }}</strong> : </span
           >{{ err.description }}
         </div>
-      </perfect-scrollbar>
+      </div>
       <div class="footer tw-my-4">
         Corrige los errores y vuelve a subir la plantilla
       </div>

@@ -4,7 +4,6 @@ import { LetDirective, PushPipe } from '@ngrx/component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
 
 import { HeaderComponent } from '../../shared/components/header/header.component';
@@ -12,7 +11,6 @@ import { AuthGuard } from '../../shared/guards/auth.guard';
 import { LogoutGuard } from '../../shared/guards/logout.guard';
 import { NotifyService } from '../../shared/services/notify.service';
 import { RecuperaService } from '../../shared/services/recupera.service';
-import { StorageService } from '../../shared/services/storage.service';
 import { SharedModule } from '../../shared/shared.module';
 import { AuthComponent } from './auth.component';
 import { AuthRoutingModule } from './auth-routing.module';
@@ -32,7 +30,6 @@ import { SERVICES } from './services';
     RecaptchaModule,
     DigitOnlyModule,
     SharedModule,
-    PerfectScrollbarModule,
     NgOptimizedImage,
     PushPipe,
     LetDirective,

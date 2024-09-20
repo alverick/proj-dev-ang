@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ValdemortModule } from 'ngx-valdemort';
 
 import { HeaderComponent } from '../../shared/components/header/header.component';
@@ -37,7 +36,6 @@ import { RESOLVERS } from './resolvers';
     HeaderComponent,
     CommonModule,
     AdminRoutingModule,
-    PerfectScrollbarModule,
     SharedModule,
     ValdemortModule,
   ],
