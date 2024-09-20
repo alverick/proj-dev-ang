@@ -45,7 +45,7 @@
     "@ngrx/eslint-plugin": "^17.2.0",
     "@ngrx/store": "^17.2.0",
     "@ngrx/store-devtools": "^17.2.0",
-    "@uiowa/digit-only": "^1.2.3",
+    "@uiowa/digit-only": "^3.2.1",
     "ajv": "^8.12.0",
     "angular-shepherd": "^17.0.0",
     "bootstrap": "^4.6.1",
