@@ -108,7 +108,7 @@
                     >
                       <td class="c0"></td>
                       <td class="c1">
-                        {{ items.requestDate | date: 'dd/MM/yy' }}
+                        {{ items.requestDate | date : 'dd/MM/yy' }}
                       </td>
                       <td class="c2">{{ items.ruc }}</td>
                       <td class="c3">{{ items.cu }}</td>
@@ -119,9 +119,9 @@
                           *ngFor="let request of items?.requestTypeList"
                         >
                           <div *ngIf="request.type == 0">
-                            <span class="badge tw-bg-primary-green-1"
-                              >{{ request.texto }}</span
-                            >
+                            <span class="badge tw-bg-primary-green-1">{{
+                              request.texto
+                            }}</span>
                           </div>
                         </div>
                         <div
@@ -129,22 +129,22 @@
                           *ngFor="let request of items?.requestTypeList"
                         >
                           <div *ngIf="request.type == 1">
-                            <span class="badge tw-bg-extended-yellow-1"
-                              >{{ request.texto }}</span
-                            >
+                            <span class="badge tw-bg-extended-yellow-1">{{
+                              request.texto
+                            }}</span>
                           </div>
                           <div *ngIf="request.type == 2">
-                            <span class="badge tw-bg-primary-green-1"
-                              >{{ request.texto }}</span
-                            >
+                            <span class="badge tw-bg-primary-green-1">{{
+                              request.texto
+                            }}</span>
                           </div>
                           <div
                             *ngIf="request.type == 3"
                             pTooltip="{{ request.detalles }}"
                           >
-                            <span class="badge tw-bg-extended-yellow-1"
-                              >{{ request.texto }}</span
-                            >
+                            <span class="badge tw-bg-extended-yellow-1">{{
+                              request.texto
+                            }}</span>
                           </div>
                         </div>
                         <!-- -->
@@ -239,16 +239,18 @@
                         (click)="p.setCurrent(page.value)"
                         *ngIf="p.getCurrent() !== page.value"
                       >
-                        <span
-                          >{{ page.label === '...' ? page.label : (page.label |
-                          number: '') }}</span
-                        >
+                        <span>{{
+                          page.label === '...'
+                            ? page.label
+                            : (page.label | number : '')
+                        }}</span>
                       </a>
                       <ng-container *ngIf="p.getCurrent() === page.value">
-                        <span
-                          >{{ page.label === '...' ? page.label : (page.label |
-                          number: '') }}</span
-                        >
+                        <span>{{
+                          page.label === '...'
+                            ? page.label
+                            : (page.label | number : '')
+                        }}</span>
                       </ng-container>
                     </li>
                     <li
