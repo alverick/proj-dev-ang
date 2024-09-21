@@ -70,7 +70,8 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
-    connectInZone: true}),
+      connectInZone: true,
+    }),
     MatSnackBarModule,
   ],
   providers: [
