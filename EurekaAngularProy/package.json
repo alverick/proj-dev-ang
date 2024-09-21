@@ -67,7 +67,7 @@
     "ngx-pagination": "^6.0.3",
     "ngx-perfect-scrollbar": "^10.1.1",
     "ngx-spinner": "^15.0.1",
-    "ngx-valdemort": "^9.0.0",
+    "ngx-valdemort": "^11.0.0",
     "ngx-webstorage-service": "^4.1.0",
     "normalize.css": "^8.0.1",
     "popper.js": "^1.16.1",
