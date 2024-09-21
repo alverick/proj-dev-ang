@@ -264,6 +264,13 @@ body {
     color: var(--ibk-white);
     background: var(--primary-green-1);
     border: 1px solid var(--primary-green-1);
+    gap: 0.5rem;
+
+    &.p-button-danger {
+      color: #ffffff;
+      background: var(--extended-palette-watermelon-1);
+      border: 1px solid var(--extended-palette-watermelon-1);
+    }
 
     &.p-button-text {
       color: var(--primary-green-1);
@@ -286,6 +293,10 @@ body {
         width: 2rem;
         padding: 0.25rem 0;
       }
+    }
+
+    &.p-button-icon-only {
+      gap: 0;
     }
 
     &.p-button-outlined {
@@ -357,10 +368,6 @@ body {
     &.input-button {
       font-size: 10px;
       padding: 0.2rem;
-    }
-
-    .p-button-icon{
-      margin-right: 0.5rem;
     }
   }
 

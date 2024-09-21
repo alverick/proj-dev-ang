@@ -8,8 +8,9 @@ import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dia
 import { Store } from '@ngrx/store';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
-import { isNotEmpty } from 'ramda';
-import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
+import { type FileUpload } from 'primeng/fileupload';
+import { isNil, isNotEmpty } from 'ramda';
+import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -37,13 +38,11 @@ export class DialogComponent implements OnInit {
   useAmountLimits = false;
   public inputXlsForm: UntypedFormGroup;
   public messageUploadExcel = false;
-  public errores: any[] = [];
   public ready = false;
   public fileName: string;
   public cuadro_errores = true;
-  private files: any;
   limitAmountMax: number;
-  changestatus = true;
+  changeStatus = true;
   uploaderFiles: File[] = [];
 
   public rowsAccepted = 0;
@@ -53,6 +52,7 @@ export class DialogComponent implements OnInit {
     mode: 'indeterminate',
     value: 0,
   };
+  private readonly rowStart = 14;
 
   constructor(
     public excelService: ExcelService,
@@ -86,21 +86,6 @@ export class DialogComponent implements OnInit {
       });
   }
 
-  onChangeFile(event: Event) {
-    console.log(event);
-    const el = event.target as HTMLInputElement;
-    let names: string[] = el.value.split('/');
-    if (names.length <= 1) {
-      names = el.value.split('\\');
-    }
-    this.fileName = names[names.length - 1];
-    this.files = el.files;
-    this.excelService.errores = [];
-    this.ready = true;
-  }
-
-  private readonly rowStart = 14;
-
   validateFile() {
     return new Promise<IErrorObj[]>((resolve) => {
       const reader = new FileReader();
@@ -114,16 +99,19 @@ export class DialogComponent implements OnInit {
             const errors: IErrorObj[] = [];
             const limit = workbook.getWorksheet(1).rowCount;
 
+            if (limit < this.rowStart) {
+              errors.push({
+                description: 'El archivo no contiene registros válidos',
+                row: 0,
+              } as IErrorObj);
+              resolve(errors);
+              return;
+            }
+
             if (limit >= 5000 + this.rowStart) {
               errors.push({
                 description:
                   'Se ha superado el límite de 5000 registros por archivo excel',
-                row: 0,
-              } as IErrorObj);
-            }
-            if (limit < this.rowStart) {
-              errors.push({
-                description: 'El archivo no contiene registros válidos',
                 row: 0,
               } as IErrorObj);
             }
@@ -204,7 +192,7 @@ export class DialogComponent implements OnInit {
           }
         }
       }
-      if (row.getCell(6).value <= 0 && isNotNil(row.getCell(6).value)) {
+      if (this.validateAmountZero(row)) {
         errors.push({
           description: `${
             fieldLabels[this.excelService.service.dataType][5]
@@ -216,12 +204,6 @@ export class DialogComponent implements OnInit {
 
     const checkAllCols =
       this.excelService.service.dataType === ServiceTypes.complete ? 6 : 2;
-
-    console.log(
-      this.excelService.service.dataType,
-      checkAllCols,
-      row.actualCellCount
-    );
 
     if (row.actualCellCount < checkAllCols) {
       (fieldLabels[this.excelService.service.dataType] as string[]).forEach(
@@ -237,6 +219,22 @@ export class DialogComponent implements OnInit {
     }
 
     return errors;
+  }
+
+  private validateAmountZero(row: ExcelJS.Row) {
+    let value = row.getCell(6).value;
+
+    if (isNil(value)) {
+      return false;
+    }
+
+    if (typeof value === 'string') {
+      value = parseFloat(value);
+    }
+    if (typeof value !== 'number') {
+      return true;
+    }
+    return value <= 0;
   }
 
   public removeFiled() {
@@ -273,7 +271,7 @@ export class DialogComponent implements OnInit {
         .UploadExcel(
           this.uploaderFiles,
           this.excelService.service.name,
-          this.changestatus
+          this.changeStatus
         )
         .subscribe({
           next: (value) => {
@@ -451,5 +449,14 @@ export class DialogComponent implements OnInit {
     this.excelService.GetTemplate().subscribe((r: Blob) => {
       saveAs(r, `Plantilla de carga - ${this.excelService.service.name}.xlsx`);
     });
+  }
+
+  getSizeInMegaBytes(file: File) {
+    return file ? file.size / 1000000 : 0;
+  }
+
+  removeFile(file: File, uploader: FileUpload) {
+    const index = uploader.files.indexOf(file);
+    uploader.remove(null, index);
   }
 }
