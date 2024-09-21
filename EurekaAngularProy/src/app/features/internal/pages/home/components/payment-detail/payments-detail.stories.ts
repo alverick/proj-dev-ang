@@ -7,8 +7,8 @@ import {
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
-import { MatLegacyDialogRef } from '@angular/material/legacy-dialog';
 import {
   MAT_MOMENT_DATE_FORMATS,
   MomentDateAdapter,
@@ -48,7 +48,7 @@ export default {
         MatDialogModule,
       ],
       providers: [
-        MatLegacyDialogRef,
+        MatDialogRef,
         CookieService,
         {
           provide: APP_INITIALIZER,

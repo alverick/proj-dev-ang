@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';

@@ -127,14 +127,16 @@ body {
   color: var(--grises-grey-1) !important;
 }
 
+/*TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version.*/
 :host
   ::ng-deep
-  .mat-form-field
-  .mat-select.mat-select-disabled
+  .mat-mdc-form-field
+  .mat-mdc-select.mat-select-disabled
   .mat-select-arrow {
   color: var(--ibk-white);
 }
 
+/*TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 :host
   ::ng-deep
   .mat-form-field-appearance-legacy.mat-form-field-disabled

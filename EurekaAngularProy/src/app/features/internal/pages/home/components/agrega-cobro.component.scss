@@ -35,14 +35,14 @@
   }
 }
 
-.mat-dialog-actions {
+.mat-mdc-dialog-actions {
   padding: 0;
   display: block;
   margin-top: -25px;
   margin-bottom: 1px;
 }
 
-:host ::ng-deep .mat-dialog-container {
+:host ::ng-deep .mat-mdc-dialog-container {
   object-fit: contain;
   border-radius: 4px !important;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1) !important;
