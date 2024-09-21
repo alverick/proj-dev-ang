@@ -11,7 +11,7 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ShepherdService } from 'angular-shepherd';
-import * as saveAs from 'file-saver';
+import { saveAs } from 'file-saver';
 import { type LazyLoadEvent, type MenuItem } from 'primeng/api';
 import { type DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
