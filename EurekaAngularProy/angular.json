@@ -137,23 +137,23 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "EurekaAngularProy:build"
+            "buildTarget": "EurekaAngularProy:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "EurekaAngularProy:build:production"
+              "buildTarget": "EurekaAngularProy:build:production"
             },
             "hmr": {
-              "browserTarget": "EurekaAngularProy:build:hmr"
+              "buildTarget": "EurekaAngularProy:build:hmr"
             },
             "local": {
-              "browserTarget": "EurekaAngularProy:build:local"
+              "buildTarget": "EurekaAngularProy:build:local"
             },
             "dev": {
-              "browserTarget": "EurekaAngularProy:build:dev"
+              "buildTarget": "EurekaAngularProy:build:dev"
             },
             "uat": {
-              "browserTarget": "EurekaAngularProy:build:uat"
+              "buildTarget": "EurekaAngularProy:build:uat"
             }
           }
         },
@@ -173,7 +173,7 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "EurekaAngularProy:build",
+            "buildTarget": "EurekaAngularProy:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "."],
             "port": 6006
@@ -183,7 +183,7 @@
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "EurekaAngularProy:build",
+            "buildTarget": "EurekaAngularProy:build",
             "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "."],
             "outputDir": "dist/storybook/EurekaAngularProy"
