@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import {
   type Type,
   ApplicationRef,
-  ComponentFactoryResolver,
   Inject,
   Injectable,
   Injector,
@@ -20,12 +19,11 @@ import { AdobeEvent, TrackingService } from './tracking.service';
 export class DynamicDialogService extends DialogService {
   constructor(
     private tracking: TrackingService,
-    componentFactoryResolver: ComponentFactoryResolver,
     appRef: ApplicationRef,
     injector: Injector,
     @Inject(DOCUMENT) document: Document
   ) {
-    super(componentFactoryResolver, appRef, injector, document);
+    super(appRef, injector, document);
   }
 
   open(
