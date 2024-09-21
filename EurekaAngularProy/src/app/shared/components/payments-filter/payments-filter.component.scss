@@ -1,4 +1,4 @@
-.mat-form-field {
+.mat-mdc-form-field {
   width: 100%;
   @include media('>sm') {
     width: calc(50% - 10px);
@@ -61,7 +61,7 @@
       flex-wrap: wrap;
     }
 
-    .mat-form-field {
+    .mat-mdc-form-field {
       @include media('>lg') {
         width: auto;
       }

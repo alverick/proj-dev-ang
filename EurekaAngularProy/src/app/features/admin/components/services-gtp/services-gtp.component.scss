@@ -230,6 +230,7 @@ body {
   margin: 5px;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 :host ::ng-deep .texto-mora .mat-form-field-infix {
   border-top: 0;
 }
@@ -244,10 +245,11 @@ body {
   color: var(--ibk-black);
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
 :host
   ::ng-deep
-  .mat-form-field
-  .mat-select.mat-select-invalid
+  .mat-mdc-form-field
+  .mat-mdc-select.mat-select-invalid
   .mat-select-arrow {
   color: var(--primary-green-1);
 }
@@ -257,6 +259,7 @@ body {
   color: var(--ibk-black) !important;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
 :host ::ng-deep .mat-select-disabled .mat-select-value {
   @include font-text(16px !important, normal !important);
   color: var(--ibk-black) !important;
@@ -274,11 +277,13 @@ body {
   width: 80%;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of radio that may no longer apply for the MDC version. */
 :host ::ng-deep .mat-radio-inner-circle {
   height: 16px !important;
   width: 16px !important;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of radio that may no longer apply for the MDC version. */
 :host ::ng-deep .mat-radio-outer-circle {
   height: 16px !important;
   width: 16px !important;
@@ -294,10 +299,12 @@ body {
   }
 }
 
-:host ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+:host ::ng-deep .mat-mdc-form-field.mat-form-field-invalid .mat-form-field-label {
   color: rgba(0, 0, 0, 0.54) !important;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 :host
   ::ng-deep
   .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
@@ -305,6 +312,7 @@ body {
   color: var(--ibk-black) !important;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 :host ::ng-deep #input-mora .mat-form-field-infix {
   max-width: 118px !important;
 }

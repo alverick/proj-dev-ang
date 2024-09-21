@@ -3,10 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
-import {
-  MatLegacyError,
-  MatLegacyFormFieldModule,
-} from '@angular/material/legacy-form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserModule } from '@angular/platform-browser';
 import { MockComponent } from 'ng-mocks';
 
@@ -19,12 +16,12 @@ describe('ServicesGTPComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [MockComponent(ServicesGTPComponent), MatLegacyError],
+      declarations: [MockComponent(ServicesGTPComponent), MatError],
       imports: [
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        MatLegacyFormFieldModule,
+        MatFormFieldModule,
         MatOptionModule,
         BrowserModule,
         CommonModule,
