@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { type OnInit, Component } from '@angular/core';
+import { Component,type OnInit } from '@angular/core';
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
@@ -8,8 +8,8 @@ import {
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Store } from '@ngrx/store';
-import { forEachObjIndexed } from 'ramda';
-import { isNilOrEmpty, isNotEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import { forEachObjIndexed, isNotEmpty } from 'ramda';
+import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
@@ -17,8 +17,8 @@ import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
 import {
   type ActionEventProperties,
-  type Metadata,
   AdobeEvent,
+  type Metadata,
   TrackingService,
 } from '../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';

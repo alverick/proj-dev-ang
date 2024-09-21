@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { hasPath, isEmpty } from 'ramda';
-import { isNotEmpty } from 'ramda-adjunct';
-import { type Observable, combineLatest } from 'rxjs';
+import { hasPath, isEmpty, isNotEmpty } from 'ramda';
+import { combineLatest, type Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -10,9 +9,9 @@ import { AppConfigActions } from '../../store/actions/app-config.actions';
 import { type ProviderService } from './provider.service';
 import { ScriptInjectorService } from './script-injector.service';
 import {
+  AdobeEvent,
   type AdobeEventType,
   type TrackEventProperties,
-  AdobeEvent,
   TrackingService,
 } from './tracking.service';
 

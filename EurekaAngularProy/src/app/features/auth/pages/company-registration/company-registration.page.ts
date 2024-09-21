@@ -24,7 +24,7 @@ export class CompanyRegistrationPage implements OnInit {
 
   constructor(private router: Router, public affiliation: AffiliationService) {
     const navigation = this.router.getCurrentNavigation();
-    if (pathEq(['extras', 'state', 'initNew'], true, navigation)) {
+    if (pathEq(true, ['extras', 'state', 'initNew'], navigation)) {
       this.affiliation.registerForm.get('email').setValue('');
       this.affiliation.resetRegistration();
     }

@@ -336,11 +336,11 @@ export class CompanyServicesService {
     );
 
     let parsedName: string;
-    if (pathEq(['services', position, 'name'], name, this)) {
+    if (pathEq(name, ['services', position, 'name'], this)) {
       if (
         !pathEq(
-          ['services', position, 'newNameGTPStatus'],
           statusCodes.REJECTED,
+          ['services', position, 'newNameGTPStatus'],
           this
         )
       ) {

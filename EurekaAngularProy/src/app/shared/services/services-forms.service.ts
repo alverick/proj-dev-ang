@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { type FormControl, FormBuilder, Validators } from '@angular/forms';
-import { isNil } from 'ramda';
-import { isNotEmpty } from 'ramda-adjunct';
+import { isNil, isNotEmpty } from 'ramda';
 
 import { ServiceTypes } from '../constants/services';
 import { type ServiceTypeType } from '../models';

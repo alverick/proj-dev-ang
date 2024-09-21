@@ -29,7 +29,7 @@ export class AffiliationResumeExitGuard {
     | boolean
     | UrlTree {
     const currentNavigation = this.router.getCurrentNavigation();
-    if (pathEq(['extras', 'state', 'navigateValid'], true, currentNavigation)) {
+    if (pathEq(true, ['extras', 'state', 'navigateValid'], currentNavigation)) {
       return true;
     }
     if (nextState.url === authFullRoutingNames.REGISTRATION_FINISHED) {

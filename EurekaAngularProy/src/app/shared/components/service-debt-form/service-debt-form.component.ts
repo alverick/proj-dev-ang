@@ -53,7 +53,7 @@ export class ServiceDebtFormComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (pathEq(['submitted', 'currentValue'], true, changes) && this.htmlForm) {
+    if (pathEq(true, ['submitted', 'currentValue'], changes) && this.htmlForm) {
       this.htmlForm.onSubmit(null);
     }
   }
