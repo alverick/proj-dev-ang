@@ -61,7 +61,6 @@
     "karma": "^6.4.3",
     "moment": "^2.29.4",
     "ng-recaptcha": "^13.2.1",
-    "ngx-bootstrap": "^10.2.0",
     "ngx-cookie-service": "^17.1.0",
     "ngx-logger": "^5.0.12",
     "ngx-pagination": "^6.0.3",
