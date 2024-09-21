@@ -5,8 +5,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
-import { isNil } from 'ramda';
+import { isNil, isNotEmpty } from 'ramda';
 import { delay } from 'rxjs';
+import { environment } from '../environments/environment';
 
 import { appFullRoutingNames } from './app-routing.names';
 import {
@@ -88,7 +89,11 @@ export class AppComponent implements OnInit {
   }
 
   onAnimationEvent(event: AnimationEvent) {
-    if (event.phaseName === phasesStateName.start && !this.appLoaded) {
+    if (
+      event.phaseName === phasesStateName.start &&
+      !this.appLoaded &&
+      isNotEmpty(environment.adobe)
+    ) {
       this.store.dispatch(AppConfigActions.setLoader({ show: true }));
     }
     if (event.phaseName === phasesStateName.done) {
