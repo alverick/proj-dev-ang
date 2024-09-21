@@ -92,7 +92,7 @@ export class CompanyConfigurationService {
     };
 
     const formValue = pick(
-      ['email', 'movilNumber', ' movilOperator', 'name'],
+      ['email', 'movilNumber', 'movilOperator', 'name'],
       this.companyForm.value
     );
     const metadata: Metadata[] = [];
