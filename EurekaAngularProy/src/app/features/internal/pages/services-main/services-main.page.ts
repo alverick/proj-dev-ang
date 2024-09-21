@@ -48,7 +48,7 @@ export class ServicesMainPage implements OnInit, OnDestroy {
         map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)),
         takeUntil(this.destroy$)
       )
-      .subscribe((val: RouterEvent) => {
+      .subscribe((val) => {
         if (val instanceof NavigationEnd) {
           switch (val.url) {
             case internalFullRoutingChildNames.SERVICES_ADD_INFO:
