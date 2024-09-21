@@ -8,12 +8,8 @@ import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dia
 import { Store } from '@ngrx/store';
 import ExcelJS from 'exceljs';
 import * as saveAs from 'file-saver';
-import {
-  isNilOrEmpty,
-  isNotEmpty,
-  isNotNil,
-  isNotNilOrEmpty,
-} from 'ramda-adjunct';
+import { isNotEmpty } from 'ramda';
+import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 

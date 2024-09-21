@@ -31,8 +31,8 @@ export class SettingsStorageService {
 
   getSetting(keySettings: SettingOptionsType, keyPage: SectionsType) {
     return pathEq(
-      [this.username, keySettings, keyPage],
       Status.saved,
+      [this.username, keySettings, keyPage],
       this.settings
     );
   }

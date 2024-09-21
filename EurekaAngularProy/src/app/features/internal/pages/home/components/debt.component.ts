@@ -8,8 +8,8 @@ import {
 import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Store } from '@ngrx/store';
-import { forEachObjIndexed } from 'ramda';
-import { isNilOrEmpty, isNotEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import { forEachObjIndexed, isNotEmpty } from 'ramda';
+import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { type UrlTree, Router } from '@angular/router';
-import { isEmpty } from 'ramda';
-import { isNotEmpty } from 'ramda-adjunct';
+import { isEmpty, isNotEmpty } from 'ramda';
 import { type Observable } from 'rxjs';
 
 import {

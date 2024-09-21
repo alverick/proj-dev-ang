@@ -1,5 +1,5 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { isNotEmpty } from 'ramda-adjunct';
+import { isNotEmpty } from 'ramda';
 
 import {
   type CurrencyWithLimit,
