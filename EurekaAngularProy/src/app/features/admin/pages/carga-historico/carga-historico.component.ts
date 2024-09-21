@@ -1,6 +1,6 @@
 import { type OnInit, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as saveAs from 'file-saver';
+import { saveAs } from 'file-saver';
 
 import { QueryDataService } from '../../../../shared/data';
 import { ProcessService } from '../../../../shared/services/process.service';

@@ -1,6 +1,6 @@
 import { type OnDestroy, type OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import * as saveAs from 'file-saver';
+import { saveAs } from 'file-saver';
 import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { type Subscription, lastValueFrom, timer } from 'rxjs';
