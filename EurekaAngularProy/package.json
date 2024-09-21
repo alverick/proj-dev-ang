@@ -64,6 +64,7 @@
     "ngx-cookie-service": "^17.1.0",
     "ngx-logger": "^5.0.12",
     "ngx-pagination": "^6.0.3",
+    "ngx-scrollbar": "^14.1.1",
     "ngx-spinner": "^17.0.0",
     "ngx-valdemort": "^11.0.0",
     "ngx-webstorage-service": "^4.1.0",

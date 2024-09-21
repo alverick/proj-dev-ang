@@ -39,7 +39,7 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          (click)="openNotifyList()"
+          (click)="openNotifyList('hideScroll')"
         >
           <i
             *ngIf="notify.total <= 0"
@@ -66,14 +66,16 @@
             <div class="clear-float"></div>
           </div>
 
-          <div
-            class="notifies tw-overflow-auto"
-            [config]="scrollConfig"
-            (psYReachEnd)="onScroll()"
+          <ng-scrollbar
+            *ngIf="!hideScroll"
+            style="height: 300px"
+            (reachedBottom)="onScroll()"
+            class="notifies"
           >
             <div
               *ngFor="let msg of notify.messages"
               class="dropdown-item"
+              (click)="$event.stopPropagation()"
               [class.dropdown-item-readed]="!msg.isNew"
             >
               <div
@@ -126,7 +128,7 @@
             <div *ngIf="notify.loadingMsg" class="loading">
               <mat-spinner [diameter]="20"></mat-spinner>
             </div>
-          </div>
+          </ng-scrollbar>
 
           <div class="more">
             <a
@@ -166,7 +168,7 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          (click)="openNotifyList()"
+          (click)="openNotifyList('hideScrollMobile')"
         >
           <i
             *ngIf="notify.total <= 0"
@@ -193,10 +195,11 @@
             <div class="clear-float"></div>
           </div>
 
-          <div
-            class="notifies tw-overflow-auto"
-            [config]="scrollConfig"
-            (psYReachEnd)="onScroll()"
+          <ng-scrollbar
+            *ngIf="!hideScrollMobile"
+            style="height: 300px"
+            (reachedBottom)="onScroll()"
+            class="notifies"
           >
             <a
               *ngFor="let msg of notify.messages"
@@ -254,7 +257,7 @@
             <div *ngIf="notify.loadingMsg" class="loading">
               <mat-spinner [diameter]="20"></mat-spinner>
             </div>
-          </div>
+          </ng-scrollbar>
 
           <div class="more">
             <a
