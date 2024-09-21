@@ -36,9 +36,8 @@ export class InternalHeaderComponent implements OnInit {
   companyText = 'Mi Empresa';
   dashboardText = 'Mi Resumen';
   chargesText = 'Mis Servicios';
-  scrollConfig = {
-    suppressScrollX: true,
-  };
+  hideScroll = true;
+  hideScrollMobile = true;
 
   constructor(
     private router: Router,
@@ -147,7 +146,10 @@ export class InternalHeaderComponent implements OnInit {
     });
   }
 
-  openNotifyList() {
+  openNotifyList(hideControl: string) {
+    setTimeout(() => {
+      this[hideControl] = false;
+    }, 0);
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
