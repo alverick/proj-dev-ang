@@ -50,6 +50,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   @Input() gtpMode = false;
   @Input() dateList: DateList[];
   @Input() stateTypeList: StatesGtp[];
+  @Input() multipleState: boolean | string = false;
   @Input() services: any[];
   @Input() stateList: WayPay[] | StatesGtp[];
   @Input() initial;
