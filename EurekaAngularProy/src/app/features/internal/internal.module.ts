@@ -28,7 +28,7 @@ import { PAGES } from './pages';
 import { AgregaCobroComponent } from './pages/home/components/agrega-cobro.component';
 import { CommissionsInfoComponent } from './pages/home/components/comissions-info/commissions-info.component';
 import { DebtComponent } from './pages/home/components/debt.component';
-import { DialogComponent } from './pages/home/components/dialog';
+import { DialogComponent } from './pages/home/components/dialog/dialog.component';
 import { PaymentDetailComponent } from './pages/home/components/payment-detail/payment-detail.component';
 import { TableMovementsComponent } from './pages/home/components/table-movements/table-movements.component';
 import { RESOLVERS } from './resolvers';

@@ -10,6 +10,7 @@ import { ModalTermsComponent } from './modal-terms.component';
 
 @Component({
   template: ` <button pButton pRipple (click)="launch()">Launch</button>`,
+  standalone: true,
 })
 class LaunchComponent {
   ref: DynamicDialogRef;

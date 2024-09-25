@@ -27,5 +27,8 @@ export default meta;
 type Story = StoryObj<FabWhatsappComponent>;
 
 export const Normal: Story = {
-  args: {},
+  args: {
+    showButton: true,
+    expand: true,
+  },
 };
