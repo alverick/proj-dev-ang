@@ -1,12 +1,3 @@
 .form-cmp {
-  min-width: 320px;
-  @include media('>=md') {
-    min-width: 436px;
-  }
-  @include media('>=lg') {
-    width: 652px;
-  }
-  @include media('>=2xl') {
-    width: 752px;
-  }
+  @apply tw-min-w-[320px] md:tw-min-w-[436px] lg:tw-min-w-[652px] 2xl:tw-min-w-[752px];
 }
