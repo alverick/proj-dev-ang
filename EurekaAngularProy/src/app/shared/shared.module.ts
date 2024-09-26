@@ -74,6 +74,7 @@ import { ServicesListComponent } from './components/services-list/services-list.
 import { SidebarServiceComponent } from './components/sidebar-service/sidebar-service.component';
 import { DATA_SERVICES } from './data';
 import { DIRECTIVES } from './directives';
+import { BlockCopyPasteDirective } from './directives/block-copy-paste.directive';
 import { NameEnterpiseDirective } from './directives/name-enterpise.directive';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 import { OnlyNumbersFormDirective } from './directives/only-numbers-form.directive';
@@ -160,6 +161,7 @@ const UI_MODULES = [FontAwesomeModule, OverlayModule];
   declarations: [
     OnlyNumbersFormDirective,
     OnlyNumbersDirective,
+    BlockCopyPasteDirective,
     SearchDirective,
     NameEnterpiseDirective,
     PaymentsFilterComponent,
@@ -181,6 +183,7 @@ const UI_MODULES = [FontAwesomeModule, OverlayModule];
   exports: [
     OnlyNumbersFormDirective,
     OnlyNumbersDirective,
+    BlockCopyPasteDirective,
     SearchDirective,
     NameEnterpiseDirective,
     ...DIRECTIVES,

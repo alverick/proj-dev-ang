@@ -1,5 +1,23 @@
 import { type IErrorMessages } from '../models/forms';
 
+export const errorsLoginForm: IErrorMessages = {
+  ruc: {
+    required: 'Debe ingresar el RUC',
+    pattern: 'Ingresa un RUC válido',
+    minlength: 'Ingrese un RUC válido de 11 dígitos',
+  },
+  password: {
+    required: 'Debe ingresar una contraseña',
+    length: 'Debes ingresar una contraseña entre 6 y 20 caracteres',
+    minlength: 'La contraseña no es válida',
+  },
+  email: {
+    required: 'El correo electrónico es obligatorio',
+    pattern: 'Ingresa un correo electrónico válido',
+    minlength: 'El correo electrónico debe tener mínimo 10 dígitos',
+  },
+};
+
 export const errorsRegisterForm: IErrorMessages = {
   documentType: {
     required: 'Selecciona un tipo de documento',
