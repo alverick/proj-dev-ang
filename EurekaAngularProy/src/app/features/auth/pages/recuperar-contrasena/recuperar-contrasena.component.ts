@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { forEachObjIndexed } from 'ramda';
 
+import { errorsLoginForm } from '../../../../shared/constants/company-errors';
 import { emailRegex } from '../../../../shared/constants/patterns';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
 import {
@@ -35,6 +36,7 @@ export class RecuperarContrasenaComponent implements OnInit {
   recupera: UntypedFormGroup;
   public submitted = false;
   submittedRequired = false;
+  protected readonly errorMessages = errorsLoginForm;
 
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: BeforeUnloadEvent) {
@@ -101,7 +103,7 @@ export class RecuperarContrasenaComponent implements OnInit {
             this.f.email.reset();
             this.f.email.clearValidators();
             // al ocultar la pantalla se mostrara en la parte de arriba la pagina
-            this.router.navigate([authFullRoutingNames.LOGIN]);
+            void this.router.navigate([authFullRoutingNames.LOGIN]);
           } else {
             this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
               ...actionStep,
@@ -147,7 +149,6 @@ export class RecuperarContrasenaComponent implements OnInit {
       location: 'Modal',
     });
     void swalAlert.fire({
-      // type: tipo ,
       title: titulo,
       html: text,
       showCloseButton: false,
