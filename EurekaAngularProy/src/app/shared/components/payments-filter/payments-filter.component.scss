@@ -1,94 +1,38 @@
 .mat-mdc-form-field {
   width: 100%;
-  @include media('>sm') {
-    width: calc(50% - 10px);
-  }
-  @include media('>lg') {
-    width: 120px;
-  }
-  @include media('>xl') {
-    min-width: 120px;
-    width: auto;
-  }
+  @apply sm:tw-w-[calc(50%_-_10px)] lg:tw-w-[120px] xl:tw-w-auto xl:tw-min-w-[120px];
 
   &:nth-child(even) {
-    @include media('>lg') {
-      margin-left: 0;
-    }
+    @apply lg:tw-ml-0;
   }
 
   &.name {
-    @include media('>lg') {
-      width: 230px;
-    }
-    @include media('>xl') {
-      min-width: 230px;
-      width: auto;
-    }
+    @apply lg:tw-w-[230px] xl:tw-w-auto xl:tw-min-w-[230px];
   }
 }
 
 .form {
-  display: inline-flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 5px 20px;
-  @include media('>sm') {
-    flex-wrap: wrap;
-    flex-direction: row;
-  }
-  @include media('>xl') {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-  @include media('>lg') {
-    gap: 5px 10px;
-  }
+  @apply tw-inline-flex tw-items-center tw-flex-col tw-gap-[5px_20px] sm:tw-flex-wrap sm:tw-flex-row xl:tw-flex xl:tw-flex-nowrap lg:tw-gap-[5px_10px];
 
   button {
-    height: 40px;
-    padding: 0 20px;
-    @include media('>lg') {
-      padding: 0 30px;
-    }
+    @apply tw-h-10 tw-mx-5 lg:tw-mx-[30px];
   }
 
   &.gtp-mode {
-    @include media('>xl') {
-      display: inline-flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
+    @apply tw-inline-flex tw-flex-row tw-flex-wrap;
 
     .mat-mdc-form-field {
-      @include media('>lg') {
-        width: auto;
-      }
-      @include media('>xl') {
-        min-width: 0;
-      }
+      @apply lg:tw-w-auto xl:tw-min-w-0;
 
       &.name {
-        @include media('>lg') {
-          width: 260px;
-        }
-        @include media('>xl') {
-          min-width: 260px;
-          width: auto;
-        }
+        @apply lg:tw-w-[260px] xl:tw-min-w-[260px] xl:tw-w-auto;
       }
     }
   }
 }
 
 .actions {
-  display: flex;
-  flex-direction: column;
-  @include media('>sm') {
-    flex-direction: row;
-    gap: 10px;
-  }
+  @apply tw-flex sm:tw-flex-row tw-flex-col sm:tw-gap-2.5;
 }
 
 .btn-reset {
@@ -96,9 +40,7 @@
   visibility: hidden;
   transition: all 0.5s;
   order: 1;
-  @include media('>xl') {
-    order: 0;
-  }
+  @apply tw-order-1 xl:tw-order-none;
 
   &.active {
     opacity: 1;
@@ -116,13 +58,8 @@
   margin-right: auto;
   @include font-text(14px);
   padding-bottom: 0.34rem;
-  @include media('>sm') {
-    flex-basis: 100%;
-  }
-  @include media('>lg') {
-    margin-right: 0;
-    flex-basis: auto;
-  }
+
+  @apply sm:tw-basis-full lg:tw-mr-0 lg:tw-basis-auto;
 }
 
 .break-elm {

@@ -223,10 +223,7 @@
 
   .p-sidebar {
     &.edit-form {
-      @include media('>=lg') {
-        padding: 0;
-        border-style: none;
-      }
+      @apply lg:tw-p-0 lg:tw-border-none
 
       .p-sidebar-close {
         position: absolute;
