@@ -1,7 +1,7 @@
-import type { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { type OnInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
+import moment from 'moment';
+import { type MenuItem } from 'primeng/api';
 
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
@@ -38,6 +38,7 @@ export class InternalHeaderComponent implements OnInit {
   chargesText = 'Mis Servicios';
   hideScroll = true;
   hideScrollMobile = true;
+  items: MenuItem[] | undefined;
 
   constructor(
     private router: Router,
@@ -66,6 +67,15 @@ export class InternalHeaderComponent implements OnInit {
     this.notify.iniciar();
     this.storage.getCurrentSession();
     this.showMenu = this.storage.isValidSession();
+    this.items = [
+      {
+        label: 'Cerrar sesión',
+        styleClass: 'tw-text-center',
+        command: () => {
+          this.logout();
+        },
+      },
+    ];
   }
 
   goResumenCobros() {
