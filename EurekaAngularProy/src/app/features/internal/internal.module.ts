@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
@@ -62,6 +62,7 @@ import { SERVICES } from './services';
     PushPipe,
     LetDirective,
     NgScrollbarModule,
+    NgOptimizedImage,
   ],
   providers: [
     ...SERVICES,
