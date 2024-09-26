@@ -14,6 +14,7 @@ import { ShepherdService } from 'angular-shepherd';
 import { saveAs } from 'file-saver';
 import { type LazyLoadEvent, type MenuItem } from 'primeng/api';
 import { type DynamicDialogRef } from 'primeng/dynamicdialog';
+import { SplitButton } from 'primeng/splitbutton';
 import {
   all,
   equals,
@@ -1185,5 +1186,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         location: 'Movimientos',
       });
     }
+  }
+
+  clickSplitButton(event: SplitButton, eventClick: MouseEvent): void {
+    setTimeout(() => {
+      event.onDropdownButtonClick(eventClick);
+    }, 0);
   }
 }
