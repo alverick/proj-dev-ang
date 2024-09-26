@@ -44,6 +44,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { MenuModule } from 'primeng/menu';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { MultiSelectModule } from 'primeng/multiselect';
@@ -114,6 +115,7 @@ const PRIMENG_MODULES = [
   InputNumberModule,
   InputTextModule,
   KeyFilterModule,
+  MenuModule,
   MessageModule,
   MessagesModule,
   MultiSelectModule,
