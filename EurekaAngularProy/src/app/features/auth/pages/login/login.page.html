@@ -3,148 +3,94 @@
     class="tw-bg-white ibk-box-rounded tw-min-w-[320px] sm:tw-min-w-[450px] tw-p-8"
   >
     <div
-      class="tw-text-secondary-blue-1 tw-text-2xl lg:tw-text-3xl tw-font-medium tw-text-center mb-4"
+      class="tw-text-secondary-blue-1 tw-text-2xl lg:tw-text-3xl tw-font-medium tw-text-center tw-mb-6"
     >
       Inicia sesión
     </div>
-    <form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
-      <div class="d-flex pb-3" style="text-align: left">
-        <div class="flex-fill mt-2">
-          <label class="d-block texto-negro h6">
-            <img
-              class="tw-inline icon-gb"
-              ngSrc="assets/images/user.svg"
-              alt="RUC"
-              height="16"
-              width="16"
-            />
-            RUC
-            <mat-form-field style="height: 1.9px !important; width: 100%">
-              <input
-                matInput
-                class="input-text"
-                type="text"
-                name="ruc"
-                csOnlyNumbers
-                (focus)="focusFunctionRuc()"
-                autocomplete="on"
-                minlength="11"
-                maxlength="11"
-                required
-                formControlName="ruc"
-                [class.is-invalid]="submitted && f.ruc.errors"
-              />
-              <mat-error *ngIf="inputUsuaValid" class="messsage-error">
-                Debe ingresar el RUC
-              </mat-error>
-              <mat-error *ngIf="validarCantRuc" class="messsage-error">
-                Ingrese un RUC válido de 11 dígitos
-              </mat-error>
-            </mat-form-field>
-          </label>
-          <div class="mt-4">
-            <label class="text-check" for="remember-me">
-              <mat-checkbox
-                type="checkbox"
-                [(ngModel)]="rememberMe"
-                autocomplete="on"
-                formControlName="rememberme"
-                id="remember-me"
-              >
-                Recordar
-              </mat-checkbox></label
-            >
-          </div>
-        </div>
+    <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="ruc"
+          [errorMessages]="errorMessages.ruc"
+          ><i class="pi pi-user tw-text-primary-green-1"></i> RUC
+          <input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            pKeyFilter="int"
+            maxlength="11"
+            formControlName="ruc"
+          />
+        </cs-label-control>
+      </div>
+      <div class="form-elm">
+        <cs-label-control class="tw-w-full" formControlName="rememberMe">
+          <p-checkbox
+            class="tw-mr-1"
+            [binary]="true"
+            formControlName="rememberMe"
+          >
+          </p-checkbox>
+          <ng-container label-inline>Recordar</ng-container>
+        </cs-label-control>
       </div>
 
-      <div class="d-flex pb-3" style="text-align: left">
-        <div class="flex-fill mt-2">
-          <label class="d-block texto-negro h6">
-            <img
-              class="tw-inline icon-gb"
-              ngSrc="assets/images/password.svg"
-              alt="Contraseña"
-              height="16"
-              width="16"
-            />
-            Contraseña
-            <mat-form-field style="height: 1.9px !important; width: 100%">
-              <input
-                matInput
-                class="input-text"
-                [type]="hide ? 'password' : 'text'"
-                (Keydown.space)="$event.preventDefault()"
-                (focus)="focusFunctionPass()"
-                minlength="6"
-                maxlength="25"
-                formControlName="psw"
-                csBlockCopyPaste
-                [ngClass]="{
-                  'is-invalid': submitted && f.psw.errors
-                }"
-              />
-              <button
-                matSuffix
-                (click)="hide = !hide"
-                type="button"
-                class="pi"
-                [ngClass]="{
-                  'pi-eye': hide,
-                  'pi-eye-slash': !hide
-                }"
-              ></button>
-              <mat-error *ngIf="inputPassValid" class="messsage-error">
-                Debe ingresar una contraseña
-              </mat-error>
-              <mat-error *ngIf="validarCantPass" class="messsage-error">
-                Debes ingresar una contraseña entre 6 y 20 caracteres
-              </mat-error>
-            </mat-form-field>
-          </label>
-          <mat-error *ngIf="codigo2" class="messsage-error">
-            RUC o Contraseña Incorrecta
-          </mat-error>
-        </div>
+      <div class="form-elm">
+        <cs-label-control
+          class="tw-w-full"
+          formControlName="psw"
+          [errorMessages]="errorMessages.password"
+          ><i class="pi pi-lock tw-text-primary-green-1"></i>
+          Contraseña
+          <p-password
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            inputStyleClass="tw-w-full"
+            minlength="6"
+            [maxLength]="25"
+            formControlName="psw"
+            [toggleMask]="true"
+            [feedback]="false"
+            control
+            csBlockCopyPaste
+            #passwordControl
+          >
+          </p-password>
+        </cs-label-control>
       </div>
-
-      <div class="tw-mt-3 mb-3" style="text-align: left">
+      <div class="form-elm tw-my-4">
         <a
-          id="text-olv"
           class="tw-underline tw-text-sm tw-py-2"
           [routerLink]="[linkRecoverPassword]"
           (click)="clickRecoverPassword()"
           >Recuperar contraseña
         </a>
       </div>
-      <br class="br-none-mobil" />
       <div>
         <button
           pButton
           pRipple
           type="submit"
           class="tw-mb-6 p-button-sm tw-w-72 tw-flex tw-mx-auto tw-justify-center"
-          form="login-form"
         >
           Ingresar
         </button>
       </div>
     </form>
-    <div class="mb-2">
-      <div class="mb-3 dpt" style="text-align: center">
-        <div class="text-rg">¿No tienes una cuenta?</div>
-        <br />
-        <ng-container *ngrxLet="disabledAffiliation$ as disabled">
-          <button
-            pButton
-            pRipple
-            class="p-button-text p-button-sm tw-text-sm tw-underline"
-            (click)="clickRegistration(disabled)"
-          >
-            Regístrate aquí
-          </button>
-        </ng-container>
-      </div>
+    <div class="tw-mb-2 tw-text-center">
+      <div class="text-rg">¿No tienes una cuenta?</div>
+      <ng-container *ngrxLet="disabledAffiliation$ as disabled">
+        <button
+          pButton
+          pRipple
+          [text]="true"
+          class="p-button-text p-button-sm tw-text-sm tw-underline"
+          (click)="clickRegistration(disabled)"
+        >
+          Regístrate aquí
+        </button>
+      </ng-container>
     </div>
     <p-toast
       position="top-center"
