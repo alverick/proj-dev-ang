@@ -1,36 +1,16 @@
 :root {
   --font-family: 'Geometria', 'Helvetica Neue', sans-serif;
 }
+@layer primeng {
+  .p-inputtext {
+    font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+    padding: 0.429rem;
+  }
 
-.p-component {
-  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-}
+  .p-terminal .p-terminal-input {
+    font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+  }
 
-.p-link {
-  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-}
-
-.p-autocomplete
-  .p-autocomplete-multiple-container
-  .p-autocomplete-input-token
-  input {
-  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-}
-
-.p-chips .p-chips-multiple-container .p-chips-input-token input {
-  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-}
-
-.p-inputtext {
-  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-  padding: 0.429rem;
-}
-
-.p-terminal .p-terminal-input {
-  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-}
-
-body {
   a {
     color: var(--primary-green-1);
     transition: color 0.4s;
