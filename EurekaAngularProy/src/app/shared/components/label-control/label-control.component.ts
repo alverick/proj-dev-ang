@@ -25,7 +25,7 @@ export class LabelControlComponent
   @Input() onlyControl = false;
   @Input() formControlName: string;
   @Input() formControlLabel: string;
-  @Input() errorMessages: { [key: string]: string };
+  @Input() errorMessages: Record<string, string>;
   @ViewChild('wrapper') wrapper: ElementRef<HTMLDivElement>;
 
   constructor(

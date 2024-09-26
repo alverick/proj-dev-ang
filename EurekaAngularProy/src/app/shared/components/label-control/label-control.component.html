@@ -1,6 +1,8 @@
 <div class="tw-relative tw-mb-3" [ngClass]="{ 'tw-pb-5': !onlyControl }">
   <ng-container *ngIf="!hideLabel">
-    <label [for]="labelInputID" class="tw-block tw-mb-2 tw-text-extended-grey-1"
+    <label
+      [for]="labelInputID"
+      class="tw-flex tw-gap-1 tw-items-center tw-mb-2 tw-text-extended-grey-1"
       ><ng-content></ng-content
     ></label>
   </ng-container>
