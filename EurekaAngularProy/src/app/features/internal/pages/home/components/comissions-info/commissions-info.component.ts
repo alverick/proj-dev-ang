@@ -15,7 +15,7 @@ export class CommissionsInfoComponent {
     public tracking: TrackingService,
     public router: Router,
     public dialogRef: DynamicDialogRef,
-    public config: DynamicDialogConfig
+    public config: DynamicDialogConfig,
   ) {
     this.showed = pathOr(false, ['data', 'showed'], config);
   }

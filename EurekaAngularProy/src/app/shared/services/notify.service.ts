@@ -1,9 +1,9 @@
-import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  type IconDefinition,
   faBell as farBell,
   faCircle as farCircle,
+  type IconDefinition,
 } from '@fortawesome/free-regular-svg-icons';
 import { faCircle as fasCircle } from '@fortawesome/free-solid-svg-icons';
 import { Subject, timer } from 'rxjs';
@@ -42,7 +42,6 @@ export class NotifyService {
   get total() {
     return this._total;
   }
-  constructor(private http: HttpClient, private storage: StorageService) {}
 
   inExecution = false;
   icono: any = farBell;
@@ -52,6 +51,11 @@ export class NotifyService {
   messages: MessagesType[] = [];
   private _total = -1;
   totalLabel = '';
+
+  constructor(
+    private http: HttpClient,
+    private storage: StorageService,
+  ) {}
 
   public iniciar() {
     this.storage.getCurrentSession();
@@ -95,9 +99,9 @@ export class NotifyService {
     if (this.existMore && !this.loadingMsg) {
       this.loadingMsg = true;
       this.http
-        .get<MessagesResponse[]>(
-          `${environment.END_POINT}/notification?skip=${this.messages.length}`
-        )
+        .get<
+          MessagesResponse[]
+        >(`${environment.END_POINT}/notification?skip=${this.messages.length}`)
         .subscribe({
           next: (d) => {
             this.loadingMsg = false;

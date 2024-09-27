@@ -1,11 +1,11 @@
 import {
-  type OnChanges,
-  type OnInit,
-  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
+  type OnChanges,
+  type OnInit,
   Output,
+  type SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -13,8 +13,7 @@ import { NGXLogger } from 'ngx-logger';
 import { type LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
-import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
-import { filter } from 'rxjs/operators';
+import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
 
 import { type CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
@@ -113,7 +112,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @Output() loadData = new EventEmitter<LazyLoadEvent>();
   displayDialog = false;
   willCloseModal = false;
-  isNewFlow = false;
+  useAmountLimits = false;
   editRowData: any = {};
   dataSet = {};
   selectedAll = false;
@@ -123,16 +122,15 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     private logger: NGXLogger,
     private selectAllTable: SelectAllTableService,
     private tracking: TrackingService,
-    private store: Store
+    private store: Store,
   ) {}
 
   ngOnInit() {
     this.selectAllTable.overridePrimeNGTableMethods();
     this.store
-      .select(companyFeature.selectDetails)
-      .pipe(filter((data) => isNotNilOrEmpty(data)))
-      .subscribe((details) => {
-        this.isNewFlow = details.isNewFlow;
+      .select(companyFeature.selectUseAmountLimits)
+      .subscribe((useLimits) => {
+        this.useAmountLimits = useLimits;
       });
   }
 
@@ -238,7 +236,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       this.selectedRows = [...this.selectedRows, rowData];
     } else {
       this.selectedRows = this.selectedRows.filter(
-        (item) => item.id !== rowData.id
+        (item) => item.id !== rowData.id,
       );
     }
     this.selectedRowsChange.emit(this.selectedRows);
@@ -357,8 +355,8 @@ export class TableMovementsComponent implements OnInit, OnChanges {
 
   getLimit(currencySel: string) {
     return this.maxAmountLimits.find(
-      (currency) => currency.symbol === currencySel
-    ).limitMax;
+      (currency) => currency.symbol === currencySel,
+    )?.limitMax;
   }
 
   loadDataLazy(event: LazyLoadEvent) {
@@ -371,13 +369,14 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     const fields = this.cols.filter(
       (field) =>
         isNotNil(field.checkEditableField) &&
-        field.serviceType.includes(data.serviceType)
+        field.serviceType.includes(data.serviceType),
     );
+
     for (const field of fields) {
       if (
         field.checkEditableField === 'canEditAmount' &&
-        data.amount > this.getLimit(data.currency) &&
-        this.isNewFlow
+        this.useAmountLimits &&
+        data.amount > this.getLimit(data.currency)
       ) {
         return false;
       }

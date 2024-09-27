@@ -1,9 +1,9 @@
-import { type OnDestroy, type OnInit, Component } from '@angular/core';
+import { Component, type OnDestroy, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { type Subscription, lastValueFrom, timer } from 'rxjs';
+import { lastValueFrom, type Subscription, timer } from 'rxjs';
 
 import { QueryDataService } from '../../../../shared/data';
 import { type IEntryModel } from '../../../../shared/models';
@@ -107,7 +107,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     public gtpService: GtpService,
     private router: Router,
     private companyService: CompanyService,
-    private queryDataService: QueryDataService
+    private queryDataService: QueryDataService,
   ) {}
 
   ngOnInit() {
@@ -180,7 +180,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
         filterData.inputSearch,
         filterData.BusinessHeading,
         filterData.status,
-        filterData.statusSolicitud
+        filterData.statusSolicitud,
       );
     }
   }

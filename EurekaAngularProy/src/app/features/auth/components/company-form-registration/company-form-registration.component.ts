@@ -1,15 +1,15 @@
 import {
-  type OnInit,
   Component,
   EventEmitter,
   Input,
+  type OnInit,
   Output,
 } from '@angular/core';
 import { Validators } from '@angular/forms';
 
 import {
-  type ModelFormGroup,
   IErrorMessages,
+  type ModelFormGroup,
 } from '../../../../shared/models/forms';
 import { type RegisterForm } from '../../services/affiliation-forms.service';
 

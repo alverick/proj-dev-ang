@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   applicationConfig,
-  Meta,
+  type Meta,
   moduleMetadata,
-  StoryObj,
+  type StoryObj,
 } from '@storybook/angular';
-import { MenuItem } from 'primeng/api';
+import { type MenuItem } from 'primeng/api';
 
 import { SharedModule } from '../../../../shared/shared.module';
 

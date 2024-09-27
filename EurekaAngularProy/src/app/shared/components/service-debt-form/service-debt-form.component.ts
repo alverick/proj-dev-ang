@@ -1,10 +1,10 @@
 import {
   type AfterViewInit,
+  Component,
+  Input,
   type OnChanges,
   type OnInit,
   type SimpleChanges,
-  Component,
-  Input,
   ViewChild,
 } from '@angular/core';
 import {

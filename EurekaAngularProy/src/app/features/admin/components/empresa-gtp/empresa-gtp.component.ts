@@ -1,15 +1,15 @@
 import {
-  type OnInit,
   Component,
   EventEmitter,
   Input,
+  type OnInit,
   Output,
 } from '@angular/core';
 import {
   type AbstractControl,
-  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
+  type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { forEachObjIndexed } from 'ramda';
@@ -107,7 +107,7 @@ export class EmpresaGTPComponent implements OnInit {
           Validators.pattern(emailRegex),
           Validators.minLength(10),
           Validators.maxLength(100),
-        ]
+        ],
       ),
       movilNumber: new UntypedFormControl(
         {
@@ -119,7 +119,7 @@ export class EmpresaGTPComponent implements OnInit {
           Validators.pattern(/^9\d{8}$/),
           Validators.minLength(9),
           Validators.maxLength(9),
-        ]
+        ],
       ),
       movilOperator: new UntypedFormControl({
         value: movilOperator,
@@ -136,7 +136,7 @@ export class EmpresaGTPComponent implements OnInit {
     controlName: UntypedFormControl | AbstractControl,
     errors: {
       [key: string]: string;
-    }
+    },
   ) {
     let result = '';
     forEachObjIndexed((_value, key) => {
