@@ -162,7 +162,7 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "EurekaAngularProy:build",
-            "compodoc": false,
+            "compodoc": true,
             "compodocArgs": ["-e", "json", "-d", "."],
             "port": 6006
           }
