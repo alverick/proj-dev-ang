@@ -1,4 +1,4 @@
-import { type OnInit, Component, HostListener } from '@angular/core';
+import { Component, HostListener, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { clone, equals, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
@@ -56,7 +56,7 @@ export class AprobacionesPage implements OnInit {
   constructor(
     public gtpService: GtpService,
     private activatedRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
   ) {}
 
   @HostListener('window:beforeunload', ['$event'])
@@ -114,7 +114,7 @@ export class AprobacionesPage implements OnInit {
     if (this.ServiciosFormulario === true) {
       this.mensaje(
         'Aprobando Servicio ',
-        'Actualmente se esta aprobando un Servicio'
+        'Actualmente se esta aprobando un Servicio',
       );
       return;
     }
@@ -126,7 +126,7 @@ export class AprobacionesPage implements OnInit {
     if (this.Formulario === true) {
       this.mensaje(
         'Aprobando Empresa',
-        'Actualmente se esta aprobando una Empresa'
+        'Actualmente se esta aprobando una Empresa',
       );
       return;
     }
@@ -161,7 +161,7 @@ export class AprobacionesPage implements OnInit {
     if (entryDiff) {
       this.mensaje(
         'Error en Rubro',
-        'La res es diferente del rubro, no se puede enviar a PAG'
+        'La res es diferente del rubro, no se puede enviar a PAG',
       );
       return;
     }
@@ -169,23 +169,23 @@ export class AprobacionesPage implements OnInit {
     this.scv = [];
     // NO APROBADOS
     const nombreApp = this.gtpService.services.filter(
-      ({ acceptednewName }) => acceptednewName === false
+      ({ acceptednewName }) => acceptednewName === false,
     ).length;
     const CodDeuApp = this.gtpService.services.filter(
-      ({ acceptednewNameCode }) => acceptednewNameCode === false
+      ({ acceptednewNameCode }) => acceptednewNameCode === false,
     ).length;
 
     // eslint-disable-next-line max-len
     const ListCantidadNombre = this.gtpService.services.filter(
       ({ acceptednewName, newNameGTPStatus }) =>
         (newNameGTPStatus === 0 || newNameGTPStatus === 2) &&
-        acceptednewName === null
+        acceptednewName === null,
     ).length;
     // eslint-disable-next-line max-len
     const ListCantidadCodigoDeudor = this.gtpService.services.filter(
       ({ acceptednewNameCode, newNameCodeGTPStatus }) =>
         (newNameCodeGTPStatus === 0 || newNameCodeGTPStatus === 2) &&
-        acceptednewNameCode === null
+        acceptednewNameCode === null,
     ).length;
 
     let Empcant = 0;
@@ -220,7 +220,7 @@ export class AprobacionesPage implements OnInit {
           newNameGTPStatus === 0 ||
           newNameCodeGTPStatus === 2 ||
           newNameCodeGTPStatus === 0 ||
-          res !== ''
+          res !== '',
       )
       .map(({ acceptednewName, acceptednewNameCode, id, res }) => ({
         ServiceId: id,
@@ -236,13 +236,13 @@ export class AprobacionesPage implements OnInit {
     const { isNewEnterprise, inReview, name, newName } = this.Enterprise;
 
     const servicesInReview = this.gtpService.services.some(
-      (service) => service.inReview
+      (service) => service.inReview,
     );
 
     if (observations !== 0) {
       this.mensaje(
         'Aprobación',
-        `Aun faltan aprobar ${observations} observaciones`
+        `Aun faltan aprobar ${observations} observaciones`,
       );
       return;
     }
