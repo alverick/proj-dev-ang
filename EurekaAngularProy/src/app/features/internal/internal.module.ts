@@ -2,6 +2,7 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgScrollReached } from 'ngx-scrollbar/reached-event';
 
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { LoadBarComponent } from '../../shared/components/load-bar/load-bar.component';
@@ -9,6 +10,7 @@ import { LoadFileComponent } from '../../shared/components/load-file/load-file.c
 import { AuthGuard } from '../../shared/guards/auth.guard';
 import { GtpOutputGuard } from '../../shared/guards/gtp-output.guard';
 import { AfiliacionService } from '../../shared/services/afiliacion.service';
+import { DynamicDialogService } from '../../shared/services/dynamic-dialog.service';
 import { ExcelService } from '../../shared/services/excel.service';
 import { HomeService } from '../../shared/services/home.service';
 import { LoadBarService } from '../../shared/services/load-bar.service';
@@ -63,6 +65,7 @@ import { SERVICES } from './services';
     LetDirective,
     NgScrollbarModule,
     NgOptimizedImage,
+    NgScrollReached,
   ],
   providers: [
     ...SERVICES,
@@ -75,6 +78,7 @@ import { SERVICES } from './services';
     GtpOutputGuard,
     TransactionService,
     LoadBarService,
+    DynamicDialogService,
   ],
 })
 export class InternalModule {}
