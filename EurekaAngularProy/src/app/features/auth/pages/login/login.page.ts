@@ -70,7 +70,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.snackBar.dismiss();
-    const rucStr = this.cookieService.check('ruc1')
+    const rucStr = this.cookieService.check('ruc')
       ? this.cookieService.get('ruc')
       : userData[0];
 
