@@ -1,11 +1,11 @@
 import {
-  type OnChanges,
-  type OnInit,
-  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
+  type OnChanges,
+  type OnInit,
   Output,
+  type SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -122,7 +122,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     private logger: NGXLogger,
     private selectAllTable: SelectAllTableService,
     private tracking: TrackingService,
-    private store: Store
+    private store: Store,
   ) {}
 
   ngOnInit() {
@@ -236,7 +236,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       this.selectedRows = [...this.selectedRows, rowData];
     } else {
       this.selectedRows = this.selectedRows.filter(
-        (item) => item.id !== rowData.id
+        (item) => item.id !== rowData.id,
       );
     }
     this.selectedRowsChange.emit(this.selectedRows);
@@ -355,7 +355,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
 
   getLimit(currencySel: string) {
     return this.maxAmountLimits.find(
-      (currency) => currency.symbol === currencySel
+      (currency) => currency.symbol === currencySel,
     )?.limitMax;
   }
 
@@ -369,7 +369,7 @@ export class TableMovementsComponent implements OnInit, OnChanges {
     const fields = this.cols.filter(
       (field) =>
         isNotNil(field.checkEditableField) &&
-        field.serviceType.includes(data.serviceType)
+        field.serviceType.includes(data.serviceType),
     );
 
     for (const field of fields) {

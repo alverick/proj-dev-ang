@@ -1,8 +1,8 @@
 import {
   type ComponentRef,
-  type ViewContainerRef,
   EventEmitter,
   Injectable,
+  type ViewContainerRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -10,7 +10,7 @@ import { repeat, takeUntil } from 'rxjs/operators';
 
 import { internalFullRoutingNames } from '../../app-routing.collection';
 import { LoadFileComponent } from '../components/load-file/load-file.component';
-import { type ProcessStatus, ExcelService } from './excel.service';
+import { ExcelService, type ProcessStatus } from './excel.service';
 
 export interface ModalCloseData {
   status: string;
@@ -21,7 +21,10 @@ export interface ModalCloseData {
 
 @Injectable()
 export class LoadFileService {
-  constructor(private excelService: ExcelService, private router: Router) {}
+  constructor(
+    private excelService: ExcelService,
+    private router: Router,
+  ) {}
 
   private componentRef: ComponentRef<LoadFileComponent> = null;
   private cancel = true;
@@ -120,7 +123,7 @@ export class LoadFileService {
               this.componentRef.instance.progress.status = `Grabando (${phase}/2)`;
             }
           }
-        }
+        },
       );
     this.componentRef.instance.progress.mode = 'determinate';
     this.componentRef.instance.progress.value = 0;

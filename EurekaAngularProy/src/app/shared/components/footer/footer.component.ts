@@ -13,7 +13,7 @@ import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
 export class FooterComponent {
   constructor(
     public dialogService: DynamicDialogService,
-    private tracking: TrackingService
+    private readonly tracking: TrackingService,
   ) {}
 
   showModalTerms() {

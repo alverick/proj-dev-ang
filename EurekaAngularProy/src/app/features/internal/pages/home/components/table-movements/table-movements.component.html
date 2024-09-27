@@ -132,7 +132,7 @@
                   ></p-calendar>
                 </ng-template>
                 <ng-template pTemplate="output">{{
-                  rowData[col.field] | date : 'dd/MM/yy' | notEmpty : '-'
+                  rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
                 }}</ng-template>
               </p-cellEditor>
             </ng-container>
@@ -152,20 +152,20 @@
                     ></p-calendar>
                   </ng-template>
                   <ng-template pTemplate="output">{{
-                    rowData[col.field] | date : 'dd/MM/yy' | notEmpty : '-'
+                    rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
                   }}</ng-template>
                 </p-cellEditor>
               </ng-container>
               <ng-container
                 *ngIf="!(col.editable && rowData[col.checkEditableField])"
                 >{{
-                  rowData[col.field] | date : 'dd/MM/yy' | notEmpty : '-'
+                  rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
                 }}</ng-container
               >
             </ng-container>
             <ng-container *ngSwitchCase="'totalAmount'">
               <ng-container *ngIf="rowData[col.field] > 0">{{
-                rowData[col.field] | currency : rowData.currency
+                rowData[col.field] | currency: rowData.currency
               }}</ng-container>
               <ng-container *ngIf="rowData[col.field] <= 0">-</ng-container>
               <ng-container
@@ -206,8 +206,8 @@
                         Monto máximo
                         {{
                           rowData.currency
-                            | getLimitCurrency : maxAmountLimits
-                            | currency : rowData.currency
+                            | getLimitCurrency: maxAmountLimits
+                            | currency: rowData.currency
                         }}
                       </div>
                       <div *ngIf="amount.invalid && amount.errors?.required">
@@ -217,19 +217,19 @@
                   </ng-template>
                   <ng-template pTemplate="output">
                     <div *ngIf="rowData.amount > 0" class="tw-text-xxs">
-                      Cuota: {{ rowData.amount | currency : rowData.currency }}
+                      Cuota: {{ rowData.amount | currency: rowData.currency }}
                     </div>
                   </ng-template>
                 </p-cellEditor>
               </ng-container>
               <div *ngIf="rowData.interestAmount > 0" class="tw-text-xxs">
                 Mora:
-                {{ rowData.interestAmount | currency : rowData.currency }}
+                {{ rowData.interestAmount | currency: rowData.currency }}
               </div>
             </ng-container>
             <ng-container *ngSwitchCase="'totalAmountPayed'">
               <ng-container *ngIf="rowData[col.field] > 0">{{
-                rowData[col.field] | currency : rowData.currency
+                rowData[col.field] | currency: rowData.currency
               }}</ng-container>
               <ng-container *ngIf="rowData[col.field] <= 0">-</ng-container>
               <button
@@ -280,7 +280,7 @@
               </div>
             </ng-container>
             <ng-container *ngSwitchDefault>{{
-              rowData[col.field] | notEmpty : '-'
+              rowData[col.field] | notEmpty: '-'
             }}</ng-container>
           </ng-container>
         </td>
@@ -300,24 +300,20 @@
               <tr>
                 <td>F. emisión:</td>
                 <td>
-                  {{
-                    rowData.emissionDate | date : 'dd/MM/yy' | notEmpty : '-'
-                  }}
+                  {{ rowData.emissionDate | date: 'dd/MM/yy' | notEmpty: '-' }}
                 </td>
               </tr>
               <tr>
                 <td>F. vcto.:</td>
                 <td>
-                  {{ rowData.dueDate | date : 'dd/MM/yy' | notEmpty : '-' }}
+                  {{ rowData.dueDate | date: 'dd/MM/yy' | notEmpty: '-' }}
                 </td>
               </tr>
               <tr>
                 <td>Cuota:</td>
                 <td>
                   {{
-                    rowData.amount
-                      | currency : rowData.currency
-                      | notEmpty : '-'
+                    rowData.amount | currency: rowData.currency | notEmpty: '-'
                   }}
                 </td>
               </tr>
@@ -325,9 +321,7 @@
                 <td>Mora:</td>
                 <td>
                   {{
-                    rowData.amount
-                      | currency : rowData.currency
-                      | notEmpty : '-'
+                    rowData.amount | currency: rowData.currency | notEmpty: '-'
                   }}
                 </td>
               </tr>
@@ -336,8 +330,8 @@
                 <td>
                   {{
                     rowData.totalAmount
-                      | currency : rowData.currency
-                      | notEmpty : '-'
+                      | currency: rowData.currency
+                      | notEmpty: '-'
                   }}
                 </td>
               </tr>
@@ -346,8 +340,8 @@
                 <td>
                   {{
                     rowData.totalAmountPayed
-                      | currency : rowData.currency
-                      | notEmpty : '-'
+                      | currency: rowData.currency
+                      | notEmpty: '-'
                   }}
                 </td>
               </tr>
@@ -493,8 +487,8 @@
             Monto máximo
             {{
               editRowData.currency
-                | getLimitCurrency : maxAmountLimits
-                | currency : editRowData.currency
+                | getLimitCurrency: maxAmountLimits
+                | currency: editRowData.currency
             }}
           </div>
           <div *ngIf="amountForm.invalid && amountForm.errors?.required">

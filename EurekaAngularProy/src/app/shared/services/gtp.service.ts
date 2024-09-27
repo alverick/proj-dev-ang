@@ -1,4 +1,4 @@
-import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
 import { isNilOrEmpty } from 'ramda-adjunct';
@@ -85,7 +85,7 @@ export class GtpService {
         map((r) => {
           this.EnterprisesItems = r;
           return r;
-        })
+        }),
       )
       .pipe(
         map((r) => {
@@ -104,7 +104,7 @@ export class GtpService {
             this.pageMessage = `Mostrando ${beg} - ${end} de ${r.totalCompanies} elementos`;
           }
           return r;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -116,7 +116,7 @@ export class GtpService {
       .pipe(
         map((r) => {
           return r;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -205,7 +205,7 @@ export class GtpService {
             porcentaje: percentage,
             pagoPartes: partialPayment,
           });
-        }
+        },
       );
       this.services = servicios;
     });
@@ -217,7 +217,7 @@ export class GtpService {
       .pipe(
         map((r) => {
           return r;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -240,12 +240,12 @@ export class GtpService {
     return this.http
       .post<any>(
         `${environment.END_POINT}/company/GTP/client/${clientId}/pag`,
-        {}
+        {},
       )
       .pipe(
         map((r) => {
           return r;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -264,7 +264,7 @@ export class GtpService {
         { inicio: strDateFrom, final: strDateTo },
         {
           responseType: 'blob',
-        }
+        },
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -273,7 +273,7 @@ export class GtpService {
     const url = `${environment.END_POINT}/company/GTP/emailgtp`;
     return this.http.get<{ emails: CorreoGtpModel[] }>(url).pipe(
       map((r) => r.emails),
-      catchError((err: HttpErrorResponse) => throwError(() => err))
+      catchError((err: HttpErrorResponse) => throwError(() => err)),
     );
   }
 

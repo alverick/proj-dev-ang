@@ -2,8 +2,8 @@ import { createFeature, createReducer, on } from '@ngrx/store';
 import { isNotEmpty } from 'ramda';
 
 import {
-  type CurrencyWithLimit,
   currencies,
+  type CurrencyWithLimit,
 } from '../../shared/constants/currencies';
 import { type IDataEnterpriseModel } from '../../shared/models/data-enterprise.model';
 import { CompanyActions } from '../actions/company.actions';
@@ -27,12 +27,12 @@ export const reducerCompany = createReducer(
   on(CompanyActions.loadCompany, (state): State => state),
   on(
     CompanyActions.loadCompanySuccess,
-    (state, action): State => ({ ...state, details: action.data })
+    (state, action): State => ({ ...state, details: action.data }),
   ),
   on(CompanyActions.setCurrencyLimits, (state): State => {
     const currencyLimits = state.details.amountLimits.map((item) => {
       const currencyElm = currencies.find(
-        (currency) => currency.code === item.currency
+        (currency) => currency.code === item.currency,
       );
       return { ...currencyElm, limitMax: item.amountMax };
     });
@@ -42,7 +42,7 @@ export const reducerCompany = createReducer(
       useAmountLimits: isNotEmpty(currencyLimits),
     };
   }),
-  on(CompanyActions.loadCompanyFailure, (state, action): State => state)
+  on(CompanyActions.loadCompanyFailure, (state, action): State => state),
 );
 
 export const companyFeature = createFeature({

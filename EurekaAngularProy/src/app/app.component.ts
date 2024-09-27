@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
     adobeLaunch: AdobeLaunchProviderService,
     newrelic: NewRelicProviderService,
     private router: Router,
-    private store: Store
+    private store: Store,
   ) {
     adobeLaunch.startTracking();
     newrelic.startTracking();
@@ -58,33 +58,33 @@ export class AppComponent implements OnInit {
     matIconRegistry.addSvgIcon(
       'eurc_calendar',
       domSanitizer.bypassSecurityTrustResourceUrl(
-        '/assets/images/calendar.svg'
+        '/assets/images/calendar.svg',
       ),
-      { viewBox: '0 0 24 24' }
+      { viewBox: '0 0 24 24' },
     );
     matIconRegistry.addSvgIcon(
       'eurc_trash',
       domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/trash.svg'),
-      { viewBox: '0 0 20 20' }
+      { viewBox: '0 0 20 20' },
     );
     matIconRegistry.addSvgIcon(
       'eurc_download',
       domSanitizer.bypassSecurityTrustResourceUrl(
-        '/assets/images/download.svg'
+        '/assets/images/download.svg',
       ),
-      { viewBox: '0 0 20 20' }
+      { viewBox: '0 0 20 20' },
     );
     matIconRegistry.addSvgIcon(
       'eurc_minimize',
       domSanitizer.bypassSecurityTrustResourceUrl(
-        '/assets/images/minimize.svg'
+        '/assets/images/minimize.svg',
       ),
-      { viewBox: '0 0 24 24' }
+      { viewBox: '0 0 24 24' },
     );
     matIconRegistry.addSvgIcon(
       'eurc_new_tab',
       domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
-      { viewBox: '0 0 24 24' }
+      { viewBox: '0 0 24 24' },
     );
   }
 
