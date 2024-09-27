@@ -1,89 +1,142 @@
 import { CurrencyPipe } from '@angular/common';
-import { type OnInit, Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+  AbstractControl,
+  FormBuilder,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { forEachObjIndexed, isNotEmpty } from 'ramda';
-import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
-import { Subject } from 'rxjs';
+import { FormModel } from 'ngx-mf';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { forEachObjIndexed, isNil } from 'ramda';
+import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { of, Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
+import { ServiceTypes } from '../../../../../shared/constants/services';
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
 import {
   type ActionEventProperties,
-  type Metadata,
   AdobeEvent,
+  type Metadata,
   TrackingService,
 } from '../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
 import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
-const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
+interface Debt {
+  emissionDate: string;
+  dueDate: string;
+  code: string;
+  firstName: string;
+  concept: string;
+  amount: number;
+}
 
 @Component({
   selector: 'cs-debt-form',
   templateUrl: './debt.component.html',
   styleUrls: ['./debt.component.scss'],
-  providers: [
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-    CurrencyPipe,
-  ],
+  providers: [CurrencyPipe, DynamicDialogRef],
 })
 export class DebtComponent implements OnInit {
   useAmountLimits = false;
-
-  constructor(
-    private dialogRef: MatDialogRef<DebtComponent>,
-    private homeService: HomeService,
-    public excelService: ExcelService,
-    private tracking: TrackingService,
-    private store: Store,
-    private currencyPipe: CurrencyPipe
-  ) {}
-
   public grabado = false;
   public minDate = new Date(2000, 0, 1);
-  public maxDate = new Date(2050, 0, 1);
+  public maxDate = new Date(2049, 11, 31);
   public isPartial = false;
-  public nuevaDeuda: any = {
-    errores: {},
-  };
-  limitAmountMax = 0;
+  limitAmountMax: number = null;
   debtorCodeChanged = new Subject<boolean>();
   loaderDebtorCode = false;
+  debtorExistent = false;
   notAlphanumericRegex = /^[0-9a-zA-Z]+$/;
+  alphaNumSpaceRegex = /^[ 0-9a-zA-Z]+$/;
+  validNameRegex = /^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$/;
+  amountWithSymbolLabel = '';
+  debtForm: FormModel<Debt> = this.fb.group({
+    emissionDate: ['', Validators.required, this.limitYearValidator()],
+    dueDate: ['', Validators.required],
+    code: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.pattern('[\\w]*'),
+      ],
+    ],
+    firstName: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.pattern(this.validNameRegex),
+      ],
+    ],
+    concept: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.pattern(this.alphaNumSpaceRegex),
+      ],
+    ],
+    amount: [null as number, Validators.required],
+  });
+
+  formErrors: Record<string, Record<string, string>> = {
+    emissionDate: {
+      required: 'Debe ingresar un valor',
+      notValid: 'Fecha inválida',
+      limitYear: 'Fecha inválida',
+    },
+    dueDate: {
+      required: 'Debe ingresar un valor',
+      notValid: 'Fecha inválida',
+      limitYear: 'Fecha inválida',
+    },
+    code: {
+      required: 'Debe ingresar un valor',
+      minlength: 'Debe tener 1 carácter como mínimo',
+      pattern: 'No cumple con el formato',
+    },
+    firstName: {
+      required: 'Debe ingresar un valor',
+      pattern: 'No cumple con el formato',
+      minlength: 'Debe tener 3 carácteres como mínimo',
+    },
+    concept: {
+      required: 'Debe ingresar un valor',
+    },
+    amount: { required: 'Debe ingresar un valor' },
+  };
+
+  constructor(
+    public dialogRef: DynamicDialogRef<DebtComponent>,
+    private readonly homeService: HomeService,
+    public excelService: ExcelService,
+    private readonly tracking: TrackingService,
+    private readonly store: Store,
+    private readonly currencyPipe: CurrencyPipe,
+    public fb: FormBuilder,
+  ) {}
 
   ngOnInit(): void {
-    this.nuevaDeuda.service = this.excelService.service.name;
-    this.isPartial = this.excelService.service.dataType === 'P';
+    this.setPartialMode();
     this.store
       .select(companyFeature.selectCurrencyLimits)
       .pipe(filter((data) => isNotNilOrEmpty(data)))
       .subscribe((limits) => {
+        console.log(limits, this.excelService.service.currencySymbol);
         this.limitAmountMax = limits.find(
-          (limit) => limit.symbol === this.excelService.service.currencySymbol
+          (limit) => limit.symbol === this.excelService.service.currencySymbol,
         ).limitMax;
+        const amountWithSymbol = this.currencyPipe.transform(
+          this.limitAmountMax,
+          this.excelService.service.currencySymbol,
+        );
+        this.amountWithSymbolLabel = 'Monto máximo ' + amountWithSymbol;
       });
     this.store
       .select(companyFeature.selectUseAmountLimits)
@@ -91,34 +144,28 @@ export class DebtComponent implements OnInit {
         this.useAmountLimits = useLimits;
       });
 
-    this.debtorCodeChanged.pipe(debounceTime(600)).subscribe(() => {
-      this.buscarNewCode();
-    });
+    this.debtForm.controls.code.valueChanges
+      .pipe(debounceTime(600))
+      .subscribe(() => {
+        this.debtorExistent = false;
+        this.debtForm.controls.firstName.reset();
+        this.debtForm.controls.firstName.enable();
+        this.buscarNewCode();
+      });
   }
 
-  MontoBlur(e: any) {
-    const initialValue = parseFloat(e.amount);
-    if (!isNaN(initialValue)) {
-      e.amount = initialValue.toFixed(2);
+  setPartialMode() {
+    this.isPartial =
+      this.excelService.service.dataType === ServiceTypes.partial;
+    if (this.isPartial) {
+      this.debtForm.controls.dueDate.disable();
+      this.debtForm.controls.concept.disable();
+      this.debtForm.controls.amount.disable();
     }
   }
 
   buscarNewCode() {
-    this.nuevaDeuda.errores.code = '';
-
-    if (
-      this.nuevaDeuda.service === null ||
-      this.nuevaDeuda.service === undefined
-    ) {
-      this.nuevaDeuda.errores.service = 'Debe escoger un servicio';
-      delete this.nuevaDeuda.code;
-      return;
-    }
-
-    if (
-      isNilOrEmpty(this.nuevaDeuda.code) ||
-      !this.notAlphanumericRegex.test(this.nuevaDeuda.code)
-    ) {
+    if (!this.debtForm.controls.code.valid) {
       return;
     }
 
@@ -126,8 +173,18 @@ export class DebtComponent implements OnInit {
 
     this.loaderDebtorCode = true;
 
+    setTimeout(() => {
+      this.loaderDebtorCode = false;
+      this.debtForm.controls.firstName.setValue('Nombre guardado');
+      this.debtForm.controls.firstName.disable();
+      this.debtorExistent = true;
+    }, 8000);
+
     this.homeService
-      .getDebtorCode(this.nuevaDeuda.service, this.nuevaDeuda.code)
+      .getDebtorCode(
+        this.excelService.service.name,
+        this.debtForm.controls.code.value,
+      )
       .subscribe((d) => {
         const endTime = new Date();
         const delay = 900 - (endTime.getTime() - initTime.getTime());
@@ -135,62 +192,41 @@ export class DebtComponent implements OnInit {
           this.loaderDebtorCode = false;
         }, delay);
         if (d.id) {
-          this.nuevaDeuda.firstName = d.firstName;
-          delete this.nuevaDeuda.errores.firstName;
+          this.debtForm.controls.firstName.setValue(d.firstName);
         }
       });
   }
 
   grabarNuevo() {
-    console.log(this.nuevaDeuda.errores);
-    this.nuevaDeuda.errores = {};
-    if (!this.nuevaDeuda.service) {
-      this.nuevaDeuda.errores.service = 'Debe escoger un servicio';
-    }
-
-    const emidate = new Date(this.nuevaDeuda.emissionDate).getFullYear();
-    if (!this.nuevaDeuda.emissionDate || emidate < 2000 || emidate > 2050) {
-      this.nuevaDeuda.errores.emissionDate = 'Fecha Inválida';
-    }
-
-    if (!this.isPartial) {
-      this.validateCompleteData();
-    }
-
-    this.validateCode();
-
-    if (this.nuevaDeuda.firstName) {
-      const re = /^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$/;
-      if (this.nuevaDeuda.firstName.length < 3) {
-        this.nuevaDeuda.errores.firstName =
-          'Debe tener 3 carácteres como mínimo';
-      } else if (!re.test(this.nuevaDeuda.firstName)) {
-        this.nuevaDeuda.errores.firstName = 'No cumple con el formato';
-      }
-    } else {
-      this.nuevaDeuda.errores.firstName = 'Debe ingresar un valor';
-    }
-
-    if (isNotEmpty(this.nuevaDeuda.errores)) {
+    console.log(
+      this.debtForm,
+      this.debtForm.valid,
+      typeof this.debtForm.controls.emissionDate,
+    );
+    if (!this.debtForm.valid) {
       return;
     }
 
+    const { emissionDate, code, firstName, dueDate, concept, amount } =
+      this.debtForm.value;
+
     const debt = this.isPartial
       ? {
-          emissionDate: this.nuevaDeuda.emissionDate,
-          code: this.nuevaDeuda.code,
-          firstName: this.nuevaDeuda.firstName,
+          emissionDate,
+          code,
+          firstName,
         }
       : {
-          emissionDate: this.nuevaDeuda.emissionDate,
-          dueDate: this.nuevaDeuda.dueDate,
-          code: this.nuevaDeuda.code,
-          firstName: this.nuevaDeuda.firstName,
-          concept: this.nuevaDeuda.concept,
-          amount: this.nuevaDeuda.amount,
+          emissionDate,
+          dueDate,
+          code,
+          firstName,
+          concept,
+          amount,
         };
+
     this.homeService
-      .postNewDebt(this.nuevaDeuda.service, debt)
+      .postNewDebt(this.excelService.service.name, debt)
       .subscribe((r) => {
         const metadata: Metadata[] = [];
         forEachObjIndexed((value, key) => {
@@ -237,10 +273,7 @@ export class DebtComponent implements OnInit {
                 location: 'Modal agregar cobro',
               });
               if (result.value) {
-                this.nuevaDeuda = {
-                  service: this.excelService.service.name,
-                  errores: {},
-                };
+                this.debtForm.reset();
               } else {
                 this.dialogRef.close({ grabado: this.grabado });
               }
@@ -258,55 +291,6 @@ export class DebtComponent implements OnInit {
       });
   }
 
-  private validateCode() {
-    if (this.nuevaDeuda.code) {
-      if (this.nuevaDeuda.code.length < 1) {
-        this.nuevaDeuda.errores.code = 'Debe tener 1 carácter como mínimo';
-      } else if (!this.notAlphanumericRegex.test(this.nuevaDeuda.code)) {
-        this.nuevaDeuda.errores.code = 'No cumple con el formato';
-      }
-    } else if (!this.nuevaDeuda.code) {
-      this.nuevaDeuda.errores.code = 'Debe ingresar un valor';
-    }
-  }
-
-  private validateCompleteData() {
-    const dueyear = new Date(this.nuevaDeuda.dueDate).getFullYear();
-    if (!this.nuevaDeuda.dueDate || dueyear < 2000 || dueyear > 2050) {
-      this.nuevaDeuda.errores.dueDate = 'Fecha Inválida';
-    } else if (
-      this.nuevaDeuda.emissionDate &&
-      this.nuevaDeuda.dueDate < this.nuevaDeuda.emissionDate
-    ) {
-      this.nuevaDeuda.errores.dueDate =
-        'No debe ser menor a la fecha de emisión';
-    }
-
-    if (this.nuevaDeuda.concept) {
-      const re = /^[ 0-9a-zA-Z]+$/;
-      if (this.nuevaDeuda.concept.length < 2) {
-        this.nuevaDeuda.errores.concept = 'Debe tener 2 carácteres como mínimo';
-      } else if (!re.test(this.nuevaDeuda.concept)) {
-        this.nuevaDeuda.errores.concept = 'No cumple con el formato';
-      }
-    } else if (!this.nuevaDeuda.concept) {
-      this.nuevaDeuda.errores.concept = 'Debe ingresar un valor';
-    }
-
-    const amount = parseFloat(this.nuevaDeuda.amount);
-    if (!amount) {
-      this.nuevaDeuda.errores.amount = 'Debe ingresar un valor';
-    } else if (amount < 0) {
-      this.nuevaDeuda.errores.amount = 'Ingrese un monto válido';
-    } else if (amount > this.limitAmountMax && this.useAmountLimits) {
-      const amountWithSymbol = this.currencyPipe.transform(
-        this.limitAmountMax,
-        this.excelService.service.currencySymbol
-      );
-      this.nuevaDeuda.errores.amount = `Monto máximo ${amountWithSymbol}`;
-    }
-  }
-
   cerrarDialog() {
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Home movimientos',
@@ -317,5 +301,15 @@ export class DebtComponent implements OnInit {
       location: 'Modal agregar cobro',
     });
     this.dialogRef.close({ grabado: this.grabado });
+  }
+
+  limitYearValidator(minYear = 2000, maxYear = 2050) {
+    return (control: AbstractControl<Date>): ValidationErrors | null => {
+      const limitYear =
+        isNil(control.value) ||
+        control.value.getFullYear() < minYear ||
+        control.value.getFullYear() > maxYear;
+      return limitYear ? of({ limitYear: { value: control.value } }) : of(null);
+    };
   }
 }
