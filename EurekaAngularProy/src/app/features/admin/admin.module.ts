@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ValdemortModule } from 'ngx-valdemort';
 
@@ -38,6 +38,7 @@ import { RESOLVERS } from './resolvers';
     AdminRoutingModule,
     SharedModule,
     ValdemortModule,
+    NgOptimizedImage,
   ],
   providers: [
     ...RESOLVERS,

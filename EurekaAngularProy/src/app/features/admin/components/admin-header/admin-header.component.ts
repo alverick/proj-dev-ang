@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import type { MenuItem } from 'primeng/api';
 
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
@@ -12,17 +13,36 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
   styleUrls: ['./admin-header.component.scss'],
 })
 export class AdminHeaderComponent {
-  linkSetupEmail = adminFullRoutingNames.SETUP_EMAIL;
+  items: MenuItem[] = [
+    {
+      label: 'Configurar correo',
+      styleClass: 'tw-text-center',
+      command: () => {
+        this.gotoSetupEmail();
+      },
+    },
+    {
+      label: 'Cerrar sesión',
+      styleClass: 'tw-text-center',
+      command: () => {
+        this.logout();
+      },
+    },
+  ];
   constructor(
-    private loginService: LoginService,
-    private excelser: ExcelService,
-    private router: Router
+    private readonly loginService: LoginService,
+    private readonly excel: ExcelService,
+    private router: Router,
   ) {}
+
+  public gotoSetupEmail() {
+    void this.router.navigate([adminFullRoutingNames.SETUP_EMAIL]);
+  }
 
   public logout(): void {
     this.loginService.logout().subscribe(() => {
       void this.router.navigate([authFullRoutingNames.LOGIN]);
     });
-    this.excelser.statusUpload = false;
+    this.excel.statusUpload = false;
   }
 }
