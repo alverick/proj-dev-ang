@@ -1,15 +1,3 @@
-<mat-dialog-actions align="end">
-  <a style="cursor: pointer; float: right" class="pt-2" (click)="close()">
-    <img
-      height="20"
-      width="20"
-      style="cursor: pointer"
-      alt="Cerrar"
-      src="assets/images/cerrar.svg"
-    />
-  </a>
-</mat-dialog-actions>
-
 <div class="content">
   <div class="titulo">
     Agrega cobros del servicio {{ excelService.service.name }}
@@ -34,7 +22,7 @@
     class="tw-mx-auto tw-block md:tw-w-96 tw-my-6"
     >Monto máximo permitido por cobro
     {{
-      limitAmountMax | currency : excelService.service.currencySymbol
+      limitAmountMax | currency: excelService.service.currencySymbol
     }}</cs-message-alert
   >
   <div

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
 
@@ -17,15 +17,15 @@ export class AgregaCobroComponent {
   useAmountLimits = false;
   constructor(
     public excelService: ExcelService,
-    public dialogRef: MatDialogRef<AgregaCobroComponent>,
-    private store: Store
+    public dialogRef: DynamicDialogRef<AgregaCobroComponent>,
+    private store: Store,
   ) {
     this.store
       .select(companyFeature.selectCurrencyLimits)
       .pipe(filter((data) => isNotNilOrEmpty(data)))
       .subscribe((limits) => {
         this.limitAmountMax = limits.find(
-          (limit) => limit.symbol === this.excelService.service.currencySymbol
+          (limit) => limit.symbol === this.excelService.service.currencySymbol,
         )?.limitMax;
       });
     this.store
