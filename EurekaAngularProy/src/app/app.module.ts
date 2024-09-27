@@ -1,8 +1,8 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ApiMockModule } from '@ng-stack/api-mock';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -62,7 +62,7 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
           strictStateSerializability: true,
           strictActionSerializability: true,
         },
-      }
+      },
     ),
     StoreModule.forFeature(appConfigFeature),
     EffectsModule.forRoot([]),
@@ -72,7 +72,6 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
       logOnly: environment.production,
       connectInZone: true,
     }),
-    MatSnackBarModule,
   ],
   providers: [
     {
@@ -89,6 +88,7 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
     NewRelicProviderService,
     NotifyService,
     StorageService,
+    provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
 })

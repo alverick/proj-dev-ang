@@ -19,7 +19,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {
   MAT_MOMENT_DATE_FORMATS,
   MatMomentDateModule,
@@ -27,6 +26,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgClickOutsideDirective } from 'ng-click-outside2';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ValdemortModule } from 'ngx-valdemort';
 import { AccordionModule } from 'primeng/accordion';
@@ -39,6 +39,8 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -54,6 +56,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { StepsModule } from 'primeng/steps';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
@@ -97,7 +100,6 @@ const FORM_MODULES = [
   MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
-  MatSnackBarModule,
   NgxPaginationModule,
   ReactiveFormsModule,
 ];
@@ -111,6 +113,8 @@ const PRIMENG_MODULES = [
   DialogModule,
   DropdownModule,
   DynamicDialogModule,
+  IconFieldModule,
+  InputIconModule,
   InputMaskModule,
   InputNumberModule,
   InputTextModule,
@@ -128,6 +132,7 @@ const PRIMENG_MODULES = [
   SplitButtonModule,
   StepsModule,
   TableModule,
+  TagModule,
   ToastModule,
   TooltipModule,
 ];
@@ -142,6 +147,7 @@ const UI_MODULES = [FontAwesomeModule, OverlayModule];
     ...PRIMENG_MODULES,
     ValdemortModule,
     NgOptimizedImage,
+    NgClickOutsideDirective,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
@@ -179,6 +185,7 @@ const UI_MODULES = [FontAwesomeModule, OverlayModule];
     ControlRulesPoliciesComponent,
   ],
   exports: [
+    NgClickOutsideDirective,
     OnlyNumbersFormDirective,
     OnlyNumbersDirective,
     BlockCopyPasteDirective,

@@ -91,5 +91,5 @@ module.exports = {
       'green-1': 'var(--primary-green-1)',
     }),
   },
-  plugins: [],
+  plugins: [require('tailwindcss-animated')],
 };
