@@ -1,33 +1,8 @@
-.mat-mdc-form-field {
-  width: 100%;
-  @apply sm:tw-w-[calc(50%_-_10px)] lg:tw-w-[120px] xl:tw-w-auto xl:tw-min-w-[120px];
-
-  &:nth-child(even) {
-    @apply lg:tw-ml-0;
-  }
-
-  &.name {
-    @apply lg:tw-w-[230px] xl:tw-w-auto xl:tw-min-w-[230px];
-  }
-}
-
 .form {
-  @apply tw-inline-flex tw-items-center tw-flex-col tw-gap-[5px_20px] sm:tw-flex-wrap sm:tw-flex-row xl:tw-flex xl:tw-flex-nowrap lg:tw-gap-[5px_10px];
+  @apply tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-flex tw-flex-wrap tw-items-start tw-gap-[5px_20px] sm:tw-flex-wrap lg:tw-gap-[5px_10px];
 
   button {
-    @apply tw-h-10 tw-mx-5 lg:tw-mx-[30px];
-  }
-
-  &.gtp-mode {
-    @apply tw-inline-flex tw-flex-row tw-flex-wrap;
-
-    .mat-mdc-form-field {
-      @apply lg:tw-w-auto xl:tw-min-w-0;
-
-      &.name {
-        @apply lg:tw-w-[260px] xl:tw-min-w-[260px] xl:tw-w-auto;
-      }
-    }
+    @apply tw-h-10;
   }
 }
 
@@ -38,28 +13,16 @@
 .btn-reset {
   opacity: 0;
   visibility: hidden;
-  transition: all 0.5s;
-  order: 1;
-  @apply tw-order-1 xl:tw-order-none;
+  transition: all 0.3s;
+  @apply tw-opacity-0 tw-transition-opacity tw-duration-300 tw-invisible;
 
   &.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  span {
-    position: relative;
-    top: -2px;
+    @apply tw-opacity-100 tw-visible;
   }
 }
 
 .label-date {
-  white-space: nowrap;
-  margin-right: auto;
-  @include font-text(14px);
-  padding-bottom: 0.34rem;
-
-  @apply sm:tw-basis-full lg:tw-mr-0 lg:tw-basis-auto;
+  @apply tw-h-10 tw-flex tw-items-center tw-whitespace-nowrap sm:tw-col-span-2 lg:tw-col-auto;
 }
 
 .break-elm {
