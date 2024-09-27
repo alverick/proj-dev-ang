@@ -1,9 +1,9 @@
 import {
   type AfterViewInit,
-  type OnDestroy,
-  type OnInit,
   Component,
   HostListener,
+  type OnDestroy,
+  type OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { ShepherdService } from 'angular-shepherd';
 import { saveAs } from 'file-saver';
 import { type LazyLoadEvent, type MenuItem } from 'primeng/api';
-import { type DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { SplitButton } from 'primeng/splitbutton';
 import {
   all,
@@ -46,15 +46,15 @@ import { ExcelService } from '../../../../shared/services/excel.service';
 import { HomeService } from '../../../../shared/services/home.service';
 import { LoadBarService } from '../../../../shared/services/load-bar.service';
 import {
-  type ModalCloseData,
   LoadFileService,
+  type ModalCloseData,
 } from '../../../../shared/services/load-file.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import {
   type ActionEventProperties,
-  type Metadata,
   AdobeEvent,
+  type Metadata,
 } from '../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
@@ -76,7 +76,6 @@ import { TableMovementsComponent } from './components/table-movements/table-move
   selector: 'cs-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  providers: [DynamicDialogService],
 })
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   ref: DynamicDialogRef;
@@ -153,10 +152,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   private showedCommissions: boolean;
   private readonly onboardingIntro = 'intro';
 
-  protected dialogConfig = {
+  protected dialogConfig: DynamicDialogConfig = {
     width: '899px',
-    backdropClass: 'backdrop-background-opaque',
-    panelClass: 'upload-files-dialog',
+    styleClass: 'upload-files-dialog simple-dialog',
+    maskStyleClass: 'upload-files-dialog',
+    focusOnShow: false,
   };
 
   @HostListener('window:resize', ['$event'])
@@ -168,7 +168,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private storageService: StorageService,
     private homeService: HomeService,
     public transactionService: TransactionService,
-    private excelService: ExcelService,
+    public excelService: ExcelService,
     public dialog: MatDialog,
     private loginService: LoginService,
     private fileLoad: LoadFileService,
@@ -179,7 +179,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     protected tracking: TrackingService,
     private store: Store,
     public dynamicDialogService: DynamicDialogService,
-    public settings: SettingsStorageService
+    public settings: SettingsStorageService,
   ) {
     transactionService.itemsForDelete = [];
     const navigation = this.router.getCurrentNavigation();
@@ -255,7 +255,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   showModalCommissions(auto = true) {
     const showed = this.settings.getSetting(
       SettingOptions.commissions,
-      Sections.movements
+      Sections.movements,
     );
 
     if (this.showedCommissions && auto) return;
@@ -264,7 +264,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
     if (!this.showedCommissions) {
       this.store.dispatch(
-        AppConfigActions.setModalCommissions({ showed: true })
+        AppConfigActions.setModalCommissions({ showed: true }),
       );
     }
 
@@ -288,7 +288,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       if (action === 'hide') {
         this.settings.getSettingAndSave(
           SettingOptions.commissions,
-          Sections.movements
+          Sections.movements,
         );
       }
     });
@@ -327,10 +327,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       } else if (m.status === 'rejected') {
         this.fileLoad.close();
         this.excelService.statusUpload = false;
-        const dialogRef = this.dialog.open(DialogComponent, this.dialogConfig);
         dialogRef.componentInstance.ready = true;
         dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
         dialogRef.componentInstance.rowsRejected = m.rowsRejected;
+        const dialogRef = this.dynamicDialogService.open(
+          DialogComponent,
+          this.dialogConfig,
+        );
       }
     };
   }
@@ -347,7 +350,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       action: () => {
         const position = this.getOnboardingPosition();
         const intro = this.shepherdService.tourObject.getById(
-          this.onboardingIntro
+          this.onboardingIntro,
         );
         this.tracking.trackEvent(AdobeEvent.trackAction, {
           category: 'Home onboarding',
@@ -388,7 +391,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       action: () => {
         const position = this.getOnboardingPosition();
         const intro = this.shepherdService.tourObject.getById(
-          this.onboardingIntro
+          this.onboardingIntro,
         );
         const isFinal =
           position ===
@@ -552,7 +555,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     if (this.shepherdService.isActive) {
       this.shepherdService.complete();
     }
-    this.dialog.closeAll();
+    this.dynamicDialogService.closeAll();
     if (isNotNil(this.ref)) this.ref.destroy();
   }
 
@@ -730,11 +733,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(() => {
         if (this.transactionService.debtItems.data.length > 0) {
           this.selectedAll = this.transactionService.isMarkedAll(
-            this.selectedUniverse
+            this.selectedUniverse,
           );
         }
         this.validateOnboarding(
-          this.transactionService.debtItems.data.length > 0
+          this.transactionService.debtItems.data.length > 0,
         );
         if (cb) {
           cb();
@@ -747,7 +750,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   validateOnboarding(hasRecords: boolean) {
     const saved = this.settings.getSettingAndSave(
       SettingOptions.onBoarding,
-      Sections.movements
+      Sections.movements,
     );
 
     if (!hasRecords && !saved) {
@@ -833,7 +836,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
                 this.tracking.trackEvent(
                   AdobeEvent.trackFormSubmit,
-                  actionStep
+                  actionStep,
                 );
 
                 this.tracking.trackEvent(AdobeEvent.trackView, {
@@ -849,7 +852,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
               .subscribe((statusUpdate) => {
                 this.tracking.trackEvent(
                   AdobeEvent.trackFormSubmit,
-                  actionStep
+                  actionStep,
                 );
 
                 this.tracking.trackEvent(AdobeEvent.trackView, {
@@ -897,7 +900,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.numeroPagina = nro;
     this.consultaDeuda();
     this.selectedAll = this.transactionService.isMarkedAll(
-      this.selectedUniverse
+      this.selectedUniverse,
     );
   }
 
@@ -1000,9 +1003,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.cargaExcel = false;
     this.excelService.service = service;
     if (this.fileLoad.isRunning()) {
-      const dialogRef = this.dialog.open(DialogComponent, this.dialogConfig);
-      dialogRef.afterClosed().subscribe((result: Observable<any>) => {
         dialogRef.componentInstance.ready = false;
+      const dialogRef = this.dynamicDialogService.open(
+        DialogComponent,
+        this.dialogConfig,
+      );
+      dialogRef.onClose.subscribe((result: Observable<any>) => {
         this.fileLoad.verify(this.fileLoadContainer);
         if (result) {
           result.subscribe(() => {
@@ -1027,20 +1033,36 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         location: 'Modal',
       });
 
-      this.dialog
-        .open(AgregaCobroComponent, { width: '899px' })
-        .afterClosed()
-        .subscribe((r) => {
+      this.dynamicDialogService
+        .open(AgregaCobroComponent, {
+          width: '899px',
+          footer: ' ',
+          header: '',
+          styleClass: 'simple-dialog',
+          style: { 'max-height': 'none' },
+          dismissableMask: true,
+          focusOnShow: false,
+          focusTrap: false,
+        })
+        .onClose.subscribe((r) => {
           if (r) {
             if (r.medio === 'web') {
-              const dlg = this.dialog.open(DebtComponent, {
-                width: '330px',
-              });
-              dlg.afterClosed().subscribe((result) => {
-                if (result?.grabado) {
-                  this.validateResetForm();
-                }
-              });
+              this.dynamicDialogService
+                .open(DebtComponent, {
+                  width: '450px',
+                  footer: ' ',
+                  header: '',
+                  styleClass: 'simple-dialog',
+                  style: { 'max-height': 'none' },
+                  dismissableMask: true,
+                  focusOnShow: false,
+                  focusTrap: false,
+                })
+                .onClose.subscribe((result) => {
+                  if (result?.grabado) {
+                    this.validateResetForm();
+                  }
+                });
               this.tracking.trackEvent(AdobeEvent.trackAction, {
                 category: 'Home movimientos',
                 action: 'Click',
@@ -1056,11 +1078,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 location: 'Modal',
               });
             } else {
-              const dialogRef = this.dialog.open(
+              const dialogRef = this.dynamicDialogService.open(
                 DialogComponent,
-                this.dialogConfig
+                this.dialogConfig,
               );
-              dialogRef.afterClosed().subscribe((result: Observable<any>) => {
                 dialogRef.componentInstance.ready = false;
                 this.fileLoad.verify(this.fileLoadContainer);
                 if (result) {
@@ -1068,6 +1089,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                     this.validateResetForm();
                   });
                 }
+              dialogRef.onClose.subscribe((result: Observable<any>) => {
               });
               this.tracking.trackEvent(AdobeEvent.trackAction, {
                 category: 'Home movimientos',
@@ -1117,7 +1139,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             this.mensaje(
               'error',
               'Descarga',
-              'No se pudo descargar el reporte'
+              'No se pudo descargar el reporte',
             );
           },
         });
@@ -1125,7 +1147,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.mensaje(
           'warning',
           'Descarga',
-          'No tiene registros para descargar'
+          'No tiene registros para descargar',
         );
       }
     }
@@ -1146,9 +1168,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       detail: 'Información de pago',
       location: 'Modal',
     });
-    const dialogRef = this.dialog.open(PaymentDetailComponent, {
+    const dialogRef = this.dynamicDialogService.open(PaymentDetailComponent, {
       width: '810px',
-      disableClose: true,
+      modal: true,
+      closeOnEscape: false,
       data: {
         debtId: itm.id,
         status: itm.status,
@@ -1160,7 +1183,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         },
       },
     });
-    dialogRef.afterClosed().subscribe((result: { status: string }) => {
+    dialogRef.onClose.subscribe((result: { status: string }) => {
       console.log('afterClose', result);
       if (isNotNil(prop('status', result))) {
         itm.status = result.status;
