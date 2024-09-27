@@ -8,7 +8,6 @@
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "cs",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
@@ -16,12 +15,12 @@
             "allowedCommonJsDependencies": [
               "dompurify",
               "file-saver",
+              "strip-ansi",
               "moment",
               "sweetalert2",
-              "raf",
-              "core-js",
-              "rgbcolor",
+              "lodash",
               "exceljs",
+              "react-dom",
               "dot-object"
             ],
             "customWebpackConfig": {
@@ -44,9 +43,6 @@
               "src/scss/style.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.js",
-              "node_modules/popper.js/dist/umd/popper.js",
-              "node_modules/bootstrap/dist/js/bootstrap.js",
               "libs/fingerprint.js"
             ],
             "stylePreprocessorOptions": {
@@ -66,9 +62,7 @@
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": false
+              "extractLicenses": true
             },
             "local": {
               "fileReplacements": [
@@ -85,9 +79,7 @@
                   "with": "src/environments/environment.hmr.ts"
                 }
               ],
-              "buildOptimizer": true,
               "optimization": false,
-              "vendorChunk": true,
               "aot": true,
               "extractLicenses": false,
               "sourceMap": true,
@@ -112,9 +104,7 @@
               "sourceMap": true,
               "namedChunks": false,
               "aot": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": false
+              "extractLicenses": true
             },
             "dev": {
               "fileReplacements": [
@@ -128,9 +118,7 @@
               "sourceMap": true,
               "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": true
+              "extractLicenses": true
             }
           }
         },
@@ -174,7 +162,7 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "EurekaAngularProy:build",
-            "compodoc": true,
+            "compodoc": false,
             "compodocArgs": ["-e", "json", "-d", "."],
             "port": 6006
           }

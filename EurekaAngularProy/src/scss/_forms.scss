@@ -223,7 +223,7 @@
 
   .p-sidebar {
     &.edit-form {
-      @apply lg:tw-p-0 lg:tw-border-none
+      @apply lg:tw-p-0 lg:tw-border-none;
 
       .p-sidebar-close {
         position: absolute;

@@ -1,17 +1,11 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true,
         "ecmaVersion": "latest"
       },
@@ -21,7 +15,8 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "plugin:@ngrx/recommended-requiring-type-checking"
       ],
       "plugins": [
         "@typescript-eslint",
@@ -49,11 +44,7 @@
         "@angular-eslint/component-class-suffix": [
           "error",
           {
-            "suffixes": [
-              "Component",
-              "Page",
-              "Main"
-            ]
+            "suffixes": ["Component", "Page", "Main"]
           }
         ],
         "@typescript-eslint/array-type": [
@@ -83,21 +74,12 @@
             "ignoreStatic": true
           }
         ],
-        "arrow-parens": [
-          "off",
-          "always"
-        ],
-        "brace-style": [
-          "error",
-          "1tbs"
-        ],
+        "arrow-parens": ["off", "always"],
+        "brace-style": ["error", "1tbs"],
         "id-blacklist": "off",
         "id-match": "off",
         "linebreak-style": "off",
-        "max-classes-per-file": [
-          "error",
-          1
-        ],
+        "max-classes-per-file": ["error", 1],
         "new-parens": "off",
         "newline-per-chained-call": "off",
         "no-extra-semi": "off",
@@ -115,20 +97,13 @@
         ],
         "react/jsx-wrap-multilines": "off",
         "space-before-function-paren": "off",
-        "space-in-parens": [
-          "off",
-          "never"
-        ],
+        "space-in-parens": ["off", "never"],
         "simple-import-sort/imports": "error"
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {
         "@angular-eslint/template/conditional-complexity": [
           "error",
@@ -147,15 +122,9 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "excludedFiles": [
-        "*inline-template-*.component.html"
-      ],
-      "extends": [
-        "plugin:prettier/recommended"
-      ],
+      "files": ["*.html"],
+      "excludedFiles": ["*inline-template-*.component.html"],
+      "extends": ["plugin:prettier/recommended"],
       "rules": {
         "prettier/prettier": [
           "error",
@@ -164,17 +133,7 @@
           }
         ]
       }
-    },
-    {
-      "files": [
-        "*.ts"
-      ],
-      "extends": [
-        "plugin:@ngrx/recommended-requiring-type-checking"
-      ]
     }
   ],
-  "extends": [
-    "plugin:storybook/recommended"
-  ]
+  "extends": ["plugin:storybook/recommended"]
 }

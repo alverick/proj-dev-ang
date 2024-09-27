@@ -27,7 +27,6 @@ import {
 } from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { DigitOnlyModule } from '@uiowa/digit-only';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ValdemortModule } from 'ngx-valdemort';
 import { AccordionModule } from 'primeng/accordion';
@@ -137,7 +136,6 @@ const UI_MODULES = [FontAwesomeModule, OverlayModule];
 @NgModule({
   imports: [
     CommonModule,
-    DigitOnlyModule,
     RouterModule,
     ...UI_MODULES,
     ...FORM_MODULES,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify';
 import { isNil, pathEq } from 'ramda';
 import { isObj } from 'ramda-adjunct';
 
