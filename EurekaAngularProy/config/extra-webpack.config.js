@@ -17,10 +17,6 @@ module.exports = (config) => {
         options: {
           resources: [
             './src/scss/_configuration.scss',
-            path.resolve(
-              __dirname,
-              '../node_modules/include-media/dist/_include-media.scss'
-            ),
           ],
         },
       },

@@ -1,8 +1,6 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LetDirective, PushPipe } from '@ngrx/component';
-import { DigitOnlyModule } from '@uiowa/digit-only';
-import { RecaptchaModule } from 'ng-recaptcha';
 import { CookieService } from 'ngx-cookie-service';
 import { ValdemortModule } from 'ngx-valdemort';
 
@@ -27,8 +25,6 @@ import { SERVICES } from './services';
     CommonModule,
     HeaderComponent,
     AuthRoutingModule,
-    RecaptchaModule,
-    DigitOnlyModule,
     SharedModule,
     NgOptimizedImage,
     PushPipe,
