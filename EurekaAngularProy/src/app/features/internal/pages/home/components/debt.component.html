@@ -1,139 +1,167 @@
-<div mat-dialog-content class="content">
-  <div class="subtitulo">Agregar cobro del servicio</div>
-  <div class="titulo">{{ excelService.service.name }}</div>
-  <div class="row">
-    <mat-form-field class="inline-ctrl">
-      <mat-label>Fecha de Emisión</mat-label>
-      <input
-        matInput
-        [matDatepicker]="n_edp"
-        (click)="n_edp.open()"
-        class="input-text-dash"
-        csDate
-        [min]="minDate"
-        [max]="maxDate"
-        [(ngModel)]="nuevaDeuda.emissionDate"
-        formC
-        maxlength="10"
-        autocomplete="off"
-        minlength="10"
-        type="text"
-        (ngModelChange)="nuevaDeuda.errores.emissionDate = null"
-      />
-      <mat-datepicker-toggle matSuffix [for]="n_edp"></mat-datepicker-toggle>
-      <mat-datepicker #n_edp></mat-datepicker>
-      <div class="msg-error inline" *ngIf="nuevaDeuda.errores.emissionDate">
-        {{ nuevaDeuda.errores.emissionDate }}
+<div class="content tw-py-0">
+  <form
+    [formGroup]="debtForm"
+    novalidate
+    (submit)="grabarNuevo()"
+    autocomplete="off"
+    class="content"
+  >
+    <input type="hidden" name="hidden" />
+    <div class="tw-text-xs">Agregar cobro del servicio</div>
+    <div class="tw-font-medium tw-text-2xl tw-mb-2">
+      {{ excelService.service.name }}
+    </div>
+    <div class="form-row sm:tw-flex tw-gap-2">
+      <cs-label-control
+        class="tw-w-full"
+        formControlName="emissionDate"
+        [errorMessages]="formErrors.emissionDate"
+      >
+        Fecha de emisión
+        <p-calendar
+          control
+          class="tw-w-full"
+          styleClass="tw-w-full"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          formControlName="emissionDate"
+          appendTo="body"
+          dateFormat="dd/mm/yy"
+        ></p-calendar
+      ></cs-label-control>
+      <cs-label-control
+        *ngIf="!isPartial"
+        class="tw-w-full"
+        formControlName="dueDate"
+        [errorMessages]="formErrors.dueDate"
+      >
+        Fecha de vencimiento
+        <p-calendar
+          control
+          class="tw-w-full"
+          styleClass="tw-w-full"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          appendTo="body"
+          formControlName="dueDate"
+          dateFormat="dd/mm/yy"
+        ></p-calendar
+      ></cs-label-control>
+    </div>
+    <div class="form-row">
+      <cs-label-control
+        class="tw-w-full"
+        formControlName="code"
+        [errorMessages]="formErrors.code"
+      >
+        Código
+        <div class="tw-w-full tw-relative" control>
+          <input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            pKeyFilter="alphanum"
+            [maxLength]="20"
+            formControlName="code"
+          />
+          <span
+            *ngIf="loaderDebtorCode"
+            class="tw-absolute tw-right-4 tw-text-extended-grey-2 tw-text-xs tw-flex tw-items-center tw-gap-2 tw-top-1/2 -tw-translate-y-1/2 tw-pointer-events-none"
+            >Buscando...<i
+              class="pi pi-spin pi-spinner tw-text-primary-green-1"
+            ></i
+          ></span>
+        </div>
+      </cs-label-control>
+    </div>
+    <div class="form-row">
+      <cs-label-control
+        formControlName="firstName"
+        class="tw-w-full"
+        [errorMessages]="formErrors.firstName"
+      >
+        Nombre
+        <input
+          type="text"
+          class="tw-w-full"
+          pInputText
+          minlength="3"
+          [pKeyFilter]="validNameRegex"
+          [maxLength]="80"
+          formControlName="firstName"
+        />
+      </cs-label-control>
+      <cs-message-alert *ngIf="debtorExistent" class="" mode="info"
+        ><div class="tw-text-xs">
+          El código deudor ingresado ya esta registrado, no se puede cambiar el
+          nombre.
+        </div></cs-message-alert
+      >
+    </div>
+    <ng-container *ngIf="!isPartial">
+      <div class="form-row">
+        <cs-label-control
+          formControlName="concept"
+          class="tw-w-full"
+          [errorMessages]="formErrors.concept"
+        >
+          Concepto
+          <input
+            type="text"
+            class="tw-w-full"
+            pInputText
+            [pKeyFilter]="alphaNumSpaceRegex"
+            minlength="2"
+            [maxLength]="16"
+            formControlName="concept"
+          />
+        </cs-label-control>
       </div>
-    </mat-form-field>
-    <mat-form-field class="inline-ctrl" *ngIf="!isPartial">
-      <mat-label>Fecha de Vencimiento</mat-label>
-      <input
-        class="input-text-dash"
-        csDate
-        [min]="minDate"
-        [max]="maxDate"
-        matInput
-        [matDatepicker]="n_ddp"
-        [(ngModel)]="nuevaDeuda.dueDate"
-        maxlength="10"
-        minlength="10"
-        autocomplete="off"
-        (click)="n_ddp.open()"
-        type="text"
-        (ngModelChange)="nuevaDeuda.errores.dueDate = null"
-      />
-      <mat-datepicker-toggle matSuffix [for]="n_ddp"></mat-datepicker-toggle>
-      <mat-datepicker #n_ddp></mat-datepicker>
-      <div class="msg-error inline" *ngIf="nuevaDeuda.errores.dueDate">
-        {{ nuevaDeuda.errores.dueDate }}
+      <div class="form-row">
+        <cs-label-control
+          formControlName="amount"
+          class="tw-w-full"
+          [errorMessages]="formErrors.amount"
+        >
+          Monto
+          <p-inputNumber
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            mode="decimal"
+            [min]="0"
+            [max]="limitAmountMax"
+            [prefix]="excelService.service.currencySymbol"
+            [minFractionDigits]="2"
+            [maxFractionDigits]="2"
+            [placeholder]="amountWithSymbolLabel"
+            formControlName="amount"
+          />
+        </cs-label-control>
       </div>
-    </mat-form-field>
-  </div>
-  <div class="row">
-    <mat-form-field>
-      <mat-label>Código</mat-label>
-      <input
-        class="input-text-dash"
-        matInput
-        [(ngModel)]="nuevaDeuda.code"
-        maxlength="14"
-        autocomplete="off"
-        minlength="1"
-        type="text"
-        (ngModelChange)="debtorCodeChanged.next(true)"
-      />
-      <span
-        *ngIf="loaderDebtorCode"
-        class="tw-text-extended-grey-2 tw-text-xs tw-flex tw-items-center tw-gap-2"
-        matSuffix
-        >Buscando...<i class="pi pi-spin pi-spinner tw-text-primary-green-1"></i
-      ></span>
-      <div class="msg-error" *ngIf="nuevaDeuda.errores.code">
-        {{ nuevaDeuda.errores.code }}
-      </div>
-    </mat-form-field>
-  </div>
-  <div class="row">
-    <mat-form-field>
-      <mat-label>Nombre</mat-label>
-      <input
-        class="input-text-dash"
-        matInput
-        [(ngModel)]="nuevaDeuda.firstName"
-        maxlength="80"
-        autocomplete="off"
-        minlength="3"
-        type="text"
-        (ngModelChange)="nuevaDeuda.errores.firstName = null"
-      />
-      <div class="msg-error" *ngIf="nuevaDeuda.errores.firstName">
-        {{ nuevaDeuda.errores.firstName }}
-      </div>
-    </mat-form-field>
-  </div>
-  <div class="row">
-    <mat-form-field *ngIf="!isPartial">
-      <mat-label>Concepto</mat-label>
-      <input
-        class="input-text-dash"
-        matInput
-        [(ngModel)]="nuevaDeuda.concept"
-        maxlength="16"
-        autocomplete="off"
-        minlength="1"
-        type="text"
-        (ngModelChange)="nuevaDeuda.errores.concept = null"
-      />
-      <div class="msg-error" *ngIf="nuevaDeuda.errores.concept">
-        {{ nuevaDeuda.errores.concept }}
-      </div>
-    </mat-form-field>
-  </div>
-  <div class="row">
-    <mat-form-field *ngIf="!isPartial">
-      <mat-label>Monto</mat-label>
-      <input
-        class="input-text-dash"
-        type="text"
-        matInput
-        csOnlyNumbersForm
-        [(ngModel)]="nuevaDeuda.amount"
-        maxlength="12"
-        minlength="4"
-        autocomplete="off"
-        (blur)="MontoBlur(nuevaDeuda)"
-        (ngModelChange)="nuevaDeuda.errores.amount = null"
-      />
-      <div class="msg-error" *ngIf="nuevaDeuda.errores.amount">
-        {{ nuevaDeuda.errores.amount }}
-      </div>
-    </mat-form-field>
-  </div>
-</div>
-<div class="tw-flex tw-gap-2 tw-justify-center tw-mt-2">
-  <button pButton pRipple (click)="grabarNuevo()">Grabar</button>
-  <button pButton pRipple class="p-button-text" (click)="cerrarDialog()">
-    Cerrar
-  </button>
+    </ng-container>
+    <div class="tw-flex tw-gap-2 tw-justify-center tw-mt-2">
+      <button
+        type="submit"
+        pButton
+        pRipple
+        icon="pi pi-save"
+        label="Grabar"
+        iconPos="right"
+      ></button>
+      <button
+        type="button"
+        pButton
+        pRipple
+        class="p-button-text"
+        icon="pi pi-times-circle"
+        (click)="cerrarDialog()"
+        label="Cerrar"
+        iconPos="right"
+      ></button>
+    </div>
+  </form>
 </div>
