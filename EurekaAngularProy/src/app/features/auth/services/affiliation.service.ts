@@ -46,17 +46,17 @@ import {
 } from '../../../shared/services/services-forms.service';
 import {
   type ActionEventProperties,
-  type AdobeEventType,
   AdobeEvent,
+  type AdobeEventType,
   TrackingService,
 } from '../../../shared/services/tracking.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../auth-routing.names';
 import {
+  AffiliationFormsService,
   type AuthForm,
   type CompanyName,
   type RegisterForm,
-  AffiliationFormsService,
 } from './affiliation-forms.service';
 
 @Injectable()
@@ -83,7 +83,7 @@ export class AffiliationService {
     private serviceForms: ServicesFormsService,
     private logger: NGXLogger,
     private digitalData: DigitalDataService,
-    protected tracking: TrackingService
+    protected tracking: TrackingService,
   ) {
     this.setRegisterForm();
   }
@@ -125,7 +125,7 @@ export class AffiliationService {
     } = this.servicesList[position];
     this.logger.log(
       '-> this.servicesList[position]',
-      this.servicesList[position]
+      this.servicesList[position],
     );
 
     if (inReview) {
@@ -241,7 +241,7 @@ export class AffiliationService {
           });
           this.showErrorServer();
           return throwError(() => err);
-        })
+        }),
       );
   }
 
@@ -273,7 +273,7 @@ export class AffiliationService {
   private processResultCode(
     code: number,
     message: string,
-    action: Partial<ActionEventProperties>
+    action: Partial<ActionEventProperties>,
   ) {
     let typeError = '';
     let titleError = '';
@@ -402,7 +402,7 @@ export class AffiliationService {
           });
           this.showErrorServer();
           return throwError(() => err);
-        })
+        }),
       );
   }
 
@@ -495,7 +495,7 @@ export class AffiliationService {
         {
           key: 'Monto',
           value: amount,
-        }
+        },
       );
     }
 
@@ -553,7 +553,7 @@ export class AffiliationService {
       rawMetadata: {
         newrelic: {
           services: this.servicesList.map(
-            ({ id, newName, newNameCode, ...service }) => service
+            ({ id, newName, newNameCode, ...service }) => service,
           ),
         },
       },
@@ -579,9 +579,9 @@ export class AffiliationService {
                 typeError: typeErrorServer,
               });
               throw new Error(err);
-            })
+            }),
           );
-      })
+      }),
     );
   }
 
@@ -610,7 +610,7 @@ export class AffiliationService {
         }) =>
           inReview &&
           ((newNameGTPStatus === 3 && name === newName) ||
-            (newNameCodeGTPStatus === 3 && debtorCode === newNameCode))
+            (newNameCodeGTPStatus === 3 && debtorCode === newNameCode)),
       )
     ) {
       modalSettings = {
@@ -641,7 +641,7 @@ export class AffiliationService {
             });
           }
           this.updateData = null;
-        })
+        }),
       );
   }
 
@@ -666,7 +666,7 @@ export class AffiliationService {
             NewCodName:
               inReview && newNameCodeGTPStatus === 3 ? debtorCode : null,
           };
-        }
+        },
       ),
     };
   }
@@ -746,7 +746,7 @@ export class AffiliationService {
     return this.enterpriseHeading.getEntryOptions().pipe(
       tap((result) => {
         this.entryOptions = result;
-      })
+      }),
     );
   }
 
@@ -782,7 +782,7 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
           const newWindow = window.open(
             'https://interbank.pe/cuenta-negocios',
             '_blank',
-            'noopener,noreferrer'
+            'noopener,noreferrer',
           );
           if (newWindow) {
             newWindow.opener = null;
@@ -852,13 +852,13 @@ Te llevaremos a abrir una Cuenta Negocios 100% digital.`,
             this.tokenUpdate = token;
             this.setUpdateFormsData(result);
           }
-        })
+        }),
       );
   }
 
   sendAdobeTrack(
     event: AdobeEventType,
-    eventProperties: Partial<ActionEventProperties>
+    eventProperties: Partial<ActionEventProperties>,
   ) {
     this.tracking.trackEvent(event, eventProperties);
   }
