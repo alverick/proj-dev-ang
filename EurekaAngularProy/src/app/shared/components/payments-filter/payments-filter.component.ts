@@ -1,20 +1,20 @@
 import {
-  type OnDestroy,
-  type OnInit,
   Component,
   EventEmitter,
   Input,
+  type OnDestroy,
+  type OnInit,
   Output,
 } from '@angular/core';
 import {
   type AbstractControl,
-  type ValidationErrors,
-  type ValidatorFn,
   UntypedFormControl,
   UntypedFormGroup,
+  type ValidationErrors,
+  type ValidatorFn,
   Validators,
 } from '@angular/forms';
-import type * as moment from 'moment';
+import moment from 'moment';
 import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
 import { combineLatest, Subject } from 'rxjs';
@@ -24,11 +24,10 @@ import { type DateList } from '../../models/dateList';
 import { type StatesGtp } from '../../models/states-gtp';
 import { type WayPay } from '../../models/way-pay';
 
-const errorMessageDates = {
+const errorMessageDates: Record<string, string> = {
   required: 'Ingrese una fecha',
   invalid: 'Fecha Inválida',
   beforeFrom: 'Fecha Inválida',
-  matDatepickerParse: 'Fecha Inválida',
 };
 
 const labelNames = {
@@ -67,6 +66,8 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   errorDateTo = '';
   fieldNameSearch = '';
   fieldState = '';
+  selectDropdownValue = '';
+  errorMessageDates = errorMessageDates;
 
   private readonly dateValidators = [
     this.validDateValidator(),
@@ -75,10 +76,10 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
 
   form = new UntypedFormGroup({
     inputSearch: new UntypedFormControl(''),
-    service: new UntypedFormControl(''),
-    status: new UntypedFormControl(''),
-    statusSolicitud: new UntypedFormControl(''),
-    dateForFilter: new UntypedFormControl(''),
+    service: new UntypedFormControl(null),
+    status: new UntypedFormControl(null),
+    statusSolicitud: new UntypedFormControl(null),
+    dateForFilter: new UntypedFormControl(null),
     dateFrom: new UntypedFormControl({ value: '', disabled: true }),
     dateTo: new UntypedFormControl({ value: '', disabled: true }),
   });
@@ -100,7 +101,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
           status: this.initial.status,
           service,
         },
-        { emitEvent: false }
+        { emitEvent: false },
       );
       const { dateTo, dateFrom } = this.form.controls;
 
@@ -111,6 +112,8 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     this.resetFilters?.subscribe(() => {
       this.cleanAllFilters();
     });
+
+    this.selectDropdownValue = this.gtpMode ? 'code' : 'name';
   }
 
   private setMode() {
@@ -138,7 +141,11 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
 
   private parseDates() {
     const compareDates =
-      (control, controlOrig, isLower = false) =>
+      (
+        control: AbstractControl,
+        controlOrig: AbstractControl,
+        isLower = false,
+      ) =>
       (value: moment.Moment) => {
         if (all(isNotNil, [value, control.value]) && isObj(value)) {
           if (
@@ -159,14 +166,14 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
       .get('dateFrom')
       .valueChanges.pipe(takeUntil(this.$destroy), filter(filterNotValidValues))
       .subscribe(
-        compareDates(this.form.get('dateTo'), this.form.get('dateFrom'))
+        compareDates(this.form.get('dateTo'), this.form.get('dateFrom')),
       );
 
     this.form
       .get('dateTo')
       .valueChanges.pipe(takeUntil(this.$destroy), filter(filterNotValidValues))
       .subscribe(
-        compareDates(this.form.get('dateFrom'), this.form.get('dateTo'), true)
+        compareDates(this.form.get('dateFrom'), this.form.get('dateTo'), true),
       );
 
     combineLatest([
@@ -181,7 +188,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
 
   setMessagesErrorDate() {
     const { dateTo, dateFrom } = this.form.controls;
-    const processErrors = (field, errorMessage) => {
+    const processErrors = (field: AbstractControl, errorMessage: string) => {
       const errorTypes = keys(field.errors);
       this[errorMessage] =
         errorTypes.length > 0 ? errorMessageDates[errorTypes[0]] : '';
@@ -242,7 +249,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
       const error = { invalid: { value } };
       if (
         isNotNilOrEmpty(value) &&
-        (value.toDate() < this.minDate || value.toDate() > this.maxDate)
+        (value < this.minDate || value > this.maxDate)
       ) {
         return error;
       } else {
@@ -270,10 +277,11 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
 
   sendFilters() {
     this.formSubmitted = true;
+    console.log(this.form);
     if (this.form.valid) {
       const formValuesNull = mapObjIndexed(
         (value) => (isNil(value) ? '' : value),
-        this.form.value
+        this.form.value,
       );
       const {
         inputSearch,
