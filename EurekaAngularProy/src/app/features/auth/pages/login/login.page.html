@@ -13,29 +13,32 @@
           class="tw-w-full"
           formControlName="ruc"
           [errorMessages]="errorMessages.ruc"
-          ><i class="pi pi-user tw-text-primary-green-1"></i> RUC
-          <input
-            type="text"
-            class="tw-w-full"
-            pInputText
-            pKeyFilter="int"
-            maxlength="11"
-            formControlName="ruc"
-          />
+          ><i class="pi pi-user tw-text-primary-green-1"></i>
+          RUC
+          <div class="p-inputgroup" control>
+            <input
+              class="tw-w-full"
+              pInputText
+              minlength="11"
+              pKeyFilter="int"
+              [maxLength]="11"
+              formControlName="ruc"
+            />
+            <span class="p-inputgroup-addon tw-gap-1"
+              ><p-checkbox
+                class="tw-ml-1"
+                [binary]="true"
+                formControlName="rememberMe"
+                inputId="remember"
+              >
+              </p-checkbox
+              ><label for="remember" class="tw-m-0 tw-text-xs tw-mr-1"
+                >Recordar</label
+              ></span
+            >
+          </div>
         </cs-label-control>
       </div>
-      <div class="form-elm">
-        <cs-label-control class="tw-w-full" formControlName="rememberMe">
-          <p-checkbox
-            class="tw-mr-1"
-            [binary]="true"
-            formControlName="rememberMe"
-          >
-          </p-checkbox>
-          <ng-container label-inline>Recordar</ng-container>
-        </cs-label-control>
-      </div>
-
       <div class="form-elm">
         <cs-label-control
           class="tw-w-full"
@@ -79,7 +82,7 @@
       </div>
     </form>
     <div class="tw-mb-2 tw-text-center">
-      <div class="text-rg">¿No tienes una cuenta?</div>
+      <div class="tw-text-sm tw-mb-2">¿No tienes una cuenta?</div>
       <ng-container *ngrxLet="disabledAffiliation$ as disabled">
         <button
           pButton
