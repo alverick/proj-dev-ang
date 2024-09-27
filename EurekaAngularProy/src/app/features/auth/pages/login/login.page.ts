@@ -1,6 +1,5 @@
-import { type OnInit, Component, ViewChild } from '@angular/core';
+import { Component, type OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
@@ -52,7 +51,7 @@ export class LoginPage implements OnInit {
 
   linkRecoverPassword = authFullRoutingNames.RECOVER_PASSWORD;
   disabledAffiliation$ = this.store.select(
-    appConfigFeature.selectDisabledAffiliation
+    appConfigFeature.selectDisabledAffiliation,
   );
   attemptsLimit = 6;
 
@@ -62,14 +61,12 @@ export class LoginPage implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     private storageService: StorageService,
-    public snackBar: MatSnackBar,
     private tracking: TrackingService,
     private store: Store,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   ngOnInit() {
-    this.snackBar.dismiss();
     const rucStr = this.cookieService.check('ruc')
       ? this.cookieService.get('ruc')
       : userData[0];
@@ -187,7 +184,7 @@ export class LoginPage implements OnInit {
             ) {
               this.showModal(
                 'Contraseña Incorrecta',
-                'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos por whatsapp al 993 119 001.'
+                'Tu cuenta ha sido bloqueada por seguridad, inténtalo nuevamente en 60 minutos. Si tienes problemas para ingresar a tu cuenta, contáctanos por whatsapp al 993 119 001.',
               );
               this.intento6 = true;
               this.sendAdobeTrack({
@@ -199,7 +196,7 @@ export class LoginPage implements OnInit {
               if (this.codRespuesta === loginResultStatus.errorCredentials) {
                 this.showModal(
                   'Contraseña incorrecta',
-                  `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes.`
+                  `Lo sentimos tu contraseña es incorrecta, verifícala o vuelve a intentarlo. Tienes  ${this.intentosRestantes} intentos restantes.`,
                 );
                 this.sendAdobeTrack({
                   ...actionParams,
@@ -211,7 +208,7 @@ export class LoginPage implements OnInit {
                   'Tu cuenta está siendo procesada',
                   'Estamos procesando la información de tu registro,' +
                     ' esto puede tomar un máximo 24 horas hábiles. Cuando esté lista te enviaremos un mail de Bienvenida.',
-                  'Entendido'
+                  'Entendido',
                 );
                 this.sendAdobeTrack({
                   ...actionParams,
@@ -225,7 +222,7 @@ export class LoginPage implements OnInit {
             if (error.status === 500) {
               this.showModal(
                 'Error',
-                'Error del servidor comuníquese con el administrador'
+                'Error del servidor comuníquese con el administrador',
               );
               this.sendAdobeTrack({
                 ...actionParams,
