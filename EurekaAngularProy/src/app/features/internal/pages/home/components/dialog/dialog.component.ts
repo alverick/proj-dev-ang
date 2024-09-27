@@ -1,13 +1,13 @@
-import { type OnInit, Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import {
-  type UntypedFormGroup,
   UntypedFormBuilder,
+  type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { type FileUpload } from 'primeng/fileupload';
 import { isNil, isNotEmpty } from 'ramda';
 import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
@@ -18,8 +18,8 @@ import { ServiceTypes } from '../../../../../../shared/constants/services';
 import { type ServiceTypeType } from '../../../../../../shared/models';
 import type { IErrorObj } from '../../../../../../shared/models/error.model';
 import {
-  type ProcessStatus,
   ExcelService,
+  type ProcessStatus,
 } from '../../../../../../shared/services/excel.service';
 import {
   type ActionEventProperties,
@@ -33,6 +33,7 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
   selector: 'cs-dialog',
   templateUrl: 'dialog.component.html',
   styleUrls: ['dialog.component.scss'],
+  providers: [DynamicDialogRef],
 })
 export class DialogComponent implements OnInit {
   useAmountLimits = false;
@@ -57,16 +58,16 @@ export class DialogComponent implements OnInit {
   constructor(
     public excelService: ExcelService,
     public formBuilder: UntypedFormBuilder,
-    public dialogRef: MatDialogRef<DialogComponent>,
+    public dialogRef: DynamicDialogRef<DialogComponent>,
     private tracking: TrackingService,
-    private store: Store
+    private store: Store,
   ) {}
 
   ngOnInit() {
     this.inputXlsForm = this.formBuilder.group({
       xls: ['', Validators.required],
     });
-    this.dialogRef.afterClosed().subscribe(() => {
+    this.dialogRef.onClose.subscribe(() => {
       if (!this.excelService.statusUpload) {
         this.excelService.errores = [];
       }
@@ -76,7 +77,7 @@ export class DialogComponent implements OnInit {
       .pipe(filter((data) => isNotNilOrEmpty(data)))
       .subscribe((limits) => {
         this.limitAmountMax = limits.find(
-          (limit) => limit.symbol === this.excelService.service.currencySymbol
+          (limit) => limit.symbol === this.excelService.service.currencySymbol,
         ).limitMax;
       });
     this.store
@@ -176,7 +177,7 @@ export class DialogComponent implements OnInit {
           if (typeof row.getCell(idx).value === 'string') {
             const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
             const dt = new Date(
-              (row.getCell(idx).value as string).replace(pattern, '$3-$2-$1')
+              (row.getCell(idx).value as string).replace(pattern, '$3-$2-$1'),
             );
             if (dt instanceof Date) {
               isNotValidDate = false;
@@ -214,7 +215,7 @@ export class DialogComponent implements OnInit {
               row: row.number,
             } as IErrorObj);
           }
-        }
+        },
       );
     }
 
@@ -271,7 +272,7 @@ export class DialogComponent implements OnInit {
         .UploadExcel(
           this.uploaderFiles,
           this.excelService.service.name,
-          this.changeStatus
+          this.changeStatus,
         )
         .subscribe({
           next: (value) => {
