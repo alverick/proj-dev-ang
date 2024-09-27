@@ -1,7 +1,22 @@
-@import 'node_modules/bootstrap/dist/css/bootstrap.css' layer(bootstrap-reboot);
+@layer bootstrap-reboot {
+  @import 'node_modules/bootstrap/dist/css/bootstrap.css';
+}
 
 @layer tailwind-base {
   @tailwind base;
+}
+
+@layer custom {
+  @import 'forms';
+}
+
+@layer general {
+  @import 'configuration';
+  @import 'fonts';
+  @import 'material-config-theme';
+  @import 'material-custom';
+  @import 'main';
+  @import 'reponsive';
 }
 
 @layer tailwind-utilities {
@@ -10,13 +25,4 @@
   @tailwind utilities;
 }
 
-/* Reset Styles */
-
-@import 'configuration';
-@import 'fonts';
-@import 'material-config-theme';
-@import 'material-custom';
-@import 'forms';
-@import 'main';
 @import 'global';
-@import 'reponsive';
