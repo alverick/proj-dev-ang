@@ -1,31 +1,31 @@
-<mat-dialog-actions align="end">
-  <a
-    *ngIf="!excelService.statusUpload"
-    class="pt-2 hover:tw-no-underline tw-cursor-pointer"
-    (click)="close()"
-  >
-    <span class="pr-2 pt-1"
-      ><span class="cancelar tw-cursor-pointer">Cancelar</span>
-    </span>
-    <img
-      class="tw-inline tw-cursor-pointer"
-      height="20"
-      width="20"
-      src="/assets/images/cerrar.svg"
-      alt="Close"
-    />
-  </a>
-  <a
-    *ngIf="excelService.statusUpload"
-    class="pt-2 hover:tw-no-underline tw-cursor-pointer"
-    (click)="close()"
-  >
-    <span class="pr-2 pt-1"
-      ><span class="cancelar tw-cursor-pointer">Minimizar</span>
-    </span>
-    <mat-icon class="svg_custom" svgIcon="eurc_minimize"></mat-icon>
-  </a>
-</mat-dialog-actions>
+<!--<mat-dialog-actions align="end">-->
+<!--  <a-->
+<!--    *ngIf="!excelService.statusUpload"-->
+<!--    class="pt-2 hover:tw-no-underline tw-cursor-pointer"-->
+<!--    (click)="close()"-->
+<!--  >-->
+<!--    <span class="pr-2 pt-1"-->
+<!--      ><span class="cancelar tw-cursor-pointer">Cancelar</span>-->
+<!--    </span>-->
+<!--    <img-->
+<!--      class="tw-inline tw-cursor-pointer"-->
+<!--      height="20"-->
+<!--      width="20"-->
+<!--      src="/assets/images/cerrar.svg"-->
+<!--      alt="Close"-->
+<!--    />-->
+<!--  </a>-->
+<!--  <a-->
+<!--    *ngIf="excelService.statusUpload"-->
+<!--    class="pt-2 hover:tw-no-underline tw-cursor-pointer"-->
+<!--    (click)="close()"-->
+<!--  >-->
+<!--    <span class="pr-2 pt-1"-->
+<!--      ><span class="cancelar tw-cursor-pointer">Minimizar</span>-->
+<!--    </span>-->
+<!--    <mat-icon class="svg_custom" svgIcon="eurc_minimize"></mat-icon>-->
+<!--  </a>-->
+<!--</mat-dialog-actions>-->
 
 <div class="content p-0">
   <div *ngIf="!excelService.statusUpload && !ready" class="paso">
@@ -73,7 +73,7 @@
       class="tw-mx-auto tw-block md:tw-w-96 tw-my-6"
       >Monto máximo permitido por cobro
       {{
-        limitAmountMax | currency : excelService.service.currencySymbol
+        limitAmountMax | currency: excelService.service.currencySymbol
       }}</cs-message-alert
     >
     <div class="text-center">
@@ -131,7 +131,7 @@
             class="tw-flex tw-items-center tw-my-4 tw-justify-center tw-gap-4"
           >
             <div>{{ file.name }}</div>
-            <div>{{ getSizeInMegaBytes(file) | number : '1.2-2' }} MB</div>
+            <div>{{ getSizeInMegaBytes(file) | number: '1.2-2' }} MB</div>
             <div>
               <button
                 class="p-button-danger tw-bg-extended-fucsia"
@@ -147,7 +147,7 @@
       <br />
     </div>
     <div
-      *ngIf="excelService.errores.length > 0 && cuadro_errores === true"
+      *ngIf="excelService.errores?.length > 0 && cuadro_errores === true"
       class="errores"
     >
       <div class="header">
@@ -180,7 +180,7 @@
       </div>
     </div>
     <div
-      *ngIf="uploaderFiles.length > 0 && excelService.errores.length === 0"
+      *ngIf="uploaderFiles.length > 0 && excelService.errores?.length === 0"
       class="text-center"
     >
       <button
@@ -190,9 +190,8 @@
         class="tw-transition-colors"
         type="button"
         (click)="openSnackBar()"
-      >
-        Subir plantilla
-      </button>
+        label="Subir plantilla"
+      ></button>
     </div>
   </div>
 </div>
