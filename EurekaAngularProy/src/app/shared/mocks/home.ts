@@ -15,7 +15,7 @@ export const movementsDataMock = [
     amountPayed: 0.0,
     totalAmount: 0.0,
     totalAmountPayed: 0.0,
-    status: 'PENDIENTE',
+    status: 'VENCIDO',
     payDate: null,
     channel: null,
     hasIBKPayments: false,
@@ -89,8 +89,8 @@ export const movementsDataMock = [
   },
   {
     id: 298952,
-    emissionDate: '2021-06-16T00:00:00',
-    dueDate: '2021-06-17T00:00:00',
+    emissionDate: '2023-06-16T00:00:00',
+    dueDate: '2024-06-17T00:00:00',
     code: '20202020202',
     firstName: 'Empresa B',
     lastName: null,
@@ -106,7 +106,7 @@ export const movementsDataMock = [
     status: 'VENCIDO',
     payDate: null,
     channel: null,
-    hasIBKPayments: false,
+    hasIBKPayments: true,
     serviceType: 'C',
   },
   {
