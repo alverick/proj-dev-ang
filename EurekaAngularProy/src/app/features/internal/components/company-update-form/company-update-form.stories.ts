@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { type FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, type FormGroup, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
-import { moduleMetadata } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
 
 import {
   documentTypes,
@@ -18,7 +17,7 @@ import { CompanyUpdateFormComponent } from './company-update-form.component';
 
 @Component({
   selector: 'cs-form-demo',
-  template: `<cs-company-update-form
+  template: ` <cs-company-update-form
       class="tw-max-w-2xl tw-pl-20"
       [form]="registerForm"
       [errorMessages]="errors"
@@ -31,6 +30,7 @@ import { CompanyUpdateFormComponent } from './company-update-form.component';
     <button (click)="submitted = true" class="tw-block tw-m-3">
       send form
     </button>`,
+  standalone: true,
 })
 class FormDemoComponent {
   @Output() showPanel = new EventEmitter();
@@ -93,25 +93,24 @@ class FormDemoComponent {
     this.showPanel.emit();
   }
 }
-
-export default {
+const meta: Meta<CompanyUpdateFormComponent> = {
   title: 'Internal/Module/Company Form',
   decorators: [
     moduleMetadata({
       declarations: [CompanyUpdateFormComponent],
-      imports: [BrowserAnimationsModule, SharedModule],
+      imports: [FormDemoComponent, BrowserAnimationsModule, SharedModule],
     }),
   ],
 };
 
-export const normal = () => ({
-  component: CompanyUpdateFormComponent,
-  moduleMetadata: {
-    declarations: [FormDemoComponent, CompanyUpdateFormComponent],
-    providers: [],
-  },
-  template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults><cs-form-demo (showPanel)="onSubmit()"></cs-form-demo>`,
-  props: {
-    onSubmit: action('show panel'),
-  },
-});
+export default meta;
+
+type Story = StoryObj<CompanyUpdateFormComponent>;
+
+export const Normal: Story = {
+  args: {},
+  render: ({ ...args }) => ({
+    props: args,
+    template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults><cs-form-demo (showPanel)="onSubmit()"></cs-form-demo>`,
+  }),
+};
