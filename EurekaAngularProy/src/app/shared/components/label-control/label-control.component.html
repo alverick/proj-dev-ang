@@ -1,8 +1,10 @@
 <div class="tw-relative tw-mb-3" [ngClass]="{ 'tw-pb-5': !onlyControl }">
   <ng-container *ngIf="!hideLabel">
     <label
+      #labelRef
       [for]="labelInputID"
-      class="tw-flex tw-gap-1 tw-items-center tw-mb-2 tw-text-extended-grey-1"
+      class="tw-flex tw-gap-1 tw-items-center tw-text-extended-grey-1"
+      [ngClass]="{ 'tw-mb-2': labelRef.hasChildNodes() }"
       ><ng-content></ng-content
     ></label>
   </ng-container>
