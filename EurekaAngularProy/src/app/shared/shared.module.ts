@@ -69,24 +69,7 @@ import { PIPES } from './pipes';
 import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
 
-const FORM_MODULES = [
-  FormsModule,
-  MatButtonModule,
-  MatCheckboxModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatMomentDateModule,
-  MatNativeDateModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatSelectModule,
-  NgxPaginationModule,
-  ReactiveFormsModule,
-];
+const FORM_MODULES = [FormsModule, NgxPaginationModule, ReactiveFormsModule];
 const PRIMENG_MODULES = [
   AccordionModule,
   BadgeModule,
@@ -139,19 +122,7 @@ const UI_MODULES = [FontAwesomeModule, OverlayModule];
     NgClickOutsideDirective,
     ServiceChannelChipComponent,
   ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-
-    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-    ...SERVICES,
-    ...RESOLVERS,
-    ...DATA_SERVICES,
-  ],
+  providers: [...SERVICES, ...RESOLVERS, ...DATA_SERVICES],
   declarations: [
     OnlyNumbersFormDirective,
     OnlyNumbersDirective,
