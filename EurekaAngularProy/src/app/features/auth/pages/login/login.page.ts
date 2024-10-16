@@ -80,14 +80,7 @@ export class LoginPage implements OnInit {
     }
 
     this.loginForm = this.formBuilder.group({
-      ruc: [
-        rucStr,
-        [
-          Validators.required,
-          Validators.pattern('[1-2]0[0-9]+?'),
-          Validators.minLength(11),
-        ],
-      ],
+      ruc: [rucStr, [Validators.required, Validators.minLength(11)]],
       psw: [userData[1], Validators.required],
       rememberMe: [this.rememberMe, Validators.required],
     });
@@ -167,7 +160,7 @@ export class LoginPage implements OnInit {
               value.estado === true &&
               this.intentos <= this.attemptsLimit
             ) {
-              if (this.rememberMe === true) {
+              if (this.f.rememberMe.value === true) {
                 const expire = new Date();
                 expire.setDate(expire.getDate() + 25);
                 this.cookieService.set('ruc', this.f.ruc.value, expire);

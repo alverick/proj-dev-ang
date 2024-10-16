@@ -1,9 +1,9 @@
 <cs-layout-form>
   <div
-    class="tw-bg-white ibk-box-rounded tw-min-w-[320px] sm:tw-min-w-[450px] tw-p-8"
+    class="ibk-box-rounded tw-min-w-[320px] tw-bg-white tw-p-8 sm:tw-min-w-[450px]"
   >
     <div
-      class="tw-text-secondary-blue-1 tw-text-2xl lg:tw-text-3xl tw-font-medium tw-text-center tw-mb-6"
+      class="tw-mb-6 tw-text-center tw-text-2xl tw-font-medium tw-text-secondary-blue-1 lg:tw-text-3xl"
     >
       Inicia sesión
     </div>
@@ -32,7 +32,7 @@
                 inputId="remember"
               >
               </p-checkbox
-              ><label for="remember" class="tw-m-0 tw-text-xs tw-mr-1"
+              ><label for="remember" class="tw-m-0 tw-mr-1 tw-text-xs"
                 >Recordar</label
               ></span
             >
@@ -56,7 +56,6 @@
             [toggleMask]="true"
             [feedback]="false"
             control
-            csBlockCopyPaste
             #passwordControl
           >
           </p-password>
@@ -64,7 +63,7 @@
       </div>
       <div class="form-elm tw-my-4">
         <a
-          class="tw-underline tw-text-sm tw-py-2"
+          class="tw-py-2 tw-text-sm tw-underline"
           [routerLink]="[linkRecoverPassword]"
           (click)="clickRecoverPassword()"
           >Recuperar contraseña
@@ -75,14 +74,14 @@
           pButton
           pRipple
           type="submit"
-          class="tw-mb-6 p-button-sm tw-w-72 tw-flex tw-mx-auto tw-justify-center"
+          class="p-button-sm tw-mx-auto tw-mb-6 tw-flex tw-w-72 tw-justify-center"
         >
           Ingresar
         </button>
       </div>
     </form>
     <div class="tw-mb-2 tw-text-center">
-      <div class="tw-text-sm tw-mb-2">¿No tienes una cuenta?</div>
+      <div class="tw-mb-2 tw-text-sm">¿No tienes una cuenta?</div>
       <ng-container *ngrxLet="disabledAffiliation$ as disabled">
         <button
           pButton
