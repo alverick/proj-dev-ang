@@ -1,7 +1,5 @@
 import { type AnimationEvent } from '@angular/animations';
 import { Component, type OnInit } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
@@ -36,8 +34,6 @@ export class AppComponent implements OnInit {
   spinnerBackground = 'rgba(255, 255, 255, 1)';
 
   constructor(
-    matIconRegistry: MatIconRegistry,
-    domSanitizer: DomSanitizer,
     private primengConfig: PrimeNGConfig,
     adobeLaunch: AdobeLaunchProviderService,
     newrelic: NewRelicProviderService,
@@ -54,38 +50,6 @@ export class AppComponent implements OnInit {
     });
 
     this.detectLayoutForm();
-
-    matIconRegistry.addSvgIcon(
-      'eurc_calendar',
-      domSanitizer.bypassSecurityTrustResourceUrl(
-        '/assets/images/calendar.svg',
-      ),
-      { viewBox: '0 0 24 24' },
-    );
-    matIconRegistry.addSvgIcon(
-      'eurc_trash',
-      domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/trash.svg'),
-      { viewBox: '0 0 20 20' },
-    );
-    matIconRegistry.addSvgIcon(
-      'eurc_download',
-      domSanitizer.bypassSecurityTrustResourceUrl(
-        '/assets/images/download.svg',
-      ),
-      { viewBox: '0 0 20 20' },
-    );
-    matIconRegistry.addSvgIcon(
-      'eurc_minimize',
-      domSanitizer.bypassSecurityTrustResourceUrl(
-        '/assets/images/minimize.svg',
-      ),
-      { viewBox: '0 0 24 24' },
-    );
-    matIconRegistry.addSvgIcon(
-      'eurc_new_tab',
-      domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/new-tab.svg'),
-      { viewBox: '0 0 24 24' },
-    );
   }
 
   onAnimationEvent(event: AnimationEvent) {

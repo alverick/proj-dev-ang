@@ -1,14 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import {
-  MAT_MOMENT_DATE_FORMATS,
-  MomentDateAdapter,
-} from '@angular/material-moment-adapter';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   applicationConfig,
@@ -31,16 +22,6 @@ const meta: Meta<PaymentsFilterComponent> = {
     moduleMetadata({
       declarations: [],
       imports: [HttpClientModule, CommonModule, SharedModule],
-      providers: [
-        { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
-        {
-          provide: DateAdapter,
-          useClass: MomentDateAdapter,
-          deps: [MAT_DATE_LOCALE],
-        },
-
-        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-      ],
     }),
   ],
 };
