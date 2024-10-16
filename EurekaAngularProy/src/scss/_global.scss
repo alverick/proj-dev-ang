@@ -33,6 +33,9 @@
     width: 410px;
   }
 
+  &.swal2-container {
+    z-index: 12000;
+  }
   &.cs-alert-legacy {
     .swal2-popup {
       width: 32em;
