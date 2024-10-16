@@ -277,7 +277,6 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
 
   sendFilters() {
     this.formSubmitted = true;
-    console.log(this.form);
     if (this.form.valid) {
       const formValuesNull = mapObjIndexed(
         (value) => (isNil(value) ? '' : value),

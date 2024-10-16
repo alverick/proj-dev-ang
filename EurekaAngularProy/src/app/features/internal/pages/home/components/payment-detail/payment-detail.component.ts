@@ -73,12 +73,6 @@ export class PaymentDetailComponent implements OnInit {
     itm.newDate = new Date(itm.date);
     itm.newChannel = itm.channel;
     itm.errores = {};
-    console.log(
-      itm.date,
-      typeof itm.date,
-      new Date(itm.date),
-      new Date(itm.date).toLocaleDateString(),
-    );
   }
 
   saveItem() {

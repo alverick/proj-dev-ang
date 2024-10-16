@@ -240,7 +240,6 @@ export class LoginPage implements OnInit {
   }
 
   clickRegistration(disabled = false) {
-    console.log(disabled);
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Login',
       action: 'Click',

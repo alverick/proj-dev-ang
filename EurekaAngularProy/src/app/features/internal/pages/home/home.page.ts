@@ -1193,7 +1193,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       data: dialogData,
     });
     dialogRef.onClose.subscribe((result: { status: string }) => {
-      console.log('afterClose', result);
       if (isNotNil(prop('status', result))) {
         itm.status = result.status;
         this.consultaDeuda(() => this.tableMovements.updateSelected(itm));

@@ -132,7 +132,6 @@ export class AprobacionesPage implements OnInit {
     this.ServiciosFormulario = true;
     this.Servgtp = clone(etp);
     this.Servgtp.useAgencyChannel = this.Enterprise.useAgencyChannel;
-    console.log(this.Servgtp);
     this.indiceActual = index;
   }
 
@@ -153,7 +152,6 @@ export class AprobacionesPage implements OnInit {
 
   EnviarAprobados() {
     let entryDiff = false;
-    console.log(this.gtpService.services);
     this.gtpService.services.forEach(({ res }) => {
       if (res.length > 0 && res.substring(0, 2) !== this.Enterprise.entry) {
         entryDiff = true;

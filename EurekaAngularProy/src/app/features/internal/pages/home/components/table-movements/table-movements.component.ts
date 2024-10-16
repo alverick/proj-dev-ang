@@ -222,7 +222,6 @@ export class TableMovementsComponent implements OnInit, OnChanges {
       this.selectedAll = evt.checked as boolean;
     }
     this.selectedRowsChange.emit(this.selectedRows);
-    console.log(this.selectedRows);
   }
 
   updateSelected(rowData: Debts) {
