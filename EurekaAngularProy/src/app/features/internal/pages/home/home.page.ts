@@ -72,6 +72,14 @@ import { DialogComponent } from './components/dialog/dialog.component';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { TableMovementsComponent } from './components/table-movements/table-movements.component';
 
+export type DebtDialog = {
+  currency: string;
+  customer: { code: string; name: string };
+  debtId: number;
+  serviceType: string;
+  status: string;
+};
+
 @Component({
   selector: 'cs-home',
   templateUrl: './home.page.html',
@@ -327,13 +335,13 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       } else if (m.status === 'rejected') {
         this.fileLoad.close();
         this.excelService.statusUpload = false;
-        dialogRef.componentInstance.ready = true;
-        dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
-        dialogRef.componentInstance.rowsRejected = m.rowsRejected;
         const dialogRef = this.dynamicDialogService.open(
           DialogComponent,
           this.dialogConfig,
         );
+        // dialogRef.componentInstance.ready = true;
+        // dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
+        // dialogRef.componentInstance.rowsRejected = m.rowsRejected;
       }
     };
   }
@@ -1003,12 +1011,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.cargaExcel = false;
     this.excelService.service = service;
     if (this.fileLoad.isRunning()) {
-        dialogRef.componentInstance.ready = false;
       const dialogRef = this.dynamicDialogService.open(
         DialogComponent,
         this.dialogConfig,
       );
       dialogRef.onClose.subscribe((result: Observable<any>) => {
+        // dialogRef.componentInstance.ready = false;
         this.fileLoad.verify(this.fileLoadContainer);
         if (result) {
           result.subscribe(() => {
@@ -1082,14 +1090,14 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 DialogComponent,
                 this.dialogConfig,
               );
-                dialogRef.componentInstance.ready = false;
+              dialogRef.onClose.subscribe((result: Observable<any>) => {
+                // dialogRef.componentInstance.ready = false;
                 this.fileLoad.verify(this.fileLoadContainer);
                 if (result) {
                   result.subscribe(() => {
                     this.validateResetForm();
                   });
                 }
-              dialogRef.onClose.subscribe((result: Observable<any>) => {
               });
               this.tracking.trackEvent(AdobeEvent.trackAction, {
                 category: 'Home movimientos',
@@ -1168,20 +1176,23 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       detail: 'Información de pago',
       location: 'Modal',
     });
+    const dialogData: DebtDialog = {
+      debtId: itm.id,
+      status: itm.status,
+      serviceType: itm.serviceType,
+      currency: itm.currency,
+      customer: {
+        name: itm.firstName,
+        code: itm.code,
+      },
+    };
     const dialogRef = this.dynamicDialogService.open(PaymentDetailComponent, {
       width: '810px',
       modal: true,
+      showHeader: false,
       closeOnEscape: false,
-      data: {
-        debtId: itm.id,
-        status: itm.status,
-        serviceType: itm.serviceType,
-        currency: itm.currency,
-        customer: {
-          name: itm.firstName,
-          code: itm.code,
-        },
-      },
+      styleClass: 'simple-dialog',
+      data: dialogData,
     });
     dialogRef.onClose.subscribe((result: { status: string }) => {
       console.log('afterClose', result);
