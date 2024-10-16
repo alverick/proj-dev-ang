@@ -62,6 +62,12 @@ a {
       color: var(--primary-green-1);
     }
   }
+
+  &.p-disabled {
+    opacity: 1;
+    background-color: #e2e8f0;
+    color: #64748b;
+  }
 }
 
 .p-multiselect {
@@ -160,6 +166,12 @@ a {
     font-size: 14px;
   }
 
+  &:disabled {
+    opacity: 1;
+    background-color: #e2e8f0;
+    color: #64748b;
+  }
+
   &:enabled {
     &:hover {
       border-color: var(--primary-green-1);
@@ -240,7 +252,7 @@ a {
 
 .p-sidebar {
   &.edit-form {
-    @apply lg:tw-p-0 lg:tw-border-none;
+    @apply lg:tw-border-none lg:tw-p-0;
 
     .p-sidebar-close {
       position: absolute;
@@ -641,7 +653,7 @@ a {
   .p-menuitem-badge {
     background-color: var(--secondary-blue-2);
     min-width: 48px;
-    @apply tw-font-normal tw-text-[0.5rem] tw-w-12 tw-grow;
+    @apply tw-w-12 tw-grow tw-text-[0.5rem] tw-font-normal;
   }
 }
 
@@ -661,7 +673,7 @@ a {
       background: var(--ibk-white);
       color: var(--ibk-black);
       font-weight: 400;
-      @apply tw-px-6 tw-border-extended-grey-4;
+      @apply tw-border-extended-grey-4 tw-px-6;
 
       &:hover {
         text-decoration: none;
@@ -675,11 +687,11 @@ a {
 
       &.p-highlight {
         .p-accordion-header-link {
-          @apply tw-border-extended-grey-4 tw-text-secondary-blue-1 tw-bg-white tw-border-b-0;
+          @apply tw-border-b-0 tw-border-extended-grey-4 tw-bg-white tw-text-secondary-blue-1;
         }
 
         &:hover .p-accordion-header-link {
-          @apply tw-border-extended-grey-4 tw-text-secondary-blue-1 tw-bg-white tw-border-b-0;
+          @apply tw-border-b-0 tw-border-extended-grey-4 tw-bg-white tw-text-secondary-blue-1;
         }
       }
     }
@@ -693,7 +705,7 @@ a {
   }
 
   .p-accordion-content {
-    @apply tw-px-6 tw-py-4 tw-border-extended-grey-4 tw-border-t-0;
+    @apply tw-border-t-0 tw-border-extended-grey-4 tw-px-6 tw-py-4;
   }
 
   &.p-accordion-outline {
@@ -771,7 +783,7 @@ a {
 
 .p-overlay-badge {
   .p-badge:not(.p-badge-dot) {
-    @apply tw-min-w-[1.2rem] tw-h-[1.2rem] tw-text-[0.55rem] tw-leading-[1.2rem] tw-flex tw-justify-center tw-items-center tw-p-0 tw-top-[0.2rem] tw-right-[0.2rem];
+    @apply tw-right-[0.2rem] tw-top-[0.2rem] tw-flex tw-h-[1.2rem] tw-min-w-[1.2rem] tw-items-center tw-justify-center tw-p-0 tw-text-[0.55rem] tw-leading-[1.2rem];
   }
 }
 
@@ -841,5 +853,11 @@ a {
     .p-dialog-footer {
       padding: 0.25rem;
     }
+  }
+}
+.progress-spinner {
+  .p-progress-spinner-circle {
+    stroke: var(--ibk-black);
+    animation: p-progress-spinner-dash 1.5s ease-in-out infinite;
   }
 }
