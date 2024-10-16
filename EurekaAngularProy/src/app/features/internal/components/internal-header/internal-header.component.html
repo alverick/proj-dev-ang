@@ -1,59 +1,59 @@
 <cs-header>
   <div
     *ngIf="showMenu"
-    class="tw-flex tw-group tw-relative"
+    class="tw-group tw-relative tw-flex"
     [ngClass]="{
       expanded: isExpanded,
     }"
   >
     <ul
-      class="lg:tw-flex tw-flex-col lg:tw-flex-row lg:tw-items-center tw-gap-3 lg:tw-gap-2 tw-absolute tw-right-0 tw-top-full tw-bg-white tw-shadow-md tw-z-50 tw-p-4 lg:tw-relative lg:tw-shadow-none lg:tw-bg-transparent lg:tw-p-0 tw-hidden group-[.expanded]:tw-flex tw-animate-fade-down lg:tw-animate-fade tw-animate-duration-200 lg:tw-animate-duration-[0ms]"
+      class="tw-absolute tw-right-0 tw-top-full tw-z-50 tw-hidden tw-animate-fade-down tw-flex-col tw-gap-3 tw-bg-white tw-p-4 tw-shadow-md tw-animate-duration-200 group-[.expanded]:tw-flex lg:tw-relative lg:tw-right-auto lg:tw-top-auto lg:tw-flex lg:tw-animate-fade lg:tw-flex-row lg:tw-items-center lg:tw-gap-2 lg:tw-bg-transparent lg:tw-p-0 lg:tw-shadow-none lg:tw-animate-duration-[0ms]"
       (clickOutside)="toggleMenu()"
       (keyup)="toggleMenu()"
     >
-      <li class="tw-h-full tw-group" routerLinkActive="active">
+      <li class="tw-group tw-h-full" routerLinkActive="active">
         <a
-          class="lg:tw-px-3 tw-h-full tw-flex tw-items-center lg:tw-justify-center tw-text-xs tw-uppercase tw-font-medium tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black"
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
           [routerLink]="[homeLink]"
           (click)="gotoHomePage()"
           >{{ homeText }}</a
         >
       </li>
-      <li *ngIf="false" class="tw-h-full tw-group" routerLinkActive="active">
+      <li *ngIf="false" class="tw-group tw-h-full" routerLinkActive="active">
         <a
-          class="lg:tw-px-3 tw-h-full tw-flex tw-items-center lg:tw-justify-center tw-text-xs tw-uppercase tw-font-medium tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black"
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
           [routerLink]="[dashboardLink]"
           >{{ dashboardText }}</a
         >
       </li>
-      <li class="tw-h-full tw-group" routerLinkActive="active">
+      <li class="tw-group tw-h-full" routerLinkActive="active">
         <a
-          class="lg:tw-px-3 tw-h-full tw-flex tw-items-center lg:tw-justify-center tw-text-xs tw-uppercase tw-font-medium tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black"
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
           [routerLink]="[servicesLink]"
           (click)="gotoChargesPage()"
         >
           {{ chargesText }}
         </a>
       </li>
-      <li class="tw-h-full tw-group" routerLinkActive="active">
+      <li class="tw-group tw-h-full" routerLinkActive="active">
         <a
-          class="lg:tw-px-3 tw-h-full tw-flex tw-items-center lg:tw-justify-center tw-text-xs tw-uppercase tw-font-medium tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black"
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
           [routerLink]="[companyLink]"
           (click)="gotoCompanyPage()"
           >{{ companyText }}</a
         >
       </li>
-      <li class="tw-h-full tw-group" routerLinkActive="active">
+      <li class="tw-group tw-h-full" routerLinkActive="active">
         <a
-          class="lg:tw-px-3 tw-h-full tw-flex tw-items-center lg:tw-justify-center tw-text-xs tw-uppercase tw-font-medium tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black"
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
           [routerLink]="[helpLink]"
           (click)="gotoHelpPage()"
           >{{ helpText }}</a
         >
       </li>
-      <li class="tw-h-full tw-group lg:tw-hidden" routerLinkActive="active">
+      <li class="tw-group tw-h-full lg:tw-hidden" routerLinkActive="active">
         <a
-          class="lg:tw-px-3 tw-h-full tw-flex tw-items-center lg:tw-justify-center tw-text-xs tw-uppercase tw-font-medium tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black"
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
           (click)="logout()"
           >Cerrar sesión</a
         >
@@ -62,13 +62,13 @@
 
     <ul class="tw-flex tw-items-center tw-gap-2">
       <li
-        class="tw-h-full tw-relative"
+        class="tw-relative tw-h-full"
         (clickOutside)="blurMenu()"
         (keyup)="blurMenu()"
       >
         <a
           href="javascript:void(0);"
-          class="tw-px-2 tw-h-full tw-flex tw-items-center hover:tw-no-underline"
+          class="tw-flex tw-h-full tw-items-center tw-px-2 hover:tw-no-underline"
           id="lnkMessages"
           data-toggle="dropdown"
           aria-haspopup="true"
@@ -77,11 +77,11 @@
         >
           <i
             *ngIf="notify.total <= 0"
-            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
+            class="pi pi-bell tw-text-2xl tw-text-primary-green-1"
           ></i
           ><i
             *ngIf="notify.total > 0"
-            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
+            class="pi pi-bell tw-text-2xl tw-text-primary-green-1"
             pBadge
             iconPos="left"
             [value]="notify.totalLabel"
@@ -89,11 +89,11 @@
           ></i>
         </a>
         <div
-          class="tw-absolute tw-w-[80vw] md:tw-w-[450px] tw-right-0 tw-top-full tw-bg-white tw-shadow-md tw-z-50"
+          class="tw-absolute tw-right-0 tw-top-full tw-z-50 tw-w-[80vw] tw-bg-white tw-shadow-md md:tw-w-[450px]"
           *ngIf="!hiddenNotifications"
         >
           <div
-            class="tw-flex tw-justify-between tw-py-2.5 tw-px-3 tw-border-extended-grey-4 tw-border-b tw-text-xs"
+            class="tw-flex tw-justify-between tw-border-b tw-border-extended-grey-4 tw-px-3 tw-py-2.5 tw-text-xs"
           >
             <div class="tw-to-extended-ibk-black">Notificaciones</div>
             <a class="tw-cursor-pointer" (click)="markAllNotifications()">
@@ -113,7 +113,7 @@
               [class.dropdown-item-readed]="!msg.isNew"
             >
               <div
-                class="tw-p-2 tw-border-extended-grey-4 tw-border-b"
+                class="tw-border-b tw-border-extended-grey-4 tw-p-2"
                 [ngClass]="{ 'tw-bg-[#eaf6ee]': msg.isNew }"
               >
                 <a
@@ -122,10 +122,10 @@
                   (click)="markNotification(msg, $event)"
                 >
                   <div
-                    class="tw-flex tw-gap-2 tw-text-sm tw-text-black tw-items-start tw-font-normal"
+                    class="tw-flex tw-items-start tw-gap-2 tw-text-sm tw-font-normal tw-text-black"
                   >
                     <div
-                      class="tw-shrink-0 tw-mt-1 tw-w-3 tw-h-3 tw-flex tw-justify-between tw-items-center tw-bg-extended-watermelon-1 tw-rounded-full"
+                      class="tw-mt-1 tw-flex tw-h-3 tw-w-3 tw-shrink-0 tw-items-center tw-justify-between tw-rounded-full tw-bg-extended-watermelon-1"
                       [ngClass]="{
                         'tw-bg-extended-watermelon-1': msg.isNew,
                         'tw-bg-primary-green-1': !msg.isNew,
@@ -133,12 +133,12 @@
                     >
                       <i
                         *ngIf="!msg.isNew"
-                        class="pi pi-check tw-text-white tw-text-[9px] tw-mx-auto"
+                        class="pi pi-check tw-mx-auto tw-text-[9px] tw-text-white"
                       ></i>
                     </div>
                     <div class="tw-text-black">
                       <div>{{ msg.message }}</div>
-                      <div class="tw-text-black tw-font-light tw-mt-1">
+                      <div class="tw-mt-1 tw-font-light tw-text-black">
                         {{ getAgo(msg.create) }}
                       </div>
                     </div>
@@ -148,7 +148,7 @@
             </div>
 
             <div
-              class="tw-py-2 tw-text-center tw-border-extended-grey-4 tw-border-b tw-text-sm"
+              class="tw-border-b tw-border-extended-grey-4 tw-py-2 tw-text-center tw-text-sm"
               *ngIf="notify.messages.length == 0"
             >
               No tienes notificaciones
@@ -158,7 +158,7 @@
             </div>
           </ng-scrollbar>
 
-          <div class="tw-py-2.5 tw-px-3 tw-text-center tw-text-xs">
+          <div class="tw-px-3 tw-py-2.5 tw-text-center tw-text-xs">
             <a
               class="tw-cursor-pointer"
               (click)="onScroll(); $event.stopPropagation()"
@@ -168,11 +168,11 @@
           </div>
         </div>
       </li>
-      <li class="tw-items-center tw-hidden lg:tw-flex">
+      <li class="tw-hidden tw-items-center lg:tw-flex">
         <a
           href="javascript:void(0);"
           (click)="menu.toggle($event)"
-          class="tw-flex tw-items-center dropdown-toggle arrow no-caret tw-h-[72px]"
+          class="dropdown-toggle arrow no-caret tw-flex tw-h-[72px] tw-items-center"
         >
           <img
             class="perfil"
@@ -194,7 +194,7 @@
     </ul>
 
     <ul
-      class="navigation-mobile tw-flex tw-flex-row lg:tw-hidden tw-items-center tw-h-[72px]"
+      class="navigation-mobile tw-flex tw-h-[72px] tw-flex-row tw-items-center lg:tw-hidden"
     >
       <li class="nav-item">
         <button
