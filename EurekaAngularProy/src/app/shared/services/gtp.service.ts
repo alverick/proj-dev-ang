@@ -109,7 +109,7 @@ export class GtpService {
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
-  GetEnterpriseGtp(id: any): Observable<ICompanyData> {
+  GetEnterpriseGtp(id: any) {
     const url = `${environment.END_POINT}/company/GTP/client/${id}`;
     return this.http
       .get<ICompanyData>(url)
