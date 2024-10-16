@@ -22,6 +22,7 @@
         "@typescript-eslint",
         "@angular-eslint",
         "simple-import-sort",
+        "unused-imports",
         "prettier"
       ],
       "rules": {
@@ -98,7 +99,8 @@
         "react/jsx-wrap-multilines": "off",
         "space-before-function-paren": "off",
         "space-in-parens": ["off", "never"],
-        "simple-import-sort/imports": "error"
+        "simple-import-sort/imports": "error",
+        "unused-imports/no-unused-imports": "error"
       }
     },
     {

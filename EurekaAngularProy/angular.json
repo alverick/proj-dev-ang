@@ -32,7 +32,11 @@
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "src/tsconfig.app.json",
-            "assets": ["src/faviconIbk.ico", "src/assets"],
+            "assets": [
+              "src/faviconIbk.ico",
+              "src/assets",
+              "src/mockServiceWorker.js"
+            ],
             "styles": [
               "src/scss/layers.css",
               "node_modules/font-awesome/css/font-awesome.css",
@@ -42,9 +46,7 @@
               "node_modules/shepherd.js/dist/css/shepherd.css",
               "src/scss/style.scss"
             ],
-            "scripts": [
-              "libs/fingerprint.js"
-            ],
+            "scripts": ["libs/fingerprint.js"],
             "stylePreprocessorOptions": {
               "includePaths": ["src/scss", "node_modules"]
             }

@@ -1,11 +1,12 @@
 import type { StorybookConfig } from '@storybook/angular';
-import path from 'path';
+import * as path from 'path';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   staticDirs: [
     { from: '../src/assets', to: '/assets' },
     { from: '../src/scss', to: '/css' },
+    { from: '../src', to: '/' },
   ],
   addons: [
     '@storybook/addon-onboarding',
@@ -13,6 +14,7 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    'storybook-msw-addon',
   ],
   framework: {
     name: '@storybook/angular',
