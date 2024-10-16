@@ -1,65 +1,67 @@
-<div class="tw-max-w-6xl tw-mx-auto">
+<div class="tw-mx-auto tw-max-w-6xl">
   <div class="tw-grid tw-grid-cols-12 tw-gap-2">
     <div class="tw-col-span-5">
       <div class="tw-py-6">
-        <div
-          class="tw-mx-2 tw-px-4 tw-py-5 tw-shadow-md tw-border-extended-grey-4 tw-border tw-rounded"
-        >
+        <div class="box-shadow tw-mx-2 tw-px-4 tw-py-5">
           <div class="tw-text-left">
             <div class="tw-pb-1 tw-text-lg tw-font-medium">
               Datos actuales de la empresa
             </div>
-            <div class="tw-grid tw-grid-cols-2 tw-text-sm tw-gap-2">
+            <div class="tw-grid tw-grid-cols-2 tw-gap-2 tw-text-sm">
               <div class="tw-col-span-2">
-                <div class="tw-font-medium tw-text-xs">
+                <div class="tw-text-xs tw-font-medium">
                   Nombre de la Empresa
                 </div>
                 <div>{{ Enterprise.name }}</div>
               </div>
               <div class="tw-col-span-2">
-                <div class="tw-font-medium tw-text-xs">Rubro</div>
+                <div class="tw-text-xs tw-font-medium">Rubro</div>
                 <div>{{ rubro }}</div>
               </div>
               <div>
-                <div class="tw-font-medium tw-text-xs">CU</div>
+                <div class="tw-text-xs tw-font-medium">CU</div>
                 <div class="">{{ Enterprise.uniqueCodeIBK }}</div>
               </div>
               <div>
-                <div class="tw-font-medium tw-text-xs">RUC</div>
+                <div class="tw-text-xs tw-font-medium">RUC</div>
                 <div class="">{{ Enterprise.ruc }}</div>
               </div>
               <div>
-                <div class="tw-font-medium tw-text-xs">
+                <div class="tw-text-xs tw-font-medium">
                   Última actualización
                 </div>
                 <div class="">
-                  {{ stateDetail.accountStateDetailsResponse.approbationDate |
-                  notEmpty: '-' }}
+                  {{
+                    stateDetail.accountStateDetailsResponse.approbationDate
+                      | notEmpty: '-'
+                  }}
                 </div>
               </div>
               <div>
-                <div class="tw-font-medium tw-text-xs">Último log in</div>
+                <div class="tw-text-xs tw-font-medium">Último log in</div>
                 <div class="tw-whitespace-nowrap">
-                  {{ stateDetail.accountStateDetailsResponse.lastAccess |
-                  notEmpty: '-' }}
+                  {{
+                    stateDetail.accountStateDetailsResponse.lastAccess
+                      | notEmpty: '-'
+                  }}
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="tw-text-lg tw-my-5 tw-mx-4 tw-font-medium">
+        <div class="tw-mx-4 tw-my-5 tw-text-lg tw-font-medium">
           Revisiones Pendientes
         </div>
         <div
-          class="tw-flex tw-gap-4 tw-flex-col tw-overflow-auto tw-max-h-[500px] tw-px-4"
+          class="tw-flex tw-max-h-[500px] tw-flex-col tw-gap-4 tw-overflow-auto tw-px-4"
         >
           <div
-            class="card-aprobaciones tw-p-4 tw-shadow-md tw-border-extended-grey-4 tw-border tw-rounded"
-            [class.seleccionado]="Formulario"
+            class="card-aprobaciones box-shadow tw-p-4"
+            [ngClass]="{ 'tw-border-primary-green-1': Formulario }"
           >
-            <div class="tw-font-medium tw-text-lg">Datos de Empresa</div>
-            <div class="tw-flex tw-gap-2 tw-justify-between">
+            <div class="tw-text-lg tw-font-medium">Datos de Empresa</div>
+            <div class="tw-flex tw-justify-between tw-gap-2">
               <div class="tw-flex tw-flex-col tw-gap-2 tw-text-sm">
                 <div class="tw-py-2">
                   <p-tag
@@ -132,50 +134,62 @@
             </div>
           </div>
           <div
-            class="card-aprobaciones tw-mb-4"
+            class="box-shadow tw-mb-4"
             *ngFor="let svc of gtpService.services; let i = index"
-            [class.seleccionado]="indiceActual === i"
+            [ngClass]="{ 'tw-border-primary-green-1': indiceActual === i }"
           >
-            <div class="tw-px-4 tw-pb-4">
+            <div class="tw-px-4 tw-py-5">
               <div class="pl-1 row pb-0">
                 <div class="col-sm-12 pt-3">
-                  <div class="font-black-servicios-des-list tw-truncate">
+                  <div class="tw-truncate tw-font-medium">
                     {{ getName(svc) }}
                   </div>
                 </div>
               </div>
-              <table class="table-sm table-borderless tw-w-full">
+              <table
+                class="table-sm table-borderless tw-w-full tw-border-separate tw-border-spacing-y-1"
+              >
                 <tr>
-                  <th class="font-black-servicios-des-list" scope="col">
+                  <th
+                    class="tw-text-left tw-font-medium"
+                    scope="col"
+                    colspan="2"
+                  >
                     {{ svc.res }}
                   </th>
                 </tr>
                 <tr>
-                  <td class="font-black-servicios-des-list">
-                    <span
-                      class="badge tw-bg-primary-green-1 tw-text-sm tw-text-white tw-leading-[1]"
+                  <td class="tw-font-medium">
+                    <p-tag
                       *ngIf="getState(svc) === 'Nuevo servicio'"
-                      >{{ getState(svc) }}</span
-                    >
-                    <span
-                      class="badge badge-primary"
+                      icon="pi pi-info-circle"
+                      styleClass="tw-font-normal"
+                      severity="info"
+                      [value]="getState(svc)"
+                    />
+                    <p-tag
                       *ngIf="getState(svc) === 'Servicio habilitado'"
-                      >{{ getState(svc) }}</span
-                    >
-                    <span
-                      class="badge tw-bg-primary-green-1 tw-text-sm tw-text-white tw-leading-[1]"
+                      icon="pi pi-check"
+                      styleClass="tw-font-normal"
+                      severity="success"
+                      [value]="getState(svc)"
+                    />
+                    <p-tag
                       *ngIf="getState(svc) === 'Servicio rechazado'"
-                      >{{ getState(svc) }}</span
-                    >
-                    <span
-                      class="badge badge-warning"
+                      icon="pi pi-times"
+                      styleClass="tw-font-normal"
+                      severity="danger"
+                      [value]="getState(svc)"
+                    />
+                    <p-tag
                       *ngIf="getState(svc) === 'Servicio editado'"
-                      >{{ getState(svc) }}</span
-                    >
+                      icon="pi pi-exclamation-triangle"
+                      styleClass="tw-font-normal"
+                      severity="warning"
+                      [value]="getState(svc)"
+                    />
                   </td>
-                </tr>
-                <tr *ngIf="svc.inReview == false">
-                  <td>
+                  <td class="tw-text-right" *ngIf="svc.inReview == false">
                     <button
                       pButton
                       pRipple
@@ -196,7 +210,7 @@
                       svc.acceptednewNameCode == null
                     "
                   >
-                    por Revisar
+                    Por revisar
                   </td>
                   <td
                     class="font-black-servicios-des-list"
@@ -209,7 +223,7 @@
                   >
                     Revisado
                   </td>
-                  <td class="tw-text-right tw-p-0">
+                  <td class="tw-p-0 tw-text-right">
                     <button
                       pButton
                       pRipple
@@ -269,17 +283,18 @@
         </div>
       </div>
     </div>
-    <div class="tw-col-start-8 tw-col-span-5 tw-py-6" *ngIf="Formulario">
-      <div
-        class="tw-shadow-md tw-border-extended-grey-4 tw-border tw-rounded tw-p-4"
-      >
+    <div
+      class="tw-col-span-5 tw-col-start-8 tw-py-6"
+      *ngIf="Formulario || ServiciosFormulario"
+    >
+      <div class="box-shadow tw-p-4">
         <div class="formulario px-5 pt-3 bg-white">
           <div
             class="tw-flex tw-flex-col tw-items-end tw-justify-center tw-gap-2"
           >
             <button
-              (click)="OcultarFormulario()"
-              class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-gap-1 tw-text-extended-grey-2 tw-text-xxs"
+              (click)="hidePanel()"
+              class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-1 tw-text-xxs tw-text-extended-grey-2"
             >
               <img
                 class="tw-inline"
@@ -290,47 +305,14 @@
             </button>
             <div>¿Aprobado?</div>
           </div>
-          <cs-empresa-gtp [enterprise]="Empgtp" (grabar)="onGrabar($event)">
+          <cs-empresa-gtp
+            *ngIf="Formulario"
+            [enterprise]="Empgtp"
+            (grabar)="onGrabar($event)"
+          >
           </cs-empresa-gtp>
-        </div>
-      </div>
-    </div>
-    <div
-      class="col-xs-12 col-sm-12 col-md-12 col-lg-7 pb-3"
-      *ngIf="ServiciosFormulario"
-    >
-      <br />
-      <div class="d-flex justify-content-end">
-        <div class="formularioServ px-5 pt-3 pb-3 bg-white">
-          <div class="form-row">
-            <div class="form-group col-md-10">
-              <div class="font-black"></div>
-            </div>
-            <div class="form-group col-md-2">
-              <button
-                style="float: right"
-                (click)="OcultarFormularioSer()"
-                class="mano font-cerrar"
-              >
-                <img
-                  class="tw-inline"
-                  src="assets/images/cerrar.svg"
-                  alt="Cerrar"
-                />
-                <br />
-                Cerrar
-              </button>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-10">
-              <div class="font-black"></div>
-            </div>
-            <div class="form-group col-md-2">
-              <div style="float: right">¿Aprobado?</div>
-            </div>
-          </div>
           <cs-services-gtp
+            *ngIf="ServiciosFormulario"
             [service]="Servgtp"
             [idCompany]="llave"
             (grabar)="onGrabarSer($event)"
