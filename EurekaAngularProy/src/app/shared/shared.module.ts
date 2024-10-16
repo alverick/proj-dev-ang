@@ -2,28 +2,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-  MatNativeDateModule,
-} from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import {
-  MAT_MOMENT_DATE_FORMATS,
-  MatMomentDateModule,
-  MomentDateAdapter,
-} from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgClickOutsideDirective } from 'ng-click-outside2';
@@ -40,16 +18,21 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { IconFieldModule } from 'primeng/iconfield';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { MenuModule } from 'primeng/menu';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { PasswordModule } from 'primeng/password';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
@@ -68,6 +51,7 @@ import { MessageAlertComponent } from './components/message-alert/message-alert.
 import { ModalTermsComponent } from './components/modal-terms/modal-terms.component';
 import { PaymentsFilterComponent } from './components/payments-filter/payments-filter.component';
 import { ServiceCardComponent } from './components/service-card/service-card.component';
+import { ServiceChannelChipComponent } from './components/service-channel-chip/service-channel-chip.component';
 import { ServiceDebtFormComponent } from './components/service-debt-form/service-debt-form.component';
 import { ServiceEditFormComponent } from './components/service-edit-form/service-edit-form.component';
 import { ServiceStepConfigurationComponent } from './components/service-step-configuration/service-step-configuration.component';
@@ -118,6 +102,9 @@ const PRIMENG_MODULES = [
   InputMaskModule,
   InputNumberModule,
   InputTextModule,
+  InputTextareaModule,
+  InputGroupModule,
+  InputGroupAddonModule,
   KeyFilterModule,
   MenuModule,
   MessageModule,
@@ -126,6 +113,8 @@ const PRIMENG_MODULES = [
   PasswordModule,
   FileUploadModule,
   RadioButtonModule,
+  ProgressBarModule,
+  ProgressSpinnerModule,
   RippleModule,
   SidebarModule,
   TieredMenuModule,
@@ -148,6 +137,7 @@ const UI_MODULES = [FontAwesomeModule, OverlayModule];
     ValdemortModule,
     NgOptimizedImage,
     NgClickOutsideDirective,
+    ServiceChannelChipComponent,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
