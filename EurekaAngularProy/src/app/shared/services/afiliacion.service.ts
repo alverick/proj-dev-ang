@@ -1,25 +1,73 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import {
-  type IEntryModel,
-  type IServiceModel,
-  type MonedaModel,
-} from '../models';
+import { type IEntryModel, type IServiceModel } from '../models';
+import { CompanyAccounts } from './company.service';
 
 @Injectable()
 export class AfiliacionService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   public idCompany = 0;
   public email: string;
 
   public services: IServiceModel[] = [];
   private _rubros: IEntryModel[] = null;
-  private _rubrosAll: IEntryModel[] = null;
+  public codDeudor: IEntryModel[] = [
+    {
+      code: 'DNI',
+      name: 'DNI',
+    },
+    {
+      code: 'RUC',
+      name: 'RUC',
+    },
+    {
+      code: 'Codigo Interno',
+      name: 'Celular',
+    },
+    {
+      code: 'Otro',
+      name: 'Otro (Cód. Interno, Cod. Alumno, N° de departamentos, etc.)',
+    },
+  ];
+  public tipoDato: IEntryModel[] = [
+    {
+      code: 'C',
+      name: 'Tengo su código, nombres y deuda',
+    },
+    {
+      code: 'P',
+      name: 'Tengo solo código y nombres',
+    },
+    {
+      code: 'S',
+      name: 'No ingresaré data',
+    },
+  ];
+  public tipoPago: IEntryModel[] = [
+    {
+      code: 'C',
+      name: 'Pueden elegir qué deuda quieren pagar',
+    },
+    {
+      code: 'P',
+      name: 'Siempre la deuda que vence primero',
+    },
+  ];
+  public periodoMora: IEntryModel[] = [
+    {
+      code: '1',
+      name: 'Diario',
+    },
+    {
+      code: '2',
+      name: 'Fijo',
+    },
+  ];
 
   public GetRubros(): Observable<IEntryModel[]> {
     if (this._rubros !== null) {
@@ -31,112 +79,19 @@ export class AfiliacionService {
         map((r) => {
           this._rubros = r;
           return r;
-        })
+        }),
       )
-      .pipe(catchError((err) => throwError(err)));
+      .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
-  public GetRubrosAll(): Observable<IEntryModel[]> {
-    return this.http
-      .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading/all`)
-      .pipe(
-        map((r) => {
-          this._rubrosAll = r;
-          return r;
-        })
-      )
-      .pipe(catchError((err) => throwError(err)));
-  }
-
-  public GetCodDeudor(): Observable<any[]> {
-    return of<Record<string, string>[]>([
-      {
-        code: 'DNI',
-        name: 'DNI',
-      },
-      {
-        code: 'RUC',
-        name: 'RUC',
-      },
-      {
-        code: 'Codigo Interno',
-        name: 'Celular',
-      },
-      {
-        code: 'Otro',
-        name: 'Otro (Cód. Interno, Cod. Alumno, N° de departamentos, etc.)',
-      },
-    ]);
-  }
-
-  public GetTipoDato(): Observable<any[]> {
-    return of<any[]>([
-      {
-        code: 'C',
-        name: 'Tengo su código, nombres y deuda',
-      },
-      {
-        code: 'P',
-        name: 'Tengo solo código y nombres',
-      },
-      {
-        code: 'S',
-        name: 'No ingresaré data',
-      },
-    ]);
-  }
-
-  public GetTipoPago(): Observable<any[]> {
-    return of<any[]>([
-      {
-        code: 'C',
-        name: 'Pueden elegir qué deuda quieren pagar',
-      },
-      {
-        code: 'P',
-        name: 'Siempre la deuda que vence primero',
-      },
-    ]);
-  }
-
-  public GetMoneda(): Observable<MonedaModel[]> {
-    return of<MonedaModel[]>([
-      {
-        code: '001',
-        name: 'Soles',
-        symbol: 'S/',
-      },
-      {
-        code: '002',
-        name: 'Dólares',
-        symbol: '$',
-      },
-    ]);
-  }
-
-  public GetPeriodoMora(): Observable<any[]> {
-    return of<any[]>([
-      {
-        code: '1',
-        name: 'Diario',
-      },
-      {
-        code: '2',
-        name: 'Fijo',
-      },
-    ]);
-  }
-
-  public GetCards(): Observable<any[]> {
+  public GetCards() {
     if (this.idCompany) {
-      return this.http.get<any[]>(
-        `${environment.END_POINT}/company/${this.idCompany}/cards`
+      return this.http.get<CompanyAccounts[]>(
+        `${environment.END_POINT}/company/${this.idCompany}/cards`,
       );
     }
-    return this.http.get<any[]>(`${environment.END_POINT}/company/cards`);
-  }
-
-  GetTipoCambio(): Observable<number> {
-    return of(3.37);
+    return this.http.get<CompanyAccounts[]>(
+      `${environment.END_POINT}/company/cards`,
+    );
   }
 }
