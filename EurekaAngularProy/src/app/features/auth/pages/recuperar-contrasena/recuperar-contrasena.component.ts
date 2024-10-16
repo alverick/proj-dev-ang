@@ -1,8 +1,8 @@
-import { type OnInit, Component, HostListener } from '@angular/core';
+import { Component, HostListener, type OnInit } from '@angular/core';
 import {
-  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
+  type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,8 +13,8 @@ import { emailRegex } from '../../../../shared/constants/patterns';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
 import {
   type ActionEventProperties,
-  type Metadata,
   AdobeEvent,
+  type Metadata,
   TrackingService,
 } from '../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
@@ -23,20 +23,19 @@ import { authFullRoutingNames } from '../../auth-routing.names';
 @Component({
   selector: 'cs-recuperar-contrasena',
   templateUrl: './recuperar-contrasena.component.html',
-  styleUrls: ['./recuperar-contrasena.component.scss'],
 })
 export class RecuperarContrasenaComponent implements OnInit {
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private recuperaService: RecuperaService,
-    private router: Router,
-    protected tracking: TrackingService
-  ) {}
   public formulario = true;
   recupera: UntypedFormGroup;
   public submitted = false;
   submittedRequired = false;
   protected readonly errorMessages = errorsLoginForm;
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private recuperaService: RecuperaService,
+    private router: Router,
+    protected tracking: TrackingService,
+  ) {}
 
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: BeforeUnloadEvent) {
@@ -95,7 +94,7 @@ export class RecuperarContrasenaComponent implements OnInit {
             this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
             this.mensaje(
               'Hemos recibido tus datos',
-              'Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta.'
+              'Estamos revisando los datos que ingresaste, en caso de que sean correctos recibirás un correo electrónico con indicaciones para acceder a tu cuenta.',
             );
             this.formulario = false;
             this.f.ruc.reset();
@@ -112,7 +111,7 @@ export class RecuperarContrasenaComponent implements OnInit {
             });
             this.mensaje(
               'Los datos ingresados son inválidos',
-              'Por favor, verifique e ingréselos nuevamente.'
+              'Por favor, verifique e ingréselos nuevamente.',
             );
           }
         });
@@ -129,13 +128,13 @@ export class RecuperarContrasenaComponent implements OnInit {
         if (d === true) {
           this.mensaje(
             'Hemos recibido tus datos',
-            'Se ha reenviado un correo electrónico con indicaciones para acceder a tu cuenta.'
+            'Se ha reenviado un correo electrónico con indicaciones para acceder a tu cuenta.',
           );
           this.formulario = false;
         } else {
           this.mensaje(
             'Los datos ingresados son inválidos',
-            'Por favor, verifique e ingréselos nuevamente.'
+            'Por favor, verifique e ingréselos nuevamente.',
           );
         }
       });
