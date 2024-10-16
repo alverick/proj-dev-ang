@@ -1,157 +1,139 @@
-<div class="position-relative">
-  <div *ngIf="loading" class="d-flex justify-content-center">
-    <mat-spinner
-      mode="indeterminate"
-      [diameter]="30"
-      class="my-4"
-    ></mat-spinner>
+<div class="tw-relative tw-pt-6">
+  <div *ngIf="loading" class="tw-flex tw-justify-center">
+    <p-progressSpinner
+      styleClass="tw-w-8 tw-h-8 progress-spinner"
+      strokeWidth="5"
+    />
   </div>
-  <div *ngIf="!loading" class="bg-white">
-    <div class="container-header mb-5">
-      <div class="title text-center mb-5">Detalle de pago</div>
-      <div class="details d-flex justify-content-center">
-        <div class="label font-weight-bold mr-3">Nombre Cliente:</div>
-        <div class="value mr-5">{{ customer?.name }}</div>
-        <div class="label font-weight-bold mr-3">Código Cliente:</div>
-        <div class="value">{{ customer?.code }}</div>
+  <div *ngIf="!loading" class="tw-bg-white">
+    <div class="tw-mb-5">
+      <div class="tw-mb-8 tw-text-center tw-text-2xl tw-font-medium">
+        Detalle de pago
+      </div>
+      <div class="tw-flex tw-justify-center tw-gap-2">
+        <div class="tw-font-bold">Nombre Cliente:</div>
+        <div class="tw-mr-5 tw-text-extended-grey-1">{{ customer?.name }}</div>
+        <div class="tw-font-bold">Código Cliente:</div>
+        <div class="tw-text-extended-grey-1">{{ customer?.code }}</div>
       </div>
     </div>
 
-    <div class="shadow p-4">
-      <table class="table">
+    <div class="box-shadow tw-p-6">
+      <table class="tw-w-full">
         <thead>
-          <tr class="header">
-            <th class="text-center" scope="col">Monto pagado</th>
-            <th class="text-center" scope="col">Fecha de pago</th>
-            <th class="text-center" scope="col">Canal</th>
-            <th class="text-center" scope="col">Nº de operación</th>
-            <th class="text-center" scope="col"></th>
+          <tr class="tw-border-b-2 tw-border-primary-green-1">
+            <th class="tw-w-1/5 tw-p-3 tw-text-center" scope="col">
+              Monto pagado
+            </th>
+            <th class="tw-w-1/5 tw-p-3 tw-text-center" scope="col">
+              Fecha de pago
+            </th>
+            <th class="tw-w-1/5 tw-p-3 tw-text-center" scope="col">Canal</th>
+            <th class="tw-w-2/12 tw-p-3 tw-text-center" scope="col">
+              Nº de operación
+            </th>
+            <th class="tw-w-1/12 tw-p-3 tw-text-center" scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngIf="items.length === 0">
-            <td class="text-center">-</td>
-            <td class="text-center">-</td>
-            <td class="text-center">-</td>
-            <td class="text-center">-</td>
-            <td class="text-center"></td>
+            <td class="tw-p-3 tw-text-center">-</td>
+            <td class="tw-p-3 tw-text-center">-</td>
+            <td class="tw-p-3 tw-text-center">-</td>
+            <td class="tw-p-3 tw-text-center">-</td>
+            <td class="tw-p-3 tw-text-center"></td>
           </tr>
           <tr *ngFor="let itm of items">
-            <td class="text-center">
+            <td class="tw-p-3 tw-text-center">
               <span *ngIf="!itm.editing"
-                >{{ itm.currency }} {{ itm.amount | number : '1.2-2' }}</span
+                >{{ itm.currency }} {{ itm.amount | number: '1.2-2' }}</span
               >
               <div *ngIf="itm.editing">
-                <mat-form-field class="full-width inline-input">
-                  <input
+                <div class="tw-relative tw-w-full">
+                  <p-inputNumber
                     type="text"
-                    matInput
-                    csOnlyNumbersForm
                     [(ngModel)]="itm.newAmount"
                     maxlength="12"
                     minlength="4"
+                    [min]="1"
                     (blur)="amountBlur(itm)"
+                    [minFractionDigits]="2"
+                    [maxFractionDigits]="2"
+                    [prefix]="itm.currency"
                     (ngModelChange)="itm.errores.amount = null"
                   />
-                  <span class="moneda" matPrefix>{{ itm.currency }}&nbsp;</span>
-                  <div class="msg-error" *ngIf="itm.errores.amount">
+                  <div
+                    class="tw-absolute tw-left-0 tw-top-full tw-mt-1 tw-w-full tw-text-left tw-text-xxs tw-text-error"
+                    *ngIf="itm.errores.amount"
+                  >
                     {{ itm.errores.amount }}
                   </div>
-                </mat-form-field>
+                </div>
               </div>
             </td>
-            <td class="text-center">
+            <td class="tw-p-3 tw-text-center">
               <span *ngIf="!itm.editing">{{
-                itm.date | date : 'dd/MM/yy'
+                itm.date | date: 'dd/MM/yy'
               }}</span>
-              <div *ngIf="itm.editing">
-                <mat-form-field class="full-width inline-input">
-                  <input
-                    csDate
-                    matInput
-                    [matDatepicker]="ddp"
-                    [(ngModel)]="itm.newDate"
-                    maxlength="10"
-                    minlength="10"
-                    type="text"
-                    (ngModelChange)="itm.errores.date = null"
-                    (click)="ddp.open()"
-                  />
-                  <mat-datepicker-toggle
-                    matSuffix
-                    [for]="ddp"
-                  ></mat-datepicker-toggle>
-                  <mat-datepicker #ddp></mat-datepicker>
-                  <div class="msg-error" *ngIf="itm.errores.date">
-                    {{ itm.errores.date }}
-                  </div>
-                </mat-form-field>
+              <div *ngIf="itm.editing" class="tw-relative">
+                <p-calendar
+                  class="tw-w-full"
+                  styleClass="tw-w-full"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [(ngModel)]="itm.newDate"
+                  (ngModelChange)="itm.errores.date = null"
+                  appendTo="body"
+                  dateFormat="dd/mm/yy"
+                ></p-calendar>
+                <div
+                  class="tw-absolute tw-left-0 tw-top-full tw-mt-1 tw-w-full tw-text-left tw-text-xxs tw-text-error"
+                  *ngIf="itm.errores.date"
+                >
+                  {{ itm.errores.date }}
+                </div>
               </div>
             </td>
-            <td class="text-center">
+            <td class="tw-p-3 tw-text-center">
               <span class="select-color" *ngIf="!itm.editing">{{
                 itm.channel
               }}</span>
               <div *ngIf="itm.editing">
-                <mat-form-field class="select-color full-width inline-input">
-                  <mat-select
-                    class="select-color"
-                    [(ngModel)]="itm.newChannel"
-                    disableOptionCentering
-                    panelClass="pts16"
-                  >
-                    <mat-option class="select-color" value="Efectivo"
-                      >Efectivo
-                    </mat-option>
-                    <mat-option class="select-color" value="POS"
-                      >POS</mat-option
-                    >
-                    <mat-option class="select-color" value="BCP"
-                      >BCP</mat-option
-                    >
-                    <mat-option class="select-color" value="BBVA"
-                      >BBVA
-                    </mat-option>
-                    <mat-option class="select-color" value="Otro banco"
-                      >Otro banco
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+                <p-dropdown
+                  [options]="channelOptions"
+                  class="tw-w-full"
+                  styleClass="tw-w-full"
+                  [(ngModel)]="itm.newChannel"
+                ></p-dropdown>
               </div>
             </td>
-            <td class="text-center">{{ itm.number }}</td>
+            <td class="tw-p-3 tw-text-center">{{ itm.number }}</td>
             <td>
               <ng-container *ngrxLet="useAmountLimits$ as useAmountLimits">
                 <div
                   *ngIf="
                     itm.canEdit && (!useAmountLimits || serviceType === 'C')
                   "
-                  class="d-flex"
+                  class="tw-flex tw-gap-2"
                 >
-                  <a
+                  <button
                     *ngIf="!itm.editing"
-                    class="btn-edit tw-shrink-0 tw-cursor-pointer"
+                    pButton
+                    pRipple
+                    type="button"
+                    class="p-button p-button-text p-button-icon-only tw-h-10 tw-w-10"
+                    icon="pi pi-pen-to-square"
                     (click)="editItm(itm); $event.stopPropagation()"
-                  >
-                    <img
-                      class="tw-inline"
-                      src="assets/images/pencil.svg"
-                      alt="editar"
-                      width="20"
-                    />
-                  </a>
-                  <a
+                  ></button>
+                  <button
                     *ngIf="!itm.editing"
-                    class="btn-delete ml-1 tw-shrink-0 tw-cursor-pointer"
+                    pButton
+                    pRipple
+                    type="button"
+                    class="p-button p-button-text p-button-icon-only tw-h-10 tw-w-10"
+                    icon="pi pi-trash"
                     (click)="delItm(itm); $event.stopPropagation()"
-                  >
-                    <img
-                      class="tw-inline"
-                      src="assets/images/trash.svg"
-                      alt="eliminar"
-                      width="20"
-                    />
-                  </a>
+                  ></button>
                 </div>
               </ng-container>
             </td>
@@ -165,47 +147,45 @@
             (items.length == 0 || status !== 'PAGADO' || isEditingRow)
           "
         >
-          <div class="action d-flex flex-column">
-            <ng-container *ngIf="!isEditingRow">
-              <button
-                type="button"
-                mat-button
-                class="btn-outline-green mx-auto"
-                (click)="addItem()"
-              >
-                <img
-                  class="tw-inline"
-                  src="assets/images/plus_circle.svg"
-                  alt="agregar"
-                />
-                Agregar un pago
-              </button>
-            </ng-container>
+          <div class="tw-flex tw-flex-col tw-items-center tw-gap-2">
+            <button
+              *ngIf="!isEditingRow"
+              pButton
+              pRipple
+              type="button"
+              (click)="addItem()"
+              icon="pi pi-plus-circle"
+              class="p-button-text tw-h-10 tw-w-60"
+              label="Agregar un pago"
+            ></button>
             <ng-container *ngIf="isEditingRow">
               <button
                 type="button"
-                mat-button
-                mat-raised-button
-                color="primary"
-                class="mx-auto"
+                pButton
+                pRipple
+                class="tw-h-10 tw-w-32"
                 (click)="saveItem()"
-              >
-                Guardar
-              </button>
+                label="Guardar"
+              ></button>
               <button
                 type="button"
-                class="btn-outline-green mx-auto"
+                pButton
+                pRipple
+                class="p-button-outlined tw-h-10 tw-w-32"
                 (click)="cancelItem()"
-              >
-                Cancelar
-              </button>
+                label="Cancelar"
+              ></button>
             </ng-container>
           </div>
         </div>
       </ng-container>
     </div>
   </div>
-  <a class="close" (click)="close()">
-    <img src="assets/images/cerrar.svg" alt="Cerrar" />
+  <a class="tw-absolute tw-right-3 tw-top-5" (click)="close()">
+    <img
+      class="tw-brightness-0 tw-saturate-100"
+      src="/assets/images/cerrar.svg"
+      alt="Cerrar"
+    />
   </a>
 </div>
