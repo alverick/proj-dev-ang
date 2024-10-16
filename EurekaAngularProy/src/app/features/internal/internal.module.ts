@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { LetDirective, PushPipe } from '@ngrx/component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgScrollReached } from 'ngx-scrollbar/reached-event';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { LoadBarComponent } from '../../shared/components/load-bar/load-bar.component';
@@ -79,6 +80,7 @@ import { SERVICES } from './services';
     TransactionService,
     LoadBarService,
     DynamicDialogService,
+    DynamicDialogRef,
   ],
 })
 export class InternalModule {}
