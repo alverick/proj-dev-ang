@@ -1,8 +1,8 @@
-import { type OnInit, Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import {
-  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
+  type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -26,21 +26,30 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
   public _service: CorreoGtpModel;
   public correos: CorreoGtpModel[] = [];
   public indiceActual = -1;
+  errorsForm = {
+    correo: {
+      minLength: 'El e-mail debe tener al menos 10 carácteres',
+      pattern: 'Ingrese un e-mail válido',
+    },
+  };
 
   // correoGtp: CorreoGtpModel;
   constructor(
     private formBuilder: UntypedFormBuilder,
-    public gtpService: GtpService
+    public gtpService: GtpService,
   ) {}
 
   ngOnInit() {
     this.frmCorreoGtp = this.formBuilder.group({
-      correo: new UntypedFormControl('', [
-        Validators.required,
-        Validators.pattern(emailRegex),
-        Validators.minLength(10),
-        Validators.maxLength(100),
-      ]),
+      correo: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(emailRegex),
+          Validators.minLength(10),
+          Validators.maxLength(100),
+        ],
+      ],
     });
     this.onListarCorreoGTP();
   }
@@ -127,7 +136,7 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
             (s, i) =>
               s.correo.toUpperCase() ===
                 this.frmCorreoGtp.value.correo.toUpperCase() &&
-              i !== this.indiceActual
+              i !== this.indiceActual,
           )
         ) {
           Swal.fire({
@@ -144,7 +153,7 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
           (s, i) =>
             s.correo.toUpperCase() ===
               this.frmCorreoGtp.value.correo.toUpperCase() &&
-            i !== this.indiceActual
+            i !== this.indiceActual,
         )
       ) {
         Swal.fire({
