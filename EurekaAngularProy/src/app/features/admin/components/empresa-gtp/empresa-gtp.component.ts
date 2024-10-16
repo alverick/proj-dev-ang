@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
+import { mobileOperators } from '../../../../shared/constants/company';
 
 import { emailRegex } from '../../../../shared/constants/patterns';
 import { type IEntryModel } from '../../../../shared/models';
@@ -23,7 +24,6 @@ import { AfiliacionService } from '../../../../shared/services/afiliacion.servic
 @Component({
   selector: 'cs-empresa-gtp',
   templateUrl: './empresa-gtp.component.html',
-  styleUrls: ['./empresa-gtp.component.scss'],
 })
 export class EmpresaGTPComponent implements OnInit {
   public _enterprise: ICompanyData;
@@ -70,6 +70,10 @@ export class EmpresaGTPComponent implements OnInit {
 
     const isNotEditable = newNameGTPStatus !== 1;
 
+    const operator = mobileOperators.find(
+      (operator) => operator.value === movilOperator,
+    );
+
     let newNombreApprovedValue: string;
     switch (NombreApproved) {
       case undefined:
@@ -100,7 +104,7 @@ export class EmpresaGTPComponent implements OnInit {
       email: new UntypedFormControl(
         {
           value: email,
-          disabled: isNotEditable,
+          disabled: true,
         },
         [
           Validators.required,
@@ -112,7 +116,7 @@ export class EmpresaGTPComponent implements OnInit {
       movilNumber: new UntypedFormControl(
         {
           value: movilNumber,
-          disabled: isNotEditable,
+          disabled: true,
         },
         [
           Validators.required,
@@ -122,7 +126,7 @@ export class EmpresaGTPComponent implements OnInit {
         ],
       ),
       movilOperator: new UntypedFormControl({
-        value: movilOperator,
+        value: operator.label,
         disabled: true,
       }),
     });
