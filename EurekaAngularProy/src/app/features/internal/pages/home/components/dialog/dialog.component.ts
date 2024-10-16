@@ -33,7 +33,6 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
   selector: 'cs-dialog',
   templateUrl: 'dialog.component.html',
   styleUrls: ['dialog.component.scss'],
-  providers: [DynamicDialogRef],
 })
 export class DialogComponent implements OnInit {
   useAmountLimits = false;

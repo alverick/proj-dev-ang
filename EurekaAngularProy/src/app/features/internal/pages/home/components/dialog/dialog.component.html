@@ -1,32 +1,3 @@
-<!--<mat-dialog-actions align="end">-->
-<!--  <a-->
-<!--    *ngIf="!excelService.statusUpload"-->
-<!--    class="pt-2 hover:tw-no-underline tw-cursor-pointer"-->
-<!--    (click)="close()"-->
-<!--  >-->
-<!--    <span class="pr-2 pt-1"-->
-<!--      ><span class="cancelar tw-cursor-pointer">Cancelar</span>-->
-<!--    </span>-->
-<!--    <img-->
-<!--      class="tw-inline tw-cursor-pointer"-->
-<!--      height="20"-->
-<!--      width="20"-->
-<!--      src="/assets/images/cerrar.svg"-->
-<!--      alt="Close"-->
-<!--    />-->
-<!--  </a>-->
-<!--  <a-->
-<!--    *ngIf="excelService.statusUpload"-->
-<!--    class="pt-2 hover:tw-no-underline tw-cursor-pointer"-->
-<!--    (click)="close()"-->
-<!--  >-->
-<!--    <span class="pr-2 pt-1"-->
-<!--      ><span class="cancelar tw-cursor-pointer">Minimizar</span>-->
-<!--    </span>-->
-<!--    <mat-icon class="svg_custom" svgIcon="eurc_minimize"></mat-icon>-->
-<!--  </a>-->
-<!--</mat-dialog-actions>-->
-
 <div class="content p-0">
   <div *ngIf="!excelService.statusUpload && !ready" class="paso">
     PASO 1 DE 2
@@ -70,7 +41,7 @@
     <cs-message-alert
       *ngIf="isNewFlow"
       mode="info"
-      class="tw-mx-auto tw-block md:tw-w-96 tw-my-6"
+      class="tw-mx-auto tw-my-6 tw-block md:tw-w-96"
       >Monto máximo permitido por cobro
       {{
         limitAmountMax | currency: excelService.service.currencySymbol
@@ -86,7 +57,7 @@
       </button>
       <br />
       <button
-        class="tw-mt-2 btn-outline-green"
+        class="btn-outline-green tw-mt-2"
         type="button"
         (click)="gotoUploadTemplate()"
       >
@@ -97,12 +68,12 @@
   <div *ngIf="excelService.statusUpload" class="progress-text">
     {{ progress.status }}
   </div>
-  <mat-progress-bar
+  <p-progressBar
     *ngIf="excelService.statusUpload"
     [mode]="progress.mode"
     [value]="progress.value"
-    [bufferValue]="100"
-  ></mat-progress-bar>
+    styleClass="tw-h-1 tw-my-4"
+  />
   <div *ngIf="!excelService.statusUpload && ready" class="landing">
     <div class="text">
       Selecciona el archivo y sube la plantilla con la información de los
@@ -128,7 +99,7 @@
       >
         <ng-template let-file pTemplate="file">
           <div
-            class="tw-flex tw-items-center tw-my-4 tw-justify-center tw-gap-4"
+            class="tw-my-4 tw-flex tw-items-center tw-justify-center tw-gap-4"
           >
             <div>{{ file.name }}</div>
             <div>{{ getSizeInMegaBytes(file) | number: '1.2-2' }} MB</div>
@@ -168,7 +139,7 @@
         </div>
         <div class="clear-float"></div>
       </div>
-      <div class="list tw-text-left tw-overflow-auto">
+      <div class="list tw-overflow-auto tw-text-left">
         <div class="err-item" *ngFor="let err of excelService.errores">
           <span *ngIf="err.row > 0"
             ><strong class="resaltado">Fila {{ err.row }}</strong> : </span
