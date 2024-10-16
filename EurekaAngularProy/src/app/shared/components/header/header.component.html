@@ -1,7 +1,9 @@
 <nav
-  class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow d-flex justify-content-center tw-px-2 xl:tw-px-0"
+  class="tw-flex tw-h-[72px] tw-justify-center tw-border-b tw-border-extended-grey-4 tw-px-2 tw-shadow-sm xl:tw-px-0"
 >
-  <div class="custom-container col-12">
+  <div
+    class="tw-mx-auto tw-flex tw-w-full tw-max-w-[1320px] tw-items-center tw-justify-between"
+  >
     <a class="navbar-brand" [routerLink]="'/'">
       <ng-template [ngIf]="isBlank" [ngIfElse]="isNotBlank">
         <img

@@ -2,8 +2,7 @@
   class="form"
   [ngClass]="{ 'gtp-mode': gtpMode }"
   [formGroup]="form"
-  (ngSubmit)="sendFilters()"
->
+  (ngSubmit)="sendFilters()">
   <div class="form-elm">
     <cs-label-control class="tw-w-full" formControlName="inputSearch">
       <p-iconField class="tw-w-full" iconPosition="left" control>
@@ -16,8 +15,7 @@
           [maxLength]="20"
           [placeholder]="fieldNameSearch"
           formControlName="inputSearch"
-          variant="filled"
-        />
+          variant="filled" />
       </p-iconField>
     </cs-label-control>
   </div>
@@ -31,8 +29,7 @@
         optionLabel="name"
         [showClear]="true"
         [placeholder]="fieldState"
-        [optionValue]="selectDropdownValue"
-      >
+        [optionValue]="selectDropdownValue">
         <ng-template let-service pTemplate="selectedItem">
           {{ (service.code ? service.code + ' - ' : '') + service.name }}
         </ng-template>
@@ -53,8 +50,7 @@
         styleClass="tw-w-full lg:tw-w-52"
         optionLabel="descripcion"
         placeholder="Estado"
-        [optionValue]="gtpMode ? 'idWayPay' : 'idState'"
-      >
+        [optionValue]="gtpMode ? 'idWayPay' : 'idState'">
       </p-dropdown
     ></cs-label-control>
   </div>
@@ -69,15 +65,16 @@
         styleClass="tw-w-full lg:tw-w-52"
         optionLabel="descripcion"
         placeholder="Tipo de solicitud"
-        optionValue="idState"
-      >
+        optionValue="idState">
       </p-dropdown>
     </cs-label-control>
   </div>
   <div
     class="tw-hidden lg:tw-block lg:tw-basis-full"
-    [ngClass]="{ 'xl:tw-hidden': !gtpMode, '2xl:tw-basis-auto': !gtpMode }"
-  ></div>
+    [ngClass]="{
+      'xl:tw-hidden': !gtpMode,
+      '2xl:tw-basis-auto': !gtpMode,
+    }"></div>
   <div *ngIf="dateList" class="form-elm">
     <cs-label-control formControlName="dateForFilter">
       <p-dropdown
@@ -89,8 +86,7 @@
         styleClass="tw-w-full lg:tw-w-44"
         optionLabel="descripcion"
         placeholder="Fecha"
-        optionValue="idDate"
-      >
+        optionValue="idDate">
       </p-dropdown>
     </cs-label-control>
   </div>
@@ -99,8 +95,7 @@
     <cs-label-control
       class="tw-w-full"
       formControlName="dateFrom"
-      [errorMessages]="errorMessageDates"
-    >
+      [errorMessages]="errorMessageDates">
       <p-calendar
         control
         formControlName="dateFrom"
@@ -111,16 +106,14 @@
         [maxDate]="maxDateFrom"
         placeholder="Desde"
         appendTo="body"
-        dateFormat="d/m/yy"
-      ></p-calendar
+        dateFormat="d/m/yy"></p-calendar
     ></cs-label-control>
   </div>
   <div class="form-elm tw-w-full lg:tw-w-auto">
     <cs-label-control
       class="tw-w-full"
       formControlName="dateTo"
-      [errorMessages]="errorMessageDates"
-    >
+      [errorMessages]="errorMessageDates">
       <p-calendar
         control
         formControlName="dateTo"
@@ -132,21 +125,18 @@
         [maxDate]="maxDate"
         placeholder="Hasta"
         appendTo="body"
-        dateFormat="d/m/yy"
-      ></p-calendar
+        dateFormat="d/m/yy"></p-calendar
     ></cs-label-control>
   </div>
   <div
     class="actions 2xl:tw-basis-auto"
-    [ngClass]="{ 'xl:tw-basis-full': !gtpMode }"
-  >
+    [ngClass]="{ 'xl:tw-basis-full': !gtpMode }">
     <button
       type="submit"
       icon="pi pi-send"
       pButton
       pRipple
-      label="Buscar"
-    ></button>
+      label="Buscar"></button>
     <button
       type="button"
       pButton
@@ -155,7 +145,6 @@
       icon="pi pi-trash"
       [ngClass]="{ active: formFilled }"
       (click)="cleanAllFilters()"
-      label="Limpiar filtros"
-    ></button>
+      label="Limpiar filtros"></button>
   </div>
 </form>

@@ -6,9 +6,9 @@
   class="tw-max-w-3xl"
 >
   <div
-    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-16 tw-py-14"
+    class="form-container tw-rounded tw-border tw-border-solid tw-border-extended-grey-3 tw-px-5 tw-py-14 md:tw-px-10 xl:tw-px-16"
   >
-    <h2 class="tw-font-medium tw-text-2xl tw-mb-7">
+    <h2 class="tw-mb-7 tw-text-2xl tw-font-medium">
       Completa la información de tu servicio
     </h2>
     <div class="form-controls tw-max-w-xl">
@@ -16,7 +16,7 @@
         <cs-label-control
           class="tw-w-full"
           formControlName="name"
-          [errorMessages]="errorMessages.name"
+          [errorMessages]="errorMessages?.name"
           >Nombre del servicio<input
             type="text"
             class="tw-w-full"
@@ -33,7 +33,7 @@
       <cs-label-control
         class="tw-w-full"
         formControlName="account"
-        [errorMessages]="errorMessages.account"
+        [errorMessages]="errorMessages?.account"
         >Selecciona la cuenta que se asociará al servicio<p-dropdown
           [options]="accounts"
           optionLabel="number"
@@ -61,20 +61,13 @@
             formControlName="useAppWeb"
           >
           </p-checkbox>
-          <ng-container label-inline
-            ><div
-              class="description tw-flex tw-flex-col md:tw-flex-row tw-gap-2 tw-justify-between tw-w-72 md:tw-w-96"
+          <ng-container label-inline>
+            <cs-service-channel-chip amount="S/ 2.00">
+              <div class="tw-text-base">Canales Digitales</div>
+              <div class="sub">
+                Interbank APP y Banca por Internet
+              </div></cs-service-channel-chip
             >
-              <div>
-                <div class="tw-text-base">Canales Digitales</div>
-                <div class="sub">Interbank APP y Banca por Internet</div>
-              </div>
-              <p-chip
-                icon="pi pi-money-bill"
-                label="S/ 2.00"
-                styleClass="p-chip-primary tw-text-primary-green-1 tw-text-sm tw-whitespace-nowrap"
-              ></p-chip>
-            </div>
           </ng-container>
         </cs-label-control>
       </div>
@@ -91,19 +84,10 @@
           >
           </p-checkbox>
           <ng-container label-inline
-            ><div
-              class="description tw-flex tw-flex-col md:tw-flex-row tw-gap-2 tw-justify-between tw-w-72 md:tw-w-96"
+            ><cs-service-channel-chip amount="S/ 1.50">
+              <div class="tw-text-base">Agentes</div>
+              <div class="sub">Lima y provincia</div></cs-service-channel-chip
             >
-              <div>
-                <div class="tw-text-base">Agentes</div>
-                <div class="sub">Lima y provincia</div>
-              </div>
-              <p-chip
-                icon="pi pi-money-bill"
-                label="S/ 1.50"
-                styleClass="p-chip-primary tw-text-primary-green-1 tw-text-sm tw-whitespace-nowrap"
-              ></p-chip>
-            </div>
           </ng-container>
         </cs-label-control>
       </div>
@@ -127,16 +111,16 @@
     </div>
   </div>
   <div
-    class="tw-flex tw-mt-10 tw-gap-2"
+    class="tw-mt-10 tw-flex tw-gap-2"
     [ngClass]="{
       'tw-justify-between': showCancel,
-      'tw-justify-end': !showCancel
+      'tw-justify-end': !showCancel,
     }"
   >
     <button
       pButton
       pRipple
-      class="tw-w-full md:tw-w-56 p-button-outlined"
+      class="p-button-outlined tw-w-full md:tw-w-56"
       *ngIf="showCancel"
       type="button"
       (click)="onCancel()"
