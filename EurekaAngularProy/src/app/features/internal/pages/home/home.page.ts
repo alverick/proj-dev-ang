@@ -7,7 +7,6 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ShepherdService } from 'angular-shepherd';
@@ -177,7 +176,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     private homeService: HomeService,
     public transactionService: TransactionService,
     public excelService: ExcelService,
-    public dialog: MatDialog,
     private loginService: LoginService,
     private fileLoad: LoadFileService,
     private barLoad: LoadBarService,

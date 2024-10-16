@@ -1,21 +1,23 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
 import { MockBuilder, MockRender } from 'ng-mocks';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { IconField } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
+import { LabelControlComponent } from '../label-control/label-control.component';
 import { PaymentsFilterComponent } from './payments-filter.component';
 
 describe('PaymentsFilterComponent', () => {
   beforeEach(() =>
     MockBuilder(PaymentsFilterComponent)
-      .mock(MatFormFieldModule)
-      .mock(MatSelectModule)
-      .mock(MatIconModule)
-      .mock(MatDatepickerModule)
       .mock(FormsModule)
-      .mock(ReactiveFormsModule)
+      .mock(IconField)
+      .mock(InputIconModule)
+      .mock(DropdownModule)
+      .mock(CalendarModule)
+      .mock(LabelControlComponent)
+      .mock(ReactiveFormsModule),
   );
 
   it('should create', () => {

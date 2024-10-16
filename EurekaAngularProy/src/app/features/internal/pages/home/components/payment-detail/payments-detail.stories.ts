@@ -1,18 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER } from '@angular/core';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconRegistry } from '@angular/material/icon';
-import {
-  MAT_MOMENT_DATE_FORMATS,
-  MomentDateAdapter,
-} from '@angular/material-moment-adapter';
-import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
@@ -30,19 +17,6 @@ import { TransactionService } from '../../../../../../shared/services/transactio
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { PaymentDetailComponent } from './payment-detail.component';
 
-function initAppComponentFactory(
-  matIconRegistry: MatIconRegistry,
-  domSanitizer: DomSanitizer,
-) {
-  return async () => {
-    matIconRegistry.addSvgIcon(
-      'eurc_trash',
-      domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/trash.svg'),
-      { viewBox: '0 0 24 24' },
-    );
-  };
-}
-
 const meta: Meta<PaymentDetailComponent> = {
   title: 'Internal/Home/Payment Detail',
   component: PaymentDetailComponent,
@@ -55,7 +29,6 @@ const meta: Meta<PaymentDetailComponent> = {
         HttpClientModule,
         CommonModule,
         SharedModule,
-        MatDialogModule,
       ],
       providers: [
         Store,
@@ -65,18 +38,6 @@ const meta: Meta<PaymentDetailComponent> = {
         DynamicDialogRef,
         StorageService,
         TrackingService,
-        {
-          provide: APP_INITIALIZER,
-          useFactory: initAppComponentFactory,
-          multi: true,
-          deps: [MatIconRegistry, DomSanitizer],
-        },
-        { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
-        {
-          provide: DateAdapter,
-          useClass: MomentDateAdapter,
-          deps: [MAT_DATE_LOCALE],
-        },
         {
           provide: DynamicDialogConfig,
           useValue: {
@@ -92,7 +53,6 @@ const meta: Meta<PaymentDetailComponent> = {
             },
           },
         },
-        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
       ],
     }),
   ],

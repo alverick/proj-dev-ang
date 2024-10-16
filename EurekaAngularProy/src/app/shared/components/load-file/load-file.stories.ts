@@ -1,5 +1,4 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatProgressBar } from '@angular/material/progress-bar';
 import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 import { ProgressBarModule } from 'primeng/progressbar';
 
@@ -11,7 +10,7 @@ const meta: Meta<LoadFileComponent> = {
   component: LoadFileComponent,
   decorators: [
     moduleMetadata({
-      imports: [HttpClientTestingModule, MatProgressBar, ProgressBarModule],
+      imports: [HttpClientTestingModule, ProgressBarModule],
       providers: [{ provide: ExcelService, useValue: { statusUpload: true } }],
     }),
   ],
