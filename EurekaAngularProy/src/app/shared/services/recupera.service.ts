@@ -24,7 +24,7 @@ export class RecuperaService {
           this.ruc = data.RUC;
           this.email = data.Email;
           return r;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -35,19 +35,18 @@ export class RecuperaService {
       .pipe(
         map((r) => {
           return r;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
   public ChangePassword(data: any) {
-    console.log('ChangePassword', data);
     return this.http
       .post<any>(`${environment.END_POINT}/Login/changepassword`, data)
       .pipe(
         map((r) => {
           return r;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
