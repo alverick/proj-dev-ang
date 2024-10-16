@@ -10,8 +10,7 @@ export interface ICompanyData {
   movilNumber: string | number;
   movilOperator: string;
   newName: string;
-  newNameGTPStatus?: any;
-  status: string;
+  newNameGTPStatus?: number;
   uniqueCodeIBK: string;
   requestDate?: Date | string;
   inReview?: boolean;
