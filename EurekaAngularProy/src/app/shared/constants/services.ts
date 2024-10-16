@@ -91,7 +91,7 @@ export function parseParams(
     chargeType,
     interestType,
   }: Partial<IServiceRemoteModelForms>,
-  compareData: Partial<IServiceRemoteModel> = null
+  compareData: Partial<IServiceRemoteModel> = null,
 ): Partial<IServiceRemoteModel> {
   const parsedDebtorCode =
     debtorCodeCustom === debtorCodeCustomEmpty ? debtorCode : debtorCodeCustom;

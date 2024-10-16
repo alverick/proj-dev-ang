@@ -1,5 +1,5 @@
 import { type AnimationEvent } from '@angular/animations';
-import { type OnInit, Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
@@ -7,8 +7,8 @@ import { Store } from '@ngrx/store';
 import { PrimeNGConfig } from 'primeng/api';
 import { isNil, isNotEmpty } from 'ramda';
 import { delay } from 'rxjs';
-import { environment } from '../environments/environment';
 
+import { environment } from '../environments/environment';
 import { appFullRoutingNames } from './app-routing.names';
 import {
   fadeAnimation,
