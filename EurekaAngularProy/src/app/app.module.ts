@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { ApiMockModule } from '@ng-stack/api-mock';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -14,7 +13,6 @@ import { ValdemortModule } from 'ngx-valdemort';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MockService } from './mock.service';
 import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
 import { ValidationDefaultsComponent } from './shared/components/validation-defaults/validation-defaults.component';
 import { AuthInterceptorService } from './shared/interceptors/auth-interceptor.service';
@@ -27,11 +25,6 @@ import { NotifyService } from './shared/services/notify.service';
 import { StorageService } from './shared/services/storage.service';
 import { AppConfigEffects } from './store/effects/app-config.effects';
 import { appConfigFeature } from './store/reducers/app-config.reducer';
-
-const apiMockModule = ApiMockModule.forRoot(MockService, {
-  passThruUnknownUrl: true,
-  delay: 100,
-});
 
 @NgModule({
   declarations: [
@@ -51,7 +44,6 @@ const apiMockModule = ApiMockModule.forRoot(MockService, {
       disableConsoleLogging: false,
       enableSourceMaps: true,
     }),
-    environment.development ? apiMockModule : [],
     ValdemortModule,
     StoreModule.forRoot(
       {},
