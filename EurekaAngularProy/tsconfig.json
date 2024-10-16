@@ -7,7 +7,8 @@
     "sourceMap": false,
     "declaration": false,
     "module": "es2022",
-    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
     "useDefineForClassFields": false,
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
@@ -15,5 +16,5 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2022",
     "lib": ["es2022", "dom"]
-  },
+  }
 }

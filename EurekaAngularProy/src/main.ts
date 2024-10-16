@@ -4,6 +4,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { hmrBootstrap } from './hmr';
+import { worker } from './mocks/browser';
 
 const { production, hmr: hmrValue = false } = environment;
 if (production) {
@@ -13,6 +14,9 @@ if (production) {
 const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule);
 
 if (hmrValue) {
+  void worker.start({
+    onUnhandledRequest: 'bypass',
+  });
   if ((module as any).hot) {
     hmrBootstrap(module, bootstrap);
   } else {

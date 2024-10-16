@@ -1,8 +1,12 @@
 import { type Preview } from '@storybook/angular';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import docJson from '../documentation.json';
+import { initialize, mswLoader } from 'storybook-msw-addon';
+import { handlers } from '../src/mocks/handlers';
 
 setCompodocJson(docJson);
+
+initialize({}, handlers);
 
 const tailwindViewports = {
   mobile: {
@@ -70,6 +74,7 @@ const preview: Preview = {
       },
     },
   },
+  loaders: [mswLoader],
 };
 
 export default preview;
