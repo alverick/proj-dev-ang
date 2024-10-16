@@ -6,8 +6,7 @@ import {
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import {
   MAT_MOMENT_DATE_FORMATS,
@@ -15,32 +14,43 @@ import {
 } from '@angular/material-moment-adapter';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { moduleMetadata } from '@storybook/angular';
+import { LetDirective } from '@ngrx/component';
+import { Store } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
+import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { http, HttpResponse } from 'msw';
 import { CookieService } from 'ngx-cookie-service';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
+import { environment } from '../../../../../../../environments/environment';
+import { initialState } from '../../../../../../shared/mocks/store';
+import { TrackingService } from '../../../../../../shared/services';
+import { StorageService } from '../../../../../../shared/services/storage.service';
+import { TransactionService } from '../../../../../../shared/services/transaction.service';
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { PaymentDetailComponent } from './payment-detail.component';
 
 function initAppComponentFactory(
   matIconRegistry: MatIconRegistry,
-  domSanitizer: DomSanitizer
+  domSanitizer: DomSanitizer,
 ) {
   return async () => {
     matIconRegistry.addSvgIcon(
       'eurc_trash',
       domSanitizer.bypassSecurityTrustResourceUrl('/assets/images/trash.svg'),
-      { viewBox: '0 0 24 24' }
+      { viewBox: '0 0 24 24' },
     );
   };
 }
 
-export default {
+const meta: Meta<PaymentDetailComponent> = {
   title: 'Internal/Home/Payment Detail',
   component: PaymentDetailComponent,
   decorators: [
     moduleMetadata({
       declarations: [],
       imports: [
+        LetDirective,
         BrowserAnimationsModule,
         HttpClientModule,
         CommonModule,
@@ -48,8 +58,13 @@ export default {
         MatDialogModule,
       ],
       providers: [
-        MatDialogRef,
+        Store,
+        provideMockStore({ initialState }),
         CookieService,
+        TransactionService,
+        DynamicDialogRef,
+        StorageService,
+        TrackingService,
         {
           provide: APP_INITIALIZER,
           useFactory: initAppComponentFactory,
@@ -62,37 +77,81 @@ export default {
           useClass: MomentDateAdapter,
           deps: [MAT_DATE_LOCALE],
         },
-
-        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
         {
-          provide: MAT_DIALOG_DATA,
+          provide: DynamicDialogConfig,
           useValue: {
-            customer: {
-              code: 93837373,
-              name: 'werwerwe',
+            data: {
+              debtId: 1238992,
+              status: 'VENCIDO',
+              serviceType: 'C',
+              currency: 'S/',
+              customer: {
+                name: '3444',
+                code: '3242334545',
+              },
             },
-            currency: 'S/',
-            debtId: 288287,
-            status: 'PARCIAL',
           },
         },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
       ],
     }),
   ],
 };
+export default meta;
 
-export const normal = () => ({
-  component: PaymentDetailComponent,
-  props: {
-    gtpMode: false,
-  },
-  argTypes: { sendForm: { action: 'clicked' } },
-});
+type Story = StoryObj<PaymentDetailComponent>;
 
-export const gtp = () => ({
-  component: PaymentDetailComponent,
-  props: {
-    gtpMode: true,
+export const Normal: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.post(`${environment.END_POINT}/payment/ofDebt/1238992`, () => {
+          return HttpResponse.json([]);
+        }),
+      ],
+    },
   },
-  argTypes: { sendForm: { action: 'clicked' } },
-});
+};
+
+export const WithData: Story = {
+  parameters: {
+    msw: {
+      handlers: [
+        http.post(`${environment.END_POINT}/payment/ofDebt/1238992`, () => {
+          return HttpResponse.json([
+            {
+              id: 110,
+              currency: 'S/',
+              amount: 50.2,
+              date: '2023-03-09T12:45:40.2666667',
+              channel: 'Efectivo',
+              number: '',
+              canEdit: true,
+            },
+            {
+              id: 111,
+              currency: 'S/',
+              amount: 50.3,
+              date: '2023-03-10T12:45:40.2666667',
+              channel: 'Efectivo',
+              number: '4333',
+              canEdit: false,
+            },
+          ]);
+        }),
+      ],
+    },
+  },
+};
+
+export const Editing: Story = {
+  args: {
+    isEditingRow: true,
+  },
+};
+
+export const Loader: Story = {
+  args: {
+    loading: true,
+  },
+};

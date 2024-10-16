@@ -1,12 +1,12 @@
-import { type OnInit, Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, type OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { forEachObjIndexed, isNil } from 'ramda';
 
 import {
   type ActionEventProperties,
-  type Metadata,
   AdobeEvent,
+  type Metadata,
   TrackingService,
 } from '../../../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../../../shared/services/transaction.service';
@@ -16,30 +16,32 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
 @Component({
   selector: 'cs-payment-detail',
   templateUrl: './payment-detail.component.html',
-  styleUrls: ['./payment-detail.component.scss'],
 })
 export class PaymentDetailComponent implements OnInit {
   items: any[] = [];
   loading = false;
   isEditingRow = false;
   serviceType = '';
-  customer: any = {};
+  customer = {};
   debtId: number;
   status: string;
   currency: string;
-  companyDetails$ = this.store.select(companyFeature.selectDetails);
+  useAmountLimits$ = this.store.select(companyFeature.selectUseAmountLimits);
+  channelOptions = ['Efectivo', 'POS', 'BCP', 'BBVA', 'Otro banco'];
 
   constructor(
     private transaction: TransactionService,
-    public dialogRef: MatDialogRef<PaymentDetailComponent>,
+    public dialogRef: DynamicDialogRef<PaymentDetailComponent>,
+    public dialogConfig: DynamicDialogConfig<PaymentDetailComponent>,
     protected tracking: TrackingService,
     private readonly store: Store,
-    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.debtId = data.debtId;
-    this.customer = data.customer;
-    this.currency = data.currency;
-    this.serviceType = data.serviceType;
+    ({
+      debtId: this.debtId,
+      customer: this.customer,
+      currency: this.currency,
+      serviceType: this.serviceType,
+    } = this.dialogConfig.data);
   }
 
   ngOnInit(): void {
@@ -68,9 +70,15 @@ export class PaymentDetailComponent implements OnInit {
     this.isEditingRow = true;
     itm.editing = true;
     itm.newAmount = itm.amount;
-    itm.newDate = itm.date;
+    itm.newDate = new Date(itm.date);
     itm.newChannel = itm.channel;
     itm.errores = {};
+    console.log(
+      itm.date,
+      typeof itm.date,
+      new Date(itm.date),
+      new Date(itm.date).toLocaleDateString(),
+    );
   }
 
   saveItem() {
@@ -94,18 +102,25 @@ export class PaymentDetailComponent implements OnInit {
   }
 
   saveItm(itm) {
-    if (itm.newAmount.toString() === '' || itm.newAmount.toString() === null) {
+    if (isNil(itm.newAmount)) {
       itm.errores.amount = 'Ingrese un monto';
-    }
-    if (itm.newAmount.toString().length < 1) {
-      itm.errores.amount = 'Ingrese un monto correcto';
-    }
-    if (parseInt(itm.newAmount.toString(), 10) < 0) {
-      itm.errores.amount = 'Ingrese un monto correcto';
-    }
+    } else {
+      if (
+        itm.newAmount.toString() === '' ||
+        itm.newAmount.toString() === null
+      ) {
+        itm.errores.amount = 'Ingrese un monto';
+      }
+      if (itm.newAmount.toString().length < 1) {
+        itm.errores.amount = 'Ingrese un monto correcto';
+      }
+      if (parseInt(itm.newAmount.toString(), 10) < 0) {
+        itm.errores.amount = 'Ingrese un monto correcto';
+      }
 
-    if (!itm.newAmount.toString().match(/^\d{1,9}([.]\d{0,2})?$/)) {
-      itm.errores.amount = 'Ingrese un monto válido';
+      if (!itm.newAmount.toString().match(/^\d{1,9}([.]\d{0,2})?$/)) {
+        itm.errores.amount = 'Ingrese un monto válido';
+      }
     }
 
     const newDateYear = new Date(itm.newDate).getFullYear();
@@ -240,7 +255,7 @@ export class PaymentDetailComponent implements OnInit {
     this.isEditingRow = true;
     this.items.push({
       currency: this.currency,
-      newAmount: '',
+      newAmount: null,
       newDate: new Date(),
       newChannel: 'Efectivo',
       canEdit: true,
