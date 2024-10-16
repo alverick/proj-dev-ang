@@ -15,6 +15,7 @@ module.exports = {
         'green-3': 'var(--primary-green-3)',
         'green-4': 'var(--primary-green-4)',
         'green-5': 'var(--primary-green-5)',
+        'green-6': 'var(--primary-green-6)',
       },
       secondary: {
         'blue-1': 'var(--secondary-blue-1)',
