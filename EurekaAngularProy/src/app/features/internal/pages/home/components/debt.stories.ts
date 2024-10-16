@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Component, importProvidersFrom } from '@angular/core';
+import { Component, importProvidersFrom, Input } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -28,12 +28,13 @@ import { DebtComponent } from './debt.component';
 })
 class LaunchComponent {
   ref: DynamicDialogRef;
+  @Input() width = '450px';
 
   constructor(public dialogService: DynamicDialogService) {}
 
   public launch(): void {
     this.ref = this.dialogService.open(DebtComponent, {
-      width: '450px',
+      width: this.width,
       footer: ' ',
       header: '',
       styleClass: 'simple-dialog',
@@ -75,11 +76,13 @@ export default meta;
 type Story = StoryObj<DebtComponent>;
 
 export const Normal: Story = {};
+
 export const Partial: Story = {
   args: {
     isPartial: true,
   },
 };
+
 export const Modal: Story = {
   decorators: [
     moduleMetadata({

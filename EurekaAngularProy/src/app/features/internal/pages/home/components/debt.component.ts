@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
+import { Component, Input, type OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -11,7 +11,7 @@ import { FormModel } from 'ngx-mf';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { forEachObjIndexed, isNil } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { of, Subject } from 'rxjs';
+import { of } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
 import { ServiceTypes } from '../../../../../shared/constants/services';
@@ -38,8 +38,7 @@ interface Debt {
 @Component({
   selector: 'cs-debt-form',
   templateUrl: './debt.component.html',
-  styleUrls: ['./debt.component.scss'],
-  providers: [CurrencyPipe, DynamicDialogRef],
+  providers: [CurrencyPipe],
 })
 export class DebtComponent implements OnInit {
   useAmountLimits = false;
@@ -48,10 +47,7 @@ export class DebtComponent implements OnInit {
   public maxDate = new Date(2049, 11, 31);
   public isPartial = false;
   limitAmountMax: number = null;
-  debtorCodeChanged = new Subject<boolean>();
   loaderDebtorCode = false;
-  debtorExistent = false;
-  notAlphanumericRegex = /^[0-9a-zA-Z]+$/;
   alphaNumSpaceRegex = /^[ 0-9a-zA-Z]+$/;
   validNameRegex = /^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$/;
   amountWithSymbolLabel = '';
@@ -128,7 +124,6 @@ export class DebtComponent implements OnInit {
       .select(companyFeature.selectCurrencyLimits)
       .pipe(filter((data) => isNotNilOrEmpty(data)))
       .subscribe((limits) => {
-        console.log(limits, this.excelService.service.currencySymbol);
         this.limitAmountMax = limits.find(
           (limit) => limit.symbol === this.excelService.service.currencySymbol,
         ).limitMax;
@@ -147,7 +142,6 @@ export class DebtComponent implements OnInit {
     this.debtForm.controls.code.valueChanges
       .pipe(debounceTime(600))
       .subscribe(() => {
-        this.debtorExistent = false;
         this.debtForm.controls.firstName.reset();
         this.debtForm.controls.firstName.enable();
         this.buscarNewCode();
@@ -173,13 +167,6 @@ export class DebtComponent implements OnInit {
 
     this.loaderDebtorCode = true;
 
-    setTimeout(() => {
-      this.loaderDebtorCode = false;
-      this.debtForm.controls.firstName.setValue('Nombre guardado');
-      this.debtForm.controls.firstName.disable();
-      this.debtorExistent = true;
-    }, 8000);
-
     this.homeService
       .getDebtorCode(
         this.excelService.service.name,
@@ -198,11 +185,6 @@ export class DebtComponent implements OnInit {
   }
 
   grabarNuevo() {
-    console.log(
-      this.debtForm,
-      this.debtForm.valid,
-      typeof this.debtForm.controls.emissionDate,
-    );
     if (!this.debtForm.valid) {
       return;
     }
@@ -254,7 +236,7 @@ export class DebtComponent implements OnInit {
             detail: 'Se ha agregado el cobro. ¿Que desea hacer?',
             location: 'Modal',
           });
-          swalAlert
+          void swalAlert
             .fire({
               title: 'Agregar Cobro',
               html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',
