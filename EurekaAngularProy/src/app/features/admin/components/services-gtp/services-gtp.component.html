@@ -1,550 +1,277 @@
 <form [formGroup]="frm" novalidate (submit)="onSubmitServicio()">
-  <div class="form-group">
-    <mat-form-field class="w-70">
+  <div class="form-row tw-flex tw-gap-4">
+    <cs-label-control class="tw-w-full" formControlName="nombre">
+      Nombre del servicio
       <textarea
-        class="input-text"
-        matInput
+        control
+        cols="30"
+        rows="1"
+        class="tw-w-full"
+        pInputTextarea
+        [autoResize]="true"
         formControlName="nombre"
-        name="nombre"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="5"
-        placeholder="Nombre del servicio"
-        style="overflow: hidden"
-      >
-      </textarea>
-      <mat-error>
-        <mat-error
-          class="messsage-error"
-          *ngIf="
-            f.nombre.invalid &&
-            f.nombre.hasError('required') &&
-            submittedRequired
-          "
-          >El nombre es obligatorio</mat-error
-        >
-        <mat-error
-          class="messsage-error"
-          *ngIf="f.nombre.invalid && f.nombre.hasError('pattern')"
-          >Ingrese un nombre correcto</mat-error
-        >
-        <mat-error
-          class="messsage-error"
-          *ngIf="f.nombre.invalid && f.nombre.hasError('minlength')"
-          >El nombre no puede tener menos de 3 caracteres</mat-error
-        >
-        <mat-error
-          class="messsage-error"
-          *ngIf="f.nombre.invalid && f.nombre.hasError('maxlength')"
-          >El nombre no puede tener mas de 30 caracteres</mat-error
-        >
-        <mat-error
-          class="messsage-error"
-          *ngIf="
-            f.nombre.invalid &&
-            !f.nombre.hasError('minlength') &&
-            f.nombre.hasError('alfa')
-          "
-          >El nombre debe tener por lo menos una letra o un numero</mat-error
-        >
-      </mat-error>
-    </mat-form-field>
-
-    <mat-radio-group
+      ></textarea>
+    </cs-label-control>
+    <div
       *ngIf="RadioAprovveName()"
-      formControlName="NewName"
-      aria-label="Select an option"
+      class="form-group tw-w-40 tw-shrink-0 tw-pr-2"
     >
-      <mat-radio-button name="NewName" class="w-15" value="S"
-        >SI</mat-radio-button
-      >
-      <mat-radio-button name="NewName" class="w-15" value="N"
-        >NO</mat-radio-button
-      >
-      <mat-error
-        class="messsage-error"
+      <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
+        <cs-label-control [onlyControl]="true" class="tw-w-full">
+          <p-radioButton
+            name="NewName"
+            value="S"
+            formControlName="NewName"
+          ></p-radioButton>
+          <ng-container label-inline>
+            <div class="tw-font-light">
+              <div class="tw-text-base">SI</div>
+            </div>
+          </ng-container>
+        </cs-label-control>
+        <cs-label-control [onlyControl]="true" class="tw-w-full">
+          <p-radioButton
+            name="NewName"
+            value="N"
+            formControlName="NewName"
+          ></p-radioButton>
+          <ng-container label-inline>
+            <div class="tw-font-light">
+              <div class="tw-text-base">NO</div>
+            </div>
+          </ng-container>
+        </cs-label-control>
+      </div>
+      <div
+        class="tw-whitespace-nowrap tw-text-xxs tw-text-error"
         *ngIf="
           f.NewName.invalid &&
           f.NewName.hasError('required') &&
           submittedRequired
         "
-        >Debe seleccionar una opción</mat-error
       >
-    </mat-radio-group>
-
-    <mat-form-field class="w-70">
-      <input
-        class="input-text"
-        (keypress)="onUpdateRes()"
-        matInput
-        type="text"
-        maxlength="7"
-        pattern="^[0-9]*$"
-        formControlName="res"
-        name="res"
-        placeholder="Código de servicio"
-      />
-      <mat-error
-        class="messsage-error"
-        *ngIf="f.res.invalid && f.res.hasError('required') && submittedRequired"
-        >El Código de servicio es obligatorio</mat-error
-      >
-      <mat-error
-        class="messsage-error"
-        *ngIf="f.res.invalid && f.res.hasError('maxlength')"
-        >El Código de servicio no puede tener mas de 7 caracteres</mat-error
-      >
-      <mat-error
-        class="messsage-error"
-        *ngIf="
-          f.res.invalid &&
-          f.res.hasError('minlength') &&
-          !f.res.hasError('pattern')
-        "
-        >El Código de servicio no puede tener menos de 7 caracteres</mat-error
-      >
-      <mat-error
-        class="messsage-error"
-        *ngIf="f.res.invalid && f.res.hasError('pattern')"
-        >Debe contener solo números</mat-error
-      >
-    </mat-form-field>
+        Debe seleccionar una opción
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <mat-form-field class="w-70">
-      <mat-label class="label">Código deudor</mat-label>
-      <input
-        class="input-text"
-        matInput
+  <div class="form-row tw-flex tw-gap-4">
+    <cs-label-control class="tw-w-full" formControlName="nameCod"
+      >Código deudor<input
         type="text"
+        class="tw-w-full"
+        pInputText
         maxlength="20"
         formControlName="nameCod"
-        name="nameCod"
       />
-      <mat-error>
-        <mat-error
-          class="messsage-error"
-          *ngIf="
-            f.codDeudor.invalid &&
-            f.codDeudor.hasError('required') &&
-            submittedRequired
-          "
-          >Elija una opcion</mat-error
-        >
-        <mat-error
-          *ngIf="
-            f.nameCod.invalid &&
-            f.nameCod.hasError('required') &&
-            submittedRequired
-          "
-          class="messsage-error"
-          >Escriba una opcion</mat-error
-        >
-        <mat-error
-          *ngIf="f.nameCod.invalid && f.nameCod.hasError('pattern')"
-          class="messsage-error"
-          >Ingrese un codigo correcto</mat-error
-        >
-        <mat-error
-          *ngIf="
-            f.nameCod.invalid &&
-            !f.nameCod.hasError('pattern') &&
-            f.nameCod.hasError('minlength')
-          "
-          class="messsage-error"
-          >El codigo no puede tener menos de 3 caracteres</mat-error
-        >
-      </mat-error>
-    </mat-form-field>
-    <mat-radio-group
+    </cs-label-control>
+    <div
       *ngIf="RadioAprovveNameCod()"
-      formControlName="NewNameCod"
-      aria-label="Select an option"
+      class="form-group tw-w-40 tw-shrink-0 tw-pr-2"
     >
-      <mat-radio-button name="NewNameCod" class="w-15" value="S"
-        >SI</mat-radio-button
-      >
-      <mat-radio-button name="NewNameCod" class="w-15" value="N"
-        >NO</mat-radio-button
-      >
-      <mat-error
-        class="messsage-error"
+      <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
+        <cs-label-control [onlyControl]="true" class="tw-w-full">
+          <p-radioButton
+            name="NewNameCod"
+            value="S"
+            formControlName="NewNameCod"
+          ></p-radioButton>
+          <ng-container label-inline>
+            <div class="tw-font-light">
+              <div class="tw-text-base">SI</div>
+            </div>
+          </ng-container>
+        </cs-label-control>
+        <cs-label-control [onlyControl]="true" class="tw-w-full">
+          <p-radioButton
+            name="NewNameCod"
+            value="N"
+            formControlName="NewNameCod"
+          ></p-radioButton>
+          <ng-container label-inline>
+            <div class="tw-font-light">
+              <div class="tw-text-base">NO</div>
+            </div>
+          </ng-container>
+        </cs-label-control>
+      </div>
+      <div
+        class="tw-whitespace-nowrap tw-text-xxs tw-text-error"
         *ngIf="
           f.NewNameCod.invalid &&
           f.NewNameCod.hasError('required') &&
           submittedRequired
         "
-        >Debe seleccionar una opción</mat-error
       >
-    </mat-radio-group>
+        Debe seleccionar una opción
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <mat-form-field class="w-100">
-      <mat-label class="label">¿Qué datos tienes de tus clientes?</mat-label>
-      <mat-select
-        class="input-text"
+  <div *ngIf="f.res.value !== ''" class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="res"
+      ><ng-container label>Código de servicio</ng-container
+      ><input
+        type="text"
+        class="tw-w-full"
+        pInputText
+        maxlength="7"
+        formControlName="res"
+      />
+    </cs-label-control>
+  </div>
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="tipoDato"
+      ><ng-container label>¿Qué datos tienes de tus clientes?</ng-container
+      ><input
+        type="text"
+        class="tw-w-full"
+        pInputText
+        maxlength="7"
         formControlName="tipoDato"
-        name="tipoDato"
-        disableOptionCentering
-        panelClass="pts30"
-        (ngModelChange)="onChangeTipoDato()"
-      >
-        <mat-option class="input-text"
-          >¿Qué datos tienes de tus clientes?</mat-option
-        >
-        <mat-option
-          class="input-text"
-          *ngFor="let t of tiposDato"
-          [value]="t.code"
-        >
-          {{ t.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error
-        class="messsage-error"
-        *ngIf="
-          f.tipoDato.invalid &&
-          f.tipoDato.hasError('required') &&
-          submittedRequired
-        "
-        >Elija una opcion</mat-error
-      >
-    </mat-form-field>
+      />
+    </cs-label-control>
   </div>
-  <div class="form-group" *ngIf="Dataparcial">
-    <mat-form-field class="w-100">
-      <mat-label class="label"
-        >¿Cómo quieres que te paguen tus clientes?</mat-label
-      >
-      <mat-select
-        class="input-text"
+  <div class="form-row" *ngIf="Dataparcial">
+    <cs-label-control class="tw-w-full" formControlName="tipoPago"
+      ><ng-container label
+        >¿Cómo quieres que te paguen tus clientes?</ng-container
+      ><input
+        type="text"
+        class="tw-w-full"
+        pInputText
+        maxlength="7"
         formControlName="tipoPago"
-        name="tipoPago"
-        disableOptionCentering
-        panelClass="pts30"
-      >
-        <mat-option class="input-text"
-          >¿Cómo quieres que te paguen tus clientes?</mat-option
-        >
-        <mat-option
-          class="input-text"
-          *ngFor="let t of tiposPago"
-          [value]="t.code"
-        >
-          {{ t.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error
-        class="messsage-error"
-        *ngIf="
-          f.tipoPago.invalid &&
-          f.tipoPago.hasError('required') &&
-          submittedRequired
-        "
-        >Elija una opcion</mat-error
-      >
-    </mat-form-field>
+      />
+    </cs-label-control>
   </div>
-  <div class="form-group">
-    <mat-form-field class="w-100">
-      <mat-label class="label">Nº de cuenta Interbank</mat-label>
-      <mat-select
-        class="input-text"
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="idCuenta"
+      ><ng-container label>Nº de cuenta Interbank</ng-container
+      ><input
+        type="text"
+        class="tw-w-full"
+        pInputText
         formControlName="idCuenta"
-        name="idCuenta"
-        disableOptionCentering
-        panelClass="pts30"
-      >
-        <mat-option class="input-text">Nº de cuenta Interbank</mat-option>
-        <mat-option
-          style="
-            white-space: normal !important;
-            display: block;
-            padding: 0.9em 0.5em 0.5em;
-            height: auto;
-          "
-          class="input-text"
-          *ngFor="let cta of cuentas"
-          [value]="cta.id"
-          >{{ cta.number }}</mat-option
-        >
-      </mat-select>
-      <mat-error
-        class="messsage-error"
-        *ngIf="
-          f.idCuenta.invalid &&
-          f.idCuenta.hasError('required') &&
-          submittedRequired
-        "
-        >Elija una opcion</mat-error
-      >
-      <!--POR AHORA VALIDA POR MEDIO DEL MINLENGTH-->
-      <mat-error
-        class="messsage-error"
-        *ngIf="f.idCuenta.invalid && f.idCuenta.hasError('minlength')"
-        >Elija una opcion</mat-error
-      >
-    </mat-form-field>
+      />
+    </cs-label-control>
   </div>
-  <div class="sub-el">
-    <span class="texto-medios">
-      Elige los medios por los cuales tus <br class="br-none-mobil" />
-      clientes te pagarán
-    </span>
+  <div class="tw-mb-1 tw-text-extended-grey-1">
+    Los medios por los cuales tus clientes te pagarán
   </div>
 
-  <div class="row card-columns mt-2 mb-3 text-center justify-content-center">
-    <div class="card-medio-pago">
-      <div [class.seleccionado-card]="f.usaWebApp.value" style="height: 161px">
-        <div class="pt-2">
-          <mat-checkbox formControlName="usaWebApp" id="styled-checkbox-1">
-          </mat-checkbox>
-        </div>
-        <div class="card-title texto-black">Web / App</div>
-        <div class="texto-d-medios pt-1">
-          Interbank APP <br />
-          y Banca por <br />
-          internet
-        </div>
-        <div class="pt-2 texto-green">S/2.00</div>
-        <div class="pt-1 texto-p-medios">por transacción</div>
-      </div>
+  <div class="tw-mb-6 tw-flex tw-justify-center tw-gap-4">
+    <div
+      class="tw-flex tw-w-32 tw-flex-col tw-justify-between tw-rounded-md tw-border tw-border-extended-grey-3 tw-bg-primary-green-6 tw-p-3 tw-text-center"
+    >
+      <div class="tw-font-semibold">Web / App</div>
+      <div class="tw-text-xs">Interbank APP y Banca por internet</div>
+      <div class="tw-font-semibold tw-text-primary-green-1">S/2.00</div>
+      <div class="tw-text-xs">por transacción</div>
     </div>
-    <div class="card-medio-pago">
-      <div [class.seleccionado-card]="f.usaAgente.value" style="height: 161px">
-        <div class="pt-2">
-          <mat-checkbox formControlName="usaAgente" id="styled-checkbox-2">
-          </mat-checkbox>
-        </div>
-        <div class="card-title texto-black">Agentes</div>
-        <div class="texto-d-medios" style="padding-top: 1em !important">
-          Lima y <br />
-          provincias
-        </div>
-        <div class="pt-2 texto-green">S/1.50</div>
-        <div class="pt-1 texto-p-medios">por transacción</div>
-      </div>
-    </div>
-    <div class="card-medio-pago" *ngIf="useAgencyChannel">
-      <div [class.seleccionado-card]="f.usaTienda.value" style="height: 161px">
-        <div class="pt-2">
-          <mat-checkbox formControlName="usaTienda" id="styled-checkbox-3">
-          </mat-checkbox>
-        </div>
-        <div class="card-title texto-black">
-          Tiendas <br />
-          <div class="ventanilla">(Ventanilla)</div>
-        </div>
-        <div class="texto-d-medios">
-          Lima y <br />
-          provincias
-        </div>
-        <div class="pt-2 texto-green">{{ simboloMoneda }} {{ comTienda }}</div>
-        <div class="pt-1 texto-p-medios">por transacción</div>
-      </div>
+    <div
+      *ngIf="f.usaAgente.value"
+      class="tw-flex tw-w-32 tw-flex-col tw-justify-between tw-rounded-md tw-border tw-border-extended-grey-3 tw-bg-primary-green-6 tw-p-3 tw-text-center"
+    >
+      <div class="tw-font-semibold">Agentes</div>
+      <div class="tw-grow tw-text-xs">Lima y provincias</div>
+      <div class="tw-font-semibold tw-text-primary-green-1">S/1.50</div>
+      <div class="tw-text-xs">por transacción</div>
     </div>
   </div>
-  <span class="texto-medios" *ngIf="Dataparcial"
-    >¿Quieres que tus clientes te puedan pagar en partes?</span
-  >
-  <div class="form-group pt-2" *ngIf="Dataparcial">
-    <div class="form-group col-2 pl-0">
-      <mat-radio-group formControlName="pagoPartes">
-        <mat-radio-button
+  <ng-container *ngIf="Dataparcial">
+    <div class="tw-mb-1 tw-text-extended-grey-1">
+      ¿Quieres que tus clientes te puedan pagar en partes?
+    </div>
+    <div
+      class="form-elm tw-flex tw-items-center tw-justify-items-start tw-gap-4 tw-pt-2"
+    >
+      <cs-label-control [onlyControl]="true">
+        <p-radioButton
           name="pagoPartes"
-          id="pagoPartes-no"
-          value="N"
-          class="texto-mora"
-          >No</mat-radio-button
-        >
-        <mat-radio-button
+          value="S"
+          formControlName="pagoPartes"
+        ></p-radioButton>
+        <ng-container label-inline>
+          <div class="tw-font-light">
+            <div class="tw-text-base">Si</div>
+          </div>
+        </ng-container>
+      </cs-label-control>
+      <cs-label-control [onlyControl]="true">
+        <p-radioButton
           name="pagoPartes"
-          id="pagoPartes-si"
-          value="S"
-          class="texto-mora"
-          >Si</mat-radio-button
-        >
-      </mat-radio-group>
-    </div>
-  </div>
-  <span class="texto-medios" *ngIf="Dataparcial">Cobro de mora</span>
-  <div class="form-row pt-2" *ngIf="Dataparcial">
-    <div class="form-group col-2">
-      <mat-radio-group formControlName="cobraMora" (change)="changeMora()">
-        <mat-radio-button
-          name="cobraMora"
-          id="mora-no"
           value="N"
-          class="texto-mora"
-          >No</mat-radio-button
-        >
-        <mat-radio-button
+          formControlName="pagoPartes"
+        ></p-radioButton>
+        <ng-container label-inline>
+          <div class="tw-font-light">
+            <div class="tw-text-base">No</div>
+          </div>
+        </ng-container>
+      </cs-label-control>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="Dataparcial">
+    <span class="tw-mb-1 tw-text-extended-grey-1">Cobro de mora</span>
+    <div
+      class="form-elm tw-flex tw-items-center tw-justify-items-start tw-gap-4 tw-pt-2"
+    >
+      <cs-label-control [onlyControl]="true">
+        <p-radioButton
           name="cobraMora"
-          id="mora-si"
           value="S"
-          class="texto-mora"
-          >Si</mat-radio-button
-        >
-      </mat-radio-group>
+          formControlName="cobraMora"
+        ></p-radioButton>
+        <ng-container label-inline>
+          <div class="tw-font-light">
+            <div class="tw-text-base">Si</div>
+          </div>
+        </ng-container>
+      </cs-label-control>
+      <cs-label-control [onlyControl]="true">
+        <p-radioButton
+          name="cobraMora"
+          value="N"
+          formControlName="cobraMora"
+        ></p-radioButton>
+        <ng-container label-inline>
+          <div class="tw-font-light">
+            <div class="tw-text-base">No</div>
+          </div>
+        </ng-container>
+      </cs-label-control>
     </div>
-    <div class="form-group col-5" *ngIf="cobraMora">
-      <mat-form-field class="w-80 ml-3">
-        <mat-label style="max-width: 128px">Tipo de Cobro</mat-label>
-        <mat-select
-          style="max-width: 128px"
-          class="texto-mora"
-          formControlName="periodoMora"
-          (ngModelChange)="TipoCobro()"
-          disableOptionCentering
-          panelClass="pts30"
-        >
-          <mat-option class="texto-mora">Tipo de Cobro</mat-option>
-          <mat-option
-            class="texto-mora"
-            *ngFor="let t of tiposMora"
-            [value]="t.code"
-          >
-            {{ t.name }}
-          </mat-option>
-        </mat-select>
-        <mat-error
-          class="messsage-error"
-          *ngIf="
-            f.periodoMora.invalid &&
-            f.periodoMora.hasError('required') &&
-            submittedRequired
-          "
-          >Elija una opcion</mat-error
-        >
-      </mat-form-field>
+    <div class="form-row tw-pb-4 tw-pt-2">
+      <div class="form-group" *ngIf="cobraMora">
+        <div class="form-elm">
+          <cs-label-control class="tw-w-full" formControlName="periodoMora"
+            ><ng-container label>Tipo de Cobro</ng-container
+            ><input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              formControlName="periodoMora"
+            />
+          </cs-label-control>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="cmoraporce">
+        <div *ngIf="f.tipoMora.value === 'M'" class="data">
+          Monto: {{ f.monto.value | currency: simboloMoneda }}
+        </div>
+        <div *ngIf="f.tipoMora.value === 'P'" class="data">
+          Porcentaje: {{ f.monto.value }} %
+        </div>
+      </div>
     </div>
-    <div class="form-group col-5" *ngIf="cmoraporce">
-      <mat-radio-group
-        class="radio-group"
-        formControlName="tipoMora"
-        (change)="changeTipoMora(true)"
-      >
-        <mat-radio-button
-          class="radio-button"
-          name="tipoMora"
-          id="monto"
-          value="M"
-          class="texto-radio-small"
-          >Monto</mat-radio-button
-        >
-        <mat-form-field
-          style="margin-top: -14px"
-          class="ml-4 w-80 texto-mora"
-          id="input-mora"
-        >
-          <input
-            formControlName="monto"
-            type="text"
-            name="monto"
-            matInput
-            csOnlyNumbersForm
-            maxlength="7"
-            (blur)="MoraMontoBlur($event)"
-          />
-          <span matSuffix class="simbolos"
-            >{{ simboloMoneda }}&nbsp;&nbsp;</span
-          >
-          <mat-error>
-            <mat-error
-              class="messsage-error"
-              *ngIf="
-                f.monto.invalid &&
-                f.monto.hasError('required') &&
-                submittedRequired
-              "
-              >Debe ingresar un monto</mat-error
-            >
-            <mat-error
-              class="messsage-error"
-              *ngIf="f.monto.invalid && f.monto.hasError('maximo')"
-              >No puede ser mayor a 1000.00 <br
-            /></mat-error>
-            <mat-error
-              class="messsage-error"
-              *ngIf="f.monto.invalid && f.monto.hasError('minimo')"
-              >No puede ser menor a 0.50</mat-error
-            >
-            <mat-error
-              class="messsage-error"
-              *ngIf="
-                f.monto.invalid &&
-                !f.monto.hasError('maximo') &&
-                !f.monto.hasError('minimo') &&
-                f.monto.hasError('pattern')
-              "
-              >No tiene el formato correcto</mat-error
-            >
-          </mat-error>
-        </mat-form-field>
-        <mat-radio-button
-          class="radio-button"
-          style="padding-top: 10px"
-          name="tipoMora"
-          id="porcentaje"
-          value="P"
-          class="texto-radio-small"
-          >Porcentaje</mat-radio-button
-        >
-        <mat-form-field
-          style="margin-top: -14px"
-          class="ml-4 w-80 texto-mora"
-          id="input-mora"
-        >
-          <input
-            formControlName="porcentaje"
-            name="porcentaje"
-            matInput
-            csOnlyNumbersForm
-            type="text"
-            maxlength="5"
-            (blur)="MoraPorcenBlur($event)"
-          />
-          <span matSuffix class="simbolos">%</span>
-          <mat-error>
-            <mat-error
-              class="messsage-error"
-              *ngIf="
-                f.porcentaje.invalid &&
-                f.porcentaje.hasError('required') &&
-                submittedRequired
-              "
-              >Debe ingresar un porcentaje</mat-error
-            >
-            <mat-error
-              class="messsage-error"
-              *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('maximo')"
-              >No puede ser mayor a 100.00</mat-error
-            >
-            <mat-error
-              class="messsage-error"
-              *ngIf="f.porcentaje.invalid && f.porcentaje.hasError('minimo')"
-              >No puede ser menor a 0.01</mat-error
-            >
-            <mat-error
-              class="messsage-error"
-              *ngIf="
-                f.porcentaje.invalid &&
-                !f.porcentaje.hasError('maximo') &&
-                !f.porcentaje.hasError('minimo') &&
-                f.porcentaje.hasError('pattern')
-              "
-              >No tiene el formato correcto</mat-error
-            >
-          </mat-error>
-        </mat-form-field>
-      </mat-radio-group>
-    </div>
+  </ng-container>
+  <div class="tw-text-center">
+    <button
+      *ngIf="Button() || update == true"
+      type="submit"
+      pButton
+      pRipple
+      class="tw-w-36"
+      label="Guardar"
+    ></button>
   </div>
-  <button
-    *ngIf="Button() || update == true"
-    type="submit"
-    class="btn-eureca-green"
-  >
-    GUARDAR
-  </button>
 </form>
