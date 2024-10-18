@@ -328,7 +328,7 @@ export class ServicesGTPComponent implements OnInit {
     }
     if (this.frm.valid) {
       const value: DataServiceGTP = this._service;
-      value.res = this.frm.value.res;
+      value.res = this.frm.getRawValue().res;
 
       value.acceptednewName =
         this._service.newNameGTPStatus === 1 ||
