@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { service } from '../../../../../../shared/mocks/service';
 import { initialState } from '../../../../../../shared/mocks/store';
@@ -18,9 +19,10 @@ const meta: Meta<DialogComponent> = {
     moduleMetadata({
       imports: [SharedModule, HttpClientModule],
       providers: [
+        DynamicDialogRef,
         Store,
         provideMockStore({ initialState }),
-        { provide: ExcelService, useValue: { service } },
+        { provide: ExcelService, useValue: { service, statusUpload: true } },
         StorageService,
         TrackingService,
       ],
@@ -35,5 +37,10 @@ export const Normal: Story = {};
 export const Upload: Story = {
   args: {
     ready: true,
+    progress: {
+      status: 'Subiendo',
+      mode: 'determinate',
+      value: 50,
+    },
   },
 };
