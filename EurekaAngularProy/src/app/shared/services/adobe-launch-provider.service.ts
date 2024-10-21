@@ -35,7 +35,7 @@ export class AdobeLaunchProviderService implements ProviderService {
   constructor(
     private scriptInjectorService: ScriptInjectorService,
     public trackingService: TrackingService,
-    private store: Store
+    private store: Store,
   ) {
     if (isNotEmpty(environment.adobe)) {
       document.addEventListener('at-content-rendering-succeeded', () => {
@@ -56,13 +56,19 @@ export class AdobeLaunchProviderService implements ProviderService {
               setTimeout(() => {
                 if (!hasPath(['adobe', 'target'], window)) {
                   this.store.dispatch(
-                    AppConfigActions.setLoader({ show: false })
+                    AppConfigActions.setLoader({ show: false }),
                   );
                 }
               }, 1100);
             }
-          })
+          }),
         );
+    } else {
+      setTimeout(() => {
+        document.dispatchEvent(
+          new CustomEvent('at-content-rendering-succeeded'),
+        );
+      });
     }
   }
 
@@ -76,7 +82,7 @@ export class AdobeLaunchProviderService implements ProviderService {
 
   private runSatelliteEvent(
     event: AdobeEventType,
-    payload: Partial<TrackEventProperties>
+    payload: Partial<TrackEventProperties>,
   ) {
     try {
       if ('undefined' !== typeof window._satellite && window._satellite) {
