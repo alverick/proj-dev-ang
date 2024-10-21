@@ -1,6 +1,6 @@
 <cs-header></cs-header>
 <div
-  class="tw-relative tw-pt-6 tw-px-6 xl:tw-px-0 tw-bg-contain tw-bg-center tw-bg-secondary-blue-1 tw-overflow-hidden"
+  class="tw-relative tw-overflow-hidden tw-bg-secondary-blue-1 tw-bg-contain tw-bg-center tw-px-6 tw-pt-6 xl:tw-px-0"
 >
   <img
     ngSrc="/assets/images/bg-hero.webp"
@@ -9,24 +9,24 @@
     fill
     priority
   />
-  <div class="tw-max-w-6xl tw-mx-auto">
+  <div class="tw-mx-auto tw-max-w-6xl">
     <div
-      class="tw-relative tw-flex tw-flex-col md:tw-flex-row tw-justify-between tw-gap-6"
+      class="tw-relative tw-flex tw-flex-col tw-justify-between tw-gap-6 md:tw-flex-row"
     >
       <div class="md:tw-max-w-2xl">
         <h2
-          class="tw-pt-2 tw-text-2xl lg:tw-text-3xl tw-text-center md:tw-text-left xl:tw-text-4xl tw-font-medium tw-text-white"
+          class="tw-pt-2 tw-text-center tw-text-2xl tw-font-medium tw-text-white md:tw-text-left lg:tw-text-3xl xl:tw-text-4xl"
         >
           Gestiona las cobranzas de tu negocio de manera 100% digital con
           <span class="md:tw-block">Cobro Simple</span>
         </h2>
         <div
-          class="tw-pt-6 tw-text-center md:tw-text-left xl:tw-text-xl tw-text-white md:tw-max-w-[440px] tw-mb-8"
+          class="tw-mb-8 tw-pt-6 tw-text-center tw-text-white md:tw-max-w-[440px] md:tw-text-left xl:tw-text-xl"
         >
           Recibe el pago de tus clientes en nuestros canales Interbank.
         </div>
         <div
-          class="tw-py-10 tw-flex tw-flex-col md:tw-flex-row tw-gap-4 tw-items-center"
+          class="tw-flex tw-flex-col tw-items-center tw-gap-4 tw-py-10 md:tw-flex-row"
         >
           <ng-container *ngrxLet="disabledAffiliation$ as disabled">
             <button
@@ -34,7 +34,7 @@
               pRipple
               type="button"
               label="Regístrate"
-              class="tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
+              class="tw-h-12 tw-w-48 md:tw-w-auto lg:tw-w-52"
               (click)="clickRegistration('Regístrate - hero', 'hero', disabled)"
             ></button>
           </ng-container>
@@ -44,7 +44,7 @@
             pRipple
             type="button"
             label="Inicia sesión"
-            class="p-button-white tw-w-48 md:tw-w-auto lg:tw-w-52 tw-h-12"
+            class="p-button-white tw-h-12 tw-w-48 md:tw-w-auto lg:tw-w-52"
             (click)="clickLogin()"
           ></button>
         </div>
@@ -53,7 +53,7 @@
       <div class="tw-bottom-0 tw-right-0 md:tw-self-end">
         <img
           alt=""
-          class="tw-mx-auto sm:tw-min-w-[400px] sm:tw-h-[400px] md:tw-h-[380px] lg:tw-h-[410px] tw-w-auto tw-object-contain tw-object-bottom"
+          class="tw-mx-auto tw-w-auto tw-object-contain tw-object-bottom sm:tw-h-[400px] sm:tw-min-w-[400px] md:tw-h-[380px] lg:tw-h-[410px]"
           ngSrc="/assets/images/img-laptop-home.webp"
           height="440"
           width="454"
@@ -63,29 +63,29 @@
     </div>
   </div>
 </div>
-<div class="tw-bg-white tw-pt-14 tw-pb-14 tw-px-6 xl:tw-px-0">
-  <div class="tw-max-w-6xl tw-mx-auto">
+<div class="tw-bg-white tw-px-6 tw-pb-14 tw-pt-14 xl:tw-px-0">
+  <div class="tw-mx-auto tw-max-w-6xl">
     <h2
-      class="tw-text-2xl lg:tw-text-3xl tw-text-center xl:tw-text-4xl tw-font-medium tw-text-secondary-blue-1 tw-mb-10 lg:tw-mb-0"
+      class="tw-mb-10 tw-text-center tw-text-2xl tw-font-medium tw-text-secondary-blue-1 lg:tw-mb-0 lg:tw-text-3xl xl:tw-text-4xl"
     >
       ¿Listo para simplificar tus cobranzas?
     </h2>
 
-    <div class="lg:tw-flex lg:tw-pt-16 tw-gap-14">
+    <div class="tw-gap-14 lg:tw-flex lg:tw-pt-16">
       <div
-        class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-between tw-gap-6"
+        class="tw-flex tw-flex-col tw-justify-between tw-gap-6 lg:tw-flex-row"
       >
         <div
-          class="tw-text-center lg:tw-w-1/4 tw-border tw-border-extended-grey-3 tw-rounded-tl-3xl tw-rounded-br-3xl tw-p-10 hover:tw-border-primary-green-1 tw-will-change-auto tw-transition-all tw-duration-200 hover:tw-scale-[1.02]"
+          class="tw-rounded-br-3xl tw-rounded-tl-3xl tw-border tw-border-extended-grey-3 tw-p-10 tw-text-center tw-transition-all tw-duration-200 tw-will-change-auto hover:tw-scale-[1.02] hover:tw-border-primary-green-1 lg:tw-w-1/4"
           *ngFor="let groupInt of benefits; trackBy: trackByiItems"
         >
           <img
             alt=""
-            class="tw-mx-auto tw-w-20 tw-mb-2"
+            class="tw-mx-auto tw-mb-2 tw-w-20"
             [src]="'/assets/images/' + groupInt.image"
           />
           <div
-            class="tw-text-xl tw-leading-6 tw-mb-3 tw-h-[57px] tw-flex tw-items-center tw-justify-center"
+            class="tw-mb-3 tw-flex tw-h-[57px] tw-items-center tw-justify-center tw-text-xl tw-leading-6"
           >
             {{ groupInt.title }}
           </div>
@@ -95,49 +95,50 @@
     </div>
   </div>
 </div>
-<div class="tw-bg-secondary-blue-1 tw-py-14 tw-px-6 xl:tw-px-0">
-  <div class="tw-max-w-8xl tw-mx-auto lg:tw-px-20">
-    <div class="tw-text-white lg:tw-gap-24 tw-flex-col tw-text-center">
+<div class="tw-bg-secondary-blue-1 tw-px-6 tw-py-14 xl:tw-px-0">
+  <div class="tw-mx-auto tw-max-w-8xl lg:tw-px-20">
+    <div class="tw-flex-col tw-text-center tw-text-white lg:tw-gap-24">
       <div class="tw-mb-5 lg:tw-mb-0">
-        <div class="tw-text-2xl lg:tw-text-3xl tw-font-medium">
+        <div class="tw-text-2xl tw-font-medium lg:tw-text-3xl">
           ¿Qué necesitas?
         </div>
       </div>
-      <div class="lg:tw-text-2xl tw-text-base tw-mt-4">
+      <div class="tw-mt-4 tw-text-base lg:tw-text-2xl">
         Sólo necesitas tener una cuenta en Interbank:
         <div
-          class="tw-flex tw-flex-col lg:tw-flex-row tw-gap-10 tw-mt-4 tw-text-xl"
+          class="tw-mt-4 tw-flex tw-flex-col tw-gap-10 tw-text-xl lg:tw-flex-row"
         >
           <a
             href="https://bancacomercial.interbank.pe/cuenta-negocios/solicitud/verificacion-datos?utm_source=interbank.pe&utm_medium=web&utm_campaign=landing_producto_apertura_cuenta_negocios"
-            class="lg:tw-w-1/2 tw-mb-1 tw-relative tw-p-8 tw-py-20 hover:tw-no-underline"
+            rel="noopener noreferrer"
+            class="tw-relative tw-mb-1 tw-p-8 tw-py-20 hover:tw-no-underline lg:tw-w-1/2"
           >
             <div
-              class="shape tw-rounded-tl-3xl tw-rounded-br-3xl tw-bg-secondary-blue-2 tw-overflow-hidden tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-will-change-auto tw-transition-all tw-duration-200"
+              class="shape tw-absolute tw-bottom-0 tw-left-0 tw-right-0 tw-top-0 tw-overflow-hidden tw-rounded-br-3xl tw-rounded-tl-3xl tw-bg-secondary-blue-2 tw-transition-all tw-duration-200 tw-will-change-auto"
             >
               <img
                 alt=""
-                class="tw-mx-auto tw-w-48 tw-absolute tw-right-2 tw-bottom-0"
+                class="tw-absolute tw-bottom-0 tw-right-2 tw-mx-auto tw-w-48"
                 src="/assets/images/img-account-1.svg"
               />
             </div>
             <div
-              class="content tw-relative tw-text-left tw-pr-24 tw-text-white"
+              class="content tw-relative tw-pr-24 tw-text-left tw-text-white"
             >
               Cuenta Negocio (ábrela 100% online haciendo clic aquí).
             </div>
           </a>
-          <div class="lg:tw-w-1/2 tw-mb-1 tw-relative tw-p-8 tw-py-20">
+          <div class="tw-relative tw-mb-1 tw-p-8 tw-py-20 lg:tw-w-1/2">
             <div
-              class="shape tw-rounded-tl-3xl tw-rounded-br-3xl tw-bg-secondary-blue-2 tw-overflow-hidden tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-will-change-auto tw-transition-all tw-duration-200"
+              class="shape tw-absolute tw-bottom-0 tw-left-0 tw-right-0 tw-top-0 tw-overflow-hidden tw-rounded-br-3xl tw-rounded-tl-3xl tw-bg-secondary-blue-2 tw-transition-all tw-duration-200 tw-will-change-auto"
             >
               <img
                 alt=""
-                class="tw-mx-auto tw-w-44 tw-absolute tw-right-2 tw-bottom-0"
+                class="tw-absolute tw-bottom-0 tw-right-2 tw-mx-auto tw-w-44"
                 src="/assets/images/img-account-2.svg"
               />
             </div>
-            <div class="content tw-relative tw-text-left tw-pr-24">
+            <div class="content tw-relative tw-pr-24 tw-text-left">
               Cuenta Corriente o Ahorros Persona Jurídica.
             </div>
           </div>
@@ -146,26 +147,26 @@
     </div>
   </div>
 </div>
-<div class="tw-bg-white tw-py-14 tw-px-6 xl:tw-px-0">
-  <div class="tw-max-w-6xl tw-mx-auto">
+<div class="tw-bg-white tw-px-6 tw-py-14 xl:tw-px-0">
+  <div class="tw-mx-auto tw-max-w-6xl">
     <h2
-      class="tw-text-2xl lg:tw-text-3xl tw-text-center xl:tw-text-4xl tw-font-medium tw-text-secondary-blue-1 tw-mb-10 lg:tw-mb-0"
+      class="tw-mb-10 tw-text-center tw-text-2xl tw-font-medium tw-text-secondary-blue-1 lg:tw-mb-0 lg:tw-text-3xl xl:tw-text-4xl"
     >
       ¿Cómo funciona?
     </h2>
     <div
-      class="lg:tw-grid tw-flex tw-flex-col tw-grid-cols-2 lg:tw-pt-16 tw-justify-center tw-gap-6 tw-w-full"
+      class="tw-flex tw-w-full tw-grid-cols-2 tw-flex-col tw-justify-center tw-gap-6 lg:tw-grid lg:tw-pt-16"
     >
       <div
-        class="tw-text-left tw-border tw-border-extended-grey-3 tw-rounded-tl-3xl tw-rounded-br-3xl tw-p-8 tw-bg-extended-grey-5"
+        class="tw-rounded-br-3xl tw-rounded-tl-3xl tw-border tw-border-extended-grey-3 tw-bg-extended-grey-5 tw-p-8 tw-text-left"
         *ngFor="let groupInt of howWorks"
       >
-        <div class="tw-flex tw-gap-4 tw-items-center">
+        <div class="tw-flex tw-items-center tw-gap-4">
           <div class="tw-text-4xl tw-text-primary-green-1">
             {{ groupInt.position }}
           </div>
           <div
-            class="tw-text-lg tw-font-medium tw-leading-6 tw-text-secondary-blue-1 tw-border-b tw-border-secondary-blue-1 tw-pb-2 tw-mb-3 tw-flex tw-items-center"
+            class="tw-mb-3 tw-flex tw-items-center tw-border-b tw-border-secondary-blue-1 tw-pb-2 tw-text-lg tw-font-medium tw-leading-6 tw-text-secondary-blue-1"
           >
             {{ groupInt.title }}
           </div>
@@ -176,15 +177,15 @@
   </div>
 </div>
 <div class="tw-bg-primary-green-1 tw-px-6 xl:tw-px-0">
-  <div class="tw-max-w-6xl tw-mx-auto">
+  <div class="tw-mx-auto tw-max-w-6xl">
     <div
-      class="tw-flex tw-flex-col-reverse lg:tw-flex-row tw-gap-10 lg:tw-gap-28"
+      class="tw-flex tw-flex-col-reverse tw-gap-10 lg:tw-flex-row lg:tw-gap-28"
     >
       <div
-        class="tw-text-white tw-flex tw-flex-col tw-justify-evenly tw-shrink tw-py-14 tw-text-center"
+        class="tw-flex tw-shrink tw-flex-col tw-justify-evenly tw-py-14 tw-text-center tw-text-white"
       >
         <h2
-          class="tw-text-2xl lg:tw-text-3xl xl:tw-text-4xl tw-font-medium tw-mb-10 lg:tw-mb-0"
+          class="tw-mb-10 tw-text-2xl tw-font-medium lg:tw-mb-0 lg:tw-text-3xl xl:tw-text-4xl"
         >
           Podrás configurar tus cobros según tu modelo de negocio
         </h2>
@@ -199,61 +200,61 @@
           indicatorStyleClass="secondary-blue-1"
         >
           <ng-template let-payment pTemplate="item">
-            <div class="payment tw-p-8 tw-pr-24 tw-relative">
+            <div class="payment tw-relative tw-p-8 tw-pr-24">
               <div
-                class="shape tw-rounded-tl-3xl tw-rounded-br-3xl tw-bg-primary-green-2 tw-overflow-hidden tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-will-change-auto tw-transition-all tw-duration-200"
+                class="shape tw-absolute tw-bottom-0 tw-left-0 tw-right-0 tw-top-0 tw-overflow-hidden tw-rounded-br-3xl tw-rounded-tl-3xl tw-bg-primary-green-2 tw-transition-all tw-duration-200 tw-will-change-auto"
               >
                 <div
-                  class="sprite tw-absolute tw-right-0 tw-bottom-0 tw-w-24 tw-h-24 tw-bg-[length:100%_auto] tw-bg-[center_-100%] tw-bg-[url(/assets/images/sprite-stars.png)]"
+                  class="sprite tw-absolute tw-bottom-0 tw-right-0 tw-h-24 tw-w-24 tw-bg-[url(/assets/images/sprite-stars.png)] tw-bg-[length:100%_auto] tw-bg-[center_-100%]"
                 ></div>
                 <div
-                  class="sprite over tw-absolute tw-right-0 tw-bottom-0 tw-w-24 tw-h-24 tw-bg-[length:100%_auto] tw-bg-top tw-bg-[url(/assets/images/sprite-stars.png)]"
+                  class="sprite over tw-absolute tw-bottom-0 tw-right-0 tw-h-24 tw-w-24 tw-bg-[url(/assets/images/sprite-stars.png)] tw-bg-[length:100%_auto] tw-bg-top"
                 ></div>
                 <img
                   alt=""
-                  class="tw-mx-auto tw-h-16 tw-absolute tw-right-0 tw-bottom-0"
+                  class="tw-absolute tw-bottom-0 tw-right-0 tw-mx-auto tw-h-16"
                   [src]="'/assets/images/' + payment.image"
                 />
               </div>
               <div
-                class="tw-text-xl tw-font-bold tw-leading-6 tw-mb-3 tw-flex tw-items-center tw-relative tw-pointer-events-none"
+                class="tw-pointer-events-none tw-relative tw-mb-3 tw-flex tw-items-center tw-text-xl tw-font-bold tw-leading-6"
               >
                 {{ payment.title }}
               </div>
-              <div class="tw-text-left tw-relative tw-pointer-events-none">
+              <div class="tw-pointer-events-none tw-relative tw-text-left">
                 {{ payment.content }}
               </div>
             </div>
           </ng-template>
         </p-carousel>
         <div
-          class="tw-hidden sm:tw-grid tw-grid-cols-2 tw-gap-8 tw-py-9 tw-relative"
+          class="tw-relative tw-hidden tw-grid-cols-2 tw-gap-8 tw-py-9 sm:tw-grid"
         >
           <div
-            class="payment tw-p-8 tw-pr-24 tw-relative"
+            class="payment tw-relative tw-p-8 tw-pr-24"
             *ngFor="let groupInt of payments"
           >
             <div
-              class="shape tw-rounded-tl-3xl tw-rounded-br-3xl tw-bg-primary-green-2 tw-overflow-hidden tw-absolute tw-top-0 tw-bottom-0 tw-left-0 tw-right-0 tw-will-change-auto tw-transition-all tw-duration-200"
+              class="shape tw-absolute tw-bottom-0 tw-left-0 tw-right-0 tw-top-0 tw-overflow-hidden tw-rounded-br-3xl tw-rounded-tl-3xl tw-bg-primary-green-2 tw-transition-all tw-duration-200 tw-will-change-auto"
             >
               <div
-                class="sprite tw-absolute tw-right-0 tw-bottom-0 tw-w-24 tw-h-24 tw-bg-[length:100%_auto] tw-bg-[center_-100%] tw-bg-[url(/assets/images/sprite-stars.png)]"
+                class="sprite tw-absolute tw-bottom-0 tw-right-0 tw-h-24 tw-w-24 tw-bg-[url(/assets/images/sprite-stars.png)] tw-bg-[length:100%_auto] tw-bg-[center_-100%]"
               ></div>
               <div
-                class="sprite over tw-absolute tw-right-0 tw-bottom-0 tw-w-24 tw-h-24 tw-bg-[length:100%_auto] tw-bg-top tw-bg-[url(/assets/images/sprite-stars.png)]"
+                class="sprite over tw-absolute tw-bottom-0 tw-right-0 tw-h-24 tw-w-24 tw-bg-[url(/assets/images/sprite-stars.png)] tw-bg-[length:100%_auto] tw-bg-top"
               ></div>
               <img
                 alt=""
-                class="tw-mx-auto tw-h-16 tw-absolute tw-right-0 tw-bottom-0"
+                class="tw-absolute tw-bottom-0 tw-right-0 tw-mx-auto tw-h-16"
                 [src]="'/assets/images/' + groupInt.image"
               />
             </div>
             <div
-              class="tw-text-xl tw-font-bold tw-leading-6 tw-mb-3 tw-flex tw-items-center tw-relative tw-pointer-events-none"
+              class="tw-pointer-events-none tw-relative tw-mb-3 tw-flex tw-items-center tw-text-xl tw-font-bold tw-leading-6"
             >
               {{ groupInt.title }}
             </div>
-            <div class="tw-text-left tw-relative tw-pointer-events-none">
+            <div class="tw-pointer-events-none tw-relative tw-text-left">
               {{ groupInt.content }}
             </div>
           </div>
@@ -265,7 +266,7 @@
               pRipple
               type="button"
               label="Regístrate"
-              class="p-button-third tw-w-48 tw-h-12 bg-"
+              class="p-button-third bg- tw-h-12 tw-w-48"
               (click)="
                 clickRegistration('Regístrate - bottom', 'bottom', disabled)
               "
@@ -276,30 +277,31 @@
     </div>
   </div>
 </div>
-<div class="tw-bg-white tw-pt-10 tw-pb-12 tw-px-6 xl:tw-px-0">
+<div class="tw-bg-white tw-px-6 tw-pb-12 tw-pt-10 xl:tw-px-0">
   <div
-    class="tw-max-w-6xl tw-mx-auto tw-flex tw-flex-col md:tw-flex-row tw-justify-evenly tw-gap-10"
+    class="tw-mx-auto tw-flex tw-max-w-6xl tw-flex-col tw-justify-evenly tw-gap-10 md:tw-flex-row"
   >
-    <div class="lg:tw-w-1/4 tw-text-left">
+    <div class="tw-text-left lg:tw-w-1/4">
       <h2 class="tw-text-xl">Legales</h2>
       <div class="tw-text-base">
         <div class="tw-pt-5">
           <a
             (click)="showModalTerms()"
-            class="tw-cursor-pointer tw-text-extended-ibk-black hover:tw-no-underline tw-transition-colors tw-duration-300"
+            class="tw-cursor-pointer tw-text-extended-ibk-black tw-transition-colors tw-duration-300 hover:tw-no-underline"
           >
             Términos y condiciones
           </a>
         </div>
       </div>
     </div>
-    <div class="lg:tw-w-1/4 tw-text-left">
+    <div class="tw-text-left lg:tw-w-1/4">
       <h2 class="tw-text-xl">Contáctanos</h2>
       <div class="tw-text-base">
         <div class="tw-pt-5">
           <a
             href="https://api.whatsapp.com/send?phone=51993119001&text=Hola%20Interbank!"
             (click)="clickWa()"
+            rel="noopener noreferrer"
             target="_blank"
             class="tw-text-extended-ibk-black hover:tw-no-underline"
             ><i class="pi pi-whatsapp tw-text-primary-green-1"></i> 993 119
@@ -321,14 +323,14 @@
   ></p-toast>
 </div>
 <footer
-  class="tw-bg-white tw-border-extended-grey-3 tw-border-t tw-py-6 tw-px-6 xl:tw-px-0"
+  class="tw-border-t tw-border-extended-grey-3 tw-bg-white tw-px-6 tw-py-6 xl:tw-px-0"
 >
-  <div class="tw-max-w-6xl tw-mx-auto tw-text-extended-ibk-black tw-px-6">
-    <div class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-center tw-gap-2">
+  <div class="tw-mx-auto tw-max-w-6xl tw-px-6 tw-text-extended-ibk-black">
+    <div class="tw-flex tw-flex-col tw-justify-center tw-gap-2 lg:tw-flex-row">
       <div
-        class="tw-flex xl:tw-flex-wrap tw-flex-col xl:tw-flex-row tw-justify-center tw-gap-3 xl:tw-gap-1 tw-text-center tw-text-base"
+        class="tw-flex tw-flex-col tw-justify-center tw-gap-3 tw-text-center tw-text-base xl:tw-flex-row xl:tw-flex-wrap xl:tw-gap-1"
       >
-        <p class="xl:after:tw-content-['|'] after:tw-ml-1 after:tw-mr-1">
+        <p class="after:tw-ml-1 after:tw-mr-1 xl:after:tw-content-['|']">
           Banco Internacional del Perú S.A.A.
         </p>
         <p>
