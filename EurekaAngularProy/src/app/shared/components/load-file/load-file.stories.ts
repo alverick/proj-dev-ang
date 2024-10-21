@@ -21,11 +21,5 @@ export default meta;
 type Story = StoryObj<LoadFileComponent>;
 
 export const Default: Story = {
-  args: {
-    progress: {
-      status: 'Subiendo',
-      mode: 'indeterminate',
-      value: 0,
-    },
-  },
+  args: {},
 };
