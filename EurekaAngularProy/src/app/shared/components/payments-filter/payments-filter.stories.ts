@@ -16,9 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
 
 import { type DateList } from '../../models/dateList';
-import { type WayPay } from '../../models/way-pay';
 import { SharedModule } from '../../shared.module';
 import { PaymentsFilterComponent } from './payments-filter.component';
+import type { StatesGtp } from '../../models/states-gtp';
 
 function initAppComponentFactory(
   matIconRegistry: MatIconRegistry,
@@ -69,8 +69,12 @@ const meta: Meta<PaymentsFilterComponent> = {
 
 export default meta;
 
-const listStates: WayPay[] = [
-  { idWayPay: 'da', descripcion: 'Domiciliaciones' },
+const listStates: StatesGtp[] = [
+  { idState: 'Pendiente', descripcion: 'Pendiente' },
+  { idState: 'Atendido', descripcion: 'Atendido' },
+  { idState: 'Devuelto a la empresa', descripcion: 'Devuelto a la Empresa' },
+  { idState: 'Rechazado', descripcion: 'Rechazado' },
+  { idState: 'Desafiliado', descripcion: 'Desafiliado' },
 ];
 
 const listDates: DateList[] = [
@@ -268,6 +272,49 @@ const services = [
   },
 ];
 
+const categories = [
+  {
+    code: '33',
+    name: 'CLUBS CERT II',
+  },
+  {
+    code: '34',
+    name: 'COLEGIOS II',
+  },
+  {
+    code: '36',
+    name: 'ENT ESTADO II',
+  },
+  {
+    code: '38',
+    name: 'EVARIAS CSIII',
+  },
+  {
+    code: '39',
+    name: 'IB OPER.INTII',
+  },
+  {
+    code: '40',
+    name: 'INMOBILIAR II',
+  },
+  {
+    code: '32',
+    name: 'SEGURO/OTROII',
+  },
+  {
+    code: '31',
+    name: 'SERVICIOS II',
+  },
+  {
+    code: '35',
+    name: 'UNIV/INST II',
+  },
+  {
+    code: '37',
+    name: 'VARIOS II',
+  },
+];
+
 const initial = {
   ...initialOrig,
   payment: initialOrig.payment.code,
@@ -289,5 +336,7 @@ export const Gtp: Story = {
   args: {
     stateList: listStates,
     gtpMode: true,
+    services: categories,
+    multipleState: true,
   },
 };
