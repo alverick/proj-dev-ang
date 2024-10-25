@@ -272,18 +272,21 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   sendFilters() {
     this.formSubmitted = true;
     if (this.form.valid) {
-      const formValuesNull = mapObjIndexed(
-        (value) => (isNil(value) ? '' : value),
-        this.form.value
-      );
+      const formValuesNull = mapObjIndexed((value, key) => {
+        if (key === 'dateFrom' || key === 'dateTo' || !isNil(value)) {
+          return value;
+        } else {
+          return '';
+        }
+      }, this.form.value);
       const {
         inputSearch,
         service,
         status,
         statusSolicitud,
         dateForFilter,
-        dateFrom = '',
-        dateTo = '',
+        dateFrom = null,
+        dateTo = null,
       } = formValuesNull;
       let filterData: any = {
         inputSearch,
