@@ -48,7 +48,7 @@ const tailwindViewports = {
     name: 'default',
     styles: {
       width: '1320px',
-      height: '768px',
+      height: '748px',
     },
   },
   '2xl': {
