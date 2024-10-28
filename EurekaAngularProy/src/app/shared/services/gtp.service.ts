@@ -76,7 +76,7 @@ export class GtpService {
       filtro.BusinessHeading = '';
     }
     if (isNilOrEmpty(filtro.status)) {
-      filtro.status = '';
+      filtro.status = [];
     }
     const url = `${this.URI_API}/Company/GTP/list?PageNumber=${filtro.pageNumber}&ColumnName=${filtro.ColumnName}&Asc=${filtro.asc}&InputSearch=${filtro.inputSearch}&BusinessHeading=${filtro.BusinessHeading}&Status=${filtro.status}&Solicitud=${filtro.statusSolicitud}&DateFrom=${strDateFrom}&DateTo=${strDateTo}`;
     return this.http
