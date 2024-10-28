@@ -103,7 +103,7 @@
     "eslint-plugin-unused-imports": "^4.1.4",
     "jest": "^29.7.0",
     "jest-preset-angular": "^14.2.4",
-    "msw": "^2.4.11",
+    "msw": "^2.5.2",
     "ng-mocks": "^14.13.1",
     "ngx-mf": "^4.1.1",
     "postcss": "^8.4.47",
