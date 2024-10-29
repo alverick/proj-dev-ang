@@ -49,6 +49,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   @Input() gtpMode = false;
   @Input() dateList: DateList[];
   @Input() stateTypeList: StatesGtp[];
+  @Input() multipleState: boolean | string = false;
   @Input() services: any[];
   @Input() stateList: WayPay[] | StatesGtp[];
   @Input() initial;
@@ -278,9 +279,13 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
   sendFilters() {
     this.formSubmitted = true;
     if (this.form.valid) {
-      const formValuesNull = mapObjIndexed(
-        (value) => (isNil(value) ? '' : value),
-        this.form.value,
+      const formValuesNull = mapObjIndexed((value, key) => {
+        if (key === 'dateFrom' || key === 'dateTo' || !isNil(value)) {
+          return value;
+        } else {
+          return '';
+        }
+      },this.form.value,
       );
       const {
         inputSearch,
@@ -288,8 +293,8 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
         status,
         statusSolicitud,
         dateForFilter,
-        dateFrom = '',
-        dateTo = '',
+        dateFrom = null,
+        dateTo = null,
       } = formValuesNull;
       let filterData: any = {
         inputSearch,
