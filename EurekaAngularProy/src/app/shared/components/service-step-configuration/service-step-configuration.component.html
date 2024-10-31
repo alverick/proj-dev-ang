@@ -6,9 +6,9 @@
   class="tw-max-w-2xl"
 >
   <div
-    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-16 tw-py-14"
+    class="form-container tw-rounded tw-border tw-border-solid tw-border-extended-grey-3 tw-px-5 tw-py-14 md:tw-px-10 xl:tw-px-16"
   >
-    <h2 class="tw-font-medium tw-text-2xl tw-mb-7">Configura tu servicio</h2>
+    <h2 class="tw-mb-7 tw-text-2xl tw-font-medium">Configura tu servicio</h2>
     <div class="form-controls tw-max-w-xl">
       <div *ngIf="showAllTypes" class="form-elm tw-mb-5">
         <div class="tw-font-medium">
@@ -87,7 +87,7 @@
               pRipple
               type="button"
               icon="pi pi-times"
-              class="tw-bg-extended-grey-1 p-button-text input-button"
+              class="p-button-text input-button tw-bg-extended-grey-1"
               (click)="showDropdown()"
             ></button>
           </div>
@@ -113,16 +113,16 @@
     </div>
   </div>
   <div
-    class="tw-flex tw-mt-10 tw-gap-2"
+    class="tw-mt-10 tw-flex tw-gap-2"
     [ngClass]="{
       'tw-justify-between': showCancel,
-      'tw-justify-end': !showCancel
+      'tw-justify-end': !showCancel,
     }"
   >
     <button
       pButton
       pRipple
-      class="tw-w-full md:tw-w-56 p-button-outlined"
+      class="p-button-outlined tw-w-full md:tw-w-56"
       *ngIf="showCancel"
       type="button"
       (click)="onCancel()"

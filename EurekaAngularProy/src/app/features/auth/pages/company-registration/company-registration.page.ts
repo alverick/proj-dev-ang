@@ -1,4 +1,4 @@
-import { type OnInit, Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import { type UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { pathEq } from 'ramda';
@@ -22,7 +22,10 @@ export class CompanyRegistrationPage implements OnInit {
   operators = mobileOperators;
   documentTypes = documentTypes;
 
-  constructor(private router: Router, public affiliation: AffiliationService) {
+  constructor(
+    private router: Router,
+    public affiliation: AffiliationService,
+  ) {
     const navigation = this.router.getCurrentNavigation();
     if (pathEq(true, ['extras', 'state', 'initNew'], navigation)) {
       this.affiliation.registerForm.get('email').setValue('');
