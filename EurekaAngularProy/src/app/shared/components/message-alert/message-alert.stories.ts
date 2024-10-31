@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
-  type Meta,
-  type StoryObj,
   applicationConfig,
   argsToTemplate,
+  type Meta,
   moduleMetadata,
+  type StoryObj,
 } from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';
@@ -28,14 +28,14 @@ const meta: Meta<MessageAlertAndMessage> = {
   tags: ['autodocs'],
   argTypes: {
     mode: {
-      options: ['info'],
+      options: ['info', 'warning'],
       control: { type: 'select' },
     },
   },
   render: ({ content, ...args }) => ({
     props: args,
     template: `<cs-message-alert ${argsToTemplate(
-      args
+      args,
     )}>${content}</cs-message-alert>`,
   }),
 };
