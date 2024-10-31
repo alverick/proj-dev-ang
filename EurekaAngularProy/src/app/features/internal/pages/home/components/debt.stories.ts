@@ -29,7 +29,7 @@ import { DialogHeaderComponent } from './dialog-header/dialog-header.component';
 })
 class LaunchComponent {
   ref: DynamicDialogRef;
-  @Input() width = '450px';
+  @Input() width = '650px';
 
   constructor(public dialogService: DynamicDialogService) {}
 

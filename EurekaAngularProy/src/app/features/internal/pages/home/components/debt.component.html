@@ -1,4 +1,4 @@
-<div class="content tw-py-0">
+<div class="content tw-group tw-py-0">
   <form
     [formGroup]="debtForm"
     novalidate
@@ -69,14 +69,13 @@
               [maxLength]="20"
               formControlName="code"
             />
-            @if (loaderDebtorCode) {
-              <span
-                class="tw-pointer-events-none tw-absolute tw-right-4 tw-top-1/2 tw-flex -tw-translate-y-1/2 tw-items-center tw-gap-2 tw-text-xs tw-text-extended-grey-2"
-                >Buscando...<i
-                  class="pi pi-spin pi-spinner tw-text-primary-green-1"
-                ></i
-              ></span>
-            }
+            <span
+              *ngIf="loaderDebtorCode"
+              class="tw-pointer-events-none tw-absolute tw-right-4 tw-top-1/2 tw-flex -tw-translate-y-1/2 tw-items-center tw-gap-2 tw-text-xs tw-text-extended-grey-2"
+              >Buscando...<i
+                class="pi pi-spin pi-spinner tw-text-primary-green-1"
+              ></i
+            ></span>
           </div>
         </cs-label-control>
       </div>
@@ -87,21 +86,39 @@
           [errorMessages]="formErrors.firstName"
         >
           Nombre
-          <input
-            control
-            type="text"
-            class="tw-w-full"
-            pInputText
-            minlength="3"
-            [pKeyFilter]="validNameRegex"
-            [maxLength]="80"
-            formControlName="firstName"
-          />
+          <p-iconField control iconPosition="right" class="tw-w-full">
+            <p-inputIcon
+              *ngIf="debtorExistent()"
+              (click)="resetName()"
+              styleClass="pi pi-times tw-cursor-pointer"
+            />
+            <input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              minlength="3"
+              [pKeyFilter]="validNameRegex"
+              [maxLength]="80"
+              formControlName="firstName"
+            />
+          </p-iconField>
         </cs-label-control>
       </div>
+      <cs-message-alert
+        *ngIf="debtorExistent()"
+        class="tw-col-start-2 tw-mb-2"
+        mode="warning"
+        ><div class="tw-text-xs">
+          El código deudor ya tiene un nombre asociado (Para cambiar el nombre
+          ir a la sección Mis Movimientos en la opción editar cobros)
+        </div></cs-message-alert
+      >
     </div>
     @if (!isPartial) {
       <div
+        class="tw-grid tw-grid-cols-2 tw-gap-2 [@media_((min-height:780px))]:tw-block"
+      >
+        <div
         class="tw-grid tw-grid-cols-2 tw-gap-2 [@media_((min-height:780px))]:tw-block"
       >
         <div class="form-row">
