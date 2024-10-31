@@ -5,6 +5,7 @@ import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 import { http, HttpResponse } from 'msw';
 
 import { environment } from '../../../../../environments/environment';
+import { companyAccounts } from '../../../../shared/mocks/company';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { SharedModule } from '../../../../shared/shared.module';
 import { ServicesGTPComponent } from './services-gtp.component';
@@ -127,33 +128,16 @@ const serviceInReview = {
   pagoPartes: 'S',
   useAgencyChannel: false,
 };
-const cuentas = [
-  {
-    id: '3416',
-    number: '*********3416 ( CTA CTE PERSONA JURIDICA - Soles)',
-    currency: '001',
-  },
-  {
-    id: '3423',
-    number: '*********3423 ( CTA CTE PERSONA JURIDICA - Dolares)',
-    currency: '002',
-  },
-  {
-    id: '1843',
-    number: '*********1843 (AHORROS ME - Dolares)',
-    currency: '002',
-  },
-];
 export const Normal: Story = {
   args: {
     service: serviceNormal,
-    cuentas,
+    cuentas: companyAccounts,
   },
   parameters: {
     msw: {
       handlers: [
         http.get(`${environment.END_POINT}/company/cards`, () => {
-          return HttpResponse.json(cuentas);
+          return HttpResponse.json(companyAccounts);
         }),
       ],
     },
@@ -169,7 +153,7 @@ export const Review: Story = {
         http.get(
           'https://apis.dev.interbank.pe/eureca/api/company/cards',
           () => {
-            return HttpResponse.json(cuentas);
+            return HttpResponse.json(companyAccounts);
           },
         ),
       ],
