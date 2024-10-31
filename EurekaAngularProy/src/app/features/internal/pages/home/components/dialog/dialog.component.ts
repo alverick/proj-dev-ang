@@ -360,7 +360,7 @@ export class DialogComponent implements OnInit {
       }
       if (
         value.status === processStatus.rejected ||
-        value.status === processStatus.confirm_User
+        value.status === processStatus.confirmUser
       ) {
         this.excelService.statusUpload = false;
         this.rowsAccepted = value.rowsUploaded;
@@ -372,7 +372,7 @@ export class DialogComponent implements OnInit {
           state: 'Intento de envio',
           typeError: 'REJECTED',
         });
-        if (value.status === processStatus.confirm_User) {
+        if (value.status === processStatus.confirmUser) {
           this.confirmUser = true;
         }
       } else if (value.status === processStatus.failed) {
