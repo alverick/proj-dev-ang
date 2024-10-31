@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, Input, type OnInit } from '@angular/core';
+import { Component, type OnInit, signal } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -47,6 +47,7 @@ export class DebtComponent implements OnInit {
   public maxDate = new Date(2049, 11, 31);
   public isPartial = false;
   limitAmountMax: number = null;
+  debtorExistent = signal(false);
   loaderDebtorCode = false;
   alphaNumSpaceRegex = /^[ 0-9a-zA-Z]+$/;
   validNameRegex = /^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$/;
@@ -142,6 +143,7 @@ export class DebtComponent implements OnInit {
     this.debtForm.controls.code.valueChanges
       .pipe(debounceTime(600))
       .subscribe(() => {
+        this.debtorExistent.set(false);
         this.debtForm.controls.firstName.reset();
         this.debtForm.controls.firstName.enable();
         this.buscarNewCode();
@@ -180,8 +182,19 @@ export class DebtComponent implements OnInit {
         }, delay);
         if (d.id) {
           this.debtForm.controls.firstName.setValue(d.firstName);
+          this.loaderDebtorCode = false;
+          this.debtForm.controls.firstName.disable();
+          this.debtorExistent.set(true);
         }
       });
+  }
+
+  resetName() {
+    this.debtForm.controls.firstName.setValue('');
+    this.debtForm.controls.code.setValue('');
+    this.loaderDebtorCode = false;
+    this.debtForm.controls.firstName.enable();
+    this.debtorExistent.set(false);
   }
 
   grabarNuevo() {
