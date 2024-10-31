@@ -4,17 +4,9 @@ import { type Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
+import { type StatusValues } from '../constants/process';
 import { type CompanyServices } from '../models/company';
 import { type IErrorObj } from '../models/error.model';
-
-export type StatusValues =
-  | 'CREATED'
-  | 'VALIDATED'
-  | 'REJECTED'
-  | 'COMPLETED'
-  | 'FAILED'
-  | 'VALIDATING'
-  | 'SAVING';
 
 export interface ProcessStatus {
   status: StatusValues;
@@ -32,6 +24,10 @@ export interface LastProcessStatus {
   phase: number;
 }
 
+export type LoadFileProcess = {
+  idProcess: number;
+};
+
 @Injectable()
 export class ExcelService {
   private readonly URI_API: string = environment.END_POINT;
@@ -42,14 +38,25 @@ export class ExcelService {
 
   constructor(public http: HttpClient) {}
 
-  UploadExcel(files: File[], service: string, changeStatus: boolean) {
-    this.statusUpload = changeStatus;
+  UploadExcel(files: File[]) {
+    this.statusUpload = true;
     this.errores = [];
-    const url = `${this.URI_API}/debt/load/${service}`;
+    const url = `${this.URI_API}/debt/load/${this.service.name}`;
     const formData = new FormData();
     formData.append('file', files[0], files[0].name);
     return this.http
-      .post<any>(url, formData)
+      .post<LoadFileProcess>(url, formData)
+      .pipe(catchError((error: HttpErrorResponse) => throwError(() => error)));
+  }
+
+  confirmUser(files: File[]) {
+    this.statusUpload = true;
+    this.errores = [];
+    const url = `${this.URI_API}/debt/load/${this.service.name}/${this.idProcess}`;
+    const formData = new FormData();
+    formData.append('file', files[0], files[0].name);
+    return this.http
+      .post<LoadFileProcess>(url, formData)
       .pipe(catchError((error: HttpErrorResponse) => throwError(() => error)));
   }
 
