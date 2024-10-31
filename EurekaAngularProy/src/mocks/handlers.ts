@@ -1,9 +1,11 @@
-import { delay, graphql, http, HttpResponse } from 'msw';
+import { bypass, delay, graphql, http, HttpResponse } from 'msw';
 
 import {
-  type ProcessStatus,
   processStatus,
+  type StatusValues,
 } from '../app/shared/constants/process';
+import { companyAccounts } from '../app/shared/mocks/company';
+import { type IErrorObj } from '../app/shared/models/error.model';
 import { environment } from '../environments/environment';
 
 const serverApi = (path: string) => {
@@ -11,6 +13,17 @@ const serverApi = (path: string) => {
 };
 
 export const handlers = [
+  http.post(serverApi('/company'), async () => {
+    await delay(5000);
+    return HttpResponse.json({
+      id: 3000,
+      success: true,
+      code: 1,
+      message: 'El Ruc ya se encuentra registrado',
+      tradeName: 'Nombre empresa trade',
+      fullName: 'Nombre empresa full',
+    });
+  }),
   http.post(serverApi('/company/validate'), async () => {
     await delay(5000);
     return HttpResponse.json({
@@ -22,6 +35,9 @@ export const handlers = [
       fullName: 'Nombre empresa full',
     });
   }),
+  http.get(serverApi(`/company/:company/cards`), () => {
+    return HttpResponse.json(companyAccounts);
+  }),
   http.post(serverApi('/debt/service/Mensualidad3/debtor'), () =>
     HttpResponse.json({ success: true }),
   ),
@@ -31,28 +47,53 @@ export const handlers = [
       emails: [{ correo: 'emailgtp@gmail.com' }],
     });
   }),
-  http.get(serverApi('/debt/process/last1'), () =>
+  http.get(serverApi('/debt1/process/last'), () =>
     HttpResponse.json({
       id: 325,
-      status: 'VALIDATING',
+      status: 'COMPLETED',
       phase: 2,
       advance: 0.0,
     }),
   ),
-  http.post(serverApi('/debt/load/:service'), () =>
-    HttpResponse.json({ id: 738 }),
+  http.post(
+    serverApi('/debt1/service/:service/debtor/:code'),
+    async ({ params, request }) => {
+      const { code } = params;
+      if (code === 'rep') {
+        return HttpResponse.json({
+          id: 9204457,
+          code,
+          firstName: 'Nombre usado',
+        });
+      }
+      const getUserResponse = await fetch(bypass(request)).then((response) =>
+        response.json(),
+      );
+      return HttpResponse.json({ ...getUserResponse });
+    },
   ),
-  http.get(serverApi('/debt/process/:process/status'), async function* () {
+  http.post(serverApi('/debt1/load/:service/:process?'), () =>
+    HttpResponse.json({ id: 1210 }),
+  ),
+  http.get(serverApi('/debt1/process/:process/status'), async function* () {
     let counter = 1;
     await delay();
-    const { saving, validating, validated, completed, created } = processStatus;
-    let status: ProcessStatus = created;
+    const {
+      confirmUser,
+      saving,
+      validating,
+      validated,
+      completed,
+      created,
+      rejected,
+    } = processStatus;
+    let status: StatusValues = created;
     const getProcess = (counter: number) => {
-      const processSteps: ProcessStatus[] = [
+      const processSteps: StatusValues[] = [
         created,
         validating,
         validated,
-        saving,
+        rejected,
         completed,
       ];
       const selectedKey = Math.floor(counter / 5);
@@ -61,10 +102,21 @@ export const handlers = [
     while (status !== completed) {
       counter++;
       status = getProcess(counter);
+      const errors: IErrorObj[] =
+        status === rejected
+          ? [
+              {
+                code: 1,
+                row: 10,
+                description:
+                  'El código deudor ingresado ya existe, el nombre existente se va a mantener',
+              },
+            ]
+          : [];
 
       yield HttpResponse.json({
         status,
-        errors: [],
+        errors: errors,
         rowsUploaded: -4,
         rowsRejected: 2,
         advance: 100,
