@@ -11,6 +11,8 @@ import { type Debts } from '../models/debts';
 import { type Type } from '../models/type';
 import { type WayPay } from '../models/way-pay';
 
+export type DebtorCode = { id?: number; code: string; firstName?: string };
+
 @Injectable()
 export class HomeService {
   constructor(private http: HttpClient) {}
@@ -106,7 +108,7 @@ export class HomeService {
   getDebtorCode(service: string, code: string) {
     const url = `${environment.END_POINT}/debt/service/${service}/debtor/${code}`;
     return this.http
-      .get<any>(url)
+      .get<DebtorCode>(url)
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
 
