@@ -139,30 +139,54 @@
         </div>
         <div class="clear-float"></div>
       </div>
-      <div class="list tw-overflow-auto tw-text-left">
-        <div class="err-item" *ngFor="let err of excelService.errores">
+      <div
+        class="list tw-overflow-auto tw-border tw-text-left"
+        [ngClass]="{
+          'tw-border-extended-dark-yellow-1': confirmUser,
+          'tw-border-extended-watermelon-1': !confirmUser,
+        }"
+      >
+        <div
+          class="err-item tw-mb-1 tw-flex tw-gap-1"
+          *ngFor="let err of excelService.errores"
+        >
+          <i
+            *ngIf="err.code === 0"
+            class="pi pi-times-circle tw-text-extended-watermelon-1"
+          ></i>
+          <i
+            *ngIf="err.code === 1"
+            class="pi pi-exclamation-triangle tw-text-extended-dark-yellow-1"
+          ></i>
           <span *ngIf="err.row > 0"
             ><strong class="resaltado">Fila {{ err.row }}</strong> : </span
           >{{ err.description }}
         </div>
       </div>
       <div class="footer tw-my-4">
-        Corrige los errores y vuelve a subir la plantilla
+        @if (confirmUser) {
+          Confirma la carga de tu plantilla o revisa las observaciones y
+          vuélvelo a subir
+        } @else {
+          Corrige los errores y vuelve a subir la plantilla
+        }
       </div>
     </div>
-    <div
-      *ngIf="uploaderFiles.length > 0 && excelService.errores?.length === 0"
-      class="text-center"
-    >
-      <button
-        pButton
-        pRipple
-        icon="pi pi-upload"
-        class="tw-transition-colors"
-        type="button"
-        (click)="openSnackBar()"
-        label="Subir plantilla"
-      ></button>
-    </div>
+    @if (
+      uploaderFiles.length > 0 &&
+      (excelService.errores?.length === 0 || confirmUser)
+    ) {
+      <div class="text-center">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-upload"
+          class="tw-transition-colors"
+          type="button"
+          (click)="openSnackBar()"
+          label="Subir plantilla"
+        ></button>
+      </div>
+    }
   </div>
 </div>
