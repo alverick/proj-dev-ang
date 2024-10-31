@@ -10,10 +10,11 @@ import { repeat, takeUntil } from 'rxjs/operators';
 
 import { internalFullRoutingNames } from '../../app-routing.collection';
 import { LoadFileComponent } from '../components/load-file/load-file.component';
+import { processStatus, StatusValues } from '../constants/process';
 import { ExcelService, type ProcessStatus } from './excel.service';
 
 export interface ModalCloseData {
-  status: string;
+  status: StatusValues;
   rowsAccepted: number;
   rowsRejected: number;
   dataType: string;
@@ -89,31 +90,24 @@ export class LoadFileService {
             stopLoop();
             return;
           }
-          if (status === 'REJECTED') {
+          const finalStates: string[] = [
+            processStatus.rejected,
+            processStatus.failed,
+            processStatus.completed,
+            processStatus.confirmUser,
+          ];
+          if (finalStates.includes(status)) {
             stopLoop();
             this.componentRef.destroy();
-            this.excelService.errores = errors;
-            this.onClose.emit({
-              status: 'rejected',
+            this.excelService.errores =
+              status === processStatus.rejected ? errors : [];
+            const closeObj = {
+              status,
               rowsAccepted: rowsUploaded,
               rowsRejected: rowsRejected,
-            });
-          } else if (status === 'FAILED') {
-            stopLoop();
-            this.componentRef.destroy();
-            this.onClose.emit({
-              status: 'failed',
-            });
-            this.excelService.statusUpload = false;
-          } else if (status === 'COMPLETED') {
-            stopLoop();
-            this.componentRef.destroy();
-            this.excelService.statusUpload = false;
-            this.excelService.errores = [];
-            this.onClose.emit({
-              status: 'completed',
-              dataType: this.excelService.service.dataType,
-            });
+            };
+            this.onClose.emit(closeObj);
+            this.excelService.statusUpload = status === processStatus.rejected;
           } else {
             this.componentRef.instance.progress.mode = 'determinate';
             this.componentRef.instance.progress.value = advance;
