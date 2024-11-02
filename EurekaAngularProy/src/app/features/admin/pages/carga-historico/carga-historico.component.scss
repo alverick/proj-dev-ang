@@ -28,10 +28,10 @@ body {
 
 .widget.filtros {
   .content {
-    .mat-form-field.f1 {
+    .mat-mdc-form-field.f1 {
       width: 236px;
     }
-    .mat-form-field.f2 {
+    .mat-mdc-form-field.f2 {
       margin-left: 10px;
       width: 116px;
     }
@@ -330,7 +330,7 @@ body {
   }
 }
 
-.mat-form-field {
+.mat-mdc-form-field {
   .msg-error {
     @include font-text(10px, 500);
     position: absolute;
@@ -345,19 +345,6 @@ body {
     margin-top: 10px;
     width: 200px;
     background-color: var(--ibk-white);
-  }
-}
-
-:host ::ng-deep .inline-input {
-  .mat-form-field-wrapper {
-    padding-bottom: 0;
-    .mat-form-field-infix {
-      padding: 0;
-      border-top: none;
-    }
-    .mat-form-field-underline {
-      bottom: 0;
-    }
   }
 }
 
@@ -377,21 +364,6 @@ body {
 .input-text {
   @include font-text(14px !important, normal);
   color: var(--ibk-black) !important;
-}
-
-:host ::ng-deep .mat-form-field .mat-form-field-label {
-  @include font-text(14px, normal !important);
-  color: var(--ibk-black);
-}
-
-:host
-  ::ng-deep
-  .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
-  .mat-form-field-label {
-  transform: translateY(-1.28125em) scale(1) perspective(100px)
-    translateZ(0.001px);
-  font-size: 10px;
-  font-weight: 500 !important;
 }
 
 .input-text-dash {
@@ -495,10 +467,6 @@ body {
   }
 }
 
-:host ::ng-deep .mat-select-value {
-  color: var(--ibk-black) !important;
-}
-
 .btn {
   @include font-text(14px, 500 !important);
   font-weight: 400;
@@ -537,10 +505,6 @@ body {
 
 .chk-vertical {
   margin-left: -10px !important;
-}
-
-:host ::ng-deep .mat-checkbox-inner-container-no-side-margin {
-  margin-left: 12px !important;
 }
 
 ///TAGS

@@ -1,68 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { MatIconRegistry } from '@angular/material/icon';
-import {
-  MAT_MOMENT_DATE_FORMATS,
-  MomentDateAdapter,
-} from '@angular/material-moment-adapter';
-import { DomSanitizer } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 
 import { type DateList } from '../../models/dateList';
+import type { StatesGtp } from '../../models/states-gtp';
 import { SharedModule } from '../../shared.module';
 import { PaymentsFilterComponent } from './payments-filter.component';
-import type { StatesGtp } from '../../models/states-gtp';
-
-function initAppComponentFactory(
-  matIconRegistry: MatIconRegistry,
-  domSanitizer: DomSanitizer
-) {
-  return () => {
-    matIconRegistry.addSvgIcon(
-      'eurc_calendar',
-      domSanitizer.bypassSecurityTrustResourceUrl(
-        '/assets/images/calendar.svg'
-      ),
-      { viewBox: '0 0 24 24' }
-    );
-  };
-}
 
 const meta: Meta<PaymentsFilterComponent> = {
   title: 'Shared/Molecules/Payments Filter',
   component: PaymentsFilterComponent,
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
-      providers: [
-        {
-          provide: APP_INITIALIZER,
-          useFactory: initAppComponentFactory,
-          multi: true,
-          deps: [MatIconRegistry, DomSanitizer],
-        },
-        { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
-        {
-          provide: DateAdapter,
-          useClass: MomentDateAdapter,
-          deps: [MAT_DATE_LOCALE],
-        },
-
-        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
-      ],
+      imports: [HttpClientModule, CommonModule, SharedModule],
     }),
   ],
 };
@@ -95,6 +53,7 @@ const initialOrig = {
       id: 456,
       name: 'Paquete basico',
       currency: '001',
+      code: '001',
       dataType: 'S',
     },
     {
@@ -128,6 +87,7 @@ const services = [
   {
     id: 456,
     res: '1106101',
+    code: 1106,
     name: 'Paquete basico',
     debtorCode: 'DNI',
     dataType: 'S',
@@ -328,13 +288,18 @@ export const Normal: Story = {
     dateList: listDates,
     gtpMode: false,
     services,
-    initial,
   },
 };
 
 export const Gtp: Story = {
   args: {
     stateList: listStates,
+    stateTypeList: [
+      { idState: 'EmpNuevo', descripcion: 'Empresa Nueva' },
+      { idState: 'EmpMod', descripcion: 'Actualización de Empresa' },
+      { idState: 'SvcMod', descripcion: 'Actualización de Servicios' },
+      { idState: 'SvcNuevo', descripcion: 'Nuevos Servicios' },
+    ],
     gtpMode: true,
     services: categories,
     multipleState: true,

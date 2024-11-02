@@ -2,9 +2,13 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
-import { type DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
+import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { type DynamicDialogRef } from 'primeng/dynamicdialog';
 
+import { modalTermsConfig } from '../../constants/modal-data';
+import { TrackingService } from '../../services';
+import { DynamicDialogService } from '../../services/dynamic-dialog.service';
+import { StorageService } from '../../services/storage.service';
 import { SharedModule } from '../../shared.module';
 import { ModalTermsComponent } from './modal-terms.component';
 
@@ -15,14 +19,10 @@ import { ModalTermsComponent } from './modal-terms.component';
 class LaunchComponent {
   ref: DynamicDialogRef;
 
-  constructor(public dialogService: DialogService) {}
+  constructor(public dialogService: DynamicDialogService) {}
 
   public launch(): void {
-    this.ref = this.dialogService.open(ModalTermsComponent, {
-      width: '810px',
-      header: 'Términos y condiciones',
-      styleClass: 'modal-custom-cs',
-    });
+    this.ref = this.dialogService.open(ModalTermsComponent, modalTermsConfig);
   }
 }
 
@@ -38,7 +38,7 @@ const meta: Meta<LaunchComponent> = {
         CommonModule,
         SharedModule,
       ],
-      providers: [DialogService],
+      providers: [DynamicDialogService, StorageService, TrackingService],
     }),
   ],
 };

@@ -90,7 +90,10 @@ export class TrackingService {
   pageSubject$ = new ReplaySubject<Partial<TrackEventProperties>>(10);
   eventSubject$ = new ReplaySubject<EventTrackType>(10);
 
-  constructor(private storageService: StorageService, private router: Router) {
+  constructor(
+    private storageService: StorageService,
+    private router: Router,
+  ) {
     const session = this.storageService.getCurrentSession();
     if (session?.isAuthenticate) {
       this.setRuc(window.sessionStorage.getItem('username'));
@@ -114,7 +117,7 @@ export class TrackingService {
 
   trackEvent(
     event: AdobeEventType,
-    eventProperties?: Partial<ActionEventProperties>
+    eventProperties?: Partial<ActionEventProperties>,
   ) {
     const payload = clone(this.payload);
     if (isNotNil(eventProperties)) {

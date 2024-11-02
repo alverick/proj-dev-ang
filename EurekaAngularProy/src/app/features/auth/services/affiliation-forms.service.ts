@@ -83,7 +83,7 @@ export class AffiliationFormsService {
       },
       {
         validators: MustMatch('email', 'emailConfirm', true),
-      }
+      },
     );
 
     this.authForm = this.formBuilder.group(
@@ -106,7 +106,7 @@ export class AffiliationFormsService {
       },
       {
         validators: MustMatch('password', 'passwordConfirm'),
-      }
+      },
     );
   }
 

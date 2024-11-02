@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'cs-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
   standalone: true,
   imports: [CommonModule, RouterModule, NgOptimizedImage],
 })

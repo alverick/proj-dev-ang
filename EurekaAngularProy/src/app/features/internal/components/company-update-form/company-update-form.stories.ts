@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { type FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, NgModule, Output } from '@angular/core';
+import { FormBuilder, type FormGroup, Validators } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { action } from '@storybook/addon-actions';
-import { moduleMetadata } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
 
+import { ValidationDefaultsComponent } from '../../../../shared/components/validation-defaults/validation-defaults.component';
 import {
   documentTypes,
   mobileOperators,
@@ -16,9 +17,16 @@ import { emailRegex } from '../../../../shared/constants/patterns';
 import { SharedModule } from '../../../../shared/shared.module';
 import { CompanyUpdateFormComponent } from './company-update-form.component';
 
+@NgModule({
+  declarations: [CompanyUpdateFormComponent],
+  exports: [CompanyUpdateFormComponent],
+  imports: [CommonModule, SharedModule],
+})
+class FormDemoModule {}
+
 @Component({
   selector: 'cs-form-demo',
-  template: `<cs-company-update-form
+  template: ` <cs-company-update-form
       class="tw-max-w-2xl tw-pl-20"
       [form]="registerForm"
       [errorMessages]="errors"
@@ -28,9 +36,11 @@ import { CompanyUpdateFormComponent } from './company-update-form.component';
       (showPanel)="onShowPanel()"
     ></cs-company-update-form>
     {{ submitted }}
-    <button (click)="submitted = true" class="tw-block tw-m-3">
+    <button (click)="submitted = true" class="tw-m-3 tw-block">
       send form
     </button>`,
+  standalone: true,
+  imports: [FormDemoModule],
 })
 class FormDemoComponent {
   @Output() showPanel = new EventEmitter();
@@ -93,25 +103,24 @@ class FormDemoComponent {
     this.showPanel.emit();
   }
 }
-
-export default {
+const meta: Meta<CompanyUpdateFormComponent> = {
   title: 'Internal/Module/Company Form',
   decorators: [
     moduleMetadata({
-      declarations: [CompanyUpdateFormComponent],
-      imports: [BrowserAnimationsModule, SharedModule],
+      declarations: [ValidationDefaultsComponent],
+      imports: [FormDemoComponent, BrowserAnimationsModule, SharedModule],
     }),
   ],
 };
 
-export const normal = () => ({
-  component: CompanyUpdateFormComponent,
-  moduleMetadata: {
-    declarations: [FormDemoComponent, CompanyUpdateFormComponent],
-    providers: [],
-  },
-  template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults><cs-form-demo (showPanel)="onSubmit()"></cs-form-demo>`,
-  props: {
-    onSubmit: action('show panel'),
-  },
-});
+export default meta;
+
+type Story = StoryObj<CompanyUpdateFormComponent>;
+
+export const Normal: Story = {
+  args: {},
+  render: ({ ...args }) => ({
+    props: args,
+    template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults><cs-form-demo (showPanel)="onSubmit()"></cs-form-demo>`,
+  }),
+};

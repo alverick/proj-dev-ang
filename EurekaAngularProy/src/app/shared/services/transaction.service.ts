@@ -1,6 +1,6 @@
-import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
+import moment from 'moment';
 import { clone, isNil } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { type Observable, throwError } from 'rxjs';
@@ -40,7 +40,7 @@ export class TransactionService {
 
   getDeuda(
     filtro: DebstFilter = null,
-    selectedUniverse: boolean = false
+    selectedUniverse: boolean = false,
   ): Observable<any> {
     if (filtro === null) {
       filtro = this.lastFilter;
@@ -116,7 +116,7 @@ export class TransactionService {
           this.debtItems = { ...response, data };
           this.debtItemsOriginal = clone(this.debtItems);
           return response;
-        })
+        }),
       )
       .pipe(
         map((response) => {
@@ -131,7 +131,7 @@ export class TransactionService {
             this.pageMessage = `Mostrando ${beg} - ${end} de ${response.count} elementos`;
           }
           return response;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -198,7 +198,7 @@ export class TransactionService {
             v.errores = {};
           });
           return p;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -214,7 +214,7 @@ export class TransactionService {
   editPayment(
     debtId: number,
     paymentId: number,
-    payment: any
+    payment: any,
   ): Observable<any> {
     const url = `${this.URI_API}/payment/${paymentId}`;
     payment.debtId = debtId;

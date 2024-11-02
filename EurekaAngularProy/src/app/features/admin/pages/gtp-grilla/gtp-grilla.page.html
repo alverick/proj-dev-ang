@@ -4,7 +4,7 @@
       <div class="col">
         <div class="widget filtros">
           <div class="title">Buscar</div>
-          <div class="content">
+          <div class="content box-shadow">
             <cs-payments-filter
               [services]="rubros"
               [stateList]="states"
@@ -19,9 +19,9 @@
 
         <div class="widget lista">
           <div class="title">Empresas</div>
-          <div class="content">
+          <div class="content box-shadow tw-pb-4">
             <section
-              class="tw-flex tw-justify-between tw-border-extended-grey-4 tw-border-b tw-border-solid tw-px-4 tw-py-4"
+              class="tw-flex tw-justify-between tw-border-b tw-border-solid tw-border-extended-grey-4 tw-px-4 tw-py-4"
             >
               <div class="tw-flex">
                 <p-splitButton
@@ -79,7 +79,7 @@
                   </tr>
                 </thead>
               </table>
-              <perfect-scrollbar class="content-container">
+              <div class="content-container tw-overflow-auto">
                 <table>
                   <thead class="tw-hidden">
                     <tr>
@@ -103,7 +103,7 @@
                                 itemsPerPage: 50,
                                 currentPage: currentFilter.pageNumber,
                                 totalItems:
-                                  gtpService.EnterprisesItems.totalCompanies
+                                  gtpService.EnterprisesItems.totalCompanies,
                               }
                       "
                     >
@@ -116,36 +116,36 @@
                       <td class="c4">{{ items.nameEnterprise }}</td>
                       <td class="c5">
                         <div
-                          style="width: 100px"
+                          class="tw-m-2"
                           *ngFor="let request of items?.requestTypeList"
                         >
                           <div *ngIf="request.type == 0">
-                            <span class="badge tw-bg-primary-green-1"
-                              >{{ request.texto }}</span
-                            >
+                            <span class="badge tw-bg-primary-green-1">{{
+                              request.texto
+                            }}</span>
                           </div>
                         </div>
                         <div
-                          style="width: 80px"
+                          class="tw-m-2"
                           *ngFor="let request of items?.requestTypeList"
                         >
                           <div *ngIf="request.type == 1">
-                            <span class="badge tw-bg-extended-yellow-1"
-                              >{{ request.texto }}</span
-                            >
+                            <span class="badge tw-bg-extended-yellow-1">{{
+                              request.texto
+                            }}</span>
                           </div>
                           <div *ngIf="request.type == 2">
-                            <span class="badge tw-bg-primary-green-1"
-                              >{{ request.texto }}</span
-                            >
+                            <span class="badge tw-bg-primary-green-1">{{
+                              request.texto
+                            }}</span>
                           </div>
                           <div
                             *ngIf="request.type == 3"
-                            tooltip="{{ request.detalles }}"
+                            pTooltip="{{ request.detalles }}"
                           >
-                            <span class="badge tw-bg-extended-yellow-1"
-                              >{{ request.texto }}</span
-                            >
+                            <span class="badge tw-bg-extended-yellow-1">{{
+                              request.texto
+                            }}</span>
                           </div>
                         </div>
                         <!-- -->
@@ -165,7 +165,7 @@
                         <button
                           *ngIf="items.status === 'PendientePAG'"
                           type="button"
-                          class="f3 btn-eureca-yellow tw-mt-1 tw-mx-2"
+                          class="f3 btn-eureca-yellow tw-mx-2 tw-mt-1"
                           (click)="onUpdateEAG(items.clientId)"
                         >
                           <i class="fa fa-refresh" aria-hidden="true"></i>
@@ -173,7 +173,7 @@
 
                         <button
                           type="button"
-                          class="f3 btn-outline-green tw-mt-1 tw-mx-2"
+                          class="f3 btn-outline-green tw-mx-2 tw-mt-1"
                           title="Ver Cargas de Datos"
                           [routerLink]="[linkHistory, items.clientId]"
                         >
@@ -191,7 +191,7 @@
                     </tr>
                   </tbody>
                 </table>
-              </perfect-scrollbar>
+              </div>
             </section>
             <section class="pagination">
               <div class="ctrl">
@@ -240,16 +240,18 @@
                         (click)="p.setCurrent(page.value)"
                         *ngIf="p.getCurrent() !== page.value"
                       >
-                        <span
-                          >{{ page.label === '...' ? page.label : (page.label |
-                          number: '') }}</span
-                        >
+                        <span>{{
+                          page.label === '...'
+                            ? page.label
+                            : (page.label | number: '')
+                        }}</span>
                       </a>
                       <ng-container *ngIf="p.getCurrent() === page.value">
-                        <span
-                          >{{ page.label === '...' ? page.label : (page.label |
-                          number: '') }}</span
-                        >
+                        <span>{{
+                          page.label === '...'
+                            ? page.label
+                            : (page.label | number: '')
+                        }}</span>
                       </ng-container>
                     </li>
                     <li

@@ -6,7 +6,6 @@ import {
   type HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { Router } from '@angular/router';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -21,14 +20,13 @@ import { swalAlert } from '../utils/helpers/popups';
 export class AuthInterceptorService implements HttpInterceptor {
   constructor(
     private router: Router,
-    public snackBar: MatSnackBar,
     private login: LoginService,
-    private storage: StorageService
+    private storage: StorageService,
   ) {}
 
   intercept(
     req: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     if (!req.url.includes('notification')) {
       this.login.refresh();
@@ -57,13 +55,12 @@ export class AuthInterceptorService implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
         const urlNotAllowed = stringNotAllowed.filter((str) =>
-          request.url.includes(str)
+          request.url.includes(str),
         );
 
         if (urlNotAllowed.length < 1) {
           if (err.status === 401) {
             this.storage.removeCurrentSession();
-            this.snackBar.dismiss();
             void swalAlert.fire({
               title: 'Su sesión ha sido cerrada por inactividad',
               showCloseButton: true,
@@ -75,7 +72,6 @@ export class AuthInterceptorService implements HttpInterceptor {
               },
             });
           } else if (err.status !== 400) {
-            this.snackBar.dismiss();
             void swalAlert.fire({
               title: 'Ha ocurrido un error en el servidor',
               showCloseButton: true,
@@ -89,7 +85,7 @@ export class AuthInterceptorService implements HttpInterceptor {
           }
         }
         return throwError(() => err);
-      })
+      }),
     );
   }
 }

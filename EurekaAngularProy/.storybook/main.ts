@@ -1,15 +1,20 @@
-import { StorybookConfig } from '@storybook/angular';
-import path from 'path';
+import type { StorybookConfig } from '@storybook/angular';
+import * as path from 'path';
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
-  staticDirs: [{ from: '../src/assets', to: '/assets' }],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  staticDirs: [
+    { from: '../src/assets', to: '/assets' },
+    { from: '../src/scss', to: '/css' },
+    { from: '../src', to: '/' },
+  ],
   addons: [
+    '@storybook/addon-onboarding',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
-    '@storybook/addon-mdx-gfm',
     '@chromatic-com/storybook',
+    '@storybook/addon-interactions',
+    'storybook-msw-addon',
   ],
   framework: {
     name: '@storybook/angular',
@@ -24,10 +29,6 @@ const config: StorybookConfig = {
           options: {
             resources: [
               path.resolve(__dirname, '../src/scss/_configuration.scss'),
-              path.resolve(
-                __dirname,
-                '../node_modules/include-media/dist/_include-media.scss'
-              ),
             ],
           },
         },
@@ -35,7 +36,5 @@ const config: StorybookConfig = {
     });
     return config;
   },
-  docs: {},
 };
-
 export default config;

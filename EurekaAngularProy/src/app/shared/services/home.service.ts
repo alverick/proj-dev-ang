@@ -1,4 +1,4 @@
-import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -70,10 +70,10 @@ export class HomeService {
               id: s.id,
               name: s.name,
               dataType: s.dataType,
-            })
+            }),
           );
           return data;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -98,7 +98,7 @@ export class HomeService {
             }
           });
           return data;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }

@@ -5,7 +5,7 @@
   autocomplete="off"
   class="tw-max-w-3xl"
 >
-  <div class="form-container tw-py-14 tw-max-w-md tw-mx-auto">
+  <div class="form-container tw-mx-auto tw-max-w-md tw-py-14">
     <div class="form-controls">
       <div class="form-elm">
         <cs-label-control
@@ -25,7 +25,7 @@
     </div>
     <p-message
       *ngIf="formData?.newNameGTPStatus === 3"
-      class="tw-block tw-text-sm tw-mb-2"
+      class="tw-mb-2 tw-block tw-text-sm"
       severity="warn"
       [text]="
         'El nombre <strong>' +
@@ -69,7 +69,7 @@
             pButton
             type="button"
             icon="pi pi-times"
-            class="tw-bg-extended-grey-1 p-button-text input-button"
+            class="p-button-text input-button tw-bg-extended-grey-1"
             (click)="showDropdown()"
             [disabled]="
               formData.inReview && formData.newNameCodeGTPStatus !== 3
@@ -80,7 +80,7 @@
     </div>
     <p-message
       *ngIf="formData?.newNameCodeGTPStatus === 3"
-      class="tw-block tw-text-sm tw-mb-2"
+      class="tw-mb-2 tw-block tw-text-sm"
       severity="warn"
       [text]="
         'El código deudor <strong>' +
@@ -117,19 +117,12 @@
           >
           </p-checkbox>
           <ng-container label-inline
-            ><div
-              class="description tw-flex tw-flex-col md:tw-flex-row tw-gap-2 tw-justify-between tw-w-72 md:tw-w-96"
+            ><cs-service-channel-chip amount="S/ 2.00">
+              <div class="tw-text-base">Canales Digitales</div>
+              <div class="sub">
+                Interbank APP y Banca por Internet
+              </div></cs-service-channel-chip
             >
-              <div>
-                <div class="tw-text-base">Canales Digitales</div>
-                <div class="sub">Interbank APP y Banca por Internet</div>
-              </div>
-              <p-chip
-                icon="pi pi-money-bill"
-                label="S/ 2.00"
-                styleClass="p-chip-primary tw-text-primary-green-1 tw-text-sm tw-whitespace-nowrap"
-              ></p-chip>
-            </div>
           </ng-container>
         </cs-label-control>
       </div>
@@ -146,25 +139,16 @@
           >
           </p-checkbox>
           <ng-container label-inline
-            ><div
-              class="description tw-flex tw-flex-col md:tw-flex-row tw-gap-2 tw-justify-between tw-w-72 md:tw-w-96"
+            ><cs-service-channel-chip amount="S/ 1.50">
+              <div class="tw-text-base">Agentes</div>
+              <div class="sub">Lima y provincia</div></cs-service-channel-chip
             >
-              <div>
-                <div class="tw-text-base">Agentes</div>
-                <div class="sub">Lima y provincia</div>
-              </div>
-              <p-chip
-                icon="pi pi-money-bill"
-                label="S/ 1.50"
-                styleClass="p-chip-primary tw-text-primary-green-1 tw-text-sm tw-whitespace-nowrap"
-              ></p-chip>
-            </div>
           </ng-container>
         </cs-label-control>
       </div>
     </div>
   </div>
-  <div class="tw-text-center tw-pb-10">
+  <div class="tw-pb-10 tw-text-center">
     <button
       pButton
       pRipple

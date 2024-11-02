@@ -1,20 +1,21 @@
 import {
-  type OnInit,
   Component,
   EventEmitter,
   Input,
+  type OnInit,
   Output,
 } from '@angular/core';
 import {
-  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
+  type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { isNil } from 'ramda';
 
+import { currencies } from '../../../../shared/constants/currencies';
 import { statusCodes } from '../../../../shared/constants/services';
-import { type MonedaModel } from '../../../../shared/models';
+import { type IEntryModel } from '../../../../shared/models';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { type CompanyAccounts } from '../../../../shared/services/company.service';
@@ -22,14 +23,13 @@ import { type CompanyAccounts } from '../../../../shared/services/company.servic
 @Component({
   selector: 'cs-services-gtp',
   templateUrl: './services-gtp.component.html',
-  styleUrls: ['./services-gtp.component.scss'],
 })
 export class ServicesGTPComponent implements OnInit {
-  codDeudor: any[] = [];
-  tiposDato: any[] = [];
-  tiposPago: any[] = [];
-  monedas: MonedaModel[] = [];
-  tiposMora: any[] = [];
+  codDeudor = this.afiliacionService.codDeudor;
+  tiposDato = this.afiliacionService.tipoDato;
+  tiposPago = this.afiliacionService.tipoPago;
+  monedas = currencies;
+  tiposMora = this.afiliacionService.periodoMora;
   cuentas: CompanyAccounts[] = [];
   simboloMoneda = 'S/';
   cobraMora = false;
@@ -57,7 +57,7 @@ export class ServicesGTPComponent implements OnInit {
 
   constructor(
     private fb: UntypedFormBuilder,
-    private afiliacionService: AfiliacionService
+    private afiliacionService: AfiliacionService,
   ) {}
 
   ngOnInit() {
@@ -99,8 +99,12 @@ export class ServicesGTPComponent implements OnInit {
       }
     };
 
+    const getValue = (value: string, elements: IEntryModel[]) => {
+      return elements.find((item) => item.code === value).name;
+    };
+
     this.frm = this.fb.group({
-      nombre: new UntypedFormControl(
+      nombre: [
         {
           value:
             this._service.newNameGTPStatus !== statusCodes.APPROVED
@@ -112,16 +116,13 @@ export class ServicesGTPComponent implements OnInit {
           Validators.required,
           Validators.minLength(3),
           Validators.pattern(
-            '^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$'
+            '^[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñA-Za-zÁÉÍÓÚáéíóú&  ]*$',
           ),
-        ]
-      ),
+        ],
+      ],
 
-      res: new UntypedFormControl(
-        { value: this._service.res, disabled: false },
-        ResValue
-      ),
-      codDeudor: new UntypedFormControl(
+      res: [{ value: this._service.res, disabled: true }, ResValue],
+      codDeudor: [
         {
           value:
             this._service.debtorCode === 'RUC' ||
@@ -131,53 +132,74 @@ export class ServicesGTPComponent implements OnInit {
               : 'Otro',
           disabled: true,
         },
-        [Validators.required]
-      ),
-      nameCod: new UntypedFormControl({ value: nameCode, disabled: true }),
-      tipoDato: new UntypedFormControl(
-        { value: this._service.dataType, disabled: true },
-        Validators.required
-      ),
-      tipoPago: new UntypedFormControl(
-        { value: this._service.paymentType, disabled: true },
-        Validators.required
-      ),
-      idCuenta: new UntypedFormControl(
+        [Validators.required],
+      ],
+      nameCod: [{ value: nameCode, disabled: true }],
+      tipoDato: [
+        {
+          value: getValue(this._service.dataType, this.tiposDato),
+          disabled: true,
+        },
+        Validators.required,
+      ],
+      tipoPago: [
+        {
+          value: getValue(this._service.paymentType, this.tiposPago),
+          disabled: true,
+        },
+        Validators.required,
+      ],
+      idCuenta: [
         { value: this._service.idAccount, disabled: true },
-        Validators.required
-      ),
+        Validators.required,
+      ],
       moneda: [this._service.currency, Validators.required],
-      usaAgente: new UntypedFormControl({
-        value: this._service.useAgent,
-        disabled: true,
-      }),
-      usaTienda: new UntypedFormControl({
-        value: this._service.useStore,
-        disabled: true,
-      }),
-      usaWebApp: new UntypedFormControl({
-        value: this._service.useAppWeb,
-        disabled: true,
-      }),
-      cobraMora: new UntypedFormControl({
-        value: this._service.chargeInterest,
-        disabled: true,
-      }),
-      periodoMora: new UntypedFormControl(
-        { value: this._service.chargeType, disabled: true },
-        [Validators.required]
-      ),
+      usaAgente: [
+        {
+          value: this._service.useAgent,
+          disabled: true,
+        },
+      ],
+      usaTienda: [
+        {
+          value: this._service.useStore,
+          disabled: true,
+        },
+      ],
+      usaWebApp: [
+        {
+          value: this._service.useAppWeb,
+          disabled: true,
+        },
+      ],
+      cobraMora: [
+        {
+          value: this._service.chargeInterest,
+          disabled: true,
+        },
+      ],
+      periodoMora: [
+        {
+          value: getValue(this._service.chargeType.toString(), this.tiposMora),
+          disabled: true,
+        },
+        [Validators.required],
+      ],
       tipoMora: { value: this._service.interestType, disabled: true },
-      monto: new UntypedFormControl({ value: montod, disabled: true }),
+      monto: [{ value: montod, disabled: true }],
 
-      porcentaje: new UntypedFormControl({
-        value: porcentajed,
-        disabled: true,
-      }),
-      pagoPartes: new UntypedFormControl({
-        value: this._service.partialPayment,
-        disabled: true,
-      }),
+      porcentaje: [
+        {
+          value: porcentajed,
+          disabled: true,
+        },
+      ],
+      pagoPartes: [
+        {
+          value: this._service.partialPayment,
+          disabled: true,
+        },
+      ],
       NewNameCod: [
         processValue(this._service.acceptednewNameCode),
         Validators.required,
@@ -189,18 +211,10 @@ export class ServicesGTPComponent implements OnInit {
     });
     this.afiliacionService.idCompany = this.idCompany;
     this.changeMora(false);
-    this.afiliacionService
-      .GetCodDeudor()
-      .subscribe((d) => (this.codDeudor = d));
-    this.afiliacionService.GetTipoDato().subscribe((d) => (this.tiposDato = d));
-    this.afiliacionService.GetTipoPago().subscribe((d) => (this.tiposPago = d));
-    this.afiliacionService.GetMoneda().subscribe((d) => (this.monedas = d));
-    this.afiliacionService
-      .GetPeriodoMora()
-      .subscribe((d) => (this.tiposMora = d));
     this.afiliacionService.GetCards().subscribe((d) => {
       this.cuentas = d;
-      this.frm.get('idCuenta').setValue(this._service.idAccount);
+      const account = d.find((item) => item.id === this._service.idAccount);
+      this.frm.get('idCuenta').setValue(account.number);
     });
 
     if (this.frm.get('cobraMora').value === 'S') {
@@ -314,7 +328,7 @@ export class ServicesGTPComponent implements OnInit {
     }
     if (this.frm.valid) {
       const value: DataServiceGTP = this._service;
-      value.res = this.frm.value.res;
+      value.res = this.frm.getRawValue().res;
 
       value.acceptednewName =
         this._service.newNameGTPStatus === 1 ||

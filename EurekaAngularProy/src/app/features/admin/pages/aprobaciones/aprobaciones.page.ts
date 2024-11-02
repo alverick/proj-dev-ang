@@ -1,4 +1,4 @@
-import { type OnInit, Component, HostListener } from '@angular/core';
+import { Component, HostListener, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { clone, equals, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
@@ -36,7 +36,6 @@ export class AprobacionesPage implements OnInit {
     movilOperator: '',
     newName: '',
     newNameGTPStatus: -1,
-    status: '',
     uniqueCodeIBK: '',
     useAgencyChannel: false,
   };
@@ -83,7 +82,7 @@ export class AprobacionesPage implements OnInit {
   }
 
   getInfoEmpresa() {
-    this.gtpService.GetEnterpriseGtp(this.llave).subscribe((dataEnterprise) => {
+    this.gtpService.GetEnterpriseGtp(this.llave).subscribe(dataEnterprise => {
       this.Enterprise = dataEnterprise;
       this.rubro = dataEnterprise.entryName;
     });
@@ -236,7 +235,7 @@ export class AprobacionesPage implements OnInit {
     const { isNewEnterprise, inReview, name, newName } = this.Enterprise;
 
     const servicesInReview = this.gtpService.services.some(
-      (service) => service.inReview
+      service => service.inReview
     );
 
     if (observations !== 0) {
@@ -256,7 +255,7 @@ export class AprobacionesPage implements OnInit {
           confirmButtonText: 'Si, Rechazar afiliación',
           cancelButtonText: 'No, Solicitar corrección de datos',
           onOpen: drawPopup,
-        }).then(async (result) => {
+        }).then(async result => {
           if (result.value) {
             this.saveApprovedData({
               Rechaza: true,
@@ -276,7 +275,7 @@ export class AprobacionesPage implements OnInit {
           confirmButtonText: 'Si, Solicitar corrección de datos',
           cancelButtonText: 'No, Cancelar',
           onOpen: drawPopup,
-        }).then(async (result) => {
+        }).then(async result => {
           if (result.value) {
             await this.saveQueryFixData();
           }
@@ -296,7 +295,7 @@ export class AprobacionesPage implements OnInit {
         confirmButtonText: 'Si, Terminar',
         cancelButtonText: 'No, Cancelar',
         onOpen: drawPopup,
-      }).then(async (result) => {
+      }).then(async result => {
         if (result.value) {
           if (this.enterpriseChanged) {
             await this.saveCompanyData({
@@ -324,7 +323,7 @@ export class AprobacionesPage implements OnInit {
         confirmButtonText: 'Si, Terminar',
         cancelButtonText: 'No, Cancelar',
         onOpen: drawPopup,
-      }).then(async (result) => {
+      }).then(async result => {
         if (!result.value) {
           return;
         }
@@ -412,7 +411,7 @@ export class AprobacionesPage implements OnInit {
   }
 
   private saveCompanyData(serviceData = null, redirect = false) {
-    return new Promise<void>((resolve) => {
+    return new Promise<void>(resolve => {
       const { email, movilNumber } = this.Enterprise;
       const companyData = {
         email,
@@ -449,7 +448,7 @@ export class AprobacionesPage implements OnInit {
   }
 
   private setNavigate() {
-    return (response) => {
+    return response => {
       this.servicesChanged = false;
       if (response) {
         this.router.navigate([appFullRoutingNames.ADMIN]);
@@ -526,6 +525,14 @@ export class AprobacionesPage implements OnInit {
     }
   }
 
+  hidePanel() {
+    if (this.Formulario) {
+      this.OcultarFormulario();
+    }
+    if (this.ServiciosFormulario) {
+      this.OcultarFormularioSer();
+    }
+  }
   OcultarFormulario() {
     if (
       this.Empgtp.newNameGTPStatus === 0 ||
@@ -540,7 +547,7 @@ export class AprobacionesPage implements OnInit {
         confirmButtonText: 'Descartar',
         cancelButtonText: 'Regresar',
         onOpen: drawPopup,
-      }).then((r) => {
+      }).then(r => {
         if (r.value) {
           this.Formulario = false;
         }
@@ -566,7 +573,7 @@ export class AprobacionesPage implements OnInit {
         confirmButtonText: 'Descartar',
         cancelButtonText: 'Regresar',
         onOpen: drawPopup,
-      }).then((r) => {
+      }).then(r => {
         if (r.value) {
           this.indiceActual = -1;
           this.ServiciosFormulario = false;

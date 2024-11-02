@@ -1,7 +1,7 @@
-import type { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
+import moment from 'moment';
+import { type MenuItem } from 'primeng/api';
 
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
@@ -36,9 +36,16 @@ export class InternalHeaderComponent implements OnInit {
   companyText = 'Mi Empresa';
   dashboardText = 'Mi Resumen';
   chargesText = 'Mis Servicios';
-  scrollConfig = {
-    suppressScrollX: true,
-  };
+  hiddenNotifications = true;
+  items: MenuItem[] = [
+    {
+      label: 'Cerrar sesión',
+      styleClass: 'tw-text-center',
+      command: () => {
+        this.logout();
+      },
+    },
+  ];
 
   constructor(
     private router: Router,
@@ -47,16 +54,21 @@ export class InternalHeaderComponent implements OnInit {
     private excelser: ExcelService,
     public afiliacionService: AfiliacionService,
     private storage: StorageService,
-    private tracking: TrackingService
+    private tracking: TrackingService,
   ) {}
 
-  toggle(text: string) {
+  toggleMenu() {
+    this.isExpanded = false;
+  }
+  toggle(evt: PointerEvent) {
+    evt.stopPropagation();
+    this.hiddenNotifications = true;
     this.isExpanded = !this.isExpanded;
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
-      detail: `Enlace a ${text}`,
-      label: text,
+      detail: 'Menu móvil',
+      label: 'Menu',
       typeElement: 'Link',
       location: 'Header',
     });
@@ -147,7 +159,8 @@ export class InternalHeaderComponent implements OnInit {
     });
   }
 
-  openNotifyList() {
+  toggleNotifyList() {
+    this.hiddenNotifications = !this.hiddenNotifications;
     this.tracking.trackEvent(AdobeEvent.trackAction, {
       category: 'Navigation',
       action: 'Click',
@@ -171,7 +184,6 @@ export class InternalHeaderComponent implements OnInit {
   }
 
   markNotification(msg: MessagesType, $event: MouseEvent) {
-    console.log('markNotification');
     this.notify.changeRead(msg);
     $event.stopPropagation();
     this.tracking.trackEvent(AdobeEvent.trackAction, {
@@ -183,4 +195,10 @@ export class InternalHeaderComponent implements OnInit {
       location: 'Header',
     });
   }
+
+  blurMenu() {
+    this.hiddenNotifications = true;
+  }
+
+  protected readonly blur = blur;
 }

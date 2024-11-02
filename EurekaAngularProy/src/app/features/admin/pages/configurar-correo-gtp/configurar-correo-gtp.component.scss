@@ -39,47 +39,6 @@ small {
   max-height: 300px;
 }
 
-:host
-  ::ng-deep
-  .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float
-  .mat-form-field-label {
-  transform: translateY(-1.28125em) scale(1) perspective(100px)
-    translateZ(0.001px);
-  font-size: 12px !important;
-  font-weight: 500;
-  color: var(--ibk-black) !important;
-}
-
-:host
-  ::ng-deep
-  .mat-form-field
-  .mat-select.mat-select-invalid
-  .mat-select-arrow {
-  color: var(--primary-green-1);
-}
-
-.swal2-close {
-  background-image: url('/assets/images/buscar.svg');
-}
-
-:host ::ng-deep .mat-select-value {
-  color: var(--ibk-black) !important;
-}
-
-:host ::ng-deep .mat-select-placeholder {
-  color: var(--ibk-black) !important;
-}
-
-:host ::ng-deep .mat-input-element {
-  caret-color: var(--ibk-black) !important;
-}
-
-:host ::ng-deep .mat-checkbox-inner-container-no-side-margin {
-  margin-left: 12px;
-  margin-right: 0;
-  margin-top: 5px;
-}
-
 .br-none-mobil {
   display: none;
 }
@@ -98,10 +57,6 @@ small {
 
 .title-rp-emp {
   font-size: 28px;
-}
-
-:host ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label {
-  color: rgba(0, 0, 0, 0.54) !important;
 }
 
 // ========= table  ====
@@ -133,7 +88,6 @@ small {
     @include border-radius(5px);
     background-color: var(--ibk-white);
     padding: 5px 15px;
-    @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, 0.1), 0);
   }
 }
 

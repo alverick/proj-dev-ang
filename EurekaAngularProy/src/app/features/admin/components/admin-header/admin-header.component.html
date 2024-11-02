@@ -1,31 +1,25 @@
 <cs-header>
-  <ul class="navbar-nav ml-auto">
-    <li class="nav-item dropdown">
-      <a
-        href="javascript:void(0);"
-        class="nav-link dropdown-toggle arrow no-caret"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <img
-          class="perfil"
-          src="../../../../assets/images/person.svg"
-          alt="Perfil"
-        />
-      </a>
-      <div
-        class="dropdown-menu dropdown-menu-right"
-        aria-labelledby="lnkPerfil"
-      >
-        <a
-          class="dropdown-item nav-link"
-          routerLinkActive="active"
-          [routerLink]="[linkSetupEmail]"
-          >Configurar correo</a
-        >
-        <a class="dropdown-item nav-link" (click)="logout()">Cerrar Sesión</a>
-      </div>
-    </li>
-  </ul>
+  <div class="tw-flex tw-h-[72px">
+    <a
+      href="javascript:void(0);"
+      (click)="menu.toggle($event)"
+      class="tw-flex tw-items-center dropdown-toggle arrow no-caret tw-h-[72px]"
+    >
+      <img
+        class="perfil"
+        ngSrc="/assets/images/person.svg"
+        alt="Perfil"
+        height="40"
+        width="40"
+      />
+    </a>
+    <div class="tw-relative tw-h-[72px]">
+      <p-menu
+        #menu
+        [model]="items"
+        [popup]="true"
+        styleClass="p-menu-popup-test tw-w-auto !tw-left-auto !tw-top-[72px] tw-right-0 tw-text-nowrap"
+      />
+    </div>
+  </div>
 </cs-header>

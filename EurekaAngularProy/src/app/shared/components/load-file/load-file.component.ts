@@ -5,7 +5,6 @@ import { ExcelService } from '../../services/excel.service';
 @Component({
   selector: 'cs-load-file',
   templateUrl: './load-file.component.html',
-  styleUrls: ['./load-file.component.scss'],
 })
 export class LoadFileComponent {
   public progress = {

@@ -2,167 +2,149 @@
   class="form"
   [ngClass]="{ 'gtp-mode': gtpMode }"
   [formGroup]="form"
-  (ngSubmit)="sendFilters()"
->
-  <mat-form-field class="name" floatLabel="never">
-    <input
-      class="input-text11"
-      matInput
-      formControlName="inputSearch"
-      type="text"
-      appShear
-      maxlength="20"
-      [placeholder]="fieldNameSearch"
-    />
-    <span matPrefix class="pr-1">
-      <img alt="Buscar" class="tw-inline" src="assets/images/buscar.svg" />
-    </span>
-  </mat-form-field>
-  <mat-form-field class="f2" floatLabel="never">
-    <mat-select
-      [placeholder]="fieldState"
-      formControlName="service"
-      class="selectpicker filter-slt"
-      disableOptionCentering
-      panelClass="pts26"
-      name="servicio"
-    >
-      <mat-option
-        value="{{ service.code || service.name }}"
-        *ngFor="let service of services"
-      >
-        {{
-          (service.code ? service.code + '-' : '') + service.name
-        }}</mat-option
-      >
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="f2" floatLabel="never">
-    <mat-select
-      formControlName="status"
-      placeholder="Estado"
-      disableOptionCentering
-      panelClass="pts26"
-      name="status"
-      [multiple]="multipleState"
-    >
-      <mat-option
-        value="{{ item.idWayPay || item.idState }}"
-        *ngFor="let item of stateList"
-      >
-        {{ item.descripcion }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field *ngIf="stateTypeList" class="f2" floatLabel="never">
-    <mat-select
-      formControlName="statusSolicitud"
-      placeholder="Tipo de solicitud"
-      disableOptionCentering
-      panelClass="pts26"
-      name="statusSolicitud"
-    >
-      <mat-option value="{{ item.idState }}" *ngFor="let item of stateTypeList">
-        {{ item.descripcion }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field *ngIf="dateList" class="f2" floatLabel="never">
-    <mat-select
-      formControlName="dateForFilter"
-      placeholder="Fecha"
-      disableOptionCentering
-      panelClass="pts26"
-      name="dateForFilter"
-    >
-      <mat-option value="{{ item.idDate }}" *ngFor="let item of dateList">
-        {{ item.descripcion }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <div class="break-elm" *ngIf="!dateList"></div>
+  (ngSubmit)="sendFilters()">
+  <div class="form-elm">
+    <cs-label-control class="tw-w-full" formControlName="inputSearch">
+      <p-iconField class="tw-w-full" iconPosition="left" control>
+        <p-inputIcon styleClass="pi pi-search" />
+        <input
+          [ngClass]="{ 'lg:tw-w-72': !gtpMode, 'lg:tw-w-80': gtpMode }"
+          type="text"
+          class="tw-w-full"
+          pInputText
+          [maxLength]="20"
+          [placeholder]="fieldNameSearch"
+          formControlName="inputSearch"
+          variant="filled" />
+      </p-iconField>
+    </cs-label-control>
+  </div>
+  <div class="form-elm">
+    <cs-label-control class="tw-w-full" formControlName="service">
+      <p-dropdown
+        formControlName="service"
+        [options]="services"
+        class="tw-w-full"
+        styleClass="tw-w-full lg:tw-w-52"
+        optionLabel="name"
+        [showClear]="true"
+        [placeholder]="fieldState"
+        [optionValue]="selectDropdownValue">
+        <ng-template let-service pTemplate="selectedItem">
+          {{ (service.code ? service.code + ' - ' : '') + service.name }}
+        </ng-template>
+        <ng-template let-service pTemplate="item">
+          {{ (service.code ? service.code + ' - ' : '') + service.name }}
+        </ng-template>
+      </p-dropdown>
+    </cs-label-control>
+  </div>
+  <div class="form-elm">
+    <cs-label-control formControlName="status">
+      <p-dropdown
+        control
+        formControlName="status"
+        [options]="stateList"
+        [showClear]="true"
+        class="tw-w-full"
+        styleClass="tw-w-full lg:tw-w-52"
+        optionLabel="descripcion"
+        placeholder="Estado"
+        [optionValue]="gtpMode ? 'idWayPay' : 'idState'">
+      </p-dropdown
+    ></cs-label-control>
+  </div>
+  <div *ngIf="stateTypeList" class="form-elm">
+    <cs-label-control formControlName="statusSolicitud">
+      <p-dropdown
+        control
+        formControlName="statusSolicitud"
+        [options]="stateTypeList"
+        [showClear]="true"
+        class="tw-w-full"
+        styleClass="tw-w-full lg:tw-w-52"
+        optionLabel="descripcion"
+        placeholder="Tipo de solicitud"
+        optionValue="idState">
+      </p-dropdown>
+    </cs-label-control>
+  </div>
+  <div
+    class="tw-hidden lg:tw-block lg:tw-basis-full"
+    [ngClass]="{
+      'xl:tw-hidden': !gtpMode,
+      '2xl:tw-basis-auto': !gtpMode,
+    }"></div>
+  <div *ngIf="dateList" class="form-elm">
+    <cs-label-control formControlName="dateForFilter">
+      <p-dropdown
+        control
+        formControlName="dateForFilter"
+        [options]="dateList"
+        [showClear]="true"
+        class="tw-w-full"
+        styleClass="tw-w-full lg:tw-w-44"
+        optionLabel="descripcion"
+        placeholder="Fecha"
+        optionValue="idDate">
+      </p-dropdown>
+    </cs-label-control>
+  </div>
   <div class="label-date" *ngIf="!dateList">Fecha de solicitud:</div>
-  <mat-form-field class="f2" floatLabel="never">
-    <input
+  <div class="form-elm tw-w-full lg:tw-w-auto">
+    <cs-label-control
+      class="tw-w-full"
       formControlName="dateFrom"
-      csDate
-      csBlockCopyPaste
-      placeholder="Desde"
-      type="text"
-      matInput
-      maxlength="10"
-      minlength="10"
-      [max]="maxDateFrom"
-      [matDatepicker]="dateFromPicker"
-      (click)="dateFromPicker.open()"
-    />
-    <mat-datepicker-toggle
-      class="date-color-eureca"
-      matSuffix
-      [for]="dateFromPicker"
-    >
-      <mat-icon
-        class="svg-custom"
-        matDatepickerToggleIcon
-        svgIcon="eurc_calendar"
-      ></mat-icon>
-    </mat-datepicker-toggle>
-    <mat-datepicker #dateFromPicker></mat-datepicker>
-    <div class="msg-error" *ngIf="errorDateFrom !== '' && this.formSubmitted">
-      {{ errorDateFrom }}
-    </div>
-  </mat-form-field>
-  <mat-form-field class="f2" floatLabel="never">
-    <input
+      [errorMessages]="errorMessageDates">
+      <p-calendar
+        control
+        formControlName="dateFrom"
+        class="tw-w-full lg:tw-w-36"
+        styleClass="tw-w-full lg:tw-w-36"
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+        [maxDate]="maxDateFrom"
+        placeholder="Desde"
+        appendTo="body"
+        dateFormat="d/m/yy"></p-calendar
+    ></cs-label-control>
+  </div>
+  <div class="form-elm tw-w-full lg:tw-w-auto">
+    <cs-label-control
+      class="tw-w-full"
       formControlName="dateTo"
-      csDate
-      csBlockCopyPaste
-      placeholder="Hasta"
-      type="text"
-      name="dateTo"
-      matInput
-      maxlength="10"
-      minlength="10"
-      [min]="minDateTo"
-      [max]="maxDate"
-      [matDatepicker]="dateToPicker"
-      (click)="dateToPicker.open()"
-    />
-    <mat-datepicker-toggle
-      class="date-color-eureca"
-      matSuffix
-      [for]="dateToPicker"
-    >
-      <mat-icon
-        class="svg-custom"
-        matDatepickerToggleIcon
-        svgIcon="eurc_calendar"
-      ></mat-icon>
-    </mat-datepicker-toggle>
-    <mat-datepicker #dateToPicker></mat-datepicker>
-    <div class="msg-error" *ngIf="errorDateTo !== '' && this.formSubmitted">
-      {{ errorDateTo }}
-    </div>
-  </mat-form-field>
-  <div class="actions">
+      [errorMessages]="errorMessageDates">
+      <p-calendar
+        control
+        formControlName="dateTo"
+        class="tw-w-full lg:tw-w-36"
+        styleClass="tw-w-full lg:tw-w-36"
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+        [minDate]="minDateTo"
+        [maxDate]="maxDate"
+        placeholder="Hasta"
+        appendTo="body"
+        dateFormat="d/m/yy"></p-calendar
+    ></cs-label-control>
+  </div>
+  <div
+    class="actions 2xl:tw-basis-auto"
+    [ngClass]="{ 'xl:tw-basis-full': !gtpMode }">
+    <button
+      type="submit"
+      icon="pi pi-send"
+      pButton
+      pRipple
+      label="Buscar"></button>
     <button
       type="button"
-      class="btn-reset"
+      pButton
+      pRipple
+      class="btn-reset p-button-text tw-whitespace-nowrap"
+      icon="pi pi-trash"
       [ngClass]="{ active: formFilled }"
-      mat-button
       (click)="cleanAllFilters()"
-    >
-      <span matPrefix
-        ><img
-          class="tw-inline"
-          alt="Limpiar"
-          src="assets/images/iconos-ui-xs-trash-lines.svg"
-        />
-      </span>
-      Limpiar filtros
-    </button>
-    <button type="submit" mat-button mat-raised-button color="primary">
-      Buscar
-    </button>
+      label="Limpiar filtros"></button>
   </div>
 </form>

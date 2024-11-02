@@ -1,7 +1,11 @@
 <div class="tw-relative tw-mb-3" [ngClass]="{ 'tw-pb-5': !onlyControl }">
   <ng-container *ngIf="!hideLabel">
-    <label [for]="labelInputID" class="tw-block tw-mb-2 tw-text-extended-grey-1"
-      ><ng-content></ng-content
+    <label
+      #labelRef
+      [for]="labelInputID"
+      class="tw-flex tw-items-center tw-gap-1 tw-text-extended-grey-1"
+      [ngClass]="{ 'tw-mb-2': labelRef.hasChildNodes() }"
+      ><ng-content></ng-content><ng-content select="[label]"></ng-content
     ></label>
   </ng-container>
   <div
@@ -14,13 +18,13 @@
     ></ng-content>
     <label
       [for]="labelInputID"
-      class="label-right tw-block tw-text-sm tw-mt-1 tw-mb-0 tw-text-gray-700"
+      class="label-right tw-text-gray-700 tw-mb-0 tw-mt-1 tw-block tw-text-sm"
       ><ng-content select="[label-inline]"></ng-content
     ></label>
   </div>
   <div
     *ngIf="!onlyControl"
-    class="tw-absolute tw-w-full tw-text-xxs tw-inline-block tw-align-middle tw-mt-1"
+    class="tw-absolute tw-mt-1 tw-inline-block tw-w-full tw-align-middle tw-text-xxs"
     [ngClass]="{ 'tw-text-error': ngControl?.errors }"
   >
     <ng-content select="[validation-messages],[hint]"></ng-content>

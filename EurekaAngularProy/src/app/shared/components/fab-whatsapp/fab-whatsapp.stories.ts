@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, type StoryObj, moduleMetadata } from '@storybook/angular';
+import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';
 import { FabWhatsappComponent } from './fab-whatsapp.component';

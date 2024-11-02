@@ -26,8 +26,6 @@ export default meta;
 
 type Story = StoryObj<DashboardGraphComponent>;
 
-type Story = StoryObj<DashboardGraphComponent>;
-
 export const Normal: Story = {
   args: {
     serviceData: {

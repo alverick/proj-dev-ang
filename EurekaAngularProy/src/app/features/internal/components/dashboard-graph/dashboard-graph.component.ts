@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { path } from 'ramda';
-import { isNotEmpty, isNotNil } from 'ramda-adjunct';
+import { isNotEmpty, path } from 'ramda';
+import { isNotNil } from 'ramda-adjunct';
 
 export interface Dataset {
   data: number[];

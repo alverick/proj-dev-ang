@@ -20,13 +20,12 @@
     @include border-radius(5px);
     background-color: var(--ibk-white);
     padding: 5px 15px;
-    @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, 0.1), 0);
   }
 }
 
 .widget.filtros {
   .content {
-    @apply tw-py-8 tw-px-6 lg-greater:tw-py-4;
+    @apply tw-px-6 tw-py-8 lg-greater:tw-py-4;
   }
 }
 
@@ -321,7 +320,7 @@
   }
 }
 
-.mat-form-field {
+.mat-mdc-form-field {
   .msg-error {
     @include font-text(10px, 500);
     position: absolute;
@@ -499,10 +498,6 @@
   margin-left: -10px !important;
 }
 
-:host ::ng-deep .mat-checkbox-inner-container-no-side-margin {
-  margin-left: 12px !important;
-}
-
 ///TAGS
 :host ::ng-deep .badge-primary {
   color: var(--ibk-white);
@@ -512,4 +507,8 @@
 :host ::ng-deep .ps--active-x > .ps__rail-x,
 .ps--active-y > .ps__rail-y {
   display: none !important;
+}
+
+.badge {
+  @apply tw-whitespace-nowrap tw-rounded-lg tw-px-2 tw-py-1 tw-text-[9px];
 }

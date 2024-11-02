@@ -1,15 +1,23 @@
-@tailwind base;
-@tailwind components;
-@import 'components';
-@tailwind utilities;
+@layer tailwind-base {
+  @tailwind base;
+}
 
-@import 'configuration';
-@import 'node_modules/include-media/dist/_include-media.scss';
-@import 'fonts';
-@import 'material-config-theme';
-@import 'material-custom';
-@import 'forms';
-@import 'main';
+@layer custom {
+  @import 'forms';
+}
+
+@layer general {
+  @import 'configuration';
+  @import 'fonts';
+  @import 'material-custom';
+  @import 'main';
+  @import 'reponsive';
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @import 'components';
+  @tailwind utilities;
+}
+
 @import 'global';
-
-@import 'reponsive';

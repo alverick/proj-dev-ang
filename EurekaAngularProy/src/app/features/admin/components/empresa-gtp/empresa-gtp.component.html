@@ -4,114 +4,121 @@
   (submit)="onSubmitEmpresa()"
   class="form"
 >
-  <div class="form-group">
-    <mat-form-field class="w-100">
-      <input
-        class="input-text"
-        matInput
-        [readonly]="true"
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="ruc"
+      >RUC de la empresa<input
         type="text"
+        class="tw-w-full"
+        pInputText
+        pKeyFilter="int"
+        maxlength="11"
         formControlName="ruc"
-        placeholder="RUC"
       />
-    </mat-form-field>
+    </cs-label-control>
   </div>
-  <div class="form-group">
-    <mat-form-field class="w-70">
+  <div class="form-row tw-flex tw-gap-4">
+    <cs-label-control class="tw-w-full" formControlName="newName">
+      Nuevo Nombre de la empresa
       <textarea
-        class="input-text"
-        matInput
+        control
+        cols="30"
+        rows="1"
+        class="tw-w-full"
+        pInputTextarea
+        [autoResize]="true"
         formControlName="newName"
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="1"
-        cdkAutosizeMaxRows="5"
         placeholder="Nuevo Nombre de la empresa"
-        style="overflow: hidden"
       ></textarea>
-    </mat-form-field>
-    <mat-radio-group
+    </cs-label-control>
+    <div
       *ngIf="
         enterprise.newNameGTPStatus === statusCodes.NEW ||
         enterprise.newNameGTPStatus === statusCodes.EDITED
       "
-      formControlName="NewNameApproved"
-      aria-label="Select an option"
+      class="form-group tw-w-40 tw-shrink-0 tw-pr-2"
     >
-      <mat-radio-button name="NewNameApproved" class="w-15" value="S"
-        >SI</mat-radio-button
+      <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
+        <cs-label-control [onlyControl]="true" class="tw-w-full">
+          <p-radioButton
+            name="NewNameApproved"
+            value="S"
+            formControlName="NewNameApproved"
+          ></p-radioButton>
+          <ng-container label-inline>
+            <div class="tw-font-light">
+              <div class="tw-text-base">SI</div>
+            </div>
+          </ng-container>
+        </cs-label-control>
+        <cs-label-control [onlyControl]="true" class="tw-w-full">
+          <p-radioButton
+            name="NewNameApproved"
+            value="N"
+            formControlName="NewNameApproved"
+          ></p-radioButton>
+          <ng-container label-inline>
+            <div class="tw-font-light">
+              <div class="tw-text-base">NO</div>
+            </div>
+          </ng-container>
+        </cs-label-control>
+      </div>
+      <div
+        class="tw-whitespace-nowrap tw-text-xxs tw-text-error"
+        *ngIf="
+          formGroup.get('NewNameApproved').invalid &&
+          formGroup.get('NewNameApproved').hasError('required') &&
+          (enterprise.newNameGTPStatus === statusCodes.NEW ||
+            enterprise.newNameGTPStatus === statusCodes.EDITED)
+        "
       >
-      <mat-radio-button name="NewNameApproved" class="w-15" value="N"
-        >NO</mat-radio-button
-      >
-    </mat-radio-group>
-    <mat-error
-      class="messsage-error"
-      *ngIf="
-        formGroup.get('NewNameApproved').invalid &&
-        formGroup.get('NewNameApproved').hasError('required') &&
-        (enterprise.newNameGTPStatus === statusCodes.NEW ||
-          enterprise.newNameGTPStatus === statusCodes.EDITED)
-      "
-      >Debe seleccionar una opción</mat-error
-    >
+        Debe seleccionar una opción
+      </div>
+    </div>
   </div>
-  <div class="input-text form-group">
-    <mat-form-field class="w-100">
-      <input
-        class="input-text"
-        matInput
-        [readonly]="true"
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="entry"
+      >Rubro<input
+        control
         type="text"
+        class="tw-w-full"
+        pInputText
         formControlName="entry"
-        placeholder="Rubro"
       />
-    </mat-form-field>
+    </cs-label-control>
   </div>
-  <div class="form-group">
-    <mat-form-field class="w-100">
-      <input
-        class="input-text"
-        matInput
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="email"
+      >E-mail<input
+        control
         type="email"
-        placeholder="E-mail"
-        minlength="10"
-        maxlength="100"
+        class="tw-w-full"
+        pInputText
         formControlName="email"
-        (Keydown.space)="$event.preventDefault()"
       />
-      <mat-error *ngIf="submitted">{{
-        getErrorMessage(formGroup.get('email'), errorMessages.email)
-      }}</mat-error>
-    </mat-form-field>
+    </cs-label-control>
   </div>
-  <div class="form-group">
-    <mat-form-field class="w-100">
-      <input
-        class="input-text"
-        matInput
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="movilNumber"
+      >Teléfono o celular<input
+        control
         type="text"
-        (Keydown.space)="$event.preventDefault()"
-        placeholder="Teléfono o celular"
-        minlength="6"
-        maxlength="9"
-        csOnlyNumbers
+        class="tw-w-full"
+        pInputText
         formControlName="movilNumber"
       />
-      <mat-error *ngIf="submitted">{{
-        getErrorMessage(formGroup.get('movilNumber'), errorMessages.movilNumber)
-      }}</mat-error>
-    </mat-form-field>
+    </cs-label-control>
   </div>
-  <div class="form-group">
-    <mat-form-field class="w-100">
-      <mat-label>Operador</mat-label>
-      <mat-select formControlName="movilOperator">
-        <mat-option value="M">Movistar</mat-option>
-        <mat-option value="C">Claro</mat-option>
-        <mat-option value="E">Entel</mat-option>
-        <mat-option value="B">Bitel</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div class="form-row">
+    <cs-label-control class="tw-w-full" formControlName="movilOperator"
+      >Operador<input
+        control
+        type="text"
+        class="tw-w-full"
+        pInputText
+        formControlName="movilOperator"
+      />
+    </cs-label-control>
   </div>
   <div
     *ngIf="
@@ -119,8 +126,14 @@
       enterprise.newNameGTPStatus === statusCodes.APPROVED ||
       enterprise.newNameGTPStatus === statusCodes.EDITED
     "
-    class="mt-4 pb-4"
+    class="tw-mt-4 tw-pb-4 tw-text-center"
   >
-    <button type="submit" class="btn-eureca-green">GUARDAR</button>
+    <button
+      pButton
+      pRipple
+      type="submit"
+      label="Guardar"
+      class="tw-w-36"
+    ></button>
   </div>
 </form>

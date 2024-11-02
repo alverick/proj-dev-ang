@@ -1,195 +1,190 @@
-<div>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <div class="widget lista">
-          <div class="title">Historial de Cargas de Excel</div>
-          <div class="content">
-            <section class="lista">
+<div class="container tw-mx-auto">
+  <div class="row">
+    <div class="col">
+      <div class="widget lista">
+        <div class="title">Historial de Cargas de Excel</div>
+        <div class="content">
+          <section class="lista">
+            <table>
+              <thead>
+                <tr>
+                  <th class="c0">
+                    <div class="text">Fecha</div>
+                  </th>
+                  <th class="c1">
+                    <div class="text">Hora</div>
+                  </th>
+                  <th class="c2">
+                    <div class="text">Servicio</div>
+                  </th>
+                  <th class="c3">
+                    <div class="text">Registros</div>
+                  </th>
+                  <th class="c4">
+                    <div class="text">Resultado</div>
+                  </th>
+                  <th class="c5"></th>
+                </tr>
+              </thead>
+            </table>
+            <div class="content-container tw-overflow-auto">
               <table>
-                <thead>
+                <thead class="tw-hidden">
                   <tr>
-                    <th class="c0">
+                    <th class="c0" scope="col">
                       <div class="text">Fecha</div>
                     </th>
-                    <th class="c1">
+                    <th class="c1" scope="col">
                       <div class="text">Hora</div>
                     </th>
-                    <th class="c2">
+                    <th class="c2" scope="col">
                       <div class="text">Servicio</div>
                     </th>
-                    <th class="c3">
+                    <th class="c3" scope="col">
                       <div class="text">Registros</div>
                     </th>
-                    <th class="c4">
+                    <th class="c4" scope="col">
                       <div class="text">Resultado</div>
                     </th>
-                    <th class="c5"></th>
+                    <th class="c5" scope="col"></th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let itm of items
+                        | paginate
+                          : {
+                              itemsPerPage: 50,
+                              currentPage: pageNumber,
+                              totalItems: totalItems,
+                            }
+                    "
+                  >
+                    <td class="c0">{{ itm.date | date: 'dd/MM/yyyy' }}</td>
+                    <td class="c1">{{ itm.date | date: 'hh:mm:ss' }}</td>
+                    <td class="c2">{{ itm.service }}</td>
+                    <td class="c3">{{ itm.rows }}</td>
+                    <td class="c4">{{ itm.status }}</td>
+                    <td class="c5">
+                      <div class="tw-flex tw-gap-2">
+                        <button
+                          pButton
+                          pRipple
+                          icon="pi pi-download"
+                          class="p-button-xs"
+                          (click)="bajarExcel(itm)"
+                        ></button>
+                        <button
+                          *ngIf="
+                            itm.status === 'SAVING' ||
+                            itm.status === 'VALIDATING'
+                          "
+                          pButton
+                          pRipple
+                          (click)="fixProcess(itm.id)"
+                          pTooltip="Te permite actualizar la carga del excel que se quedó en estado SAVING o VALIDATING a FAILED."
+                          icon="pi pi-sync"
+                          class="p-button-xs"
+                        ></button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
-              <perfect-scrollbar class="content-container">
-                <table>
-                  <thead class="tw-hidden">
-                    <tr>
-                      <th class="c0" scope="col">
-                        <div class="text">Fecha</div>
-                      </th>
-                      <th class="c1" scope="col">
-                        <div class="text">Hora</div>
-                      </th>
-                      <th class="c2" scope="col">
-                        <div class="text">Servicio</div>
-                      </th>
-                      <th class="c3" scope="col">
-                        <div class="text">Registros</div>
-                      </th>
-                      <th class="c4" scope="col">
-                        <div class="text">Resultado</div>
-                      </th>
-                      <th class="c5" scope="col"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="
-                        let itm of items
-                          | paginate
-                            : {
-                                itemsPerPage: 50,
-                                currentPage: pageNumber,
-                                totalItems: totalItems
-                              }
-                      "
+            </div>
+          </section>
+          <section class="pagination">
+            <div class="ctrl">
+              <pagination-template
+                #p="paginationApi"
+                [maxSize]="5"
+                (pageChange)="changePage($event)"
+              >
+                <ul class="ngx-pagination">
+                  <li
+                    class="pagination-previous"
+                    [class.disabled]="p.isFirstPage()"
+                  >
+                    <a
+                      tabindex="0"
+                      *ngIf="1 < p.getCurrent()"
+                      (keyup.enter)="p.previous()"
+                      (click)="p.previous()"
                     >
-                      <td class="c0">{{ itm.date | date : 'dd/MM/yyyy' }}</td>
-                      <td class="c1">{{ itm.date | date : 'hh:mm:ss' }}</td>
-                      <td class="c2">{{ itm.service }}</td>
-                      <td class="c3">{{ itm.rows }}</td>
-                      <td class="c4">{{ itm.status }}</td>
-                      <td class="c5">
-                        <div class="tw-flex tw-gap-2">
-                          <button
-                            pButton
-                            pRipple
-                            icon="pi pi-download"
-                            class="p-button-xs"
-                            (click)="bajarExcel(itm)"
-                          ></button>
-                          <button
-                            *ngIf="
-                              itm.status === 'SAVING' ||
-                              itm.status === 'VALIDATING'
-                            "
-                            pButton
-                            pRipple
-                            (click)="fixProcess(itm.id)"
-                            pTooltip="Te permite actualizar la carga del excel que se quedó en estado SAVING o VALIDATING a FAILED."
-                            icon="pi pi-sync"
-                            class="p-button-xs"
-                          ></button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </perfect-scrollbar>
-            </section>
-            <section class="pagination">
-              <div class="ctrl">
-                <pagination-template
-                  #p="paginationApi"
-                  [maxSize]="5"
-                  (pageChange)="changePage($event)"
-                >
-                  <ul class="ngx-pagination">
-                    <li
-                      class="pagination-previous"
-                      [class.disabled]="p.isFirstPage()"
+                      <img
+                        alt="Anterior"
+                        class="tw-inline"
+                        src="/assets/images/before.svg"
+                      />
+                    </a>
+                    <span *ngIf="p.isFirstPage()">
+                      <img
+                        alt="Anterior"
+                        class="tw-inline"
+                        src="/assets/images/before.svg"
+                      />
+                    </span>
+                  </li>
+                  <li *ngIf="p.pages.length === 0" class="current">
+                    <span>1</span>
+                  </li>
+                  <li
+                    *ngFor="let page of p.pages"
+                    [class.current]="p.getCurrent() === page.value"
+                    [class.ellipsis]="page.label === '...'"
+                  >
+                    <a
+                      class="numpag"
+                      tabindex="0"
+                      (keyup.enter)="p.setCurrent(page.value)"
+                      (click)="p.setCurrent(page.value)"
+                      *ngIf="p.getCurrent() !== page.value"
                     >
-                      <a
-                        tabindex="0"
-                        *ngIf="1 < p.getCurrent()"
-                        (keyup.enter)="p.previous()"
-                        (click)="p.previous()"
-                      >
-                        <img
-                          alt="Anterior"
-                          class="tw-inline"
-                          src="/assets/images/before.svg"
-                        />
-                      </a>
-                      <span *ngIf="p.isFirstPage()">
-                        <img
-                          alt="Anterior"
-                          class="tw-inline"
-                          src="/assets/images/before.svg"
-                        />
-                      </span>
-                    </li>
-                    <li *ngIf="p.pages.length === 0" class="current">
-                      <span>1</span>
-                    </li>
-                    <li
-                      *ngFor="let page of p.pages"
-                      [class.current]="p.getCurrent() === page.value"
-                      [class.ellipsis]="page.label === '...'"
+                      <span>{{
+                        page.label === '...'
+                          ? page.label
+                          : (page.label | number: '')
+                      }}</span>
+                    </a>
+                    <ng-container *ngIf="p.getCurrent() === page.value">
+                      <span>{{
+                        page.label === '...'
+                          ? page.label
+                          : (page.label | number: '')
+                      }}</span>
+                    </ng-container>
+                  </li>
+                  <li class="pagination-next" [class.disabled]="p.isLastPage()">
+                    <a
+                      class="pr-0"
+                      tabindex="0"
+                      *ngIf="!p.isLastPage()"
+                      (keyup.enter)="p.next()"
+                      (click)="p.next()"
                     >
-                      <a
-                        class="numpag"
-                        tabindex="0"
-                        (keyup.enter)="p.setCurrent(page.value)"
-                        (click)="p.setCurrent(page.value)"
-                        *ngIf="p.getCurrent() !== page.value"
-                      >
-                        <span>{{
-                          page.label === '...'
-                            ? page.label
-                            : (page.label | number : '')
-                        }}</span>
-                      </a>
-                      <ng-container *ngIf="p.getCurrent() === page.value">
-                        <span>{{
-                          page.label === '...'
-                            ? page.label
-                            : (page.label | number : '')
-                        }}</span>
-                      </ng-container>
-                    </li>
-                    <li
-                      class="pagination-next"
-                      [class.disabled]="p.isLastPage()"
-                    >
-                      <a
-                        class="pr-0"
-                        tabindex="0"
-                        *ngIf="!p.isLastPage()"
-                        (keyup.enter)="p.next()"
-                        (click)="p.next()"
-                      >
-                        <img
-                          alt="Siguiente"
-                          class="tw-inline"
-                          src="/assets/images/after.svg"
-                        />
-                      </a>
-                      <span class="pr-0" *ngIf="p.isLastPage()">
-                        <img
-                          alt="Siguiente"
-                          class="tw-inline"
-                          src="/assets/images/after.svg"
-                        />
-                      </span>
-                    </li>
-                  </ul>
-                </pagination-template>
-              </div>
-              <div class="clear-float"></div>
-            </section>
-          </div>
+                      <img
+                        alt="Siguiente"
+                        class="tw-inline"
+                        src="/assets/images/after.svg"
+                      />
+                    </a>
+                    <span class="pr-0" *ngIf="p.isLastPage()">
+                      <img
+                        alt="Siguiente"
+                        class="tw-inline"
+                        src="/assets/images/after.svg"
+                      />
+                    </span>
+                  </li>
+                </ul>
+              </pagination-template>
+            </div>
+            <div class="clear-float"></div>
+          </section>
         </div>
       </div>
     </div>
-    <cs-footer></cs-footer>
   </div>
+  <cs-footer></cs-footer>
 </div>

@@ -30,7 +30,7 @@ export class FabWhatsappComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (pathEq(['showButton', 'currentValue'], true, changes)) {
+    if (pathEq(true, ['showButton', 'currentValue'], changes)) {
       this.showText = true;
       setTimeout(() => (this.showText = false), this.timeToHide);
     }

@@ -45,7 +45,7 @@
               >
             </div>
           </div>
-          <div class="content tw-py-6 lg:tw-py-4 tw-px-8 box-shadow">
+          <div class="content tw-py-6 lg:tw-pt-6 tw-px-4 box-shadow">
             <cs-payments-filter
               [services]="services"
               [stateList]="waypayList"
@@ -78,7 +78,7 @@
                   type="button"
                   icon="pi pi-trash"
                   label="Eliminar"
-                  class="p-button-text p-button-sm p-button-outlined tw-h-11"
+                  class="p-button-text p-button-outlined tw-h-11"
                   [disabled]="selectedRows.length === 0"
                 ></button>
               </div>
@@ -93,7 +93,7 @@
                     type="button"
                     icon="pi pi-download"
                     label="Descargar movimientos"
-                    class="p-button-text p-button-sm p-button-outlined tw-h-11"
+                    class="p-button-text p-button-outlined tw-h-11"
                     [disabled]="enDescarga"
                   ></button>
                 </div>
@@ -103,7 +103,7 @@
                     label="Agregar cobros"
                     icon="pi pi-plus"
                     [model]="this.items"
-                    (onClick)="ua.onDropdownButtonClick($event)"
+                    (onClick)="clickSplitButton(ua,$event)"
                     styleClass="p-button-outlined p-button-sm p-button-success"
                   ></p-splitButton>
                 </div>

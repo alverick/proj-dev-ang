@@ -1,4 +1,4 @@
-import { type HttpErrorResponse, HttpClient } from '@angular/common/http';
+import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { type Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -34,20 +34,15 @@ export interface LastProcessStatus {
 
 @Injectable()
 export class ExcelService {
-  private URI_API: string = environment.END_POINT;
+  private readonly URI_API: string = environment.END_POINT;
   public statusUpload = false;
-
-  constructor(public http: HttpClient) {}
-
   public service: Partial<CompanyServices> = {};
   public idProcess = 0;
   public errores: IErrorObj[] = [];
 
-  UploadExcel(
-    files: any,
-    service: string,
-    changeStatus: boolean
-  ): Observable<any> {
+  constructor(public http: HttpClient) {}
+
+  UploadExcel(files: File[], service: string, changeStatus: boolean) {
     this.statusUpload = changeStatus;
     this.errores = [];
     const url = `${this.URI_API}/debt/load/${service}`;
@@ -86,7 +81,7 @@ export class ExcelService {
           this.idProcess = result.id;
         }
         return result;
-      })
+      }),
     );
   }
 }

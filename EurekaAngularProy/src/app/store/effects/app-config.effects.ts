@@ -18,10 +18,10 @@ export class AppConfigEffects {
         EMPTY.pipe(
           map((data) => AppConfigActions.loadConfigSuccess({ data })),
           catchError((error) =>
-            of(AppConfigActions.loadConfigFailure({ error }))
-          )
-        )
-      )
+            of(AppConfigActions.loadConfigFailure({ error })),
+          ),
+        ),
+      ),
     );
   });
   setLoaderAppConfigs$ = createEffect(
@@ -29,7 +29,7 @@ export class AppConfigEffects {
       this.actions$.pipe(
         ofType(AppConfigActions.setLoader),
         concatLatestFrom(() =>
-          this.store.select(appConfigFeature.selectShowLoader)
+          this.store.select(appConfigFeature.selectShowLoader),
         ),
         debounce(([{ show }]) => {
           return show ? timer(0) : timer(500);
@@ -40,14 +40,14 @@ export class AppConfigEffects {
           } else {
             void this.spinner.hide();
           }
-        })
+        }),
       ),
-    { dispatch: false }
+    { dispatch: false },
   );
 
   constructor(
     private actions$: Actions,
     private store: Store,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) {}
 }

@@ -1,8 +1,8 @@
-import { type OnInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, type OnInit, ViewChild } from '@angular/core';
 import {
+  FormBuilder,
   type FormControl,
   type FormGroup,
-  FormBuilder,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -74,7 +74,7 @@ export class DashboardPage implements OnInit {
     protected fb: FormBuilder,
     private collectAmountService: CollectAmountService,
     private historicalCollectService: HistoricalCollectService,
-    private topClientService: TopClientService
+    private topClientService: TopClientService,
   ) {
     this.dateFrom.setMonth(this.dateFrom.getMonth() - 1);
     this.setCollectAmount();
@@ -103,7 +103,7 @@ export class DashboardPage implements OnInit {
         const servicesFiltered =
           currenciesServices.length > 1
             ? servicesList.filter(
-                (item) => item.currency === currencies[0].code
+                (item) => item.currency === currencies[0].code,
               )
             : servicesList;
         this.services = servicesList;
@@ -144,7 +144,7 @@ export class DashboardPage implements OnInit {
       const dates: string[] = pipe(
         pluck('date'),
         flatten,
-        uniq
+        uniq,
       )(dataList) as string[];
 
       dates.sort((dateA, dateB): number => {
@@ -153,7 +153,7 @@ export class DashboardPage implements OnInit {
           const date = new Date(
             parseInt(dateParts[2]),
             parseInt(dateParts[1]) - 1,
-            parseInt(dateParts[0])
+            parseInt(dateParts[0]),
           );
           return date;
         };
@@ -233,7 +233,7 @@ export class DashboardPage implements OnInit {
         width,
         (output.offsetHeight * width) / output.offsetWidth,
         '',
-        'FAST'
+        'FAST',
       );
       const report = doc.output('blob');
       formData.append('filename', report);

@@ -1,53 +1,87 @@
 <cs-header>
-  <div *ngIf="showMenu" class="tw-flex">
-    <ul class="navigation-menu">
-      <li class="tw-h-full" routerLinkActive="active">
-        <a class="link" [routerLink]="[homeLink]" (click)="gotoHomePage()">{{
-          homeText
-        }}</a>
-      </li>
-      <li *ngIf="false" class="tw-h-full" routerLinkActive="active">
-        <a class="link" [routerLink]="[dashboardLink]">{{ dashboardText }}</a>
-      </li>
-      <li class="tw-h-full" routerLinkActive="active">
+  <div
+    *ngIf="showMenu"
+    class="tw-group tw-relative tw-flex"
+    [ngClass]="{
+      expanded: isExpanded,
+    }"
+  >
+    <ul
+      class="tw-absolute tw-right-0 tw-top-full tw-z-50 tw-hidden tw-animate-fade-down tw-flex-col tw-gap-3 tw-bg-white tw-p-4 tw-shadow-md tw-animate-duration-200 group-[.expanded]:tw-flex lg:tw-relative lg:tw-right-auto lg:tw-top-auto lg:tw-flex lg:tw-animate-fade lg:tw-flex-row lg:tw-items-center lg:tw-gap-2 lg:tw-bg-transparent lg:tw-p-0 lg:tw-shadow-none lg:tw-animate-duration-[0ms]"
+      (clickOutside)="toggleMenu()"
+      (keyup)="toggleMenu()"
+    >
+      <li class="tw-group tw-h-full" routerLinkActive="active">
         <a
-          class="link"
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
+          [routerLink]="[homeLink]"
+          (click)="gotoHomePage()"
+          >{{ homeText }}</a
+        >
+      </li>
+      <li *ngIf="false" class="tw-group tw-h-full" routerLinkActive="active">
+        <a
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
+          [routerLink]="[dashboardLink]"
+          >{{ dashboardText }}</a
+        >
+      </li>
+      <li class="tw-group tw-h-full" routerLinkActive="active">
+        <a
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
           [routerLink]="[servicesLink]"
           (click)="gotoChargesPage()"
         >
           {{ chargesText }}
         </a>
       </li>
-      <li class="tw-h-full" routerLinkActive="active">
+      <li class="tw-group tw-h-full" routerLinkActive="active">
         <a
-          class="link"
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
           [routerLink]="[companyLink]"
           (click)="gotoCompanyPage()"
           >{{ companyText }}</a
         >
       </li>
-      <li class="tw-h-full" routerLinkActive="active">
-        <a class="link" [routerLink]="[helpLink]" (click)="gotoHelpPage()">{{
-          helpText
-        }}</a>
-      </li>
-      <li class="nav-item dropdown ml-4">
+      <li class="tw-group tw-h-full" routerLinkActive="active">
         <a
-          href="#"
-          class="dropdown-toggle no-caret tw-px-2 tw-h-full tw-flex tw-items-center hover:tw-no-underline"
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
+          [routerLink]="[helpLink]"
+          (click)="gotoHelpPage()"
+          >{{ helpText }}</a
+        >
+      </li>
+      <li class="tw-group tw-h-full lg:tw-hidden" routerLinkActive="active">
+        <a
+          class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
+          (click)="logout()"
+          >Cerrar sesión</a
+        >
+      </li>
+    </ul>
+
+    <ul class="tw-flex tw-items-center tw-gap-2">
+      <li
+        class="tw-relative tw-h-full"
+        (clickOutside)="blurMenu()"
+        (keyup)="blurMenu()"
+      >
+        <a
+          href="javascript:void(0);"
+          class="tw-flex tw-h-full tw-items-center tw-px-2 hover:tw-no-underline"
           id="lnkMessages"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          (click)="openNotifyList()"
+          (click)="toggleNotifyList()"
         >
           <i
             *ngIf="notify.total <= 0"
-            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
+            class="pi pi-bell tw-text-2xl tw-text-primary-green-1"
           ></i
           ><i
             *ngIf="notify.total > 0"
-            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
+            class="pi pi-bell tw-text-2xl tw-text-primary-green-1"
             pBadge
             iconPos="left"
             [value]="notify.totalLabel"
@@ -55,211 +89,78 @@
           ></i>
         </a>
         <div
-          class="dropdown-menu scroll-menu dropdown-menu-right"
-          aria-labelledby="lnkMessages"
+          class="tw-absolute tw-right-0 tw-top-full tw-z-50 tw-w-[80vw] tw-bg-white tw-shadow-md md:tw-w-[450px]"
+          *ngIf="!hiddenNotifications"
         >
-          <div class="title">
-            <div class="text al-left">Notificaciones</div>
-            <a class="mark-all al-right" (click)="markAllNotifications()">
+          <div
+            class="tw-flex tw-justify-between tw-border-b tw-border-extended-grey-4 tw-px-3 tw-py-2.5 tw-text-xs"
+          >
+            <div class="tw-to-extended-ibk-black">Notificaciones</div>
+            <a class="tw-cursor-pointer" (click)="markAllNotifications()">
               Marcar todas como leídas
             </a>
-            <div class="clear-float"></div>
           </div>
 
-          <perfect-scrollbar
-            class="notifies"
-            [config]="scrollConfig"
-            (psYReachEnd)="onScroll()"
+          <ng-scrollbar
+            [ngClass]="{
+              'tw-h-[450px]': notify.total > 0,
+            }"
+            (reachedBottom)="onScroll()"
           >
             <div
               *ngFor="let msg of notify.messages"
-              class="dropdown-item"
-              [class.dropdown-item-readed]="!msg.isNew"
-            >
-              <div
-                *ngIf="msg.isNew"
-                style="
-                  background-color: rgba(132, 206, 162, 0.1803921568627451);
-                "
-              >
-                <div class="espacio">
-                  <a
-                    class="notiificacion"
-                    title="{{ msg.title }}"
-                    (click)="markNotification(msg, $event)"
-                  >
-                    <img
-                      class="item-icono"
-                      src="assets/images/badge-bg.svg"
-                      alt="Notificación"
-                    />
-                  </a>
-                  <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
-                  <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
-                </div>
-              </div>
-              <div
-                *ngIf="!msg.isNew"
-                style="background-color: var(--ibk-white)"
-              >
-                <div class="espacio">
-                  <a
-                    class="notiificacion"
-                    title="{{ msg.title }}"
-                    (click)="markNotification(msg, $event)"
-                  >
-                    <img
-                      class="item-icono"
-                      src="assets/images/ok.svg"
-                      alt="ok"
-                    />
-                  </a>
-                  <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
-                  <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="text-notifications" *ngIf="notify.messages.length == 0">
-              No tienes notificaciones
-            </div>
-            <div *ngIf="notify.loadingMsg" class="loading">
-              <mat-spinner [diameter]="20"></mat-spinner>
-            </div>
-          </perfect-scrollbar>
-
-          <div class="more">
-            <a
-              class="text-notifications"
-              style="cursor: pointer"
-              (click)="onScroll(); $event.stopPropagation()"
-            >
-              Ver más
-            </a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a
-          href="#"
-          class="nav-link dropdown-toggle arrow no-caret"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <img class="perfil" src="assets/images/person.svg" alt="Perfil" />
-        </a>
-        <div
-          class="dropdown-menu dropdown-menu-right"
-          aria-labelledby="lnkPerfil"
-        >
-          <a class="dropdown-item" (click)="logout()">Cerrar Sesión</a>
-        </div>
-      </li>
-    </ul>
-
-    <ul class="navigation-mobile tw-flex tw-flex-row lg:tw-hidden">
-      <li class="nav-item dropdown mr-3">
-        <a
-          href="#"
-          class="nav-link dropdown-toggle no-caret hover:tw-no-underline"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          (click)="openNotifyList()"
-        >
-          <i
-            *ngIf="notify.total <= 0"
-            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
-          ></i
-          ><i
-            *ngIf="notify.total > 0"
-            class="pi pi-bell tw-text-primary-green-1 tw-text-2xl"
-            pBadge
-            iconPos="left"
-            [value]="notify.totalLabel"
-            severity="danger"
-          ></i>
-        </a>
-        <div
-          class="dropdown-menu scroll-menu dropdown-menu-right"
-          aria-labelledby="lnkMessages"
-        >
-          <div class="title">
-            <div class="text al-left">Notificaciones</div>
-            <a class="mark-all al-right" (click)="markAllNotifications()">
-              Marcar todas como leidas
-            </a>
-            <div class="clear-float"></div>
-          </div>
-
-          <perfect-scrollbar
-            class="notifies"
-            [config]="scrollConfig"
-            (psYReachEnd)="onScroll()"
-          >
-            <a
-              *ngFor="let msg of notify.messages"
-              class="dropdown-item"
               (click)="$event.stopPropagation()"
               [class.dropdown-item-readed]="!msg.isNew"
             >
               <div
-                *ngIf="msg.isNew"
-                style="
-                  background-color: rgba(132, 206, 162, 0.1803921568627451);
-                "
+                class="tw-border-b tw-border-extended-grey-4 tw-p-2"
+                [ngClass]="{ 'tw-bg-[#eaf6ee]': msg.isNew }"
               >
-                <div class="espacio">
-                  <a
-                    class="notiificacion"
-                    title="{{ msg.title }}"
-                    (click)="markNotification(msg, $event)"
+                <a
+                  class="tw-block"
+                  title="{{ msg.title }}"
+                  (click)="markNotification(msg, $event)"
+                >
+                  <div
+                    class="tw-flex tw-items-start tw-gap-2 tw-text-sm tw-font-normal tw-text-black"
                   >
-                    <img
-                      class="item-icono"
-                      src="assets/images/badge-bg.svg"
-                      alt="Notificación"
-                    />
-                  </a>
-                  <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
-                  <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
-                </div>
+                    <div
+                      class="tw-mt-1 tw-flex tw-h-3 tw-w-3 tw-shrink-0 tw-items-center tw-justify-between tw-rounded-full tw-bg-extended-watermelon-1"
+                      [ngClass]="{
+                        'tw-bg-extended-watermelon-1': msg.isNew,
+                        'tw-bg-primary-green-1': !msg.isNew,
+                      }"
+                    >
+                      <i
+                        *ngIf="!msg.isNew"
+                        class="pi pi-check tw-mx-auto tw-text-[9px] tw-text-white"
+                      ></i>
+                    </div>
+                    <div class="tw-text-black">
+                      <div>{{ msg.message }}</div>
+                      <div class="tw-mt-1 tw-font-light tw-text-black">
+                        {{ getAgo(msg.create) }}
+                      </div>
+                    </div>
+                  </div>
+                </a>
               </div>
-              <div
-                *ngIf="!msg.isNew"
-                style="background-color: var(--ibk-white)"
-              >
-                <div class="espacio">
-                  <a
-                    class="notiificacion"
-                    title="{{ msg.title }}"
-                    (click)="markNotification(msg, $event)"
-                  >
-                    <img
-                      class="item-icono"
-                      src="assets/images/ok.svg"
-                      alt="ok"
-                    />
-                  </a>
-                  <div class="pl-2 pr-2 texto">{{ msg.message }}</div>
-                  <div class="pl-2 pr-2 tiempo">{{ getAgo(msg.create) }}</div>
-                </div>
-              </div>
-            </a>
+            </div>
 
-            <div class="text-notifications" *ngIf="notify.messages.length == 0">
+            <div
+              class="tw-border-b tw-border-extended-grey-4 tw-py-2 tw-text-center tw-text-sm"
+              *ngIf="notify.messages.length == 0"
+            >
               No tienes notificaciones
             </div>
-            <div *ngIf="notify.loadingMsg" class="loading">
-              <mat-spinner [diameter]="20"></mat-spinner>
+            <div *ngIf="notify.loadingMsg" class="tw-py-2 tw-text-center">
+              <i class="pi pi-spin pi-spinner tw-text-lg"></i>
             </div>
-          </perfect-scrollbar>
+          </ng-scrollbar>
 
-          <div class="more">
+          <div class="tw-px-3 tw-py-2.5 tw-text-center tw-text-xs">
             <a
-              class="text-notifications"
-              style="cursor: pointer"
+              class="tw-cursor-pointer"
               (click)="onScroll(); $event.stopPropagation()"
             >
               Ver más
@@ -267,58 +168,44 @@
           </div>
         </div>
       </li>
-      <li class="nav-item">
-        <button class="btn-nabar" type="button" (click)="toggle()">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <li class="tw-hidden tw-items-center lg:tw-flex">
+        <a
+          href="javascript:void(0);"
+          (click)="menu.toggle($event)"
+          class="dropdown-toggle arrow no-caret tw-flex tw-h-[72px] tw-items-center"
+        >
+          <img
+            class="perfil"
+            ngSrc="/assets/images/person.svg"
+            alt="Perfil"
+            height="40"
+            width="40"
+          />
+        </a>
+        <div class="tw-relative tw-h-[72px]">
+          <p-menu
+            #menu
+            [model]="items"
+            [popup]="true"
+            styleClass="p-menu-popup-test tw-w-auto !tw-left-auto !tw-top-[72px] tw-right-0 tw-text-nowrap"
+          />
+        </div>
       </li>
     </ul>
-    <div *ngIf="isExpanded == true">
-      <ul class="navbar-responsive" (mouseleave)="toggle()">
-        <li class="nav-item" routerLinkActive="active">
-          <a
-            class="mano nav-link mb-3"
-            [routerLink]="[homeLink]"
-            (click)="toggle(homeText)"
-            >{{ homeText }}</a
-          >
-        </li>
-        <li *ngIf="false" class="nav-item" routerLinkActive="active">
-          <a
-            class="mano nav-link mb-3"
-            [routerLink]="[dashboardLink]"
-            (click)="toggle(dashboardText)"
-            >{{ dashboardText }}</a
-          >
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a
-            class="mano nav-link mb-3"
-            [routerLink]="[servicesLink]"
-            (click)="toggle(chargesText)"
-            >{{ chargesText }}</a
-          >
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a
-            class="mano nav-link mb-3"
-            [routerLink]="[companyLink]"
-            (click)="toggle(companyText)"
-            >{{ companyText }}</a
-          >
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a
-            class="mano nav-link mb-3"
-            [routerLink]="[helpLink]"
-            (click)="toggle(helpText)"
-            >{{ helpText }}</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="mano nav-link mb-3" (click)="logout()">Cerrar Sesión</a>
-        </li>
-      </ul>
-    </div>
+
+    <ul
+      class="navigation-mobile tw-flex tw-h-[72px] tw-flex-row tw-items-center lg:tw-hidden"
+    >
+      <li class="nav-item">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-bars"
+          class="p-button-white tw-h-10 tw-w-10 tw-text-black"
+          type="button"
+          (click)="toggle($event)"
+        ></button>
+      </li>
+    </ul>
   </div>
 </cs-header>

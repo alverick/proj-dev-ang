@@ -1,128 +1,28 @@
-.mat-form-field {
-  width: 100%;
-  @include media('>sm') {
-    width: calc(50% - 10px);
-  }
-  @include media('>lg') {
-    width: 120px;
-  }
-  @include media('>xl') {
-    min-width: 120px;
-    width: auto;
-  }
-
-  &:nth-child(even) {
-    @include media('>lg') {
-      margin-left: 0;
-    }
-  }
-
-  &.name {
-    @include media('>lg') {
-      width: 230px;
-    }
-    @include media('>xl') {
-      min-width: 230px;
-      width: auto;
-    }
-  }
-}
-
 .form {
-  display: inline-flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 5px 20px;
-  @include media('>sm') {
-    flex-wrap: wrap;
-    flex-direction: row;
-  }
-  @include media('>xl') {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-  @include media('>lg') {
-    gap: 5px 10px;
-  }
+  @apply tw-grid tw-grid-cols-1 sm:tw-grid-cols-2 lg:tw-flex tw-flex-wrap tw-items-start tw-gap-[5px_20px] sm:tw-flex-wrap lg:tw-gap-[5px_10px];
 
   button {
-    height: 40px;
-    padding: 0 20px;
-    @include media('>lg') {
-      padding: 0 30px;
-    }
-  }
-
-  &.gtp-mode {
-    @include media('>xl') {
-      display: inline-flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-
-    .mat-form-field {
-      @include media('>lg') {
-        width: auto;
-      }
-      @include media('>xl') {
-        min-width: 0;
-      }
-
-      &.name {
-        @include media('>lg') {
-          width: 260px;
-        }
-        @include media('>xl') {
-          min-width: 260px;
-          width: auto;
-        }
-      }
-    }
+    @apply tw-h-10;
   }
 }
 
 .actions {
-  display: flex;
-  flex-direction: column;
-  @include media('>sm') {
-    flex-direction: row;
-    gap: 10px;
-  }
+  @apply tw-flex sm:tw-flex-row tw-flex-col sm:tw-gap-2.5;
 }
 
 .btn-reset {
   opacity: 0;
   visibility: hidden;
-  transition: all 0.5s;
-  order: 1;
-  @include media('>xl') {
-    order: 0;
-  }
+  transition: all 0.3s;
+  @apply tw-opacity-0 tw-transition-opacity tw-duration-300 tw-invisible;
 
   &.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  span {
-    position: relative;
-    top: -2px;
+    @apply tw-opacity-100 tw-visible;
   }
 }
 
 .label-date {
-  white-space: nowrap;
-  margin-right: auto;
-  @include font-text(14px);
-  padding-bottom: 0.34rem;
-  @include media('>sm') {
-    flex-basis: 100%;
-  }
-  @include media('>lg') {
-    margin-right: 0;
-    flex-basis: auto;
-  }
+  @apply tw-h-10 tw-flex tw-items-center tw-whitespace-nowrap sm:tw-col-span-2 lg:tw-col-auto;
 }
 
 .break-elm {

@@ -1,209 +1,11 @@
-.mat-button,
-.mat-raised-button,
-.mat-icon-button,
-.mat-stroked-button,
-.mat-flat-button,
-.mat-fab,
-.mat-mini-fab {
-  @include font-text(14px !important, normal !important);
-  color: var(--primary-green-1);
-}
-
-.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background,
-.mat-checkbox-checked.mat-accent .mat-checkbox-background {
-  background-color: var(--primary-green-1);
-}
-
-.mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background,
-.mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background {
-  background-color: var(--grises-grey-2);
-}
-
-.mat-progress-bar-buffer {
-  background-color: var(--primary-green-4);
-}
-
-.mat-progress-bar-fill::after {
-  background-color: var(--primary-green-1);
-}
-
-.mat-progress-spinner circle,
-.mat-spinner circle {
-  stroke: var(--ibk-black);
-}
-
-.mat-form-field {
-  @include font-text(14px);
-
-  .mat-form-field-prefix {
-    margin-right: 2px;
-  }
-
-  .mat-select {
-    @include font-text(14px);
-  }
-
-  .mat-form-field-ripple {
-    background-color: var(--ibk-black);
-  }
-
-  .mat-select-arrow {
-    width: 16px;
-    height: 16px;
-    border: 0;
-    background-image: url(/assets/images/iconos-ui-xs-expand-more.svg);
-    background-repeat: no-repeat;
-    transition: all 0.5s;
-  }
-
-  .mat-datepicker-toggle {
-    .mdc-icon-button {
-      font-size: 15px;
-      color: var(--primary-green-1);
-    }
-  }
-
-  &.mat-focused {
-    .mat-form-field-label {
-      color: var(--ibk-black) !important;
-    }
-
-    .mat-form-field-ripple {
-      background-color: var(--primary-green-1) !important;
-    }
-
-    .mat-select-arrow {
-      transform: rotate(180deg);
-    }
-  }
-
-  &.mat-form-field-disabled {
-    .mat-datepicker-toggle {
-      .mat-mdc-icon-button {
-        font-size: 15px;
-        color: rgba(0, 0, 0, 0.42);
-      }
-    }
-  }
-}
-
-.mat-form-field-appearance-legacy {
-  .mat-form-field-prefix .mat-datepicker-toggle .mat-mdc-icon-button,
-  .mat-form-field-suffix
-    .mat-datepicker-toggle
-    .mat-mdc-icon-button.mdc-icon-button {
-    font-size: 15px;
-  }
-
-  .mat-form-field-label-wrapper {
-    .mat-form-field-label {
-      color: var(--grises-grey-2);
-    }
-  }
-
-  .mat-form-field-underline {
-    background-color: var(--grises-grey-3);
-  }
-
-  &.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-    transform: translateY(-1.28125em) scale(1) perspective(100px)
-      translateZ(0.001px);
-    font-weight: 500;
-    font-size: 10px !important;
-    color: var(--ibk-black);
-  }
-
-  .msg-error {
-    @include font-text(10px, 500);
-
-    position: absolute;
-    color: var(--extended-palette-watermelon-1);
-    margin-top: 10px;
-    width: 200px;
-  }
-
-  .msg-error-filtro {
-    @include font-text(10px, 500);
-
-    position: absolute;
-    color: var(--extended-palette-watermelon-1);
-    margin-top: 10px;
-    width: 200px;
-    background-color: var(--ibk-white);
-  }
-}
-
-.mat-calendar-body-selected {
-  background-color: var(--primary-green-1);
-  color: var(--ibk-white);
-}
-
-mat-icon.svg-custom {
-  svg {
-    width: 24px;
-    height: 24px;
-
-    path {
-      fill: inherit;
-    }
-  }
-}
-
-.mat-checkbox-frame {
-  border-color: var(--grises-grey-1);
-}
-
-.mat-radio-outer-circle {
-  border-color: var(--grises-grey-1);
-}
-
-.mat-select-value {
-  color: var(--ibk-black);
-}
-
-.mat-input-element {
-  caret-color: var(--ibk-black);
-}
-
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-  border-color: var(--primary-green-1);
-}
-
-.mat-radio-button.mat-accent .mat-radio-inner-circle {
-  background-color: var(--primary-green-1);
-}
-
 .chk-vertical {
   display: block;
   width: 40px;
   text-align: center;
-
-  .mat-checkbox-ripple {
-    left: calc(50% - 12px);
-    top: calc(50% - 12px);
-    height: 24px;
-    width: 24px;
-  }
-
-  .mat-checkbox-layout {
-    margin-bottom: 0;
-  }
+  /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
 }
 
-.mat-select-panel {
-  min-width: 220px !important;
-  max-width: 100% !important;
-
-  &.pts26 {
-    margin-top: 26px;
-  }
-
-  .mat-option-text {
-    @include font-text(14px);
-  }
-}
-
-:-ms-input-placeholder.mat-input-element {
+:-ms-input-placeholder.mat-mdc-input-element {
   color: rgba(0, 0, 0, 0.42);
 }
 
@@ -283,7 +85,7 @@ mat-icon.svg-custom {
   border: solid 1px var(--primary-green-1) !important;
 
   &:hover {
-    background-color:var(--primary-green-2) !important;
+    background-color: var(--primary-green-2) !important;
   }
 
   &:active {
@@ -323,8 +125,4 @@ mat-icon.svg-custom {
     text-decoration: underline;
     cursor: pointer;
   }
-}
-
-.mat-form-field .input-text[type=password]::-ms-reveal {
-  display: none;
 }

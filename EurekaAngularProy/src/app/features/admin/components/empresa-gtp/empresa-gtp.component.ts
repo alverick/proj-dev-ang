@@ -1,19 +1,20 @@
 import {
-  type OnInit,
   Component,
   EventEmitter,
   Input,
+  type OnInit,
   Output,
 } from '@angular/core';
 import {
   type AbstractControl,
-  type UntypedFormGroup,
   UntypedFormBuilder,
   UntypedFormControl,
+  type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
+import { mobileOperators } from '../../../../shared/constants/company';
 
 import { emailRegex } from '../../../../shared/constants/patterns';
 import { statusCodes } from '../../../../shared/constants/services';
@@ -22,7 +23,6 @@ import { ICompanyData } from '../../../../shared/models/company-data';
 @Component({
   selector: 'cs-empresa-gtp',
   templateUrl: './empresa-gtp.component.html',
-  styleUrls: ['./empresa-gtp.component.scss'],
 })
 export class EmpresaGTPComponent implements OnInit {
   formGroup: UntypedFormGroup;
@@ -60,6 +60,10 @@ export class EmpresaGTPComponent implements OnInit {
 
     const isNotEditable = newNameGTPStatus !== statusCodes.APPROVED;
 
+    const operator = mobileOperators.find(
+      (operator) => operator.value === movilOperator,
+    );
+
     let newNombreApprovedValue: string;
     switch (NombreApproved) {
       case undefined:
@@ -90,29 +94,29 @@ export class EmpresaGTPComponent implements OnInit {
       email: new UntypedFormControl(
         {
           value: email,
-          disabled: isNotEditable,
+          disabled: true,
         },
         [
           Validators.required,
           Validators.pattern(emailRegex),
           Validators.minLength(10),
           Validators.maxLength(100),
-        ]
+        ],
       ),
       movilNumber: new UntypedFormControl(
         {
           value: movilNumber,
-          disabled: isNotEditable,
+          disabled: true,
         },
         [
           Validators.required,
           Validators.pattern(/^9\d{8}$/),
           Validators.minLength(9),
           Validators.maxLength(9),
-        ]
+        ],
       ),
       movilOperator: new UntypedFormControl({
-        value: movilOperator,
+        value: operator.label,
         disabled: true,
       }),
     });
@@ -122,7 +126,7 @@ export class EmpresaGTPComponent implements OnInit {
     controlName: UntypedFormControl | AbstractControl,
     errors: {
       [key: string]: string;
-    }
+    },
   ) {
     let result = '';
     forEachObjIndexed((_value, key) => {

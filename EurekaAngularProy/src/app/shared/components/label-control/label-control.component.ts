@@ -15,7 +15,8 @@ import { type ControlValueAccessor, NgControl } from '@angular/forms';
   templateUrl: './label-control.component.html',
 })
 export class LabelControlComponent
-  implements AfterViewInit, AfterContentInit, ControlValueAccessor {
+  implements AfterViewInit, AfterContentInit, ControlValueAccessor
+{
   private static labelCounter = 0;
   useDefaultContent = false;
   useGap = false;
@@ -25,14 +26,14 @@ export class LabelControlComponent
   @Input() onlyControl = false;
   @Input() formControlName: string;
   @Input() formControlLabel: string;
-  @Input() errorMessages: { [key: string]: string };
+  @Input() errorMessages: Record<string, string>;
   @ViewChild('wrapper') wrapper: ElementRef<HTMLDivElement>;
 
   constructor(
     @Optional()
     @Self()
     public ngControl: NgControl,
-    private elRef: ElementRef<HTMLElement>
+    private elRef: ElementRef<HTMLElement>,
   ) {
     if (ngControl != null) {
       ngControl.valueAccessor = this;
@@ -49,7 +50,7 @@ export class LabelControlComponent
       }
       setTimeout(() => {
         const nav = this.elRef.nativeElement.querySelector(
-          '[validation-messages]'
+          '[validation-messages]',
         );
         this.useDefaultContent = nav === null;
       });

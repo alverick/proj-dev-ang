@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify';
 import { isNil, pathEq } from 'ramda';
 import { isObj } from 'ramda-adjunct';
 
@@ -31,8 +31,8 @@ export class SettingsStorageService {
 
   getSetting(keySettings: SettingOptionsType, keyPage: SectionsType) {
     return pathEq(
-      [this.username, keySettings, keyPage],
       Status.saved,
+      [this.username, keySettings, keyPage],
       this.settings
     );
   }

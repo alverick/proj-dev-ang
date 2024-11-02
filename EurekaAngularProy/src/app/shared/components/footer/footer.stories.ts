@@ -1,5 +1,9 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { applicationConfig, Meta, StoryObj } from '@storybook/angular';
+import {
+  applicationConfig,
+  type Meta,
+  type StoryObj,
+} from '@storybook/angular';
 import { DialogService } from 'primeng/dynamicdialog';
 
 import { FooterComponent } from './footer.component';

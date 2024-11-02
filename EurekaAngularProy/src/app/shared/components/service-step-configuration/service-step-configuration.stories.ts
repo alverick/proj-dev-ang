@@ -26,6 +26,7 @@ import {
 import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
+import { ValidationDefaultsComponent } from '../validation-defaults/validation-defaults.component';
 
 @Component({
   selector: 'cs-form-demo',
@@ -78,6 +79,7 @@ const meta: Meta<FormDemoComponent> = {
       providers: [provideAnimations()],
     }),
     moduleMetadata({
+      declarations: [ValidationDefaultsComponent],
       imports: [SharedModule],
       providers: [
         AffiliationFormsService,
