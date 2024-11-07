@@ -1,34 +1,36 @@
 <div
-  class="tw-px-6 tw-py-5 tw-bg-white tw-border-extended-grey-3 tw-animate"
+  class="tw-animate tw-border-extended-grey-3 tw-bg-white tw-px-6 tw-py-5"
   [ngClass]="{
     'tw-shadow': !printMode,
     'tw-border': printMode,
-    'skeleton-background': loading
+    'skeleton-background': loading,
   }"
 >
-  <ng-container *ngIf="!loading">
+  @if (!loading) {
     <p class="tw-text-lg tw-font-medium">{{ title }}</p>
-    <p class="tw-text-3xl tw-font-medium tw-pb-2 bg-gray-300">
-      <ng-container *ngIf="amount === 0">{{ currency }} -</ng-container>
-      <ng-container *ngIf="amount !== 0">{{
-        amount | currency : currency | notEmpty : '-'
-      }}</ng-container>
+    <p class="bg-gray-300 tw-pb-2 tw-text-3xl tw-font-medium">
+      @if (amount === 0) {
+        {{ currency }} -
+      }
+      @if (amount !== 0) {
+        {{ amount | currency: currency | notEmpty: '-' }}
+      }
     </p>
-    <p class="tw-text-sm tw-pb-4 bg-gray-300">{{ peopleQuantity }} personas</p>
-    <a class="tw-text-xs bg-gray-300 tw-cursor-pointer" (click)="goto()"
+    <p class="bg-gray-300 tw-pb-4 tw-text-sm">{{ peopleQuantity }} personas</p>
+    <a class="bg-gray-300 tw-cursor-pointer tw-text-xs" (click)="goto()"
       >Ver detalle ></a
     >
-  </ng-container>
-  <ng-container *ngIf="loading">
+  }
+  @if (loading) {
     <div
-      class="tw-h-3 tw-bg-extended-grey-3 tw-rounded-full tw-w-24 tw-mb-3"
+      class="tw-mb-3 tw-h-3 tw-w-24 tw-rounded-full tw-bg-extended-grey-3"
     ></div>
     <div
-      class="tw-h-5 tw-bg-extended-grey-3 tw-rounded-full tw-w-44 tw-mb-4"
+      class="tw-mb-4 tw-h-5 tw-w-44 tw-rounded-full tw-bg-extended-grey-3"
     ></div>
     <div
-      class="tw-h-2.5 tw-bg-extended-grey-3 tw-rounded-full tw-w-24 tw-mb-4"
+      class="tw-mb-4 tw-h-2.5 tw-w-24 tw-rounded-full tw-bg-extended-grey-3"
     ></div>
-    <div class="tw-h-2 tw-bg-extended-grey-3 tw-rounded-full tw-w-24"></div>
-  </ng-container>
+    <div class="tw-h-2 tw-w-24 tw-rounded-full tw-bg-extended-grey-3"></div>
+  }
 </div>

@@ -1,14 +1,14 @@
-<div class="tw-relative tw-bg-primary-green-1 tw-text-white tw-py-12">
+<div class="tw-relative tw-bg-primary-green-1 tw-py-12 tw-text-white">
   <div
-    class="tw-w-80 lg:tw-w-96 md:tw-w-auto md:tw-mx-6 lg:tw-mx-auto tw-mx-auto"
+    class="tw-mx-auto tw-w-80 md:tw-mx-6 md:tw-w-auto lg:tw-mx-auto lg:tw-w-96"
   >
-    <h2 class="tw-font-medium tw-text-3xl tw-mb-7">
+    <h2 class="tw-mb-7 tw-text-3xl tw-font-medium">
       Configura
       {{ this.existServices ? 'tus servicios' : 'tu primer servicio' }} y
       gestiona tus cobranzas 100% digital
     </h2>
-    <ng-container *ngIf="position === 0">
-      <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20">
+    @if (position === 0) {
+      <div class="tw-mb-20 tw-text-xl tw-text-secondary-blue-1">
         Un servicio es el concepto por el cual te pagarán tus clientes.
       </div>
       <div class="tw-text-xl">
@@ -24,104 +24,108 @@
           </li>
         </ul>
       </div>
-    </ng-container>
-    <ng-container *ngIf="position === 1">
-      <div class="tw-text-xl tw-text-secondary-blue-1 tw-mb-20 tw-font-medium">
-        <ng-container *ngIf="showAllTypes">¿Qué modalidad elegir?</ng-container>
+    }
+    @if (position === 1) {
+      <div class="tw-mb-20 tw-text-xl tw-font-medium tw-text-secondary-blue-1">
+        @if (showAllTypes) {
+          ¿Qué modalidad elegir?
+        }
       </div>
-      <p-accordion
-        *ngIf="showAllTypes"
-        expandIcon="pi pi-plus-circle tw-text-white tw-text-2xl"
-        collapseIcon="pi pi-minus-circle tw-text-white tw-text-2xl"
-        styleClass="p-accordion-outline"
-        [multiple]="true"
-      >
-        <p-accordionTab
-          iconPos="end"
-          headerStyleClass="tw-text-xl"
-          [selected]="false"
+      @if (showAllTypes) {
+        <p-accordion
+          expandIcon="pi pi-plus-circle tw-text-white tw-text-2xl"
+          collapseIcon="pi pi-minus-circle tw-text-white tw-text-2xl"
+          styleClass="p-accordion-outline"
+          [multiple]="true"
         >
-          <ng-template pTemplate="header">
-            <div class="tw-text-white tw-font-medium">
-              Sin data
-            </div></ng-template
+          <p-accordionTab
+            iconPos="end"
+            headerStyleClass="tw-text-xl"
+            [selected]="false"
           >
-          <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
-            <li class="tw-mb-3">
-              Elige esta modalidad si no cuentas con información de tus
-              clientes.
-            </li>
-            <li class="tw-mb-3">
-              <strong>No deberás cargar ninguna información.</strong> Tu cliente
-              tendrá que ingresar su código de deudor e ingresar el monto que
-              pagará en cada operación.
-            </li>
-          </ul>
-        </p-accordionTab>
-        <p-accordionTab
-          iconPos="end"
-          headerStyleClass="tw-text-xl tw-font-medium"
-        >
-          <ng-template pTemplate="header">
-            <div class="tw-text-white tw-font-medium">
-              Data parcial
-            </div></ng-template
+            <ng-template pTemplate="header">
+              <div class="tw-font-medium tw-text-white">
+                Sin data
+              </div></ng-template
+            >
+            <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
+              <li class="tw-mb-3">
+                Elige esta modalidad si no cuentas con información de tus
+                clientes.
+              </li>
+              <li class="tw-mb-3">
+                <strong>No deberás cargar ninguna información.</strong> Tu
+                cliente tendrá que ingresar su código de deudor e ingresar el
+                monto que pagará en cada operación.
+              </li>
+            </ul>
+          </p-accordionTab>
+          <p-accordionTab
+            iconPos="end"
+            headerStyleClass="tw-text-xl tw-font-medium"
           >
-          <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
-            <li class="tw-mb-3">
-              Elige esta modalidad si tienes la
-              <strong>lista de clientes</strong> y su
-              <strong>código de identificación</strong>, pero no el monto de la
-              deuda a pagar.
-            </li>
-            <li class="tw-mb-3">
-              Tu cliente tendrá que ingresar el monto que pagará en cada
-              operación.
-            </li>
-          </ul>
-        </p-accordionTab>
-        <p-accordionTab
-          iconPos="end"
-          headerStyleClass="tw-text-xl tw-font-medium"
-        >
-          <ng-template pTemplate="header">
-            <div class="tw-text-white tw-font-medium">
-              Data completa
-            </div></ng-template
+            <ng-template pTemplate="header">
+              <div class="tw-font-medium tw-text-white">
+                Data parcial
+              </div></ng-template
+            >
+            <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
+              <li class="tw-mb-3">
+                Elige esta modalidad si tienes la
+                <strong>lista de clientes</strong> y su
+                <strong>código de identificación</strong>, pero no el monto de
+                la deuda a pagar.
+              </li>
+              <li class="tw-mb-3">
+                Tu cliente tendrá que ingresar el monto que pagará en cada
+                operación.
+              </li>
+            </ul>
+          </p-accordionTab>
+          <p-accordionTab
+            iconPos="end"
+            headerStyleClass="tw-text-xl tw-font-medium"
           >
-          <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
+            <ng-template pTemplate="header">
+              <div class="tw-font-medium tw-text-white">
+                Data completa
+              </div></ng-template
+            >
+            <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
+              <li class="tw-mb-3">
+                Elige esta modalidad si tienes la
+                <strong>lista de clientes</strong>, su
+                <strong>código de identificación</strong> y el monto de la
+                <strong>deuda a pagar</strong> de cada uno.
+              </li>
+              <li class="tw-mb-3">
+                Podrás configurar el orden de pago de las deudas, si aceptarás
+                pago por partes o incluir el cobro de mora.
+              </li>
+            </ul>
+          </p-accordionTab>
+        </p-accordion>
+      }
+      @if (!showAllTypes) {
+        <ul class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white">
+          <li class="tw-mb-3">
+            Agrega tu
+            <strong>lista de clientes</strong>, su
+            <strong>código de identificación</strong> y el monto de la
+            <strong>deuda a pagar</strong> de cada uno.
+          </li>
+          @if (currency?.limitMax) {
             <li class="tw-mb-3">
-              Elige esta modalidad si tienes la
-              <strong>lista de clientes</strong>, su
-              <strong>código de identificación</strong> y el monto de la
-              <strong>deuda a pagar</strong> de cada uno.
+              Monto máximo permitido por cobro
+              {{ currency.limitMax | currency: currency.symbol }}
             </li>
-            <li class="tw-mb-3">
-              Podrás configurar el orden de pago de las deudas, si aceptarás
-              pago por partes o incluir el cobro de mora.
-            </li>
-          </ul>
-        </p-accordionTab>
-      </p-accordion>
-      <ul
-        *ngIf="!showAllTypes"
-        class="tw-list-disc tw-pl-4 tw-text-lg tw-text-white"
-      >
-        <li class="tw-mb-3">
-          Agrega tu
-          <strong>lista de clientes</strong>, su
-          <strong>código de identificación</strong> y el monto de la
-          <strong>deuda a pagar</strong> de cada uno.
-        </li>
-        <li *ngIf="currency?.limitMax" class="tw-mb-3">
-          Monto máximo permitido por cobro
-          {{ currency.limitMax | currency : currency.symbol }}
-        </li>
-        <li class="tw-mb-3">
-          Podrás configurar el orden de pago de las deudas, si aceptarás pago
-          por partes o incluir el cobro de mora.
-        </li>
-      </ul>
-    </ng-container>
+          }
+          <li class="tw-mb-3">
+            Podrás configurar el orden de pago de las deudas, si aceptarás pago
+            por partes o incluir el cobro de mora.
+          </li>
+        </ul>
+      }
+    }
   </div>
 </div>

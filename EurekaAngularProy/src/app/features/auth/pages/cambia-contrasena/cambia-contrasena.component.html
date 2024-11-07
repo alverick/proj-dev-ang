@@ -1,75 +1,74 @@
 <cs-layout-form>
-  <div
-    *ngIf="!formulario"
-    class="tw-bg-white ibk-box-rounded tw-min-w-[320px] sm:tw-min-w-[450px] tw-p-8"
-  >
+  @if (!formulario) {
     <div
-      class="tw-text-secondary-blue-1 tw-text-2xl lg:tw-text-3xl tw-font-medium tw-text-center mb-4"
+      class="ibk-box-rounded tw-min-w-[320px] tw-bg-white tw-p-8 sm:tw-min-w-[450px]"
     >
-      Crea una <br />
-      nueva contraseña
-    </div>
-
-    <form [formGroup]="Cambia" (ngSubmit)="SubmitCambia()" autocomplete="off">
-      <div class="tw-pb-4">
-        <cs-label-control
-          class="tw-w-full"
-          formControlName="contrasena"
-          [errorMessages]="errorMessages.password"
-          ><i class="pi pi-lock tw-text-primary-green-1"></i>
-          Nueva contraseña
-          <p-password
+      <div
+        class="mb-4 tw-text-center tw-text-2xl tw-font-medium tw-text-secondary-blue-1 lg:tw-text-3xl"
+      >
+        Crea una <br />
+        nueva contraseña
+      </div>
+      <form [formGroup]="Cambia" (ngSubmit)="SubmitCambia()" autocomplete="off">
+        <div class="tw-pb-4">
+          <cs-label-control
             class="tw-w-full"
-            styleClass="tw-w-full"
-            inputStyleClass="tw-w-full"
-            minlength="8"
-            [maxLength]="25"
             formControlName="contrasena"
-            [toggleMask]="true"
-            control
-          >
-            <ng-template pTemplate="content">
-              <cs-control-rules-policies
-                [control]="Cambia.get('contrasena')"
-                [rules]="messageErrorNewPasswords"
-                >Por seguridad, tu nueva contraseña debe tener por lo
-                menos:</cs-control-rules-policies
-              >
-            </ng-template>
-          </p-password>
-        </cs-label-control>
-      </div>
-
-      <div class="tw-pb-4">
-        <cs-label-control
-          class="tw-w-full"
-          formControlName="repcontrasena"
-          [errorMessages]="errorMessages.passwordConfirm"
-          ><i class="pi pi-lock tw-text-primary-green-1"></i> Repite la
-          contraseña
-          <p-password
+            [errorMessages]="errorMessages.password"
+            ><i class="pi pi-lock tw-text-primary-green-1"></i>
+            Nueva contraseña
+            <p-password
+              class="tw-w-full"
+              styleClass="tw-w-full"
+              inputStyleClass="tw-w-full"
+              minlength="8"
+              [maxLength]="25"
+              formControlName="contrasena"
+              [toggleMask]="true"
+              control
+            >
+              <ng-template pTemplate="content">
+                <cs-control-rules-policies
+                  [control]="Cambia.get('contrasena')"
+                  [rules]="messageErrorNewPasswords"
+                  >Por seguridad, tu nueva contraseña debe tener por lo
+                  menos:</cs-control-rules-policies
+                >
+              </ng-template>
+            </p-password>
+          </cs-label-control>
+        </div>
+        <div class="tw-pb-4">
+          <cs-label-control
             class="tw-w-full"
-            styleClass="tw-w-full"
-            inputStyleClass="tw-w-full"
-            minlength="8"
-            [maxLength]="25"
             formControlName="repcontrasena"
-            [toggleMask]="true"
-            [feedback]="false"
-            control
-          ></p-password>
-        </cs-label-control>
-      </div>
-      <div class="tw-text-center tw-mb-6">
-        <button
-          type="submit"
-          pButton
-          pRipple
-          class="tw-w-[230px] tw-justify-center"
-        >
-          Guardar
-        </button>
-      </div>
-    </form>
-  </div>
+            [errorMessages]="errorMessages.passwordConfirm"
+            ><i class="pi pi-lock tw-text-primary-green-1"></i> Repite la
+            contraseña
+            <p-password
+              class="tw-w-full"
+              styleClass="tw-w-full"
+              inputStyleClass="tw-w-full"
+              minlength="8"
+              [maxLength]="25"
+              formControlName="repcontrasena"
+              [toggleMask]="true"
+              [feedback]="false"
+              control
+            ></p-password>
+          </cs-label-control>
+        </div>
+        <div class="tw-mb-6 tw-text-center">
+          <button
+            type="submit"
+            pButton
+            pRipple
+            class="tw-w-[230px] tw-justify-center"
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  }
 </cs-layout-form>

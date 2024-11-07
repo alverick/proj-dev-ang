@@ -1,39 +1,36 @@
 <div
-  class="tw-bg-white tw-rounded tw-border-extended-grey-3"
+  class="tw-rounded tw-border-extended-grey-3 tw-bg-white"
   [ngClass]="{
     'tw-shadow': !printMode,
     'tw-border': printMode,
-    'skeleton-background': loading
+    'skeleton-background': loading,
   }"
 >
-  <ng-container *ngIf="!loading">
+  @if (!loading) {
     <div
-      class="tw-px-6 tw-py-4 tw-font-medium tw-border-b tw-border-extended-grey-4"
+      class="tw-border-b tw-border-extended-grey-4 tw-px-6 tw-py-4 tw-font-medium"
     >
       <p>Recaudación histórica</p>
     </div>
     <div class="tw-px-6 tw-py-4">
-      <ng-container *ngIf="serviceData?.labels?.length > 0">
+      @if (serviceData?.labels?.length > 0) {
         <p-chart type="bar" [data]="internalData" [height]="height"></p-chart>
-      </ng-container>
-      <div
-        class="tw-text-center tw-text-xs"
-        *ngIf="serviceData?.labels?.length === 0"
-      >
-        Sin registros
-      </div>
+      }
+      @if (serviceData?.labels?.length === 0) {
+        <div class="tw-text-center tw-text-xs">Sin registros</div>
+      }
     </div>
-  </ng-container>
-  <ng-container *ngIf="loading">
-    <div class="tw-px-5 tw-py-4 tw-border-b tw-border-extended-grey-4">
-      <div class="tw-h-3.5 tw-bg-extended-grey-3 tw-rounded-full tw-w-24"></div>
+  }
+  @if (loading) {
+    <div class="tw-border-b tw-border-extended-grey-4 tw-px-5 tw-py-4">
+      <div class="tw-h-3.5 tw-w-24 tw-rounded-full tw-bg-extended-grey-3"></div>
     </div>
     <div class="tw-px-6 tw-py-4">
       <div
-        class="tw-flex tw-items-center tw-justify-center tw-w-full tw-h-72 tw-bg-extended-grey-3 tw-rounded"
+        class="tw-flex tw-h-72 tw-w-full tw-items-center tw-justify-center tw-rounded tw-bg-extended-grey-3"
       >
         <svg
-          class="tw-w-12 tw-h-12 tw-text-extended-grey-4"
+          class="tw-h-12 tw-w-12 tw-text-extended-grey-4"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
           fill="currentColor"
@@ -45,5 +42,5 @@
         </svg>
       </div>
     </div>
-  </ng-container>
+  }
 </div>

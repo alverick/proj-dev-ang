@@ -1,5 +1,5 @@
 <div class="" style="flex: 1">
-  <div class="tw-text-sm tw-pb-6">
+  <div class="tw-pb-6 tw-text-sm">
     <p class="tw-mb-2">
       A partir de Mayo, aplicaremos una comisión de S/2 por cada pago recaudado
       a través de nuestros canales digitales. Para calcular la comisión total,
@@ -14,8 +14,8 @@
       nuestro módulo de ayuda.
     </p>
   </div>
-  <div class="tw-flex tw-flex-col tw-gap-4 tw-items-center tw-justify-center">
-    <div class="tw-flex tw-gap-4 tw-items-center tw-justify-center">
+  <div class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-4">
+    <div class="tw-flex tw-items-center tw-justify-center tw-gap-4">
       <button
         pButton
         pRipple
@@ -31,12 +31,10 @@
         (click)="close('more')"
       ></button>
     </div>
-    <a
-      *ngIf="!showed"
-      href="javascript:void(0)"
-      class="tw-text-sm"
-      (click)="close('hide')"
-      >Cerrar y no volver a mostrar</a
-    >
+    @if (!showed) {
+      <a href="javascript:void(0)" class="tw-text-sm" (click)="close('hide')"
+        >Cerrar y no volver a mostrar</a
+      >
+    }
   </div>
 </div>

@@ -1,50 +1,52 @@
 <div
-  class="tw-h-full tw-rounded-md tw-border tw-p-4 lg:tw-py-5 lg:tw-px-8 tw-border-solid tw-border-extended-grey-3 tw-text-extended-ibk-black"
+  class="tw-h-full tw-rounded-md tw-border tw-border-solid tw-border-extended-grey-3 tw-p-4 tw-text-extended-ibk-black lg:tw-px-8 lg:tw-py-5"
 >
   <div
     class="tw-flex tw-justify-between"
     [ngClass]="{
       'tw-pb-2': !hasWarnings,
       'tw-border-b': !hasWarnings,
-      'tw-border-extended-grey-4': !hasWarnings
+      'tw-border-extended-grey-4': !hasWarnings,
     }"
   >
     <div
-      class="tw-text-lg tw-font-medium tw-truncate tw-max-w-[calc(100vw_-_130px)] lg:tw-max-w-none tw-mr-2"
+      class="tw-mr-2 tw-max-w-[calc(100vw_-_130px)] tw-truncate tw-text-lg tw-font-medium lg:tw-max-w-none"
     >
       {{ name }}
     </div>
-    <div class="tw-flex tw-gap-2 tw-flex-shrink-0">
-      <button *ngIf="canEdit" (click)="actionEdit()" class="tw-cursor-pointer">
-        <img alt="Editar" src="assets/images/card-icon-edit.svg" />
-      </button>
-      <button
-        *ngIf="!reviewMode"
-        (click)="actionDelete()"
-        class="tw-cursor-pointer"
-      >
-        <img alt="Eliminar" src="assets/images/card-icon-delete.svg" />
-      </button>
+    <div class="tw-flex tw-flex-shrink-0 tw-gap-2">
+      @if (canEdit) {
+        <button (click)="actionEdit()" class="tw-cursor-pointer">
+          <img alt="Editar" src="assets/images/card-icon-edit.svg" />
+        </button>
+      }
+      @if (!reviewMode) {
+        <button (click)="actionDelete()" class="tw-cursor-pointer">
+          <img alt="Eliminar" src="assets/images/card-icon-delete.svg" />
+        </button>
+      }
     </div>
   </div>
-  <ng-template [ngIf]="messageStatus !== ''">
-    <div class="tw-h-8 tw-flex tw-items-center tw-my-1">
+  @if (messageStatus !== '') {
+    <div class="tw-my-1 tw-flex tw-h-8 tw-items-center">
       <div
-        class="tw-inline tw-text-white tw-rounded-3xl tw-text-xs tw-px-4 tw-py-0.5"
+        class="tw-inline tw-rounded-3xl tw-px-4 tw-py-0.5 tw-text-xs tw-text-white"
         [ngClass]="[messagesOptions[messageStatus].color]"
       >
         {{ messagesOptions[messageStatus].text }}
       </div>
     </div>
-  </ng-template>
-  <div *ngIf="!hasWarnings" class="tw-h-8"></div>
+  }
+  @if (!hasWarnings) {
+    <div class="tw-h-8"></div>
+  }
   <div class="tw-grid tw-grid-cols-2 tw-gap-2">
     <div class="tw-text-extended-grey-2">Código de servicio:</div>
-    <div class="val">{{ serviceData?.res | notEmpty : '-' }}</div>
+    <div class="val">{{ serviceData?.res | notEmpty: '-' }}</div>
     <div class="tw-text-extended-grey-2">Canales de pago:</div>
     <div class="val">{{ paymentChannels }}</div>
     <div class="tw-text-extended-grey-2">Código de cliente:</div>
-    <div class="val tw-overflow-ellipsis tw-overflow-hidden tw-break-all">
+    <div class="val tw-overflow-hidden tw-overflow-ellipsis tw-break-all">
       {{ debtorCode }}
     </div>
     <div class="tw-text-extended-grey-2">Modalidad:</div>

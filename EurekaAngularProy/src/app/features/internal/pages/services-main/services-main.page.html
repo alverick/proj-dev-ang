@@ -1,11 +1,12 @@
-<div class="tw-max-w-8xl tw-m-auto md:tw-flex tw-relative">
-  <cs-sidebar-service
-    *ngIf="position !== 2"
-    class="info tw-relative"
-    [position]="position"
-    [existServices]="true"
-    [showAllTypes]="companyServices.allowAllServiceType"
-    [currency]="currency"
-  ></cs-sidebar-service>
+<div class="tw-relative tw-m-auto tw-max-w-8xl md:tw-flex">
+  @if (position !== 2) {
+    <cs-sidebar-service
+      class="info tw-relative"
+      [position]="position"
+      [existServices]="true"
+      [showAllTypes]="companyServices.allowAllServiceType"
+      [currency]="currency"
+    ></cs-sidebar-service>
+  }
   <router-outlet></router-outlet>
 </div>

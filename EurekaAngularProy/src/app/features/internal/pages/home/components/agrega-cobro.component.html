@@ -7,7 +7,7 @@
     usar la plantilla excel para carga masiva.
   </div>
   <div
-    class="opciones tw-flex tw-gap-2 tw-flex-col sm:tw-flex-row sm:tw-justify-center"
+    class="opciones tw-flex tw-flex-col tw-gap-2 sm:tw-flex-row sm:tw-justify-center"
   >
     <div class="opcion sm:tw-w-[250px]">
       <img class="tw-inline" alt="excel" src="assets/images/movil.svg" />
@@ -16,17 +16,16 @@
       <img class="tw-inline" alt="excel" src="assets/images/excel.svg" />
     </div>
   </div>
-  <cs-message-alert
-    *ngIf="useAmountLimits"
-    mode="info"
-    class="tw-mx-auto tw-block md:tw-w-96 tw-my-6"
-    >Monto máximo permitido por cobro
-    {{
-      limitAmountMax | currency: excelService.service.currencySymbol
-    }}</cs-message-alert
-  >
+  @if (useAmountLimits) {
+    <cs-message-alert mode="info" class="tw-mx-auto tw-my-6 tw-block md:tw-w-96"
+      >Monto máximo permitido por cobro
+      {{
+        limitAmountMax | currency: excelService.service.currencySymbol
+      }}</cs-message-alert
+    >
+  }
   <div
-    class="opciones tw-flex tw-gap-2 tw-flex-col sm:tw-flex-row sm:tw-justify-center"
+    class="opciones tw-flex tw-flex-col tw-gap-2 sm:tw-flex-row sm:tw-justify-center"
   >
     <div class="opcion sm:tw-w-[250px]">
       <button type="button" class="btn-eureca-green" (click)="chooseWeb()">
