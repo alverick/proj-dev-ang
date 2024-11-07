@@ -1,5 +1,5 @@
 <div class="tw-relative tw-mb-3" [ngClass]="{ 'tw-pb-5': !onlyControl }">
-  <ng-container *ngIf="!hideLabel">
+  @if (!hideLabel) {
     <label
       #labelRef
       [for]="labelInputID"
@@ -7,7 +7,7 @@
       [ngClass]="{ 'tw-mb-2': labelRef.hasChildNodes() }"
       ><ng-content></ng-content><ng-content select="[label]"></ng-content
     ></label>
-  </ng-container>
+  }
   <div
     class="wrapper tw-flex tw-items-center"
     [ngClass]="{ 'tw-gap-2': useGap }"
@@ -22,20 +22,19 @@
       ><ng-content select="[label-inline]"></ng-content
     ></label>
   </div>
-  <div
-    *ngIf="!onlyControl"
-    class="tw-absolute tw-mt-1 tw-inline-block tw-w-full tw-align-middle tw-text-xxs"
-    [ngClass]="{ 'tw-text-error': ngControl?.errors }"
-  >
-    <ng-content select="[validation-messages],[hint]"></ng-content>
-    <ng-container *ngIf="useDefaultContent">
-      <val-errors [controlName]="formControlName" [label]="formControlLabel">
-        <ng-template
-          [valError]="error.key"
-          *ngFor="let error of errorMessages | keyvalue"
-          >{{ error.value }}</ng-template
-        >
-      </val-errors>
-    </ng-container>
-  </div>
+  @if (!onlyControl) {
+    <div
+      class="tw-absolute tw-mt-1 tw-inline-block tw-w-full tw-align-middle tw-text-xxs"
+      [ngClass]="{ 'tw-text-error': ngControl?.errors }"
+    >
+      <ng-content select="[validation-messages],[hint]"></ng-content>
+      @if (useDefaultContent) {
+        <val-errors [controlName]="formControlName" [label]="formControlLabel">
+          @for (error of errorMessages | keyvalue; track error) {
+            <ng-template [valError]="error.key">{{ error.value }}</ng-template>
+          }
+        </val-errors>
+      }
+    </div>
+  }
 </div>

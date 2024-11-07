@@ -12,47 +12,45 @@
         formControlName="nombre"
       ></textarea>
     </cs-label-control>
-    <div
-      *ngIf="RadioAprovveName()"
-      class="form-group tw-w-40 tw-shrink-0 tw-pr-2"
-    >
-      <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
-        <cs-label-control [onlyControl]="true" class="tw-w-full">
-          <p-radioButton
-            name="NewName"
-            value="S"
-            formControlName="NewName"
-          ></p-radioButton>
-          <ng-container label-inline>
-            <div class="tw-font-light">
-              <div class="tw-text-base">SI</div>
-            </div>
-          </ng-container>
-        </cs-label-control>
-        <cs-label-control [onlyControl]="true" class="tw-w-full">
-          <p-radioButton
-            name="NewName"
-            value="N"
-            formControlName="NewName"
-          ></p-radioButton>
-          <ng-container label-inline>
-            <div class="tw-font-light">
-              <div class="tw-text-base">NO</div>
-            </div>
-          </ng-container>
-        </cs-label-control>
-      </div>
-      <div
-        class="tw-whitespace-nowrap tw-text-xxs tw-text-error"
-        *ngIf="
+    @if (RadioAprovveName()) {
+      <div class="form-group tw-w-40 tw-shrink-0 tw-pr-2">
+        <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
+          <cs-label-control [onlyControl]="true" class="tw-w-full">
+            <p-radioButton
+              name="NewName"
+              value="S"
+              formControlName="NewName"
+            ></p-radioButton>
+            <ng-container label-inline>
+              <div class="tw-font-light">
+                <div class="tw-text-base">SI</div>
+              </div>
+            </ng-container>
+          </cs-label-control>
+          <cs-label-control [onlyControl]="true" class="tw-w-full">
+            <p-radioButton
+              name="NewName"
+              value="N"
+              formControlName="NewName"
+            ></p-radioButton>
+            <ng-container label-inline>
+              <div class="tw-font-light">
+                <div class="tw-text-base">NO</div>
+              </div>
+            </ng-container>
+          </cs-label-control>
+        </div>
+        @if (
           f.NewName.invalid &&
           f.NewName.hasError('required') &&
           submittedRequired
-        "
-      >
-        Debe seleccionar una opción
+        ) {
+          <div class="tw-whitespace-nowrap tw-text-xxs tw-text-error">
+            Debe seleccionar una opción
+          </div>
+        }
       </div>
-    </div>
+    }
   </div>
   <div class="form-row tw-flex tw-gap-4">
     <cs-label-control class="tw-w-full" formControlName="nameCod"
@@ -64,47 +62,45 @@
         formControlName="nameCod"
       />
     </cs-label-control>
-    <div
-      *ngIf="RadioAprovveNameCod()"
-      class="form-group tw-w-40 tw-shrink-0 tw-pr-2"
-    >
-      <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
-        <cs-label-control [onlyControl]="true" class="tw-w-full">
-          <p-radioButton
-            name="NewNameCod"
-            value="S"
-            formControlName="NewNameCod"
-          ></p-radioButton>
-          <ng-container label-inline>
-            <div class="tw-font-light">
-              <div class="tw-text-base">SI</div>
-            </div>
-          </ng-container>
-        </cs-label-control>
-        <cs-label-control [onlyControl]="true" class="tw-w-full">
-          <p-radioButton
-            name="NewNameCod"
-            value="N"
-            formControlName="NewNameCod"
-          ></p-radioButton>
-          <ng-container label-inline>
-            <div class="tw-font-light">
-              <div class="tw-text-base">NO</div>
-            </div>
-          </ng-container>
-        </cs-label-control>
-      </div>
-      <div
-        class="tw-whitespace-nowrap tw-text-xxs tw-text-error"
-        *ngIf="
+    @if (RadioAprovveNameCod()) {
+      <div class="form-group tw-w-40 tw-shrink-0 tw-pr-2">
+        <div class="form-elm tw-flex tw-items-center tw-gap-4 tw-pt-10">
+          <cs-label-control [onlyControl]="true" class="tw-w-full">
+            <p-radioButton
+              name="NewNameCod"
+              value="S"
+              formControlName="NewNameCod"
+            ></p-radioButton>
+            <ng-container label-inline>
+              <div class="tw-font-light">
+                <div class="tw-text-base">SI</div>
+              </div>
+            </ng-container>
+          </cs-label-control>
+          <cs-label-control [onlyControl]="true" class="tw-w-full">
+            <p-radioButton
+              name="NewNameCod"
+              value="N"
+              formControlName="NewNameCod"
+            ></p-radioButton>
+            <ng-container label-inline>
+              <div class="tw-font-light">
+                <div class="tw-text-base">NO</div>
+              </div>
+            </ng-container>
+          </cs-label-control>
+        </div>
+        @if (
           f.NewNameCod.invalid &&
           f.NewNameCod.hasError('required') &&
           submittedRequired
-        "
-      >
-        Debe seleccionar una opción
+        ) {
+          <div class="tw-whitespace-nowrap tw-text-xxs tw-text-error">
+            Debe seleccionar una opción
+          </div>
+        }
       </div>
-    </div>
+    }
   </div>
   <div class="form-row">
     <cs-label-control class="tw-w-full" formControlName="res"
@@ -130,19 +126,21 @@
       />
     </cs-label-control>
   </div>
-  <div class="form-row" *ngIf="Dataparcial">
-    <cs-label-control class="tw-w-full" formControlName="tipoPago"
-      ><ng-container label
-        >¿Cómo quieres que te paguen tus clientes?</ng-container
-      ><input
-        type="text"
-        class="tw-w-full"
-        pInputText
-        maxlength="7"
-        formControlName="tipoPago"
-      />
-    </cs-label-control>
-  </div>
+  @if (Dataparcial) {
+    <div class="form-row">
+      <cs-label-control class="tw-w-full" formControlName="tipoPago"
+        ><ng-container label
+          >¿Cómo quieres que te paguen tus clientes?</ng-container
+        ><input
+          type="text"
+          class="tw-w-full"
+          pInputText
+          maxlength="7"
+          formControlName="tipoPago"
+        />
+      </cs-label-control>
+    </div>
+  }
   <div class="form-row">
     <cs-label-control class="tw-w-full" formControlName="idCuenta"
       ><ng-container label>Nº de cuenta Interbank</ng-container
@@ -167,17 +165,18 @@
       <div class="tw-font-semibold tw-text-primary-green-1">S/2.00</div>
       <div class="tw-text-xs">por transacción</div>
     </div>
-    <div
-      *ngIf="f.usaAgente.value"
-      class="tw-flex tw-w-32 tw-flex-col tw-justify-between tw-rounded-md tw-border tw-border-extended-grey-3 tw-bg-primary-green-6 tw-p-3 tw-text-center"
-    >
-      <div class="tw-font-semibold">Agentes</div>
-      <div class="tw-grow tw-text-xs">Lima y provincias</div>
-      <div class="tw-font-semibold tw-text-primary-green-1">S/1.50</div>
-      <div class="tw-text-xs">por transacción</div>
-    </div>
+    @if (f.usaAgente.value) {
+      <div
+        class="tw-flex tw-w-32 tw-flex-col tw-justify-between tw-rounded-md tw-border tw-border-extended-grey-3 tw-bg-primary-green-6 tw-p-3 tw-text-center"
+      >
+        <div class="tw-font-semibold">Agentes</div>
+        <div class="tw-grow tw-text-xs">Lima y provincias</div>
+        <div class="tw-font-semibold tw-text-primary-green-1">S/1.50</div>
+        <div class="tw-text-xs">por transacción</div>
+      </div>
+    }
   </div>
-  <ng-container *ngIf="Dataparcial">
+  @if (Dataparcial) {
     <div class="tw-mb-1 tw-text-extended-grey-1">
       ¿Quieres que tus clientes te puedan pagar en partes?
     </div>
@@ -209,8 +208,8 @@
         </ng-container>
       </cs-label-control>
     </div>
-  </ng-container>
-  <ng-container *ngIf="Dataparcial">
+  }
+  @if (Dataparcial) {
     <span class="tw-mb-1 tw-text-extended-grey-1">Cobro de mora</span>
     <div
       class="form-elm tw-flex tw-items-center tw-justify-items-start tw-gap-4 tw-pt-2"
@@ -241,37 +240,44 @@
       </cs-label-control>
     </div>
     <div class="form-row tw-pb-4 tw-pt-2">
-      <div class="form-group" *ngIf="cobraMora">
-        <div class="form-elm">
-          <cs-label-control class="tw-w-full" formControlName="periodoMora"
-            ><ng-container label>Tipo de Cobro</ng-container
-            ><input
-              type="text"
-              class="tw-w-full"
-              pInputText
-              formControlName="periodoMora"
-            />
-          </cs-label-control>
+      @if (cobraMora) {
+        <div class="form-group">
+          <div class="form-elm">
+            <cs-label-control class="tw-w-full" formControlName="periodoMora"
+              ><ng-container label>Tipo de Cobro</ng-container
+              ><input
+                type="text"
+                class="tw-w-full"
+                pInputText
+                formControlName="periodoMora"
+              />
+            </cs-label-control>
+          </div>
         </div>
-      </div>
-      <div class="form-group" *ngIf="cmoraporce">
-        <div *ngIf="f.tipoMora.value === 'M'" class="data">
-          Monto: {{ f.monto.value | currency: simboloMoneda }}
+      }
+      @if (cmoraporce) {
+        <div class="form-group">
+          @if (f.tipoMora.value === 'M') {
+            <div class="data">
+              Monto: {{ f.monto.value | currency: simboloMoneda }}
+            </div>
+          }
+          @if (f.tipoMora.value === 'P') {
+            <div class="data">Porcentaje: {{ f.monto.value }} %</div>
+          }
         </div>
-        <div *ngIf="f.tipoMora.value === 'P'" class="data">
-          Porcentaje: {{ f.monto.value }} %
-        </div>
-      </div>
+      }
     </div>
-  </ng-container>
+  }
   <div class="tw-text-center">
-    <button
-      *ngIf="Button() || update == true"
-      type="submit"
-      pButton
-      pRipple
-      class="tw-w-36"
-      label="Guardar"
-    ></button>
+    @if (Button() || update == true) {
+      <button
+        type="submit"
+        pButton
+        pRipple
+        class="tw-w-36"
+        label="Guardar"
+      ></button>
+    }
   </div>
 </form>

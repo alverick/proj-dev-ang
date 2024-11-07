@@ -6,9 +6,9 @@
   class="tw-max-w-2xl"
 >
   <div
-    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-16 tw-py-14"
+    class="form-container tw-rounded tw-border tw-border-solid tw-border-extended-grey-3 tw-px-5 tw-py-14 md:tw-px-10 xl:tw-px-16"
   >
-    <h2 class="tw-font-medium tw-text-2xl tw-mb-7">Ingresa tus datos</h2>
+    <h2 class="tw-mb-7 tw-text-2xl tw-font-medium">Ingresa tus datos</h2>
     <div class="form-controls tw-max-w-xl">
       <div class="form-elm">
         <cs-label-control class="tw-w-full" formControlName="ruc"
@@ -28,32 +28,36 @@
           formControlName="name"
           [errorMessages]="errorMessages?.name"
           >Nombre de tu empresa
-          <input
-            *ngIf="nameOptions?.length < 2"
-            type="text"
-            class="tw-w-full"
-            pInputText
-            csInputWithoutSpaces
-            minlength="3"
-            maxlength="80"
-            formControlName="name"
-          />
-          <p-dropdown
-            *ngIf="nameOptions?.length >= 2"
-            [options]="nameOptions"
-            optionLabel="label"
-            optionValue="value"
-            class="tw-w-full"
-            styleClass="tw-w-full"
-            formControlName="nameSelect"
-          >
-            <ng-template let-option pTemplate="item">
-              <div class="tw-flex tw-items-center tw-gap-2 tw-justify-between">
-                <div>{{ option.label }}</div>
-                <div class="tw-text-xxs">{{ option.description }}</div>
-              </div>
-            </ng-template>
-          </p-dropdown>
+          @if (nameOptions?.length < 2) {
+            <input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              csInputWithoutSpaces
+              minlength="3"
+              maxlength="80"
+              formControlName="name"
+            />
+          }
+          @if (nameOptions?.length >= 2) {
+            <p-dropdown
+              [options]="nameOptions"
+              optionLabel="label"
+              optionValue="value"
+              class="tw-w-full"
+              styleClass="tw-w-full"
+              formControlName="nameSelect"
+            >
+              <ng-template let-option pTemplate="item">
+                <div
+                  class="tw-flex tw-items-center tw-justify-between tw-gap-2"
+                >
+                  <div>{{ option.label }}</div>
+                  <div class="tw-text-xxs">{{ option.description }}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          }
         </cs-label-control>
       </div>
       <div class="form-elm tw-mb-6">
@@ -80,7 +84,7 @@
           ></p-dropdown>
         </cs-label-control>
       </div>
-      <ng-template [ngIf]="!passwordNoEditable">
+      @if (!passwordNoEditable) {
         <div class="form-elm">
           <cs-label-control
             class="tw-w-full"
@@ -147,10 +151,10 @@
             >
           </cs-label-control>
         </div>
-      </ng-template>
+      }
     </div>
   </div>
-  <div class="tw-text-right tw-mt-10">
+  <div class="tw-mt-10 tw-text-right">
     <button
       pButton
       pRipple

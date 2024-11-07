@@ -2,7 +2,7 @@
   <div
     class="ibk-box-rounded tw-min-w-[320px] tw-bg-white tw-p-8 sm:tw-min-w-[450px]"
   >
-    <ng-container *ngIf="!formulario">
+    @if (!formulario) {
       <div class="texto-azul mb-4">¡Listo!</div>
       <div class="texto-azul-text pb-4">
         Hemos enviado las instrucciones a tu <br />correo electrónico
@@ -19,8 +19,8 @@
           Reenviar correo
         </button>
       </div>
-    </ng-container>
-    <ng-container *ngIf="formulario">
+    }
+    @if (formulario) {
       <div
         class="tw-mb-6 tw-text-center tw-text-2xl tw-font-medium tw-text-secondary-blue-1 lg:tw-text-3xl"
       >
@@ -64,7 +64,6 @@
             />
           </cs-label-control>
         </div>
-
         <div class="tw-mt-6">
           <button
             pButton
@@ -75,6 +74,6 @@
           ></button>
         </div>
       </form>
-    </ng-container>
+    }
   </div>
 </cs-layout-form>

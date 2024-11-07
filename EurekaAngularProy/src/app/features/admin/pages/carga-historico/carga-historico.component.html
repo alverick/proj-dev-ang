@@ -50,46 +50,48 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    *ngFor="
-                      let itm of items
-                        | paginate
-                          : {
-                              itemsPerPage: 50,
-                              currentPage: pageNumber,
-                              totalItems: totalItems,
-                            }
-                    "
-                  >
-                    <td class="c0">{{ itm.date | date: 'dd/MM/yyyy' }}</td>
-                    <td class="c1">{{ itm.date | date: 'hh:mm:ss' }}</td>
-                    <td class="c2">{{ itm.service }}</td>
-                    <td class="c3">{{ itm.rows }}</td>
-                    <td class="c4">{{ itm.status }}</td>
-                    <td class="c5">
-                      <div class="tw-flex tw-gap-2">
-                        <button
-                          pButton
-                          pRipple
-                          icon="pi pi-download"
-                          class="p-button-xs"
-                          (click)="bajarExcel(itm)"
-                        ></button>
-                        <button
-                          *ngIf="
+                  @for (
+                    itm of items
+                      | paginate
+                        : {
+                            itemsPerPage: 50,
+                            currentPage: pageNumber,
+                            totalItems: totalItems,
+                          };
+                    track itm
+                  ) {
+                    <tr>
+                      <td class="c0">{{ itm.date | date: 'dd/MM/yyyy' }}</td>
+                      <td class="c1">{{ itm.date | date: 'hh:mm:ss' }}</td>
+                      <td class="c2">{{ itm.service }}</td>
+                      <td class="c3">{{ itm.rows }}</td>
+                      <td class="c4">{{ itm.status }}</td>
+                      <td class="c5">
+                        <div class="tw-flex tw-gap-2">
+                          <button
+                            pButton
+                            pRipple
+                            icon="pi pi-download"
+                            class="p-button-xs"
+                            (click)="bajarExcel(itm)"
+                          ></button>
+                          @if (
                             itm.status === 'SAVING' ||
                             itm.status === 'VALIDATING'
-                          "
-                          pButton
-                          pRipple
-                          (click)="fixProcess(itm.id)"
-                          pTooltip="Te permite actualizar la carga del excel que se quedó en estado SAVING o VALIDATING a FAILED."
-                          icon="pi pi-sync"
-                          class="p-button-xs"
-                        ></button>
-                      </div>
-                    </td>
-                  </tr>
+                          ) {
+                            <button
+                              pButton
+                              pRipple
+                              (click)="fixProcess(itm.id)"
+                              pTooltip="Te permite actualizar la carga del excel que se quedó en estado SAVING o VALIDATING a FAILED."
+                              icon="pi pi-sync"
+                              class="p-button-xs"
+                            ></button>
+                          }
+                        </div>
+                      </td>
+                    </tr>
+                  }
                 </tbody>
               </table>
             </div>
@@ -106,76 +108,86 @@
                     class="pagination-previous"
                     [class.disabled]="p.isFirstPage()"
                   >
-                    <a
-                      tabindex="0"
-                      *ngIf="1 < p.getCurrent()"
-                      (keyup.enter)="p.previous()"
-                      (click)="p.previous()"
+                    @if (1 < p.getCurrent()) {
+                      <a
+                        tabindex="0"
+                        (keyup.enter)="p.previous()"
+                        (click)="p.previous()"
+                      >
+                        <img
+                          alt="Anterior"
+                          class="tw-inline"
+                          src="/assets/images/before.svg"
+                        />
+                      </a>
+                    }
+                    @if (p.isFirstPage()) {
+                      <span>
+                        <img
+                          alt="Anterior"
+                          class="tw-inline"
+                          src="/assets/images/before.svg"
+                        />
+                      </span>
+                    }
+                  </li>
+                  @if (p.pages.length === 0) {
+                    <li class="current">
+                      <span>1</span>
+                    </li>
+                  }
+                  @for (page of p.pages; track page) {
+                    <li
+                      [class.current]="p.getCurrent() === page.value"
+                      [class.ellipsis]="page.label === '...'"
                     >
-                      <img
-                        alt="Anterior"
-                        class="tw-inline"
-                        src="/assets/images/before.svg"
-                      />
-                    </a>
-                    <span *ngIf="p.isFirstPage()">
-                      <img
-                        alt="Anterior"
-                        class="tw-inline"
-                        src="/assets/images/before.svg"
-                      />
-                    </span>
-                  </li>
-                  <li *ngIf="p.pages.length === 0" class="current">
-                    <span>1</span>
-                  </li>
-                  <li
-                    *ngFor="let page of p.pages"
-                    [class.current]="p.getCurrent() === page.value"
-                    [class.ellipsis]="page.label === '...'"
-                  >
-                    <a
-                      class="numpag"
-                      tabindex="0"
-                      (keyup.enter)="p.setCurrent(page.value)"
-                      (click)="p.setCurrent(page.value)"
-                      *ngIf="p.getCurrent() !== page.value"
-                    >
-                      <span>{{
-                        page.label === '...'
-                          ? page.label
-                          : (page.label | number: '')
-                      }}</span>
-                    </a>
-                    <ng-container *ngIf="p.getCurrent() === page.value">
-                      <span>{{
-                        page.label === '...'
-                          ? page.label
-                          : (page.label | number: '')
-                      }}</span>
-                    </ng-container>
-                  </li>
+                      @if (p.getCurrent() !== page.value) {
+                        <a
+                          class="numpag"
+                          tabindex="0"
+                          (keyup.enter)="p.setCurrent(page.value)"
+                          (click)="p.setCurrent(page.value)"
+                        >
+                          <span>{{
+                            page.label === '...'
+                              ? page.label
+                              : (page.label | number: '')
+                          }}</span>
+                        </a>
+                      }
+                      @if (p.getCurrent() === page.value) {
+                        <span>{{
+                          page.label === '...'
+                            ? page.label
+                            : (page.label | number: '')
+                        }}</span>
+                      }
+                    </li>
+                  }
                   <li class="pagination-next" [class.disabled]="p.isLastPage()">
-                    <a
-                      class="pr-0"
-                      tabindex="0"
-                      *ngIf="!p.isLastPage()"
-                      (keyup.enter)="p.next()"
-                      (click)="p.next()"
-                    >
-                      <img
-                        alt="Siguiente"
-                        class="tw-inline"
-                        src="/assets/images/after.svg"
-                      />
-                    </a>
-                    <span class="pr-0" *ngIf="p.isLastPage()">
-                      <img
-                        alt="Siguiente"
-                        class="tw-inline"
-                        src="/assets/images/after.svg"
-                      />
-                    </span>
+                    @if (!p.isLastPage()) {
+                      <a
+                        class="pr-0"
+                        tabindex="0"
+                        (keyup.enter)="p.next()"
+                        (click)="p.next()"
+                      >
+                        <img
+                          alt="Siguiente"
+                          class="tw-inline"
+                          src="/assets/images/after.svg"
+                        />
+                      </a>
+                    }
+                    @if (p.isLastPage()) {
+                      <span class="pr-0">
+                        <img
+                          alt="Siguiente"
+                          class="tw-inline"
+                          src="/assets/images/after.svg"
+                        />
+                      </span>
+                    }
                   </li>
                 </ul>
               </pagination-template>

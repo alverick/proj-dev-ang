@@ -75,22 +75,23 @@
       <div
         class="tw-flex tw-flex-col tw-justify-between tw-gap-6 lg:tw-flex-row"
       >
-        <div
-          class="tw-rounded-br-3xl tw-rounded-tl-3xl tw-border tw-border-extended-grey-3 tw-p-10 tw-text-center tw-transition-all tw-duration-200 tw-will-change-auto hover:tw-scale-[1.02] hover:tw-border-primary-green-1 lg:tw-w-1/4"
-          *ngFor="let groupInt of benefits; trackBy: trackByiItems"
-        >
-          <img
-            alt=""
-            class="tw-mx-auto tw-mb-2 tw-w-20"
-            [src]="'/assets/images/' + groupInt.image"
-          />
+        @for (groupInt of benefits; track trackByiItems($index, groupInt)) {
           <div
-            class="tw-mb-3 tw-flex tw-h-[57px] tw-items-center tw-justify-center tw-text-xl tw-leading-6"
+            class="tw-rounded-br-3xl tw-rounded-tl-3xl tw-border tw-border-extended-grey-3 tw-p-10 tw-text-center tw-transition-all tw-duration-200 tw-will-change-auto hover:tw-scale-[1.02] hover:tw-border-primary-green-1 lg:tw-w-1/4"
           >
-            {{ groupInt.title }}
+            <img
+              alt=""
+              class="tw-mx-auto tw-mb-2 tw-w-20"
+              [src]="'/assets/images/' + groupInt.image"
+            />
+            <div
+              class="tw-mb-3 tw-flex tw-h-[57px] tw-items-center tw-justify-center tw-text-xl tw-leading-6"
+            >
+              {{ groupInt.title }}
+            </div>
+            <div class="tw-text-sm">{{ groupInt.content }}</div>
           </div>
-          <div class="tw-text-sm">{{ groupInt.content }}</div>
-        </div>
+        }
       </div>
     </div>
   </div>
@@ -157,22 +158,26 @@
     <div
       class="tw-flex tw-w-full tw-grid-cols-2 tw-flex-col tw-justify-center tw-gap-6 lg:tw-grid lg:tw-pt-16"
     >
-      <div
-        class="tw-rounded-br-3xl tw-rounded-tl-3xl tw-border tw-border-extended-grey-3 tw-bg-extended-grey-5 tw-p-8 tw-text-left"
-        *ngFor="let groupInt of howWorks"
-      >
-        <div class="tw-flex tw-items-center tw-gap-4">
-          <div class="tw-text-4xl tw-text-primary-green-1">
-            {{ groupInt.position }}
+      @for (groupInt of howWorks; track groupInt) {
+        <div
+          class="tw-rounded-br-3xl tw-rounded-tl-3xl tw-border tw-border-extended-grey-3 tw-bg-extended-grey-5 tw-p-8 tw-text-left"
+        >
+          <div class="tw-flex tw-items-center tw-gap-4">
+            <div class="tw-text-4xl tw-text-primary-green-1">
+              {{ groupInt.position }}
+            </div>
+            <div
+              class="tw-mb-3 tw-flex tw-items-center tw-border-b tw-border-secondary-blue-1 tw-pb-2 tw-text-lg tw-font-medium tw-leading-6 tw-text-secondary-blue-1"
+            >
+              {{ groupInt.title }}
+            </div>
           </div>
           <div
-            class="tw-mb-3 tw-flex tw-items-center tw-border-b tw-border-secondary-blue-1 tw-pb-2 tw-text-lg tw-font-medium tw-leading-6 tw-text-secondary-blue-1"
-          >
-            {{ groupInt.title }}
-          </div>
+            class="tw-pt-1 tw-leading-5"
+            [innerHtml]="groupInt.content"
+          ></div>
         </div>
-        <div class="tw-pt-1 tw-leading-5" [innerHtml]="groupInt.content"></div>
-      </div>
+      }
     </div>
   </div>
 </div>
@@ -230,34 +235,33 @@
         <div
           class="tw-relative tw-hidden tw-grid-cols-2 tw-gap-8 tw-py-9 sm:tw-grid"
         >
-          <div
-            class="payment tw-relative tw-p-8 tw-pr-24"
-            *ngFor="let groupInt of payments"
-          >
-            <div
-              class="shape tw-absolute tw-bottom-0 tw-left-0 tw-right-0 tw-top-0 tw-overflow-hidden tw-rounded-br-3xl tw-rounded-tl-3xl tw-bg-primary-green-2 tw-transition-all tw-duration-200 tw-will-change-auto"
-            >
+          @for (groupInt of payments; track groupInt) {
+            <div class="payment tw-relative tw-p-8 tw-pr-24">
               <div
-                class="sprite tw-absolute tw-bottom-0 tw-right-0 tw-h-24 tw-w-24 tw-bg-[url(/assets/images/sprite-stars.png)] tw-bg-[length:100%_auto] tw-bg-[center_-100%]"
-              ></div>
+                class="shape tw-absolute tw-bottom-0 tw-left-0 tw-right-0 tw-top-0 tw-overflow-hidden tw-rounded-br-3xl tw-rounded-tl-3xl tw-bg-primary-green-2 tw-transition-all tw-duration-200 tw-will-change-auto"
+              >
+                <div
+                  class="sprite tw-absolute tw-bottom-0 tw-right-0 tw-h-24 tw-w-24 tw-bg-[url(/assets/images/sprite-stars.png)] tw-bg-[length:100%_auto] tw-bg-[center_-100%]"
+                ></div>
+                <div
+                  class="sprite over tw-absolute tw-bottom-0 tw-right-0 tw-h-24 tw-w-24 tw-bg-[url(/assets/images/sprite-stars.png)] tw-bg-[length:100%_auto] tw-bg-top"
+                ></div>
+                <img
+                  alt=""
+                  class="tw-absolute tw-bottom-0 tw-right-0 tw-mx-auto tw-h-16"
+                  [src]="'/assets/images/' + groupInt.image"
+                />
+              </div>
               <div
-                class="sprite over tw-absolute tw-bottom-0 tw-right-0 tw-h-24 tw-w-24 tw-bg-[url(/assets/images/sprite-stars.png)] tw-bg-[length:100%_auto] tw-bg-top"
-              ></div>
-              <img
-                alt=""
-                class="tw-absolute tw-bottom-0 tw-right-0 tw-mx-auto tw-h-16"
-                [src]="'/assets/images/' + groupInt.image"
-              />
+                class="tw-pointer-events-none tw-relative tw-mb-3 tw-flex tw-items-center tw-text-xl tw-font-bold tw-leading-6"
+              >
+                {{ groupInt.title }}
+              </div>
+              <div class="tw-pointer-events-none tw-relative tw-text-left">
+                {{ groupInt.content }}
+              </div>
             </div>
-            <div
-              class="tw-pointer-events-none tw-relative tw-mb-3 tw-flex tw-items-center tw-text-xl tw-font-bold tw-leading-6"
-            >
-              {{ groupInt.title }}
-            </div>
-            <div class="tw-pointer-events-none tw-relative tw-text-left">
-              {{ groupInt.content }}
-            </div>
-          </div>
+          }
         </div>
         <div class="mb-2">
           <ng-container *ngrxLet="disabledAffiliation$ as disabled">

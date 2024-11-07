@@ -1,61 +1,67 @@
-<div class="tw-pt-8 tw-w-full tw-px-5 md:tw-px-10 tw-max-w-8xl">
-  <div class="sm:tw-flex tw-text-center tw-items-center tw-justify-between">
-    <div class="tw-text-lg tw-font-medium tw-mb-4">
+<div class="tw-w-full tw-max-w-8xl tw-px-5 tw-pt-8 md:tw-px-10">
+  <div class="tw-items-center tw-justify-between tw-text-center sm:tw-flex">
+    <div class="tw-mb-4 tw-text-lg tw-font-medium">
       Resumen de tus servicios
     </div>
     <div class="actions tw-flex tw-justify-center tw-gap-2">
-      <button
-        pButton
-        pRipple
-        class="tw-w-full md:tw-w-56"
-        type="button"
-        *ngIf="!onlyEdit"
-        (click)="add.emit()"
-        label="Agregar otro servicio"
-      ></button>
-      <button
-        pButton
-        pRipple
-        class="tw-w-full md:tw-w-56"
-        type="button"
-        *ngIf="additionalButtons && showSaveAll"
-        (click)="finish.emit()"
-        label="Finalizar"
-      ></button>
+      @if (!onlyEdit) {
+        <button
+          pButton
+          pRipple
+          class="tw-w-full md:tw-w-56"
+          type="button"
+          (click)="add.emit()"
+          label="Agregar otro servicio"
+        ></button>
+      }
+      @if (additionalButtons && showSaveAll) {
+        <button
+          pButton
+          pRipple
+          class="tw-w-full md:tw-w-56"
+          type="button"
+          (click)="finish.emit()"
+          label="Finalizar"
+        ></button>
+      }
     </div>
   </div>
   <div
-    class="lg:tw-py-8 tw-mt-6 tw-w-full tw-p-4 lg:tw-px-10 box-shadow sm:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-3 tw-grid"
+    class="box-shadow tw-mt-6 tw-grid tw-w-full tw-gap-3 tw-p-4 sm:tw-grid-cols-2 lg:tw-grid-cols-3 lg:tw-px-10 lg:tw-py-8"
   >
-    <div
-      *ngIf="empty"
-      class="empty tw-text-extended-grey-2 tw-text-3xl tw-text-center tw-flex tw-items-center tw-justify-center tw-col-span-3"
-    >
-      {{ message }}
-    </div>
+    @if (empty) {
+      <div
+        class="empty tw-col-span-3 tw-flex tw-items-center tw-justify-center tw-text-center tw-text-3xl tw-text-extended-grey-2"
+      >
+        {{ message }}
+      </div>
+    }
     <ng-content></ng-content>
   </div>
-  <div
-    *ngIf="(additionalButtons && !onlyEdit) || showSaveAll"
-    class="tw-text-center sm:tw-text-right tw-justify-end tw-mt-10 tw-flex tw-gap-2"
-  >
-    <button
-      pButton
-      pRipple
-      class="tw-w-full md:tw-w-56"
-      type="button"
-      *ngIf="additionalButtons && !onlyEdit"
-      (click)="add.emit()"
-      label="Agregar otro servicio"
-    ></button>
-    <button
-      pButton
-      pRipple
-      class="tw-w-full md:tw-w-56"
-      type="button"
-      *ngIf="showSaveAll"
-      (click)="finish.emit()"
-      label="Finalizar"
-    ></button>
-  </div>
+  @if ((additionalButtons && !onlyEdit) || showSaveAll) {
+    <div
+      class="tw-mt-10 tw-flex tw-justify-end tw-gap-2 tw-text-center sm:tw-text-right"
+    >
+      @if (additionalButtons && !onlyEdit) {
+        <button
+          pButton
+          pRipple
+          class="tw-w-full md:tw-w-56"
+          type="button"
+          (click)="add.emit()"
+          label="Agregar otro servicio"
+        ></button>
+      }
+      @if (showSaveAll) {
+        <button
+          pButton
+          pRipple
+          class="tw-w-full md:tw-w-56"
+          type="button"
+          (click)="finish.emit()"
+          label="Finalizar"
+        ></button>
+      }
+    </div>
+  }
 </div>

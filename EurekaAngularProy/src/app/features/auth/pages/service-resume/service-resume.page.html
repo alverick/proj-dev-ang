@@ -5,13 +5,18 @@
   (add)="createService()"
   (finish)="finalize()"
 >
-  <cs-service-card
-    *ngFor="let service of affiliation.servicesList; let position = index"
-    [serviceData]="service"
-    [position]="position"
-    (delete)="actionDelete($event)"
-    (edit)="actionEdit(position)"
-  ></cs-service-card>
+  @for (
+    service of affiliation.servicesList;
+    track service;
+    let position = $index
+  ) {
+    <cs-service-card
+      [serviceData]="service"
+      [position]="position"
+      (delete)="actionDelete($event)"
+      (edit)="actionEdit(position)"
+    ></cs-service-card>
+  }
 </cs-services-list>
 <p-sidebar
   [(visible)]="showSidebar"

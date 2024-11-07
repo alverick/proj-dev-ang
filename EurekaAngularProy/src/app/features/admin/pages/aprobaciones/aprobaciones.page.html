@@ -64,210 +64,210 @@
             <div class="tw-flex tw-justify-between tw-gap-2">
               <div class="tw-flex tw-flex-col tw-gap-2 tw-text-sm">
                 <div class="tw-py-2">
-                  <p-tag
-                    *ngIf="getStateEnterprise(Enterprise) === 'Nueva Empresa'"
-                    icon="pi pi-info-circle"
-                    styleClass="tw-font-normal"
-                    severity="info"
-                    value="Nueva Empresa"
-                  />
-                  <p-tag
-                    *ngIf="
-                      getStateEnterprise(Enterprise) === 'Empresa Habilitada'
-                    "
-                    icon="pi pi-check"
-                    styleClass="tw-font-normal"
-                    severity="success"
-                    value="Empresa Habilitada"
-                  />
-                  <p-tag
-                    *ngIf="
-                      getStateEnterprise(Enterprise) === 'Empresa Rechazada'
-                    "
-                    icon="pi pi-times"
-                    styleClass="tw-font-normal"
-                    severity="danger"
-                    value="Empresa rechazada"
-                  />
-                  <p-tag
-                    *ngIf="getStateEnterprise(Enterprise) === 'Empresa Editada'"
-                    icon="pi pi-exclamation-triangle"
-                    styleClass="tw-font-normal"
-                    severity="warning"
-                    value="Empresa Editada"
-                  />
-                </div>
-                <div
-                  *ngIf="Enterprise.inReview"
-                  class="tw-flex tw-items-center tw-justify-between"
-                >
-                  <div *ngIf="Enterprise.NombreApproved == null">
-                    Por revisar
-                  </div>
-                  <div
-                    *ngIf="
-                      Enterprise.NombreApproved == true ||
-                      Enterprise.NombreApproved == false
-                    "
-                  >
-                    Revisado
-                  </div>
-                </div>
-                <div *ngIf="Enterprise.NombreApproved == false">
-                  1 Error encontrado
-                </div>
-              </div>
-              <div
-                *ngIf="Enterprise.newNameGTPStatus >= 0"
-                class="tw-mt-2 tw-self-end"
-              >
-                <button
-                  pButton
-                  pRipple
-                  type="button"
-                  (click)="VerCamposEnterprise(Enterprise)"
-                  class="p-button-outlined p-button-sm"
-                >
-                  Ver
-                </button>
-              </div>
-            </div>
-          </div>
-          <div
-            class="box-shadow tw-mb-4"
-            *ngFor="let svc of gtpService.services; let i = index"
-            [ngClass]="{ 'tw-border-primary-green-1': indiceActual === i }"
-          >
-            <div class="tw-px-4 tw-py-5">
-              <div class="pl-1 row pb-0">
-                <div class="col-sm-12 pt-3">
-                  <div class="tw-truncate tw-font-medium">
-                    {{ getName(svc) }}
-                  </div>
-                </div>
-              </div>
-              <table
-                class="table-sm table-borderless tw-w-full tw-border-separate tw-border-spacing-y-1"
-              >
-                <tr>
-                  <th
-                    class="tw-text-left tw-font-medium"
-                    scope="col"
-                    colspan="2"
-                  >
-                    {{ svc.res }}
-                  </th>
-                </tr>
-                <tr>
-                  <td class="tw-font-medium">
+                  @if (getStateEnterprise(Enterprise) === 'Nueva Empresa') {
                     <p-tag
-                      *ngIf="getState(svc) === 'Nuevo servicio'"
                       icon="pi pi-info-circle"
                       styleClass="tw-font-normal"
                       severity="info"
-                      [value]="getState(svc)"
+                      value="Nueva Empresa"
                     />
+                  }
+                  @if (
+                    getStateEnterprise(Enterprise) === 'Empresa Habilitada'
+                  ) {
                     <p-tag
-                      *ngIf="getState(svc) === 'Servicio habilitado'"
                       icon="pi pi-check"
                       styleClass="tw-font-normal"
                       severity="success"
-                      [value]="getState(svc)"
+                      value="Empresa Habilitada"
                     />
+                  }
+                  @if (getStateEnterprise(Enterprise) === 'Empresa Rechazada') {
                     <p-tag
-                      *ngIf="getState(svc) === 'Servicio rechazado'"
                       icon="pi pi-times"
                       styleClass="tw-font-normal"
                       severity="danger"
-                      [value]="getState(svc)"
+                      value="Empresa rechazada"
                     />
+                  }
+                  @if (getStateEnterprise(Enterprise) === 'Empresa Editada') {
                     <p-tag
-                      *ngIf="getState(svc) === 'Servicio editado'"
                       icon="pi pi-exclamation-triangle"
                       styleClass="tw-font-normal"
                       severity="warning"
-                      [value]="getState(svc)"
+                      value="Empresa Editada"
                     />
-                  </td>
-                  <td class="tw-text-right" *ngIf="svc.inReview == false">
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      [disabled]="ServiciosFormulario"
-                      (click)="VerCamposSer(svc, i)"
-                      class="p-button-outlined p-button-sm"
-                    >
-                      Ver
-                    </button>
-                  </td>
-                </tr>
-                <tr *ngIf="svc.inReview == true">
-                  <td
-                    class="font-black-servicios-des-list"
-                    *ngIf="
-                      svc.acceptednewName == null &&
-                      svc.acceptednewNameCode == null
-                    "
+                  }
+                </div>
+                @if (Enterprise.inReview) {
+                  <div class="tw-flex tw-items-center tw-justify-between">
+                    @if (Enterprise.NombreApproved == null) {
+                      <div>Por revisar</div>
+                    }
+                    @if (
+                      Enterprise.NombreApproved == true ||
+                      Enterprise.NombreApproved == false
+                    ) {
+                      <div>Revisado</div>
+                    }
+                  </div>
+                }
+                @if (Enterprise.NombreApproved == false) {
+                  <div>1 Error encontrado</div>
+                }
+              </div>
+              @if (Enterprise.newNameGTPStatus >= 0) {
+                <div class="tw-mt-2 tw-self-end">
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    (click)="VerCamposEnterprise(Enterprise)"
+                    class="p-button-outlined p-button-sm"
                   >
-                    Por revisar
-                  </td>
-                  <td
-                    class="font-black-servicios-des-list"
-                    *ngIf="
-                      (svc.acceptednewName === true ||
-                        svc.acceptednewName === false) &&
-                      (svc.acceptednewNameCode === true ||
-                        svc.acceptednewNameCode === false)
-                    "
-                  >
-                    Revisado
-                  </td>
-                  <td class="tw-p-0 tw-text-right">
-                    <button
-                      pButton
-                      pRipple
-                      type="button"
-                      [disabled]="ServiciosFormulario"
-                      (click)="VerCamposSer(svc, i)"
-                      class="p-button-outlined p-button-sm"
-                    >
-                      Ver
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    class="font-black-servicios-des-list"
-                    *ngIf="
-                      svc.acceptednewName == false &&
-                      svc.acceptednewNameCode == true
-                    "
-                  >
-                    1 Error encontrado
-                  </td>
-                  <td
-                    class="font-black-servicios-des-list"
-                    *ngIf="
-                      svc.acceptednewName == true &&
-                      svc.acceptednewNameCode == false
-                    "
-                  >
-                    1 Error encontrado
-                  </td>
-                  <td
-                    class="font-black-servicios-des-list"
-                    *ngIf="
-                      svc.acceptednewName == false &&
-                      svc.acceptednewNameCode == false
-                    "
-                  >
-                    2 Errores encontrados
-                  </td>
-                </tr>
-              </table>
+                    Ver
+                  </button>
+                </div>
+              }
             </div>
           </div>
+          @for (svc of gtpService.services; track svc; let i = $index) {
+            <div
+              class="box-shadow tw-mb-4"
+              [ngClass]="{ 'tw-border-primary-green-1': indiceActual === i }"
+            >
+              <div class="tw-px-4 tw-py-5">
+                <div class="pl-1 row pb-0">
+                  <div class="col-sm-12 pt-3">
+                    <div class="tw-truncate tw-font-medium">
+                      {{ getName(svc) }}
+                    </div>
+                  </div>
+                </div>
+                <table
+                  class="table-sm table-borderless tw-w-full tw-border-separate tw-border-spacing-y-1"
+                >
+                  <tr>
+                    <th
+                      class="tw-text-left tw-font-medium"
+                      scope="col"
+                      colspan="2"
+                    >
+                      {{ svc.res }}
+                    </th>
+                  </tr>
+                  <tr>
+                    <td class="tw-font-medium">
+                      @if (getState(svc) === 'Nuevo servicio') {
+                        <p-tag
+                          icon="pi pi-info-circle"
+                          styleClass="tw-font-normal"
+                          severity="info"
+                          [value]="getState(svc)"
+                        />
+                      }
+                      @if (getState(svc) === 'Servicio habilitado') {
+                        <p-tag
+                          icon="pi pi-check"
+                          styleClass="tw-font-normal"
+                          severity="success"
+                          [value]="getState(svc)"
+                        />
+                      }
+                      @if (getState(svc) === 'Servicio rechazado') {
+                        <p-tag
+                          icon="pi pi-times"
+                          styleClass="tw-font-normal"
+                          severity="danger"
+                          [value]="getState(svc)"
+                        />
+                      }
+                      @if (getState(svc) === 'Servicio editado') {
+                        <p-tag
+                          icon="pi pi-exclamation-triangle"
+                          styleClass="tw-font-normal"
+                          severity="warning"
+                          [value]="getState(svc)"
+                        />
+                      }
+                    </td>
+                    @if (svc.inReview == false) {
+                      <td class="tw-text-right">
+                        <button
+                          pButton
+                          pRipple
+                          type="button"
+                          [disabled]="ServiciosFormulario"
+                          (click)="VerCamposSer(svc, i)"
+                          class="p-button-outlined p-button-sm"
+                        >
+                          Ver
+                        </button>
+                      </td>
+                    }
+                  </tr>
+                  @if (svc.inReview == true) {
+                    <tr>
+                      @if (
+                        svc.acceptednewName == null &&
+                        svc.acceptednewNameCode == null
+                      ) {
+                        <td class="font-black-servicios-des-list">
+                          Por revisar
+                        </td>
+                      }
+                      @if (
+                        (svc.acceptednewName === true ||
+                          svc.acceptednewName === false) &&
+                        (svc.acceptednewNameCode === true ||
+                          svc.acceptednewNameCode === false)
+                      ) {
+                        <td class="font-black-servicios-des-list">Revisado</td>
+                      }
+                      <td class="tw-p-0 tw-text-right">
+                        <button
+                          pButton
+                          pRipple
+                          type="button"
+                          [disabled]="ServiciosFormulario"
+                          (click)="VerCamposSer(svc, i)"
+                          class="p-button-outlined p-button-sm"
+                        >
+                          Ver
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                  <tr>
+                    @if (
+                      svc.acceptednewName == false &&
+                      svc.acceptednewNameCode == true
+                    ) {
+                      <td class="font-black-servicios-des-list">
+                        1 Error encontrado
+                      </td>
+                    }
+                    @if (
+                      svc.acceptednewName == true &&
+                      svc.acceptednewNameCode == false
+                    ) {
+                      <td class="font-black-servicios-des-list">
+                        1 Error encontrado
+                      </td>
+                    }
+                    @if (
+                      svc.acceptednewName == false &&
+                      svc.acceptednewNameCode == false
+                    ) {
+                      <td class="font-black-servicios-des-list">
+                        2 Errores encontrados
+                      </td>
+                    }
+                  </tr>
+                </table>
+              </div>
+            </div>
+          }
         </div>
         <div class="tw-text-center">
           <button
@@ -283,43 +283,41 @@
         </div>
       </div>
     </div>
-    <div
-      class="tw-col-span-5 tw-col-start-8 tw-py-6"
-      *ngIf="Formulario || ServiciosFormulario"
-    >
-      <div class="box-shadow tw-p-4">
-        <div class="formulario px-5 pt-3 bg-white">
-          <div
-            class="tw-flex tw-flex-col tw-items-end tw-justify-center tw-gap-2"
-          >
-            <button
-              (click)="hidePanel()"
-              class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-1 tw-text-xxs tw-text-extended-grey-2"
+    @if (Formulario || ServiciosFormulario) {
+      <div class="tw-col-span-5 tw-col-start-8 tw-py-6">
+        <div class="box-shadow tw-p-4">
+          <div class="formulario px-5 pt-3 bg-white">
+            <div
+              class="tw-flex tw-flex-col tw-items-end tw-justify-center tw-gap-2"
             >
-              <img
-                class="tw-inline"
-                src="/assets/images/cerrar.svg"
-                alt="Cerrar"
-              />
-              Cerrar
-            </button>
-            <div>¿Aprobado?</div>
+              <button
+                (click)="hidePanel()"
+                class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-1 tw-text-xxs tw-text-extended-grey-2"
+              >
+                <img
+                  class="tw-inline"
+                  src="/assets/images/cerrar.svg"
+                  alt="Cerrar"
+                />
+                Cerrar
+              </button>
+              <div>¿Aprobado?</div>
+            </div>
+            @if (Formulario) {
+              <cs-empresa-gtp [enterprise]="Empgtp" (grabar)="onGrabar($event)">
+              </cs-empresa-gtp>
+            }
+            @if (ServiciosFormulario) {
+              <cs-services-gtp
+                [service]="Servgtp"
+                [idCompany]="llave"
+                (grabar)="onGrabarSer($event)"
+              >
+              </cs-services-gtp>
+            }
           </div>
-          <cs-empresa-gtp
-            *ngIf="Formulario"
-            [enterprise]="Empgtp"
-            (grabar)="onGrabar($event)"
-          >
-          </cs-empresa-gtp>
-          <cs-services-gtp
-            *ngIf="ServiciosFormulario"
-            [service]="Servgtp"
-            [idCompany]="llave"
-            (grabar)="onGrabarSer($event)"
-          >
-          </cs-services-gtp>
         </div>
       </div>
-    </div>
+    }
   </div>
 </div>

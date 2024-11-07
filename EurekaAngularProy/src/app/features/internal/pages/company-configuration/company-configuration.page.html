@@ -1,21 +1,21 @@
 <div
-  class="tw-pt-8 tw-w-full tw-px-4 xl:tw-px-0 tw-max-w-8xl tw-mx-auto"
+  class="tw-mx-auto tw-w-full tw-max-w-8xl tw-px-4 tw-pt-8 xl:tw-px-0"
   [ngClass]="{ 'tw-blur': blurContent }"
 >
-  <div class="sm:tw-flex tw-text-center tw-justify-between tw-items-center">
+  <div class="tw-items-center tw-justify-between tw-text-center sm:tw-flex">
     <div class="tw-text-lg tw-font-medium">Información de tu empresa</div>
     <div class="actions">
       <button
-        class="btn-big btn-eureca-green tw-w-56 tw-text-center text-white"
+        class="btn-big btn-eureca-green text-white tw-w-56 tw-text-center"
         (click)="saveInfo()"
       >
         Guardar
       </button>
     </div>
   </div>
-  <div class="tw-py-12 tw-mt-6 tw-w-full tw-px-5 md:tw-px-10 box-shadow">
+  <div class="box-shadow tw-mt-6 tw-w-full tw-px-5 tw-py-12 md:tw-px-10">
     <cs-company-update-form
-      class="tw-block tw-max-w-2xl lg:tw-px-9 tw-mx-auto"
+      class="tw-mx-auto tw-block tw-max-w-2xl lg:tw-px-9"
       [form]="companyForm"
       [errorMessages]="errors"
       [operators]="operators"
@@ -37,11 +37,12 @@
   position="right"
   styleClass="p-sidebar-md edit-form lg:tw-h-screen tw-overflow-auto"
 >
-  <cs-company-password-form
-    *ngIf="showSidebar"
-    class="tw-block tw-max-w-sm tw-mx-auto"
-    [form]="passwordForm"
-    [errorMessages]="errorsPassword"
-    (sendForm)="onSendForm()"
-  ></cs-company-password-form>
+  @if (showSidebar) {
+    <cs-company-password-form
+      class="tw-mx-auto tw-block tw-max-w-sm"
+      [form]="passwordForm"
+      [errorMessages]="errorsPassword"
+      (sendForm)="onSendForm()"
+    ></cs-company-password-form>
+  }
 </p-sidebar>

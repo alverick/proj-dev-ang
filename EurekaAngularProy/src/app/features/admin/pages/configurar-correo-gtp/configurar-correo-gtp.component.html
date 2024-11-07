@@ -28,33 +28,34 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      *ngFor="let cor of correos; let i = index"
-                      class="border-item"
-                      [class.actual]="indiceActual === i"
-                    >
-                      <td class="tw-w-full">{{ cor.correo }}</td>
-                      <td class="tw-flex tw-gap-2">
-                        <button
-                          pButton
-                          pRipple
-                          type="button"
-                          class="p-button p-button-outlined p-button-icon-only"
-                          icon="pi pi-pen-to-square"
-                          (click)="onEditar(cor, i)"
-                          [disabled]="Formulario"
-                        ></button>
-                        <button
-                          pButton
-                          pRipple
-                          type="button"
-                          class="p-button p-button-outlined p-button-icon-only"
-                          icon="pi pi-trash"
-                          (click)="onEliminar(i)"
-                          [disabled]="Formulario"
-                        ></button>
-                      </td>
-                    </tr>
+                    @for (cor of correos; track cor; let i = $index) {
+                      <tr
+                        class="border-item"
+                        [class.actual]="indiceActual === i"
+                      >
+                        <td class="tw-w-full">{{ cor.correo }}</td>
+                        <td class="tw-flex tw-gap-2">
+                          <button
+                            pButton
+                            pRipple
+                            type="button"
+                            class="p-button p-button-outlined p-button-icon-only"
+                            icon="pi pi-pen-to-square"
+                            (click)="onEditar(cor, i)"
+                            [disabled]="Formulario"
+                          ></button>
+                          <button
+                            pButton
+                            pRipple
+                            type="button"
+                            class="p-button p-button-outlined p-button-icon-only"
+                            icon="pi pi-trash"
+                            (click)="onEliminar(i)"
+                            [disabled]="Formulario"
+                          ></button>
+                        </td>
+                      </tr>
+                    }
                   </tbody>
                 </table>
               </div>
@@ -90,51 +91,52 @@
       </div>
     </div>
     <div class="tw-col-span-5 tw-col-start-8 tw-pb-6 tw-pt-10">
-      <div *ngIf="Formulario" class="box-shadow tw-p-4">
-        <div
-          class="tw-relative tw-mb-2 tw-text-center tw-text-lg tw-text-secondary-blue-1"
-        >
-          {{ titleCorreo }}
-          <button
-            (click)="Formulario = false; indiceActual = -1"
-            class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-1 tw-text-xxs tw-text-extended-grey-2"
+      @if (Formulario) {
+        <div class="box-shadow tw-p-4">
+          <div
+            class="tw-relative tw-mb-2 tw-text-center tw-text-lg tw-text-secondary-blue-1"
           >
-            <img
-              class="tw-inline"
-              src="/assets/images/cerrar.svg"
-              alt="Cerrar"
-            />
-            Cerrar
-          </button>
-        </div>
-
-        <form [formGroup]="frmCorreoGtp" novalidate>
-          <div class="form-group">
-            <cs-label-control
-              class="tw-w-full"
-              formControlName="correo"
-              [errorMessages]="errorsForm.correo"
-              ><ng-container label>E-mail</ng-container
-              ><input
-                type="text"
-                class="tw-w-full"
-                pInputText
-                formControlName="correo"
-              />
-            </cs-label-control>
-          </div>
-          <div class="bnt-cont-reg">
+            {{ titleCorreo }}
             <button
-              pButton
-              pRipple
-              type="button"
-              class="p-button"
-              (click)="onGrabar()"
-              [label]="titlebtn"
-            ></button>
+              (click)="Formulario = false; indiceActual = -1"
+              class="tw-absolute tw-right-0 tw-top-0 tw-flex tw-flex-col tw-items-center tw-justify-center tw-gap-1 tw-text-xxs tw-text-extended-grey-2"
+            >
+              <img
+                class="tw-inline"
+                src="/assets/images/cerrar.svg"
+                alt="Cerrar"
+              />
+              Cerrar
+            </button>
           </div>
-        </form>
-      </div>
+          <form [formGroup]="frmCorreoGtp" novalidate>
+            <div class="form-group">
+              <cs-label-control
+                class="tw-w-full"
+                formControlName="correo"
+                [errorMessages]="errorsForm.correo"
+                ><ng-container label>E-mail</ng-container
+                ><input
+                  type="text"
+                  class="tw-w-full"
+                  pInputText
+                  formControlName="correo"
+                />
+              </cs-label-control>
+            </div>
+            <div class="bnt-cont-reg">
+              <button
+                pButton
+                pRipple
+                type="button"
+                class="p-button"
+                (click)="onGrabar()"
+                [label]="titlebtn"
+              ></button>
+            </div>
+          </form>
+        </div>
+      }
     </div>
     <div class="tw-col-span-5">
       <div class="widget lista tw-py-5">

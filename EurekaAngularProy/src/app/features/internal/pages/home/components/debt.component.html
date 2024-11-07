@@ -31,26 +31,27 @@
           dateFormat="dd/mm/yy"
         ></p-calendar
       ></cs-label-control>
-      <cs-label-control
-        *ngIf="!isPartial"
-        class="tw-w-full"
-        formControlName="dueDate"
-        [errorMessages]="formErrors.dueDate"
-      >
-        Fecha de vencimiento
-        <p-calendar
-          control
+      @if (!isPartial) {
+        <cs-label-control
           class="tw-w-full"
-          styleClass="tw-w-full"
-          [iconDisplay]="'input'"
-          [showIcon]="true"
-          [minDate]="minDate"
-          [maxDate]="maxDate"
-          appendTo="body"
           formControlName="dueDate"
-          dateFormat="dd/mm/yy"
-        ></p-calendar
-      ></cs-label-control>
+          [errorMessages]="formErrors.dueDate"
+        >
+          Fecha de vencimiento
+          <p-calendar
+            control
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            [iconDisplay]="'input'"
+            [showIcon]="true"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            appendTo="body"
+            formControlName="dueDate"
+            dateFormat="dd/mm/yy"
+          ></p-calendar
+        ></cs-label-control>
+      }
     </div>
     <div class="form-row">
       <cs-label-control
@@ -68,13 +69,14 @@
             [maxLength]="20"
             formControlName="code"
           />
-          <span
-            *ngIf="loaderDebtorCode"
-            class="tw-pointer-events-none tw-absolute tw-right-4 tw-top-1/2 tw-flex -tw-translate-y-1/2 tw-items-center tw-gap-2 tw-text-xs tw-text-extended-grey-2"
-            >Buscando...<i
-              class="pi pi-spin pi-spinner tw-text-primary-green-1"
-            ></i
-          ></span>
+          @if (loaderDebtorCode) {
+            <span
+              class="tw-pointer-events-none tw-absolute tw-right-4 tw-top-1/2 tw-flex -tw-translate-y-1/2 tw-items-center tw-gap-2 tw-text-xs tw-text-extended-grey-2"
+              >Buscando...<i
+                class="pi pi-spin pi-spinner tw-text-primary-green-1"
+              ></i
+            ></span>
+          }
         </div>
       </cs-label-control>
     </div>
@@ -97,7 +99,7 @@
         />
       </cs-label-control>
     </div>
-    <ng-container *ngIf="!isPartial">
+    @if (!isPartial) {
       <div class="form-row">
         <cs-label-control
           formControlName="concept"
@@ -137,7 +139,7 @@
           />
         </cs-label-control>
       </div>
-    </ng-container>
+    }
     <div class="tw-mt-2 tw-flex tw-justify-center tw-gap-2">
       <button
         type="submit"
