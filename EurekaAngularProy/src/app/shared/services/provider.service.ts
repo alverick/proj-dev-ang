@@ -6,6 +6,6 @@ export abstract class ProviderService {
 
   abstract trackEvent(
     event: AdobeEventType,
-    payload: Partial<TrackEventProperties>
+    payload: Partial<TrackEventProperties>,
   ): void;
 }

@@ -2,6 +2,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
   selector: 'input[appPunto]',
+  standalone: true,
 })
 export class PuntoDirective {
   constructor(private _el: ElementRef) {}

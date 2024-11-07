@@ -1,9 +1,10 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, type PipeTransform } from '@angular/core';
 
-import { CurrencyWithLimit } from '../constants/currencies';
+import { type CurrencyWithLimit } from '../constants/currencies';
 
 @Pipe({
   name: 'getLimitCurrency',
+  standalone: true,
 })
 export class GetLimitCurrencyPipe implements PipeTransform {
   transform(currencySel: string, maxAmountLimits: CurrencyWithLimit[]) {

@@ -1,4 +1,4 @@
-import { IErrorObj } from './error.model';
+import { type IErrorObj } from './error.model';
 
 export interface IStatus {
   status?: number;

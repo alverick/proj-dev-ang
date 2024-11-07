@@ -38,7 +38,17 @@ import { RESOLVERS } from './resolvers';
 import { SERVICES } from './services';
 
 @NgModule({
-  declarations: [
+  imports: [
+    CommonModule,
+    InternalRoutingModule,
+    HeaderComponent,
+    EntityStoreModule,
+    SharedModule,
+    PushPipe,
+    LetDirective,
+    NgScrollbarModule,
+    NgOptimizedImage,
+    NgScrollReached,
     InternalComponent,
     AgregaCobroComponent,
     DateDirective,
@@ -55,18 +65,6 @@ import { SERVICES } from './services';
     TableMovementsComponent,
     CommissionsInfoComponent,
     LoadFileComponent,
-  ],
-  imports: [
-    CommonModule,
-    InternalRoutingModule,
-    HeaderComponent,
-    EntityStoreModule,
-    SharedModule,
-    PushPipe,
-    LetDirective,
-    NgScrollbarModule,
-    NgOptimizedImage,
-    NgScrollReached,
   ],
   providers: [
     ...SERVICES,

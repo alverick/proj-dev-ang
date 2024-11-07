@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
-  type Meta,
-  type StoryObj,
   applicationConfig,
   argsToTemplate,
+  type Meta,
   moduleMetadata,
+  type StoryObj,
 } from '@storybook/angular';
 
 import { SharedModule } from '../../shared.module';
@@ -35,7 +35,7 @@ const meta: Meta<MessageAlertAndMessage> = {
   render: ({ content, ...args }) => ({
     props: args,
     template: `<cs-message-alert ${argsToTemplate(
-      args
+      args,
     )}>${content}</cs-message-alert>`,
   }),
 };

@@ -16,10 +16,10 @@ export class CompanyEffects {
         this.companyService.getCompanyData().pipe(
           map((data) => CompanyActions.loadCompanySuccess({ data })),
           catchError((error) =>
-            of(CompanyActions.loadCompanyFailure({ error }))
-          )
-        )
-      )
+            of(CompanyActions.loadCompanyFailure({ error })),
+          ),
+        ),
+      ),
     );
   });
   loadCompanySuccess$ = createEffect(
@@ -28,15 +28,15 @@ export class CompanyEffects {
         ofType(CompanyActions.loadCompanySuccess),
         tap(() => {
           this.store.dispatch(CompanyActions.setCurrencyLimits());
-        })
+        }),
       );
     },
-    { dispatch: false }
+    { dispatch: false },
   );
 
   constructor(
     private actions$: Actions,
     private companyService: CompanyService,
-    private store: Store
+    private store: Store,
   ) {}
 }

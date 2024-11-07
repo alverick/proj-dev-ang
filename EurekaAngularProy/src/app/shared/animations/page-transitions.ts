@@ -23,7 +23,7 @@ export const fadeAnimation = trigger('fadeAnimation', [
           width: '100%',
         }),
       ],
-      { optional: true }
+      { optional: true },
     ),
     query(
       ':leave',
@@ -36,7 +36,7 @@ export const fadeAnimation = trigger('fadeAnimation', [
         }),
         animate('0.7s', style({ opacity: 0 })),
       ],
-      { optional: true }
+      { optional: true },
     ),
     query(
       ':enter',
@@ -49,7 +49,7 @@ export const fadeAnimation = trigger('fadeAnimation', [
         }),
         animate('0.7s', style({ opacity: 1 })),
       ],
-      { optional: true }
+      { optional: true },
     ),
   ]),
 ]);

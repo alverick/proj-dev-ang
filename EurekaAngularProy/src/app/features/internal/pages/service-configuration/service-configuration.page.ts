@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 
+import { ServiceStepConfigurationComponent } from '../../../../shared/components/service-step-configuration/service-step-configuration.component';
 import {
   chargeTypeOptions,
   currencyOptions,
@@ -22,6 +23,8 @@ import { CompanyServicesService } from '../../services';
   selector: 'cs-service-configuration',
   templateUrl: './service-configuration.page.html',
   styleUrls: ['./service-configuration.page.scss'],
+  standalone: true,
+  imports: [ServiceStepConfigurationComponent],
 })
 export class ServiceConfigurationPage {
   errorMessagesServiceConfig = errorServiceConfiguration;
@@ -36,7 +39,7 @@ export class ServiceConfigurationPage {
     protected companyServices: CompanyServicesService,
     public serviceForms: ServicesFormsService,
     private logger: NGXLogger,
-    protected tracking: TrackingService
+    protected tracking: TrackingService,
   ) {}
 
   onSubmit() {

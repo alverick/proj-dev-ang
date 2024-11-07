@@ -1,7 +1,13 @@
-import { type OnInit, Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, type OnInit } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PrimeTemplate } from 'primeng/api';
+import { ButtonDirective } from 'primeng/button';
+import { PasswordModule } from 'primeng/password';
+import { Ripple } from 'primeng/ripple';
 
+import { ControlRulesPoliciesComponent } from '../../../../shared/components/control-rules-policies/control-rules-policies.component';
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import { type ModelFormGroup } from '../../../../shared/models/forms';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
@@ -18,6 +24,7 @@ import {
   passwordValidators,
 } from '../../../../shared/validators/password-validators';
 import { authFullRoutingNames } from '../../auth-routing.names';
+import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
 
 export type FormChangePassword = {
   contrasena: string;
@@ -27,6 +34,18 @@ export type FormChangePassword = {
 @Component({
   selector: 'cs-cambia-contrasena',
   templateUrl: './cambia-contrasena.component.html',
+  standalone: true,
+  imports: [
+    LayoutFormComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    PasswordModule,
+    PrimeTemplate,
+    ControlRulesPoliciesComponent,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class CambiaContrasenaComponent implements OnInit {
   public llave: string;
@@ -41,7 +60,7 @@ export class CambiaContrasenaComponent implements OnInit {
     private router: Router,
     private recuperaService: RecuperaService,
     public storage: StorageService,
-    protected tracking: TrackingService
+    protected tracking: TrackingService,
   ) {}
   ngOnInit() {
     this.Cambia = this.formBuilder.group(
@@ -51,7 +70,7 @@ export class CambiaContrasenaComponent implements OnInit {
       },
       {
         validators: MustMatch('contrasena', 'repcontrasena'),
-      }
+      },
     );
     this.llave = this.rutaActiva?.snapshot?.params.llave as string;
     this.Verificar(this.llave);
@@ -64,7 +83,7 @@ export class CambiaContrasenaComponent implements OnInit {
         if (d !== true) {
           this.mensaje(
             'Enlace expirado',
-            'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro para recuperar tu contraseña'
+            'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro para recuperar tu contraseña',
           );
           void this.router.navigate([authFullRoutingNames.LOGIN]);
         }
@@ -96,14 +115,14 @@ export class CambiaContrasenaComponent implements OnInit {
             });
             this.mensaje(
               'Actualizar Contraseña',
-              'Error al actualizar contraseña'
+              'Error al actualizar contraseña',
             );
           } else if (d) {
             this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
             this.PopUpWithOneButon(
               'Contraseña actualizada',
               'Tu contraseña ha sido actualizada.',
-              'Iniciar sesión'
+              'Iniciar sesión',
             );
           }
         });

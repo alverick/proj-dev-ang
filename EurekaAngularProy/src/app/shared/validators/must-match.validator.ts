@@ -11,10 +11,10 @@ import { type ModelFormGroup } from '../models/forms';
 export function MustMatch(
   controlName: string,
   matchingControlName: string,
-  ignoreCase = false
+  ignoreCase = false,
 ): ValidatorFn {
   return (
-    formGroup: ModelFormGroup<ChangePasswordForm>
+    formGroup: ModelFormGroup<ChangePasswordForm>,
   ): ValidationErrors | null => {
     const { value: valueOriginal } = formGroup.controls[
       controlName

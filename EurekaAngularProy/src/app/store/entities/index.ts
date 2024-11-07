@@ -1,3 +1,3 @@
-export { CollectAmount } from './CollectAmount';
-export { HistoricalCollect } from './HistoricalCollect';
-export { TopClient } from './TopClient';
+export type { CollectAmount } from './CollectAmount';
+export type { HistoricalCollect } from './HistoricalCollect';
+export type { TopClient } from './TopClient';

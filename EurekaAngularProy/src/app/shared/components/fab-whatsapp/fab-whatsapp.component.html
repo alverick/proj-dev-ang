@@ -3,18 +3,18 @@
   target="_blank"
   href="https://api.whatsapp.com/send?phone=51993119001&text=Hola%20Interbank!"
   (click)="clickWa()"
-  class="tw-fixed tw-z-90 tw-rounded-full tw-drop-shadow-lg tw-flex tw-justify-center tw-items-center tw-transition-all hover:tw-drop-shadow-xl hover:tw-no-underline tw-duration-400 tw-bg-white tw-gap-3 tw-text-black tw-no-underline tw-border tw-border-extended-grey-2"
+  class="tw-z-90 tw-duration-400 tw-fixed tw-flex tw-items-center tw-justify-center tw-gap-3 tw-rounded-full tw-border tw-border-extended-grey-2 tw-bg-white tw-text-black tw-no-underline tw-drop-shadow-lg tw-transition-all hover:tw-no-underline hover:tw-drop-shadow-xl"
   [ngClass]="{ hide: !showButton, 'show-text': showText, 'tw-p-2': !expand }"
 >
   <div
-    class="text tw-text-sm tw-w-28 tw-text-right tw-leading-4 tw-hidden tw-no-underline"
+    class="text tw-hidden tw-w-28 tw-text-right tw-text-sm tw-leading-4 tw-no-underline"
   >
     Comunícate con nosotros
   </div>
   <div
-    class="tw-rounded-full tw-bg-primary-green-1 tw-flex tw-justify-center tw-items-center tw-transition-all tw-duration-400"
-    [ngClass]="[expand ? 'tw-w-11 tw-h-11' : 'tw-w-9 tw-h-9']"
+    class="tw-duration-400 tw-flex tw-items-center tw-justify-center tw-rounded-full tw-bg-primary-green-1 tw-transition-all"
+    [ngClass]="[expand ? 'tw-h-11 tw-w-11' : 'tw-h-9 tw-w-9']"
   >
-    <i class="pi pi-whatsapp tw-text-white tw-text-2xl"></i>
+    <i class="pi pi-whatsapp tw-text-2xl tw-text-white"></i>
   </div>
 </a>

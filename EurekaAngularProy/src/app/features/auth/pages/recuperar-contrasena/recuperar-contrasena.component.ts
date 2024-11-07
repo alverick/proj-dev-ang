@@ -1,13 +1,20 @@
 import { Component, HostListener, type OnInit } from '@angular/core';
 import {
+  FormsModule,
+  ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormControl,
   type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ButtonDirective } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { Ripple } from 'primeng/ripple';
 import { forEachObjIndexed } from 'ramda';
 
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { errorsLoginForm } from '../../../../shared/constants/company-errors';
 import { emailRegex } from '../../../../shared/constants/patterns';
 import { RecuperaService } from '../../../../shared/services/recupera.service';
@@ -19,10 +26,22 @@ import {
 } from '../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
+import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
 
 @Component({
   selector: 'cs-recuperar-contrasena',
   templateUrl: './recuperar-contrasena.component.html',
+  standalone: true,
+  imports: [
+    LayoutFormComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+    KeyFilterModule,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class RecuperarContrasenaComponent implements OnInit {
   public formulario = true;

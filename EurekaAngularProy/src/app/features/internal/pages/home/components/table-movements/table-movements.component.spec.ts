@@ -41,7 +41,7 @@ describe('TableMovementsComponent', () => {
               strictStateSerializability: true,
               strictActionSerializability: true,
             },
-          }
+          },
         ),
         StoreModule.forFeature(companyFeature),
         StoreModule.forFeature(appConfigFeature),
@@ -49,7 +49,8 @@ describe('TableMovementsComponent', () => {
         StoreDevtoolsModule.instrument({
           maxAge: 25,
           logOnly: environment.production,
-        connectInZone: true}),
+          connectInZone: true,
+        }),
         EntityDataModule.forRoot(entityConfig),
         EffectsModule.forFeature([CompanyEffects, AppConfigEffects]),
         HttpClientTestingModule,

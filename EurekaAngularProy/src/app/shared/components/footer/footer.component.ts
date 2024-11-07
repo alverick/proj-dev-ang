@@ -9,6 +9,7 @@ import { ModalTermsComponent } from '../modal-terms/modal-terms.component';
   selector: 'cs-footer',
   templateUrl: './footer.component.html',
   providers: [DynamicDialogService],
+  standalone: true,
 })
 export class FooterComponent {
   constructor(

@@ -163,7 +163,7 @@ describe('AffiliationService', () => {
             serverLogLevel: environment.serverLogLevel,
             disableConsoleLogging: false,
             enableSourceMaps: true,
-          })
+          }),
         ),
       ],
       providers: [
@@ -257,7 +257,7 @@ describe('AffiliationService', () => {
       expect(success).toEqual(true);
       expect(service.authForm.getRawValue().ruc).toEqual(form.ruc);
       expect(service.authForm.getRawValue().name).toEqual(
-        mockValidateCompany.tradeName
+        mockValidateCompany.tradeName,
       );
       expect(service.authForm.getRawValue().nameSelect).toEqual('tradeName');
       done();

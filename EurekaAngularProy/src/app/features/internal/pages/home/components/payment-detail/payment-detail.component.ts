@@ -1,6 +1,15 @@
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
+import { ButtonDirective } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { Ripple } from 'primeng/ripple';
 import { forEachObjIndexed, isNil } from 'ramda';
 
 import {
@@ -16,6 +25,19 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
 @Component({
   selector: 'cs-payment-detail',
   templateUrl: './payment-detail.component.html',
+  standalone: true,
+  imports: [
+    ProgressSpinnerModule,
+    InputNumberModule,
+    FormsModule,
+    CalendarModule,
+    DropdownModule,
+    LetDirective,
+    ButtonDirective,
+    Ripple,
+    DecimalPipe,
+    DatePipe,
+  ],
 })
 export class PaymentDetailComponent implements OnInit {
   items: any[] = [];

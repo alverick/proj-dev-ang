@@ -4,19 +4,20 @@ import { CurrencyWithLimit } from '../constants/currencies';
 
 @Pipe({
   name: 'validateLimitCurrency',
+  standalone: true,
 })
 export class ValidateLimitCurrencyPipe implements PipeTransform {
   transform(
     amount: number,
     maxAmountLimits: CurrencyWithLimit[],
     currencySel: string,
-    validate: boolean
+    validate: boolean,
   ): boolean {
     if (!validate) {
       return false;
     }
     const limit = maxAmountLimits.find(
-      (currency) => currency.symbol === currencySel
+      (currency) => currency.symbol === currencySel,
     ).limitMax;
     return amount > limit;
   }

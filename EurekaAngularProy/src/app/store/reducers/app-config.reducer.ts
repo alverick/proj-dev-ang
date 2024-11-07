@@ -26,12 +26,12 @@ export const reducer = createReducer(
   on(AppConfigActions.loadConfigFailure, (state, action): State => state),
   on(
     AppConfigActions.setModalCommissions,
-    (state, action): State => ({ ...state, showedCommission: action.showed })
+    (state, action): State => ({ ...state, showedCommission: action.showed }),
   ),
   on(
     AppConfigActions.setLoader,
-    (state, action): State => ({ ...state, showLoader: action.show })
-  )
+    (state, action): State => ({ ...state, showLoader: action.show }),
+  ),
 );
 
 export const appConfigFeature = createFeature({

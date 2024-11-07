@@ -71,7 +71,7 @@ describe('CompanyFormAuthComponent', () => {
       .keep(FormsModule)
       .keep(FormBuilder)
       .keep(ReactiveFormsModule)
-      .mock(CheckboxModule)
+      .mock(CheckboxModule),
   );
   beforeEach(() => {
     service = TestBed.inject(AffiliationFormsService);

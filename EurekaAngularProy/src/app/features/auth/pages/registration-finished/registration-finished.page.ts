@@ -1,10 +1,11 @@
-import { type OnInit, Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 
 import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-registration-finished',
   templateUrl: './registration-finished.page.html',
+  standalone: true,
 })
 export class RegistrationFinishedPage implements OnInit {
   email = '';

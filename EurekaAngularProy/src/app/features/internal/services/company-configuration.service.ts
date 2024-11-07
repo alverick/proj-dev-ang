@@ -14,8 +14,8 @@ import { CompanyService } from '../../../shared/services';
 import { LoginService } from '../../../shared/services/login.service';
 import {
   type ActionEventProperties,
-  type Metadata,
   AdobeEvent,
+  type Metadata,
   TrackingService,
 } from '../../../shared/services/tracking.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
@@ -54,7 +54,7 @@ export class CompanyConfigurationService {
     private companyService: CompanyService,
     private router: Router,
     protected loginService: LoginService,
-    protected tracking: TrackingService
+    protected tracking: TrackingService,
   ) {
     this.initForms();
   }
@@ -93,7 +93,7 @@ export class CompanyConfigurationService {
 
     const formValue = pick(
       ['email', 'movilNumber', 'movilOperator', 'name'],
-      this.companyForm.value
+      this.companyForm.value,
     );
     const metadata: Metadata[] = [];
     forEachObjIndexed((value, key) => {
@@ -223,7 +223,7 @@ export class CompanyConfigurationService {
             confirmButtonText: 'Aceptar',
           });
         }
-      })
+      }),
     );
   }
 
@@ -280,7 +280,7 @@ export class CompanyConfigurationService {
           MustMatch('newPassword', 'confirmNewPassword'),
           MustDifferent('password', 'newPassword'),
         ],
-      }
+      },
     );
   }
 }

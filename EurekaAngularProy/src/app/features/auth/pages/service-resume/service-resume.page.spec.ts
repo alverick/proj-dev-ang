@@ -14,7 +14,7 @@ describe('ServiceListPage', () => {
       .mock(AffiliationService)
       .mock(ServicesListComponent)
       .mock(ServiceEditFormComponent)
-      .mock(SidebarModule)
+      .mock(SidebarModule),
   );
 
   it('should create', () => {

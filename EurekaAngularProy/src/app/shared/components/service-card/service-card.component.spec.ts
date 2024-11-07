@@ -1,5 +1,4 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent, MockComponents, MockPipe } from 'ng-mocks';
 
 import { NotEmptyPipe } from '../../pipes/not-empty.pipe';
 import { ServiceCardComponent } from './service-card.component';

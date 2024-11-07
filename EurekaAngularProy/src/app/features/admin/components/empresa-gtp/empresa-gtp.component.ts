@@ -7,15 +7,24 @@ import {
 } from '@angular/core';
 import {
   type AbstractControl,
+  FormsModule,
+  ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormControl,
   type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { ButtonDirective } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { Ripple } from 'primeng/ripple';
 import { forEachObjIndexed } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
-import { mobileOperators } from '../../../../shared/constants/company';
 
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
+import { mobileOperators } from '../../../../shared/constants/company';
 import { emailRegex } from '../../../../shared/constants/patterns';
 import { type IEntryModel } from '../../../../shared/models';
 import { ICompanyData } from '../../../../shared/models/company-data';
@@ -24,6 +33,18 @@ import { AfiliacionService } from '../../../../shared/services/afiliacion.servic
 @Component({
   selector: 'cs-empresa-gtp',
   templateUrl: './empresa-gtp.component.html',
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+    KeyFilterModule,
+    InputTextareaModule,
+    RadioButtonModule,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class EmpresaGTPComponent implements OnInit {
   public _enterprise: ICompanyData;

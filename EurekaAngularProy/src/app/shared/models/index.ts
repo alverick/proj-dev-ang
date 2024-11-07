@@ -1,3 +1,3 @@
-export * from './moneda.model';
-export * from './entryModel';
-export * from './services.model';
+export type * from './moneda.model';
+export type * from './entryModel';
+export type * from './services.model';

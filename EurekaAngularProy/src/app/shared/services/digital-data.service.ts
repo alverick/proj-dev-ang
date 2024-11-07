@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { type Observable, from, mergeMap, of } from 'rxjs';
+import { from, mergeMap, type Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { type IpInfo, IpInfoDataService } from '../data/ip-info-data.service';
@@ -134,9 +134,9 @@ export class DigitalDataService {
               },
             };
           }),
-          catchError(() => of(data))
-        )
-      )
+          catchError(() => of(data)),
+        ),
+      ),
     );
   }
 }

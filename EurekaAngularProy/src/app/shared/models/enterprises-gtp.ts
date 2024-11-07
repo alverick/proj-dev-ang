@@ -1,4 +1,4 @@
-import { RequestTypegtp } from './request-typegtp';
+import { type RequestTypegtp } from './request-typegtp';
 export interface EnterprisesGtp {
   clientId: number;
   requestDate: Date;

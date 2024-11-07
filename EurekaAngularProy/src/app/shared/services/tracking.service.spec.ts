@@ -44,7 +44,7 @@ describe('TrackingService', () => {
   it('track page', (done) => {
     service.pageSubject$.subscribe((payload) => {
       expect(payload.page).toEqual(
-        expect.objectContaining({ name: 'cs:login' })
+        expect.objectContaining({ name: 'cs:login' }),
       );
       done();
     });

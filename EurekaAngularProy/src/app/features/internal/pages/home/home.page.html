@@ -4,13 +4,13 @@
       <div class="col-sm-12 col-md-12">
         <div class="widget filtros">
           <div
-            class="sm:tw-flex tw-justify-between tw-items-center tw-pt-10 tw-pb-4"
+            class="tw-items-center tw-justify-between tw-pb-4 tw-pt-10 sm:tw-flex"
           >
-            <div class="tw-text-lg tw-pb-4 sm:tw-pb-0">
+            <div class="tw-pb-4 tw-text-lg sm:tw-pb-0">
               ¡Bienvenido a <span class="tw-font-medium">Cobro Simple</span>!
             </div>
             <div
-              class="tw-text-sm tw-flex tw-flex-col tw-items-end sm:tw-flex-row tw-gap-5"
+              class="tw-flex tw-flex-col tw-items-end tw-gap-5 tw-text-sm sm:tw-flex-row"
             >
               <a
                 href="javascript:void(0)"
@@ -45,7 +45,7 @@
               >
             </div>
           </div>
-          <div class="content tw-py-6 lg:tw-pt-6 tw-px-4 box-shadow">
+          <div class="content box-shadow tw-px-4 tw-py-6 lg:tw-pt-6">
             <cs-payments-filter
               [services]="services"
               [stateList]="waypayList"
@@ -59,16 +59,16 @@
         </div>
         <div class="widget lista tw-relative">
           <div
-            class="tw-flex tw-justify-between tw-items-center tw-pt-10 tw-pb-4"
+            class="tw-flex tw-items-center tw-justify-between tw-pb-4 tw-pt-10"
           >
             <div class="tw-text-lg">Movimientos</div>
           </div>
           <div
-            class="tw-py-6 lg:tw-py-4 box-shadow content"
+            class="box-shadow content tw-py-6 lg:tw-py-4"
             [ngClass]="{ 'tw-pointer-events-none': tableMovementsInactive }"
           >
             <section
-              class="tw-flex tw-border-b tw-border-extended-grey-4 tw-flex-col-reverse sm:tw-flex-row sm:tw-items-center tw-justify-between tw-gap-4 tw-px-4 tw-pb-4"
+              class="tw-flex tw-flex-col-reverse tw-justify-between tw-gap-4 tw-border-b tw-border-extended-grey-4 tw-px-4 tw-pb-4 sm:tw-flex-row sm:tw-items-center"
             >
               <div class="rows-actions tw-flex">
                 <button
@@ -83,7 +83,7 @@
                 ></button>
               </div>
               <div
-                class="movements-actions tw-h-full tw-flex tw-flex-col sm:tw-flex-row tw-items-center tw-text-primary-green-1 tw-text-sm tw-gap-6"
+                class="movements-actions tw-flex tw-h-full tw-flex-col tw-items-center tw-gap-6 tw-text-sm tw-text-primary-green-1 sm:tw-flex-row"
               >
                 <div class="tw-flex">
                   <button
@@ -103,7 +103,7 @@
                     label="Agregar cobros"
                     icon="pi pi-plus"
                     [model]="this.items"
-                    (onClick)="clickSplitButton(ua,$event)"
+                    (onClick)="clickSplitButton(ua, $event)"
                     styleClass="p-button-outlined p-button-sm p-button-success"
                   ></p-splitButton>
                 </div>
@@ -124,7 +124,7 @@
             </section>
           </div>
           <div
-            class="movements tw-absolute tw-w-full tw-h-[220px] tw-top-4 tw-pointer-events-none"
+            class="movements tw-pointer-events-none tw-absolute tw-top-4 tw-h-[220px] tw-w-full"
           ></div>
         </div>
       </div>

@@ -1,18 +1,18 @@
 import {
-  type OnChanges,
-  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
+  type OnChanges,
   Output,
+  type SimpleChanges,
 } from '@angular/core';
 import { type FormGroup } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
-  type Meta,
-  type StoryObj,
   applicationConfig,
+  type Meta,
   moduleMetadata,
+  type StoryObj,
 } from '@storybook/angular';
 
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
@@ -104,7 +104,7 @@ class FormDemoComponent implements OnChanges {
         password: '',
         passwordConfirm: '',
       },
-      { emitEvent: false }
+      { emitEvent: false },
     );
   }
 

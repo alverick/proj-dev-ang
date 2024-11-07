@@ -22,7 +22,7 @@ export class LoginService {
     public http: HttpClient,
     private storage: StorageService,
     private notify: NotifyService,
-    private store: Store
+    private store: Store,
   ) {}
 
   private URI_API: string = environment.END_POINT;
@@ -60,7 +60,7 @@ export class LoginService {
             this.store.dispatch(AppConfigActions.resetConfig());
           }
           return r;
-        })
+        }),
       )
       .pipe(catchError((err: HttpErrorResponse) => throwError(() => err)));
   }
@@ -70,7 +70,7 @@ export class LoginService {
     return this.http.post(url, {}).pipe(
       tap(() => {
         this.storage.removeCurrentSession();
-      })
+      }),
     );
   }
 

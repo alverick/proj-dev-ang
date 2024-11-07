@@ -1,22 +1,24 @@
-import { type OnDestroy, type OnInit, Component } from '@angular/core';
+import { Component, type OnDestroy, type OnInit } from '@angular/core';
 import {
-  type RouterEvent,
   ActivatedRoute,
   NavigationEnd,
   Router,
+  RouterOutlet,
   Scroll,
 } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { type Observable, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
+import { SidebarServiceComponent } from '../../../../shared/components/sidebar-service/sidebar-service.component';
 import {
-  type CurrencyWithLimit,
   currencies,
+  type CurrencyWithLimit,
 } from '../../../../shared/constants/currencies';
 import { ServiceTypes } from '../../../../shared/constants/services';
 import {
   type AmountLimit,
+  collectionRestrictionTypes,
   type IDataEnterpriseModel,
 } from '../../../../shared/models/data-enterprise.model';
 import { ServicesFormsService } from '../../../../shared/services';
@@ -29,22 +31,25 @@ import { CompanyServicesService } from '../../services';
 @Component({
   selector: 'cs-internal-services-main',
   templateUrl: './services-main.page.html',
+  standalone: true,
+  imports: [SidebarServiceComponent, RouterOutlet],
 })
 export class ServicesMainPage implements OnInit, OnDestroy {
   destroy$ = new Subject();
   position = 2;
   limitsAmountMax: AmountLimit[] = null;
   currency: CurrencyWithLimit = null;
+
   constructor(
     protected router: Router,
     public companyServices: CompanyServicesService,
     private activatedRoute: ActivatedRoute,
-    private servicesFormsService: ServicesFormsService
+    private servicesFormsService: ServicesFormsService,
   ) {
     router.events
       .pipe(
         map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((val) => {
         if (val instanceof NavigationEnd) {
@@ -70,25 +75,31 @@ export class ServicesMainPage implements OnInit, OnDestroy {
         company: IDataEnterpriseModel;
       }>
     ).subscribe(({ company }) => {
-      this.companyServices.allowAllServiceType = !company.isNewFlow;
+      this.companyServices.allowAllServiceType =
+        company.collectionRestriction ===
+        collectionRestrictionTypes.notRestricted;
       this.limitsAmountMax = company.amountLimits;
       this.companyServices.setDefaultType(
-        company.isNewFlow ? ServiceTypes.complete : ServiceTypes.withoutData
+        company.collectionRestriction ===
+          collectionRestrictionTypes.notRestricted
+          ? ServiceTypes.withoutData
+          : ServiceTypes.complete,
       );
     });
     this.servicesFormsService.serviceForm
-      .get('account')
+      .get('currency')
       .valueChanges.pipe(
         takeUntil(this.destroy$),
-        filter((data) => isNotNilOrEmpty(data))
+        filter((data) => isNotNilOrEmpty(data)),
       )
-      .subscribe((val: any) => {
-        const limitSel = this.limitsAmountMax.find(
-          (limit) => limit.currency === val.currency
-        ).amountMax;
-        const currencySel = currencies.find(
-          (limit) => limit.code === val.currency
-        );
+      .subscribe((val) => {
+        const currencySel = currencies.find((limit) => limit.code === val);
+
+        const limitSel =
+          this.limitsAmountMax.find(
+            (limit) => limit.currency === currencySel.code,
+          )?.amountMax || null;
+
         this.currency = { ...currencySel, limitMax: limitSel };
       });
   }

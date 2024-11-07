@@ -1,4 +1,4 @@
-import { type OnInit, Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { type IEntryModel } from '../../../../shared/models';
@@ -6,6 +6,8 @@ import {
   authFullRoutingChildNames,
   authFullRoutingNames,
 } from '../../auth-routing.names';
+import { CompanyFormAuthComponent } from '../../components/company-form-auth/company-form-auth.component';
+import { SidebarCompanyComponent } from '../../components/sidebar-company/sidebar-company.component';
 import { errorRegisterAuth } from '../../constants';
 import { AffiliationService } from '../../services';
 
@@ -13,13 +15,18 @@ import { AffiliationService } from '../../services';
   selector: 'cs-company-registration-auth',
   templateUrl: './company-registration-auth.page.html',
   styleUrls: ['./company-registration-auth.page.scss'],
+  standalone: true,
+  imports: [SidebarCompanyComponent, CompanyFormAuthComponent],
 })
 export class CompanyRegistrationAuthPage implements OnInit {
   entryOptions: IEntryModel[] = [];
   errors = errorRegisterAuth;
   blockAction = false;
 
-  constructor(public affiliation: AffiliationService, private router: Router) {}
+  constructor(
+    public affiliation: AffiliationService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.affiliation

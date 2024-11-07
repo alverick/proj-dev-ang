@@ -5,7 +5,7 @@ import { RegistrationFinishedPage } from './registration-finished.page';
 
 describe('RegistrationFinishedPage', () => {
   beforeEach(() =>
-    MockBuilder(RegistrationFinishedPage).mock(AffiliationService)
+    MockBuilder(RegistrationFinishedPage).mock(AffiliationService),
   );
 
   it('should create', () => {

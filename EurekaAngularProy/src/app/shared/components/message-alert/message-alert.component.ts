@@ -1,4 +1,5 @@
-import { type OnInit, Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, Input, type OnInit } from '@angular/core';
 
 /**
  * Message alert component for disclaimers
@@ -6,6 +7,8 @@ import { type OnInit, Component, Input } from '@angular/core';
 @Component({
   selector: 'cs-message-alert',
   templateUrl: './message-alert.component.html',
+  standalone: true,
+  imports: [NgClass],
 })
 export class MessageAlertComponent implements OnInit {
   /**

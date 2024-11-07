@@ -51,7 +51,7 @@ describe('NewRelicProviderService', () => {
     expect(mockedTrackPage).toBeCalled();
     expect(mockedTrackPage).toHaveBeenCalledWith(
       AdobeEvent.pageTrack,
-      dot.dot(payload)
+      dot.dot(payload),
     );
   });
 
