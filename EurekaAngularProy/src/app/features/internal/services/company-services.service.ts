@@ -30,8 +30,8 @@ import {
 } from '../../../shared/services/services-forms.service';
 import {
   type ActionEventProperties,
-  type Metadata,
   AdobeEvent,
+  type Metadata,
   TrackingService,
 } from '../../../shared/services/tracking.service';
 import { swalAlert } from '../../../shared/utils/helpers/popups';
@@ -58,7 +58,7 @@ export class CompanyServicesService {
     private serviceService: ServiceService,
     private logger: NGXLogger,
     private digitalData: DigitalDataService,
-    protected tracking: TrackingService
+    protected tracking: TrackingService,
   ) {
     this.serviceForm = this.serviceForms.serviceForm;
     this.serviceConfigForm = this.serviceForms.serviceConfigForm;
@@ -69,13 +69,13 @@ export class CompanyServicesService {
     return this.companyService.getCompanyServices().pipe(
       tap((response) => {
         this.services = response;
-      })
+      }),
     );
   }
 
   canDelete(position: number) {
     return this.serviceService.checkCanDeleteService(
-      this.services[position].id
+      this.services[position].id,
     );
   }
 
@@ -181,7 +181,7 @@ export class CompanyServicesService {
         {
           key: 'Monto',
           value: amount,
-        }
+        },
       );
     }
 
@@ -310,7 +310,7 @@ export class CompanyServicesService {
           value: value as string,
         });
       },
-      { ...formValue, ...this.editServiceForm.value.debt }
+      { ...formValue, ...this.editServiceForm.value.debt },
     );
     const actionStep: Partial<ActionEventProperties> = {
       category: 'Servicios',
@@ -332,7 +332,7 @@ export class CompanyServicesService {
         chargeType,
         interestType,
       },
-      this.services[position]
+      this.services[position],
     );
 
     let parsedName: string;
@@ -341,7 +341,7 @@ export class CompanyServicesService {
         !pathEq(
           statusCodes.REJECTED,
           ['services', position, 'newNameGTPStatus'],
-          this
+          this,
         )
       ) {
         parsedName = '';
@@ -384,7 +384,7 @@ export class CompanyServicesService {
             newNameCodeGTPStatus === statusCodes.NEW ||
             newNameCodeGTPStatus === statusCodes.EDITED
           );
-        }
+        },
       )
       .map(
         ({
@@ -427,7 +427,7 @@ export class CompanyServicesService {
             percentage,
             partialPayment,
           };
-        }
+        },
       );
     return this.digitalData.getData$().pipe(
       switchMap((sdk) => {
@@ -436,7 +436,7 @@ export class CompanyServicesService {
           services,
           sdk,
         });
-      })
+      }),
     );
   }
 }

@@ -1,14 +1,19 @@
-import { type OnDestroy, Component, HostListener } from '@angular/core';
-import { NavigationEnd, Router, Scroll } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { Component, HostListener, type OnDestroy } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet, Scroll } from '@angular/router';
+import { StepsModule } from 'primeng/steps';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
+import { SidebarServiceComponent } from '../../../../shared/components/sidebar-service/sidebar-service.component';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import { AffiliationService } from '../../services';
 
 @Component({
   selector: 'cs-service-add',
   templateUrl: './service-add.page.html',
+  standalone: true,
+  imports: [SidebarServiceComponent, NgClass, StepsModule, RouterOutlet],
 })
 export class ServiceAddPage implements OnDestroy {
   destroy$ = new Subject();
@@ -17,12 +22,12 @@ export class ServiceAddPage implements OnDestroy {
 
   constructor(
     protected router: Router,
-    public affiliation: AffiliationService
+    public affiliation: AffiliationService,
   ) {
     router.events
       ?.pipe(
         map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((val) => {
         if (val instanceof NavigationEnd) {
@@ -50,7 +55,7 @@ export class ServiceAddPage implements OnDestroy {
   @HostListener('window:beforeunload', ['$event'])
   unloadHandler(event: Event) {
     confirm(
-      'El registro de tu empresa no ha concluido, si sales ahora los cambios se perderán.'
+      'El registro de tu empresa no ha concluido, si sales ahora los cambios se perderán.',
     );
     event.preventDefault();
   }

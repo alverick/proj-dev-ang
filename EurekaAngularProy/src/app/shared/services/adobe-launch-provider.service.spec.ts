@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
 import {
-  type Satellite,
   AdobeLaunchProviderService,
+  type Satellite,
 } from './adobe-launch-provider.service';
 import { StorageService } from './storage.service';
 import { AdobeEvent } from './tracking.service';
@@ -78,7 +78,7 @@ describe('AdobeLaunchProviderService', () => {
     expect(mockedTrackPage).toBeCalled();
     expect(mockedTrackPage).toHaveBeenCalledWith(
       AdobeEvent.trackFormSubmit,
-      payload
+      payload,
     );
   });
 });

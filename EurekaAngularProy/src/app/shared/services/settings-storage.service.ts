@@ -18,7 +18,7 @@ export class SettingsStorageService {
 
   constructor() {
     this.username = DOMPurify.sanitize(
-      window.sessionStorage.getItem('username')
+      window.sessionStorage.getItem('username'),
     );
 
     const localSettings = window.localStorage.getItem(StorageSettings);
@@ -33,7 +33,7 @@ export class SettingsStorageService {
     return pathEq(
       Status.saved,
       [this.username, keySettings, keyPage],
-      this.settings
+      this.settings,
     );
   }
 

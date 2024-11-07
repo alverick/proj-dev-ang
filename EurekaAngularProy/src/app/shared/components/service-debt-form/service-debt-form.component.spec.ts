@@ -58,7 +58,7 @@ describe('ServiceDebtFormComponent', () => {
     fixture = TestBed.createComponent(ServiceDebtFormComponent);
     component = fixture.componentInstance;
     component.form = service.editServiceForm.get(
-      'debt'
+      'debt',
     ) as ModelFormGroup<ServiceDebt>;
     component.errorMessages = errorServiceConfiguration;
     fixture.detectChanges();

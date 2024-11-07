@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
   selector: 'cs-load-bar',
   templateUrl: './load-bar.component.html',
   styleUrls: ['./load-bar.component.scss'],
+  standalone: true,
+  imports: [ProgressBarModule],
 })
 export class LoadBarComponent {
   public progress: any = {

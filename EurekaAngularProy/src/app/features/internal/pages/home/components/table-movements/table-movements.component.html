@@ -18,7 +18,7 @@
       currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} elementos"
       class="table"
       #table
-      >
+    >
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th scope="col" style="width: 3em">
@@ -28,10 +28,10 @@
           @for (col of columns; track col) {
             <th
               [pSortableColumn]="col.field"
-              class="tw-hidden md:tw-table-cell tw-break-all"
+              class="tw-hidden tw-break-all md:tw-table-cell"
               [ngClass]="'th-' + col.field"
               scope="col"
-              >
+            >
               {{ col.header }}
               <p-sortIcon
                 [field]="col.field"
@@ -50,45 +50,45 @@
         let-editing="editing"
         let-ri="rowIndex"
         let-expanded="expanded"
-        >
+      >
         <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
           <td>
             @if (
               rowData.status !== 'PAGADO' &&
               (rowData.totalAmount === 0 || !rowData.hasIBKPayments)
-              ) {
-              <p-tableCheckbox
-                [value]="rowData"
-              ></p-tableCheckbox>
+            ) {
+              <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
             }
           </td>
-          <td class="md:tw-hidden tw-pb-2">
+          <td class="tw-pb-2 md:tw-hidden">
             <div class="preview tw-flex tw-justify-between">
               <div class="info">
                 <div class="tw-mb-2">{{ rowData.code }}</div>
                 <div class="tw-mb-2">{{ rowData.firstName }}</div>
                 <div
-                  class="tw-whitespace-nowrap tw-w-32 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
+                  class="tw-flex tw-w-32 tw-content-center tw-items-center tw-whitespace-nowrap tw-rounded-3xl tw-px-3 tw-py-1 tw-text-xs tw-shadow-lg"
                   [ngClass]="[setStatusRow(rowData).color]"
-                  >
+                >
                   <i class="pi pi-circle-on icon tw-pr-1 tw-align-middle"></i>
                   {{ setStatusRow(rowData).text }}
                 </div>
               </div>
               <a href="#" [pRowToggler]="rowData"
                 ><i
-                [ngClass]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
+                  [ngClass]="
+                    expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'
+                  "
                 ></i
               ></a>
             </div>
           </td>
           @for (col of columns; track col) {
             <td
-          [attr.pEditableColumn]="
-            col.editable && rowData[col.checkEditableField]
-          "
+              [attr.pEditableColumn]="
+                col.editable && rowData[col.checkEditableField]
+              "
               class="tw-hidden md:tw-table-cell"
-              >
+            >
               @switch (col.field) {
                 @case ('firstName') {
                   {{ rowData.code }}<br />
@@ -103,21 +103,17 @@
                         [(ngModel)]="rowData.firstName"
                         #name="ngModel"
                         required
-                        />
+                      />
                       @if (name.invalid && (name.dirty || name.touched)) {
-                        <div
-                          class="tw-text-extended-watermelon-1 tw-text-xxs"
-                          >
+                        <div class="tw-text-xxs tw-text-extended-watermelon-1">
                           @if (name.errors?.required) {
-                            <div>
-                              Cliente es requerido.
-                            </div>
+                            <div>Cliente es requerido.</div>
                           }
                         </div>
                       }
                     </ng-template>
                     <ng-template pTemplate="output">
-                      <span class="tw-text-xs tw-text-extended-ibk-grey">{{
+                      <span class="tw-text-extended-ibk-grey tw-text-xs">{{
                         rowData.firstName
                       }}</span>
                     </ng-template>
@@ -159,16 +155,12 @@
                     </p-cellEditor>
                   }
                   @if (!(col.editable && rowData[col.checkEditableField])) {
-                    {{
-                    rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-'
-                    }}
+                    {{ rowData[col.field] | date: 'dd/MM/yy' | notEmpty: '-' }}
                   }
                 }
                 @case ('totalAmount') {
                   @if (rowData[col.field] > 0) {
-                    {{
-                    rowData[col.field] | currency: rowData.currency
-                    }}
+                    {{ rowData[col.field] | currency: rowData.currency }}
                   }
                   @if (rowData[col.field] <= 0) {
                     -
@@ -177,7 +169,7 @@
                     <p-cellEditor>
                       <ng-template pTemplate="input">
                         <p-inputNumber
-                          class="tw-w-full tw-block"
+                          class="tw-block tw-w-full"
                           mode="decimal"
                           csInputMoney
                           csAmountMaxValidate
@@ -195,29 +187,26 @@
                         ></p-inputNumber>
                         @if (amount.dirty || amount.touched) {
                           <div
-                            class="tw-text-extended-watermelon-1 tw-text-xxs"
-                            >
+                            class="tw-text-xxs tw-text-extended-watermelon-1"
+                          >
                             @if (
                               amount.value
-                              | validateLimitCurrency
-                              : maxAmountLimits
-                              : rowData.currency
-                              : useAmountLimits
-                              ) {
-                              <div
-                                >
+                                | validateLimitCurrency
+                                  : maxAmountLimits
+                                  : rowData.currency
+                                  : useAmountLimits
+                            ) {
+                              <div>
                                 Monto máximo
                                 {{
-                                rowData.currency
-                                | getLimitCurrency: maxAmountLimits
-                                | currency: rowData.currency
+                                  rowData.currency
+                                    | getLimitCurrency: maxAmountLimits
+                                    | currency: rowData.currency
                                 }}
                               </div>
                             }
                             @if (amount.invalid && amount.errors?.required) {
-                              <div>
-                                Cuota es requerida.
-                              </div>
+                              <div>Cuota es requerida.</div>
                             }
                           </div>
                         }
@@ -225,7 +214,8 @@
                       <ng-template pTemplate="output">
                         @if (rowData.amount > 0) {
                           <div class="tw-text-xxs">
-                            Cuota: {{ rowData.amount | currency: rowData.currency }}
+                            Cuota:
+                            {{ rowData.amount | currency: rowData.currency }}
                           </div>
                         }
                       </ng-template>
@@ -240,27 +230,27 @@
                 }
                 @case ('totalAmountPayed') {
                   @if (rowData[col.field] > 0) {
-                    {{
-                    rowData[col.field] | currency: rowData.currency
-                    }}
+                    {{ rowData[col.field] | currency: rowData.currency }}
                   }
                   @if (rowData[col.field] <= 0) {
                     -
                   }
                   <button
-                    class="tw-block tw-cursor-pointer tw-text-primary-green-1 tw-text-xxs"
+                    class="tw-block tw-cursor-pointer tw-text-xxs tw-text-primary-green-1"
                     (click)="actionShowDetails(rowData)"
-                    >
+                  >
                     Ver detalle
                   </button>
                 }
                 @case ('status') {
                   <div class="tw-flex">
                     <div
-                      class="tw-whitespace-nowrap tw-w-28 tw-h-6 tw-flex-shrink-0 tw-shadow-lg tw-rounded-3xl tw-text-xs tw-px-3 tw-py-1 tw-flex tw-items-center tw-content-center"
+                      class="tw-flex tw-h-6 tw-w-28 tw-flex-shrink-0 tw-content-center tw-items-center tw-whitespace-nowrap tw-rounded-3xl tw-px-3 tw-py-1 tw-text-xs tw-shadow-lg"
                       [ngClass]="[setStatusRow(rowData).color]"
-                      >
-                      <i class="pi pi-circle-on icon tw-pr-1 tw-align-middle"></i>
+                    >
+                      <i
+                        class="pi pi-circle-on icon tw-pr-1 tw-align-middle"
+                      ></i>
                       {{ setStatusRow(rowData).text }}
                     </div>
                     @if (setStatusRow(rowData).canEdit) {
@@ -269,29 +259,33 @@
                           <button
                             pInitEditableRow
                             (click)="onRowEditInit(rowData)"
-                            >
+                          >
                             <img
-                              class="tw-inline tw-w-6 tw-pl-2 tw-cursor-pointer"
+                              class="tw-inline tw-w-6 tw-cursor-pointer tw-pl-2"
                               src="assets/images/pencil.svg"
                               alt="Editar"
-                              />
+                            />
                           </button>
                         }
                         @if (editing) {
                           <div class="actions-items">
                             <button
-                              class="action tw-w-6 tw-h-6 tw-shadow-lg tw-rounded-3xl tw-flex tw-justify-center tw-items-center"
+                              class="action tw-flex tw-h-6 tw-w-6 tw-items-center tw-justify-center tw-rounded-3xl tw-shadow-lg"
                               pSaveEditableRow
                               (click)="onRowEditSave(rowData)"
-                              >
-                              <i class="pi pi-check tw-text-primary-green-1"></i>
+                            >
+                              <i
+                                class="pi pi-check tw-text-primary-green-1"
+                              ></i>
                             </button>
                             <button
-                              class="action tw-w-6 tw-h-6 tw-shadow-lg tw-rounded-3xl tw-flex tw-justify-center tw-items-center"
+                              class="action tw-flex tw-h-6 tw-w-6 tw-items-center tw-justify-center tw-rounded-3xl tw-shadow-lg"
                               pCancelEditableRow
                               (click)="onRowEditCancel(rowData, ri)"
-                              >
-                              <i class="pi pi-times tw-text-extended-watermelon-1"></i>
+                            >
+                              <i
+                                class="pi pi-times tw-text-extended-watermelon-1"
+                              ></i>
                             </button>
                           </div>
                         }
@@ -300,9 +294,7 @@
                   </div>
                 }
                 @default {
-                  {{
-                  rowData[col.field] | notEmpty: '-'
-                  }}
+                  {{ rowData[col.field] | notEmpty: '-' }}
                 }
               }
             </td>
@@ -313,9 +305,12 @@
         <tr class="lg:tw-hidden">
           <td [attr.colspan]="2">
             <div class="">
-              <table class="tw-text-sm tw-max-w-xs table-details tw-m-auto">
+              <table class="table-details tw-m-auto tw-max-w-xs tw-text-sm">
                 <tr>
-                  <th scope="row" class="tw-text-extended-grey-1 tw-border-none">
+                  <th
+                    scope="row"
+                    class="tw-border-none tw-text-extended-grey-1"
+                  >
                     Servicio:
                   </th>
                   <td class="tw-border-none">{{ rowData.service }}</td>
@@ -323,7 +318,9 @@
                 <tr>
                   <td>F. emisión:</td>
                   <td>
-                    {{ rowData.emissionDate | date: 'dd/MM/yy' | notEmpty: '-' }}
+                    {{
+                      rowData.emissionDate | date: 'dd/MM/yy' | notEmpty: '-'
+                    }}
                   </td>
                 </tr>
                 <tr>
@@ -336,7 +333,9 @@
                   <td>Cuota:</td>
                   <td>
                     {{
-                    rowData.amount | currency: rowData.currency | notEmpty: '-'
+                      rowData.amount
+                        | currency: rowData.currency
+                        | notEmpty: '-'
                     }}
                   </td>
                 </tr>
@@ -344,7 +343,9 @@
                   <td>Mora:</td>
                   <td>
                     {{
-                    rowData.amount | currency: rowData.currency | notEmpty: '-'
+                      rowData.amount
+                        | currency: rowData.currency
+                        | notEmpty: '-'
                     }}
                   </td>
                 </tr>
@@ -352,9 +353,9 @@
                   <td>Total:</td>
                   <td>
                     {{
-                    rowData.totalAmount
-                    | currency: rowData.currency
-                    | notEmpty: '-'
+                      rowData.totalAmount
+                        | currency: rowData.currency
+                        | notEmpty: '-'
                     }}
                   </td>
                 </tr>
@@ -362,9 +363,9 @@
                   <td>Monto pagado:</td>
                   <td>
                     {{
-                    rowData.totalAmountPayed
-                    | currency: rowData.currency
-                    | notEmpty: '-'
+                      rowData.totalAmountPayed
+                        | currency: rowData.currency
+                        | notEmpty: '-'
                     }}
                   </td>
                 </tr>
@@ -375,7 +376,7 @@
                       pRipple
                       class="p-button-text"
                       (click)="openDialog(rowData)"
-                      >
+                    >
                       Editar
                     </button>
                   </td>
@@ -385,7 +386,7 @@
                       pRipple
                       class="p-button-text"
                       (click)="actionShowDetails(rowData)"
-                      >
+                    >
                       Ver detalle
                     </button>
                   </td>
@@ -399,8 +400,8 @@
   }
   @if (data.length === 0) {
     <div
-      class="empty tw-text-lg tw-text-extended-grey-2 tw-flex tw-justify-center tw-items-center"
-      >
+      class="empty tw-flex tw-items-center tw-justify-center tw-text-lg tw-text-extended-grey-2"
+    >
       Agrega tu primera deuda dando clic al botón “Agregar cobros”
     </div>
   }
@@ -412,13 +413,11 @@
   [style]="{ width: '300px' }"
   (onHide)="onCancel('Cerrar')"
   class="modal-edit"
-  >
+>
   @if (editRowData) {
     <div class="tw-text-sm">
       @if (editRowData.canEditFirstName) {
-        <div
-          class="tw-flex tw-items-center tw-mb-2"
-          >
+        <div class="tw-mb-2 tw-flex tw-items-center">
           <div class="tw-w-20 tw-flex-shrink-0">
             <label for="vin" class="tw-m-0">Nombre</label>
           </div>
@@ -428,14 +427,12 @@
               id="vin"
               [(ngModel)]="editRowData.firstName"
               required
-              />
+            />
           </div>
         </div>
       }
       @if (editRowData.canEditEmissionDate) {
-        <div
-          class="tw-flex tw-items-center tw-mb-2"
-          >
+        <div class="tw-mb-2 tw-flex tw-items-center">
           <div class="tw-w-20 tw-flex-shrink-0">
             <label for="year" class="tw-m-0">F. emisión</label>
           </div>
@@ -454,9 +451,7 @@
         </div>
       }
       @if (editRowData.canEditDueDate) {
-        <div
-          class="tw-flex tw-items-center tw-mb-2"
-          >
+        <div class="tw-mb-2 tw-flex tw-items-center">
           <div class="tw-w-20 tw-flex-shrink-0">
             <label for="brand" class="tw-m-0">F. vcto.</label>
           </div>
@@ -475,16 +470,14 @@
         </div>
       }
       @if (editRowData.canEditAmount > 0) {
-        <div
-          class="tw-flex tw-items-center tw-mb-2"
-          >
+        <div class="tw-mb-2 tw-flex tw-items-center">
           <div class="tw-w-20 tw-flex-shrink-0">
             <label for="amount" class="tw-m-0">Cuota</label>
           </div>
           <div class="field">
             <p-inputNumber
               id="amount"
-              class="tw-w-full tw-block"
+              class="tw-block tw-w-full"
               mode="decimal"
               csInputMoney
               csAmountMaxValidate
@@ -501,30 +494,25 @@
               required
             ></p-inputNumber>
             @if (amountForm.dirty || amountForm.touched) {
-              <div
-                class="tw-text-extended-watermelon-1 tw-text-xxs"
-                >
+              <div class="tw-text-xxs tw-text-extended-watermelon-1">
                 @if (
                   amountForm.value
-                  | validateLimitCurrency
-                  : maxAmountLimits
-                  : editRowData.currency
-                  : useAmountLimits
-                  ) {
-                  <div
-                    >
+                    | validateLimitCurrency
+                      : maxAmountLimits
+                      : editRowData.currency
+                      : useAmountLimits
+                ) {
+                  <div>
                     Monto máximo
                     {{
-                    editRowData.currency
-                    | getLimitCurrency: maxAmountLimits
-                    | currency: editRowData.currency
+                      editRowData.currency
+                        | getLimitCurrency: maxAmountLimits
+                        | currency: editRowData.currency
                     }}
                   </div>
                 }
                 @if (amountForm.invalid && amountForm.errors?.required) {
-                  <div>
-                    Cuota es requerida.
-                  </div>
+                  <div>Cuota es requerida.</div>
                 }
               </div>
             }
@@ -537,15 +525,15 @@
     <button
       type="button"
       (click)="onSave()"
-      class="tw-bg-primary-green-1 tw-text-white tw-w-44 tw-h-9 tw-text-center tw-rounded-md tw-mb-3"
-      >
+      class="tw-mb-3 tw-h-9 tw-w-44 tw-rounded-md tw-bg-primary-green-1 tw-text-center tw-text-white"
+    >
       Guardar
     </button>
     <button
       type="button"
       (click)="onCancel('Cancelar')"
-      class="tw-text-primary-green-1 tw-border tw-border-green-1 tw-w-44 tw-h-9 tw-text-center tw-rounded-md tw-mb-3"
-      >
+      class="tw-mb-3 tw-h-9 tw-w-44 tw-rounded-md tw-border tw-border-green-1 tw-text-center tw-text-primary-green-1"
+    >
       Cancelar
     </button>
   </div>

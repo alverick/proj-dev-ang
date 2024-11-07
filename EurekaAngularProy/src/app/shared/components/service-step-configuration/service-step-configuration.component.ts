@@ -1,25 +1,51 @@
+import { NgClass } from '@angular/common';
 import {
-  type OnInit,
   Component,
   EventEmitter,
   Input,
+  type OnInit,
   Output,
 } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ButtonDirective } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { Ripple } from 'primeng/ripple';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { type ISelectOptions } from '../../constants/company';
 import { debtorCodeCustomEmpty, ServiceTypes } from '../../constants/services';
+import { InputWithoutSpacesDirective } from '../../directives/input-without-spaces.directive';
 import { type ServiceTypeType } from '../../models';
 import { IErrorMessages, ModelFormGroup } from '../../models/forms';
 import {
   type ServiceConfigurationForm,
   type ServiceDebt,
 } from '../../services/services-forms.service';
+import { LabelControlComponent } from '../label-control/label-control.component';
+import { MessageAlertComponent } from '../message-alert/message-alert.component';
+import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
 
 @Component({
   selector: 'cs-service-step-configuration',
   templateUrl: './service-step-configuration.component.html',
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    RadioButtonModule,
+    DropdownModule,
+    InputTextModule,
+    InputWithoutSpacesDirective,
+    ButtonDirective,
+    Ripple,
+    MessageAlertComponent,
+    ServiceDebtFormComponent,
+    NgClass,
+  ],
 })
 export class ServiceStepConfigurationComponent implements OnInit {
   @Output() sendForm = new EventEmitter<object>();
@@ -46,7 +72,7 @@ export class ServiceStepConfigurationComponent implements OnInit {
     this.setDebtForm(this.form.value.dataType);
     this.setDebtorCodeCustomField(
       this.form.value.debtorCode,
-      this.form.value.debtorCodeCustom
+      this.form.value.debtorCodeCustom,
     );
   }
 

@@ -24,13 +24,16 @@ describe('SettingsService', () => {
 
     it('check settings', () => {
       expect(
-        service.getSettingAndSave(SettingOptions.onBoarding, Sections.movements)
+        service.getSettingAndSave(
+          SettingOptions.onBoarding,
+          Sections.movements,
+        ),
       ).toBeFalsy();
       expect(
         service.getSettingAndSave(
           SettingOptions.commissions,
-          Sections.movements
-        )
+          Sections.movements,
+        ),
       ).toBeFalsy();
     });
   });
@@ -48,22 +51,28 @@ describe('SettingsService', () => {
 
     it('check settings', () => {
       expect(
-        service.getSettingAndSave(SettingOptions.onBoarding, Sections.movements)
+        service.getSettingAndSave(
+          SettingOptions.onBoarding,
+          Sections.movements,
+        ),
       ).toBeFalsy();
       expect(
         service.getSettingAndSave(
           SettingOptions.commissions,
-          Sections.movements
-        )
+          Sections.movements,
+        ),
       ).toBeFalsy();
       expect(
-        service.getSettingAndSave(SettingOptions.onBoarding, Sections.movements)
+        service.getSettingAndSave(
+          SettingOptions.onBoarding,
+          Sections.movements,
+        ),
       ).toBeTruthy();
       expect(
         service.getSettingAndSave(
           SettingOptions.commissions,
-          Sections.movements
-        )
+          Sections.movements,
+        ),
       ).toBeTruthy();
     });
   });
@@ -76,7 +85,7 @@ describe('SettingsService', () => {
       window.sessionStorage.setItem('username', rucTest);
       window.localStorage.setItem(
         StorageSettings,
-        `{"${rucTest}":{"ob":{"mov":1}}}`
+        `{"${rucTest}":{"ob":{"mov":1}}}`,
       );
       TestBed.configureTestingModule({ providers: [SettingsStorageService] });
       service = TestBed.inject(SettingsStorageService);
@@ -84,13 +93,16 @@ describe('SettingsService', () => {
 
     it('check settings', () => {
       expect(
-        service.getSettingAndSave(SettingOptions.onBoarding, Sections.movements)
+        service.getSettingAndSave(
+          SettingOptions.onBoarding,
+          Sections.movements,
+        ),
       ).toBeTruthy();
       expect(
         service.getSettingAndSave(
           SettingOptions.commissions,
-          Sections.movements
-        )
+          Sections.movements,
+        ),
       ).toBeFalsy();
     });
   });
@@ -108,13 +120,16 @@ describe('SettingsService', () => {
 
     it('check settings', () => {
       expect(
-        service.getSettingAndSave(SettingOptions.onBoarding, Sections.movements)
+        service.getSettingAndSave(
+          SettingOptions.onBoarding,
+          Sections.movements,
+        ),
       ).toBeFalsy();
       expect(
         service.getSettingAndSave(
           SettingOptions.commissions,
-          Sections.movements
-        )
+          Sections.movements,
+        ),
       ).toBeFalsy();
     });
   });

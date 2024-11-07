@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -8,6 +9,8 @@ import {
 } from '@angular/core';
 import {
   type AbstractControl,
+  FormsModule,
+  ReactiveFormsModule,
   UntypedFormControl,
   UntypedFormGroup,
   type ValidationErrors,
@@ -15,6 +18,14 @@ import {
   Validators,
 } from '@angular/forms';
 import moment from 'moment';
+import { PrimeTemplate } from 'primeng/api';
+import { ButtonDirective } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { Ripple } from 'primeng/ripple';
 import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
 import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
 import { combineLatest, Subject } from 'rxjs';
@@ -23,6 +34,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { type DateList } from '../../models/dateList';
 import { type StatesGtp } from '../../models/states-gtp';
 import { type WayPay } from '../../models/way-pay';
+import { LabelControlComponent } from '../label-control/label-control.component';
 
 const errorMessageDates: Record<string, string> = {
   required: 'Ingrese una fecha',
@@ -44,6 +56,21 @@ const labelNamesGtp = {
   selector: 'cs-payments-filter',
   templateUrl: './payments-filter.component.html',
   styleUrls: ['./payments-filter.component.scss'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    NgClass,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    DropdownModule,
+    PrimeTemplate,
+    CalendarModule,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class PaymentsFilterComponent implements OnInit, OnDestroy {
   @Input() gtpMode = false;
@@ -285,8 +312,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
         } else {
           return '';
         }
-      },this.form.value,
-      );
+      }, this.form.value);
       const {
         inputSearch,
         service,

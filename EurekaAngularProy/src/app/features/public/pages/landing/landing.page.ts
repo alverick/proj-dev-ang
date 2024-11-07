@@ -1,9 +1,16 @@
-import { type OnDestroy, Component } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { Component, type OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeTemplate } from 'primeng/api';
+import { ButtonDirective } from 'primeng/button';
+import { CarouselModule } from 'primeng/carousel';
 import { type DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Ripple } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
 
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { ModalTermsComponent } from '../../../../shared/components/modal-terms/modal-terms.component';
 import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
 import {
@@ -31,6 +38,17 @@ interface ItemLanding {
   templateUrl: './landing.page.html',
   styleUrls: ['./landing.page.scss'],
   providers: [DynamicDialogService, MessageService],
+  standalone: true,
+  imports: [
+    HeaderComponent,
+    NgOptimizedImage,
+    LetDirective,
+    ButtonDirective,
+    Ripple,
+    CarouselModule,
+    PrimeTemplate,
+    ToastModule,
+  ],
 })
 export class LandingPage implements OnDestroy {
   ref: DynamicDialogRef;
@@ -113,7 +131,7 @@ export class LandingPage implements OnDestroy {
     },
   ];
   disabledAffiliation$ = this.store.select(
-    appConfigFeature.selectDisabledAffiliation
+    appConfigFeature.selectDisabledAffiliation,
   );
 
   constructor(
@@ -121,7 +139,7 @@ export class LandingPage implements OnDestroy {
     public dialogService: DynamicDialogService,
     private tracking: TrackingService,
     private store: Store,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   ngOnDestroy(): void {

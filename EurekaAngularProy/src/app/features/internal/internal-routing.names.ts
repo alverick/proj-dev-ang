@@ -69,5 +69,5 @@ export const internalFullRoutingNames: IInternalRoutingNames =
 export const internalFullRoutingChildNames: IInternalRoutingChildNames =
   generateFullRoutesTree(
     internalRoutingChildNames,
-    internalRoutingChildNamesTree
+    internalRoutingChildNamesTree,
   );

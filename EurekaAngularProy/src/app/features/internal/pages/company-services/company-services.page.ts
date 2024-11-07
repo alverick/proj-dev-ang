@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
+import { SidebarModule } from 'primeng/sidebar';
 
+import { ServiceCardComponent } from '../../../../shared/components/service-card/service-card.component';
+import { ServiceEditFormComponent } from '../../../../shared/components/service-edit-form/service-edit-form.component';
+import { ServicesListComponent } from '../../../../shared/components/services-list/services-list.component';
 import {
   errorServiceConfiguration,
   errorServiceInformation,
@@ -26,6 +30,13 @@ import { CompanyServicesService } from '../../services';
   host: { class: 'tw-w-full' },
   selector: 'cs-company-services',
   templateUrl: './company-services.page.html',
+  standalone: true,
+  imports: [
+    ServicesListComponent,
+    ServiceCardComponent,
+    SidebarModule,
+    ServiceEditFormComponent,
+  ],
 })
 export class CompanyServicesPage {
   showSidebar = false;
@@ -48,11 +59,11 @@ export class CompanyServicesPage {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private logger: NGXLogger,
-    protected tracking: TrackingService
+    protected tracking: TrackingService,
   ) {
     this.logger.debug(
       '-> this.companyServicesService.services',
-      this.companyServices.services
+      this.companyServices.services,
     );
     this.activatedRoute.data.subscribe((value: any) => {
       this.companyServices.services = value.services;

@@ -3,6 +3,7 @@ import { NgControl } from '@angular/forms';
 
 @Directive({
   selector: 'input[csInputTrimSpaces]',
+  standalone: true,
 })
 export class InputTrimSpacesDirective {
   constructor(private ngControl: NgControl) {}

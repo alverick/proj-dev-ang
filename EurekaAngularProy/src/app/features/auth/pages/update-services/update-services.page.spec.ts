@@ -12,7 +12,7 @@ describe('UpdateServicesPage', () => {
       .mock(AffiliationService)
       .mock(ServicesListComponent)
       .mock(StepsModule)
-      .mock(SidebarModule)
+      .mock(SidebarModule),
   );
 
   it('should create', () => {

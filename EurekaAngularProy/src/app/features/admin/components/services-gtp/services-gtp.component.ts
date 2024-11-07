@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -6,13 +7,21 @@ import {
   Output,
 } from '@angular/core';
 import {
+  FormsModule,
+  ReactiveFormsModule,
   UntypedFormBuilder,
   UntypedFormControl,
   type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { ButtonDirective } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { Ripple } from 'primeng/ripple';
 import { isNil } from 'ramda';
 
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { currencies } from '../../../../shared/constants/currencies';
 import { statusCodes } from '../../../../shared/constants/services';
 import { type IEntryModel } from '../../../../shared/models';
@@ -23,6 +32,18 @@ import { type CompanyAccounts } from '../../../../shared/services/company.servic
 @Component({
   selector: 'cs-services-gtp',
   templateUrl: './services-gtp.component.html',
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextareaModule,
+    RadioButtonModule,
+    InputTextModule,
+    ButtonDirective,
+    Ripple,
+    CurrencyPipe,
+  ],
 })
 export class ServicesGTPComponent implements OnInit {
   codDeudor = this.afiliacionService.codDeudor;

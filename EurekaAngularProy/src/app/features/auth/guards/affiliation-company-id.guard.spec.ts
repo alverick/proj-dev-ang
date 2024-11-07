@@ -14,6 +14,6 @@ describe('AffiliationCompanyIdGuard', () => {
     [AffiliationCompanyIdGuard],
     (guard: AffiliationCompanyIdGuard) => {
       void expect(guard).toBeTruthy();
-    }
+    },
   ));
 });

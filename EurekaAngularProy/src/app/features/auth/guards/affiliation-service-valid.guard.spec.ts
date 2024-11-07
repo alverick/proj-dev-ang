@@ -14,6 +14,6 @@ describe('AffiliationServiceValidGuard', () => {
     [AffiliationServiceValidGuard],
     (guard: AffiliationServiceValidGuard) => {
       void expect(guard).toBeTruthy();
-    }
+    },
   ));
 });

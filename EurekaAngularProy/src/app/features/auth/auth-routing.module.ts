@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { type Routes, RouterModule } from '@angular/router';
+import { RouterModule, type Routes } from '@angular/router';
 
 import {
   appRoutingNames,

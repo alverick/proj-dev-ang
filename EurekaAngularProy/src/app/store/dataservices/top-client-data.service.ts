@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  type QueryParams,
   DefaultDataService,
   HttpUrlGenerator,
+  type QueryParams,
 } from '@ngrx/data';
 import { Store } from '@ngrx/store';
 import { type Observable, of } from 'rxjs';
@@ -18,7 +18,7 @@ export class TopClientDataService extends DefaultDataService<TopClient> {
     private httpClient: HttpClient,
     private store: Store<any>,
     httpUrlGenerator: HttpUrlGenerator,
-    private dashboardDataService: DashboardDataService
+    private dashboardDataService: DashboardDataService,
   ) {
     super('CollectAmount', httpClient, httpUrlGenerator);
   }
@@ -33,8 +33,8 @@ export class TopClientDataService extends DefaultDataService<TopClient> {
             payload: err.message,
           });
           return of(err);
-        }
-      )
+        },
+      ),
     );
   }
 }

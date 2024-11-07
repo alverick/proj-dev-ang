@@ -1,12 +1,17 @@
 import { Component, type OnInit } from '@angular/core';
 import {
+  FormsModule,
+  ReactiveFormsModule,
   UntypedFormBuilder,
-  UntypedFormControl,
   type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { ButtonDirective } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { Ripple } from 'primeng/ripple';
 import Swal from 'sweetalert2';
 
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { emailRegex } from '../../../../shared/constants/patterns';
 import { type CorreoGtpModel } from '../../../../shared/models/data-correoGtp';
 import { GtpService } from '../../../../shared/services/gtp.service';
@@ -16,6 +21,15 @@ import { drawPopup } from '../../../../shared/utils/helpers/popups';
   selector: 'cs-configurar-correo-gtp',
   templateUrl: './configurar-correo-gtp.component.html',
   styleUrls: ['./configurar-correo-gtp.component.scss'],
+  standalone: true,
+  imports: [
+    ButtonDirective,
+    Ripple,
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+  ],
 })
 export class ConfigurarCorreoGtpComponent implements OnInit {
   frmCorreoGtp: UntypedFormGroup;

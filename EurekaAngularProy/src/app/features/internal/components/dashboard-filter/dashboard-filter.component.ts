@@ -1,18 +1,18 @@
 import {
-  type OnChanges,
-  type OnDestroy,
-  type OnInit,
-  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
+  type OnChanges,
+  type OnDestroy,
+  type OnInit,
   Output,
+  type SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {
+  FormBuilder,
   type FormControl,
   type FormGroup,
-  FormBuilder,
   Validators,
 } from '@angular/forms';
 import { has, path, pipe, pluck, uniq } from 'ramda';
@@ -21,8 +21,8 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import {
-  type Currency,
   currencies,
+  type Currency,
 } from '../../../../shared/constants/currencies';
 
 export interface OptionList {
@@ -134,7 +134,7 @@ export class DashboardFilterComponent implements OnInit, OnDestroy, OnChanges {
     this.form.get('currency').valueChanges.subscribe((value) => {
       this.form.patchValue({ services: [] });
       this.internalServices = this.services.filter(
-        (item) => item.currency === value.code
+        (item) => item.currency === value.code,
       );
     });
   }

@@ -21,7 +21,7 @@ export class SelectAllTableService {
         const enabledRows = (this.dt.value as Partial<Debts>[]).filter(
           (rowData) =>
             rowData.status !== 'PAGADO' &&
-            (rowData.totalAmount === 0 || !rowData.hasIBKPayments)
+            (rowData.totalAmount === 0 || !rowData.hasIBKPayments),
         );
         return (
           val &&
@@ -43,7 +43,7 @@ export class SelectAllTableService {
         ? this._selection.filter(
             (rowData) =>
               rowData.status !== 'PAGADO' &&
-              (rowData.totalAmount === 0 || !rowData.hasIBKPayments)
+              (rowData.totalAmount === 0 || !rowData.hasIBKPayments),
           )
         : [];
       this.preventSelectionSetterPropagation = true;

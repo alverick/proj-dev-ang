@@ -1,5 +1,5 @@
 import { appRoutingNames } from '../../app-routing.names';
-import { IRouteItem, IRouteNames } from '../../shared/models/router';
+import { type IRouteItem, type IRouteNames } from '../../shared/models/router';
 import {
   generateFullRoutes,
   generateFullRoutesTree,
@@ -97,7 +97,7 @@ export const authDynamicRoutingNames: Partial<IAuthRoutingNames> = {
 
 export const authFullRoutingNames: IAuthRoutingNames = generateFullRoutes(
   authRoutingNames,
-  authModuleRoutingPath
+  authModuleRoutingPath,
 );
 
 export const authFullRoutingChildNames: IAuthRoutingChildNames =

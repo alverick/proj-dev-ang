@@ -1,13 +1,23 @@
 import {
-  type OnChanges,
-  type OnInit,
-  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
+  type OnChanges,
+  type OnInit,
   Output,
+  type SimpleChanges,
 } from '@angular/core';
-import { type UntypedFormGroup } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+  type UntypedFormGroup,
+} from '@angular/forms';
+import { ButtonDirective } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { Ripple } from 'primeng/ripple';
 import { has, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { throttleTime } from 'rxjs/operators';
@@ -16,14 +26,33 @@ import {
   debtorCodeCustomEmpty,
   debtorCodeOptions,
 } from '../../constants/services';
+import { InputWithoutSpacesDirective } from '../../directives/input-without-spaces.directive';
 import { IServiceRemoteModelForms } from '../../models';
 import { IErrorMessages } from '../../models/forms';
 import { ServicesFormsService } from '../../services';
+import { LabelControlComponent } from '../label-control/label-control.component';
+import { ServiceChannelChipComponent } from '../service-channel-chip/service-channel-chip.component';
+import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
 
 @Component({
   selector: 'cs-service-edit-form',
   templateUrl: './service-edit-form.component.html',
   styleUrls: ['./service-edit-form.component.scss'],
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+    MessageModule,
+    DropdownModule,
+    InputWithoutSpacesDirective,
+    ButtonDirective,
+    ServiceDebtFormComponent,
+    CheckboxModule,
+    ServiceChannelChipComponent,
+    Ripple,
+  ],
 })
 export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Output() sendForm = new EventEmitter<object>();
@@ -77,7 +106,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
       ...formData
     } = this.formData;
     const isNotDebtorCodeCustom = debtorCodeOptions.some(
-      ({ value }) => value === debtorCode
+      ({ value }) => value === debtorCode,
     );
     this.debtorCodeEditable = !isNotDebtorCodeCustom;
     const debtorCodeObj = isNotDebtorCodeCustom
@@ -111,12 +140,12 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
         if (newNameCodeGTPStatus === 3) {
           this.servicesForms.setServiceEditDebtorCodeValidate(
             this.debtorCodeEditable,
-            debtorCodeOriginal
+            debtorCodeOriginal,
           );
         }
       } else {
         this.servicesForms.setServiceEditDebtorCodeValidate(
-          this.debtorCodeEditable
+          this.debtorCodeEditable,
         );
       }
       this.form.patchValue({

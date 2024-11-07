@@ -2,6 +2,7 @@ import { Directive, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[csInputWithoutSpaces]',
+  standalone: true,
 })
 export class InputWithoutSpacesDirective {
   @HostListener('input', ['$event'])

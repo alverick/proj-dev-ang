@@ -6,7 +6,10 @@ import { StorageService } from '../services/storage.service';
 
 @Injectable()
 export class AuthGuard {
-  constructor(private router: Router, private storageService: StorageService) {}
+  constructor(
+    private router: Router,
+    private storageService: StorageService,
+  ) {}
 
   canActivate(): boolean {
     return this.checkLogin();

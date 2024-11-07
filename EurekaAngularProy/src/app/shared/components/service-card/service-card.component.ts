@@ -1,22 +1,26 @@
+import { NgClass } from '@angular/common';
 import {
-  type OnChanges,
-  type OnInit,
-  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
+  type OnChanges,
+  type OnInit,
   Output,
+  type SimpleChanges,
 } from '@angular/core';
 import { propOr } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
 import { dataTypeOptions } from '../../constants/services';
 import { type IServiceRemoteModelForms } from '../../models';
+import { NotEmptyPipe } from '../../pipes/not-empty.pipe';
 
 @Component({
   selector: 'cs-service-card',
   templateUrl: './service-card.component.html',
   styleUrls: ['./service-card.component.scss'],
+  standalone: true,
+  imports: [NgClass, NotEmptyPipe],
 })
 export class ServiceCardComponent implements OnInit, OnChanges {
   @Input() serviceData: Partial<IServiceRemoteModelForms>;

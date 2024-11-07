@@ -39,14 +39,14 @@ export class CompanyService {
   public validateCompany(data: Partial<RegisterForm>) {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company/validate`,
-      data
+      data,
     );
   }
 
   public saveCompany(data: SaveCompanyData) {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company`,
-      data
+      data,
     );
   }
 
@@ -58,26 +58,26 @@ export class CompanyService {
   saveServices(data: CompanyServicesData) {
     return this.http.post<ICompanyResult>(
       `${environment.END_POINT}/company/service`,
-      data
+      data,
     );
   }
 
   getCompanyAccountsById(idCompany: number) {
     return this.http.get<CompanyAccounts[]>(
-      `${environment.END_POINT}/company/${idCompany}/cards`
+      `${environment.END_POINT}/company/${idCompany}/cards`,
     );
   }
 
   getCompanyAccounts() {
     return this.http.get<CompanyAccounts[]>(
-      `${environment.END_POINT}/company/cards`
+      `${environment.END_POINT}/company/cards`,
     );
   }
 
   sendUpdateCompanyData(data) {
     return this.http.post<boolean>(
       `${environment.END_POINT}/company/gtp/client/update`,
-      data
+      data,
     );
   }
 
@@ -88,7 +88,7 @@ export class CompanyService {
 
   getAccountStateDetails(idCompany: string) {
     return this.http.get<IAccountStateDetails>(
-      `${environment.END_POINT}/company/GTP/accountStateDetails/${idCompany}`
+      `${environment.END_POINT}/company/GTP/accountStateDetails/${idCompany}`,
     );
   }
 
@@ -97,7 +97,7 @@ export class CompanyService {
       `${environment.END_POINT}/company/GTP/AccountStateDetailsList`,
       {
         responseType: 'blob',
-      }
+      },
     );
   }
 
@@ -105,7 +105,7 @@ export class CompanyService {
     return this.http.get<IServiceRemoteModel[]>(
       `${
         environment.END_POINT
-      }/company/service?incDeactivates=${incDeactivates.toString()}`
+      }/company/service?incDeactivates=${incDeactivates.toString()}`,
     );
   }
 }

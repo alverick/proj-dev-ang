@@ -1,19 +1,28 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, Input, type OnInit } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
   ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { FormModel } from 'ngx-mf';
+import { ButtonDirective } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { Ripple } from 'primeng/ripple';
 import { forEachObjIndexed, isNil } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { of } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
+import { LabelControlComponent } from '../../../../../shared/components/label-control/label-control.component';
 import { ServiceTypes } from '../../../../../shared/constants/services';
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
@@ -39,6 +48,18 @@ interface Debt {
   selector: 'cs-debt-form',
   templateUrl: './debt.component.html',
   providers: [CurrencyPipe],
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    CalendarModule,
+    InputTextModule,
+    KeyFilterModule,
+    InputNumberModule,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class DebtComponent implements OnInit {
   useAmountLimits = false;

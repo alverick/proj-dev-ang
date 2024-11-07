@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { type FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, type FormControl, Validators } from '@angular/forms';
 import { isNil, isNotEmpty } from 'ramda';
 
 import { ServiceTypes } from '../constants/services';
@@ -55,7 +55,7 @@ export class ServicesFormsService {
     Validators.minLength(3),
     onlyAlphaNumber,
     Validators.pattern(
-      '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
+      '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$',
     ),
   ];
 
@@ -69,7 +69,7 @@ export class ServicesFormsService {
           onlyAlphaNumber,
           notBlankSpaces,
           Validators.pattern(
-            '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$'
+            '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$',
           ),
         ],
       ],
@@ -89,7 +89,7 @@ export class ServicesFormsService {
         chargeType: ['', [Validators.required]],
         interestType: ['', [Validators.required]],
         amount: ['', [Validators.required]],
-      }
+      },
     );
 
     serviceDebtForm.get('interestType').valueChanges.subscribe((val) => {

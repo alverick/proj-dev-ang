@@ -1,4 +1,4 @@
-import { FormControl, Validators } from '@angular/forms';
+import { type FormControl, Validators } from '@angular/forms';
 
 export class CustomValidators {
   static RequiredWhen(controlName: string, refName: string, refValue: any) {

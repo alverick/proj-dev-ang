@@ -16,7 +16,7 @@ export class AffiliationExitGuard {
     _component: ServiceAddPage,
     _currentRoute: ActivatedRouteSnapshot,
     _currentState: RouterStateSnapshot,
-    nextState: RouterStateSnapshot
+    nextState: RouterStateSnapshot,
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

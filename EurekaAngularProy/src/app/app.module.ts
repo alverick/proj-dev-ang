@@ -27,11 +27,7 @@ import { AppConfigEffects } from './store/effects/app-config.effects';
 import { appConfigFeature } from './store/reducers/app-config.reducer';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ValidationDefaultsComponent,
-    FabWhatsappComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -64,6 +60,8 @@ import { appConfigFeature } from './store/reducers/app-config.reducer';
       logOnly: environment.production,
       connectInZone: true,
     }),
+    ValidationDefaultsComponent,
+    FabWhatsappComponent,
   ],
   providers: [
     {

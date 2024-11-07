@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SidebarModule } from 'primeng/sidebar';
+import { StepsModule } from 'primeng/steps';
 
+import { ServiceCardComponent } from '../../../../shared/components/service-card/service-card.component';
+import { ServiceEditFormComponent } from '../../../../shared/components/service-edit-form/service-edit-form.component';
+import { ServicesListComponent } from '../../../../shared/components/services-list/services-list.component';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { authFullRoutingNames } from '../../auth-routing.names';
 import {
@@ -17,6 +22,14 @@ import { AffiliationService } from '../../services';
 @Component({
   selector: 'cs-update-services',
   templateUrl: './update-services.page.html',
+  standalone: true,
+  imports: [
+    StepsModule,
+    ServicesListComponent,
+    ServiceCardComponent,
+    SidebarModule,
+    ServiceEditFormComponent,
+  ],
 })
 export class UpdateServicesPage {
   position = 0;
@@ -34,7 +47,10 @@ export class UpdateServicesPage {
   interestTypeOptions = interestTypeOptions;
   formData;
 
-  constructor(private router: Router, public affiliation: AffiliationService) {}
+  constructor(
+    private router: Router,
+    public affiliation: AffiliationService,
+  ) {}
 
   actionDelete(position: number) {
     void swalAlert

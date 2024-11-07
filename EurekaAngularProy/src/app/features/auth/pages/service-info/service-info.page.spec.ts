@@ -10,7 +10,7 @@ describe('ServiceInfoPage', () => {
     MockBuilder(ServiceInfoPage)
       .mock(AffiliationService)
       .mock(ServicesFormsService)
-      .mock(ServiceStepInfoComponent)
+      .mock(ServiceStepInfoComponent),
   );
 
   it('should create', () => {
