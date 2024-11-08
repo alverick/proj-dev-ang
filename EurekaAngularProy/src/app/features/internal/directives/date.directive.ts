@@ -2,6 +2,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
   selector: 'input[csDate]',
+  standalone: true,
 })
 export class DateDirective {
   constructor(private _el: ElementRef) {}

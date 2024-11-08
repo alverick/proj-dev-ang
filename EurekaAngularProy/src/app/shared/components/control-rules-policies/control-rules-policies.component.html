@@ -3,19 +3,18 @@
     <ng-content></ng-content>
   </div>
   <div class="tw-py-3">
-    <div
-      *ngFor="let rule of rules; trackBy: ruleTrackBy"
-      class="tw-flex tw-items-center tw-gap-1 tw-text-xs"
-    >
-      <i
-        class="pi tw-w-4 tw-transition-all tw-duration-500"
-        [ngClass]="
-          !control.hasError(rule.key) && control.value !== ''
-            ? 'pi-check tw-text-primary-green-1'
-            : 'pi-times tw-text-extended-grey-3'
-        "
-      ></i>
-      <div class="control tw-pt-1">{{ rule.message }}</div>
-    </div>
+    @for (rule of rules; track ruleTrackBy($index, rule)) {
+      <div class="tw-flex tw-items-center tw-gap-1 tw-text-xs">
+        <i
+          class="pi tw-w-4 tw-transition-all tw-duration-500"
+          [ngClass]="
+            !control.hasError(rule.key) && control.value !== ''
+              ? 'pi-check tw-text-primary-green-1'
+              : 'pi-times tw-text-extended-grey-3'
+          "
+        ></i>
+        <div class="control tw-pt-1">{{ rule.message }}</div>
+      </div>
+    }
   </div>
 </div>

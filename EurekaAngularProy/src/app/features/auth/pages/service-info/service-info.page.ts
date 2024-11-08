@@ -1,6 +1,7 @@
-import { type OnInit, Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ServiceStepInfoComponent } from '../../../../shared/components/service-step-info/service-step-info.component';
 import { ServicesFormsService } from '../../../../shared/services';
 import { type CompanyAccounts } from '../../../../shared/services/company.service';
 import {
@@ -15,6 +16,8 @@ import { AffiliationService } from '../../services';
   selector: 'cs-service-info',
   templateUrl: './service-info.page.html',
   styleUrls: ['./service-info.page.scss'],
+  standalone: true,
+  imports: [ServiceStepInfoComponent],
 })
 export class ServiceInfoPage implements OnInit {
   accounts: CompanyAccounts[];
@@ -23,7 +26,7 @@ export class ServiceInfoPage implements OnInit {
     private router: Router,
     public affiliation: AffiliationService,
     private serviceForms: ServicesFormsService,
-    private tracking: TrackingService
+    private tracking: TrackingService,
   ) {}
 
   ngOnInit() {

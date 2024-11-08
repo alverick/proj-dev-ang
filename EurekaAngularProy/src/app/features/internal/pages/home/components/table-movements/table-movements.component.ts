@@ -1,3 +1,4 @@
+import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -8,17 +9,29 @@ import {
   type SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { NGXLogger } from 'ngx-logger';
-import { type LazyLoadEvent } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { type LazyLoadEvent, PrimeTemplate } from 'primeng/api';
+import { ButtonDirective } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { DialogModule } from 'primeng/dialog';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { Ripple } from 'primeng/ripple';
+import { Table, TableModule } from 'primeng/table';
 import { clone, forEachObjIndexed, has, isEmpty, pathEq } from 'ramda';
 import { isNilOrEmpty, isNotNil } from 'ramda-adjunct';
 
 import { type CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
+import { AmountMaxValidateDirective } from '../../../../../../shared/directives/amount-max-validate.directive';
+import { InputMoneyDirective } from '../../../../../../shared/directives/input-money.directive';
 import { type ServiceTypeType } from '../../../../../../shared/models';
 import { type Debts } from '../../../../../../shared/models/debts';
+import { GetLimitCurrencyPipe } from '../../../../../../shared/pipes/get-limit-currency.pipe';
+import { NotEmptyPipe } from '../../../../../../shared/pipes/not-empty.pipe';
+import { ValidateLimitCurrencyPipe } from '../../../../../../shared/pipes/validate-limit-currency.pipe';
 import {
   AdobeEvent,
   TrackingService,
@@ -56,6 +69,26 @@ type TableCol = {
   selector: 'cs-table-movements',
   templateUrl: './table-movements.component.html',
   styleUrls: ['./table-movements.component.scss'],
+  standalone: true,
+  imports: [
+    TableModule,
+    PrimeTemplate,
+    NgClass,
+    FormsModule,
+    InputTextModule,
+    CalendarModule,
+    InputNumberModule,
+    InputMoneyDirective,
+    AmountMaxValidateDirective,
+    ButtonDirective,
+    Ripple,
+    DialogModule,
+    CurrencyPipe,
+    DatePipe,
+    GetLimitCurrencyPipe,
+    NotEmptyPipe,
+    ValidateLimitCurrencyPipe,
+  ],
 })
 export class TableMovementsComponent implements OnInit, OnChanges {
   cols: Partial<TableCol>[] = [

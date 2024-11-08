@@ -26,7 +26,7 @@ export class LoaderInterceptor implements HttpInterceptor {
 
   intercept(
     request: HttpRequest<unknown>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
     const validUrl = () => {
       let isValid = true;
@@ -54,7 +54,7 @@ export class LoaderInterceptor implements HttpInterceptor {
           this.totalRequests = 0;
           this.requestsCompleted = 0;
         }
-      })
+      }),
     );
   }
 }

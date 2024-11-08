@@ -14,6 +14,6 @@ describe('AffiliationRucGuard', () => {
     [AffiliationRucGuard],
     (guard: AffiliationRucGuard) => {
       void expect(guard).toBeTruthy();
-    }
+    },
   ));
 });

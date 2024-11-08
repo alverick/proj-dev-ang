@@ -1,24 +1,25 @@
-import { type OnDestroy, type OnInit, Component } from '@angular/core';
+import { Component, type OnDestroy, type OnInit } from '@angular/core';
 import {
-  type RouterEvent,
   ActivatedRoute,
   NavigationEnd,
   Router,
+  RouterOutlet,
   Scroll,
 } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { type Observable, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
+import { SidebarServiceComponent } from '../../../../shared/components/sidebar-service/sidebar-service.component';
 import {
-  type CurrencyWithLimit,
   currencies,
+  type CurrencyWithLimit,
 } from '../../../../shared/constants/currencies';
 import { ServiceTypes } from '../../../../shared/constants/services';
 import {
   type AmountLimit,
-  type IDataEnterpriseModel,
   collectionRestrictionTypes,
+  type IDataEnterpriseModel,
 } from '../../../../shared/models/data-enterprise.model';
 import { ServicesFormsService } from '../../../../shared/services';
 import {
@@ -30,6 +31,8 @@ import { CompanyServicesService } from '../../services';
 @Component({
   selector: 'cs-internal-services-main',
   templateUrl: './services-main.page.html',
+  standalone: true,
+  imports: [SidebarServiceComponent, RouterOutlet],
 })
 export class ServicesMainPage implements OnInit, OnDestroy {
   destroy$ = new Subject();
@@ -41,12 +44,12 @@ export class ServicesMainPage implements OnInit, OnDestroy {
     protected router: Router,
     public companyServices: CompanyServicesService,
     private activatedRoute: ActivatedRoute,
-    private servicesFormsService: ServicesFormsService
+    private servicesFormsService: ServicesFormsService,
   ) {
     router.events
       .pipe(
         map((evt) => (evt instanceof Scroll ? evt.routerEvent : evt)),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
       )
       .subscribe((val) => {
         if (val instanceof NavigationEnd) {
@@ -80,21 +83,21 @@ export class ServicesMainPage implements OnInit, OnDestroy {
         company.collectionRestriction ===
           collectionRestrictionTypes.notRestricted
           ? ServiceTypes.withoutData
-          : ServiceTypes.complete
+          : ServiceTypes.complete,
       );
     });
     this.servicesFormsService.serviceForm
       .get('currency')
       .valueChanges.pipe(
         takeUntil(this.destroy$),
-        filter((data) => isNotNilOrEmpty(data))
+        filter((data) => isNotNilOrEmpty(data)),
       )
       .subscribe((val) => {
         const currencySel = currencies.find((limit) => limit.code === val);
 
         const limitSel =
           this.limitsAmountMax.find(
-            (limit) => limit.currency === currencySel.code
+            (limit) => limit.currency === currencySel.code,
           )?.amountMax || null;
 
         this.currency = { ...currencySel, limitMax: limitSel };

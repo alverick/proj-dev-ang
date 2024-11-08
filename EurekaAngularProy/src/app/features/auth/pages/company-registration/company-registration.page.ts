@@ -1,9 +1,11 @@
-import { type OnInit, Component } from '@angular/core';
+import { Component, type OnInit } from '@angular/core';
 import { type UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { pathEq } from 'ramda';
 
 import { authFullRoutingNames } from '../../auth-routing.names';
+import { CompanyFormRegistrationComponent } from '../../components/company-form-registration/company-form-registration.component';
+import { SidebarCompanyComponent } from '../../components/sidebar-company/sidebar-company.component';
 import {
   documentTypes,
   errorsRegisterForm,
@@ -15,6 +17,8 @@ import { AffiliationService } from '../../services';
   selector: 'cs-company-registration',
   templateUrl: './company-registration.page.html',
   styleUrls: ['./company-registration.page.scss'],
+  standalone: true,
+  imports: [SidebarCompanyComponent, CompanyFormRegistrationComponent],
 })
 export class CompanyRegistrationPage implements OnInit {
   registerForm: UntypedFormGroup;
@@ -22,7 +26,10 @@ export class CompanyRegistrationPage implements OnInit {
   operators = mobileOperators;
   documentTypes = documentTypes;
 
-  constructor(private router: Router, public affiliation: AffiliationService) {
+  constructor(
+    private router: Router,
+    public affiliation: AffiliationService,
+  ) {
     const navigation = this.router.getCurrentNavigation();
     if (pathEq(true, ['extras', 'state', 'initNew'], navigation)) {
       this.affiliation.registerForm.get('email').setValue('');

@@ -21,7 +21,7 @@ describe('LayoutFormComponent', () => {
     expect(component).toBeTruthy();
     const compiled = fixture.debugElement.nativeElement as HTMLElement;
     expect(compiled.textContent.trim()).toEqual(
-      'Gestiona las cobranzas de tu negocio de manera 100% digital con Cobro Simple'
+      'Gestiona las cobranzas de tu negocio de manera 100% digital con Cobro Simple',
     );
   });
 });

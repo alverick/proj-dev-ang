@@ -1,19 +1,21 @@
-<div class="tw-max-w-8xl tw-m-auto md:tw-flex tw-relative">
-  <cs-sidebar-service
-    *ngIf="position !== 2"
-    class="info tw-relative"
-    [position]="position"
-    [existServices]="affiliation?.servicesList?.length > 0"
-  ></cs-sidebar-service>
+<div class="tw-relative tw-m-auto tw-max-w-8xl md:tw-flex">
+  @if (position !== 2) {
+    <cs-sidebar-service
+      class="info tw-relative"
+      [position]="position"
+      [existServices]="affiliation?.servicesList?.length > 0"
+    ></cs-sidebar-service>
+  }
   <div class="content" [ngClass]="{ 'tw-w-full': position === 2 }">
-    <div
-      *ngIf="position !== 2"
-      class="tw-w-40 tw-px-5 md:tw-px-10 xl:tw-pr-0 xl:tw-pl-20 tw-py-12 tw-pb-0 md:tw-w-48 tw-mx-auto lg:tw-w-auto"
-    >
-      <div class="tw-w-40 tw-mx-auto">
-        <p-steps [model]="steps" [activeIndex]="position"></p-steps>
+    @if (position !== 2) {
+      <div
+        class="tw-mx-auto tw-w-40 tw-px-5 tw-py-12 tw-pb-0 md:tw-w-48 md:tw-px-10 lg:tw-w-auto xl:tw-pl-20 xl:tw-pr-0"
+      >
+        <div class="tw-mx-auto tw-w-40">
+          <p-steps [model]="steps" [activeIndex]="position"></p-steps>
+        </div>
       </div>
-    </div>
+    }
     <router-outlet></router-outlet>
   </div>
 </div>

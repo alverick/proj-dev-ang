@@ -10,14 +10,14 @@ import { CompanyService } from '../../../shared/services';
 export class AccountStateDetailsResolver {
   constructor(private companyService: CompanyService) {}
   resolve(
-    route: ActivatedRouteSnapshot
+    route: ActivatedRouteSnapshot,
   ): Observable<IAccountStateDetails | string> {
     return this.companyService
       .getAccountStateDetails(route.params.llave as string)
       .pipe(
         catchError(() => {
           return of('No data');
-        })
+        }),
       );
   }
 }

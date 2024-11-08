@@ -30,6 +30,12 @@ import { SERVICES } from './services';
     PushPipe,
     LetDirective,
     ValdemortModule,
+    AuthComponent,
+    CompanyFormRegistrationComponent,
+    CompanyFormAuthComponent,
+    SidebarCompanyComponent,
+    ...PAGES,
+    LayoutFormComponent,
   ],
   providers: [
     ...GUARDS,
@@ -39,14 +45,6 @@ import { SERVICES } from './services';
     LogoutGuard,
     AuthGuard,
     RecuperaService,
-  ],
-  declarations: [
-    AuthComponent,
-    CompanyFormRegistrationComponent,
-    CompanyFormAuthComponent,
-    SidebarCompanyComponent,
-    ...PAGES,
-    LayoutFormComponent,
   ],
   exports: [],
 })

@@ -1,8 +1,9 @@
+import { NgClass } from '@angular/common';
 import {
-  type OnChanges,
-  type SimpleChanges,
   Component,
   Input,
+  type OnChanges,
+  type SimpleChanges,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { pathEq } from 'ramda';
@@ -13,6 +14,8 @@ import { AdobeEvent, TrackingService } from '../../services/tracking.service';
   selector: 'cs-fab-whatsapp',
   templateUrl: './fab-whatsapp.component.html',
   styleUrls: ['./fab-whatsapp.component.scss'],
+  standalone: true,
+  imports: [NgClass],
 })
 export class FabWhatsappComponent implements OnChanges {
   @Input() showButton = true;
@@ -20,7 +23,10 @@ export class FabWhatsappComponent implements OnChanges {
   showText = true;
   url = '';
   timeToHide = 10000;
-  constructor(private tracking: TrackingService, protected router: Router) {
+  constructor(
+    private tracking: TrackingService,
+    protected router: Router,
+  ) {
     setTimeout(() => (this.showText = false), this.timeToHide);
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {

@@ -1,25 +1,50 @@
+import { KeyValuePipe } from '@angular/common';
 import {
-  type OnChanges,
-  type OnInit,
-  type SimpleChanges,
   Component,
   EventEmitter,
   Input,
+  type OnChanges,
+  type OnInit,
   Output,
+  type SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import {
+  ValidationErrorDirective,
+  ValidationErrorsComponent,
+} from 'ngx-valdemort';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
 import { isNil, pathEq } from 'ramda';
 
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
+import { InputTrimSpacesDirective } from '../../../../shared/directives/input-trim-spaces.directive';
+import { InputWithoutSpacesDirective } from '../../../../shared/directives/input-without-spaces.directive';
 import {
-  type SimpleModelFormGroup,
   IErrorMessages,
+  type SimpleModelFormGroup,
 } from '../../../../shared/models/forms';
 import { type CompanyForm } from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-update-form',
   templateUrl: './company-update-form.component.html',
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+    InputWithoutSpacesDirective,
+    KeyFilterModule,
+    DropdownModule,
+    ValidationErrorsComponent,
+    ValidationErrorDirective,
+    InputTrimSpacesDirective,
+    KeyValuePipe,
+  ],
 })
 export class CompanyUpdateFormComponent implements OnInit, OnChanges {
   documentNumberMax = '8';

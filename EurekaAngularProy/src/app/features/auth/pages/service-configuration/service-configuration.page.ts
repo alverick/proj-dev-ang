@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ServiceStepConfigurationComponent } from '../../../../shared/components/service-step-configuration/service-step-configuration.component';
 import { ServicesFormsService } from '../../../../shared/services';
 import { authFullRoutingChildNames } from '../../auth-routing.names';
 import {
@@ -17,6 +18,8 @@ import { AffiliationService } from '../../services';
   selector: 'cs-service-configuration',
   templateUrl: './service-configuration.page.html',
   styleUrls: ['./service-configuration.page.scss'],
+  standalone: true,
+  imports: [ServiceStepConfigurationComponent],
 })
 export class ServiceConfigurationPage {
   errorMessagesServiceConfig = errorServiceConfiguration;
@@ -30,7 +33,7 @@ export class ServiceConfigurationPage {
   constructor(
     private router: Router,
     public affiliation: AffiliationService,
-    private serviceForms: ServicesFormsService
+    private serviceForms: ServicesFormsService,
   ) {}
 
   onSubmit() {

@@ -14,7 +14,7 @@ describe('UpdateCompanyComponent', () => {
       .mock(RouterTestingModule)
       .mock(SidebarModule)
       .mock(SidebarCompanyComponent)
-      .mock(CompanyFormAuthComponent)
+      .mock(CompanyFormAuthComponent),
   );
 
   it('should create', () => {

@@ -14,6 +14,6 @@ describe('AffiliationFinishedGuard', () => {
     [AffiliationFinishedGuard],
     (guard: AffiliationFinishedGuard) => {
       void expect(guard).toBeTruthy();
-    }
+    },
   ));
 });

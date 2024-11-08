@@ -1,8 +1,17 @@
+import { NgClass, NgOptimizedImage } from '@angular/common';
 import { Component, type OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import moment from 'moment';
+import { NgClickOutsideDirective } from 'ng-click-outside2';
+import { NgScrollbar } from 'ngx-scrollbar';
+import { NgScrollReached } from 'ngx-scrollbar/reached-event';
 import { type MenuItem } from 'primeng/api';
+import { BadgeModule } from 'primeng/badge';
+import { ButtonDirective } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
+import { Ripple } from 'primeng/ripple';
 
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
@@ -22,6 +31,21 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
   selector: 'cs-internal-header',
   templateUrl: './internal-header.component.html',
   styleUrls: ['./internal-header.component.scss'],
+  standalone: true,
+  imports: [
+    HeaderComponent,
+    NgClass,
+    NgClickOutsideDirective,
+    RouterLinkActive,
+    RouterLink,
+    BadgeModule,
+    NgScrollbar,
+    NgScrollReached,
+    NgOptimizedImage,
+    MenuModule,
+    ButtonDirective,
+    Ripple,
+  ],
 })
 export class InternalHeaderComponent implements OnInit {
   isExpanded = false;

@@ -9,13 +9,20 @@ import {
 } from '@angular/core';
 import {
   type ControlValueAccessor,
+  FormsModule,
   NG_VALUE_ACCESSOR,
   NgForm,
+  ReactiveFormsModule,
 } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { pathEq } from 'ramda';
 
+import { InputMoneyDirective } from '../../directives/input-money.directive';
 import { IErrorMessages, ModelFormGroup } from '../../models/forms';
 import { type ServiceDebt } from '../../services/services-forms.service';
+import { LabelControlComponent } from '../label-control/label-control.component';
 
 @Component({
   selector: 'cs-service-debt-form',
@@ -26,6 +33,16 @@ import { type ServiceDebt } from '../../services/services-forms.service';
       useExisting: ServiceDebtFormComponent,
       multi: true,
     },
+  ],
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    DropdownModule,
+    RadioButtonModule,
+    InputNumberModule,
+    InputMoneyDirective,
   ],
 })
 export class ServiceDebtFormComponent

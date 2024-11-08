@@ -1,5 +1,7 @@
-import { type OnInit, Component } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, type OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SidebarModule } from 'primeng/sidebar';
 import { type Observable } from 'rxjs';
 
 import {
@@ -19,6 +21,8 @@ import {
   AdobeEvent,
   TrackingService,
 } from '../../../../shared/services/tracking.service';
+import { CompanyPasswordFormComponent } from '../../components/company-password-form/company-password-form.component';
+import { CompanyUpdateFormComponent } from '../../components/company-update-form/company-update-form.component';
 import { CompanyConfigurationService } from '../../services';
 import {
   type ChangePasswordForm,
@@ -28,6 +32,13 @@ import {
 @Component({
   selector: 'cs-company-configuration',
   templateUrl: './company-configuration.page.html',
+  standalone: true,
+  imports: [
+    NgClass,
+    CompanyUpdateFormComponent,
+    SidebarModule,
+    CompanyPasswordFormComponent,
+  ],
 })
 export class CompanyConfigurationPage implements OnInit {
   companyForm: SimpleModelFormGroup<CompanyForm>;
@@ -48,7 +59,7 @@ export class CompanyConfigurationPage implements OnInit {
   constructor(
     public companyConfiguration: CompanyConfigurationService,
     private activatedRoute: ActivatedRoute,
-    protected tracking: TrackingService
+    protected tracking: TrackingService,
   ) {}
 
   ngOnInit() {

@@ -11,7 +11,7 @@ export class CompanyAccountsResolver {
     return this.companyService.getCompanyAccounts().pipe(
       catchError(() => {
         return of('No data');
-      })
+      }),
     );
   }
 }

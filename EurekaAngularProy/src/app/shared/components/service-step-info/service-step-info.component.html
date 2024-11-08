@@ -101,14 +101,16 @@
           </div></cs-message-alert
         >
       </div>
-      <div *ngIf="disclaimerCommissionDollars" class="form-elm tw-pt-6">
-        <cs-message-alert class="" mode="info"
-          ><div class="tw-text-xs">
-            Para el caso de cuentas en dólares, se aplicará la comisión según el
-            tipo de cambio vigente.
-          </div></cs-message-alert
-        >
-      </div>
+      @if (disclaimerCommissionDollars) {
+        <div class="form-elm tw-pt-6">
+          <cs-message-alert class="" mode="info"
+            ><div class="tw-text-xs">
+              Para el caso de cuentas en dólares, se aplicará la comisión según
+              el tipo de cambio vigente.
+            </div></cs-message-alert
+          >
+        </div>
+      }
     </div>
   </div>
   <div
@@ -118,15 +120,16 @@
       'tw-justify-end': !showCancel,
     }"
   >
-    <button
-      pButton
-      pRipple
-      class="p-button-outlined tw-w-full md:tw-w-56"
-      *ngIf="showCancel"
-      type="button"
-      (click)="onCancel()"
-      label="Cancelar"
-    ></button>
+    @if (showCancel) {
+      <button
+        pButton
+        pRipple
+        class="p-button-outlined tw-w-full md:tw-w-56"
+        type="button"
+        (click)="onCancel()"
+        label="Cancelar"
+      ></button>
+    }
     <button
       pButton
       pRipple

@@ -12,7 +12,7 @@ describe('ServiceAddPage', () => {
       .mock(AffiliationService)
       .mock(SidebarServiceComponent)
       .mock(RouterTestingModule)
-      .mock(StepsModule)
+      .mock(StepsModule),
   );
 
   it('should create', () => {

@@ -10,7 +10,7 @@ describe('ServiceConfigurationPage', () => {
     MockBuilder(ServiceConfigurationPage)
       .mock(AffiliationService)
       .mock(ServicesFormsService)
-      .mock(ServiceStepConfigurationComponent)
+      .mock(ServiceStepConfigurationComponent),
   );
 
   it('should create', () => {

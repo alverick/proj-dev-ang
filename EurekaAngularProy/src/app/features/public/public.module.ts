@@ -15,7 +15,6 @@ import { LandingPage } from './pages/landing/landing.page';
 import { PublicRoutingModule } from './public-routing.module';
 
 @NgModule({
-  declarations: [LandingPage],
   imports: [
     CommonModule,
     ButtonModule,
@@ -28,6 +27,7 @@ import { PublicRoutingModule } from './public-routing.module';
     StoreModule.forFeature(appConfigFeature),
     PushPipe,
     LetDirective,
+    LandingPage,
   ],
   providers: [CompanyService, LogoutGuard],
 })

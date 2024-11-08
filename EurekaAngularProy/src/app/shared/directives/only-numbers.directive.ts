@@ -2,6 +2,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[csOnlyNumbers]',
+  standalone: true,
 })
 export class OnlyNumbersDirective {
   constructor(private _el: ElementRef<HTMLInputElement>) {}

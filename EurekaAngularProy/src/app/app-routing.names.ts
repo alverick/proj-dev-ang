@@ -20,5 +20,5 @@ export const appRoutingNames: IAppRoutingNames = {
 
 export const appFullRoutingNames: IAppRoutingNames = generateFullRoutes(
   appRoutingNames,
-  appModuleRoutingNames
+  appModuleRoutingNames,
 );

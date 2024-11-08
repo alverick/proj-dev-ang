@@ -22,7 +22,13 @@ import { GtpGrillaPage } from './pages/gtp-grilla/gtp-grilla.page';
 import { RESOLVERS } from './resolvers';
 
 @NgModule({
-  declarations: [
+  imports: [
+    HeaderComponent,
+    CommonModule,
+    AdminRoutingModule,
+    SharedModule,
+    ValdemortModule,
+    NgOptimizedImage,
     AdminComponent,
     GtpGrillaPage,
     AprobacionesPage,
@@ -31,14 +37,6 @@ import { RESOLVERS } from './resolvers';
     ServicesGTPComponent,
     ConfigurarCorreoGtpComponent,
     AdminHeaderComponent,
-  ],
-  imports: [
-    HeaderComponent,
-    CommonModule,
-    AdminRoutingModule,
-    SharedModule,
-    ValdemortModule,
-    NgOptimizedImage,
   ],
   providers: [
     ...RESOLVERS,

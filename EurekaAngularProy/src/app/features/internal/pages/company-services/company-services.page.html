@@ -1,4 +1,4 @@
-<div class="tw-max-w-8xl tw-m-auto tw-flex tw-relative">
+<div class="tw-relative tw-m-auto tw-flex tw-max-w-8xl">
   <cs-services-list
     class="tw-w-full"
     (add)="createService()"
@@ -6,42 +6,48 @@
     [message]="'Aún no cuentas con servicios configurados'"
     [showSaveAll]="false"
   >
-    <cs-service-card
-      *ngFor="let service of companyServices.services; let position = index"
-      [serviceData]="service"
-      [position]="position"
-      [lockedMode]="true"
-      [canEdit]="
-        !service.inReview ||
-        service.newNameCodeGTPStatus === 3 ||
-        service.newNameGTPStatus === 3
-      "
-      (delete)="actionDelete($event)"
-      (edit)="actionEdit(position)"
-    ></cs-service-card>
+    @for (
+      service of companyServices.services;
+      track service;
+      let position = $index
+    ) {
+      <cs-service-card
+        [serviceData]="service"
+        [position]="position"
+        [lockedMode]="true"
+        [canEdit]="
+          !service.inReview ||
+          service.newNameCodeGTPStatus === 3 ||
+          service.newNameGTPStatus === 3
+        "
+        (delete)="actionDelete($event)"
+        (edit)="actionEdit(position)"
+      ></cs-service-card>
+    }
   </cs-services-list>
   <p-sidebar
     [(visible)]="showSidebar"
     [dismissible]="false"
     [closeOnEscape]="false"
     [blockScroll]="true"
-    [baseZIndex]="10000"
+    [appendTo]="'body'"
     (onHide)="onClosePanel()"
     position="right"
     styleClass="p-sidebar-md edit-form lg:tw-h-screen tw-overflow-auto"
   >
-    <cs-service-edit-form
-      *ngIf="loadFormEdit"
-      [form]="companyServices.editServiceForm"
-      [errorMessages]="errorMessages"
-      [debtorCodeOptions]="debtorCodeOptions"
-      [paymentTypeOptions]="paymentTypeOptions"
-      [currencyOptions]="currencyOptions"
-      [chargeTypeOptions]="chargeTypeOptions"
-      [interestTypeOptions]="interestTypeOptions"
-      [formData]="formData"
-      [affiliationMode]="false"
-      (sendForm)="updateService()"
-    ></cs-service-edit-form>
+    @if (loadFormEdit) {
+      <cs-service-edit-form
+        [form]="companyServices.editServiceForm"
+        [errorMessages]="errorMessages"
+        [debtorCodeOptions]="debtorCodeOptions"
+        [paymentTypeOptions]="paymentTypeOptions"
+        [currencyOptions]="currencyOptions"
+        [chargeTypeOptions]="chargeTypeOptions"
+        [interestTypeOptions]="interestTypeOptions"
+        [formData]="formData"
+        [affiliationMode]="false"
+        (sendForm)="updateService()"
+      ></cs-service-edit-form>
+    }
   </p-sidebar>
 </div>

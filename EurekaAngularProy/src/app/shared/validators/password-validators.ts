@@ -8,7 +8,7 @@ import {
 const regexValidator = (
   regex: RegExp,
   error: ValidationErrors,
-  isForbidden: boolean = false
+  isForbidden: boolean = false,
 ): ValidatorFn => {
   return (control: AbstractControl<string>): ValidationErrors => {
     if (!control.value) {
@@ -47,7 +47,7 @@ const sequenceValidator =
     };
 
     const isSequencedNumber = numbers.find(
-      (num: string) => num.length >= 3 && searchNum(num)
+      (num: string) => num.length >= 3 && searchNum(num),
     );
 
     const valid = regex.test(control.value);

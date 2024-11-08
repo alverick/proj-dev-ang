@@ -7,7 +7,10 @@ import { appConfigFeature } from '../../../store/reducers/app-config.reducer';
 
 @Injectable()
 export class AffiliationLoadGuard {
-  constructor(private store: Store, private route: Router) {}
+  constructor(
+    private store: Store,
+    private route: Router,
+  ) {}
 
   canMatch(): Observable<boolean> | Promise<boolean> | boolean {
     return new Promise((resolve) => {

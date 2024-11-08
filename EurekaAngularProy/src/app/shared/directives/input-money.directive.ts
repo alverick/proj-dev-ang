@@ -3,6 +3,7 @@ import { NgControl } from '@angular/forms';
 
 @Directive({
   selector: '[csInputMoney]',
+  standalone: true,
 })
 export class InputMoneyDirective {
   constructor(private ngControl: NgControl) {}
