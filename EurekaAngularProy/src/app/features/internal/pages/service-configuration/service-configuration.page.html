@@ -3,6 +3,7 @@
 >
   <cs-service-step-configuration
     [form]="serviceForms.serviceConfigForm"
+    [currency]="serviceForms.serviceForm?.value?.currency"
     [errorMessages]="errorMessagesServiceConfig"
     [debtorCodeOptions]="debtorCodeOptions"
     [paymentTypeOptions]="paymentTypeOptions"
