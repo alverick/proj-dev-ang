@@ -64,6 +64,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
   @Input() affiliationMode = true;
+  @Input() interestOnlyInfo = false;
   @Input() formData: IServiceRemoteModelForms;
   debtForm: UntypedFormGroup;
   debtorCodeEditable = false;
