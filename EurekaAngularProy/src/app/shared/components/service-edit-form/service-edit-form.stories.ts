@@ -7,7 +7,7 @@ import {
 import { type FormGroup } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
-import { moduleMetadata } from '@storybook/angular';
+import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
 
 import {
   chargeTypeOptions,
@@ -21,6 +21,7 @@ import { AffiliationFormsService } from '../../../features/auth/services';
 import { type IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
 import { SharedModule } from '../../shared.module';
+import { ValidationDefaultsComponent } from '../validation-defaults/validation-defaults.component';
 
 @Component({
   selector: 'cs-form-demo',
@@ -32,6 +33,7 @@ import { SharedModule } from '../../shared.module';
     [currencyOptions]="currencyOptions"
     [chargeTypeOptions]="chargeTypeOptions"
     [interestTypeOptions]="interestTypeOptions"
+    [interestOnlyInfo]="true"
     [formData]="formData"
     (sendForm)="onSubmit($event)"
   ></cs-service-edit-form>`,
@@ -91,11 +93,16 @@ const initAppComponentFactory =
   (affiliationForms: AffiliationFormsService) => async () =>
     affiliationForms;
 
-export default {
+const meta: Meta<FormDemoComponent> = {
   title: 'Auth/Module/Service Edit Form',
   decorators: [
     moduleMetadata({
-      imports: [BrowserAnimationsModule, SharedModule],
+      declarations: [FormDemoComponent],
+      imports: [
+        BrowserAnimationsModule,
+        SharedModule,
+        ValidationDefaultsComponent,
+      ],
       providers: [
         AffiliationFormsService,
         {
@@ -109,17 +116,14 @@ export default {
   ],
 };
 
-export const normal = () => ({
-  moduleMetadata: {
-    declarations: [FormDemoComponent],
-    providers: [],
-  },
-  template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
+export default meta;
+
+type Story = StoryObj<FormDemoComponent>;
+
+export const Normal: Story = {
+  render: ({ ...args }) => ({
+    props: args,
+    template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
 <cs-form-demo (sendForm)="onSubmit($event)"></cs-form-demo>`,
-  props: {
-    onSubmit: (e) => {
-      console.log(e);
-      action('form data')(e);
-    },
-  },
-});
+  }),
+};

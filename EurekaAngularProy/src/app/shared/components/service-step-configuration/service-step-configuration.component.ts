@@ -59,8 +59,10 @@ export class ServiceStepConfigurationComponent implements OnInit {
   @Input() interestTypeOptions: ISelectOptions[];
   @Input() showCancel = false;
   @Input() showAllTypes = true;
+  @Input() currency = '';
   debtForm: ModelFormGroup<ServiceDebt>;
   showDebtFields = false;
+  currencySymbol = '';
   debtorCodeEditable = false;
   submittedForm = false;
   $destroy = new Subject();
@@ -74,6 +76,9 @@ export class ServiceStepConfigurationComponent implements OnInit {
       this.form.value.debtorCode,
       this.form.value.debtorCodeCustom,
     );
+    this.currencySymbol = this.currencyOptions.find(
+      (currency) => currency.value === this.currency,
+    )?.symbol;
   }
 
   listenForms() {
