@@ -9,5 +9,4 @@ export const environment: IEnvironment = {
   END_POINT: serverUrl.local,
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
-  credentials: [['20545692971', 'Interbank*1', 'uat revisar ver detalle']],
 };
