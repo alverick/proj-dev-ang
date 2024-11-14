@@ -47,34 +47,46 @@
   </div>
   <div class="form-elm tw-mb-5">
     <div class="tw-font-medium">¿Quieres incluir el cobro de mora?</div>
-    <cs-label-control [onlyControl]="true" class="tw-w-full">
-      <p-radioButton
-        name="chargeInterest"
-        value="N"
-        formControlName="chargeInterest"
-      ></p-radioButton>
-      <ng-container label-inline>
-        <div class="tw-font-light">
-          <div class="tw-text-base">No</div>
-        </div>
-      </ng-container>
-    </cs-label-control>
-    <cs-label-control [onlyControl]="true" class="tw-w-full">
-      <p-radioButton
-        name="chargeInterest"
-        value="S"
-        formControlName="chargeInterest"
-      ></p-radioButton>
-      <ng-container label-inline>
-        <div class="tw-font-light">
-          <div class="tw-text-base">Sí</div>
-        </div>
-      </ng-container>
-    </cs-label-control>
+    <div *ngIf="interestOnlyInfo" class="tw-font-light">
+      {{ form.get('chargeInterest').value === 'S' ? 'Sí' : 'No' }}
+    </div>
+    <ng-container *ngIf="!interestOnlyInfo">
+      <cs-label-control [onlyControl]="true" class="tw-w-full">
+        <p-radioButton
+          name="chargeInterest"
+          value="N"
+          formControlName="chargeInterest"
+        ></p-radioButton>
+        <ng-container label-inline>
+          <div class="tw-font-light">
+            <div class="tw-text-base">No</div>
+          </div>
+        </ng-container>
+      </cs-label-control>
+      <cs-label-control [onlyControl]="true" class="tw-w-full">
+        <p-radioButton
+          name="chargeInterest"
+          value="S"
+          formControlName="chargeInterest"
+        ></p-radioButton>
+        <ng-container label-inline>
+          <div class="tw-font-light">
+            <div class="tw-text-base">Sí</div>
+          </div>
+        </ng-container>
+      </cs-label-control>
+    </ng-container>
   </div>
   @if (showArrearsFields) {
     <div class="form-elm">
+      <div *ngIf="interestOnlyInfo" class="info tw-mb-5">
+        <div class="tw-font-medium">Tipo de cobro</div>
+        <div class="tw-font-light">
+          {{ form.get('chargeType').value === '1' ? 'Diario' : 'Fijo' }}
+        </div>
+      </div>
       <cs-label-control
+        *ngIf="!interestOnlyInfo"
         class="tw-w-full"
         formControlName="chargeType"
         [errorMessages]="errorMessages.chargeType"
@@ -87,41 +99,58 @@
           placeholder="Selecciona"
         ></p-dropdown>
       </cs-label-control>
-      <div class="tw-w-full"></div>
     </div>
     <div class="form-elm lg:tw-flex lg:tw-gap-4">
-      <cs-label-control
-        class="tw-w-full"
-        formControlName="interestType"
-        [errorMessages]="errorMessages.interestType"
-        >Tipo de cálculo
-        <p-dropdown
-          [options]="interestTypeOptions"
+      <ng-container *ngIf="interestOnlyInfo">
+        <div class="info tw-mb-5">
+          <div class="tw-font-medium">Tipo de cobro</div>
+          <div class="tw-font-light">
+            {{
+              form.get('interestType').value === 'M' ? 'Monto' : 'Porcentaje'
+            }}
+          </div>
+        </div>
+        <div class="info tw-mb-5">
+          <div class="tw-font-medium">Tipo de cobro</div>
+          <div class="tw-font-light">
+            {{ form.get('amount').value | currency: unitAmount }}
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!interestOnlyInfo">
+        <cs-label-control
           class="tw-w-full"
-          styleClass="tw-w-full"
           formControlName="interestType"
-          placeholder="Selecciona"
-        ></p-dropdown>
-      </cs-label-control>
-      <cs-label-control
-        class="tw-w-full"
-        formControlName="amount"
-        formControlLabel="El monto"
-        [errorMessages]="errorMessages.amount"
-        >Monto
-        <p-inputNumber
+          [errorMessages]="errorMessages.interestType"
+          >Tipo de cálculo
+          <p-dropdown
+            [options]="interestTypeOptions"
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            formControlName="interestType"
+            placeholder="Selecciona"
+          ></p-dropdown>
+        </cs-label-control>
+        <cs-label-control
+          class="tw-w-full"
           formControlName="amount"
-          class="tw-block tw-w-full"
-          mode="decimal"
-          csInputMoney
-          placeholder="1.00"
-          locale="es-PE"
-          [prefix]="unitAmount"
-          [max]="maxAmount"
-          [minFractionDigits]="2"
-          [maxFractionDigits]="2"
-        ></p-inputNumber>
-      </cs-label-control>
+          formControlLabel="El monto"
+          [errorMessages]="errorMessages.amount"
+          >Monto
+          <p-inputNumber
+            formControlName="amount"
+            class="tw-block tw-w-full"
+            mode="decimal"
+            csInputMoney
+            placeholder="1.00"
+            locale="es-PE"
+            [prefix]="unitAmount"
+            [max]="maxAmount"
+            [minFractionDigits]="2"
+            [maxFractionDigits]="2"
+          ></p-inputNumber>
+        </cs-label-control>
+      </ng-container>
     </div>
   }
 </form>

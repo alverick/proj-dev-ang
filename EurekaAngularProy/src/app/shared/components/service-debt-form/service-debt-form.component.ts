@@ -1,3 +1,4 @@
+import { CurrencyPipe, NgIf } from '@angular/common';
 import {
   type AfterViewInit,
   Component,
@@ -43,6 +44,8 @@ import { LabelControlComponent } from '../label-control/label-control.component'
     RadioButtonModule,
     InputNumberModule,
     InputMoneyDirective,
+    CurrencyPipe,
+    NgIf,
   ],
 })
 export class ServiceDebtFormComponent
@@ -55,6 +58,8 @@ export class ServiceDebtFormComponent
   @Input() chargeTypeOptions: any[];
   @Input() interestTypeOptions: any[];
   @Input() submitted = false;
+  @Input() interestOnlyInfo = false;
+  @Input() currency = 'S/';
   @ViewChild('formElm')
   htmlForm: NgForm;
   showArrearsFields = false;
@@ -87,7 +92,7 @@ export class ServiceDebtFormComponent
   }
 
   setAmountProps(val) {
-    this.unitAmount = val === 'M' ? 'S/ ' : '% ';
+    this.unitAmount = val === 'M' ? this.currency : '% ';
     this.maxAmount = val === 'M' ? 1000 : 100;
   }
 
