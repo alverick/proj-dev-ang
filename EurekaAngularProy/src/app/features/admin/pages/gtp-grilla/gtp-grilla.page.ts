@@ -70,7 +70,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     asc: false,
     inputSearch: '',
     BusinessHeading: '',
-    status: '',
+    status: [],
     statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
@@ -81,7 +81,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     asc: false,
     inputSearch: '',
     BusinessHeading: '',
-    status: '',
+    status: [],
     statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
@@ -92,7 +92,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     asc: true,
     inputSearch: '',
     BusinessHeading: '',
-    status: '',
+    status: [],
     statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
@@ -187,7 +187,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     }
   }
 
-  searchDebts(filterData: any) {
+  searchDebts(filterData) {
     const filter: GtpFilter = {
       ...this.initialFilter,
       ...filterData,
