@@ -64,6 +64,7 @@
               "sourceMap": false,
               "namedChunks": false,
               "aot": true,
+              "buildOptimizer": true,
               "extractLicenses": true
             },
             "local": {
@@ -103,9 +104,10 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": false,
-              "aot": false,
+              "aot": true,
+              "buildOptimizer": true,
               "extractLicenses": true
             },
             "dev": {
@@ -120,6 +122,7 @@
               "sourceMap": true,
               "namedChunks": false,
               "aot": true,
+              "buildOptimizer": true,
               "extractLicenses": true
             }
           }
