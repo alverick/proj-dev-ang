@@ -27,7 +27,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { Ripple } from 'primeng/ripple';
 import { all, forEachObjIndexed, isNil, keys, mapObjIndexed } from 'ramda';
-import { isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
+import { isNilOrEmpty, isNotNil, isNotNilOrEmpty, isObj } from 'ramda-adjunct';
 import { combineLatest, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -307,7 +307,9 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
     if (this.form.valid) {
       const formValuesNull = mapObjIndexed((value, key) => {
-        if (key === 'dateFrom' || key === 'dateTo' || !isNil(value)) {
+        if (this.multipleState && key === 'status' && isNilOrEmpty(value)) {
+          return [];
+        } else if (key === 'dateFrom' || key === 'dateTo' || !isNil(value)) {
           return value;
         } else {
           return '';

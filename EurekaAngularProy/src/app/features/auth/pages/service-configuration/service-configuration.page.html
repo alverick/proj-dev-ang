@@ -10,6 +10,7 @@
     [chargeTypeOptions]="chargeTypeOptions"
     [interestTypeOptions]="interestTypeOptions"
     [showCancel]="affiliation?.servicesList?.length > 0"
+    [currency]="affiliation.serviceForm?.value?.currency"
     (sendForm)="onSubmit()"
     (cancel)="onCancel()"
   ></cs-service-step-configuration>

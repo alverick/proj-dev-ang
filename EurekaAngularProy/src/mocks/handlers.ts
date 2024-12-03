@@ -12,7 +12,7 @@ const serverApi = (path: string) => {
 
 export const handlers = [
   http.post(serverApi('/company/validate'), async () => {
-    await delay(5000);
+    await delay(500);
     return HttpResponse.json({
       id: 3000,
       success: true,
@@ -22,6 +22,31 @@ export const handlers = [
       fullName: 'Nombre empresa full',
     });
   }),
+  http.post(serverApi('/company'), async () => {
+    await delay(500);
+    return HttpResponse.json({
+      id: 3000,
+      success: true,
+      code: 1,
+      message: 'El Ruc ya se encuentra registrado',
+      tradeName: 'Nombre empresa trade',
+      fullName: 'Nombre empresa full',
+    });
+  }),
+  http.get(serverApi('/company/:company/cards'), () =>
+    HttpResponse.json([
+      {
+        id: '8180',
+        number: '*********8180 ( CTA CTE PERSONA JURIDICA - Soles)',
+        currency: '001',
+      },
+      {
+        id: '8181',
+        number: '*********8181 ( CTA CTE PERSONA - Dólares)',
+        currency: '002',
+      },
+    ]),
+  ),
   http.post(serverApi('/debt/service/Mensualidad3/debtor'), () =>
     HttpResponse.json({ success: true }),
   ),

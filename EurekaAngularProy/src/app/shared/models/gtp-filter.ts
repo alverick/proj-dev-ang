@@ -4,7 +4,7 @@ export interface GtpFilter {
   asc: boolean;
   inputSearch: string;
   BusinessHeading: string;
-  status: string;
+  status: string[];
   statusSolicitud: string;
   dateFrom?: Date;
   dateTo?: Date;
