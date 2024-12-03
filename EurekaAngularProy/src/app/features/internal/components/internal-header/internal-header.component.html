@@ -32,6 +32,7 @@
           <a
             class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
             [routerLink]="[servicesLink]"
+            data-onboarding="services"
             (click)="gotoChargesPage()"
           >
             {{ chargesText }}
@@ -42,6 +43,7 @@
             class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
             [routerLink]="[companyLink]"
             (click)="gotoCompanyPage()"
+            data-onboarding="company"
             >{{ companyText }}</a
           >
         </li>
@@ -71,6 +73,7 @@
             href="javascript:void(0);"
             class="tw-flex tw-h-full tw-items-center tw-px-2 hover:tw-no-underline"
             id="lnkMessages"
+            data-onboarding="notifications"
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
