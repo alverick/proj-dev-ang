@@ -45,7 +45,10 @@
               >
             </div>
           </div>
-          <div class="content box-shadow tw-px-4 tw-py-6 lg:tw-pt-6">
+          <div
+            class="content box-shadow tw-px-4 tw-py-6 lg:tw-pt-6"
+            data-onboarding="filters"
+          >
             <cs-payments-filter
               [services]="services"
               [stateList]="waypayList"
@@ -105,6 +108,7 @@
                     [model]="this.items"
                     (onClick)="clickSplitButton(ua, $event)"
                     styleClass="p-button-outlined p-button-sm p-button-success"
+                    data-onboarding="add-deuda"
                   ></p-splitButton>
                 </div>
               </div>
@@ -125,6 +129,7 @@
           </div>
           <div
             class="movements tw-pointer-events-none tw-absolute tw-top-4 tw-h-[220px] tw-w-full"
+            data-onboarding="movements"
           ></div>
         </div>
       </div>

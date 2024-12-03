@@ -458,7 +458,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'addDeuda',
         attachTo: {
-          element: '.addDeuda',
+          element: '[data-onboarding="add-deuda"]',
           on: 'bottom',
         },
         buttons: [{ ...buttonSkip, text: 'Cerrar' }, buttonNext],
@@ -477,7 +477,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'lista',
         attachTo: {
-          element: '.movements',
+          element: '[data-onboarding="movements"]',
           on: 'bottom-end',
         },
         buttons: [buttonBack, buttonNext],
@@ -498,7 +498,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'filter',
         attachTo: {
-          element: '.widget.filtros .content',
+          element: '[data-onboarding="filters"]',
           on: 'bottom-end',
         },
         buttons: [buttonBack, buttonNext],
@@ -510,8 +510,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'menu-services',
         attachTo: {
-          element:
-            'cs-internal-header ul.navigation-menu > li:nth-child(2) > a',
+          element: '[data-onboarding="services"]',
           on: 'bottom',
         },
         buttons: [buttonBack, buttonNext],
@@ -523,8 +522,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'menu-company',
         attachTo: {
-          element:
-            'cs-internal-header ul.navigation-menu > li:nth-child(3) > a',
+          element: '[data-onboarding="company"]',
           on: 'bottom',
         },
         buttons: [buttonBack, buttonNext],
@@ -536,7 +534,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'menu-notifications',
         attachTo: {
-          element: '#lnkMessages',
+          element: '[data-onboarding="notifications"]',
           on: 'bottom',
         },
         buttons: [buttonBack, { ...buttonNext, text: 'Finalizar' }],
