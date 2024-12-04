@@ -71,7 +71,8 @@ export const handlers = [
   http.get(serverApi('/debt/process/:process/status'), async function* () {
     let counter = 1;
     await delay();
-    const { saving, validating, validated, completed, created } = processStatus;
+    const { saving, validating, validated, completed, created, rejected } =
+      processStatus;
     let status: ProcessStatus = created;
     const getProcess = (counter: number) => {
       const processSteps: ProcessStatus[] = [
