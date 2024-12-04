@@ -14,7 +14,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { type FileUpload, FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { Ripple } from 'primeng/ripple';
-import { isNil, pathOr } from 'ramda';
+import { isNil, isNotEmpty, pathOr } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 
