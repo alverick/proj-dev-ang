@@ -1,0 +1,22 @@
+<div
+  class="header-int tw-mb-4 tw-flex tw-w-full tw-items-center tw-justify-between tw-p-1"
+>
+  @if (!!excelService.service) {
+    <div class="p-dialog-title">
+      Agrega cobros del servicio
+      <strong>{{ excelService.service.name }}</strong>
+    </div>
+  } @else {
+    <div class="p-dialog-title">Resultados de la carga</div>
+  }
+  <div class="icons">
+    <button
+      [ngClass]="'p-dialog-header-icon p-dialog-header-maximize p-link'"
+      type="button"
+      (click)="hide()"
+      (keydown.enter)="hide()"
+    >
+      <TimesIcon [styleClass]="'p-dialog-header-close-icon'" />
+    </button>
+  </div>
+</div>
