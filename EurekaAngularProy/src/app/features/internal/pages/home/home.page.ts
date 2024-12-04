@@ -361,9 +361,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           DialogComponent,
           this.dialogConfig,
         );
-        // dialogRef.componentInstance.ready = true;
-        // dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
-        // dialogRef.componentInstance.rowsRejected = m.rowsRejected;
+        const dialogComponentRef =
+          this.dynamicDialogService.dialogComponentRefMap.get(dialogRef);
+        dialogComponentRef.changeDetectorRef.detectChanges();
+        const component = dialogComponentRef.instance.componentRef
+          .instance as DialogComponent;
+        console.log(dialogRef, dialogComponentRef, component);
+        component.ready = true;
+        component.rowsAccepted = m.rowsAccepted;
+        component.rowsRejected = m.rowsRejected;
       }
     };
   }
