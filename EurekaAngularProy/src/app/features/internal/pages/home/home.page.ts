@@ -172,6 +172,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   };
   displayDialog = false;
   amountLimits: CurrencyWithLimit[] = [];
+  useAmountLimits = false;
   private showedCommissions: boolean;
   private readonly onboardingIntro = 'intro';
 
@@ -274,6 +275,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       .pipe(filter((data) => isNotNilOrEmpty(data)))
       .subscribe((data) => {
         this.amountLimits = data;
+      });
+    this.store
+      .select(companyFeature.selectUseAmountLimits)
+      .subscribe((useLimits) => {
+        this.useAmountLimits = useLimits;
       });
     this.store
       .select(appConfigFeature.selectShowedCommission)
@@ -1080,6 +1086,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           templates: {
             header: DialogHeaderComponent,
           },
+          data: {
+            amountLimits: this.amountLimits,
+            useAmountLimits: this.useAmountLimits,
+          },
         })
         .onClose.subscribe((r) => {
           if (r) {
@@ -1096,6 +1106,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                   focusTrap: false,
                   templates: {
                     header: DialogHeaderComponent,
+                  },
+                  data: {
+                    amountLimits: this.amountLimits,
+                    useAmountLimits: this.useAmountLimits,
                   },
                 })
                 .onClose.subscribe((result) => {

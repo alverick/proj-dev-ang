@@ -8,21 +8,20 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { FormModel } from 'ngx-mf';
 import { ButtonDirective } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { Ripple } from 'primeng/ripple';
-import { forEachObjIndexed, isNil } from 'ramda';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
+import { forEachObjIndexed, isNil, pathOr } from 'ramda';
 import { of } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 import { LabelControlComponent } from '../../../../../shared/components/label-control/label-control.component';
+import type { CurrencyWithLimit } from '../../../../../shared/constants/currencies';
 import { ServiceTypes } from '../../../../../shared/constants/services';
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
@@ -33,7 +32,6 @@ import {
   TrackingService,
 } from '../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
-import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
 interface Debt {
   emissionDate: string;
@@ -134,31 +132,32 @@ export class DebtComponent implements OnInit {
     private readonly homeService: HomeService,
     public excelService: ExcelService,
     private readonly tracking: TrackingService,
-    private readonly store: Store,
+    public config: DynamicDialogConfig,
     private readonly currencyPipe: CurrencyPipe,
     public fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
     this.setPartialMode();
-    this.store
-      .select(companyFeature.selectCurrencyLimits)
-      .pipe(filter((data) => isNotNilOrEmpty(data)))
-      .subscribe((limits) => {
-        this.limitAmountMax = limits.find(
-          (limit) => limit.symbol === this.excelService.service.currencySymbol,
-        ).limitMax;
-        const amountWithSymbol = this.currencyPipe.transform(
-          this.limitAmountMax,
-          this.excelService.service.currencySymbol,
-        );
-        this.amountWithSymbolLabel = 'Monto máximo ' + amountWithSymbol;
-      });
-    this.store
-      .select(companyFeature.selectUseAmountLimits)
-      .subscribe((useLimits) => {
-        this.useAmountLimits = useLimits;
-      });
+
+    this.useAmountLimits = pathOr(
+      false,
+      ['data', 'useAmountLimits'],
+      this.config,
+    );
+
+    if (this.useAmountLimits) {
+      this.limitAmountMax = (
+        pathOr([], ['data', 'amountLimits'], this.config) as CurrencyWithLimit[]
+      ).find(
+        (limit) => limit.symbol === this.excelService.service.currencySymbol,
+      )?.limitMax;
+      const amountWithSymbol = this.currencyPipe.transform(
+        this.limitAmountMax,
+        this.excelService.service.currencySymbol,
+      );
+      this.amountWithSymbolLabel = 'Monto máximo ' + amountWithSymbol;
+    }
 
     this.debtForm.controls.code.valueChanges
       .pipe(debounceTime(600))
