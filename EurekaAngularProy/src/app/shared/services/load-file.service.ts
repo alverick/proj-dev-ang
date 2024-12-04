@@ -112,7 +112,7 @@ export class LoadFileService {
             this.excelService.errores = [];
             this.onClose.emit({
               status: 'completed',
-              dataType: this.excelService.service.dataType,
+              dataType: this.excelService.service?.dataType,
             });
           } else {
             this.componentRef.instance.progress.mode = 'determinate';

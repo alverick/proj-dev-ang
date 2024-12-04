@@ -24,12 +24,6 @@
     </div>
   }
 
-  <div class="title pt-2">
-    Agrega cobros del servicio
-    <span class="resaltado">{{ excelService.service.name }}</span>
-  </div>
-  <br />
-  @if (!excelService.statusUpload && !ready) {
     <div>
       <div class="landing">
         <div class="text">
@@ -83,6 +77,7 @@
       [value]="progress.value"
       styleClass="tw-h-2 tw-text-[8px] tw-my-4"
     />
+    @if (!excelService.statusUpload && !ready) {
   }
   @if (!excelService.statusUpload && ready) {
     <div class="landing">
