@@ -1,0 +1,32 @@
+trigger:
+  branches:
+    include:
+      - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - checkout: none
+  - script: |
+      git clone $(BIEREPO)
+    displayName: 'Init Sync ️‍🔥'
+  - script: |
+      cd eureca-frontend
+      git config user.name "$(BIE_USER)"
+      git config user.email "$(BIE_EMAIL)"
+      git checkout develop
+      git pull origin develop
+      git fetch origin develop fluidattacks-security-scan
+      changes=$(git diff --name-only origin/develop origin/fluidattacks-security-scan)
+      if [ -n "$changes" ]; then
+        git checkout fluidattacks-security-scan
+        git rm -rf .
+        git checkout develop -- .
+        git add .
+        git commit -m "Sync base source"
+        git push origin fluidattacks-security-scan
+      else
+        echo "No hay cambios en la rama develop. La rama fluidattacks ya está actualizada."
+      fi
+    displayName: 'Push on fluidAttacks ️‍🔥'
