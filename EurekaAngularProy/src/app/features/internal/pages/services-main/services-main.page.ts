@@ -6,6 +6,7 @@ import {
   RouterOutlet,
   Scroll,
 } from '@angular/router';
+import { isNil } from 'ramda';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { type Observable, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
@@ -38,6 +39,7 @@ export class ServicesMainPage implements OnInit, OnDestroy {
   destroy$ = new Subject();
   position = 2;
   limitsAmountMax: AmountLimit[] = null;
+  useAmountLimits = false;
   currency: CurrencyWithLimit = null;
 
   constructor(
@@ -75,13 +77,16 @@ export class ServicesMainPage implements OnInit, OnDestroy {
         company: IDataEnterpriseModel;
       }>
     ).subscribe(({ company }) => {
+      let collectionRestriction = company.collectionRestriction;
+      if (isNil(collectionRestriction)) {
+        collectionRestriction = collectionRestrictionTypes.notRestricted;
+      }
+
       this.companyServices.allowAllServiceType =
-        company.collectionRestriction ===
-        collectionRestrictionTypes.notRestricted;
+        collectionRestriction === collectionRestrictionTypes.notRestricted;
       this.limitsAmountMax = company.amountLimits;
       this.companyServices.setDefaultType(
-        company.collectionRestriction ===
-          collectionRestrictionTypes.notRestricted
+        collectionRestriction === collectionRestrictionTypes.notRestricted
           ? ServiceTypes.withoutData
           : ServiceTypes.complete,
       );
