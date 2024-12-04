@@ -10,16 +10,16 @@ import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { PrimeTemplate } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { type FileUpload, FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { Ripple } from 'primeng/ripple';
-import { isNil, isNotEmpty } from 'ramda';
-import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
+import { isNil, pathOr } from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
 
 import { MessageAlertComponent } from '../../../../../../shared/components/message-alert/message-alert.component';
+import type { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
 import { type ServiceTypeType } from '../../../../../../shared/models';
 import type { IErrorObj } from '../../../../../../shared/models/error.model';
@@ -33,7 +33,6 @@ import {
   TrackingService,
 } from '../../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
-import { companyFeature } from '../../../../../../store/reducers/company.reducer';
 
 @Component({
   selector: 'cs-dialog',
@@ -58,7 +57,7 @@ export class DialogComponent implements OnInit {
   public ready = false;
   public fileName: string;
   public cuadro_errores = true;
-  limitAmountMax: number;
+  limitAmountMax: number = null;
   changeStatus = true;
   uploaderFiles: File[] = [];
 
@@ -76,6 +75,7 @@ export class DialogComponent implements OnInit {
     public formBuilder: UntypedFormBuilder,
     public dialogRef: DynamicDialogRef<DialogComponent>,
     private tracking: TrackingService,
+    public config: DynamicDialogConfig,
     private store: Store,
   ) {}
 
@@ -88,19 +88,20 @@ export class DialogComponent implements OnInit {
         this.excelService.errores = [];
       }
     });
-    this.store
-      .select(companyFeature.selectCurrencyLimits)
-      .pipe(filter((data) => isNotNilOrEmpty(data)))
-      .subscribe((limits) => {
-        this.limitAmountMax = limits.find(
-          (limit) => limit.symbol === this.excelService.service.currencySymbol,
-        ).limitMax;
-      });
-    this.store
-      .select(companyFeature.selectUseAmountLimits)
-      .subscribe((useLimits) => {
-        this.useAmountLimits = useLimits;
-      });
+
+    this.useAmountLimits = pathOr(
+      false,
+      ['data', 'useAmountLimits'],
+      this.config,
+    );
+
+    if (this.useAmountLimits) {
+      this.limitAmountMax = (
+        pathOr([], ['data', 'amountLimits'], this.config) as CurrencyWithLimit[]
+      ).find(
+        (limit) => limit.symbol === this.excelService.service.currencySymbol,
+      )?.limitMax;
+    }
   }
 
   validateFile() {
