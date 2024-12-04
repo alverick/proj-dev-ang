@@ -73,6 +73,7 @@ import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { CommissionsInfoComponent } from './components/comissions-info/commissions-info.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { DialogHeaderComponent } from './components/dialog-header/dialog-header.component';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { TableMovementsComponent } from './components/table-movements/table-movements.component';
 
@@ -176,9 +177,17 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   protected dialogConfig: DynamicDialogConfig = {
     width: '899px',
-    styleClass: 'upload-files-dialog simple-dialog',
+    styleClass: 'upload-files-dialog modal-custom-cs',
+    templates: {
+      header: DialogHeaderComponent,
+    },
     maskStyleClass: 'upload-files-dialog',
     focusOnShow: false,
+    header: 'Agrega cobros del servicio Servicio usuario nuevo',
+    data: {
+      amountLimits: this.amountLimits,
+      useAmountLimits: this.useAmountLimits,
+    },
   };
 
   @HostListener('window:resize', ['$event'])
@@ -1056,12 +1065,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         .open(AgregaCobroComponent, {
           width: '899px',
           footer: ' ',
-          header: '',
-          styleClass: 'simple-dialog',
+          header: 'Agrega cobros del servicio Servicio usuario nuevo',
+          styleClass: 'modal-custom-cs',
           style: { 'max-height': 'none' },
           dismissableMask: true,
           focusOnShow: false,
           focusTrap: false,
+          templates: {
+            header: DialogHeaderComponent,
+          },
         })
         .onClose.subscribe((r) => {
           if (r) {
@@ -1070,12 +1082,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 .open(DebtComponent, {
                   width: '450px',
                   footer: ' ',
-                  header: '',
-                  styleClass: 'simple-dialog',
+                  header: 'Agrega cobros del servicio Servicio usuario nuevo',
+                  styleClass: 'modal-custom-cs modal-thin',
                   style: { 'max-height': 'none' },
                   dismissableMask: true,
                   focusOnShow: false,
                   focusTrap: false,
+                  templates: {
+                    header: DialogHeaderComponent,
+                  },
                 })
                 .onClose.subscribe((result) => {
                   if (result?.grabado) {
