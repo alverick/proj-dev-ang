@@ -1,8 +1,9 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
+import { Component, type OnInit, viewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
+  FormGroupDirective,
   FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
@@ -126,6 +127,7 @@ export class DebtComponent implements OnInit {
     },
     amount: { required: 'Debe ingresar un valor' },
   };
+  formDirective = viewChild<FormGroupDirective>('formDirective');
 
   constructor(
     public dialogRef: DynamicDialogRef<DebtComponent>,
@@ -275,6 +277,7 @@ export class DebtComponent implements OnInit {
                 location: 'Modal agregar cobro',
               });
               if (result.value) {
+                this.formDirective().resetForm();
                 this.debtForm.reset();
               } else {
                 this.dialogRef.close({ grabado: this.grabado });
