@@ -126,7 +126,7 @@
       />
     </cs-label-control>
   </div>
-  @if (Dataparcial) {
+  @if (serviceTypeComplete) {
     <div class="form-row">
       <cs-label-control class="tw-w-full" formControlName="tipoPago"
         ><ng-container label
@@ -176,7 +176,7 @@
       </div>
     }
   </div>
-  @if (Dataparcial) {
+  @if (serviceTypeComplete) {
     <div class="tw-mb-1 tw-text-extended-grey-1">
       ¿Quieres que tus clientes te puedan pagar en partes?
     </div>
@@ -209,7 +209,7 @@
       </cs-label-control>
     </div>
   }
-  @if (Dataparcial) {
+  @if (serviceTypeComplete) {
     <span class="tw-mb-1 tw-text-extended-grey-1">Cobro de mora</span>
     <div
       class="form-elm tw-flex tw-items-center tw-justify-items-start tw-gap-4 tw-pt-2"
