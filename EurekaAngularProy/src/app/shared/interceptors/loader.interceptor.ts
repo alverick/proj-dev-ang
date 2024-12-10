@@ -16,7 +16,7 @@ export class LoaderInterceptor implements HttpInterceptor {
   totalRequests = 0;
   requestsCompleted = 0;
   forbiddenUrls = [
-    'notification?skip',
+    'notification\\?skip',
     'notification/total',
     'debt/process/[\\d]+/status',
     'debt/service/[^\\/]+/debtor/[\\w]+',
