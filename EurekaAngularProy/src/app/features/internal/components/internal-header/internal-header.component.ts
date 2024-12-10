@@ -223,6 +223,4 @@ export class InternalHeaderComponent implements OnInit {
   blurMenu() {
     this.hiddenNotifications = true;
   }
-
-  protected readonly blur = blur;
 }
