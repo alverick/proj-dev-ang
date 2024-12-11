@@ -32,6 +32,7 @@
           <a
             class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
             [routerLink]="[servicesLink]"
+            data-onboarding="services"
             (click)="gotoChargesPage()"
           >
             {{ chargesText }}
@@ -42,6 +43,7 @@
             class="tw-flex tw-h-full tw-items-center tw-text-xs tw-font-medium tw-uppercase tw-text-extended-grey-2 tw-transition-colors tw-duration-200 hover:tw-text-black group-[.active]:tw-text-black lg:tw-justify-center lg:tw-px-3"
             [routerLink]="[companyLink]"
             (click)="gotoCompanyPage()"
+            data-onboarding="company"
             >{{ companyText }}</a
           >
         </li>
@@ -71,6 +73,7 @@
             href="javascript:void(0);"
             class="tw-flex tw-h-full tw-items-center tw-px-2 hover:tw-no-underline"
             id="lnkMessages"
+            data-onboarding="notifications"
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
@@ -109,43 +112,38 @@
               >
                 @for (msg of notify.messages; track msg) {
                   <div
-                    (click)="$event.stopPropagation()"
-                    [class.dropdown-item-readed]="!msg.isNew"
+                    class="tw-border-b tw-border-extended-grey-4 tw-p-2"
+                    [ngClass]="{ 'tw-bg-[#eaf6ee]': msg.isNew }"
                   >
-                    <div
-                      class="tw-border-b tw-border-extended-grey-4 tw-p-2"
-                      [ngClass]="{ 'tw-bg-[#eaf6ee]': msg.isNew }"
+                    <a
+                      class="tw-block"
+                      title="{{ msg.title }}"
+                      (click)="markNotification(msg, $event)"
                     >
-                      <a
-                        class="tw-block"
-                        title="{{ msg.title }}"
-                        (click)="markNotification(msg, $event)"
+                      <div
+                        class="tw-flex tw-items-start tw-gap-2 tw-text-sm tw-font-normal tw-text-black"
                       >
                         <div
-                          class="tw-flex tw-items-start tw-gap-2 tw-text-sm tw-font-normal tw-text-black"
+                          class="tw-mt-1 tw-flex tw-h-3 tw-w-3 tw-shrink-0 tw-items-center tw-justify-between tw-rounded-full tw-bg-extended-watermelon-1"
+                          [ngClass]="{
+                            'tw-bg-extended-watermelon-1': msg.isNew,
+                            'tw-bg-primary-green-1': !msg.isNew,
+                          }"
                         >
-                          <div
-                            class="tw-mt-1 tw-flex tw-h-3 tw-w-3 tw-shrink-0 tw-items-center tw-justify-between tw-rounded-full tw-bg-extended-watermelon-1"
-                            [ngClass]="{
-                              'tw-bg-extended-watermelon-1': msg.isNew,
-                              'tw-bg-primary-green-1': !msg.isNew,
-                            }"
-                          >
-                            @if (!msg.isNew) {
-                              <i
-                                class="pi pi-check tw-mx-auto tw-text-[9px] tw-text-white"
-                              ></i>
-                            }
-                          </div>
-                          <div class="tw-text-black">
-                            <div>{{ msg.message }}</div>
-                            <div class="tw-mt-1 tw-font-light tw-text-black">
-                              {{ getAgo(msg.create) }}
-                            </div>
+                          @if (!msg.isNew) {
+                            <i
+                              class="pi pi-check tw-mx-auto tw-text-[9px] tw-text-white"
+                            ></i>
+                          }
+                        </div>
+                        <div class="tw-text-black">
+                          <div>{{ msg.message }}</div>
+                          <div class="tw-mt-1 tw-font-light tw-text-black">
+                            {{ getAgo(msg.create) }}
                           </div>
                         </div>
-                      </a>
-                    </div>
+                      </div>
+                    </a>
                   </div>
                 }
                 @if (notify.messages.length == 0) {

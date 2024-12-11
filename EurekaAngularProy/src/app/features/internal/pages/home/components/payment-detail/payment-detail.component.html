@@ -66,7 +66,7 @@
                           [(ngModel)]="itm.newAmount"
                           maxlength="12"
                           minlength="4"
-                          [min]="1"
+                          [min]="0.01"
                           (blur)="amountBlur(itm)"
                           [minFractionDigits]="2"
                           [maxFractionDigits]="2"
@@ -121,6 +121,7 @@
                         class="tw-w-full"
                         styleClass="tw-w-full"
                         [(ngModel)]="itm.newChannel"
+                        appendTo="body"
                       ></p-dropdown>
                     </div>
                   }
@@ -166,7 +167,7 @@
             (items.length == 0 || status !== 'PAGADO' || isEditingRow)
           ) {
             <div>
-              <div class="tw-flex tw-flex-col tw-items-center tw-gap-2">
+              <div class="tw-flex tw-items-center tw-justify-center tw-gap-4">
                 @if (!isEditingRow) {
                   <button
                     pButton
@@ -174,7 +175,7 @@
                     type="button"
                     (click)="addItem()"
                     icon="pi pi-plus-circle"
-                    class="p-button-text tw-h-10 tw-w-60"
+                    class="p-button-text tw-h-10"
                     label="Agregar un pago"
                   ></button>
                 }
@@ -185,6 +186,7 @@
                     pRipple
                     class="tw-h-10 tw-w-32"
                     (click)="saveItem()"
+                    icon="pi pi-save"
                     label="Guardar"
                   ></button>
                   <button
@@ -193,6 +195,7 @@
                     pRipple
                     class="p-button-outlined tw-h-10 tw-w-32"
                     (click)="cancelItem()"
+                    icon="pi pi-times-circle"
                     label="Cancelar"
                   ></button>
                 }

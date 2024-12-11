@@ -1,13 +1,11 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { isNotNilOrEmpty } from 'ramda-adjunct';
-import { filter } from 'rxjs/operators';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { pathOr } from 'ramda';
 
 import { MessageAlertComponent } from '../../../../../shared/components/message-alert/message-alert.component';
+import type { CurrencyWithLimit } from '../../../../../shared/constants/currencies';
 import { ExcelService } from '../../../../../shared/services/excel.service';
-import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
 @Component({
   selector: 'cs-agrega-cobro',
@@ -17,26 +15,26 @@ import { companyFeature } from '../../../../../store/reducers/company.reducer';
   imports: [MessageAlertComponent, CurrencyPipe],
 })
 export class AgregaCobroComponent {
-  limitAmountMax: number;
+  limitAmountMax: number = null;
   useAmountLimits = false;
   constructor(
     public excelService: ExcelService,
     public dialogRef: DynamicDialogRef<AgregaCobroComponent>,
-    private store: Store,
+    public config: DynamicDialogConfig,
   ) {
-    this.store
-      .select(companyFeature.selectCurrencyLimits)
-      .pipe(filter((data) => isNotNilOrEmpty(data)))
-      .subscribe((limits) => {
-        this.limitAmountMax = limits.find(
-          (limit) => limit.symbol === this.excelService.service.currencySymbol,
-        )?.limitMax;
-      });
-    this.store
-      .select(companyFeature.selectUseAmountLimits)
-      .subscribe((useLimits) => {
-        this.useAmountLimits = useLimits;
-      });
+    this.useAmountLimits = pathOr(
+      false,
+      ['data', 'useAmountLimits'],
+      this.config,
+    );
+
+    if (this.useAmountLimits) {
+      this.limitAmountMax = (
+        pathOr([], ['data', 'amountLimits'], this.config) as CurrencyWithLimit[]
+      ).find(
+        (limit) => limit.symbol === this.excelService.service.currencySymbol,
+      )?.limitMax;
+    }
   }
 
   close() {

@@ -73,6 +73,7 @@ import { AgregaCobroComponent } from './components/agrega-cobro.component';
 import { CommissionsInfoComponent } from './components/comissions-info/commissions-info.component';
 import { DebtComponent } from './components/debt.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { DialogHeaderComponent } from './components/dialog-header/dialog-header.component';
 import { PaymentDetailComponent } from './components/payment-detail/payment-detail.component';
 import { TableMovementsComponent } from './components/table-movements/table-movements.component';
 
@@ -171,14 +172,23 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   };
   displayDialog = false;
   amountLimits: CurrencyWithLimit[] = [];
+  useAmountLimits = false;
   private showedCommissions: boolean;
   private readonly onboardingIntro = 'intro';
 
   protected dialogConfig: DynamicDialogConfig = {
     width: '899px',
-    styleClass: 'upload-files-dialog simple-dialog',
+    styleClass: 'upload-files-dialog modal-custom-cs',
+    templates: {
+      header: DialogHeaderComponent,
+    },
     maskStyleClass: 'upload-files-dialog',
     focusOnShow: false,
+    header: 'Agrega cobros del servicio Servicio usuario nuevo',
+    data: {
+      amountLimits: this.amountLimits,
+      useAmountLimits: this.useAmountLimits,
+    },
   };
 
   @HostListener('window:resize', ['$event'])
@@ -267,6 +277,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         this.amountLimits = data;
       });
     this.store
+      .select(companyFeature.selectUseAmountLimits)
+      .subscribe((useLimits) => {
+        this.useAmountLimits = useLimits;
+      });
+    this.store
       .select(appConfigFeature.selectShowedCommission)
       .subscribe((data) => {
         this.showedCommissions = data;
@@ -352,9 +367,15 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
           DialogComponent,
           this.dialogConfig,
         );
-        // dialogRef.componentInstance.ready = true;
-        // dialogRef.componentInstance.rowsAccepted = m.rowsAccepted;
-        // dialogRef.componentInstance.rowsRejected = m.rowsRejected;
+        const dialogComponentRef =
+          this.dynamicDialogService.dialogComponentRefMap.get(dialogRef);
+        dialogComponentRef.changeDetectorRef.detectChanges();
+        const component = dialogComponentRef.instance.componentRef
+          .instance as DialogComponent;
+        console.log(dialogRef, dialogComponentRef, component);
+        component.ready = true;
+        component.rowsAccepted = m.rowsAccepted;
+        component.rowsRejected = m.rowsRejected;
       }
     };
   }
@@ -458,7 +479,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'addDeuda',
         attachTo: {
-          element: '.addDeuda',
+          element: '[data-onboarding="add-deuda"]',
           on: 'bottom',
         },
         buttons: [{ ...buttonSkip, text: 'Cerrar' }, buttonNext],
@@ -477,7 +498,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'lista',
         attachTo: {
-          element: '.movements',
+          element: '[data-onboarding="movements"]',
           on: 'bottom-end',
         },
         buttons: [buttonBack, buttonNext],
@@ -498,7 +519,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'filter',
         attachTo: {
-          element: '.widget.filtros .content',
+          element: '[data-onboarding="filters"]',
           on: 'bottom-end',
         },
         buttons: [buttonBack, buttonNext],
@@ -510,8 +531,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'menu-services',
         attachTo: {
-          element:
-            'cs-internal-header ul.navigation-menu > li:nth-child(2) > a',
+          element: '[data-onboarding="services"]',
           on: 'bottom',
         },
         buttons: [buttonBack, buttonNext],
@@ -523,8 +543,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'menu-company',
         attachTo: {
-          element:
-            'cs-internal-header ul.navigation-menu > li:nth-child(3) > a',
+          element: '[data-onboarding="company"]',
           on: 'bottom',
         },
         buttons: [buttonBack, buttonNext],
@@ -536,7 +555,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       {
         id: 'menu-notifications',
         attachTo: {
-          element: '#lnkMessages',
+          element: '[data-onboarding="notifications"]',
           on: 'bottom',
         },
         buttons: [buttonBack, { ...buttonNext, text: 'Finalizar' }],
@@ -1058,12 +1077,19 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         .open(AgregaCobroComponent, {
           width: '899px',
           footer: ' ',
-          header: '',
-          styleClass: 'simple-dialog',
+          header: 'Agrega cobros del servicio Servicio usuario nuevo',
+          styleClass: 'modal-custom-cs',
           style: { 'max-height': 'none' },
           dismissableMask: true,
           focusOnShow: false,
           focusTrap: false,
+          templates: {
+            header: DialogHeaderComponent,
+          },
+          data: {
+            amountLimits: this.amountLimits,
+            useAmountLimits: this.useAmountLimits,
+          },
         })
         .onClose.subscribe((r) => {
           if (r) {
@@ -1072,12 +1098,19 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 .open(DebtComponent, {
                   width: '450px',
                   footer: ' ',
-                  header: '',
-                  styleClass: 'simple-dialog',
+                  header: 'Agrega cobros del servicio Servicio usuario nuevo',
+                  styleClass: 'modal-custom-cs modal-thin',
                   style: { 'max-height': 'none' },
                   dismissableMask: true,
                   focusOnShow: false,
                   focusTrap: false,
+                  templates: {
+                    header: DialogHeaderComponent,
+                  },
+                  data: {
+                    amountLimits: this.amountLimits,
+                    useAmountLimits: this.useAmountLimits,
+                  },
                 })
                 .onClose.subscribe((result) => {
                   if (result?.grabado) {

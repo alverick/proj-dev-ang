@@ -1,9 +1,3 @@
 .container {
-  position: sticky;
-  bottom: 0;
-  width: 350px;
-  @include border-radius(5px);
-  background-color: var(--ibk-white);
-  padding: 5px 15px;
-  @include box-shadows(4px, 10px, 0px, rgba(0, 0, 0, 0.432), 0);
+  @apply tw-sticky tw-bottom-2 tw-left-1/2 tw-w-80 -tw-translate-x-1/2 tw-rounded-md tw-border tw-border-extended-grey-4 tw-bg-white tw-px-3 tw-py-1 tw-shadow-lg;
 }

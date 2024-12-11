@@ -47,7 +47,6 @@ export class NotifyService {
   icono: any = farBell;
   loadingMsg = false;
 
-  existMore = true;
   messages: MessagesType[] = [];
   private _total = -1;
   totalLabel = '';
@@ -69,15 +68,13 @@ export class NotifyService {
       this.inExecution ? timer(timeCallNotify) : timer(2000);
 
     this.http
-      .get(`${environment.END_POINT}/notification/total`)
+      .get<{ total: number }>(`${environment.END_POINT}/notification/total`)
       .pipe(delayWhen(setDelay), repeat(), takeUntil(stop))
       .subscribe({
-        next: ({ total }: { total: number }) => {
+        next: ({ total }) => {
           this.inExecution = true;
           if (total !== this.total) {
             this.total = total;
-            this.messages = [];
-            this.existMore = true;
             this.loadMessages();
           }
         },
@@ -96,7 +93,7 @@ export class NotifyService {
   }
 
   public loadMessages() {
-    if (this.existMore && !this.loadingMsg) {
+    if (!this.loadingMsg) {
       this.loadingMsg = true;
       this.http
         .get<
@@ -104,17 +101,21 @@ export class NotifyService {
         >(`${environment.END_POINT}/notification?skip=${this.messages.length}`)
         .subscribe({
           next: (d) => {
-            this.loadingMsg = false;
-            if (d.length < 15) {
-              this.existMore = false;
-            }
-            d.forEach((s) => {
-              this.messages.push({
-                ...s,
-                icono: s.isNew ? farCircle : fasCircle,
-                title: s.isNew ? markAsRead : markAsNotRead,
+            setTimeout(() => {
+              this.loadingMsg = false;
+              d.forEach((s) => {
+                this.messages.push({
+                  ...s,
+                  icono: s.isNew ? farCircle : fasCircle,
+                  title: s.isNew ? markAsRead : markAsNotRead,
+                });
               });
-            });
+              this.messages.sort((a, b) => {
+                return (
+                  new Date(b.create).getTime() - new Date(a.create).getTime()
+                );
+              });
+            }, 1000);
           },
           error: () => {
             this.loadingMsg = false;
@@ -124,15 +125,20 @@ export class NotifyService {
   }
 
   public changeRead(msg: MessagesType) {
-    this.http.post(`${environment.END_POINT}/notification/mark/${msg.id}`, {});
-    msg.isNew = !msg.isNew;
-    if (msg.isNew) {
-      msg.icono = farCircle;
-      msg.title = markAsRead;
-    } else {
-      msg.icono = fasCircle;
-      msg.title = markAsNotRead;
-    }
+    this.http
+      .post(`${environment.END_POINT}/notification/mark/${msg.id}`, {})
+      .subscribe({
+        next: () => {
+          msg.isNew = !msg.isNew;
+          if (msg.isNew) {
+            msg.icono = farCircle;
+            msg.title = markAsRead;
+          } else {
+            msg.icono = fasCircle;
+            msg.title = markAsNotRead;
+          }
+        },
+      });
   }
 
   public markAll() {

@@ -20,6 +20,7 @@ import { HomeService } from '../../../../../shared/services/home.service';
 import { StorageService } from '../../../../../shared/services/storage.service';
 import { SharedModule } from '../../../../../shared/shared.module';
 import { DebtComponent } from './debt.component';
+import { DialogHeaderComponent } from './dialog-header/dialog-header.component';
 
 @Component({
   selector: 'cs-launch-debt',
@@ -36,11 +37,15 @@ class LaunchComponent {
     this.ref = this.dialogService.open(DebtComponent, {
       width: this.width,
       footer: ' ',
-      header: '',
-      styleClass: 'simple-dialog',
+      header: 'Agrega cobros del servicio Servicio usuario nuevo',
+      styleClass: 'modal-custom-cs modal-thin',
       style: { 'max-height': 'none' },
       dismissableMask: true,
       focusOnShow: false,
+      focusTrap: false,
+      templates: {
+        header: DialogHeaderComponent,
+      },
     });
 
     this.ref.onClose.subscribe((result) => {

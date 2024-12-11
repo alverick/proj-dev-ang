@@ -1,5 +1,4 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { isNotEmpty } from 'ramda';
 
 import {
   currencies,
@@ -39,7 +38,6 @@ export const reducerCompany = createReducer(
     return {
       ...state,
       currencyLimits: currencyLimits,
-      useAmountLimits: isNotEmpty(currencyLimits),
     };
   }),
   on(CompanyActions.loadCompanyFailure, (state, action): State => state),

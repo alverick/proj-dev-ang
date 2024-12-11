@@ -4,6 +4,7 @@ import {
   type ProcessStatus,
   processStatus,
 } from '../app/shared/constants/process';
+import { type IErrorObj } from '../app/shared/models/error.model';
 import { environment } from '../environments/environment';
 
 const serverApi = (path: string) => {
@@ -70,7 +71,8 @@ export const handlers = [
   http.get(serverApi('/debt/process/:process/status'), async function* () {
     let counter = 1;
     await delay();
-    const { saving, validating, validated, completed, created } = processStatus;
+    const { saving, validating, validated, completed, created, rejected } =
+      processStatus;
     let status: ProcessStatus = created;
     const getProcess = (counter: number) => {
       const processSteps: ProcessStatus[] = [
@@ -78,19 +80,31 @@ export const handlers = [
         validating,
         validated,
         saving,
-        completed,
+        rejected,
       ];
       const selectedKey = Math.floor(counter / 5);
       return processSteps[selectedKey];
     };
-    while (status !== completed) {
+    while (status !== rejected) {
       counter++;
       status = getProcess(counter);
 
+      const errors: IErrorObj[] =
+        status === rejected
+          ? [
+              {
+                code: 1,
+                row: 10,
+                description:
+                  'El código deudor ingresado ya existe, el nombre existente se va a mantener',
+              },
+            ]
+          : [];
+
       yield HttpResponse.json({
         status,
-        errors: [],
-        rowsUploaded: -4,
+        errors: errors,
+        rowsUploaded: 2,
         rowsRejected: 2,
         advance: 100,
         phase: 3,

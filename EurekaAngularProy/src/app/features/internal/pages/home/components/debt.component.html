@@ -5,12 +5,9 @@
     (submit)="grabarNuevo()"
     autocomplete="off"
     class="content"
+    #formDirective="ngForm"
   >
     <input type="hidden" name="hidden" />
-    <div class="tw-text-xs">Agregar cobro del servicio</div>
-    <div class="tw-mb-2 tw-text-2xl tw-font-medium">
-      {{ excelService.service.name }}
-    </div>
     <div class="form-row tw-gap-2 sm:tw-flex">
       <cs-label-control
         class="tw-w-full"
@@ -53,91 +50,99 @@
         ></cs-label-control>
       }
     </div>
-    <div class="form-row">
-      <cs-label-control
-        class="tw-w-full"
-        formControlName="code"
-        [errorMessages]="formErrors.code"
-      >
-        Código
-        <div class="tw-relative tw-w-full" control>
-          <input
-            type="text"
-            class="tw-w-full"
-            pInputText
-            pKeyFilter="alphanum"
-            [maxLength]="20"
-            formControlName="code"
-          />
-          @if (loaderDebtorCode) {
-            <span
-              class="tw-pointer-events-none tw-absolute tw-right-4 tw-top-1/2 tw-flex -tw-translate-y-1/2 tw-items-center tw-gap-2 tw-text-xs tw-text-extended-grey-2"
-              >Buscando...<i
-                class="pi pi-spin pi-spinner tw-text-primary-green-1"
-              ></i
-            ></span>
-          }
-        </div>
-      </cs-label-control>
-    </div>
-    <div class="form-row">
-      <cs-label-control
-        formControlName="firstName"
-        class="tw-w-full"
-        [errorMessages]="formErrors.firstName"
-      >
-        Nombre
-        <input
-          control
-          type="text"
-          class="tw-w-full"
-          pInputText
-          minlength="3"
-          [pKeyFilter]="validNameRegex"
-          [maxLength]="80"
-          formControlName="firstName"
-        />
-      </cs-label-control>
-    </div>
-    @if (!isPartial) {
+    <div
+      class="tw-grid tw-grid-cols-2 tw-gap-2 [@media_((min-height:780px))]:tw-block"
+    >
       <div class="form-row">
         <cs-label-control
-          formControlName="concept"
           class="tw-w-full"
-          [errorMessages]="formErrors.concept"
+          formControlName="code"
+          [errorMessages]="formErrors.code"
         >
-          Concepto
-          <input
-            type="text"
-            class="tw-w-full"
-            pInputText
-            [pKeyFilter]="alphaNumSpaceRegex"
-            minlength="2"
-            [maxLength]="16"
-            formControlName="concept"
-          />
+          Código
+          <div class="tw-relative tw-w-full" control>
+            <input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              pKeyFilter="alphanum"
+              [maxLength]="20"
+              formControlName="code"
+            />
+            @if (loaderDebtorCode) {
+              <span
+                class="tw-pointer-events-none tw-absolute tw-right-4 tw-top-1/2 tw-flex -tw-translate-y-1/2 tw-items-center tw-gap-2 tw-text-xs tw-text-extended-grey-2"
+                >Buscando...<i
+                  class="pi pi-spin pi-spinner tw-text-primary-green-1"
+                ></i
+              ></span>
+            }
+          </div>
         </cs-label-control>
       </div>
       <div class="form-row">
         <cs-label-control
-          formControlName="amount"
+          formControlName="firstName"
           class="tw-w-full"
-          [errorMessages]="formErrors.amount"
+          [errorMessages]="formErrors.firstName"
         >
-          Monto
-          <p-inputNumber
+          Nombre
+          <input
+            control
+            type="text"
             class="tw-w-full"
-            styleClass="tw-w-full"
-            mode="decimal"
-            [min]="0"
-            [max]="limitAmountMax"
-            [prefix]="excelService.service.currencySymbol"
-            [minFractionDigits]="2"
-            [maxFractionDigits]="2"
-            [placeholder]="amountWithSymbolLabel"
-            formControlName="amount"
+            pInputText
+            minlength="3"
+            [pKeyFilter]="validNameRegex"
+            [maxLength]="80"
+            formControlName="firstName"
           />
         </cs-label-control>
+      </div>
+    </div>
+    @if (!isPartial) {
+      <div
+        class="tw-grid tw-grid-cols-2 tw-gap-2 [@media_((min-height:780px))]:tw-block"
+      >
+        <div class="form-row">
+          <cs-label-control
+            formControlName="concept"
+            class="tw-w-full"
+            [errorMessages]="formErrors.concept"
+          >
+            Concepto
+            <input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              [pKeyFilter]="alphaNumSpaceRegex"
+              minlength="2"
+              [maxLength]="16"
+              formControlName="concept"
+            />
+          </cs-label-control>
+        </div>
+        <div class="form-row">
+          <cs-label-control
+            formControlName="amount"
+            class="tw-w-full"
+            [errorMessages]="formErrors.amount"
+          >
+            Monto
+            <p-inputNumber
+              class="tw-w-full"
+              styleClass="tw-w-full"
+              mode="decimal"
+              [min]="0"
+              [max]="limitAmountMax"
+              [prefix]="excelService.service.currencySymbol"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              [placeholder]="amountWithSymbolLabel"
+              formControlName="amount"
+            />
+          </cs-label-control>
+        </div>
       </div>
     }
     <div class="tw-mt-2 tw-flex tw-justify-center tw-gap-2">
@@ -147,7 +152,6 @@
         pRipple
         icon="pi pi-save"
         label="Grabar"
-        iconPos="right"
       ></button>
       <button
         type="button"
@@ -157,7 +161,6 @@
         icon="pi pi-times-circle"
         (click)="cerrarDialog()"
         label="Cerrar"
-        iconPos="right"
       ></button>
     </div>
   </form>
