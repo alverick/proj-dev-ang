@@ -103,24 +103,17 @@ export class NotifyService {
           next: (d) => {
             setTimeout(() => {
               this.loadingMsg = false;
-              const firstLoad = this.messages.length === 0;
-              if (!firstLoad) {
-                d.reverse();
-              }
               d.forEach((s) => {
-                if (firstLoad) {
-                  this.messages.push({
-                    ...s,
-                    icono: s.isNew ? farCircle : fasCircle,
-                    title: s.isNew ? markAsRead : markAsNotRead,
-                  });
-                } else {
-                  this.messages.unshift({
-                    ...s,
-                    icono: s.isNew ? farCircle : fasCircle,
-                    title: s.isNew ? markAsRead : markAsNotRead,
-                  });
-                }
+                this.messages.push({
+                  ...s,
+                  icono: s.isNew ? farCircle : fasCircle,
+                  title: s.isNew ? markAsRead : markAsNotRead,
+                });
+              });
+              this.messages.sort((a, b) => {
+                return (
+                  new Date(b.create).getTime() - new Date(a.create).getTime()
+                );
               });
             }, 1000);
           },
