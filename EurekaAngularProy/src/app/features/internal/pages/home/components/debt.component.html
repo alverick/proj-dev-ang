@@ -87,11 +87,12 @@
         >
           Nombre
           <p-iconField control iconPosition="right" class="tw-w-full">
-            <p-inputIcon
-              *ngIf="debtorExistent()"
-              (click)="resetName()"
-              styleClass="pi pi-times tw-cursor-pointer"
-            />
+            @if (debtorExistent()) {
+              <p-inputIcon
+                (click)="resetName()"
+                styleClass="pi pi-times tw-cursor-pointer"
+              />
+            }
             <input
               type="text"
               class="tw-w-full"
@@ -104,15 +105,14 @@
           </p-iconField>
         </cs-label-control>
       </div>
-      <cs-message-alert
-        *ngIf="debtorExistent()"
-        class="tw-col-start-2 tw-mb-2"
-        mode="warning"
-        ><div class="tw-text-xs">
-          El código deudor ya tiene un nombre asociado (Para cambiar el nombre
-          ir a la sección Mis Movimientos en la opción editar cobros)
-        </div></cs-message-alert
-      >
+      @if (debtorExistent()) {
+        <cs-message-alert class="tw-col-start-2 tw-mb-2" mode="warning"
+          ><div class="tw-text-xs">
+            El código deudor ya tiene un nombre asociado (Para cambiar el nombre
+            ir a la sección Mis Movimientos en la opción editar cobros)
+          </div></cs-message-alert
+        >
+      }
     </div>
     @if (!isPartial) {
       <div
