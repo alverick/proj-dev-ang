@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { pathEq } from 'ramda';
 
 import { authFullRoutingNames } from '../../auth-routing.names';
+import { CompanyFormRegistrationComponent } from '../../components/company-form-registration/company-form-registration.component';
+import { SidebarCompanyComponent } from '../../components/sidebar-company/sidebar-company.component';
 import {
   documentTypes,
   errorsRegisterForm,
@@ -15,6 +17,8 @@ import { AffiliationService } from '../../services';
   selector: 'cs-company-registration',
   templateUrl: './company-registration.page.html',
   styleUrls: ['./company-registration.page.scss'],
+  standalone: true,
+  imports: [SidebarCompanyComponent, CompanyFormRegistrationComponent],
 })
 export class CompanyRegistrationPage implements OnInit {
   registerForm: UntypedFormGroup;

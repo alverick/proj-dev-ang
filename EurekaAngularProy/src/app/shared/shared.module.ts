@@ -121,9 +121,6 @@ const UI_MODULES = [FontAwesomeModule, OverlayModule];
     NgOptimizedImage,
     NgClickOutsideDirective,
     ServiceChannelChipComponent,
-  ],
-  providers: [...SERVICES, ...RESOLVERS, ...DATA_SERVICES],
-  declarations: [
     OnlyNumbersFormDirective,
     OnlyNumbersDirective,
     BlockCopyPasteDirective,
@@ -145,6 +142,7 @@ const UI_MODULES = [FontAwesomeModule, OverlayModule];
     ...PIPES,
     ControlRulesPoliciesComponent,
   ],
+  providers: [...SERVICES, ...RESOLVERS, ...DATA_SERVICES],
   exports: [
     NgClickOutsideDirective,
     OnlyNumbersFormDirective,

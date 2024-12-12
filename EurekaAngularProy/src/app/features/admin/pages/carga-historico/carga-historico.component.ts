@@ -1,7 +1,13 @@
-import { type OnInit, Component } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { Component, type OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { saveAs } from 'file-saver';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
+import { TooltipModule } from 'primeng/tooltip';
 
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { QueryDataService } from '../../../../shared/data';
 import { ProcessService } from '../../../../shared/services/process.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
@@ -10,6 +16,16 @@ import { swalAlert } from '../../../../shared/utils/helpers/popups';
   selector: 'cs-carga-historico',
   templateUrl: './carga-historico.component.html',
   styleUrls: ['./carga-historico.component.scss'],
+  standalone: true,
+  imports: [
+    ButtonDirective,
+    Ripple,
+    TooltipModule,
+    NgxPaginationModule,
+    FooterComponent,
+    DecimalPipe,
+    DatePipe,
+  ],
 })
 export class CargaHistoricoComponent implements OnInit {
   items: any[] = [];
@@ -19,7 +35,7 @@ export class CargaHistoricoComponent implements OnInit {
   constructor(
     private processService: ProcessService,
     private route: ActivatedRoute,
-    private queryDataService: QueryDataService
+    private queryDataService: QueryDataService,
   ) {}
 
   ngOnInit(): void {

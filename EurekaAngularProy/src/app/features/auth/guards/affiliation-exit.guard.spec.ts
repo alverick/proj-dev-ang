@@ -13,6 +13,6 @@ describe('AffiliationExitGuard', () => {
     [AffiliationExitGuard],
     (guard: AffiliationExitGuard) => {
       void expect(guard).toBeTruthy();
-    }
+    },
   ));
 });

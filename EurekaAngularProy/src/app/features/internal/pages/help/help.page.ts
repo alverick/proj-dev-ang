@@ -1,5 +1,6 @@
 import { type AfterViewInit, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccordionModule } from 'primeng/accordion';
 import { pathOr } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 
@@ -16,6 +17,8 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
 @Component({
   selector: 'cs-help',
   templateUrl: './help.page.html',
+  standalone: true,
+  imports: [AccordionModule],
 })
 export class HelpPage implements AfterViewInit {
   /**
@@ -23,12 +26,15 @@ export class HelpPage implements AfterViewInit {
    */
   activeIndex: number;
 
-  constructor(private router: Router, protected tracking: TrackingService) {
+  constructor(
+    private router: Router,
+    protected tracking: TrackingService,
+  ) {
     const navigation = this.router.getCurrentNavigation();
     const section = pathOr<string>(
       null,
       ['extras', 'state', 'section'],
-      navigation
+      navigation,
     );
     if (section === sectionCommissions) {
       this.activeIndex = 6;
@@ -38,7 +44,7 @@ export class HelpPage implements AfterViewInit {
   ngAfterViewInit(): void {
     if (isNotNil(this.activeIndex)) {
       const accordion = document.querySelector(
-        `.p-accordion.p-component p-accordiontab:nth-child(${this.activeIndex})`
+        `.p-accordion.p-component p-accordiontab:nth-child(${this.activeIndex})`,
       );
 
       if (isNotNil(accordion)) {

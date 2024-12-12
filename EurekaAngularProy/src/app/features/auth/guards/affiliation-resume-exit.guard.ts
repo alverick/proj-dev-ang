@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
   type ActivatedRouteSnapshot,
+  Router,
   type RouterStateSnapshot,
   type UrlTree,
-  Router,
 } from '@angular/router';
 import { pathEq } from 'ramda';
 import { type Observable } from 'rxjs';
@@ -22,7 +22,7 @@ export class AffiliationResumeExitGuard {
     _component: ServiceResumePage,
     _currentRoute: ActivatedRouteSnapshot,
     _currentState: RouterStateSnapshot,
-    nextState: RouterStateSnapshot
+    nextState: RouterStateSnapshot,
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

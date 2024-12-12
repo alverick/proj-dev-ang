@@ -10,6 +10,7 @@
               [stateList]="states"
               [stateTypeList]="solicitudes"
               [gtpMode]="true"
+              [multipleState]="true"
               (sendForm)="searchDebts($event)"
               (resetForm)="resetDebts()"
             ></cs-payments-filter>
@@ -52,28 +53,25 @@
                 <thead>
                   <tr>
                     <th class="c0"></th>
-                    <th
-                      class="{{ items.class }}"
-                      *ngFor="let items of herderTable; let i = index"
-                    >
-                      <button
-                        class="text tw-flex tw-items-center"
-                        style="cursor: pointer"
-                        (click)="orderList(items)"
-                      >
-                        {{ items.name }}
-                        <div class="ord">
-                          <div
-                            *ngIf="items.asc == true && items.orderBy == i"
-                            class="up"
-                          ></div>
-                          <div
-                            *ngIf="items.asc == false && items.orderBy == i"
-                            class="down"
-                          ></div>
-                        </div>
-                      </button>
-                    </th>
+                    @for (items of herderTable; track items; let i = $index) {
+                      <th class="{{ items.class }}">
+                        <button
+                          class="text tw-flex tw-items-center"
+                          style="cursor: pointer"
+                          (click)="orderList(items)"
+                        >
+                          {{ items.name }}
+                          <div class="ord">
+                            @if (items.asc == true && items.orderBy == i) {
+                              <div class="up"></div>
+                            }
+                            @if (items.asc == false && items.orderBy == i) {
+                              <div class="down"></div>
+                            }
+                          </div>
+                        </button>
+                      </th>
+                    }
                     <th class="c7"></th>
                   </tr>
                 </thead>
@@ -83,111 +81,119 @@
                   <thead class="tw-hidden">
                     <tr>
                       <th class="c0" scope="col"></th>
-                      <th
-                        class="{{ items.class }}"
-                        *ngFor="let items of herderTable; let i = index"
-                        scope="col"
-                      >
-                        {{ items.name }}
-                      </th>
+                      @for (items of herderTable; track items; let i = $index) {
+                        <th class="{{ items.class }}" scope="col">
+                          {{ items.name }}
+                        </th>
+                      }
                       <th class="c7" scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      *ngFor="
-                        let items of gtpService.EnterprisesItems.listCompanyGTP
-                          | paginate
-                            : {
-                                itemsPerPage: 50,
-                                currentPage: currentFilter.pageNumber,
-                                totalItems:
-                                  gtpService.EnterprisesItems.totalCompanies,
+                    @for (
+                      items of gtpService.EnterprisesItems.listCompanyGTP
+                        | paginate
+                          : {
+                              itemsPerPage: 50,
+                              currentPage: currentFilter.pageNumber,
+                              totalItems:
+                                gtpService.EnterprisesItems.totalCompanies,
+                            };
+                      track items
+                    ) {
+                      <tr>
+                        <td class="c0"></td>
+                        <td class="c1">
+                          {{ items.requestDate | date: 'dd/MM/yy' }}
+                        </td>
+                        <td class="c2">{{ items.ruc }}</td>
+                        <td class="c3">{{ items.cu }}</td>
+                        <td class="c4">{{ items.nameEnterprise }}</td>
+                        <td class="c5">
+                          @for (
+                            request of items?.requestTypeList;
+                            track request
+                          ) {
+                            <div class="tw-m-2">
+                              @if (request.type == 0) {
+                                <div>
+                                  <span class="badge tw-bg-primary-green-1">{{
+                                    request.texto
+                                  }}</span>
+                                </div>
                               }
-                      "
-                    >
-                      <td class="c0"></td>
-                      <td class="c1">
-                        {{ items.requestDate | date: 'dd/MM/yy' }}
-                      </td>
-                      <td class="c2">{{ items.ruc }}</td>
-                      <td class="c3">{{ items.cu }}</td>
-                      <td class="c4">{{ items.nameEnterprise }}</td>
-                      <td class="c5">
-                        <div
-                          class="tw-m-2"
-                          *ngFor="let request of items?.requestTypeList"
-                        >
-                          <div *ngIf="request.type == 0">
-                            <span class="badge tw-bg-primary-green-1">{{
-                              request.texto
-                            }}</span>
-                          </div>
-                        </div>
-                        <div
-                          class="tw-m-2"
-                          *ngFor="let request of items?.requestTypeList"
-                        >
-                          <div *ngIf="request.type == 1">
-                            <span class="badge tw-bg-extended-yellow-1">{{
-                              request.texto
-                            }}</span>
-                          </div>
-                          <div *ngIf="request.type == 2">
-                            <span class="badge tw-bg-primary-green-1">{{
-                              request.texto
-                            }}</span>
-                          </div>
-                          <div
-                            *ngIf="request.type == 3"
-                            pTooltip="{{ request.detalles }}"
+                            </div>
+                          }
+                          @for (
+                            request of items?.requestTypeList;
+                            track request
+                          ) {
+                            <div class="tw-m-2">
+                              @if (request.type == 1) {
+                                <div>
+                                  <span class="badge tw-bg-extended-yellow-1">{{
+                                    request.texto
+                                  }}</span>
+                                </div>
+                              }
+                              @if (request.type == 2) {
+                                <div>
+                                  <span class="badge tw-bg-primary-green-1">{{
+                                    request.texto
+                                  }}</span>
+                                </div>
+                              }
+                              @if (request.type == 3) {
+                                <div pTooltip="{{ request.detalles }}">
+                                  <span class="badge tw-bg-extended-yellow-1">{{
+                                    request.texto
+                                  }}</span>
+                                </div>
+                              }
+                            </div>
+                          }
+                          <!-- -->
+                        </td>
+                        <td class="c6">{{ items.status }}</td>
+                        <td class="c7">
+                          <button
+                            type="button"
+                            class="f3 btn-eureca-green"
+                            title="Ver datos"
+                            (click)="Aprobar(items.clientId)"
                           >
-                            <span class="badge tw-bg-extended-yellow-1">{{
-                              request.texto
-                            }}</span>
-                          </div>
-                        </div>
-                        <!-- -->
-                      </td>
-
-                      <td class="c6">{{ items.status }}</td>
-                      <td class="c7">
-                        <button
-                          type="button"
-                          class="f3 btn-eureca-green"
-                          title="Ver datos"
-                          (click)="Aprobar(items.clientId)"
-                        >
-                          <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                        </button>
-
-                        <button
-                          *ngIf="items.status === 'PendientePAG'"
-                          type="button"
-                          class="f3 btn-eureca-yellow tw-mx-2 tw-mt-1"
-                          (click)="onUpdateEAG(items.clientId)"
-                        >
-                          <i class="fa fa-refresh" aria-hidden="true"></i>
-                        </button>
-
-                        <button
-                          type="button"
-                          class="f3 btn-outline-green tw-mx-2 tw-mt-1"
-                          title="Ver Cargas de Datos"
-                          [routerLink]="[linkHistory, items.clientId]"
-                        >
-                          <i class="fa fa-external-link" aria-hidden="true"></i>
-                        </button>
-                      </td>
-                    </tr>
-                    <tr
-                      style="border-bottom: #13131300"
-                      *ngIf="ceroRegistros()"
-                    >
-                      <td colspan="13" class="texto-after">
-                        <span>{{ messageTable }}</span>
-                      </td>
-                    </tr>
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                          </button>
+                          @if (items.status === 'PendientePAG') {
+                            <button
+                              type="button"
+                              class="f3 btn-eureca-yellow tw-mx-2 tw-mt-1"
+                              (click)="onUpdateEAG(items.clientId)"
+                            >
+                              <i class="fa fa-refresh" aria-hidden="true"></i>
+                            </button>
+                          }
+                          <button
+                            type="button"
+                            class="f3 btn-outline-green tw-mx-2 tw-mt-1"
+                            title="Ver Cargas de Datos"
+                            [routerLink]="[linkHistory, items.clientId]"
+                          >
+                            <i
+                              class="fa fa-external-link"
+                              aria-hidden="true"
+                            ></i>
+                          </button>
+                        </td>
+                      </tr>
+                    }
+                    @if (ceroRegistros()) {
+                      <tr style="border-bottom: #13131300">
+                        <td colspan="13" class="texto-after">
+                          <span>{{ messageTable }}</span>
+                        </td>
+                      </tr>
+                    }
                   </tbody>
                 </table>
               </div>
@@ -204,79 +210,89 @@
                       class="pagination-previous"
                       [class.disabled]="p.isFirstPage()"
                     >
-                      <a
-                        tabindex="0"
-                        *ngIf="1 < p.getCurrent()"
-                        (keyup.enter)="p.previous()"
-                        (click)="p.previous()"
+                      @if (1 < p.getCurrent()) {
+                        <a
+                          tabindex="0"
+                          (keyup.enter)="p.previous()"
+                          (click)="p.previous()"
+                        >
+                          <img
+                            alt="Anterior"
+                            class="tw-inline"
+                            src="/assets/images/before.svg"
+                          />
+                        </a>
+                      }
+                      @if (p.isFirstPage()) {
+                        <span>
+                          <img
+                            alt="Anterior"
+                            class="tw-inline"
+                            src="/assets/images/before.svg"
+                          />
+                        </span>
+                      }
+                    </li>
+                    @if (p.pages.length === 0) {
+                      <li class="current">
+                        <span>1</span>
+                      </li>
+                    }
+                    @for (page of p.pages; track page) {
+                      <li
+                        [class.current]="p.getCurrent() === page.value"
+                        [class.ellipsis]="page.label === '...'"
                       >
-                        <img
-                          alt="Anterior"
-                          class="tw-inline"
-                          src="/assets/images/before.svg"
-                        />
-                      </a>
-                      <span *ngIf="p.isFirstPage()">
-                        <img
-                          alt="Anterior"
-                          class="tw-inline"
-                          src="/assets/images/before.svg"
-                        />
-                      </span>
-                    </li>
-                    <li *ngIf="p.pages.length === 0" class="current">
-                      <span>1</span>
-                    </li>
-                    <li
-                      *ngFor="let page of p.pages"
-                      [class.current]="p.getCurrent() === page.value"
-                      [class.ellipsis]="page.label === '...'"
-                    >
-                      <a
-                        class="numpag"
-                        tabindex="0"
-                        (keyup.enter)="p.setCurrent(page.value)"
-                        (click)="p.setCurrent(page.value)"
-                        *ngIf="p.getCurrent() !== page.value"
-                      >
-                        <span>{{
-                          page.label === '...'
-                            ? page.label
-                            : (page.label | number: '')
-                        }}</span>
-                      </a>
-                      <ng-container *ngIf="p.getCurrent() === page.value">
-                        <span>{{
-                          page.label === '...'
-                            ? page.label
-                            : (page.label | number: '')
-                        }}</span>
-                      </ng-container>
-                    </li>
+                        @if (p.getCurrent() !== page.value) {
+                          <a
+                            class="numpag"
+                            tabindex="0"
+                            (keyup.enter)="p.setCurrent(page.value)"
+                            (click)="p.setCurrent(page.value)"
+                          >
+                            <span>{{
+                              page.label === '...'
+                                ? page.label
+                                : (page.label | number: '')
+                            }}</span>
+                          </a>
+                        }
+                        @if (p.getCurrent() === page.value) {
+                          <span>{{
+                            page.label === '...'
+                              ? page.label
+                              : (page.label | number: '')
+                          }}</span>
+                        }
+                      </li>
+                    }
                     <li
                       class="pagination-next"
                       [class.disabled]="p.isLastPage()"
                     >
-                      <a
-                        class="pr-0"
-                        tabindex="0"
-                        *ngIf="!p.isLastPage()"
-                        (keyup.enter)="p.next()"
-                        (click)="p.next()"
-                      >
-                        <img
-                          alt="Siguiente"
-                          class="tw-inline"
-                          src="/assets/images/after.svg"
-                        />
-                      </a>
-                      <span class="pr-0" *ngIf="p.isLastPage()">
-                        <img
-                          alt="Siguiente"
-                          class="tw-inline"
-                          src="/assets/images/after.svg"
-                        />
-                      </span>
+                      @if (!p.isLastPage()) {
+                        <a
+                          class="pr-0"
+                          tabindex="0"
+                          (keyup.enter)="p.next()"
+                          (click)="p.next()"
+                        >
+                          <img
+                            alt="Siguiente"
+                            class="tw-inline"
+                            src="/assets/images/after.svg"
+                          />
+                        </a>
+                      }
+                      @if (p.isLastPage()) {
+                        <span class="pr-0">
+                          <img
+                            alt="Siguiente"
+                            class="tw-inline"
+                            src="/assets/images/after.svg"
+                          />
+                        </span>
+                      }
                     </li>
                   </ul>
                 </pagination-template>

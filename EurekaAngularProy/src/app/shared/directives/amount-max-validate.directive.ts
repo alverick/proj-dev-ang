@@ -1,8 +1,8 @@
 import { Directive, Input } from '@angular/core';
 import {
   type AbstractControl,
-  type ValidationErrors,
   NG_VALIDATORS,
+  type ValidationErrors,
 } from '@angular/forms';
 import { isNilOrEmpty } from 'ramda-adjunct';
 
@@ -17,6 +17,7 @@ import { type CurrencyWithLimit } from '../constants/currencies';
       multi: true,
     },
   ],
+  standalone: true,
 })
 export class AmountMaxValidateDirective {
   @Input() maxAmountLimits: CurrencyWithLimit[] = [];
@@ -28,7 +29,7 @@ export class AmountMaxValidateDirective {
     }
     const amount = parseFloat(control.value);
     const limit = this.maxAmountLimits.find(
-      (currency) => currency.symbol === this.currencySymbol
+      (currency) => currency.symbol === this.currencySymbol,
     ).limitMax;
     if (amount > limit) {
       return { amountMax: true };

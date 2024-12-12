@@ -9,8 +9,7 @@ import {
 } from '@storybook/angular';
 
 import { type DateList } from '../../models/dateList';
-import { type StatesGtp } from '../../models/states-gtp';
-import { type WayPay } from '../../models/way-pay';
+import type { StatesGtp } from '../../models/states-gtp';
 import { SharedModule } from '../../shared.module';
 import { PaymentsFilterComponent } from './payments-filter.component';
 
@@ -29,10 +28,11 @@ const meta: Meta<PaymentsFilterComponent> = {
 export default meta;
 
 const listStates: StatesGtp[] = [
-  { idState: 'state-1', descripcion: 'Domiciliaciones state' },
-];
-const wayPay: WayPay[] = [
-  { idWayPay: 'way-da', descripcion: 'Domiciliaciones way' },
+  { idState: 'Pendiente', descripcion: 'Pendiente' },
+  { idState: 'Atendido', descripcion: 'Atendido' },
+  { idState: 'Devuelto a la empresa', descripcion: 'Devuelto a la Empresa' },
+  { idState: 'Rechazado', descripcion: 'Rechazado' },
+  { idState: 'Desafiliado', descripcion: 'Desafiliado' },
 ];
 
 const listDates: DateList[] = [
@@ -232,6 +232,49 @@ const services = [
   },
 ];
 
+const categories = [
+  {
+    code: '33',
+    name: 'CLUBS CERT II',
+  },
+  {
+    code: '34',
+    name: 'COLEGIOS II',
+  },
+  {
+    code: '36',
+    name: 'ENT ESTADO II',
+  },
+  {
+    code: '38',
+    name: 'EVARIAS CSIII',
+  },
+  {
+    code: '39',
+    name: 'IB OPER.INTII',
+  },
+  {
+    code: '40',
+    name: 'INMOBILIAR II',
+  },
+  {
+    code: '32',
+    name: 'SEGURO/OTROII',
+  },
+  {
+    code: '31',
+    name: 'SERVICIOS II',
+  },
+  {
+    code: '35',
+    name: 'UNIV/INST II',
+  },
+  {
+    code: '37',
+    name: 'VARIOS II',
+  },
+];
+
 const initial = {
   ...initialOrig,
   payment: initialOrig.payment.code,
@@ -250,7 +293,7 @@ export const Normal: Story = {
 
 export const Gtp: Story = {
   args: {
-    stateList: wayPay,
+    stateList: listStates,
     stateTypeList: [
       { idState: 'EmpNuevo', descripcion: 'Empresa Nueva' },
       { idState: 'EmpMod', descripcion: 'Actualización de Empresa' },
@@ -258,5 +301,7 @@ export const Gtp: Story = {
       { idState: 'SvcNuevo', descripcion: 'Nuevos Servicios' },
     ],
     gtpMode: true,
+    services: categories,
+    multipleState: true,
   },
 };

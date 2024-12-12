@@ -1,10 +1,18 @@
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, type OnDestroy, type OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { saveAs } from 'file-saver';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { TooltipModule } from 'primeng/tooltip';
 import { all, equals } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { lastValueFrom, type Subscription, timer } from 'rxjs';
 
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
+import { PaymentsFilterComponent } from '../../../../shared/components/payments-filter/payments-filter.component';
 import { QueryDataService } from '../../../../shared/data';
 import { type IEntryModel } from '../../../../shared/models';
 import { type GtpFilter } from '../../../../shared/models/gtp-filter';
@@ -19,6 +27,19 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
   selector: 'cs-gtp-grilla',
   templateUrl: './gtp-grilla.page.html',
   styleUrls: ['./gtp-grilla.page.scss'],
+  standalone: true,
+  imports: [
+    PaymentsFilterComponent,
+    SplitButtonModule,
+    ButtonDirective,
+    Ripple,
+    TooltipModule,
+    RouterLink,
+    NgxPaginationModule,
+    FooterComponent,
+    DecimalPipe,
+    DatePipe,
+  ],
 })
 export class GtpGrillaPage implements OnInit, OnDestroy {
   messageTable = '';
@@ -49,7 +70,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     asc: false,
     inputSearch: '',
     BusinessHeading: '',
-    status: '',
+    status: [],
     statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
@@ -60,7 +81,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     asc: false,
     inputSearch: '',
     BusinessHeading: '',
-    status: '',
+    status: [],
     statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
@@ -71,7 +92,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     asc: true,
     inputSearch: '',
     BusinessHeading: '',
-    status: '',
+    status: [],
     statusSolicitud: '',
     dateFrom: null,
     dateTo: null,
@@ -166,7 +187,7 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
     }
   }
 
-  searchDebts(filterData: any) {
+  searchDebts(filterData) {
     const filter: GtpFilter = {
       ...this.initialFilter,
       ...filterData,

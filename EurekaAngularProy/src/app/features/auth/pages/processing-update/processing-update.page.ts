@@ -7,11 +7,15 @@ import { AffiliationService } from '../../services';
 @Component({
   selector: 'cs-processing-update',
   templateUrl: './processing-update.page.html',
+  standalone: true,
 })
 export class ProcessingUpdatePage implements OnInit {
   public email: string;
 
-  constructor(public affiliation: AffiliationService, private router: Router) {}
+  constructor(
+    public affiliation: AffiliationService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.email = this.affiliation.email;

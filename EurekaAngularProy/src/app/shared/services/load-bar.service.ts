@@ -1,8 +1,8 @@
 import {
-  type ComponentRef,
-  type ViewContainerRef,
   ComponentFactoryResolver,
+  type ComponentRef,
   Injectable,
+  type ViewContainerRef,
 } from '@angular/core';
 
 import { LoadBarComponent } from '../components/load-bar/load-bar.component';

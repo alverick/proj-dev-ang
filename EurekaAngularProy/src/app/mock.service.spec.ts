@@ -4,7 +4,7 @@ import { MockService } from './mock.service';
 
 describe('MockService', () => {
   beforeEach(() =>
-    TestBed.configureTestingModule({ providers: [MockService] })
+    TestBed.configureTestingModule({ providers: [MockService] }),
   );
 
   it('should be created', () => {

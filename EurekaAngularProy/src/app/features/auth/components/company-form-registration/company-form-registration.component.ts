@@ -1,3 +1,4 @@
+import { KeyValuePipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -5,8 +6,19 @@ import {
   type OnInit,
   Output,
 } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  ValidationErrorDirective,
+  ValidationErrorsComponent,
+} from 'ngx-valdemort';
+import { ButtonDirective } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { Ripple } from 'primeng/ripple';
 
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
+import { InputTrimSpacesDirective } from '../../../../shared/directives/input-trim-spaces.directive';
 import {
   IErrorMessages,
   type ModelFormGroup,
@@ -16,6 +28,21 @@ import { type RegisterForm } from '../../services/affiliation-forms.service';
 @Component({
   selector: 'cs-company-form-registration',
   templateUrl: './company-form-registration.component.html',
+  standalone: true,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    DropdownModule,
+    InputTextModule,
+    KeyFilterModule,
+    ValidationErrorsComponent,
+    ValidationErrorDirective,
+    InputTrimSpacesDirective,
+    ButtonDirective,
+    Ripple,
+    KeyValuePipe,
+  ],
 })
 export class CompanyFormRegistrationComponent implements OnInit {
   @Output() sendForm = new EventEmitter<Partial<RegisterForm>>();

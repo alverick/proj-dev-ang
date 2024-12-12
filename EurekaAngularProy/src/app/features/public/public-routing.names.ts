@@ -11,5 +11,5 @@ export const publicRoutingNames: IPublicRoutingNames = {
 
 export const publicFullRoutingNames: IPublicRoutingNames = generateFullRoutes(
   publicRoutingNames,
-  appModuleRoutingNames
+  appModuleRoutingNames,
 );

@@ -1,3 +1,4 @@
+import { KeyValuePipe, NgClass } from '@angular/common';
 import {
   type AfterContentInit,
   type AfterViewInit,
@@ -9,10 +10,21 @@ import {
   ViewChild,
 } from '@angular/core';
 import { type ControlValueAccessor, NgControl } from '@angular/forms';
+import {
+  ValidationErrorDirective,
+  ValidationErrorsComponent,
+} from 'ngx-valdemort';
 
 @Component({
   selector: 'cs-label-control',
   templateUrl: './label-control.component.html',
+  standalone: true,
+  imports: [
+    NgClass,
+    ValidationErrorsComponent,
+    ValidationErrorDirective,
+    KeyValuePipe,
+  ],
 })
 export class LabelControlComponent
   implements AfterViewInit, AfterContentInit, ControlValueAccessor

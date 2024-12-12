@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  type QueryParams,
   DefaultDataService,
   HttpUrlGenerator,
+  type QueryParams,
 } from '@ngrx/data';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -18,7 +18,7 @@ export class CollectAmountDataService extends DefaultDataService<CollectAmount> 
     private _httpClient: HttpClient,
     private store: Store<any>,
     httpUrlGenerator: HttpUrlGenerator,
-    private dashboardDataService: DashboardDataService
+    private dashboardDataService: DashboardDataService,
   ) {
     super('CollectAmount', _httpClient, httpUrlGenerator);
   }
@@ -38,8 +38,8 @@ export class CollectAmountDataService extends DefaultDataService<CollectAmount> 
             payload: err.message,
           });
           return of(err);
-        }
-      )
+        },
+      ),
     );
   }
 }

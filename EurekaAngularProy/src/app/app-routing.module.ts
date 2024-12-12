@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { type Routes, RouterModule } from '@angular/router';
+import { RouterModule, type Routes } from '@angular/router';
 
 import { appRoutingNames } from './app-routing.names';
 import {
@@ -18,7 +18,7 @@ const routes: Routes = [
     path: appRoutingNames.INTERNAL,
     loadChildren: () =>
       import('./features/internal/internal.module').then(
-        (m) => m.InternalModule
+        (m) => m.InternalModule,
       ),
   },
   {

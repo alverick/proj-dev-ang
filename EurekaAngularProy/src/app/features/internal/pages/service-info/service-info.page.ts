@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { ServiceStepInfoComponent } from '../../../../shared/components/service-step-info/service-step-info.component';
 import { ServicesFormsService } from '../../../../shared/services';
 import { type CompanyAccounts } from '../../../../shared/services/company.service';
 import {
@@ -17,6 +18,8 @@ import {
   selector: 'cs-internal-service-info',
   templateUrl: './service-info.page.html',
   styleUrls: ['./service-info.page.scss'],
+  standalone: true,
+  imports: [ServiceStepInfoComponent],
 })
 export class ServiceInfoPage {
   accounts: CompanyAccounts[];
@@ -25,7 +28,7 @@ export class ServiceInfoPage {
     private router: Router,
     public activatedRoute: ActivatedRoute,
     public serviceForms: ServicesFormsService,
-    protected tracking: TrackingService
+    protected tracking: TrackingService,
   ) {
     this.activatedRoute.data.subscribe((value) => {
       this.accounts = value.accounts as CompanyAccounts[];

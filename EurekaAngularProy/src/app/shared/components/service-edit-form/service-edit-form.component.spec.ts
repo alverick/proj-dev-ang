@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockProvider } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
 import { CheckboxModule } from 'primeng/checkbox';
-import { ChipModule } from "primeng/chip";
+import { ChipModule } from 'primeng/chip';
 import { DropdownModule } from 'primeng/dropdown';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { type UrlTree, Router } from '@angular/router';
+import { Router, type UrlTree } from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { type Observable } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { AffiliationService } from '../services';
 export class AffiliationRucGuard {
   constructor(
     private affiliation: AffiliationService,
-    private router: Router
+    private router: Router,
   ) {}
   canActivate():
     | Observable<boolean | UrlTree>

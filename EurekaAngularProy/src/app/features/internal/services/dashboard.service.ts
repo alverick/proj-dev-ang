@@ -7,7 +7,7 @@ import { CompanyService } from '../../../shared/services';
 export class DashboardService {
   constructor(
     private company: CompanyService,
-    private dashboard: DashboardDataService
+    private dashboard: DashboardDataService,
   ) {}
 
   getServices() {

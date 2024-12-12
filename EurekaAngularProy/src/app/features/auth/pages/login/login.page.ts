@@ -1,14 +1,27 @@
 import { Component, type OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
-import { type Password } from 'primeng/password';
+import { ButtonDirective } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { type Password, PasswordModule } from 'primeng/password';
+import { Ripple } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
 import { first } from 'rxjs/operators';
 
 import { environment } from '../../../../../environments/environment';
 import { internalFullRoutingNames } from '../../../../app-routing.collection';
+import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { errorsLoginForm } from '../../../../shared/constants/company-errors';
 import { AFFILIATION_SUSPENDED } from '../../../../shared/constants/message-service';
 import { loginResultStatus } from '../../../../shared/constants/session';
@@ -23,6 +36,7 @@ import {
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { appConfigFeature } from '../../../../store/reducers/app-config.reducer';
 import { authFullRoutingNames } from '../../auth-routing.names';
+import { LayoutFormComponent } from '../../components/layout-form/layout-form.component';
 
 const userData = environment.credentials[0];
 
@@ -37,6 +51,22 @@ interface LoginForm {
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   providers: [MessageService],
+  standalone: true,
+  imports: [
+    LayoutFormComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    LabelControlComponent,
+    InputTextModule,
+    KeyFilterModule,
+    CheckboxModule,
+    PasswordModule,
+    RouterLink,
+    ButtonDirective,
+    Ripple,
+    LetDirective,
+    ToastModule,
+  ],
 })
 export class LoginPage implements OnInit {
   public loginForm: ModelFormGroup<LoginForm>;

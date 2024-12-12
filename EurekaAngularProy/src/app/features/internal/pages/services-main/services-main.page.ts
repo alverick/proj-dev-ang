@@ -1,9 +1,16 @@
 import { Component, type OnDestroy, type OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+  Scroll,
+} from '@angular/router';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { type Observable, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
+import { SidebarServiceComponent } from '../../../../shared/components/sidebar-service/sidebar-service.component';
 import {
   currencies,
   type CurrencyWithLimit,
@@ -24,6 +31,8 @@ import { CompanyServicesService } from '../../services';
 @Component({
   selector: 'cs-internal-services-main',
   templateUrl: './services-main.page.html',
+  standalone: true,
+  imports: [SidebarServiceComponent, RouterOutlet],
 })
 export class ServicesMainPage implements OnInit, OnDestroy {
   destroy$ = new Subject();

@@ -6,9 +6,9 @@
   class="tw-max-w-2xl"
 >
   <div
-    class="form-container tw-border-solid tw-border-extended-grey-3 tw-border tw-rounded tw-px-5 md:tw-px-10 xl:tw-px-16 tw-py-14"
+    class="form-container tw-rounded tw-border tw-border-solid tw-border-extended-grey-3 tw-px-5 tw-py-14 md:tw-px-10 xl:tw-px-16"
   >
-    <h2 class="tw-font-medium tw-text-2xl tw-mb-7">Ingresa tus datos</h2>
+    <h2 class="tw-mb-7 tw-text-2xl tw-font-medium">Ingresa tus datos</h2>
     <div class="form-controls tw-max-w-xl">
       <div class="form-elm lg:tw-flex lg:tw-gap-4">
         <cs-label-control
@@ -36,11 +36,14 @@
             formControlName="documentNumber"
           />
           <val-errors validation-messages controlName="documentNumber">
-            <ng-template
-              [valError]="error.key"
-              *ngFor="let error of errorMessages.documentNumber | keyvalue"
-              >{{ error.value }}</ng-template
-            >
+            @for (
+              error of errorMessages.documentNumber | keyvalue;
+              track error
+            ) {
+              <ng-template [valError]="error.key">{{
+                error.value
+              }}</ng-template>
+            }
             <ng-template valError="minlength" let-error="error"
               >El Número de documento debe tener
               {{ error.requiredLength }} dígitos</ng-template
@@ -124,7 +127,7 @@
       </div>
     </div>
   </div>
-  <div class="tw-text-right tw-mt-10">
+  <div class="tw-mt-10 tw-text-right">
     <button
       pButton
       pRipple

@@ -1,7 +1,10 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
 
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { authFullRoutingNames } from '../../../auth/auth-routing.names';
@@ -11,6 +14,8 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
   selector: 'cs-admin-header',
   templateUrl: './admin-header.component.html',
   styleUrls: ['./admin-header.component.scss'],
+  standalone: true,
+  imports: [HeaderComponent, NgOptimizedImage, MenuModule],
 })
 export class AdminHeaderComponent {
   items: MenuItem[] = [

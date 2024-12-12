@@ -1,6 +1,9 @@
-import { EntityDataModuleConfig, EntityMetadataMap } from '@ngrx/data';
+import {
+  type EntityDataModuleConfig,
+  type EntityMetadataMap,
+} from '@ngrx/data';
 
-import { HistoricalCollect, TopClient } from './entities';
+import { type HistoricalCollect, type TopClient } from './entities';
 
 const entityMetadata: EntityMetadataMap = {
   CollectAmount: {},

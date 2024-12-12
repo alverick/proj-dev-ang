@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { Component, Input, OnChanges, type OnInit } from '@angular/core';
 
 import {
@@ -11,6 +12,8 @@ import {
 @Component({
   selector: 'cs-message-alert',
   templateUrl: './message-alert.component.html',
+  standalone: true,
+  imports: [NgClass],
 })
 export class MessageAlertComponent implements OnInit, OnChanges {
   /**

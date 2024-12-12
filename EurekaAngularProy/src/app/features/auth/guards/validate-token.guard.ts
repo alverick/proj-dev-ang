@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   type ActivatedRouteSnapshot,
-  type UrlTree,
   Router,
+  type UrlTree,
 } from '@angular/router';
 import { type Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,10 +18,10 @@ import { AffiliationService } from '../services';
 export class ValidateTokenGuard {
   constructor(
     private router: Router,
-    private affiliation: AffiliationService
+    private affiliation: AffiliationService,
   ) {}
   canActivate(
-    next: ActivatedRouteSnapshot
+    next: ActivatedRouteSnapshot,
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -39,7 +39,7 @@ export class ValidateTokenGuard {
           });
           return this.router.parseUrl(authFullRoutingNames.LOGIN);
         }
-      })
+      }),
     );
   }
 }

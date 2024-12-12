@@ -1,4 +1,4 @@
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
+import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
 import { AffiliationService } from '../../services';
 import { RegistrationFinishedPage } from './registration-finished.page';

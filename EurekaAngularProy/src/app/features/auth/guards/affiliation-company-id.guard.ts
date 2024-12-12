@@ -9,7 +9,7 @@ import { AffiliationService } from '../services';
 export class AffiliationCompanyIdGuard {
   constructor(
     private affiliation: AffiliationService,
-    private router: Router
+    private router: Router,
   ) {}
   canActivateChild() {
     if (!isNotNilOrEmpty(this.affiliation.companyId)) {

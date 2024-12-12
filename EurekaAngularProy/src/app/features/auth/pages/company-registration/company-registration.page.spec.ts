@@ -12,7 +12,7 @@ describe('CompanyRegistrationPage', () => {
       .mock(AffiliationService)
       .mock(SidebarServiceComponent)
       .mock(SidebarCompanyComponent)
-      .mock(CompanyFormRegistrationComponent)
+      .mock(CompanyFormRegistrationComponent),
   );
 
   it('should create', () => {

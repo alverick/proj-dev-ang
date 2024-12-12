@@ -1,9 +1,11 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { isNotNilOrEmpty } from 'ramda-adjunct';
 import { filter } from 'rxjs/operators';
 
+import { MessageAlertComponent } from '../../../../../shared/components/message-alert/message-alert.component';
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { companyFeature } from '../../../../../store/reducers/company.reducer';
 
@@ -11,6 +13,8 @@ import { companyFeature } from '../../../../../store/reducers/company.reducer';
   selector: 'cs-agrega-cobro',
   templateUrl: './agrega-cobro.component.html',
   styleUrls: ['./agrega-cobro.component.scss'],
+  standalone: true,
+  imports: [MessageAlertComponent, CurrencyPipe],
 })
 export class AgregaCobroComponent {
   limitAmountMax: number;

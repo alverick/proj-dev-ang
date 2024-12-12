@@ -1,26 +1,27 @@
-<div class="tw-shadow tw-p-6 xl:tw-pb-0 tw-bg-white">
+<div class="tw-bg-white tw-p-6 tw-shadow xl:tw-pb-0">
   <form
-    class="form md:tw-flex md:tw-flex-wrap tw-gap-1 lg:tw-gap-4"
+    class="form tw-gap-1 md:tw-flex md:tw-flex-wrap lg:tw-gap-4"
     [formGroup]="form"
     (ngSubmit)="sendFilters()"
   >
-    <cs-label-control
-      *ngIf="false"
-      class="tw-w-full md:tw-w-36 lg:tw-w-40"
-      formControlName="currency"
-      [hideLabel]="true"
-      [errorMessages]="errorMessages.currency"
-    >
-      <p-dropdown
-        [options]="currencies"
-        placeholder="Moneda"
-        formControlName="currency"
-        optionLabel="label"
+    @if (false) {
+      <cs-label-control
         class="tw-w-full md:tw-w-36 lg:tw-w-40"
-        styleClass="tw-w-full md:tw-w-36 lg:tw-w-40"
-        control
-      ></p-dropdown>
-    </cs-label-control>
+        formControlName="currency"
+        [hideLabel]="true"
+        [errorMessages]="errorMessages.currency"
+      >
+        <p-dropdown
+          [options]="currencies"
+          placeholder="Moneda"
+          formControlName="currency"
+          optionLabel="label"
+          class="tw-w-full md:tw-w-36 lg:tw-w-40"
+          styleClass="tw-w-full md:tw-w-36 lg:tw-w-40"
+          control
+        ></p-dropdown>
+      </cs-label-control>
+    }
     <cs-label-control
       class="tw-w-full md:tw-w-52 lg:tw-w-60"
       formControlName="services"
@@ -40,15 +41,17 @@
         control
       >
         <ng-template let-value pTemplate="selectedItems">
-          <ng-container *ngIf="!value || value.length === 0">
+          @if (!value || value.length === 0) {
             Seleccione un servicio
-          </ng-container>
-          <ng-container *ngIf="value.length > 0">
+          }
+          @if (value.length > 0) {
             {{ parseLabelServices(value) }}
-          </ng-container>
+          }
         </ng-template>
       </p-multiSelect>
-      <div *ngIf="showCurrency" hint>*Sólo servicios en soles</div>
+      @if (showCurrency) {
+        <div hint>*Sólo servicios en soles</div>
+      }
     </cs-label-control>
     <cs-label-control
       class="tw-w-full md:tw-w-36 lg:tw-w-40"
@@ -99,18 +102,19 @@
         control
       ></p-calendar>
     </cs-label-control>
-    <div class="flex-break tw-basis-full lg:tw-hidden tw-h-0"></div>
-    <div class="actions tw-flex tw-gap-4 tw-h-10">
+    <div class="flex-break tw-h-0 tw-basis-full lg:tw-hidden"></div>
+    <div class="actions tw-flex tw-h-10 tw-gap-4">
       <button pButton pRipple type="submit" label="Filtrar"></button>
-      <button
-        *ngIf="false"
-        pButton
-        pRipple
-        type="button"
-        label="Enviar"
-        class="p-button-outlined"
-        (click)="send()"
-      ></button>
+      @if (false) {
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Enviar"
+          class="p-button-outlined"
+          (click)="send()"
+        ></button>
+      }
     </div>
   </form>
 </div>

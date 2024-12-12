@@ -1,5 +1,9 @@
+import { NgClass } from '@angular/common';
 import { Component, HostListener, type OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ButtonDirective } from 'primeng/button';
+import { Ripple } from 'primeng/ripple';
+import { TagModule } from 'primeng/tag';
 import { clone, equals, isNil } from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import Swal from 'sweetalert2';
@@ -13,13 +17,26 @@ import {
   type GtpEmpresa,
   type GtpServcegtp,
 } from '../../../../shared/models/gtp-post';
+import { NotEmptyPipe } from '../../../../shared/pipes/not-empty.pipe';
 import { GtpService } from '../../../../shared/services/gtp.service';
 import { drawPopup } from '../../../../shared/utils/helpers/popups';
+import { EmpresaGTPComponent } from '../../components/empresa-gtp/empresa-gtp.component';
+import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp.component';
 
 @Component({
   selector: 'cs-aprobaciones',
   templateUrl: './aprobaciones.page.html',
   styleUrls: ['./aprobaciones.page.scss'],
+  standalone: true,
+  imports: [
+    NgClass,
+    TagModule,
+    ButtonDirective,
+    Ripple,
+    EmpresaGTPComponent,
+    ServicesGTPComponent,
+    NotEmptyPipe,
+  ],
 })
 export class AprobacionesPage implements OnInit {
   public Formulario = false;
@@ -55,7 +72,7 @@ export class AprobacionesPage implements OnInit {
   constructor(
     public gtpService: GtpService,
     private activatedRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
   ) {}
 
   @HostListener('window:beforeunload', ['$event'])
@@ -82,7 +99,7 @@ export class AprobacionesPage implements OnInit {
   }
 
   getInfoEmpresa() {
-    this.gtpService.GetEnterpriseGtp(this.llave).subscribe(dataEnterprise => {
+    this.gtpService.GetEnterpriseGtp(this.llave).subscribe((dataEnterprise) => {
       this.Enterprise = dataEnterprise;
       this.rubro = dataEnterprise.entryName;
     });
@@ -113,7 +130,7 @@ export class AprobacionesPage implements OnInit {
     if (this.ServiciosFormulario === true) {
       this.mensaje(
         'Aprobando Servicio ',
-        'Actualmente se esta aprobando un Servicio'
+        'Actualmente se esta aprobando un Servicio',
       );
       return;
     }
@@ -125,7 +142,7 @@ export class AprobacionesPage implements OnInit {
     if (this.Formulario === true) {
       this.mensaje(
         'Aprobando Empresa',
-        'Actualmente se esta aprobando una Empresa'
+        'Actualmente se esta aprobando una Empresa',
       );
       return;
     }
@@ -160,7 +177,7 @@ export class AprobacionesPage implements OnInit {
     if (entryDiff) {
       this.mensaje(
         'Error en Rubro',
-        'La res es diferente del rubro, no se puede enviar a PAG'
+        'La res es diferente del rubro, no se puede enviar a PAG',
       );
       return;
     }
@@ -168,23 +185,23 @@ export class AprobacionesPage implements OnInit {
     this.scv = [];
     // NO APROBADOS
     const nombreApp = this.gtpService.services.filter(
-      ({ acceptednewName }) => acceptednewName === false
+      ({ acceptednewName }) => acceptednewName === false,
     ).length;
     const CodDeuApp = this.gtpService.services.filter(
-      ({ acceptednewNameCode }) => acceptednewNameCode === false
+      ({ acceptednewNameCode }) => acceptednewNameCode === false,
     ).length;
 
     // eslint-disable-next-line max-len
     const ListCantidadNombre = this.gtpService.services.filter(
       ({ acceptednewName, newNameGTPStatus }) =>
         (newNameGTPStatus === 0 || newNameGTPStatus === 2) &&
-        acceptednewName === null
+        acceptednewName === null,
     ).length;
     // eslint-disable-next-line max-len
     const ListCantidadCodigoDeudor = this.gtpService.services.filter(
       ({ acceptednewNameCode, newNameCodeGTPStatus }) =>
         (newNameCodeGTPStatus === 0 || newNameCodeGTPStatus === 2) &&
-        acceptednewNameCode === null
+        acceptednewNameCode === null,
     ).length;
 
     let Empcant = 0;
@@ -219,7 +236,7 @@ export class AprobacionesPage implements OnInit {
           newNameGTPStatus === 0 ||
           newNameCodeGTPStatus === 2 ||
           newNameCodeGTPStatus === 0 ||
-          res !== ''
+          res !== '',
       )
       .map(({ acceptednewName, acceptednewNameCode, id, res }) => ({
         ServiceId: id,
@@ -235,13 +252,13 @@ export class AprobacionesPage implements OnInit {
     const { isNewEnterprise, inReview, name, newName } = this.Enterprise;
 
     const servicesInReview = this.gtpService.services.some(
-      service => service.inReview
+      (service) => service.inReview,
     );
 
     if (observations !== 0) {
       this.mensaje(
         'Aprobación',
-        `Aun faltan aprobar ${observations} observaciones`
+        `Aun faltan aprobar ${observations} observaciones`,
       );
       return;
     }
@@ -255,7 +272,7 @@ export class AprobacionesPage implements OnInit {
           confirmButtonText: 'Si, Rechazar afiliación',
           cancelButtonText: 'No, Solicitar corrección de datos',
           onOpen: drawPopup,
-        }).then(async result => {
+        }).then(async (result) => {
           if (result.value) {
             this.saveApprovedData({
               Rechaza: true,
@@ -275,7 +292,7 @@ export class AprobacionesPage implements OnInit {
           confirmButtonText: 'Si, Solicitar corrección de datos',
           cancelButtonText: 'No, Cancelar',
           onOpen: drawPopup,
-        }).then(async result => {
+        }).then(async (result) => {
           if (result.value) {
             await this.saveQueryFixData();
           }
@@ -295,7 +312,7 @@ export class AprobacionesPage implements OnInit {
         confirmButtonText: 'Si, Terminar',
         cancelButtonText: 'No, Cancelar',
         onOpen: drawPopup,
-      }).then(async result => {
+      }).then(async (result) => {
         if (result.value) {
           if (this.enterpriseChanged) {
             await this.saveCompanyData({
@@ -323,7 +340,7 @@ export class AprobacionesPage implements OnInit {
         confirmButtonText: 'Si, Terminar',
         cancelButtonText: 'No, Cancelar',
         onOpen: drawPopup,
-      }).then(async result => {
+      }).then(async (result) => {
         if (!result.value) {
           return;
         }
@@ -411,7 +428,7 @@ export class AprobacionesPage implements OnInit {
   }
 
   private saveCompanyData(serviceData = null, redirect = false) {
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve) => {
       const { email, movilNumber } = this.Enterprise;
       const companyData = {
         email,
@@ -448,7 +465,7 @@ export class AprobacionesPage implements OnInit {
   }
 
   private setNavigate() {
-    return response => {
+    return (response) => {
       this.servicesChanged = false;
       if (response) {
         this.router.navigate([appFullRoutingNames.ADMIN]);
@@ -547,7 +564,7 @@ export class AprobacionesPage implements OnInit {
         confirmButtonText: 'Descartar',
         cancelButtonText: 'Regresar',
         onOpen: drawPopup,
-      }).then(r => {
+      }).then((r) => {
         if (r.value) {
           this.Formulario = false;
         }
@@ -573,7 +590,7 @@ export class AprobacionesPage implements OnInit {
         confirmButtonText: 'Descartar',
         cancelButtonText: 'Regresar',
         onOpen: drawPopup,
-      }).then(r => {
+      }).then((r) => {
         if (r.value) {
           this.indiceActual = -1;
           this.ServiciosFormulario = false;

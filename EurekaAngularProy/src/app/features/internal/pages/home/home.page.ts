@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import {
   type AfterViewInit,
   Component,
@@ -12,8 +13,11 @@ import { Store } from '@ngrx/store';
 import { ShepherdService } from 'angular-shepherd';
 import { saveAs } from 'file-saver';
 import { type LazyLoadEvent, type MenuItem } from 'primeng/api';
+import { BadgeModule } from 'primeng/badge';
+import { ButtonDirective } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SplitButton } from 'primeng/splitbutton';
+import { Ripple } from 'primeng/ripple';
+import { SplitButton, SplitButtonModule } from 'primeng/splitbutton';
 import {
   all,
   equals,
@@ -27,6 +31,7 @@ import { isNilOrEmpty, isNotNil, isNotNilOrEmpty } from 'ramda-adjunct';
 import { type Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { PaymentsFilterComponent } from '../../../../shared/components/payments-filter/payments-filter.component';
 import { type CurrencyWithLimit } from '../../../../shared/constants/currencies';
 import { processStatus } from '../../../../shared/constants/process';
 import type { IServiceRemoteModel } from '../../../../shared/models';
@@ -84,6 +89,16 @@ export type DebtDialog = {
   selector: 'cs-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
+  standalone: true,
+  imports: [
+    BadgeModule,
+    PaymentsFilterComponent,
+    NgClass,
+    ButtonDirective,
+    Ripple,
+    SplitButtonModule,
+    TableMovementsComponent,
+  ],
 })
 export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   ref: DynamicDialogRef;

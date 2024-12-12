@@ -5,15 +5,14 @@
     class="tw-mx-auto tw-flex tw-w-full tw-max-w-[1320px] tw-items-center tw-justify-between"
   >
     <a class="navbar-brand" [routerLink]="'/'">
-      <ng-template [ngIf]="isBlank" [ngIfElse]="isNotBlank">
+      @if (isBlank) {
         <img
           ngSrc="/assets/images/cs-logo-alternative.svg"
           alt="Cobro Simple"
           height="37"
           width="127"
         />
-      </ng-template>
-      <ng-template #isNotBlank>
+      } @else {
         <img
           ngSrc="/assets/images/cs-logo.svg"
           alt="Cobro Simple"
@@ -21,7 +20,7 @@
           width="127"
           priority="true"
         />
-      </ng-template>
+      }
     </a>
     <ng-content></ng-content>
   </div>

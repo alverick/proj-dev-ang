@@ -72,7 +72,7 @@ export default ({ configuration }: TargetOptions, indexHtml: string) => {
       (sameAsDefault.includes(configuration)
         ? 'default'
         : configuration) as EnvironmentType,
-      isEmpty(parsedHtml) ? indexHtml : parsedHtml
+      isEmpty(parsedHtml) ? indexHtml : parsedHtml,
     );
   });
   return parsedHtml;

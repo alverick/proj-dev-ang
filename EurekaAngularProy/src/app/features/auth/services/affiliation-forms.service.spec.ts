@@ -5,7 +5,7 @@ import { AffiliationFormsService } from './affiliation-forms.service';
 describe('AffiliationFormsService', () => {
   let service: AffiliationFormsService;
   beforeEach(() =>
-    TestBed.configureTestingModule({ providers: [AffiliationFormsService] })
+    TestBed.configureTestingModule({ providers: [AffiliationFormsService] }),
   );
 
   it('should be created', () => {

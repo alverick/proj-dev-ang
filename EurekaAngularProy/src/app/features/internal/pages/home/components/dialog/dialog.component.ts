@@ -8,13 +8,18 @@ import {
 import { Store } from '@ngrx/store';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
+import { PrimeTemplate } from 'primeng/api';
+import { ButtonDirective } from 'primeng/button';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { type FileUpload } from 'primeng/fileupload';
+import { type FileUpload, FileUploadModule } from 'primeng/fileupload';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { Ripple } from 'primeng/ripple';
 import { isNil, isNotEmpty } from 'ramda';
 import { isNilOrEmpty, isNotNilOrEmpty } from 'ramda-adjunct';
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { MessageAlertComponent } from '../../../../../../shared/components/message-alert/message-alert.component';
 import { processStatus } from '../../../../../../shared/constants/process';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
 import { type ServiceTypeType } from '../../../../../../shared/models';
@@ -35,6 +40,17 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
   selector: 'cs-dialog',
   templateUrl: 'dialog.component.html',
   styleUrls: ['dialog.component.scss'],
+  standalone: true,
+  imports: [
+    MessageAlertComponent,
+    ProgressBarModule,
+    FileUploadModule,
+    PrimeTemplate,
+    ButtonDirective,
+    Ripple,
+    DecimalPipe,
+    CurrencyPipe,
+  ],
 })
 export class DialogComponent implements OnInit {
   useAmountLimits = false;

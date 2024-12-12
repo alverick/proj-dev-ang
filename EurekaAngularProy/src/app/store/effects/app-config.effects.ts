@@ -25,8 +25,8 @@ export class AppConfigEffects {
     );
   });
   setLoaderAppConfigs$ = createEffect(
-    () =>
-      this.actions$.pipe(
+    () => {
+      return this.actions$.pipe(
         ofType(AppConfigActions.setLoader),
         concatLatestFrom(() =>
           this.store.select(appConfigFeature.selectShowLoader),
@@ -41,7 +41,8 @@ export class AppConfigEffects {
             void this.spinner.hide();
           }
         }),
-      ),
+      );
+    },
     { dispatch: false },
   );
 

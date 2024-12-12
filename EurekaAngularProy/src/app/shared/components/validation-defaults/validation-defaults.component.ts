@@ -1,9 +1,21 @@
+import { DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { DisplayMode, ValdemortConfig } from 'ngx-valdemort';
+import {
+  DefaultValidationErrorsDirective,
+  DisplayMode,
+  ValdemortConfig,
+  ValidationErrorDirective,
+} from 'ngx-valdemort';
 
 @Component({
   selector: 'cs-validation-defaults',
   templateUrl: './validation-defaults.component.html',
+  standalone: true,
+  imports: [
+    DefaultValidationErrorsDirective,
+    ValidationErrorDirective,
+    DecimalPipe,
+  ],
 })
 export class ValidationDefaultsComponent {
   constructor(config: ValdemortConfig) {

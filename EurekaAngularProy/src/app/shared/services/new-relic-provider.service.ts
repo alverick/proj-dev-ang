@@ -6,10 +6,10 @@ import { filter } from 'rxjs/operators';
 
 import { type ProviderService } from './provider.service';
 import {
+  AdobeEvent,
   type AdobeEventType,
   type Metadata,
   type TrackEventProperties,
-  AdobeEvent,
   TrackingService,
 } from './tracking.service';
 
@@ -26,7 +26,7 @@ export class NewRelicProviderService implements ProviderService {
   trackPage(payload: Partial<TrackEventProperties>) {
     this.runNewrelic(
       AdobeEvent.pageTrack,
-      dot.dot(payload) as Record<string, string>
+      dot.dot(payload) as Record<string, string>,
     );
   }
 
@@ -54,8 +54,8 @@ export class NewRelicProviderService implements ProviderService {
             event === AdobeEvent.trackFormSubmit &&
             (payload.action.step === 'Step2' ||
               payload.action.step === 'Step5') &&
-            payload.page.module === 'Afiliación'
-        )
+            payload.page.module === 'Afiliación',
+        ),
       )
       .subscribe(({ event, payload }) => {
         this.trackEvent(event, payload);
