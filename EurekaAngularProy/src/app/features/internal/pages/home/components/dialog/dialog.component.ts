@@ -1,3 +1,4 @@
+import { CurrencyPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, type OnInit } from '@angular/core';
 import {
@@ -48,7 +49,6 @@ import { companyFeature } from '../../../../../../store/reducers/company.reducer
     PrimeTemplate,
     ButtonDirective,
     Ripple,
-    DecimalPipe,
     CurrencyPipe,
   ],
 })
