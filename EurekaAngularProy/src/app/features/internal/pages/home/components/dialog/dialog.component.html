@@ -28,9 +28,9 @@
     @if (!excelService.statusUpload && !ready) {
       <div>
         <div class="landing">
-          <div class="text">
+          <div class="text tw-mx-auto tw-max-w-[36rem] tw-text-balance tw-pb-4">
             Descarga la plantilla donde podrás llenar la información de los
-            <br />cobros de tus clientes.
+            cobros de tus clientes.
           </div>
           <i class="fa fa-file-excel"></i>
         </div>
@@ -84,11 +84,10 @@
   @if (!excelService.statusUpload && ready) {
     <div class="landing">
       @if (!!excelService.service) {
-        <div class="text">
+        <div class="text tw-mx-auto tw-max-w-[36rem] tw-text-balance tw-pb-4">
           Selecciona el archivo y sube la plantilla con la información de los
-          <br />cobros de tus clientes.
+          cobros de tus clientes.
         </div>
-        <br />
         @if (!excelService.statusUpload && ready) {
           <div class="text-center pt-1">
             <p-fileUpload
@@ -159,9 +158,25 @@
             </div>
             <div class="clear-float"></div>
           </div>
-          <div class="list tw-overflow-auto tw-text-left">
+          <div
+            class="list tw-overflow-auto tw-border tw-text-left"
+            [ngClass]="{
+              'tw-border-extended-dark-yellow-1': confirmUser,
+              'tw-border-extended-watermelon-1': !confirmUser,
+            }"
+          >
             @for (err of excelService.errores; track err) {
-              <div class="err-item">
+              <div class="err-item tw-mb-1 tw-flex tw-gap-1">
+                @if (err.code === 0) {
+                  <i
+                    class="pi pi-times-circle tw-text-extended-watermelon-1"
+                  ></i>
+                }
+                @if (err.code === 1) {
+                  <i
+                    class="pi pi-exclamation-triangle tw-text-extended-dark-yellow-1"
+                  ></i>
+                }
                 @if (err.row > 0) {
                   <span
                     ><strong class="resaltado">Fila {{ err.row }}</strong> :
@@ -172,11 +187,19 @@
             }
           </div>
           <div class="footer tw-my-4">
-            Corrige los errores y vuelve a subir la plantilla
+            @if (confirmUser) {
+              Confirma la carga de tu plantilla o revisa las observaciones y
+              vuélvelo a subir
+            } @else {
+              Corrige los errores y vuelve a subir la plantilla
+            }
           </div>
         </div>
       }
-      @if (uploaderFiles.length > 0 && excelService.errores?.length === 0) {
+      @if (
+        (uploaderFiles.length > 0 && excelService.errores?.length === 0) ||
+        confirmUser
+      ) {
         <div class="text-center">
           <button
             pButton

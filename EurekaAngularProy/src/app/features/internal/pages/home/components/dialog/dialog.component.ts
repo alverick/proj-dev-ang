@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, type OnInit } from '@angular/core';
 import {
@@ -49,6 +49,8 @@ import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
     ButtonDirective,
     Ripple,
     CurrencyPipe,
+    DecimalPipe,
+    NgClass,
   ],
 })
 export class DialogComponent implements OnInit {
@@ -258,6 +260,7 @@ export class DialogComponent implements OnInit {
   public removeFiled() {
     this.uploaderFiles = [];
     this.excelService.errores = [];
+    this.confirmUser = false;
   }
 
   public selectFiled({ currentFiles }: { currentFiles: File[] }) {
