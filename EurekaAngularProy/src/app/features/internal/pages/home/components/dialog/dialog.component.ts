@@ -1,4 +1,4 @@
-import { CurrencyPipe, DecimalPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, type OnInit } from '@angular/core';
 import {
@@ -48,7 +48,6 @@ import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
     PrimeTemplate,
     ButtonDirective,
     Ripple,
-    DecimalPipe,
     CurrencyPipe,
   ],
 })

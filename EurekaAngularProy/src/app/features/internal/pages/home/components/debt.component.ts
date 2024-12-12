@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, type OnInit, signal } from '@angular/core';
+import { Component, type OnInit, signal, viewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -13,6 +13,8 @@ import { FormModel } from 'ngx-mf';
 import { ButtonDirective } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
@@ -22,6 +24,7 @@ import { of } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { LabelControlComponent } from '../../../../../shared/components/label-control/label-control.component';
+import { MessageAlertComponent } from '../../../../../shared/components/message-alert/message-alert.component';
 import type { CurrencyWithLimit } from '../../../../../shared/constants/currencies';
 import { ServiceTypes } from '../../../../../shared/constants/services';
 import { ExcelService } from '../../../../../shared/services/excel.service';
@@ -58,6 +61,9 @@ interface Debt {
     InputNumberModule,
     ButtonDirective,
     Ripple,
+    IconFieldModule,
+    InputIconModule,
+    MessageAlertComponent,
   ],
 })
 export class DebtComponent implements OnInit {
