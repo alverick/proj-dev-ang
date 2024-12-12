@@ -32,7 +32,7 @@ export type LoadFileProcess = {
 export class ExcelService {
   private readonly URI_API: string = environment.END_POINT;
   public statusUpload = false;
-  public service: Partial<CompanyServices> = {};
+  public service: Partial<CompanyServices> = null;
   public idProcess = 0;
   public errores: IErrorObj[] = [];
 

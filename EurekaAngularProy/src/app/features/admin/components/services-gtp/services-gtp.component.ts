@@ -23,7 +23,10 @@ import { isNil } from 'ramda';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { currencies } from '../../../../shared/constants/currencies';
-import { statusCodes } from '../../../../shared/constants/services';
+import {
+  ServiceTypes,
+  statusCodes,
+} from '../../../../shared/constants/services';
 import { type IEntryModel } from '../../../../shared/models';
 import { DataServiceGTP } from '../../../../shared/models/data-service-gtp';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
@@ -54,16 +57,12 @@ export class ServicesGTPComponent implements OnInit {
   cuentas: CompanyAccounts[] = [];
   simboloMoneda = 'S/';
   cobraMora = false;
-  cobraMonto = true;
-  cobraPorcentaje = false;
   cmoraporce = false;
-  Dataparcial = true;
+  serviceTypeComplete = true;
   inReview: boolean;
   private _service: DataServiceGTP;
 
   update = false;
-  public comAgente = 1.5;
-  public comTienda = 7;
   useAgencyChannel = false;
 
   @Input() public idCompany: number;
@@ -247,9 +246,7 @@ export class ServicesGTPComponent implements OnInit {
     }
 
     // combo para ocultar si es data parcial
-    this.Dataparcial =
-      this.frm.get('tipoDato').value !== 'P' &&
-      this.frm.get('tipoDato').value !== 'S';
+    this.serviceTypeComplete = this._service.dataType === ServiceTypes.complete;
 
     this.showAgencyChannel(this._service.useAgencyChannel);
   }
@@ -371,55 +368,6 @@ export class ServicesGTPComponent implements OnInit {
     }
   }
 
-  onChangeTipoDato() {
-    if (this.frm.get('tipoDato').value === 'P') {
-      this.Dataparcial = false;
-      // cobraMora
-      this.frm.get('cobraMora').setValue('N');
-      this.frm.get('pagoPartes').setValue('N');
-
-      this.frm.get('monto').setValue('1.00');
-      this.frm.get('porcentaje').setValue('1.00');
-      this.cmoraporce = false;
-      this.cobraMora = false;
-    } else {
-      this.Dataparcial = true;
-    }
-  }
-
-  TipoCobro() {
-    this.frm.get('tipoMora').setValue('M');
-    this.cobraMonto = true;
-    this.cobraPorcentaje = false;
-    if (
-      this.frm.get('periodoMora').value === '1' ||
-      this.frm.get('periodoMora').value === '2'
-    ) {
-      this.cmoraporce = true;
-      this.f.monto.clearValidators();
-      this.f.monto.enable();
-      this.f.monto.setValidators([
-        Validators.required,
-        Validators.pattern('^([0-9]{1,4})?(.[0-9]{1,2})?$'),
-        Minimo(0.5),
-        Maximo(1000),
-      ]);
-      this.f.monto.reset('1.00');
-
-      this.f.porcentaje.clearValidators();
-      this.f.porcentaje.disable();
-      this.f.porcentaje.setValidators([
-        Validators.required,
-        Validators.pattern('^([0-9]{1,4})?(.[0-9]{1,2})?$'),
-        Minimo(0.01),
-        Maximo(100),
-      ]);
-      this.f.porcentaje.reset('1.00');
-    } else {
-      this.cmoraporce = false;
-    }
-  }
-
   Codigo(event) {
     if (event === 'Otro') {
       this.f.nameCod.setValidators([
@@ -464,52 +412,6 @@ export class ServicesGTPComponent implements OnInit {
       if (changeData) {
         this.f.porcentaje.reset('1.00');
       }
-    }
-  }
-
-  changeTipoMora(changeData: boolean = true) {
-    this.cobraMonto = this.f.tipoMora.value === 'M';
-    this.cobraPorcentaje = this.f.tipoMora.value === 'P';
-    if (this.cobraMora && this.cobraMonto) {
-      this.f.monto.enable();
-      this.f.monto.setValidators([
-        Validators.required,
-        Validators.pattern('^([0-9]{1,4})?(.[0-9]{1,2})?$'),
-        Minimo(0.5),
-        Maximo(1000),
-      ]);
-      this.f.porcentaje.clearValidators();
-      this.f.porcentaje.disable();
-      if (changeData) {
-        this.f.porcentaje.reset('1.00');
-      }
-    } else if (this.cobraMora && this.cobraPorcentaje) {
-      this.f.porcentaje.enable();
-      this.f.porcentaje.setValidators([
-        Validators.required,
-        Validators.pattern('^([0-9]{1,4})?(.[0-9]{1,2})?$'),
-        Minimo(0.01),
-        Maximo(100),
-      ]);
-      this.f.monto.clearValidators();
-      this.f.monto.disable();
-      if (changeData) {
-        this.f.monto.reset('1.00');
-      }
-    }
-  }
-
-  MoraMontoBlur(e) {
-    const initalValue = parseFloat(this.f.monto.value);
-    if (!isNaN(initalValue)) {
-      this.f.monto.setValue(initalValue.toFixed(2));
-    }
-  }
-
-  MoraPorcenBlur() {
-    const initalValue = parseFloat(this.f.porcentaje.value);
-    if (!isNaN(initalValue)) {
-      this.f.porcentaje.setValue(initalValue.toFixed(2));
     }
   }
 

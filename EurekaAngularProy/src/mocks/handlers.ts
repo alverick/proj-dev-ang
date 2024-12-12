@@ -25,7 +25,18 @@ export const handlers = [
     });
   }),
   http.post(serverApi('/company/validate'), async () => {
-    await delay(5000);
+    await delay(500);
+    return HttpResponse.json({
+      id: 3000,
+      success: true,
+      code: 1,
+      message: 'El Ruc ya se encuentra registrado',
+      tradeName: 'Nombre empresa trade',
+      fullName: 'Nombre empresa full',
+    });
+  }),
+  http.post(serverApi('/company'), async () => {
+    await delay(500);
     return HttpResponse.json({
       id: 3000,
       success: true,
@@ -99,7 +110,7 @@ export const handlers = [
       const selectedKey = Math.floor(counter / 5);
       return processSteps[selectedKey];
     };
-    while (status !== completed) {
+    while (status !== rejected) {
       counter++;
       status = getProcess(counter);
       const errors: IErrorObj[] =
@@ -117,7 +128,7 @@ export const handlers = [
       yield HttpResponse.json({
         status,
         errors: errors,
-        rowsUploaded: -4,
+        rowsUploaded: 2,
         rowsRejected: 2,
         advance: 100,
         phase: 3,
