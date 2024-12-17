@@ -272,14 +272,14 @@ export class DebtComponent implements OnInit {
           this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
           this.grabado = true;
           this.tracking.trackEvent(AdobeEvent.trackView, {
-            category: 'Agregar Cobro',
+            category: 'Agregar cobro',
             action: 'modal-view',
             detail: 'Se ha agregado el cobro. ¿Que desea hacer?',
             location: 'Modal',
           });
           void swalAlert
             .fire({
-              title: 'Agregar Cobro',
+              title: 'Agregar cobro',
               html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',
               showCancelButton: true,
               showCloseButton: true,
@@ -304,7 +304,7 @@ export class DebtComponent implements OnInit {
             });
         } else {
           void swalAlert.fire({
-            title: 'Agregar Cobro',
+            title: 'Agregar cobro',
             html: r.message,
             showCloseButton: true,
             showCancelButton: false,
