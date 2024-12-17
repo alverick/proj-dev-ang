@@ -231,7 +231,7 @@ export class DebtComponent implements OnInit {
     }
 
     const { emissionDate, code, firstName, dueDate, concept, amount } =
-      this.debtForm.value;
+      this.debtForm.getRawValue();
 
     const debt = this.isPartial
       ? {
