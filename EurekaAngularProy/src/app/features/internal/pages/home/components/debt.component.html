@@ -1,4 +1,4 @@
-<div class="content tw-py-0">
+<div class="content tw-group tw-py-0">
   <form
     [formGroup]="debtForm"
     novalidate
@@ -87,18 +87,33 @@
           [errorMessages]="formErrors.firstName"
         >
           Nombre
-          <input
-            control
-            type="text"
-            class="tw-w-full"
-            pInputText
-            minlength="3"
-            [pKeyFilter]="validNameRegex"
-            [maxLength]="80"
-            formControlName="firstName"
-          />
+          <p-iconField control iconPosition="right" class="tw-w-full">
+            @if (debtorExistent()) {
+              <p-inputIcon
+                (click)="resetName()"
+                styleClass="pi pi-times tw-cursor-pointer"
+              />
+            }
+            <input
+              type="text"
+              class="tw-w-full"
+              pInputText
+              minlength="3"
+              [pKeyFilter]="validNameRegex"
+              [maxLength]="80"
+              formControlName="firstName"
+            />
+          </p-iconField>
         </cs-label-control>
       </div>
+      @if (debtorExistent()) {
+        <cs-message-alert class="tw-col-start-2 tw-mb-2" mode="warning"
+          ><div class="tw-text-xs">
+            El código deudor ya tiene un nombre asociado (Para cambiar el nombre
+            ir a la sección Mis Movimientos en la opción editar cobros)
+          </div></cs-message-alert
+        >
+      }
     </div>
     @if (!isPartial) {
       <div

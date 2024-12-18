@@ -33,6 +33,7 @@ import { filter } from 'rxjs/operators';
 
 import { PaymentsFilterComponent } from '../../../../shared/components/payments-filter/payments-filter.component';
 import { type CurrencyWithLimit } from '../../../../shared/constants/currencies';
+import { processStatus } from '../../../../shared/constants/process';
 import type { IServiceRemoteModel } from '../../../../shared/models';
 import { type CompanyServices } from '../../../../shared/models/company';
 import { type DateList } from '../../../../shared/models/dateList';
@@ -332,7 +333,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   private onClose() {
     return (m: ModalCloseData) => {
-      if (m.status === 'completed') {
+      if (m.status === processStatus.completed) {
         this.fileLoad.close();
         let msg = '';
         if (m.dataType === 'C') {
@@ -349,7 +350,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             this.validateResetForm();
           },
         });
-      } else if (m.status === 'failed') {
+      } else if (m.status === processStatus.failed) {
         this.fileLoad.close();
         void swalAlert.fire({
           title: 'Lo sentimos, no se pudo finalizar la carga de cobros',
@@ -360,7 +361,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
             this.validateResetForm();
           },
         });
-      } else if (m.status === 'rejected') {
+      } else if (m.status === processStatus.rejected) {
         this.fileLoad.close();
         this.excelService.statusUpload = false;
         const dialogRef = this.dynamicDialogService.open(

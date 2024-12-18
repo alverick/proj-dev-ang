@@ -1,4 +1,5 @@
 export const processStatus = {
+  confirmUser: 'CONFIRM_USER',
   created: 'CREATED',
   validating: 'VALIDATING',
   validated: 'VALIDATED',
@@ -8,4 +9,5 @@ export const processStatus = {
   completed: 'COMPLETED',
 } as const;
 
-export type ProcessStatus = Uppercase<keyof typeof processStatus>;
+export type StatusValuesKeys = keyof typeof processStatus;
+export type StatusValues = (typeof processStatus)[StatusValuesKeys];

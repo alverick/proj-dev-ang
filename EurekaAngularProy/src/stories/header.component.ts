@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ButtonComponent } from './button.component';
@@ -10,7 +9,7 @@ export interface User {
 @Component({
   selector: 'storybook-header',
   standalone: true,
-  imports: [CommonModule, ButtonComponent],
+  imports: [ButtonComponent],
   template: `<header>
     <div class="storybook-header">
       <div>
@@ -38,35 +37,42 @@ export interface User {
         <h1>Acme</h1>
       </div>
       <div>
-        <div *ngIf="user">
-          <span class="welcome">
-            Welcome, <b>{{ user.name }}</b
-            >!
-          </span>
-          <storybook-button
-            *ngIf="user"
-            size="small"
-            (onClick)="onLogout.emit($event)"
-            label="Log out"
-          ></storybook-button>
-        </div>
-        <div *ngIf="!user">
-          <storybook-button
-            *ngIf="!user"
-            size="small"
-            class="margin-left"
-            (onClick)="onLogin.emit($event)"
-            label="Log in"
-          ></storybook-button>
-          <storybook-button
-            *ngIf="!user"
-            size="small"
-            [primary]="true"
-            class="margin-left"
-            (onClick)="onCreateAccount.emit($event)"
-            label="Sign up"
-          ></storybook-button>
-        </div>
+        @if (user) {
+          <div>
+            <span class="welcome">
+              Welcome, <b>{{ user.name }}</b
+              >!
+            </span>
+            @if (user) {
+              <storybook-button
+                size="small"
+                (onClick)="onLogout.emit($event)"
+                label="Log out"
+              ></storybook-button>
+            }
+          </div>
+        }
+        @if (!user) {
+          <div>
+            @if (!user) {
+              <storybook-button
+                size="small"
+                class="margin-left"
+                (onClick)="onLogin.emit($event)"
+                label="Log in"
+              ></storybook-button>
+            }
+            @if (!user) {
+              <storybook-button
+                size="small"
+                [primary]="true"
+                class="margin-left"
+                (onClick)="onCreateAccount.emit($event)"
+                label="Sign up"
+              ></storybook-button>
+            }
+          </div>
+        }
       </div>
     </div>
   </header>`,

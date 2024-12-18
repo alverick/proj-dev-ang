@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, type OnInit, viewChild } from '@angular/core';
+import { Component, type OnInit, signal, viewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -13,6 +13,8 @@ import { FormModel } from 'ngx-mf';
 import { ButtonDirective } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
@@ -23,6 +25,7 @@ import { debounceTime } from 'rxjs/operators';
 
 import { LabelControlComponent } from '../../../../../shared/components/label-control/label-control.component';
 import type { CurrencyWithLimit } from '../../../../../shared/constants/currencies';
+import { MessageAlertComponent } from '../../../../../shared/components/message-alert/message-alert.component';
 import { ServiceTypes } from '../../../../../shared/constants/services';
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
@@ -58,6 +61,9 @@ interface Debt {
     InputNumberModule,
     ButtonDirective,
     Ripple,
+    IconFieldModule,
+    InputIconModule,
+    MessageAlertComponent,
   ],
 })
 export class DebtComponent implements OnInit {
@@ -67,6 +73,7 @@ export class DebtComponent implements OnInit {
   public maxDate = new Date(2049, 11, 31);
   public isPartial = false;
   limitAmountMax: number = null;
+  debtorExistent = signal(false);
   loaderDebtorCode = false;
   alphaNumSpaceRegex = /^[ 0-9a-zA-Z]+$/;
   validNameRegex = /^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$/;
@@ -164,6 +171,7 @@ export class DebtComponent implements OnInit {
     this.debtForm.controls.code.valueChanges
       .pipe(debounceTime(600))
       .subscribe(() => {
+        this.debtorExistent.set(false);
         this.debtForm.controls.firstName.reset();
         this.debtForm.controls.firstName.enable();
         this.buscarNewCode();
@@ -202,8 +210,19 @@ export class DebtComponent implements OnInit {
         }, delay);
         if (d.id) {
           this.debtForm.controls.firstName.setValue(d.firstName);
+          this.loaderDebtorCode = false;
+          this.debtForm.controls.firstName.disable();
+          this.debtorExistent.set(true);
         }
       });
+  }
+
+  resetName() {
+    this.debtForm.controls.firstName.setValue('');
+    this.debtForm.controls.code.setValue('');
+    this.loaderDebtorCode = false;
+    this.debtForm.controls.firstName.enable();
+    this.debtorExistent.set(false);
   }
 
   grabarNuevo() {
@@ -212,7 +231,7 @@ export class DebtComponent implements OnInit {
     }
 
     const { emissionDate, code, firstName, dueDate, concept, amount } =
-      this.debtForm.value;
+      this.debtForm.getRawValue();
 
     const debt = this.isPartial
       ? {
@@ -253,14 +272,14 @@ export class DebtComponent implements OnInit {
           this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
           this.grabado = true;
           this.tracking.trackEvent(AdobeEvent.trackView, {
-            category: 'Agregar Cobro',
+            category: 'Agregar cobro',
             action: 'modal-view',
             detail: 'Se ha agregado el cobro. ¿Que desea hacer?',
             location: 'Modal',
           });
           void swalAlert
             .fire({
-              title: 'Agregar Cobro',
+              title: 'Agregar cobro',
               html: 'Se ha agregado el cobro.<br />¿Que desea hacer?',
               showCancelButton: true,
               showCloseButton: true,
@@ -285,7 +304,7 @@ export class DebtComponent implements OnInit {
             });
         } else {
           void swalAlert.fire({
-            title: 'Agregar Cobro',
+            title: 'Agregar cobro',
             html: r.message,
             showCloseButton: true,
             showCancelButton: false,

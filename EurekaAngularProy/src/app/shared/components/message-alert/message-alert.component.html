@@ -1,9 +1,9 @@
 <div
-  class="message tw-flex tw-items-start tw-rounded tw-px-6 tw-py-3"
+  class="message tw-flex tw-items-start tw-rounded tw-px-5 tw-py-3"
   [ngClass]="[bgClass, mode]"
 >
-  <div class="icon flex-shrink-0 tw-flex tw-w-10 tw-justify-center">
-    <i class="pi pi-info-circle tw-text-secondary-blue-3"></i>
+  <div class="icon tw-flex tw-w-8 tw-flex-shrink-0 tw-justify-center">
+    <i class="pi pi-info-circle" [ngClass]="[iconClass]"></i>
   </div>
   <div class="tw-text-xs">
     <ng-content></ng-content>
