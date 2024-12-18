@@ -9,11 +9,10 @@ parameters:
   - name: destiny
     displayName: Deploy to
     type: string
-    default: production
+    default: uat
     values:
       - dev
       - uat
-      - production
   - name: runSonarTask
     displayName: SonarCloud
     default: false
@@ -37,12 +36,6 @@ variables:
     appServiceConnection: 'RG_EU2_C003_EURC_UAT_01'
     groupName: 'rg_eu2_c003_eurc_uat_01'
     appServiceName: 'wappeu2c003eurcuat01'
-
-  ${{ else }}:
-    mode: 'production'
-    appServiceConnection: 'RG_EU2_C003_EURC_PRD_01'
-    groupName: 'rg_eu2_c003_eurc_prd_01'
-    appServiceName: 'wappeu2c003eurcprd01'
 
 stages:
   - stage: Build
