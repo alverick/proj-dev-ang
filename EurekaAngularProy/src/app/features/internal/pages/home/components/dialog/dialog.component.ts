@@ -1,6 +1,6 @@
 import { CurrencyPipe, DecimalPipe, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, type OnInit } from '@angular/core';
+import { Component, computed, type OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
   type UntypedFormGroup,
@@ -70,7 +70,11 @@ export class DialogComponent implements OnInit {
     mode: 'indeterminate',
     value: 0,
   };
-  private readonly rowStart = 14;
+  rowStart = computed(() => {
+    return this.excelService.service.dataType === ServiceTypes.complete
+      ? 14
+      : 10;
+  });
 
   constructor(
     public excelService: ExcelService,
@@ -119,7 +123,7 @@ export class DialogComponent implements OnInit {
             const errors: IErrorObj[] = [];
             const limit = workbook.getWorksheet(1).rowCount;
 
-            if (limit < this.rowStart) {
+            if (limit < this.rowStart()) {
               errors.push({
                 description: 'El archivo no contiene registros válidos',
                 row: 0,
@@ -128,7 +132,7 @@ export class DialogComponent implements OnInit {
               return;
             }
 
-            if (limit >= 5000 + this.rowStart) {
+            if (limit >= 5000 + this.rowStart()) {
               errors.push({
                 description:
                   'Se ha superado el límite de 5000 registros por archivo excel',
@@ -146,7 +150,7 @@ export class DialogComponent implements OnInit {
             }
             workbook
               .getWorksheet(1)
-              .getRows(this.rowStart, limit - this.rowStart + 1)
+              .getRows(this.rowStart(), limit - this.rowStart() + 1)
               .forEach((row) => {
                 errors.push(...this.validateRow(row));
               });
@@ -175,8 +179,12 @@ export class DialogComponent implements OnInit {
       ],
     };
 
-    if (row.number === 14) {
-      const cellTemplateText = row.getCell('G').value ?? '';
+    if (row.number === this.rowStart()) {
+      const column =
+        this.excelService.service.dataType === ServiceTypes.complete
+          ? 'G'
+          : 'C';
+      const cellTemplateText = row.getCell(column).value ?? '';
       if (
         cellTemplateText ===
         'Esto es un ejemplo, no olvides eliminar esta fila antes de subir tu archivo'
