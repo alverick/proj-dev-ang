@@ -137,7 +137,7 @@ export class DialogComponent implements OnInit {
           errors.push({
             description: 'El archivo no contiene registros válidos',
             row: 0,
-          } as IErrorObj);
+          });
           resolve(errors);
           return;
         }
@@ -161,7 +161,7 @@ export class DialogComponent implements OnInit {
         description:
           'Se ha superado el límite de 5000 registros por archivo excel',
         row: 0,
-      } as IErrorObj);
+      });
     }
 
     const title = workbook.getWorksheet(1).getRow(2).getCell('B')
@@ -170,7 +170,7 @@ export class DialogComponent implements OnInit {
       errors.push({
         description: 'El nombre del servicio no es correcto',
         row: 0,
-      } as IErrorObj);
+      });
     }
     workbook
       .getWorksheet(1)
@@ -205,7 +205,7 @@ export class DialogComponent implements OnInit {
           description:
             'El archivo no contiene registros válidos, eliminar la fila de ejemplo',
           row: 0,
-        } as IErrorObj);
+        });
       }
     }
 
@@ -215,14 +215,14 @@ export class DialogComponent implements OnInit {
           errors.push({
             description: `${fieldLabels[idx - 1]} no es una fecha válida`,
             row: row.number,
-          } as IErrorObj);
+          });
         }
       }
       if (this.validateAmountZero(row)) {
         errors.push({
           description: `${fieldLabels[5]} no es un monto válido`,
           row: row.number,
-        } as IErrorObj);
+        });
       }
     }
 
@@ -235,7 +235,7 @@ export class DialogComponent implements OnInit {
           errors.push({
             description: `${col} debe tener un valor`,
             row: row.number,
-          } as IErrorObj);
+          });
         }
       });
     }
