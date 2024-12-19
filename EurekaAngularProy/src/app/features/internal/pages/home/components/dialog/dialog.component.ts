@@ -5,7 +5,6 @@ import {
   type UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { PrimeTemplate } from 'primeng/api';
@@ -34,6 +33,8 @@ import {
 } from '../../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../../shared/utils/helpers/popups';
 
+type withoutData = 'S';
+
 @Component({
   selector: 'cs-dialog',
   templateUrl: 'dialog.component.html',
@@ -60,6 +61,7 @@ export class DialogComponent implements OnInit {
   limitAmountMax: number = null;
   changeStatus = true;
   uploaderFiles: File[] = [];
+  lastRows: number[] = [];
 
   public rowsAccepted = 0;
   public rowsRejected = 0;
@@ -67,6 +69,17 @@ export class DialogComponent implements OnInit {
     status: 'Subiendo',
     mode: 'indeterminate',
     value: 0,
+  };
+  fieldLabels: Record<Exclude<ServiceTypeType, withoutData>, string[]> = {
+    [ServiceTypes.partial]: ['Código de cliente', 'Nombre del cliente'],
+    [ServiceTypes.complete]: [
+      'Fecha de emisión',
+      'Fecha de vencimiento',
+      'Código de cliente',
+      'Nombre del cliente',
+      'Descripción',
+      'Monto',
+    ],
   };
   rowStart = computed(() => {
     return this.excelService.service.dataType === ServiceTypes.complete
@@ -78,9 +91,8 @@ export class DialogComponent implements OnInit {
     public excelService: ExcelService,
     public formBuilder: UntypedFormBuilder,
     public dialogRef: DynamicDialogRef<DialogComponent>,
-    private tracking: TrackingService,
+    private readonly tracking: TrackingService,
     public config: DynamicDialogConfig,
-    private store: Store,
   ) {}
 
   ngOnInit() {
@@ -111,71 +123,71 @@ export class DialogComponent implements OnInit {
   validateFile() {
     return new Promise<IErrorObj[]>((resolve) => {
       const reader = new FileReader();
-      reader.onloadend = () => {
+      reader.onloadend = async () => {
         const arrayBuffer = reader.result as ArrayBuffer;
 
         const workbook = new ExcelJS.Workbook();
-        void workbook.xlsx
-          .load(arrayBuffer)
-          .then((workbook: ExcelJS.Workbook) => {
-            const errors: IErrorObj[] = [];
-            const limit = workbook.getWorksheet(1).rowCount;
+        await workbook.xlsx.load(arrayBuffer);
+        let errors: IErrorObj[] = [];
+        const limit = workbook.getWorksheet(1).rowCount;
 
-            if (limit < this.rowStart()) {
-              errors.push({
-                description: 'El archivo no contiene registros válidos',
-                row: 0,
-              } as IErrorObj);
-              resolve(errors);
-              return;
-            }
+        if (limit < this.rowStart()) {
+          errors.push({
+            description: 'El archivo no contiene registros válidos',
+            row: 0,
+          } as IErrorObj);
+          resolve(errors);
+          return;
+        }
+        errors = errors.concat(this.validateWorkBook(workbook));
 
-            if (limit >= 5000 + this.rowStart()) {
-              errors.push({
-                description:
-                  'Se ha superado el límite de 5000 registros por archivo excel',
-                row: 0,
-              } as IErrorObj);
-            }
-
-            const title = workbook.getWorksheet(1).getRow(2).getCell('B')
-              .value as string;
-            if (title.trim() !== this.excelService.service.name) {
-              errors.push({
-                description: 'El nombre del servicio no es correcto',
-                row: 0,
-              } as IErrorObj);
-            }
-            workbook
-              .getWorksheet(1)
-              .getRows(this.rowStart(), limit - this.rowStart() + 1)
-              .forEach((row) => {
-                errors.push(...this.validateRow(row));
-              });
-            resolve(errors);
-          });
+        if (this.lastRows.includes(workbook.getWorksheet(1).lastRow.number)) {
+          resolve(errors.filter((error) => !this.lastRows.includes(error.row)));
+        }
+        resolve(errors);
       };
       reader.readAsArrayBuffer(this.uploaderFiles[0]);
     });
   }
 
+  private validateWorkBook(workbook: ExcelJS.Workbook) {
+    const errors: IErrorObj[] = [];
+    const limit = workbook.getWorksheet(1).rowCount;
+
+    if (limit >= 5000 + this.rowStart()) {
+      errors.push({
+        description:
+          'Se ha superado el límite de 5000 registros por archivo excel',
+        row: 0,
+      } as IErrorObj);
+    }
+
+    const title = workbook.getWorksheet(1).getRow(2).getCell('B')
+      .value as string;
+    if (title.trim() !== this.excelService.service.name) {
+      errors.push({
+        description: 'El nombre del servicio no es correcto',
+        row: 0,
+      } as IErrorObj);
+    }
+    workbook
+      .getWorksheet(1)
+      .getRows(this.rowStart(), limit - this.rowStart() + 1)
+      .forEach((row) => {
+        const errorObjs = this.validateRow(row);
+        if (this.checkLastEmptyRows(errorObjs)) {
+          this.lastRows.push(row.number);
+        }
+        errors.push(...errorObjs);
+      });
+    return errors;
+  }
+
   validateRow(row: ExcelJS.Row) {
     const errors: IErrorObj[] = [];
-    type withoutData = 'S';
-    const fieldLabels: Record<
-      Exclude<ServiceTypeType, withoutData>,
-      string[]
-    > = {
-      [ServiceTypes.partial]: ['Código de cliente', 'Nombre del cliente'],
-      [ServiceTypes.complete]: [
-        'Fecha de emisión',
-        'Fecha de vencimiento',
-        'Código de cliente',
-        'Nombre del cliente',
-        'Descripción',
-        'Monto',
-      ],
-    };
+    const fieldLabels = this.fieldLabels[
+      this.excelService.service.dataType
+    ] as string[];
 
     if (row.number === this.rowStart()) {
       const column =
@@ -197,32 +209,16 @@ export class DialogComponent implements OnInit {
 
     if (this.excelService.service.dataType === ServiceTypes.complete) {
       for (let idx = 1; idx <= 2; idx++) {
-        if (!(row.getCell(idx).value instanceof Date)) {
-          let isNotValidDate = true;
-          if (typeof row.getCell(idx).value === 'string') {
-            const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
-            const dt = new Date(
-              (row.getCell(idx).value as string).replace(pattern, '$3-$2-$1'),
-            );
-            if (dt instanceof Date) {
-              isNotValidDate = false;
-            }
-          }
-          if (isNotValidDate) {
-            errors.push({
-              description: `${
-                fieldLabels[this.excelService.service.dataType][idx - 1]
-              } no es una fecha válida`,
-              row: row.number,
-            } as IErrorObj);
-          }
+        if (this.validateDateCell(row, idx)) {
+          errors.push({
+            description: `${fieldLabels[idx - 1]} no es una fecha válida`,
+            row: row.number,
+          } as IErrorObj);
         }
       }
       if (this.validateAmountZero(row)) {
         errors.push({
-          description: `${
-            fieldLabels[this.excelService.service.dataType][5]
-          } no es un monto válido`,
+          description: `${fieldLabels[5]} no es un monto válido`,
           row: row.number,
         } as IErrorObj);
       }
@@ -232,19 +228,35 @@ export class DialogComponent implements OnInit {
       this.excelService.service.dataType === ServiceTypes.complete ? 6 : 2;
 
     if (row.actualCellCount < checkAllCols) {
-      (fieldLabels[this.excelService.service.dataType] as string[]).forEach(
-        (col, index) => {
-          if (isNilOrEmpty(row.getCell(index + 1).value)) {
-            errors.push({
-              description: `${col} debe tener un valor`,
-              row: row.number,
-            } as IErrorObj);
-          }
-        },
-      );
+      fieldLabels.forEach((col, index) => {
+        if (isNilOrEmpty(row.getCell(index + 1).value)) {
+          errors.push({
+            description: `${col} debe tener un valor`,
+            row: row.number,
+          } as IErrorObj);
+        }
+      });
     }
 
     return errors;
+  }
+
+  private validateDateCell(row: ExcelJS.Row, idx: number) {
+    if (row.getCell(idx).value instanceof Date) {
+      return false;
+    }
+
+    let isNotValidDate = true;
+    if (typeof row.getCell(idx).value === 'string') {
+      const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
+      const dt = new Date(
+        (row.getCell(idx).value as string).replace(pattern, '$3-$2-$1'),
+      );
+      if (dt instanceof Date) {
+        isNotValidDate = false;
+      }
+    }
+    return isNotValidDate;
   }
 
   private validateAmountZero(row: ExcelJS.Row) {
@@ -284,9 +296,9 @@ export class DialogComponent implements OnInit {
         state: 'Envío exitoso',
         metadata: [{ key: 'fileName', value: this.fileName }],
       };
-      const validation = await this.validateFile();
-      if (isNotEmpty(validation)) {
-        this.excelService.errores = validation;
+      const validationErrors = await this.validateFile();
+      if (isNotEmpty(validationErrors)) {
+        this.excelService.errores = validationErrors;
         return;
       }
 
@@ -325,16 +337,17 @@ export class DialogComponent implements OnInit {
     }
   }
 
-  close() {
-    this.tracking.trackEvent(AdobeEvent.trackAction, {
-      category: 'Home movimientos',
-      action: 'Click',
-      detail: 'Cerrar agrega cobros del servicio',
-      label: 'Cerrar',
-      typeElement: 'Botón',
-      location: 'Modal agregar cobro excel',
+  checkLastEmptyRows(errors: IErrorObj[]) {
+    const fieldLabels = this.fieldLabels[
+      this.excelService.service.dataType
+    ] as string[];
+    let isEmptyRow = true;
+    errors.forEach((errorsRow, idx) => {
+      if (errorsRow.description !== `${fieldLabels[idx]} debe tener un valor`) {
+        isEmptyRow = false;
+      }
     });
-    this.dialogRef.close();
+    return isEmptyRow;
   }
 
   private verifyStatus() {
