@@ -8,6 +8,7 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
       error: 'var(--extended-palette-watermelon-1)',
+      danger: 'var(--extended-palette-watermelon-5)',
       info: 'var(--extended-palette-lightblue-5)',
       warning: 'var(--extended-palette-dark-yellow-2)',
       primary: {
