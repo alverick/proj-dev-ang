@@ -123,6 +123,11 @@ export class DialogComponent implements OnInit {
   }
 
   validateFile() {
+    const notValidRows = {
+      description: 'El archivo no contiene registros válidos',
+      row: 0,
+    };
+
     return new Promise<IErrorObj[]>((resolve) => {
       const reader = new FileReader();
       reader.onloadend = async () => {
@@ -134,16 +139,15 @@ export class DialogComponent implements OnInit {
         const limit = workbook.getWorksheet(1).rowCount;
 
         if (limit < this.rowStart()) {
-          errors.push({
-            description: 'El archivo no contiene registros válidos',
-            row: 0,
-          });
-          resolve(errors);
+          resolve([notValidRows]);
           return;
         }
         errors = errors.concat(this.validateWorkBook(workbook));
-
         if (this.lastRows.includes(workbook.getWorksheet(1).lastRow.number)) {
+          if (limit - this.rowStart() + 1 === this.lastRows.length) {
+            resolve([notValidRows]);
+            return;
+          }
           resolve(errors.filter((error) => !this.lastRows.includes(error.row)));
         }
         resolve(errors);
