@@ -7,6 +7,8 @@ import {
   moduleMetadata,
   type StoryObj,
 } from '@storybook/angular';
+import { values } from 'ramda';
+import { messageModes } from '../../constants/messages';
 
 import { SharedModule } from '../../shared.module';
 import { MessageAlertComponent } from './message-alert.component';
@@ -28,7 +30,7 @@ const meta: Meta<MessageAlertAndMessage> = {
   tags: ['autodocs'],
   argTypes: {
     mode: {
-      options: ['info', 'warning'],
+      options: values(messageModes),
       control: { type: 'select' },
     },
   },
