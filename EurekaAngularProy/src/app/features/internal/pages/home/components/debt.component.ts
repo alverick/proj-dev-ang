@@ -26,6 +26,7 @@ import { debounceTime } from 'rxjs/operators';
 import { LabelControlComponent } from '../../../../../shared/components/label-control/label-control.component';
 import type { CurrencyWithLimit } from '../../../../../shared/constants/currencies';
 import { MessageAlertComponent } from '../../../../../shared/components/message-alert/message-alert.component';
+import { messageModes } from '../../../../../shared/constants/messages';
 import { ServiceTypes } from '../../../../../shared/constants/services';
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
@@ -73,6 +74,7 @@ export class DebtComponent implements OnInit {
   public maxDate = new Date(2049, 11, 31);
   public isPartial = false;
   limitAmountMax: number = null;
+  messageModes = messageModes;
   debtorExistent = signal(false);
   loaderDebtorCode = false;
   alphaNumSpaceRegex = /^[ 0-9a-zA-Z]+$/;
