@@ -59,7 +59,7 @@
           formControlName="code"
           [errorMessages]="formErrors.code"
         >
-          Código
+          Código deudor
           <div class="tw-relative tw-w-full" control>
             <input
               type="text"
@@ -109,7 +109,7 @@
       @if (debtorExistent()) {
         <cs-message-alert
           class="tw-col-start-2 tw-mb-2"
-          [mode]="isPartial ? messageModes.danger : messageModes.warning"
+          [mode]="messageModes.warning"
           ><div class="tw-text-xs">
             El código deudor ya tiene un nombre asociado (Puedes cambiar el
             nombre del deudor en opción Editar de la sección Mis movimientos)
@@ -169,7 +169,6 @@
         pRipple
         icon="pi pi-save"
         label="Grabar"
-        [disabled]="debtorExistent() && isPartial"
       ></button>
       <button
         type="button"
