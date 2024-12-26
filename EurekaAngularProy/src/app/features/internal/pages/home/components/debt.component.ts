@@ -306,7 +306,7 @@ export class DebtComponent implements OnInit {
             });
         } else {
           void swalAlert.fire({
-            title: 'Agregar cobro',
+            title: 'Ha ocurrido un error',
             html: r.message,
             showCloseButton: true,
             showCancelButton: false,
