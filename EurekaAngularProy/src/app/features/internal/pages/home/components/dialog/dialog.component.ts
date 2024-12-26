@@ -183,7 +183,7 @@ export class DialogComponent implements OnInit {
       .getRows(this.rowStart(), limit - this.rowStart() + 1)
       .forEach((row) => {
         const errorObjs = this.validateRow(row);
-        if (this.checkLastEmptyRows(errorObjs)) {
+        if (errorObjs.length > 0 && this.checkLastEmptyRows(errorObjs)) {
           this.lastRows.push(row.number);
         }
         errors.push(...errorObjs);
@@ -303,7 +303,6 @@ export class DialogComponent implements OnInit {
 
   public selectFiled({ currentFiles }: { currentFiles: File[] }) {
     this.uploaderFiles = currentFiles;
-    // this.excelService.errores = [];
   }
 
   async openSnackBar() {
