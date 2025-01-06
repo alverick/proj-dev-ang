@@ -69,13 +69,14 @@
               [maxLength]="20"
               formControlName="code"
             />
-            <span
-              *ngIf="loaderDebtorCode"
-              class="tw-pointer-events-none tw-absolute tw-right-4 tw-top-1/2 tw-flex -tw-translate-y-1/2 tw-items-center tw-gap-2 tw-text-xs tw-text-extended-grey-2"
-              >Buscando...<i
-                class="pi pi-spin pi-spinner tw-text-primary-green-1"
-              ></i
-            ></span>
+            @if (loaderDebtorCode) {
+              <span
+                class="tw-pointer-events-none tw-absolute tw-right-4 tw-top-1/2 tw-flex -tw-translate-y-1/2 tw-items-center tw-gap-2 tw-text-xs tw-text-extended-grey-2"
+                >Buscando...<i
+                  class="pi pi-spin pi-spinner tw-text-primary-green-1"
+                ></i
+              ></span>
+            }
           </div>
         </cs-label-control>
       </div>

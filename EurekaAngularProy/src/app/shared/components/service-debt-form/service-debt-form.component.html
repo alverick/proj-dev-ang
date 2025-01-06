@@ -47,10 +47,12 @@
   </div>
   <div class="form-elm tw-mb-5">
     <div class="tw-font-medium">¿Quieres incluir el cobro de mora?</div>
-    <div *ngIf="interestOnlyInfo" class="tw-font-light">
-      {{ form.get('chargeInterest').value === 'S' ? 'Sí' : 'No' }}
-    </div>
-    <ng-container *ngIf="!interestOnlyInfo">
+    @if (interestOnlyInfo) {
+      <div class="tw-font-light">
+        {{ form.get('chargeInterest').value === 'S' ? 'Sí' : 'No' }}
+      </div>
+    }
+    @if (!interestOnlyInfo) {
       <cs-label-control [onlyControl]="true" class="tw-w-full">
         <p-radioButton
           name="chargeInterest"
@@ -75,38 +77,41 @@
           </div>
         </ng-container>
       </cs-label-control>
-    </ng-container>
+    }
   </div>
   @if (showArrearsFields) {
     <div class="form-elm">
-      <div *ngIf="interestOnlyInfo" class="info tw-mb-5">
-        <div class="tw-font-medium">Tipo de cobro</div>
-        <div class="tw-font-light">
-          {{ form.get('chargeType').value === '1' ? 'Diario' : 'Fijo' }}
+      @if (interestOnlyInfo) {
+        <div class="info tw-mb-5">
+          <div class="tw-font-medium">Tipo de cobro</div>
+          <div class="tw-font-light">
+            {{ form.get('chargeType').value === '1' ? 'Diario' : 'Fijo' }}
+          </div>
         </div>
-      </div>
-      <cs-label-control
-        *ngIf="!interestOnlyInfo"
-        class="tw-w-full"
-        formControlName="chargeType"
-        [errorMessages]="errorMessages.chargeType"
-        >Tipo de cobro
-        <p-dropdown
-          [options]="chargeTypeOptions"
+      }
+      @if (!interestOnlyInfo) {
+        <cs-label-control
           class="tw-w-full"
-          styleClass="tw-w-full"
           formControlName="chargeType"
-          placeholder="Selecciona"
-        ></p-dropdown>
-      </cs-label-control>
+          [errorMessages]="errorMessages.chargeType"
+          >Tipo de cobro
+          <p-dropdown
+            [options]="chargeTypeOptions"
+            class="tw-w-full"
+            styleClass="tw-w-full"
+            formControlName="chargeType"
+            placeholder="Selecciona"
+          ></p-dropdown>
+        </cs-label-control>
+      }
     </div>
     <div class="form-elm lg:tw-flex lg:tw-gap-4">
-      <ng-container *ngIf="interestOnlyInfo">
+      @if (interestOnlyInfo) {
         <div class="info tw-mb-5">
           <div class="tw-font-medium">Tipo de cobro</div>
           <div class="tw-font-light">
             {{
-              form.get('interestType').value === 'M' ? 'Monto' : 'Porcentaje'
+            form.get('interestType').value === 'M' ? 'Monto' : 'Porcentaje'
             }}
           </div>
         </div>
@@ -116,8 +121,8 @@
             {{ form.get('amount').value | currency: unitAmount }}
           </div>
         </div>
-      </ng-container>
-      <ng-container *ngIf="!interestOnlyInfo">
+      }
+      @if (!interestOnlyInfo) {
         <cs-label-control
           class="tw-w-full"
           formControlName="interestType"
@@ -150,7 +155,7 @@
             [maxFractionDigits]="2"
           ></p-inputNumber>
         </cs-label-control>
-      </ng-container>
+      }
     </div>
   }
 </form>
