@@ -22,6 +22,7 @@ import { MessageAlertComponent } from '../../../../../../shared/components/messa
 import type { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 import { processStatus } from '../../../../../../shared/constants/process';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
+import { SingleClickDirective } from '../../../../../../shared/directives/single-click.directive';
 import { type ServiceTypeType } from '../../../../../../shared/models';
 import type { IErrorObj } from '../../../../../../shared/models/error.model';
 import {
@@ -52,6 +53,7 @@ type withoutData = 'S';
     CurrencyPipe,
     DecimalPipe,
     NgClass,
+    SingleClickDirective,
   ],
 })
 export class DialogComponent implements OnInit {
@@ -292,59 +294,60 @@ export class DialogComponent implements OnInit {
   }
 
   async openSnackBar() {
-    if (!this.excelService.statusUpload) {
-      const actionStep: Partial<ActionEventProperties> = {
-        category: 'Home filtro',
-        action: 'Click',
-        label: 'Buscar',
-        location: 'Filtro',
-        step: 'Not available',
-        state: 'Envío exitoso',
-        metadata: [{ key: 'fileName', value: this.fileName }],
-      };
-
-      const validationErrors = await this.validateFile();
-      if (isNotEmpty(validationErrors)) {
-        this.excelService.errores = validationErrors;
-        return;
-      }
-
-      this.progress.status = 'Subiendo';
-      this.progress.mode = 'indeterminate';
-      this.progress.value = 0;
-      if (this.confirmUser) {
-        this.confirmUser = false;
-        this.excelService.confirmUser(this.uploaderFiles).subscribe(() => {
-          this.verifyStatus();
-        });
-      } else {
-        this.excelService.UploadExcel(this.uploaderFiles).subscribe({
-          next: (value) => {
-            this.excelService.idProcess = value.idProcess;
-            this.verifyStatus();
-          },
-          error: (err: HttpErrorResponse) => {
-            this.excelService.statusUpload = false;
-            let message = err.message || 'Ha ocurrido un error';
-            if (err.status === 400) {
-              message = 'El nombre del archivo no es correcto';
-              this.excelService.errores = [
-                {
-                  description: 'El nombre del archivo no es correcto',
-                  row: 0,
-                },
-              ];
-            }
-            this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
-              ...actionStep,
-              state: 'Intento de envio',
-              typeError: message,
-            });
-          },
-        });
-      }
-    } else {
+    if (this.excelService.statusUpload) {
       this.messageUploadExcel = this.excelService.statusUpload;
+      return;
+    }
+
+    const actionStep: Partial<ActionEventProperties> = {
+      category: 'Home filtro',
+      action: 'Click',
+      label: 'Buscar',
+      location: 'Filtro',
+      step: 'Not available',
+      state: 'Envío exitoso',
+      metadata: [{ key: 'fileName', value: this.fileName }],
+    };
+
+    const validationErrors = await this.validateFile();
+    if (isNotEmpty(validationErrors)) {
+      this.excelService.errores = validationErrors;
+      return;
+    }
+
+    this.progress.status = 'Subiendo';
+    this.progress.mode = 'indeterminate';
+    this.progress.value = 0;
+    if (this.confirmUser) {
+      this.confirmUser = false;
+      this.excelService.confirmUser(this.uploaderFiles).subscribe(() => {
+        this.verifyStatus();
+      });
+    } else {
+      this.excelService.UploadExcel(this.uploaderFiles).subscribe({
+        next: (value) => {
+          this.excelService.idProcess = value.idProcess;
+          this.verifyStatus();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.excelService.statusUpload = false;
+          let message = err.message || 'Ha ocurrido un error';
+          if (err.status === 400) {
+            message = 'El nombre del archivo no es correcto';
+            this.excelService.errores = [
+              {
+                description: 'El nombre del archivo no es correcto',
+                row: 0,
+              },
+            ];
+          }
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: 'Intento de envio',
+            typeError: message,
+          });
+        },
+      });
     }
   }
 
