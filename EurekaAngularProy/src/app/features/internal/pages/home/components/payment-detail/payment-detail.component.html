@@ -14,11 +14,13 @@
           Detalle de pago
         </div>
         <div class="tw-flex tw-justify-center tw-gap-2">
-          <div class="tw-font-bold">Nombre Cliente:</div>
-          <div class="tw-mr-5 tw-text-extended-grey-1">
-            {{ customer?.name }}
-          </div>
-          <div class="tw-font-bold">Código Cliente:</div>
+          @if (serviceType !== ServiceTypes.withoutData) {
+            <div class="tw-font-bold">Nombre:</div>
+            <div class="tw-mr-5 tw-text-extended-grey-1">
+              {{ customer?.name }}
+            </div>
+          }
+          <div class="tw-font-bold">Código deudor:</div>
           <div class="tw-text-extended-grey-1">{{ customer?.code }}</div>
         </div>
       </div>
@@ -130,7 +132,9 @@
                 <td>
                   <ng-container *ngrxLet="useAmountLimits$ as useAmountLimits">
                     @if (
-                      itm.canEdit && (!useAmountLimits || serviceType === 'C')
+                      itm.canEdit &&
+                      (!useAmountLimits ||
+                        serviceType === ServiceTypes.complete)
                     ) {
                       <div class="tw-flex tw-gap-2">
                         @if (!itm.editing) {
@@ -163,7 +167,7 @@
         </table>
         <ng-container *ngrxLet="useAmountLimits$ as useAmountLimits">
           @if (
-            (!useAmountLimits || serviceType === 'C') &&
+            (!useAmountLimits || serviceType === ServiceTypes.complete) &&
             (items.length == 0 || status !== 'PAGADO' || isEditingRow)
           ) {
             <div>
