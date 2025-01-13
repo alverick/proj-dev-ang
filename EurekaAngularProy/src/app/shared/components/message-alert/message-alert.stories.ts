@@ -28,7 +28,7 @@ const meta: Meta<MessageAlertAndMessage> = {
   tags: ['autodocs'],
   argTypes: {
     mode: {
-      options: ['info'],
+      options: ['info', 'warning'],
       control: { type: 'select' },
     },
   },

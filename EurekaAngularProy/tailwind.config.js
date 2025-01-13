@@ -9,6 +9,7 @@ module.exports = {
       current: 'currentColor',
       error: 'var(--extended-palette-watermelon-1)',
       info: 'var(--extended-palette-lightblue-5)',
+      warning: 'var(--extended-palette-dark-yellow-2)',
       primary: {
         'green-1': 'var(--primary-green-1)',
         'green-2': 'var(--primary-green-2)',
@@ -59,6 +60,8 @@ module.exports = {
         'yellow-3': '#ffe166',
         'yellow-4': '#ffeb99',
         'yellow-5': '#fff5cc',
+        'dark-yellow-1': 'var(--extended-palette-dark-yellow-1)',
+        'dark-yellow-2': 'var(--extended-palette-dark-yellow-2)',
         'bleached-silk': 'var(--extended-bleached-silk)',
       },
     },

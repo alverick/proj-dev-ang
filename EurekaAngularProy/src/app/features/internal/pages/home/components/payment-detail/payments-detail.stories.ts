@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LetDirective } from '@ngrx/component';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
@@ -14,7 +12,6 @@ import { initialState } from '../../../../../../shared/mocks/store';
 import { TrackingService } from '../../../../../../shared/services';
 import { StorageService } from '../../../../../../shared/services/storage.service';
 import { TransactionService } from '../../../../../../shared/services/transaction.service';
-import { SharedModule } from '../../../../../../shared/shared.module';
 import { PaymentDetailComponent } from './payment-detail.component';
 
 const meta: Meta<PaymentDetailComponent> = {
@@ -23,13 +20,7 @@ const meta: Meta<PaymentDetailComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [
-        LetDirective,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [BrowserAnimationsModule, HttpClientModule],
       providers: [
         Store,
         provideMockStore({ initialState }),

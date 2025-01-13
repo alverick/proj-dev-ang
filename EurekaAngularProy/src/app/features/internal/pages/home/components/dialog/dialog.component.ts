@@ -1,4 +1,5 @@
-import { CurrencyPipe, DecimalPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe, NgClass } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, type OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -19,6 +20,7 @@ import { Observable } from 'rxjs';
 
 import { MessageAlertComponent } from '../../../../../../shared/components/message-alert/message-alert.component';
 import type { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
+import { processStatus } from '../../../../../../shared/constants/process';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
 import { type ServiceTypeType } from '../../../../../../shared/models';
 import type { IErrorObj } from '../../../../../../shared/models/error.model';
@@ -47,8 +49,9 @@ type withoutData = 'S';
     PrimeTemplate,
     ButtonDirective,
     Ripple,
-    DecimalPipe,
     CurrencyPipe,
+    DecimalPipe,
+    NgClass,
   ],
 })
 export class DialogComponent implements OnInit {
@@ -59,10 +62,9 @@ export class DialogComponent implements OnInit {
   public fileName: string;
   public cuadro_errores = true;
   limitAmountMax: number = null;
-  changeStatus = true;
   uploaderFiles: File[] = [];
   lastRows: number[] = [];
-
+  confirmUser = false;
   public rowsAccepted = 0;
   public rowsRejected = 0;
   public progress = {
@@ -278,11 +280,12 @@ export class DialogComponent implements OnInit {
   public removeFiled() {
     this.uploaderFiles = [];
     this.excelService.errores = [];
+    this.confirmUser = false;
   }
 
   public selectFiled({ currentFiles }: { currentFiles: File[] }) {
     this.uploaderFiles = currentFiles;
-    this.excelService.errores = [];
+    // this.excelService.errores = [];
   }
 
   async openSnackBar() {
@@ -296,6 +299,7 @@ export class DialogComponent implements OnInit {
         state: 'Envío exitoso',
         metadata: [{ key: 'fileName', value: this.fileName }],
       };
+
       const validationErrors = await this.validateFile();
       if (isNotEmpty(validationErrors)) {
         this.excelService.errores = validationErrors;
@@ -305,33 +309,37 @@ export class DialogComponent implements OnInit {
       this.progress.status = 'Subiendo';
       this.progress.mode = 'indeterminate';
       this.progress.value = 0;
-      this.excelService
-        .UploadExcel(
-          this.uploaderFiles,
-          this.excelService.service.name,
-          this.changeStatus,
-        )
-        .subscribe({
+      if (this.confirmUser) {
+        this.confirmUser = false;
+        this.excelService.confirmUser(this.uploaderFiles).subscribe(() => {
+          this.verifyStatus();
+        });
+      } else {
+        this.excelService.UploadExcel(this.uploaderFiles).subscribe({
           next: (value) => {
-            this.excelService.idProcess = value.id;
+            this.excelService.idProcess = value.idProcess;
             this.verifyStatus();
           },
-          error: (err) => {
+          error: (err: HttpErrorResponse) => {
             this.excelService.statusUpload = false;
             let message = err.message || 'Ha ocurrido un error';
             if (err.status === 400) {
               message = 'El nombre del archivo no es correcto';
               this.excelService.errores = [
-                { description: 'El nombre del archivo no es correcto', row: 0 },
+                {
+                  description: 'El nombre del archivo no es correcto',
+                  row: 0,
+                },
               ];
             }
             this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
               ...actionStep,
               state: 'Intento de envio',
-              typeError: message as string,
+              typeError: message,
             });
           },
         });
+      }
     } else {
       this.messageUploadExcel = this.excelService.statusUpload;
     }
@@ -365,7 +373,10 @@ export class DialogComponent implements OnInit {
       if (!this.ready) {
         return;
       }
-      if (value.status === 'REJECTED') {
+      if (
+        value.status === processStatus.rejected ||
+        value.status === processStatus.confirmUser
+      ) {
         this.excelService.statusUpload = false;
         this.rowsAccepted = value.rowsUploaded;
         this.rowsRejected = value.rowsRejected;
@@ -376,7 +387,10 @@ export class DialogComponent implements OnInit {
           state: 'Intento de envio',
           typeError: 'REJECTED',
         });
-      } else if (value.status === 'FAILED') {
+        if (value.status === processStatus.confirmUser) {
+          this.confirmUser = true;
+        }
+      } else if (value.status === processStatus.failed) {
         const obsClose = new Observable((observer) => {
           this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
             ...actionStep,
@@ -396,7 +410,7 @@ export class DialogComponent implements OnInit {
         });
         this.excelService.statusUpload = false;
         this.dialogRef.close(obsClose);
-      } else if (value.status === 'COMPLETED') {
+      } else if (value.status === processStatus.completed) {
         this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
         this.excelService.statusUpload = false;
         this.excelService.errores = [];
@@ -434,10 +448,9 @@ export class DialogComponent implements OnInit {
         } else if (value.status === 'SAVING') {
           this.progress.status = `Grabando (${value.phase}/2)`;
         }
-        const th = this;
         setTimeout(() => {
-          th.excelService
-            .StatusExcel(th.excelService.idProcess)
+          this.excelService
+            .StatusExcel(this.excelService.idProcess)
             .subscribe(recursiveFunc);
         }, 2000);
       }

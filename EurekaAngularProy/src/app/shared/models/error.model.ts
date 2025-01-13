@@ -3,5 +3,5 @@ export interface IErrorObj {
   row: number;
   description?: string;
   field?: string;
-  value?: number;
+  value?: string;
 }

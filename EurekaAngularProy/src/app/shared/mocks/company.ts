@@ -22,3 +22,20 @@ export const getAffiliate: IDataEnterpriseModel = {
     { currency: '002', amountMax: 4000 },
   ],
 };
+export const companyAccounts = [
+  {
+    id: '3416',
+    number: '*********3416 ( CTA CTE PERSONA JURIDICA - Soles)',
+    currency: '001',
+  },
+  {
+    id: '3423',
+    number: '*********3423 ( CTA CTE PERSONA JURIDICA - Dolares)',
+    currency: '002',
+  },
+  {
+    id: '1843',
+    number: '*********1843 (AHORROS ME - Dolares)',
+    currency: '002',
+  },
+];
