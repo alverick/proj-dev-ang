@@ -17,10 +17,10 @@ parameters:
 
 variables:
   vmImageName: 'ubuntu-20.04'
-  mode: 'dev'
-  appServiceConnection: 'gr2c003eurcdev01'
-  groupName: 'RG_EU2_C003_EURC_DEV_01'
-  appServiceName: 'wappeu2c003eurcdev01'
+  mode: 'production'
+  appServiceConnection: 'SC_RG_EU2_C003_EURC_PRD_01'
+  groupName: 'rg_eu2_c003_eurc_prd_01'
+  appServiceName: 'wappeu2c003eurcprd01'
 
 stages:
   - stage: Build
