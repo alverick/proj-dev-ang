@@ -109,6 +109,8 @@ export class ServicesGTPComponent implements OnInit {
       nameCode = this._service.newNameCode;
     }
 
+    this.simboloMoneda = this._service.currencySymbol;
+
     const processValue = function (value) {
       if (value === null) {
         return '';
