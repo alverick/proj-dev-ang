@@ -59,7 +59,7 @@
           formControlName="code"
           [errorMessages]="formErrors.code"
         >
-          Código
+          Código deudor
           <div class="tw-relative tw-w-full" control>
             <input
               type="text"
@@ -107,10 +107,12 @@
         </cs-label-control>
       </div>
       @if (debtorExistent()) {
-        <cs-message-alert class="tw-col-start-2 tw-mb-2" mode="warning"
+        <cs-message-alert
+          class="tw-col-start-2 tw-mb-2"
+          [mode]="messageModes.warning"
           ><div class="tw-text-xs">
-            El código deudor ya tiene un nombre asociado (Para cambiar el nombre
-            ir a la sección Mis Movimientos en la opción editar cobros)
+            El código deudor ya tiene un nombre asociado (Puedes cambiar el
+            nombre del deudor en opción Editar de la sección Mis movimientos)
           </div></cs-message-alert
         >
       }

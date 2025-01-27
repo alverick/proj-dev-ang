@@ -1,4 +1,4 @@
-import { CurrencyPipe, NgIf } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import {
   type AfterViewInit,
   Component,
@@ -45,7 +45,6 @@ import { LabelControlComponent } from '../label-control/label-control.component'
     InputNumberModule,
     InputMoneyDirective,
     CurrencyPipe,
-    NgIf,
   ],
 })
 export class ServiceDebtFormComponent

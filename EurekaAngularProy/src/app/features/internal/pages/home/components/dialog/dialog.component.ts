@@ -22,6 +22,7 @@ import { MessageAlertComponent } from '../../../../../../shared/components/messa
 import type { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
 import { processStatus } from '../../../../../../shared/constants/process';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
+import { SingleClickDirective } from '../../../../../../shared/directives/single-click.directive';
 import { type ServiceTypeType } from '../../../../../../shared/models';
 import type { IErrorObj } from '../../../../../../shared/models/error.model';
 import {
@@ -52,6 +53,7 @@ type withoutData = 'S';
     CurrencyPipe,
     DecimalPipe,
     NgClass,
+    SingleClickDirective,
   ],
 })
 export class DialogComponent implements OnInit {
@@ -123,6 +125,11 @@ export class DialogComponent implements OnInit {
   }
 
   validateFile() {
+    const notValidRows = {
+      description: 'El archivo no contiene registros válidos',
+      row: 0,
+    };
+
     return new Promise<IErrorObj[]>((resolve) => {
       const reader = new FileReader();
       reader.onloadend = async () => {
@@ -134,16 +141,15 @@ export class DialogComponent implements OnInit {
         const limit = workbook.getWorksheet(1).rowCount;
 
         if (limit < this.rowStart()) {
-          errors.push({
-            description: 'El archivo no contiene registros válidos',
-            row: 0,
-          });
-          resolve(errors);
+          resolve([notValidRows]);
           return;
         }
         errors = errors.concat(this.validateWorkBook(workbook));
-
         if (this.lastRows.includes(workbook.getWorksheet(1).lastRow.number)) {
+          if (limit - this.rowStart() + 1 === this.lastRows.length) {
+            resolve([notValidRows]);
+            return;
+          }
           resolve(errors.filter((error) => !this.lastRows.includes(error.row)));
         }
         resolve(errors);
@@ -177,7 +183,7 @@ export class DialogComponent implements OnInit {
       .getRows(this.rowStart(), limit - this.rowStart() + 1)
       .forEach((row) => {
         const errorObjs = this.validateRow(row);
-        if (this.checkLastEmptyRows(errorObjs)) {
+        if (errorObjs.length > 0 && this.checkLastEmptyRows(errorObjs)) {
           this.lastRows.push(row.number);
         }
         errors.push(...errorObjs);
@@ -285,63 +291,63 @@ export class DialogComponent implements OnInit {
 
   public selectFiled({ currentFiles }: { currentFiles: File[] }) {
     this.uploaderFiles = currentFiles;
-    // this.excelService.errores = [];
   }
 
   async openSnackBar() {
-    if (!this.excelService.statusUpload) {
-      const actionStep: Partial<ActionEventProperties> = {
-        category: 'Home filtro',
-        action: 'Click',
-        label: 'Buscar',
-        location: 'Filtro',
-        step: 'Not available',
-        state: 'Envío exitoso',
-        metadata: [{ key: 'fileName', value: this.fileName }],
-      };
-
-      const validationErrors = await this.validateFile();
-      if (isNotEmpty(validationErrors)) {
-        this.excelService.errores = validationErrors;
-        return;
-      }
-
-      this.progress.status = 'Subiendo';
-      this.progress.mode = 'indeterminate';
-      this.progress.value = 0;
-      if (this.confirmUser) {
-        this.confirmUser = false;
-        this.excelService.confirmUser(this.uploaderFiles).subscribe(() => {
-          this.verifyStatus();
-        });
-      } else {
-        this.excelService.UploadExcel(this.uploaderFiles).subscribe({
-          next: (value) => {
-            this.excelService.idProcess = value.idProcess;
-            this.verifyStatus();
-          },
-          error: (err: HttpErrorResponse) => {
-            this.excelService.statusUpload = false;
-            let message = err.message || 'Ha ocurrido un error';
-            if (err.status === 400) {
-              message = 'El nombre del archivo no es correcto';
-              this.excelService.errores = [
-                {
-                  description: 'El nombre del archivo no es correcto',
-                  row: 0,
-                },
-              ];
-            }
-            this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
-              ...actionStep,
-              state: 'Intento de envio',
-              typeError: message,
-            });
-          },
-        });
-      }
-    } else {
+    if (this.excelService.statusUpload) {
       this.messageUploadExcel = this.excelService.statusUpload;
+      return;
+    }
+
+    const actionStep: Partial<ActionEventProperties> = {
+      category: 'Home filtro',
+      action: 'Click',
+      label: 'Buscar',
+      location: 'Filtro',
+      step: 'Not available',
+      state: 'Envío exitoso',
+      metadata: [{ key: 'fileName', value: this.fileName }],
+    };
+
+    const validationErrors = await this.validateFile();
+    if (isNotEmpty(validationErrors)) {
+      this.excelService.errores = validationErrors;
+      return;
+    }
+
+    this.progress.status = 'Subiendo';
+    this.progress.mode = 'indeterminate';
+    this.progress.value = 0;
+    if (this.confirmUser) {
+      this.confirmUser = false;
+      this.excelService.confirmUser(this.uploaderFiles).subscribe(() => {
+        this.verifyStatus();
+      });
+    } else {
+      this.excelService.UploadExcel(this.uploaderFiles).subscribe({
+        next: (value) => {
+          this.excelService.idProcess = value.idProcess;
+          this.verifyStatus();
+        },
+        error: (err: HttpErrorResponse) => {
+          this.excelService.statusUpload = false;
+          let message = err.message || 'Ha ocurrido un error';
+          if (err.status === 400) {
+            message = 'El nombre del archivo no es correcto';
+            this.excelService.errores = [
+              {
+                description: 'El nombre del archivo no es correcto',
+                row: 0,
+              },
+            ];
+          }
+          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
+            ...actionStep,
+            state: 'Intento de envio',
+            typeError: message,
+          });
+        },
+      });
     }
   }
 

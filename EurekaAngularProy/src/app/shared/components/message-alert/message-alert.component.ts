@@ -21,10 +21,23 @@ export class MessageAlertComponent implements OnInit, OnChanges {
    */
   @Input() mode: MessageModeType;
   bgClass = '';
-  iconClass = '';
+  iconClass: string[] = [];
   colors: MessageColor = {
-    info: { bg: 'tw-bg-info', icon: 'tw-text-secondary-blue-3' },
-    warning: { bg: 'tw-bg-warning', icon: 'tw-text-extended-dark-yellow-1' },
+    info: {
+      bg: 'tw-bg-info',
+      icon: 'pi-info-circle',
+      iconColor: 'tw-text-secondary-blue-3',
+    },
+    warning: {
+      bg: 'tw-bg-warning',
+      icon: 'pi-question-circle',
+      iconColor: 'tw-text-extended-dark-yellow-1',
+    },
+    danger: {
+      bg: 'tw-bg-danger',
+      icon: 'pi-times-circle',
+      iconColor: 'tw-text-extended-watermelon-1',
+    },
   };
 
   ngOnInit() {
@@ -37,6 +50,9 @@ export class MessageAlertComponent implements OnInit, OnChanges {
 
   setColorClass() {
     this.bgClass = this.colors[this.mode].bg;
-    this.iconClass = this.colors[this.mode].icon;
+    this.iconClass = [
+      this.colors[this.mode].iconColor,
+      this.colors[this.mode].icon,
+    ];
   }
 }

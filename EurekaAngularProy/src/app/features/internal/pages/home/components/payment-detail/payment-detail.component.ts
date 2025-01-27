@@ -12,6 +12,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Ripple } from 'primeng/ripple';
 import { forEachObjIndexed, isNil } from 'ramda';
 
+import { ServiceTypes } from '../../../../../../shared/constants/services';
 import {
   type ActionEventProperties,
   AdobeEvent,
@@ -50,6 +51,7 @@ export class PaymentDetailComponent implements OnInit {
   currency: string;
   useAmountLimits$ = this.store.select(companyFeature.selectUseAmountLimits);
   channelOptions = ['Efectivo', 'POS', 'BCP', 'BBVA', 'Otro banco'];
+  protected readonly ServiceTypes = ServiceTypes;
 
   constructor(
     private transaction: TransactionService,
