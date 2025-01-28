@@ -4,7 +4,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { hmrBootstrap } from './hmr';
-import { worker } from './mocks/browser';
 
 const { production, hmr: hmrValue = false } = environment;
 if (production) {
@@ -14,9 +13,13 @@ if (production) {
 const bootstrap = () => platformBrowserDynamic().bootstrapModule(AppModule);
 
 if (hmrValue) {
-  void worker.start({
-    onUnhandledRequest: 'bypass',
-  });
+  import('./mocks/browser')
+    .then(({ worker }) => {
+      return worker.start({
+        onUnhandledRequest: 'bypass',
+      });
+    })
+    .catch((err) => console.error('Failed to start MSW', err));
   if ((module as any).hot) {
     hmrBootstrap(module, bootstrap);
   } else {
