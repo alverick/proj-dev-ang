@@ -165,4 +165,7 @@ stages:
                     az webapp deploy \
                       --resource-group $(groupName) \
                       --name $(appServiceName) \
-                      --src-path $(Build.ArtifactStagingDirectory)/ClientApp.zip
+                      --src-path $(Build.ArtifactStagingDirectory)/ClientApp.zip \
+                      --type zip \
+                      --clean false
+
