@@ -146,4 +146,10 @@ stages:
                   azureSubscription: $(appServiceConnection)
                   scriptType: bash
                   scriptLocation: inlineScript
-                  inlineScript: 'az webapp deployment source config-zip -g $(groupName) -n $(appServiceName) --src $(Build.ArtifactStagingDirectory)/ClientApp.zip'
+                  inlineScript: |
+                    az webapp deploy \
+                      --resource-group $(groupName) \
+                      --name $(appServiceName) \
+                      --src-path $(Build.ArtifactStagingDirectory)/ClientApp.zip \
+                      --type zip \
+                      --clean false
