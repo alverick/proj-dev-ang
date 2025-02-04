@@ -3,10 +3,46 @@ import { forEachObjIndexed, isEmpty } from 'ramda';
 
 const defaultRootUrl = 'https://cobrosimple.dev.interbank.pe';
 
+/**
+ * Defines the possible environment types for the application.
+ *
+ * - `default` - The fallback environment configuration.
+ * - `dev` - Development environment with debugging tools enabled.
+ * - `production` - Production environment with optimizations.
+ * - `uat` - User Acceptance Testing (UAT) environment for validation.
+ */
 type EnvironmentType = 'default' | 'dev' | 'production' | 'uat';
 
+/**
+ * Configuration settings for each environment.
+ */
 type EnvironmentConfig = {
-  scripts: { hotjar: string; newRelic: string };
+  /**
+   * Script file paths for third-party services.
+   */
+  scripts: {
+    /**
+     * The local path for the Hotjar tracking script.
+     * Used for user behavior analytics.
+     *
+     * @example "/assets/scripts/hotjar.js"
+     */
+    hotjar: string;
+
+    /**
+     * The local path for the New Relic monitoring script.
+     * Used for performance tracking and error logging.
+     *
+     * @example "/assets/scripts/newrelic.js"
+     */
+    newRelic: string;
+  };
+
+  /**
+   * The base domain URL for the environment.
+   *
+   * @example "https://cobrosimple.uat.interbank.pe"
+   */
   url: string;
 };
 
