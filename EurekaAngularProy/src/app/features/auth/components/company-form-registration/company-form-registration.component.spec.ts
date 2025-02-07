@@ -30,20 +30,15 @@ describe('CompanyFormRegistrationComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [CompanyFormRegistrationComponent, LabelControlComponent],
+      declarations: [],
       imports: [
-        DropdownModule,
-        FormsModule,
         HttpClientTestingModule,
-        ReactiveFormsModule,
-        ValdemortModule,
         LoggerModule.forRoot({
           level: environment.logLevel,
           serverLogLevel: environment.serverLogLevel,
           disableConsoleLogging: false,
           enableSourceMaps: true,
         }),
-        KeyFilterModule,
       ],
       providers: [
         AffiliationFormsService,
