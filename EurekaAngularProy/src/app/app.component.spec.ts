@@ -1,7 +1,11 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router, RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { MockProvider } from 'ng-mocks';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { ValdemortModule } from 'ngx-valdemort';
+import { PrimeNGConfig } from 'primeng/api';
+import { Subject } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { FabWhatsappComponent } from './shared/components/fab-whatsapp/fab-whatsapp.component';
@@ -9,30 +13,52 @@ import { ValidationDefaultsComponent } from './shared/components/validation-defa
 import {
   AdobeLaunchProviderService,
   NewRelicProviderService,
+  TrackingService,
 } from './shared/services';
-import { StorageService } from './shared/services/storage.service';
 
 describe('AppComponent', () => {
-  beforeEach(() => {
-    void TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+  let routerEvents$: Subject<any>;
+  let storeMock: any;
+  let dispatchSpy: jest.SpyInstance;
+
+  beforeEach(async () => {
+    routerEvents$ = new Subject();
+    storeMock = { dispatch: jest.fn() };
+
+    await TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      imports: [
+        BrowserAnimationsModule,
+        RouterModule,
         ValidationDefaultsComponent,
+        NgxSpinnerModule,
         FabWhatsappComponent,
       ],
-      imports: [RouterTestingModule, ValdemortModule, NgxSpinnerModule],
       providers: [
-        AdobeLaunchProviderService,
-        NewRelicProviderService,
-        StorageService,
+        MockProvider(PrimeNGConfig),
+        MockProvider(AdobeLaunchProviderService),
+        MockProvider(NewRelicProviderService),
+        MockProvider(TrackingService),
+        { provide: Router, useValue: { events: routerEvents$.asObservable() } },
+        { provide: Store, useValue: storeMock },
       ],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    dispatchSpy = jest.spyOn(storeMock, 'dispatch');
+
+    fixture.detectChanges();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance as AppComponent;
-    expect(app).toBeTruthy();
+  afterEach(() => {
+    routerEvents$.complete();
+  });
+
+  it('should create the app component', () => {
+    expect(component).toBeTruthy();
   });
 
   it(`should have as title 'Mis Cobros – Interbank'`, () => {

@@ -8,14 +8,14 @@
   <cs-validation-defaults class="tw-hidden"></cs-validation-defaults>
   <ngx-spinner
     size="large"
-    [bdColor]="spinnerBackground"
+    [bdColor]="spinnerBackground()"
     color="#05be50"
     template="<div class='a-loader__spinner'><div class='a-loader__logo'></div></div>"
     [fullScreen]="true"
   >
   </ngx-spinner>
   <cs-fab-whatsapp
-    [showButton]="showButton"
-    [expand]="expand"
+    [showButton]="showButton()"
+    [expand]="expand()"
   ></cs-fab-whatsapp>
 </div>
