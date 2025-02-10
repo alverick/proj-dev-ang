@@ -2,6 +2,7 @@ import {
   Directive,
   ElementRef,
   inject,
+  Input,
   input,
   OnDestroy,
   OnInit,
@@ -15,13 +16,18 @@ import { throttleTime } from 'rxjs/operators';
   standalone: true,
 })
 export class SingleClickDirective implements OnInit, OnDestroy {
-  elementRef = inject<ElementRef<HTMLButtonElement>>(ElementRef);
+  private elementRef = inject<ElementRef<HTMLButtonElement>>(ElementRef);
   private subscription: Subscription;
+
   throttleMillis = input<number>(5000);
   singleClick = output();
+  @Input() csSingleClick!: number;
 
   ngOnInit() {
-    this.subscription = fromEvent(this.elementRef.nativeElement, 'click')
+    this.subscription = fromEvent<MouseEvent>(
+      this.elementRef.nativeElement,
+      'click',
+    )
       .pipe(throttleTime(this.throttleMillis()))
       .subscribe(() => {
         this.singleClick.emit();
@@ -30,5 +36,6 @@ export class SingleClickDirective implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+    this.subscription = null;
   }
 }
