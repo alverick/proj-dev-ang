@@ -1,9 +1,15 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent, MockProviders } from 'ng-mocks';
+import { MockProviders } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
 
 import { environment } from '../../../../../environments/environment';
-import { ServicesFormsService } from '../../../../shared/services';
+import {
+  CompanyService,
+  DigitalDataService,
+  ServiceService,
+  ServicesFormsService,
+} from '../../../../shared/services';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { CompanyServicesService } from '../../services';
 import { ServiceConfigurationPage } from './service-configuration.page';
@@ -14,8 +20,8 @@ describe('ServiceConfigurationPage', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [MockComponent(ServiceConfigurationPage)],
       imports: [
+        HttpClientTestingModule,
         LoggerModule.forRoot({
           level: environment.logLevel,
           serverLogLevel: environment.serverLogLevel,
@@ -24,8 +30,12 @@ describe('ServiceConfigurationPage', () => {
         }),
       ],
       providers: [
-        MockProviders(CompanyServicesService, ServicesFormsService),
+        CompanyServicesService,
+        ServicesFormsService,
+        CompanyService,
+        ServiceService,
         StorageService,
+        MockProviders(DigitalDataService),
       ],
     }).compileComponents();
   });

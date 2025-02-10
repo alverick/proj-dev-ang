@@ -1,14 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockProvider } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
-import { ValdemortModule } from 'ngx-valdemort';
-import { DropdownModule } from 'primeng/dropdown';
-import { KeyFilterModule } from 'primeng/keyfilter';
 
 import { environment } from '../../../../../environments/environment';
-import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { errorsRegisterForm } from '../../../../shared/constants/company-errors';
 import { IpInfoDataService } from '../../../../shared/data';
 import {

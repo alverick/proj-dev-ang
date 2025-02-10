@@ -8,12 +8,6 @@ describe('RegistrationUpdateComponent', () => {
   let fixture: ComponentFixture<RegistrationUpdatePage>;
 
   beforeEach(() => {
-    void TestBed.configureTestingModule({
-      declarations: [MockComponent(RegistrationUpdatePage)],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(RegistrationUpdatePage);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockProvider } from 'ng-mocks';
 import { PasswordModule } from 'primeng/password';
 
-import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import { CompanyService } from '../../../../shared/services';
 import { LoginService } from '../../../../shared/services/login.service';
@@ -20,7 +19,6 @@ describe('CompanyPasswordFormComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [CompanyPasswordFormComponent, LabelControlComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,

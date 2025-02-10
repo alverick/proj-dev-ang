@@ -1,5 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
+import { ExcelService } from '../../../../../../shared/services/excel.service';
 import { DialogHeaderComponent } from './dialog-header.component';
 
 describe('DialogHeaderComponent', () => {
@@ -8,7 +11,8 @@ describe('DialogHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DialogHeaderComponent],
+      imports: [HttpClientTestingModule],
+      providers: [DynamicDialogRef, ExcelService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DialogHeaderComponent);

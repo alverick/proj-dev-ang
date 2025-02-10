@@ -7,12 +7,6 @@ describe('SidebarInfoComponent', () => {
   let fixture: ComponentFixture<SidebarCompanyComponent>;
 
   beforeEach(() => {
-    void TestBed.configureTestingModule({
-      declarations: [SidebarCompanyComponent],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(SidebarCompanyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

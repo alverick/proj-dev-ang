@@ -6,7 +6,6 @@ import { LoggerModule } from 'ngx-logger';
 import { SidebarModule } from 'primeng/sidebar';
 
 import { environment } from '../../../../../environments/environment';
-import { ServicesListComponent } from '../../../../shared/components/services-list/services-list.component';
 import {
   CompanyService,
   DigitalDataService,
@@ -23,7 +22,6 @@ describe('CompanyServicesPage', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [CompanyServicesPage, ServicesListComponent],
       imports: [
         HttpClientTestingModule,
         LoggerModule.forRoot({

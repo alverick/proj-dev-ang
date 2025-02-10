@@ -1,17 +1,10 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NotEmptyPipe } from '../../pipes/not-empty.pipe';
 import { ServiceCardComponent } from './service-card.component';
 
 describe('ServiceCardComponent', () => {
   let component: ServiceCardComponent;
   let fixture: ComponentFixture<ServiceCardComponent>;
-
-  beforeEach(() => {
-    void TestBed.configureTestingModule({
-      declarations: [ServiceCardComponent, NotEmptyPipe],
-    }).compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ServiceCardComponent);

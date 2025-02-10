@@ -1,9 +1,12 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { Store } from '@ngrx/store';
 
 import {
   AdobeLaunchProviderService,
   type Satellite,
 } from './adobe-launch-provider.service';
+import { CompanyService } from './company.service';
 import { StorageService } from './storage.service';
 import { AdobeEvent } from './tracking.service';
 
@@ -13,6 +16,7 @@ declare const window: {
 
 describe('AdobeLaunchProviderService', () => {
   let service: AdobeLaunchProviderService;
+  let storeMock: any;
   const _satellite: Partial<Satellite> = {
     track: () => {
       console.log('track');
@@ -26,7 +30,13 @@ describe('AdobeLaunchProviderService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AdobeLaunchProviderService, StorageService],
+      providers: [
+        AdobeLaunchProviderService,
+        StorageService,
+        CompanyService,
+        { provide: Store, useValue: storeMock },
+      ],
+      imports: [HttpClientTestingModule],
     });
     service = TestBed.inject(AdobeLaunchProviderService);
     _satellite.track = mockedTrackPage;

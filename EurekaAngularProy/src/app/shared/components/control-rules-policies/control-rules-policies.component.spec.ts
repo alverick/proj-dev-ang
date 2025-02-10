@@ -7,10 +7,6 @@ describe('ControlRulesPoliciesComponent', () => {
   let fixture: ComponentFixture<ControlRulesPoliciesComponent>;
 
   beforeEach(() => {
-    void TestBed.configureTestingModule({
-      declarations: [ControlRulesPoliciesComponent],
-    }).compileComponents();
-
     fixture = TestBed.createComponent(ControlRulesPoliciesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

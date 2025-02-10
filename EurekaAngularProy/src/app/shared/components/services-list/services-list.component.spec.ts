@@ -7,12 +7,6 @@ describe('ServicesListComponent', () => {
   let fixture: ComponentFixture<ServicesListComponent>;
 
   beforeEach(() => {
-    void TestBed.configureTestingModule({
-      declarations: [ServicesListComponent],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(ServicesListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

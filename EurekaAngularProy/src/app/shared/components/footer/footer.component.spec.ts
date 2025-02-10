@@ -9,7 +9,6 @@ describe('FooterComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [FooterComponent],
       providers: [StorageService],
     }).compileComponents();
   });

@@ -7,12 +7,6 @@ describe('SidebarServiceComponent', () => {
   let fixture: ComponentFixture<SidebarServiceComponent>;
 
   beforeEach(() => {
-    void TestBed.configureTestingModule({
-      declarations: [SidebarServiceComponent],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(SidebarServiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
