@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, Input, OnChanges, type OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import {
   type MessageColor,
@@ -15,13 +15,14 @@ import {
   standalone: true,
   imports: [NgClass],
 })
-export class MessageAlertComponent implements OnInit, OnChanges {
+export class MessageAlertComponent implements OnChanges {
   /**
    * Mode for disclaimer
    */
-  @Input() mode: MessageModeType;
-  bgClass = '';
-  iconClass: string[] = [];
+  @Input() mode: MessageModeType = 'info';
+
+  bgClass = 'tw-bg-info';
+  iconClass: string[] = ['pi-info-circle', 'tw-text-secondary-blue-3'];
   colors: MessageColor = {
     info: {
       bg: 'tw-bg-info',
@@ -40,19 +41,17 @@ export class MessageAlertComponent implements OnInit, OnChanges {
     },
   };
 
-  ngOnInit() {
-    this.setColorClass();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['mode']?.currentValue) {
+      this.setColorClass();
+    }
   }
 
-  ngOnChanges(): void {
-    this.setColorClass();
-  }
-
-  setColorClass() {
-    this.bgClass = this.colors[this.mode].bg;
-    this.iconClass = [
-      this.colors[this.mode].iconColor,
-      this.colors[this.mode].icon,
-    ];
+  private setColorClass(): void {
+    const colorConfig = this.colors[this.mode];
+    if (colorConfig) {
+      this.bgClass = colorConfig.bg;
+      this.iconClass = [colorConfig.iconColor, colorConfig.icon];
+    }
   }
 }
