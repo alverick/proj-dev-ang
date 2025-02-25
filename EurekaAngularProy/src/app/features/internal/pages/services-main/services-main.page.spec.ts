@@ -12,7 +12,6 @@ describe('ServicesMainPage', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [ServicesMainPage],
       imports: [RouterTestingModule],
       providers: [MockProvider(CompanyServicesService), ServicesFormsService],
     }).compileComponents();

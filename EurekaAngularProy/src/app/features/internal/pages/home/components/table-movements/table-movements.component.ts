@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { NGXLogger } from 'ngx-logger';
 import { type LazyLoadEvent, PrimeTemplate } from 'primeng/api';
 import { ButtonDirective } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -152,7 +151,6 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @ViewChild('table') table: Table;
 
   constructor(
-    private logger: NGXLogger,
     private selectAllTable: SelectAllTableService,
     private tracking: TrackingService,
     private store: Store,

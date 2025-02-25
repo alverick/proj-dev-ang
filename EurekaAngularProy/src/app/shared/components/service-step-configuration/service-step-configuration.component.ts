@@ -71,24 +71,24 @@ export class ServiceStepConfigurationComponent implements OnInit {
   ngOnInit() {
     this.listenForms();
     this.debtForm = this.form?.get('debt') as ModelFormGroup<ServiceDebt>;
-    this.setDebtForm(this.form.value.dataType);
+    this.setDebtForm(this.form?.value.dataType);
     this.setDebtorCodeCustomField(
-      this.form.value.debtorCode,
-      this.form.value.debtorCodeCustom,
+      this.form?.value.debtorCode,
+      this.form?.value.debtorCodeCustom,
     );
-    this.currencySymbol = this.currencyOptions.find(
+    this.currencySymbol = this.currencyOptions?.find(
       (currency) => currency.value === this.currency,
     )?.symbol;
   }
 
   listenForms() {
-    this.form.get('dataType').valueChanges.subscribe((val) => {
+    this.form?.get('dataType').valueChanges.subscribe((val) => {
       setTimeout(() => {
         this.setDebtForm(val);
       }, 100);
     });
     this.form
-      .get('debtorCode')
+      ?.get('debtorCode')
       .valueChanges.pipe(takeUntil(this.$destroy))
       .subscribe((val) => {
         this.setDebtorCodeCustomField(val);
@@ -98,9 +98,9 @@ export class ServiceStepConfigurationComponent implements OnInit {
   private setDebtorCodeCustomField(debtorVal: string, debtorCustom = '') {
     this.debtorCodeEditable = debtorVal === 'Otro';
     if (debtorVal === 'Otro') {
-      this.form.get('debtorCodeCustom').setValue(debtorCustom);
+      this.form?.get('debtorCodeCustom').setValue(debtorCustom);
     } else {
-      this.form.get('debtorCodeCustom').setValue(debtorCodeCustomEmpty);
+      this.form?.get('debtorCodeCustom').setValue(debtorCodeCustomEmpty);
     }
   }
 
@@ -112,20 +112,20 @@ export class ServiceStepConfigurationComponent implements OnInit {
   private setDebtForm(val: ServiceTypeType) {
     this.showDebtFields = val === ServiceTypes.complete;
     if (this.showDebtFields) {
-      this.debtForm.enable();
-      this.debtForm.valueChanges.subscribe(() => {
+      this.debtForm?.enable();
+      this.debtForm?.valueChanges.subscribe(() => {
         setTimeout(() => {
           this.form.updateValueAndValidity();
         }, 100);
       });
     } else {
-      this.debtForm.disable();
-      this.debtForm.reset({
+      this.debtForm?.disable();
+      this.debtForm?.reset({
         partialPayment: 'S',
         chargeInterest: 'N',
       });
     }
-    this.form.updateValueAndValidity();
+    this.form?.updateValueAndValidity();
   }
 
   onSubmit() {

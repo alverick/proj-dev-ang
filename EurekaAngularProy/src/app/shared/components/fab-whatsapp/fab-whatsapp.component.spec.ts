@@ -9,7 +9,6 @@ describe('FabWhatsappComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [FabWhatsappComponent],
       providers: [StorageService],
     }).compileComponents();
 

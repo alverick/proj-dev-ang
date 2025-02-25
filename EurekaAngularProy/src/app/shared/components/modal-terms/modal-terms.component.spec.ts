@@ -9,7 +9,6 @@ describe('ModalTermsComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [ModalTermsComponent],
       providers: [DynamicDialogRef],
     }).compileComponents();
   });

@@ -1,6 +1,8 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
+import { ActivatedRoute } from '@angular/router';
+import { MockProvider } from 'ng-mocks';
 
+import { TrackingService } from '../../shared/services';
 import { AuthComponent } from './auth.component';
 
 describe('AuthComponent', () => {
@@ -9,7 +11,7 @@ describe('AuthComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [MockComponent(AuthComponent)],
+      providers: [MockProvider(TrackingService), MockProvider(ActivatedRoute)],
     }).compileComponents();
   });
 

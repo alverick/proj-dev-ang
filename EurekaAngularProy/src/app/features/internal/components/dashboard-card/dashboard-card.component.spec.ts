@@ -9,8 +9,8 @@ describe('DashboardCardComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [DashboardCardComponent, NotEmptyPipe],
-      imports: [],
+      declarations: [DashboardCardComponent],
+      imports: [NotEmptyPipe],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardCardComponent);

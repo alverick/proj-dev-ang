@@ -1,12 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockProvider } from 'ng-mocks';
-import { ValdemortModule } from 'ngx-valdemort';
-import { DropdownModule } from 'primeng/dropdown';
-import { KeyFilterModule } from 'primeng/keyfilter';
 
-import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import {
   errorRegisterAuth,
   errorsRegisterForm,
@@ -25,15 +20,7 @@ describe('CompanyUpdateFormComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [CompanyUpdateFormComponent, LabelControlComponent],
-      imports: [
-        HttpClientTestingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        ValdemortModule,
-        DropdownModule,
-        KeyFilterModule,
-      ],
+      imports: [HttpClientTestingModule],
       providers: [
         CompanyService,
         CompanyConfigurationService,

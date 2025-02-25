@@ -24,8 +24,8 @@ import { of } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { LabelControlComponent } from '../../../../../shared/components/label-control/label-control.component';
-import type { CurrencyWithLimit } from '../../../../../shared/constants/currencies';
 import { MessageAlertComponent } from '../../../../../shared/components/message-alert/message-alert.component';
+import type { CurrencyWithLimit } from '../../../../../shared/constants/currencies';
 import { messageModes } from '../../../../../shared/constants/messages';
 import { ServiceTypes } from '../../../../../shared/constants/services';
 import { ExcelService } from '../../../../../shared/services/excel.service';

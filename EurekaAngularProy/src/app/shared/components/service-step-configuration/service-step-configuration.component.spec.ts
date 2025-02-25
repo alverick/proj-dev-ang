@@ -1,10 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockProvider } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
-import { DropdownModule } from 'primeng/dropdown';
-import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { environment } from '../../../../environments/environment';
 import { CompanyServicesService } from '../../../features/internal/services';
@@ -16,9 +13,6 @@ import {
   ServicesFormsService,
 } from '../../services';
 import { StorageService } from '../../services/storage.service';
-import { LabelControlComponent } from '../label-control/label-control.component';
-import { MessageAlertComponent } from '../message-alert/message-alert.component';
-import { ServiceDebtFormComponent } from '../service-debt-form/service-debt-form.component';
 import { ServiceStepConfigurationComponent } from './service-step-configuration.component';
 
 describe('ServiceStepConfigurationComponent', () => {
@@ -28,15 +22,7 @@ describe('ServiceStepConfigurationComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [
-        ServiceStepConfigurationComponent,
-        LabelControlComponent,
-        MessageAlertComponent,
-        ServiceDebtFormComponent,
-      ],
       imports: [
-        DropdownModule,
-        RadioButtonModule,
         HttpClientTestingModule,
         LoggerModule.forRoot({
           level: environment.logLevel,
@@ -44,8 +30,6 @@ describe('ServiceStepConfigurationComponent', () => {
           disableConsoleLogging: false,
           enableSourceMaps: true,
         }),
-        FormsModule,
-        ReactiveFormsModule,
       ],
       providers: [
         CompanyServicesService,

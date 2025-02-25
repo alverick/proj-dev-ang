@@ -4,7 +4,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockProvider } from 'ng-mocks';
 
-import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
 import { ExcelService } from '../../../../shared/services/excel.service';
 import { LoginService } from '../../../../shared/services/login.service';
@@ -18,9 +17,7 @@ describe('InternalHeaderComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [InternalHeaderComponent],
       imports: [
-        HeaderComponent,
         HttpClientTestingModule,
         RouterTestingModule,
         NoopAnimationsModule,

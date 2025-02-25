@@ -24,7 +24,6 @@ describe('TableMovementsComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [TableMovementsComponent],
       imports: [
         LoggerModule.forRoot({
           level: environment.logLevel,

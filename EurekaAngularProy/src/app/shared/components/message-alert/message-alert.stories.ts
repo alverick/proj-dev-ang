@@ -8,8 +8,8 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 import { values } from 'ramda';
-import { messageModes } from '../../constants/messages';
 
+import { messageModes } from '../../constants/messages';
 import { SharedModule } from '../../shared.module';
 import { MessageAlertComponent } from './message-alert.component';
 

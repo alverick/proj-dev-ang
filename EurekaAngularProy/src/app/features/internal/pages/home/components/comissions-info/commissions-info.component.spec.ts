@@ -1,5 +1,4 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { StorageService } from '../../../../../../shared/services/storage.service';
@@ -11,8 +10,6 @@ describe('CommissionsInfoComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [CommissionsInfoComponent],
-      imports: [ButtonModule],
       providers: [DynamicDialogRef, DynamicDialogConfig, StorageService],
     }).compileComponents();
   });

@@ -7,12 +7,6 @@ describe('LabelControlComponent', () => {
   let fixture: ComponentFixture<LabelControlComponent>;
 
   beforeEach(() => {
-    void TestBed.configureTestingModule({
-      declarations: [LabelControlComponent],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(LabelControlComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

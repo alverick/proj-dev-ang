@@ -1,13 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MockProvider } from 'ng-mocks';
 import { LoggerModule } from 'ngx-logger';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ChipModule } from 'primeng/chip';
-import { DropdownModule } from 'primeng/dropdown';
-import { MessageModule } from 'primeng/message';
-import { MessagesModule } from 'primeng/messages';
 
 import { environment } from '../../../../environments/environment';
 import { CompanyServicesService } from '../../../features/internal/services';
@@ -19,7 +13,6 @@ import {
   ServicesFormsService,
 } from '../../services';
 import { StorageService } from '../../services/storage.service';
-import { LabelControlComponent } from '../label-control/label-control.component';
 import { ServiceEditFormComponent } from './service-edit-form.component';
 
 describe('ServiceEditFormComponent', () => {
@@ -29,22 +22,14 @@ describe('ServiceEditFormComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      declarations: [ServiceEditFormComponent, LabelControlComponent],
       imports: [
-        CheckboxModule,
-        DropdownModule,
-        ChipModule,
-        MessagesModule,
-        MessageModule,
         LoggerModule.forRoot({
           level: environment.logLevel,
           serverLogLevel: environment.serverLogLevel,
           disableConsoleLogging: false,
           enableSourceMaps: true,
         }),
-        FormsModule,
         HttpClientTestingModule,
-        ReactiveFormsModule,
       ],
       providers: [
         CompanyService,
