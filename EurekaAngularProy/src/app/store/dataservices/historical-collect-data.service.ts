@@ -15,10 +15,10 @@ import { type HistoricalCollect } from '../entities';
 @Injectable()
 export class HistoricalCollectDataService extends DefaultDataService<HistoricalCollect> {
   constructor(
-    private httpClient: HttpClient,
-    private store: Store<any>,
+    private readonly httpClient: HttpClient,
+    private readonly store: Store,
     httpUrlGenerator: HttpUrlGenerator,
-    private dashboardDataService: DashboardDataService,
+    private readonly dashboardDataService: DashboardDataService,
   ) {
     super('CollectAmount', httpClient, httpUrlGenerator);
   }

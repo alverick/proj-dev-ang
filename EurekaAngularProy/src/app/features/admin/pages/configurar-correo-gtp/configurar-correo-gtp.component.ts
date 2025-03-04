@@ -49,7 +49,7 @@ export class ConfigurarCorreoGtpComponent implements OnInit {
 
   // correoGtp: CorreoGtpModel;
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    private readonly formBuilder: UntypedFormBuilder,
     public gtpService: GtpService,
   ) {}
 

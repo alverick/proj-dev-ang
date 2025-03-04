@@ -6,17 +6,19 @@ import { NgControl } from '@angular/forms';
   standalone: true,
 })
 export class InputMoneyDirective {
-  constructor(private ngControl: NgControl) {}
+  constructor(private readonly ngControl: NgControl) {}
 
   @HostListener('input', ['$event'])
-  onInputChange(event) {
-    event.target.value = event.target.value
+  onInputChange(event: InputEvent) {
+    (event.target as HTMLInputElement).value = (
+      event.target as HTMLInputElement
+    ).value
       .replace(/\.{2,}/g, '.')
       .replace(/[^0-9.]*/g, '');
   }
   @HostListener('blur', ['$event'])
   onBlur() {
-    const value = parseFloat(this.ngControl.value);
+    const value = parseFloat(this.ngControl.value as string);
 
     if (!isNaN(value)) {
       this.ngControl.control.setValue(value.toFixed(2), {

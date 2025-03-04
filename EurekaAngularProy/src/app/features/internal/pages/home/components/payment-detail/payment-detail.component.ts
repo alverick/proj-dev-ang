@@ -54,7 +54,7 @@ export class PaymentDetailComponent implements OnInit {
   protected readonly ServiceTypes = ServiceTypes;
 
   constructor(
-    private transaction: TransactionService,
+    private readonly transaction: TransactionService,
     public dialogRef: DynamicDialogRef<PaymentDetailComponent>,
     public dialogConfig: DynamicDialogConfig<PaymentDetailComponent>,
     protected tracking: TrackingService,

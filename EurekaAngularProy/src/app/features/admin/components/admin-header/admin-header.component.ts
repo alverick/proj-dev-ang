@@ -37,7 +37,7 @@ export class AdminHeaderComponent {
   constructor(
     private readonly loginService: LoginService,
     private readonly excel: ExcelService,
-    private router: Router,
+    private readonly router: Router,
   ) {}
 
   public gotoSetupEmail() {

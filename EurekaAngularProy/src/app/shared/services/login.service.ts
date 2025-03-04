@@ -20,12 +20,12 @@ import { StorageService } from './storage.service';
 export class LoginService {
   constructor(
     public http: HttpClient,
-    private storage: StorageService,
-    private notify: NotifyService,
-    private store: Store,
+    private readonly storage: StorageService,
+    private readonly notify: NotifyService,
+    private readonly store: Store,
   ) {}
 
-  private URI_API: string = environment.END_POINT;
+  private readonly URI_API: string = environment.END_POINT;
   public errores: number;
 
   private callingRefresh = false;

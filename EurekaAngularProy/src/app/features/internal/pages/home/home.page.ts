@@ -198,18 +198,18 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(
-    private storageService: StorageService,
-    private homeService: HomeService,
+    private readonly storageService: StorageService,
+    private readonly homeService: HomeService,
     public transactionService: TransactionService,
     public excelService: ExcelService,
-    private loginService: LoginService,
-    private fileLoad: LoadFileService,
-    private barLoad: LoadBarService,
-    private movementsService: MovementsService,
-    private router: Router,
-    private shepherdService: ShepherdService,
+    private readonly loginService: LoginService,
+    private readonly fileLoad: LoadFileService,
+    private readonly barLoad: LoadBarService,
+    private readonly movementsService: MovementsService,
+    private readonly router: Router,
+    private readonly shepherdService: ShepherdService,
     protected tracking: TrackingService,
-    private store: Store,
+    private readonly store: Store,
     public dynamicDialogService: DynamicDialogService,
     public settings: SettingsStorageService,
   ) {
@@ -1048,8 +1048,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
         DialogComponent,
         this.dialogConfig,
       );
-      dialogRef.onClose.subscribe((result: Observable<any>) => {
-        // dialogRef.componentInstance.ready = false;
+      dialogRef.onClose.subscribe((result: Observable<unknown>) => {
         this.fileLoad.verify(this.fileLoadContainer);
         if (result) {
           result.subscribe(() => {
@@ -1137,8 +1136,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
                 DialogComponent,
                 this.dialogConfig,
               );
-              dialogRef.onClose.subscribe((result: Observable<any>) => {
-                // dialogRef.componentInstance.ready = false;
+              dialogRef.onClose.subscribe((result: Observable<unknown>) => {
                 this.fileLoad.verify(this.fileLoadContainer);
                 if (result) {
                   result.subscribe(() => {

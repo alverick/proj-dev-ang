@@ -5,9 +5,9 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   standalone: true,
 })
 export class PuntoDirective {
-  constructor(private _el: ElementRef) {}
+  constructor(private readonly _el: ElementRef<HTMLInputElement>) {}
 
-  @HostListener('input', ['$event']) onInputChange(event) {
+  @HostListener('input', ['$event']) onInputChange(event: Event) {
     const initalValue = this._el.nativeElement.value;
     this._el.nativeElement.value = initalValue.replace(/[^0-9-.]*/g, '');
     if (initalValue !== this._el.nativeElement.value) {

@@ -50,9 +50,9 @@ export class RecuperarContrasenaComponent implements OnInit {
   submittedRequired = false;
   protected readonly errorMessages = errorsLoginForm;
   constructor(
-    private formBuilder: UntypedFormBuilder,
-    private recuperaService: RecuperaService,
-    private router: Router,
+    private readonly formBuilder: UntypedFormBuilder,
+    private readonly recuperaService: RecuperaService,
+    private readonly router: Router,
     protected tracking: TrackingService,
   ) {}
 

@@ -80,14 +80,14 @@ export class AffiliationService {
   tokenUpdate: string;
 
   constructor(
-    private router: Router,
-    private companyService: CompanyService,
-    private loginService: LoginService,
-    private enterpriseHeading: EnterpriseHeadingService,
+    private readonly router: Router,
+    private readonly companyService: CompanyService,
+    private readonly loginService: LoginService,
+    private readonly enterpriseHeading: EnterpriseHeadingService,
     public affiliationForms: AffiliationFormsService,
-    private serviceForms: ServicesFormsService,
-    private logger: NGXLogger,
-    private digitalData: DigitalDataService,
+    private readonly serviceForms: ServicesFormsService,
+    private readonly logger: NGXLogger,
+    private readonly digitalData: DigitalDataService,
     protected tracking: TrackingService,
   ) {
     this.setRegisterForm();

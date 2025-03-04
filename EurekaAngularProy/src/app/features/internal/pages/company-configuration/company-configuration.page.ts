@@ -58,7 +58,7 @@ export class CompanyConfigurationPage implements OnInit {
 
   constructor(
     public companyConfiguration: CompanyConfigurationService,
-    private activatedRoute: ActivatedRoute,
+    private readonly activatedRoute: ActivatedRoute,
     protected tracking: TrackingService,
   ) {}
 

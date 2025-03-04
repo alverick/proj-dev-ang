@@ -7,7 +7,7 @@ import { type Observable, ReplaySubject } from 'rxjs';
 export class ScriptInjectorService {
   private loadedLibraries: Record<string, ReplaySubject<boolean>> = {};
 
-  constructor(@Inject(DOCUMENT) private document: Document) {}
+  constructor(@Inject(DOCUMENT) private readonly document: Document) {}
 
   loadScript(id: string, src: string): Observable<boolean> {
     if (this.loadedLibraries[src]) {

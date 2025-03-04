@@ -35,10 +35,10 @@ export class ServiceConfigurationPage {
   interestTypeOptions = interestTypeOptions;
   blockAction = false;
   constructor(
-    private router: Router,
+    private readonly router: Router,
     protected companyServices: CompanyServicesService,
     public serviceForms: ServicesFormsService,
-    private logger: NGXLogger,
+    private readonly logger: NGXLogger,
     protected tracking: TrackingService,
   ) {}
 

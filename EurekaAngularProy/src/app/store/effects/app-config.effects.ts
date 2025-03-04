@@ -47,8 +47,8 @@ export class AppConfigEffects {
   );
 
   constructor(
-    private actions$: Actions,
-    private store: Store,
-    private spinner: NgxSpinnerService,
+    private readonly actions$: Actions,
+    private readonly store: Store,
+    private readonly spinner: NgxSpinnerService,
   ) {}
 }

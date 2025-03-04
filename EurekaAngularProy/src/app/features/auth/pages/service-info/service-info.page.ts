@@ -23,10 +23,10 @@ export class ServiceInfoPage implements OnInit {
   accounts: CompanyAccounts[];
   errors = errorServiceInformation;
   constructor(
-    private router: Router,
+    private readonly router: Router,
     public affiliation: AffiliationService,
-    private serviceForms: ServicesFormsService,
-    private tracking: TrackingService,
+    private readonly serviceForms: ServicesFormsService,
+    private readonly tracking: TrackingService,
   ) {}
 
   ngOnInit() {

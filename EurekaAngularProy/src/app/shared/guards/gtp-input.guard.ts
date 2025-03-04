@@ -3,14 +3,10 @@ import { Router, type UrlTree } from '@angular/router';
 import { type Observable } from 'rxjs';
 
 import { internalFullRoutingNames } from '../../features/internal/internal-routing.names';
-import { StorageService } from '../services/storage.service';
 
 @Injectable()
 export class GtpInputGuard {
-  constructor(
-    private router: Router,
-    private storageService: StorageService,
-  ) {}
+  constructor(private readonly router: Router) {}
 
   canActivate():
     | Observable<boolean | UrlTree>

@@ -69,12 +69,12 @@ export class DashboardPage implements OnInit {
   @ViewChild('outputHtml', { static: false }) outputHtml: ElementRef;
 
   constructor(
-    private dashboard: DashboardService,
-    private router: Router,
+    private readonly dashboard: DashboardService,
+    private readonly router: Router,
     protected fb: FormBuilder,
-    private collectAmountService: CollectAmountService,
-    private historicalCollectService: HistoricalCollectService,
-    private topClientService: TopClientService,
+    private readonly collectAmountService: CollectAmountService,
+    private readonly historicalCollectService: HistoricalCollectService,
+    private readonly topClientService: TopClientService,
   ) {
     this.dateFrom.setMonth(this.dateFrom.getMonth() - 1);
     this.setCollectAmount();

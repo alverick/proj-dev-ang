@@ -15,10 +15,10 @@ import { type CollectAmount } from '../entities';
 @Injectable()
 export class CollectAmountDataService extends DefaultDataService<CollectAmount> {
   constructor(
-    private _httpClient: HttpClient,
-    private store: Store<any>,
+    private readonly _httpClient: HttpClient,
+    private readonly store: Store,
     httpUrlGenerator: HttpUrlGenerator,
-    private dashboardDataService: DashboardDataService,
+    private readonly dashboardDataService: DashboardDataService,
   ) {
     super('CollectAmount', _httpClient, httpUrlGenerator);
   }

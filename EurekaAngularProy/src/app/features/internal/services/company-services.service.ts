@@ -53,11 +53,11 @@ export class CompanyServicesService {
   private _allowAllServiceType = false;
 
   constructor(
-    private companyService: CompanyService,
-    private serviceForms: ServicesFormsService,
-    private serviceService: ServiceService,
-    private logger: NGXLogger,
-    private digitalData: DigitalDataService,
+    private readonly companyService: CompanyService,
+    private readonly serviceForms: ServicesFormsService,
+    private readonly serviceService: ServiceService,
+    private readonly logger: NGXLogger,
+    private readonly digitalData: DigitalDataService,
     protected tracking: TrackingService,
   ) {
     this.serviceForm = this.serviceForms.serviceForm;

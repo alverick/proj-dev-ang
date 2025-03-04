@@ -24,7 +24,7 @@ export class FabWhatsappComponent implements OnChanges {
   url = '';
   timeToHide = 10000;
   constructor(
-    private tracking: TrackingService,
+    private readonly tracking: TrackingService,
     protected router: Router,
   ) {
     setTimeout(() => (this.showText = false), this.timeToHide);

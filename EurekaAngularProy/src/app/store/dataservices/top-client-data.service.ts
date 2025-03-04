@@ -17,8 +17,10 @@ export class TopClientDataService extends DefaultDataService<TopClient> {
   constructor(
     private httpClient: HttpClient,
     private store: Store<any>,
+    private readonly httpClient: HttpClient,
+    private readonly store: Store,
     httpUrlGenerator: HttpUrlGenerator,
-    private dashboardDataService: DashboardDataService,
+    private readonly dashboardDataService: DashboardDataService,
   ) {
     super('CollectAmount', httpClient, httpUrlGenerator);
   }

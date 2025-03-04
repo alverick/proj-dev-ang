@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   standalone: true,
 })
 export class OnlyNumbersFormDirective {
-  constructor(private _el: ElementRef<HTMLInputElement>) {}
+  constructor(private readonly _el: ElementRef<HTMLInputElement>) {}
 
   @HostListener('input', ['$event'])
   onInputKeydown(event: InputEvent) {

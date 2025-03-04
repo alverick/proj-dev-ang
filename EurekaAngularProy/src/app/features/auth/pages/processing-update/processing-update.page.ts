@@ -14,7 +14,7 @@ export class ProcessingUpdatePage implements OnInit {
 
   constructor(
     public affiliation: AffiliationService,
-    private router: Router,
+    private readonly router: Router,
   ) {}
 
   ngOnInit() {

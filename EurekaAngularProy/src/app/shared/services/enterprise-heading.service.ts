@@ -8,7 +8,7 @@ import { type IEntryModel } from '../models';
 
 @Injectable()
 export class EnterpriseHeadingService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
   public getEntryOptions(): Observable<IEntryModel[]> {
     return this.http
       .get<IEntryModel[]>(`${environment.END_POINT}/enterpriseHeading`)

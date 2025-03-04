@@ -19,9 +19,9 @@ export class UpdateCompanyPage implements OnInit {
   errors = errorRegisterAuth;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
     public affiliation: AffiliationService,
-    private activatedRoute: ActivatedRoute,
+    private readonly activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit() {

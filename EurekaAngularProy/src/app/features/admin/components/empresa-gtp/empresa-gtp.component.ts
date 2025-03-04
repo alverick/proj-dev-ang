@@ -65,7 +65,7 @@ export class EmpresaGTPComponent implements OnInit {
   @Input() enterprise: ICompanyData;
   @Output() grabar = new EventEmitter<ICompanyData>();
 
-  constructor(private formBuilder: UntypedFormBuilder) {}
+  constructor(private readonly formBuilder: UntypedFormBuilder) {}
 
   ngOnInit() {
     const {

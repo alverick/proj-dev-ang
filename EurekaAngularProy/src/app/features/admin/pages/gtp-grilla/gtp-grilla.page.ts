@@ -124,11 +124,11 @@ export class GtpGrillaPage implements OnInit, OnDestroy {
   checkTimeObservable: Subscription;
 
   constructor(
-    private afiliacionService: AfiliacionService,
+    private readonly afiliacionService: AfiliacionService,
     public gtpService: GtpService,
-    private router: Router,
-    private companyService: CompanyService,
-    private queryDataService: QueryDataService,
+    private readonly router: Router,
+    private readonly companyService: CompanyService,
+    private readonly queryDataService: QueryDataService,
   ) {}
 
   ngOnInit() {

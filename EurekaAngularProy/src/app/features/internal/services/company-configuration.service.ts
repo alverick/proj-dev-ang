@@ -50,9 +50,9 @@ export class CompanyConfigurationService {
   passwordForm: ModelFormGroup<ChangePasswordForm>;
 
   constructor(
-    private fb: FormBuilder,
-    private companyService: CompanyService,
-    private router: Router,
+    private readonly fb: FormBuilder,
+    private readonly companyService: CompanyService,
+    private readonly router: Router,
     protected loginService: LoginService,
     protected tracking: TrackingService,
   ) {

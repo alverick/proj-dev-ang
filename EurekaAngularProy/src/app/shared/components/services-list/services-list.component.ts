@@ -29,8 +29,8 @@ export class ServicesListComponent implements AfterViewInit, AfterViewChecked {
   additionalButtons = false;
 
   constructor(
-    private element: ElementRef,
-    private cdr: ChangeDetectorRef,
+    private readonly element: ElementRef<HTMLElement>,
+    private readonly cdr: ChangeDetectorRef,
   ) {}
 
   ngAfterViewInit(): void {
@@ -44,8 +44,7 @@ export class ServicesListComponent implements AfterViewInit, AfterViewChecked {
   @HostListener('window:resize')
   resize() {
     this.additionalButtons =
-      (this.element.nativeElement as HTMLElement).offsetHeight >
-      window.innerHeight + 50;
+      this.element.nativeElement.offsetHeight > window.innerHeight + 50;
     this.cdr.detectChanges();
   }
 }

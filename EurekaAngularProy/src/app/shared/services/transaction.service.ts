@@ -13,7 +13,7 @@ import { type DebstFilter } from '../models/debts-filter.model';
 
 @Injectable()
 export class TransactionService {
-  private URI_API: string = environment.END_POINT;
+  private readonly URI_API: string = environment.END_POINT;
   private lastFilter: DebstFilter = null;
 
   constructor(public http: HttpClient) {}

@@ -8,7 +8,8 @@ import { CompanyService } from '../../../shared/services';
 
 @Injectable()
 export class AccountStateDetailsResolver {
-  constructor(private companyService: CompanyService) {}
+  constructor(private readonly companyService: CompanyService) {}
+
   resolve(
     route: ActivatedRouteSnapshot,
   ): Observable<IAccountStateDetails | string> {

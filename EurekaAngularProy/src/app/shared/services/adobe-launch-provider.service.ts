@@ -21,8 +21,6 @@ export interface Satellite {
   track(event: AdobeEventType, payload: Partial<TrackEventProperties>): void;
 }
 
-export declare const _satellite: Satellite;
-
 declare const window: {
   _satellite: Satellite;
 } & Window;
@@ -33,9 +31,9 @@ export class AdobeLaunchProviderService implements ProviderService {
   loaded = false;
 
   constructor(
-    private scriptInjectorService: ScriptInjectorService,
-    public trackingService: TrackingService,
-    private store: Store,
+    private readonly scriptInjectorService: ScriptInjectorService,
+    private readonly trackingService: TrackingService,
+    private readonly store: Store,
   ) {
     if (isNotEmpty(environment.adobe)) {
       document.addEventListener('at-content-rendering-succeeded', () => {

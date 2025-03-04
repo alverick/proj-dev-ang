@@ -9,7 +9,7 @@ import { LoadBarComponent } from '../components/load-bar/load-bar.component';
 
 @Injectable()
 export class LoadBarService {
-  constructor(private resolver: ComponentFactoryResolver) {}
+  constructor(private readonly resolver: ComponentFactoryResolver) {}
 
   private componentRef: ComponentRef<LoadBarComponent> = null;
 

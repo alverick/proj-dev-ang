@@ -25,7 +25,7 @@ export class ServiceInfoPage {
   accounts: CompanyAccounts[];
   errors = errorServiceInformation;
   constructor(
-    private router: Router,
+    private readonly router: Router,
     public activatedRoute: ActivatedRoute,
     public serviceForms: ServicesFormsService,
     protected tracking: TrackingService,

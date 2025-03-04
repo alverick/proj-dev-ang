@@ -27,7 +27,7 @@ export class CompanyRegistrationPage implements OnInit {
   documentTypes = documentTypes;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
     public affiliation: AffiliationService,
   ) {
     const navigation = this.router.getCurrentNavigation();

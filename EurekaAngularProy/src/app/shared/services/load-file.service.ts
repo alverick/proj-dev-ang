@@ -23,8 +23,8 @@ export interface ModalCloseData {
 @Injectable()
 export class LoadFileService {
   constructor(
-    private excelService: ExcelService,
-    private router: Router,
+    private readonly excelService: ExcelService,
+    private readonly router: Router,
   ) {}
 
   private componentRef: ComponentRef<LoadFileComponent> = null;

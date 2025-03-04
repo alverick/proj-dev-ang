@@ -50,8 +50,8 @@ export class ServiceResumePage {
   form = this.affiliation.editServiceForm;
 
   constructor(
-    private router: Router,
-    private serviceForms: ServicesFormsService,
+    private readonly router: Router,
+    private readonly serviceForms: ServicesFormsService,
     public affiliation: AffiliationService,
   ) {}
 

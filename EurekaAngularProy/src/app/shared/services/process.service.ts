@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ProcessService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   getList(clientId, page: number) {
     const limit = 50;

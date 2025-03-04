@@ -17,8 +17,8 @@ import { AffiliationService } from '../services';
 @Injectable()
 export class ValidateTokenGuard {
   constructor(
-    private router: Router,
-    private affiliation: AffiliationService,
+    private readonly router: Router,
+    private readonly affiliation: AffiliationService,
   ) {}
   canActivate(
     next: ActivatedRouteSnapshot,

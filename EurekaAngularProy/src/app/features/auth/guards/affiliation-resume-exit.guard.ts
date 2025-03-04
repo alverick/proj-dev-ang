@@ -17,7 +17,7 @@ import { type ServiceResumePage } from '../pages';
 
 @Injectable()
 export class AffiliationResumeExitGuard {
-  constructor(private router: Router) {}
+  constructor(private readonly router: Router) {}
   canDeactivate(
     _component: ServiceResumePage,
     _currentRoute: ActivatedRouteSnapshot,

@@ -27,7 +27,7 @@ export class HelpPage implements AfterViewInit {
   activeIndex: number;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
     protected tracking: TrackingService,
   ) {
     const navigation = this.router.getCurrentNavigation();

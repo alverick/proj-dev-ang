@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, mergeMap, type Observable, of } from 'rxjs';
+import { defer, from, mergeMap, type Observable, of, shareReplay } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { type IpInfo, IpInfoDataService } from '../data/ip-info-data.service';
@@ -110,12 +110,14 @@ declare const window: {
 
 @Injectable()
 export class DigitalDataService {
-  private digital: FingerPrintType;
-  private fingerPrintData: Observable<FingerPrintData>;
+  private readonly digital: FingerPrintType;
+  private readonly fingerPrintData: Observable<FingerPrintData>;
 
   constructor(private readonly ipInfoService: IpInfoDataService) {
+    this.fingerPrintData = defer(() =>
+      from(this.digital?.getData(true, true)),
+    ).pipe(shareReplay(1));
     this.digital = window.MPFingerprint;
-    this.fingerPrintData = from(this.digital?.getData(true, true));
   }
 
   getData$() {

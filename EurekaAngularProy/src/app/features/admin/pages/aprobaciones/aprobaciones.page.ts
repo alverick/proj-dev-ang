@@ -71,7 +71,7 @@ export class AprobacionesPage implements OnInit {
 
   constructor(
     public gtpService: GtpService,
-    private activatedRoute: ActivatedRoute,
+    private readonly activatedRoute: ActivatedRoute,
     public router: Router,
   ) {}
 
@@ -83,7 +83,8 @@ export class AprobacionesPage implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe(({ stateDetail }) => {
+    console.log(this.activatedRoute, this.activatedRoute.data);
+    this.activatedRoute?.data.subscribe(({ stateDetail }) => {
       this.stateDetail = stateDetail;
     });
     this.llave = this.activatedRoute.snapshot.params.llave;

@@ -76,8 +76,8 @@ export class ServicesGTPComponent implements OnInit {
   frm: UntypedFormGroup;
 
   constructor(
-    private fb: UntypedFormBuilder,
-    private afiliacionService: AfiliacionService,
+    private readonly fb: UntypedFormBuilder,
+    private readonly afiliacionService: AfiliacionService,
   ) {}
 
   ngOnInit() {

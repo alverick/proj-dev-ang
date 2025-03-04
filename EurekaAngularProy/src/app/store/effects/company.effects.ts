@@ -35,8 +35,8 @@ export class CompanyEffects {
   );
 
   constructor(
-    private actions$: Actions,
-    private companyService: CompanyService,
-    private store: Store,
+    private readonly actions$: Actions,
+    private readonly companyService: CompanyService,
+    private readonly store: Store,
   ) {}
 }

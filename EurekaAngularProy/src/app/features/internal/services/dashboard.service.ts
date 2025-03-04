@@ -6,8 +6,8 @@ import { CompanyService } from '../../../shared/services';
 @Injectable()
 export class DashboardService {
   constructor(
-    private company: CompanyService,
-    private dashboard: DashboardDataService,
+    private readonly company: CompanyService,
+    private readonly dashboard: DashboardDataService,
   ) {}
 
   getServices() {
