@@ -47,8 +47,8 @@ describe('RegistrationFinishedPage', () => {
     swalAlert.fire = jest.fn();
     component.mensaje('titulo', 'texto');
 
-    expect(swalAlert.fire).toBeCalled();
-    expect(swalAlert.fire).toBeCalledWith({
+    expect(swalAlert.fire).toHaveBeenCalled();
+    expect(swalAlert.fire).toHaveBeenCalledWith({
       title: 'titulo',
       html: 'texto',
       showCloseButton: false,
@@ -70,8 +70,8 @@ describe('RegistrationFinishedPage', () => {
     swalAlert.fire = jest.fn();
 
     verifingTokenSubject.next(false);
-    expect(swalAlert.fire).toBeCalled();
-    expect(swalAlert.fire).toBeCalledWith({
+    expect(swalAlert.fire).toHaveBeenCalled();
+    expect(swalAlert.fire).toHaveBeenCalledWith({
       title: 'Enlace expirado',
       html: 'El enlace ya ha expirado o ha sido usado, puedes volver a solicitar otro para recuperar tu contraseña',
       showCloseButton: false,
@@ -100,8 +100,8 @@ describe('RegistrationFinishedPage', () => {
     component.SubmitCambia();
     changePasswordSubject.next(true);
 
-    expect(swalAlert.fire).toBeCalled();
-    expect(swalAlert.fire).toBeCalledWith({
+    expect(swalAlert.fire).toHaveBeenCalled();
+    expect(swalAlert.fire).toHaveBeenCalledWith({
       title: 'Contraseña actualizada',
       html: 'Tu contraseña ha sido actualizada.',
       showCloseButton: false,
@@ -129,8 +129,8 @@ describe('RegistrationFinishedPage', () => {
     component.SubmitCambia();
 
     changePasswordSubject.next(false);
-    expect(swalAlert.fire).toBeCalled();
-    expect(swalAlert.fire).toBeCalledWith({
+    expect(swalAlert.fire).toHaveBeenCalled();
+    expect(swalAlert.fire).toHaveBeenCalledWith({
       title: 'Actualizar Contraseña',
       html: 'Error al actualizar contraseña',
       showCloseButton: false,
