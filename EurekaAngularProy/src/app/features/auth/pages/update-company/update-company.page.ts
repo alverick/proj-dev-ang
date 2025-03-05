@@ -25,12 +25,14 @@ export class UpdateCompanyPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute?.data?.subscribe(({ entries }: any) => {
-      this.entryOptions = entries;
-    });
+    this.activatedRoute?.data?.subscribe(
+      ({ entries }: { entries: IEntryModel[] }) => {
+        this.entryOptions = entries;
+      },
+    );
   }
 
   onSubmit() {
-    this.router.navigate([authFullRoutingChildNames.UPDATE_SERVICES]);
+    void this.router.navigate([authFullRoutingChildNames.UPDATE_SERVICES]);
   }
 }

@@ -59,7 +59,7 @@ export class RecuperarContrasenaComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: BeforeUnloadEvent) {
     if (!this.formulario) {
-      $event.returnValue = 'Se van a perder los cambios.';
+      $event.preventDefault();
     }
   }
 

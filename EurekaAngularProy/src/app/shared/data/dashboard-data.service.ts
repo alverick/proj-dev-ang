@@ -1,6 +1,9 @@
-import { HttpClient, type HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  type HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { type QueryParams } from '@ngrx/data';
 import { type Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -19,23 +22,23 @@ export interface SendReport {
 
 @Injectable()
 export class DashboardDataService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
-  getAmounts(filterData: QueryParams): Observable<CollectAmount[]> {
+  getAmounts(filterData: HttpParams): Observable<CollectAmount[]> {
     const url = `${environment.END_POINT}/dashBoard/collectAmount`;
     return this.http
       .get<CollectAmount[]>(url, { params: filterData })
       .pipe(catchError((error: HttpErrorResponse) => throwError(() => error)));
   }
 
-  getClients(filterData: any): Observable<TopClient[]> {
+  getClients(filterData: HttpParams): Observable<TopClient[]> {
     const url = `${environment.END_POINT}/dashBoard/topClients`;
     return this.http
       .get<TopClient[]>(url, { params: filterData })
       .pipe(catchError((error: HttpErrorResponse) => throwError(() => error)));
   }
 
-  getHistorical(filterData: any): Observable<HistoricalData[]> {
+  getHistorical(filterData: HttpParams): Observable<HistoricalData[]> {
     const url = `${environment.END_POINT}/dashBoard/historicalCollect`;
     return this.http
       .get<HistoricalData[]>(url, { params: filterData })

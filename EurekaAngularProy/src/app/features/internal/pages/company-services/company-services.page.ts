@@ -66,8 +66,9 @@ export class CompanyServicesPage {
       '-> this.companyServicesService.services',
       this.companyServices.services,
     );
-    this.activatedRoute.data.subscribe((value: any) => {
-      this.companyServices.services = value.services;
+    this.activatedRoute.data.subscribe((value) => {
+      this.companyServices.services =
+        value.services as Partial<IServiceRemoteModel>[];
     });
   }
 

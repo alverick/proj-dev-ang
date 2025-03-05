@@ -236,7 +236,7 @@ export class ServicesGTPComponent implements OnInit {
     this.afiliacionService.GetCards().subscribe((d) => {
       this.cuentas = d;
       const account = d.find((item) => item.id === this._service.idAccount);
-      this.frm.get('idCuenta').setValue(account.number);
+      this.frm.get('idCuenta').setValue(account?.number);
     });
 
     if (this.frm.get('cobraMora').value === 'S') {

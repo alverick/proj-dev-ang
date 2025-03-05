@@ -173,12 +173,12 @@ export class AffiliationService {
 
   public validateCompany() {
     const {
-      movilNumber,
-      documentType,
-      email,
-      documentNumber,
-      movilOperator,
       ruc,
+      email,
+      movilNumber,
+      movilOperator,
+      documentType,
+      documentNumber,
     } = this.registerForm.value;
 
     const actionStep: Partial<ActionEventProperties> = {
@@ -189,30 +189,12 @@ export class AffiliationService {
       step: 'Step1',
       state: stateSuccessful,
       metadata: [
-        {
-          key: 'TipoDocumento',
-          value: documentType,
-        },
-        {
-          key: 'NúmeroDocumento',
-          value: documentNumber,
-        },
-        {
-          key: 'RucEmpresa',
-          value: ruc,
-        },
-        {
-          key: 'Email',
-          value: email,
-        },
-        {
-          key: 'Operador',
-          value: movilOperator,
-        },
-        {
-          key: 'Celular',
-          value: movilNumber,
-        },
+        { key: 'TipoDocumento', value: documentType },
+        { key: 'NúmeroDocumento', value: documentNumber },
+        { key: 'RucEmpresa', value: ruc },
+        { key: 'Email', value: email },
+        { key: 'Operador', value: movilOperator },
+        { key: 'Celular', value: movilNumber },
       ],
     };
 

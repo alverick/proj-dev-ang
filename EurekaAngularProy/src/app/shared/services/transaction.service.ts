@@ -31,11 +31,12 @@ export class TransactionService {
   };
   public itemsForDelete: number[] = [];
 
-  private mustBeSelected(d: Debts, selectedUniverse: boolean = false): boolean {
-    if (d.hasIBKPayments || d.status === 'PAGADO') {
-      return false;
-    }
-    return selectedUniverse || this.itemsForDelete.indexOf(d.id) >= 0;
+  private mustBeSelected(d: Debts, selectedUniverse = false): boolean {
+    return (
+      !d.hasIBKPayments &&
+      d.status !== 'PAGADO' &&
+      (selectedUniverse || this.itemsForDelete.includes(d.id))
+    );
   }
 
   getDeuda(
@@ -235,21 +236,28 @@ export class TransactionService {
   }
 
   isMarkedAll(selectedUniverse: boolean = false) {
-    let markAll = true;
-    let mustBeChecked = false;
-    this.debtItems.data.forEach((v) => {
-      if (selectedUniverse) {
-        if (this.mustBeSelected(v, selectedUniverse)) {
-          markAll = markAll && v.selected;
-          mustBeChecked = true;
-        }
-      } else if (!v.hasIBKPayments && v.status !== 'PAGADO') {
-        const idx = this.itemsForDelete.indexOf(v.id);
-        markAll = markAll && idx >= 0;
-        mustBeChecked = true;
+    const itemsToCheck = selectedUniverse
+      ? this.debtItems.data.filter((v) =>
+          this.mustBeSelected(v, selectedUniverse),
+        )
+      : this.debtItems.data.filter(
+          (v) => !v.hasIBKPayments && v.status !== 'PAGADO',
+        );
+
+    if (itemsToCheck.length === 0) {
+      return false;
+    }
+
+    for (const v of itemsToCheck) {
+      const isSelected = selectedUniverse
+        ? v.selected
+        : this.itemsForDelete.includes(v.id);
+      if (!isSelected) {
+        return false;
       }
-    });
-    return markAll && mustBeChecked;
+    }
+
+    return true;
   }
 
   resetDebts() {
