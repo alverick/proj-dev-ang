@@ -19,7 +19,7 @@ import {
 } from '../../../../shared/models/gtp-post';
 import { NotEmptyPipe } from '../../../../shared/pipes/not-empty.pipe';
 import { GtpService } from '../../../../shared/services/gtp.service';
-import { drawPopup } from '../../../../shared/utils/helpers/popups';
+import { drawPopup, swalAlert } from '../../../../shared/utils/helpers/popups';
 import { EmpresaGTPComponent } from '../../components/empresa-gtp/empresa-gtp.component';
 import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp.component';
 
@@ -76,14 +76,13 @@ export class AprobacionesPage implements OnInit {
   ) {}
 
   @HostListener('window:beforeunload', ['$event'])
-  public closeWindow($event: any) {
+  closeWindow(event: BeforeUnloadEvent) {
     if (this.Formulario && this.ServiciosFormulario) {
-      $event.returnValue = 'Se van a perder los cambios.';
+      event.preventDefault();
     }
   }
 
   ngOnInit() {
-    console.log(this.activatedRoute, this.activatedRoute.data);
     this.activatedRoute?.data.subscribe(({ stateDetail }) => {
       this.stateDetail = stateDetail;
     });
@@ -604,18 +603,15 @@ export class AprobacionesPage implements OnInit {
   }
 
   mensaje(titulo: string, text: string) {
-    Swal.fire({
-      // type: tipo ,
+    void swalAlert.fire({
       title: titulo,
       text,
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
       cancelButtonColor: '#d33',
-      // cancelButtonText:  'CERRAR',
       allowOutsideClick: false,
       confirmButtonText: 'Cerrar',
-      onOpen: drawPopup,
     });
   }
 }

@@ -22,23 +22,29 @@ export class AgregaCobroComponent {
     public dialogRef: DynamicDialogRef<AgregaCobroComponent>,
     public config: DynamicDialogConfig,
   ) {
-    this.useAmountLimits = pathOr(
-      false,
-      ['data', 'useAmountLimits'],
-      this.config,
-    );
+    this.initializeComponent();
+  }
 
+  private initializeComponent(): void {
+    this.useAmountLimits = this.getUseAmountLimits();
     if (this.useAmountLimits) {
-      this.limitAmountMax = (
-        pathOr([], ['data', 'amountLimits'], this.config) as CurrencyWithLimit[]
-      ).find(
-        (limit) => limit.symbol === this.excelService.service.currencySymbol,
-      )?.limitMax;
+      this.limitAmountMax = this.getAmountLimitMax();
     }
   }
 
-  close() {
-    this.dialogRef.close();
+  private getUseAmountLimits(): boolean {
+    return pathOr(false, ['data', 'useAmountLimits'], this.config);
+  }
+
+  private getAmountLimitMax(): number | null {
+    const amountLimits = pathOr(
+      [],
+      ['data', 'amountLimits'],
+      this.config,
+    ) as CurrencyWithLimit[];
+    const currencySymbol = this.excelService.service.currencySymbol;
+    const limit = amountLimits.find((limit) => limit.symbol === currencySymbol);
+    return limit ? limit.limitMax : null;
   }
 
   chooseWeb() {
