@@ -13,7 +13,6 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
 @Component({
   selector: 'cs-admin-header',
   templateUrl: './admin-header.component.html',
-  styleUrls: ['./admin-header.component.scss'],
   standalone: true,
   imports: [HeaderComponent, NgOptimizedImage, MenuModule],
 })

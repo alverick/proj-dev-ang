@@ -30,7 +30,6 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
 @Component({
   selector: 'cs-internal-header',
   templateUrl: './internal-header.component.html',
-  styleUrls: ['./internal-header.component.scss'],
   standalone: true,
   imports: [
     HeaderComponent,

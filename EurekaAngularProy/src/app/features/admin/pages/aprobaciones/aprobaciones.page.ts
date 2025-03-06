@@ -26,7 +26,6 @@ import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp
 @Component({
   selector: 'cs-aprobaciones',
   templateUrl: './aprobaciones.page.html',
-  styleUrls: ['./aprobaciones.page.scss'],
   standalone: true,
   imports: [
     NgClass,

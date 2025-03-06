@@ -50,7 +50,6 @@ interface LoginForm {
 @Component({
   selector: 'cs-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
   providers: [MessageService],
   standalone: true,
   imports: [
