@@ -49,6 +49,18 @@ export const handlers = [
   http.get(serverApi(`/company/:company/cards`), () => {
     return HttpResponse.json(companyAccounts);
   }),
+  http.get(serverApi(`/enterpriseHeading`), () => {
+    return HttpResponse.json([
+      {
+        code: '3416',
+        name: 'Rubro 1',
+      },
+      {
+        code: '3413',
+        name: 'Rubro 2',
+      },
+    ]);
+  }),
   http.post(serverApi('/debt/service/Mensualidad3/debtor'), () =>
     HttpResponse.json({ success: true }),
   ),
@@ -86,18 +98,12 @@ export const handlers = [
   http.post(serverApi('/debt1/load/:service/:process?'), () =>
     HttpResponse.json({ id: 1210 }),
   ),
+  http.post(serverApi('/Login/dencrypt'), () => HttpResponse.json(true)),
   http.get(serverApi('/debt1/process/:process/status'), async function* () {
     let counter = 1;
     await delay();
-    const {
-      confirmUser,
-      saving,
-      validating,
-      validated,
-      completed,
-      created,
-      rejected,
-    } = processStatus;
+    const { validating, validated, completed, created, rejected } =
+      processStatus;
     let status: StatusValues = created;
     const getProcess = (counter: number) => {
       const processSteps: StatusValues[] = [
