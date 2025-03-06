@@ -91,6 +91,7 @@
             @if (debtorExistent()) {
               <p-inputIcon
                 (click)="resetName()"
+                (keydown)="resetName()"
                 styleClass="pi pi-times tw-cursor-pointer"
               />
             }
