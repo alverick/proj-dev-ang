@@ -1,7 +1,7 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import {
@@ -12,6 +12,7 @@ import {
 } from '@storybook/angular';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgScrollReached } from 'ngx-scrollbar/reached-event';
+import { of } from 'rxjs';
 
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { initialState } from '../../../../shared/mocks/store';
@@ -24,6 +25,14 @@ import { StorageService } from '../../../../shared/services/storage.service';
 import { SharedModule } from '../../../../shared/shared.module';
 import { InternalHeaderComponent } from './internal-header.component';
 
+const mockActivatedRoute = {
+  params: of({}),
+  snapshot: {
+    params: {},
+    data: {},
+  },
+};
+
 const meta: Meta<InternalHeaderComponent> = {
   title: 'Internal/Internal Header',
   component: InternalHeaderComponent,
@@ -35,9 +44,8 @@ const meta: Meta<InternalHeaderComponent> = {
         HeaderComponent,
         CommonModule,
         SharedModule,
-        HttpClientModule,
+        HttpClientTestingModule,
         NgOptimizedImage,
-        RouterTestingModule,
         NgScrollbarModule,
         NgScrollReached,
       ],
@@ -49,6 +57,7 @@ const meta: Meta<InternalHeaderComponent> = {
         StorageService,
         TrackingService,
         Store,
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
         provideMockStore({ initialState }),
       ],
     }),

@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { MockProvider } from 'ng-mocks';
 
 import { AfiliacionService } from '../../../../shared/services/afiliacion.service';
@@ -17,15 +17,12 @@ describe('InternalHeaderComponent', () => {
 
   beforeEach(() => {
     void TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        NoopAnimationsModule,
-      ],
+      imports: [HttpClientTestingModule, NoopAnimationsModule],
       providers: [
         AfiliacionService,
         ExcelService,
         NotifyService,
+        provideRouter([]),
         MockProvider(LoginService),
         StorageService,
       ],
