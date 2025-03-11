@@ -1,12 +1,12 @@
+import { NgZone } from '@angular/core';
 import {
   type ComponentFixture,
   fakeAsync,
+  flush,
   TestBed,
-  tick,
 } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { Router, RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ShepherdService } from 'angular-shepherd';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -35,6 +35,7 @@ import {
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
+import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { AppConfigActions } from '../../../../store/actions/app-config.actions';
 import { CompanyActions } from '../../../../store/actions/company.actions';
 import { MovementsService, SelectAllTableService } from '../../services';
@@ -64,6 +65,7 @@ describe('HomePage', () => {
   let settings: SettingsStorageService;
   let tracking: TrackingService;
   let storageService: StorageService;
+  let ngZone: NgZone;
 
   let storeMock: any;
 
@@ -235,6 +237,7 @@ describe('HomePage', () => {
         .mockReturnValue({ onClose: new Subject(), destroy: jest.fn() }),
       closeAll: jest.fn(),
       dialogComponentRefMap: new Map(),
+      destroy: new Subject(),
     };
     const mockExcelService = {
       service: null,
@@ -262,14 +265,10 @@ describe('HomePage', () => {
       getSettingAndSave: jest.fn().mockReturnValue(false),
     };
 
-    const mockSwalAlert = {
-      fire: jest.fn().mockResolvedValue({ value: true }),
-    };
-
     storeMock = { dispatch: jest.fn() };
 
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HomePage],
+      imports: [RouterModule.forRoot([]), HomePage],
       providers: [
         { provide: ShepherdService, useValue: mockShepherdService },
         { provide: HomeService, useValue: mockHomeService },
@@ -286,7 +285,6 @@ describe('HomePage', () => {
           provide: SettingsStorageService,
           useValue: mockSettingsStorageService,
         },
-        { provide: 'swalAlert', useValue: mockSwalAlert },
         DynamicDialogRef,
         provideMockStore({ initialState }),
         SelectAllTableService,
@@ -310,11 +308,8 @@ describe('HomePage', () => {
     barLoad = TestBed.inject(LoadBarService);
     movementsService = TestBed.inject(MovementsService);
     settings = TestBed.inject(SettingsStorageService);
+    ngZone = TestBed.inject(NgZone);
 
-    // MockInstance(DialogHeaderComponent, (instance) => {
-    //   instance.close = new Subject();
-    //   instance.config = {} as DynamicDialogConfig;
-    // });
     fixture.detectChanges();
   });
 
@@ -347,7 +342,6 @@ describe('HomePage', () => {
   });
 
   it('should call showModalCommissions and dispatch action', () => {
-    jest.spyOn(store, 'dispatch');
     (component as any).showedCommissions = false;
     component.showModalCommissions();
     expect(store.dispatch).toHaveBeenCalledWith(
@@ -356,36 +350,34 @@ describe('HomePage', () => {
     expect(dynamicDialogService.open).toHaveBeenCalled();
   });
 
-  // it('should call showModalCommissions and not dispatch action', () => {
-  //   jest.spyOn(store, 'dispatch');
-  //   (component as any).showedCommissions = true;
-  //   component.showModalCommissions();
-  //   expect(store.dispatch).not.toHaveBeenCalled();
-  //   expect(dynamicDialogService.open).not.toHaveBeenCalled();
-  // });
+  it('should call showModalCommissions and not dispatch action', () => {
+    (component as any).showedCommissions = true;
+    component.showModalCommissions();
+    expect(store.dispatch).not.toHaveBeenCalledWith(
+      expect.objectContaining({ type: 'Set Modal Commissions' }),
+    );
+    expect(dynamicDialogService.open).not.toHaveBeenCalled();
+  });
 
-  // it('should call showModalCommissions and navigate to help', () => {
-  //   jest.spyOn(router, 'navigate');
-  //   // const ref = dynamicDialogService.open.mockReturnValue({
-  //   //   onClose: new Subject(),
-  //   // });
-  //   component.showModalCommissions();
-  //   component.ref.onClose.next('more');
-  //   expect(router.navigate).toHaveBeenCalled();
-  // });
-  //
-  // it('should call showModalCommissions and save settings', () => {
-  //   jest.spyOn(settings, 'getSettingAndSave');
-  //   const ref = dynamicDialogService.open.mockReturnValue({
-  //     onClose: new Subject(),
-  //   });
-  //   component.showModalCommissions();
-  //   ref.onClose.next('hide');
-  //   expect(settings.getSettingAndSave).toHaveBeenCalled();
-  // });
+  it('should call showModalCommissions and navigate to help', () => {
+    jest.spyOn(router, 'navigate');
+    component.showModalCommissions();
+    ngZone.run(() => {
+      (component as any).ref.onClose.next('more');
+    });
+    expect(router.navigate).toHaveBeenCalled();
+  });
+
+  it('should call showModalCommissions and save settings', () => {
+    jest.spyOn(settings, 'getSettingAndSave');
+    component.showModalCommissions();
+    (component as any).ref.onClose.next('hide');
+    expect(settings.getSettingAndSave).toHaveBeenCalled();
+  });
 
   it('should call onClose', fakeAsync(() => {
-    jest.spyOn(component, 'validateResetForm');
+    const swalAlertFire = swalAlert.fire;
+    swalAlert.fire = jest.fn();
     const mockModalCloseData: ModalCloseData = {
       status: processStatus.completed,
       rowsAccepted: 0,
@@ -393,13 +385,13 @@ describe('HomePage', () => {
       dataType: 'C',
     };
     fileLoad.onClose.next(mockModalCloseData);
-    tick();
+    flush();
     expect(fileLoad.close).toHaveBeenCalled();
-    expect(component.validateResetForm).toHaveBeenCalled();
+    expect(swalAlert.fire).toHaveBeenCalled();
+    swalAlert.fire = swalAlertFire;
   }));
 
   it('should call onClose with rejected status', fakeAsync(() => {
-    jest.spyOn(component, 'validateResetForm');
     const mockModalCloseData: ModalCloseData = {
       status: processStatus.rejected,
       rowsAccepted: 0,
@@ -407,7 +399,7 @@ describe('HomePage', () => {
       dataType: 'C',
     };
     fileLoad.onClose.next(mockModalCloseData);
-    tick();
+    flush();
     expect(fileLoad.close).toHaveBeenCalled();
     expect(dynamicDialogService.open).toHaveBeenCalledWith(
       DialogComponent,
