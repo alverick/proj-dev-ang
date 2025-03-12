@@ -9,6 +9,7 @@ import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { ShepherdService } from 'angular-shepherd';
+import { type LazyLoadEvent } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { of, Subject } from 'rxjs';
 
@@ -34,6 +35,7 @@ import {
 } from '../../../../shared/services/load-file.service';
 import { LoginService } from '../../../../shared/services/login.service';
 import { StorageService } from '../../../../shared/services/storage.service';
+import { AdobeEvent } from '../../../../shared/services/tracking.service';
 import { TransactionService } from '../../../../shared/services/transaction.service';
 import { swalAlert } from '../../../../shared/utils/helpers/popups';
 import { AppConfigActions } from '../../../../store/actions/app-config.actions';
@@ -534,5 +536,127 @@ describe('HomePage', () => {
     component.styleTag = document.createElement('style');
     component.updatePositionModal();
     expect(component.styleTag.innerHTML).toContain('top');
+  });
+
+  it('should handle filter reset', () => {
+    const mockFilter = {
+      pageNumber: 1,
+      columnName: '',
+      asc: true,
+      inputSearch: '',
+      service: '',
+      status: '',
+      dateForFilter: '',
+      dateFrom: null,
+      dateTo: null,
+    };
+    component.currentFilter = { ...mockFilter };
+    component.resetFilterEvt.next(true);
+    expect(component.currentFilter).toEqual(mockFilter);
+  });
+
+  it('should update table movements inactive state', () => {
+    component.tableMovementsInactive = true;
+    expect(component.tableMovementsInactive).toBeTruthy();
+    component.tableMovementsInactive = false;
+    expect(component.tableMovementsInactive).toBeFalsy();
+  });
+
+  it('should handle row selection', () => {
+    const mockDebt = {
+      id: 1,
+      amount: 100,
+      currency: 'S/',
+      firstName: 'Test',
+      status: 'PENDING',
+      serviceType: 'Service1',
+      code: 'C1',
+      emissionDate: '',
+      lastName: '',
+      service: '',
+      concept: '',
+      payDate: undefined,
+      channel: '',
+      hasIBKPayments: false,
+      editPending: false,
+      editInput: false,
+      editButton: false,
+    };
+    component.selectedRows = [mockDebt];
+    expect(component.selectedRows.length).toBe(1);
+    expect(component.selectedRows[0]).toEqual(mockDebt);
+  });
+
+  it('should handle dialog display', () => {
+    component.displayDialog = true;
+    expect(component.displayDialog).toBeTruthy();
+    component.displayDialog = false;
+    expect(component.displayDialog).toBeFalsy();
+  });
+
+  it('should handle window resize', () => {
+    const updatePositionModalSpy = jest.spyOn(
+      component as any,
+      'updatePositionModal',
+    );
+    component.onResize();
+    expect(updatePositionModalSpy).toHaveBeenCalled();
+  });
+
+  it('should calculate page selected correctly', () => {
+    const args: LazyLoadEvent = { first: 10, rows: 10 };
+    const changePageSpy = jest.spyOn(component, 'changePage');
+    component.loadData(args);
+    expect(changePageSpy).toHaveBeenCalledTimes(1);
+    expect(changePageSpy).toHaveBeenCalledWith(2);
+  });
+
+  it('should update sorting field', () => {
+    const args: LazyLoadEvent = {
+      first: 0,
+      rows: 10,
+      sortField: 'test',
+      sortOrder: 1,
+    };
+    component.loadData(args);
+    expect(component.currentFilter.columnName).toBe('test');
+    expect(component.currentFilter.asc).toBe(true);
+  });
+
+  it('should call changePage', () => {
+    const args: LazyLoadEvent = { first: 0, rows: 10 };
+    const changePageSpy = jest.spyOn(component, 'changePage');
+    component.loadData(args);
+    expect(changePageSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should track event for non-first page', () => {
+    const args: LazyLoadEvent = { first: 10, rows: 10 };
+    component.loadData(args);
+    expect((component as any).tracking.trackEvent).toHaveBeenCalledTimes(1);
+    expect((component as any).tracking.trackEvent).toHaveBeenCalledWith(
+      AdobeEvent.trackAction,
+      expect.objectContaining({
+        category: 'Home movimientos',
+        action: 'Click',
+        detail: 'Cambiar pagina',
+        label: 'Pagina 2',
+        typeElement: 'Link',
+        location: 'Movimientos',
+      }),
+    );
+  });
+
+  it('should not track event for first page', () => {
+    const args: LazyLoadEvent = { first: 0, rows: 10 };
+    component.loadData(args);
+    expect((component as any).tracking.trackEvent).not.toHaveBeenCalled();
+  });
+
+  it('should handle empty sort field', () => {
+    const args: LazyLoadEvent = { first: 0, rows: 10, sortField: '' };
+    component.loadData(args);
+    expect(component.currentFilter.columnName).toBe('');
+    expect(component.currentFilter.asc).toBe(true);
   });
 });
