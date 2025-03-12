@@ -20,6 +20,10 @@ import { Observable } from 'rxjs';
 
 import { MessageAlertComponent } from '../../../../../../shared/components/message-alert/message-alert.component';
 import type { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
+import {
+  fileUploadExampleTest,
+  fileUploadExampleTestMessage,
+} from '../../../../../../shared/constants/fileload-messages';
 import { processStatus } from '../../../../../../shared/constants/process';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
 import { SingleClickDirective } from '../../../../../../shared/directives/single-click.directive';
@@ -203,13 +207,9 @@ export class DialogComponent implements OnInit {
           ? 'G'
           : 'C';
       const cellTemplateText = row.getCell(column).value ?? '';
-      if (
-        cellTemplateText ===
-        'Esto es un ejemplo, no olvides eliminar esta fila antes de subir tu archivo'
-      ) {
+      if (cellTemplateText === fileUploadExampleTest) {
         errors.push({
-          description:
-            'El archivo no contiene registros válidos, eliminar la fila de ejemplo',
+          description: fileUploadExampleTestMessage,
           row: 0,
         });
       }
@@ -249,7 +249,7 @@ export class DialogComponent implements OnInit {
     return errors;
   }
 
-  private validateDateCell(row: ExcelJS.Row, idx: number) {
+  protected validateDateCell(row: ExcelJS.Row, idx: number) {
     if (row.getCell(idx).value instanceof Date) {
       return false;
     }
@@ -260,14 +260,14 @@ export class DialogComponent implements OnInit {
       const dt = new Date(
         (row.getCell(idx).value as string).replace(pattern, '$3-$2-$1'),
       );
-      if (dt instanceof Date) {
+      if (dt instanceof Date && dt.toString() !== 'Invalid Date') {
         isNotValidDate = false;
       }
     }
     return isNotValidDate;
   }
 
-  private validateAmountZero(row: ExcelJS.Row) {
+  protected validateAmountZero(row: ExcelJS.Row) {
     let value = row.getCell(6).value;
 
     if (isNil(value)) {
@@ -364,7 +364,7 @@ export class DialogComponent implements OnInit {
     return isEmptyRow;
   }
 
-  private verifyStatus() {
+  protected verifyStatus() {
     this.ready = true;
     const actionStep: Partial<ActionEventProperties> = {
       category: 'Home filtro',
