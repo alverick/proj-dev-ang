@@ -96,7 +96,6 @@ describe('DebtComponent', () => {
   });
 
   it('should return if form is invalid', () => {
-    // component.debtForm.invalid = true;
     component.grabarNuevo();
     expect(homeServiceMock.postNewDebt).not.toHaveBeenCalled();
   });

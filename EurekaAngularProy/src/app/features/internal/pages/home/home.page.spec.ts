@@ -495,12 +495,10 @@ describe('HomePage', () => {
       id: 'intro',
     });
 
-    // Mock `getCurrentStep`
     (shepherdService.tourObject.getCurrentStep as any).mockReturnValue({
       id: '2',
     });
 
-    // Mock the `steps` array with properly structured step objects
     shepherdService.tourObject.steps = [
       {
         ...mockStep,
@@ -509,7 +507,6 @@ describe('HomePage', () => {
       { ...mockStep, id: '2' },
     ];
 
-    // Mock `getOnboardingPosition()`
     jest.spyOn(component as any, 'getOnboardingPosition').mockReturnValue(1);
     const result = component.getStepPositionTitle();
     expect(result).toEqual(

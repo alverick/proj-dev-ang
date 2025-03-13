@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
 import type * as ExcelJS from 'exceljs';
@@ -6,7 +5,7 @@ import { MockProvider, MockProviders } from 'ng-mocks';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { Observable, of, Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 
 import { MessageAlertComponent } from '../../../../../../shared/components/message-alert/message-alert.component';
 import {
@@ -25,7 +24,6 @@ import {
 import { StorageService } from '../../../../../../shared/services/storage.service';
 import {
   type ActionEventProperties,
-  AdobeEvent,
   TrackingService,
 } from '../../../../../../shared/services/tracking.service';
 import { DialogComponent } from './dialog.component';
@@ -403,7 +401,7 @@ describe('DialogComponent', () => {
     it('should validate required fields', () => {
       const mockRowWithMissingFields = createMockRow({
         getCell: jest.fn().mockReturnValue({ value: null }),
-        actualCellCount: 5, // Missing one required field
+        actualCellCount: 5,
       });
 
       const errors = component.validateRow(mockRowWithMissingFields);
