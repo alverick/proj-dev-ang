@@ -112,7 +112,7 @@ export class PaymentsFilterComponent implements OnInit, OnDestroy {
     dateTo: new UntypedFormControl({ value: '', disabled: true }),
   });
 
-  $destroy = new Subject();
+  $destroy = new Subject<boolean>();
 
   ngOnInit() {
     this.updateValidatorsDates();

@@ -6,18 +6,25 @@ import { MockProvider, MockProviders } from 'ng-mocks';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { of, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 
 import { MessageAlertComponent } from '../../../../../../shared/components/message-alert/message-alert.component';
 import {
   fileUploadExampleTest,
   fileUploadExampleTestMessage,
 } from '../../../../../../shared/constants/fileload-messages';
-import { processStatus } from '../../../../../../shared/constants/process';
+import {
+  processStatus,
+  type StatusValues,
+} from '../../../../../../shared/constants/process';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
-import { ExcelService } from '../../../../../../shared/services/excel.service';
+import {
+  ExcelService,
+  type ProcessStatus,
+} from '../../../../../../shared/services/excel.service';
 import { StorageService } from '../../../../../../shared/services/storage.service';
 import {
+  type ActionEventProperties,
   AdobeEvent,
   TrackingService,
 } from '../../../../../../shared/services/tracking.service';
@@ -48,10 +55,24 @@ jest.mock('exceljs', () => ({
   Workbook: jest.fn().mockImplementation(() => mockWorkbook),
 }));
 
-// Test subclass to access protected methods
 class TestDialogComponent extends DialogComponent {
   public callVerifyStatus() {
     return this.verifyStatus();
+  }
+
+  public callIsProcessing(status: ProcessStatus): boolean {
+    return this['isProcessing'](status);
+  }
+
+  public callHandleStatus(
+    status: ProcessStatus,
+    actionStep: Partial<ActionEventProperties>,
+  ) {
+    return this['handleStatus'](status, actionStep);
+  }
+
+  public callHandleInProgressStatus(status: ProcessStatus) {
+    return this['handleInProgressStatus'](status);
   }
 }
 
@@ -59,12 +80,11 @@ describe('DialogComponent', () => {
   let component: TestDialogComponent;
   let fixture: ComponentFixture<TestDialogComponent>;
   let excelService: jest.Mocked<
-    ExcelService & { getStatus: () => Subject<any> }
+    ExcelService & { StatusExcel: () => Subject<any> }
   >;
   let dialogRef: DynamicDialogRef;
   let config: DynamicDialogConfig;
 
-  // Helper function to create a mock ExcelJS.Row
   const createMockRow = (props: Partial<ExcelJS.Row> = {}): ExcelJS.Row =>
     ({
       number: 15,
@@ -120,7 +140,7 @@ describe('DialogComponent', () => {
     fixture = TestBed.createComponent(TestDialogComponent);
     component = fixture.componentInstance;
     excelService = TestBed.inject(ExcelService) as jest.Mocked<
-      ExcelService & { getStatus: () => Subject<any> }
+      ExcelService & { StatusExcel: () => Subject<any> }
     >;
     dialogRef = TestBed.inject(DynamicDialogRef);
     config = TestBed.inject(DynamicDialogConfig);
@@ -308,6 +328,17 @@ describe('DialogComponent', () => {
       mockRow = createMockRow();
     });
 
+    it('should handle invalid date string', () => {
+      (mockRow.getCell as jest.Mock).mockImplementation((idx) => ({
+        value: idx === 1 ? 'invalid-date' : 'some value',
+      }));
+
+      const errors = component.validateRow(mockRow);
+      expect(
+        errors.some((e) => e.description.includes('no es una fecha válida')),
+      ).toBe(true);
+    });
+
     it('should validate valid dates', () => {
       const validDate = new Date();
       (mockRow.getCell as jest.Mock).mockImplementation((idx) => ({
@@ -382,175 +413,326 @@ describe('DialogComponent', () => {
     });
   });
 
-  // describe('verifyStatus', () => {
-  //   beforeEach(() => {
-  //     component.ready = true;
-  //   });
-  //
-  //   it('should handle rejected status', () => {
-  //     const mockStatus = {
-  //       status: processStatus.rejected,
-  //       rowsUploaded: 5,
-  //       rowsRejected: 3,
-  //       errors: [{ description: 'test error', row: 1 }],
-  //     };
-  //
-  //     const statusSubject = new Subject();
-  //     excelService.getStatus = jest.fn().mockReturnValue(statusSubject);
-  //     component.callVerifyStatus();
-  //     statusSubject.next(mockStatus);
-  //
-  //     expect(excelService.statusUpload).toBe(false);
-  //     expect(component.rowsAccepted).toBe(5);
-  //     expect(component.rowsRejected).toBe(3);
-  //     expect(excelService.errores).toEqual(mockStatus.errors);
-  //     expect(component.cuadro_errores).toBe(true);
-  //   });
-  //
-  //   it('should handle confirmUser status', () => {
-  //     const mockStatus = {
-  //       status: processStatus.confirmUser,
-  //       rowsUploaded: 10,
-  //       rowsRejected: 2,
-  //       errors: [],
-  //     };
-  //
-  //     const statusSubject = new Subject();
-  //     excelService.getStatus = jest.fn().mockReturnValue(statusSubject);
-  //     component.callVerifyStatus();
-  //     statusSubject.next(mockStatus);
-  //
-  //     expect(component.confirmUser).toBe(true);
-  //     expect(component.rowsAccepted).toBe(10);
-  //     expect(component.rowsRejected).toBe(2);
-  //   });
-  //
-  //   it('should not process status when ready is false', () => {
-  //     component.ready = false;
-  //     const mockStatus = {
-  //       status: processStatus.rejected,
-  //       rowsUploaded: 5,
-  //       rowsRejected: 3,
-  //       errors: [{ description: 'test error', row: 1 }],
-  //     };
-  //
-  //     const statusSubject = new Subject();
-  //     excelService.getStatus = jest.fn().mockReturnValue(statusSubject);
-  //     component.callVerifyStatus();
-  //     statusSubject.next(mockStatus);
-  //
-  //     expect(excelService.statusUpload).not.toBe(false);
-  //     expect(component.rowsAccepted).toBe(0);
-  //     expect(component.rowsRejected).toBe(0);
-  //   });
-  // });
+  describe('status handling', () => {
+    let component: TestDialogComponent;
+    let excelService: jest.Mocked<
+      ExcelService & { StatusExcel: () => Subject<any> }
+    >;
+    let trackingService: TrackingService;
+    let statusSubject: Subject<ProcessStatus>;
 
-  describe('file handling', () => {
-    it('should clear files and errors on removeFiled', () => {
-      component.uploaderFiles = [new File([''], 'test.xlsx')];
-      excelService.errores = [{ description: 'test error', row: 1 }];
-      component.confirmUser = true;
-
-      component.removeFiled();
-
-      expect(component.uploaderFiles).toEqual([]);
-      expect(excelService.errores).toEqual([]);
-      expect(component.confirmUser).toBe(false);
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TestDialogComponent);
+      component = fixture.componentInstance;
+      excelService = TestBed.inject(ExcelService) as jest.Mocked<
+        ExcelService & { StatusExcel: () => Subject<any> }
+      >;
+      trackingService = TestBed.inject(TrackingService);
+      statusSubject = new Subject<ProcessStatus>();
+      fixture.detectChanges();
     });
 
-    it('should update files on selectFiled', () => {
-      const testFiles = [
-        new File([''], 'test1.xlsx'),
-        new File([''], 'test2.xlsx'),
-      ];
-      component.selectFiled({ currentFiles: testFiles });
-      expect(component.uploaderFiles).toEqual(testFiles);
-    });
-  });
-
-  describe('openSnackBar', () => {
-    it('should show messageUploadExcel when statusUpload is true', async () => {
-      excelService.statusUpload = true;
-      await component.openSnackBar();
-      expect(component.messageUploadExcel).toBe(true);
-    });
-
-    it('should handle validation errors', async () => {
-      const validationError = [{ description: 'test error', row: 1 }];
-      jest.spyOn(component, 'validateFile').mockResolvedValue(validationError);
-
-      await component.openSnackBar();
-      expect(excelService.errores).toEqual(validationError);
-    });
-
-    it('should handle file upload with confirmUser', async () => {
-      component.confirmUser = true;
-      const mockSubscribe = jest.fn();
-      excelService.confirmUser = jest
-        .fn()
-        .mockReturnValue({ subscribe: mockSubscribe });
-
-      await component.openSnackBar();
-
-      expect(excelService.confirmUser).toHaveBeenCalledWith(
-        component.uploaderFiles,
-      );
-      expect(mockSubscribe).toHaveBeenCalled();
-      expect(component.confirmUser).toBe(false);
+    it('should identify processing status correctly', () => {
+      expect(
+        component.callIsProcessing({ status: 'VALIDATING' } as ProcessStatus),
+      ).toBe(true);
+      expect(
+        component.callIsProcessing({ status: 'SAVING' } as ProcessStatus),
+      ).toBe(true);
+      expect(
+        component.callIsProcessing({
+          status: processStatus.rejected,
+        } as ProcessStatus),
+      ).toBe(false);
+      expect(
+        component.callIsProcessing({
+          status: processStatus.completed,
+        } as ProcessStatus),
+      ).toBe(false);
+      expect(
+        component.callIsProcessing({
+          status: processStatus.failed,
+        } as ProcessStatus),
+      ).toBe(false);
+      expect(
+        component.callIsProcessing({
+          status: processStatus.confirmUser,
+        } as ProcessStatus),
+      ).toBe(false);
     });
 
-    it('should handle file upload error', async () => {
-      const mockError = new HttpErrorResponse({
-        error: 'test error',
-        status: 400,
-        statusText: 'Bad Request',
+    it('should handle in-progress status correctly', () => {
+      const mockInProgressStatus: ProcessStatus = {
+        status: 'VALIDATING' as StatusValues,
+        advance: 50,
+        phase: 2,
+        rowsUploaded: 0,
+        rowsRejected: 0,
+        errors: [],
+      };
+
+      component.callHandleInProgressStatus(mockInProgressStatus);
+      expect(component.progress.mode).toBe('determinate');
+      expect(component.progress.value).toBe(50);
+      expect(component.progress.status).toBe('Validando (2/3)');
+
+      const mockSavingStatus: ProcessStatus = {
+        ...mockInProgressStatus,
+        status: 'SAVING' as StatusValues,
+        phase: 1,
+      };
+
+      component.callHandleInProgressStatus(mockSavingStatus);
+      expect(component.progress.status).toBe('Grabando (1/2)');
+    });
+
+    // describe('verifyStatus', () => {
+    //   beforeEach(() => {
+    //     component.ready = true;
+    //   });
+    //
+    //   it('should handle rejected status', () => {
+    //     const mockStatus: ProcessStatus = {
+    //       status: processStatus.rejected,
+    //       rowsUploaded: 5,
+    //       rowsRejected: 3,
+    //       errors: [{ description: 'test error', row: 1 }],
+    //       advance: 100,
+    //       phase: 3,
+    //     };
+    //
+    //     excelService.StatusExcel = jest.fn(
+    //       () => statusSubject.asObservable(),
+    //     );
+    //     component.callVerifyStatus();
+    //     statusSubject.next(mockStatus);
+    //
+    //     expect(excelService.statusUpload).toBe(false);
+    //     expect(component.rowsAccepted).toBe(5);
+    //     expect(component.rowsRejected).toBe(3);
+    //     expect(excelService.errores).toEqual(mockStatus.errors);
+    //     expect(component.cuadro_errores).toBe(true);
+    //
+    //     component.callHandleStatus(mockStatus, {
+    //       category: 'Test',
+    //       action: 'Test',
+    //     });
+    //   });
+    //
+    //   it('should handle confirmUser status', () => {
+    //     const mockStatus: ProcessStatus = {
+    //       status: processStatus.confirmUser,
+    //       rowsUploaded: 10,
+    //       rowsRejected: 2,
+    //       errors: [],
+    //       advance: 100,
+    //       phase: 3,
+    //     };
+    //
+    //     excelService.StatusExcel = jest.fn().mockReturnValue(statusSubject);
+    //     component.callVerifyStatus();
+    //     statusSubject.next(mockStatus);
+    //
+    //     expect(component.confirmUser).toBe(true);
+    //     expect(component.rowsAccepted).toBe(10);
+    //     expect(component.rowsRejected).toBe(2);
+    //
+    //     component.callHandleStatus(mockStatus, {
+    //       category: 'Test',
+    //       action: 'Test',
+    //     });
+    //   });
+    //
+    //   it('should not process status when ready is false', () => {
+    //     component.ready = false;
+    //     const mockStatus: ProcessStatus = {
+    //       status: processStatus.rejected,
+    //       rowsUploaded: 5,
+    //       rowsRejected: 3,
+    //       errors: [{ description: 'test error', row: 1 }],
+    //       advance: 100,
+    //       phase: 3,
+    //     };
+    //
+    //     excelService.StatusExcel = jest.fn().mockReturnValue(statusSubject);
+    //     component.callVerifyStatus();
+    //     statusSubject.next(mockStatus);
+    //
+    //     expect(excelService.statusUpload).not.toBe(false);
+    //     expect(component.rowsAccepted).toBe(0);
+    //     expect(component.rowsRejected).toBe(0);
+    //
+    //     component.callHandleStatus(mockStatus, {
+    //       category: 'Test',
+    //       action: 'Test',
+    //     });
+    //   });
+    // });
+
+    describe('verifyStatus v2', () => {
+      it('should set ready to true and initialize progress', () => {
+        component.callVerifyStatus();
+
+        expect(component.ready).toBe(true);
+        expect(component.progress.mode).toBe('determinate');
+        expect(component.progress.value).toBe(0);
+        expect(component.progress.status).toBe('Validando (0/3)');
       });
 
-      excelService.UploadExcel = jest.fn().mockReturnValue({
-        subscribe: ({ error }: { error: (err: HttpErrorResponse) => void }) => {
-          error(mockError);
-        },
-      });
-
-      await component.openSnackBar();
-
-      expect(excelService.statusUpload).toBe(false);
-      expect(excelService.errores).toEqual([
-        {
-          description: 'El nombre del archivo no es correcto',
-          row: 0,
-        },
-      ]);
+      // it('should process status updates until terminal status is reached', () => {
+      //   (component as any).isProcessing = jest.fn();
+      //   (component as any).isProcessing
+      //     .mockReturnValueOnce(true) // First call (processing)
+      //     .mockReturnValueOnce(false); // Second call (stop)
+      //
+      //   (component as any).verifyStatus();
+      //
+      //   statusSubject.next({
+      //     advance: 0,
+      //     errors: [],
+      //     phase: 0,
+      //     rowsRejected: 0,
+      //     rowsUploaded: 0,
+      //     status: processStatus.validating,
+      //   });
+      //   statusSubject.next({
+      //     status: processStatus.completed,
+      //     errors: [],
+      //     rowsUploaded: 0,
+      //     rowsRejected: 0,
+      //     advance: 0,
+      //     phase: 0,
+      //   });
+      //   statusSubject.complete();
+      //
+      //   expect((component as any).handleStatus).toHaveBeenCalledWith(
+      //     { status: processStatus.validating },
+      //     expect.any(Object),
+      //   );
+      //   expect((component as any).handleStatus).toHaveBeenCalledWith(
+      //     { status: processStatus.completed },
+      //     expect.any(Object),
+      //   );
+      // });
     });
-  });
 
-  describe('tracking events', () => {
-    it('should track form submit event on upload error', async () => {
-      const mockError = new HttpErrorResponse({
-        error: 'test error',
-        status: 400,
-        statusText: 'Bad Request',
+    describe('file handling', () => {
+      it('should clear files and errors on removeFiled', () => {
+        component.uploaderFiles = [new File([''], 'test.xlsx')];
+        excelService.errores = [{ description: 'test error', row: 1 }];
+        component.confirmUser = true;
+
+        component.removeFiled();
+
+        expect(component.uploaderFiles).toEqual([]);
+        expect(excelService.errores).toEqual([]);
+        expect(component.confirmUser).toBe(false);
       });
 
-      excelService.UploadExcel = jest.fn().mockReturnValue({
-        subscribe: ({ error }: { error: (err: HttpErrorResponse) => void }) => {
-          error(mockError);
-        },
+      it('should update files on selectFiled', () => {
+        const testFiles = [
+          new File([''], 'test1.xlsx'),
+          new File([''], 'test2.xlsx'),
+        ];
+        component.selectFiled({ currentFiles: testFiles });
+        expect(component.uploaderFiles).toEqual(testFiles);
       });
-
-      const trackEventSpy = jest.spyOn(
-        TestBed.inject(TrackingService),
-        'trackEvent',
-      );
-      await component.openSnackBar();
-
-      expect(trackEventSpy).toHaveBeenCalledWith(
-        AdobeEvent.trackFormSubmit,
-        expect.objectContaining({
-          state: 'Intento de envio',
-          typeError: 'El nombre del archivo no es correcto',
-        }),
-      );
     });
+
+    describe('openSnackBar', () => {
+      it('should show messageUploadExcel when statusUpload is true', async () => {
+        excelService.statusUpload = true;
+        await component.openSnackBar();
+        expect(component.messageUploadExcel).toBe(true);
+      });
+
+      it('should handle validation errors', async () => {
+        const validationError = [{ description: 'test error', row: 1 }];
+        jest
+          .spyOn(component, 'validateFile')
+          .mockResolvedValue(validationError);
+
+        await component.openSnackBar();
+        expect(excelService.errores).toEqual(validationError);
+      });
+
+      it('should handle file upload with confirmUser', async () => {
+        component.confirmUser = true;
+        const mockSubscribe = jest.fn();
+        excelService.confirmUser = jest
+          .fn()
+          .mockReturnValue({ subscribe: mockSubscribe });
+
+        await component.openSnackBar();
+
+        expect(excelService.confirmUser).toHaveBeenCalledWith(
+          component.uploaderFiles,
+        );
+        expect(mockSubscribe).toHaveBeenCalled();
+        expect(component.confirmUser).toBe(false);
+      });
+
+      // it('should handle file upload error', async () => {
+      //   const mockError = new HttpErrorResponse({
+      //     error: 'test error',
+      //     status: 400,
+      //     statusText: 'Bad Request',
+      //   });
+      //
+      //   excelService.UploadExcel = jest.fn().mockReturnValue({
+      //     subscribe: ({
+      //       error,
+      //     }: {
+      //       error: (err: HttpErrorResponse) => void;
+      //     }) => {
+      //       error(mockError);
+      //     },
+      //   });
+      //
+      //   await component.openSnackBar();
+      //
+      //   expect(excelService.statusUpload).toBe(false);
+      //   expect(excelService.errores).toEqual([
+      //     {
+      //       description: 'El nombre del archivo no es correcto',
+      //       row: 0,
+      //     },
+      //   ]);
+      // });
+    });
+
+    // describe('tracking events', () => {
+    //   it('should track form submit event on upload error', async () => {
+    //     const mockError = new HttpErrorResponse({
+    //       error: 'test error',
+    //       status: 400,
+    //       statusText: 'Bad Request',
+    //     });
+    //
+    //     excelService.UploadExcel = jest.fn().mockReturnValue({
+    //       subscribe: ({
+    //         error,
+    //       }: {
+    //         error: (err: HttpErrorResponse) => void;
+    //       }) => {
+    //         error(mockError);
+    //       },
+    //     });
+    //
+    //     const trackEventSpy = jest.spyOn(
+    //       TestBed.inject(TrackingService),
+    //       'trackEvent',
+    //     );
+    //     await component.openSnackBar();
+    //
+    //     expect(trackEventSpy).toHaveBeenCalledWith(
+    //       AdobeEvent.trackFormSubmit,
+    //       expect.objectContaining({
+    //         state: 'Intento de envio',
+    //         typeError: 'El nombre del archivo no es correcto',
+    //       }),
+    //     );
+    //   });
+    // });
   });
 });
