@@ -5,12 +5,12 @@ import { PasswordModule } from 'primeng/password';
 
 import { ControlRulesPoliciesComponent } from '../../../../shared/components/control-rules-policies/control-rules-policies.component';
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
+import { CompanyChangePasswordForm } from '../../../../shared/models/company-forms';
 import {
   IErrorMessages,
   ModelFormGroup,
 } from '../../../../shared/models/forms';
 import { messageErrorNewPasswords } from '../../../../shared/validators/password-validators';
-import { type ChangePasswordForm } from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-password-form',
@@ -26,9 +26,9 @@ import { type ChangePasswordForm } from '../../services/company-configuration.se
   ],
 })
 export class CompanyPasswordFormComponent {
-  @Input() form: ModelFormGroup<ChangePasswordForm>;
+  @Input() form: ModelFormGroup<CompanyChangePasswordForm>;
   @Input() errorMessages: IErrorMessages;
-  @Output() sendForm = new EventEmitter<Partial<ChangePasswordForm>>();
+  @Output() sendForm = new EventEmitter<Partial<CompanyChangePasswordForm>>();
 
   protected readonly messageErrorNewPasswords = messageErrorNewPasswords;
 

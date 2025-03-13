@@ -413,7 +413,6 @@ export class AprobacionesPage implements OnInit {
         EnterpriseObj: this.emp,
         ListServiceObj: this.scv,
       });
-      return;
     }
   }
 

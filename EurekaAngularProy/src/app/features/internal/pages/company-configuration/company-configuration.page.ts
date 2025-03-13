@@ -12,6 +12,10 @@ import {
   errorRegisterAuth,
   errorsRegisterForm,
 } from '../../../../shared/constants/company-errors';
+import {
+  CompanyChangePasswordForm,
+  CompanyForm,
+} from '../../../../shared/models/company-forms';
 import { type IDataEnterpriseModel } from '../../../../shared/models/data-enterprise.model';
 import {
   type ModelFormGroup,
@@ -24,10 +28,6 @@ import {
 import { CompanyPasswordFormComponent } from '../../components/company-password-form/company-password-form.component';
 import { CompanyUpdateFormComponent } from '../../components/company-update-form/company-update-form.component';
 import { CompanyConfigurationService } from '../../services';
-import {
-  type ChangePasswordForm,
-  type CompanyForm,
-} from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-configuration',
@@ -42,7 +42,7 @@ import {
 })
 export class CompanyConfigurationPage implements OnInit {
   companyForm: SimpleModelFormGroup<CompanyForm>;
-  passwordForm: ModelFormGroup<ChangePasswordForm>;
+  passwordForm: ModelFormGroup<CompanyChangePasswordForm>;
   errors = { ...errorsRegisterForm, ...errorRegisterAuth };
   operators = mobileOperators;
   documentTypes = documentTypes;

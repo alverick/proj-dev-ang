@@ -5,6 +5,10 @@ import { forEachObjIndexed, pick } from 'ramda';
 import { tap } from 'rxjs/operators';
 
 import { emailRegex } from '../../../shared/constants/patterns';
+import {
+  CompanyChangePasswordForm,
+  CompanyForm,
+} from '../../../shared/models/company-forms';
 import { type IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
   type ModelFormGroup,
@@ -26,29 +30,11 @@ import { passwordValidators } from '../../../shared/validators/password-validato
 import { authFullRoutingNames } from '../../auth/auth-routing.names';
 import { internalFullRoutingNames } from '../internal-routing.names';
 
-export interface ChangePasswordForm {
-  password: string;
-  newPassword: string;
-  confirmNewPassword: string;
-}
-
-export interface CompanyForm {
-  ruc: string;
-  name: string;
-  entry: string;
-  entryName: string;
-  email: string;
-  movilNumber: string;
-  movilOperator: string;
-  documentType: string;
-  documentNumber: string;
-}
-
 @Injectable()
 export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
   companyForm: SimpleModelFormGroup<CompanyForm>;
-  passwordForm: ModelFormGroup<ChangePasswordForm>;
+  passwordForm: ModelFormGroup<CompanyChangePasswordForm>;
 
   constructor(
     private readonly fb: FormBuilder,
