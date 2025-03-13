@@ -93,6 +93,7 @@ stages:
                   sonar.exclusions = */node_modules/, */src/assets/*, */src/environments/*, */src/jest.config.ts, */src/main.ts, */src/assets/scripts/*, */src/assets/scripts/*, **/*.stories.ts
                   sonar.tests=$(System.DefaultWorkingDirectory)/EurekaAngularProy/src
                   sonar.test.inclusions=**/*.spec.ts
+                  sonar.test.exclusions=**/*.stories.ts
                   sonar.javascript.lcov.reportPaths=$(System.DefaultWorkingDirectory)/EurekaAngularProy/coverage/lcov.info
                   sonar.c.file.suffixes=-
                   sonar.cpp.file.suffixes=-
