@@ -12,7 +12,7 @@ export interface DataServiceGTP {
   useStore: boolean;
   partialPayment: string;
   chargeInterest: string;
-  chargeType: number;
+  chargeType: number | string;
   interestType: string;
   amount: number;
   porcentage: number;
@@ -49,5 +49,5 @@ export interface DataServiceGTP {
   usaTienda?: boolean;
   periodoMora?: string;
   pagoPartes?: string;
-  useAgencyChannel: boolean;
+  useAgencyChannel?: boolean;
 }

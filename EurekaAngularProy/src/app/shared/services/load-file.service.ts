@@ -37,15 +37,20 @@ export class LoadFileService {
       this.componentRef = container.createComponent(LoadFileComponent);
       this.verifyStatus();
     } else {
-      this.excelService.GetLastProcess().subscribe((d) => {
-        if (
-          d.status !== 'COMPLETED' &&
-          d.status !== 'REJECTED' &&
-          d.status !== 'FAILED'
-        ) {
-          this.componentRef = container.createComponent(LoadFileComponent);
-          this.verifyStatus();
-        }
+      this.excelService.GetLastProcess().subscribe({
+        next: (d) => {
+          if (
+            d.status !== 'COMPLETED' &&
+            d.status !== 'REJECTED' &&
+            d.status !== 'FAILED'
+          ) {
+            this.componentRef = container.createComponent(LoadFileComponent);
+            this.verifyStatus();
+          }
+        },
+        error: () => {
+          this.componentRef = null;
+        },
       });
     }
   }
@@ -71,6 +76,9 @@ export class LoadFileService {
       stop$.next(true);
       stop$.complete();
     };
+    this.componentRef.instance.progress.mode = 'determinate';
+    this.componentRef.instance.progress.value = 0;
+    this.componentRef.instance.progress.status = 'Validando (0/3)';
     this.excelService
       .StatusExcel(this.excelService.idProcess)
       .pipe(repeat({ delay: delayBy }), takeUntil(stop$))
@@ -119,8 +127,5 @@ export class LoadFileService {
           }
         },
       );
-    this.componentRef.instance.progress.mode = 'determinate';
-    this.componentRef.instance.progress.value = 0;
-    this.componentRef.instance.progress.status = 'Validando (0/3)';
   }
 }
