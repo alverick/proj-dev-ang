@@ -94,6 +94,8 @@ export type IEnvironment = {
    * @example "adobe-client-id-12345"
    */
   adobe: string;
+  hotjarSiteId: number;
+  hotjarVersion: number;
 };
 
 export const environmentDefault: IEnvironment = {
@@ -106,4 +108,6 @@ export const environmentDefault: IEnvironment = {
   logLevel: NgxLoggerLevel.WARN,
   serverLogLevel: NgxLoggerLevel.OFF,
   credentials: [['', '', '']],
+  hotjarSiteId: null,
+  hotjarVersion: null,
 };
