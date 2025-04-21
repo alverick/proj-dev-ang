@@ -33,6 +33,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@hotjar/browser": "^1.0.9",
     "@newrelic/browser-agent": "^1.267.0",
     "@ngrx/component": "^17.2.0",
     "@ngrx/data": "^17.2.0",
