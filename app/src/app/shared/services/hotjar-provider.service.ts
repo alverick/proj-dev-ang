@@ -23,9 +23,7 @@ export class HotjarProviderService implements ProviderService {
     ) {
       return;
     }
-    Hotjar.init(environment.hotjarSiteId, environment.hotjarVersion, {
-      debug: true,
-    });
+    Hotjar.init(environment.hotjarSiteId, environment.hotjarVersion);
   }
 
   startTracking() {
