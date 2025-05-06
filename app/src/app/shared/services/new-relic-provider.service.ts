@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AgentOptions } from '@newrelic/browser-agent/loaders/agent';
 import { type BrowserAgent } from '@newrelic/browser-agent/loaders/browser-agent';
 import dot from 'dot-object';
 import { hasPath, path, pathOr } from 'ramda';
@@ -25,7 +24,7 @@ export class NewRelicProviderService implements ProviderService {
   constructor(public trackingService: TrackingService) {}
 
   async initNewRelic() {
-    const nreum: AgentOptions = {
+    const nreum = {
       init: {
         distributed_tracing: { enabled: true },
         privacy: { cookies_enabled: true },
