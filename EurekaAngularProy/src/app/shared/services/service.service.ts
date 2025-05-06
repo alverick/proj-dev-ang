@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ServiceService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   checkCanDeleteService(serviceId: number): Observable<any> {
     const url = `${environment.END_POINT}/service/${serviceId}/canDelete`;

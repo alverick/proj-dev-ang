@@ -1,4 +1,6 @@
 import { type ICompanyUpdate } from '../models/company';
+import type { ICompanyResult } from '../services/company.service';
+import type { FingerPrintData } from '../services/digital-data.service';
 
 export const updateCompanyMock: ICompanyUpdate = {
   id: 1174,
@@ -46,4 +48,126 @@ export const updateCompanyMock: ICompanyUpdate = {
     },
   ],
   useAgencyChannel: false,
+};
+export const sdkFingerPrintMock: FingerPrintData = {
+  Browser: {
+    userAgent:
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 Edg/124.0.0.0',
+    browserName: 'Edge',
+    browserVersion: '124',
+    browserMajor: '124',
+    browserEngineName: 'Blink',
+    browserEngineVersion: '124',
+    osName: 'Mac OS',
+    osVersion: '10.15.7',
+    deviceVendor: '',
+    deviceModel: '',
+    deviceType: '',
+    cpuArchitecture: '',
+    isPrivateMode: '0',
+  },
+  General: {
+    fingerprintVersion: '3.1.1',
+    language: 'en-US',
+    colorDepth: '24',
+    deviceMemory: '8',
+    hardwareConcurrency: '12',
+    resolution: '5120x1440',
+    availableResolution: '5120x1415',
+    timezoneOffset: '300',
+    sessionStorage: '0',
+    cookieEnabled: '1',
+    localStorage: '1',
+    indexedDb: '0',
+    cpuClass: '',
+    openDatabase: '0',
+    navigatorPlatform: 'MacIntel',
+    vendorWebGL: '1',
+    rendererVideo: 'ANGLE (Apple, Apple M2 Max, OpenGL 4.1)',
+    timeZone: 'GMT-0500 (Peru Standard Time)',
+    zone: 'America/Lima',
+    UTC: -5,
+    ram: '8',
+    processorCount: '12',
+    videoInput: '1',
+    audio: '124.04346607114712',
+    canvas: -539804549,
+  },
+  Personalization: {
+    numberPlugins: '5',
+    numberFonts: '29',
+  },
+  Alterations: {
+    adblock: '0',
+    hasLiedLanguages: '0',
+    hasLiedResolution: '0',
+    hasLiedOs: '0',
+    hasLiedBrowser: '0',
+    touchSupport: '0',
+  },
+  Network: {
+    publicIp: '',
+    localIp: '',
+  },
+  Site: {
+    host: 'localhost:4200',
+    hostName: 'localhost',
+    href: 'http://localhost:4200/agregar-servicio/informacion',
+    origin: 'http://localhost:4200/empresa-registro',
+    pathname: '/agregar-servicio/informacion',
+    port: '4200',
+    protocol: 'http:',
+  },
+  Identifiers: {
+    cookie: 'b57f259a8d8e6e26cc6ac4b62cb5d977',
+    localStorageValue: 'a86a98a04142dca9465e9a3e94e39e50',
+    unanimity1:
+      'c8c1fea5e124ef540ce2e83b49621b1372c0a56a432fd879743cd4b62298edef',
+    unanimity2:
+      '8ab1e5b445cbedee54fa2149225bf6e65cd1dba594d40122fbc3daca61d95219',
+    unanimity3:
+      'e87a511b98e581a0acc2242423b61147fc12451cb796a565fc945ea9a80be46d',
+    unanimity4:
+      '0a13c6731f76791055ff56387d372509d9cc4ea7ba675ac6d5608f46d669af1b',
+    unanimity5:
+      'a7b8321c8d2a66e4c6de6886f220c129d83979277afe14ed6065e2335332e72c',
+    hash: '2C4CF65733783512.8B1C5C002AE575EF.53',
+  },
+  Geoip: {
+    as: 'AS262210 VIETTEL PERÚ S.A.C.',
+    asname: 'VIETTEL PERU S.A.C.',
+    callingCode: '51',
+    city: 'Trujillo',
+    continent: 'South America',
+    continentCode: 'SA',
+    country: 'Peru',
+    countryCode: 'PE',
+    countryCode3: 'PER',
+    currency: 'PEN',
+    currentTime: '2024-03-08T04:31:10-05:00',
+    district: '',
+    hosting: false,
+    isp: 'VIETTEL PERÚ S.A.C.',
+    lat: -8.1191,
+    lon: -79.0355,
+    mobile: true,
+    offset: -18000,
+    org: 'VIETTEL PERÚ S.A.C',
+    proxy: false,
+    query: '181',
+    region: 'LAL',
+    regionName: 'La Libertad',
+    reverse: '',
+    status: 'success',
+    timezone: 'America/Lima',
+    zip: '',
+  },
+};
+export const mockValidateCompany: ICompanyResult = {
+  id: 3000,
+  success: true,
+  code: 1,
+  message: 'El Ruc ya se encuentra registrado',
+  tradeName: 'Nombre empresa trade',
+  fullName: 'Nombre empresa full',
 };

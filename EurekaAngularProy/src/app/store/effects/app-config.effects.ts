@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { debounce, EMPTY, of, timer } from 'rxjs';
-import { catchError, concatMap, map, tap } from 'rxjs/operators';
+import { catchError, concatMap, filter, map, tap } from 'rxjs/operators';
 
 import { AppConfigActions } from '../actions/app-config.actions';
-import { appConfigFeature } from '../reducers/app-config.reducer';
+import { appConfigFeature, State } from '../reducers/app-config.reducer';
 
 @Injectable()
 export class AppConfigEffects {
@@ -24,22 +25,34 @@ export class AppConfigEffects {
       ),
     );
   });
-  setLoaderAppConfigs$ = createEffect(
+  showLoaderEffect$ = createEffect(
     () => {
       return this.actions$.pipe(
         ofType(AppConfigActions.setLoader),
         concatLatestFrom(() =>
           this.store.select(appConfigFeature.selectShowLoader),
         ),
-        debounce(([{ show }]) => {
-          return show ? timer(0) : timer(500);
+        filter(([{ show }]) => show),
+        debounce(() => timer(0)),
+        tap(() => {
+          void this.spinner.show();
         }),
-        tap(([{ show }]) => {
-          if (show) {
-            void this.spinner.show();
-          } else {
-            void this.spinner.hide();
-          }
+      );
+    },
+    { dispatch: false },
+  );
+
+  hideLoaderEffect$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AppConfigActions.setLoader),
+        concatLatestFrom(() =>
+          this.store.select(appConfigFeature.selectShowLoader),
+        ),
+        filter(([{ show }]) => !show),
+        debounce(() => timer(500)),
+        tap(() => {
+          void this.spinner.hide();
         }),
       );
     },
@@ -47,8 +60,8 @@ export class AppConfigEffects {
   );
 
   constructor(
-    private actions$: Actions,
-    private store: Store,
-    private spinner: NgxSpinnerService,
+    private readonly actions$: Actions,
+    private readonly store: Store<State>,
+    private readonly spinner: NgxSpinnerService,
   ) {}
 }

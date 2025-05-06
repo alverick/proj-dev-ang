@@ -5,7 +5,7 @@ import { EnterpriseHeadingService } from '../services';
 
 @Injectable()
 export class CompanyEntriesResolver {
-  constructor(private enterpriseHeading: EnterpriseHeadingService) {}
+  constructor(private readonly enterpriseHeading: EnterpriseHeadingService) {}
 
   resolve() {
     return this.enterpriseHeading

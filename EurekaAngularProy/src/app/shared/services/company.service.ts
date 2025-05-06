@@ -34,7 +34,7 @@ type CompanyServicesData = ServicePostData & { sdk: FingerPrintData };
 
 @Injectable()
 export class CompanyService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   public validateCompany(data: Partial<RegisterForm>) {
     return this.http.post<ICompanyResult>(

@@ -22,7 +22,7 @@ export class LoaderInterceptor implements HttpInterceptor {
     'debt/service/[^\\/]+/debtor/[\\w]+',
   ];
 
-  constructor(private store: Store) {}
+  constructor(private readonly store: Store) {}
 
   intercept(
     request: HttpRequest<unknown>,

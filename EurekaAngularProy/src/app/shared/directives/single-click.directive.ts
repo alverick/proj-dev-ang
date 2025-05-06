@@ -16,7 +16,8 @@ import { throttleTime } from 'rxjs/operators';
   standalone: true,
 })
 export class SingleClickDirective implements OnInit, OnDestroy {
-  private elementRef = inject<ElementRef<HTMLButtonElement>>(ElementRef);
+  private readonly elementRef =
+    inject<ElementRef<HTMLButtonElement>>(ElementRef);
   private subscription: Subscription;
 
   throttleMillis = input<number>(5000);

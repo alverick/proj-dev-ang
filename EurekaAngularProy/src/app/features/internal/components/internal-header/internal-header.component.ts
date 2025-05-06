@@ -30,7 +30,6 @@ import { internalFullRoutingNames } from '../../internal-routing.names';
 @Component({
   selector: 'cs-internal-header',
   templateUrl: './internal-header.component.html',
-  styleUrls: ['./internal-header.component.scss'],
   standalone: true,
   imports: [
     HeaderComponent,
@@ -72,13 +71,13 @@ export class InternalHeaderComponent implements OnInit {
   ];
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
     public notify: NotifyService,
-    private loginService: LoginService,
-    private excelser: ExcelService,
+    private readonly loginService: LoginService,
+    private readonly excelser: ExcelService,
     public afiliacionService: AfiliacionService,
-    private storage: StorageService,
-    private tracking: TrackingService,
+    private readonly storage: StorageService,
+    private readonly tracking: TrackingService,
   ) {}
 
   toggleMenu() {
@@ -115,7 +114,7 @@ export class InternalHeaderComponent implements OnInit {
     }
   }
 
-  getAgo(date): string {
+  getAgo(date: string): string {
     return moment.utc(date).local().format('DD/MM/YY [a las] hh:mm a');
   }
 

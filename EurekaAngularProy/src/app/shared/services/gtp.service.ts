@@ -17,10 +17,10 @@ import { type StatesGtp } from '../models/states-gtp';
 @Injectable()
 export class GtpService {
   private lastFilter: GtpFilter = null;
-  private URI_API: string = environment.END_POINT;
+  private readonly URI_API: string = environment.END_POINT;
   public pageMessage = 'Mostrando 0 de 0 elementos';
 
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
   /// para los servicios que estan en eprobacin
   public services: DataServiceGTP[] = [];
   public Service: DataServiceGTP;
@@ -34,7 +34,7 @@ export class GtpService {
   public nombre: string;
   public EdtEmpServ: DataGTPChange;
   public EmpresaServicios: ICompanyData;
-  private States: StatesGtp[] = [
+  private readonly States: StatesGtp[] = [
     { idState: 'Pendiente', descripcion: 'Pendiente' },
     { idState: 'Atendido', descripcion: 'Atendido' },
     { idState: 'Devuelto a la empresa', descripcion: 'Devuelto a la Empresa' },
@@ -42,7 +42,7 @@ export class GtpService {
     { idState: 'Desafiliado', descripcion: 'Desafiliado' },
   ];
 
-  private tiposSolicitudes: StatesGtp[] = [
+  private readonly tiposSolicitudes: StatesGtp[] = [
     { idState: 'EmpNuevo', descripcion: 'Empresa Nueva' },
     { idState: 'EmpMod', descripcion: 'Actualización de Empresa' },
     { idState: 'SvcMod', descripcion: 'Actualización de Servicios' },

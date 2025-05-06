@@ -2,11 +2,6 @@
   --font-family: 'Geometria', 'Helvetica Neue', sans-serif;
 }
 
-.p-inputtext {
-  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
-  padding: 0.429rem;
-}
-
 .p-inputgroup-addon {
   padding: 0.429rem 0.75rem;
 }
@@ -159,6 +154,8 @@ a {
 }
 
 .p-inputtext {
+  font-family: 'Geometria', 'Helvetica Neue', sans-serif;
+  padding: 0.429rem;
   font-size: 16px;
   color: var(--ibk-black);
 
@@ -377,12 +374,6 @@ a {
     }
   }
 
-  &:disabled {
-    //opacity: 1;
-    //color: var(--grises-grey-2);
-    //border-color: var(--grises-grey-2);
-  }
-
   &.input-button {
     font-size: 10px;
     padding: 0.2rem;
@@ -435,16 +426,6 @@ a {
 
   .p-link {
     font-size: 14px;
-  }
-
-  .p-datepicker-calendar {
-    thead th {
-      //border-bottom-style: none;
-    }
-
-    td {
-      //border-top-style: none;
-    }
   }
 }
 
@@ -821,7 +802,6 @@ a {
   }
 
   .p-fileupload-content {
-    //min-height: 148px;
     padding: 0 1rem;
     transition: all 0.3s;
   }

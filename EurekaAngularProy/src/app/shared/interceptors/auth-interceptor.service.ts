@@ -19,9 +19,9 @@ import { swalAlert } from '../utils/helpers/popups';
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
   constructor(
-    private router: Router,
-    private login: LoginService,
-    private storage: StorageService,
+    private readonly router: Router,
+    private readonly login: LoginService,
+    private readonly storage: StorageService,
   ) {}
 
   intercept(

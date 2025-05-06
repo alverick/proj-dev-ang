@@ -25,7 +25,7 @@ import { AppConfigActions } from './store/actions/app-config.actions';
   animations: [fadeAnimation],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
 
   title = 'Cobro Simple – Interbank';
   showButton = signal(false);
@@ -33,11 +33,11 @@ export class AppComponent implements OnInit, OnDestroy {
   appLoaded = signal(false);
   spinnerBackground = signal('rgba(255, 255, 255, 1)');
 
-  private router = inject(Router);
-  private store = inject(Store);
-  private primengConfig = inject(PrimeNGConfig);
-  private adobeLaunch = inject(AdobeLaunchProviderService);
-  private newrelic = inject(NewRelicProviderService);
+  private readonly router = inject(Router);
+  private readonly store = inject(Store);
+  private readonly primengConfig = inject(PrimeNGConfig);
+  private readonly adobeLaunch = inject(AdobeLaunchProviderService);
+  private readonly newrelic = inject(NewRelicProviderService);
 
   constructor() {
     this.adobeLaunch.startTracking();

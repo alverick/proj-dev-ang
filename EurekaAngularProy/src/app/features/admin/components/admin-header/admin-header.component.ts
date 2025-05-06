@@ -13,7 +13,6 @@ import { adminFullRoutingNames } from '../../admin-routing.names';
 @Component({
   selector: 'cs-admin-header',
   templateUrl: './admin-header.component.html',
-  styleUrls: ['./admin-header.component.scss'],
   standalone: true,
   imports: [HeaderComponent, NgOptimizedImage, MenuModule],
 })
@@ -37,7 +36,7 @@ export class AdminHeaderComponent {
   constructor(
     private readonly loginService: LoginService,
     private readonly excel: ExcelService,
-    private router: Router,
+    private readonly router: Router,
   ) {}
 
   public gotoSetupEmail() {

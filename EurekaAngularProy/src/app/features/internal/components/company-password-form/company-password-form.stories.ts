@@ -21,7 +21,7 @@ class FormDemoComponent {
   @Output() sendForm = new EventEmitter();
   registerForm: FormGroup;
   errors = { ...errorRegisterAuth, newPassword: errorRegisterAuth.password };
-  constructor(private fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder) {
     this.registerForm = this.fb.group({
       password: [
         '',

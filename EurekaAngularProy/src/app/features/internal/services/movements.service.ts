@@ -4,7 +4,7 @@ import { DebtDataService } from '../../../shared/data';
 
 @Injectable()
 export class MovementsService {
-  constructor(private debtService: DebtDataService) {}
+  constructor(private readonly debtService: DebtDataService) {}
 
   deleteMovements(ids) {
     return this.debtService.deleteAll(ids);

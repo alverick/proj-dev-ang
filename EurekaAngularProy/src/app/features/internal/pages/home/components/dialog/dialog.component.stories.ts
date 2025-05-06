@@ -61,7 +61,7 @@ const errors: IErrorObj[] = [
     value: '',
   },
   {
-    code: 0,
+    code: 1,
     row: 22,
     description: 'Monto debe tener un valor',
     field: '',

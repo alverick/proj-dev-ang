@@ -5,7 +5,7 @@ import {
 } from '@angular/forms';
 import { isNil } from 'ramda';
 
-import { type ChangePasswordForm } from '../../features/internal/services/company-configuration.service';
+import { type CompanyChangePasswordForm } from '../models/company-forms';
 import { type ModelFormGroup } from '../models/forms';
 
 export function MustMatch(
@@ -14,7 +14,7 @@ export function MustMatch(
   ignoreCase = false,
 ): ValidatorFn {
   return (
-    formGroup: ModelFormGroup<ChangePasswordForm>,
+    formGroup: ModelFormGroup<CompanyChangePasswordForm>,
   ): ValidationErrors | null => {
     const { value: valueOriginal } = formGroup.controls[
       controlName

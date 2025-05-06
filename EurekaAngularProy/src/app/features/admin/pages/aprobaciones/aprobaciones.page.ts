@@ -19,14 +19,13 @@ import {
 } from '../../../../shared/models/gtp-post';
 import { NotEmptyPipe } from '../../../../shared/pipes/not-empty.pipe';
 import { GtpService } from '../../../../shared/services/gtp.service';
-import { drawPopup } from '../../../../shared/utils/helpers/popups';
+import { drawPopup, swalAlert } from '../../../../shared/utils/helpers/popups';
 import { EmpresaGTPComponent } from '../../components/empresa-gtp/empresa-gtp.component';
 import { ServicesGTPComponent } from '../../components/services-gtp/services-gtp.component';
 
 @Component({
   selector: 'cs-aprobaciones',
   templateUrl: './aprobaciones.page.html',
-  styleUrls: ['./aprobaciones.page.scss'],
   standalone: true,
   imports: [
     NgClass,
@@ -71,19 +70,19 @@ export class AprobacionesPage implements OnInit {
 
   constructor(
     public gtpService: GtpService,
-    private activatedRoute: ActivatedRoute,
+    private readonly activatedRoute: ActivatedRoute,
     public router: Router,
   ) {}
 
   @HostListener('window:beforeunload', ['$event'])
-  public closeWindow($event: any) {
+  closeWindow(event: BeforeUnloadEvent) {
     if (this.Formulario && this.ServiciosFormulario) {
-      $event.returnValue = 'Se van a perder los cambios.';
+      event.preventDefault();
     }
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe(({ stateDetail }) => {
+    this.activatedRoute?.data.subscribe(({ stateDetail }) => {
       this.stateDetail = stateDetail;
     });
     this.llave = this.activatedRoute.snapshot.params.llave;
@@ -152,22 +151,8 @@ export class AprobacionesPage implements OnInit {
     this.indiceActual = index;
   }
 
-  MostrarEmpresa() {
-    if (this.Enterprise.inReview === false) {
-      return false;
-    }
-    if (this.Enterprise.name !== this.Enterprise.newName) {
-      return true;
-    }
-    if (
-      this.Enterprise.name === this.Enterprise.newName ||
-      this.Enterprise.inReview === true
-    ) {
-      return true;
-    }
-  }
-
   EnviarAprobados() {
+    console.log('EnviarAprobados');
     let entryDiff = false;
     this.gtpService.services.forEach(({ res }) => {
       if (res.length > 0 && res.substring(0, 2) !== this.Enterprise.entry) {
@@ -212,7 +197,11 @@ export class AprobacionesPage implements OnInit {
       this.Enterprise.newName.toUpperCase()
     ) {
       this.Enterprise.NombreApproved = true;
-    } else if (isNil(this.Enterprise.NombreApproved)) {
+      //ignorar nombre cambio diferente de 3
+    } else if (
+      isNil(this.Enterprise.NombreApproved) &&
+      this.Enterprise.newNameGTPStatus !== 3
+    ) {
       Empcant = 1;
     }
 
@@ -454,6 +443,7 @@ export class AprobacionesPage implements OnInit {
   }
 
   saveApprovedData(approveData) {
+    console.log('saveApprovedData', approveData);
     if (
       isNotNil(approveData) &&
       (this.servicesChanged || isNotNil(this.Enterprise.NombreApproved))
@@ -473,36 +463,6 @@ export class AprobacionesPage implements OnInit {
     };
   }
 
-  /*
-        newName         name
-      minimarket         ''       NUEVO     0  -
-        ''            minimarket  APROBADO  1
-        sm            minimarket  EDITADO   2  -
-        sm            minimarket  RECHAZADO 3
-        ''               sm       APROBADO  1
-    */
-
-  getNames(svc: DataServiceGTP) {
-    if (svc.name === '?' && svc.newName !== '?') {
-      if (svc.newName.substring(0, 3).toString() === '???') {
-        return svc.newName.substring(3, svc.newName.length).toString();
-      }
-      return svc.newName;
-    }
-    if (svc.name !== '?' && svc.newName !== '?') {
-      return svc.name;
-    }
-  }
-
-  /*
-    getName2(svc: DataServiceGTP) {
-      if (svc.newNameGtpStatus === 0 && svc.newNameCodeGtpStatus === 0) {
-        return svc.newName;
-      }
-      if (svc.newNameGtpStatus > 0 && svc.newNameCodeGtpStatus > 0) {
-        return svc.name;
-      }
-    } */
   getName(svc: DataServiceGTP) {
     if (svc.newNameGTPStatus === 0 && svc.newNameCodeGTPStatus === 0) {
       return svc.newName;
@@ -603,18 +563,15 @@ export class AprobacionesPage implements OnInit {
   }
 
   mensaje(titulo: string, text: string) {
-    Swal.fire({
-      // type: tipo ,
+    void swalAlert.fire({
       title: titulo,
       text,
       showCloseButton: true,
       showCancelButton: false,
       showConfirmButton: true,
       cancelButtonColor: '#d33',
-      // cancelButtonText:  'CERRAR',
       allowOutsideClick: false,
       confirmButtonText: 'Cerrar',
-      onOpen: drawPopup,
     });
   }
 }

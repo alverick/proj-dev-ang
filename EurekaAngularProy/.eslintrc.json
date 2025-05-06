@@ -16,14 +16,16 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "plugin:prettier/recommended",
-        "plugin:@ngrx/recommended-requiring-type-checking"
+        "plugin:@ngrx/recommended-requiring-type-checking",
+        "plugin:sonarjs/recommended-legacy"
       ],
       "plugins": [
         "@typescript-eslint",
         "@angular-eslint",
         "simple-import-sort",
         "unused-imports",
-        "prettier"
+        "prettier",
+        "sonarjs"
       ],
       "rules": {
         "@angular-eslint/component-selector": [

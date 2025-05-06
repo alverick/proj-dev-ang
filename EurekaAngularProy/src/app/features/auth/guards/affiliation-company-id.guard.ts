@@ -8,8 +8,8 @@ import { AffiliationService } from '../services';
 @Injectable()
 export class AffiliationCompanyIdGuard {
   constructor(
-    private affiliation: AffiliationService,
-    private router: Router,
+    private readonly affiliation: AffiliationService,
+    private readonly router: Router,
   ) {}
   canActivateChild() {
     if (!isNotNilOrEmpty(this.affiliation.companyId)) {

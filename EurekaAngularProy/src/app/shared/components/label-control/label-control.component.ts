@@ -45,7 +45,7 @@ export class LabelControlComponent
     @Optional()
     @Self()
     public ngControl: NgControl,
-    private elRef: ElementRef<HTMLElement>,
+    private readonly elRef: ElementRef<HTMLElement>,
   ) {
     if (ngControl != null) {
       ngControl.valueAccessor = this;

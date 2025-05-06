@@ -5,9 +5,9 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   standalone: true,
 })
 export class NameEnterpiseDirective {
-  constructor(private el: ElementRef) {}
+  constructor(private readonly el: ElementRef<HTMLInputElement>) {}
 
-  @HostListener('input', ['$event']) onInputChange(event) {
+  @HostListener('input', ['$event']) onInputChange(event: Event) {
     let initalValue = this.el.nativeElement.value;
     initalValue = initalValue.replace(/( ){2}/g, ' ');
     this.el.nativeElement.value = initalValue.replace(

@@ -5,9 +5,9 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   standalone: true,
 })
 export class SearchDirective {
-  constructor(private el: ElementRef) {}
+  constructor(private readonly el: ElementRef<HTMLInputElement>) {}
 
-  @HostListener('input', ['$event']) InputShearNombreCodigo(event) {
+  @HostListener('input', ['$event']) InputShearNombreCodigo(event: Event) {
     let initalValue = this.el.nativeElement.value;
     initalValue = initalValue.replace(/\s{2,}/g, ' ');
     this.el.nativeElement.value = initalValue.replace(

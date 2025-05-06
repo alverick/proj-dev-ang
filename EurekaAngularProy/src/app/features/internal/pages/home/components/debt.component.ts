@@ -38,9 +38,9 @@ import {
 } from '../../../../../shared/services/tracking.service';
 import { swalAlert } from '../../../../../shared/utils/helpers/popups';
 
-interface Debt {
-  emissionDate: string;
-  dueDate: string;
+export interface Debt {
+  emissionDate: Date;
+  dueDate: Date;
   code: string;
   firstName: string;
   concept: string;
@@ -81,8 +81,12 @@ export class DebtComponent implements OnInit {
   validNameRegex = /^[ 0-9a-zA-ZñÑáÁéÉíÍóÓúÚäÄëËïÏöÖüÜ'&-]+$/;
   amountWithSymbolLabel = '';
   debtForm: FormModel<Debt> = this.fb.group({
-    emissionDate: ['', Validators.required, this.limitYearValidator()],
-    dueDate: ['', Validators.required],
+    emissionDate: [
+      '' as unknown as Date,
+      Validators.required,
+      this.limitYearValidator(),
+    ],
+    dueDate: ['' as unknown as Date, Validators.required],
     code: [
       '',
       [
@@ -204,7 +208,7 @@ export class DebtComponent implements OnInit {
         this.excelService.service.name,
         this.debtForm.controls.code.value,
       )
-      .subscribe((d) => {
+      ?.subscribe((d) => {
         const endTime = new Date();
         const delay = 900 - (endTime.getTime() - initTime.getTime());
         setTimeout(() => {

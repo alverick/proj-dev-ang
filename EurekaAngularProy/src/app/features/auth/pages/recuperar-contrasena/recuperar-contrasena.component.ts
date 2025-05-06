@@ -50,16 +50,16 @@ export class RecuperarContrasenaComponent implements OnInit {
   submittedRequired = false;
   protected readonly errorMessages = errorsLoginForm;
   constructor(
-    private formBuilder: UntypedFormBuilder,
-    private recuperaService: RecuperaService,
-    private router: Router,
+    private readonly formBuilder: UntypedFormBuilder,
+    private readonly recuperaService: RecuperaService,
+    private readonly router: Router,
     protected tracking: TrackingService,
   ) {}
 
   @HostListener('window:beforeunload', ['$event'])
   public closeWindow($event: BeforeUnloadEvent) {
     if (!this.formulario) {
-      $event.returnValue = 'Se van a perder los cambios.';
+      $event.preventDefault();
     }
   }
 

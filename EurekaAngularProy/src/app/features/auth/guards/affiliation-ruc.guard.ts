@@ -9,8 +9,8 @@ import { AffiliationService } from '../services';
 @Injectable()
 export class AffiliationRucGuard {
   constructor(
-    private affiliation: AffiliationService,
-    private router: Router,
+    private readonly affiliation: AffiliationService,
+    private readonly router: Router,
   ) {}
   canActivate():
     | Observable<boolean | UrlTree>

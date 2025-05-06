@@ -53,11 +53,11 @@ export class CompanyServicesService {
   private _allowAllServiceType = false;
 
   constructor(
-    private companyService: CompanyService,
-    private serviceForms: ServicesFormsService,
-    private serviceService: ServiceService,
-    private logger: NGXLogger,
-    private digitalData: DigitalDataService,
+    private readonly companyService: CompanyService,
+    private readonly serviceForms: ServicesFormsService,
+    private readonly serviceService: ServiceService,
+    private readonly logger: NGXLogger,
+    private readonly digitalData: DigitalDataService,
     protected tracking: TrackingService,
   ) {
     this.serviceForm = this.serviceForms.serviceForm;
@@ -145,7 +145,7 @@ export class CompanyServicesService {
     const metadata = [
       {
         key: 'Tipo de servicio',
-        value: dataTypeOptions.find((item) => dataType === item.value).label,
+        value: dataTypeOptions.find((item) => dataType === item.value)?.label,
       },
       {
         key: 'Codigo cliente',
@@ -154,7 +154,7 @@ export class CompanyServicesService {
       {
         key: 'Orden a pagar',
         value: paymentTypeOptions.find((item) => paymentType === item.value)
-          .label,
+          ?.label,
       },
       {
         key: 'Pago parcial',
@@ -171,12 +171,12 @@ export class CompanyServicesService {
         {
           key: 'Tipo cobro',
           value: chargeTypeOptions.find((item) => chargeType === item.value)
-            .label,
+            ?.label,
         },
         {
           key: 'Tipo calculo',
           value: interestTypeOptions.find((item) => interestType === item.value)
-            .label,
+            ?.label,
         },
         {
           key: 'Monto',

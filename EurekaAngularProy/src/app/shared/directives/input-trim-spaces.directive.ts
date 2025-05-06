@@ -6,11 +6,11 @@ import { NgControl } from '@angular/forms';
   standalone: true,
 })
 export class InputTrimSpacesDirective {
-  constructor(private ngControl: NgControl) {}
+  constructor(private readonly ngControl: NgControl) {}
   @HostListener('input', ['$event'])
   @HostListener('blur', ['$event'])
   onBlur() {
-    const value: string = this.ngControl.value;
+    const value = this.ngControl.value as string;
     if (value && (value.startsWith(' ') || value.endsWith(' '))) {
       this.ngControl.control.setValue(value.trim(), {
         emitEvent: false,

@@ -151,9 +151,9 @@ export class TableMovementsComponent implements OnInit, OnChanges {
   @ViewChild('table') table: Table;
 
   constructor(
-    private selectAllTable: SelectAllTableService,
-    private tracking: TrackingService,
-    private store: Store,
+    private readonly selectAllTable: SelectAllTableService,
+    private readonly tracking: TrackingService,
+    private readonly store: Store,
   ) {}
 
   ngOnInit() {

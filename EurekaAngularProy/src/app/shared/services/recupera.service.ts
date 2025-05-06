@@ -11,7 +11,7 @@ interface TokenChangePassword {
 
 @Injectable()
 export class RecuperaService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   public ruc: number;
   public email: number;

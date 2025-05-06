@@ -91,8 +91,8 @@ export class TrackingService {
   eventSubject$ = new ReplaySubject<EventTrackType>(10);
 
   constructor(
-    private storageService: StorageService,
-    private router: Router,
+    private readonly storageService: StorageService,
+    private readonly router: Router,
   ) {
     const session = this.storageService.getCurrentSession();
     if (session?.isAuthenticate) {

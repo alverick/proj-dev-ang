@@ -8,16 +8,21 @@ import { CompanyService } from '../../../shared/services';
 
 @Injectable()
 export class AccountStateDetailsResolver {
-  constructor(private companyService: CompanyService) {}
+  constructor(private readonly companyService: CompanyService) {}
+
   resolve(
     route: ActivatedRouteSnapshot,
   ): Observable<IAccountStateDetails | string> {
-    return this.companyService
-      .getAccountStateDetails(route.params.llave as string)
-      .pipe(
-        catchError(() => {
-          return of('No data');
-        }),
-      );
+    const accountKey = route.params['llave'] as string;
+
+    if (!accountKey) {
+      return of('Invalid account key');
+    }
+
+    return this.companyService.getAccountStateDetails(accountKey).pipe(
+      catchError(() => {
+        return of('Failed to load account state details');
+      }),
+    );
   }
 }

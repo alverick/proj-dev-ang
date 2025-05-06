@@ -20,6 +20,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { pathEq } from 'ramda';
 
+import { ISelectOptions } from '../../constants/company';
 import { InputMoneyDirective } from '../../directives/input-money.directive';
 import { IErrorMessages, ModelFormGroup } from '../../models/forms';
 import { type ServiceDebt } from '../../services/services-forms.service';
@@ -52,10 +53,10 @@ export class ServiceDebtFormComponent
 {
   @Input() form: ModelFormGroup<ServiceDebt>;
   @Input() errorMessages: IErrorMessages;
-  @Input() paymentTypeOptions: any[];
-  @Input() currencyOptions: any[];
-  @Input() chargeTypeOptions: any[];
-  @Input() interestTypeOptions: any[];
+  @Input() paymentTypeOptions: ISelectOptions[];
+  @Input() currencyOptions: ISelectOptions[];
+  @Input() chargeTypeOptions: ISelectOptions[];
+  @Input() interestTypeOptions: ISelectOptions[];
   @Input() submitted = false;
   @Input() interestOnlyInfo = false;
   @Input() currency = 'S/';
@@ -64,7 +65,7 @@ export class ServiceDebtFormComponent
   showArrearsFields = false;
   unitAmount = 'S/ ';
   maxAmount = 1000;
-  onTouched: any;
+  onTouched: () => void = () => {};
 
   ngOnInit() {
     const { chargeInterest, interestType } = this.form.value;
@@ -81,13 +82,19 @@ export class ServiceDebtFormComponent
 
   processArrearsMode(show: boolean) {
     this.showArrearsFields = show;
-    ['chargeType', 'interestType', 'amount'].forEach((field) => {
-      if (show) {
-        this.form.get(field).enable();
-      } else {
-        this.form.get(field).disable();
-      }
-    });
+    if (show) {
+      this.enableFields(['chargeType', 'interestType', 'amount']);
+    } else {
+      this.disableFields(['chargeType', 'interestType', 'amount']);
+    }
+  }
+
+  enableFields(fields: string[]) {
+    fields.forEach((field) => this.form.get(field)?.enable());
+  }
+
+  disableFields(fields: string[]) {
+    fields.forEach((field) => this.form.get(field)?.disable());
   }
 
   setAmountProps(val) {
@@ -104,22 +111,27 @@ export class ServiceDebtFormComponent
     });
   }
 
-  registerOnChange(fn): void {
+  registerOnChange(fn: (value: any) => void): void {
     this.form.valueChanges.subscribe((value) => {
       fn(value);
     });
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: Partial<ServiceDebt>): void {
     this.form.patchValue(obj, { emitEvent: false });
   }
 
   setDisabledState(disabled: boolean) {
-    disabled ? this.form.disable() : this.form.enable();
+    // eslint-disable-next-line sonarjs/no-selector-parameter
+    if (disabled) {
+      this.disableFields(Object.keys(this.form.controls));
+    } else {
+      this.enableFields(Object.keys(this.form.controls));
+    }
   }
 
   ngAfterViewInit(): void {

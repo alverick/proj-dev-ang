@@ -76,8 +76,8 @@ export class ServicesGTPComponent implements OnInit {
   frm: UntypedFormGroup;
 
   constructor(
-    private fb: UntypedFormBuilder,
-    private afiliacionService: AfiliacionService,
+    private readonly fb: UntypedFormBuilder,
+    private readonly afiliacionService: AfiliacionService,
   ) {}
 
   ngOnInit() {
@@ -236,7 +236,7 @@ export class ServicesGTPComponent implements OnInit {
     this.afiliacionService.GetCards().subscribe((d) => {
       this.cuentas = d;
       const account = d.find((item) => item.id === this._service.idAccount);
-      this.frm.get('idCuenta').setValue(account.number);
+      this.frm.get('idCuenta').setValue(account?.number);
     });
 
     if (this.frm.get('cobraMora').value === 'S') {

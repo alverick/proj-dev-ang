@@ -22,11 +22,11 @@ import { isNil, pathEq } from 'ramda';
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
 import { InputTrimSpacesDirective } from '../../../../shared/directives/input-trim-spaces.directive';
 import { InputWithoutSpacesDirective } from '../../../../shared/directives/input-without-spaces.directive';
+import { CompanyForm } from '../../../../shared/models/company-forms';
 import {
   IErrorMessages,
   type SimpleModelFormGroup,
 } from '../../../../shared/models/forms';
-import { type CompanyForm } from '../../services/company-configuration.service';
 
 @Component({
   selector: 'cs-company-update-form',

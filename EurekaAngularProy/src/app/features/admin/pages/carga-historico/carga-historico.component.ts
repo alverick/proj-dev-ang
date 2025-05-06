@@ -33,9 +33,9 @@ export class CargaHistoricoComponent implements OnInit {
   totalItems = 0;
 
   constructor(
-    private processService: ProcessService,
-    private route: ActivatedRoute,
-    private queryDataService: QueryDataService,
+    private readonly processService: ProcessService,
+    private readonly route: ActivatedRoute,
+    private readonly queryDataService: QueryDataService,
   ) {}
 
   ngOnInit(): void {

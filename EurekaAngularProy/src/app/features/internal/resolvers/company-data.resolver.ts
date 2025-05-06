@@ -6,7 +6,7 @@ import { CompanyService } from '../../../shared/services';
 
 @Injectable()
 export class CompanyDataResolver {
-  constructor(private companyService: CompanyService) {}
+  constructor(private readonly companyService: CompanyService) {}
   resolve() {
     return this.companyService.getCompanyData().pipe(
       catchError(() => {

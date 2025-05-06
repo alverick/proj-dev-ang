@@ -52,8 +52,8 @@ export class NotifyService {
   totalLabel = '';
 
   constructor(
-    private http: HttpClient,
-    private storage: StorageService,
+    private readonly http: HttpClient,
+    private readonly storage: StorageService,
   ) {}
 
   public iniciar() {

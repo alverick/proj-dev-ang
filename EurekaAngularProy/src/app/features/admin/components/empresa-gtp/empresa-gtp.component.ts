@@ -65,7 +65,7 @@ export class EmpresaGTPComponent implements OnInit {
   @Input() enterprise: ICompanyData;
   @Output() grabar = new EventEmitter<ICompanyData>();
 
-  constructor(private formBuilder: UntypedFormBuilder) {}
+  constructor(private readonly formBuilder: UntypedFormBuilder) {}
 
   ngOnInit() {
     const {
@@ -79,7 +79,7 @@ export class EmpresaGTPComponent implements OnInit {
       entryName,
     } = this.enterprise;
 
-    const isNotEditable = newNameGTPStatus !== statusCodes.APPROVED;
+    const isNotEditable = newNameGTPStatus === statusCodes.APPROVED;
 
     const operator = mobileOperators.find(
       (operator) => operator.value === movilOperator,
@@ -105,7 +105,7 @@ export class EmpresaGTPComponent implements OnInit {
         disabled: true,
       }),
       NewNameApproved: [
-        { value: newNombreApprovedValue, disabled: !isNotEditable },
+        { value: newNombreApprovedValue, disabled: isNotEditable },
         Validators.required,
       ],
       entry: new UntypedFormControl({
@@ -137,7 +137,7 @@ export class EmpresaGTPComponent implements OnInit {
         ],
       ),
       movilOperator: new UntypedFormControl({
-        value: operator.label,
+        value: operator?.label,
         disabled: true,
       }),
     });

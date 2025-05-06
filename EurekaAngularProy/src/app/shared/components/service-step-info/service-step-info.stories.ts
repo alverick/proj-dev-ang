@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, EventEmitter, NgModule, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   applicationConfig,
@@ -51,48 +51,10 @@ class FormDemoComponent {
       required: 'Elige una opción';
     };
   };
-  // documentTypes = documentTypes;
   submitted = false;
   @Output() sendForm = new EventEmitter<object>();
   @Output() cancel = new EventEmitter();
-  constructor(
-    private fb: FormBuilder,
-    private serviceForms: ServicesFormsService,
-  ) {
-    // this.registerForm = this.fb.group({
-    //   name: [
-    //     '',
-    //     [
-    //       Validators.required,
-    //       Validators.minLength(3),
-    //       Validators.pattern(
-    //         '^[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ]*[-0-9ñÑA-Za-zÁÉÍÓÚáéíóú& ][-0-9ñÑA-Za-zÁÉÍÓÚáéíóú&  ]*$',
-    //       ),
-    //     ],
-    //   ],
-    //   account: ['', [Validators.required]],
-    //   idAccount: ['', [Validators.required]],
-    //   currency: [''],
-    //   accountNumber: [''],
-    //   useAppWeb: [{ value: true, disabled: true }],
-    //   useAgent: [true],
-    // });
-    // this.registerForm.patchValue({
-    //   ruc: '20000000005',
-    //   name: 'demo 5',
-    //   entry: '01',
-    //   email: 'mnieva@gmail.com',
-    //   movilNumber: '123456',
-    //   movilOperator: 'C',
-    //   documentType: 'DNI',
-    //   documentNumber: '28235624',
-    //   newName: null,
-    //   newNameGTPStatus: 1,
-    //   status: 'Pendiente',
-    //   inReview: true,
-    //   requestDate: '2019-12-16T23:03:16.675169',
-    // });
-  }
+  constructor(private readonly serviceForms: ServicesFormsService) {}
   onSubmit($event) {
     this.sendForm.emit($event);
   }

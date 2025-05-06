@@ -43,6 +43,7 @@ import {
   EnterpriseHeadingService,
   ServicesFormsService,
 } from '../../../shared/services';
+import { ICompanyResult } from '../../../shared/services/company.service';
 import { LoginService } from '../../../shared/services/login.service';
 import {
   type ServiceConfigurationForm,
@@ -80,14 +81,14 @@ export class AffiliationService {
   tokenUpdate: string;
 
   constructor(
-    private router: Router,
-    private companyService: CompanyService,
-    private loginService: LoginService,
-    private enterpriseHeading: EnterpriseHeadingService,
+    private readonly router: Router,
+    private readonly companyService: CompanyService,
+    private readonly loginService: LoginService,
+    private readonly enterpriseHeading: EnterpriseHeadingService,
     public affiliationForms: AffiliationFormsService,
-    private serviceForms: ServicesFormsService,
-    private logger: NGXLogger,
-    private digitalData: DigitalDataService,
+    private readonly serviceForms: ServicesFormsService,
+    private readonly logger: NGXLogger,
+    private readonly digitalData: DigitalDataService,
     protected tracking: TrackingService,
   ) {
     this.setRegisterForm();
@@ -173,48 +174,13 @@ export class AffiliationService {
 
   public validateCompany() {
     const {
-      movilNumber,
-      documentType,
-      email,
-      documentNumber,
-      movilOperator,
       ruc,
+      email,
+      movilNumber,
+      movilOperator,
+      documentType,
+      documentNumber,
     } = this.registerForm.value;
-
-    const actionStep: Partial<ActionEventProperties> = {
-      category: 'Registrate – Ingresa tus datos',
-      action: 'Click',
-      label: 'Siguiente',
-      location: 'Registrate',
-      step: 'Step1',
-      state: stateSuccessful,
-      metadata: [
-        {
-          key: 'TipoDocumento',
-          value: documentType,
-        },
-        {
-          key: 'NúmeroDocumento',
-          value: documentNumber,
-        },
-        {
-          key: 'RucEmpresa',
-          value: ruc,
-        },
-        {
-          key: 'Email',
-          value: email,
-        },
-        {
-          key: 'Operador',
-          value: movilOperator,
-        },
-        {
-          key: 'Celular',
-          value: movilNumber,
-        },
-      ],
-    };
 
     return this.companyService
       .validateCompany({
@@ -226,28 +192,103 @@ export class AffiliationService {
         documentNumber,
       })
       .pipe(
-        tap(({ code, message, success, tradeName, fullName }) => {
-          if (success) {
-            this.authForm.get('ruc').setValue(ruc);
-            this.validateName(tradeName, fullName);
-            this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-          } else {
-            this.processResultCode(code, message, {
-              ...actionStep,
-              state: stateIntent,
-            });
-          }
-        }),
-        catchError((err: HttpErrorResponse) => {
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-            ...actionStep,
-            state: stateIntent,
-            typeError: typeErrorServer,
-          });
-          this.showErrorServer();
-          return throwError(() => err);
-        }),
+        tap((response) =>
+          this.handleValidationResponse(
+            response,
+            'Registrate – Ingresa tus datos',
+            'Step1',
+            () => {
+              this.authForm.get('ruc').setValue(ruc);
+              this.validateName(response.tradeName, response.fullName);
+            },
+          ),
+        ),
+        catchError((error: HttpErrorResponse) =>
+          this.handleValidationError(
+            error,
+            'Registrate – Ingresa tus datos',
+            'Step1',
+          ),
+        ),
       );
+  }
+
+  private handleValidationResponse(
+    response: ICompanyResult,
+    category: string,
+    step: string,
+    cb: () => void,
+  ) {
+    const { code, message, success } = response;
+    const actionStep = this.createActionStep(
+      category,
+      step,
+      success ? stateSuccessful : stateIntent,
+    );
+
+    if (success) {
+      cb();
+      this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+    } else {
+      this.processResultCode(code, message, actionStep);
+    }
+  }
+
+  private handleValidationError(
+    error: HttpErrorResponse,
+    category: string,
+    step: string,
+  ) {
+    const actionStep = this.createActionStep(
+      category,
+      step,
+      stateIntent,
+      typeErrorServer,
+    );
+    this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
+    this.showErrorServer();
+    return throwError(() => error);
+  }
+
+  private createActionStep(
+    category: string,
+    step: string,
+    state: string,
+    typeError?: string,
+  ): Partial<ActionEventProperties> {
+    const formData = this.registerForm.value;
+    let metadata = [
+      { key: 'TipoDocumento', value: formData.documentType },
+      { key: 'NúmeroDocumento', value: formData.documentNumber },
+      { key: 'RucEmpresa', value: formData.ruc },
+      { key: 'Email', value: formData.email },
+      { key: 'Operador', value: formData.movilOperator },
+      { key: 'Celular', value: formData.movilNumber },
+    ];
+    if (step === 'Step2') {
+      const { entrySelect } = this.authForm.value;
+      metadata = [
+        ...metadata,
+        {
+          key: 'Nombre Empresa',
+          value: this.authForm.get('nameSelect').value,
+        },
+        {
+          key: 'Rubro Empresa',
+          value: entrySelect.name,
+        },
+      ];
+    }
+    return {
+      category,
+      action: 'Click',
+      label: 'Siguiente',
+      location: 'Registrate',
+      step,
+      state,
+      typeError,
+      metadata,
+    };
   }
 
   private validateName(tradeName: string, fullName: string) {
@@ -339,49 +380,6 @@ export class AffiliationService {
     const name = this.authForm.get('nameSelect').value;
     const { acceptTerms, entry, password, entrySelect } = this.authForm.value;
 
-    const actionStep: Partial<ActionEventProperties> = {
-      category: 'Registrate – Datos de empresa',
-      action: 'Click',
-      label: 'Siguiente',
-      location: 'Registrate',
-      step: 'Step2',
-      state: stateSuccessful,
-      metadata: [
-        {
-          key: 'TipoDocumento',
-          value: documentType,
-        },
-        {
-          key: 'NúmeroDocumento',
-          value: documentNumber,
-        },
-        {
-          key: 'RucEmpresa',
-          value: ruc,
-        },
-        {
-          key: 'Email',
-          value: email,
-        },
-        {
-          key: 'Operador',
-          value: movilOperator,
-        },
-        {
-          key: 'Celular',
-          value: movilNumber,
-        },
-        {
-          key: 'Nombre Empresa',
-          value: name,
-        },
-        {
-          key: 'Rubro Empresa',
-          value: entrySelect.name,
-        },
-      ],
-    };
-
     return this.companyService
       .saveCompany({
         documentType,
@@ -397,26 +395,23 @@ export class AffiliationService {
         acceptTerms,
       })
       .pipe(
-        tap(({ code, success, id, message }) => {
-          if (success) {
-            this.companyId = id;
-            this.sendAdobeTrack(AdobeEvent.trackFormSubmit, actionStep);
-          } else {
-            this.processResultCode(code, message, {
-              ...actionStep,
-              state: stateIntent,
-            });
-          }
-        }),
-        catchError((err: HttpErrorResponse) => {
-          this.sendAdobeTrack(AdobeEvent.trackFormSubmit, {
-            ...actionStep,
-            state: stateIntent,
-            typeError: typeErrorServer,
-          });
-          this.showErrorServer();
-          return throwError(() => err);
-        }),
+        tap((response) =>
+          this.handleValidationResponse(
+            response,
+            'Registrate – Datos de empresa',
+            'Step2',
+            () => {
+              this.companyId = response.id;
+            },
+          ),
+        ),
+        catchError((error: HttpErrorResponse) =>
+          this.handleValidationError(
+            error,
+            'Registrate – Datos de empresa',
+            'Step2',
+          ),
+        ),
       );
   }
 

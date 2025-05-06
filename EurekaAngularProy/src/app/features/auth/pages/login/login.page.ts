@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, type OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
@@ -49,7 +50,6 @@ interface LoginForm {
 @Component({
   selector: 'cs-login',
   templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
   providers: [MessageService],
   standalone: true,
   imports: [
@@ -86,14 +86,14 @@ export class LoginPage implements OnInit {
   attemptsLimit = 6;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private loginService: LoginService,
-    private router: Router,
-    private cookieService: CookieService,
-    private storageService: StorageService,
-    private tracking: TrackingService,
-    private store: Store,
-    private messageService: MessageService,
+    private readonly formBuilder: FormBuilder,
+    private readonly loginService: LoginService,
+    private readonly router: Router,
+    private readonly cookieService: CookieService,
+    private readonly storageService: StorageService,
+    private readonly tracking: TrackingService,
+    private readonly store: Store,
+    private readonly messageService: MessageService,
   ) {}
 
   ngOnInit() {
@@ -241,7 +241,7 @@ export class LoginPage implements OnInit {
               }
             }
           },
-          error: (error) => {
+          error: (error: HttpErrorResponse) => {
             if (error.status === 500) {
               this.showModal(
                 'Error',

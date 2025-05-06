@@ -49,7 +49,7 @@ class FormDemoComponent {
   operators = mobileOperators;
   documentTypes = documentTypes;
   submitted = false;
-  constructor(private fb: FormBuilder) {
+  constructor(private readonly fb: FormBuilder) {
     this.registerForm = this.fb.group({
       name: [
         '',

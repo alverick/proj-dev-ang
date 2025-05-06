@@ -6,10 +6,10 @@ import { type User } from '../models/user.model';
 
 @Injectable()
 export class StorageService {
-  private localStorageService;
+  private readonly localStorageService;
   private currentSession: Session = null;
 
-  constructor(private cookieStorage: CookieService) {
+  constructor(private readonly cookieStorage: CookieService) {
     this.localStorageService = window.sessionStorage;
     this.currentSession = this.loadSessionData();
   }

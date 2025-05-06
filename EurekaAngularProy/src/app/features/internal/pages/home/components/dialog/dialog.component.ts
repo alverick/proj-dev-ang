@@ -16,11 +16,18 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { Ripple } from 'primeng/ripple';
 import { isNil, isNotEmpty, pathOr } from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, takeWhile, timer } from 'rxjs';
 
 import { MessageAlertComponent } from '../../../../../../shared/components/message-alert/message-alert.component';
 import type { CurrencyWithLimit } from '../../../../../../shared/constants/currencies';
-import { processStatus } from '../../../../../../shared/constants/process';
+import {
+  fileUploadExampleTest,
+  fileUploadExampleTestMessage,
+} from '../../../../../../shared/constants/fileload-messages';
+import {
+  processStatus,
+  StatusValues,
+} from '../../../../../../shared/constants/process';
 import { ServiceTypes } from '../../../../../../shared/constants/services';
 import { SingleClickDirective } from '../../../../../../shared/directives/single-click.directive';
 import { type ServiceTypeType } from '../../../../../../shared/models';
@@ -203,13 +210,9 @@ export class DialogComponent implements OnInit {
           ? 'G'
           : 'C';
       const cellTemplateText = row.getCell(column).value ?? '';
-      if (
-        cellTemplateText ===
-        'Esto es un ejemplo, no olvides eliminar esta fila antes de subir tu archivo'
-      ) {
+      if (cellTemplateText === fileUploadExampleTest) {
         errors.push({
-          description:
-            'El archivo no contiene registros válidos, eliminar la fila de ejemplo',
+          description: fileUploadExampleTestMessage,
           row: 0,
         });
       }
@@ -249,7 +252,7 @@ export class DialogComponent implements OnInit {
     return errors;
   }
 
-  private validateDateCell(row: ExcelJS.Row, idx: number) {
+  protected validateDateCell(row: ExcelJS.Row, idx: number) {
     if (row.getCell(idx).value instanceof Date) {
       return false;
     }
@@ -260,14 +263,14 @@ export class DialogComponent implements OnInit {
       const dt = new Date(
         (row.getCell(idx).value as string).replace(pattern, '$3-$2-$1'),
       );
-      if (dt instanceof Date) {
+      if (dt instanceof Date && dt.toString() !== 'Invalid Date') {
         isNotValidDate = false;
       }
     }
     return isNotValidDate;
   }
 
-  private validateAmountZero(row: ExcelJS.Row) {
+  protected validateAmountZero(row: ExcelJS.Row) {
     let value = row.getCell(6).value;
 
     if (isNil(value)) {
@@ -364,7 +367,7 @@ export class DialogComponent implements OnInit {
     return isEmptyRow;
   }
 
-  private verifyStatus() {
+  protected verifyStatus() {
     this.ready = true;
     const actionStep: Partial<ActionEventProperties> = {
       category: 'Home filtro',
@@ -375,100 +378,154 @@ export class DialogComponent implements OnInit {
       state: 'Envío exitoso',
       metadata: [{ key: 'fileName', value: this.fileName }],
     };
-    const recursiveFunc = (value: ProcessStatus) => {
-      if (!this.ready) {
-        return;
-      }
-      if (
-        value.status === processStatus.rejected ||
-        value.status === processStatus.confirmUser
-      ) {
-        this.excelService.statusUpload = false;
-        this.rowsAccepted = value.rowsUploaded;
-        this.rowsRejected = value.rowsRejected;
-        this.excelService.errores = value.errors;
-        this.cuadro_errores = true;
-        this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
-          ...actionStep,
-          state: 'Intento de envio',
-          typeError: 'REJECTED',
-        });
-        if (value.status === processStatus.confirmUser) {
-          this.confirmUser = true;
-        }
-      } else if (value.status === processStatus.failed) {
-        const obsClose = new Observable((observer) => {
-          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
-            ...actionStep,
-            state: 'Intento de envio',
-            typeError: 'FAILED',
-          });
-          void swalAlert.fire({
-            title: 'Lo sentimos, no se pudo finalizar la carga de cobros',
-            text: 'Por favor, revisa si algunos cobros se cargaron correctamente y luego inténtalo nuevamente.',
-            showCloseButton: true,
-            confirmButtonText: 'Ver cobros cargados',
-            didClose: () => {
-              observer.next();
-              observer.complete();
-            },
-          });
-        });
-        this.excelService.statusUpload = false;
-        this.dialogRef.close(obsClose);
-      } else if (value.status === processStatus.completed) {
-        this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
-        this.excelService.statusUpload = false;
-        this.excelService.errores = [];
-        const obsClose = new Observable((observer) => {
-          let msg: string;
-          if (this.excelService.service.dataType === 'C') {
-            msg = `¡Listo! Se agregaron nuevas deudas `;
-          } else {
-            msg = `¡Listo! Se agregaron nuevos clientes`;
-          }
-          this.tracking.trackEvent(AdobeEvent.trackView, {
-            category: msg,
-            action: 'modal-view',
-            detail:
-              'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos.',
-            location: 'Modal',
-          });
-          void swalAlert.fire({
-            title: msg,
-            text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos.',
-            showCloseButton: true,
-            confirmButtonText: 'Cerrar',
-            didClose: () => {
-              observer.next();
-              observer.complete();
-            },
-          });
-        });
-        this.dialogRef.close(obsClose);
-      } else {
-        this.progress.mode = 'determinate';
-        this.progress.value = value.advance;
-        if (value.status === 'VALIDATING') {
-          this.progress.status = `Validando (${value.phase}/3)`;
-        } else if (value.status === 'SAVING') {
-          this.progress.status = `Grabando (${value.phase}/2)`;
-        }
-        setTimeout(() => {
-          this.excelService
-            .StatusExcel(this.excelService.idProcess)
-            .subscribe(recursiveFunc);
-        }, 2000);
-      }
+
+    this.initializeProgress();
+
+    timer(0, 2000)
+      .pipe(
+        switchMap(() =>
+          this.excelService.StatusExcel(this.excelService.idProcess),
+        ),
+        takeWhile((status) => this.isProcessing(status), true),
+      )
+      .subscribe({
+        next: (status) => this.handleStatus(status, actionStep),
+        complete: () => console.log('Process completed'),
+      });
+  }
+
+  private isProcessing(status: ProcessStatus): boolean {
+    const terminalStatuses = new Set<StatusValues>([
+      processStatus.rejected,
+      processStatus.confirmUser,
+      processStatus.failed,
+      processStatus.completed,
+    ]);
+
+    return !terminalStatuses.has(status.status);
+  }
+
+  private handleStatus(
+    value: ProcessStatus,
+    actionStep: Partial<ActionEventProperties>,
+  ) {
+    if (!this.ready) return;
+
+    switch (value.status) {
+      case processStatus.rejected:
+      case processStatus.confirmUser:
+        this.handleRejectedStatus(value, actionStep);
+        break;
+
+      case processStatus.failed:
+        this.handleFailedStatus(actionStep);
+        break;
+
+      case processStatus.completed:
+        this.handleCompletedStatus(actionStep);
+        break;
+
+      default:
+        this.handleInProgressStatus(value);
+    }
+  }
+
+  private handleRejectedStatus(
+    value: ProcessStatus,
+    actionStep: Partial<ActionEventProperties>,
+  ) {
+    this.excelService.statusUpload = false;
+    this.rowsAccepted = value.rowsUploaded;
+    this.rowsRejected = value.rowsRejected;
+    this.excelService.errores = value.errors;
+    this.cuadro_errores = true;
+
+    this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
+      ...actionStep,
+      state: 'Intento de envio',
+      typeError: 'REJECTED',
+    });
+
+    if (value.status === processStatus.confirmUser) {
+      this.confirmUser = true;
+    }
+  }
+
+  private handleFailedStatus(actionStep: Partial<ActionEventProperties>) {
+    this.excelService.statusUpload = false;
+
+    const obsClose = new Observable((observer) => {
+      this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
+        ...actionStep,
+        state: 'Intento de envio',
+        typeError: 'FAILED',
+      });
+
+      void swalAlert.fire({
+        title: 'Lo sentimos, no se pudo finalizar la carga de cobros',
+        text: 'Por favor, revisa si algunos cobros se cargaron correctamente y luego inténtalo nuevamente.',
+        showCloseButton: true,
+        confirmButtonText: 'Ver cobros cargados',
+        didClose: () => {
+          observer.next();
+          observer.complete();
+        },
+      });
+    });
+
+    this.dialogRef.close(obsClose);
+  }
+
+  private handleCompletedStatus(actionStep: Partial<ActionEventProperties>) {
+    this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
+    this.excelService.statusUpload = false;
+    this.excelService.errores = [];
+
+    const obsClose = new Observable((observer) => {
+      const msg =
+        this.excelService.service.dataType === 'C'
+          ? '¡Listo! Se agregaron nuevas deudas'
+          : '¡Listo! Se agregaron nuevos clientes';
+
+      this.tracking.trackEvent(AdobeEvent.trackView, {
+        category: msg,
+        action: 'modal-view',
+        detail:
+          'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos.',
+        location: 'Modal',
+      });
+
+      void swalAlert.fire({
+        title: msg,
+        text: 'Recuerda que puedes eliminar y/o editar los datos de tus clientes desde la página de movimientos.',
+        showCloseButton: true,
+        confirmButtonText: 'Cerrar',
+        didClose: () => {
+          observer.next();
+          observer.complete();
+        },
+      });
+    });
+
+    this.dialogRef.close(obsClose);
+  }
+
+  private handleInProgressStatus(value: ProcessStatus) {
+    this.progress.mode = 'determinate';
+    this.progress.value = value.advance;
+
+    const phaseMapping: Record<string, string> = {
+      VALIDATING: `Validando (${value.phase}/3)`,
+      SAVING: `Grabando (${value.phase}/2)`,
     };
+
+    this.progress.status = phaseMapping[value.status] || 'Procesando';
+  }
+
+  private initializeProgress() {
     this.progress.mode = 'determinate';
     this.progress.value = 0;
     this.progress.status = 'Validando (0/3)';
-    setTimeout(() => {
-      this.excelService
-        .StatusExcel(this.excelService.idProcess)
-        .subscribe(recursiveFunc);
-    }, 2000);
   }
 
   right() {

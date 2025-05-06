@@ -30,7 +30,8 @@ const sequenceValidator =
       return null;
     }
     const pattern = '0123456789';
-    const numbers = control.value.match(regex) || [];
+    const regExp = new RegExp(regex, 'g');
+    const numbers = [...control.value.matchAll(regExp)];
 
     const searchNum = (num: string): boolean => {
       if (num.length > 3) {
@@ -47,7 +48,7 @@ const sequenceValidator =
     };
 
     const isSequencedNumber = numbers.find(
-      (num: string) => num.length >= 3 && searchNum(num),
+      (num) => num[0].length >= 3 && searchNum(num[0]),
     );
 
     const valid = regex.test(control.value);
@@ -64,7 +65,7 @@ export const passwordValidators = [
     regexValidator(/[^\w@!#$%&/()=?+*\-,.]+/, { symbol: true }, true),
     regexValidator(/^(?=.*[@!#$%&/()=?+*\-,_.])/, { symbol: true }),
   ]),
-  sequenceValidator(/\d+/g, {
+  sequenceValidator(/\d+/, {
     sequence: true,
   }),
 ];

@@ -15,17 +15,17 @@ export type DebtorCode = { id?: number; code: string; firstName?: string };
 
 @Injectable()
 export class HomeService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
-  private ListDebts: Debts[] = [];
+  private readonly ListDebts: Debts[] = [];
 
-  private type: Type[] = [
+  private readonly type: Type[] = [
     { idType: '', descripcion: 'Servicio' },
     /* {idType: 'Pension', descripcion: 'Pensión'},
     {idType: 'Matricula', descripcion: 'Matricula'}*/
   ];
 
-  private wayPay: WayPay[] = [
+  private readonly wayPay: WayPay[] = [
     { idWayPay: 'PENDIENTE', descripcion: 'Pendiente' },
     { idWayPay: 'PAGADO', descripcion: 'Pagado' },
     { idWayPay: 'PARCIAL', descripcion: 'Parcial' },
@@ -34,7 +34,7 @@ export class HomeService {
     { idWayPay: 'DESHABILITADO', descripcion: 'Deshabilitado' },
   ];
 
-  private date: DateList[] = [
+  private readonly date: DateList[] = [
     { idDate: 'EmissionDate', descripcion: 'Emisión' },
     { idDate: 'DueDate', descripcion: 'Vencimiento' },
     { idDate: 'PaymentDate', descripcion: 'Pago' },

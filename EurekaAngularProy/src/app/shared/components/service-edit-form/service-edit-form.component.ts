@@ -71,7 +71,7 @@ export class ServiceEditFormComponent implements OnInit, OnChanges {
   submittedForm = false;
   formLoaded = false;
   showDebtFields = false;
-  constructor(private servicesForms: ServicesFormsService) {}
+  constructor(private readonly servicesForms: ServicesFormsService) {}
 
   ngOnInit() {
     this.listenForChanges();

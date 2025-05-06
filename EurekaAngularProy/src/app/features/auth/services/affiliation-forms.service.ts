@@ -49,7 +49,7 @@ export class AffiliationFormsService {
     Validators.maxLength(80),
   ];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private readonly formBuilder: FormBuilder) {
     const emailValidators = [
       Validators.required,
       Validators.pattern(emailRegex),

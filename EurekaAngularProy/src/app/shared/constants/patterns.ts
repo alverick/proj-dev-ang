@@ -1,3 +1,1 @@
-//TODO: review regex
-export const emailRegex =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const emailRegex = /^([^\s@]+)@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;

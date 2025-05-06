@@ -15,7 +15,7 @@ export interface MessageResult {
 
 @Injectable()
 export class QueryDataService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   regularizeAll(): Observable<MessageResult> {
     const url = `${environment.END_POINT}/Query/regularizeStateProcessAll`;

@@ -8,7 +8,7 @@ import { type Debts, type DebtsPagedList } from '../models/debts';
 
 @Injectable()
 export class DebtDataService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   deleteAll(ids): Observable<any> {
     const url = `${environment.END_POINT}/debt/deleteAll`;

@@ -48,7 +48,7 @@ export class UpdateServicesPage {
   formData;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
     public affiliation: AffiliationService,
   ) {}
 
@@ -79,12 +79,17 @@ export class UpdateServicesPage {
   }
 
   finalize() {
-    this.affiliation.saveUpdateInformation().subscribe((result) => {
-      if (result) {
-        void this.router.navigate([authFullRoutingNames.PROCESSING]);
-      } else {
+    this.affiliation.saveUpdateInformation().subscribe({
+      next: (result) => {
+        const route = result
+          ? authFullRoutingNames.PROCESSING
+          : authFullRoutingNames.LOGIN;
+        void this.router.navigate([route]);
+      },
+      error: (error) => {
+        console.error('Error finalizing:', error);
         void this.router.navigate([authFullRoutingNames.LOGIN]);
-      }
+      },
     });
   }
 

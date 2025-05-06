@@ -137,9 +137,9 @@ export class LandingPage implements OnDestroy {
   constructor(
     public router: Router,
     public dialogService: DynamicDialogService,
-    private tracking: TrackingService,
-    private store: Store,
-    private messageService: MessageService,
+    private readonly tracking: TrackingService,
+    private readonly store: Store,
+    private readonly messageService: MessageService,
   ) {}
 
   ngOnDestroy(): void {

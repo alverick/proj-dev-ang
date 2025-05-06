@@ -5,12 +5,17 @@ import { forEachObjIndexed, pick } from 'ramda';
 import { tap } from 'rxjs/operators';
 
 import { emailRegex } from '../../../shared/constants/patterns';
+import {
+  CompanyChangePasswordForm,
+  CompanyForm,
+} from '../../../shared/models/company-forms';
 import { type IDataEnterpriseModel } from '../../../shared/models/data-enterprise.model';
 import {
   type ModelFormGroup,
   type SimpleModelFormGroup,
 } from '../../../shared/models/forms';
 import { CompanyService } from '../../../shared/services';
+import { ICompanyResult } from '../../../shared/services/company.service';
 import { LoginService } from '../../../shared/services/login.service';
 import {
   type ActionEventProperties,
@@ -25,34 +30,16 @@ import { passwordValidators } from '../../../shared/validators/password-validato
 import { authFullRoutingNames } from '../../auth/auth-routing.names';
 import { internalFullRoutingNames } from '../internal-routing.names';
 
-export interface ChangePasswordForm {
-  password: string;
-  newPassword: string;
-  confirmNewPassword: string;
-}
-
-export interface CompanyForm {
-  ruc: string;
-  name: string;
-  entry: string;
-  entryName: string;
-  email: string;
-  movilNumber: string;
-  movilOperator: string;
-  documentType: string;
-  documentNumber: string;
-}
-
 @Injectable()
 export class CompanyConfigurationService {
   companyData: IDataEnterpriseModel;
   companyForm: SimpleModelFormGroup<CompanyForm>;
-  passwordForm: ModelFormGroup<ChangePasswordForm>;
+  passwordForm: ModelFormGroup<CompanyChangePasswordForm>;
 
   constructor(
-    private fb: FormBuilder,
-    private companyService: CompanyService,
-    private router: Router,
+    private readonly fb: FormBuilder,
+    private readonly companyService: CompanyService,
+    private readonly router: Router,
     protected loginService: LoginService,
     protected tracking: TrackingService,
   ) {
@@ -182,49 +169,56 @@ export class CompanyConfigurationService {
       state: 'Envío exitoso',
     };
     return this.companyService.updateCompany(enterprise).pipe(
-      tap(({ success, message }) => {
-        if (success === true) {
-          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
-          this.loginService.logout().subscribe(() => {
-            this.tracking.trackEvent(AdobeEvent.trackView, {
-              category: 'warning - icon',
-              action: 'modal-view',
-              detail: 'Los datos de la empresa han sido actualizados',
-              location: 'Modal',
-            });
-            void swalAlert
-              .fire({
-                title: 'Contraseña actualizada ',
-                text: 'Inicie sesión con su nueva contraseña.',
-                showCloseButton: true,
-                confirmButtonText: 'Entendido',
-              })
-              .then(() => {
-                void this.router.navigate([authFullRoutingNames.LOGIN]);
-              });
-          });
-          this.passwordForm.reset();
-        } else {
-          this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
-            ...actionStep,
-            state: 'Intención de envío',
-            typeError: 'Ha ocurrido un error con el servidor.',
-          });
-          this.tracking.trackEvent(AdobeEvent.trackView, {
-            category: 'error - icon',
-            action: 'modal-view',
-            detail: message || 'Ha ocurrido un error en el servidor.',
-            location: 'Modal',
-          });
-          void swalAlert.fire({
-            icon: 'warning',
-            text: message || 'Ha ocurrido un error en el servidor.',
-            showCloseButton: true,
-            confirmButtonText: 'Aceptar',
-          });
-        }
+      tap((response) => {
+        this.handleSuccessResponse(response, actionStep);
       }),
     );
+  }
+
+  private handleSuccessResponse(
+    response: ICompanyResult,
+    actionStep: Partial<ActionEventProperties>,
+  ) {
+    if (response.success === true) {
+      this.tracking.trackEvent(AdobeEvent.trackFormSubmit, actionStep);
+      this.loginService.logout().subscribe(() => {
+        this.tracking.trackEvent(AdobeEvent.trackView, {
+          category: 'warning - icon',
+          action: 'modal-view',
+          detail: 'Los datos de la empresa han sido actualizados',
+          location: 'Modal',
+        });
+        void swalAlert
+          .fire({
+            title: 'Contraseña actualizada ',
+            text: 'Inicie sesión con su nueva contraseña.',
+            showCloseButton: true,
+            confirmButtonText: 'Entendido',
+          })
+          .then(() => {
+            void this.router.navigate([authFullRoutingNames.LOGIN]);
+          });
+      });
+      this.passwordForm.reset();
+    } else {
+      this.tracking.trackEvent(AdobeEvent.trackFormSubmit, {
+        ...actionStep,
+        state: 'Intención de envío',
+        typeError: 'Ha ocurrido un error con el servidor.',
+      });
+      this.tracking.trackEvent(AdobeEvent.trackView, {
+        category: 'error - icon',
+        action: 'modal-view',
+        detail: response.message || 'Ha ocurrido un error en el servidor.',
+        location: 'Modal',
+      });
+      void swalAlert.fire({
+        icon: 'warning',
+        text: response.message || 'Ha ocurrido un error en el servidor.',
+        showCloseButton: true,
+        confirmButtonText: 'Aceptar',
+      });
+    }
   }
 
   private initForms() {

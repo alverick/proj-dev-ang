@@ -19,18 +19,20 @@ export class UpdateCompanyPage implements OnInit {
   errors = errorRegisterAuth;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
     public affiliation: AffiliationService,
-    private activatedRoute: ActivatedRoute,
+    private readonly activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit() {
-    this.activatedRoute?.data?.subscribe(({ entries }: any) => {
-      this.entryOptions = entries;
-    });
+    this.activatedRoute?.data?.subscribe(
+      ({ entries }: { entries: IEntryModel[] }) => {
+        this.entryOptions = entries;
+      },
+    );
   }
 
   onSubmit() {
-    this.router.navigate([authFullRoutingChildNames.UPDATE_SERVICES]);
+    void this.router.navigate([authFullRoutingChildNames.UPDATE_SERVICES]);
   }
 }

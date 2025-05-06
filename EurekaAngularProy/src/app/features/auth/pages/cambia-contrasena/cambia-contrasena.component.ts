@@ -55,10 +55,10 @@ export class CambiaContrasenaComponent implements OnInit {
   public Cambia: ModelFormGroup<FormChangePassword>;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private rutaActiva: ActivatedRoute,
-    private router: Router,
-    private recuperaService: RecuperaService,
+    private readonly formBuilder: FormBuilder,
+    private readonly rutaActiva: ActivatedRoute,
+    private readonly router: Router,
+    private readonly recuperaService: RecuperaService,
     public storage: StorageService,
     protected tracking: TrackingService,
   ) {}

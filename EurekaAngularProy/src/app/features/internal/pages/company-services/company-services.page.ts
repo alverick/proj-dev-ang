@@ -17,6 +17,7 @@ import {
   interestTypeOptions,
   paymentTypeOptions,
 } from '../../../../shared/constants/services';
+import type { IServiceRemoteModel } from '../../../../shared/models';
 import { ServicesFormsService } from '../../../../shared/services';
 import {
   AdobeEvent,
@@ -55,18 +56,19 @@ export class CompanyServicesPage {
 
   constructor(
     public companyServices: CompanyServicesService,
-    private serviceForms: ServicesFormsService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private logger: NGXLogger,
+    private readonly serviceForms: ServicesFormsService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
+    private readonly logger: NGXLogger,
     protected tracking: TrackingService,
   ) {
     this.logger.debug(
       '-> this.companyServicesService.services',
       this.companyServices.services,
     );
-    this.activatedRoute.data.subscribe((value: any) => {
-      this.companyServices.services = value.services;
+    this.activatedRoute.data.subscribe((value) => {
+      this.companyServices.services =
+        value.services as Partial<IServiceRemoteModel>[];
     });
   }
 

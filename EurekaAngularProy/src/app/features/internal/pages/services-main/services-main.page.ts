@@ -45,8 +45,8 @@ export class ServicesMainPage implements OnInit, OnDestroy {
   constructor(
     protected router: Router,
     public companyServices: CompanyServicesService,
-    private activatedRoute: ActivatedRoute,
-    private servicesFormsService: ServicesFormsService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly servicesFormsService: ServicesFormsService,
   ) {
     router.events
       .pipe(

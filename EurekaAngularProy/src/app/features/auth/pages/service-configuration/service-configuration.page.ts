@@ -31,9 +31,9 @@ export class ServiceConfigurationPage {
   blockAction = false;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
     public affiliation: AffiliationService,
-    private serviceForms: ServicesFormsService,
+    private readonly serviceForms: ServicesFormsService,
   ) {}
 
   onSubmit() {

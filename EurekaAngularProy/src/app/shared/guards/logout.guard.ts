@@ -5,7 +5,7 @@ import { internalFullRoutingNames } from '../../features/internal/internal-routi
 
 @Injectable()
 export class LogoutGuard {
-  constructor(private router: Router) {}
+  constructor(private readonly router: Router) {}
   canActivate(): boolean {
     if (
       sessionStorage.getItem('tk') == null ||
