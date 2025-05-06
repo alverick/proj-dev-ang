@@ -7,11 +7,10 @@ export const environment: IEnvironment = {
   ...environmentDefault,
   development: false,
   production: true,
-  END_POINT: serverUrl.prod,
+  END_POINT: '#{API_URL}#',
   logLevel: NgxLoggerLevel.OFF,
   serverLogLevel: NgxLoggerLevel.ERROR,
-  adobe:
-    'https://assets.adobedtm.com/df637a308f4c/ec7ac20e39e1/launch-f36536511e92.min.js',
-  hotjarSiteId: 2944859,
-  hotjarVersion: 6,
+  adobe: '#{ADOBE_URL}',
+  hotjarSiteId: '#{HOTJAR_SITE_ID}',
+  hotjarVersion: '#{HOTJAR_VERSION}',
 };
