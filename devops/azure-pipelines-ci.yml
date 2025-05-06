@@ -42,8 +42,8 @@ resources:
 extends:
   template: "src/templates/node/ci.yml@ibkAzTemplates"
   parameters:
-    projectName: "DSO"
-    componentName: "dso-angular-swa-sample-web"
+    projectName: "CSE"
+    componentName: "cse-angular-web"
     workingDir: "app"
     buildOutputPath: "dist"
     nodeVersion: "18.X"
