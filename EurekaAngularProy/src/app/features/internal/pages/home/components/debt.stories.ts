@@ -18,7 +18,6 @@ import { DynamicDialogService } from '../../../../../shared/services/dynamic-dia
 import { ExcelService } from '../../../../../shared/services/excel.service';
 import { HomeService } from '../../../../../shared/services/home.service';
 import { StorageService } from '../../../../../shared/services/storage.service';
-import { SharedModule } from '../../../../../shared/shared.module';
 import { DebtComponent } from './debt.component';
 import { DialogHeaderComponent } from './dialog-header/dialog-header.component';
 
@@ -62,7 +61,7 @@ const meta: Meta<DebtComponent> = {
       providers: [importProvidersFrom(BrowserAnimationsModule)],
     }),
     moduleMetadata({
-      imports: [HttpClientTestingModule, SharedModule],
+      imports: [HttpClientTestingModule],
       providers: [
         Store,
         provideMockStore({ initialState }),
@@ -76,6 +75,7 @@ const meta: Meta<DebtComponent> = {
     }),
   ],
 };
+
 export default meta;
 
 type Story = StoryObj<DebtComponent>;

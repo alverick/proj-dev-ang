@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { action } from '@storybook/addon-actions';
-import { moduleMetadata } from '@storybook/angular';
+import { applicationConfig, moduleMetadata } from '@storybook/angular';
 
+import { ValidationDefaultsComponent } from '../../../../shared/components/validation-defaults/validation-defaults.component';
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
-import { SharedModule } from '../../../../shared/shared.module';
 import { CompanyPasswordFormComponent } from './company-password-form.component';
 
 @Component({
@@ -16,6 +16,8 @@ import { CompanyPasswordFormComponent } from './company-password-form.component'
     [errorMessages]="errors"
     (sendForm)="onSendForm($event)"
   ></cs-company-password-form> `,
+  standalone: true,
+  imports: [CompanyPasswordFormComponent],
 })
 class FormDemoComponent {
   @Output() sendForm = new EventEmitter();
@@ -39,7 +41,7 @@ class FormDemoComponent {
           Validators.maxLength(20),
         ],
       ],
-      passwordConfirm: [
+      confirmNewPassword: [
         '',
         [
           Validators.required,
@@ -72,9 +74,14 @@ class FormDemoComponent {
 export default {
   title: 'Internal/Module/Company Form Password',
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
-      declarations: [CompanyPasswordFormComponent],
-      imports: [BrowserAnimationsModule, SharedModule],
+      declarations: [],
+      imports: [
+        FormDemoComponent,
+        CompanyPasswordFormComponent,
+        ValidationDefaultsComponent,
+      ],
     }),
   ],
 };
@@ -82,7 +89,7 @@ export default {
 export const normal = () => ({
   component: CompanyPasswordFormComponent,
   moduleMetadata: {
-    declarations: [FormDemoComponent, CompanyPasswordFormComponent],
+    declarations: [],
     providers: [],
   },
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults><cs-form-demo (showPanel)="onSubmit()"></cs-form-demo>`,

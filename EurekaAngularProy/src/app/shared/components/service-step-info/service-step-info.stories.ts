@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, EventEmitter, NgModule, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
@@ -12,13 +11,8 @@ import {
 
 import { mobileOperators } from '../../constants/company';
 import { ServicesFormsService } from '../../services';
-import { SharedModule } from '../../shared.module';
 import { ValidationDefaultsComponent } from '../validation-defaults/validation-defaults.component';
-
-@NgModule({
-  imports: [CommonModule, SharedModule],
-})
-class FormDemoModule {}
+import { ServiceStepInfoComponent } from './service-step-info.component';
 
 @Component({
   selector: 'cs-form-demo',
@@ -31,7 +25,7 @@ class FormDemoModule {}
     (cancel)="onCancel()"
   ></cs-service-step-info>`,
   standalone: true,
-  imports: [FormDemoModule, SharedModule],
+  imports: [ServiceStepInfoComponent],
 })
 class FormDemoComponent {
   form: FormGroup = this.serviceForms.serviceForm;
@@ -71,8 +65,9 @@ const meta: Meta<FormDemoComponent> = {
       providers: [provideAnimations()],
     }),
     moduleMetadata({
-      declarations: [ValidationDefaultsComponent],
-      imports: [HttpClientModule, CommonModule, SharedModule],
+      declarations: [],
+      providers: [ServicesFormsService],
+      imports: [HttpClientModule, ValidationDefaultsComponent],
     }),
   ],
 };

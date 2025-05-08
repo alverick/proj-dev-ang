@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   applicationConfig,
@@ -7,8 +6,7 @@ import {
   type StoryObj,
 } from '@storybook/angular';
 import { type MenuItem } from 'primeng/api';
-
-import { SharedModule } from '../../../../shared/shared.module';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 interface Services {
   idAccount: string;
@@ -385,7 +383,7 @@ const meta: Meta<ToolbarButtons> = {
     }),
     moduleMetadata({
       declarations: [],
-      imports: [CommonModule, SharedModule],
+      imports: [SplitButtonModule],
     }),
   ],
   argTypes: {

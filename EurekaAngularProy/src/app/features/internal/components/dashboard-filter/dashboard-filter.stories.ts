@@ -1,9 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import {
+  BrowserAnimationsModule,
+  provideAnimations,
+} from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 
-import { SharedModule } from '../../../../shared/shared.module';
 import { DashboardFilterComponent } from './dashboard-filter.component';
 
 const serviceList = [
@@ -158,14 +164,10 @@ const meta: Meta<DashboardFilterComponent> = {
   title: 'Internal/Dashboard/Dashboard Filter',
   component: DashboardFilterComponent,
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [BrowserAnimationsModule, HttpClientModule],
     }),
   ],
 };

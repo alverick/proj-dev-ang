@@ -1,15 +1,20 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 
-import { SharedModule } from '../../shared.module';
 import { SidebarServiceComponent } from './sidebar-service.component';
 
 const meta: Meta<SidebarServiceComponent> = {
   title: 'Shared/Service/Sidebar',
   component: SidebarServiceComponent,
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
-      imports: [BrowserAnimationsModule, SharedModule],
+      imports: [],
     }),
   ],
 };

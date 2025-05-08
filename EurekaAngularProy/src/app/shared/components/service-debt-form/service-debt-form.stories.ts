@@ -19,7 +19,8 @@ import {
 } from '../../constants/services';
 import { type IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
-import { SharedModule } from '../../shared.module';
+import { ValidationDefaultsComponent } from '../validation-defaults/validation-defaults.component';
+import { ServiceDebtFormComponent } from './service-debt-form.component';
 
 @Component({
   selector: 'cs-form-demo',
@@ -31,6 +32,8 @@ import { SharedModule } from '../../shared.module';
     [chargeTypeOptions]="chargeTypeOptions"
     [interestTypeOptions]="interestTypeOptions"
   ></cs-service-debt-form>`,
+  standalone: true,
+  imports: [ServiceDebtFormComponent],
 })
 class FormDemoComponent {
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
@@ -58,7 +61,11 @@ export default {
   title: 'Auth/Module/Service Debt Form',
   decorators: [
     moduleMetadata({
-      imports: [BrowserAnimationsModule, SharedModule],
+      imports: [
+        BrowserAnimationsModule,
+        FormDemoComponent,
+        ValidationDefaultsComponent,
+      ],
       providers: [
         ServicesFormsService,
         {
@@ -74,7 +81,6 @@ export default {
 
 export const normal = () => ({
   moduleMetadata: {
-    declarations: [FormDemoComponent],
     providers: [],
   },
   template: `<cs-validation-defaults class="tw-hidden"></cs-validation-defaults>

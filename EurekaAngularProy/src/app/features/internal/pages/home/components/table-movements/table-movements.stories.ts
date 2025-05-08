@@ -1,10 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Store } from '@ngrx/store';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideMockStore } from '@ngrx/store/testing';
-import { applicationConfig, moduleMetadata } from '@storybook/angular';
+import { applicationConfig } from '@storybook/angular';
 import { LoggerModule } from 'ngx-logger';
 import { isNil } from 'ramda';
 
@@ -13,7 +11,6 @@ import { movementsDataMock } from '../../../../../../shared/mocks/home';
 import { initialState } from '../../../../../../shared/mocks/store';
 import { TrackingService } from '../../../../../../shared/services';
 import { StorageService } from '../../../../../../shared/services/storage.service';
-import { SharedModule } from '../../../../../../shared/shared.module';
 import { SelectAllTableService } from '../../../../services';
 import { TableMovementsComponent } from './table-movements.component';
 
@@ -22,26 +19,20 @@ export default {
   component: TableMovementsComponent,
   decorators: [
     applicationConfig({
-      providers: [importProvidersFrom([BrowserAnimationsModule])],
-    }),
-    moduleMetadata({
-      declarations: [],
-      imports: [
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-        LoggerModule.forRoot({
-          level: environment.logLevel,
-          serverLogLevel: environment.serverLogLevel,
-          disableConsoleLogging: false,
-          enableSourceMaps: true,
-        }),
-      ],
       providers: [
+        provideAnimations(),
+        importProvidersFrom(HttpClientModule),
+        importProvidersFrom(
+          LoggerModule.forRoot({
+            level: environment.logLevel,
+            serverLogLevel: environment.serverLogLevel,
+            disableConsoleLogging: false,
+            enableSourceMaps: true,
+          }),
+        ),
         SelectAllTableService,
         TrackingService,
         StorageService,
-        Store,
         provideMockStore({ initialState }),
       ],
     }),

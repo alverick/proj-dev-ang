@@ -25,12 +25,12 @@ import {
 } from '../../constants/services';
 import { IDataEnterpriseModel } from '../../models/data-enterprise.model';
 import { ServicesFormsService } from '../../services';
-import { SharedModule } from '../../shared.module';
 import { ValidationDefaultsComponent } from '../validation-defaults/validation-defaults.component';
+import { ServiceStepConfigurationComponent } from './service-step-configuration.component';
 
 @Component({
   selector: 'cs-form-demo',
-  template: `<cs-service-step-configuration
+  template: ` <cs-service-step-configuration
     [form]="form"
     [errorMessages]="errors"
     [debtorCodeOptions]="debtorCodeOptions"
@@ -43,6 +43,8 @@ import { ValidationDefaultsComponent } from '../validation-defaults/validation-d
     (cancel)="onCancel()"
     (sendForm)="onSubmit($event)"
   ></cs-service-step-configuration>`,
+  standalone: true,
+  imports: [ServiceStepConfigurationComponent],
 })
 class FormDemoComponent {
   @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
@@ -79,9 +81,10 @@ const meta: Meta<FormDemoComponent> = {
       providers: [provideAnimations()],
     }),
     moduleMetadata({
-      declarations: [ValidationDefaultsComponent],
-      imports: [SharedModule],
+      declarations: [],
+      imports: [ValidationDefaultsComponent],
       providers: [
+        ServicesFormsService,
         AffiliationFormsService,
         {
           provide: APP_INITIALIZER,

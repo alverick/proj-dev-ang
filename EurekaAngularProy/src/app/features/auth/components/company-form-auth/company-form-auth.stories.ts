@@ -18,7 +18,8 @@ import {
 import { errorRegisterAuth } from '../../../../shared/constants/company-errors';
 import { type IEntryModel } from '../../../../shared/models';
 import { IErrorMessages } from '../../../../shared/models/forms';
-import { SharedModule } from '../../../../shared/shared.module';
+import { TrackingService } from '../../../../shared/services';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { AffiliationFormsService } from '../../services';
 import {
   type AuthForm,
@@ -38,9 +39,10 @@ import { CompanyFormAuthComponent } from './company-form-auth.component';
     (sendForm)="onSubmit($event)"
   ></cs-company-form-auth>`,
   standalone: true,
+  imports: [CompanyFormAuthComponent],
 })
 class FormDemoComponent implements OnChanges {
-  @Output() sendForm = new EventEmitter<AuthForm>();
+  @Output() sendForm = new EventEmitter<Partial<AuthForm>>();
   form: FormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() companyName: CompanyName[];
@@ -121,7 +123,7 @@ class FormDemoComponent implements OnChanges {
     }
   }
 
-  onSubmit($event: AuthForm) {
+  onSubmit($event: Partial<AuthForm>) {
     this.sendForm.emit($event);
   }
 }
@@ -132,9 +134,9 @@ const meta: Meta<FormDemoComponent> = {
   decorators: [
     applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
-      declarations: [CompanyFormAuthComponent],
-      imports: [SharedModule, FormDemoComponent],
-      providers: [AffiliationFormsService],
+      declarations: [],
+      imports: [FormDemoComponent, CompanyFormAuthComponent],
+      providers: [AffiliationFormsService, TrackingService, StorageService],
     }),
   ],
 };

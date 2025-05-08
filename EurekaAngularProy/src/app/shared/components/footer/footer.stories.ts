@@ -6,13 +6,22 @@ import {
 } from '@storybook/angular';
 import { DialogService } from 'primeng/dynamicdialog';
 
+import { TrackingService } from '../../services';
+import { StorageService } from '../../services/storage.service';
 import { FooterComponent } from './footer.component';
 
 const meta: Meta<FooterComponent> = {
   title: 'UI/Footer',
   component: FooterComponent,
   decorators: [
-    applicationConfig({ providers: [provideAnimations(), DialogService] }),
+    applicationConfig({
+      providers: [
+        provideAnimations(),
+        DialogService,
+        TrackingService,
+        StorageService,
+      ],
+    }),
   ],
 };
 
