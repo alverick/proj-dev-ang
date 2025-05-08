@@ -1,23 +1,25 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 
-import { SharedModule } from '../../shared.module';
+import { TrackingService } from '../../services';
+import { StorageService } from '../../services/storage.service';
 import { FabWhatsappComponent } from './fab-whatsapp.component';
 
 const meta: Meta<FabWhatsappComponent> = {
   title: 'Shared/UI/Button Whatsapp',
   component: FabWhatsappComponent,
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
+      providers: [TrackingService, StorageService],
+      imports: [HttpClientModule],
     }),
   ],
 };

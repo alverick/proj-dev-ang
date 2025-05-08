@@ -1,17 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 
-import { SharedModule } from '../../shared.module';
 import { LabelControlComponent } from './label-control.component';
 
 const meta: Meta<LabelControlComponent> = {
   title: 'UI/Forms/Label',
   component: LabelControlComponent,
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [BrowserAnimationsModule, CommonModule, SharedModule],
+      imports: [LabelControlComponent],
     }),
   ],
 };

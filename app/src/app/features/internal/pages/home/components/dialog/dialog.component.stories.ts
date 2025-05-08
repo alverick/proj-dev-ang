@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
@@ -17,7 +18,7 @@ const meta: Meta<DialogComponent> = {
   component: DialogComponent,
   decorators: [
     moduleMetadata({
-      imports: [],
+      imports: [HttpClientModule],
       providers: [
         DynamicDialogRef,
         Store,

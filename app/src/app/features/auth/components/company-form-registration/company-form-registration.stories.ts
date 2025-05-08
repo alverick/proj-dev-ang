@@ -15,7 +15,6 @@ import {
 } from '../../../../shared/constants/company';
 import { errorsRegisterForm } from '../../../../shared/constants/company-errors';
 import { IErrorMessages } from '../../../../shared/models/forms';
-import { SharedModule } from '../../../../shared/shared.module';
 import { AffiliationFormsService } from '../../services';
 import { RegisterForm } from '../../services/affiliation-forms.service';
 import { CompanyFormRegistrationComponent } from './company-form-registration.component';
@@ -30,10 +29,12 @@ import { CompanyFormRegistrationComponent } from './company-form-registration.co
     [documentTypes]="documentTypes"
     (sendForm)="onSubmit($event)"
   ></cs-company-form-registration>`,
+  standalone: true,
+  imports: [CompanyFormRegistrationComponent],
 })
 class FormDemoComponent {
   @Input() operators: ISelectOptions[] = [];
-  @Output() sendForm = new EventEmitter<RegisterForm>();
+  @Output() sendForm = new EventEmitter<Partial<RegisterForm>>();
   registerForm: FormGroup;
   @Input() errorMessages: IErrorMessages;
   @Input() documentTypes: ISelectOptions[] = [];
@@ -49,7 +50,7 @@ class FormDemoComponent {
       movilOperator: 'M',
     });
   }
-  onSubmit($event: RegisterForm) {
+  onSubmit($event: Partial<RegisterForm>) {
     this.sendForm.emit($event);
   }
 }
@@ -62,8 +63,8 @@ const meta: Meta<FormDemoComponent> = {
       providers: [provideAnimations()],
     }),
     moduleMetadata({
-      declarations: [FormDemoComponent, CompanyFormRegistrationComponent],
-      imports: [SharedModule],
+      declarations: [],
+      imports: [FormDemoComponent, CompanyFormRegistrationComponent],
       providers: [AffiliationFormsService],
     }),
   ],

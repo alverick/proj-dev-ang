@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
@@ -10,7 +9,6 @@ import {
 
 import { type DateList } from '../../models/dateList';
 import type { StatesGtp } from '../../models/states-gtp';
-import { SharedModule } from '../../shared.module';
 import { PaymentsFilterComponent } from './payments-filter.component';
 
 const meta: Meta<PaymentsFilterComponent> = {
@@ -20,7 +18,7 @@ const meta: Meta<PaymentsFilterComponent> = {
     applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [HttpClientModule, CommonModule, SharedModule],
+      imports: [HttpClientModule],
     }),
   ],
 };

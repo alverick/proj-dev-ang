@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
@@ -9,7 +8,6 @@ import {
 } from '@storybook/angular';
 
 import { GtpService } from '../../../../shared/services/gtp.service';
-import { SharedModule } from '../../../../shared/shared.module';
 import { ConfigurarCorreoGtpComponent } from './configurar-correo-gtp.component';
 
 const meta: Meta<ConfigurarCorreoGtpComponent> = {
@@ -20,7 +18,7 @@ const meta: Meta<ConfigurarCorreoGtpComponent> = {
       providers: [provideAnimations()],
     }),
     moduleMetadata({
-      imports: [HttpClientModule, CommonModule, SharedModule],
+      imports: [HttpClientModule],
       providers: [GtpService],
     }),
   ],

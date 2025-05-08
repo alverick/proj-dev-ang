@@ -14,7 +14,7 @@ import {
 import { ButtonDirective } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
-import { KeyFilterModule } from 'primeng/keyfilter';
+import { KeyFilterModule, KeyFilterPattern } from 'primeng/keyfilter';
 import { Ripple } from 'primeng/ripple';
 
 import { LabelControlComponent } from '../../../../shared/components/label-control/label-control.component';
@@ -49,7 +49,7 @@ export class CompanyFormRegistrationComponent implements OnInit {
 
   text = '';
   documentNumberMax = '8';
-  documentNumberFilter: string | RegExp = 'int';
+  documentNumberFilter: KeyFilterPattern | RegExp = 'int';
   blockSpecial = /^[a-z0-9]+$/i;
   @Input() registerForm: ModelFormGroup<RegisterForm>;
   @Input() operators = [];

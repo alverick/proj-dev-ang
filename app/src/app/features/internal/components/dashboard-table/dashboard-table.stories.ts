@@ -1,9 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
+import {
+  BrowserAnimationsModule,
+  provideAnimations,
+} from '@angular/platform-browser/animations';
+import {
+  applicationConfig,
+  type Meta,
+  moduleMetadata,
+  type StoryObj,
+} from '@storybook/angular';
 
-import { SharedModule } from '../../../../shared/shared.module';
 import { type TopClient } from '../../../../store/entities';
 import { DashboardTableComponent } from './dashboard-table.component';
 
@@ -11,14 +17,10 @@ const meta: Meta<DashboardTableComponent> = {
   title: 'Internal/Dashboard/Dashboard Table',
   component: DashboardTableComponent,
   decorators: [
+    applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [BrowserAnimationsModule, HttpClientModule],
     }),
   ],
 };

@@ -1,9 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { type Meta, moduleMetadata, type StoryObj } from '@storybook/angular';
 
-import { SharedModule } from '../../../../shared/shared.module';
 import { DashboardCardComponent } from './dashboard-card.component';
 
 const meta: Meta<DashboardCardComponent> = {
@@ -12,12 +10,7 @@ const meta: Meta<DashboardCardComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [],
-      imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [BrowserAnimationsModule, HttpClientModule],
     }),
   ],
 };

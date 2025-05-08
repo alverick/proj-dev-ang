@@ -17,10 +17,10 @@ import {
   paymentTypeOptions,
 } from '../../../features/auth/constants';
 import { AffiliationFormsService } from '../../../features/auth/services';
-import { type IDataEnterpriseModel } from '../../models/data-enterprise.model';
+import { IServiceRemoteModelForms } from '../../models';
 import { ServicesFormsService } from '../../services';
-import { SharedModule } from '../../shared.module';
 import { ValidationDefaultsComponent } from '../validation-defaults/validation-defaults.component';
+import { ServiceEditFormComponent } from './service-edit-form.component';
 
 @Component({
   selector: 'cs-form-demo',
@@ -36,9 +36,11 @@ import { ValidationDefaultsComponent } from '../validation-defaults/validation-d
     [formData]="formData"
     (sendForm)="onSubmit($event)"
   ></cs-service-edit-form>`,
+  standalone: true,
+  imports: [ServiceEditFormComponent],
 })
 class FormDemoComponent {
-  @Output() sendForm = new EventEmitter<IDataEnterpriseModel>();
+  @Output() sendForm = new EventEmitter<object>();
   form: FormGroup;
   errors = errorServiceConfiguration;
   debtorCodeOptions = debtorCodeOptions;
@@ -46,7 +48,7 @@ class FormDemoComponent {
   currencyOptions = currencyOptions;
   chargeTypeOptions = chargeTypeOptions;
   interestTypeOptions = interestTypeOptions;
-  formData = {
+  formData: IServiceRemoteModelForms = {
     id: 1639,
     res: '2000302',
     name: 'PAGO3',
@@ -78,12 +80,18 @@ class FormDemoComponent {
       interestType: 'M',
       amount: 2,
       partialPayment: 'N',
+      currency: '',
+      debtorCode: '',
+      idAccount: '',
+      name: '',
     },
+    dataType: '',
+    paymentType: '',
   };
   constructor(servicesForms: ServicesFormsService) {
     this.form = servicesForms.editServiceForm;
   }
-  onSubmit($event) {
+  onSubmit($event: object) {
     this.sendForm.emit($event);
   }
 }
@@ -96,14 +104,15 @@ const meta: Meta<FormDemoComponent> = {
   title: 'Auth/Module/Service Edit Form',
   decorators: [
     moduleMetadata({
-      declarations: [FormDemoComponent],
+      declarations: [],
       imports: [
+        FormDemoComponent,
         BrowserAnimationsModule,
-        SharedModule,
         ValidationDefaultsComponent,
       ],
       providers: [
         AffiliationFormsService,
+        ServicesFormsService,
         {
           provide: APP_INITIALIZER,
           useFactory: initAppComponentFactory,
